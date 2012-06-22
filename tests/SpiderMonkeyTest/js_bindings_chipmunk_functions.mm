@@ -8,6 +8,248 @@
 #import "js_manual_conversions.h"
 #import "js_bindings_chipmunk_functions.h"
 
+// Arguments: cpArbiter*
+// Ret value: int
+JSBool JSPROXY_cpArbiterGetCount(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	int ret_val;
+
+	ret_val = cpArbiterGetCount((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, int
+// Ret value: cpFloat
+JSBool JSPROXY_cpArbiterGetDepth(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; int32_t arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	cpFloat ret_val;
+
+	ret_val = cpArbiterGetDepth((cpArbiter*)arg0 , (int)arg1  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpFloat
+JSBool JSPROXY_cpArbiterGetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpArbiterGetElasticity((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpFloat
+JSBool JSPROXY_cpArbiterGetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpArbiterGetFriction((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, int
+// Ret value: cpVect
+JSBool JSPROXY_cpArbiterGetNormal(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; int32_t arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	cpVect ret_val;
+
+	ret_val = cpArbiterGetNormal((cpArbiter*)arg0 , (int)arg1  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, int
+// Ret value: cpVect
+JSBool JSPROXY_cpArbiterGetPoint(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; int32_t arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	cpVect ret_val;
+
+	ret_val = cpArbiterGetPoint((cpArbiter*)arg0 , (int)arg1  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpVect
+JSBool JSPROXY_cpArbiterGetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpArbiterGetSurfaceVelocity((cpArbiter*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: None
+JSBool JSPROXY_cpArbiterIgnore(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+
+	cpArbiterIgnore((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpBool
+JSBool JSPROXY_cpArbiterIsFirstContact(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpBool ret_val;
+
+	ret_val = cpArbiterIsFirstContact((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpArbiterSetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; double arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpArbiterSetElasticity((cpArbiter*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpArbiterSetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; double arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpArbiterSetFriction((cpArbiter*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpArbiterSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; cpVect arg1; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpArbiterSetSurfaceVelocity((cpArbiter*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpVect
+JSBool JSPROXY_cpArbiterTotalImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpArbiterTotalImpulse((cpArbiter*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpVect
+JSBool JSPROXY_cpArbiterTotalImpulseWithFriction(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpArbiterTotalImpulseWithFriction((cpArbiter*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpArbiter*
+// Ret value: cpFloat
+JSBool JSPROXY_cpArbiterTotalKE(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpArbiter* arg0; 
+
+	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpArbiterTotalKE((cpArbiter*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
 // Arguments: cpFloat, cpFloat
 // Ret value: cpFloat
 JSBool JSPROXY_cpAreaForCircle(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1162,6 +1404,701 @@ JSBool JSPROXY_cpCircleShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpConstraint*
+// Ret value: None
+JSBool JSPROXY_cpConstraintActivateBodies(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+
+	cpConstraintActivateBodies((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: None
+JSBool JSPROXY_cpConstraintDestroy(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+
+	cpConstraintDestroy((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: None
+JSBool JSPROXY_cpConstraintFree(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+
+	cpConstraintFree((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpBody*
+JSBool JSPROXY_cpConstraintGetA(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpBody* ret_val;
+
+	ret_val = cpConstraintGetA((cpConstraint*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpBody*
+JSBool JSPROXY_cpConstraintGetB(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpBody* ret_val;
+
+	ret_val = cpConstraintGetB((cpConstraint*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpConstraintGetErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpConstraintGetErrorBias((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpConstraintGetImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpConstraintGetImpulse((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpConstraintGetMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpConstraintGetMaxBias((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpConstraintGetMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpConstraintGetMaxForce((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpSpace*
+JSBool JSPROXY_cpConstraintGetSpace(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpSpace* ret_val;
+
+	ret_val = cpConstraintGetSpace((cpConstraint*)arg0  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpConstraintSetErrorBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpConstraintSetErrorBias((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpConstraintSetMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpConstraintSetMaxBias((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpConstraintSetMaxForce(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpConstraintSetMaxForce((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedRotarySpringGetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedRotarySpringGetDamping((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedRotarySpringGetRestAngle(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedRotarySpringGetRestAngle((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedRotarySpringGetStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedRotarySpringGetStiffness((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpFloat, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpDampedRotarySpringNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; double arg2; double arg3; double arg4; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg2 );
+	JS_ValueToNumber( cx, *argvp++, &arg3 );
+	JS_ValueToNumber( cx, *argvp++, &arg4 );
+	cpConstraint* ret_val;
+
+	ret_val = cpDampedRotarySpringNew((cpBody*)arg0 , (cpBody*)arg1 , (cpFloat)arg2 , (cpFloat)arg3 , (cpFloat)arg4  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedRotarySpringSetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedRotarySpringSetDamping((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedRotarySpringSetRestAngle(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedRotarySpringSetRestAngle((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedRotarySpringSetStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedRotarySpringSetStiffness((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpDampedSpringGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpDampedSpringGetAnchr1((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpDampedSpringGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpDampedSpringGetAnchr2((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedSpringGetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedSpringGetDamping((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedSpringGetRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedSpringGetRestLength((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpDampedSpringGetStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpDampedSpringGetStiffness((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect, cpVect, cpFloat, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpDampedSpringNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 7, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; double arg4; double arg5; double arg6; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg4 );
+	JS_ValueToNumber( cx, *argvp++, &arg5 );
+	JS_ValueToNumber( cx, *argvp++, &arg6 );
+	cpConstraint* ret_val;
+
+	ret_val = cpDampedSpringNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3 , (cpFloat)arg4 , (cpFloat)arg5 , (cpFloat)arg6  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpDampedSpringSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpDampedSpringSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpDampedSpringSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpDampedSpringSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedSpringSetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedSpringSetDamping((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedSpringSetRestLength(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedSpringSetRestLength((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpDampedSpringSetStiffness(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpDampedSpringSetStiffness((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpGearJointGetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpGearJointGetPhase((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpGearJointGetRatio(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpGearJointGetRatio((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpGearJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg2 );
+	JS_ValueToNumber( cx, *argvp++, &arg3 );
+	cpConstraint* ret_val;
+
+	ret_val = cpGearJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpFloat)arg2 , (cpFloat)arg3  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpGearJointSetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpGearJointSetPhase((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpGearJointSetRatio(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpGearJointSetRatio((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpGrooveJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpGrooveJointGetAnchr2((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpGrooveJointGetGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpGrooveJointGetGrooveA((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpGrooveJointGetGrooveB(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpGrooveJointGetGrooveB((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect, cpVect, cpVect
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpGrooveJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; cpVect arg4; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg4 = jsval_to_cpVect( cx, *argvp++ );
+	cpConstraint* ret_val;
+
+	ret_val = cpGrooveJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3 , (cpVect)arg4  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpGrooveJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpGrooveJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpGrooveJointSetGrooveA(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpGrooveJointSetGrooveA((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpGrooveJointSetGrooveB(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpGrooveJointSetGrooveB((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: None
 JSBool JSPROXY_cpInitChipmunk(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1243,6 +2180,230 @@ JSBool JSPROXY_cpMomentForSegment(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpPinJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpPinJointGetAnchr1((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpPinJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpPinJointGetAnchr2((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpPinJointGetDist(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpPinJointGetDist((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect, cpVect
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpPinJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	cpConstraint* ret_val;
+
+	ret_val = cpPinJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpPinJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpPinJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpPinJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpPinJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpPinJointSetDist(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpPinJointSetDist((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpPivotJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpPivotJointGetAnchr1((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpPivotJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpPivotJointGetAnchr2((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpPivotJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	cpConstraint* ret_val;
+
+	ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect, cpVect
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpPivotJointNew2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	cpConstraint* ret_val;
+
+	ret_val = cpPivotJointNew2((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpPivotJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpPivotJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpPivotJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpPivotJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: cpShape*
 // Ret value: int
 JSBool JSPROXY_cpPolyShapeGetNumVerts(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1277,12 +2438,204 @@ JSBool JSPROXY_cpPolyShapeGetVert(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpRatchetJointGetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpRatchetJointGetAngle((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpRatchetJointGetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpRatchetJointGetPhase((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpRatchetJointGetRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpRatchetJointGetRatchet((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpRatchetJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg2 );
+	JS_ValueToNumber( cx, *argvp++, &arg3 );
+	cpConstraint* ret_val;
+
+	ret_val = cpRatchetJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpFloat)arg2 , (cpFloat)arg3  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpRatchetJointSetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpRatchetJointSetAngle((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpRatchetJointSetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpRatchetJointSetPhase((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpRatchetJointSetRatchet(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpRatchetJointSetRatchet((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: None
 JSBool JSPROXY_cpResetShapeIdCounter(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	cpResetShapeIdCounter( );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpRotaryLimitJointGetMax(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpRotaryLimitJointGetMax((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpRotaryLimitJointGetMin(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpRotaryLimitJointGetMin((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpRotaryLimitJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; double arg2; double arg3; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg2 );
+	JS_ValueToNumber( cx, *argvp++, &arg3 );
+	cpConstraint* ret_val;
+
+	ret_val = cpRotaryLimitJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpFloat)arg2 , (cpFloat)arg3  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpRotaryLimitJointSetMax(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpRotaryLimitJointSetMax((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpRotaryLimitJointSetMin(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpRotaryLimitJointSetMin((cpConstraint*)arg0 , (cpFloat)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -1703,6 +3056,205 @@ JSBool JSPROXY_cpShapeUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSimpleMotorGetRate(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSimpleMotorGetRate((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpSimpleMotorNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; double arg2; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg2 );
+	cpConstraint* ret_val;
+
+	ret_val = cpSimpleMotorNew((cpBody*)arg0 , (cpBody*)arg1 , (cpFloat)arg2  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSimpleMotorSetRate(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSimpleMotorSetRate((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpSlideJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSlideJointGetAnchr1((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpVect
+JSBool JSPROXY_cpSlideJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpVect ret_val;
+
+	ret_val = cpSlideJointGetAnchr2((cpConstraint*)arg0  );
+
+	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSlideJointGetMax(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSlideJointGetMax((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*
+// Ret value: cpFloat
+JSBool JSPROXY_cpSlideJointGetMin(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpFloat ret_val;
+
+	ret_val = cpSlideJointGetMin((cpConstraint*)arg0  );
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpBody*, cpBody*, cpVect, cpVect, cpFloat, cpFloat
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpSlideJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpBody* arg0; cpBody* arg1; cpVect arg2; cpVect arg3; double arg4; double arg5; 
+
+	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
+	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg4 );
+	JS_ValueToNumber( cx, *argvp++, &arg5 );
+	cpConstraint* ret_val;
+
+	ret_val = cpSlideJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3 , (cpFloat)arg4 , (cpFloat)arg5  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpSlideJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpSlideJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpVect
+// Ret value: None
+JSBool JSPROXY_cpSlideJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; cpVect arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = jsval_to_cpVect( cx, *argvp++ );
+
+	cpSlideJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSlideJointSetMax(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSlideJointSetMax((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpConstraint*, cpFloat
+// Ret value: None
+JSBool JSPROXY_cpSlideJointSetMin(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpConstraint* arg0; double arg1; 
+
+	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	JS_ValueToNumber( cx, *argvp++, &arg1 );
+
+	cpSlideJointSetMin((cpConstraint*)arg0 , (cpFloat)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
 // Arguments: cpSpace*, cpShape*
 // Ret value: None
 JSBool JSPROXY_cpSpaceActivateShapesTouchingShape(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -1730,6 +3282,25 @@ JSBool JSPROXY_cpSpaceAddBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* ret_val;
 
 	ret_val = cpSpaceAddBody((cpSpace*)arg0 , (cpBody*)arg1  );
+
+	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+	
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpConstraint*
+// Ret value: cpConstraint*
+JSBool JSPROXY_cpSpaceAddConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; cpConstraint* arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpConstraint* ret_val;
+
+	ret_val = cpSpaceAddConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
 
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
@@ -1801,6 +3372,22 @@ JSBool JSPROXY_cpSpaceContainsBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBool ret_val;
 
 	ret_val = cpSpaceContainsBody((cpSpace*)arg0 , (cpBody*)arg1  );
+	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpConstraint*
+// Ret value: cpBool
+JSBool JSPROXY_cpSpaceContainsConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; cpConstraint* arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+	cpBool ret_val;
+
+	ret_val = cpSpaceContainsConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -2122,6 +3709,21 @@ JSBool JSPROXY_cpSpaceRemoveBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
+	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	return JS_TRUE;
+}
+
+// Arguments: cpSpace*, cpConstraint*
+// Ret value: None
+JSBool JSPROXY_cpSpaceRemoveConstraint(JSContext *cx, uint32_t argc, jsval *vp) {
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	cpSpace* arg0; cpConstraint* arg1; 
+
+	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
+	arg1 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
+
+	cpSpaceRemoveConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }

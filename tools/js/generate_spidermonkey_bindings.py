@@ -74,6 +74,7 @@ class SpiderMonkey(object):
         supported_options = {'obj_class_prefix_to_remove': '',
                              'classes_to_parse' : [],
                              'classes_to_ignore' : [],
+                             'class_properties' : [],
                              'bridge_support_file' : [],
                              'hierarchy_protocol_file' : [],
                              'inherit_class_methods' : True,
@@ -109,6 +110,7 @@ class SpiderMonkey(object):
                     v = v.replace('\t','')
                     v = v.replace('\n','')
                     v = v.replace(' ','')
+                    v = v.strip()
                     v = v.split(',')
                 else:
                     raise Exception('Unsupported type' % str(t) )
@@ -134,7 +136,7 @@ class SpiderMonkey(object):
         self.inherit_class_methods = config['inherit_class_methods']
 
         # Add here manually generated classes
-        self.supported_classes = set(['NSObject'])
+        self.init_class_properties( config['method_properties'] )
         self.init_classes_to_bind( config['classes_to_parse'] )
         self.init_classes_to_ignore( config['classes_to_ignore'] )
 
@@ -168,9 +170,11 @@ class SpiderMonkey(object):
     def init_hierarchy_file( self ):
         self.hierarchy = {}
         for f in self.hierarchy_files:
-            fd = open( get_path_for( f ) )
-            self.hierarchy.update( ast.literal_eval( fd.read() ) )
-            fd.close()
+            # empty string ??
+            if f:
+                fd = open( get_path_for( f ) )
+                self.hierarchy.update( ast.literal_eval( fd.read() ) )
+                fd.close()
 
     def init_bridgesupport_file( self ):
         self.bs = {}
@@ -284,6 +288,35 @@ class SpiderMonkey(object):
                 copy_set.remove( i )
 
         self.functions_to_bind = copy_set
+
+    def init_class_properties( self, properties ):
+        self.supported_classes = set()
+        self.class_properties = {}
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                # populate lists. easier to code
+                if o_key == 'manual':
+                    # '*' is needed for opaque structs
+                    self.supported_classes.add( key )
+
+            self.class_properties[key] = opts
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
