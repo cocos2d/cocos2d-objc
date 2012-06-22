@@ -8,6 +8,8 @@ require("javascript-spidermonkey/helper.js");
 var director = cc.Director.sharedDirector();
 var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
+var audio = cd.SimpleAudioEngine.sharedEngine();
+
 
 var physics = {
 	// "instance" variables
@@ -91,9 +93,16 @@ var MyLayer = {
 	},
 }
 
+var run = function() {
+	// Music
+	audio.playBackgroundMusic("Cyber Advance!.mp3");
 
-var scene = cc.Scene.create();
-var layer = MyLayer.create();
-scene.addChild( layer );
+	// Setup main scene
+	var scene = cc.Scene.create();
+	var layer = MyLayer.create();
+	scene.addChild( layer );
 
-director.replaceScene( scene );
+	director.replaceScene( scene );
+}
+
+run();
