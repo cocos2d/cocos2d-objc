@@ -71,13 +71,13 @@ OSStatus AudioSessionGetProperty(UInt32 inID, UInt32 *ioDataSize, void *outData)
 -(void) dealloc {
 	[_player release];
 	[super dealloc];
-}	
+}
 
 - (void)sound:(NSSound *)sound didFinishPlaying:(BOOL)finished {
 	if (self.delegate && [self.delegate respondsToSelector:@selector(audioPlayerDidFinishPlaying:successfully:)]) {
 		[self.delegate audioPlayerDidFinishPlaying:self successfully:finished];
-	}	
-}	
+	}
+}
 
 - (BOOL)play {
 	BOOL result;
