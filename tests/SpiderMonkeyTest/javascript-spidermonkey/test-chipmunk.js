@@ -43,7 +43,7 @@ var MyLayer = {
 
 	// constructor
 	create : function() {
-		var layer1 = cc.Layer.create();
+		var layer1 = cc._Layer.create();
 		layer1.onEnter = function () {
 			cc.log("onEnter called");
 			__jsc__.garbageCollect();
