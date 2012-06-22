@@ -226,7 +226,7 @@ class SpiderMonkey(object):
                     o_val = o_val.replace('"', '')    # remove possible "
                 else:
                     o_key = o
-                    o_val = None
+                    o_val = True
                 opts[ o_key ] = o_val
             if not klass in self.method_properties:
                 self.method_properties[klass] = {}
@@ -499,6 +499,12 @@ class SpiderMonkey(object):
                 return True
         return False
 
+    def get_method_property( self, property, method_name, class_name ):
+        try:
+            return self.method_properties[ class_name ][ method_name ][ property ]
+        except KeyError, e:
+            return None
+
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
 
@@ -645,7 +651,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     # Method generator functions
     #
-    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, class_name, method_type ):
+    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_js_type, args_declared_type, class_name, method_type ):
 
         args = selector_name.split(':')
 
@@ -656,14 +662,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
-            if ret_declared_type:
+            if ret_js_type:
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
         elif method_type == METHOD_CONSTRUCTOR:
             prefix = '\tret_val = [%s ' % (class_name )
             suffix = ''
         elif method_type == METHOD_CLASS:
-            if not ret_declared_type or ret_declared_type == 'void':
+            if not ret_js_type:
                 prefix = '\t[%s ' % (class_name)
             else:
                 prefix = '\tret_val = [%s ' % (class_name )
@@ -753,6 +759,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
             None : 'JSVAL_TRUE',
+            'void' : 'JSVAL_TRUE',
         }
         special_convert = {
             'o' : self.generate_retval_object,
@@ -829,7 +836,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif t in supported_types:
                 if supported_types[t] == None:  # void type
                     ret_js_type = None
-                    ret_declared_type = None
+                    ret_declared_type = 'void'
                 else:
                     ret_js_type = supported_types[t]
                     ret_declared_type = retval[0]['declared_type']
@@ -1158,15 +1165,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if total_args > 0:
             self.generate_arguments( args_declared_type, args_js_type, properties )
 
-        if ret_declared_type:
-            self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
+        if ret_js_type:
+            self.mm_file.write( '\t%s ret_val; // %s <-- Tito\n' % (ret_declared_type, ret_js_type ) )
 
         if optional_args_since:
             for i in xrange(total_args):
-                call_real = self.generate_method_call_to_real_object( s, i+1, ret_declared_type, args_declared_type, class_name, method_type )
+                call_real = self.generate_method_call_to_real_object( s, i+1, ret_js_type, args_declared_type, class_name, method_type )
                 self.mm_file.write( '\n\tif( argc == %d )\n\t%s\n' % (i+1, call_real) )
         else:
-            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
+            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )
@@ -1329,19 +1336,25 @@ extern JSClass *%s_class;
         if 'arg' in method:
             for arg in method['arg']:
                 t = arg['type'].lower()
+                dt = arg['declared_type']
                 if t in convert:
                     tmp = convert[t] % arg['name']
                     return with_args % (1, tmp  )
+
+                if dt[-1] == '*':
+                    dt = dt[:-1]
+                if t == '@' and (dt in self.supported_classes or dt in self.class_manual):
+                    return with_args % (1, 'OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, %s ) );' % arg['name'] )
 
         return no_args
 
 
     def generate_implementation_callback( self, class_name ):
-        # onEnter
-        # onEnter
-        # onEnter
+        # BOOL ccMouseUp NSEvent*
+        # ccMouseUp
+        # ccMouseUp
         template = '''
--(void) %s%s
+-(%s) %s%s
 {
 	if (_jsObj) {
 		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
@@ -1361,11 +1374,12 @@ extern JSClass *%s_class;
 
                 method = self.get_method( class_name, m )
                 full_args, args = self.get_callback_args_for_method( method )
+                js_retval, dt_retval = self.validate_retval( method, class_name )
 
                 converted_args = self.generate_callback_args( method )
 
                 js_name = self.convert_selector_name_to_js( class_name, m )
-                self.mm_file.write( template % ( m, full_args,
+                self.mm_file.write( template % ( dt_retval, m, full_args,
                                                  js_name,
                                                  converted_args,
                                                  js_name ) )
@@ -1397,7 +1411,9 @@ extern JSClass *%s_class;
         if class_name in self.callback_methods:
             self.mm_file.write(  template_prefix % ( class_name, class_name ) )
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template_middle % ( class_name, m, m ) )
+
+                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                    self.mm_file.write( template_middle % ( class_name, m, m ) )
 
             self.mm_file.write(  template_suffix % ( class_name ) )
 
@@ -1526,16 +1542,15 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # CCNode
         template_prefix = '@implementation %s (SpiderMonkey)\n'
 
-        # onEnter
+        # BOOL - ccMouseUp:(NSEvent*)
         # PROXYJS_CCNode
         template = '''
--(void) JSHook_%s%s
+-(%s) %s%s%s
 {
+%s
 	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
 		[proxy %s%s];
-
-	[self JSHook_%s%s];
 }
 '''
         template_suffix = '@end\n'
@@ -1549,10 +1564,19 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
                 real_method = self.get_method( class_name,m )
                 fullargs, args = self.get_callback_args_for_method( real_method )
-                self.mm_file.write( template % ( m, fullargs,
+                js_ret_val, dt_ret_val = self.validate_retval(  real_method, class_name )
+
+                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                    swizzle_prefix = 'JSHook_'
+                    call_native ='\t//1st call native, then JS. Order is important\n\t[self JSHook_%s%s];'% (m, args)
+                else:
+                    swizzle_prefix = ''
+                    call_native = ''
+                self.mm_file.write( template % ( dt_ret_val, swizzle_prefix, m, fullargs,
+                                                 call_native,
                                                  proxy_class_name,
-                                                 m, args,
-                                                 m, args) )
+                                                 m, args
+                                                 ) )
 
             self.mm_file.write( template_suffix )
 
@@ -1658,9 +1682,9 @@ extern "C" {
         template_funcname = 'JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
         self.h_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
 
-    def generate_function_call_to_real_object( self, func_name, num_of_args, ret_declared_type, args_declared_type ):
+    def generate_function_call_to_real_object( self, func_name, num_of_args, ret_js_type, args_declared_type ):
 
-        if ret_declared_type:
+        if ret_js_type:
             prefix = '\tret_val = %s(' % func_name
         else:
             prefix = '\t%s(' % func_name
@@ -1715,10 +1739,10 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if len(args_js_type) > 0:
             self.generate_arguments( args_declared_type, args_js_type );
 
-        if ret_declared_type:
+        if ret_js_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_function_call_to_real_object( func_name, num_of_args, ret_declared_type, args_declared_type )
+        call_real = self.generate_function_call_to_real_object( func_name, num_of_args, ret_js_type, args_declared_type )
         self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )

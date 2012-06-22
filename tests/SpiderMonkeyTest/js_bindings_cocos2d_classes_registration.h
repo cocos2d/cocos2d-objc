@@ -16,7 +16,7 @@ JSPROXY_CCCamera_createClass(_cx, cocos2d, "Camera");
 JSPROXY_CCReverseTime_createClass(_cx, cocos2d, "ReverseTime");
 JSPROXY_CCSprite_createClass(_cx, cocos2d, "Sprite");
 JSPROXY_ChipmunkSprite_createClass(_cx, cocos2d, "ChipmunkSprite");
-JSPROXY_CCLayer_createClass(_cx, cocos2d, "_Layer");
+JSPROXY_CCLayer_createClass(_cx, cocos2d, "Layer");
 JSPROXY_CCLayerColor_createClass(_cx, cocos2d, "LayerColor");
 JSPROXY_CCProgressTo_createClass(_cx, cocos2d, "ProgressTo");
 JSPROXY_CCScene_createClass(_cx, cocos2d, "Scene");
