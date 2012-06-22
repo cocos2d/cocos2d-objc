@@ -54,6 +54,9 @@ var MyLayer = {
 				var sprite = MyLayer.addSprite( cp.v(winSize.width/2, winSize.height/2) );
 				this.addChild( sprite );
 			}
+
+			this.setIsMouseEnabled( true );
+
 		};
 
 		layer1.update = function( delta ) {
