@@ -276,6 +276,11 @@
 		A0186FAF1593EDF900DEEE51 /* CDXMacOSXSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A0186FAB1593EDF900DEEE51 /* CDXMacOSXSupport.m */; };
 		A0186FB01593EDF900DEEE51 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A0186FAC1593EDF900DEEE51 /* CDXPropertyModifierAction.h */; };
 		A0186FB11593EDF900DEEE51 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = A0186FAD1593EDF900DEEE51 /* CDXPropertyModifierAction.m */; };
+		A0186FBA1593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0186FB61593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm */; };
+		A0186FBE1593F17800DEEE51 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0186F951593ED5E00DEEE51 /* libCocosDenshion.a */; };
+		A0186FC01593F23F00DEEE51 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0186FBF1593F23F00DEEE51 /* AudioToolbox.framework */; };
+		A0186FC21593F24D00DEEE51 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0186FC11593F24D00DEEE51 /* OpenAL.framework */; };
+		A0186FC41593F3EF00DEEE51 /* cocos2d-mac.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = A0186FC31593F3EF00DEEE51 /* cocos2d-mac.bridgesupport */; };
 		A01D2CC3158BF30F005FCA72 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A01D2CC2158BF30F005FCA72 /* libjs_static.a */; };
 		A02F6E41159157AA000975D7 /* js_bindings_chipmunk_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */; };
 		A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8A614A51386002DF395 /* libchipmunk.a */; };
@@ -1020,7 +1025,6 @@
 		A04B0F5914A29B77005EB429 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A04B0F6314A29BEB005EB429 /* SchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A04B0F6114A29BEB005EB429 /* SchedulerTest.m */; };
 		A04B0F6414A29CDE005EB429 /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B9300F1226C184003FF67E /* ActionsEaseTest.m */; };
-		A04FA985156309E700EC18D4 /* cocos2d-mac.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */; };
 		A04FA986156309E700EC18D4 /* cocos2d-mac.dylib in Resources */ = {isa = PBXBuildFile; fileRef = A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */; };
 		A04FA98715630BD800EC18D4 /* libffi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A03416FB1548806D00AE4D93 /* libffi.dylib */; };
 		A05B63E8156F552500ADAB65 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63AB156F552500ADAB65 /* chipmunk.h */; };
@@ -5353,6 +5357,13 @@
 			remoteGlobalIDString = A06430E613C1414300CC5554;
 			remoteInfo = kazmath;
 		};
+		A0186FBC1593F16D00DEEE51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0186ECB1593ED5E00DEEE51;
+			remoteInfo = CocosDenshion;
+		};
 		A02C33B413C908E80081CFF7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5889,6 +5900,12 @@
 		A0186FAB1593EDF900DEEE51 /* CDXMacOSXSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXMacOSXSupport.m; sourceTree = "<group>"; };
 		A0186FAC1593EDF900DEEE51 /* CDXPropertyModifierAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXPropertyModifierAction.h; sourceTree = "<group>"; };
 		A0186FAD1593EDF900DEEE51 /* CDXPropertyModifierAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXPropertyModifierAction.m; sourceTree = "<group>"; };
+		A0186FB41593F11C00DEEE51 /* js_bindings_CocosDenshion_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes_registration.h; sourceTree = "<group>"; };
+		A0186FB51593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes.h; sourceTree = "<group>"; };
+		A0186FB61593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_classes.mm; sourceTree = "<group>"; };
+		A0186FBF1593F23F00DEEE51 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A0186FC11593F24D00DEEE51 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
+		A0186FC31593F3EF00DEEE51 /* cocos2d-mac.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "cocos2d-mac.bridgesupport"; path = "tools/js/cocos2d-mac.bridgesupport"; sourceTree = "<group>"; };
 		A01D2CC2158BF30F005FCA72 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A02F6E3F159157AA000975D7 /* js_bindings_chipmunk_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_functions.h; sourceTree = "<group>"; };
 		A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_functions.mm; sourceTree = "<group>"; };
@@ -6051,7 +6068,6 @@
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
 		A04B0F6214A29BEB005EB429 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
-		A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "cocos2d-mac.bridgesupport"; path = "Resources-Mac/cocos2d-mac.bridgesupport"; sourceTree = "<group>"; };
 		A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "cocos2d-mac.dylib"; path = "Resources-Mac/cocos2d-mac.dylib"; sourceTree = "<group>"; };
 		A05B63AB156F552500ADAB65 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		A05B63AC156F552500ADAB65 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -6933,6 +6949,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0186FC21593F24D00DEEE51 /* OpenAL.framework in Frameworks */,
+				A0186FC01593F23F00DEEE51 /* AudioToolbox.framework in Frameworks */,
+				A0186FBE1593F17800DEEE51 /* libCocosDenshion.a in Frameworks */,
 				A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */,
 				A09C8D341566FB4100ADFDA9 /* Cocoa.framework in Frameworks */,
 				A09C8D351566FB4100ADFDA9 /* OpenGL.framework in Frameworks */,
@@ -7262,6 +7281,8 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				A0186FC11593F24D00DEEE51 /* OpenAL.framework */,
+				A0186FBF1593F23F00DEEE51 /* AudioToolbox.framework */,
 				A0E55417141EAEEE003F1E5A /* README.md */,
 				E076E61C1225EC1E00DE0DA2 /* AUTHORS */,
 				E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */,
@@ -7288,7 +7309,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */,
+				A0186FC31593F3EF00DEEE51 /* cocos2d-mac.bridgesupport */,
 				A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
 				E02A8537129F11BF00341C97 /* icon.icns */,
@@ -7785,6 +7806,9 @@
 				A02F6E4B15926885000975D7 /* js_bindings_chipmunk_functions_registration.h */,
 				A02F6E3F159157AA000975D7 /* js_bindings_chipmunk_functions.h */,
 				A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */,
+				A0186FB41593F11C00DEEE51 /* js_bindings_CocosDenshion_classes_registration.h */,
+				A0186FB51593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.h */,
+				A0186FB61593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
 				A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */,
@@ -9162,6 +9186,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0186FBD1593F16D00DEEE51 /* PBXTargetDependency */,
 				A02F6E4415915862000975D7 /* PBXTargetDependency */,
 				A09C8CBB1566FB4100ADFDA9 /* PBXTargetDependency */,
 				A09C8CBD1566FB4100ADFDA9 /* PBXTargetDependency */,
@@ -9912,8 +9937,8 @@
 				A03416C515487C3C00AE4D93 /* piece.png in Resources */,
 				A03416C615487C3C00AE4D93 /* icon.icns in Resources */,
 				A03416FE1548809000AE4D93 /* javascript-jscocoa in Resources */,
-				A04FA985156309E700EC18D4 /* cocos2d-mac.bridgesupport in Resources */,
 				A04FA986156309E700EC18D4 /* cocos2d-mac.dylib in Resources */,
+				A0186FC41593F3EF00DEEE51 /* cocos2d-mac.bridgesupport in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14576,6 +14601,7 @@
 				A08ECD0D158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm in Sources */,
 				A02F6E41159157AA000975D7 /* js_bindings_chipmunk_functions.mm in Sources */,
 				A02F70C21593C6AA000975D7 /* ChipmunkSprite.m in Sources */,
+				A0186FBA1593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14958,6 +14984,11 @@
 			isa = PBXTargetDependency;
 			target = A06430E613C1414300CC5554 /* kazmath */;
 			targetProxy = A0186ECD1593ED5E00DEEE51 /* PBXContainerItemProxy */;
+		};
+		A0186FBD1593F16D00DEEE51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0186ECB1593ED5E00DEEE51 /* CocosDenshion */;
+			targetProxy = A0186FBC1593F16D00DEEE51 /* PBXContainerItemProxy */;
 		};
 		A02C33B513C908E80081CFF7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
