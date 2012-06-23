@@ -84,7 +84,7 @@ __jsc__.garbageCollect();
 // Testing same object
 var sprite3 = cc.Sprite.create("grossinis_sister1.png");
 sprite3.I_was_here = 'Oh Yeah';
-parent2.addChildZTag( sprite3, 0, 100 );
+parent2.addChild( sprite3, 0, 100 );
 sprite3.setPosition( cc.p( 300,200) );
 
 var sameSprite = parent2.getChildByTag( 100 );
@@ -119,12 +119,12 @@ parent2.addChild( menu );
 //
 cc.log("hola");
 var subclass = function() {
-	cc.base(this);
+	goog.base(this);
 	this.initWithFile("grossini.png");
 	this.setPosition( cc.p(100, 100) );
 	this.setScale( 3 );
 }
-cc.inherits(subclass, cc.Sprite );
+goog.inherits(subclass, cc.Sprite );
 
 //for( var i in cc.Sprite ) { cc.log( "---->" + cc.Sprite[ i ] + "..." + i ); }
 //var sprite = new subclass();
