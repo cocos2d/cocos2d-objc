@@ -68,13 +68,13 @@ var SpriteTestDemo = cc.Layer.extend({
     onEnter:function () {
 
         var label = cc.LabelTTF.labelWithStringFontnameFontsize(this.title(), "Arial", 28);
-        this.addChildZ(label, 1);
+        this.addChild(label, 1);
         label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
         var strSubtitle = this.subtitle();
         if (strSubtitle != "") {
             var l = cc.LabelTTF.labelWithStringFontnameFontsize(strSubtitle, "Thonburi", 16);
-            this.addChildZ(l, 1);
+            this.addChild(l, 1);
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
         }
 
@@ -89,7 +89,7 @@ var SpriteTestDemo = cc.Layer.extend({
         item2.setPosition( cc.p(winSize.width / 2, 30));
         item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
 
-        this.addChildZ(menu, 1);
+        this.addChild(menu, 1);
     },
 
     restartCallback:function (sender) {

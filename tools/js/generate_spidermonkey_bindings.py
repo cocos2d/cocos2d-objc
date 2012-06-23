@@ -636,6 +636,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 {
 //	%%s *proxy = (%%s*)JS_GetPrivate(obj);
 	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
+	printf("JS finalize Obj(%%p) - %%s\\n", obj, [[proxy description] UTF8String] );
 
 	if (proxy) {
 		del_proxy_for_jsobject( obj );
@@ -1100,7 +1101,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             properties = self.method_properties[class_name][selector]
             if 'optional_args_since' in properties:
                 optional_args_since = int( properties['optional_args_since'] )
-                required_args = num_of_args - (optional_args_since-1)
+                required_args = optional_args_since-1
                 method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
             elif 'variadic_2_array' in properties:
                 method_assert_on_arguments = '\tNSCAssert( argc > 0, @"Invalid number of arguments" );\n'
@@ -1171,7 +1172,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if optional_args_since:
             for i in xrange(total_args):
                 call_real = self.generate_method_call_to_real_object( s, i+1, ret_js_type, args_declared_type, class_name, method_type )
-                self.mm_file.write( '\n\tif( argc == %d )\n\t%s\n' % (i+1, call_real) )
+                self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i+1, call_real) )
         else:
             call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )

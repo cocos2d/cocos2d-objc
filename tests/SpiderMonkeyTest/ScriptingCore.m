@@ -332,7 +332,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	return ok;
 }
 
--(void) runScript:(NSString*)filename
+-(BOOL) runScript2:(NSString*)filename
 {
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
@@ -361,6 +361,44 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		}
 		free(content);
 	}
+	
+	return YES;
+}
+
+/*
+ * Compile a script and execute it repeatedly until an
+ * error occurs.  (If this ever returns, it returns false.
+ * If there's no error it just keeps going.)
+ */
+-(BOOL) runScript:(NSString*)filename
+{
+    JSScript *script;
+    JSObject *scriptObj;
+	
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
+
+	script = JS_CompileUTF8File(_cx, _object, [fullpath UTF8String] );
+
+    if (script == NULL)
+        return NO;   /* compilation error */
+	
+    scriptObj = JS_GetGlobalFromScript(script);
+    if (scriptObj == NULL) {
+        return NO;
+    }
+	
+    if (!JS_AddNamedObjectRoot(_cx, &scriptObj, "compileAndRepeat script object"))
+        return NO;
+	
+	jsval result;	
+	if (!JS_ExecuteScript(_cx, _object, script, &result)) {
+		NSLog(@"Failed to execute script");
+    }
+	
+//    JS_RemoveObjectRoot(_cx, &scriptObj);  /* scriptObj becomes unreachable
+//										   and will eventually be collected. */
+    return YES;
 }
 
 -(void) dealloc
@@ -397,6 +435,8 @@ void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
 {
 	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
 	
+	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
+	
 	tHashJSObject *element = malloc( sizeof( *element ) );
 	element->proxy = [proxy retain];
 	element->jsObject = obj;
@@ -409,6 +449,8 @@ void del_proxy_for_jsobject(JSObject *obj)
 	tHashJSObject *element = NULL;
 	HASH_FIND_INT(hash, &obj, element);
 	if( element ) {
+		
+		printf("Deleting proxy for: %p - %p (%s)\n", obj, element->proxy, [[element->proxy description] UTF8String] );
 		[element->proxy release];
 
 		HASH_DEL(hash, element);

@@ -137,7 +137,8 @@ function copy_properties( parent, child ) {
 // Google "subclasses"
 // borrowed from closure library
 //
-cc.inherits = function (childCtor, parentCtor) {
+var goog = goog || {}; // Check to see if already defined in current scope
+goog.inherits = function (childCtor, parentCtor) {
 	/** @constructor */
 	function tempCtor() {};
 	tempCtor.prototype = parentCtor.prototype;
@@ -150,7 +151,7 @@ cc.inherits = function (childCtor, parentCtor) {
 //		childCtor[ i ] = parentCtor[ i ];
 //	}
 };
-cc.base = function(me, opt_methodName, var_args) {
+goog.base = function(me, opt_methodName, var_args) {
 	var caller = arguments.callee.caller;
 	if (caller.superClass_) {
 		// This is a constructor. Call the superclass constructor.

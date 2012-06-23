@@ -3,7 +3,7 @@
 // Shows how to use Chipmunk + cocos2d
 //
 
-//require("javascript-spidermonkey/helper.js");
+require("javascript-spidermonkey/helper.js");
 
 var director = cc.Director.sharedDirector();
 var _winSize = director.winSize();
@@ -39,6 +39,13 @@ var physics = {
 	},
 };
 
+var MySprite = function(file) {
+	goog.base(this);
+	this.initWithFile(file);
+	this.setOpacity(128);
+}
+goog.inherits(MySprite, cc.ChipmunkSprite );
+
 var MyLayer = {
 
 	// constructor
@@ -46,7 +53,7 @@ var MyLayer = {
 		var layer1 = cc.Layer.create();
 		layer1.onEnter = function () {
 			cc.log("onEnter called");
-			__jsc__.garbageCollect();
+//			__jsc__.garbageCollect();
 
 			physics.init( this );
 			this.scheduleUpdate();
@@ -68,19 +75,19 @@ var MyLayer = {
 			cc.log("Mouse Down:" + pos );
 			sprite = MyLayer.addSprite( pos );
 			this.addChild( sprite );
-			__jsc__.garbageCollect();
+//			__jsc__.garbageCollect();
 		};
 
 		layer1.mouseDragged = function( event ) {
 			pos = director.convertEventToGL( event );
 			cc.log("Mouse Dragged:" + pos );
-			__jsc__.garbageCollect();
+//			__jsc__.garbageCollect();
 		};
 
 		layer1.mouseUp = function( event ) {
 			pos = director.convertEventToGL( event );
 			cc.log("Mouse Up:" + pos );
-			__jsc__.garbageCollect();
+//			__jsc__.garbageCollect();
 		};
 
 		var label = cc.LabelTTF.labelWithStringFontnameFontsize("Javascript: cocos2d + Chipmunk", "Arial", 28);
@@ -110,7 +117,8 @@ var MyLayer = {
 		cp.shapeSetFriction( shape, 0.5 );
 		cp.spaceAddShape( physics.space, shape );
 
-		var sprite = cc.ChipmunkSprite.create("grossini.png");
+//		var sprite = cc.ChipmunkSprite.create("grossini.png");
+		var sprite = new MySprite("grossini.png");
 		sprite.setBody( body );
 		return sprite;
 	},
@@ -126,6 +134,8 @@ var run = function() {
 	scene.addChild( layer );
 
 	director.replaceScene( scene );
+
+//	__jsc__.addGCRootObject( layer );
 }
 
 run();
