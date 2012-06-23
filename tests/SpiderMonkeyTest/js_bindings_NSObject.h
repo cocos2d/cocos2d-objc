@@ -28,12 +28,12 @@
 @interface JSPROXY_NSObject : NSObject
 {
 	JSObject	*_jsObj;
-	id			_realObj;
+	id			_realObj;  // weak ref
 	Class		_klass;
 }
 
 @property (nonatomic, readwrite, assign) JSObject *jsObj;
-@property (nonatomic, readwrite, retain) id	realObj;
+@property (nonatomic, readwrite, assign) id	realObj;
 @property (nonatomic, readonly) Class klass;
 
 -(id) initWithJSObject:(JSObject*)object class:(Class)klass;

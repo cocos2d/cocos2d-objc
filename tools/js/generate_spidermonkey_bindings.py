@@ -635,14 +635,14 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
 //	%%s *proxy = (%%s*)JS_GetPrivate(obj);
-	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%%p) - %%s\\n", obj, [[proxy description] UTF8String] );
+//	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
+	printf("JS finalize Obj(%%p) \\n", obj);
 
-	if (proxy) {
-		del_proxy_for_jsobject( obj );
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		[proxy release];
-	}
+//	if (proxy) {
+//		del_proxy_for_jsobject( obj );
+//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
+//		[proxy release];
+//	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
@@ -658,8 +658,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         if method_type == METHOD_INIT:
             prefix = '\t%s *real = [(%s*)[proxy.klass alloc] ' % (class_name, class_name )
-            suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
-            suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);'
+            suffix = '\n\t[proxy setRealObj: real];\n\t[real autorelease];\n'
+            suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);'
+            suffix += '\n\t[proxy release];'
         elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
@@ -1429,8 +1430,10 @@ extern JSClass *%s_class;
 //	JS_SetPrivate(jsobj, proxy);
 	set_proxy_for_jsobject(proxy, jsobj);
 
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+                [proxy release];
+	}
 
 	[self swizzleMethods];
 '''
