@@ -8,6 +8,18 @@
 //	return floats;
 //}
 
+var cc = cc || {};
+
+cc.rect = function(x,y,w,h)
+{
+	var rect = new Float32Array(4)
+	rect[0] = x;
+	rect[1] = y;
+	rect[2] = w;
+	rect[3] = h;
+	return rect;
+}
+
 function ccc3(r, g, b)
 {
 	var colors = new Uint8Array(3)
