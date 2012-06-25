@@ -6,9 +6,10 @@
 
 require("javascript-spidermonkey/helper.js");
 
-var director = cc.Director.sharedDirector();
+var director = cc.Director.getInstance();
 var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
+var centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
 var currentScene = 0;
@@ -53,7 +54,10 @@ var loadScene = function (sceneIdx)
 var SpriteTestDemo = function(file) {
 
 	//
-	// Init
+	// VERY IMPORTANT
+	//
+	// Only subclasses of a native classes MUST call __associateObjectWithNative
+	// Failure to do so, it will crash.
 	//
 	var parent = goog.base(this);
 	__associateObjWithNative( this, parent );
@@ -126,6 +130,7 @@ var SpriteTouchTest = function(file) {
 
 	this.initialize = function() {
 		this.setIsMouseEnabled( true );
+		this.addSprite( centerPos );
 	}
 
 	this.addSprite = function(pos) {
@@ -180,7 +185,6 @@ SpriteTouchTest.prototype.createSprite = function( pos ) {
 	return sprite;
 }
 
-scenes.push( SpriteTouchTest );
 
 //------------------------------------------------------------------
 //
@@ -214,7 +218,356 @@ var SpriteBatchTouchTest = function(file) {
 	this.initialize();
 }
 goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
-scenes.push( SpriteBatchTouchTest );
+
+//------------------------------------------------------------------
+//
+// Sprite vs. SpriteBatch Animation
+//
+//------------------------------------------------------------------
+var SpriteFrameTest = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		var cache = cc.SpriteFrameCache.getInstance();
+		cache.addSpriteFrames( "animations/grossini.plist" );
+		cache.addSpriteFrames( "animations/grossini_gray.plist", "animations/grossini_gray.png" );
+		cache.addSpriteFrames( "animations/grossini_blue.plist", "animations/grossini_blue.png" );
+
+		//
+		// Animation using Sprite batch
+		//
+		// A CCSpriteBatchNode can reference one and only one texture (one .png file)
+		// Sprites that are contained in that texture can be instantiatied as CCSprites and then added to the CCSpriteBatchNode
+		// All CCSprites added to a CCSpriteBatchNode are drawn in one OpenGL ES draw call
+		// If the CCSprites are not added to a CCSpriteBatchNode then an OpenGL ES draw call will be needed for each one, which is less efficient
+		//
+		// When you animate a sprite, CCAnimation changes the frame of the sprite using setDisplayFrame: (this is why the animation must be in the same texture)
+		// When setDisplayFrame: is used in the CCAnimation it changes the frame to one specified by the CCSpriteFrames that were added to the animation,
+		// but texture id is still the same and so the sprite is still a child of the CCSpriteBatchNode,
+		// and therefore all the animation sprites are also drawn as part of the CCSpriteBatchNode
+		//
+
+		var sprite1 = cc.Sprite.createWithSpriteFrameName("grossini_dance_01.png");
+		sprite1.setPosition( cc.p( winSize.width/2-80, winSize.height/2) );
+
+		var spritebatch = cc.SpriteBatchNode.create("animations/grossini.pvr.gz");
+		spritebatch.addChild(sprite1);
+		this.addChild( spritebatch );
+
+		var frames = []
+		for( var i = 1; i < 15; i++) {
+
+			if( i < 10 ) {
+				var name = "grossini_dance_0" + i + ".png";
+			} else {
+				var name = "grossini_dance_" + i + ".png";
+			}
+
+			var frame = cache.spriteFrameByName( name );
+			frames.push( frame );
+		}
+
+		var animation = cc.Animation.create( frames, 0.3 );
+		// 14 frames * 1sec = 14 seconds
+		sprite1.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
+
+
+		//
+		// Animation using standard Sprite
+		//
+		//
+		var sprite2 = cc.Sprite.createWithSpriteFrameName( "grossini_dance_01.png" );
+		sprite2.setPosition( cc.p( winSize.width/2 + 80, winSize.height/2) );
+		this.addChild( sprite2 );
+
+		var moreFrames = []
+		for(var i = 1; i < 15; i++) {
+			if( i < 10 ) {
+				var name = "grossini_dance_gray_0" + i + ".png";
+			} else {
+				var name = "grossini_dance_gray_" + i + ".png";
+			}
+			var frame = cache.spriteFrameByName( name );
+			moreFrames.push( frame );
+		}
+		for( var i = 1; i < 5; i++) {
+			var name = "grossini_blue_0" + i + ".png";
+			var frame = cache.spriteFrameByName( name );
+			moreFrames.push( frame );
+		}
+
+
+		moreFrames.concat( frames );
+		var animMixed = cc.Animation.create( moreFrames, 0.3 );
+
+		// 32 frames * 1 seconds = 32 seconds
+		sprite2.runAction( cc.RepeatForever.create( cc.Animate.create( animMixed ) ) );
+
+		// to test issue #732, uncomment the following line
+		sprite2.setFlipX( false );
+		sprite2.setFlipY( false );
+	}
+
+	this.title = function () {
+		return "Sprite vs. SpriteBatchNode animation";
+	}
+
+	this.subtitle = function () {
+		return "Testing issue #792";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteFrameTest, SpriteTestDemo );
+
+//------------------------------------------------------------------
+//
+// SpriteAnchorPoint
+//
+//------------------------------------------------------------------
+var SpriteAnchorPoint = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		for(var i=0;i<3;i++) {
+			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
+
+			var point = cc.Sprite.create( "r1.png" );
+			point.setScale( 0.25 );
+			point.setPosition( sprite.position() );
+			this.addChild( point, 10 );
+
+			if( i == 0 ) {
+				sprite.setAnchorPoint( cc.p( 0, 0) );
+			} else if( i == 1 ) {
+				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
+			} else if( i == 2 ) {
+				sprite.setAnchorPoint( cc.p(1,1) );
+			}
+
+			point.setPosition( sprite.position() );
+
+			var rotate = cc.RotateBy.create(10, 360);
+			var action = cc.RepeatForever.create( rotate );
+
+			sprite.runAction( action );
+			this.addChild( sprite, i );
+		}
+	}
+
+	this.title = function () {
+		return "Sprite: anchor point";
+	}
+
+	this.subtitle = function () {
+		return "Testing 3 different anchor points";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteAnchorPoint, SpriteTestDemo );
+
+//------------------------------------------------------------------
+//
+// SpriteBatchAnchorPoint
+//
+//------------------------------------------------------------------
+var SpriteBatchAnchorPoint = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		var batch = cc.SpriteBatchNode.create( "grossini_dance_atlas.png" );
+		for(var i=0;i<3;i++) {
+			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
+
+			var point = cc.Sprite.create( "r1.png" );
+			point.setScale( 0.25 );
+			point.setPosition( sprite.position() );
+			this.addChild( point, 10 );
+
+			if( i == 0 ) {
+				sprite.setAnchorPoint( cc.p( 0, 0) );
+			} else if( i == 1 ) {
+				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
+			} else if( i == 2 ) {
+				sprite.setAnchorPoint( cc.p(1,1) );
+			}
+
+			point.setPosition( sprite.position() );
+
+			var rotate = cc.RotateBy.create(10, 360);
+			var action = cc.RepeatForever.create( rotate );
+
+			sprite.runAction( action );
+			batch.addChild( sprite, i );
+		}
+		this.addChild( batch );
+	}
+
+	this.title = function () {
+		return "Sprite Batch: anchor point";
+	}
+
+	this.subtitle = function () {
+		return "Testing 3 different anchor points";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteBatchAnchorPoint, SpriteTestDemo );
+
+//------------------------------------------------------------------
+//
+// SpriteOffsetAnchorFlip
+//
+//------------------------------------------------------------------
+var SpriteOffsetAnchorFlip = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		var cache = cc.SpriteFrameCache.getInstance();
+		cache.addSpriteFrames("animations/grossini.plist");
+		cache.addSpriteFrames("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		for(var i=0;i<3;i++) {
+			var sprite = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(85*i, 121*1, 85, 121) );
+			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
+
+			var point = cc.Sprite.create( "r1.png" );
+			point.setScale( 0.25 );
+			point.setPosition( sprite.position() );
+			this.addChild( point, 10 );
+
+			if( i == 0 ) {
+				sprite.setAnchorPoint( cc.p( 0, 0) );
+			} else if( i == 1 ) {
+				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
+			} else if( i == 2 ) {
+				sprite.setAnchorPoint( cc.p(1,1) );
+			}
+
+			point.setPosition( sprite.position() );
+
+			var frames = []
+			for( var j = 1; j < 15; j++) {
+
+				if( j < 10 ) {
+					var name = "grossini_dance_0" + j + ".png";
+				} else {
+					var name = "grossini_dance_" + j + ".png";
+				}
+
+				var frame = cache.spriteFrameByName( name );
+				frames.push( frame );
+			}
+
+			var animation = cc.Animation.create( frames, 0.3 );
+			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
+
+			var flip = cc.FlipY.create( true );
+			var flip_back = cc.FlipY.create( false );
+			var delay = cc.DelayTime.create( 1 );
+			var delay2 = cc.DelayTime.create( 1 );
+			var seq = cc.Sequence.create( delay, flip, delay2, flip_back );
+			sprite.runAction( cc.RepeatForever.create( seq ) );
+
+			this.addChild( sprite );
+		}
+	}
+
+	this.title = function () {
+		return "Sprite offset + anchor + flip";
+	}
+
+	this.subtitle = function () {
+		return "issue #1078";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteOffsetAnchorFlip, SpriteTestDemo );
+
+//------------------------------------------------------------------
+//
+// SpriteBatchOffsetAnchorFlip
+//
+//------------------------------------------------------------------
+var SpriteBatchOffsetAnchorFlip = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		var cache = cc.SpriteFrameCache.getInstance();
+		cache.addSpriteFrames("animations/grossini.plist");
+		cache.addSpriteFrames("animations/grossini_gray.plist", "animations/grossini_gray.png");
+
+		var batch = cc.SpriteBatchNode.create("animations/grossini.pvr.gz");
+
+		for(var i=0;i<3;i++) {
+			var sprite = cc.Sprite.createWithSpriteFrameName("grossini_dance_01.png");
+			sprite.setPosition( cc.p( winSize.width/4*(i+1), winSize.height/2) );
+
+			var point = cc.Sprite.create( "r1.png" );
+			point.setScale( 0.25 );
+			point.setPosition( sprite.position() );
+			this.addChild( point, 10 );
+
+			if( i == 0 ) {
+				sprite.setAnchorPoint( cc.p( 0, 0) );
+			} else if( i == 1 ) {
+				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
+			} else if( i == 2 ) {
+				sprite.setAnchorPoint( cc.p(1,1) );
+			}
+
+			point.setPosition( sprite.position() );
+
+			var frames = []
+			for( var j = 1; j < 15; j++) {
+
+				if( j < 10 ) {
+					var name = "grossini_dance_0" + j + ".png";
+				} else {
+					var name = "grossini_dance_" + j + ".png";
+				}
+
+				var frame = cache.spriteFrameByName( name );
+				frames.push( frame );
+			}
+
+			var animation = cc.Animation.create( frames, 0.3 );
+			sprite.runAction( cc.RepeatForever.create( cc.Animate.create( animation ) ) );
+
+			var flip = cc.FlipY.create( true );
+			var flip_back = cc.FlipY.create( false );
+			var delay = cc.DelayTime.create( 1 );
+			var delay2 = cc.DelayTime.create( 1 );
+			var seq = cc.Sequence.create( delay, flip, delay2, flip_back );
+			sprite.runAction( cc.RepeatForever.create( seq ) );
+
+			batch.addChild( sprite );
+		}
+		this.addChild(batch);
+	}
+
+	this.title = function () {
+		return "SpriteBatch offset + anchor + flip";
+	}
+
+	this.subtitle = function () {
+		return "issue #1078";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteBatchOffsetAnchorFlip, SpriteTestDemo );
+
 
 //------------------------------------------------------------------
 //
@@ -291,7 +644,6 @@ var SpriteColorOpacity = function(file) {
 	this.initialize();
 }
 goog.inherits(SpriteColorOpacity, SpriteTestDemo );
-scenes.push( SpriteColorOpacity );
 
 //------------------------------------------------------------------
 //
@@ -370,7 +722,6 @@ var SpriteBatchColorOpacity = function(file) {
 	this.initialize();
 }
 goog.inherits(SpriteBatchColorOpacity, SpriteTestDemo );
-scenes.push( SpriteBatchColorOpacity );
 
 //------------------------------------------------------------------
 //
@@ -462,7 +813,6 @@ ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
 	this.addSprite( pos );
 }
 
-scenes.push( ChipmunkSpriteTest );
 
 //------------------------------------------------------------------
 //
@@ -491,8 +841,22 @@ var ChipmunkSpriteBatchTest = function(file) {
 	}
 }
 goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
-scenes.push( ChipmunkSpriteBatchTest );
 
+
+//
+// Order of tests
+//
+scenes.push( SpriteTouchTest ); scenes.push( SpriteBatchTouchTest );
+
+scenes.push( SpriteFrameTest );
+
+scenes.push( SpriteAnchorPoint ); scenes.push( SpriteBatchAnchorPoint );
+
+scenes.push( SpriteOffsetAnchorFlip ); scenes.push( SpriteBatchOffsetAnchorFlip );
+
+scenes.push( SpriteColorOpacity ); scenes.push( SpriteBatchColorOpacity );
+
+scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 
 
 //------------------------------------------------------------------
