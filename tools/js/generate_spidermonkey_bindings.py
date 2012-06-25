@@ -1148,7 +1148,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_of_args = len( args_declared_type )
 
         # writes method description
-        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
+        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s (%s)' % ( ', '.join(args_declared_type), ret_declared_type, ret_js_type ) )
 
         self.generate_method_prefix( class_name, method, num_of_args, method_type )
 
@@ -1168,7 +1168,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             self.generate_arguments( args_declared_type, args_js_type, properties )
 
         if ret_js_type:
-            self.mm_file.write( '\t%s ret_val; // %s <-- Tito\n' % (ret_declared_type, ret_js_type ) )
+            self.mm_file.write( '\t%s ret_val;\n' % (ret_declared_type ) )
 
         if optional_args_since:
             for i in xrange(total_args):
