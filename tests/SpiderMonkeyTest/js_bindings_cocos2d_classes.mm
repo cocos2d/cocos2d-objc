@@ -35496,7 +35496,7 @@ void JSPROXY_CCBlink_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationBlinks", JSPROXY_CCBlink_actionWithDuration_blinks__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCBlink_actionWithDuration_blinks__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCBlink_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCBlink_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
