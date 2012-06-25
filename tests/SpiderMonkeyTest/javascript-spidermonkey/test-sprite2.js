@@ -1,7 +1,7 @@
+//
 // http://www.cocos2d-iphone.org
 //
-// Javascript Action tests
-// Test are coded using Javascript, with the exception of MenuCallback which uses Objective-J to handle the callbacks.
+// Javascript + cocos2d sprite tests
 //
 
 require("javascript-spidermonkey/helper.js");
@@ -59,10 +59,6 @@ var SpriteTestDemo = function(file) {
 	__associateObjWithNative( this, parent );
 	this.init();
 
-	//
-	// Instanced mehtods
-	//
-
 	this.title = function () {
 	    return "No title";
 	}
@@ -74,6 +70,10 @@ var SpriteTestDemo = function(file) {
 }
 goog.inherits(SpriteTestDemo, cc.Layer );
 
+//
+// Instance 'base' methods
+// XXX: Should be defined after "goog.inherits"
+//
 SpriteTestDemo.prototype.onEnter = function() {
 	var label = cc.LabelTTF.labelWithStringFontnameFontsize(this.title(), "Arial", 28);
 	this.addChild(label, 1);
@@ -115,7 +115,106 @@ SpriteTestDemo.prototype.backCallback = function (sender) {
     backSpriteTestAction();
 }
 
+//------------------------------------------------------------------
+//
+// Sprite Touch test
+//
+//------------------------------------------------------------------
+var SpriteTouchTest = function(file) {
 
+	goog.base(this);
+
+	this.initialize = function() {
+		this.setIsMouseEnabled( true );
+	}
+
+	this.addSprite = function(pos) {
+		var sprite = this.createSprite( pos );
+		this.addChild( sprite );
+	}
+
+	this.title = function () {
+		return "Sprite: Simnple action test";
+	}
+
+	this.subtitle = function () {
+		return "Tap screen to add more sprites";
+	}
+
+	this.initialize();
+}
+goog.inherits(SpriteTouchTest, SpriteTestDemo );
+
+SpriteTouchTest.prototype.onMouseDown = function( event ) {
+	pos = director.convertEventToGL( event );
+	this.addSprite( pos );
+}
+
+SpriteTouchTest.prototype.createSprite = function( pos ) {
+	var idx = Math.random() * 1400 / 100;
+	idx = Math.floor( idx );
+	var x = Math.floor(idx%5) * 85;
+	var y = Math.floor(idx/5) * 121;
+
+	var sprite  = cc.Sprite.create("grossini_dance_atlas.png", cc.rect(x,y,85,121) );
+	sprite.setPosition( pos );
+
+	var rand = Math.random();
+
+	if( rand < 0.20 ) {
+		var action = cc.ScaleBy.create(3, 2 );
+	} else if(rand < 0.40) {
+		var action = cc.RotateBy.create(3, 360 );
+	} else if( rand < 0.60) {
+		var action = cc.Blink.create(1, 3 );
+	} else if( rand < 0.8 ) {
+		var action = cc.TintBy.create(2, 0, -255, -255 );
+	} else {
+		var action = cc.FadeOut.create( 2 );
+	}
+	var action_back = action.reverse();
+	var seq = cc.Sequence.create(action, action_back);
+
+	sprite.runAction( cc.RepeatForever.create( seq ) );
+
+	return sprite;
+}
+
+scenes.push( SpriteTouchTest );
+
+//------------------------------------------------------------------
+//
+// Sprite Batch Touch test
+//
+//------------------------------------------------------------------
+var SpriteBatchTouchTest = function(file) {
+
+	goog.base(this);
+
+	this.initialize = function() {
+		this.batch = cc.SpriteBatchNode.create("grossini_dance_atlas.png", 50 );
+		this.addChild( this.batch );
+
+		this.setIsMouseEnabled( true );
+	}
+
+	this.addSprite = function(pos) {
+		var sprite = this.createSprite( pos );
+		this.batch.addChild( sprite );
+	}
+
+	this.title = function () {
+		return "SpriteBatch: Simnple action test";
+	}
+
+	this.subtitle = function () {
+		return "Tap screen to add more sprites";
+	}
+
+	this.initialize();
+}
+goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
+scenes.push( SpriteBatchTouchTest );
 
 //------------------------------------------------------------------
 //
@@ -123,61 +222,60 @@ SpriteTestDemo.prototype.backCallback = function (sender) {
 //
 //------------------------------------------------------------------
 var SpriteColorOpacity = function(file) {
-	cc.log("SpriteColorOpacity.init");
 
 	goog.base(this);
 
-	var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-	var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-	var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-	var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
-	var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-	var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-	var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-	var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+	this.initialize = function() {
+		var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
 
-	sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
-	sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
-	sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
-	sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
-	sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
-	sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
-	sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
-	sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
+		sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
+		sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
+		sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
+		sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
+		sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
+		sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
+		sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
+		sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
 
-	var action = cc.FadeIn.create(2);
-	var action_back = action.reverse();
-	var fade = cc.RepeatForever.create( cc.Sequence.create( action, action_back ) );
+		var action = cc.FadeIn.create(2);
+		var action_back = action.reverse();
+		var fade = cc.RepeatForever.create( cc.Sequence.create( action, action_back ) );
 
-	var tintRed = cc.TintBy.create(2, 0, -255, -255);
-//	var tintRed = cc.RotateBy.create(2, 360 );
-	var tintRedBack = tintRed.reverse();
-	var red = cc.RepeatForever.create(cc.Sequence.create( tintRed, tintRedBack ) );
+		var tintRed = cc.TintBy.create(2, 0, -255, -255);
+	//	var tintRed = cc.RotateBy.create(2, 360 );
+		var tintRedBack = tintRed.reverse();
+		var red = cc.RepeatForever.create(cc.Sequence.create( tintRed, tintRedBack ) );
 
-	var tintGreen = cc.TintBy.create(2, -255, 0, -255);
-	var tintGreenBack = tintGreen.reverse();
-	var green = cc.RepeatForever.create(cc.Sequence.create( tintGreen, tintGreenBack ) );
+		var tintGreen = cc.TintBy.create(2, -255, 0, -255);
+		var tintGreenBack = tintGreen.reverse();
+		var green = cc.RepeatForever.create(cc.Sequence.create( tintGreen, tintGreenBack ) );
 
-	var tintBlue = cc.TintBy.create(2, -255, -255, 0);
-	var tintBlueBack = tintBlue.reverse();
-	var blue = cc.RepeatForever.create(cc.Sequence.create( tintBlue, tintBlueBack ) );
+		var tintBlue = cc.TintBy.create(2, -255, -255, 0);
+		var tintBlueBack = tintBlue.reverse();
+		var blue = cc.RepeatForever.create(cc.Sequence.create( tintBlue, tintBlueBack ) );
 
-	sprite5.runAction(red);
-	sprite6.runAction(green);
-	sprite7.runAction(blue);
-	sprite8.runAction(fade);
+		sprite5.runAction(red);
+		sprite6.runAction(green);
+		sprite7.runAction(blue);
+		sprite8.runAction(fade);
 
-	// late add: test dirtyColor and dirtyPosition
-	this.addChild(sprite1);
-	this.addChild(sprite2);
-	this.addChild(sprite3);
-	this.addChild(sprite4);
-	this.addChild(sprite5);
-	this.addChild(sprite6);
-	this.addChild(sprite7);
-	this.addChild(sprite8);
-
-//	this.scheduleUpdate();
+		// late add: test dirtyColor and dirtyPosition
+		this.addChild(sprite1);
+		this.addChild(sprite2);
+		this.addChild(sprite3);
+		this.addChild(sprite4);
+		this.addChild(sprite5);
+		this.addChild(sprite6);
+		this.addChild(sprite7);
+		this.addChild(sprite8);
+	}
 
 	//
 	// Instance methods
@@ -190,9 +288,7 @@ var SpriteColorOpacity = function(file) {
 		return "testing opacity and color";
 	}
 
-	this.update = function(delta) {
-		cc.log("delta: " + delta );
-	}
+	this.initialize();
 }
 goog.inherits(SpriteColorOpacity, SpriteTestDemo );
 scenes.push( SpriteColorOpacity );
@@ -206,59 +302,59 @@ var SpriteBatchColorOpacity = function(file) {
 
 	goog.base(this);
 
-	var batch = cc.SpriteBatchNode.create('grossini_dance_atlas.png', 10);
-	var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-	var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-	var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-	var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
-	var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
-	var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
-	var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
-	var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+	this.initialize = function() {
+		var batch = cc.SpriteBatchNode.create('grossini_dance_atlas.png', 10);
+		var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite2 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite3 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite4 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
+		var sprite5 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
+		var sprite6 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 1, 121 * 1, 85, 121));
+		var sprite7 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 2, 121 * 1, 85, 121));
+		var sprite8 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 3, 121 * 1, 85, 121));
 
-	sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
-	sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
-	sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
-	sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
-	sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
-	sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
-	sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
-	sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
+		sprite1.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 1));
+		sprite2.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 1));
+		sprite3.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 1));
+		sprite4.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 1));
+		sprite5.setPosition(cc.p((winSize.width / 5) * 1, (winSize.height / 3) * 2));
+		sprite6.setPosition(cc.p((winSize.width / 5) * 2, (winSize.height / 3) * 2));
+		sprite7.setPosition(cc.p((winSize.width / 5) * 3, (winSize.height / 3) * 2));
+		sprite8.setPosition(cc.p((winSize.width / 5) * 4, (winSize.height / 3) * 2));
 
-	var action = cc.FadeIn.create(2);
-	var action_back = action.reverse();
-	var fade = cc.RepeatForever.create( cc.Sequence.create( action, action_back ) );
+		var action = cc.FadeIn.create(2);
+		var action_back = action.reverse();
+		var fade = cc.RepeatForever.create( cc.Sequence.create( action, action_back ) );
 
-	var tintRed = cc.TintBy.create(2, 0, -255, -255);
-//	var tintRed = cc.RotateBy.create(2, 360 );
-	var tintRedBack = tintRed.reverse();
-	var red = cc.RepeatForever.create(cc.Sequence.create( tintRed, tintRedBack ) );
+		var tintRed = cc.TintBy.create(2, 0, -255, -255);
+	//	var tintRed = cc.RotateBy.create(2, 360 );
+		var tintRedBack = tintRed.reverse();
+		var red = cc.RepeatForever.create(cc.Sequence.create( tintRed, tintRedBack ) );
 
-	var tintGreen = cc.TintBy.create(2, -255, 0, -255);
-	var tintGreenBack = tintGreen.reverse();
-	var green = cc.RepeatForever.create(cc.Sequence.create( tintGreen, tintGreenBack ) );
+		var tintGreen = cc.TintBy.create(2, -255, 0, -255);
+		var tintGreenBack = tintGreen.reverse();
+		var green = cc.RepeatForever.create(cc.Sequence.create( tintGreen, tintGreenBack ) );
 
-	var tintBlue = cc.TintBy.create(2, -255, -255, 0);
-	var tintBlueBack = tintBlue.reverse();
-	var blue = cc.RepeatForever.create(cc.Sequence.create( tintBlue, tintBlueBack ) );
+		var tintBlue = cc.TintBy.create(2, -255, -255, 0);
+		var tintBlueBack = tintBlue.reverse();
+		var blue = cc.RepeatForever.create(cc.Sequence.create( tintBlue, tintBlueBack ) );
 
-	sprite5.runAction(red);
-	sprite6.runAction(green);
-	sprite7.runAction(blue);
-	sprite8.runAction(fade);
+		sprite5.runAction(red);
+		sprite6.runAction(green);
+		sprite7.runAction(blue);
+		sprite8.runAction(fade);
 
-	// late add: test dirtyColor and dirtyPosition
-	this.addChild(batch);
-	batch.addChild(sprite1);
-	batch.addChild(sprite2);
-	batch.addChild(sprite3);
-	batch.addChild(sprite4);
-	batch.addChild(sprite5);
-	batch.addChild(sprite6);
-	batch.addChild(sprite7);
-	batch.addChild(sprite8);
-
-//	this.scheduleUpdate();
+		// late add: test dirtyColor and dirtyPosition
+		this.addChild(batch);
+		batch.addChild(sprite1);
+		batch.addChild(sprite2);
+		batch.addChild(sprite3);
+		batch.addChild(sprite4);
+		batch.addChild(sprite5);
+		batch.addChild(sprite6);
+		batch.addChild(sprite7);
+		batch.addChild(sprite8);
+	}
 
 	//
 	// Instance methods
@@ -271,9 +367,7 @@ var SpriteBatchColorOpacity = function(file) {
 		return "testing opacity and color with batches";
 	}
 
-	this.update = function(delta) {
-		cc.log("delta: " + delta );
-	}
+	this.initialize();
 }
 goog.inherits(SpriteBatchColorOpacity, SpriteTestDemo );
 scenes.push( SpriteBatchColorOpacity );
@@ -304,6 +398,11 @@ var ChipmunkSpriteTest = function(file) {
 }
 goog.inherits( ChipmunkSpriteTest, SpriteTestDemo );
 
+//
+// Instance 'base' methods
+// XXX: Should be defined after "goog.inherits"
+//
+
 // init physics
 ChipmunkSpriteTest.prototype.initPhysics = function() {
 	this.space =  cp.spaceNew();
@@ -327,7 +426,6 @@ ChipmunkSpriteTest.prototype.initPhysics = function() {
 }
 
 ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
-	cc.log('Position: ' + pos);
 	var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
 	cp.bodySetPos( body, pos );
 	cp.spaceAddBody( this.space, body );
@@ -396,6 +494,12 @@ goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 scenes.push( ChipmunkSpriteBatchTest );
 
 
+
+//------------------------------------------------------------------
+//
+// Main entry point
+//
+//------------------------------------------------------------------
 function run()
 {
     var scene = new cc.Scene();
