@@ -158,7 +158,7 @@ goog.base = function(me, opt_methodName, var_args) {
 		ret =  caller.superClass_.constructor.apply( me, Array.prototype.slice.call(arguments, 1));
 
 		// XXX: SpiderMonkey bindings extensions
-		__associateObjWithNative( me, ret );
+//		__associateObjWithNative( me, ret );
 		return ret;
 	}
 

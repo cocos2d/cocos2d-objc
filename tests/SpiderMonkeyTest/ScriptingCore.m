@@ -101,6 +101,26 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 	return JS_FALSE;
 };
 
+JSBool ScriptingCore_getAssociatedNative(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		
+		jsval *argvp = JS_ARGV(cx,vp);
+		JSObject *pureJSObj;
+		JS_ValueToObject( cx, *argvp++, &pureJSObj );
+		
+		JSPROXY_NSObject *proxy = get_proxy_for_jsobject( pureJSObj );
+		id native = [proxy realObj];
+		
+		JSObject * obj = get_or_create_jsobject_from_realobj(cx, native);
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj) );
+		
+		return JS_TRUE;
+	}
+	
+	return JS_FALSE;
+};
+
 JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	if (argc==1 || argc==2) {
@@ -237,6 +257,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		// register some global functions
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__getAssociatedNative", ScriptingCore_getAssociatedNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
 		// create the "__jsc__" namescpae (Javascript controller)
@@ -433,7 +454,7 @@ JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *obj)
 
 void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
 {
-	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
+//	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
 	
 	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
 	
