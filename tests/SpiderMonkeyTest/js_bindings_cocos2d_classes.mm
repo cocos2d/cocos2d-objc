@@ -5668,7 +5668,7 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCSprite_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithSpriteFrame", JSPROXY_CCSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("createWithSpriteFrame", JSPROXY_CCSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -7901,7 +7901,7 @@ void JSPROXY_CCFlipX_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithFlipX", JSPROXY_CCFlipX_actionWithFlipX__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCFlipX_actionWithFlipX__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFlipX_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -8041,7 +8041,7 @@ void JSPROXY_CCFlipY_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithFlipY", JSPROXY_CCFlipY_actionWithFlipY__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCFlipY_actionWithFlipY__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFlipY_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10921,7 +10921,7 @@ void JSPROXY_CCDelayTime_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCDelayTime_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCDelayTime_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCDelayTime_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -27547,7 +27547,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("sharedDirector", JSPROXY_CCDirector_sharedDirector_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInstance", JSPROXY_CCDirector_sharedDirector_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -34100,7 +34100,7 @@ void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAnimation", JSPROXY_CCAnimate_actionWithAnimation__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCAnimate_actionWithAnimation__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCAnimate_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCAnimate_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -37400,36 +37400,26 @@ JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__stat
 	return JS_TRUE;
 }
 
-// Arguments: NSArray*
-// Ret value: CCAnimation* (o)
-JSBool JSPROXY_CCAnimation_animationWithSpriteFrames__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	NSArray* arg0; 
-
-	arg0 = jsval_to_nsarray( cx, *argvp++ );
-	CCAnimation* ret_val;
-
-	ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: NSArray*, float
 // Ret value: CCAnimation* (o)
 JSBool JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	NSCAssert( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; double arg1; 
 
 	arg0 = jsval_to_nsarray( cx, *argvp++ );
-	JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if (argc >= 2) {
+		JS_ValueToNumber( cx, *argvp++, &arg1 );
+	}
 	CCAnimation* ret_val;
 
-	ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0  ];
+	}
+
+	if( argc == 2 ) {
+		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -37762,8 +37752,7 @@ void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const c
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("animation", JSPROXY_CCAnimation_animation_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("animationWithAnimationFramesDelayperunitLoops", JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationWithSpriteFrames", JSPROXY_CCAnimation_animationWithSpriteFrames__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationWithSpriteFramesDelay", JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -43433,28 +43422,6 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFrame_name_(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: void (None)
-JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	NSString* arg0; 
-
-	arg0 = jsval_to_nsstring( cx, *argvp++ );
-
-	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
-	[real addSpriteFramesWithFile:(NSString*)arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
 // Arguments: NSString*, CCTexture2D*
 // Ret value: void (None)
 JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_texture_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -43488,15 +43455,24 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_(JSCon
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	NSCAssert( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; NSString* arg1; 
 
 	arg0 = jsval_to_nsstring( cx, *argvp++ );
-	arg1 = jsval_to_nsstring( cx, *argvp++ );
+	if (argc >= 2) {
+		arg1 = jsval_to_nsstring( cx, *argvp++ );
+	}
 
-	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
+	if( argc == 1 ) {
+		CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
+	[real addSpriteFramesWithFile:(NSString*)arg0  ];
+	}
+
+	if( argc == 2 ) {
+		CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0 textureFilename:(NSString*)arg1  ];
+	}
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -43672,9 +43648,8 @@ void JSPROXY_CCSpriteFrameCache_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addSpriteFrameName", JSPROXY_CCSpriteFrameCache_addSpriteFrame_name_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addSpriteFramesWithFile", JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addSpriteFramesWithFileTexture", JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_texture_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("addSpriteFramesWithFileTexturefilename", JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("addSpriteFrames", JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeSpriteFrameByName", JSPROXY_CCSpriteFrameCache_removeSpriteFrameByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeSpriteFrames", JSPROXY_CCSpriteFrameCache_removeSpriteFrames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeSpriteFramesFromFile", JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -43685,7 +43660,7 @@ void JSPROXY_CCSpriteFrameCache_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("purgeSharedSpriteFrameCache", JSPROXY_CCSpriteFrameCache_purgeSharedSpriteFrameCache_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sharedSpriteFrameCache", JSPROXY_CCSpriteFrameCache_sharedSpriteFrameCache_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInstance", JSPROXY_CCSpriteFrameCache_sharedSpriteFrameCache_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
