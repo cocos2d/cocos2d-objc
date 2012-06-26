@@ -23,7 +23,7 @@
  */
 
 
-#import "JSChipmunkCollisionHandler.h"
+#import "js_bindings_chipmunk_manual.h"
 #import "jsapi.h"
 #import "js_manual_conversions.h"
 
@@ -59,15 +59,46 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 
 static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 {
-	return cpTrue;
+	struct collision_data *handler = (struct collision_data*) data;
+	
+	jsval args[3];
+	args[0] = opaque_to_jsval( handler->cx, arb);
+	args[1] = opaque_to_jsval( handler->cx, space );
+	args[2] = handler->data;
+	
+	jsval rval;
+	JS_CallFunctionValue( handler->cx, handler->this, handler->pre, 3, args, &rval);
+	
+	JSBool ret = JSVAL_TO_BOOLEAN(rval);
+	
+	return (cpBool)ret;
+
 }
 
 static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 {
+	struct collision_data *handler = (struct collision_data*) data;
+	
+	jsval args[3];
+	args[0] = opaque_to_jsval( handler->cx, arb);
+	args[1] = opaque_to_jsval( handler->cx, space );
+	args[2] = handler->data;
+	
+	jsval ignore;
+	JS_CallFunctionValue( handler->cx, handler->this, handler->post, 3, args, &ignore);
 }
 
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 {
+	struct collision_data *handler = (struct collision_data*) data;
+	
+	jsval args[3];
+	args[0] = opaque_to_jsval( handler->cx, arb);
+	args[1] = opaque_to_jsval( handler->cx, space );
+	args[2] = handler->data;
+	
+	jsval ignore;
+	JS_CallFunctionValue( handler->cx, handler->this, handler->separate, 3, args, &ignore);
 }
 
 JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)

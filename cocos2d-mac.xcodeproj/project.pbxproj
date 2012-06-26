@@ -1089,7 +1089,7 @@
 		A07273E0155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */; };
 		A07273E1155B23A8003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273DC155B23A8003E961F /* test_1021x1024.png */; };
 		A0763E1115996F3F008DA7D9 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
-		A0763E17159A286A008DA7D9 /* JSChipmunkCollisionHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = A0763E15159A2869008DA7D9 /* JSChipmunkCollisionHandler.m */; };
+		A0763E17159A286A008DA7D9 /* js_bindings_chipmunk_manual.m in Sources */ = {isa = PBXBuildFile; fileRef = A0763E15159A2869008DA7D9 /* js_bindings_chipmunk_manual.m */; };
 		A08ECD0A158AAB48000D8892 /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A08ECD09158AAB48000D8892 /* js_bindings_cocos2d_classes.mm */; };
 		A08ECD0D158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A08ECD0C158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm */; };
 		A0980EA514B92A7A004812AD /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
@@ -6136,8 +6136,8 @@
 		A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba4444.pvr.gz; sourceTree = "<group>"; };
 		A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba8888.pvr.gz; sourceTree = "<group>"; };
 		A07273DC155B23A8003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
-		A0763E15159A2869008DA7D9 /* JSChipmunkCollisionHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JSChipmunkCollisionHandler.m; sourceTree = "<group>"; };
-		A0763E16159A286A008DA7D9 /* JSChipmunkCollisionHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; path = JSChipmunkCollisionHandler.h; sourceTree = "<group>"; };
+		A0763E15159A2869008DA7D9 /* js_bindings_chipmunk_manual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = js_bindings_chipmunk_manual.m; sourceTree = "<group>"; };
+		A0763E16159A286A008DA7D9 /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
 		A08ECD07158AAB48000D8892 /* js_bindings_cocos2d_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes_registration.h; sourceTree = "<group>"; };
 		A08ECD08158AAB48000D8892 /* js_bindings_cocos2d_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes.h; sourceTree = "<group>"; };
 		A08ECD09158AAB48000D8892 /* js_bindings_cocos2d_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_classes.mm; sourceTree = "<group>"; };
@@ -7813,6 +7813,8 @@
 				A02F6E4B15926885000975D7 /* js_bindings_chipmunk_functions_registration.h */,
 				A02F6E3F159157AA000975D7 /* js_bindings_chipmunk_functions.h */,
 				A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */,
+				A0763E16159A286A008DA7D9 /* js_bindings_chipmunk_manual.h */,
+				A0763E15159A2869008DA7D9 /* js_bindings_chipmunk_manual.m */,
 				A0186FB41593F11C00DEEE51 /* js_bindings_CocosDenshion_classes_registration.h */,
 				A0186FB51593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.h */,
 				A0186FB61593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm */,
@@ -7824,8 +7826,6 @@
 				A0BCD71A157FDBC700CCE291 /* js_manual_conversions.mm */,
 				A02F70C01593C6A9000975D7 /* ChipmunkSprite.h */,
 				A02F70C11593C6A9000975D7 /* ChipmunkSprite.m */,
-				A0763E16159A286A008DA7D9 /* JSChipmunkCollisionHandler.h */,
-				A0763E15159A2869008DA7D9 /* JSChipmunkCollisionHandler.m */,
 				A09C8D911567165B00ADFDA9 /* ScriptingCore.h */,
 				A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */,
 				A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */,
@@ -14613,7 +14613,7 @@
 				A02F6E41159157AA000975D7 /* js_bindings_chipmunk_functions.mm in Sources */,
 				A02F70C21593C6AA000975D7 /* ChipmunkSprite.m in Sources */,
 				A0186FBA1593F11C00DEEE51 /* js_bindings_CocosDenshion_classes.mm in Sources */,
-				A0763E17159A286A008DA7D9 /* JSChipmunkCollisionHandler.m in Sources */,
+				A0763E17159A286A008DA7D9 /* js_bindings_chipmunk_manual.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

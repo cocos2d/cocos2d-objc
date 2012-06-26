@@ -22,9 +22,13 @@
  * THE SOFTWARE.
  */
 
-#ifndef __JSChipmunkCollisionHandler
-#define __JSChipmunkCollisionHandler
+#ifndef __js_bindings_chipmunk_manual
+#define __js_bindings_chipmunk_manual
 
 #include "chipmunk.h"
+#include "jsapi.h"
 
-#endif // __JSChipmunkCollisionHandler
+JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
+
+#endif // __js_bindings_chipmunk_manual
