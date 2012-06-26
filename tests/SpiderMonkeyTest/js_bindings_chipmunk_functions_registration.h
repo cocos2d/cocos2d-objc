@@ -231,7 +231,6 @@ JS_DefineFunction(_cx, chipmunk, "spaceReindexShape", JSPROXY_cpSpaceReindexShap
 JS_DefineFunction(_cx, chipmunk, "spaceReindexShapesForBody", JSPROXY_cpSpaceReindexShapesForBody, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, chipmunk, "spaceReindexStatic", JSPROXY_cpSpaceReindexStatic, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, chipmunk, "spaceRemoveBody", JSPROXY_cpSpaceRemoveBody, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSPROXY_cpSpaceRemoveCollisionHandler, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, chipmunk, "spaceRemoveConstraint", JSPROXY_cpSpaceRemoveConstraint, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, chipmunk, "spaceRemoveShape", JSPROXY_cpSpaceRemoveShape, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, chipmunk, "spaceRemoveStaticShape", JSPROXY_cpSpaceRemoveStaticShape, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

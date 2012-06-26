@@ -202,6 +202,10 @@ void * jsval_to_opaque( JSContext *cx, jsval vp )
 #endif
 }
 
+int jsval_to_int( JSContext *cx, jsval vp )
+{
+	return JSVAL_TO_INT(vp);
+}
 
 // XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
 long jsval_to_long( JSContext *cx, jsval vp )
@@ -300,6 +304,11 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 	int32_t number = (int32_t) opaque;
 	return INT_TO_JSVAL(number);
 #endif
+}
+
+jsval int_to_jsval( JSContext *cx, int number )
+{
+	return INT_TO_JSVAL(number);
 }
 
 jsval long_to_jsval( JSContext *cx, long number )

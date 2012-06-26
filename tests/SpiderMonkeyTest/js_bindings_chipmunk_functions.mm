@@ -82,7 +82,7 @@ JSBool JSPROXY_cpArbiterGetNormal(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpArbiterGetNormal((cpArbiter*)arg0 , (int)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -101,7 +101,7 @@ JSBool JSPROXY_cpArbiterGetPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpArbiterGetPoint((cpArbiter*)arg0 , (int)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -119,7 +119,7 @@ JSBool JSPROXY_cpArbiterGetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *
 
 	ret_val = cpArbiterGetSurfaceVelocity((cpArbiter*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -192,7 +192,7 @@ JSBool JSPROXY_cpArbiterSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *
 	cpArbiter* arg0; cpVect arg1; 
 
 	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpArbiterSetSurfaceVelocity((cpArbiter*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -211,7 +211,7 @@ JSBool JSPROXY_cpArbiterTotalImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpArbiterTotalImpulse((cpArbiter*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -229,7 +229,7 @@ JSBool JSPROXY_cpArbiterTotalImpulseWithFriction(JSContext *cx, uint32_t argc, j
 
 	ret_val = cpArbiterTotalImpulseWithFriction((cpArbiter*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -273,8 +273,8 @@ JSBool JSPROXY_cpAreaForSegment(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpFloat ret_val;
 
@@ -312,12 +312,12 @@ JSBool JSPROXY_cpBBClampVect(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBBClampVect((cpBB)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -356,7 +356,7 @@ JSBool JSPROXY_cpBBContainsVect(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBool ret_val;
 
 	ret_val = cpBBContainsVect((cpBB)arg0 , (cpVect)arg1  );
@@ -375,7 +375,7 @@ JSBool JSPROXY_cpBBExpand(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBB ret_val;
 
 	ret_val = cpBBExpand((cpBB)arg0 , (cpVect)arg1  );
@@ -421,8 +421,8 @@ JSBool JSPROXY_cpBBIntersectsSegment(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBool ret_val;
 
 	ret_val = cpBBIntersectsSegment((cpBB)arg0 , (cpVect)arg1 , (cpVect)arg2  );
@@ -509,7 +509,7 @@ JSBool JSPROXY_cpBBNewForCircle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; double arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	cpBB ret_val;
 
@@ -534,8 +534,8 @@ JSBool JSPROXY_cpBBSegmentQuery(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpBBSegmentQuery((cpBB)arg0 , (cpVect)arg1 , (cpVect)arg2  );
@@ -554,12 +554,12 @@ JSBool JSPROXY_cpBBWrapVect(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject *tmp_arg0;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(cpBB*)JS_GetTypedArrayData( tmp_arg0);
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBBWrapVect((cpBB)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -616,8 +616,8 @@ JSBool JSPROXY_cpBodyApplyForce(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; cpVect arg2; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodyApplyForce((cpBody*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -632,8 +632,8 @@ JSBool JSPROXY_cpBodyApplyImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; cpVect arg2; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodyApplyImpulse((cpBody*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -725,7 +725,7 @@ JSBool JSPROXY_cpBodyGetForce(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetForce((cpBody*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -773,7 +773,7 @@ JSBool JSPROXY_cpBodyGetPos(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetPos((cpBody*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -791,7 +791,7 @@ JSBool JSPROXY_cpBodyGetRot(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetRot((cpBody*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -842,7 +842,7 @@ JSBool JSPROXY_cpBodyGetVel(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpBodyGetVel((cpBody*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -856,12 +856,12 @@ JSBool JSPROXY_cpBodyGetVelAtLocalPoint(JSContext *cx, uint32_t argc, jsval *vp)
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBodyGetVelAtLocalPoint((cpBody*)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -875,12 +875,12 @@ JSBool JSPROXY_cpBodyGetVelAtWorldPoint(JSContext *cx, uint32_t argc, jsval *vp)
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBodyGetVelAtWorldPoint((cpBody*)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1007,12 +1007,12 @@ JSBool JSPROXY_cpBodyLocal2World(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBodyLocal2World((cpBody*)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1132,7 +1132,7 @@ JSBool JSPROXY_cpBodySetForce(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetForce((cpBody*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1177,7 +1177,7 @@ JSBool JSPROXY_cpBodySetPos(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetPos((cpBody*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1207,7 +1207,7 @@ JSBool JSPROXY_cpBodySetVel(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetVel((cpBody*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1281,7 +1281,7 @@ JSBool JSPROXY_cpBodyUpdateVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; double arg2; double arg3; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
 
@@ -1298,12 +1298,12 @@ JSBool JSPROXY_cpBodyWorld2Local(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpBodyWorld2Local((cpBody*)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1363,7 +1363,7 @@ JSBool JSPROXY_cpCircleShapeGetOffset(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpCircleShapeGetOffset((cpShape*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1393,7 +1393,7 @@ JSBool JSPROXY_cpCircleShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpShape* ret_val;
 
 	ret_val = cpCircleShapeNew((cpBody*)arg0 , (cpFloat)arg1 , (cpVect)arg2  );
@@ -1729,7 +1729,7 @@ JSBool JSPROXY_cpDampedSpringGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpDampedSpringGetAnchr1((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1747,7 +1747,7 @@ JSBool JSPROXY_cpDampedSpringGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpDampedSpringGetAnchr2((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -1807,8 +1807,8 @@ JSBool JSPROXY_cpDampedSpringNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg4 );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 	JS_ValueToNumber( cx, *argvp++, &arg6 );
@@ -1830,7 +1830,7 @@ JSBool JSPROXY_cpDampedSpringSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) 
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpDampedSpringSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1845,7 +1845,7 @@ JSBool JSPROXY_cpDampedSpringSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) 
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpDampedSpringSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1990,7 +1990,7 @@ JSBool JSPROXY_cpGrooveJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpGrooveJointGetAnchr2((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2008,7 +2008,7 @@ JSBool JSPROXY_cpGrooveJointGetGrooveA(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpGrooveJointGetGrooveA((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2026,7 +2026,7 @@ JSBool JSPROXY_cpGrooveJointGetGrooveB(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpGrooveJointGetGrooveB((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2041,9 +2041,9 @@ JSBool JSPROXY_cpGrooveJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
-	arg4 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg4 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpConstraint* ret_val;
 
 	ret_val = cpGrooveJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3 , (cpVect)arg4  );
@@ -2062,7 +2062,7 @@ JSBool JSPROXY_cpGrooveJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2077,7 +2077,7 @@ JSBool JSPROXY_cpGrooveJointSetGrooveA(JSContext *cx, uint32_t argc, jsval *vp) 
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetGrooveA((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2092,7 +2092,7 @@ JSBool JSPROXY_cpGrooveJointSetGrooveB(JSContext *cx, uint32_t argc, jsval *vp) 
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetGrooveB((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2155,7 +2155,7 @@ JSBool JSPROXY_cpMomentForCircle(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpMomentForCircle((cpFloat)arg0 , (cpFloat)arg1 , (cpFloat)arg2 , (cpVect)arg3  );
@@ -2171,8 +2171,8 @@ JSBool JSPROXY_cpMomentForSegment(JSContext *cx, uint32_t argc, jsval *vp) {
 	double arg0; cpVect arg1; cpVect arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpMomentForSegment((cpFloat)arg0 , (cpVect)arg1 , (cpVect)arg2  );
@@ -2192,7 +2192,7 @@ JSBool JSPROXY_cpPinJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPinJointGetAnchr1((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2210,7 +2210,7 @@ JSBool JSPROXY_cpPinJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPinJointGetAnchr2((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2240,8 +2240,8 @@ JSBool JSPROXY_cpPinJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpConstraint* ret_val;
 
 	ret_val = cpPinJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3  );
@@ -2260,7 +2260,7 @@ JSBool JSPROXY_cpPinJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpPinJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2275,7 +2275,7 @@ JSBool JSPROXY_cpPinJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpPinJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2309,7 +2309,7 @@ JSBool JSPROXY_cpPivotJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPivotJointGetAnchr1((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2327,7 +2327,7 @@ JSBool JSPROXY_cpPivotJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPivotJointGetAnchr2((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2342,7 +2342,7 @@ JSBool JSPROXY_cpPivotJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpConstraint* ret_val;
 
 	ret_val = cpPivotJointNew((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2  );
@@ -2362,8 +2362,8 @@ JSBool JSPROXY_cpPivotJointNew2(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpConstraint* ret_val;
 
 	ret_val = cpPivotJointNew2((cpBody*)arg0 , (cpBody*)arg1 , (cpVect)arg2 , (cpVect)arg3  );
@@ -2382,7 +2382,7 @@ JSBool JSPROXY_cpPivotJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpPivotJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2397,7 +2397,7 @@ JSBool JSPROXY_cpPivotJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpPivotJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2432,7 +2432,7 @@ JSBool JSPROXY_cpPolyShapeGetVert(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpPolyShapeGetVert((cpShape*)arg0 , (int)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2652,7 +2652,7 @@ JSBool JSPROXY_cpSegmentShapeGetA(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSegmentShapeGetA((cpShape*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2670,7 +2670,7 @@ JSBool JSPROXY_cpSegmentShapeGetB(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSegmentShapeGetB((cpShape*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2688,7 +2688,7 @@ JSBool JSPROXY_cpSegmentShapeGetNormal(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	ret_val = cpSegmentShapeGetNormal((cpShape*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2717,8 +2717,8 @@ JSBool JSPROXY_cpSegmentShapeNew(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpBody* arg0; cpVect arg1; cpVect arg2; double arg3; 
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
 	cpShape* ret_val;
 
@@ -2738,8 +2738,8 @@ JSBool JSPROXY_cpSegmentShapeSetNeighbors(JSContext *cx, uint32_t argc, jsval *v
 	cpShape* arg0; cpVect arg1; cpVect arg2; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpSegmentShapeSetNeighbors((cpShape*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2843,7 +2843,10 @@ JSBool JSPROXY_cpShapeGetCollisionType(JSContext *cx, uint32_t argc, jsval *vp) 
 	cpCollisionType ret_val;
 
 	ret_val = cpShapeGetCollisionType((cpShape*)arg0  );
-	JS_SET_RVAL(cx, vp, long_to_jsval(cx, ret_val));
+
+	jsval ret_jsval = int_to_jsval( cx, (cpCollisionType)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
 	return JS_TRUE;
 }
 
@@ -2888,7 +2891,10 @@ JSBool JSPROXY_cpShapeGetGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpGroup ret_val;
 
 	ret_val = cpShapeGetGroup((cpShape*)arg0  );
-	JS_SET_RVAL(cx, vp, long_to_jsval(cx, ret_val));
+
+	jsval ret_jsval = int_to_jsval( cx, (cpGroup)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
 	return JS_TRUE;
 }
 
@@ -2952,7 +2958,7 @@ JSBool JSPROXY_cpShapeGetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp
 
 	ret_val = cpShapeGetSurfaceVelocity((cpShape*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -2966,7 +2972,7 @@ JSBool JSPROXY_cpShapePointQuery(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpShape* arg0; cpVect arg1; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBool ret_val;
 
 	ret_val = cpShapePointQuery((cpShape*)arg0 , (cpVect)arg1  );
@@ -2994,10 +3000,10 @@ JSBool JSPROXY_cpShapeSetBody(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_cpShapeSetCollisionType(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; long arg1; 
+	cpShape* arg0; cpCollisionType arg1; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_long( cx, *argvp++ );
+	arg1 = (cpCollisionType) jsval_to_int( cx, *argvp++ );
 
 	cpShapeSetCollisionType((cpShape*)arg0 , (cpCollisionType)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3039,10 +3045,10 @@ JSBool JSPROXY_cpShapeSetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_cpShapeSetGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	cpShape* arg0; long arg1; 
+	cpShape* arg0; cpGroup arg1; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_long( cx, *argvp++ );
+	arg1 = (cpGroup) jsval_to_int( cx, *argvp++ );
 
 	cpShapeSetGroup((cpShape*)arg0 , (cpGroup)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3087,7 +3093,7 @@ JSBool JSPROXY_cpShapeSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp
 	cpShape* arg0; cpVect arg1; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpShapeSetSurfaceVelocity((cpShape*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3102,8 +3108,8 @@ JSBool JSPROXY_cpShapeUpdate(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpShape* arg0; cpVect arg1; cpVect arg2; 
 
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBB ret_val;
 
 	ret_val = cpShapeUpdate((cpShape*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
@@ -3178,7 +3184,7 @@ JSBool JSPROXY_cpSlideJointGetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSlideJointGetAnchr1((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -3196,7 +3202,7 @@ JSBool JSPROXY_cpSlideJointGetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSlideJointGetAnchr2((cpConstraint*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -3241,8 +3247,8 @@ JSBool JSPROXY_cpSlideJointNew(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
-	arg2 = jsval_to_cpVect( cx, *argvp++ );
-	arg3 = jsval_to_cpVect( cx, *argvp++ );
+	arg2 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg3 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg4 );
 	JS_ValueToNumber( cx, *argvp++, &arg5 );
 	cpConstraint* ret_val;
@@ -3263,7 +3269,7 @@ JSBool JSPROXY_cpSlideJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpSlideJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3278,7 +3284,7 @@ JSBool JSPROXY_cpSlideJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpConstraint* arg0; cpVect arg1; 
 
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpSlideJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -3598,7 +3604,7 @@ JSBool JSPROXY_cpSpaceGetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpSpaceGetGravity((cpSpace*)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -3719,12 +3725,12 @@ JSBool JSPROXY_cpSpaceNew(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_cpSpacePointQueryFirst(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	cpSpace* arg0; cpVect arg1; uint32_t arg2; long arg3; 
+	cpSpace* arg0; cpVect arg1; uint32_t arg2; cpGroup arg3; 
 
 	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	arg3 = jsval_to_long( cx, *argvp++ );
+	arg3 = (cpGroup) jsval_to_int( cx, *argvp++ );
 	cpShape* ret_val;
 
 	ret_val = cpSpacePointQueryFirst((cpSpace*)arg0 , (cpVect)arg1 , (cpLayers)arg2 , (cpGroup)arg3  );
@@ -3790,22 +3796,6 @@ JSBool JSPROXY_cpSpaceRemoveBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: cpSpace*, cpCollisionType, cpCollisionType
-// Ret value: void
-JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	cpSpace* arg0; long arg1; long arg2; 
-
-	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_long( cx, *argvp++ );
-	arg2 = jsval_to_long( cx, *argvp++ );
-
-	cpSpaceRemoveCollisionHandler((cpSpace*)arg0 , (cpCollisionType)arg1 , (cpCollisionType)arg2  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -3938,7 +3928,7 @@ JSBool JSPROXY_cpSpaceSetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 	cpSpace* arg0; cpVect arg1; 
 
 	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 
 	cpSpaceSetGravity((cpSpace*)arg0 , (cpVect)arg1  );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -4147,7 +4137,7 @@ JSBool JSPROXY_cpv(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpv((cpFloat)arg0 , (cpFloat)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4160,13 +4150,13 @@ JSBool JSPROXY_cpvadd(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvadd((cpVect)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4179,13 +4169,13 @@ JSBool JSPROXY_cpvclamp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; double arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	cpVect ret_val;
 
 	ret_val = cpvclamp((cpVect)arg0 , (cpFloat)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4198,8 +4188,8 @@ JSBool JSPROXY_cpvcross(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvcross((cpVect)arg0 , (cpVect)arg1  );
@@ -4214,8 +4204,8 @@ JSBool JSPROXY_cpvdist(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvdist((cpVect)arg0 , (cpVect)arg1  );
@@ -4230,8 +4220,8 @@ JSBool JSPROXY_cpvdistsq(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvdistsq((cpVect)arg0 , (cpVect)arg1  );
@@ -4246,8 +4236,8 @@ JSBool JSPROXY_cpvdot(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvdot((cpVect)arg0 , (cpVect)arg1  );
@@ -4262,8 +4252,8 @@ JSBool JSPROXY_cpveql(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpBool ret_val;
 
 	ret_val = cpveql((cpVect)arg0 , (cpVect)arg1  );
@@ -4283,7 +4273,7 @@ JSBool JSPROXY_cpvforangle(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = cpvforangle((cpFloat)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4296,7 +4286,7 @@ JSBool JSPROXY_cpvlength(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvlength((cpVect)arg0  );
@@ -4311,7 +4301,7 @@ JSBool JSPROXY_cpvlengthsq(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvlengthsq((cpVect)arg0  );
@@ -4326,14 +4316,14 @@ JSBool JSPROXY_cpvlerp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpVect ret_val;
 
 	ret_val = cpvlerp((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4346,14 +4336,14 @@ JSBool JSPROXY_cpvlerpconst(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpVect ret_val;
 
 	ret_val = cpvlerpconst((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4366,13 +4356,13 @@ JSBool JSPROXY_cpvmult(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; double arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 	cpVect ret_val;
 
 	ret_val = cpvmult((cpVect)arg0 , (cpFloat)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4385,8 +4375,8 @@ JSBool JSPROXY_cpvnear(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpBool ret_val;
 
@@ -4402,12 +4392,12 @@ JSBool JSPROXY_cpvneg(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvneg((cpVect)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4420,12 +4410,12 @@ JSBool JSPROXY_cpvnormalize(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvnormalize((cpVect)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4438,12 +4428,12 @@ JSBool JSPROXY_cpvnormalize_safe(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvnormalize_safe((cpVect)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4456,12 +4446,12 @@ JSBool JSPROXY_cpvperp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvperp((cpVect)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4474,13 +4464,13 @@ JSBool JSPROXY_cpvproject(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvproject((cpVect)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4493,13 +4483,13 @@ JSBool JSPROXY_cpvrotate(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvrotate((cpVect)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4512,12 +4502,12 @@ JSBool JSPROXY_cpvrperp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvrperp((cpVect)arg0  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4530,14 +4520,14 @@ JSBool JSPROXY_cpvslerp(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpVect ret_val;
 
 	ret_val = cpvslerp((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4550,14 +4540,14 @@ JSBool JSPROXY_cpvslerpconst(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; double arg2; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	JS_ValueToNumber( cx, *argvp++, &arg2 );
 	cpVect ret_val;
 
 	ret_val = cpvslerpconst((cpVect)arg0 , (cpVect)arg1 , (cpFloat)arg2  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4570,13 +4560,13 @@ JSBool JSPROXY_cpvsub(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvsub((cpVect)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;
@@ -4589,7 +4579,7 @@ JSBool JSPROXY_cpvtoangle(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpFloat ret_val;
 
 	ret_val = cpvtoangle((cpVect)arg0  );
@@ -4604,13 +4594,13 @@ JSBool JSPROXY_cpvunrotate(JSContext *cx, uint32_t argc, jsval *vp) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	cpVect arg0; cpVect arg1; 
 
-	arg0 = jsval_to_cpVect( cx, *argvp++ );
-	arg1 = jsval_to_cpVect( cx, *argvp++ );
+	arg0 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
+	arg1 = (cpVect) jsval_to_cpVect( cx, *argvp++ );
 	cpVect ret_val;
 
 	ret_val = cpvunrotate((cpVect)arg0 , (cpVect)arg1  );
 
-	jsval ret_jsval = cpVect_to_jsval( cx, ret_val );
+	jsval ret_jsval = cpVect_to_jsval( cx, (cpVect)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
 
 	return JS_TRUE;

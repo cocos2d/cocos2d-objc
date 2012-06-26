@@ -447,6 +447,19 @@ class SpiderMonkey(object):
         # returns type of structure and len
         return (bs_to_type_array[k], len(value) )
 
+    def get_name_for_manual_struct( self, struct_name ):
+        value = self.get_struct_property( 'manual', struct_name )
+        if not value:
+            return struct_name
+        return value
+
+    def get_struct_property( self, property, struct_name ):
+        try:
+            return self.struct_properties[ struct_name ][ property ]
+        except KeyError, e:
+            return None
+
+
     def is_valid_structure( self, struct ):
         # Only support non-nested structures of only one type
         # valids:
@@ -722,10 +735,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #  eg: CGRect, CGSize, CGPoint, cpVect
     #
     def generate_retval_struct_manual( self, declared_type, js_type ):
+        new_name = self.get_name_for_manual_struct( declared_type )
         template = '''
-	jsval ret_jsval = %s_to_jsval( cx, ret_val );
+	jsval ret_jsval = %s_to_jsval( cx, (%s)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
-''' % declared_type
+''' % (new_name, declared_type )
         return template
 
     #
@@ -957,7 +971,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
     # Manual conversion for struct
     def generate_argument_struct_manual( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_%s( cx, *argvp++ );\n' % (i, arg_declared_type)
+        new_name = self.get_name_for_manual_struct( arg_declared_type )
+        template = '\targ%d = (%s) jsval_to_%s( cx, *argvp++ );\n' % (i, arg_declared_type, new_name)
         self.mm_file.write( template )
 
     def generate_argument_struct_automatic( self, i, arg_js_type, arg_declared_type ):
@@ -1038,14 +1053,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         for i,arg in enumerate(args_js_type):
             if args_declared_type[i] in self.struct_opaque:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
-            elif arg in js_types_conversions:
-                declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
-            elif arg in js_special_type_conversions:
-                declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
             elif args_declared_type[i] in self.struct_manual:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
             elif self.is_valid_structure( arg ):
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
+            elif arg in js_types_conversions:
+                declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
+            elif arg in js_special_type_conversions:
+                declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
             declared_vars += ' '
         self.mm_file.write( '%s\n\n' % declared_vars )
 
@@ -1069,15 +1084,15 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
                 if args_declared_type[i] in self.struct_opaque:
                     self.generate_argument_opaque( i, arg, args_declared_type[i] )
+                elif args_declared_type[i] in self.struct_manual:
+                    self.generate_argument_struct_manual( i, arg, args_declared_type[i] )
+                elif self.is_valid_structure( arg ):
+                    self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 elif arg in js_types_conversions:
                     t = js_types_conversions[arg]
                     self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
                 elif arg in js_special_type_conversions:
                     js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
-                elif args_declared_type[i] in self.struct_manual:
-                    self.generate_argument_struct_manual( i, arg, args_declared_type[i] )
-                elif self.is_valid_structure( arg ):
-                    self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 else:
                     raise ParseException('Unsupported argument type: %s' % arg )
 
