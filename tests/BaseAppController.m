@@ -122,9 +122,13 @@
 
 #elif defined(__CC_PLATFORM_MAC)
 
+#import "ScriptingCore.h"
+
 @implementation BaseAppController
 
-@synthesize window=window_, glView=glView_, director = director_;
+@synthesize window=window_;
+@synthesize glView=glView_;
+@synthesize director = director_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -135,7 +139,7 @@
 	[director_ setView:glView_];
 
 	// Center window
-	[self.window center];																		\
+	[self.window center];
 	
 //	[director setProjection:kCCDirectorProjection2D];
 
@@ -145,6 +149,18 @@
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
 	[director_ setResizeMode:kCCDirectorResize_NoScale]; // kCCDirectorResize_AutoScale
+    
+    [window_ makeMainWindow];
+
+    [self initThoMoServer];
+}
+
+- (void)dealloc
+{
+    [thoMoServer stop];
+    [thoMoServer release];
+
+    [super dealloc];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
@@ -158,8 +174,79 @@
 	[director setFullScreen: ! [director isFullScreen] ];
 }
 
+#pragma mark -
+#pragma mark NSTextDelegate
+
+- (void)textDidChange:(NSNotification *)aNotification
+{
+    [window_ setDocumentEdited:YES];
+}
+
+- (void)textDidBeginEditing:(NSNotification *)aNotification
+{
+
+}
+
+-(void)textViewDidChangeSelection:(NSNotification *)aNotification
+{
+
+}
+
+- (void)textDidEndEditing:(NSNotification *)aNotification
+{
+
+}
+
+- (BOOL)textShouldBeginEditing:(NSText *)aTextObject
+{
+    return YES;
+}
+
+- (BOOL)textShouldEndEditing:(NSText *)aTextObject
+{
+    return YES;
+}
+
+
+- (void)initThoMoServer {
+    thoMoServer = [[ThoMoServerStub alloc] initWithProtocolIdentifier:@"JSConsole"];
+    [thoMoServer setDelegate:self];
+    [thoMoServer start];
+}
+
+- (void) server:(ThoMoServerStub *)theServer acceptedConnectionFromClient:(NSString *)aClientIdString {
+    NSLog(@"New Client: %@", aClientIdString);
+}
+
+- (void) server:(ThoMoServerStub *)theServer didReceiveData:(id)theData fromClient:(NSString *)aClientIdString {
+    NSString *script = (NSString *)theData;
+
+    jsval out;
+    BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
+
+    NSString * string;
+    if(success)
+    {
+        if(JSVAL_IS_BOOLEAN(out))
+        {
+            string = [NSString stringWithFormat:@"Result(bool): %@.\n", (JSVAL_TO_BOOLEAN(out)) ? @"true" : @"false"];
+        }
+        else if(JSVAL_IS_INT(out))
+        {
+            string = [NSString stringWithFormat:@"Result(int): %i.\n", JSVAL_TO_INT(out)];
+        }
+        else if(JSVAL_IS_DOUBLE(out))
+        {
+            string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
+        }
+    }
+    else
+    {
+        string = [NSString stringWithFormat:@"Error evaluating script:\n#############################\n%@\n#############################\n", script];
+    }
+
+    [thoMoServer sendToAllClients:string];
+}
 @end
 
 #endif // __CC_PLATFORM_MAC
-
-

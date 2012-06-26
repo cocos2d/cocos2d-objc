@@ -46,6 +46,11 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		4AC8BDFE1593E59600C2172B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC8BDFD1593E59600C2172B /* libicucore.dylib */; };
+		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
+		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
+		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
+		4AD3B6FF15991C48002E68D1 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -5832,6 +5837,22 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		4A09F86A159905D4001D3C0C /* JavascriptSpidermonkey copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "JavascriptSpidermonkey copy-Info.plist"; path = "/Users/ngramlich/Workspace/cocos2d-iphone/JavascriptSpidermonkey copy-Info.plist"; sourceTree = "<absolute>"; };
+		4AC8BDFD1593E59600C2172B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
+		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
+		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
+		4AD3B6F015991A64002E68D1 /* ThoMoClientStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub.h; sourceTree = "<group>"; };
+		4AD3B6F115991A64002E68D1 /* ThoMoNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworking.h; sourceTree = "<group>"; };
+		4AD3B6F215991A64002E68D1 /* ThoMoNetworkStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworkStub.h; sourceTree = "<group>"; };
+		4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoNetworkStub.m; sourceTree = "<group>"; };
+		4AD3B6F515991A64002E68D1 /* ThoMoServerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerDelegateProtocol.h; sourceTree = "<group>"; };
+		4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoServerStub.m; sourceTree = "<group>"; };
+		4AD3B6F715991A64002E68D1 /* ThoMoServerStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub_private.h; sourceTree = "<group>"; };
+		4AD3B6F815991A64002E68D1 /* ThoMoServerStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub.h; sourceTree = "<group>"; };
+		4AD3B6F915991A64002E68D1 /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
+		4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
+		4AD3B6FB15991A64002E68D1 /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
 		A009440015181C8D0029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009440315181D150029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009440415181D150029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -6881,6 +6902,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AC8BDFE1593E59600C2172B /* libicucore.dylib in Frameworks */,
 				A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */,
 				A09C8D341566FB4100ADFDA9 /* Cocoa.framework in Frameworks */,
 				A09C8D351566FB4100ADFDA9 /* OpenGL.framework in Frameworks */,
@@ -7209,6 +7231,7 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				4AC8BDFD1593E59600C2172B /* libicucore.dylib */,
 				A0E55417141EAEEE003F1E5A /* README.md */,
 				E076E61C1225EC1E00DE0DA2 /* AUTHORS */,
 				E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */,
@@ -7227,6 +7250,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				4A09F86A159905D4001D3C0C /* JavascriptSpidermonkey copy-Info.plist */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";
@@ -7265,6 +7289,44 @@
 				A03416FB1548806D00AE4D93 /* libffi.dylib */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4AD3B6EB15991A64002E68D1 /* ThoMoNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B6EC15991A64002E68D1 /* ThoMoClient */,
+				4AD3B6F015991A64002E68D1 /* ThoMoClientStub.h */,
+				4AD3B6F115991A64002E68D1 /* ThoMoNetworking.h */,
+				4AD3B6F215991A64002E68D1 /* ThoMoNetworkStub.h */,
+				4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */,
+				4AD3B6F415991A64002E68D1 /* ThoMoServer */,
+				4AD3B6F815991A64002E68D1 /* ThoMoServerStub.h */,
+				4AD3B6F915991A64002E68D1 /* ThoMoTCPConnection.h */,
+				4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */,
+				4AD3B6FB15991A64002E68D1 /* ThoMoTCPConnectionDelegateProtocol.h */,
+			);
+			name = ThoMoNetworking;
+			path = external/ThoMoNetworking;
+			sourceTree = "<group>";
+		};
+		4AD3B6EC15991A64002E68D1 /* ThoMoClient */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */,
+				4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */,
+				4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */,
+			);
+			path = ThoMoClient;
+			sourceTree = "<group>";
+		};
+		4AD3B6F415991A64002E68D1 /* ThoMoServer */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B6F515991A64002E68D1 /* ThoMoServerDelegateProtocol.h */,
+				4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */,
+				4AD3B6F715991A64002E68D1 /* ThoMoServerStub_private.h */,
+			);
+			path = ThoMoServer;
 			sourceTree = "<group>";
 		};
 		A03416E01548801100AE4D93 /* JSCocoa */ = {
@@ -8505,6 +8567,7 @@
 		E076EF801225FF3E00DE0DA2 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				4AD3B6EB15991A64002E68D1 /* ThoMoNetworking */,
 				A0CBEC1D156ABF3B009D35B4 /* JRSwizzle */,
 				A09C8D491566FC7300ADFDA9 /* spidermonkey */,
 				A03416E01548801100AE4D93 /* JSCocoa */,
@@ -14424,6 +14487,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */,
+				4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */,
+				4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */,
+				4AD3B6FF15991C48002E68D1 /* ThoMoTCPConnection.m in Sources */,
 				A09C8D281566FB4100ADFDA9 /* main.m in Sources */,
 				A09C8D291566FB4100ADFDA9 /* BaseAppController.m in Sources */,
 				A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */,
@@ -15585,7 +15652,12 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/ThoMoNetworking\"",
+				);
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -15595,6 +15667,8 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/mac/include,
+					external/Fragaria,
+					external/ThoMoNetworking,
 				);
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -15612,6 +15686,11 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/ThoMoNetworking\"",
+				);
+				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
@@ -15620,6 +15699,8 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/mac/include,
+					external/Fragaria,
+					external/ThoMoNetworking,
 				);
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
