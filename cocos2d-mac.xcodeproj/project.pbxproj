@@ -15669,6 +15669,8 @@
 					external/spidermonkey/mac/include,
 					external/Fragaria,
 					external/ThoMoNetworking,
+					CocosDenshion/CocosDenshion,
+					CocosDenshion/CocosDenshionExtras,
 				);
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
@@ -15701,6 +15703,8 @@
 					external/spidermonkey/mac/include,
 					external/Fragaria,
 					external/ThoMoNetworking,
+					CocosDenshion/CocosDenshion,
+					CocosDenshion/CocosDenshionExtras,
 				);
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";

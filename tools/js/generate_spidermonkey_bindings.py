@@ -74,13 +74,14 @@ class SpiderMonkey(object):
         supported_options = {'obj_class_prefix_to_remove': '',
                              'classes_to_parse' : [],
                              'classes_to_ignore' : [],
-                             'bridge_support_file' : '',
-                             'hierarchy_protocol_file' : '',
+                             'class_properties' : [],
+                             'bridge_support_file' : [],
+                             'hierarchy_protocol_file' : [],
                              'inherit_class_methods' : True,
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
                              'method_properties' : [],
-                             'opaque_structures' : [],
+                             'struct_properties' : [],
                              'function_prefix_to_remove' : '',
                              }
 
@@ -109,6 +110,7 @@ class SpiderMonkey(object):
                     v = v.replace('\t','')
                     v = v.replace('\n','')
                     v = v.replace(' ','')
+                    v = v.strip()
                     v = v.split(',')
                 else:
                     raise Exception('Unsupported type' % str(t) )
@@ -119,12 +121,10 @@ class SpiderMonkey(object):
 
     def __init__(self, config ):
 
-        self.hierarchy_file = config['hierarchy_protocol_file']
-        self.hierarchy = {}
+        self.hierarchy_files = config['hierarchy_protocol_file']
         self.init_hierarchy_file()
 
-        self.bridgesupport_file = config['bridge_support_file']
-        self.bs = {}
+        self.bridgesupport_files = config['bridge_support_file']
         self.init_bridgesupport_file()
 
         self.namespace = config['namespace']
@@ -136,7 +136,7 @@ class SpiderMonkey(object):
         self.inherit_class_methods = config['inherit_class_methods']
 
         # Add here manually generated classes
-        self.supported_classes = set(['NSObject'])
+        self.init_class_properties( config['class_properties'] )
         self.init_classes_to_bind( config['classes_to_parse'] )
         self.init_classes_to_ignore( config['classes_to_ignore'] )
 
@@ -158,23 +158,41 @@ class SpiderMonkey(object):
         self.function_prefix = config['function_prefix_to_remove']
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
-        self.init_opaque_structures( config['opaque_structures'] )
         self.current_function = None
         self.callback_functions = []
 
+        #
+        # struct related
+        #
+        self.init_struct_properties( config['struct_properties'] )
+
 
     def init_hierarchy_file( self ):
-        if self.hierarchy_file:
-            f = open( get_path_for( self.hierarchy_file ) )
-            self.hierarchy = ast.literal_eval( f.read() )
-            f.close()
-        else:
-            self.hierarchy = {}
+        self.hierarchy = {}
+        for f in self.hierarchy_files:
+            # empty string ??
+            if f:
+                fd = open( get_path_for( f ) )
+                self.hierarchy.update( ast.literal_eval( fd.read() ) )
+                fd.close()
 
     def init_bridgesupport_file( self ):
-        p = ET.parse( get_path_for( self.bridgesupport_file ) )
-        root = p.getroot()
-        self.bs = xml2d( root )
+        self.bs = {}
+        self.bs['signatures'] = {}
+
+        for f in self.bridgesupport_files:
+            p = ET.parse( get_path_for( f ) )
+            root = p.getroot()
+            xml = xml2d( root )
+            for key in xml['signatures']:
+                # More than 1 file can be loaded
+                # So, older keys should not be overwritten
+                if not key in self.bs['signatures']:
+                    self.bs['signatures'][key] = xml['signatures'][key]
+                else:
+                    l = self.bs['signatures'][key]
+                    if type(l) == type([]):
+                        self.bs['signatures'][key].extend( xml['signatures'][key] )
 
     def init_callback_methods( self ):
         self.callback_methods = {}
@@ -208,13 +226,44 @@ class SpiderMonkey(object):
                     o_val = o_val.replace('"', '')    # remove possible "
                 else:
                     o_key = o
-                    o_val = None
+                    o_val = True
                 opts[ o_key ] = o_val
             if not klass in self.method_properties:
                 self.method_properties[klass] = {}
             if not method in self.method_properties[klass]:
                 self.method_properties[klass][method] = {}
             self.method_properties[klass][method] = opts
+
+    def init_struct_properties( self, properties ):
+        self.struct_properties = {}
+        self.struct_opaque = []
+        self.struct_manual = []
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                # populate lists. easier to code
+                if o_key == 'opaque':
+                    # '*' is needed for opaque structs
+                    self.struct_opaque.append( key + '*' )
+                elif o_key == 'manual':
+                    self.struct_manual.append( key )
+            self.struct_properties[key] = opts
 
     def init_functions_to_bind( self, functions ):
         self._functions_to_bind = set( functions )
@@ -232,7 +281,6 @@ class SpiderMonkey(object):
         self._functions_to_ignore = klasses
         self.functions_to_ignore = self.expand_regexp_names( self._functions_to_ignore, self.functions_to_bind )
 
-        print self.functions_to_ignore
         copy_set = copy.copy( self.functions_to_bind )
         for i in self.functions_to_bind:
             if i in self.functions_to_ignore:
@@ -241,9 +289,36 @@ class SpiderMonkey(object):
 
         self.functions_to_bind = copy_set
 
-    def init_opaque_structures( self, structs ):
-        # convert structures into structure pointers
-        self.opaque_structures = [item + '*' for item in structs]
+    def init_class_properties( self, properties ):
+        self.supported_classes = set()
+        self.class_manual = []
+        self.class_properties = {}
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                # populate lists. easier to code
+                if o_key == 'manual':
+                    # '*' is needed for opaque structs
+                    self.supported_classes.add( key )
+                    self.class_manual.append( key )
+
+            self.class_properties[key] = opts
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
@@ -312,6 +387,16 @@ class SpiderMonkey(object):
     #
     # Helpers
     #
+    def get_callback_args_for_method( self, method ):
+        full_args = []
+        args = []
+        if 'arg' in method:
+            for arg in method['arg']:
+                full_args.append( '(' + arg['declared_type'] + ')' )
+                full_args.append( arg['name'] )
+                args.append( arg['name'] )
+        return [''.join(full_args), ''.join(args) ]
+
     def get_parent_class( self, class_name ):
         try:
             parent = self.hierarchy[class_name]['subclass']
@@ -414,8 +499,36 @@ class SpiderMonkey(object):
                 return True
         return False
 
+    def get_method_property( self, property, method_name, class_name ):
+        try:
+            return self.method_properties[ class_name ][ method_name ][ property ]
+        except KeyError, e:
+            return None
+
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
+
+    def get_method( self,class_name, method_name ):
+        for klass in self.bs['signatures']['class']:
+            if klass['name'] == class_name:
+                for m in klass['method']:
+                    if m['selector'] == method_name:
+                        return m
+
+        # Not found... search in protocols
+        list_of_protocols = self.bs['signatures']['informal_protocol']
+        if 'protocols' in self.hierarchy[ class_name ]:
+            protocols = self.hierarchy[ class_name ]['protocols']
+            for protocol in protocols:
+                for ip in list_of_protocols:
+                    # protocol match ?
+                    if ip['name'] == protocol:
+                        # traverse method then
+                        for m in ip['method']:
+                            if m['selector'] == method_name:
+                                return m
+
+        raise Exception("Method not found for %s # %s" % (class_name, method_name) )
 
     def get_method_type( self, method ):
         if self.is_class_constructor( method ):
@@ -463,6 +576,18 @@ class SpiderMonkey(object):
             name = name[0].lower() + name[1:]
         return name
 
+    def convert_class_name_to_js( self, class_name ):
+
+        # rename rule ?
+        if class_name in self.class_properties and 'name' in self.class_properties[class_name]:
+            return self.class_properties[class_name]['name']
+
+        # Prefix rule ?
+        if class_name.startswith( self.class_prefix ):
+            class_name = class_name[len( self.class_prefix) : ]
+
+        return class_name
+
     def generate_autogenerate_prefix( self, fd ):
         autogenerated_template = '''/*
 * AUTOGENERATED FILE. DO NOT EDIT IT
@@ -493,14 +618,12 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
-    %s
-
     return JS_TRUE;
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( constructor_globals % ( proxy_class_name, proxy_class_name ) )
-        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name, '/* no callbacks */' ) )
+        self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name ) )
 
     def generate_destructor( self, class_name ):
         # 1: JSPROXY_CCNode,
@@ -512,43 +635,43 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
 //	%%s *proxy = (%%s*)JS_GetPrivate(obj);
-	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
+//	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
+	printf("JS finalize Obj(%%p) \\n", obj);
 
-	if (proxy) {
-		del_proxy_for_jsobject( obj );
-		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_ASSIGN);
-		%s
-		[proxy release];
-	}
+//	if (proxy) {
+//		del_proxy_for_jsobject( obj );
+//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
+//		[proxy release];
+//	}
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name,
-                                                    proxy_class_name, proxy_class_name,
-                                                    '/* no callbacks */' ) )
+                                                    proxy_class_name, proxy_class_name ) )
 
     #
     # Method generator functions
     #
-    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_declared_type, args_declared_type, class_name, method_type ):
+    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_js_type, args_declared_type, class_name, method_type ):
 
         args = selector_name.split(':')
 
         if method_type == METHOD_INIT:
             prefix = '\t%s *real = [(%s*)[proxy.klass alloc] ' % (class_name, class_name )
-            suffix = '\n\t[proxy setRealObj: real];\n\t[real release];\n'
-            suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);'
+            suffix = '\n\t[proxy setRealObj: real];\n\t[real autorelease];\n'
+            suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);'
+            suffix += '\n\t[proxy release];'
         elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
             suffix = ''
-            if ret_declared_type:
+            if ret_js_type:
                 prefix = prefix + 'ret_val = '
             prefix = prefix + '[real '
         elif method_type == METHOD_CONSTRUCTOR:
             prefix = '\tret_val = [%s ' % (class_name )
             suffix = ''
         elif method_type == METHOD_CLASS:
-            if not ret_declared_type or ret_declared_type == 'void':
+            if not ret_js_type:
                 prefix = '\t[%s ' % (class_name)
             else:
                 prefix = '\tret_val = [%s ' % (class_name )
@@ -595,31 +718,20 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template
 
     #
-    # special case: returning CGPoint
+    # special case: manual bindings for these structs
+    #  eg: CGRect, CGSize, CGPoint, cpVect
     #
-    def generate_retval_cgpoint( self, declared_type, js_type ):
+    def generate_retval_struct_manual( self, declared_type, js_type ):
         template = '''
-	jsval ret_jsval = CGPoint_to_jsval( cx, ret_val );
+	jsval ret_jsval = %s_to_jsval( cx, ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
+''' % declared_type
         return template
 
-    # special case: returning CGSize
-    def generate_retval_cgsize( self, declared_type, js_type ):
-        template = '''
-	jsval ret_jsval = CGSize_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
-        return template
-
-    def generate_retval_cgrect( self, declared_type, js_type ):
-        template = '''
-	jsval ret_jsval = CGRect_to_jsval( cx, ret_val );
-	JS_SET_RVAL(cx, vp, ret_jsval);
-'''
-        return template
-
-    def generate_retval_structure( self, declared_type, js_type ):
+    #
+    # Non manual bound structures
+    #
+    def generate_retval_struct_automatic( self, declared_type, js_type ):
         template = '''
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::%s, %d );
 	%s* buffer = (%s*)JS_GetTypedArrayData(typedArray);
@@ -630,6 +742,9 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return template % (t, l,
                            declared_type, declared_type )
 
+    #
+    # Structures that should be treated as "opaque"
+    #
     def generate_retval_opaque( self, declared_type, js_type ):
         template = '''
 	jsval ret_jsval = opaque_to_jsval( cx, ret_val );
@@ -646,6 +761,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
             None : 'JSVAL_TRUE',
+            'void' : 'JSVAL_TRUE',
         }
         special_convert = {
             'o' : self.generate_retval_object,
@@ -653,19 +769,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             '[]': self.generate_retval_array,
         }
 
-        special_declared_types = {
-            'CGPoint' : self.generate_retval_cgpoint,
-            'CGSize' :  self.generate_retval_cgsize,
-            'CGRect' :  self.generate_retval_cgrect,
-        }
-
         ret = ''
-        if declared_type in self.opaque_structures:
+        if declared_type in self.struct_opaque:
             ret = self.generate_retval_opaque( declared_type, js_type )
-        elif declared_type in special_declared_types:
-            ret = special_declared_types[ declared_type ]( declared_type, js_type )
+        elif declared_type in self.struct_manual:
+            ret =  self.generate_retval_struct_manual( declared_type, js_type )
         elif self.is_valid_structure( js_type ):
-            ret = self.generate_retval_structure( declared_type, js_type )
+            ret = self.generate_retval_struct_automatic( declared_type, js_type )
         elif js_type in special_convert:
             ret = special_convert[js_type]( declared_type, js_type )
         elif js_type in direct_convert:
@@ -680,9 +790,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : 'N/A',
-            'CGSize'    : 'N/A',
-            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
@@ -731,7 +838,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif t in supported_types:
                 if supported_types[t] == None:  # void type
                     ret_js_type = None
-                    ret_declared_type = None
+                    ret_declared_type = 'void'
                 else:
                     ret_js_type = supported_types[t]
                     ret_declared_type = retval[0]['declared_type']
@@ -740,12 +847,22 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif t == '@' and dt_class_name in self.supported_classes:
                 ret_js_type = 'o'
                 ret_declared_type = dt
+
+            # valid automatic struct ?
             elif self.is_valid_structure( t ):
                 ret_js_type = t
                 ret_declared_type =  dt
-            elif dt in self.opaque_structures:
+
+            # valid opaque struct ?
+            elif dt in self.struct_opaque:
                 ret_js_type = 'N/A'
                 ret_declared_type = dt
+
+            # valid manual struct ?
+            elif dt in self.struct_manual:
+                ret_js_type = 'N/A'
+                ret_declared_type = dt
+
             else:
                 raise ParseException('Unsupported return value %s' % dt)
 
@@ -755,9 +872,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'CGPoint'   : 'N/A',
-            'CGSize'    : 'N/A',
-            'CGRect'    : 'N/A',
             'NSString*' : 'S',
             'NSArray*'  : '[]',
             'CCArray*'  : '[]',
@@ -793,9 +907,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 if dt in supported_declared_types:
                     args_js_type.append( supported_declared_types[dt] )
                     args_declared_type.append( dt )
-                elif self.is_valid_structure( t ):
-                    args_js_type.append( t )
-                    args_declared_type.append( dt )
                 elif t in supported_types:
                     args_js_type.append( supported_types[t] )
                     args_declared_type.append( dt )
@@ -803,9 +914,22 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 elif t == '@' and dt_class_name in self.supported_classes:
                     args_js_type.append( 'o' )
                     args_declared_type.append( dt )
-                elif dt in self.opaque_structures:
-                    args_js_type.append( 'N/A')
+
+                # valid 'opaque' struct ?
+                elif dt in self.struct_opaque:
+                    args_js_type.append('N/A')
                     args_declared_type.append( dt )
+
+                # valid manual struct ?
+                elif dt in self.struct_manual:
+                    args_js_type.append('N/A')
+                    args_declared_type.append( dt )
+
+                # valid automatic struct ?
+                elif self.is_valid_structure( t ):
+                    args_js_type.append( t )
+                    args_declared_type.append( dt )
+
                 else:
                     raise ParseException("Unsupported argument: %s" % dt)
 
@@ -825,22 +949,12 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         object_template = '\targ%d = (%s) jsval_to_nsobject( cx, *argvp++);\n'
         self.mm_file.write( object_template % (i, arg_declared_type ) )
 
-    # CGPoint needs an special case since its internal structure changes
-    # on the platform. On Mac it uses doubles and on iOS it uses floats
-    # This function expect floats.
-    def generate_argument_cgpoint( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGPoint( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
+    # Manual conversion for struct
+    def generate_argument_struct_manual( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = jsval_to_%s( cx, *argvp++ );\n' % (i, arg_declared_type)
+        self.mm_file.write( template )
 
-    def generate_argument_cgsize( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGSize( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
-
-    def generate_argument_cgrect( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_CGRect( cx, *argvp++ );\n'
-        self.mm_file.write( template % i )
-
-    def generate_argument_struct( self, i, arg_js_type, arg_declared_type ):
+    def generate_argument_struct_automatic( self, i, arg_js_type, arg_declared_type ):
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
         template = '''
 	JSObject *tmp_arg%d;
@@ -900,25 +1014,19 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'f' : [self.generate_argument_function, 'js_block'],
         }
 
-        js_declared_types_conversions = {
-            'CGPoint' : self.generate_argument_cgpoint,
-            'CGSize'  : self.generate_argument_cgsize,
-            'CGRect'  : self.generate_argument_cgrect,
-        }
-
         # First  time
         self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
 
         # Declare variables
         declared_vars = '\t'
         for i,arg in enumerate(args_js_type):
-            if args_declared_type[i] in self.opaque_structures:
+            if args_declared_type[i] in self.struct_opaque:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
             elif arg in js_types_conversions:
                 declared_vars += '%s arg%d;' % (js_types_conversions[arg][0], i)
             elif arg in js_special_type_conversions:
                 declared_vars += '%s arg%d;' % ( js_special_type_conversions[arg][1], i )
-            elif args_declared_type[i] in js_declared_types_conversions:
+            elif args_declared_type[i] in self.struct_manual:
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
             elif self.is_valid_structure( arg ):
                 declared_vars += '%s arg%d;' % ( args_declared_type[i], i )
@@ -943,18 +1051,17 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 if optional_args_since and i >= optional_args_since-1:
                     self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
 
-                if args_declared_type[i] in self.opaque_structures:
+                if args_declared_type[i] in self.struct_opaque:
                     self.generate_argument_opaque( i, arg, args_declared_type[i] )
                 elif arg in js_types_conversions:
                     t = js_types_conversions[arg]
                     self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
                 elif arg in js_special_type_conversions:
                     js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
-                elif args_declared_type[i] in js_declared_types_conversions:
-                    f = js_declared_types_conversions[ args_declared_type[i] ]
-                    f( i, arg, args_declared_type[i] )
+                elif args_declared_type[i] in self.struct_manual:
+                    self.generate_argument_struct_manual( i, arg, args_declared_type[i] )
                 elif self.is_valid_structure( arg ):
-                    self.generate_argument_struct( i, arg, args_declared_type[i] )
+                    self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 else:
                     raise ParseException('Unsupported type: %s' % arg )
 
@@ -995,7 +1102,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             properties = self.method_properties[class_name][selector]
             if 'optional_args_since' in properties:
                 optional_args_since = int( properties['optional_args_since'] )
-                required_args = num_of_args - (optional_args_since-1)
+                required_args = optional_args_since-1
                 method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
             elif 'variadic_2_array' in properties:
                 method_assert_on_arguments = '\tNSCAssert( argc > 0, @"Invalid number of arguments" );\n'
@@ -1041,7 +1148,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_of_args = len( args_declared_type )
 
         # writes method description
-        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s' % ( ', '.join(args_declared_type), ret_declared_type ) )
+        self.mm_file.write( '\n// Arguments: %s\n// Ret value: %s (%s)' % ( ', '.join(args_declared_type), ret_declared_type, ret_js_type ) )
 
         self.generate_method_prefix( class_name, method, num_of_args, method_type )
 
@@ -1060,15 +1167,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if total_args > 0:
             self.generate_arguments( args_declared_type, args_js_type, properties )
 
-        if ret_declared_type:
-            self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
+        if ret_js_type:
+            self.mm_file.write( '\t%s ret_val;\n' % (ret_declared_type ) )
 
         if optional_args_since:
             for i in xrange(total_args):
-                call_real = self.generate_method_call_to_real_object( s, i+1, ret_declared_type, args_declared_type, class_name, method_type )
-                self.mm_file.write( '\n\tif( argc == %d )\n\t%s\n' % (i+1, call_real) )
+                call_real = self.generate_method_call_to_real_object( s, i+1, ret_js_type, args_declared_type, class_name, method_type )
+                self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i+1, call_real) )
         else:
-            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_declared_type, args_declared_type, class_name, method_type )
+            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )
@@ -1212,12 +1319,44 @@ extern JSClass *%s_class;
         # callback code should be added here
         self.h_file.write( header_template_end )
 
+    def generate_callback_args( self, method ):
+        no_args ='jsval *argv = NULL; unsigned argc=0;\n'
+        with_args = '''unsigned argc=%d;
+			jsval argv_ok = %s
+			jsval *argv = &argv_ok;
+'''
+
+        convert = {
+            'i' : 'INT_TO_JSVAL(%s);',
+            'b' : 'BOOLEAN_TO_JSVAL(%s);',
+            'f' : 'DOUBLE_TO_JSVAL(%s);',
+            'd' : 'DOUBLE_TO_JSVAL(%s);',
+            'c' : 'INT_TO_JSVAL(%s);',
+        }
+
+        # XXX Only support 0 or 1 argument, and only a limited amount of parameters
+        if 'arg' in method:
+            for arg in method['arg']:
+                t = arg['type'].lower()
+                dt = arg['declared_type']
+                if t in convert:
+                    tmp = convert[t] % arg['name']
+                    return with_args % (1, tmp  )
+
+                if dt[-1] == '*':
+                    dt = dt[:-1]
+                if t == '@' and (dt in self.supported_classes or dt in self.class_manual):
+                    return with_args % (1, 'OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, %s ) );' % arg['name'] )
+
+        return no_args
+
+
     def generate_implementation_callback( self, class_name ):
-        # onEnter
-        # onEnter
-        # onEnter
+        # BOOL ccMouseUp NSEvent*
+        # ccMouseUp
+        # ccMouseUp
         template = '''
--(void) %s
+-(%s) %s%s
 {
 	if (_jsObj) {
 		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
@@ -1225,17 +1364,27 @@ extern JSClass *%s_class;
 		JS_HasProperty(cx, _jsObj, "%s", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
+			%s
 			JS_GetProperty(cx, _jsObj, "%s", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, 0, 0, &rval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
 }
 '''
         if class_name in self.callback_methods:
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template % ( m,
-                                                 m,
-                                                 m ) )
+
+                method = self.get_method( class_name, m )
+                full_args, args = self.get_callback_args_for_method( method )
+                js_retval, dt_retval = self.validate_retval( method, class_name )
+
+                converted_args = self.generate_callback_args( method )
+
+                js_name = self.convert_selector_name_to_js( class_name, m )
+                self.mm_file.write( template % ( dt_retval, m, full_args,
+                                                 js_name,
+                                                 converted_args,
+                                                 js_name ) )
 
     def generate_implementation_swizzle( self, class_name ):
         # CCNode
@@ -1251,7 +1400,7 @@ extern JSClass *%s_class;
 '''
         # CCNode, onEnter, onEnter
         template_middle = '''
-		if( ! [%s jr_swizzleMethod:@selector(%s) withMethod:@selector(%s_JSHook) error:&error] )
+		if( ! [%s jr_swizzleMethod:@selector(%s) withMethod:@selector(JSHook_%s) error:&error] )
 			NSLog(@"Error swizzling %%@", error);
 '''
         # CCNode
@@ -1264,7 +1413,9 @@ extern JSClass *%s_class;
         if class_name in self.callback_methods:
             self.mm_file.write(  template_prefix % ( class_name, class_name ) )
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template_middle % ( class_name, m, m ) )
+
+                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                    self.mm_file.write( template_middle % ( class_name, m, m ) )
 
             self.mm_file.write(  template_suffix % ( class_name ) )
 
@@ -1279,8 +1430,10 @@ extern JSClass *%s_class;
 //	JS_SetPrivate(jsobj, proxy);
 	set_proxy_for_jsobject(proxy, jsobj);
 
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+                [proxy release];
+	}
 
 	[self swizzleMethods];
 '''
@@ -1393,16 +1546,15 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # CCNode
         template_prefix = '@implementation %s (SpiderMonkey)\n'
 
-        # onEnter
+        # BOOL - ccMouseUp:(NSEvent*)
         # PROXYJS_CCNode
         template = '''
--(void) %s_JSHook
+-(%s) %s%s%s
 {
+%s
 	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
-		[proxy %s];
-
-	[self %s_JSHook];
+		[proxy %s%s];
 }
 '''
         template_suffix = '@end\n'
@@ -1413,10 +1565,22 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
             self.mm_file.write( template_prefix % class_name )
             for m in self.callback_methods[ class_name ]:
-                self.mm_file.write( template % ( m,
+
+                real_method = self.get_method( class_name,m )
+                fullargs, args = self.get_callback_args_for_method( real_method )
+                js_ret_val, dt_ret_val = self.validate_retval(  real_method, class_name )
+
+                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                    swizzle_prefix = 'JSHook_'
+                    call_native ='\t//1st call native, then JS. Order is important\n\t[self JSHook_%s%s];'% (m, args)
+                else:
+                    swizzle_prefix = ''
+                    call_native = ''
+                self.mm_file.write( template % ( dt_ret_val, swizzle_prefix, m, fullargs,
+                                                 call_native,
                                                  proxy_class_name,
-                                                 m,
-                                                 m) )
+                                                 m, args
+                                                 ) )
 
             self.mm_file.write( template_suffix )
 
@@ -1468,18 +1632,16 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
     def generate_class_registration( self, klass ):
         # only supported classes
-        if not klass or klass in self.classes_to_ignore:
+        if not klass or klass in self.classes_to_ignore or klass in self.class_manual:
             return
 
         if not klass in self.classes_registered:
             parent = self.hierarchy[klass]['subclass']
             self.generate_class_registration( parent )
 
-            klass_wo_prefix = klass
-            if klass.startswith( self.class_prefix ):
-                klass_wo_prefix = klass[len( self.class_prefix) : ]
+            class_name = self.convert_class_name_to_js( klass )
 
-            self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, klass_wo_prefix ) )
+            self.class_registration_file.write('%s%s_createClass(_cx, %s, "%s");\n' % ( PROXY_PREFIX, klass, self.namespace, class_name ) )
             self.classes_registered.append( klass )
 
     def generate_classes_registration( self ):
@@ -1524,9 +1686,9 @@ extern "C" {
         template_funcname = 'JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
         self.h_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
 
-    def generate_function_call_to_real_object( self, func_name, num_of_args, ret_declared_type, args_declared_type ):
+    def generate_function_call_to_real_object( self, func_name, num_of_args, ret_js_type, args_declared_type ):
 
-        if ret_declared_type:
+        if ret_js_type:
             prefix = '\tret_val = %s(' % func_name
         else:
             prefix = '\t%s(' % func_name
@@ -1581,10 +1743,10 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if len(args_js_type) > 0:
             self.generate_arguments( args_declared_type, args_js_type );
 
-        if ret_declared_type:
+        if ret_js_type:
             self.mm_file.write( '\t%s ret_val;\n' % ret_declared_type )
 
-        call_real = self.generate_function_call_to_real_object( func_name, num_of_args, ret_declared_type, args_declared_type )
+        call_real = self.generate_function_call_to_real_object( func_name, num_of_args, ret_js_type, args_declared_type )
         self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )

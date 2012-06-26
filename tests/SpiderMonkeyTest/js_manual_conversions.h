@@ -62,8 +62,11 @@ jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 jsval CGRect_to_jsval( JSContext *cx, CGRect r);
 jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
 jsval opaque_to_jsval( JSContext *cx, void* opaque);
-
+	
 	
 #ifdef __cplusplus
 }
 #endif
+
+#define cpVect_to_jsval CGPoint_to_jsval
+#define jsval_to_cpVect jsval_to_CGPoint

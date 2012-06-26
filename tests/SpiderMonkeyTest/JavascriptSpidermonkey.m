@@ -23,18 +23,12 @@
 -(void) onEnter
 {
 	[super onEnter];
-		
-	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
-	
-	[sprite setPosition:ccp( s.width/2, s.height/2) ];
-	
-	[self addChild:sprite];
-	
+			
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];	
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];	
+
 }
 @end
 
@@ -128,7 +122,7 @@
 //	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-@end
+@end	
 
 #pragma mark -
 #pragma mark AppController - Mac
@@ -169,15 +163,14 @@ static JSClass global_class = {
 //	}
 
 //
-	CCScene *scene = [CCScene node];
-	Test *test = [Test node];
-	
-	[scene addChild:test];	
-	[[CCDirector sharedDirector] runWithScene:scene];
+//	CCScene *scene = [CCScene node];
+//	Test *test = [Test node];
+//	
+//	[scene addChild:test];	
+//	[[CCDirector sharedDirector] runWithScene:scene];
 
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
 
 }
 

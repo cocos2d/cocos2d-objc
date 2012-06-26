@@ -32,7 +32,7 @@ var s = cc.Sprite.create("grossini.png");
 s.setColor( ccc3(255,0,0) );
 
 // Testing Position
-parent1.setPosition( ccp(100,200) );
+parent1.setPosition( cc.p(100,200) );
 p = parent1.position();
 cc.log('position is: ' + p[0] + ', ' + p[1] )
 
@@ -57,7 +57,7 @@ parent1.addChild( s );
 
 // Labels
 var l = cc.LabelBMFont.labelWithStringFntfile("Testing Javascript", "konqa32.fnt");
-l.setPosition( ccp(200,100 ) );
+l.setPosition( cc.p(200,100 ) );
 parent2.addChild( l )
 
 //cc.addToRunningScene( a );
@@ -84,8 +84,8 @@ __jsc__.garbageCollect();
 // Testing same object
 var sprite3 = cc.Sprite.create("grossinis_sister1.png");
 sprite3.I_was_here = 'Oh Yeah';
-parent2.addChildZTag( sprite3, 0, 100 );
-sprite3.setPosition( ccp( 300,200) );
+parent2.addChild( sprite3, 0, 100 );
+sprite3.setPosition( cc.p( 300,200) );
 
 var sameSprite = parent2.getChildByTag( 100 );
 cc.log( sameSprite.I_was_here );
@@ -109,7 +109,7 @@ item2.initWithStringBlock( "Click Me 2", item2.callback );
 
 var menu = cc.Menu.create( item1, item2 );
 menu.alignItemsHorizontally();
-menu.setPosition( ccp(200,200) );
+menu.setPosition( cc.p(200,200) );
 parent2.addChild( menu );
 
 
@@ -119,18 +119,18 @@ parent2.addChild( menu );
 //
 cc.log("hola");
 var subclass = function() {
-	cc.base(this);
+	goog.base(this);
 	this.initWithFile("grossini.png");
-	this.setPosition( ccp(100, 100) );
+	this.setPosition( cc.p(100, 100) );
 	this.setScale( 3 );
 }
-cc.inherits(subclass, cc.Sprite );
+goog.inherits(subclass, cc.Sprite );
 
 //for( var i in cc.Sprite ) { cc.log( "---->" + cc.Sprite[ i ] + "..." + i ); }
 //var sprite = new subclass();
 
 var sprite = new subclass();
-sprite.setPosition( ccp(300,300) );
+sprite.setPosition( cc.p(300,300) );
 sprite.setRotation( 90 );
 p = sprite.position();
 cc.log( p );
@@ -152,7 +152,7 @@ var subclass2 = cc.Sprite.extend({
 //cc.log( Object.keys( subclass2.prototype ).join(',') );
 //var sprite3 = subclass2.spriteWithFile("grossini.png");
 var sprite3 = new subclass2();
-sprite3.setPosition( ccp(300,100) );
+sprite3.setPosition( cc.p(300,100) );
 sprite3.setRotation( 180 );
 parent2.addChild( sprite3 );
 
