@@ -454,9 +454,9 @@ JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *obj)
 
 void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
 {
-//	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
+	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
 	
-	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
+//	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
 	
 	tHashJSObject *element = malloc( sizeof( *element ) );
 	element->proxy = [proxy retain];
@@ -471,7 +471,7 @@ void del_proxy_for_jsobject(JSObject *obj)
 	HASH_FIND_INT(hash, &obj, element);
 	if( element ) {
 		
-		printf("Deleting proxy for: %p - %p (%s)\n", obj, element->proxy, [[element->proxy description] UTF8String] );
+//		printf("Deleting proxy for: %p - %p (%s)\n", obj, element->proxy, [[element->proxy description] UTF8String] );
 		[element->proxy release];
 
 		HASH_DEL(hash, element);
