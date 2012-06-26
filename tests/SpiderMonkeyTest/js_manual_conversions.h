@@ -53,10 +53,14 @@ CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp );
 CGSize jsval_to_CGSize( JSContext *cx, jsval vp );
 CGRect jsval_to_CGRect( JSContext *cx, jsval vp );
 void * jsval_to_opaque( JSContext *cx, jsval vp );
+long jsval_to_long( JSContext *cx, jsval vp);
+long long jsval_to_longlong( JSContext *cx, jsval vp);	
 	
 /** converts a jsval to a block */
 js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis );
 
+jsval long_to_jsval( JSContext *cx, long l);
+jsval longlong_to_jsval( JSContext *cx, long long l);
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 jsval CGRect_to_jsval( JSContext *cx, CGRect r);
