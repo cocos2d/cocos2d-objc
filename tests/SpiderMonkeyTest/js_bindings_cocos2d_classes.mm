@@ -25932,7 +25932,7 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("labelWithStringFntfile", JSPROXY_CCLabelBMFont_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCLabelBMFont_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("purgeCachedData", JSPROXY_CCLabelBMFont_purgeCachedData_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -28062,7 +28062,7 @@ void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("labelWithStringCharmapfileItemwidthItemheightStartcharmap", JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringFntfile", JSPROXY_CCLabelAtlas_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCLabelAtlas_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("atlasWithTileFileTilewidthTileheightItemstorender", JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCLabelAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END

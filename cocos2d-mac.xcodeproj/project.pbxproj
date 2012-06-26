@@ -1088,6 +1088,7 @@
 		A07273DF155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */; };
 		A07273E0155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */; };
 		A07273E1155B23A8003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273DC155B23A8003E961F /* test_1021x1024.png */; };
+		A0763E1115996F3F008DA7D9 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A08ECD0A158AAB48000D8892 /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A08ECD09158AAB48000D8892 /* js_bindings_cocos2d_classes.mm */; };
 		A08ECD0D158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A08ECD0C158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm */; };
 		A0980EA514B92A7A004812AD /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
@@ -11475,6 +11476,7 @@
 				A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */,
 				A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */,
 				A0ADE7411593F64600D4FAC9 /* Cyber Advance!.mp3 in Resources */,
+				A0763E1115996F3F008DA7D9 /* tuffy_bold_italic-charmap.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
