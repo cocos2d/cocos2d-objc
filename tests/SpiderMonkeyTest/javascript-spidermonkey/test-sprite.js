@@ -90,6 +90,7 @@ SpriteTestDemo.prototype.onEnter = function() {
 	    l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
 	}
 
+	// WARNING: MenuItem API will change!
 	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
 	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("r1.png", "r2.png", this.restartCallback);
 	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
