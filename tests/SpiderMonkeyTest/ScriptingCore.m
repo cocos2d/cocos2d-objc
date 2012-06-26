@@ -28,7 +28,9 @@
 #import "js_bindings_cocos2d_classes.h"
 #import "js_bindings_cocos2d_functions.h"
 #import "js_bindings_chipmunk_functions.h"
+#import "js_bindings_chipmunk_manual.h"
 #import "js_bindings_CocosDenshion_classes.h"
+
 
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
@@ -254,13 +256,17 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		}
 		
 		
-		// register some global functions
+		//
+		// globals
+		//
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__getAssociatedNative", ScriptingCore_getAssociatedNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-		// create the "__jsc__" namescpae (Javascript controller)
+		// 
+		// Javascript controller (__jsc__)
+		//
 		JSObject *jsc = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval jscVal = OBJECT_TO_JSVAL(jsc);
 		JS_SetProperty(_cx, _object, "__jsc__", &jscVal);
@@ -271,7 +277,9 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, jsc, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-		// create the cocos2d namespace
+		//
+		// cocos2d
+		//
 		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
@@ -285,14 +293,22 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 #import "js_bindings_cocos2d_functions_registration.h"
 		
 
-		// create the chipmunk namespace
+		//
+		// Chipmunk
+		//
 		JSObject *chipmunk = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
 		JS_SetProperty(_cx, _object, "cp", &chipmunkVal);
 #import "js_bindings_chipmunk_functions_registration.h"
 
+		
+		// manual
+		JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSPROXY_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSPROXY_cpSpaceRemoveCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-		// create the CocosDenshion namespace
+		//
+		// CocosDenshion
+		//
 		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
 		JS_SetProperty(_cx, _object, "cd", &denshionVal);
