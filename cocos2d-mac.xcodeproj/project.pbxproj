@@ -51,6 +51,31 @@
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
 		4AD3B6FF15991C48002E68D1 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
+		4AD3B8A0159A5415002E68D1 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
+		4AD3B8A1159A5415002E68D1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
+		4AD3B8A2159A5415002E68D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		4AD3B8A3159A5415002E68D1 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
+		4AD3B921159A54CE002E68D1 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */; };
+		4AD3B922159A54CE002E68D1 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */; };
+		4AD3B923159A54CE002E68D1 /* CDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AD159A54CD002E68D1 /* CDConfig.h */; };
+		4AD3B924159A54CE002E68D1 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */; };
+		4AD3B925159A54CE002E68D1 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */; };
+		4AD3B926159A54CE002E68D1 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */; };
+		4AD3B927159A54CE002E68D1 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */; };
+		4AD3B928159A54CE002E68D1 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */; };
+		4AD3B929159A54CE002E68D1 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */; };
+		4AD3B92A159A54CE002E68D1 /* CDXMacOSXSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */; };
+		4AD3B92B159A54CE002E68D1 /* CDXMacOSXSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */; };
+		4AD3B92C159A54CE002E68D1 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */; };
+		4AD3B92D159A54CE002E68D1 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */; };
+		4AD3B95A159A54F4002E68D1 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */; };
+		4AD3B965159A5535002E68D1 /* ChipmunkSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B95C159A5534002E68D1 /* ChipmunkSprite.m */; };
+		4AD3B966159A5535002E68D1 /* js_bindings_chipmunk_manual.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */; };
+		4AD3B967159A5535002E68D1 /* js_bindings_CocosDenshion_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */; };
+		4AD3B968159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B964159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm */; };
+		4AD3B96A159A5554002E68D1 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3B969159A5554002E68D1 /* AudioToolbox.framework */; };
+		4AD3B96C159A555F002E68D1 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3B96B159A555F002E68D1 /* OpenAL.framework */; };
+		4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -1007,7 +1032,6 @@
 		A04B0F5914A29B77005EB429 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A04B0F6314A29BEB005EB429 /* SchedulerTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A04B0F6114A29BEB005EB429 /* SchedulerTest.m */; };
 		A04B0F6414A29CDE005EB429 /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B9300F1226C184003FF67E /* ActionsEaseTest.m */; };
-		A04FA985156309E700EC18D4 /* cocos2d-mac.bridgesupport in Resources */ = {isa = PBXBuildFile; fileRef = A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */; };
 		A04FA986156309E700EC18D4 /* cocos2d-mac.dylib in Resources */ = {isa = PBXBuildFile; fileRef = A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */; };
 		A04FA98715630BD800EC18D4 /* libffi.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A03416FB1548806D00AE4D93 /* libffi.dylib */; };
 		A05B63E8156F552500ADAB65 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63AB156F552500ADAB65 /* chipmunk.h */; };
@@ -5319,6 +5343,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4AD3B958159A54ED002E68D1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AD3B7DD159A5415002E68D1;
+			remoteInfo = CocosDenshion;
+		};
 		A009433115181C8D0029A5C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5837,7 +5868,6 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4A09F86A159905D4001D3C0C /* JavascriptSpidermonkey copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "JavascriptSpidermonkey copy-Info.plist"; path = "/Users/ngramlich/Workspace/cocos2d-iphone/JavascriptSpidermonkey copy-Info.plist"; sourceTree = "<absolute>"; };
 		4AC8BDFD1593E59600C2172B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
@@ -5853,6 +5883,33 @@
 		4AD3B6F915991A64002E68D1 /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
 		4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
 		4AD3B6FB15991A64002E68D1 /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
+		4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		4AD3B8AD159A54CD002E68D1 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
+		4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXMacOSXSupport.h; sourceTree = "<group>"; };
+		4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXMacOSXSupport.m; sourceTree = "<group>"; };
+		4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXPropertyModifierAction.h; sourceTree = "<group>"; };
+		4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXPropertyModifierAction.m; sourceTree = "<group>"; };
+		4AD3B8B9159A54CD002E68D1 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
+		4AD3B95B159A5534002E68D1 /* ChipmunkSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkSprite.h; sourceTree = "<group>"; };
+		4AD3B95C159A5534002E68D1 /* ChipmunkSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChipmunkSprite.m; sourceTree = "<group>"; };
+		4AD3B95D159A5534002E68D1 /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
+		4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = js_bindings_chipmunk_manual.m; sourceTree = "<group>"; };
+		4AD3B95F159A5534002E68D1 /* js_bindings_CocosDenshion_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes_registration.h; sourceTree = "<group>"; };
+		4AD3B960159A5534002E68D1 /* js_bindings_CocosDenshion_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes.h; sourceTree = "<group>"; };
+		4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_classes.mm; sourceTree = "<group>"; };
+		4AD3B962159A5534002E68D1 /* js_bindings_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
+		4AD3B963159A5534002E68D1 /* js_bindings_CocosDenshion_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions.h; sourceTree = "<group>"; };
+		4AD3B964159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_functions.mm; sourceTree = "<group>"; };
+		4AD3B969159A5554002E68D1 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		4AD3B96B159A555F002E68D1 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		A009440015181C8D0029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009440315181D150029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009440415181D150029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -6031,7 +6088,6 @@
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
 		A04B0F6214A29BEB005EB429 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
-		A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = "cocos2d-mac.bridgesupport"; path = "Resources-Mac/cocos2d-mac.bridgesupport"; sourceTree = "<group>"; };
 		A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "cocos2d-mac.dylib"; path = "Resources-Mac/cocos2d-mac.dylib"; sourceTree = "<group>"; };
 		A05B63AB156F552500ADAB65 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		A05B63AC156F552500ADAB65 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
@@ -6722,6 +6778,17 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4AD3B89F159A5415002E68D1 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AD3B8A0159A5415002E68D1 /* ApplicationServices.framework in Frameworks */,
+				4AD3B8A1159A5415002E68D1 /* QuartzCore.framework in Frameworks */,
+				4AD3B8A2159A5415002E68D1 /* OpenGL.framework in Frameworks */,
+				4AD3B8A3159A5415002E68D1 /* libkazmath.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A00943F515181C8D0029A5C6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -6902,6 +6969,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD3B96C159A555F002E68D1 /* OpenAL.framework in Frameworks */,
+				4AD3B96A159A5554002E68D1 /* AudioToolbox.framework in Frameworks */,
+				4AD3B95A159A54F4002E68D1 /* libCocosDenshion.a in Frameworks */,
 				4AC8BDFE1593E59600C2172B /* libicucore.dylib in Frameworks */,
 				A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */,
 				A09C8D341566FB4100ADFDA9 /* Cocoa.framework in Frameworks */,
@@ -7224,6 +7294,7 @@
 				A009440015181C8D0029A5C6 /* MultithreadTest.app */,
 				A03416D615487C3C00AE4D93 /* JavascriptJSCocoaTest.app */,
 				A09C8D3E1566FB4100ADFDA9 /* JavascriptSpidermonkey.app */,
+				4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7231,6 +7302,8 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				4AD3B96B159A555F002E68D1 /* OpenAL.framework */,
+				4AD3B969159A5554002E68D1 /* AudioToolbox.framework */,
 				4AC8BDFD1593E59600C2172B /* libicucore.dylib */,
 				A0E55417141EAEEE003F1E5A /* README.md */,
 				E076E61C1225EC1E00DE0DA2 /* AUTHORS */,
@@ -7245,12 +7318,12 @@
 				E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */,
 				A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */,
 				E076E6281225EC7400DE0DA2 /* cocos2d */,
+				4AD3B8A9159A54CD002E68D1 /* CocosDenshion */,
 				E076E4531225C53300DE0DA2 /* Tests */,
 				E076EF801225FF3E00DE0DA2 /* external */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				4A09F86A159905D4001D3C0C /* JavascriptSpidermonkey copy-Info.plist */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";
@@ -7258,7 +7331,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A04FA983156309E700EC18D4 /* cocos2d-mac.bridgesupport */,
 				A04FA984156309E700EC18D4 /* cocos2d-mac.dylib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
 				E02A8537129F11BF00341C97 /* icon.icns */,
@@ -7327,6 +7399,43 @@
 				4AD3B6F715991A64002E68D1 /* ThoMoServerStub_private.h */,
 			);
 			path = ThoMoServer;
+			sourceTree = "<group>";
+		};
+		4AD3B8A9159A54CD002E68D1 /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B8AA159A54CD002E68D1 /* CocosDenshion */,
+				4AD3B8B4159A54CD002E68D1 /* CocosDenshionExtras */,
+				4AD3B8B9159A54CD002E68D1 /* README.mdown */,
+			);
+			path = CocosDenshion;
+			sourceTree = "<group>";
+		};
+		4AD3B8AA159A54CD002E68D1 /* CocosDenshion */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */,
+				4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */,
+				4AD3B8AD159A54CD002E68D1 /* CDConfig.h */,
+				4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */,
+				4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */,
+				4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */,
+				4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */,
+				4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */,
+				4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */,
+			);
+			path = CocosDenshion;
+			sourceTree = "<group>";
+		};
+		4AD3B8B4159A54CD002E68D1 /* CocosDenshionExtras */ = {
+			isa = PBXGroup;
+			children = (
+				4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */,
+				4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */,
+				4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */,
+				4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */,
+			);
+			path = CocosDenshionExtras;
 			sourceTree = "<group>";
 		};
 		A03416E01548801100AE4D93 /* JSCocoa */ = {
@@ -7746,6 +7855,16 @@
 			isa = PBXGroup;
 			children = (
 				A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */,
+				4AD3B95B159A5534002E68D1 /* ChipmunkSprite.h */,
+				4AD3B95C159A5534002E68D1 /* ChipmunkSprite.m */,
+				4AD3B95D159A5534002E68D1 /* js_bindings_chipmunk_manual.h */,
+				4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */,
+				4AD3B95F159A5534002E68D1 /* js_bindings_CocosDenshion_classes_registration.h */,
+				4AD3B960159A5534002E68D1 /* js_bindings_CocosDenshion_classes.h */,
+				4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */,
+				4AD3B962159A5534002E68D1 /* js_bindings_CocosDenshion_functions_registration.h */,
+				4AD3B963159A5534002E68D1 /* js_bindings_CocosDenshion_functions.h */,
+				4AD3B964159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm */,
 				A08ECD07158AAB48000D8892 /* js_bindings_cocos2d_classes_registration.h */,
 				A08ECD08158AAB48000D8892 /* js_bindings_cocos2d_classes.h */,
 				A08ECD09158AAB48000D8892 /* js_bindings_cocos2d_classes.mm */,
@@ -8601,6 +8720,20 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		4AD3B7E0159A5415002E68D1 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AD3B921159A54CE002E68D1 /* CDAudioManager.h in Headers */,
+				4AD3B923159A54CE002E68D1 /* CDConfig.h in Headers */,
+				4AD3B924159A54CE002E68D1 /* CDOpenALSupport.h in Headers */,
+				4AD3B926159A54CE002E68D1 /* CocosDenshion.h in Headers */,
+				4AD3B928159A54CE002E68D1 /* SimpleAudioEngine.h in Headers */,
+				4AD3B92A159A54CE002E68D1 /* CDXMacOSXSupport.h in Headers */,
+				4AD3B92C159A54CE002E68D1 /* CDXPropertyModifierAction.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A06430E313C1414300CC5554 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -8832,6 +8965,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		4AD3B7DD159A5415002E68D1 /* CocosDenshion */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4AD3B8A4159A5415002E68D1 /* Build configuration list for PBXNativeTarget "CocosDenshion" */;
+			buildPhases = (
+				4AD3B7E0159A5415002E68D1 /* Headers */,
+				4AD3B84B159A5415002E68D1 /* Sources */,
+				4AD3B89F159A5415002E68D1 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocosDenshion;
+			productName = cocos2d;
+			productReference = 4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		A009432F15181C8D0029A5C6 /* MultithreadTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A00943FD15181C8D0029A5C6 /* Build configuration list for PBXNativeTarget "MultithreadTest" */;
@@ -9099,6 +9249,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				4AD3B959159A54ED002E68D1 /* PBXTargetDependency */,
 				A02F6E4415915862000975D7 /* PBXTargetDependency */,
 				A09C8CBB1566FB4100ADFDA9 /* PBXTargetDependency */,
 				A09C8CBD1566FB4100ADFDA9 /* PBXTargetDependency */,
@@ -9510,6 +9661,7 @@
 			targets = (
 				E076EB631225F7AB00DE0DA2 /* build all tests */,
 				E01E663C121CA00A001A484F /* cocos2d */,
+				4AD3B7DD159A5415002E68D1 /* CocosDenshion */,
 				A0FBA8AE14A5138F002DF395 /* box2d */,
 				A0FBA8A514A51386002DF395 /* chipmunk */,
 				E076EDB81225FEAA00DE0DA2 /* libpng */,
@@ -9848,7 +10000,6 @@
 				A03416C515487C3C00AE4D93 /* piece.png in Resources */,
 				A03416C615487C3C00AE4D93 /* icon.icns in Resources */,
 				A03416FE1548809000AE4D93 /* javascript-jscocoa in Resources */,
-				A04FA985156309E700EC18D4 /* cocos2d-mac.bridgesupport in Resources */,
 				A04FA986156309E700EC18D4 /* cocos2d-mac.dylib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -11382,6 +11533,7 @@
 				A0CBEC2E156C2812009D35B4 /* javascript-spidermonkey in Resources */,
 				A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */,
 				A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */,
+				4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14337,6 +14489,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4AD3B84B159A5415002E68D1 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4AD3B922159A54CE002E68D1 /* CDAudioManager.m in Sources */,
+				4AD3B925159A54CE002E68D1 /* CDOpenALSupport.m in Sources */,
+				4AD3B927159A54CE002E68D1 /* CocosDenshion.m in Sources */,
+				4AD3B929159A54CE002E68D1 /* SimpleAudioEngine.m in Sources */,
+				4AD3B92B159A54CE002E68D1 /* CDXMacOSXSupport.m in Sources */,
+				4AD3B92D159A54CE002E68D1 /* CDXPropertyModifierAction.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A00943F115181C8D0029A5C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -14502,6 +14667,10 @@
 				A08ECD0A158AAB48000D8892 /* js_bindings_cocos2d_classes.mm in Sources */,
 				A08ECD0D158AEEF9000D8892 /* js_bindings_cocos2d_functions.mm in Sources */,
 				A02F6E41159157AA000975D7 /* js_bindings_chipmunk_functions.mm in Sources */,
+				4AD3B965159A5535002E68D1 /* ChipmunkSprite.m in Sources */,
+				4AD3B966159A5535002E68D1 /* js_bindings_chipmunk_manual.m in Sources */,
+				4AD3B967159A5535002E68D1 /* js_bindings_CocosDenshion_classes.mm in Sources */,
+				4AD3B968159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14870,6 +15039,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4AD3B959159A54ED002E68D1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AD3B7DD159A5415002E68D1 /* CocosDenshion */;
+			targetProxy = 4AD3B958159A54ED002E68D1 /* PBXContainerItemProxy */;
+		};
 		A009433015181C8D0029A5C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E01E663C121CA00A001A484F /* cocos2d */;
@@ -15257,6 +15431,28 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4AD3B8A5159A5415002E68D1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = CocosDenshion;
+			};
+			name = Debug;
+		};
+		4AD3B8A6159A5415002E68D1 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				PRODUCT_NAME = CocosDenshion;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		A00943FE15181C8D0029A5C6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -16372,6 +16568,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4AD3B8A4159A5415002E68D1 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4AD3B8A5159A5415002E68D1 /* Debug */,
+				4AD3B8A6159A5415002E68D1 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A00943FD15181C8D0029A5C6 /* Build configuration list for PBXNativeTarget "MultithreadTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
