@@ -28,6 +28,9 @@
 #import "js_bindings_cocos2d_classes.h"
 #import "js_bindings_cocos2d_functions.h"
 #import "js_bindings_chipmunk_functions.h"
+#import "js_bindings_chipmunk_manual.h"
+#import "js_bindings_CocosDenshion_classes.h"
+
 
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
@@ -93,6 +96,26 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 //		JSPROXY_NSObject *proxy = JS_GetPrivate( nativeJSObj );
 		set_proxy_for_jsobject( proxy, pureJSObj );
 		[proxy setJsObj:pureJSObj];
+		
+		return JS_TRUE;
+	}
+	
+	return JS_FALSE;
+};
+
+JSBool ScriptingCore_getAssociatedNative(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc == 1) {
+		
+		jsval *argvp = JS_ARGV(cx,vp);
+		JSObject *pureJSObj;
+		JS_ValueToObject( cx, *argvp++, &pureJSObj );
+		
+		JSPROXY_NSObject *proxy = get_proxy_for_jsobject( pureJSObj );
+		id native = [proxy realObj];
+		
+		JSObject * obj = get_or_create_jsobject_from_realobj(cx, native);
+		JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj) );
 		
 		return JS_TRUE;
 	}
@@ -233,12 +256,17 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		}
 		
 		
-		// register some global functions
+		//
+		// globals
+		//
 		JS_DefineFunction(_cx, _object, "require", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__getAssociatedNative", ScriptingCore_getAssociatedNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 
-		// create the "__jsc__" namescpae (Javascript controller)
+		// 
+		// Javascript controller (__jsc__)
+		//
 		JSObject *jsc = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval jscVal = OBJECT_TO_JSVAL(jsc);
 		JS_SetProperty(_cx, _object, "__jsc__", &jscVal);
@@ -249,7 +277,9 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, jsc, "removeGCRootObject", ScriptingCore_removeRootJS, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, jsc, "executeScript", ScriptingCore_executeScript, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-		// create the cocos namespace
+		//
+		// cocos2d
+		//
 		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
@@ -258,18 +288,32 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
-				
 		// Register classes: base classes should be registered first
 #import "js_bindings_cocos2d_classes_registration.h"
 #import "js_bindings_cocos2d_functions_registration.h"
 		
-		
-		// create the cocos namespace
+
+		//
+		// Chipmunk
+		//
 		JSObject *chipmunk = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
 		JS_SetProperty(_cx, _object, "cp", &chipmunkVal);
-
 #import "js_bindings_chipmunk_functions_registration.h"
+
+		
+		// manual
+		JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSPROXY_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSPROXY_cpSpaceRemoveCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+
+		//
+		// CocosDenshion
+		//
+		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
+		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
+		JS_SetProperty(_cx, _object, "cd", &denshionVal);
+#import "js_bindings_CocosDenshion_classes_registration.h"
+
 
 	}
 	
@@ -325,7 +369,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	return ok;
 }
 
--(void) runScript:(NSString*)filename
+-(BOOL) runScript2:(NSString*)filename
 {
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
@@ -354,6 +398,44 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		}
 		free(content);
 	}
+	
+	return YES;
+}
+
+/*
+ * Compile a script and execute it repeatedly until an
+ * error occurs.  (If this ever returns, it returns false.
+ * If there's no error it just keeps going.)
+ */
+-(BOOL) runScript:(NSString*)filename
+{
+    JSScript *script;
+    JSObject *scriptObj;
+	
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
+
+	script = JS_CompileUTF8File(_cx, _object, [fullpath UTF8String] );
+
+    if (script == NULL)
+        return NO;   /* compilation error */
+	
+    scriptObj = JS_GetGlobalFromScript(script);
+    if (scriptObj == NULL) {
+        return NO;
+    }
+	
+    if (!JS_AddNamedObjectRoot(_cx, &scriptObj, "compileAndRepeat script object"))
+        return NO;
+	
+	jsval result;	
+	if (!JS_ExecuteScript(_cx, _object, script, &result)) {
+		NSLog(@"Failed to execute script");
+    }
+	
+//    JS_RemoveObjectRoot(_cx, &scriptObj);  /* scriptObj becomes unreachable
+//										   and will eventually be collected. */
+    return YES;
 }
 
 -(void) dealloc
@@ -390,6 +472,8 @@ void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
 {
 	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
 	
+//	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
+	
 	tHashJSObject *element = malloc( sizeof( *element ) );
 	element->proxy = [proxy retain];
 	element->jsObject = obj;
@@ -402,6 +486,8 @@ void del_proxy_for_jsobject(JSObject *obj)
 	tHashJSObject *element = NULL;
 	HASH_FIND_INT(hash, &obj, element);
 	if( element ) {
+		
+//		printf("Deleting proxy for: %p - %p (%s)\n", obj, element->proxy, [[element->proxy description] UTF8String] );
 		[element->proxy release];
 
 		HASH_DEL(hash, element);

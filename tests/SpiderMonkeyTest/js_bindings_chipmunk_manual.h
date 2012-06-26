@@ -22,36 +22,13 @@
  * THE SOFTWARE.
  */
 
-#import "ScriptingCore.h"
-#import "js_manual_conversions.h"
+#ifndef __js_bindings_chipmunk_manual
+#define __js_bindings_chipmunk_manual
 
-@interface JSPROXY_NSObject : NSObject
-{
-	JSObject	*_jsObj;
-	id			_realObj;  // weak ref
-	Class		_klass;
-}
+#include "chipmunk.h"
+#include "jsapi.h"
 
-@property (nonatomic, readwrite, assign) JSObject *jsObj;
-@property (nonatomic, readwrite, assign) id	realObj;
-@property (nonatomic, readonly) Class klass;
+JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 
--(id) initWithJSObject:(JSObject*)object class:(Class)klass;
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)JSContext;
-+(void) swizzleMethods;
-@end
-
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-	
-void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char * name );
-extern JSObject* JSPROXY_NSObject_object;
-extern JSClass* JSPROXY_NSObject_class;
-
-#ifdef __cplusplus
-}
-#endif
-
+#endif // __js_bindings_chipmunk_manual

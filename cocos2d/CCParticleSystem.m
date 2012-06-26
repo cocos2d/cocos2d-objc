@@ -306,14 +306,14 @@
 
 		autoRemoveOnFinish_ = NO;
 
-		// Optimization: compile udpateParticle method
+		// Optimization: compile updateParticle method
 		updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
 		updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
 
 		//for batchNode
 		transformSystemDirty_ = NO;
 
-		// udpate after action in run!
+		// update after action in run!
 		[self scheduleUpdateWithPriority:1];
 	}
 	return self;

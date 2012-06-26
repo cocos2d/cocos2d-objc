@@ -187,7 +187,7 @@ void * jsval_to_opaque( JSContext *cx, jsval vp )
 #ifdef __LP64__
 	JSObject *tmp_arg;
 	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(int), @"Invalid Typed Array lenght");
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	uint64 ret =  arg_array[0];

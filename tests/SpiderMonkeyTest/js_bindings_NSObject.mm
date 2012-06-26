@@ -74,8 +74,9 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	NSObject* real = [[NSObject alloc] init];
 	[proxy setRealObj:real];
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN); // TITO
-	[real release];
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	[real autorelease];
 	
 	NSCAssert( real, @"Invalid JS object");
 	
@@ -85,63 +86,6 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	return JS_TRUE;
 }
-
-//JSBool JSPROXY_NSObject_getProperty(JSContext *cx, JSObject *obj, jsid _id, jsval *val)
-//{
-//	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, val);
-////	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-//	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
-//	if( ! proxy ) {
-//		JS_SET_RVAL(cx, val, INT_TO_JSVAL(10));
-//		return JS_TRUE;
-//	}
-//	NSCAssert( proxy, @"Invalid Proxy object");
-//	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
-//	if (!jsthis)
-//		return JS_FALSE;
-//
-//	int32_t propId = JSID_TO_INT(_id);
-//	switch(propId) {
-//		case kJSPropertyNativeObject:
-//		{
-//			JSObject *j = get_or_create_jsobject_from_realobj( [proxy realObj], cx );
-//			JS_SET_RVAL(cx, val, OBJECT_TO_JSVAL(j));
-//			break;
-//		}
-//		default:
-//			break;
-//	}
-//	return JS_TRUE;
-//}
-//
-//JSBool JSPROXY_NSObject_setProperty(JSContext *cx, JSObject *obj, jsid _id, JSBool strict, jsval *val)
-//{
-//	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, val);
-////	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-//	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
-//	if (!proxy) {
-//		NSLog(@"no proxy");
-//	} else {
-//		NSLog(@"with proxy");
-//	}
-//
-//	int32_t propId = JSID_TO_INT(_id);
-//	switch(propId) {
-//		case kJSPropertyNativeObject:
-//		{
-//			JSObject *j = JSVAL_TO_OBJECT(*val);
-//			JSPROXY_NSObject *newProxy = get_proxy_for_jsobject( j );
-//			id newReal = [newProxy realObj];
-//			[proxy setRealObj:newReal];
-//			break;
-//		}
-//		default:
-//			break;
-//	}
-//	return JS_TRUE;
-//}
-
-
 
 void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
@@ -190,8 +134,10 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 
 	
 	[proxy setRealObj:realObj];
-	if( realObj )
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_ASSIGN);
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		[proxy release];
+	}
 	
 	[self swizzleMethods];
 
@@ -210,6 +156,8 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	{
 		_jsObj = object;
 		_klass = klass;
+		
+		JS_AddNamedObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj, [[self description] UTF8String] );
 	}
 	
 	return self;
@@ -220,7 +168,8 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	// If the compiler gives you an error, you can safely remove the following line
 	CCLOGINFO(@"spidermonkey: deallocing %@", self);
 	
-	[_realObj release];
+	JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
+
 	
 	[super dealloc];
 }
