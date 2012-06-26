@@ -48,10 +48,10 @@ var loadScene = function (sceneIdx)
 
 //------------------------------------------------------------------
 //
-// SpriteTestDemo
+// BaseLayer
 //
 //------------------------------------------------------------------
-var SpriteTestDemo = function() {
+var BaseLayer = function() {
 
 	//
 	// VERY IMPORTANT
@@ -72,13 +72,13 @@ var SpriteTestDemo = function() {
 	}
 
 }
-goog.inherits(SpriteTestDemo, cc.Layer );
+goog.inherits(BaseLayer, cc.Layer );
 
 //
 // Instance 'base' methods
 // XXX: Should be defined after "goog.inherits"
 //
-SpriteTestDemo.prototype.onEnter = function() {
+BaseLayer.prototype.onEnter = function() {
 	var label = cc.LabelTTF.labelWithStringFontnameFontsize(this.title(), "Arial", 28);
 	this.addChild(label, 1);
 	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
@@ -105,17 +105,17 @@ SpriteTestDemo.prototype.onEnter = function() {
 	this.addChild(menu, 1);
 }
 
-SpriteTestDemo.prototype.restartCallback = function (sender) {
+BaseLayer.prototype.restartCallback = function (sender) {
     cc.log("restart called");
     restartSpriteTestAction();
 }
 
-SpriteTestDemo.prototype.nextCallback = function (sender) {
+BaseLayer.prototype.nextCallback = function (sender) {
     cc.log("next called");
     nextSpriteTestAction();
 }
 
-SpriteTestDemo.prototype.backCallback = function (sender) {
+BaseLayer.prototype.backCallback = function (sender) {
     cc.log("back called");
     backSpriteTestAction();
 }
@@ -149,7 +149,7 @@ var SpriteTouchTest = function() {
 
 	this.initialize();
 }
-goog.inherits(SpriteTouchTest, SpriteTestDemo );
+goog.inherits(SpriteTouchTest, BaseLayer );
 
 SpriteTouchTest.prototype.onMouseDown = function( event ) {
 	pos = director.convertEventToGL( event );
@@ -320,7 +320,7 @@ var SpriteFrameTest = function() {
 
 	this.initialize();
 }
-goog.inherits( SpriteFrameTest, SpriteTestDemo );
+goog.inherits( SpriteFrameTest, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -369,7 +369,7 @@ var SpriteAnchorPoint = function() {
 
 	this.initialize();
 }
-goog.inherits( SpriteAnchorPoint, SpriteTestDemo );
+goog.inherits( SpriteAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -420,7 +420,7 @@ var SpriteBatchAnchorPoint = function() {
 
 	this.initialize();
 }
-goog.inherits( SpriteBatchAnchorPoint, SpriteTestDemo );
+goog.inherits( SpriteBatchAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -492,7 +492,7 @@ var SpriteOffsetAnchorFlip = function() {
 
 	this.initialize();
 }
-goog.inherits( SpriteOffsetAnchorFlip, SpriteTestDemo );
+goog.inherits( SpriteOffsetAnchorFlip, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -567,7 +567,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 
 	this.initialize();
 }
-goog.inherits( SpriteBatchOffsetAnchorFlip, SpriteTestDemo );
+goog.inherits( SpriteBatchOffsetAnchorFlip, BaseLayer );
 
 
 //------------------------------------------------------------------
@@ -644,7 +644,7 @@ var SpriteColorOpacity = function() {
 
 	this.initialize();
 }
-goog.inherits(SpriteColorOpacity, SpriteTestDemo );
+goog.inherits(SpriteColorOpacity, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -722,7 +722,7 @@ var SpriteBatchColorOpacity = function() {
 
 	this.initialize();
 }
-goog.inherits(SpriteBatchColorOpacity, SpriteTestDemo );
+goog.inherits(SpriteBatchColorOpacity, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -748,7 +748,7 @@ var ChipmunkSpriteTest = function() {
 
 	this.initPhysics();
 }
-goog.inherits( ChipmunkSpriteTest, SpriteTestDemo );
+goog.inherits( ChipmunkSpriteTest, BaseLayer );
 
 //
 // Instance 'base' methods
