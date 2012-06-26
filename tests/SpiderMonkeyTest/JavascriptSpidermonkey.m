@@ -171,8 +171,7 @@ static JSClass global_class = {
 
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite2.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 }
 
