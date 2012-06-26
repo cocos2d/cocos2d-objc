@@ -187,7 +187,7 @@ void * jsval_to_opaque( JSContext *cx, jsval vp )
 #ifdef __LP64__
 	JSObject *tmp_arg;
 	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"Invalid Typed Array lenght");
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), @"Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	uint64 ret =  arg_array[0];
@@ -201,6 +201,46 @@ void * jsval_to_opaque( JSContext *cx, jsval vp )
 	return (void*) ret;
 #endif
 }
+
+
+// XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
+long jsval_to_long( JSContext *cx, jsval vp )
+{
+#ifdef __LP64__
+	// compatibility check
+	NSCAssert( sizeof(long)==8, @"fatal!");
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"Invalid Typed Array lenght");
+	
+	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
+	long ret =  arg_array[0];
+	ret = ret << 32;
+	ret |= arg_array[1];
+	
+	return ret;
+#else
+	// compatibility check
+	NSCAssert( sizeof(int)==4, @"fatal!");
+	long ret = JSVAL_TO_INT(vp);
+	return ret;
+#endif
+}
+
+long long jsval_to_longlong( JSContext *cx, jsval vp )
+{
+	JSObject *tmp_arg;
+	JS_ValueToObject( cx, vp, &tmp_arg );
+	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), @"Invalid Typed Array lenght");
+	
+	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
+	long long ret =  arg_array[0];
+	ret = ret << 32;
+	ret |= arg_array[1];
+	
+	return ret;
+}
+
 
 #pragma mark - native to jsval
 
@@ -260,4 +300,30 @@ jsval opaque_to_jsval( JSContext *cx, void *opaque )
 	int32_t number = (int32_t) opaque;
 	return INT_TO_JSVAL(number);
 #endif
+}
+
+jsval long_to_jsval( JSContext *cx, long number )
+{
+#ifdef __LP64__
+	NSCAssert( sizeof(long)==8, @"Error!");
+
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
+	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = number >> 32;
+	buffer[1] = number & 0xffffffff;
+	return OBJECT_TO_JSVAL(typedArray);		
+#else
+	NSCAssert( sizeof(int)==4, @"Error!");
+	return INT_TO_JSVAL(number);
+#endif
+}
+
+jsval longlong_to_jsval( JSContext *cx, long long number )
+{
+	NSCAssert( sizeof(long long)==8, @"Error!");
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2);
+	int32_t *buffer = (int32_t*)JS_GetTypedArrayData(typedArray);
+	buffer[0] = number >> 32;
+	buffer[1] = number & 0xffffffff;
+	return OBJECT_TO_JSVAL(typedArray);		
 }
