@@ -135,7 +135,7 @@ JSBool JSPROXY_cpArbiterIgnore(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
 
 	cpArbiterIgnore((cpArbiter*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -165,7 +165,7 @@ JSBool JSPROXY_cpArbiterSetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpArbiterSetElasticity((cpArbiter*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -180,7 +180,7 @@ JSBool JSPROXY_cpArbiterSetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpArbiterSetFriction((cpArbiter*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -195,7 +195,7 @@ JSBool JSPROXY_cpArbiterSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpArbiterSetSurfaceVelocity((cpArbiter*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -575,7 +575,7 @@ JSBool JSPROXY_cpBodyActivate(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyActivate((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -590,7 +590,7 @@ JSBool JSPROXY_cpBodyActivateStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyActivateStatic((cpBody*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -620,7 +620,7 @@ JSBool JSPROXY_cpBodyApplyForce(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg2 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodyApplyForce((cpBody*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -636,7 +636,7 @@ JSBool JSPROXY_cpBodyApplyImpulse(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg2 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodyApplyImpulse((cpBody*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -650,7 +650,7 @@ JSBool JSPROXY_cpBodyDestroy(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyDestroy((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -664,7 +664,7 @@ JSBool JSPROXY_cpBodyFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyFree((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1061,7 +1061,7 @@ JSBool JSPROXY_cpBodyResetForces(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodyResetForces((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1075,7 +1075,7 @@ JSBool JSPROXY_cpBodySanityCheck(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodySanityCheck((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1090,7 +1090,7 @@ JSBool JSPROXY_cpBodySetAngVel(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetAngVel((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1105,7 +1105,7 @@ JSBool JSPROXY_cpBodySetAngVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetAngVelLimit((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1120,7 +1120,7 @@ JSBool JSPROXY_cpBodySetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetAngle((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1135,7 +1135,7 @@ JSBool JSPROXY_cpBodySetForce(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetForce((cpBody*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1150,7 +1150,7 @@ JSBool JSPROXY_cpBodySetMass(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetMass((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1165,7 +1165,7 @@ JSBool JSPROXY_cpBodySetMoment(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetMoment((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1180,7 +1180,7 @@ JSBool JSPROXY_cpBodySetPos(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetPos((cpBody*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1195,7 +1195,7 @@ JSBool JSPROXY_cpBodySetTorque(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetTorque((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1210,7 +1210,7 @@ JSBool JSPROXY_cpBodySetVel(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpBodySetVel((cpBody*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1225,7 +1225,7 @@ JSBool JSPROXY_cpBodySetVelLimit(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodySetVelLimit((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1239,7 +1239,7 @@ JSBool JSPROXY_cpBodySleep(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodySleep((cpBody*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1254,7 +1254,7 @@ JSBool JSPROXY_cpBodySleepWithGroup(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpBodySleepWithGroup((cpBody*)arg0 , (cpBody*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1269,7 +1269,7 @@ JSBool JSPROXY_cpBodyUpdatePosition(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpBodyUpdatePosition((cpBody*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1286,7 +1286,7 @@ JSBool JSPROXY_cpBodyUpdateVelocity(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg3 );
 
 	cpBodyUpdateVelocity((cpBody*)arg0 , (cpVect)arg1 , (cpFloat)arg2 , (cpFloat)arg3  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1414,7 +1414,7 @@ JSBool JSPROXY_cpConstraintActivateBodies(JSContext *cx, uint32_t argc, jsval *v
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
 
 	cpConstraintActivateBodies((cpConstraint*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1428,7 +1428,7 @@ JSBool JSPROXY_cpConstraintDestroy(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
 
 	cpConstraintDestroy((cpConstraint*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1442,7 +1442,7 @@ JSBool JSPROXY_cpConstraintFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
 
 	cpConstraintFree((cpConstraint*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1571,7 +1571,7 @@ JSBool JSPROXY_cpConstraintSetErrorBias(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpConstraintSetErrorBias((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1586,7 +1586,7 @@ JSBool JSPROXY_cpConstraintSetMaxBias(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpConstraintSetMaxBias((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1601,7 +1601,7 @@ JSBool JSPROXY_cpConstraintSetMaxForce(JSContext *cx, uint32_t argc, jsval *vp) 
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpConstraintSetMaxForce((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1683,7 +1683,7 @@ JSBool JSPROXY_cpDampedRotarySpringSetDamping(JSContext *cx, uint32_t argc, jsva
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedRotarySpringSetDamping((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1698,7 +1698,7 @@ JSBool JSPROXY_cpDampedRotarySpringSetRestAngle(JSContext *cx, uint32_t argc, js
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedRotarySpringSetRestAngle((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1713,7 +1713,7 @@ JSBool JSPROXY_cpDampedRotarySpringSetStiffness(JSContext *cx, uint32_t argc, js
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedRotarySpringSetStiffness((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1833,7 +1833,7 @@ JSBool JSPROXY_cpDampedSpringSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) 
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpDampedSpringSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1848,7 +1848,7 @@ JSBool JSPROXY_cpDampedSpringSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) 
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpDampedSpringSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1863,7 +1863,7 @@ JSBool JSPROXY_cpDampedSpringSetDamping(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedSpringSetDamping((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1878,7 +1878,7 @@ JSBool JSPROXY_cpDampedSpringSetRestLength(JSContext *cx, uint32_t argc, jsval *
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedSpringSetRestLength((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1893,7 +1893,7 @@ JSBool JSPROXY_cpDampedSpringSetStiffness(JSContext *cx, uint32_t argc, jsval *v
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpDampedSpringSetStiffness((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1959,7 +1959,7 @@ JSBool JSPROXY_cpGearJointSetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpGearJointSetPhase((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -1974,7 +1974,7 @@ JSBool JSPROXY_cpGearJointSetRatio(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpGearJointSetRatio((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2065,7 +2065,7 @@ JSBool JSPROXY_cpGrooveJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2080,7 +2080,7 @@ JSBool JSPROXY_cpGrooveJointSetGrooveA(JSContext *cx, uint32_t argc, jsval *vp) 
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetGrooveA((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2095,7 +2095,7 @@ JSBool JSPROXY_cpGrooveJointSetGrooveB(JSContext *cx, uint32_t argc, jsval *vp) 
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpGrooveJointSetGrooveB((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2105,7 +2105,7 @@ JSBool JSPROXY_cpInitChipmunk(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	cpInitChipmunk( );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2263,7 +2263,7 @@ JSBool JSPROXY_cpPinJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpPinJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2278,7 +2278,7 @@ JSBool JSPROXY_cpPinJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpPinJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2293,7 +2293,7 @@ JSBool JSPROXY_cpPinJointSetDist(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpPinJointSetDist((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2385,7 +2385,7 @@ JSBool JSPROXY_cpPivotJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpPivotJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2400,7 +2400,7 @@ JSBool JSPROXY_cpPivotJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpPivotJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2515,7 +2515,7 @@ JSBool JSPROXY_cpRatchetJointSetAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpRatchetJointSetAngle((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2530,7 +2530,7 @@ JSBool JSPROXY_cpRatchetJointSetPhase(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpRatchetJointSetPhase((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2545,7 +2545,7 @@ JSBool JSPROXY_cpRatchetJointSetRatchet(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpRatchetJointSetRatchet((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2555,7 +2555,7 @@ JSBool JSPROXY_cpResetShapeIdCounter(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( argc == 0, @"Invalid number of arguments" );
 
 	cpResetShapeIdCounter( );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2621,7 +2621,7 @@ JSBool JSPROXY_cpRotaryLimitJointSetMax(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpRotaryLimitJointSetMax((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2636,7 +2636,7 @@ JSBool JSPROXY_cpRotaryLimitJointSetMin(JSContext *cx, uint32_t argc, jsval *vp)
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpRotaryLimitJointSetMin((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2742,7 +2742,7 @@ JSBool JSPROXY_cpSegmentShapeSetNeighbors(JSContext *cx, uint32_t argc, jsval *v
 	arg2 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpSegmentShapeSetNeighbors((cpShape*)arg0 , (cpVect)arg1 , (cpVect)arg2  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2776,7 +2776,7 @@ JSBool JSPROXY_cpShapeDestroy(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpShapeDestroy((cpShape*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2790,7 +2790,7 @@ JSBool JSPROXY_cpShapeFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpShapeFree((cpShape*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2955,7 +2955,7 @@ JSBool JSPROXY_cpShapeSetBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpShapeSetBody((cpShape*)arg0 , (cpBody*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2970,7 +2970,7 @@ JSBool JSPROXY_cpShapeSetElasticity(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpShapeSetElasticity((cpShape*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -2985,7 +2985,7 @@ JSBool JSPROXY_cpShapeSetFriction(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpShapeSetFriction((cpShape*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3000,7 +3000,7 @@ JSBool JSPROXY_cpShapeSetLayers(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	cpShapeSetLayers((cpShape*)arg0 , (cpLayers)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3015,7 +3015,7 @@ JSBool JSPROXY_cpShapeSetSensor(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	cpShapeSetSensor((cpShape*)arg0 , (cpBool)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3030,7 +3030,7 @@ JSBool JSPROXY_cpShapeSetSurfaceVelocity(JSContext *cx, uint32_t argc, jsval *vp
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpShapeSetSurfaceVelocity((cpShape*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3102,7 +3102,7 @@ JSBool JSPROXY_cpSimpleMotorSetRate(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSimpleMotorSetRate((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3206,7 +3206,7 @@ JSBool JSPROXY_cpSlideJointSetAnchr1(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpSlideJointSetAnchr1((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3221,7 +3221,7 @@ JSBool JSPROXY_cpSlideJointSetAnchr2(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpSlideJointSetAnchr2((cpConstraint*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3236,7 +3236,7 @@ JSBool JSPROXY_cpSlideJointSetMax(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSlideJointSetMax((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3251,7 +3251,7 @@ JSBool JSPROXY_cpSlideJointSetMin(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSlideJointSetMin((cpConstraint*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3266,7 +3266,7 @@ JSBool JSPROXY_cpSpaceActivateShapesTouchingShape(JSContext *cx, uint32_t argc, 
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceActivateShapesTouchingShape((cpSpace*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3418,7 +3418,7 @@ JSBool JSPROXY_cpSpaceDestroy(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceDestroy((cpSpace*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3432,7 +3432,7 @@ JSBool JSPROXY_cpSpaceFree(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceFree((cpSpace*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3665,7 +3665,7 @@ JSBool JSPROXY_cpSpaceReindexShape(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceReindexShape((cpSpace*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3680,7 +3680,7 @@ JSBool JSPROXY_cpSpaceReindexShapesForBody(JSContext *cx, uint32_t argc, jsval *
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceReindexShapesForBody((cpSpace*)arg0 , (cpBody*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3694,7 +3694,7 @@ JSBool JSPROXY_cpSpaceReindexStatic(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg0 = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceReindexStatic((cpSpace*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3709,7 +3709,7 @@ JSBool JSPROXY_cpSpaceRemoveBody(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpBody*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveBody((cpSpace*)arg0 , (cpBody*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3724,7 +3724,7 @@ JSBool JSPROXY_cpSpaceRemoveConstraint(JSContext *cx, uint32_t argc, jsval *vp) 
 	arg1 = (cpConstraint*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveConstraint((cpSpace*)arg0 , (cpConstraint*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3739,7 +3739,7 @@ JSBool JSPROXY_cpSpaceRemoveShape(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveShape((cpSpace*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3754,7 +3754,7 @@ JSBool JSPROXY_cpSpaceRemoveStaticShape(JSContext *cx, uint32_t argc, jsval *vp)
 	arg1 = (cpShape*) jsval_to_opaque( cx, *argvp++ );
 
 	cpSpaceRemoveStaticShape((cpSpace*)arg0 , (cpShape*)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3769,7 +3769,7 @@ JSBool JSPROXY_cpSpaceSetCollisionBias(JSContext *cx, uint32_t argc, jsval *vp) 
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceSetCollisionBias((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3784,7 +3784,7 @@ JSBool JSPROXY_cpSpaceSetCollisionPersistence(JSContext *cx, uint32_t argc, jsva
 	JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 
 	cpSpaceSetCollisionPersistence((cpSpace*)arg0 , (cpTimestamp)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3799,7 +3799,7 @@ JSBool JSPROXY_cpSpaceSetCollisionSlop(JSContext *cx, uint32_t argc, jsval *vp) 
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceSetCollisionSlop((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3814,7 +3814,7 @@ JSBool JSPROXY_cpSpaceSetDamping(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceSetDamping((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3829,7 +3829,7 @@ JSBool JSPROXY_cpSpaceSetEnableContactGraph(JSContext *cx, uint32_t argc, jsval 
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	cpSpaceSetEnableContactGraph((cpSpace*)arg0 , (cpBool)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3844,7 +3844,7 @@ JSBool JSPROXY_cpSpaceSetGravity(JSContext *cx, uint32_t argc, jsval *vp) {
 	arg1 = jsval_to_cpVect( cx, *argvp++ );
 
 	cpSpaceSetGravity((cpSpace*)arg0 , (cpVect)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3859,7 +3859,7 @@ JSBool JSPROXY_cpSpaceSetIdleSpeedThreshold(JSContext *cx, uint32_t argc, jsval 
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceSetIdleSpeedThreshold((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3874,7 +3874,7 @@ JSBool JSPROXY_cpSpaceSetIterations(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 
 	cpSpaceSetIterations((cpSpace*)arg0 , (int)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3889,7 +3889,7 @@ JSBool JSPROXY_cpSpaceSetSleepTimeThreshold(JSContext *cx, uint32_t argc, jsval 
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceSetSleepTimeThreshold((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3904,7 +3904,7 @@ JSBool JSPROXY_cpSpaceStep(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	cpSpaceStep((cpSpace*)arg0 , (cpFloat)arg1  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -3920,7 +3920,7 @@ JSBool JSPROXY_cpSpaceUseSpatialHash(JSContext *cx, uint32_t argc, jsval *vp) {
 	JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 
 	cpSpaceUseSpatialHash((cpSpace*)arg0 , (cpFloat)arg1 , (int)arg2  );
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 

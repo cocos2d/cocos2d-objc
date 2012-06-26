@@ -760,8 +760,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             's' : 'STRING_TO_JSVAL(ret_val)',
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
-            None : 'JSVAL_TRUE',
-            'void' : 'JSVAL_TRUE',
+            'L' : 'long_to_jsval(cx, ret_val)',                # long: not supoprted on JS 64-bit
+            'Q' : 'longlong_to_jsval(cx, ret_val)',            # long long: not supported on JS
+            None : 'JSVAL_VOID',
+            'void' : 'JSVAL_VOID',
         }
         special_convert = {
             'o' : self.generate_retval_object,
@@ -794,6 +796,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
             'CCArray*'  : '[]',
+            'L' : 'long',
         }
 
         supported_types = {
@@ -878,6 +881,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSMutableArray*' : '[]',
             'void (^)(id)' : 'f',
             'void (^)(CCNode *)' : 'f',
+            'L' : 'long',
         }
 
         supported_types = {
@@ -980,6 +984,14 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '\targ%d = (%s) jsval_to_opaque( cx, *argvp++ );\n'
         self.mm_file.write( template % (i, arg_declared_type) )
 
+    def generate_argument_long( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = jsval_to_long( cx, *argvp++ );\n'
+        self.mm_file.write( template % (i) )
+
+    def generate_argument_longlong( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = jsval_to_longlong( cx, *argvp++ );\n'
+        self.mm_file.write( template % (i) )
+
     def generate_arguments( self, args_declared_type, args_js_type, properties = {} ):
         # b      JSBool          Boolean
         # c      uint16_t/jschar ECMA uint16_t, Unicode char
@@ -1012,6 +1024,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'o' : [self.generate_argument_object, 'id'],
             '[]': [self.generate_argument_array, 'NSArray*'],
             'f' : [self.generate_argument_function, 'js_block'],
+            'L' : [self.generate_argument_long, 'long'],
+            'Q' : [self.generate_argument_longlong, 'long long'],
         }
 
         # First  time
@@ -1328,10 +1342,10 @@ extern JSClass *%s_class;
 
         convert = {
             'i' : 'INT_TO_JSVAL(%s);',
+            'c' : 'INT_TO_JSVAL(%s);',
             'b' : 'BOOLEAN_TO_JSVAL(%s);',
             'f' : 'DOUBLE_TO_JSVAL(%s);',
             'd' : 'DOUBLE_TO_JSVAL(%s);',
-            'c' : 'INT_TO_JSVAL(%s);',
         }
 
         # XXX Only support 0 or 1 argument, and only a limited amount of parameters
