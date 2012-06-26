@@ -760,10 +760,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             's' : 'STRING_TO_JSVAL(ret_val)',
             'd' : 'DOUBLE_TO_JSVAL(ret_val)',
             'c' : 'INT_TO_JSVAL(ret_val)',
-            'L' : 'long_to_jsval(cx, ret_val)',                # long: not supoprted on JS 64-bit
-            'Q' : 'longlong_to_jsval(cx, ret_val)',            # long long: not supported on JS
-            None : 'JSVAL_VOID',
+            'long' : 'long_to_jsval(cx, ret_val)',                # long: not supoprted on JS 64-bit
+            'longlong' : 'longlong_to_jsval(cx, ret_val)',        # long long: not supported on JS
             'void' : 'JSVAL_VOID',
+            None : 'JSVAL_VOID',
         }
         special_convert = {
             'o' : self.generate_retval_object,
@@ -796,7 +796,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSArray*'  : '[]',
             'NSMutableArray*' : '[]',
             'CCArray*'  : '[]',
-            'L' : 'long',
         }
 
         supported_types = {
@@ -808,6 +807,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
             'v' :  None,  # void (for retval)
+            'L' : 'long',          # long (special conversion)
+            'Q' : 'longlong',      # long long (special conversion)
         }
 
 #        s = method['selector']
@@ -881,7 +882,6 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'NSMutableArray*' : '[]',
             'void (^)(id)' : 'f',
             'void (^)(CCNode *)' : 'f',
-            'L' : 'long',
         }
 
         supported_types = {
@@ -893,6 +893,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'C' : 'c',  # unsigned char
             'B' : 'b',  # BOOL
             's' : 'c',  # short
+            'L' : 'long',       # long (custom conversion)
+            'Q' : 'longlong',   # long long (custom conversion)
         }
 
         args_js_type = []
@@ -1024,8 +1026,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             'o' : [self.generate_argument_object, 'id'],
             '[]': [self.generate_argument_array, 'NSArray*'],
             'f' : [self.generate_argument_function, 'js_block'],
-            'L' : [self.generate_argument_long, 'long'],
-            'Q' : [self.generate_argument_longlong, 'long long'],
+            'long' :     [self.generate_argument_long, 'long'],
+            'longlong' : [self.generate_argument_longlong, 'long long'],
         }
 
         # First  time
@@ -1077,7 +1079,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 elif self.is_valid_structure( arg ):
                     self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 else:
-                    raise ParseException('Unsupported type: %s' % arg )
+                    raise ParseException('Unsupported argument type: %s' % arg )
 
                 if optional_args_since and i >= optional_args_since-1:
                     self.mm_file.write('\t}\n' )
