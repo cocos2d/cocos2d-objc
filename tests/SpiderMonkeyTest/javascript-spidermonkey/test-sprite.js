@@ -51,7 +51,7 @@ var loadScene = function (sceneIdx)
 // SpriteTestDemo
 //
 //------------------------------------------------------------------
-var SpriteTestDemo = function(file) {
+var SpriteTestDemo = function() {
 
 	//
 	// VERY IMPORTANT
@@ -124,7 +124,7 @@ SpriteTestDemo.prototype.backCallback = function (sender) {
 // Sprite Touch test
 //
 //------------------------------------------------------------------
-var SpriteTouchTest = function(file) {
+var SpriteTouchTest = function() {
 
 	goog.base(this);
 
@@ -191,7 +191,7 @@ SpriteTouchTest.prototype.createSprite = function( pos ) {
 // Sprite Batch Touch test
 //
 //------------------------------------------------------------------
-var SpriteBatchTouchTest = function(file) {
+var SpriteBatchTouchTest = function() {
 
 	goog.base(this);
 
@@ -224,7 +224,7 @@ goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
 // Sprite vs. SpriteBatch Animation
 //
 //------------------------------------------------------------------
-var SpriteFrameTest = function(file) {
+var SpriteFrameTest = function() {
 
 	goog.base(this);
 
@@ -326,7 +326,7 @@ goog.inherits( SpriteFrameTest, SpriteTestDemo );
 // SpriteAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteAnchorPoint = function(file) {
+var SpriteAnchorPoint = function() {
 
 	goog.base(this);
 
@@ -375,7 +375,7 @@ goog.inherits( SpriteAnchorPoint, SpriteTestDemo );
 // SpriteBatchAnchorPoint
 //
 //------------------------------------------------------------------
-var SpriteBatchAnchorPoint = function(file) {
+var SpriteBatchAnchorPoint = function() {
 
 	goog.base(this);
 
@@ -426,7 +426,7 @@ goog.inherits( SpriteBatchAnchorPoint, SpriteTestDemo );
 // SpriteOffsetAnchorFlip
 //
 //------------------------------------------------------------------
-var SpriteOffsetAnchorFlip = function(file) {
+var SpriteOffsetAnchorFlip = function() {
 
 	goog.base(this);
 
@@ -498,7 +498,7 @@ goog.inherits( SpriteOffsetAnchorFlip, SpriteTestDemo );
 // SpriteBatchOffsetAnchorFlip
 //
 //------------------------------------------------------------------
-var SpriteBatchOffsetAnchorFlip = function(file) {
+var SpriteBatchOffsetAnchorFlip = function() {
 
 	goog.base(this);
 
@@ -574,7 +574,7 @@ goog.inherits( SpriteBatchOffsetAnchorFlip, SpriteTestDemo );
 // SpriteColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteColorOpacity = function(file) {
+var SpriteColorOpacity = function() {
 
 	goog.base(this);
 
@@ -650,7 +650,7 @@ goog.inherits(SpriteColorOpacity, SpriteTestDemo );
 // SpriteBatchColorOpacity
 //
 //------------------------------------------------------------------
-var SpriteBatchColorOpacity = function(file) {
+var SpriteBatchColorOpacity = function() {
 
 	goog.base(this);
 
@@ -728,7 +728,7 @@ goog.inherits(SpriteBatchColorOpacity, SpriteTestDemo );
 // Chipmunk + Sprite
 //
 //------------------------------------------------------------------
-var ChipmunkSpriteTest = function(file) {
+var ChipmunkSpriteTest = function() {
 
 	goog.base(this);
 
@@ -819,7 +819,7 @@ ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
 // Chipmunk + Sprite
 //
 //------------------------------------------------------------------
-var ChipmunkSpriteBatchTest = function(file) {
+var ChipmunkSpriteBatchTest = function() {
 
 	goog.base(this);
 
