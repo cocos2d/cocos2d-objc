@@ -235,7 +235,6 @@ JSBool JSPROXY_cpSpaceReindexShape(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceReindexShapesForBody(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceReindexStatic(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceRemoveBody(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceRemoveConstraint(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceRemoveShape(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpSpaceRemoveStaticShape(JSContext *cx, uint32_t argc, jsval *vp);
