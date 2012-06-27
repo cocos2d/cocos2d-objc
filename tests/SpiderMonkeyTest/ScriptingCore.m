@@ -26,11 +26,11 @@
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
 #ifdef __CC_PLATFORM_IOS
-#import "js_bindings_cocos2d_mac_classes.h"
-#import "js_bindings_cocos2d_mac_functions.h"
-#elif defined(__CC_PLATFORM_MAC)
 #import "js_bindings_cocos2d_ios_classes.h"
 #import "js_bindings_cocos2d_ios_functions.h"
+#elif defined(__CC_PLATFORM_MAC)
+#import "js_bindings_cocos2d_mac_classes.h"
+#import "js_bindings_cocos2d_mac_functions.h"
 #endif
 #import "js_bindings_chipmunk_functions.h"
 #import "js_bindings_chipmunk_manual.h"

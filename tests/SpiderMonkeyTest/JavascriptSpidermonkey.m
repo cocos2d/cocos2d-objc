@@ -106,7 +106,9 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 	return YES;
 }
@@ -123,23 +125,6 @@
 #pragma mark AppController - Mac
 
 #elif defined(__CC_PLATFORM_MAC)
-
-/* The error reporter callback. */  
-void reportError(JSContext *cx, const char *message, JSErrorReport *report)  
-{  
-	fprintf(stderr, "%s:%u:%s\n",  
-			report->filename ? report->filename : "<no filename=\"filename\">",  
-			(unsigned int) report->lineno,  
-			message);  
-}  
-
-/* The class of the global object. */  
-static JSClass global_class = {  
-	"global", JSCLASS_GLOBAL_FLAGS,  
-	JS_PropertyStub, JS_PropertyStub, JS_PropertyStub, JS_StrictPropertyStub,  
-	JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, JS_FinalizeStub,  
-	JSCLASS_NO_OPTIONAL_MEMBERS  
-};  
 
 @implementation AppController
 
