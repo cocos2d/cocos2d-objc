@@ -2166,7 +2166,6 @@
 		A09C8D3A1566FB4100ADFDA9 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A09C8D461566FBF400ADFDA9 /* JavascriptJSCocoaTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A03416DC15487F4A00AE4D93 /* JavascriptJSCocoaTest.m */; };
 		A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */; };
-		A09C8D961567634500ADFDA9 /* js_bindings_old_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */; };
 		A0A10B2014F3003600FA38C1 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */; };
 		A0A10B2114F3003600FA38C1 /* ccDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
@@ -6232,8 +6231,6 @@
 		A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JavascriptSpidermonkey.h; sourceTree = "<group>"; };
 		A09C8D8F156715F700ADFDA9 /* JavascriptSpidermonkey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JavascriptSpidermonkey.m; sourceTree = "<group>"; };
 		A09C8D911567165B00ADFDA9 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
-		A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_old_manual.h; sourceTree = "<group>"; };
-		A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_old_manual.mm; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
@@ -7867,15 +7864,13 @@
 				4AD3B962159A5534002E68D1 /* js_bindings_CocosDenshion_functions_registration.h */,
 				4AD3B963159A5534002E68D1 /* js_bindings_CocosDenshion_functions.h */,
 				4AD3B964159A5535002E68D1 /* js_bindings_CocosDenshion_functions.mm */,
-				4AD3B95D159A5534002E68D1 /* js_bindings_chipmunk_manual.h */,
-				4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */,
 				A02F6E4B15926885000975D7 /* js_bindings_chipmunk_functions_registration.h */,
 				A02F6E3F159157AA000975D7 /* js_bindings_chipmunk_functions.h */,
 				A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */,
+				4AD3B95D159A5534002E68D1 /* js_bindings_chipmunk_manual.h */,
+				4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */,
 				A0CBEC2F156C2903009D35B4 /* js_bindings_NSObject.h */,
 				A0CBEC30156C2904009D35B4 /* js_bindings_NSObject.mm */,
-				A09C8D941567634500ADFDA9 /* js_bindings_old_manual.h */,
-				A09C8D951567634500ADFDA9 /* js_bindings_old_manual.mm */,
 				A0BCD719157FDBC600CCE291 /* js_manual_conversions.h */,
 				A0BCD71A157FDBC700CCE291 /* js_manual_conversions.mm */,
 				4AD3B95B159A5534002E68D1 /* ChipmunkSprite.h */,
@@ -14659,7 +14654,6 @@
 				A09C8D281566FB4100ADFDA9 /* main.m in Sources */,
 				A09C8D291566FB4100ADFDA9 /* BaseAppController.m in Sources */,
 				A09C8D90156715F700ADFDA9 /* JavascriptSpidermonkey.m in Sources */,
-				A09C8D961567634500ADFDA9 /* js_bindings_old_manual.mm in Sources */,
 				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
 				A0CBEC31156C2904009D35B4 /* js_bindings_NSObject.mm in Sources */,
 				A0BCCBD015792F5300CCE291 /* ScriptingCore.m in Sources */,

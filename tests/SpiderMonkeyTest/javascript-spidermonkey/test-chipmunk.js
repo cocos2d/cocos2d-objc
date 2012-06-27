@@ -72,7 +72,7 @@ var BaseLayer = function() {
 	}
 
 }
-goog.inherits(SpriteTestDemo, cc.Layer );
+goog.inherits(BaseLayer, cc.Layer );
 
 //
 // Instance 'base' methods
@@ -214,7 +214,7 @@ ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
 
 //------------------------------------------------------------------
 //
-// Chipmunk + Sprite
+// Chipmunk + Sprite + Batch
 //
 //------------------------------------------------------------------
 var ChipmunkSpriteBatchTest = function() {
@@ -240,11 +240,134 @@ var ChipmunkSpriteBatchTest = function() {
 }
 goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 
+//------------------------------------------------------------------
+//
+// Chipmunk Collision Test
+//
+//------------------------------------------------------------------
+var ChipmunkCollisionTest = function() {
+
+	goog.base(this);
+
+	this.messageDisplayed = false;
+
+	this.title = function() {
+		return 'Chipmunk Collision Test';
+	}
+
+	this.subtitle = function() {
+		return 'Testing collision callback';
+	}
+
+	// init physics
+	this.initPhysics = function() {
+		this.space =  cp.spaceNew();
+		var staticBody = cp.spaceGetStaticBody( this.space );
+
+		// Walls
+		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
+				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
+				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
+				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
+				];
+		for( var i=0; i < walls.length; i++ ) {
+			var wall = walls[i];
+			cp.shapeSetElasticity(wall, 1);
+			cp.shapeSetFriction(wall, 1);
+			cp.spaceAddStaticShape( this.space, wall );
+		}
+
+		// Gravity
+		cp.spaceSetGravity( this.space, cp.v(0, -30) );
+	}
+
+	this.createPhysicsSprite = function( pos, file, collision_type ) {
+		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
+		cp.bodySetPos( body, pos );
+		cp.spaceAddBody( this.space, body );
+		var shape = cp.boxShapeNew( body, 48, 108);
+		cp.shapeSetElasticity( shape, 0.5 );
+		cp.shapeSetFriction( shape, 0.5 );
+		cp.shapeSetCollisionType( shape, collision_type );
+		cp.spaceAddShape( this.space, shape );
+
+		var sprite = cc.ChipmunkSprite.create(file);
+		sprite.setBody( body );
+		return sprite;
+	}
+
+	this.onEnter = function () {
+
+		goog.base(this, 'onEnter');
+
+		this.scheduleUpdate();
+
+		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "grossini.png", 1);
+		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), "grossinis_sister1.png", 2);
+
+		this.addChild( sprite1 );
+		this.addChild( sprite2 );
+
+		cp.spaceAddCollisionHandler( this.space, 1, 2, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate, this );
+	}
+
+	this.collisionBegin = function ( arbiter, space ) {
+
+		if( ! this.messageDisplayed ) {
+			var label = cc.LabelBMFont.create("Collision Detected", "bitmapFontTest5.fnt");
+			this.addChild( label );
+			label.setPosition( centerPos );
+			this.messageDisplayed = true;
+		}
+		cc.log('collision begin');
+		var bodies = cp.arbiterGetBodies( arbiter );
+		var shapes = cp.arbiterGetShapes( arbiter );
+		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
+		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+		cc.log( 'Collision Type A:' + collTypeA );
+		cc.log( 'Collision Type B:' + collTypeB );
+		return true
+	}
+
+	this.collisionPre = function ( arbiter, space ) {
+		cc.log('collision pre');
+		return true;
+	}
+
+	this.collisionPost = function ( arbiter, space ) {
+		cc.log('collision post');
+	}
+
+	this.collisionSeparate = function ( arbiter, space ) {
+		cc.log('collision separate');
+	}
+
+	this.onExit = function() {
+		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
+	}
+
+	this.update = function( delta ) {
+		cp.spaceStep( this.space, delta );
+	}
+
+	this.initPhysics();
+}
+goog.inherits( ChipmunkCollisionTest, BaseLayer );
+
+//
+// Instance 'base' methods
+// XXX: Should be defined after "goog.inherits"
+//
+
+
 
 //
 // Order of tests
 //
+scenes.push( ChipmunkCollisionTest );
+
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
+scenes.push( ChipmunkCollisionTest );
 
 
 //------------------------------------------------------------------

@@ -27,6 +27,8 @@
 #import "jsapi.h"
 #import "js_manual_conversions.h"
 
+#pragma mark - Collision Handler
+
 struct collision_data {
 	cpCollisionType		typeA;
 	cpCollisionType		typeB;
@@ -34,7 +36,6 @@ struct collision_data {
 	jsval				pre;
 	jsval				post;
 	jsval				separate;
-	jsval				data;
 	JSObject			*this;
 	JSContext			*cx;
 };
@@ -44,66 +45,65 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_data *handler = (struct collision_data*) data;
 	
-	jsval args[3];
+	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	args[2] = handler->data;
 	
 	jsval rval;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->begin, 3, args, &rval);
+	JS_CallFunctionValue( handler->cx, handler->this, handler->begin, 2, args, &rval);
 	
-	JSBool ret = JSVAL_TO_BOOLEAN(rval);
-
-	return (cpBool)ret;
+	if( JSVAL_IS_BOOLEAN(rval) ) {
+		JSBool ret = JSVAL_TO_BOOLEAN(rval);
+		return (cpBool)ret;
+	}
+	return cpTrue;	
 }
 
 static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_data *handler = (struct collision_data*) data;
 	
-	jsval args[3];
+	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	args[2] = handler->data;
 	
 	jsval rval;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->pre, 3, args, &rval);
+	JS_CallFunctionValue( handler->cx, handler->this, handler->pre, 2, args, &rval);
 	
-	JSBool ret = JSVAL_TO_BOOLEAN(rval);
-	
-	return (cpBool)ret;
-
+	if( JSVAL_IS_BOOLEAN(rval) ) {
+		JSBool ret = JSVAL_TO_BOOLEAN(rval);
+		return (cpBool)ret;
+	}
+	return cpTrue;	
 }
 
 static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_data *handler = (struct collision_data*) data;
 	
-	jsval args[3];
+	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	args[2] = handler->data;
 	
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->post, 3, args, &ignore);
+	JS_CallFunctionValue( handler->cx, handler->this, handler->post, 2, args, &ignore);
 }
 
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 {
 	struct collision_data *handler = (struct collision_data*) data;
 	
-	jsval args[3];
+	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
 	args[1] = opaque_to_jsval( handler->cx, space );
-	args[2] = handler->data;
 	
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->separate, 3, args, &ignore);
+	JS_CallFunctionValue( handler->cx, handler->this, handler->separate, 2, args, &ignore);
 }
 
 JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	if( argc < 7 || argc > 8 )
+	if( argc != 8 )
 		return JS_FALSE;
 
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -121,13 +121,8 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	handler->pre = *argvp++;
 	handler->post = *argvp++;
 	handler->separate = *argvp++;
-	
-	if( argc == 8 )
-		handler->data = *argvp++;
-	else
-		handler->data = JSVAL_VOID;
-	
-	handler->this = JS_THIS_OBJECT(cx, vp);
+	handler->this = JSVAL_TO_OBJECT(*argvp++);
+		
 	handler->cx = cx;
 	
 	cpSpaceAddCollisionHandler(space, handler->typeA, handler->typeB,
@@ -158,4 +153,56 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 
 	return JS_TRUE;
 }
+
+#pragma mark - Arbiter
+
+JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if( argc != 1 )
+		return  JS_FALSE;
+	
+	jsval *argvp = JS_ARGV(cx,vp);
+	
+	cpArbiter* arbiter = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+
+	cpBody *bodyA;
+	cpBody *bodyB;
+	cpArbiterGetBodies(arbiter, &bodyA, &bodyB);
+	jsval valA = opaque_to_jsval(cx, bodyA);
+	jsval valB = opaque_to_jsval(cx, bodyB);
+	
+	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
+	JS_SetElement(cx, jsobj, 0, &valA);
+	JS_SetElement(cx, jsobj, 1, &valB);
+
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	
+	return JS_TRUE;
+	
+}
+
+JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if( argc != 1 )
+		return  JS_FALSE;
+	
+	jsval *argvp = JS_ARGV(cx,vp);
+	
+	cpArbiter* arbiter = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	
+	cpShape *shapeA;
+	cpShape *shapeB;
+	cpArbiterGetShapes(arbiter, &shapeA, &shapeB);
+	jsval valA = opaque_to_jsval(cx, shapeA);
+	jsval valB = opaque_to_jsval(cx, shapeB);
+	
+	JSObject *jsobj = JS_NewArrayObject(cx, 2, NULL);
+	JS_SetElement(cx, jsobj, 0, &valA);
+	JS_SetElement(cx, jsobj, 1, &valB);
+	
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	
+	return JS_TRUE;
+}
+
 
