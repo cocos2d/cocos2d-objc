@@ -108,6 +108,9 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 
 	jsval *argvp = JS_ARGV(cx,vp);
 
+	//
+	// XXX MEMORY LEAK
+	//
 	struct collision_data *handler = malloc( sizeof(*handler) );
 	if( ! handler )
 		return JS_FALSE;
