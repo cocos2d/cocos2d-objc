@@ -23,7 +23,6 @@ JS_DefineFunction(_cx, cocos2d_mac, "gLEnable", JSPROXY_ccGLEnable, 1, JSPROP_RE
 JS_DefineFunction(_cx, cocos2d_mac, "gLEnableVertexAttribs", JSPROXY_ccGLEnableVertexAttribs, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d_mac, "gLGetActiveTexture", JSPROXY_ccGLGetActiveTexture, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d_mac, "gLInvalidateStateCache", JSPROXY_ccGLInvalidateStateCache, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-JS_DefineFunction(_cx, cocos2d_mac, "gLUniformModelViewProjectionMatrix", JSPROXY_ccGLUniformModelViewProjectionMatrix, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d_mac, "gLUseProgram", JSPROXY_ccGLUseProgram, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d_mac, "nextPOT", JSPROXY_ccNextPOT, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d_mac, "pointSize", JSPROXY_ccPointSize, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
