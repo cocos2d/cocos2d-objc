@@ -106,12 +106,7 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
-	// create the main scene
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	// and run it!
-	[director_ pushScene: scene];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 
 	return YES;
 }

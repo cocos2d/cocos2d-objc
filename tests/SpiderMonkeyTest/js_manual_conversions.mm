@@ -177,7 +177,7 @@ CGRect jsval_to_CGRect( JSContext *cx, jsval vp )
 	ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
 
 #else
-	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
+	ret = *(CGRect*)JS_GetTypedArrayData( tmp_arg );
 #endif
 	return ret;		
 }
