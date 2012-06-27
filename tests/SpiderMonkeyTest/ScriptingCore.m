@@ -424,7 +424,6 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 -(BOOL) runScript:(NSString*)filename
 {
     JSScript *script;
-    JSObject *scriptObj;
 	
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
@@ -433,13 +432,8 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 
     if (script == NULL)
         return NO;   /* compilation error */
-	
-    scriptObj = JS_GetGlobalFromScript(script);
-    if (scriptObj == NULL) {
-        return NO;
-    }
-	
-    if (!JS_AddNamedObjectRoot(_cx, &scriptObj, "compileAndRepeat script object"))
+		
+    if (!JS_AddNamedScriptRoot(_cx, &script, "compileAndRepeat script object"))
         return NO;
 	
 	jsval result;	
@@ -447,7 +441,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		NSLog(@"Failed to execute script");
     }
 	
-//    JS_RemoveObjectRoot(_cx, &scriptObj);  /* scriptObj becomes unreachable
+//    JS_RemoveScriptRoot(_cx, &script);  /* scriptObj becomes unreachable
 //										   and will eventually be collected. */
     return YES;
 }
