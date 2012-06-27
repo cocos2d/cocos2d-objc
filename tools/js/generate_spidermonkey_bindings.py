@@ -1652,7 +1652,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
                 break
 
         if not klass:
-            raise Exception("Class not found: '%s'. Check file: '%s'" % (class_name, self.bridgesupport_file ) )
+            raise Exception("Class not found: '%s'. Check file: '%s'" % (class_name, self.bridgesupport_files ) )
 
         methods = klass['method']
 
