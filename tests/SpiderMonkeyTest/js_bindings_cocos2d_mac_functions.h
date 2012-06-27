@@ -27,7 +27,6 @@ JSBool JSPROXY_ccGLEnable(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccGLGetActiveTexture(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccGLInvalidateStateCache(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSPROXY_ccGLUniformModelViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccGLUseProgram(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccNextPOT(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_ccPointSize(JSContext *cx, uint32_t argc, jsval *vp);
