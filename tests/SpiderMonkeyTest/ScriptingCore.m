@@ -150,6 +150,27 @@ JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_FALSE;
 };
 
+JSBool ScriptingCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	if (argc != 0 )
+		return JS_FALSE;
+
+	JSString * platform;
+#ifdef __CC_PLATFORM_IOS
+	platform = JS_InternString(cx, "iOS");
+#elif defined(__CC_PLATFORM_MAC)
+	platform = JS_InternString(cx, "OSX");
+#else
+#error "Unsupported platform"
+#endif
+	jsval ret = STRING_TO_JSVAL(platform);
+	
+	JS_SET_RVAL(cx, vp, ret);
+
+	return JS_TRUE;
+};
+
+
 
 /* Register an object as a member of the GC's root set, preventing them from being GC'ed */
 JSBool ScriptingCore_addRootJS(JSContext *cx, uint32_t argc, jsval *vp)
@@ -268,6 +289,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, _object, "__associateObjWithNative", ScriptingCore_associateObjectWithNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__getAssociatedNative", ScriptingCore_getAssociatedNative, 2, JSPROP_READONLY | JSPROP_PERMANENT);
 		JS_DefineFunction(_cx, _object, "__address", ScriptingCore_address, 2, JSPROP_READONLY | JSPROP_PERMANENT);
+		JS_DefineFunction(_cx, _object, "__getPlatform", ScriptingCore_platform, 0, JSPROP_READONLY | JSPROP_PERMANENT);
 
 		// 
 		// Javascript controller (__jsc__)
@@ -417,9 +439,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 /*
- * Compile a script and execute it repeatedly until an
- * error occurs.  (If this ever returns, it returns false.
- * If there's no error it just keeps going.)
+ * Compile a script and execute it. It roots the script
  */
 -(BOOL) runScript:(NSString*)filename
 {
@@ -433,7 +453,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
     if (script == NULL)
         return NO;   /* compilation error */
 		
-    if (!JS_AddNamedScriptRoot(_cx, &script, "compileAndRepeat script object"))
+    if (!JS_AddNamedScriptRoot(_cx, &script, "compiled script"))
         return NO;
 	
 	jsval result;	

@@ -134,7 +134,10 @@ var SpriteTouchTest = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		this.setIsMouseEnabled( true );
+		// Mac only
+		if( __getPlatform() == 'OSX' ) {
+			this.setIsMouseEnabled( true );
+		}
 		this.addSprite( centerPos );
 	}
 
@@ -204,7 +207,11 @@ var SpriteBatchTouchTest = function() {
 		this.batch = cc.SpriteBatchNode.create("grossini_dance_atlas.png", 50 );
 		this.addChild( this.batch );
 
-		this.setIsMouseEnabled( true );
+		// Mac only
+		if( __getPlatform() == 'OSX' ) {
+			this.setIsMouseEnabled( true );
+		}
+
 	}
 
 	this.addSprite = function(pos) {
@@ -805,7 +812,9 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 	}
 
 	// Mac only
-	this.setIsMouseEnabled( true );
+	if( __getPlatform() == 'OSX' ) {
+		this.setIsMouseEnabled( true );
+	}
 }
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {

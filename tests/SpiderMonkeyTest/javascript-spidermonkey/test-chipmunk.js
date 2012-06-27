@@ -202,7 +202,9 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 	}
 
 	// Mac only
-//	this.setIsMouseEnabled( true );
+	if( __getPlatform() == 'OSX' ) {
+		this.setIsMouseEnabled( true );
+	}
 }
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {
