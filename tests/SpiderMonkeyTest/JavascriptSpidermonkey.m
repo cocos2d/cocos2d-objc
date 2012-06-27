@@ -23,12 +23,10 @@
 -(void) onEnter
 {
 	[super onEnter];
-			
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test.js"];	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test2.js"];	
+	
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];	
-
 }
 @end
 
@@ -106,9 +104,16 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
+	
+	CCScene *scene = [CCScene node];
+	Test *test = [Test node];
+	
+	[scene addChild:test];	
+	[[CCDirector sharedDirector] runWithScene:scene];
+
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 	return YES;
 }
@@ -149,9 +154,9 @@
 //	[scene addChild:test];	
 //	[[CCDirector sharedDirector] runWithScene:scene];
 
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 }
 

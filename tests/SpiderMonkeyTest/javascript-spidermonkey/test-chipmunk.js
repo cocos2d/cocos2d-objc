@@ -36,6 +36,7 @@ var loadScene = function (sceneIdx)
 {
 	_winSize = director.winSize();
 	winSize = {width:_winSize[0], height:_winSize[1]};
+	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
 	scene.init();
@@ -201,7 +202,7 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 	}
 
 	// Mac only
-	this.setIsMouseEnabled( true );
+//	this.setIsMouseEnabled( true );
 }
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {
