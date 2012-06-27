@@ -25,8 +25,8 @@
 #import "cocos2d.h"
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
-#import "js_bindings_cocos2d_classes.h"
-#import "js_bindings_cocos2d_functions.h"
+#import "js_bindings_cocos2d_mac_classes.h"
+#import "js_bindings_cocos2d_mac_functions.h"
 #import "js_bindings_chipmunk_functions.h"
 #import "js_bindings_chipmunk_manual.h"
 #import "js_bindings_CocosDenshion_classes.h"
@@ -281,6 +281,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		// cocos2d
 		//
 		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
+		JSObject *cocos2d_mac = cocos2d;
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
 
@@ -289,8 +290,8 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 		// Register classes: base classes should be registered first
-#import "js_bindings_cocos2d_classes_registration.h"
-#import "js_bindings_cocos2d_functions_registration.h"
+#import "js_bindings_cocos2d_mac_classes_registration.h"
+#import "js_bindings_cocos2d_mac_functions_registration.h"
 		
 
 		//
