@@ -332,20 +332,6 @@ JSBool JSPROXY_ccGLInvalidateStateCache(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: CCGLProgram*
-// Ret value: void
-JSBool JSPROXY_ccGLUniformModelViewProjectionMatrix(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	id arg0; 
-
-	arg0 = (CCGLProgram*) jsval_to_nsobject( cx, *argvp++);
-
-	ccGLUniformModelViewProjectionMatrix((CCGLProgram*)arg0  );
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
 // Arguments: GLuint
 // Ret value: void
 JSBool JSPROXY_ccGLUseProgram(JSContext *cx, uint32_t argc, jsval *vp) {

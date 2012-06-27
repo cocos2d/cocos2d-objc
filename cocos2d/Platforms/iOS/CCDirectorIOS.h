@@ -77,6 +77,10 @@
 	
 	CCTouchDispatcher	*touchDispatcher_;
 }
+
+// XXX: At least one method is needed for BridgeSupport
+- (void) drawScene;
+
 @end
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.

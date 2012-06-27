@@ -1178,6 +1178,13 @@
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		A00495DA159B8ACB00B5D4DF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
+		A00495DC159B8B1500B5D4DF /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */; };
+		A00495DD159B8B1500B5D4DF /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
+		A00495DE159B8B1500B5D4DF /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		A00495DF159B8B1500B5D4DF /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB3151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist */; };
+		A00495E0159B8B2800B5D4DF /* bitmapFontTest5.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 5054639F1062867800AB7C52 /* bitmapFontTest5.fnt */; };
+		A00495E1159B8B2800B5D4DF /* bitmapFontTest5.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463A01062867800AB7C52 /* bitmapFontTest5.png */; };
 		A00942C915180C730029A5C6 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A00942CA15180C730029A5C6 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A00942CB15180C730029A5C6 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -5692,6 +5699,7 @@
 				A04E8619159B6B8B00F4BE65 /* OpenAL.framework in Frameworks */,
 				A04E861A159B6B9400F4BE65 /* AudioToolbox.framework in Frameworks */,
 				A04E866F159B6FE300F4BE65 /* libjs_static.a in Frameworks */,
+				A00495DA159B8ACB00B5D4DF /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11274,6 +11282,12 @@
 				A04E866D159B6FE300F4BE65 /* js.msg in Resources */,
 				A04E866E159B6FE300F4BE65 /* jsproto.tbl in Resources */,
 				A04E8676159B707C00F4BE65 /* README.markdown in Resources */,
+				A00495DC159B8B1500B5D4DF /* tuffy_bold_italic-charmap.png in Resources */,
+				A00495DD159B8B1500B5D4DF /* tuffy_bold_italic-charmap.plist in Resources */,
+				A00495DE159B8B1500B5D4DF /* tuffy_bold_italic-charmap-hd.png in Resources */,
+				A00495DF159B8B1500B5D4DF /* tuffy_bold_italic-charmap-hd.plist in Resources */,
+				A00495E0159B8B2800B5D4DF /* bitmapFontTest5.fnt in Resources */,
+				A00495E1159B8B2800B5D4DF /* bitmapFontTest5.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
