@@ -15,34 +15,37 @@ var scenes = []
 var currentScene = 0;
 
 var nextSpriteTestAction = function () {
-    currentScene = currentScene + 1;
-    if( currentScene >= scenes.length )
-        currentScene = 0;
+	currentScene = currentScene + 1;
+	if( currentScene >= scenes.length )
+		currentScene = 0;
 
-    loadScene(currentScene);
+	loadScene(currentScene);
 };
 var backSpriteTestAction = function () {
-    currentScene = currentScene -1;
-    if( currentScene < 0 )
-        currentScene = scenes.length -1;
+	currentScene = currentScene -1;
+	if( currentScene < 0 )
+		currentScene = scenes.length -1;
 
-    loadScene(currentScene);
+	loadScene(currentScene);
 };
 var restartSpriteTestAction = function () {
-    loadScene( currentScene );
+	loadScene( currentScene );
 };
 
 var loadScene = function (sceneIdx)
 {
-    var scene = new cc.Scene();
-    scene.init();
-    var layer = new scenes[ sceneIdx ]();
+	_winSize = director.winSize();
+	winSize = {width:_winSize[0], height:_winSize[1]};
 
-    scene.addChild( layer );
+	var scene = new cc.Scene();
+	scene.init();
+	var layer = new scenes[ sceneIdx ]();
+
+	scene.addChild( layer );
 
 //	scene.walkSceneGraph(0);
 
-    director.replaceScene( scene );
+	director.replaceScene( scene );
 //    __jsc__.garbageCollect();
 }
 
