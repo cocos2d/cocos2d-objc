@@ -9254,7 +9254,7 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("labelWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithFile", JSPROXY_CCLabelTTF_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithFileRect", JSPROXY_CCLabelTTF_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithSpriteFrame", JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -10727,7 +10727,7 @@ void JSPROXY_CCTransitionSplitCols_createClass(JSContext *cx, JSObject* globalOb
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSplitCols_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -23128,7 +23128,7 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	NSCAssert( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	ccColor4B arg0; ccColor4B arg1; CGPoint arg2; 
 
@@ -23140,47 +23140,44 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
-	arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
+	if (argc >= 3) {
+		arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
+	}
 
-	CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
+	if( argc == 1 ) {
+		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
 	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
+	}
+
+	if( argc == 2 ) {
+		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
+	[proxy setRealObj: real];
+	[real autorelease];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	}
+
+	if( argc == 3 ) {
+		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
+	[proxy setRealObj: real];
+	[real autorelease];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	}
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: ccColor4B, ccColor4B
-// Ret value: CCLayerGradient* (o)
-JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	ccColor4B arg0; ccColor4B arg1; 
-
-
-	JSObject *tmp_arg0;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
-
-	JSObject *tmp_arg1;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
-	CCLayerGradient* ret_val;
-
-	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
 	return JS_TRUE;
 }
 
 // Arguments: ccColor4B, ccColor4B, CGPoint
 // Ret value: CCLayerGradient* (o)
 JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	NSCAssert( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	ccColor4B arg0; ccColor4B arg1; CGPoint arg2; 
 
@@ -23192,10 +23189,22 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSCon
 	JSObject *tmp_arg1;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
-	arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
+	if (argc >= 3) {
+		arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
+	}
 	CCLayerGradient* ret_val;
 
-	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
+	if( argc == 1 ) {
+		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0  ];
+	}
+
+	if( argc == 2 ) {
+		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
+	}
+
+	if( argc == 3 ) {
+		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -23486,7 +23495,7 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("endColor", JSPROXY_CCLayerGradient_endColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("endOpacity", JSPROXY_CCLayerGradient_endOpacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithColorFadingto", JSPROXY_CCLayerGradient_initWithColor_fadingTo_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithColorFadingtoAlongvector", JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("init", JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setCompressedInterpolation", JSPROXY_CCLayerGradient_setCompressedInterpolation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setEndColor", JSPROXY_CCLayerGradient_setEndColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setEndOpacity", JSPROXY_CCLayerGradient_setEndOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -23499,8 +23508,7 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("layerWithColorFadingto", JSPROXY_CCLayerGradient_layerWithColor_fadingTo__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerWithColorFadingtoAlongvector", JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("layerWithColor", JSPROXY_CCLayerGradient_layerWithColor__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("layerWithColorWidthHeight", JSPROXY_CCLayerGradient_layerWithColor_width_height__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCLayerGradient_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -23693,38 +23701,31 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 // Arguments: ccTime, CCScene*, ccColor3B
 // Ret value: CCTransitionFade* (o)
 JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	NSCAssert( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; id arg1; ccColor3B arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
 	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
-
+	if (argc >= 3) {
+	
 	JSObject *tmp_arg2;
 	JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
+	}
 	CCTransitionFade* ret_val;
 
-	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
+	if( argc == 1 ) {
+		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0  ];
+	}
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	if( argc == 2 ) {
+		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	}
 
-	return JS_TRUE;
-}
-
-// Arguments: ccTime, CCScene*
-// Ret value: CCTransitionFade* (o)
-JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; id arg1; 
-
-	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
-	CCTransitionFade* ret_val;
-
-	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	if( argc == 3 ) {
+		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -23768,8 +23769,7 @@ void JSPROXY_CCTransitionFade_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationSceneWithcolor", JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFade_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFade_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -27941,7 +27941,7 @@ void JSPROXY_CCTransitionMoveInL_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionMoveInL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -33582,35 +33582,28 @@ JSBool JSPROXY_CCTransitionPageTurn_initWithDuration_scene_backwards_(JSContext 
 // Arguments: ccTime, CCScene*, BOOL
 // Ret value: CCTransitionPageTurn* (o)
 JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	NSCAssert( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; id arg1; JSBool arg2; 
 
 	JS_ValueToNumber( cx, *argvp++, &arg0 );
 	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
-	JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if (argc >= 3) {
+		JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	}
 	CCTransitionPageTurn* ret_val;
 
-	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
+	if( argc == 1 ) {
+		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0  ];
+	}
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	if( argc == 2 ) {
+		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	}
 
-	return JS_TRUE;
-}
-
-// Arguments: ccTime, CCScene*
-// Ret value: CCTransitionPageTurn* (o)
-JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	double arg0; id arg1; 
-
-	JS_ValueToNumber( cx, *argvp++, &arg0 );
-	arg1 = (CCScene*) jsval_to_nsobject( cx, *argvp++);
-	CCTransitionPageTurn* ret_val;
-
-	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	if( argc == 3 ) {
+		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -33655,8 +33648,7 @@ void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationSceneBackwards", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionPageTurn_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -35062,7 +35054,7 @@ void JSPROXY_CCTransitionSlideInL_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSlideInL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

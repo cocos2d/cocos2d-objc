@@ -46,7 +46,13 @@ var loadScene = function (sceneIdx)
 
 //	scene.walkSceneGraph(0);
 
-	director.replaceScene( scene );
+	var transitions = [ cc.TransitionSplitCols, cc.TransitionSlideInL, cc.TransitionFade ];
+	var idx = Math.floor(  Math.random() * transitions.length );
+	var transition = transitions[ idx ];
+
+	cc.log( 'Que soy:' + transition );
+
+	director.replaceScene( transition.create( 0.9, scene ) );
 //    __jsc__.garbageCollect();
 }
 
@@ -65,39 +71,67 @@ var BaseLayer = function() {
 	//
 	var parent = goog.base(this);
 	__associateObjWithNative( this, parent );
-	this.init();
+	this.init( cc.c4(0,0,0,0), cc.c4(0,128,255,255));
 
-	this.title = function () {
-	    return "No title";
-	}
-
-	this.subtitle = function () {
-	    return "No Subtitle";
-	}
+	this.title =  "No title";
+	this.subtitle = "No Subtitle";
+	this.isMainTitle = false;
 
 }
-goog.inherits(BaseLayer, cc.Layer );
+goog.inherits(BaseLayer, cc.LayerGradient );
 
 //
 // Instance 'base' methods
 // XXX: Should be defined after "goog.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
-	var label = cc.LabelTTF.create(this.title(), "Arial", 28);
-	this.addChild(label, 1);
-	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
-	var strSubtitle = this.subtitle();
-	if (strSubtitle != "") {
-	    var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
-	    this.addChild(l, 1);
-	    l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
+	var fontSize = 36;
+	var tl = this.title.length;
+	fontSize = (winSize.width / tl) * 1.60;
+	if( fontSize/winSize.width > 0.09 ) {
+		fontSize = winSize.width * 0.09;
+	}
+
+	this.label = cc.LabelTTF.create(this.title, "Gill Sans", fontSize);
+	this.addChild(this.label, 1);
+
+	var isMain = this.isMainTitle;
+
+	if( isMain == true ) {
+		this.label.setPosition( centerPos );
+	} else {
+		this.label.setPosition( cc.p(winSize.width / 2, winSize.height*11/12) );
+	}
+
+	var subStr = this.subtitle;
+	if (subStr != "") {
+		tl = this.subtitle.length;
+		var subfontSize = (winSize.width / tl) * 1.3;
+		if( subfontSize > fontSize *0.6 ) {
+			subfontSize = fontSize *0.6;
+		}
+
+		this.sublabel = cc.LabelTTF.create(subStr, "Thonburi", subfontSize);
+		this.addChild(this.sublabel, 1);
+		if( isMain ) {
+			this.sublabel.setPosition( cc.p(winSize.width / 2, winSize.height*3/8 ));
+		} else {
+			this.sublabel.setPosition( cc.p(winSize.width / 2, winSize.height*5/6 ));
+		}
+	} else {
+		this.sublabel = null;
 	}
 
 	// WARNING: MenuItem API will change!
 	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
 	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("r1.png", "r2.png", this.restartCallback);
 	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
+
+	 [item1, item2, item3].forEach( function(item) {
+		item.normalImage().setOpacity(10);
+		item.selectedImage().setOpacity(10);
+		} );
 
 	var menu = cc.Menu.create( item1, item2, item3 );
 
@@ -124,6 +158,35 @@ BaseLayer.prototype.backCallback = function (sender) {
     backSpriteTestAction();
 }
 
+//------------------------------------------------------------------
+//
+// Intro Page
+//
+//------------------------------------------------------------------
+var IntroPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Objective-C to Javascript'
+	this.subtitle = 'Web, Prototyping and Games tools for developers';
+	this.isMainTitle = true;
+}
+goog.inherits( IntroPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Features Page
+//
+//------------------------------------------------------------------
+var FeaturesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Features';
+	this.subtitle = 'Web and Prototyping tools for serious developers';
+	this.isMainTitle = false;
+}
+goog.inherits( FeaturesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -139,13 +202,8 @@ var ChipmunkSpriteTest = function() {
 		this.addChild( sprite );
 	}
 
-	this.title = function() {
-		return 'Chipmunk Sprite Test';
-	}
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprites tests. Tap screen.';
-	}
+	this.title = 'Chipmunk Sprite Test';
+	this.subtitle = 'Chipmunk + cocos2d sprites tests. Tap screen.';
 
 	this.initPhysics();
 }
@@ -245,144 +303,22 @@ var ChipmunkSpriteBatchTest = function() {
 		this.batch.addChild( sprite );
 	}
 
-	this.title = function() {
-		return 'Chipmunk SpriteBatch Test';
-	}
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-	}
+	this.title = 'Chipmunk SpriteBatch Test';
+	this.subtitle = 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
 }
 goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 
-//------------------------------------------------------------------
-//
-// Chipmunk Collision Test
-//
-//------------------------------------------------------------------
-var ChipmunkCollisionTest = function() {
-
-	goog.base(this);
-
-	this.messageDisplayed = false;
-
-	this.title = function() {
-		return 'Chipmunk Collision Test';
-	}
-
-	this.subtitle = function() {
-		return 'Testing collision callback';
-	}
-
-	// init physics
-	this.initPhysics = function() {
-		this.space =  cp.spaceNew();
-		var staticBody = cp.spaceGetStaticBody( this.space );
-
-		// Walls
-		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
-				];
-		for( var i=0; i < walls.length; i++ ) {
-			var wall = walls[i];
-			cp.shapeSetElasticity(wall, 1);
-			cp.shapeSetFriction(wall, 1);
-			cp.spaceAddStaticShape( this.space, wall );
-		}
-
-		// Gravity
-		cp.spaceSetGravity( this.space, cp.v(0, -30) );
-	}
-
-	this.createPhysicsSprite = function( pos, file, collision_type ) {
-		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
-		cp.bodySetPos( body, pos );
-		cp.spaceAddBody( this.space, body );
-		var shape = cp.boxShapeNew( body, 48, 108);
-		cp.shapeSetElasticity( shape, 0.5 );
-		cp.shapeSetFriction( shape, 0.5 );
-		cp.shapeSetCollisionType( shape, collision_type );
-		cp.spaceAddShape( this.space, shape );
-
-		var sprite = cc.ChipmunkSprite.create(file);
-		sprite.setBody( body );
-		return sprite;
-	}
-
-	this.onEnter = function () {
-
-		goog.base(this, 'onEnter');
-
-		this.scheduleUpdate();
-
-		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "grossini.png", 1);
-		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), "grossinis_sister1.png", 2);
-
-		this.addChild( sprite1 );
-		this.addChild( sprite2 );
-
-		cp.spaceAddCollisionHandler( this.space, 1, 2, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate, this );
-	}
-
-	this.collisionBegin = function ( arbiter, space ) {
-
-		if( ! this.messageDisplayed ) {
-			var label = cc.LabelBMFont.create("Collision Detected", "bitmapFontTest5.fnt");
-			this.addChild( label );
-			label.setPosition( centerPos );
-			this.messageDisplayed = true;
-		}
-		cc.log('collision begin');
-		var bodies = cp.arbiterGetBodies( arbiter );
-		var shapes = cp.arbiterGetShapes( arbiter );
-		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
-		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
-		cc.log( 'Collision Type A:' + collTypeA );
-		cc.log( 'Collision Type B:' + collTypeB );
-		return true
-	}
-
-	this.collisionPre = function ( arbiter, space ) {
-		cc.log('collision pre');
-		return true;
-	}
-
-	this.collisionPost = function ( arbiter, space ) {
-		cc.log('collision post');
-	}
-
-	this.collisionSeparate = function ( arbiter, space ) {
-		cc.log('collision separate');
-	}
-
-	this.onExit = function() {
-		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
-	}
-
-	this.update = function( delta ) {
-		cp.spaceStep( this.space, delta );
-	}
-
-	this.initPhysics();
-}
-goog.inherits( ChipmunkCollisionTest, BaseLayer );
-
-//
-// Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
-//
 
 
 
 //
 // Order of tests
 //
-scenes.push( ChipmunkCollisionTest );
 
-scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
-scenes.push( ChipmunkCollisionTest );
+scenes.push( IntroPage );
+scenes.push( FeaturesPage );
+scenes.push( ChipmunkSpriteBatchTest );
+
 
 
 //------------------------------------------------------------------
