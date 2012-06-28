@@ -83,13 +83,13 @@ goog.inherits(BaseLayer, cc.Layer );
 // XXX: Should be defined after "goog.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
-	var label = cc.LabelTTF.labelWithStringFontnameFontsize(this.title(), "Arial", 28);
+	var label = cc.LabelTTF.create(this.title(), "Arial", 28);
 	this.addChild(label, 1);
 	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
 	var strSubtitle = this.subtitle();
 	if (strSubtitle != "") {
-	    var l = cc.LabelTTF.labelWithStringFontnameFontsize(strSubtitle, "Thonburi", 16);
+	    var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
 	    this.addChild(l, 1);
 	    l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
 	}
