@@ -388,14 +388,22 @@ class SpiderMonkey(object):
     # Helpers
     #
     def get_callback_args_for_method( self, method ):
+        method_name = method['selector']
+        method_args = method_name.split(':')
+
         full_args = []
         args = []
+
         if 'arg' in method:
-            for arg in method['arg']:
+            for i,arg in enumerate( method['arg'] ):
+                full_args.append( method_args[i] +':' )
                 full_args.append( '(' + arg['declared_type'] + ')' )
-                full_args.append( arg['name'] )
-                args.append( arg['name'] )
-        return [''.join(full_args), ''.join(args) ]
+                full_args.append( arg['name'] + ' ' )
+
+                args.append( method_args[i] +':' )
+                args.append( arg['name'] + ' ' )
+            return [''.join(full_args), ''.join(args) ]
+        return method_name, method_name
 
     def get_parent_class( self, class_name ):
         try:
@@ -1390,7 +1398,7 @@ extern JSClass *%s_class;
         # ccMouseUp
         # ccMouseUp
         template = '''
--(%s) %s%s
+-(%s) %s
 {
 	if (_jsObj) {
 		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
@@ -1415,7 +1423,7 @@ extern JSClass *%s_class;
                 converted_args = self.generate_callback_args( method )
 
                 js_name = self.convert_selector_name_to_js( class_name, m )
-                self.mm_file.write( template % ( dt_retval, m, full_args,
+                self.mm_file.write( template % ( dt_retval, full_args,
                                                  js_name,
                                                  converted_args,
                                                  js_name ) )
@@ -1581,12 +1589,12 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         # BOOL - ccMouseUp:(NSEvent*)
         # PROXYJS_CCNode
         template = '''
--(%s) %s%s%s
+-(%s) %s%s
 {
 %s
 	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
-		[proxy %s%s];
+		[proxy %s];
 }
 '''
         template_suffix = '@end\n'
@@ -1604,14 +1612,14 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
                 if not self.get_method_property( 'no_swizzle', m, class_name ):
                     swizzle_prefix = 'JSHook_'
-                    call_native ='\t//1st call native, then JS. Order is important\n\t[self JSHook_%s%s];'% (m, args)
+                    call_native ='\t//1st call native, then JS. Order is important\n\t[self JSHook_%s];'% (args)
                 else:
                     swizzle_prefix = ''
                     call_native = ''
-                self.mm_file.write( template % ( dt_ret_val, swizzle_prefix, m, fullargs,
+                self.mm_file.write( template % ( dt_ret_val, swizzle_prefix, fullargs,
                                                  call_native,
                                                  proxy_class_name,
-                                                 m, args
+                                                 args
                                                  ) )
 
             self.mm_file.write( template_suffix )
