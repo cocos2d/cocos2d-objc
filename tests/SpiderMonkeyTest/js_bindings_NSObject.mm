@@ -129,8 +129,6 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
     JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
-//    JS_SetPrivate(jsobj, proxy);
-	set_proxy_for_jsobject(proxy, jsobj);
 
 	
 	[proxy setRealObj:realObj];
@@ -157,6 +155,9 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 		_jsObj = object;
 		_klass = klass;
 		
+//		JS_SetPrivate(jsobj, self);
+		set_proxy_for_jsobject(self, _jsObj);
+
 		JS_AddNamedObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj, [[self description] UTF8String] );
 	}
 	
@@ -167,7 +168,9 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 {
 	// If the compiler gives you an error, you can safely remove the following line
 	CCLOGINFO(@"spidermonkey: deallocing %@", self);
-	
+
+	del_proxy_for_jsobject(_jsObj);
+
 	JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
 
 	

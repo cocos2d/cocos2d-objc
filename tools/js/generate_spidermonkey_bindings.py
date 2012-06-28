@@ -1473,12 +1473,10 @@ extern JSClass *%s_class;
 	JSObject *jsobj = JS_NewObject(cx, %s_class, %s_object, NULL);
 	%s *proxy = [[%s alloc] initWithJSObject:jsobj class:[%s class]];
 	[proxy setRealObj:realObj];
-//	JS_SetPrivate(jsobj, proxy);
-	set_proxy_for_jsobject(proxy, jsobj);
 
 	if( realObj ) {
 		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-                [proxy release];
+		[proxy release];
 	}
 
 	[self swizzleMethods];
