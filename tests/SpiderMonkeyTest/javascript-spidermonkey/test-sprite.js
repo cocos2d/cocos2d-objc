@@ -135,8 +135,11 @@ var SpriteTouchTest = function() {
 
 	this.initialize = function() {
 		// Mac only
-		if( __getPlatform() == 'OSX' ) {
+		var platform = __getPlatform();
+		if( platform == 'OSX' ) {
 			this.setIsMouseEnabled( true );
+		} else if( platform == 'iOS' ) {
+			this.setIsTouchEnabled( true );
 		}
 		this.addSprite( centerPos );
 	}
@@ -162,6 +165,12 @@ SpriteTouchTest.prototype.onMouseDown = function( event ) {
 	pos = director.convertEventToGL( event );
 	this.addSprite( pos );
 }
+
+SpriteTouchTest.prototype.onTouchesEnded = function( touches, event ) {
+	pos = director.convertTouchToGL( touches );
+	this.addSprite( pos );
+}
+
 
 SpriteTouchTest.prototype.createSprite = function( pos ) {
 	var idx = Math.random() * 1400 / 100;

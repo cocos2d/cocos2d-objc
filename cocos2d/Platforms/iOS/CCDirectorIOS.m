@@ -327,6 +327,16 @@ CGFloat	__ccContentScaleFactor = 1;
 	return ccp( uiPoint.x, newY );
 }
 
+-(CGPoint)convertTouchToGL:(UITouch*)touch
+{
+	CGPoint uiPoint = [touch locationInView: [touch view]];
+	CGSize s = winSizeInPoints_;
+	float newY = s.height - uiPoint.y;
+	
+	return ccp( uiPoint.x, newY );
+}
+
+
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
 	CGSize winSize = winSizeInPoints_;
