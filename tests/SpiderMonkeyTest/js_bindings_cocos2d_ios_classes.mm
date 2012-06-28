@@ -359,7 +359,7 @@ JSBool JSPROXY_CCNode_camera(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: CCArray* ([])
+// Ret value: CCArray* (array)
 JSBool JSPROXY_CCNode_children(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -3306,7 +3306,7 @@ JSBool JSPROXY_CCTMXObjectGroup_groupName(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXObjectGroup_objects(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -12583,7 +12583,7 @@ JSBool JSPROXY_CCSpriteBatchNode_blendFunc(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Arguments: 
-// Ret value: CCArray* ([])
+// Ret value: CCArray* (array)
 JSBool JSPROXY_CCSpriteBatchNode_descendants(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -13225,7 +13225,7 @@ JSBool JSPROXY_CCTMXLayer_positionAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXLayer_properties(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -19963,7 +19963,7 @@ JSBool JSPROXY_CCPointArray_arrayWithCapacity__static(JSContext *cx, uint32_t ar
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCPointArray_controlPoints(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -25630,6 +25630,76 @@ void JSPROXY_CCScheduler_finalize(JSContext *cx, JSObject *obj)
 //	}
 }
 
+// Arguments: 
+// Ret value: NSSet* (set)
+JSBool JSPROXY_CCScheduler_pauseAllTargets(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSSet* ret_val;
+
+	CCScheduler *real = (CCScheduler*) [proxy realObj];
+	ret_val = [real pauseAllTargets ];
+
+	jsval ret_jsval = NSSet_to_jsval( cx, (NSSet*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: NSInteger
+// Ret value: NSSet* (set)
+JSBool JSPROXY_CCScheduler_pauseAllTargetsWithMinPriority_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	int32_t arg0; 
+
+	JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	NSSet* ret_val;
+
+	CCScheduler *real = (CCScheduler*) [proxy realObj];
+	ret_val = [real pauseAllTargetsWithMinPriority:(NSInteger)arg0  ];
+
+	jsval ret_jsval = NSSet_to_jsval( cx, (NSSet*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
+// Arguments: NSSet*
+// Ret value: void (None)
+JSBool JSPROXY_CCScheduler_resumeTargets_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	NSSet* arg0; 
+
+	arg0 = jsval_to_nsset( cx, *argvp++ );
+
+	CCScheduler *real = (CCScheduler*) [proxy realObj];
+	[real resumeTargets:(NSSet*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
 // Arguments: ccTime
 // Ret value: void (None)
 JSBool JSPROXY_CCScheduler_setTimeScale_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25751,6 +25821,9 @@ void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const c
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
+		JS_FN("pauseAllTargets", JSPROXY_CCScheduler_pauseAllTargets, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("pauseAllTargetsWithMinPriority", JSPROXY_CCScheduler_pauseAllTargetsWithMinPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("resumeTargets", JSPROXY_CCScheduler_resumeTargets_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTimeScale", JSPROXY_CCScheduler_setTimeScale_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("timeScale", JSPROXY_CCScheduler_timeScale, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unscheduleAllSelectors", JSPROXY_CCScheduler_unscheduleAllSelectors, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -27229,7 +27302,7 @@ JSBool JSPROXY_CCMenuItemToggle_setSubItems_(JSContext *cx, uint32_t argc, jsval
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCMenuItemToggle_subItems(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -32490,7 +32563,7 @@ JSBool JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_(JSContext *cx, uint32_t ar
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXMapInfo_layers(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -32534,7 +32607,7 @@ JSBool JSPROXY_CCTMXMapInfo_mapSize(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXMapInfo_objectGroups(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -32795,7 +32868,7 @@ JSBool JSPROXY_CCTMXMapInfo_tileSize(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXMapInfo_tilesets(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -36868,7 +36941,7 @@ JSBool JSPROXY_CCAnimation_duration(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCAnimation_frames(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -39780,7 +39853,7 @@ JSBool JSPROXY_CCTMXTiledMap_objectGroupNamed_(JSContext *cx, uint32_t argc, jsv
 }
 
 // Arguments: 
-// Ret value: NSMutableArray* ([])
+// Ret value: NSMutableArray* (array)
 JSBool JSPROXY_CCTMXTiledMap_objectGroups(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -42802,6 +42875,28 @@ void JSPROXY_CCActionManager_finalize(JSContext *cx, JSObject *obj)
 //	}
 }
 
+// Arguments: 
+// Ret value: NSSet* (set)
+JSBool JSPROXY_CCActionManager_pauseAllRunningActions(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	NSSet* ret_val;
+
+	CCActionManager *real = (CCActionManager*) [proxy realObj];
+	ret_val = [real pauseAllRunningActions ];
+
+	jsval ret_jsval = NSSet_to_jsval( cx, (NSSet*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+
+	return JS_TRUE;
+}
+
 // Arguments: CCAction*
 // Ret value: void (None)
 JSBool JSPROXY_CCActionManager_removeAction_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -42842,6 +42937,28 @@ JSBool JSPROXY_CCActionManager_removeAllActions(JSContext *cx, uint32_t argc, js
 	return JS_TRUE;
 }
 
+// Arguments: NSSet*
+// Ret value: void (None)
+JSBool JSPROXY_CCActionManager_resumeTargets_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	NSSet* arg0; 
+
+	arg0 = jsval_to_nsset( cx, *argvp++ );
+
+	CCActionManager *real = (CCActionManager*) [proxy realObj];
+	[real resumeTargets:(NSSet*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
 void JSPROXY_CCActionManager_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionManager_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -42860,8 +42977,10 @@ void JSPROXY_CCActionManager_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
+		JS_FN("pauseAllRunningActions", JSPROXY_CCActionManager_pauseAllRunningActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAction", JSPROXY_CCActionManager_removeAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAllActions", JSPROXY_CCActionManager_removeAllActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("resumeTargets", JSPROXY_CCActionManager_resumeTargets_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

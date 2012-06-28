@@ -34,6 +34,10 @@
 
 // CLASS IMPLEMENTATIONS
 
+@interface AppController (run)
+-(void) run;
+@end
+
 #ifdef __CC_PLATFORM_IOS
 @implementation AppController
 
@@ -104,16 +108,8 @@
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
-	
-	CCScene *scene = [CCScene node];
-	Test *test = [Test node];
-	
-	[scene addChild:test];	
-	[[CCDirector sharedDirector] runWithScene:scene];
 
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+	[self run];
 
 	return YES;
 }
@@ -137,6 +133,19 @@
 {
 	[super applicationDidFinishLaunching:aNotification];
 	
+	[self run];
+}
+
+-(void)dealloc
+{
+	[super dealloc];
+}
+@end
+#endif
+
+@implementation AppController (run)
+-(void) run
+{
 	// Load cocos2d BridgeSupport (not needed I guess)
 //	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
@@ -153,16 +162,11 @@
 //	
 //	[scene addChild:test];	
 //	[[CCDirector sharedDirector] runWithScene:scene];
-
+	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
-
-}
-
--(void)dealloc
-{
-	[super dealloc];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 }
 @end
-#endif
+
+

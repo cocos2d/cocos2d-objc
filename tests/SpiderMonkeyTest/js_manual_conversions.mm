@@ -104,6 +104,28 @@ NSArray* jsval_to_nsarray( JSContext *cx, jsval vp )
 	return array;
 }
 
+NSSet* jsval_to_nsset( JSContext *cx, jsval vp )
+{
+	// Parsing sequence
+	JSObject *jsobj;
+	JS_ValueToObject( cx, vp, &jsobj );
+	
+	NSCAssert( JS_IsArrayObject( cx, jsobj), @"Invalid argument. It is not an array" );
+	uint32_t len;
+	JS_GetArrayLength(cx, jsobj,&len);
+	NSMutableSet *set = [NSMutableArray arrayWithCapacity:len];
+	for( uint32_t i=0; i< len;i++ ) {		
+		jsval valarg;
+		JS_GetElement(cx, jsobj, i, &valarg);
+		
+		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
+		id real_obj = jsval_to_nsobject( cx, valarg );
+		
+		[set addObject:real_obj];
+	}
+	return set;
+}
+
 NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc )
 {
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:argc];
@@ -253,6 +275,19 @@ jsval NSArray_to_jsval( JSContext *cx, NSArray *array)
 	JSObject *jsobj = JS_NewArrayObject(cx, 0, NULL);
 	uint32_t index = 0;
 	for( id obj in array ) {
+		JSObject *s = get_or_create_jsobject_from_realobj( cx, obj );
+		jsval val = OBJECT_TO_JSVAL(s);
+		JS_SetElement(cx, jsobj, index++, &val);
+	}
+	
+	return OBJECT_TO_JSVAL(jsobj);
+}
+
+jsval NSSet_to_jsval( JSContext *cx, NSSet *set)
+{
+	JSObject *jsobj = JS_NewArrayObject(cx, 0, NULL);
+	uint32_t index = 0;
+	for( id obj in set ) {
 		JSObject *s = get_or_create_jsobject_from_realobj( cx, obj );
 		jsval val = OBJECT_TO_JSVAL(s);
 		JS_SetElement(cx, jsobj, index++, &val);

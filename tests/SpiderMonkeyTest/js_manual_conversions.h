@@ -45,6 +45,9 @@ id jsval_to_nsobject( JSContext *cx, jsval vp );
 /** converts a jsval to a NSArray */
 NSArray* jsval_to_nsarray( JSContext *cx , jsval vp );
 
+/** converts a jsval to a NSSet */
+NSSet* jsval_to_nsset( JSContext *cx , jsval vp );
+
 /** converts a variadic jsvals to a NSArray */
 NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc );
 	
@@ -67,6 +70,7 @@ jsval CGPoint_to_jsval( JSContext *cx, CGPoint p );
 jsval CGSize_to_jsval( JSContext *cx, CGSize s);
 jsval CGRect_to_jsval( JSContext *cx, CGRect r);
 jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
+jsval NSSet_to_jsval( JSContext *cx, NSSet *set);
 jsval opaque_to_jsval( JSContext *cx, void* opaque);
 	
 	

@@ -730,6 +730,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 '''
         return template
 
+    def generate_retval_set( self, declared_type, js_type ):
+        template = '''
+	jsval ret_jsval = NSSet_to_jsval( cx, (NSSet*) ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval );
+'''
+        return template
+
     #
     # special case: manual bindings for these structs
     #  eg: CGRect, CGSize, CGPoint, cpVect
@@ -782,7 +789,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         special_convert = {
             'o' : self.generate_retval_object,
             'S' : self.generate_retval_string,
-            '[]': self.generate_retval_array,
+            'array': self.generate_retval_array,
+            'set': self.generate_retval_set,
         }
 
         ret = ''
@@ -807,9 +815,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'NSString*' : 'S',
-            'NSArray*'  : '[]',
-            'NSMutableArray*' : '[]',
-            'CCArray*'  : '[]',
+            'NSArray*'  : 'array',
+            'NSMutableArray*' : 'array',
+            'CCArray*'  : 'array',
+            'NSSet*'    : 'set',
         }
 
         supported_types = {
@@ -891,9 +900,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         # Right column: JS types
         supported_declared_types = {
             'NSString*' : 'S',
-            'NSArray*'  : '[]',
-            'CCArray*'  : '[]',
-            'NSMutableArray*' : '[]',
+            'NSArray*'  : 'array',
+            'CCArray*'  : 'array',
+            'NSMutableArray*' : 'array',
+            'NSSet*' : 'set',
             'void (^)(id)' : 'f',
             'void (^)(CCNode *)' : 'f',
         }
@@ -993,6 +1003,10 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '\targ%d = jsval_to_nsarray( cx, *argvp++ );\n'
         self.mm_file.write( template % (i) )
 
+    def generate_argument_set( self, i, arg_js_type, arg_declared_type ):
+        template = '\targ%d = jsval_to_nsset( cx, *argvp++ );\n'
+        self.mm_file.write( template % (i) )
+
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
         template = '\targ%d = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );\n'
         self.mm_file.write( template % (i) )
@@ -1039,7 +1053,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         js_special_type_conversions =  {
             'S' : [self.generate_argument_string, 'NSString*'],
             'o' : [self.generate_argument_object, 'id'],
-            '[]': [self.generate_argument_array, 'NSArray*'],
+            'array': [self.generate_argument_array, 'NSArray*'],
+            'set': [self.generate_argument_set, 'NSSet*'],
             'f' : [self.generate_argument_function, 'js_block'],
             'long' :     [self.generate_argument_long, 'long'],
             'longlong' : [self.generate_argument_longlong, 'long long'],
