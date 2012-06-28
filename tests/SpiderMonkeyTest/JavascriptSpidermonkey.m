@@ -59,6 +59,9 @@
 
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 
+	// Multiple touches
+	[glView setMultipleTouchEnabled:YES];
+	
 	director_.wantsFullScreenLayout = YES;
 	// Display Milliseconds Per Frame
 	[director_ setDisplayStats:YES];
@@ -163,9 +166,9 @@
 //	[scene addChild:test];	
 //	[[CCDirector sharedDirector] runWithScene:scene];
 	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 }
 @end
 
