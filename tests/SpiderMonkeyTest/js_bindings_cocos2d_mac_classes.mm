@@ -32,15 +32,7 @@ JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCNode *proxy = (JSPROXY_CCNode*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCNode)", obj);
 }
 
 // Arguments: 
@@ -2089,15 +2081,7 @@ JSBool JSPROXY_CCMenuItem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMenuItem_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItem *proxy = (JSPROXY_CCMenuItem*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItem)", obj);
 }
 
 // Arguments: 
@@ -2412,15 +2396,7 @@ JSBool JSPROXY_CCMenuItemLabel_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCMenuItemLabel_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemLabel *proxy = (JSPROXY_CCMenuItemLabel*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemLabel)", obj);
 }
 
 // Arguments: 
@@ -2870,15 +2846,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CCMenuItemAtlasFont_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemAtlasFont *proxy = (JSPROXY_CCMenuItemAtlasFont*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemAtlasFont)", obj);
 }
 
 // Arguments: NSString*, NSString*, int, int, char, void (^)(id)
@@ -3099,15 +3067,7 @@ JSBool JSPROXY_CCTMXObjectGroup_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCTMXObjectGroup_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXObjectGroup *proxy = (JSPROXY_CCTMXObjectGroup*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXObjectGroup)", obj);
 }
 
 // Arguments: 
@@ -3314,15 +3274,7 @@ JSBool JSPROXY_CCAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAction *proxy = (JSPROXY_CCAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAction)", obj);
 }
 
 // Arguments: 
@@ -3557,15 +3509,7 @@ JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFiniteTimeAction *proxy = (JSPROXY_CCFiniteTimeAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFiniteTimeAction)", obj);
 }
 
 // Arguments: 
@@ -3715,15 +3659,7 @@ JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionInterval *proxy = (JSPROXY_CCActionInterval*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionInterval)", obj);
 }
 
 // Arguments: ccTime
@@ -3916,15 +3852,7 @@ JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMoveTo *proxy = (JSPROXY_CCMoveTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMoveTo)", obj);
 }
 
 // Arguments: ccTime, CGPoint
@@ -4075,15 +4003,7 @@ JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMoveBy *proxy = (JSPROXY_CCMoveBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMoveBy)", obj);
 }
 
 // Arguments: ccTime, CGPoint
@@ -4234,15 +4154,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_constructor(JSContext *cx, uint32_t argc, 
 // Destructor
 void JSPROXY_CCAccelDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAccelDeccelAmplitude *proxy = (JSPROXY_CCAccelDeccelAmplitude*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAccelDeccelAmplitude)", obj);
 }
 
 // Arguments: CCAction*, ccTime
@@ -4436,15 +4348,7 @@ JSBool JSPROXY_CCReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCReverseTime_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCReverseTime *proxy = (JSPROXY_CCReverseTime*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCReverseTime)", obj);
 }
 
 // Arguments: CCFiniteTimeAction*
@@ -4593,15 +4497,7 @@ JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSprite *proxy = (JSPROXY_CCSprite*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSprite)", obj);
 }
 
 // Arguments: 
@@ -5692,15 +5588,7 @@ JSBool JSPROXY_ChipmunkSprite_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_ChipmunkSprite_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_ChipmunkSprite *proxy = (JSPROXY_ChipmunkSprite*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (ChipmunkSprite)", obj);
 }
 
 // Arguments: 
@@ -5939,15 +5827,7 @@ JSBool JSPROXY_CCRepeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCRepeat_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRepeat *proxy = (JSPROXY_CCRepeat*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRepeat)", obj);
 }
 
 // Arguments: CCFiniteTimeAction*, NSUInteger
@@ -6144,15 +6024,7 @@ JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLayer *proxy = (JSPROXY_CCLayer*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayer)", obj);
 }
 
 // Arguments: 
@@ -6923,15 +6795,7 @@ JSBool JSPROXY_CCLayerColor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLayerColor_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLayerColor *proxy = (JSPROXY_CCLayerColor*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerColor)", obj);
 }
 
 // Arguments: 
@@ -7381,15 +7245,7 @@ JSBool JSPROXY_CCProgressTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCProgressTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCProgressTo *proxy = (JSPROXY_CCProgressTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressTo)", obj);
 }
 
 // Arguments: ccTime, float
@@ -7540,15 +7396,7 @@ JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCScene *proxy = (JSPROXY_CCScene*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScene)", obj);
 }
 
 // Arguments: 
@@ -7655,15 +7503,7 @@ JSBool JSPROXY_CCActionInstant_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCActionInstant_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionInstant *proxy = (JSPROXY_CCActionInstant*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionInstant)", obj);
 }
 
 // Arguments: 
@@ -7770,15 +7610,7 @@ JSBool JSPROXY_CCFlipX_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFlipX_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFlipX *proxy = (JSPROXY_CCFlipX*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX)", obj);
 }
 
 // Arguments: BOOL
@@ -7908,15 +7740,7 @@ JSBool JSPROXY_CCFlipY_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFlipY_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFlipY *proxy = (JSPROXY_CCFlipY*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipY)", obj);
 }
 
 // Arguments: BOOL
@@ -8046,15 +7870,7 @@ JSBool JSPROXY_CCGridAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCGridAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGridAction *proxy = (JSPROXY_CCGridAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGridAction)", obj);
 }
 
 // Arguments: ccGridSize, ccTime
@@ -8285,15 +8101,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CCTiledGrid3DAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTiledGrid3DAction *proxy = (JSPROXY_CCTiledGrid3DAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTiledGrid3DAction)", obj);
 }
 
 // Arguments: ccGridSize, ccTime
@@ -8419,15 +8227,7 @@ JSBool JSPROXY_CCShakyTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCShakyTiles3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShakyTiles3D *proxy = (JSPROXY_CCShakyTiles3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShakyTiles3D)", obj);
 }
 
 // Arguments: int, BOOL, ccGridSize, ccTime
@@ -8611,15 +8411,7 @@ JSBool JSPROXY_CCJumpBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCJumpBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCJumpBy *proxy = (JSPROXY_CCJumpBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpBy)", obj);
 }
 
 // Arguments: ccTime, CGPoint, ccTime, NSUInteger
@@ -8774,15 +8566,7 @@ JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLabelTTF *proxy = (JSPROXY_CCLabelTTF*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelTTF)", obj);
 }
 
 // Arguments: 
@@ -9523,15 +9307,7 @@ JSBool JSPROXY_CCProgressFromTo_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCProgressFromTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCProgressFromTo *proxy = (JSPROXY_CCProgressFromTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressFromTo)", obj);
 }
 
 // Arguments: ccTime, float, float
@@ -9684,15 +9460,7 @@ JSBool JSPROXY_CCShaderCache_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCShaderCache_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShaderCache *proxy = (JSPROXY_CCShaderCache*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShaderCache)", obj);
 }
 
 // Arguments: CCGLProgram*, NSString*
@@ -9857,15 +9625,7 @@ JSBool JSPROXY_CCTransitionScene_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CCTransitionScene_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionScene *proxy = (JSPROXY_CCTransitionScene*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionScene)", obj);
 }
 
 // Arguments: 
@@ -10035,15 +9795,7 @@ JSBool JSPROXY_CCTransitionFadeTR_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCTransitionFadeTR_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionFadeTR *proxy = (JSPROXY_CCTransitionFadeTR*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFadeTR)", obj);
 }
 
 // Arguments: ccGridSize
@@ -10204,15 +9956,7 @@ JSBool JSPROXY_CCScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCScaleTo *proxy = (JSPROXY_CCScaleTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScaleTo)", obj);
 }
 
 // Arguments: ccTime, float
@@ -10413,15 +10157,7 @@ JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCScaleBy *proxy = (JSPROXY_CCScaleBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScaleBy)", obj);
 }
 
 // Arguments: CCNode*
@@ -10588,15 +10324,7 @@ JSBool JSPROXY_CCSequence_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSequence *proxy = (JSPROXY_CCSequence*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSequence)", obj);
 }
 
 // Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
@@ -10766,15 +10494,7 @@ JSBool JSPROXY_CCDelayTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCDelayTime_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCDelayTime *proxy = (JSPROXY_CCDelayTime*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDelayTime)", obj);
 }
 
 // Arguments: ccTime
@@ -10900,15 +10620,7 @@ JSBool JSPROXY_CCTransitionSplitCols_constructor(JSContext *cx, uint32_t argc, j
 // Destructor
 void JSPROXY_CCTransitionSplitCols_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionSplitCols *proxy = (JSPROXY_CCTransitionSplitCols*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSplitCols)", obj);
 }
 
 // Arguments: 
@@ -11062,15 +10774,7 @@ JSBool JSPROXY_CCCardinalSplineTo_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCCardinalSplineTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCardinalSplineTo *proxy = (JSPROXY_CCCardinalSplineTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCardinalSplineTo)", obj);
 }
 
 // Arguments: ccTime, CCPointArray*, CGFloat
@@ -11269,15 +10973,7 @@ JSBool JSPROXY_CCCardinalSplineBy_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCCardinalSplineBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCardinalSplineBy *proxy = (JSPROXY_CCCardinalSplineBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCardinalSplineBy)", obj);
 }
 
 // Arguments: ccTime, CCPointArray*, CGFloat
@@ -11401,15 +11097,7 @@ JSBool JSPROXY_CCCatmullRomBy_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCCatmullRomBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCatmullRomBy *proxy = (JSPROXY_CCCatmullRomBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCatmullRomBy)", obj);
 }
 
 // Arguments: ccTime, CCPointArray*
@@ -11581,15 +11269,7 @@ JSBool JSPROXY_CCHide_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCHide_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCHide *proxy = (JSPROXY_CCHide*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCHide)", obj);
 }
 
 // Arguments: ccTime
@@ -11696,15 +11376,7 @@ JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSpriteBatchNode *proxy = (JSPROXY_CCSpriteBatchNode*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteBatchNode)", obj);
 }
 
 // Arguments: CCSprite*, NSUInteger
@@ -12304,15 +11976,7 @@ JSBool JSPROXY_CCTMXLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTMXLayer_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXLayer *proxy = (JSPROXY_CCTMXLayer*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXLayer)", obj);
 }
 
 // Arguments: CCNode*, NSInteger, NSInteger
@@ -13010,15 +12674,7 @@ JSBool JSPROXY_CCTexture2D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTexture2D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTexture2D *proxy = (JSPROXY_CCTexture2D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTexture2D)", obj);
 }
 
 // Arguments: BOOL
@@ -13690,15 +13346,7 @@ JSBool JSPROXY_CCCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCamera_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCamera *proxy = (JSPROXY_CCCamera*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCamera)", obj);
 }
 
 // Arguments: 
@@ -13935,15 +13583,7 @@ JSBool JSPROXY_CCJumpTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCJumpTiles3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCJumpTiles3D *proxy = (JSPROXY_CCJumpTiles3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpTiles3D)", obj);
 }
 
 // Arguments: int, float, ccGridSize, ccTime
@@ -14213,15 +13853,7 @@ JSBool JSPROXY_CCBezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCBezierBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCBezierBy *proxy = (JSPROXY_CCBezierBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBezierBy)", obj);
 }
 
 // Arguments: ccTime
@@ -14324,15 +13956,7 @@ JSBool JSPROXY_CCBezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCBezierTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCBezierTo *proxy = (JSPROXY_CCBezierTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBezierTo)", obj);
 }
 
 // Arguments: CCNode*
@@ -14458,15 +14082,7 @@ JSBool JSPROXY_CCParticleBatchNode_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CCParticleBatchNode_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCParticleBatchNode *proxy = (JSPROXY_CCParticleBatchNode*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleBatchNode)", obj);
 }
 
 // Arguments: CCParticleSystem*, NSInteger, NSInteger
@@ -14923,15 +14539,7 @@ JSBool JSPROXY_CCBMFontConfiguration_constructor(JSContext *cx, uint32_t argc, j
 // Destructor
 void JSPROXY_CCBMFontConfiguration_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCBMFontConfiguration *proxy = (JSPROXY_CCBMFontConfiguration*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBMFontConfiguration)", obj);
 }
 
 // Arguments: 
@@ -15092,15 +14700,7 @@ JSBool JSPROXY_CCCallFunc_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallFunc_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallFunc *proxy = (JSPROXY_CCCallFunc*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFunc)", obj);
 }
 
 // Arguments: 
@@ -15203,15 +14803,7 @@ JSBool JSPROXY_CCCallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallFuncN_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallFuncN *proxy = (JSPROXY_CCCallFuncN*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncN)", obj);
 }
 
 // Arguments: 
@@ -15314,15 +14906,7 @@ JSBool JSPROXY_CCCallFuncND_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallFuncND_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallFuncND *proxy = (JSPROXY_CCCallFuncND*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncND)", obj);
 }
 
 // Arguments: 
@@ -15406,15 +14990,7 @@ JSBool JSPROXY_CCProfiler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCProfiler_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCProfiler *proxy = (JSPROXY_CCProfiler*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProfiler)", obj);
 }
 
 // Arguments: NSString*
@@ -15586,15 +15162,7 @@ JSBool JSPROXY_CCSpeed_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSpeed_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSpeed *proxy = (JSPROXY_CCSpeed*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpeed)", obj);
 }
 
 // Arguments: CCActionInterval*, float
@@ -15815,15 +15383,7 @@ JSBool JSPROXY_CCRotateTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCRotateTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRotateTo *proxy = (JSPROXY_CCRotateTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRotateTo)", obj);
 }
 
 // Arguments: ccTime, float
@@ -15974,15 +15534,7 @@ JSBool JSPROXY_CCActionCamera_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCActionCamera_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionCamera *proxy = (JSPROXY_CCActionCamera*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionCamera)", obj);
 }
 
 // Arguments: ccTime
@@ -16085,15 +15637,7 @@ JSBool JSPROXY_CCShow_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCShow_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShow *proxy = (JSPROXY_CCShow*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShow)", obj);
 }
 
 // Arguments: ccTime
@@ -16200,15 +15744,7 @@ JSBool JSPROXY_CCAccelAmplitude_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCAccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAccelAmplitude *proxy = (JSPROXY_CCAccelAmplitude*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAccelAmplitude)", obj);
 }
 
 // Arguments: CCAction*, ccTime
@@ -16402,15 +15938,7 @@ JSBool JSPROXY_CCGridBase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCGridBase_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGridBase *proxy = (JSPROXY_CCGridBase*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGridBase)", obj);
 }
 
 // Arguments: 
@@ -17024,15 +16552,7 @@ JSBool JSPROXY_CCTiledGrid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCTiledGrid3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTiledGrid3D *proxy = (JSPROXY_CCTiledGrid3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTiledGrid3D)", obj);
 }
 
 // Arguments: ccGridSize
@@ -17147,15 +16667,7 @@ JSBool JSPROXY_CCFadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFadeOut_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFadeOut *proxy = (JSPROXY_CCFadeOut*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeOut)", obj);
 }
 
 // Arguments: ccTime
@@ -17281,15 +16793,7 @@ JSBool JSPROXY_CCEventDispatcher_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CCEventDispatcher_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCEventDispatcher *proxy = (JSPROXY_CCEventDispatcher*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEventDispatcher)", obj);
 }
 
 // Arguments: 
@@ -17918,15 +17422,7 @@ JSBool JSPROXY_CCAnimationCache_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCAnimationCache_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAnimationCache *proxy = (JSPROXY_CCAnimationCache*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimationCache)", obj);
 }
 
 // Arguments: CCAnimation*, NSString*
@@ -18118,15 +17614,7 @@ JSBool JSPROXY_CCRepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRepeatForever *proxy = (JSPROXY_CCRepeatForever*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRepeatForever)", obj);
 }
 
 // Arguments: CCActionInterval*
@@ -18302,15 +17790,7 @@ JSBool JSPROXY_CCFadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFadeIn_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFadeIn *proxy = (JSPROXY_CCFadeIn*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeIn)", obj);
 }
 
 // Arguments: ccTime
@@ -18436,15 +17916,7 @@ JSBool JSPROXY_CCLayerMultiplex_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCLayerMultiplex_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLayerMultiplex *proxy = (JSPROXY_CCLayerMultiplex*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerMultiplex)", obj);
 }
 
 // Arguments: unsigned int
@@ -18574,15 +18046,7 @@ JSBool JSPROXY_CCFileUtils_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFileUtils_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFileUtils *proxy = (JSPROXY_CCFileUtils*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFileUtils)", obj);
 }
 
 // Arguments: NSString*
@@ -18712,15 +18176,7 @@ JSBool JSPROXY_CCAtlasNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCAtlasNode_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAtlasNode *proxy = (JSPROXY_CCAtlasNode*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAtlasNode)", obj);
 }
 
 // Arguments: NSString*, NSUInteger, NSUInteger, NSUInteger
@@ -19198,15 +18654,7 @@ JSBool JSPROXY_CCTileMapAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCTileMapAtlas_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTileMapAtlas *proxy = (JSPROXY_CCTileMapAtlas*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTileMapAtlas)", obj);
 }
 
 // Arguments: NSString*, NSString*, int, int
@@ -19445,15 +18893,7 @@ JSBool JSPROXY_CCPointArray_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCPointArray_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCPointArray *proxy = (JSPROXY_CCPointArray*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCPointArray)", obj);
 }
 
 // Arguments: CGPoint
@@ -19797,15 +19237,7 @@ JSBool JSPROXY_CCCallBlock_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallBlock_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallBlock *proxy = (JSPROXY_CCCallBlock*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlock)", obj);
 }
 
 // Arguments: 
@@ -19908,15 +19340,7 @@ JSBool JSPROXY_CCParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCParticleSystem_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCParticleSystem *proxy = (JSPROXY_CCParticleSystem*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSystem)", obj);
 }
 
 // Arguments: 
@@ -22136,15 +21560,7 @@ JSBool JSPROXY_CCMenuItemFont_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCMenuItemFont_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemFont *proxy = (JSPROXY_CCMenuItemFont*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemFont)", obj);
 }
 
 // Arguments: 
@@ -22499,15 +21915,7 @@ JSBool JSPROXY_CCTargetedAction_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCTargetedAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTargetedAction *proxy = (JSPROXY_CCTargetedAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTargetedAction)", obj);
 }
 
 // Arguments: ccTime
@@ -22610,15 +22018,7 @@ JSBool JSPROXY_CCSkewTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSkewTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSkewTo *proxy = (JSPROXY_CCSkewTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSkewTo)", obj);
 }
 
 // Arguments: ccTime, float, float
@@ -22771,15 +22171,7 @@ JSBool JSPROXY_CCSkewBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSkewBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSkewBy *proxy = (JSPROXY_CCSkewBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSkewBy)", obj);
 }
 
 // Arguments: ccTime, float, float
@@ -22932,15 +22324,7 @@ JSBool JSPROXY_CCSpawn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSpawn_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSpawn *proxy = (JSPROXY_CCSpawn*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpawn)", obj);
 }
 
 // Arguments: CCFiniteTimeAction*, CCFiniteTimeAction*
@@ -23110,15 +22494,7 @@ JSBool JSPROXY_CCMotionStreak_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCMotionStreak_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMotionStreak *proxy = (JSPROXY_CCMotionStreak*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMotionStreak)", obj);
 }
 
 // Arguments: 
@@ -23644,15 +23020,7 @@ JSBool JSPROXY_CCLayerGradient_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCLayerGradient_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLayerGradient *proxy = (JSPROXY_CCLayerGradient*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerGradient)", obj);
 }
 
 // Arguments: 
@@ -24181,15 +23549,7 @@ JSBool JSPROXY_CCToggleVisibility_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCToggleVisibility_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCToggleVisibility *proxy = (JSPROXY_CCToggleVisibility*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCToggleVisibility)", obj);
 }
 
 // Arguments: ccTime
@@ -24296,15 +23656,7 @@ JSBool JSPROXY_CCTransitionFade_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCTransitionFade_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionFade *proxy = (JSPROXY_CCTransitionFade*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFade)", obj);
 }
 
 // Arguments: ccTime, CCScene*, ccColor3B
@@ -24464,15 +23816,7 @@ JSBool JSPROXY_CCParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, js
 // Destructor
 void JSPROXY_CCParticleSystemQuad_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCParticleSystemQuad *proxy = (JSPROXY_CCParticleSystemQuad*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSystemQuad)", obj);
 }
 
 // Arguments: 
@@ -24664,15 +24008,7 @@ JSBool JSPROXY_CCPlace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCPlace_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCPlace *proxy = (JSPROXY_CCPlace*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCPlace)", obj);
 }
 
 // Arguments: CGPoint
@@ -24802,15 +24138,7 @@ JSBool JSPROXY_CCCatmullRomTo_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCCatmullRomTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCatmullRomTo *proxy = (JSPROXY_CCCatmullRomTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCatmullRomTo)", obj);
 }
 
 // Arguments: ccTime, CCPointArray*
@@ -24982,15 +24310,7 @@ JSBool JSPROXY_CCScheduler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCScheduler_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCScheduler *proxy = (JSPROXY_CCScheduler*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScheduler)", obj);
 }
 
 // Arguments: 
@@ -25240,15 +24560,7 @@ JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLabelBMFont *proxy = (JSPROXY_CCLabelBMFont*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelBMFont)", obj);
 }
 
 // Arguments: 
@@ -25889,15 +25201,7 @@ JSBool JSPROXY_CCMenu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCMenu_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenu *proxy = (JSPROXY_CCMenu*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenu)", obj);
 }
 
 // Arguments: 
@@ -26314,15 +25618,7 @@ JSBool JSPROXY_CCActionEase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCActionEase_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionEase *proxy = (JSPROXY_CCActionEase*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionEase)", obj);
 }
 
 // Arguments: CCActionInterval*
@@ -26471,15 +25767,7 @@ JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCDirector_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCDirector *proxy = (JSPROXY_CCDirector*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirector)", obj);
 }
 
 // Arguments: 
@@ -27490,15 +26778,7 @@ JSBool JSPROXY_CCDirectorMac_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCDirectorMac_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCDirectorMac *proxy = (JSPROXY_CCDirectorMac*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirectorMac)", obj);
 }
 
 // Arguments: CGPoint
@@ -27741,15 +27021,7 @@ JSBool JSPROXY_CCLabelAtlas_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLabelAtlas_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLabelAtlas *proxy = (JSPROXY_CCLabelAtlas*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelAtlas)", obj);
 }
 
 // Arguments: NSString*, NSString*, NSUInteger, NSUInteger, NSUInteger
@@ -28003,15 +27275,7 @@ JSBool JSPROXY_CCFollow_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFollow_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFollow *proxy = (JSPROXY_CCFollow*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFollow)", obj);
 }
 
 // Arguments: CCNode*
@@ -28232,15 +27496,7 @@ JSBool JSPROXY_CCOrbitCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCOrbitCamera_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCOrbitCamera *proxy = (JSPROXY_CCOrbitCamera*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCOrbitCamera)", obj);
 }
 
 // Arguments: float, float, float, float, float, float, float
@@ -28401,15 +27657,7 @@ JSBool JSPROXY_CCAnimationFrame_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCAnimationFrame_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAnimationFrame *proxy = (JSPROXY_CCAnimationFrame*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimationFrame)", obj);
 }
 
 // Arguments: 
@@ -28567,15 +27815,7 @@ JSBool JSPROXY_CCTransitionMoveInL_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CCTransitionMoveInL_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionMoveInL *proxy = (JSPROXY_CCTransitionMoveInL*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionMoveInL)", obj);
 }
 
 // Arguments: 
@@ -28748,15 +27988,7 @@ JSBool JSPROXY_CCParallaxNode_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCParallaxNode_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCParallaxNode *proxy = (JSPROXY_CCParallaxNode*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParallaxNode)", obj);
 }
 
 // Arguments: CCNode*, NSInteger, CGPoint, CGPoint
@@ -28866,15 +28098,7 @@ JSBool JSPROXY_CCEaseElastic_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCEaseElastic_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCEaseElastic *proxy = (JSPROXY_CCEaseElastic*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseElastic)", obj);
 }
 
 // Arguments: CCActionInterval*, float
@@ -29087,15 +28311,7 @@ JSBool JSPROXY_CCShatteredTiles3D_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCShatteredTiles3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShatteredTiles3D *proxy = (JSPROXY_CCShatteredTiles3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShatteredTiles3D)", obj);
 }
 
 // Arguments: int, BOOL, ccGridSize, ccTime
@@ -29279,15 +28495,7 @@ JSBool JSPROXY_CCGrid3DAction_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCGrid3DAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGrid3DAction *proxy = (JSPROXY_CCGrid3DAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrid3DAction)", obj);
 }
 
 // Arguments: ccGridSize
@@ -29507,15 +28715,7 @@ JSBool JSPROXY_CCLiquid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLiquid_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLiquid *proxy = (JSPROXY_CCLiquid*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLiquid)", obj);
 }
 
 // Arguments: int, float, ccGridSize, ccTime
@@ -29785,15 +28985,7 @@ JSBool JSPROXY_CCSpriteFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCSpriteFrame_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSpriteFrame *proxy = (JSPROXY_CCSpriteFrame*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteFrame)", obj);
 }
 
 // Arguments: CCTexture2D*, CGRect
@@ -30454,15 +29646,7 @@ JSBool JSPROXY_CCSplitRows_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSplitRows_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSplitRows *proxy = (JSPROXY_CCSplitRows*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSplitRows)", obj);
 }
 
 // Arguments: int, ccTime
@@ -30636,15 +29820,7 @@ JSBool JSPROXY_CCTextureCache_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCTextureCache_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTextureCache *proxy = (JSPROXY_CCTextureCache*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTextureCache)", obj);
 }
 
 // Arguments: NSString*
@@ -30923,15 +30099,7 @@ JSBool JSPROXY_CCMenuItemSprite_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCMenuItemSprite_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemSprite *proxy = (JSPROXY_CCMenuItemSprite*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemSprite)", obj);
 }
 
 // Arguments: 
@@ -31402,15 +30570,7 @@ JSBool JSPROXY_CCRipple3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCRipple3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRipple3D *proxy = (JSPROXY_CCRipple3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRipple3D)", obj);
 }
 
 // Arguments: CGPoint, float, int, float, ccGridSize, ccTime
@@ -31730,15 +30890,7 @@ JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRotateBy *proxy = (JSPROXY_CCRotateBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRotateBy)", obj);
 }
 
 // Arguments: ccTime, float
@@ -31889,15 +31041,7 @@ JSBool JSPROXY_CCTMXLayerInfo_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCTMXLayerInfo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXLayerInfo *proxy = (JSPROXY_CCTMXLayerInfo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXLayerInfo)", obj);
 }
 
 // Arguments: 
@@ -32319,15 +31463,7 @@ JSBool JSPROXY_CCCallFuncO_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallFuncO_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallFuncO *proxy = (JSPROXY_CCCallFuncO*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncO)", obj);
 }
 
 // Arguments: 
@@ -32411,15 +31547,7 @@ JSBool JSPROXY_CCTMXMapInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTMXMapInfo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXMapInfo *proxy = (JSPROXY_CCTMXMapInfo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXMapInfo)", obj);
 }
 
 // Arguments: 
@@ -32947,15 +32075,7 @@ JSBool JSPROXY_CCReuseGrid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCReuseGrid_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCReuseGrid *proxy = (JSPROXY_CCReuseGrid*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCReuseGrid)", obj);
 }
 
 // Arguments: int
@@ -33085,15 +32205,7 @@ JSBool JSPROXY_CCShuffleTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCShuffleTiles_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShuffleTiles *proxy = (JSPROXY_CCShuffleTiles*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShuffleTiles)", obj);
 }
 
 // Arguments: int, ccGridSize, ccTime
@@ -33275,15 +32387,7 @@ JSBool JSPROXY_CCConfiguration_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCConfiguration_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCConfiguration *proxy = (JSPROXY_CCConfiguration*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCConfiguration)", obj);
 }
 
 // Arguments: 
@@ -33571,15 +32675,7 @@ JSBool JSPROXY_CCEaseRateAction_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCEaseRateAction_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCEaseRateAction *proxy = (JSPROXY_CCEaseRateAction*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseRateAction)", obj);
 }
 
 // Arguments: CCActionInterval*, float
@@ -33792,15 +32888,7 @@ JSBool JSPROXY_CCAnimate_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCAnimate_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAnimate *proxy = (JSPROXY_CCAnimate*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimate)", obj);
 }
 
 // Arguments: CCAnimation*
@@ -33995,15 +33083,7 @@ JSBool JSPROXY_CCCallBlockO_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallBlockO_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallBlockO *proxy = (JSPROXY_CCCallBlockO*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlockO)", obj);
 }
 
 // Arguments: 
@@ -34106,15 +33186,7 @@ JSBool JSPROXY_CCCallBlockN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCCallBlockN_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCCallBlockN *proxy = (JSPROXY_CCCallBlockN*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlockN)", obj);
 }
 
 // Arguments: void (^)(CCNode *)
@@ -34263,15 +33335,7 @@ JSBool JSPROXY_CCShaky3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCShaky3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCShaky3D *proxy = (JSPROXY_CCShaky3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShaky3D)", obj);
 }
 
 // Arguments: int, BOOL, ccGridSize, ccTime
@@ -34455,15 +33519,7 @@ JSBool JSPROXY_CCTransitionPageTurn_constructor(JSContext *cx, uint32_t argc, js
 // Destructor
 void JSPROXY_CCTransitionPageTurn_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionPageTurn *proxy = (JSPROXY_CCTransitionPageTurn*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionPageTurn)", obj);
 }
 
 // Arguments: ccGridSize
@@ -34647,15 +33703,7 @@ JSBool JSPROXY_CCMenuItemToggle_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCMenuItemToggle_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemToggle *proxy = (JSPROXY_CCMenuItemToggle*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemToggle)", obj);
 }
 
 // Arguments: 
@@ -35055,15 +34103,7 @@ JSBool JSPROXY_CCTintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTintTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTintTo *proxy = (JSPROXY_CCTintTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTintTo)", obj);
 }
 
 // Arguments: ccTime, GLubyte, GLubyte, GLubyte
@@ -35218,15 +34258,7 @@ JSBool JSPROXY_CCBlink_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCBlink_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCBlink *proxy = (JSPROXY_CCBlink*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBlink)", obj);
 }
 
 // Arguments: ccTime, NSUInteger
@@ -35377,15 +34409,7 @@ JSBool JSPROXY_CCTextureAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCTextureAtlas_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTextureAtlas *proxy = (JSPROXY_CCTextureAtlas*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTextureAtlas)", obj);
 }
 
 // Arguments: 
@@ -35912,15 +34936,7 @@ JSBool JSPROXY_CCTransitionSlideInL_constructor(JSContext *cx, uint32_t argc, js
 // Destructor
 void JSPROXY_CCTransitionSlideInL_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionSlideInL *proxy = (JSPROXY_CCTransitionSlideInL*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSlideInL)", obj);
 }
 
 // Arguments: 
@@ -36093,15 +35109,7 @@ JSBool JSPROXY_CCTimer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTimer_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTimer *proxy = (JSPROXY_CCTimer*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTimer)", obj);
 }
 
 // Arguments: 
@@ -36236,15 +35244,7 @@ JSBool JSPROXY_CCProgressTimer_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCProgressTimer_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCProgressTimer *proxy = (JSPROXY_CCProgressTimer*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressTimer)", obj);
 }
 
 // Arguments: 
@@ -36798,15 +35798,7 @@ JSBool JSPROXY_CCActionTween_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCActionTween_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionTween *proxy = (JSPROXY_CCActionTween*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionTween)", obj);
 }
 
 // Arguments: ccTime, NSString*, float, float
@@ -36961,15 +35953,7 @@ JSBool JSPROXY_CCGrabber_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCGrabber_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGrabber *proxy = (JSPROXY_CCGrabber*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrabber)", obj);
 }
 
 // Arguments: CCTexture2D*
@@ -37107,15 +36091,7 @@ JSBool JSPROXY_CCAnimation_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCAnimation_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCAnimation *proxy = (JSPROXY_CCAnimation*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimation)", obj);
 }
 
 // Arguments: CCSpriteFrame*
@@ -37617,15 +36593,7 @@ JSBool JSPROXY_CCFadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFadeTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFadeTo *proxy = (JSPROXY_CCFadeTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeTo)", obj);
 }
 
 // Arguments: ccTime, GLubyte
@@ -37776,15 +36744,7 @@ JSBool JSPROXY_CCFlipX3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCFlipX3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCFlipX3D *proxy = (JSPROXY_CCFlipX3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX3D)", obj);
 }
 
 // Arguments: ccTime
@@ -37937,15 +36897,7 @@ JSBool JSPROXY_CCProfilingTimer_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCProfilingTimer_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCProfilingTimer *proxy = (JSPROXY_CCProfilingTimer*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProfilingTimer)", obj);
 }
 
 // Arguments: 
@@ -38033,15 +36985,7 @@ JSBool JSPROXY_CCWaves_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCWaves_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCWaves *proxy = (JSPROXY_CCWaves*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWaves)", obj);
 }
 
 // Arguments: int, float, BOOL, BOOL, ccGridSize, ccTime
@@ -38315,15 +37259,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_constructor(JSContext *cx, uint32_t arg
 // Destructor
 void JSPROXY_CCTransitionSceneOriented_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTransitionSceneOriented *proxy = (JSPROXY_CCTransitionSceneOriented*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSceneOriented)", obj);
 }
 
 // Arguments: ccTime, CCScene*, tOrientation
@@ -38477,15 +37413,7 @@ JSBool JSPROXY_CCMenuItemImage_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCMenuItemImage_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCMenuItemImage *proxy = (JSPROXY_CCMenuItemImage*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemImage)", obj);
 }
 
 // Arguments: NSString*, NSString*, NSString*, void (^)(id)
@@ -38813,15 +37741,7 @@ JSBool JSPROXY_CCDeccelAmplitude_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CCDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCDeccelAmplitude *proxy = (JSPROXY_CCDeccelAmplitude*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDeccelAmplitude)", obj);
 }
 
 // Arguments: CCAction*, ccTime
@@ -39015,15 +37935,7 @@ JSBool JSPROXY_CCLens3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCLens3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCLens3D *proxy = (JSPROXY_CCLens3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLens3D)", obj);
 }
 
 // Arguments: CGPoint, float, ccGridSize, ccTime
@@ -39296,15 +38208,7 @@ JSBool JSPROXY_CCWaves3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCWaves3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCWaves3D *proxy = (JSPROXY_CCWaves3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWaves3D)", obj);
 }
 
 // Arguments: int, float, ccGridSize, ccTime
@@ -39574,15 +38478,7 @@ JSBool JSPROXY_CCJumpTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCJumpTo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCJumpTo *proxy = (JSPROXY_CCJumpTo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpTo)", obj);
 }
 
 // Arguments: CCNode*
@@ -39730,15 +38626,7 @@ JSBool JSPROXY_CCTintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTintBy_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTintBy *proxy = (JSPROXY_CCTintBy*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTintBy)", obj);
 }
 
 // Arguments: ccTime, GLshort, GLshort, GLshort
@@ -39893,15 +38781,7 @@ JSBool JSPROXY_CCTMXTiledMap_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CCTMXTiledMap_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXTiledMap *proxy = (JSPROXY_CCTMXTiledMap*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXTiledMap)", obj);
 }
 
 // Arguments: NSString*
@@ -40245,15 +39125,7 @@ JSBool JSPROXY_CCWavesTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCWavesTiles3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCWavesTiles3D *proxy = (JSPROXY_CCWavesTiles3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWavesTiles3D)", obj);
 }
 
 // Arguments: int, float, ccGridSize, ccTime
@@ -40523,15 +39395,7 @@ JSBool JSPROXY_CCTurnOffTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CCTurnOffTiles_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTurnOffTiles *proxy = (JSPROXY_CCTurnOffTiles*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTurnOffTiles)", obj);
 }
 
 // Arguments: int, ccGridSize, ccTime
@@ -40713,15 +39577,7 @@ JSBool JSPROXY_CCSplitCols_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCSplitCols_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSplitCols *proxy = (JSPROXY_CCSplitCols*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSplitCols)", obj);
 }
 
 // Arguments: int, ccTime
@@ -40895,15 +39751,7 @@ JSBool JSPROXY_CCRenderTexture_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCRenderTexture_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCRenderTexture *proxy = (JSPROXY_CCRenderTexture*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRenderTexture)", obj);
 }
 
 // Arguments: 
@@ -41395,15 +40243,7 @@ JSBool JSPROXY_CCTwirl_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTwirl_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTwirl *proxy = (JSPROXY_CCTwirl*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTwirl)", obj);
 }
 
 // Arguments: CGPoint, int, float, ccGridSize, ccTime
@@ -41721,15 +40561,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_constructor(JSContext *cx, uint32_t argc, jsval 
 // Destructor
 void JSPROXY_CCTMXTilesetInfo_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTMXTilesetInfo *proxy = (JSPROXY_CCTMXTilesetInfo*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXTilesetInfo)", obj);
 }
 
 // Arguments: 
@@ -42138,15 +40970,7 @@ JSBool JSPROXY_CCTexturePVR_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCTexturePVR_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCTexturePVR *proxy = (JSPROXY_CCTexturePVR*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTexturePVR)", obj);
 }
 
 // Arguments: 
@@ -42424,15 +41248,7 @@ JSBool JSPROXY_CCGLProgram_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCGLProgram_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGLProgram *proxy = (JSPROXY_CCGLProgram*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGLProgram)", obj);
 }
 
 // Arguments: NSString*, GLuint
@@ -42825,15 +41641,7 @@ JSBool JSPROXY_CCGrid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CCGrid3D_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCGrid3D *proxy = (JSPROXY_CCGrid3D*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrid3D)", obj);
 }
 
 // Arguments: ccGridSize
@@ -43042,15 +41850,7 @@ JSBool JSPROXY_CCActionManager_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CCActionManager_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCActionManager *proxy = (JSPROXY_CCActionManager*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionManager)", obj);
 }
 
 // Arguments: 
@@ -43207,15 +42007,7 @@ JSBool JSPROXY_CCSpriteFrameCache_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CCSpriteFrameCache_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CCSpriteFrameCache *proxy = (JSPROXY_CCSpriteFrameCache*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteFrameCache)", obj);
 }
 
 // Arguments: CCSpriteFrame*, NSString*

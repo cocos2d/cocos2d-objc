@@ -639,28 +639,16 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
         self.mm_file.write( constructor_template % ( proxy_class_name, proxy_class_name ) )
 
     def generate_destructor( self, class_name ):
-        # 1: JSPROXY_CCNode,
-        # 2: JSPROXY_CCNode, 3: JSPROXY_CCNode
-        # JSPROXY_CCNode,
-        # 4: possible callback code
         destructor_template = '''
 // Destructor
 void %s_finalize(JSContext *cx, JSObject *obj)
 {
-//	%%s *proxy = (%%s*)JS_GetPrivate(obj);
-//	%s *proxy = (%s*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%%p) \\n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %%p (%s)", obj);
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         self.mm_file.write( destructor_template % ( proxy_class_name,
-                                                    proxy_class_name, proxy_class_name ) )
+                                                    class_name) )
 
     #
     # Method generator functions

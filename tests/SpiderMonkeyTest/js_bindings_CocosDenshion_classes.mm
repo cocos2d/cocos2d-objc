@@ -32,15 +32,7 @@ JSBool JSPROXY_CDBufferManager_constructor(JSContext *cx, uint32_t argc, jsval *
 // Destructor
 void JSPROXY_CDBufferManager_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDBufferManager *proxy = (JSPROXY_CDBufferManager*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDBufferManager)", obj);
 }
 
 // Arguments: NSString*, BOOL
@@ -184,15 +176,7 @@ JSBool JSPROXY_CDBufferLoadRequest_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CDBufferLoadRequest_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDBufferLoadRequest *proxy = (JSPROXY_CDBufferLoadRequest*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDBufferLoadRequest)", obj);
 }
 
 // Arguments: 
@@ -332,15 +316,7 @@ JSBool JSPROXY_CDSoundEngine_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CDSoundEngine_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDSoundEngine *proxy = (JSPROXY_CDSoundEngine*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDSoundEngine)", obj);
 }
 
 // Arguments: CDSoundSource*
@@ -1103,15 +1079,7 @@ JSBool JSPROXY_SimpleAudioEngine_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_SimpleAudioEngine_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_SimpleAudioEngine *proxy = (JSPROXY_SimpleAudioEngine*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (SimpleAudioEngine)", obj);
 }
 
 // Arguments: 
@@ -1711,15 +1679,7 @@ JSBool JSPROXY_CDSoundSource_constructor(JSContext *cx, uint32_t argc, jsval *vp
 // Destructor
 void JSPROXY_CDSoundSource_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDSoundSource *proxy = (JSPROXY_CDSoundSource*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDSoundSource)", obj);
 }
 
 // Arguments: 
@@ -2258,15 +2218,7 @@ JSBool JSPROXY_CDUtilities_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_CDUtilities_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDUtilities *proxy = (JSPROXY_CDUtilities*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDUtilities)", obj);
 }
 
 // Arguments: NSString*
@@ -2354,15 +2306,7 @@ JSBool JSPROXY_CDLongAudioSource_constructor(JSContext *cx, uint32_t argc, jsval
 // Destructor
 void JSPROXY_CDLongAudioSource_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDLongAudioSource *proxy = (JSPROXY_CDLongAudioSource*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDLongAudioSource)", obj);
 }
 
 // Arguments: 
@@ -2807,15 +2751,7 @@ JSBool JSPROXY_CDAudioManager_constructor(JSContext *cx, uint32_t argc, jsval *v
 // Destructor
 void JSPROXY_CDAudioManager_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDAudioManager *proxy = (JSPROXY_CDAudioManager*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDAudioManager)", obj);
 }
 
 // Arguments: 
@@ -3538,15 +3474,7 @@ JSBool JSPROXY_CDFloatInterpolator_constructor(JSContext *cx, uint32_t argc, jsv
 // Destructor
 void JSPROXY_CDFloatInterpolator_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDFloatInterpolator *proxy = (JSPROXY_CDFloatInterpolator*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDFloatInterpolator)", obj);
 }
 
 // Arguments: 
@@ -3797,15 +3725,7 @@ JSBool JSPROXY_CDPropertyModifier_constructor(JSContext *cx, uint32_t argc, jsva
 // Destructor
 void JSPROXY_CDPropertyModifier_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDPropertyModifier *proxy = (JSPROXY_CDPropertyModifier*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDPropertyModifier)", obj);
 }
 
 // Arguments: 
@@ -4131,15 +4051,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_constructor(JSContext *cx, uint32_t a
 // Destructor
 void JSPROXY_CDAudioInterruptTargetGroup_finalize(JSContext *cx, JSObject *obj)
 {
-//	%s *proxy = (%s*)JS_GetPrivate(obj);
-//	JSPROXY_CDAudioInterruptTargetGroup *proxy = (JSPROXY_CDAudioInterruptTargetGroup*)get_proxy_for_jsobject(obj);
-	printf("JS finalize Obj(%p) \n", obj);
-
-//	if (proxy) {
-//		del_proxy_for_jsobject( obj );
-//		objc_setAssociatedObject([proxy realObj], &JSPROXY_association_proxy_key, nil, OBJC_ASSOCIATION_RETAIN);
-//		[proxy release];
-//	}
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CDAudioInterruptTargetGroup)", obj);
 }
 
 // Arguments: NSObject*
