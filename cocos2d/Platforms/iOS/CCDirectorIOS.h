@@ -62,6 +62,9 @@
 
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;
+
+/** converts a UITouch to a GL point */
+-(CGPoint)convertTouchToGL:(UITouch*)touch;
 @end
 
 #pragma mark -

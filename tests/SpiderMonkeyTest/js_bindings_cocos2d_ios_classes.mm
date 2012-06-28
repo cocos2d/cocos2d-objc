@@ -6085,6 +6085,99 @@ JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
+// Arguments: UITouch*, UIEvent*
+// Ret value: BOOL (b)
+JSBool JSPROXY_CCLayer_ccTouchBegan_withEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; id arg1; 
+
+	arg0 = (UITouch*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (UIEvent*) jsval_to_nsobject( cx, *argvp++);
+	BOOL ret_val;
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	ret_val = [real ccTouchBegan:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+// Arguments: UITouch*, UIEvent*
+// Ret value: void (None)
+JSBool JSPROXY_CCLayer_ccTouchCancelled_withEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; id arg1; 
+
+	arg0 = (UITouch*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (UIEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real ccTouchCancelled:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: UITouch*, UIEvent*
+// Ret value: void (None)
+JSBool JSPROXY_CCLayer_ccTouchEnded_withEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; id arg1; 
+
+	arg0 = (UITouch*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (UIEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real ccTouchEnded:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: UITouch*, UIEvent*
+// Ret value: void (None)
+JSBool JSPROXY_CCLayer_ccTouchMoved_withEvent_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; id arg1; 
+
+	arg0 = (UITouch*) jsval_to_nsobject( cx, *argvp++);
+	arg1 = (UIEvent*) jsval_to_nsobject( cx, *argvp++);
+
+	CCLayer *real = (CCLayer*) [proxy realObj];
+	[real ccTouchMoved:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCLayer* (o)
 JSBool JSPROXY_CCLayer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -6122,6 +6215,10 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_FN("registerWithTouchDispatcher", JSPROXY_CCLayer_registerWithTouchDispatcher, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsAccelerometerEnabled", JSPROXY_CCLayer_setIsAccelerometerEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchBeganWithevent", JSPROXY_CCLayer_ccTouchBegan_withEvent_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchCancelledWithevent", JSPROXY_CCLayer_ccTouchCancelled_withEvent_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchEndedWithevent", JSPROXY_CCLayer_ccTouchEnded_withEvent_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("ccTouchMovedWithevent", JSPROXY_CCLayer_ccTouchMoved_withEvent_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -10107,6 +10204,32 @@ JSBool JSPROXY_CCDirector_convertToUI_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
+// Arguments: UITouch*
+// Ret value: CGPoint ({CGPoint=ff})
+JSBool JSPROXY_CCDirector_convertTouchToGL_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy, @"Invalid Proxy object");
+	NSCAssert( [proxy realObj], @"Object not initialzied. error");
+	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	id arg0; 
+
+	arg0 = (UITouch*) jsval_to_nsobject( cx, *argvp++);
+	CGPoint ret_val;
+
+	CCDirector *real = (CCDirector*) [proxy realObj];
+	ret_val = [real convertTouchToGL:(UITouch*)arg0  ];
+
+	jsval ret_jsval = CGPoint_to_jsval( cx, (CGPoint)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: void (None)
 JSBool JSPROXY_CCDirector_createStatsLabel(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10954,6 +11077,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("contentScaleFactor", JSPROXY_CCDirector_contentScaleFactor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToGL", JSPROXY_CCDirector_convertToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToUI", JSPROXY_CCDirector_convertToUI_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("convertTouchToGL", JSPROXY_CCDirector_convertTouchToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createStatsLabel", JSPROXY_CCDirector_createStatsLabel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("displayStats", JSPROXY_CCDirector_displayStats, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawScene", JSPROXY_CCDirector_drawScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),

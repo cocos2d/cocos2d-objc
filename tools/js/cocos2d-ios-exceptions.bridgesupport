@@ -31,4 +31,9 @@
 <arg declared_type='UIEvent*' index='1' />
 </method>
 </class>
+<class name='CCDirector'>
+<method selector='convertTouchToGL:'>
+<arg declared_type='UITouch*' index='0'/>
+</method>
+</class>
 </signatures>
