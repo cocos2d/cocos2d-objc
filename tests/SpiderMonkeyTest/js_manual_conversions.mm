@@ -292,7 +292,7 @@ jsval NSSet_to_jsval( JSContext *cx, NSSet *set)
 		jsval val = OBJECT_TO_JSVAL(s);
 		JS_SetElement(cx, jsobj, index++, &val);
 	}
-	
+
 	return OBJECT_TO_JSVAL(jsobj);
 }
 

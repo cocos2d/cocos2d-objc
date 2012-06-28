@@ -201,9 +201,11 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
 	}
 
-	// Mac only
-	if( __getPlatform() == 'OSX' ) {
+	var platform = __getPlatform();
+	if( platform == 'OSX' ) {
 		this.setIsMouseEnabled( true );
+	} else if( platform == 'iOS' ) {
+		this.setIsTouchEnabled( true );
 	}
 }
 
@@ -217,6 +219,13 @@ ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
 	this.addSprite( pos );
 }
 
+ChipmunkSpriteTest.prototype.onTouchesEnded = function( touches, event ) {
+	var l = touches.length;
+	for( var i=0; i < l; i++) {
+		pos = director.convertTouchToGL( touches[i] );
+		this.addSprite( pos );
+	}
+}
 
 //------------------------------------------------------------------
 //

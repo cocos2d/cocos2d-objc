@@ -134,7 +134,6 @@ var SpriteTouchTest = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		// Mac only
 		var platform = __getPlatform();
 		if( platform == 'OSX' ) {
 			this.setIsMouseEnabled( true );
@@ -167,8 +166,11 @@ SpriteTouchTest.prototype.onMouseDown = function( event ) {
 }
 
 SpriteTouchTest.prototype.onTouchesEnded = function( touches, event ) {
-	pos = director.convertTouchToGL( touches );
-	this.addSprite( pos );
+	var l = touches.length;
+	for( var i=0; i < l; i++) {
+		pos = director.convertTouchToGL( touches[i] );
+		this.addSprite( pos );
+	}
 }
 
 
@@ -216,11 +218,12 @@ var SpriteBatchTouchTest = function() {
 		this.batch = cc.SpriteBatchNode.create("grossini_dance_atlas.png", 50 );
 		this.addChild( this.batch );
 
-		// Mac only
-		if( __getPlatform() == 'OSX' ) {
+		var platform = __getPlatform();
+		if( platform == 'OSX' ) {
 			this.setIsMouseEnabled( true );
+		} else if( platform == 'iOS' ) {
+			this.setIsTouchEnabled( true );
 		}
-
 	}
 
 	this.addSprite = function(pos) {
@@ -744,133 +747,9 @@ var SpriteBatchColorOpacity = function() {
 }
 goog.inherits(SpriteBatchColorOpacity, BaseLayer );
 
-//------------------------------------------------------------------
-//
-// Chipmunk + Sprite
-//
-//------------------------------------------------------------------
-var ChipmunkSpriteTest = function() {
-
-	goog.base(this);
-
-	this.addSprite = function( pos ) {
-		var sprite =  this.createPhysicsSprite( pos );
-		this.addChild( sprite );
-	}
-
-	this.title = function() {
-		return 'Chipmunk Sprite Test';
-	}
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprites tests. Tap screen.';
-	}
-
-	this.initPhysics();
-}
-goog.inherits( ChipmunkSpriteTest, BaseLayer );
-
-//
-// Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
-//
-
-// init physics
-ChipmunkSpriteTest.prototype.initPhysics = function() {
-	this.space =  cp.spaceNew();
-	var staticBody = cp.spaceGetStaticBody( this.space );
-
-	// Walls
-	var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-			cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-			cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-			cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
-			];
-	for( var i=0; i < walls.length; i++ ) {
-		var wall = walls[i];
-		cp.shapeSetElasticity(wall, 1);
-		cp.shapeSetFriction(wall, 1);
-		cp.spaceAddStaticShape( this.space, wall );
-	}
-
-	// Gravity
-	cp.spaceSetGravity( this.space, cp.v(0, -100) );
-}
-
-ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
-	var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
-	cp.bodySetPos( body, pos );
-	cp.spaceAddBody( this.space, body );
-	var shape = cp.boxShapeNew( body, 48, 108);
-	cp.shapeSetElasticity( shape, 0.5 );
-	cp.shapeSetFriction( shape, 0.5 );
-	cp.spaceAddShape( this.space, shape );
-
-	var sprite = cc.ChipmunkSprite.create("grossini.png");
-	sprite.setBody( body );
-	return sprite;
-}
-
-ChipmunkSpriteTest.prototype.onEnter = function () {
-
-	goog.base(this, 'onEnter');
-
-	this.scheduleUpdate();
-	for(var i=0; i<10; i++) {
-		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
-	}
-
-	// Mac only
-	if( __getPlatform() == 'OSX' ) {
-		this.setIsMouseEnabled( true );
-	}
-}
-
-ChipmunkSpriteTest.prototype.update = function( delta ) {
-	cp.spaceStep( this.space, delta );
-}
-
-ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
-	pos = director.convertEventToGL( event );
-	cc.log("Mouse Down:" + pos );
-	this.addSprite( pos );
-}
-
-
-//------------------------------------------------------------------
-//
-// Chipmunk + Sprite
-//
-//------------------------------------------------------------------
-var ChipmunkSpriteBatchTest = function() {
-
-	goog.base(this);
-
-	// batch node
-	this.batch = cc.SpriteBatchNode.create('grossini.png', 50 );
-	this.addChild( this.batch );
-
-	this.addSprite = function( pos ) {
-		var sprite =  this.createPhysicsSprite( pos );
-		this.batch.addChild( sprite );
-	}
-
-	this.title = function() {
-		return 'Chipmunk SpriteBatch Test';
-	}
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-	}
-}
-goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
-
-
 //
 // Order of tests
 //
-scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
-
 scenes.push( SpriteTouchTest ); scenes.push( SpriteBatchTouchTest );
 
 scenes.push( SpriteFrameTest );
