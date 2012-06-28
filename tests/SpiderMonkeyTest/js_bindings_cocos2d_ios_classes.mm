@@ -2177,8 +2177,8 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		if (found == JS_TRUE) {
 			jsval rval, fval;
 			unsigned argc=1;
-			jsval argv_ok = DOUBLE_TO_JSVAL(delta);
-			jsval *argv = &argv_ok;
+			jsval argv[1];
+			argv[0] = DOUBLE_TO_JSVAL(delta);
 
 			JS_GetProperty(cx, _jsObj, "update", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6170,9 +6170,10 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_HasProperty(cx, _jsObj, "onTouchesEnded", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
-			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			unsigned argc=2;
+			jsval argv[2];
+			argv[0] = NSSet_to_jsval( cx, touches );
+			argv[1] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onTouchesEnded", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6188,9 +6189,10 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_HasProperty(cx, _jsObj, "onTouchesMoved", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
-			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			unsigned argc=2;
+			jsval argv[2];
+			argv[0] = NSSet_to_jsval( cx, touches );
+			argv[1] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onTouchesMoved", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6206,9 +6208,10 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_HasProperty(cx, _jsObj, "onTouchesCancelled", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
-			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			unsigned argc=2;
+			jsval argv[2];
+			argv[0] = NSSet_to_jsval( cx, touches );
+			argv[1] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onTouchesCancelled", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6224,9 +6227,10 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		JS_HasProperty(cx, _jsObj, "onTouchesBegan", &found);
 		if (found == JS_TRUE) {
 			jsval rval, fval;
-			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			unsigned argc=2;
+			jsval argv[2];
+			argv[0] = NSSet_to_jsval( cx, touches );
+			argv[1] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onTouchesBegan", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);

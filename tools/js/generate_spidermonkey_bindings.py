@@ -1364,8 +1364,7 @@ extern JSClass *%s_class;
     def generate_callback_args( self, method ):
         no_args ='jsval *argv = NULL; unsigned argc=0;\n'
         with_args = '''unsigned argc=%d;
-			jsval argv_ok = %s
-			jsval *argv = &argv_ok;
+			jsval argv[%d];
 '''
 
         convert = {
@@ -1376,20 +1375,30 @@ extern JSClass *%s_class;
             'd' : 'DOUBLE_TO_JSVAL(%s);',
         }
 
-        # XXX Only support 0 or 1 argument, and only a limited amount of parameters
+        #
+        # XXX Only supports a limited amount of parameters
+        # XXX generate_retval should be reused
+        #
         if 'arg' in method:
-            for arg in method['arg']:
+            args_len = self.get_number_of_arguments( method )
+            for i,arg in enumerate( method['arg'] ):
                 t = arg['type'].lower()
                 dt = arg['declared_type']
-                if t in convert:
-                    tmp = convert[t] % arg['name']
-                    return with_args % (1, tmp  )
 
                 if dt[-1] == '*':
                     dt = dt[:-1]
-                if t == '@' and (dt in self.supported_classes or dt in self.class_manual):
-                    return with_args % (1, 'OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, %s ) );' % arg['name'] )
 
+                if t in convert:
+                    tmp = convert[t] % arg['name']
+                    with_args += "			argv[%d] = %s\n" % (i,tmp)
+                elif dt == 'NSSet':
+                    with_args += "			argv[%d] = NSSet_to_jsval( cx, %s );\n" % (i, arg['name'] )
+                elif t == '@' and (dt in self.supported_classes or dt in self.class_manual):
+                    with_args += "			argv[%d] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, %s ) );\n" % (i, arg['name'] )
+                else:
+                    with_args += '			argv[%d] = JSVAL_VOID; // XXX TODO Value not supported (%s) \n' % (i, dt)
+
+            return with_args % (args_len, args_len)
         return no_args
 
 

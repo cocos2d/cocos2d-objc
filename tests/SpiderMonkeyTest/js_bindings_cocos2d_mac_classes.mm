@@ -2022,8 +2022,8 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		if (found == JS_TRUE) {
 			jsval rval, fval;
 			unsigned argc=1;
-			jsval argv_ok = DOUBLE_TO_JSVAL(delta);
-			jsval *argv = &argv_ok;
+			jsval argv[1];
+			argv[0] = DOUBLE_TO_JSVAL(delta);
 
 			JS_GetProperty(cx, _jsObj, "update", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6703,8 +6703,8 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		if (found == JS_TRUE) {
 			jsval rval, fval;
 			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			jsval argv[1];
+			argv[0] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onMouseUp", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6721,8 +6721,8 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		if (found == JS_TRUE) {
 			jsval rval, fval;
 			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			jsval argv[1];
+			argv[0] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onMouseDown", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
@@ -6739,8 +6739,8 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		if (found == JS_TRUE) {
 			jsval rval, fval;
 			unsigned argc=1;
-			jsval argv_ok = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
-			jsval *argv = &argv_ok;
+			jsval argv[1];
+			argv[0] = OBJECT_TO_JSVAL( get_or_create_jsobject_from_realobj( cx, event ) );
 
 			JS_GetProperty(cx, _jsObj, "onMouseDragged", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
