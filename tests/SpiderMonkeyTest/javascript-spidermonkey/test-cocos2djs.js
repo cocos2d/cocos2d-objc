@@ -253,26 +253,6 @@ var AboutPage = function() {
 }
 goog.inherits( AboutPage, BaseLayer );
 
-//------------------------------------------------------------------
-//
-// FeaturesPage Page
-//
-//------------------------------------------------------------------
-var FeaturesPage = function() {
-
-	goog.base(this);
-
-	this.title = 'Features';
-	this.subtitle = '';
-	this.isMainTitle = false;
-
-	this.createBulletList( 'Automatic generated JS bindings',
-				'same JS API as cocos2d-html5',
-				'Works on iOS and Mac',
-				'Faster development',
-				'Great prototyping tool');
-}
-goog.inherits( FeaturesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -531,52 +511,6 @@ goog.inherits( ParticlesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
-// ParserFeaturesPage Page
-//
-//------------------------------------------------------------------
-var ParserFeaturesPage = function() {
-
-	goog.base(this);
-
-	this.title = 'Parser Features';
-	this.subtitle = '';
-	this.isMainTitle = false;
-
-	this.createBulletList( 'Generates robust JS bindings',
-				'No need to modify generated code',
-				'No need to modify parsed library',
-				'Easy to maintain',
-				'Powerful config file' );
-}
-goog.inherits( ParserFeaturesPage, BaseLayer );
-
-//------------------------------------------------------------------
-//
-// Internals
-//
-//------------------------------------------------------------------
-var InternalsPage = function() {
-
-	goog.base(this);
-
-	this.title = 'Internals I';
-	this.subtitle = '';
-	this.isMainTitle = false;
-
-	this.onEnterTransitionDidFinish = function() {
-		// super onEnter
-//		goog.base( this, 'onEnterTransitionDidFinish' );
-
-		var spr = this.createImage( 'Presentation/proxy_model.png' );
-		spr.setScale( 0.1 );
-		var scaleAction = cc.ScaleTo.create( 0.7, 1);
-		spr.runAction( scaleAction );
-	}
-}
-goog.inherits( InternalsPage, BaseLayer );
-
-//------------------------------------------------------------------
-//
 // Chipmunk Page
 //
 //------------------------------------------------------------------
@@ -682,24 +616,132 @@ ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
 }
 
 
+//------------------------------------------------------------------
+//
+// Behind The Scenes Page
+//
+//------------------------------------------------------------------
+var BehindTheScenesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Behind The Scenes';
+	this.subtitle = '';
+	this.isMainTitle = true;
+
+}
+goog.inherits( BehindTheScenesPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// ParserFeaturesPage Page
+//
+//------------------------------------------------------------------
+var ParserFeaturesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Parser Features';
+	this.subtitle = '';
+	this.isMainTitle = false;
+
+	this.createBulletList( 'Any Objective-C / C library',
+				'No need to modify generated code',
+				'No need to modify parsed library',
+				'Easy to maintain and extend',
+				'Powerful config file' );
+}
+goog.inherits( ParserFeaturesPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Internals
+//
+//------------------------------------------------------------------
+var InternalsPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Internals';
+	this.subtitle = 'Solid internal design';
+	this.isMainTitle = false;
+
+	this.onEnterTransitionDidFinish = function() {
+		// super onEnter
+//		goog.base( this, 'onEnterTransitionDidFinish' );
+
+		var spr = this.createImage( 'Presentation/proxy_model.png' );
+		spr.setScale( 0.1 );
+		var scaleAction = cc.ScaleTo.create( 0.7, 1);
+		spr.runAction( scaleAction );
+	}
+}
+goog.inherits( InternalsPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// DemoPage
+//
+//------------------------------------------------------------------
+var DemoPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Demo';
+	this.subtitle = '';
+	this.isMainTitle = true;
+}
+goog.inherits( DemoPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// OneMoreThing
+//
+//------------------------------------------------------------------
+var OneMoreThingPage = function() {
+
+	goog.base(this);
+
+	this.title = 'One More Thing';
+	this.subtitle = '';
+	this.isMainTitle = true;
+}
+goog.inherits( OneMoreThingPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Thanks
+//
+//------------------------------------------------------------------
+var ThanksPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Thanks';
+	this.subtitle = '';
+	this.isMainTitle = true;
+}
+goog.inherits( ThanksPage, BaseLayer );
+
+
 //
 // Order of tests
 //
-scenes.push( ParticlesPage );
-
 scenes.push( IntroPage );
 scenes.push( AboutPage );
-scenes.push( FeaturesPage );
 scenes.push( SpritesPage );
 scenes.push( LabelsPage );
 scenes.push( ActionsPage );
 scenes.push( ActionsComplexPage );
 scenes.push( ActionsEasePage );
 scenes.push( ParticlesPage );
+scenes.push( ChipmunkPage );
+scenes.push( BehindTheScenesPage );
 scenes.push( ParserFeaturesPage );
 scenes.push( InternalsPage );
-scenes.push( ChipmunkPage );
-
+scenes.push( DemoPage );
+scenes.push( OneMoreThingPage );
+scenes.push( ThanksPage );
 
 
 //------------------------------------------------------------------
