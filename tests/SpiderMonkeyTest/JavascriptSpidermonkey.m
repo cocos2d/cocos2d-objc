@@ -158,7 +158,7 @@
 	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
 	
 	[cocos2dThread performBlock:^(void) { 
-		NSString * string = @"None";
+		NSString * string = @"None\n";
 		jsval out;
 		BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
 		
@@ -177,10 +177,14 @@
 				string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
 			}
 			else if(JSVAL_IS_STRING(out)) {
-				string = [NSString stringWithFormat:@"Result(double): %d.\n", 
+				string = [NSString stringWithFormat:@"Result(string): %d.\n", 
 						  jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out )
 						  ];
 			}
+			else if (JSVAL_IS_VOID(out) )
+				string = @"Result(void):\n";
+			else if (JSVAL_IS_OBJECT(out) )
+				string = @"Result(object):\n";
 		}
 		else
 		{
