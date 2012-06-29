@@ -83,7 +83,7 @@ var BaseLayer = function() {
 	//
 	var parent = goog.base(this);
 	__associateObjWithNative( this, parent );
-	this.init( cc.c4(0,0,0,0), cc.c4(0,128,255,255));
+	this.init( cc.c4(0,0,0,255), cc.c4(0,128,255,255));
 
 	this.title =  "No title";
 	this.subtitle = "No Subtitle";
@@ -106,7 +106,7 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
 	this.label = cc.LabelTTF.create(this.title, "Gill Sans", fontSize);
-	this.addChild(this.label, 1);
+	this.addChild(this.label, 100);
 
 	var isMain = this.isMainTitle;
 
@@ -124,7 +124,7 @@ BaseLayer.prototype.onEnter = function() {
 		}
 
 		this.sublabel = cc.LabelTTF.create(subStr, "Thonburi", subfontSize);
-		this.addChild(this.sublabel, 1);
+		this.addChild(this.sublabel, 90);
 		if( isMain )
 			this.sublabel.setPosition( cc.p(winSize.width / 2, winSize.height*3/8 ));
 		else
@@ -138,8 +138,8 @@ BaseLayer.prototype.onEnter = function() {
 	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
 
 	 [item1, item2, item3].forEach( function(item) {
-		item.normalImage().setOpacity(15);
-		item.selectedImage().setOpacity(15);
+		item.normalImage().setOpacity(45);
+		item.selectedImage().setOpacity(45);
 		} );
 
 	var menu = cc.Menu.create( item1, item2, item3 );
@@ -149,7 +149,7 @@ BaseLayer.prototype.onEnter = function() {
 	item2.setPosition( cc.p(winSize.width / 2, 30));
 	item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
 
-	this.addChild(menu, 1);
+	this.addChild(menu, 80);
 }
 
 BaseLayer.prototype.createBulletList = function () {
@@ -166,13 +166,13 @@ BaseLayer.prototype.createBulletList = function () {
 	var fontSize = winSize.height*0.07;
 	var bullets = cc.LabelTTF.create( str, "Gill Sans", fontSize );
 	bullets.setPosition( centerPos );
-	this.addChild( bullets );
+	this.addChild( bullets, 80 );
 }
 
 BaseLayer.prototype.createImage = function( file ) {
 	var sprite = cc.Sprite.create( file );
 	sprite.setPosition( centerPos );
-	this.addChild( sprite );
+	this.addChild( sprite, 70 );
 
 	return sprite;
 }
@@ -202,11 +202,56 @@ var IntroPage = function() {
 
 	goog.base(this);
 
+	this.background1 = this.createImage( 'Official-cocos2d-Icon-Angry.png');
+	this.background2 = this.createImage( 'Official-cocos2d-Icon-Happy.png');
+
+	this.background2.setOpacity( 0 );
+
+	// Not working setZOrder() ??
+//	sprite.setZOrder( -200 );
+
 	this.title = 'cocos2d + JS'
-	this.subtitle = 'Prototyping, Faster development, Web Integration';
+	this.subtitle = 'Javascript bindings for cocos2d';
 	this.isMainTitle = true;
+
+	this.onEnterTransitionDidFinish =  function() {
+		var fade_out1 = cc.FadeOut.create( 2 );
+		var fade_in1 = fade_out1.reverse();
+		var delay1 = cc.DelayTime.create(4);
+
+		var seq1 = cc.Sequence.create( fade_out1, fade_in1, delay1 );
+		this.background1.runAction( cc.RepeatForever.create( seq1 ) );
+
+		var delay2 = cc.DelayTime.create(4);
+		var fade_out2 = cc.FadeOut.create( 2 );
+		var fade_in2 = fade_out2.reverse();
+
+		var seq2 = cc.Sequence.create( delay2, fade_in2, fade_out2 );
+		this.background2.runAction( cc.RepeatForever.create( seq2 ) );
+	}
 }
 goog.inherits( IntroPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// About Page
+//
+//------------------------------------------------------------------
+var AboutPage = function() {
+
+	goog.base(this);
+
+	this.title = 'About';
+	this.subtitle = 'What is cocos2d + JS ?';
+	this.isMainTitle = false;
+
+	this.createBulletList( 'Javascript bindings for cocos2d',
+				'Same JS API as cocos2d-html5',
+				'Works on iOS and Mac',
+				'Faster development',
+				'Great prototyping tool');
+}
+goog.inherits( AboutPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -433,6 +478,30 @@ goog.inherits( ActionsEasePage, BaseLayer );
 
 //------------------------------------------------------------------
 //
+// Particles Page
+//
+//------------------------------------------------------------------
+var ParticlesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Particles';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.ParticleSystem.create("myparticle.plist");', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	var particle = cc.ParticleSystem.create("Particles/Flower.plist");
+	this.addChild( particle );
+	particle.setPosition( centerPos );
+}
+goog.inherits( ParticlesPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
 // ParserFeaturesPage Page
 //
 //------------------------------------------------------------------
@@ -479,24 +548,28 @@ goog.inherits( InternalsPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
-// Chipmunk + Sprite
+// Chipmunk Page
 //
 //------------------------------------------------------------------
-var ChipmunkSpriteTest = function() {
+var ChipmunkPage = function() {
 
 	goog.base(this);
 
+	// batch node
+	this.batch = cc.SpriteBatchNode.create('grossini.png', 50 );
+	this.addChild( this.batch );
+
 	this.addSprite = function( pos ) {
 		var sprite =  this.createPhysicsSprite( pos );
-		this.addChild( sprite );
+		this.batch.addChild( sprite );
 	}
 
-	this.title = 'Chipmunk Sprite Test';
-	this.subtitle = 'Chipmunk + cocos2d sprites tests. Tap screen.';
+	this.title = 'Physics Integration';
+	this.subtitle = 'Integration with Chipmunk Physics Engine';
 
 	this.initPhysics();
 }
-goog.inherits( ChipmunkSpriteTest, BaseLayer );
+goog.inherits( ChipmunkPage, BaseLayer );
 
 //
 // Instance 'base' methods
@@ -504,7 +577,7 @@ goog.inherits( ChipmunkSpriteTest, BaseLayer );
 //
 
 // init physics
-ChipmunkSpriteTest.prototype.initPhysics = function() {
+ChipmunkPage.prototype.initPhysics = function() {
 	this.space =  cp.spaceNew();
 	var staticBody = cp.spaceGetStaticBody( this.space );
 
@@ -525,7 +598,7 @@ ChipmunkSpriteTest.prototype.initPhysics = function() {
 	cp.spaceSetGravity( this.space, cp.v(0, -100) );
 }
 
-ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
+ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 	var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
 	cp.bodySetPos( body, pos );
 	cp.spaceAddBody( this.space, body );
@@ -539,7 +612,7 @@ ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
 	return sprite;
 }
 
-ChipmunkSpriteTest.prototype.onEnter = function () {
+ChipmunkPage.prototype.onEnter = function () {
 
 	goog.base(this, 'onEnter');
 
@@ -556,22 +629,22 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 		this.setIsTouchEnabled( true );
 }
 
-ChipmunkSpriteTest.prototype.onEnterTransitionDidFinish = function () {
+ChipmunkPage.prototype.onEnterTransitionDidFinish = function () {
 	this.scheduleUpdate();
 }
 
 
-ChipmunkSpriteTest.prototype.update = function( delta ) {
+ChipmunkPage.prototype.update = function( delta ) {
 	cp.spaceStep( this.space, delta );
 }
 
-ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
+ChipmunkPage.prototype.onMouseDown = function( event ) {
 	pos = director.convertEventToGL( event );
 	cc.log("Mouse Down:" + pos );
 	this.addSprite( pos );
 }
 
-ChipmunkSpriteTest.prototype.onTouchesEnded = function( touches, event ) {
+ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
 		pos = director.convertTouchToGL( touches[i] );
@@ -579,45 +652,24 @@ ChipmunkSpriteTest.prototype.onTouchesEnded = function( touches, event ) {
 	}
 }
 
-//------------------------------------------------------------------
-//
-// Chipmunk + Sprite + Batch
-//
-//------------------------------------------------------------------
-var ChipmunkSpriteBatchTest = function() {
-
-	goog.base(this);
-
-	// batch node
-	this.batch = cc.SpriteBatchNode.create('grossini.png', 50 );
-	this.addChild( this.batch );
-
-	this.addSprite = function( pos ) {
-		var sprite =  this.createPhysicsSprite( pos );
-		this.batch.addChild( sprite );
-	}
-
-	this.title = 'Chipmunk SpriteBatch Test';
-	this.subtitle = 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-}
-goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
-
-
-
 
 //
 // Order of tests
 //
+scenes.push( ParticlesPage );
+
 scenes.push( IntroPage );
+scenes.push( AboutPage );
 scenes.push( FeaturesPage );
 scenes.push( SpritesPage );
 scenes.push( LabelsPage );
 scenes.push( ActionsPage );
 scenes.push( ActionsComplexPage );
 scenes.push( ActionsEasePage );
+scenes.push( ParticlesPage );
 scenes.push( ParserFeaturesPage );
 scenes.push( InternalsPage );
-scenes.push( ChipmunkSpriteBatchTest );
+scenes.push( ChipmunkPage );
 
 
 
@@ -628,12 +680,14 @@ scenes.push( ChipmunkSpriteBatchTest );
 //------------------------------------------------------------------
 function run()
 {
-    var scene = new cc.Scene();
-    scene.init();
-    var layer = new scenes[currentScene]();
-    scene.addChild( layer );
+	var scene = new cc.Scene();
+	scene.init();
+	var layer = new scenes[currentScene]();
+	scene.addChild( layer );
 
-    director.runWithScene( scene );
+	director.setDisplayStats( false );
+
+	director.runWithScene( scene );
 }
 
 run();

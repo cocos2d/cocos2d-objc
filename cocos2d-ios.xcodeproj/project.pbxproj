@@ -1570,6 +1570,8 @@
 		A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8552159D3F3A00E77CC9 /* Presentation */; };
 		A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
 		A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
+		A0AA855A159E1A9500E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F489C410458B6300755CFB /* Official-cocos2d-Icon-Angry.png */; };
+		A0AA855B159E1A9900E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F489C510458B6300755CFB /* Official-cocos2d-Icon-Happy.png */; };
 		A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377513EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
@@ -11302,6 +11304,8 @@
 				A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */,
 				A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */,
 				A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */,
+				A0AA855A159E1A9500E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
+				A0AA855B159E1A9900E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

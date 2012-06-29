@@ -2149,7 +2149,6 @@
 		A09C8D1B1566FB4100ADFDA9 /* stars2_mini.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E8431225EDD000DE0DA2 /* stars2_mini.png */; };
 		A09C8D1C1566FB4100ADFDA9 /* streak.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E8441225EDD000DE0DA2 /* streak.png */; };
 		A09C8D1D1566FB4100ADFDA9 /* animations in Resources */ = {isa = PBXBuildFile; fileRef = E076EADC1225EE2B00DE0DA2 /* animations */; };
-		A09C8D1E1566FB4100ADFDA9 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		A09C8D1F1566FB4100ADFDA9 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = E076EADE1225EE2B00DE0DA2 /* TileMaps */; };
 		A09C8D201566FB4100ADFDA9 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E076EADF1225EE2B00DE0DA2 /* zwoptex */; };
 		A09C8D211566FB4100ADFDA9 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
@@ -2173,6 +2172,9 @@
 		A0AA8551159D3AFF00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8550159D3AFF00E77CC9 /* Presentation */; };
 		A0AA8555159D789E00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5612DF8A8C002442F5 /* futura-48.fnt */; };
 		A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5712DF8A8C002442F5 /* futura-48.png */; };
+		A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7971225EDD000DE0DA2 /* Official-cocos2d-Icon-Angry.png */; };
+		A0AA855C159E1AA700E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7981225EDD000DE0DA2 /* Official-cocos2d-Icon-Happy.png */; };
+		A0AA855D159E286200E77CC9 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		A0AAB80B1451BD3600850F2C /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */; };
 		A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */; };
 		A0ADEF7314584BD3009A71F1 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
@@ -11524,7 +11526,6 @@
 				A09C8D1B1566FB4100ADFDA9 /* stars2_mini.png in Resources */,
 				A09C8D1C1566FB4100ADFDA9 /* streak.png in Resources */,
 				A09C8D1D1566FB4100ADFDA9 /* animations in Resources */,
-				A09C8D1E1566FB4100ADFDA9 /* Particles in Resources */,
 				A09C8D1F1566FB4100ADFDA9 /* TileMaps in Resources */,
 				A09C8D201566FB4100ADFDA9 /* zwoptex in Resources */,
 				A09C8D211566FB4100ADFDA9 /* MainMenu.xib in Resources */,
@@ -11537,6 +11538,9 @@
 				A0AA8551159D3AFF00E77CC9 /* Presentation in Resources */,
 				A0AA8555159D789E00E77CC9 /* futura-48.fnt in Resources */,
 				A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */,
+				A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
+				A0AA855C159E1AA700E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */,
+				A0AA855D159E286200E77CC9 /* Particles in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
