@@ -46,7 +46,7 @@
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 
-#import "CCLayer.h"
+#import "../../CCLayer.h"
 
 #if CC_ENABLE_PROFILERS
 #import "../../Support/CCProfiling.h"
