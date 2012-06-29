@@ -1568,6 +1568,8 @@
 		A0A7A53C1514F27D00C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */; };
 		A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */; };
 		A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8552159D3F3A00E77CC9 /* Presentation */; };
+		A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
+		A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
 		A0B0377313EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377413EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
 		A0B0377513EA1FDB0073E59A /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
@@ -11298,6 +11300,8 @@
 				A021C072159BAC74008450B6 /* jsproto.tbl in Resources */,
 				A021C074159BAC74008450B6 /* libjs_static.a.desc in Resources */,
 				A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */,
+				A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */,
+				A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
