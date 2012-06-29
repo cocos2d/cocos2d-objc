@@ -32,17 +32,15 @@
 #elif defined(__CC_PLATFORM_MAC)
 
 #import <Cocoa/Cocoa.h>
-#import "ThoMoServerStub.h"
 
 @class SMLTextView;
 @class MGSFragaria;
 
-@interface BaseAppController : NSObject <NSApplicationDelegate, ThoMoServerDelegateProtocol>
+@interface BaseAppController : NSObject <NSApplicationDelegate>
 {
 	NSWindow		*window_;
 	CCGLView		*glView_;
 	CCDirectorMac	*director_;							// weak ref
-    ThoMoServerStub *thoMoServer;
 }
 
 @property (nonatomic, assign) IBOutlet NSWindow	*window;
@@ -50,8 +48,6 @@
 @property (nonatomic, readonly) CCDirectorMac	*director;
 
 - (IBAction)toggleFullScreen:(id)sender;
-
-- (void)initThoMoServer;
 
 @end
 #endif // __CC_PLATFORM_MAC

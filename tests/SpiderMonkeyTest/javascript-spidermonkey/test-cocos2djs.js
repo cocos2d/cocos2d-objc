@@ -15,7 +15,7 @@ var scenes = []
 var currentScene = 0;
 var withTransition = false;
 
-var nextSpriteTestAction = function () {
+var nextScene = function () {
 	currentScene = currentScene + 1;
 	if( currentScene >= scenes.length )
 		currentScene = 0;
@@ -23,7 +23,7 @@ var nextSpriteTestAction = function () {
 	withTransition = true;
 	loadScene(currentScene);
 };
-var backSpriteTestAction = function () {
+var previousScene = function () {
 	currentScene = currentScene -1;
 	if( currentScene < 0 )
 		currentScene = scenes.length -1;
@@ -31,7 +31,7 @@ var backSpriteTestAction = function () {
 	withTransition = true;
 	loadScene(currentScene);
 };
-var restartSpriteTestAction = function () {
+var restartScene = function () {
 	loadScene( currentScene );
 };
 
@@ -179,18 +179,15 @@ BaseLayer.prototype.createImage = function( file ) {
 
 
 BaseLayer.prototype.restartCallback = function (sender) {
-    cc.log("restart called");
-    restartSpriteTestAction();
+	restartScene();
 }
 
 BaseLayer.prototype.nextCallback = function (sender) {
-    cc.log("next called");
-    nextSpriteTestAction();
+	nextScene();
 }
 
 BaseLayer.prototype.backCallback = function (sender) {
-    cc.log("back called");
-    backSpriteTestAction();
+	previousScene();
 }
 
 //------------------------------------------------------------------
