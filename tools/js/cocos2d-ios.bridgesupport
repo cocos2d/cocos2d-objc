@@ -6928,6 +6928,11 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCTransitionCrossFade'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCTransitionFade'>
 <method selector='initWithDuration:scene:withColor:'>
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
@@ -6942,16 +6947,69 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCTransitionFadeBL'>
+<method selector='actionWithSize:'>
+<arg name='vector' declared_type='ccGridSize' type='{_ccGridSize=ii}' index='0'/>
+<retval declared_type='CCActionInterval*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionFadeDown'>
+<method selector='actionWithSize:'>
+<arg name='v' declared_type='ccGridSize' type='{_ccGridSize=ii}' index='0'/>
+<retval declared_type='CCActionInterval*' type='@'/>
+</method>
+</class>
 <class name='CCTransitionFadeTR'>
 <method selector='actionWithSize:'>
 <arg name='vector' declared_type='ccGridSize' type='{_ccGridSize=ii}' index='0'/>
 <retval declared_type='CCActionInterval*' type='@'/>
 </method>
 </class>
+<class name='CCTransitionFadeUp'>
+<method selector='actionWithSize:'>
+<arg name='v' declared_type='ccGridSize' type='{_ccGridSize=ii}' index='0'/>
+<retval declared_type='CCActionInterval*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionFlipAngular'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionFlipX'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionFlipY'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionJumpZoom'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionMoveInB'>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCTransitionMoveInL'>
 <method selector='action'>
 <retval declared_type='CCActionInterval*' type='@'/>
 </method>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCTransitionMoveInR'>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCTransitionMoveInT'>
 <method selector='initScenes'>
 <retval declared_type='void' type='v'/>
 </method>
@@ -6971,6 +7029,53 @@
 <arg name='t' declared_type='ccTime' type='f' index='0'/>
 <arg name='s' declared_type='CCScene*' type='@' index='1'/>
 <arg name='back' declared_type='BOOL' type='B' index='2'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgress'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressHorizontal'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressInOut'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressOutIn'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressRadialCCW'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressRadialCW'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionProgressVertical'>
+<method selector='progressTimerNodeWithRenderTexture:'>
+<arg name='texture' declared_type='CCRenderTexture*' type='@' index='0'/>
+<retval declared_type='CCProgressTimer*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionRotoZoom'>
+<method selector='init'>
 <retval declared_type='id' type='@'/>
 </method>
 </class>
@@ -7006,6 +7111,16 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCTransitionShrinkGrow'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionSlideInB'>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCTransitionSlideInL'>
 <method selector='action'>
 <retval declared_type='CCActionInterval*' type='@'/>
@@ -7014,9 +7129,44 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCTransitionSlideInR'>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCTransitionSlideInT'>
+<method selector='initScenes'>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCTransitionSplitCols'>
 <method selector='action'>
 <retval declared_type='CCActionInterval*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionSplitRows'>
+<method selector='action'>
+<retval declared_type='CCActionInterval*' type='@'/>
+</method>
+</class>
+<class name='CCTransitionTurnOffTiles'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionZoomFlipAngular'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionZoomFlipX'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCTransitionZoomFlipY'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
 </method>
 </class>
 <class name='CCTurnOffTiles'>

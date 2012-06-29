@@ -49,7 +49,13 @@ var loadScene = function (sceneIdx)
 
 //	scene.walkSceneGraph(0);
 
-	var transitions = [ cc.TransitionSplitCols, cc.TransitionSlideInL, cc.TransitionFade ];
+	var transitions = [ cc.TransitionSplitCols, cc.TransitionSplitRows,
+				cc.TransitionSlideInL, cc.TransitionSlideInR, cc.TransitionSlideInT, cc.TransitionSlideInB,
+				cc.TransitionFade, cc.TransitionCrossFade,
+				cc.TransitionFlipX, cc.TransitionFlipY,
+				cc.TransitionProgressRadialCCW, cc.TransitionProgressRadialCW, cc.TransitionProgressVertical, cc.TransitionProgressHorizontal,
+				cc.TransitionShrinkGrow,
+				];
 	var idx = Math.floor(  Math.random() * transitions.length );
 	var transition = transitions[ idx ];
 

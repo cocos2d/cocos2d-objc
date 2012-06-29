@@ -113,33 +113,6 @@ extern JSClass *JSPROXY_CCMenuItemAtlasFont_class;
 @end
 
 /*
- * CCTMXObjectGroup
- */
-#pragma mark - CCTMXObjectGroup
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTMXObjectGroup_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTMXObjectGroup_object;
-extern JSClass *JSPROXY_CCTMXObjectGroup_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTMXObjectGroup : JSPROXY_NSObject
-{
-}
-
-@end
-
-/*
  * CCAction
  */
 #pragma mark - CCAction
@@ -221,6 +194,60 @@ extern JSClass *JSPROXY_CCActionInterval_class;
 @end
 
 /*
+ * CCProgressFromTo
+ */
+#pragma mark - CCProgressFromTo
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCProgressFromTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCProgressFromTo_object;
+extern JSClass *JSPROXY_CCProgressFromTo_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCProgressFromTo : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCTMXObjectGroup
+ */
+#pragma mark - CCTMXObjectGroup
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTMXObjectGroup_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTMXObjectGroup_object;
+extern JSClass *JSPROXY_CCTMXObjectGroup_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTMXObjectGroup : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCMoveTo
  */
 #pragma mark - CCMoveTo
@@ -275,19 +302,19 @@ extern JSClass *JSPROXY_CCMoveBy_class;
 @end
 
 /*
- * CCAccelDeccelAmplitude
+ * CCCamera
  */
-#pragma mark - CCAccelDeccelAmplitude
+#pragma mark - CCCamera
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCCamera_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCAccelDeccelAmplitude_object;
-extern JSClass *JSPROXY_CCAccelDeccelAmplitude_class;
+extern JSObject *JSPROXY_CCCamera_object;
+extern JSClass *JSPROXY_CCCamera_class;
 
 #ifdef __cplusplus
 }
@@ -295,7 +322,7 @@ extern JSClass *JSPROXY_CCAccelDeccelAmplitude_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCAccelDeccelAmplitude : JSPROXY_CCActionInterval
+@interface JSPROXY_CCCamera : JSPROXY_NSObject
 {
 }
 
@@ -377,33 +404,6 @@ extern JSClass *JSPROXY_ChipmunkSprite_class;
 
 /* Proxy class */
 @interface JSPROXY_ChipmunkSprite : JSPROXY_CCSprite
-{
-}
-
-@end
-
-/*
- * CCRepeat
- */
-#pragma mark - CCRepeat
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCRepeat_object;
-extern JSClass *JSPROXY_CCRepeat_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCRepeat : JSPROXY_CCActionInterval
 {
 }
 
@@ -734,19 +734,19 @@ extern JSClass *JSPROXY_CCLabelTTF_class;
 @end
 
 /*
- * CCProgressFromTo
+ * CCTransitionScene
  */
-#pragma mark - CCProgressFromTo
+#pragma mark - CCTransitionScene
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCProgressFromTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionScene_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCProgressFromTo_object;
-extern JSClass *JSPROXY_CCProgressFromTo_class;
+extern JSObject *JSPROXY_CCTransitionScene_object;
+extern JSClass *JSPROXY_CCTransitionScene_class;
 
 #ifdef __cplusplus
 }
@@ -754,7 +754,61 @@ extern JSClass *JSPROXY_CCProgressFromTo_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCProgressFromTo : JSPROXY_CCActionInterval
+@interface JSPROXY_CCTransitionScene : JSPROXY_CCScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionProgress
+ */
+#pragma mark - CCTransitionProgress
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgress_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgress_object;
+extern JSClass *JSPROXY_CCTransitionProgress_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgress : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionProgressRadialCCW
+ */
+#pragma mark - CCTransitionProgressRadialCCW
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgressRadialCCW_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgressRadialCCW_object;
+extern JSClass *JSPROXY_CCTransitionProgressRadialCCW_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgressRadialCCW : JSPROXY_CCTransitionProgress
 {
 }
 
@@ -788,33 +842,6 @@ extern JSClass *JSPROXY_CCShaderCache_class;
 @end
 
 /*
- * CCTransitionScene
- */
-#pragma mark - CCTransitionScene
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTransitionScene_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTransitionScene_object;
-extern JSClass *JSPROXY_CCTransitionScene_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTransitionScene : JSPROXY_CCScene
-{
-}
-
-@end
-
-/*
  * CCTransitionFadeTR
  */
 #pragma mark - CCTransitionFadeTR
@@ -836,6 +863,33 @@ extern JSClass *JSPROXY_CCTransitionFadeTR_class;
 
 /* Proxy class */
 @interface JSPROXY_CCTransitionFadeTR : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionSceneOriented
+ */
+#pragma mark - CCTransitionSceneOriented
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionSceneOriented_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionSceneOriented_object;
+extern JSClass *JSPROXY_CCTransitionSceneOriented_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionSceneOriented : JSPROXY_CCTransitionScene
 {
 }
 
@@ -896,19 +950,19 @@ extern JSClass *JSPROXY_CCScaleBy_class;
 @end
 
 /*
- * CCSequence
+ * CCTransitionPageTurn
  */
-#pragma mark - CCSequence
+#pragma mark - CCTransitionPageTurn
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCSequence_object;
-extern JSClass *JSPROXY_CCSequence_class;
+extern JSObject *JSPROXY_CCTransitionPageTurn_object;
+extern JSClass *JSPROXY_CCTransitionPageTurn_class;
 
 #ifdef __cplusplus
 }
@@ -916,7 +970,61 @@ extern JSClass *JSPROXY_CCSequence_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCSequence : JSPROXY_CCActionInterval
+@interface JSPROXY_CCTransitionPageTurn : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionRotoZoom
+ */
+#pragma mark - CCTransitionRotoZoom
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionRotoZoom_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionRotoZoom_object;
+extern JSClass *JSPROXY_CCTransitionRotoZoom_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionRotoZoom : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionFadeDown
+ */
+#pragma mark - CCTransitionFadeDown
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionFadeDown_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionFadeDown_object;
+extern JSClass *JSPROXY_CCTransitionFadeDown_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionFadeDown : JSPROXY_CCTransitionFadeTR
 {
 }
 
@@ -1058,6 +1166,33 @@ extern JSClass *JSPROXY_CCCatmullRomBy_class;
 @end
 
 /*
+ * CCTransitionFlipAngular
+ */
+#pragma mark - CCTransitionFlipAngular
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionFlipAngular_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionFlipAngular_object;
+extern JSClass *JSPROXY_CCTransitionFlipAngular_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionFlipAngular : JSPROXY_CCTransitionSceneOriented
+{
+}
+
+@end
+
+/*
  * CCHide
  */
 #pragma mark - CCHide
@@ -1079,6 +1214,33 @@ extern JSClass *JSPROXY_CCHide_class;
 
 /* Proxy class */
 @interface JSPROXY_CCHide : JSPROXY_CCActionInstant
+{
+}
+
+@end
+
+/*
+ * CCTransitionFadeUp
+ */
+#pragma mark - CCTransitionFadeUp
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionFadeUp_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionFadeUp_object;
+extern JSClass *JSPROXY_CCTransitionFadeUp_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionFadeUp : JSPROXY_CCTransitionFadeTR
 {
 }
 
@@ -1166,19 +1328,19 @@ extern JSClass *JSPROXY_CCTexture2D_class;
 @end
 
 /*
- * CCCamera
+ * CCAccelDeccelAmplitude
  */
-#pragma mark - CCCamera
+#pragma mark - CCAccelDeccelAmplitude
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCCamera_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCCamera_object;
-extern JSClass *JSPROXY_CCCamera_class;
+extern JSObject *JSPROXY_CCAccelDeccelAmplitude_object;
+extern JSClass *JSPROXY_CCAccelDeccelAmplitude_class;
 
 #ifdef __cplusplus
 }
@@ -1186,7 +1348,7 @@ extern JSClass *JSPROXY_CCCamera_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCCamera : JSPROXY_NSObject
+@interface JSPROXY_CCAccelDeccelAmplitude : JSPROXY_CCActionInterval
 {
 }
 
@@ -1220,19 +1382,19 @@ extern JSClass *JSPROXY_CCJumpTiles3D_class;
 @end
 
 /*
- * CCBezierBy
+ * CCParticleSystem
  */
-#pragma mark - CCBezierBy
+#pragma mark - CCParticleSystem
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCBezierBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCBezierBy_object;
-extern JSClass *JSPROXY_CCBezierBy_class;
+extern JSObject *JSPROXY_CCParticleSystem_object;
+extern JSClass *JSPROXY_CCParticleSystem_class;
 
 #ifdef __cplusplus
 }
@@ -1240,26 +1402,26 @@ extern JSClass *JSPROXY_CCBezierBy_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCBezierBy : JSPROXY_CCActionInterval
+@interface JSPROXY_CCParticleSystem : JSPROXY_CCNode
 {
 }
 
 @end
 
 /*
- * CCBezierTo
+ * CCParticleSystemQuad
  */
-#pragma mark - CCBezierTo
+#pragma mark - CCParticleSystemQuad
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCBezierTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCBezierTo_object;
-extern JSClass *JSPROXY_CCBezierTo_class;
+extern JSObject *JSPROXY_CCParticleSystemQuad_object;
+extern JSClass *JSPROXY_CCParticleSystemQuad_class;
 
 #ifdef __cplusplus
 }
@@ -1267,7 +1429,88 @@ extern JSClass *JSPROXY_CCBezierTo_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCBezierTo : JSPROXY_CCBezierBy
+@interface JSPROXY_CCParticleSystemQuad : JSPROXY_CCParticleSystem
+{
+}
+
+@end
+
+/*
+ * CCGrid3DAction
+ */
+#pragma mark - CCGrid3DAction
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCGrid3DAction_object;
+extern JSClass *JSPROXY_CCGrid3DAction_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCGrid3DAction : JSPROXY_CCGridAction
+{
+}
+
+@end
+
+/*
+ * CCMenuItemSprite
+ */
+#pragma mark - CCMenuItemSprite
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItemSprite_object;
+extern JSClass *JSPROXY_CCMenuItemSprite_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItemSprite : JSPROXY_CCMenuItem
+{
+}
+
+@end
+
+/*
+ * CCMenuItemImage
+ */
+#pragma mark - CCMenuItemImage
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCMenuItemImage_object;
+extern JSClass *JSPROXY_CCMenuItemImage_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCMenuItemImage : JSPROXY_CCMenuItemSprite
 {
 }
 
@@ -1295,6 +1538,33 @@ extern JSClass *JSPROXY_CCParticleBatchNode_class;
 
 /* Proxy class */
 @interface JSPROXY_CCParticleBatchNode : JSPROXY_CCNode
+{
+}
+
+@end
+
+/*
+ * CCTransitionCrossFade
+ */
+#pragma mark - CCTransitionCrossFade
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionCrossFade_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionCrossFade_object;
+extern JSClass *JSPROXY_CCTransitionCrossFade_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionCrossFade : JSPROXY_CCTransitionScene
 {
 }
 
@@ -1787,6 +2057,33 @@ extern JSClass *JSPROXY_CCLayerMultiplex_class;
 @end
 
 /*
+ * CCTransitionProgressVertical
+ */
+#pragma mark - CCTransitionProgressVertical
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgressVertical_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgressVertical_object;
+extern JSClass *JSPROXY_CCTransitionProgressVertical_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgressVertical : JSPROXY_CCTransitionProgress
+{
+}
+
+@end
+
+/*
  * CCFileUtils
  */
 #pragma mark - CCFileUtils
@@ -1868,19 +2165,19 @@ extern JSClass *JSPROXY_CCTileMapAtlas_class;
 @end
 
 /*
- * CCPointArray
+ * CCTMXTilesetInfo
  */
-#pragma mark - CCPointArray
+#pragma mark - CCTMXTilesetInfo
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTMXTilesetInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCPointArray_object;
-extern JSClass *JSPROXY_CCPointArray_class;
+extern JSObject *JSPROXY_CCTMXTilesetInfo_object;
+extern JSClass *JSPROXY_CCTMXTilesetInfo_class;
 
 #ifdef __cplusplus
 }
@@ -1888,7 +2185,7 @@ extern JSClass *JSPROXY_CCPointArray_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCPointArray : JSPROXY_NSObject
+@interface JSPROXY_CCTMXTilesetInfo : JSPROXY_NSObject
 {
 }
 
@@ -1922,19 +2219,19 @@ extern JSClass *JSPROXY_CCCallBlock_class;
 @end
 
 /*
- * CCParticleSystem
+ * CCTransitionShrinkGrow
  */
-#pragma mark - CCParticleSystem
+#pragma mark - CCTransitionShrinkGrow
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionShrinkGrow_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCParticleSystem_object;
-extern JSClass *JSPROXY_CCParticleSystem_class;
+extern JSObject *JSPROXY_CCTransitionShrinkGrow_object;
+extern JSClass *JSPROXY_CCTransitionShrinkGrow_class;
 
 #ifdef __cplusplus
 }
@@ -1942,7 +2239,34 @@ extern JSClass *JSPROXY_CCParticleSystem_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCParticleSystem : JSPROXY_CCNode
+@interface JSPROXY_CCTransitionShrinkGrow : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTintBy
+ */
+#pragma mark - CCTintBy
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTintBy_object;
+extern JSClass *JSPROXY_CCTintBy_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTintBy : JSPROXY_CCActionInterval
 {
 }
 
@@ -2111,19 +2435,19 @@ extern JSClass *JSPROXY_CCMotionStreak_class;
 @end
 
 /*
- * CCLayerGradient
+ * CCTMXTiledMap
  */
-#pragma mark - CCLayerGradient
+#pragma mark - CCTMXTiledMap
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCLayerGradient_object;
-extern JSClass *JSPROXY_CCLayerGradient_class;
+extern JSObject *JSPROXY_CCTMXTiledMap_object;
+extern JSClass *JSPROXY_CCTMXTiledMap_class;
 
 #ifdef __cplusplus
 }
@@ -2131,7 +2455,7 @@ extern JSClass *JSPROXY_CCLayerGradient_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCLayerGradient : JSPROXY_CCLayerColor
+@interface JSPROXY_CCTMXTiledMap : JSPROXY_CCNode
 {
 }
 
@@ -2192,19 +2516,19 @@ extern JSClass *JSPROXY_CCTransitionFade_class;
 @end
 
 /*
- * CCParticleSystemQuad
+ * CCLabelAtlas
  */
-#pragma mark - CCParticleSystemQuad
+#pragma mark - CCLabelAtlas
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCParticleSystemQuad_object;
-extern JSClass *JSPROXY_CCParticleSystemQuad_class;
+extern JSObject *JSPROXY_CCLabelAtlas_object;
+extern JSClass *JSPROXY_CCLabelAtlas_class;
 
 #ifdef __cplusplus
 }
@@ -2212,7 +2536,7 @@ extern JSClass *JSPROXY_CCParticleSystemQuad_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCParticleSystemQuad : JSPROXY_CCParticleSystem
+@interface JSPROXY_CCLabelAtlas : JSPROXY_CCAtlasNode
 {
 }
 
@@ -2246,6 +2570,87 @@ extern JSClass *JSPROXY_CCPlace_class;
 @end
 
 /*
+ * CCTransitionMoveInL
+ */
+#pragma mark - CCTransitionMoveInL
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionMoveInL_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionMoveInL_object;
+extern JSClass *JSPROXY_CCTransitionMoveInL_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionMoveInL : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionMoveInR
+ */
+#pragma mark - CCTransitionMoveInR
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionMoveInR_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionMoveInR_object;
+extern JSClass *JSPROXY_CCTransitionMoveInR_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionMoveInR : JSPROXY_CCTransitionMoveInL
+{
+}
+
+@end
+
+/*
+ * CCTransitionMoveInT
+ */
+#pragma mark - CCTransitionMoveInT
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionMoveInT_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionMoveInT_object;
+extern JSClass *JSPROXY_CCTransitionMoveInT_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionMoveInT : JSPROXY_CCTransitionMoveInL
+{
+}
+
+@end
+
+/*
  * CCCatmullRomTo
  */
 #pragma mark - CCCatmullRomTo
@@ -2273,33 +2678,6 @@ extern JSClass *JSPROXY_CCCatmullRomTo_class;
 @end
 
 /*
- * CCScheduler
- */
-#pragma mark - CCScheduler
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCScheduler_object;
-extern JSClass *JSPROXY_CCScheduler_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCScheduler : JSPROXY_NSObject
-{
-}
-
-@end
-
-/*
  * CCLabelBMFont
  */
 #pragma mark - CCLabelBMFont
@@ -2321,6 +2699,60 @@ extern JSClass *JSPROXY_CCLabelBMFont_class;
 
 /* Proxy class */
 @interface JSPROXY_CCLabelBMFont : JSPROXY_CCSpriteBatchNode
+{
+}
+
+@end
+
+/*
+ * CCTransitionMoveInB
+ */
+#pragma mark - CCTransitionMoveInB
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionMoveInB_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionMoveInB_object;
+extern JSClass *JSPROXY_CCTransitionMoveInB_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionMoveInB : JSPROXY_CCTransitionMoveInL
+{
+}
+
+@end
+
+/*
+ * CCTransitionZoomFlipX
+ */
+#pragma mark - CCTransitionZoomFlipX
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionZoomFlipX_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionZoomFlipX_object;
+extern JSClass *JSPROXY_CCTransitionZoomFlipX_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionZoomFlipX : JSPROXY_CCTransitionSceneOriented
 {
 }
 
@@ -2435,19 +2867,19 @@ extern JSClass *JSPROXY_CCDirectorMac_class;
 @end
 
 /*
- * CCLabelAtlas
+ * CCScheduler
  */
-#pragma mark - CCLabelAtlas
+#pragma mark - CCScheduler
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCLabelAtlas_object;
-extern JSClass *JSPROXY_CCLabelAtlas_class;
+extern JSObject *JSPROXY_CCScheduler_object;
+extern JSClass *JSPROXY_CCScheduler_class;
 
 #ifdef __cplusplus
 }
@@ -2455,7 +2887,7 @@ extern JSClass *JSPROXY_CCLabelAtlas_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCLabelAtlas : JSPROXY_CCAtlasNode
+@interface JSPROXY_CCScheduler : JSPROXY_NSObject
 {
 }
 
@@ -2543,33 +2975,6 @@ extern JSClass *JSPROXY_CCAnimationFrame_class;
 @end
 
 /*
- * CCTransitionMoveInL
- */
-#pragma mark - CCTransitionMoveInL
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTransitionMoveInL_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTransitionMoveInL_object;
-extern JSClass *JSPROXY_CCTransitionMoveInL_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTransitionMoveInL : JSPROXY_CCTransitionScene
-{
-}
-
-@end
-
-/*
  * CCParallaxNode
  */
 #pragma mark - CCParallaxNode
@@ -2624,6 +3029,60 @@ extern JSClass *JSPROXY_CCEaseElastic_class;
 @end
 
 /*
+ * CCTransitionProgressHorizontal
+ */
+#pragma mark - CCTransitionProgressHorizontal
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgressHorizontal_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgressHorizontal_object;
+extern JSClass *JSPROXY_CCTransitionProgressHorizontal_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgressHorizontal : JSPROXY_CCTransitionProgress
+{
+}
+
+@end
+
+/*
+ * CCRepeat
+ */
+#pragma mark - CCRepeat
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCRepeat_object;
+extern JSClass *JSPROXY_CCRepeat_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCRepeat : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
  * CCShatteredTiles3D
  */
 #pragma mark - CCShatteredTiles3D
@@ -2651,19 +3110,19 @@ extern JSClass *JSPROXY_CCShatteredTiles3D_class;
 @end
 
 /*
- * CCGrid3DAction
+ * CCTimer
  */
-#pragma mark - CCGrid3DAction
+#pragma mark - CCTimer
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTimer_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCGrid3DAction_object;
-extern JSClass *JSPROXY_CCGrid3DAction_class;
+extern JSObject *JSPROXY_CCTimer_object;
+extern JSClass *JSPROXY_CCTimer_class;
 
 #ifdef __cplusplus
 }
@@ -2671,26 +3130,26 @@ extern JSClass *JSPROXY_CCGrid3DAction_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCGrid3DAction : JSPROXY_CCGridAction
+@interface JSPROXY_CCTimer : JSPROXY_NSObject
 {
 }
 
 @end
 
 /*
- * CCLiquid
+ * CCTransitionFlipY
  */
-#pragma mark - CCLiquid
+#pragma mark - CCTransitionFlipY
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionFlipY_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCLiquid_object;
-extern JSClass *JSPROXY_CCLiquid_class;
+extern JSObject *JSPROXY_CCTransitionFlipY_object;
+extern JSClass *JSPROXY_CCTransitionFlipY_class;
 
 #ifdef __cplusplus
 }
@@ -2698,7 +3157,34 @@ extern JSClass *JSPROXY_CCLiquid_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCLiquid : JSPROXY_CCGrid3DAction
+@interface JSPROXY_CCTransitionFlipY : JSPROXY_CCTransitionSceneOriented
+{
+}
+
+@end
+
+/*
+ * CCTransitionFlipX
+ */
+#pragma mark - CCTransitionFlipX
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionFlipX_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionFlipX_object;
+extern JSClass *JSPROXY_CCTransitionFlipX_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionFlipX : JSPROXY_CCTransitionSceneOriented
 {
 }
 
@@ -2786,33 +3272,6 @@ extern JSClass *JSPROXY_CCTextureCache_class;
 @end
 
 /*
- * CCMenuItemSprite
- */
-#pragma mark - CCMenuItemSprite
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCMenuItemSprite_object;
-extern JSClass *JSPROXY_CCMenuItemSprite_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCMenuItemSprite : JSPROXY_CCMenuItem
-{
-}
-
-@end
-
-/*
  * CCRipple3D
  */
 #pragma mark - CCRipple3D
@@ -2867,6 +3326,33 @@ extern JSClass *JSPROXY_CCRotateBy_class;
 @end
 
 /*
+ * CCTMXMapInfo
+ */
+#pragma mark - CCTMXMapInfo
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTMXMapInfo_object;
+extern JSClass *JSPROXY_CCTMXMapInfo_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTMXMapInfo : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCTMXLayerInfo
  */
 #pragma mark - CCTMXLayerInfo
@@ -2894,6 +3380,33 @@ extern JSClass *JSPROXY_CCTMXLayerInfo_class;
 @end
 
 /*
+ * CCTransitionZoomFlipY
+ */
+#pragma mark - CCTransitionZoomFlipY
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionZoomFlipY_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionZoomFlipY_object;
+extern JSClass *JSPROXY_CCTransitionZoomFlipY_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionZoomFlipY : JSPROXY_CCTransitionSceneOriented
+{
+}
+
+@end
+
+/*
  * CCCallFuncO
  */
 #pragma mark - CCCallFuncO
@@ -2915,33 +3428,6 @@ extern JSClass *JSPROXY_CCCallFuncO_class;
 
 /* Proxy class */
 @interface JSPROXY_CCCallFuncO : JSPROXY_CCCallFunc
-{
-}
-
-@end
-
-/*
- * CCTMXMapInfo
- */
-#pragma mark - CCTMXMapInfo
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTMXMapInfo_object;
-extern JSClass *JSPROXY_CCTMXMapInfo_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTMXMapInfo : JSPROXY_NSObject
 {
 }
 
@@ -3056,6 +3542,33 @@ extern JSClass *JSPROXY_CCEaseRateAction_class;
 @end
 
 /*
+ * CCTransitionFadeBL
+ */
+#pragma mark - CCTransitionFadeBL
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionFadeBL_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionFadeBL_object;
+extern JSClass *JSPROXY_CCTransitionFadeBL_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionFadeBL : JSPROXY_CCTransitionFadeTR
+{
+}
+
+@end
+
+/*
  * CCAnimate
  */
 #pragma mark - CCAnimate
@@ -3137,6 +3650,60 @@ extern JSClass *JSPROXY_CCCallBlockN_class;
 @end
 
 /*
+ * CCBezierBy
+ */
+#pragma mark - CCBezierBy
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCBezierBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCBezierBy_object;
+extern JSClass *JSPROXY_CCBezierBy_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCBezierBy : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
+ * CCAnimation
+ */
+#pragma mark - CCAnimation
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCAnimation_object;
+extern JSClass *JSPROXY_CCAnimation_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCAnimation : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
  * CCShaky3D
  */
 #pragma mark - CCShaky3D
@@ -3164,19 +3731,19 @@ extern JSClass *JSPROXY_CCShaky3D_class;
 @end
 
 /*
- * CCTransitionPageTurn
+ * CCTransitionProgressRadialCW
  */
-#pragma mark - CCTransitionPageTurn
+#pragma mark - CCTransitionProgressRadialCW
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionProgressRadialCW_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCTransitionPageTurn_object;
-extern JSClass *JSPROXY_CCTransitionPageTurn_class;
+extern JSObject *JSPROXY_CCTransitionProgressRadialCW_object;
+extern JSClass *JSPROXY_CCTransitionProgressRadialCW_class;
 
 #ifdef __cplusplus
 }
@@ -3184,7 +3751,7 @@ extern JSClass *JSPROXY_CCTransitionPageTurn_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCTransitionPageTurn : JSPROXY_CCTransitionScene
+@interface JSPROXY_CCTransitionProgressRadialCW : JSPROXY_CCTransitionProgress
 {
 }
 
@@ -3245,6 +3812,87 @@ extern JSClass *JSPROXY_CCTintTo_class;
 @end
 
 /*
+ * CCTransitionTurnOffTiles
+ */
+#pragma mark - CCTransitionTurnOffTiles
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionTurnOffTiles_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionTurnOffTiles_object;
+extern JSClass *JSPROXY_CCTransitionTurnOffTiles_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionTurnOffTiles : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionSlideInL
+ */
+#pragma mark - CCTransitionSlideInL
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionSlideInL_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionSlideInL_object;
+extern JSClass *JSPROXY_CCTransitionSlideInL_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionSlideInL : JSPROXY_CCTransitionScene
+{
+}
+
+@end
+
+/*
+ * CCTransitionSlideInT
+ */
+#pragma mark - CCTransitionSlideInT
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionSlideInT_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionSlideInT_object;
+extern JSClass *JSPROXY_CCTransitionSlideInT_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionSlideInT : JSPROXY_CCTransitionSlideInL
+{
+}
+
+@end
+
+/*
  * CCBlink
  */
 #pragma mark - CCBlink
@@ -3299,19 +3947,19 @@ extern JSClass *JSPROXY_CCTextureAtlas_class;
 @end
 
 /*
- * CCTransitionSlideInL
+ * CCTransitionSlideInR
  */
-#pragma mark - CCTransitionSlideInL
+#pragma mark - CCTransitionSlideInR
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCTransitionSlideInL_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionSlideInR_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCTransitionSlideInL_object;
-extern JSClass *JSPROXY_CCTransitionSlideInL_class;
+extern JSObject *JSPROXY_CCTransitionSlideInR_object;
+extern JSClass *JSPROXY_CCTransitionSlideInR_class;
 
 #ifdef __cplusplus
 }
@@ -3319,26 +3967,26 @@ extern JSClass *JSPROXY_CCTransitionSlideInL_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCTransitionSlideInL : JSPROXY_CCTransitionScene
+@interface JSPROXY_CCTransitionSlideInR : JSPROXY_CCTransitionSlideInL
 {
 }
 
 @end
 
 /*
- * CCTimer
+ * CCPointArray
  */
-#pragma mark - CCTimer
+#pragma mark - CCPointArray
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCTimer_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCTimer_object;
-extern JSClass *JSPROXY_CCTimer_class;
+extern JSObject *JSPROXY_CCPointArray_object;
+extern JSClass *JSPROXY_CCPointArray_class;
 
 #ifdef __cplusplus
 }
@@ -3346,7 +3994,88 @@ extern JSClass *JSPROXY_CCTimer_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCTimer : JSPROXY_NSObject
+@interface JSPROXY_CCPointArray : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
+ * CCTransitionProgressInOut
+ */
+#pragma mark - CCTransitionProgressInOut
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgressInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgressInOut_object;
+extern JSClass *JSPROXY_CCTransitionProgressInOut_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgressInOut : JSPROXY_CCTransitionProgress
+{
+}
+
+@end
+
+/*
+ * CCTransitionSlideInB
+ */
+#pragma mark - CCTransitionSlideInB
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionSlideInB_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionSlideInB_object;
+extern JSClass *JSPROXY_CCTransitionSlideInB_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionSlideInB : JSPROXY_CCTransitionSlideInL
+{
+}
+
+@end
+
+/*
+ * CCLiquid
+ */
+#pragma mark - CCLiquid
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCLiquid_object;
+extern JSClass *JSPROXY_CCLiquid_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCLiquid : JSPROXY_CCGrid3DAction
 {
 }
 
@@ -3434,19 +4163,19 @@ extern JSClass *JSPROXY_CCGrabber_class;
 @end
 
 /*
- * CCAnimation
+ * CCTransitionSplitRows
  */
-#pragma mark - CCAnimation
+#pragma mark - CCTransitionSplitRows
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionSplitRows_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCAnimation_object;
-extern JSClass *JSPROXY_CCAnimation_class;
+extern JSObject *JSPROXY_CCTransitionSplitRows_object;
+extern JSClass *JSPROXY_CCTransitionSplitRows_class;
 
 #ifdef __cplusplus
 }
@@ -3454,7 +4183,7 @@ extern JSClass *JSPROXY_CCAnimation_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCAnimation : JSPROXY_NSObject
+@interface JSPROXY_CCTransitionSplitRows : JSPROXY_CCTransitionSplitCols
 {
 }
 
@@ -3542,6 +4271,33 @@ extern JSClass *JSPROXY_CCProfilingTimer_class;
 @end
 
 /*
+ * CCSequence
+ */
+#pragma mark - CCSequence
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCSequence_object;
+extern JSClass *JSPROXY_CCSequence_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCSequence : JSPROXY_CCActionInterval
+{
+}
+
+@end
+
+/*
  * CCWaves
  */
 #pragma mark - CCWaves
@@ -3569,19 +4325,19 @@ extern JSClass *JSPROXY_CCWaves_class;
 @end
 
 /*
- * CCTransitionSceneOriented
+ * CCTransitionZoomFlipAngular
  */
-#pragma mark - CCTransitionSceneOriented
+#pragma mark - CCTransitionZoomFlipAngular
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCTransitionSceneOriented_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCTransitionZoomFlipAngular_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCTransitionSceneOriented_object;
-extern JSClass *JSPROXY_CCTransitionSceneOriented_class;
+extern JSObject *JSPROXY_CCTransitionZoomFlipAngular_object;
+extern JSClass *JSPROXY_CCTransitionZoomFlipAngular_class;
 
 #ifdef __cplusplus
 }
@@ -3589,26 +4345,26 @@ extern JSClass *JSPROXY_CCTransitionSceneOriented_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCTransitionSceneOriented : JSPROXY_CCTransitionScene
+@interface JSPROXY_CCTransitionZoomFlipAngular : JSPROXY_CCTransitionSceneOriented
 {
 }
 
 @end
 
 /*
- * CCMenuItemImage
+ * CCBezierTo
  */
-#pragma mark - CCMenuItemImage
+#pragma mark - CCBezierTo
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCBezierTo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCMenuItemImage_object;
-extern JSClass *JSPROXY_CCMenuItemImage_class;
+extern JSObject *JSPROXY_CCBezierTo_object;
+extern JSClass *JSPROXY_CCBezierTo_class;
 
 #ifdef __cplusplus
 }
@@ -3616,7 +4372,7 @@ extern JSClass *JSPROXY_CCMenuItemImage_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCMenuItemImage : JSPROXY_CCMenuItemSprite
+@interface JSPROXY_CCBezierTo : JSPROXY_CCBezierBy
 {
 }
 
@@ -3731,19 +4487,19 @@ extern JSClass *JSPROXY_CCJumpTo_class;
 @end
 
 /*
- * CCTintBy
+ * CCLayerGradient
  */
-#pragma mark - CCTintBy
+#pragma mark - CCLayerGradient
 
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
-extern JSObject *JSPROXY_CCTintBy_object;
-extern JSClass *JSPROXY_CCTintBy_class;
+extern JSObject *JSPROXY_CCLayerGradient_object;
+extern JSClass *JSPROXY_CCLayerGradient_class;
 
 #ifdef __cplusplus
 }
@@ -3751,34 +4507,7 @@ extern JSClass *JSPROXY_CCTintBy_class;
 
 
 /* Proxy class */
-@interface JSPROXY_CCTintBy : JSPROXY_CCActionInterval
-{
-}
-
-@end
-
-/*
- * CCTMXTiledMap
- */
-#pragma mark - CCTMXTiledMap
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTMXTiledMap_object;
-extern JSClass *JSPROXY_CCTMXTiledMap_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTMXTiledMap : JSPROXY_CCNode
+@interface JSPROXY_CCLayerGradient : JSPROXY_CCLayerColor
 {
 }
 
@@ -3833,6 +4562,33 @@ extern JSClass *JSPROXY_CCTurnOffTiles_class;
 
 /* Proxy class */
 @interface JSPROXY_CCTurnOffTiles : JSPROXY_CCTiledGrid3DAction
+{
+}
+
+@end
+
+/*
+ * CCTransitionJumpZoom
+ */
+#pragma mark - CCTransitionJumpZoom
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionJumpZoom_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionJumpZoom_object;
+extern JSClass *JSPROXY_CCTransitionJumpZoom_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionJumpZoom : JSPROXY_CCTransitionScene
 {
 }
 
@@ -3914,33 +4670,6 @@ extern JSClass *JSPROXY_CCTwirl_class;
 
 /* Proxy class */
 @interface JSPROXY_CCTwirl : JSPROXY_CCGrid3DAction
-{
-}
-
-@end
-
-/*
- * CCTMXTilesetInfo
- */
-#pragma mark - CCTMXTilesetInfo
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCTMXTilesetInfo_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-extern JSObject *JSPROXY_CCTMXTilesetInfo_object;
-extern JSClass *JSPROXY_CCTMXTilesetInfo_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCTMXTilesetInfo : JSPROXY_NSObject
 {
 }
 
@@ -4076,6 +4805,33 @@ extern JSClass *JSPROXY_CCSpriteFrameCache_class;
 
 /* Proxy class */
 @interface JSPROXY_CCSpriteFrameCache : JSPROXY_NSObject
+{
+}
+
+@end
+
+/*
+ * CCTransitionProgressOutIn
+ */
+#pragma mark - CCTransitionProgressOutIn
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCTransitionProgressOutIn_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+extern JSObject *JSPROXY_CCTransitionProgressOutIn_object;
+extern JSClass *JSPROXY_CCTransitionProgressOutIn_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCTransitionProgressOutIn : JSPROXY_CCTransitionProgress
 {
 }
 

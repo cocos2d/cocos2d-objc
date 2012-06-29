@@ -51,7 +51,7 @@
 	// Create an CCGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES
+								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
 								 multiSampling:NO
@@ -76,8 +76,8 @@
 	[director_ setDelegate:self];
 
 	// 2D projection
-	[director_ setProjection:kCCDirectorProjection2D];
-//	[director setProjection:kCCDirectorProjection3D];
+//	[director_ setProjection:kCCDirectorProjection2D];
+	[director_ setProjection:kCCDirectorProjection3D];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director_ enableRetinaDisplay:YES] )
@@ -135,6 +135,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
+	
+	glDisable( GL_DEPTH_TEST );
 	
 	[self run];
 }
