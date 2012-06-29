@@ -199,29 +199,38 @@
 - (void) server:(ThoMoServerStub *)theServer didReceiveData:(id)theData fromClient:(NSString *)aClientIdString {
     NSString *script = (NSString *)theData;
 	
-    jsval out;
-    BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
+    __block NSString * string;
+		
+	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
 	
-    NSString * string;
-    if(success)
-    {
-        if(JSVAL_IS_BOOLEAN(out))
-        {
-            string = [NSString stringWithFormat:@"Result(bool): %@.\n", (JSVAL_TO_BOOLEAN(out)) ? @"true" : @"false"];
-        }
-        else if(JSVAL_IS_INT(out))
-        {
-            string = [NSString stringWithFormat:@"Result(int): %i.\n", JSVAL_TO_INT(out)];
-        }
-        else if(JSVAL_IS_DOUBLE(out))
-        {
-            string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
-        }
-    }
-    else
-    {
-        string = [NSString stringWithFormat:@"Error evaluating script:\n#############################\n%@\n#############################\n", script];
-    }
+	[cocos2dThread performBlock:^(void) { 
+		jsval out;
+		BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
+		
+		if(success)
+		{
+			if(JSVAL_IS_BOOLEAN(out))
+			{
+				string = [NSString stringWithFormat:@"Result(bool): %@.\n", (JSVAL_TO_BOOLEAN(out)) ? @"true" : @"false"];
+			}
+			else if(JSVAL_IS_INT(out))
+			{
+				string = [NSString stringWithFormat:@"Result(int): %i.\n", JSVAL_TO_INT(out)];
+			}
+			else if(JSVAL_IS_DOUBLE(out))
+			{
+				string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
+			}
+			else if(JSVAL_IS_STRING(out)) {
+			}
+		}
+		else
+		{
+			string = [NSString stringWithFormat:@"Error evaluating script:\n#############################\n%@\n#############################\n", script];
+		}
+
+			}
+				  waitUntilDone:YES];
 	
     [thoMoServer sendToAllClients:string];
 }

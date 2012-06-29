@@ -159,6 +159,7 @@
 #import "Support/ccUtils.h"
 #import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
+#import "Support/NSThread+performBlock.h"
 
 //
 // external
