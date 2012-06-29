@@ -46,7 +46,6 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		4AC8BDFE1593E59600C2172B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AC8BDFD1593E59600C2172B /* libicucore.dylib */; };
 		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
@@ -5872,7 +5871,6 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		4AC8BDFD1593E59600C2172B /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
 		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
@@ -6975,7 +6973,6 @@
 				A04E862C159B6E5800F4BE65 /* AudioToolbox.framework in Frameworks */,
 				A04E862A159B6E4C00F4BE65 /* OpenAL.framework in Frameworks */,
 				4AD3B95A159A54F4002E68D1 /* libCocosDenshion.a in Frameworks */,
-				4AC8BDFE1593E59600C2172B /* libicucore.dylib in Frameworks */,
 				A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */,
 				A09C8D341566FB4100ADFDA9 /* Cocoa.framework in Frameworks */,
 				A09C8D351566FB4100ADFDA9 /* OpenGL.framework in Frameworks */,
@@ -7362,7 +7359,6 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				E0F9256D1224207200EF2362 /* libz.dylib */,
 				A03416FB1548806D00AE4D93 /* libffi.dylib */,
-				4AC8BDFD1593E59600C2172B /* libicucore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

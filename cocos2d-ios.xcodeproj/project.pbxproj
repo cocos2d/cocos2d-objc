@@ -2084,6 +2084,10 @@
 		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
 		A0DEFC351538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */; };
 		A0DEFC381538E2B300530CC5 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */; };
+		A0E1DBF7159E3FC20056725B /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */; };
+		A0E1DBF8159E3FC20056725B /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */; };
+		A0E1DBF9159E3FC20056725B /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */; };
+		A0E1DBFA159E3FC20056725B /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */; };
 		A0E2A52B14D26D8D003450DF /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
@@ -4869,6 +4873,20 @@
 		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas_nomipmap-hd.png"; sourceTree = "<group>"; };
 		A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
+		A0E1DBE8159E3FC20056725B /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
+		A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
+		A0E1DBEA159E3FC20056725B /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
+		A0E1DBEB159E3FC20056725B /* ThoMoClientStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub.h; sourceTree = "<group>"; };
+		A0E1DBEC159E3FC20056725B /* ThoMoNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworking.h; sourceTree = "<group>"; };
+		A0E1DBED159E3FC20056725B /* ThoMoNetworkStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworkStub.h; sourceTree = "<group>"; };
+		A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoNetworkStub.m; sourceTree = "<group>"; };
+		A0E1DBF0159E3FC20056725B /* ThoMoServerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerDelegateProtocol.h; sourceTree = "<group>"; };
+		A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoServerStub.m; sourceTree = "<group>"; };
+		A0E1DBF2159E3FC20056725B /* ThoMoServerStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub_private.h; sourceTree = "<group>"; };
+		A0E1DBF3159E3FC20056725B /* ThoMoServerStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub.h; sourceTree = "<group>"; };
+		A0E1DBF4159E3FC20056725B /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
+		A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
+		A0E1DBF6159E3FC20056725B /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
 		A0EC4A0B1403236C00EC482A /* example_Flower.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.vsh; sourceTree = "<group>"; };
@@ -6015,6 +6033,7 @@
 		501756090F335CE900624901 /* external */ = {
 			isa = PBXGroup;
 			children = (
+				A0E1DBE6159E3FC20056725B /* ThoMoNetworking */,
 				A021BFCE159BAC73008450B6 /* spidermonkey */,
 				A04E8671159B707C00F4BE65 /* JRSwizzle */,
 				A015BFAB13B826D800C73E76 /* kazmath */,
@@ -7635,6 +7654,44 @@
 				A0DABDCC1426715A00F3FEBE /* b2Rope.h */,
 			);
 			path = Rope;
+			sourceTree = "<group>";
+		};
+		A0E1DBE6159E3FC20056725B /* ThoMoNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1DBE7159E3FC20056725B /* ThoMoClient */,
+				A0E1DBEB159E3FC20056725B /* ThoMoClientStub.h */,
+				A0E1DBEC159E3FC20056725B /* ThoMoNetworking.h */,
+				A0E1DBED159E3FC20056725B /* ThoMoNetworkStub.h */,
+				A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */,
+				A0E1DBEF159E3FC20056725B /* ThoMoServer */,
+				A0E1DBF3159E3FC20056725B /* ThoMoServerStub.h */,
+				A0E1DBF4159E3FC20056725B /* ThoMoTCPConnection.h */,
+				A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */,
+				A0E1DBF6159E3FC20056725B /* ThoMoTCPConnectionDelegateProtocol.h */,
+			);
+			name = ThoMoNetworking;
+			path = external/ThoMoNetworking;
+			sourceTree = "<group>";
+		};
+		A0E1DBE7159E3FC20056725B /* ThoMoClient */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1DBE8159E3FC20056725B /* ThoMoClientDelegateProtocol.h */,
+				A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */,
+				A0E1DBEA159E3FC20056725B /* ThoMoClientStub_private.h */,
+			);
+			path = ThoMoClient;
+			sourceTree = "<group>";
+		};
+		A0E1DBEF159E3FC20056725B /* ThoMoServer */ = {
+			isa = PBXGroup;
+			children = (
+				A0E1DBF0159E3FC20056725B /* ThoMoServerDelegateProtocol.h */,
+				A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */,
+				A0E1DBF2159E3FC20056725B /* ThoMoServerStub_private.h */,
+			);
+			path = ThoMoServer;
 			sourceTree = "<group>";
 		};
 		A0EC4A081403236C00EC482A /* Shaders */ = {
@@ -12431,6 +12488,10 @@
 				A04E8675159B707C00F4BE65 /* JRSwizzle.m in Sources */,
 				A04E8685159B83ED00F4BE65 /* js_bindings_cocos2d_ios_classes.mm in Sources */,
 				A04E8686159B83ED00F4BE65 /* js_bindings_cocos2d_ios_functions.mm in Sources */,
+				A0E1DBF7159E3FC20056725B /* ThoMoClientStub.m in Sources */,
+				A0E1DBF8159E3FC20056725B /* ThoMoNetworkStub.m in Sources */,
+				A0E1DBF9159E3FC20056725B /* ThoMoServerStub.m in Sources */,
+				A0E1DBFA159E3FC20056725B /* ThoMoTCPConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
