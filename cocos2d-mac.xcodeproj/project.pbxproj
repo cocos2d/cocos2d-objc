@@ -7307,7 +7307,6 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
-				4AC8BDFD1593E59600C2172B /* libicucore.dylib */,
 				A0E55417141EAEEE003F1E5A /* README.md */,
 				E076E61C1225EC1E00DE0DA2 /* AUTHORS */,
 				E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */,
@@ -7363,6 +7362,7 @@
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				E0F9256D1224207200EF2362 /* libz.dylib */,
 				A03416FB1548806D00AE4D93 /* libffi.dylib */,
+				4AC8BDFD1593E59600C2172B /* libicucore.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
