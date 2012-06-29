@@ -9,6 +9,7 @@
 // local import
 #import "JavascriptSpidermonkey.h"
 #import "ScriptingCore.h"
+#import "js_manual_conversions.h"
 
 // dlopen
 #include <dlfcn.h>
@@ -34,13 +35,11 @@
 
 // CLASS IMPLEMENTATIONS
 
-@interface AppController (run)
--(void) run;
-@end
-
-#ifdef __CC_PLATFORM_IOS
 @implementation AppController
 
+#pragma mark - AppController - iOS
+
+#ifdef __CC_PLATFORM_IOS
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Don't call super
@@ -123,14 +122,9 @@
 //	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 
-@end	
-
-#pragma mark -
-#pragma mark AppController - Mac
+#pragma mark - AppController - Mac
 
 #elif defined(__CC_PLATFORM_MAC)
-
-@implementation AppController
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -138,52 +132,13 @@
 	
 	glDisable( GL_DEPTH_TEST );
 	
-	[self initThoMoServer];
-
 	[self run];
 }
 
--(void)dealloc
-{
-	[thoMoServer stop];
-	[thoMoServer release];
-
-	[super dealloc];
-}
-
-#pragma mark -
-#pragma mark NSTextDelegate
-
-- (void)textDidChange:(NSNotification *)aNotification
-{
-    [window_ setDocumentEdited:YES];
-}
-
-- (void)textDidBeginEditing:(NSNotification *)aNotification
-{
+#endif // Platform specific
 	
-}
 
--(void)textViewDidChangeSelection:(NSNotification *)aNotification
-{
-	
-}
-
-- (void)textDidEndEditing:(NSNotification *)aNotification
-{
-	
-}
-
-- (BOOL)textShouldBeginEditing:(NSText *)aTextObject
-{
-    return YES;
-}
-
-- (BOOL)textShouldEndEditing:(NSText *)aTextObject
-{
-    return YES;
-}
-
+#pragma mark - AppController - Common
 
 - (void)initThoMoServer
 {
@@ -199,11 +154,11 @@
 - (void) server:(ThoMoServerStub *)theServer didReceiveData:(id)theData fromClient:(NSString *)aClientIdString {
     NSString *script = (NSString *)theData;
 	
-    __block NSString * string;
-		
+	
 	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
 	
 	[cocos2dThread performBlock:^(void) { 
+		NSString * string = @"None";
 		jsval out;
 		BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
 		
@@ -222,24 +177,37 @@
 				string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
 			}
 			else if(JSVAL_IS_STRING(out)) {
+				string = [NSString stringWithFormat:@"Result(double): %d.\n", 
+						  jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out )
+						  ];
 			}
 		}
 		else
 		{
 			string = [NSString stringWithFormat:@"Error evaluating script:\n#############################\n%@\n#############################\n", script];
 		}
-
-			}
-				  waitUntilDone:YES];
+		
+		[thoMoServer sendToAllClients:string];
+		
+	}
+				  waitUntilDone:NO];
 	
-    [thoMoServer sendToAllClients:string];
 }
-@end
-#endif
 
-@implementation AppController (run)
+
+-(void)dealloc
+{
+	[thoMoServer stop];
+	[thoMoServer release];
+
+	[super dealloc];
+}
+
 -(void) run
 {
+	// init server
+	[self initThoMoServer];
+
 	// Load cocos2d BridgeSupport (not needed I guess)
 //	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 //	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
