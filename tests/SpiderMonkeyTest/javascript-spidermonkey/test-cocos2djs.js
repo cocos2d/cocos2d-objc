@@ -202,15 +202,15 @@ var IntroPage = function() {
 
 	goog.base(this);
 
-	this.title = 'Objective-C to Javascript'
-	this.subtitle = 'Web, Prototyping and Games tools for developers';
+	this.title = 'cocos2d + JS'
+	this.subtitle = 'Prototyping, Faster development, Web Integration';
 	this.isMainTitle = true;
 }
 goog.inherits( IntroPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
-// Features Page
+// FeaturesPage Page
 //
 //------------------------------------------------------------------
 var FeaturesPage = function() {
@@ -221,13 +221,165 @@ var FeaturesPage = function() {
 	this.subtitle = '';
 	this.isMainTitle = false;
 
+	this.createBulletList( 'Automatic generated JS bindings',
+				'same JS API as cocos2d-html5',
+				'Works on iOS and Mac',
+				'Faster development',
+				'Great prototyping tool');
+}
+goog.inherits( FeaturesPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Sprites Page
+//
+//------------------------------------------------------------------
+var SpritesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Sprites';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.Sprite.create("grossini.png");', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	var sprite1 = cc.Sprite.create("grossinis_sister1.png");
+	sprite1.setPosition( cc.p( winSize.width*1/4, winSize.height/2) );
+
+	var sprite2 = cc.Sprite.create("grossini.png");
+	sprite2.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
+
+	var sprite3 = cc.Sprite.create("grossinis_sister2.png");
+	sprite3.setPosition( cc.p( winSize.width*3/4, winSize.height/2) );
+
+	this.addChild( sprite1 );
+	this.addChild( sprite2 );
+	this.addChild( sprite3 );
+}
+goog.inherits( SpritesPage, BaseLayer );
+
+
+//------------------------------------------------------------------
+//
+// Actions Page
+//
+//------------------------------------------------------------------
+var ActionsPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Actions';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.RotateBy.create(8, 360);', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	this.sprite = cc.Sprite.create("grossini.png");
+	this.sprite.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
+	this.addChild( this.sprite );
+
+	this.onEnterTransitionDidFinish = function() {
+		var action = cc.RotateBy.create(8, 360);
+		this.sprite.runAction( action );
+	}
+}
+goog.inherits( ActionsPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Labels Page
+//
+//------------------------------------------------------------------
+var LabelsPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Labels';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.03;
+
+	var label = cc.LabelTTF.create('cc.LabelTTF.create("Hello JS World", "Marker Felt", 32);\ncc.LabelBMFont.create("Hello World", "font.fnt")', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+
+	var labelTTF = cc.LabelTTF.create('Label TTF', 'Marker Felt', 48 );
+	labelTTF.setPosition( cc.p( winSize.width*1/4, winSize.height/2) );
+	this.addChild( labelTTF );
+
+	var labelBM = cc.LabelBMFont.create('Label BMFont', 'futura-48.fnt');
+	labelBM.setPosition( cc.p( winSize.width*3/4, winSize.height/2) );
+	this.addChild( labelBM );
+
+//	var labelAtlas = cc.LabelAtlas.create('Atlas', 'tuffy_bold_italic-charmap.plist');
+//	labelAtlas.setPosition( cc.p( winSize.width*3/5, winSize.height/2) );
+//	this.addChild( labelAtlas );
+
+}
+goog.inherits( LabelsPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Actions 2 Page
+//
+//------------------------------------------------------------------
+var Actions2Page = function() {
+
+	goog.base(this);
+
+	this.title = 'Complex Actions';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.Sequence.create(action1, action2,...);', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	this.sprite = cc.Sprite.create("grossini.png");
+	this.sprite.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
+	this.addChild( this.sprite );
+
+	this.onEnterTransitionDidFinish = function() {
+		var rot = cc.RotateBy.create(1, 360);
+		var rot_back = rot.reverse();
+		var scale = cc.ScaleBy.create(1, 7);
+		var scale_back = scale.reverse();
+		var seq = cc.Sequence.create( rot, scale, rot_back, scale_back );
+
+		this.sprite.runAction( cc.RepeatForever.create( seq ) );
+	}
+}
+goog.inherits( Actions2Page, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// ParserFeaturesPage Page
+//
+//------------------------------------------------------------------
+var ParserFeaturesPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Parser Features';
+	this.subtitle = '';
+	this.isMainTitle = false;
+
 	this.createBulletList( 'Generates robust JS bindings',
 				'No need to modify generated code',
 				'No need to modify parsed library',
 				'Easy to maintain',
 				'Powerful config file' );
 }
-goog.inherits( FeaturesPage, BaseLayer );
+goog.inherits( ParserFeaturesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -379,10 +531,13 @@ goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 //
 // Order of tests
 //
-scenes.push( FeaturesPage );
-
 scenes.push( IntroPage );
 scenes.push( FeaturesPage );
+scenes.push( SpritesPage );
+scenes.push( LabelsPage );
+scenes.push( ActionsPage );
+scenes.push( Actions2Page );
+scenes.push( ParserFeaturesPage );
 scenes.push( InternalsPage );
 scenes.push( ChipmunkSpriteBatchTest );
 
