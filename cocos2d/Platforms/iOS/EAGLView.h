@@ -109,7 +109,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	id<EAGLTouchDelegate>   touchDelegate_;
 
 	//fsaa addition
-	BOOL					multisampling_;
+	BOOL					multiSampling_;
 	unsigned int			requestedSamples_;
 }
 
