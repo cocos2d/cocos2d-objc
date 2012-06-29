@@ -91,6 +91,8 @@ typedef enum {
  */
 @interface CCTransitionRotoZoom : CCTransitionScene
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionJumpZoom:
@@ -98,6 +100,8 @@ typedef enum {
 */
 @interface CCTransitionJumpZoom : CCTransitionScene
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionMoveInL:
@@ -116,6 +120,8 @@ typedef enum {
  */
 @interface CCTransitionMoveInR : CCTransitionMoveInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /** CCTransitionMoveInT:
@@ -123,6 +129,8 @@ typedef enum {
  */
 @interface CCTransitionMoveInT : CCTransitionMoveInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /** CCTransitionMoveInB:
@@ -130,6 +138,8 @@ typedef enum {
  */
 @interface CCTransitionMoveInB : CCTransitionMoveInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /** CCTransitionSlideInL:
@@ -148,6 +158,8 @@ typedef enum {
  */
 @interface CCTransitionSlideInR : CCTransitionSlideInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /** CCTransitionSlideInB:
@@ -155,6 +167,8 @@ typedef enum {
  */
 @interface CCTransitionSlideInB : CCTransitionSlideInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /** CCTransitionSlideInT:
@@ -162,6 +176,8 @@ typedef enum {
  */
 @interface CCTransitionSlideInT : CCTransitionSlideInL
 {}
+// Needed for BridgeSupport
+-(void) initScenes;
 @end
 
 /**
@@ -169,6 +185,8 @@ typedef enum {
  */
 @interface CCTransitionShrinkGrow : CCTransitionScene <CCTransitionEaseScene>
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionFlipX:
@@ -177,6 +195,8 @@ typedef enum {
  */
 @interface CCTransitionFlipX : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionFlipY:
@@ -185,6 +205,8 @@ typedef enum {
  */
 @interface CCTransitionFlipY : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionFlipAngular:
@@ -193,6 +215,8 @@ typedef enum {
  */
 @interface CCTransitionFlipAngular : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionZoomFlipX:
@@ -201,6 +225,8 @@ typedef enum {
  */
 @interface CCTransitionZoomFlipX : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionZoomFlipY:
@@ -209,6 +235,8 @@ typedef enum {
  */
 @interface CCTransitionZoomFlipY : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionZoomFlipAngular:
@@ -217,6 +245,8 @@ typedef enum {
  */
 @interface CCTransitionZoomFlipAngular : CCTransitionSceneOriented
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionFade:
@@ -242,6 +272,8 @@ typedef enum {
 @class CCRenderTexture;
 @interface CCTransitionCrossFade : CCTransitionScene
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionTurnOffTiles:
@@ -249,6 +281,8 @@ typedef enum {
  */
 @interface CCTransitionTurnOffTiles : CCTransitionScene <CCTransitionEaseScene>
 {}
+// needed for BrdigeSupport
+-(id) init;
 @end
 
 /** CCTransitionSplitCols:
@@ -264,6 +298,8 @@ typedef enum {
  */
 @interface CCTransitionSplitRows : CCTransitionSplitCols
 {}
+// Needed for BridgeSupport
+-(CCActionInterval*) action;
 @end
 
 /** CCTransitionFadeTR:
@@ -279,6 +315,7 @@ typedef enum {
  */
 @interface CCTransitionFadeBL : CCTransitionFadeTR
 {}
+-(CCActionInterval*) actionWithSize:(ccGridSize) vector;
 @end
 
 /** CCTransitionFadeUp:
@@ -286,6 +323,7 @@ typedef enum {
  */
 @interface CCTransitionFadeUp : CCTransitionFadeTR
 {}
+-(CCActionInterval*) actionWithSize: (ccGridSize) v;
 @end
 
 /** CCTransitionFadeDown:
@@ -293,4 +331,5 @@ typedef enum {
  */
 @interface CCTransitionFadeDown : CCTransitionFadeTR
 {}
+-(CCActionInterval*) actionWithSize: (ccGridSize) v;
 @end
