@@ -373,6 +373,7 @@ goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 //
 // Order of tests
 //
+scenes.push( FeaturesPage );
 
 scenes.push( IntroPage );
 scenes.push( FeaturesPage );
