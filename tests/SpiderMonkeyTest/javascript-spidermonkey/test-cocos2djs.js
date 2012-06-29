@@ -263,34 +263,7 @@ var SpritesPage = function() {
 goog.inherits( SpritesPage, BaseLayer );
 
 
-//------------------------------------------------------------------
-//
-// Actions Page
-//
-//------------------------------------------------------------------
-var ActionsPage = function() {
 
-	goog.base(this);
-
-	this.title = 'Actions';
-	this.subtitle = ''
-
-	var fontSize = winSize.height * 0.05;
-
-	var label = cc.LabelTTF.create('cc.RotateBy.create(8, 360);', 'CourierNewPSMT', fontSize );
-	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
-	this.addChild( label );
-
-	this.sprite = cc.Sprite.create("grossini.png");
-	this.sprite.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
-	this.addChild( this.sprite );
-
-	this.onEnterTransitionDidFinish = function() {
-		var action = cc.RotateBy.create(8, 360);
-		this.sprite.runAction( action );
-	}
-}
-goog.inherits( ActionsPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -326,12 +299,42 @@ var LabelsPage = function() {
 }
 goog.inherits( LabelsPage, BaseLayer );
 
+
 //------------------------------------------------------------------
 //
-// Actions 2 Page
+// Actions Page
 //
 //------------------------------------------------------------------
-var Actions2Page = function() {
+var ActionsPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Actions';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.RotateBy.create(8, 360);', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	this.sprite = cc.Sprite.create("grossini.png");
+	this.sprite.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
+	this.addChild( this.sprite );
+
+	this.onEnterTransitionDidFinish = function() {
+		var action = cc.RotateBy.create(8, 360);
+		this.sprite.runAction( action );
+	}
+}
+goog.inherits( ActionsPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Actions Complex Page
+//
+//------------------------------------------------------------------
+var ActionsComplexPage = function() {
 
 	goog.base(this);
 
@@ -361,7 +364,72 @@ var Actions2Page = function() {
 		this.sprite.runAction( cc.RepeatForever.create( seq ) );
 	}
 }
-goog.inherits( Actions2Page, BaseLayer );
+goog.inherits( ActionsComplexPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Actions Ease Page
+//
+//------------------------------------------------------------------
+var ActionsEasePage = function() {
+
+	goog.base(this);
+
+	this.title = 'Ease Actions';
+	this.subtitle = ''
+
+	var fontSize = winSize.height * 0.05;
+
+	var label = cc.LabelTTF.create('cc.EaseIn.create(action1, rate);', 'CourierNewPSMT', fontSize );
+	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
+	this.addChild( label );
+
+	this.sprite1 = cc.Sprite.create("grossini.png");
+	this.sprite2 = cc.Sprite.create("grossinis_sister1.png");
+	this.sprite3 = cc.Sprite.create("grossinis_sister2.png");
+
+	this.addChild( this.sprite1 );
+	this.addChild( this.sprite2 );
+	this.addChild( this.sprite3 );
+
+	this.sprite1.setPosition( cc.p(60, winSize.height*1/5) );
+	this.sprite2.setPosition( cc.p(60, winSize.height*2.5/5) );
+	this.sprite3.setPosition( cc.p(60, winSize.height*4/5) );
+
+	this.onEnterTransitionDidFinish = function() {
+		var move = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
+		var move_back = move.reverse();
+
+		// XXX: Copy not working yet... re-create the actions
+		var move_copy = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
+
+		var move_ease_in = cc.EaseIn.create( move_copy,  2.5 );
+		var move_ease_in_back = move_ease_in.reverse();
+
+		// XXX: Copy not working yet... re-create the actions
+		move_copy = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
+
+		var move_ease_out = cc.EaseOut.create( move_copy, 2.5 );
+		var move_ease_out_back = move_ease_out.reverse();
+
+		// XXX: Copy not working yet... re-create the actions
+		var delay1 = cc.DelayTime.create( 0.25 );
+		var delay2 = cc.DelayTime.create( 0.25 );
+		var delay3 = cc.DelayTime.create( 0.25 );
+		var delay4 = cc.DelayTime.create( 0.25 );
+		var delay5 = cc.DelayTime.create( 0.25 );
+		var delay6 = cc.DelayTime.create( 0.25 );
+
+		var seq1 = cc.Sequence.create( move, delay1, move_back, delay2);
+		var seq2 = cc.Sequence.create( move_ease_in, delay3, move_ease_in_back, delay4 );
+		var seq3 = cc.Sequence.create( move_ease_out, delay5, move_ease_out_back, delay6 );
+
+		this.sprite1.runAction( cc.RepeatForever.create( seq1 ) );
+		this.sprite2.runAction( cc.RepeatForever.create( seq2 ) );
+		this.sprite3.runAction( cc.RepeatForever.create( seq3 ) );
+	}
+}
+goog.inherits( ActionsEasePage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -545,7 +613,8 @@ scenes.push( FeaturesPage );
 scenes.push( SpritesPage );
 scenes.push( LabelsPage );
 scenes.push( ActionsPage );
-scenes.push( Actions2Page );
+scenes.push( ActionsComplexPage );
+scenes.push( ActionsEasePage );
 scenes.push( ParserFeaturesPage );
 scenes.push( InternalsPage );
 scenes.push( ChipmunkSpriteBatchTest );
