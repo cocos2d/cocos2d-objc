@@ -13,12 +13,14 @@ var centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
 var currentScene = 0;
+var withTransition = false;
 
 var nextSpriteTestAction = function () {
 	currentScene = currentScene + 1;
 	if( currentScene >= scenes.length )
 		currentScene = 0;
 
+	withTransition = true;
 	loadScene(currentScene);
 };
 var backSpriteTestAction = function () {
@@ -26,6 +28,7 @@ var backSpriteTestAction = function () {
 	if( currentScene < 0 )
 		currentScene = scenes.length -1;
 
+	withTransition = true;
 	loadScene(currentScene);
 };
 var restartSpriteTestAction = function () {
@@ -50,9 +53,12 @@ var loadScene = function (sceneIdx)
 	var idx = Math.floor(  Math.random() * transitions.length );
 	var transition = transitions[ idx ];
 
-	cc.log( 'Que soy:' + transition );
+	if( withTransition == true )
+		director.replaceScene( transition.create( 0.9, scene ) );
+	else
+		director.replaceScene( scene );
 
-	director.replaceScene( transition.create( 0.9, scene ) );
+	withTransition = false;
 //    __jsc__.garbageCollect();
 }
 
@@ -98,11 +104,10 @@ BaseLayer.prototype.onEnter = function() {
 
 	var isMain = this.isMainTitle;
 
-	if( isMain == true ) {
+	if( isMain == true )
 		this.label.setPosition( centerPos );
-	} else {
+	else
 		this.label.setPosition( cc.p(winSize.width / 2, winSize.height*11/12) );
-	}
 
 	var subStr = this.subtitle;
 	if (subStr != "") {
@@ -114,14 +119,12 @@ BaseLayer.prototype.onEnter = function() {
 
 		this.sublabel = cc.LabelTTF.create(subStr, "Thonburi", subfontSize);
 		this.addChild(this.sublabel, 1);
-		if( isMain ) {
+		if( isMain )
 			this.sublabel.setPosition( cc.p(winSize.width / 2, winSize.height*3/8 ));
-		} else {
+		else
 			this.sublabel.setPosition( cc.p(winSize.width / 2, winSize.height*5/6 ));
-		}
-	} else {
+	} else
 		this.sublabel = null;
-	}
 
 	// WARNING: MenuItem API will change!
 	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
@@ -129,8 +132,8 @@ BaseLayer.prototype.onEnter = function() {
 	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
 
 	 [item1, item2, item3].forEach( function(item) {
-		item.normalImage().setOpacity(10);
-		item.selectedImage().setOpacity(10);
+		item.normalImage().setOpacity(15);
+		item.selectedImage().setOpacity(15);
 		} );
 
 	var menu = cc.Menu.create( item1, item2, item3 );
@@ -142,6 +145,32 @@ BaseLayer.prototype.onEnter = function() {
 
 	this.addChild(menu, 1);
 }
+
+BaseLayer.prototype.createBulletList = function () {
+	var str = "";
+	for(var i=0; i<arguments.length; i++)
+	{
+		if(i != 0)
+			str += "\n";
+		str += '- ' + arguments[i];
+	}
+
+	cc.log( str );
+
+	var fontSize = winSize.height*0.07;
+	var bullets = cc.LabelTTF.create( str, "Gill Sans", fontSize );
+	bullets.setPosition( centerPos );
+	this.addChild( bullets );
+}
+
+BaseLayer.prototype.createImage = function( file ) {
+	var sprite = cc.Sprite.create( file );
+	sprite.setPosition( centerPos );
+	this.addChild( sprite );
+
+	return sprite;
+}
+
 
 BaseLayer.prototype.restartCallback = function (sender) {
     cc.log("restart called");
@@ -183,10 +212,41 @@ var FeaturesPage = function() {
 	goog.base(this);
 
 	this.title = 'Features';
-	this.subtitle = 'Web and Prototyping tools for serious developers';
+	this.subtitle = '';
 	this.isMainTitle = false;
+
+	this.createBulletList( 'Generates robust JS bindings',
+				'No need to modify generated code',
+				'No need to modify parsed library',
+				'Easy to maintain',
+				'Powerful config file' );
 }
 goog.inherits( FeaturesPage, BaseLayer );
+
+//------------------------------------------------------------------
+//
+// Internals
+//
+//------------------------------------------------------------------
+var InternalsPage = function() {
+
+	goog.base(this);
+
+	this.title = 'Internals I';
+	this.subtitle = '';
+	this.isMainTitle = false;
+
+	this.onEnterTransitionDidFinish = function() {
+		// super onEnter
+//		goog.base( this, 'onEnterTransitionDidFinish' );
+
+		var spr = this.createImage( 'Presentation/proxy_model.png' );
+		spr.setScale( 0.1 );
+		var scaleAction = cc.ScaleTo.create( 0.7, 1);
+		spr.runAction( scaleAction );
+	}
+}
+goog.inherits( InternalsPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -260,11 +320,10 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 	}
 
 	var platform = __getPlatform();
-	if( platform == 'OSX' ) {
+	if( platform == 'OSX' )
 		this.setIsMouseEnabled( true );
-	} else if( platform == 'iOS' ) {
+	else if( platform == 'iOS' )
 		this.setIsTouchEnabled( true );
-	}
 }
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {
@@ -317,6 +376,7 @@ goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 
 scenes.push( IntroPage );
 scenes.push( FeaturesPage );
+scenes.push( InternalsPage );
 scenes.push( ChipmunkSpriteBatchTest );
 
 

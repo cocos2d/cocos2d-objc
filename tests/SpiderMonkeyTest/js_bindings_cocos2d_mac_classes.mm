@@ -604,42 +604,6 @@ JSBool JSPROXY_CCNode_numberOfRunningActions(JSContext *cx, uint32_t argc, jsval
 }
 
 // Arguments: 
-// Ret value: void (None)
-JSBool JSPROXY_CCNode_onEnterTransitionDidFinish(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	CCNode *real = (CCNode*) [proxy realObj];
-	[real onEnterTransitionDidFinish ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: void (None)
-JSBool JSPROXY_CCNode_onExitTransitionDidStart(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
-
-	CCNode *real = (CCNode*) [proxy realObj];
-	[real onExitTransitionDidStart ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: 
 // Ret value: NSUInteger (u)
 JSBool JSPROXY_CCNode_orderOfArrival(JSContext *cx, uint32_t argc, jsval *vp) {
 
@@ -1873,8 +1837,6 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("nodeToParentTransform", JSPROXY_CCNode_nodeToParentTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("nodeToWorldTransform", JSPROXY_CCNode_nodeToWorldTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("numberOfRunningActions", JSPROXY_CCNode_numberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("onEnterTransitionDidFinish", JSPROXY_CCNode_onEnterTransitionDidFinish, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("onExitTransitionDidStart", JSPROXY_CCNode_onExitTransitionDidStart, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("orderOfArrival", JSPROXY_CCNode_orderOfArrival, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("parent", JSPROXY_CCNode_parent, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("parentToNodeTransform", JSPROXY_CCNode_parentToNodeTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -1974,7 +1936,13 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		if( ! [CCNode jr_swizzleMethod:@selector(onExit) withMethod:@selector(JSHook_onExit) error:&error] )
 			NSLog(@"Error swizzling %@", error);
 
+		if( ! [CCNode jr_swizzleMethod:@selector(onExitTransitionDidStart) withMethod:@selector(JSHook_onExitTransitionDidStart) error:&error] )
+			NSLog(@"Error swizzling %@", error);
+
 		if( ! [CCNode jr_swizzleMethod:@selector(update:) withMethod:@selector(JSHook_update:) error:&error] )
+			NSLog(@"Error swizzling %@", error);
+
+		if( ! [CCNode jr_swizzleMethod:@selector(onEnterTransitionDidFinish) withMethod:@selector(JSHook_onEnterTransitionDidFinish) error:&error] )
 			NSLog(@"Error swizzling %@", error);
 
 		CCNode_already_swizzled = YES;
@@ -2013,6 +1981,22 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	}
 }
 
+-(void) onExitTransitionDidStart
+{
+	if (_jsObj) {
+		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
+		JSBool found;
+		JS_HasProperty(cx, _jsObj, "onExitTransitionDidStart", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			jsval *argv = NULL; unsigned argc=0;
+
+			JS_GetProperty(cx, _jsObj, "onExitTransitionDidStart", &fval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
+		}
+	}
+}
+
 -(void) update:(ccTime)delta 
 {
 	if (_jsObj) {
@@ -2026,6 +2010,22 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 			argv[0] = DOUBLE_TO_JSVAL(delta);
 
 			JS_GetProperty(cx, _jsObj, "update", &fval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
+		}
+	}
+}
+
+-(void) onEnterTransitionDidFinish
+{
+	if (_jsObj) {
+		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
+		JSBool found;
+		JS_HasProperty(cx, _jsObj, "onEnterTransitionDidFinish", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			jsval *argv = NULL; unsigned argc=0;
+
+			JS_GetProperty(cx, _jsObj, "onEnterTransitionDidFinish", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
@@ -2052,6 +2052,15 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		[proxy onExit];
 }
 
+-(void) JSHook_onExitTransitionDidStart
+{
+	//1st call native, then JS. Order is important
+	[self JSHook_onExitTransitionDidStart];
+	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
+	if( proxy )
+		[proxy onExitTransitionDidStart];
+}
+
 -(void) JSHook_update:(ccTime)delta 
 {
 	//1st call native, then JS. Order is important
@@ -2059,6 +2068,15 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
 		[proxy update:delta ];
+}
+
+-(void) JSHook_onEnterTransitionDidFinish
+{
+	//1st call native, then JS. Order is important
+	[self JSHook_onEnterTransitionDidFinish];
+	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
+	if( proxy )
+		[proxy onEnterTransitionDidFinish];
 }
 @end
 
@@ -3955,7 +3973,7 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationPosition", JSPROXY_CCMoveTo_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMoveTo_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCMoveTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCMoveTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -10108,7 +10126,7 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationScale", JSPROXY_CCScaleTo_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCScaleTo_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCScaleTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCScaleTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -15486,7 +15504,7 @@ void JSPROXY_CCRotateTo_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationAngle", JSPROXY_CCRotateTo_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCRotateTo_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCRotateTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCRotateTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -23144,15 +23162,6 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 		arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
 	}
 
-	if( argc == 1 ) {
-		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0  ];
-	[proxy setRealObj: real];
-	[real autorelease];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-	[proxy release];
-	}
-
 	if( argc == 2 ) {
 		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
 	[proxy setRealObj: real];
@@ -23193,10 +23202,6 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSCon
 		arg2 = (CGPoint) jsval_to_CGPoint( cx, *argvp++ );
 	}
 	CCLayerGradient* ret_val;
-
-	if( argc == 1 ) {
-		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0  ];
-	}
 
 	if( argc == 2 ) {
 		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
@@ -23714,10 +23719,6 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
 	}
 	CCTransitionFade* ret_val;
-
-	if( argc == 1 ) {
-		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0  ];
-	}
 
 	if( argc == 2 ) {
 		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -33593,10 +33594,6 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	}
 	CCTransitionPageTurn* ret_val;
 
-	if( argc == 1 ) {
-		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0  ];
-	}
-
 	if( argc == 2 ) {
 		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 	}
@@ -34202,7 +34199,7 @@ void JSPROXY_CCTintTo_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationRedGreenBlue", JSPROXY_CCTintTo_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTintTo_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCTintTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCTintTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END

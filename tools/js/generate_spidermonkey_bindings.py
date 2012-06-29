@@ -1214,6 +1214,8 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
         if optional_args_since:
             for i in xrange(total_args):
+                if i+1 < optional_args_since-1:
+                    continue
                 call_real = self.generate_method_call_to_real_object( s, i+1, ret_js_type, args_declared_type, class_name, method_type )
                 self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i+1, call_real) )
         else:
