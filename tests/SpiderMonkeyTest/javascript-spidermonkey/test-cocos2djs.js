@@ -494,11 +494,40 @@ var ParticlesPage = function() {
 	label.setPosition( cc.p( winSize.width/2, winSize.height*1/5) );
 	this.addChild( label );
 
-	var particle = cc.ParticleSystem.create("Particles/Flower.plist");
-	this.addChild( particle );
-	particle.setPosition( centerPos );
+	this.particle = cc.ParticleSystem.create("Particles/Flower.plist");
+	this.addChild( this.particle );
+	this.particle.setPosition( centerPos );
+
+	var platform = __getPlatform();
+	if( platform == 'OSX' )
+		this.setIsMouseEnabled( true );
+	else if( platform == 'iOS' )
+		this.setIsTouchEnabled( true );
+
+	this.onMouseDown = function( event ) {
+		pos = director.convertEventToGL( event );
+		this.particle.setPosition( pos );
+	}
+
+	this.onMouseDragged = function( event ) {
+		return this.onMouseDown( event );
+	}
+
+	this.onTouchesEnded = function( touches, event ) {
+		var l = touches.length;
+		for( var i=0; i < l; i++) {
+			pos = director.convertTouchToGL( touches[i] );
+			this.particle.setPosition( pos );
+		}
+	}
+
+	this.onTouchesMoved = function( touches, event ) {
+		return this.onTouchesEnded( touches, event );
+	}
+
 }
 goog.inherits( ParticlesPage, BaseLayer );
+
 
 //------------------------------------------------------------------
 //
