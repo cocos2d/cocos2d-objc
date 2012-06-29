@@ -2235,6 +2235,48 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCEaseBackIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseBackInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseBackOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseBounce'>
+<method selector='bounceTime:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='ccTime' type='f'/>
+</method>
+</class>
+<class name='CCEaseBounceIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseBounceInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseBounceOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCEaseElastic'>
 <method selector='actionWithAction:period:' class_method='true'>
 <arg name='action' declared_type='CCActionInterval*' type='@' index='0'/>
@@ -2254,6 +2296,60 @@
 <retval declared_type='void' type='v'/>
 </method>
 </class>
+<class name='CCEaseElasticIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseElasticInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseElasticOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseExponentialIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseExponentialInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseExponentialOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCEaseRateAction'>
 <method selector='actionWithAction:rate:' class_method='true'>
 <arg name='action' declared_type='CCActionInterval*' type='@' index='0'/>
@@ -2270,6 +2366,24 @@
 </method>
 <method selector='setRate:'>
 <arg name='rate' declared_type='float' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseSineIn'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseSineInOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCEaseSineOut'>
+<method selector='update:'>
+<arg name='t' declared_type='ccTime' type='f' index='0'/>
 <retval declared_type='void' type='v'/>
 </method>
 </class>

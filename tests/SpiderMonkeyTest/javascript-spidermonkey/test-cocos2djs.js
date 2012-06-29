@@ -348,6 +348,9 @@ var Actions2Page = function() {
 	this.sprite.setPosition( cc.p( winSize.width*2/4, winSize.height/2) );
 	this.addChild( this.sprite );
 
+	// This function is not portable to cocos2d-html5
+	this.sprite.texture().setAliasTexParameters();
+
 	this.onEnterTransitionDidFinish = function() {
 		var rot = cc.RotateBy.create(1, 360);
 		var rot_back = rot.reverse();
@@ -472,9 +475,10 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 
 	goog.base(this, 'onEnter');
 
-	this.scheduleUpdate();
-	for(var i=0; i<10; i++) {
-		this.addSprite( cp.v(winSize.width/2, winSize.height/2) );
+	for(var i=0; i<20; i++) {
+		var x = 40 + Math.random() * (winSize.width-80);
+		var y = winSize.height/2 + Math.random() * 80;
+		this.addSprite( cp.v(x, y) );
 	}
 
 	var platform = __getPlatform();
@@ -483,6 +487,11 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
 	else if( platform == 'iOS' )
 		this.setIsTouchEnabled( true );
 }
+
+ChipmunkSpriteTest.prototype.onEnterTransitionDidFinish = function () {
+	this.scheduleUpdate();
+}
+
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {
 	cp.spaceStep( this.space, delta );
