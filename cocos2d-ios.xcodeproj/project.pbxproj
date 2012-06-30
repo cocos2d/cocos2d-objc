@@ -1341,6 +1341,8 @@
 		A01AB915149709E300C93DB6 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
+		A01D0A46159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A42159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm */; };
+		A01D0A47159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A45159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm */; };
 		A021C072159BAC74008450B6 /* jsproto.tbl in Resources */ = {isa = PBXBuildFile; fileRef = A021BFEF159BAC73008450B6 /* jsproto.tbl */; };
 		A021C073159BAC74008450B6 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A021C009159BAC73008450B6 /* libjs_static.a */; };
 		A021C074159BAC74008450B6 /* libjs_static.a.desc in Resources */ = {isa = PBXBuildFile; fileRef = A021C00A159BAC73008450B6 /* libjs_static.a.desc */; };
@@ -4512,6 +4514,12 @@
 		A01AB91A149709E300C93DB6 /* DirectorTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DirectorTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
+		A01D0A40159E8AEC0029EE77 /* js_bindings_cocos2d_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes_registration.h; sourceTree = "<group>"; };
+		A01D0A41159E8AEC0029EE77 /* js_bindings_cocos2d_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes.h; sourceTree = "<group>"; };
+		A01D0A42159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_classes.mm; sourceTree = "<group>"; };
+		A01D0A43159E8AEC0029EE77 /* js_bindings_cocos2d_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_functions_registration.h; sourceTree = "<group>"; };
+		A01D0A44159E8AEC0029EE77 /* js_bindings_cocos2d_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_functions.h; sourceTree = "<group>"; };
+		A01D0A45159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_functions.mm; sourceTree = "<group>"; };
 		A021BFD2159BAC73008450B6 /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
 		A021BFD4159BAC73008450B6 /* Barrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Barrier.h; sourceTree = "<group>"; };
 		A021BFD5159BAC73008450B6 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
@@ -7305,6 +7313,12 @@
 			isa = PBXGroup;
 			children = (
 				A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */,
+				A01D0A40159E8AEC0029EE77 /* js_bindings_cocos2d_classes_registration.h */,
+				A01D0A41159E8AEC0029EE77 /* js_bindings_cocos2d_classes.h */,
+				A01D0A42159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm */,
+				A01D0A43159E8AEC0029EE77 /* js_bindings_cocos2d_functions_registration.h */,
+				A01D0A44159E8AEC0029EE77 /* js_bindings_cocos2d_functions.h */,
+				A01D0A45159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm */,
 				A04E867F159B83ED00F4BE65 /* js_bindings_cocos2d_ios_classes_registration.h */,
 				A04E8680159B83ED00F4BE65 /* js_bindings_cocos2d_ios_classes.h */,
 				A04E8681159B83ED00F4BE65 /* js_bindings_cocos2d_ios_classes.mm */,
@@ -12492,6 +12506,8 @@
 				A0E1DBF8159E3FC20056725B /* ThoMoNetworkStub.m in Sources */,
 				A0E1DBF9159E3FC20056725B /* ThoMoServerStub.m in Sources */,
 				A0E1DBFA159E3FC20056725B /* ThoMoTCPConnection.m in Sources */,
+				A01D0A46159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm in Sources */,
+				A01D0A47159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

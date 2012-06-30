@@ -4,46 +4,6 @@
 <field name='address' declared_type='unsigned char*' type='*'/>
 <field name='len' declared_type='unsigned int' type='I'/>
 </struct>
-<struct name='CCZHeader' type='{CCZHeader=&quot;sig&quot;[4C]&quot;compression_type&quot;S&quot;version&quot;S&quot;reserved&quot;I&quot;len&quot;I}'>
-<field name='sig' declared_type='uint8_t*' type='[4C]'/>
-<field name='compression_type' declared_type='uint16_t' type='S'/>
-<field name='version' declared_type='uint16_t' type='S'/>
-<field name='reserved' declared_type='uint32_t' type='I'/>
-<field name='len' declared_type='uint32_t' type='I'/>
-</struct>
-<struct name='UT_hash_bucket' type='{UT_hash_bucket=&quot;hh_head&quot;^{UT_hash_handle}&quot;count&quot;I&quot;expand_mult&quot;I}'>
-<field name='hh_head' declared_type='struct UT_hash_handle*' type='^{UT_hash_handle=^{UT_hash_table}^v^v^{UT_hash_handle}^{UT_hash_handle}^vII}'/>
-<field name='count' declared_type='unsigned int' type='I'/>
-<field name='expand_mult' declared_type='unsigned int' type='I'/>
-</struct>
-<struct name='UT_hash_handle' type='{UT_hash_handle=&quot;tbl&quot;^{UT_hash_table}&quot;prev&quot;^v&quot;next&quot;^v&quot;hh_prev&quot;^{UT_hash_handle}&quot;hh_next&quot;^{UT_hash_handle}&quot;key&quot;^v&quot;keylen&quot;I&quot;hashv&quot;I}'>
-<field name='tbl' declared_type='struct UT_hash_table*' type64='^{UT_hash_table=^{UT_hash_bucket}III^{UT_hash_handle}qIIIII}' type='^{UT_hash_table=^{UT_hash_bucket}III^{UT_hash_handle}iIIIII}'/>
-<field name='prev' declared_type='void*' type='^v'/>
-<field name='next' declared_type='void*' type='^v'/>
-<field name='hh_prev' declared_type='struct UT_hash_handle*' type='^{UT_hash_handle=^{UT_hash_table}^v^v^{UT_hash_handle}^{UT_hash_handle}^vII}'/>
-<field name='hh_next' declared_type='struct UT_hash_handle*' type='^{UT_hash_handle=^{UT_hash_table}^v^v^{UT_hash_handle}^{UT_hash_handle}^vII}'/>
-<field name='key' declared_type='void*' type='^v'/>
-<field name='keylen' declared_type='unsigned int' type='I'/>
-<field name='hashv' declared_type='unsigned int' type='I'/>
-</struct>
-<struct name='UT_hash_table' type64='{UT_hash_table=&quot;buckets&quot;^{UT_hash_bucket}&quot;num_buckets&quot;I&quot;log2_num_buckets&quot;I&quot;num_items&quot;I&quot;tail&quot;^{UT_hash_handle}&quot;hho&quot;q&quot;ideal_chain_maxlen&quot;I&quot;nonideal_items&quot;I&quot;ineff_expands&quot;I&quot;noexpand&quot;I&quot;signature&quot;I}' type='{UT_hash_table=&quot;buckets&quot;^{UT_hash_bucket}&quot;num_buckets&quot;I&quot;log2_num_buckets&quot;I&quot;num_items&quot;I&quot;tail&quot;^{UT_hash_handle}&quot;hho&quot;i&quot;ideal_chain_maxlen&quot;I&quot;nonideal_items&quot;I&quot;ineff_expands&quot;I&quot;noexpand&quot;I&quot;signature&quot;I}'>
-<field name='buckets' declared_type='UT_hash_bucket*' type='^{UT_hash_bucket=^{UT_hash_handle}II}'/>
-<field name='num_buckets' declared_type='unsigned int' type='I'/>
-<field name='log2_num_buckets' declared_type='unsigned int' type='I'/>
-<field name='num_items' declared_type='unsigned int' type='I'/>
-<field name='tail' declared_type='struct UT_hash_handle*' type='^{UT_hash_handle=^{UT_hash_table}^v^v^{UT_hash_handle}^{UT_hash_handle}^vII}'/>
-<field name='hho' declared_type='ptrdiff_t' type64='q' type='i'/>
-<field name='ideal_chain_maxlen' declared_type='unsigned int' type='I'/>
-<field name='nonideal_items' declared_type='unsigned int' type='I'/>
-<field name='ineff_expands' declared_type='unsigned int' type='I'/>
-<field name='noexpand' declared_type='unsigned int' type='I'/>
-<field name='signature' declared_type='uint32_t' type='I'/>
-</struct>
-<struct name='ccArray' type64='{ccArray=&quot;num&quot;Q&quot;max&quot;Q&quot;arr&quot;^@}' type='{ccArray=&quot;num&quot;I&quot;max&quot;I&quot;arr&quot;^@}'>
-<field name='num' declared_type='NSUInteger' type64='Q' type='I'/>
-<field name='max' declared_type='NSUInteger' type64='Q' type='I'/>
-<field name='arr' declared_type='CCARRAY_ID*' type='^@'/>
-</struct>
 <struct name='ccBMFontDef' type64='{_BMFontDef=&quot;charID&quot;S&quot;rect&quot;{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;size&quot;{CGSize=&quot;width&quot;d&quot;height&quot;d}}&quot;xOffset&quot;s&quot;yOffset&quot;s&quot;xAdvance&quot;s}' type='{_BMFontDef=&quot;charID&quot;S&quot;rect&quot;{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;size&quot;{CGSize=&quot;width&quot;f&quot;height&quot;f}}&quot;xOffset&quot;s&quot;yOffset&quot;s&quot;xAdvance&quot;s}'>
 <field name='charID' declared_type='unichar' type='S'/>
 <field name='rect' declared_type='CGRect' type64='{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;size&quot;{CGSize=&quot;width&quot;d&quot;height&quot;d}}' type='{CGRect=&quot;origin&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;size&quot;{CGSize=&quot;width&quot;f&quot;height&quot;f}}'/>
@@ -65,11 +25,6 @@
 <struct name='ccBlendFunc' type='{_ccBlendFunc=&quot;src&quot;I&quot;dst&quot;I}'>
 <field name='src' declared_type='GLenum' type='I'/>
 <field name='dst' declared_type='GLenum' type='I'/>
-</struct>
-<struct name='ccCArray' type64='{ccArray=&quot;num&quot;Q&quot;max&quot;Q&quot;arr&quot;^@}' type='{ccArray=&quot;num&quot;I&quot;max&quot;I&quot;arr&quot;^@}'>
-<field name='num' declared_type='NSUInteger' type64='Q' type='I'/>
-<field name='max' declared_type='NSUInteger' type64='Q' type='I'/>
-<field name='arr' declared_type='CCARRAY_ID*' type='^@'/>
 </struct>
 <struct name='ccColor3B' type='{_ccColor3B=&quot;r&quot;C&quot;g&quot;C&quot;b&quot;C}'>
 <field name='r' declared_type='GLubyte' type='C'/>
@@ -185,15 +140,6 @@
 <field name='atlasIndex' declared_type='NSUInteger' type64='Q' type='I'/>
 <field name='mode' declared_type='union sCCParticle::' type64='(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})' type='(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})'/>
 </struct>
-<struct name='sImageTGA' type='{sImageTGA=&quot;status&quot;i&quot;type&quot;C&quot;pixelDepth&quot;C&quot;width&quot;s&quot;height&quot;s&quot;imageData&quot;*&quot;flipped&quot;i}'>
-<field name='status' declared_type='int' type='i'/>
-<field name='type' declared_type='unsigned char' type='C'/>
-<field name='pixelDepth' declared_type='unsigned char' type='C'/>
-<field name='width' declared_type='short' type='s'/>
-<field name='height' declared_type='short' type='s'/>
-<field name='imageData' declared_type='unsigned char*' type='*'/>
-<field name='flipped' declared_type='int' type='i'/>
-</struct>
 <struct name='tCCParticle' type64='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;startPos&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;Q&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;d&quot;y&quot;d}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}' type='{sCCParticle=&quot;pos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;startPos&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;color&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;deltaColor&quot;{ccColor4F=&quot;r&quot;f&quot;g&quot;f&quot;b&quot;f&quot;a&quot;f}&quot;size&quot;f&quot;deltaSize&quot;f&quot;rotation&quot;f&quot;deltaRotation&quot;f&quot;timeToLive&quot;f&quot;atlasIndex&quot;I&quot;mode&quot;(?=&quot;A&quot;{?=&quot;dir&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;radialAccel&quot;f&quot;tangentialAccel&quot;f}&quot;B&quot;{?=&quot;angle&quot;f&quot;degreesPerSecond&quot;f&quot;radius&quot;f&quot;deltaRadius&quot;f})}'>
 <field name='pos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
 <field name='startPos' declared_type='CGPoint' type64='{CGPoint=&quot;x&quot;d&quot;y&quot;d}' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
@@ -215,15 +161,6 @@
 <field name='hh' declared_type='UT_hash_handle' type='{UT_hash_handle=&quot;tbl&quot;^{UT_hash_table}&quot;prev&quot;^v&quot;next&quot;^v&quot;hh_prev&quot;^{UT_hash_handle}&quot;hh_next&quot;^{UT_hash_handle}&quot;key&quot;^v&quot;keylen&quot;I&quot;hashv&quot;I}'/>
 <field name='target' declared_type='id' type='@'/>
 <field name='currentAction' declared_type='CCAction*' type='@&quot;CCAction&quot;'/>
-</struct>
-<struct name='tImageTGA' type='{sImageTGA=&quot;status&quot;i&quot;type&quot;C&quot;pixelDepth&quot;C&quot;width&quot;s&quot;height&quot;s&quot;imageData&quot;*&quot;flipped&quot;i}'>
-<field name='status' declared_type='int' type='i'/>
-<field name='type' declared_type='unsigned char' type='C'/>
-<field name='pixelDepth' declared_type='unsigned char' type='C'/>
-<field name='width' declared_type='short' type='s'/>
-<field name='height' declared_type='short' type='s'/>
-<field name='imageData' declared_type='unsigned char*' type='*'/>
-<field name='flipped' declared_type='int' type='i'/>
 </struct>
 <constant name='ccBLACK' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
 <constant name='ccBLUE' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
@@ -247,9 +184,6 @@
 <constant name='ccRED' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
 <constant name='ccWHITE' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
 <constant name='ccYELLOW' declared_type='ccColor3B' const='true' type='{_ccColor3B=CCC}'/>
-<constant name='kCCProfilerCategoryBatchSprite' declared_type='BOOL' type='B'/>
-<constant name='kCCProfilerCategoryParticles' declared_type='BOOL' type='B'/>
-<constant name='kCCProfilerCategorySprite' declared_type='BOOL' type='B'/>
 <string_constant name='CCAnimationFrameDisplayedNotification' nsstring='true' value='CCAnimationFrameDisplayedNotification'/>
 <string_constant name='kCCAttributeNameColor' nsstring='true' value='a_color'/>
 <string_constant name='kCCAttributeNamePosition' nsstring='true' value='a_position'/>
@@ -268,10 +202,6 @@
 <enum name='CCTMXOrientationHex' value='1'/>
 <enum name='CCTMXOrientationIso' value='2'/>
 <enum name='CCTMXOrientationOrtho' value='0'/>
-<enum name='CCZ_COMPRESSION_BZIP2' value='1'/>
-<enum name='CCZ_COMPRESSION_GZIP' value='2'/>
-<enum name='CCZ_COMPRESSION_NONE' value='3'/>
-<enum name='CCZ_COMPRESSION_ZLIB' value='0'/>
 <enum name='CC_BLEND_DST' value='771'/>
 <enum name='CC_BLEND_SRC' value='1'/>
 <enum name='CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD' value='0'/>
@@ -297,17 +227,6 @@
 <enum name='CC_TEXTURE_ATLAS_USE_VAO' value='1'/>
 <enum name='CC_USE_LA88_LABELS' value='1'/>
 <enum name='COCOS2D_VERSION' value='131072'/>
-<enum name='HASH_BKT_CAPACITY_THRESH' value='10'/>
-<enum name='HASH_BLOOM_SIGNATURE' value='2971803890'/>
-<enum name='HASH_INITIAL_NUM_BUCKETS' value='32'/>
-<enum name='HASH_INITIAL_NUM_BUCKETS_LOG2' value='5'/>
-<enum name='HASH_SIGNATURE' value='2685476833'/>
-<enum name='TGA_ERROR_COMPRESSED_FILE' value='5'/>
-<enum name='TGA_ERROR_FILE_OPEN' value='1'/>
-<enum name='TGA_ERROR_INDEXED_COLOR' value='3'/>
-<enum name='TGA_ERROR_MEMORY' value='4'/>
-<enum name='TGA_ERROR_READING_FILE' value='2'/>
-<enum name='TGA_OK' value='0'/>
 <enum name='TMXLayerAttribBase64' value='2'/>
 <enum name='TMXLayerAttribGzip' value='4'/>
 <enum name='TMXLayerAttribNone' value='1'/>
@@ -415,235 +334,11 @@
 <enum name='kParticleStartSizeEqualToEndSize' value='-1'/>
 <enum name='kPositionTypeFree' value='0'/>
 <enum name='kPositionTypeGrouped' value='2'/>
-<function name='CCProfilingBeginTimingBlock'>
-<arg name='timerName' declared_type='NSString*' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='CCProfilingEndTimingBlock'>
-<arg name='timerName' declared_type='NSString*' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='CCProfilingResetTimingBlock'>
-<arg name='timerName' declared_type='NSString*' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='CGAffineToGL'>
-<arg name='t' declared_type='CGAffineTransform*' type64='^{CGAffineTransform=dddddd}' const='true' type='^{CGAffineTransform=ffffff}'/>
-<arg name='m' declared_type='GLfloat*' type='^f'/>
-<retval declared_type='void' type='v'/>
-</function>
 <function name='FNTConfigLoadFile'>
 <arg name='file' declared_type='NSString*' type='@'/>
 <retval declared_type='CCBMFontConfiguration*' type='@'/>
 </function>
 <function name='FNTConfigRemoveCache'>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='GLToCGAffine'>
-<arg name='m' declared_type='GLfloat*' const='true' type='^f'/>
-<arg name='t' declared_type='CGAffineTransform*' type64='^{CGAffineTransform=dddddd}' type='^{CGAffineTransform=ffffff}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='base64Decode'>
-<arg name='in' declared_type='unsigned char*' type='*'/>
-<arg name='inLength' declared_type='unsigned int' type='I'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='ccArrayAppendArray'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='plusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayAppendArrayWithResize'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='plusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayAppendObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayAppendObjectWithResize'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayContainsObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccArrayDoubleCapacity'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayEnsureExtraCapacity'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='extra' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayFastRemoveObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayFastRemoveObjectAtIndex'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayFree'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayFullRemoveArray'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='minusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayGetIndexOfObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='NSUInteger' type64='Q' type='I'/>
-</function>
-<function name='ccArrayInsertObjectAtIndex'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayMakeObjectPerformSelectorWithArrayObjects'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='sel' declared_type='SEL' type=':'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayMakeObjectsPerformSelector'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='sel' declared_type='SEL' type=':'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayMakeObjectsPerformSelectorWithObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='sel' declared_type='SEL' type=':'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayNew'>
-<arg name='capacity' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-</function>
-<function name='ccArrayRemoveAllObjects'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayRemoveArray'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='minusArr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayRemoveObject'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='object' declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayRemoveObjectAtIndex'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArrayShrink'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccArraySwapObjectsAtIndexes'>
-<arg name='arr' declared_type='ccArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='index1' declared_type='NSUInteger' type64='Q' type='I'/>
-<arg name='index2' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayAppendArray'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='plusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayAppendArrayWithResize'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='plusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayAppendValue'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayAppendValueWithResize'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayContainsValue'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccCArrayDoubleCapacity'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayEnsureExtraCapacity'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='extra' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayFastRemoveValueAtIndex'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayFree'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayFullRemoveArray'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='minusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayGetIndexOfValue'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<retval declared_type='NSUInteger' type64='Q' type='I'/>
-</function>
-<function name='ccCArrayInsertValueAtIndex'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayNew'>
-<arg name='capacity' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-</function>
-<function name='ccCArrayRemoveAllValues'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayRemoveArray'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='minusArr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayRemoveValue'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='value' declared_type='CCARRAY_ID' type='@'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccCArrayRemoveValueAtIndex'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccCardinalSplineAt'>
@@ -779,88 +474,11 @@
 <arg name='program' declared_type='GLuint' type='I'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function name='ccInflateCCZFile'>
-<arg name='filename' declared_type='char*' const='true' type='*'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='ccInflateGZipFile'>
-<arg name='filename' declared_type='char*' const='true' type='*'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='ccInflateMemory'>
-<arg name='in' declared_type='unsigned char*' type='*'/>
-<arg name='inLength' declared_type='unsigned int' type='I'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='ccInflateMemoryWithHint'>
-<arg name='in' declared_type='unsigned char*' type='*'/>
-<arg name='inLength' declared_type='unsigned int' type='I'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<arg name='outLenghtHint' declared_type='unsigned int' type='I'/>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='ccLoadFileIntoMemory'>
-<arg name='filename' declared_type='char*' const='true' type='*'/>
-<arg name='out' declared_type='unsigned char**' type='^*'/>
-<retval declared_type='NSInteger' type64='q' type='i'/>
-</function>
-<function name='ccNextPOT'>
-<arg name='value' declared_type='unsigned long' type64='Q' type='L'/>
-<retval declared_type='unsigned long' type64='Q' type='L'/>
-</function>
 <function name='ccPointSize'>
 <arg name='pointSize' declared_type='GLfloat' type='f'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccSetProjectionMatrixDirty'>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='ccVertexLineIntersect'>
-<arg name='Ax' declared_type='float' type='f'/>
-<arg name='Ay' declared_type='float' type='f'/>
-<arg name='Bx' declared_type='float' type='f'/>
-<arg name='By' declared_type='float' type='f'/>
-<arg name='Cx' declared_type='float' type='f'/>
-<arg name='Cy' declared_type='float' type='f'/>
-<arg name='Dx' declared_type='float' type='f'/>
-<arg name='Dy' declared_type='float' type='f'/>
-<arg name='T' declared_type='float*' type='^f'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccVertexLineToPolygon'>
-<arg name='points' declared_type='CGPoint*' type64='^{CGPoint=dd}' type='^{CGPoint=ff}'/>
-<arg name='stroke' declared_type='float' type='f'/>
-<arg name='vertices' declared_type='ccVertex2F*' type='^{_ccVertex2F=ff}'/>
-<arg name='offset' declared_type='NSUInteger' type64='Q' type='I'/>
-<arg name='nuPoints' declared_type='NSUInteger' type64='Q' type='I'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='cc_insertionSort'>
-<arg name='arr' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='comparator' function_pointer='true' declared_type='cc_comparator' type='^?'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='cc_mergesortL'>
-<arg name='array' declared_type='ccCArray*' type64='^{ccArray=QQ^@}' type='^{ccArray=II^@}'/>
-<arg name='width' declared_type='size_t' type64='Q' type='L'/>
-<arg name='comparator' function_pointer='true' declared_type='cc_comparator' type='^?'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='int' type='i'/>
-</function>
-<function name='cc_pointerswap'>
-<arg name='a' declared_type='void*' type='^v'/>
-<arg name='b' declared_type='void*' type='^v'/>
-<arg name='width' declared_type='size_t' type64='Q' type='L'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='ccc3' inline='true'>
@@ -901,202 +519,8 @@
 <arg name='y' declared_type='NSInteger' type64='q' const='true' type='i'/>
 <retval declared_type='ccGridSize' type64='{_ccGridSize=qq}' type='{_ccGridSize=ii}'/>
 </function>
-<function name='ccp' inline='true'>
-<arg name='x' declared_type='CGFloat' type64='d' type='f'/>
-<arg name='y' declared_type='CGFloat' type64='d' type='f'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpAdd' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpAngle'>
-<arg name='a' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='b' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='float' type='f'/>
-</function>
-<function name='ccpAngleSigned'>
-<arg name='a' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='b' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='float' type='f'/>
-</function>
-<function name='ccpClamp'>
-<arg name='p' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='from' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='to' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpCompMult'>
-<arg name='a' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='b' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpCompOp'>
-<arg name='p' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='opFunc' function_pointer='true' declared_type='float (*)(float)' type='^?'>
-<arg declared_type='float' type='f'/>
-<retval declared_type='float' type='f'/>
-</arg>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpCross' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpDistance'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpDistanceSQ' inline='true'>
-<arg name='p1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='p2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpDot' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpForAngle'>
-<arg name='a' declared_type='CGFloat' type64='d' const='true' type='f'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpFromSize'>
-<arg name='s' declared_type='CGSize' type64='{CGSize=dd}' type='{CGSize=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpFuzzyEqual'>
-<arg name='a' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='b' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='variance' declared_type='float' type='f'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccpIntersectPoint'>
-<arg name='A' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='B' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='C' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='D' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpLength'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpLengthSQ' inline='true'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpLerp'>
-<arg name='a' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='b' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='alpha' declared_type='float' type='f'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpLineIntersect'>
-<arg name='p1' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='p2' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='p3' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='p4' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='s' declared_type='float*' type='^f'/>
-<arg name='t' declared_type='float*' type='^f'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccpMidpoint' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpMult' inline='true'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='s' declared_type='CGFloat' type64='d' const='true' type='f'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpNeg' inline='true'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpNormalize'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpPerp' inline='true'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpProject' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpRPerp' inline='true'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpRotate' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpRotateByAngle'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='pivot' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='angle' declared_type='float' type='f'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpSegmentIntersect'>
-<arg name='A' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='B' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='C' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<arg name='D' declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-<retval declared_type='BOOL' type='B'/>
-</function>
-<function name='ccpSub' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='ccpToAngle'>
-<arg name='v' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGFloat' type64='d' type='f'/>
-</function>
-<function name='ccpUnrotate' inline='true'>
-<arg name='v1' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<arg name='v2' declared_type='CGPoint' type64='{CGPoint=dd}' const='true' type='{CGPoint=ff}'/>
-<retval declared_type='CGPoint' type64='{CGPoint=dd}' type='{CGPoint=ff}'/>
-</function>
-<function name='clampf'>
-<arg name='value' declared_type='float' type='f'/>
-<arg name='min_inclusive' declared_type='float' type='f'/>
-<arg name='max_inclusive' declared_type='float' type='f'/>
-<retval declared_type='float' type='f'/>
-</function>
 <function name='cocos2dVersion'>
 <retval declared_type='NSString*' type='@'/>
-</function>
-<function name='tgaDestroy'>
-<arg name='info' declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='tgaLoad'>
-<arg name='filename' declared_type='char*' const='true' type='*'/>
-<retval declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
-</function>
-<function name='tgaLoadHeader'>
-<arg name='file' declared_type='FILE*' type='^{__sFILE=*iiss{__sbuf=*i}i^v^?^?^?^?{__sbuf=*i}^{__sFILEX}i[3C][1C]{__sbuf=*i}iq}'/>
-<arg name='info' declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='tgaLoadImageData'>
-<arg name='file' declared_type='FILE*' type='^{__sFILE=*iiss{__sbuf=*i}i^v^?^?^?^?{__sbuf=*i}^{__sFILEX}i[3C][1C]{__sbuf=*i}iq}'/>
-<arg name='info' declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
-<retval declared_type='void' type='v'/>
-</function>
-<function name='tgaRGBtogreyscale'>
-<arg name='info' declared_type='tImageTGA*' type='^{sImageTGA=iCCss*i}'/>
-<retval declared_type='void' type='v'/>
 </function>
 <function_alias name='CCNSPointToCGPoint' original='NSPointToCGPoint'/>
 <function_alias name='CCNSRectToCGRect' original='NSRectToCGRect'/>
@@ -1444,182 +868,6 @@
 </method>
 <method selector='userInfo'>
 <retval declared_type='NSDictionary*' type='@'/>
-</method>
-</class>
-<class name='CCArray'>
-<method selector='addObject:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='addObjectsFromArray:'>
-<arg name='otherArray' declared_type='CCArray*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='addObjectsFromNSArray:'>
-<arg name='otherArray' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='array' class_method='true'>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='arrayWithArray:' class_method='true'>
-<arg name='otherArray' declared_type='CCArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='arrayWithCapacity:' class_method='true'>
-<arg name='capacity' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='arrayWithNSArray:' class_method='true'>
-<arg name='otherArray' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='capacity'>
-<retval declared_type='NSUInteger' type64='Q' type='I'/>
-</method>
-<method selector='containsObject:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<retval declared_type='BOOL' type='B'/>
-</method>
-<method selector='count'>
-<retval declared_type='NSUInteger' type64='Q' type='I'/>
-</method>
-<method selector='exchangeObject:withObject:'>
-<arg name='object1' declared_type='id' type='@' index='0'/>
-<arg name='object2' declared_type='id' type='@' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='exchangeObjectAtIndex:withObjectAtIndex:'>
-<arg name='index1' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<arg name='index2' declared_type='NSUInteger' type64='Q' type='I' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='fastRemoveObject:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='fastRemoveObjectAtIndex:'>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='getNSArray'>
-<retval declared_type='NSArray*' type='@'/>
-</method>
-<method selector='indexOfObject:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<retval declared_type='NSUInteger' type64='Q' type='I'/>
-</method>
-<method selector='initWithArray:'>
-<arg name='otherArray' declared_type='CCArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithCapacity:'>
-<arg name='capacity' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='initWithNSArray:'>
-<arg name='otherArray' declared_type='NSArray*' type='@' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='insertObject:atIndex:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='insertionSort:'>
-<arg name='selector' declared_type='SEL' type=':' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='insertionSortUsingCFuncComparator:'>
-<arg name='comparator' function_pointer='true' declared_type='int (*)(void *, void *)' type='^?' index='0'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='isEqualToArray:'>
-<arg name='otherArray' declared_type='CCArray*' type='@' index='0'/>
-<retval declared_type='BOOL' type='B'/>
-</method>
-<method selector='lastObject'>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='makeObjectPerformSelectorWithArrayObjects:selector:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<arg name='aSelector' declared_type='SEL' type=':' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='makeObjectsPerformSelector:'>
-<arg name='aSelector' declared_type='SEL' type=':' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='makeObjectsPerformSelector:withObject:'>
-<arg name='aSelector' declared_type='SEL' type=':' index='0'/>
-<arg name='object' declared_type='id' type='@' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='mergesortLUsingCFuncComparator:'>
-<arg name='comparator' function_pointer='true' declared_type='int (*)(void *, void *)' type='^?' index='0'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='objectAtIndex:'>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='qsortUsingCFuncComparator:'>
-<arg name='comparator' function_pointer='true' declared_type='int (*)(void *, void *)' type='^?' index='0'>
-<arg declared_type='void*' const='true' type='^v'/>
-<arg declared_type='void*' const='true' type='^v'/>
-<retval declared_type='int' type='i'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='randomObject'>
-<retval declared_type='id' type='@'/>
-</method>
-<method selector='reduceMemoryFootprint'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='removeAllObjects'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='removeLastObject'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='removeObject:'>
-<arg name='object' declared_type='id' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='removeObjectAtIndex:'>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='removeObjectsInArray:'>
-<arg name='otherArray' declared_type='CCArray*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='replaceObjectAtIndex:withObject:'>
-<arg name='index' declared_type='NSUInteger' type64='Q' type='I' index='0'/>
-<arg name='anObject' declared_type='id' type='@' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='reverseObjects'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='sortUsingFunction:context:'>
-<arg name='compare' function_pointer='true' declared_type='NSInteger (*)(id, id, void *)' type='^?' index='0'>
-<arg declared_type='id' type='@'/>
-<arg declared_type='id' type='@'/>
-<arg declared_type='void*' type='^v'/>
-<retval declared_type='NSInteger' type64='q' type='i'/>
-</arg>
-<arg name='context' declared_type='void*' type='^v' index='1'/>
-<retval declared_type='void' type='v'/>
 </method>
 </class>
 <class name='CCAtlasNode'>
@@ -2458,37 +1706,6 @@
 <arg name='duration' declared_type='ccTime' type='f' index='0'/>
 <arg name='opacity' declared_type='GLubyte' type='C' index='1'/>
 <retval declared_type='id' type='@'/>
-</method>
-</class>
-<class name='CCFileUtils'>
-<method selector='bundle'>
-<retval declared_type='NSBundle*' type='@'/>
-</method>
-<method selector='fileManager'>
-<retval declared_type='NSFileManager*' type='@'/>
-</method>
-<method selector='fullPathFromRelativePath:'>
-<arg name='relPath' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='NSString*' type='@'/>
-</method>
-<method selector='fullPathFromRelativePath:resolutionType:'>
-<arg name='relPath' declared_type='NSString*' type='@' index='0'/>
-<arg name='resolutionType' declared_type='ccResolutionType*' type='^i' index='1'/>
-<retval declared_type='NSString*' type='@'/>
-</method>
-<method selector='purgeCachedEntries'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='setBundle:'>
-<arg name='bundle' declared_type='NSBundle*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='setFileManager:'>
-<arg name='fileManager' declared_type='NSFileManager*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='sharedFileUtils' class_method='true'>
-<retval declared_type='CCFileUtils*' type='@'/>
 </method>
 </class>
 <class name='CCFiniteTimeAction'>
@@ -4829,30 +4046,6 @@
 </method>
 <method selector='setControlPoints:'>
 <arg name='controlPoints' declared_type='NSMutableArray*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-</class>
-<class name='CCProfiler'>
-<method selector='createAndAddTimerWithName:'>
-<arg name='timerName' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='CCProfilingTimer*' type='@'/>
-</method>
-<method selector='displayTimers'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='releaseAllTimers'>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='releaseTimer:'>
-<arg name='timerName' declared_type='NSString*' type='@' index='0'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='sharedProfiler' class_method='true'>
-<retval declared_type='CCProfiler*' type='@'/>
-</method>
-</class>
-<class name='CCProfilingTimer'>
-<method selector='reset'>
 <retval declared_type='void' type='v'/>
 </method>
 </class>
@@ -7466,30 +6659,6 @@
 <retval declared_type='void' type='v'/>
 </method>
 <method selector='updateProjection'>
-<retval declared_type='void' type='v'/>
-</method>
-</class>
-<class name='NSThread'>
-<method selector='performBlock:'>
-<arg name='block' function_pointer='true' declared_type='void (^)(void)' type='@?' index='0'>
-<retval declared_type='void' type='v'/>
-</arg>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='performBlock:waitUntilDone:'>
-<arg name='block' function_pointer='true' declared_type='void (^)(void)' type='@?' index='0'>
-<retval declared_type='void' type='v'/>
-</arg>
-<arg name='wait' declared_type='BOOL' type='B' index='1'/>
-<retval declared_type='void' type='v'/>
-</method>
-<method selector='performBlock:withObject:waitUntilDone:'>
-<arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='0'>
-<arg declared_type='id' type='@'/>
-<retval declared_type='void' type='v'/>
-</arg>
-<arg name='object' declared_type='id' type='@' index='1'/>
-<arg name='wait' declared_type='BOOL' type='B' index='2'/>
 <retval declared_type='void' type='v'/>
 </method>
 </class>

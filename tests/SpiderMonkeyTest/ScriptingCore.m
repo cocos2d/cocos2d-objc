@@ -25,6 +25,9 @@
 #import "cocos2d.h"
 #import "ScriptingCore.h"
 #import "js_bindings_NSObject.h"
+
+#import "js_bindings_cocos2d_classes.h"
+#import "js_bindings_cocos2d_functions.h"
 #ifdef __CC_PLATFORM_IOS
 #import "js_bindings_cocos2d_ios_classes.h"
 #import "js_bindings_cocos2d_ios_functions.h"
@@ -316,7 +319,10 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 		// Register classes: base classes should be registered first
-		
+
+#import "js_bindings_cocos2d_classes_registration.h"
+#import "js_bindings_cocos2d_functions_registration.h"
+
 #ifdef __CC_PLATFORM_IOS
 		JSObject *cocos2d_ios = cocos2d;
 #import "js_bindings_cocos2d_ios_classes_registration.h"

@@ -83,6 +83,7 @@ class SpiderMonkey(object):
                              'method_properties' : [],
                              'struct_properties' : [],
                              'function_prefix_to_remove' : '',
+                             'import_files' : [],
                              }
 
 
@@ -134,6 +135,7 @@ class SpiderMonkey(object):
         #
         self.class_prefix = config['obj_class_prefix_to_remove']
         self.inherit_class_methods = config['inherit_class_methods']
+        self.import_files = config['import_files']
 
         # Add here manually generated classes
         self.init_class_properties( config['class_properties'] )
@@ -1322,7 +1324,8 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
     def generate_class_header_prefix( self ):
         self.generate_autogenerate_prefix( self.h_file )
-        self.h_file.write('#import "%sNSObject.h"\n' % BINDINGS_PREFIX )
+        for i in self.import_files:
+            self.h_file.write('#import "%s"\n' % i )
 
     def generate_class_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
