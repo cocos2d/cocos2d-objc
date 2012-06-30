@@ -230,11 +230,14 @@ class SpiderMonkey(object):
                     o_key = o
                     o_val = True
                 opts[ o_key ] = o_val
-            if not klass in self.method_properties:
-                self.method_properties[klass] = {}
-            if not method in self.method_properties[klass]:
-                self.method_properties[klass][method] = {}
-            self.method_properties[klass][method] = opts
+
+            expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
+            for k in expanded_klasses:
+                if not k in self.method_properties:
+                    self.method_properties[k] = {}
+                if not method in self.method_properties[k]:
+                    self.method_properties[k][method] = {}
+                self.method_properties[k][method] = opts
 
     def init_struct_properties( self, properties ):
         self.struct_properties = {}

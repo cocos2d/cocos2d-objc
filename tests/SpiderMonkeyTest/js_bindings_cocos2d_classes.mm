@@ -8753,7 +8753,7 @@ void JSPROXY_CCTransitionScene_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionScene_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionScene_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionScene_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -8884,7 +8884,7 @@ void JSPROXY_CCTransitionProgress_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgress_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -9341,7 +9341,7 @@ void JSPROXY_CCTransitionFadeTR_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeTR_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -9640,7 +9640,7 @@ void JSPROXY_CCTransitionSceneOriented_createClass(JSContext *cx, JSObject* glob
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSceneOriented_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10307,7 +10307,7 @@ void JSPROXY_CCTransitionRotoZoom_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionRotoZoom_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10441,7 +10441,7 @@ void JSPROXY_CCTransitionFadeDown_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeDown_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -11742,7 +11742,7 @@ void JSPROXY_CCTransitionFlipAngular_createClass(JSContext *cx, JSObject* global
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFlipAngular_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -27510,7 +27510,7 @@ void JSPROXY_CCTransitionZoomFlipX_createClass(JSContext *cx, JSObject* globalOb
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipX_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -33234,7 +33234,7 @@ void JSPROXY_CCTransitionZoomFlipY_createClass(JSContext *cx, JSObject* globalOb
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipY_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -34197,7 +34197,7 @@ void JSPROXY_CCTransitionFadeBL_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeBL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -36018,7 +36018,7 @@ void JSPROXY_CCTransitionTurnOffTiles_createClass(JSContext *cx, JSObject* globa
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionTurnOffTiles_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -37417,7 +37417,7 @@ void JSPROXY_CCTransitionProgressInOut_createClass(JSContext *cx, JSObject* glob
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressInOut_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -41328,7 +41328,7 @@ void JSPROXY_CCTransitionZoomFlipAngular_createClass(JSContext *cx, JSObject* gl
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipAngular_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -42918,7 +42918,7 @@ void JSPROXY_CCTransitionJumpZoom_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionJumpZoom_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -43226,7 +43226,7 @@ void JSPROXY_CCTransitionFadeUp_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeUp_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -45659,7 +45659,7 @@ void JSPROXY_CCTransitionProgressOutIn_createClass(JSContext *cx, JSObject* glob
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("transitionWithDurationScene", JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressOutIn_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
