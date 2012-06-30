@@ -603,7 +603,9 @@ class SpiderMonkey(object):
 
         # rename rule ?
         if class_name in self.class_properties and 'name' in self.class_properties[class_name]:
-            return self.class_properties[class_name]['name']
+            name = self.class_properties[class_name]['name']
+            name = name.replace('"', '')
+            return name
 
         # Prefix rule ?
         if class_name.startswith( self.class_prefix ):
