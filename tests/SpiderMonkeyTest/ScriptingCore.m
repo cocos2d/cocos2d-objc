@@ -24,7 +24,7 @@
 
 #import "cocos2d.h"
 #import "ScriptingCore.h"
-#import "js_bindings_NSObject.h"
+#import "js_bindings_NS_manual.h"
 
 #import "js_bindings_cocos2d_classes.h"
 #import "js_bindings_cocos2d_functions.h"

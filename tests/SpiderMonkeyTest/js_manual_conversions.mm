@@ -25,7 +25,7 @@
 #import "jsapi.h"
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
-#import "js_bindings_NSObject.h"
+#import "js_bindings_NS_manual.h"
 
 
 #pragma mark - helpers
