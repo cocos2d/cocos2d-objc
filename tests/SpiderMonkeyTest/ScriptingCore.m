@@ -145,7 +145,8 @@ JSBool ScriptingCore_address(JSContext *cx, uint32_t argc, jsval *vp)
 
 		NSString *str = @"-";
 		if( argc == 2 ) {
-			str = jsval_to_nsstring( cx, *argvp++ );
+			NSString *tmp;
+			jsval_to_nsstring( cx, *argvp++, &tmp );
 		}
 		NSLog(@"Address this:%p arg:%p - %@", jsThis, jsObj, str);
 

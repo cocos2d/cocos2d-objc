@@ -177,9 +177,9 @@
 				string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
 			}
 			else if(JSVAL_IS_STRING(out)) {
-				string = [NSString stringWithFormat:@"Result(string): %d.\n", 
-						  jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out )
-						  ];
+				NSString *tmp;
+				jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out, &tmp );
+				string = [NSString stringWithFormat:@"Result(string): %d.\n", tmp];
 			}
 			else if (JSVAL_IS_VOID(out) )
 				string = @"Result(void):\n";
@@ -229,10 +229,10 @@
 //	[scene addChild:test];	
 //	[[CCDirector sharedDirector] runWithScene:scene];
 	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-cocos2djs.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-cocos2djs.js"];
 }
 @end
 

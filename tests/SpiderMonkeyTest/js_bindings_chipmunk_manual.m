@@ -115,16 +115,21 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	if( ! handler )
 		return JS_FALSE;
 	
+	JSBool error = JS_FALSE;
 
 	// args
-	cpSpace* space = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
-	handler->typeA = (cpCollisionType) JSVAL_TO_INT( *argvp++ );
-	handler->typeB = (cpCollisionType) JSVAL_TO_INT( *argvp++ );
+	cpSpace *space;
+	error |= jsval_to_opaque( cx, *argvp++, (void**)&space);
+	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &handler->typeA );
+	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &handler->typeB );
 	handler->begin =  *argvp++;
 	handler->pre = *argvp++;
 	handler->post = *argvp++;
 	handler->separate = *argvp++;
 	handler->this = JSVAL_TO_OBJECT(*argvp++);
+	
+	if( error )
+		return JS_FALSE;
 		
 	handler->cx = cx;
 	
@@ -145,10 +150,17 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 		return  JS_FALSE;
 	
 	jsval *argvp = JS_ARGV(cx,vp);
-
-	cpSpace* space = (cpSpace*) jsval_to_opaque( cx, *argvp++ );
-	cpCollisionType typeA = (cpCollisionType) JSVAL_TO_INT( *argvp++ );
-	cpCollisionType typeB = (cpCollisionType) JSVAL_TO_INT( *argvp++ );
+	JSBool error = JS_FALSE;
+	
+	cpSpace* space;
+	cpCollisionType typeA;
+	cpCollisionType typeB;
+	error |= jsval_to_opaque( cx, *argvp++, (void**)&space);
+	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &typeA );
+	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &typeB );
+	
+	if( error )
+		return JS_FALSE;
 
 	cpSpaceRemoveCollisionHandler(space, typeA, typeB );
 	
@@ -165,8 +177,11 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 		return  JS_FALSE;
 	
 	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool error = JS_FALSE;
 	
-	cpArbiter* arbiter = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpArbiter* arbiter;
+	if( ! jsval_to_opaque( cx, *argvp++, (void*)&arbiter ) )
+		return JS_FALSE;
 
 	cpBody *bodyA;
 	cpBody *bodyB;
@@ -191,7 +206,9 @@ JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
 	
 	jsval *argvp = JS_ARGV(cx,vp);
 	
-	cpArbiter* arbiter = (cpArbiter*) jsval_to_opaque( cx, *argvp++ );
+	cpArbiter* arbiter;
+	if( ! jsval_to_opaque( cx, *argvp++, (void**) &arbiter ) )
+	   return JS_FALSE;
 	
 	cpShape *shapeA;
 	cpShape *shapeB;
