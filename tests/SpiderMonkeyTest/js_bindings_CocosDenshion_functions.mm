@@ -6,4 +6,5 @@
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
 #import "js_manual_conversions.h"
+#import "js_bindings_config.h"
 #import "js_bindings_CocosDenshion_functions.h"
