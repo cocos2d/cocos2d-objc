@@ -969,30 +969,30 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         return (args_js_type, args_declared_type)
 
     def generate_argument_variadic_2_nsarray( self ):
-        template = '\targ0 = jsvals_variadic_to_nsarray( cx, argvp, argc );\n'
+        template = '\terror |= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );\n'
         self.mm_file.write( template )
 
     # Special case for string to NSString generator
     def generate_argument_string( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_nsstring( cx, *argvp++ );\n'
+        template = '\terror |= jsval_to_nsstring( cx, *argvp++, &arg%d );\n'
         self.mm_file.write( template % i )
 
     # Special case for objects
     def generate_argument_object( self, i, arg_js_type, arg_declared_type ):
-        object_template = '\targ%d = (%s) jsval_to_nsobject( cx, *argvp++);\n'
-        self.mm_file.write( object_template % (i, arg_declared_type ) )
+        object_template = '\terror |= jsval_to_nsobject( cx, *argvp++, &arg%d);\n'
+        self.mm_file.write( object_template % (i ) )
 
     # Manual conversion for struct
     def generate_argument_struct_manual( self, i, arg_js_type, arg_declared_type ):
         new_name = self.get_name_for_manual_struct( arg_declared_type )
-        template = '\targ%d = (%s) jsval_to_%s( cx, *argvp++ );\n' % (i, arg_declared_type, new_name)
+        template = '\terror |= jsval_to_%s( cx, *argvp++, (%s*) &arg%d );\n' % (new_name, new_name, i )
         self.mm_file.write( template )
 
     def generate_argument_struct_automatic( self, i, arg_js_type, arg_declared_type ):
         # This template assumes that the types will be the same on all platforms (eg: 64 and 32-bit platforms)
         template = '''
 	JSObject *tmp_arg%d;
-	JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
+	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
 	arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
@@ -1003,27 +1003,27 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
 
     def generate_argument_array( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_nsarray( cx, *argvp++ );\n'
+        template = '\terror |= jsval_to_nsarray( cx, *argvp++, &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_set( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_nsset( cx, *argvp++ );\n'
+        template = '\terror |= jsval_to_nsset( cx, *argvp++, &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp) );\n'
+        template = '\terror |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_opaque( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = (%s) jsval_to_opaque( cx, *argvp++ );\n'
-        self.mm_file.write( template % (i, arg_declared_type) )
+        template = '\terror |= jsval_to_opaque( cx, *argvp++, (void**)&arg%d );\n'
+        self.mm_file.write( template % (i) )
 
     def generate_argument_long( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_long( cx, *argvp++ );\n'
+        template = '\terror |= jsval_to_long( cx, *argvp++, &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_longlong( self, i, arg_js_type, arg_declared_type ):
-        template = '\targ%d = jsval_to_longlong( cx, *argvp++ );\n'
+        template = '\error |= jsval_to_longlong( cx, *argvp++, &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_arguments( self, args_declared_type, args_js_type, properties = {} ):
@@ -1065,6 +1065,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 
         # First  time
         self.mm_file.write('\tjsval *argvp = JS_ARGV(cx,vp);\n')
+        self.mm_file.write('\tJSBool error = JS_FALSE;\n');
 
         # Declare variables
         declared_vars = '\t'
@@ -1108,7 +1109,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                     self.generate_argument_struct_automatic( i, arg, args_declared_type[i] )
                 elif arg in js_types_conversions:
                     t = js_types_conversions[arg]
-                    self.mm_file.write( '\t%s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
+                    self.mm_file.write( '\terror |= %s( cx, *argvp++, &arg%d );\n' % ( t[1], i ) )
                 elif arg in js_special_type_conversions:
                     js_special_type_conversions[arg][0]( i, arg, args_declared_type[i] )
                 else:

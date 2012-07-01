@@ -58,21 +58,24 @@ JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 #pragma mark - jsval to native
 
 // Convert function
-NSString *jsval_to_nsstring( JSContext *cx, jsval vp )
+JSBool jsval_to_nsstring( JSContext *cx, jsval vp, NSString **ret )
 {
 	JSString *jsstr = JS_ValueToString( cx, vp );
+	JSB_PRECONDITION( jsstr, @"invalid string" );
 	
 	// root it
 	vp = STRING_TO_JSVAL(jsstr);
 
-	return [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
+	*ret = [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
+	
+	return JS_TRUE;
 }
 
-id jsval_to_nsobject( JSContext *cx, jsval vp )
+JSBool jsval_to_nsobject( JSContext *cx, jsval vp, NSObject **ret )
 {
 	JSObject *jsobj;
 	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return nil;
+		return JS_FALSE;
 	
 	// root it
 	vp = OBJECT_TO_JSVAL(jsobj);
@@ -80,16 +83,21 @@ id jsval_to_nsobject( JSContext *cx, jsval vp )
 //	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
 	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
 
-	return [proxy realObj];
+	*ret = [proxy realObj];
+	
+	return JS_TRUE;
 }
 
-NSArray* jsval_to_nsarray( JSContext *cx, jsval vp )
+JSBool jsval_to_nsarray( JSContext *cx, jsval vp, NSArray**ret )
 {
 	// Parsing sequence
 	JSObject *jsobj;
-	JS_ValueToObject( cx, vp, &jsobj );
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
 	
-	NSCAssert( JS_IsArrayObject( cx, jsobj), @"Invalid argument. It is not an array" );
+	JSB_PRECONDITION( JS_IsArrayObject( cx, jsobj),  @"Object must be an array");
+
+	
 	uint32_t len;
 	JS_GetArrayLength(cx, jsobj,&len);
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:len];
@@ -98,20 +106,26 @@ NSArray* jsval_to_nsarray( JSContext *cx, jsval vp )
 		JS_GetElement(cx, jsobj, i, &valarg);
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
-		id real_obj = jsval_to_nsobject( cx, valarg );
+		id real_obj;
+		if( ! jsval_to_nsobject( cx, valarg, &real_obj ) )
+			return JS_FALSE;
 		
 		[array addObject:real_obj];
 	}
-	return array;
+	*ret = array;
+
+	return JS_TRUE;
 }
 
-NSSet* jsval_to_nsset( JSContext *cx, jsval vp )
+JSBool jsval_to_nsset( JSContext *cx, jsval vp, NSSet** ret)
 {
 	// Parsing sequence
 	JSObject *jsobj;
-	JS_ValueToObject( cx, vp, &jsobj );
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
 	
-	NSCAssert( JS_IsArrayObject( cx, jsobj), @"Invalid argument. It is not an array" );
+	JSB_PRECONDITION( JS_IsArrayObject( cx, jsobj),  @"Object must be an array");
+
 	uint32_t len;
 	JS_GetArrayLength(cx, jsobj,&len);
 	NSMutableSet *set = [NSMutableArray arrayWithCapacity:len];
@@ -120,28 +134,36 @@ NSSet* jsval_to_nsset( JSContext *cx, jsval vp )
 		JS_GetElement(cx, jsobj, i, &valarg);
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
-		id real_obj = jsval_to_nsobject( cx, valarg );
+		id real_obj;
+		if( ! jsval_to_nsobject( cx, valarg, &real_obj ) )
+			return JS_FALSE;
 		
 		[set addObject:real_obj];
 	}
-	return set;
+	*ret = set;
+	return JS_TRUE;
 }
 
-NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc )
+JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray**ret )
 {
 	NSMutableArray *array = [NSMutableArray arrayWithCapacity:argc];
 	
 	for( int i=0; i < argc; i++ )
 	{
-		id obj = jsval_to_nsobject( cx, *vp++ );
+		id obj;
+		if( ! jsval_to_nsobject( cx, *vp++, &obj ) )
+			return JS_FALSE;
+
 		[array addObject:obj];
 	}
-	return array;
+	*ret = array;
+	return JS_TRUE;
 }
 
-js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis )
+JSBool jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ret)
 {
-	NSCAssert( JS_ValueToFunction(cx, vp ), @"Should be a function");
+	if( ! JS_ValueToFunction(cx, vp ) )
+		return JS_FALSE;
 
 	js_block block = ^(id sender) {
 
@@ -153,119 +175,144 @@ js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis )
 		JS_CallFunctionValue(cx, jsthis, vp, 1, &val, &rval);
 	};
 	
-	return [[block copy] autorelease];
+	*ret = [[block copy] autorelease];
+	return JS_TRUE;
 }
 
-CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp )
+JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 {
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
 	
-	CGPoint ret;
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"jsb: Invalid length");
+	
 #ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	ret = ccp(arg_array[0], arg_array[1] );	
+	*ret = ccp(arg_array[0], arg_array[1] );	
 #else
-	ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
+	*ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
 #endif
-	return ret;
+	return JS_TRUE;
 }
 
-CGSize jsval_to_CGSize( JSContext *cx, jsval vp )
+JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 {
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"Invalid length");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"jsb: Invalid length" );
 	
-	CGSize ret;
 #ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	ret = CGSizeMake( arg_array[0], arg_array[1] );
+	*ret = CGSizeMake( arg_array[0], arg_array[1] );
 #else
-	ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
+	*ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
 #endif
-	return ret;	
+	return JS_TRUE;
 }
 
-CGRect jsval_to_CGRect( JSContext *cx, jsval vp )
+JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
 {
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*4, @"Invalid length");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*4, @"jsb: Invalid length");
 	
-	CGRect ret;
 #ifdef __LP64__
 	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
+	*ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
 
 #else
-	ret = *(CGRect*)JS_GetTypedArrayData( tmp_arg );
+	*ret = *(CGRect*)JS_GetTypedArrayData( tmp_arg );
 #endif
-	return ret;		
+	return JS_TRUE;
 }
 
-void * jsval_to_opaque( JSContext *cx, jsval vp )
+JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 {
 #ifdef __LP64__
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), @"Invalid Typed Array lenght");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), @"jsb: Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	uint64 ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
 	
-	return (void*) ret;
 #else
 	NSCAssert( sizeof(int)==4, @"fatal!");
 	int32_t ret = JSVAL_TO_INT(vp);
-	return (void*) ret;
 #endif
+	*r = (void*)ret;
+	return JS_TRUE;
 }
 
-int jsval_to_int( JSContext *cx, jsval vp )
+JSBool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 {
-	return JSVAL_TO_INT(vp);
+	*ret = JSVAL_TO_INT(vp);
+	return JS_TRUE;
 }
 
 // XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
-long jsval_to_long( JSContext *cx, jsval vp )
+JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 {
 #ifdef __LP64__
 	// compatibility check
-	NSCAssert( sizeof(long)==8, @"fatal!");
+	NSCAssert( sizeof(long)==8, @"fatal! Compiler error ?");
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"Invalid Typed Array lenght");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"jsb: Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	long ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
 	
-	return ret;
 #else
 	// compatibility check
-	NSCAssert( sizeof(int)==4, @"fatal!");
+	NSCAssert( sizeof(int)==4, @"fatal!, Compiler error ?");
 	long ret = JSVAL_TO_INT(vp);
-	return ret;
 #endif
+	
+	*r = ret;
+	return JS_TRUE;
 }
 
-long long jsval_to_longlong( JSContext *cx, jsval vp )
+JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *r )
 {
 	JSObject *tmp_arg;
-	JS_ValueToObject( cx, vp, &tmp_arg );
-	NSCAssert( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), @"Invalid Typed Array lenght");
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), @"jsb: Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	long long ret =  arg_array[0];
 	ret = ret << 32;
 	ret |= arg_array[1];
 	
-	return ret;
+	*r = ret;
+	return JS_TRUE;
 }
 
 

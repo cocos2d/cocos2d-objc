@@ -37,7 +37,12 @@
 #if JSB_ASSERT_ON_FAIL
 #define JSB_PRECONDITION( condition, error_msg) do { NSCAssert( condition, error_msg ) } while(0)
 #else
-#define JSB_PRECONDITION( condition, error_msg) do { if( ! (condition) ) return JS_FALSE; } while(0)
+#define JSB_PRECONDITION( condition, error_msg) do {							\
+	if( ! (condition) ) {														\
+		CCLOG(@"%@", error_msg);												\
+		return JS_FALSE;														\
+	}																			\
+} while(0)
 #endif
 
 #endif // __JS_BINDINGS_CONFIG_H

@@ -37,31 +37,31 @@ JSObject* create_jsobject_from_realobj( JSContext* context, Class klass, id real
 JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj);
 
 /** converts a jsval to a NSString */
-NSString *jsval_to_nsstring( JSContext *cx , jsval vp );
+JSBool jsval_to_nsstring( JSContext *cx , jsval vp, NSString **out );
 
 /** converts a jsval to a NSObject */
-id jsval_to_nsobject( JSContext *cx, jsval vp );
+JSBool jsval_to_nsobject( JSContext *cx, jsval vp, NSObject **out );
 
 /** converts a jsval to a NSArray */
-NSArray* jsval_to_nsarray( JSContext *cx , jsval vp );
+JSBool jsval_to_nsarray( JSContext *cx , jsval vp, NSArray **out );
 
 /** converts a jsval to a NSSet */
-NSSet* jsval_to_nsset( JSContext *cx , jsval vp );
+JSBool jsval_to_nsset( JSContext *cx , jsval vp, NSSet** out );
 
 /** converts a variadic jsvals to a NSArray */
-NSArray* jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc );
+JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray** out );
 	
 	
-CGPoint jsval_to_CGPoint( JSContext *cx, jsval vp );
-CGSize jsval_to_CGSize( JSContext *cx, jsval vp );
-CGRect jsval_to_CGRect( JSContext *cx, jsval vp );
-void * jsval_to_opaque( JSContext *cx, jsval vp );
-int jsval_to_int( JSContext *cx, jsval vp);
-long jsval_to_long( JSContext *cx, jsval vp);
-long long jsval_to_longlong( JSContext *cx, jsval vp);	
+JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *out );
+JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *out );
+JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *out );
+JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **out );
+JSBool jsval_to_int( JSContext *cx, jsval vp, int *out);
+JSBool jsval_to_long( JSContext *cx, jsval vp, long *out);
+JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *out);	
 	
 /** converts a jsval to a block */
-js_block jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis );
+JSBool jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis, js_block *out  );
 
 jsval int_to_jsval( JSContext *cx, int l);
 jsval long_to_jsval( JSContext *cx, long l);
