@@ -70,16 +70,17 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc >= 1 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if (argc >= 2) {
-		error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+		ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	}
 	if (argc >= 3) {
-		error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+		ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	}
+	if( ! ok ) return JS_FALSE;
 
 	if( argc == 1 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
@@ -261,10 +262,11 @@ JSBool JSPROXY_CCNode_convertToNodeSpace_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -288,10 +290,11 @@ JSBool JSPROXY_CCNode_convertToNodeSpaceAR_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -315,10 +318,11 @@ JSBool JSPROXY_CCNode_convertToWorldSpace_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -342,10 +346,11 @@ JSBool JSPROXY_CCNode_convertToWorldSpaceAR_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -387,10 +392,11 @@ JSBool JSPROXY_CCNode_getActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCAction* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -414,10 +420,11 @@ JSBool JSPROXY_CCNode_getChildByTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCNode* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -728,10 +735,11 @@ JSBool JSPROXY_CCNode_removeAllChildrenWithCleanup_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real removeAllChildrenWithCleanup:(BOOL)arg0  ];
@@ -751,11 +759,12 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; JSBool arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real removeChild:(CCNode*)arg0 cleanup:(BOOL)arg1  ];
@@ -775,11 +784,12 @@ JSBool JSPROXY_CCNode_removeChildByTag_cleanup_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real removeChildByTag:(NSInteger)arg0 cleanup:(BOOL)arg1  ];
@@ -799,10 +809,11 @@ JSBool JSPROXY_CCNode_removeFromParentAndCleanup_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real removeFromParentAndCleanup:(BOOL)arg0  ];
@@ -822,11 +833,12 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real reorderChild:(CCNode*)arg0 z:(NSInteger)arg1  ];
@@ -883,10 +895,11 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCAction* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
@@ -985,10 +998,11 @@ JSBool JSPROXY_CCNode_scheduleUpdateWithPriority_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real scheduleUpdateWithPriority:(NSInteger)arg0  ];
@@ -1030,10 +1044,11 @@ JSBool JSPROXY_CCNode_setActionManager_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setActionManager:(CCActionManager*)arg0  ];
@@ -1053,10 +1068,11 @@ JSBool JSPROXY_CCNode_setAnchorPoint_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setAnchorPoint:(CGPoint)arg0  ];
@@ -1076,10 +1092,11 @@ JSBool JSPROXY_CCNode_setContentSize_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setContentSize:(CGSize)arg0  ];
@@ -1099,10 +1116,11 @@ JSBool JSPROXY_CCNode_setGlServerState_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setGlServerState:(ccGLServerState)arg0  ];
@@ -1122,10 +1140,11 @@ JSBool JSPROXY_CCNode_setGrid_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setGrid:(CCGridBase*)arg0  ];
@@ -1145,10 +1164,11 @@ JSBool JSPROXY_CCNode_setIgnoreAnchorPointForPosition_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setIgnoreAnchorPointForPosition:(BOOL)arg0  ];
@@ -1168,10 +1188,11 @@ JSBool JSPROXY_CCNode_setOrderOfArrival_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setOrderOfArrival:(NSUInteger)arg0  ];
@@ -1191,10 +1212,11 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setParent:(CCNode*)arg0  ];
@@ -1214,10 +1236,11 @@ JSBool JSPROXY_CCNode_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -1237,10 +1260,11 @@ JSBool JSPROXY_CCNode_setRotation_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setRotation:(float)arg0  ];
@@ -1260,10 +1284,11 @@ JSBool JSPROXY_CCNode_setScale_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setScale:(float)arg0  ];
@@ -1283,10 +1308,11 @@ JSBool JSPROXY_CCNode_setScaleX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setScaleX:(float)arg0  ];
@@ -1306,10 +1332,11 @@ JSBool JSPROXY_CCNode_setScaleY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setScaleY:(float)arg0  ];
@@ -1329,10 +1356,11 @@ JSBool JSPROXY_CCNode_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setScheduler:(CCScheduler*)arg0  ];
@@ -1352,10 +1380,11 @@ JSBool JSPROXY_CCNode_setShaderProgram_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -1375,10 +1404,11 @@ JSBool JSPROXY_CCNode_setSkewX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setSkewX:(float)arg0  ];
@@ -1398,10 +1428,11 @@ JSBool JSPROXY_CCNode_setSkewY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setSkewY:(float)arg0  ];
@@ -1421,10 +1452,11 @@ JSBool JSPROXY_CCNode_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setTag:(NSInteger)arg0  ];
@@ -1444,10 +1476,11 @@ JSBool JSPROXY_CCNode_setVertexZ_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setVertexZ:(float)arg0  ];
@@ -1467,10 +1500,11 @@ JSBool JSPROXY_CCNode_setVisible_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setVisible:(BOOL)arg0  ];
@@ -1490,10 +1524,11 @@ JSBool JSPROXY_CCNode_setZOrder_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real setZOrder:(NSUInteger)arg0  ];
@@ -1591,10 +1626,11 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real stopAction:(CCAction*)arg0  ];
@@ -1614,10 +1650,11 @@ JSBool JSPROXY_CCNode_stopActionByTag_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	[real stopActionByTag:(NSInteger)arg0  ];
@@ -2188,10 +2225,11 @@ JSBool JSPROXY_CCMenuItem_initWithBlock_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItem *real = [(CCMenuItem*)[proxy.klass alloc] initWithBlock:(void (^)(id))arg0  ];
 	[proxy setRealObj: real];
@@ -2246,10 +2284,11 @@ JSBool JSPROXY_CCMenuItem_isSelected(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCMenuItem_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItem* ret_val;
 
 	ret_val = [CCMenuItem itemWithBlock:(void (^)(id))arg0  ];
@@ -2312,10 +2351,11 @@ JSBool JSPROXY_CCMenuItem_setBlock_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
 	[real setBlock:(void (^)(id))arg0  ];
@@ -2335,10 +2375,11 @@ JSBool JSPROXY_CCMenuItem_setIsEnabled_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
 	[real setIsEnabled:(BOOL)arg0  ];
@@ -2495,11 +2536,12 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; js_block arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -2516,10 +2558,11 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCMenuItemLabel_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithLabel:(CCNode*)arg0  ];
@@ -2535,11 +2578,12 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel__static(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; js_block arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
@@ -2584,13 +2628,14 @@ JSBool JSPROXY_CCMenuItemLabel_setDisabledColor_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setDisabledColor:(ccColor3B)arg0  ];
@@ -2610,10 +2655,11 @@ JSBool JSPROXY_CCMenuItemLabel_setIsEnabled_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setIsEnabled:(BOOL)arg0  ];
@@ -2633,10 +2679,11 @@ JSBool JSPROXY_CCMenuItemLabel_setLabel_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setLabel:(CCNode*)arg0  ];
@@ -2656,10 +2703,11 @@ JSBool JSPROXY_CCMenuItemLabel_setString_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -2741,13 +2789,14 @@ JSBool JSPROXY_CCMenuItemLabel_setColor_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -2767,10 +2816,11 @@ JSBool JSPROXY_CCMenuItemLabel_setOpacity_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -2790,10 +2840,11 @@ JSBool JSPROXY_CCMenuItemLabel_setOpacityModifyRGB_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -2806,10 +2857,11 @@ JSBool JSPROXY_CCMenuItemLabel_setOpacityModifyRGB_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCMenuItemLabel_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemLabel* ret_val;
 
 	ret_val = [CCMenuItemLabel itemWithBlock:(void (^)(id))arg0  ];
@@ -2932,15 +2984,16 @@ JSBool JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeig
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; js_block arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg4 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg4 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemAtlasFont *real = [(CCMenuItemAtlasFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4 block:(void (^)(id))arg5  ];
 	[proxy setRealObj: real];
@@ -2957,14 +3010,15 @@ JSBool JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeig
 JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4  ];
@@ -2980,15 +3034,16 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; uint16_t arg4; js_block arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg4 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg4 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4 block:(void (^)(id))arg5  ];
@@ -3004,10 +3059,11 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0  ];
@@ -3023,11 +3079,12 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; js_block arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
@@ -3043,10 +3100,11 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, ui
 JSBool JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
 	ret_val = [CCMenuItemAtlasFont itemWithBlock:(void (^)(id))arg0  ];
@@ -3214,10 +3272,11 @@ JSBool JSPROXY_CCAction_setTag_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real setTag:(NSInteger)arg0  ];
@@ -3237,10 +3296,11 @@ JSBool JSPROXY_CCAction_step_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real step:(ccTime)arg0  ];
@@ -3297,10 +3357,11 @@ JSBool JSPROXY_CCAction_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAction *real = (CCAction*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -3438,10 +3499,11 @@ JSBool JSPROXY_CCFiniteTimeAction_setDuration_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFiniteTimeAction *real = (CCFiniteTimeAction*) [proxy realObj];
 	[real setDuration:(ccTime)arg0  ];
@@ -3541,10 +3603,11 @@ void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCActionInterval_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	ret_val = [CCActionInterval actionWithDuration:(ccTime)arg0  ];
@@ -3586,10 +3649,11 @@ JSBool JSPROXY_CCActionInterval_initWithDuration_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCActionInterval *real = [(CCActionInterval*)[proxy.klass alloc] initWithDuration:(ccTime)arg0  ];
 	[proxy setRealObj: real];
@@ -3736,12 +3800,13 @@ void JSPROXY_CCProgressFromTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCProgressFromTo_actionWithDuration_from_to__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCProgressFromTo* ret_val;
 
 	ret_val = [CCProgressFromTo actionWithDuration:(ccTime)arg0 from:(float)arg1 to:(float)arg2  ];
@@ -3764,12 +3829,13 @@ JSBool JSPROXY_CCProgressFromTo_initWithDuration_from_to_(JSContext *cx, uint32_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressFromTo *real = [(CCProgressFromTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 from:(float)arg1 to:(float)arg2  ];
 	[proxy setRealObj: real];
@@ -3786,10 +3852,11 @@ JSBool JSPROXY_CCProgressFromTo_initWithDuration_from_to_(JSContext *cx, uint32_
 JSBool JSPROXY_CCProgressFromTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCProgressFromTo* ret_val;
 
 	ret_val = [CCProgressFromTo actionWithDuration:(ccTime)arg0  ];
@@ -3965,10 +4032,11 @@ JSBool JSPROXY_CCTMXObjectGroup_setGroupName_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setGroupName:(NSString*)arg0  ];
@@ -3988,10 +4056,11 @@ JSBool JSPROXY_CCTMXObjectGroup_setObjects_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setObjects:(NSMutableArray*)arg0  ];
@@ -4011,10 +4080,11 @@ JSBool JSPROXY_CCTMXObjectGroup_setPositionOffset_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXObjectGroup *real = (CCTMXObjectGroup*) [proxy realObj];
 	[real setPositionOffset:(CGPoint)arg0  ];
@@ -4102,11 +4172,12 @@ void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCMoveTo_actionWithDuration_position__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMoveTo* ret_val;
 
 	ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
@@ -4129,11 +4200,12 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMoveTo *real = [(CCMoveTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 	[proxy setRealObj: real];
@@ -4150,10 +4222,11 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 JSBool JSPROXY_CCMoveTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMoveTo* ret_val;
 
 	ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0  ];
@@ -4256,11 +4329,12 @@ void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCMoveBy_actionWithDuration_position__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMoveBy* ret_val;
 
 	ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
@@ -4283,11 +4357,12 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMoveBy *real = [(CCMoveBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1  ];
 	[proxy setRealObj: real];
@@ -4304,10 +4379,11 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 JSBool JSPROXY_CCMoveBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMoveBy* ret_val;
 
 	ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0  ];
@@ -4483,12 +4559,13 @@ JSBool JSPROXY_CCCamera_setCenterX_centerY_centerZ_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCamera *real = (CCCamera*) [proxy realObj];
 	[real setCenterX:(float)arg0 centerY:(float)arg1 centerZ:(float)arg2  ];
@@ -4508,10 +4585,11 @@ JSBool JSPROXY_CCCamera_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCamera *real = (CCCamera*) [proxy realObj];
 	[real setDirty:(BOOL)arg0  ];
@@ -4531,12 +4609,13 @@ JSBool JSPROXY_CCCamera_setEyeX_eyeY_eyeZ_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCamera *real = (CCCamera*) [proxy realObj];
 	[real setEyeX:(float)arg0 eyeY:(float)arg1 eyeZ:(float)arg2  ];
@@ -4556,12 +4635,13 @@ JSBool JSPROXY_CCCamera_setUpX_upY_upZ_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCamera *real = (CCCamera*) [proxy realObj];
 	[real setUpX:(float)arg0 upY:(float)arg1 upZ:(float)arg2  ];
@@ -4651,10 +4731,11 @@ void JSPROXY_CCReverseTime_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCReverseTime_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCReverseTime* ret_val;
 
 	ret_val = [CCReverseTime actionWithAction:(CCFiniteTimeAction*)arg0  ];
@@ -4677,10 +4758,11 @@ JSBool JSPROXY_CCReverseTime_initWithAction_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCReverseTime *real = [(CCReverseTime*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0  ];
 	[proxy setRealObj: real];
@@ -4697,10 +4779,11 @@ JSBool JSPROXY_CCReverseTime_initWithAction_(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_CCReverseTime_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCReverseTime* ret_val;
 
 	ret_val = [CCReverseTime actionWithDuration:(ccTime)arg0  ];
@@ -4978,10 +5061,11 @@ JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -5005,11 +5089,12 @@ JSBool JSPROXY_CCSprite_initWithFile_rect_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -5033,10 +5118,11 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrame_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrame:(CCSpriteFrame*)arg0  ];
 	[proxy setRealObj: real];
@@ -5060,10 +5146,11 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrameName:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -5087,10 +5174,11 @@ JSBool JSPROXY_CCSprite_initWithTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0  ];
 	[proxy setRealObj: real];
@@ -5114,11 +5202,12 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -5142,12 +5231,13 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_rotated_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; JSBool arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1 rotated:(BOOL)arg2  ];
 	[proxy setRealObj: real];
@@ -5171,10 +5261,11 @@ JSBool JSPROXY_CCSprite_isFrameDisplayed_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -5236,10 +5327,11 @@ JSBool JSPROXY_CCSprite_setAtlasIndex_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setAtlasIndex:(NSUInteger)arg0  ];
@@ -5259,10 +5351,11 @@ JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
@@ -5282,13 +5375,14 @@ JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -5308,13 +5402,14 @@ JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -5334,10 +5429,11 @@ JSBool JSPROXY_CCSprite_setDirty_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDirty:(BOOL)arg0  ];
@@ -5357,10 +5453,11 @@ JSBool JSPROXY_CCSprite_setDisplayFrame_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
@@ -5380,11 +5477,12 @@ JSBool JSPROXY_CCSprite_setDisplayFrameWithAnimationName_index_(JSContext *cx, u
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; int32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setDisplayFrameWithAnimationName:(NSString*)arg0 index:(int)arg1  ];
@@ -5404,10 +5502,11 @@ JSBool JSPROXY_CCSprite_setFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setFlipX:(BOOL)arg0  ];
@@ -5427,10 +5526,11 @@ JSBool JSPROXY_CCSprite_setFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setFlipY:(BOOL)arg0  ];
@@ -5450,10 +5550,11 @@ JSBool JSPROXY_CCSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -5473,10 +5574,11 @@ JSBool JSPROXY_CCSprite_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -5496,10 +5598,11 @@ JSBool JSPROXY_CCSprite_setTextureRect_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureRect:(CGRect)arg0  ];
@@ -5519,12 +5622,13 @@ JSBool JSPROXY_CCSprite_setTextureRect_rotated_untrimmedSize_(JSContext *cx, uin
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; JSBool arg1; CGSize arg2; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg2 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTextureRect:(CGRect)arg0 rotated:(BOOL)arg1 untrimmedSize:(CGSize)arg2  ];
@@ -5544,10 +5648,11 @@ JSBool JSPROXY_CCSprite_setVertexRect_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setVertexRect:(CGRect)arg0  ];
@@ -5560,13 +5665,14 @@ JSBool JSPROXY_CCSprite_setVertexRect_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	if (argc >= 2) {
-		error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+		ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCSprite* ret_val;
 
 	if( argc == 1 ) {
@@ -5588,10 +5694,11 @@ JSBool JSPROXY_CCSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCSprite* ret_val;
 
 	ret_val = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -5607,10 +5714,11 @@ JSBool JSPROXY_CCSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSprite* ret_val;
 
 	ret_val = [CCSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
@@ -5733,10 +5841,11 @@ JSBool JSPROXY_CCSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -5756,10 +5865,11 @@ JSBool JSPROXY_CCSprite_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -5969,10 +6079,11 @@ JSBool JSPROXY_ChipmunkSprite_setBody_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	cpBody* arg0; 
 
-	error |= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+	ok &= jsval_to_opaque( cx, *argvp++, (void**)&arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	ChipmunkSprite *real = (ChipmunkSprite*) [proxy realObj];
 	[real setBody:(cpBody*)arg0  ];
@@ -5992,10 +6103,11 @@ JSBool JSPROXY_ChipmunkSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	ChipmunkSprite *real = (ChipmunkSprite*) [proxy realObj];
 	[real setIgnoreBodyRotation:(BOOL)arg0  ];
@@ -6008,13 +6120,14 @@ JSBool JSPROXY_ChipmunkSprite_setIgnoreBodyRotation_(JSContext *cx, uint32_t arg
 JSBool JSPROXY_ChipmunkSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	if (argc >= 2) {
-		error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+		ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 	ChipmunkSprite* ret_val;
 
 	if( argc == 1 ) {
@@ -6036,10 +6149,11 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithFile_rect__static(JSContext *cx, uint32_
 JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	ChipmunkSprite* ret_val;
 
 	ret_val = [ChipmunkSprite spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -6055,10 +6169,11 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrame__static(JSContext *cx, uint3
 JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	ChipmunkSprite* ret_val;
 
 	ret_val = [ChipmunkSprite spriteWithSpriteFrameName:(NSString*)arg0  ];
@@ -6165,10 +6280,11 @@ void JSPROXY_CCActionEase_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCActionEase_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionEase* ret_val;
 
 	ret_val = [CCActionEase actionWithAction:(CCActionInterval*)arg0  ];
@@ -6191,10 +6307,11 @@ JSBool JSPROXY_CCActionEase_initWithAction_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCActionEase *real = [(CCActionEase*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
 	[proxy setRealObj: real];
@@ -6211,10 +6328,11 @@ JSBool JSPROXY_CCActionEase_initWithAction_(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCActionEase_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCActionEase* ret_val;
 
 	ret_val = [CCActionEase actionWithDuration:(ccTime)arg0  ];
@@ -6317,11 +6435,12 @@ void JSPROXY_CCEaseElastic_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCEaseElastic_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElastic* ret_val;
 
 	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
@@ -6344,11 +6463,12 @@ JSBool JSPROXY_CCEaseElastic_initWithAction_period_(JSContext *cx, uint32_t argc
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseElastic *real = [(CCEaseElastic*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -6391,10 +6511,11 @@ JSBool JSPROXY_CCEaseElastic_setPeriod_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseElastic *real = (CCEaseElastic*) [proxy realObj];
 	[real setPeriod:(float)arg0  ];
@@ -6407,10 +6528,11 @@ JSBool JSPROXY_CCEaseElastic_setPeriod_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSPROXY_CCEaseElastic_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseElastic* ret_val;
 
 	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
@@ -6426,10 +6548,11 @@ JSBool JSPROXY_CCEaseElastic_actionWithAction__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCEaseElastic_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElastic* ret_val;
 
 	ret_val = [CCEaseElastic actionWithDuration:(ccTime)arg0  ];
@@ -6542,10 +6665,11 @@ JSBool JSPROXY_CCEaseElasticOut_update_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseElasticOut *real = (CCEaseElasticOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -6558,11 +6682,12 @@ JSBool JSPROXY_CCEaseElasticOut_update_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticOut* ret_val;
 
 	ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
@@ -6578,10 +6703,11 @@ JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, u
 JSBool JSPROXY_CCEaseElasticOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticOut* ret_val;
 
 	ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -6597,10 +6723,11 @@ JSBool JSPROXY_CCEaseElasticOut_actionWithAction__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCEaseElasticOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticOut* ret_val;
 
 	ret_val = [CCEaseElasticOut actionWithDuration:(ccTime)arg0  ];
@@ -6704,11 +6831,12 @@ void JSPROXY_CCProgressTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCProgressTo_actionWithDuration_percent__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCProgressTo* ret_val;
 
 	ret_val = [CCProgressTo actionWithDuration:(ccTime)arg0 percent:(float)arg1  ];
@@ -6731,11 +6859,12 @@ JSBool JSPROXY_CCProgressTo_initWithDuration_percent_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTo *real = [(CCProgressTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 percent:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -6752,10 +6881,11 @@ JSBool JSPROXY_CCProgressTo_initWithDuration_percent_(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCProgressTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCProgressTo* ret_val;
 
 	ret_val = [CCProgressTo actionWithDuration:(ccTime)arg0  ];
@@ -7072,10 +7202,11 @@ void JSPROXY_CCFlipX_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCFlipX_actionWithFlipX__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFlipX* ret_val;
 
 	ret_val = [CCFlipX actionWithFlipX:(BOOL)arg0  ];
@@ -7098,10 +7229,11 @@ JSBool JSPROXY_CCFlipX_initWithFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFlipX *real = [(CCFlipX*)[proxy.klass alloc] initWithFlipX:(BOOL)arg0  ];
 	[proxy setRealObj: real];
@@ -7204,10 +7336,11 @@ void JSPROXY_CCFlipY_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCFlipY_actionWithFlipY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFlipY* ret_val;
 
 	ret_val = [CCFlipY actionWithFlipY:(BOOL)arg0  ];
@@ -7230,10 +7363,11 @@ JSBool JSPROXY_CCFlipY_initWithFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFlipY *real = [(CCFlipY*)[proxy.klass alloc] initWithFlipY:(BOOL)arg0  ];
 	[proxy setRealObj: real];
@@ -7336,14 +7470,15 @@ void JSPROXY_CCGridAction_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCGridAction_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCGridAction* ret_val;
 
 	ret_val = [CCGridAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -7412,14 +7547,15 @@ JSBool JSPROXY_CCGridAction_initWithSize_duration_(JSContext *cx, uint32_t argc,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridAction *real = [(CCGridAction*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -7443,13 +7579,14 @@ JSBool JSPROXY_CCGridAction_setGridSize_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridAction *real = (CCGridAction*) [proxy realObj];
 	[real setGridSize:(ccGridSize)arg0  ];
@@ -7462,10 +7599,11 @@ JSBool JSPROXY_CCGridAction_setGridSize_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCGridAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCGridAction* ret_val;
 
 	ret_val = [CCGridAction actionWithDuration:(ccTime)arg0  ];
@@ -7571,14 +7709,15 @@ void JSPROXY_CCTiledGrid3DAction_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3DAction* ret_val;
 
 	ret_val = [CCTiledGrid3DAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -7594,10 +7733,11 @@ JSBool JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static(JSContext *cx
 JSBool JSPROXY_CCTiledGrid3DAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3DAction* ret_val;
 
 	ret_val = [CCTiledGrid3DAction actionWithDuration:(ccTime)arg0  ];
@@ -7699,16 +7839,17 @@ void JSPROXY_CCShakyTiles3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCShakyTiles3D* ret_val;
 
 	ret_val = [CCShakyTiles3D actionWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -7731,16 +7872,17 @@ JSBool JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_(JSContext *cx,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShakyTiles3D *real = [(CCShakyTiles3D*)[proxy.klass alloc] initWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -7757,14 +7899,15 @@ JSBool JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_(JSContext *cx,
 JSBool JSPROXY_CCShakyTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCShakyTiles3D* ret_val;
 
 	ret_val = [CCShakyTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -7780,10 +7923,11 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 JSBool JSPROXY_CCShakyTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCShakyTiles3D* ret_val;
 
 	ret_val = [CCShakyTiles3D actionWithDuration:(ccTime)arg0  ];
@@ -7887,13 +8031,14 @@ void JSPROXY_CCJumpBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCJumpBy_actionWithDuration_position_height_jumps__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpBy* ret_val;
 
 	ret_val = [CCJumpBy actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1 height:(ccTime)arg2 jumps:(NSUInteger)arg3  ];
@@ -7916,13 +8061,14 @@ JSBool JSPROXY_CCJumpBy_initWithDuration_position_height_jumps_(JSContext *cx, u
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCJumpBy *real = [(CCJumpBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 position:(CGPoint)arg1 height:(ccTime)arg2 jumps:(NSUInteger)arg3  ];
 	[proxy setRealObj: real];
@@ -7939,10 +8085,11 @@ JSBool JSPROXY_CCJumpBy_initWithDuration_position_height_jumps_(JSContext *cx, u
 JSBool JSPROXY_CCJumpBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpBy* ret_val;
 
 	ret_val = [CCJumpBy actionWithDuration:(ccTime)arg0  ];
@@ -8134,14 +8281,15 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; NSString* arg3; double arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
 	[proxy setRealObj: real];
@@ -8165,15 +8313,16 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fon
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 	[proxy setRealObj: real];
@@ -8197,15 +8346,16 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontNa
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 	[proxy setRealObj: real];
@@ -8229,16 +8379,17 @@ JSBool JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBr
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg5 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
 	[proxy setRealObj: real];
@@ -8262,12 +8413,13 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = [(CCLabelTTF*)[proxy.klass alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
 	[proxy setRealObj: real];
@@ -8284,14 +8436,15 @@ JSBool JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_(JSContext *cx, uint3
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; NSString* arg3; double arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 fontName:(NSString*)arg3 fontSize:(CGFloat)arg4  ];
@@ -8307,15 +8460,16 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSiz
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 lineBreakMode:(CCLineBreakMode)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -8331,15 +8485,16 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fo
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
@@ -8355,16 +8510,17 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontN
 JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg5 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
@@ -8380,12 +8536,13 @@ JSBool JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineB
 JSBool JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF labelWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
@@ -8408,10 +8565,11 @@ JSBool JSPROXY_CCLabelTTF_setDimensions_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setDimensions:(CGSize)arg0  ];
@@ -8431,10 +8589,11 @@ JSBool JSPROXY_CCLabelTTF_setFontName_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setFontName:(NSString*)arg0  ];
@@ -8454,10 +8613,11 @@ JSBool JSPROXY_CCLabelTTF_setFontSize_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setFontSize:(float)arg0  ];
@@ -8477,10 +8637,11 @@ JSBool JSPROXY_CCLabelTTF_setHorizontalAlignment_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setHorizontalAlignment:(CCTextAlignment)arg0  ];
@@ -8500,10 +8661,11 @@ JSBool JSPROXY_CCLabelTTF_setString_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -8523,10 +8685,11 @@ JSBool JSPROXY_CCLabelTTF_setVerticalAlignment_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelTTF *real = (CCLabelTTF*) [proxy realObj];
 	[real setVerticalAlignment:(CCVerticalTextAlignment)arg0  ];
@@ -8580,10 +8743,11 @@ JSBool JSPROXY_CCLabelTTF_string(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCLabelTTF_spriteWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0  ];
@@ -8599,11 +8763,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithFile__static(JSContext *cx, uint32_t argc, j
 JSBool JSPROXY_CCLabelTTF_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
@@ -8619,10 +8784,11 @@ JSBool JSPROXY_CCLabelTTF_spriteWithFile_rect__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -8638,10 +8804,11 @@ JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithSpriteFrameName:(NSString*)arg0  ];
@@ -8657,10 +8824,11 @@ JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrameName__static(JSContext *cx, uint3
 JSBool JSPROXY_CCLabelTTF_spriteWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0  ];
@@ -8676,11 +8844,12 @@ JSBool JSPROXY_CCLabelTTF_spriteWithTexture__static(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCLabelTTF_spriteWithTexture_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
 	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
@@ -8851,11 +9020,12 @@ JSBool JSPROXY_CCTransitionScene_initWithDuration_scene_(JSContext *cx, uint32_t
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCTransitionScene *real = [(CCTransitionScene*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 	[proxy setRealObj: real];
@@ -8872,11 +9042,12 @@ JSBool JSPROXY_CCTransitionScene_initWithDuration_scene_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCTransitionScene_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionScene* ret_val;
 
 	ret_val = [CCTransitionScene transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -8987,10 +9158,11 @@ JSBool JSPROXY_CCTransitionProgress_progressTimerNodeWithRenderTexture_(JSContex
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgress *real = (CCTransitionProgress*) [proxy realObj];
@@ -9007,11 +9179,12 @@ JSBool JSPROXY_CCTransitionProgress_progressTimerNodeWithRenderTexture_(JSContex
 JSBool JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgress* ret_val;
 
 	ret_val = [CCTransitionProgress transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -9120,10 +9293,11 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_progressTimerNodeWithRenderTexture_
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressRadialCCW *real = (CCTransitionProgressRadialCCW*) [proxy realObj];
@@ -9140,11 +9314,12 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_progressTimerNodeWithRenderTexture_
 JSBool JSPROXY_CCTransitionProgressRadialCCW_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressRadialCCW* ret_val;
 
 	ret_val = [CCTransitionProgressRadialCCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -9253,11 +9428,12 @@ JSBool JSPROXY_CCShaderCache_addProgram_forKey_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; NSString* arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShaderCache *real = (CCShaderCache*) [proxy realObj];
 	[real addProgram:(CCGLProgram*)arg0 forKey:(NSString*)arg1  ];
@@ -9295,10 +9471,11 @@ JSBool JSPROXY_CCShaderCache_programForKey_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCGLProgram* ret_val;
 
 	CCShaderCache *real = (CCShaderCache*) [proxy realObj];
@@ -9420,13 +9597,14 @@ JSBool JSPROXY_CCTransitionFadeTR_actionWithSize_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeTR *real = (CCTransitionFadeTR*) [proxy realObj];
@@ -9450,10 +9628,11 @@ JSBool JSPROXY_CCTransitionFadeTR_easeActionWithAction_(JSContext *cx, uint32_t 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeTR *real = (CCTransitionFadeTR*) [proxy realObj];
@@ -9470,11 +9649,12 @@ JSBool JSPROXY_CCTransitionFadeTR_easeActionWithAction_(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeTR* ret_val;
 
 	ret_val = [CCTransitionFadeTR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -9584,10 +9764,11 @@ JSBool JSPROXY_CCEaseBackOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBackOut *real = (CCEaseBackOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -9600,10 +9781,11 @@ JSBool JSPROXY_CCEaseBackOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseBackOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackOut* ret_val;
 
 	ret_val = [CCEaseBackOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -9619,10 +9801,11 @@ JSBool JSPROXY_CCEaseBackOut_actionWithAction__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCEaseBackOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackOut* ret_val;
 
 	ret_val = [CCEaseBackOut actionWithDuration:(ccTime)arg0  ];
@@ -9732,12 +9915,13 @@ JSBool JSPROXY_CCTransitionSceneOriented_initWithDuration_scene_orientation_(JSC
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTransitionSceneOriented *real = [(CCTransitionSceneOriented*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
 	[proxy setRealObj: real];
@@ -9754,12 +9938,13 @@ JSBool JSPROXY_CCTransitionSceneOriented_initWithDuration_scene_orientation_(JSC
 JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSceneOriented* ret_val;
 
 	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -9775,11 +9960,12 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientatio
 JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSceneOriented* ret_val;
 
 	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -9882,11 +10068,12 @@ void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCScaleTo_actionWithDuration_scale__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleTo* ret_val;
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
@@ -9902,12 +10089,13 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scale__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleTo* ret_val;
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
@@ -9930,11 +10118,12 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scale_(JSContext *cx, uint32_t argc, j
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScaleTo *real = [(CCScaleTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -9958,12 +10147,13 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScaleTo *real = [(CCScaleTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 	[proxy setRealObj: real];
@@ -9980,10 +10170,11 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCScaleTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleTo* ret_val;
 
 	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0  ];
@@ -10095,10 +10286,11 @@ JSBool JSPROXY_CCScaleBy_startWithTarget_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCScaleBy *real = (CCScaleBy*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -10111,11 +10303,12 @@ JSBool JSPROXY_CCScaleBy_startWithTarget_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCScaleBy_actionWithDuration_scale__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleBy* ret_val;
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
@@ -10131,12 +10324,13 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scale__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleBy* ret_val;
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
@@ -10152,10 +10346,11 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 JSBool JSPROXY_CCScaleBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCScaleBy* ret_val;
 
 	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0  ];
@@ -10266,13 +10461,14 @@ JSBool JSPROXY_CCTransitionPageTurn_actionWithSize_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionPageTurn *real = (CCTransitionPageTurn*) [proxy realObj];
@@ -10296,12 +10492,13 @@ JSBool JSPROXY_CCTransitionPageTurn_initWithDuration_scene_backwards_(JSContext 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; JSBool arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTransitionPageTurn *real = [(CCTransitionPageTurn*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
 	[proxy setRealObj: real];
@@ -10318,14 +10515,15 @@ JSBool JSPROXY_CCTransitionPageTurn_initWithDuration_scene_backwards_(JSContext 
 JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; JSBool arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if (argc >= 3) {
-		error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+		ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCTransitionPageTurn* ret_val;
 
 	if( argc == 2 ) {
@@ -10456,11 +10654,12 @@ JSBool JSPROXY_CCTransitionRotoZoom_init(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionRotoZoom* ret_val;
 
 	ret_val = [CCTransitionRotoZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -10569,13 +10768,14 @@ JSBool JSPROXY_CCTransitionFadeDown_actionWithSize_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeDown *real = (CCTransitionFadeDown*) [proxy realObj];
@@ -10592,11 +10792,12 @@ JSBool JSPROXY_CCTransitionFadeDown_actionWithSize_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeDown* ret_val;
 
 	ret_val = [CCTransitionFadeDown transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -10705,10 +10906,11 @@ JSBool JSPROXY_CCDelayTime_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDelayTime *real = (CCDelayTime*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -10721,10 +10923,11 @@ JSBool JSPROXY_CCDelayTime_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCDelayTime_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCDelayTime* ret_val;
 
 	ret_val = [CCDelayTime actionWithDuration:(ccTime)arg0  ];
@@ -10826,11 +11029,12 @@ void JSPROXY_CCEaseRateAction_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCEaseRateAction_actionWithAction_rate__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseRateAction* ret_val;
 
 	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
@@ -10853,11 +11057,12 @@ JSBool JSPROXY_CCEaseRateAction_initWithAction_rate_(JSContext *cx, uint32_t arg
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseRateAction *real = [(CCEaseRateAction*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -10900,10 +11105,11 @@ JSBool JSPROXY_CCEaseRateAction_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseRateAction *real = (CCEaseRateAction*) [proxy realObj];
 	[real setRate:(float)arg0  ];
@@ -10916,10 +11122,11 @@ JSBool JSPROXY_CCEaseRateAction_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCEaseRateAction_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseRateAction* ret_val;
 
 	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0  ];
@@ -10935,10 +11142,11 @@ JSBool JSPROXY_CCEaseRateAction_actionWithAction__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCEaseRateAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseRateAction* ret_val;
 
 	ret_val = [CCEaseRateAction actionWithDuration:(ccTime)arg0  ];
@@ -11051,10 +11259,11 @@ JSBool JSPROXY_CCEaseInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseInOut *real = (CCEaseInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -11067,11 +11276,12 @@ JSBool JSPROXY_CCEaseInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseInOut_actionWithAction_rate__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseInOut* ret_val;
 
 	ret_val = [CCEaseInOut actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
@@ -11087,10 +11297,11 @@ JSBool JSPROXY_CCEaseInOut_actionWithAction_rate__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCEaseInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseInOut* ret_val;
 
 	ret_val = [CCEaseInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -11106,10 +11317,11 @@ JSBool JSPROXY_CCEaseInOut_actionWithAction__static(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCEaseInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseInOut* ret_val;
 
 	ret_val = [CCEaseInOut actionWithDuration:(ccTime)arg0  ];
@@ -11242,10 +11454,11 @@ JSBool JSPROXY_CCTransitionSplitCols_easeActionWithAction_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionSplitCols *real = (CCTransitionSplitCols*) [proxy realObj];
@@ -11262,11 +11475,12 @@ JSBool JSPROXY_CCTransitionSplitCols_easeActionWithAction_(JSContext *cx, uint32
 JSBool JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSplitCols* ret_val;
 
 	ret_val = [CCTransitionSplitCols transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -11369,12 +11583,13 @@ void JSPROXY_CCCardinalSplineTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineTo* ret_val;
 
 	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
@@ -11397,12 +11612,13 @@ JSBool JSPROXY_CCCardinalSplineTo_initWithDuration_points_tension_(JSContext *cx
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCardinalSplineTo *real = [(CCCardinalSplineTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
 	[proxy setRealObj: real];
@@ -11448,10 +11664,11 @@ JSBool JSPROXY_CCCardinalSplineTo_setPoints_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCCardinalSplineTo *real = (CCCardinalSplineTo*) [proxy realObj];
 	[real setPoints:(CCPointArray*)arg0  ];
@@ -11464,10 +11681,11 @@ JSBool JSPROXY_CCCardinalSplineTo_setPoints_(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineTo* ret_val;
 
 	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0  ];
@@ -11572,12 +11790,13 @@ void JSPROXY_CCCardinalSplineBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineBy* ret_val;
 
 	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
@@ -11593,10 +11812,11 @@ JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static(JSCo
 JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineBy* ret_val;
 
 	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0  ];
@@ -11698,11 +11918,12 @@ void JSPROXY_CCCatmullRomBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomBy* ret_val;
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
@@ -11725,11 +11946,12 @@ JSBool JSPROXY_CCCatmullRomBy_initWithDuration_points_(JSContext *cx, uint32_t a
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCCatmullRomBy *real = [(CCCatmullRomBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 	[proxy setRealObj: real];
@@ -11746,12 +11968,13 @@ JSBool JSPROXY_CCCatmullRomBy_initWithDuration_points_(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomBy* ret_val;
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
@@ -11767,10 +11990,11 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static(JSContex
 JSBool JSPROXY_CCCatmullRomBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomBy* ret_val;
 
 	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0  ];
@@ -11896,12 +12120,13 @@ JSBool JSPROXY_CCTransitionFlipAngular_init(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipAngular* ret_val;
 
 	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -11917,11 +12142,12 @@ JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation_
 JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipAngular* ret_val;
 
 	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -12031,10 +12257,11 @@ JSBool JSPROXY_CCHide_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCHide *real = (CCHide*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -12139,10 +12366,11 @@ JSBool JSPROXY_CCEaseBackIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBackIn *real = (CCEaseBackIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -12155,10 +12383,11 @@ JSBool JSPROXY_CCEaseBackIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseBackIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackIn* ret_val;
 
 	ret_val = [CCEaseBackIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -12174,10 +12403,11 @@ JSBool JSPROXY_CCEaseBackIn_actionWithAction__static(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCEaseBackIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackIn* ret_val;
 
 	ret_val = [CCEaseBackIn actionWithDuration:(ccTime)arg0  ];
@@ -12287,11 +12517,12 @@ JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uin
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real addQuadFromSprite:(CCSprite*)arg0 quadIndex:(NSUInteger)arg1  ];
@@ -12311,10 +12542,11 @@ JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real appendChild:(CCSprite*)arg0  ];
@@ -12334,11 +12566,12 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	NSUInteger ret_val;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -12352,15 +12585,16 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 0 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
 	if (argc >= 1) {
-		error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+		ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	}
 	if (argc >= 2) {
-		error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+		ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCSpriteBatchNode* ret_val;
 
 	if( argc == 1 ) {
@@ -12382,15 +12616,16 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static(JSContext *c
 JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 0 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
 	if (argc >= 1) {
-		error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+		ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	}
 	if (argc >= 2) {
-		error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+		ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCSpriteBatchNode* ret_val;
 
 	if( argc == 1 ) {
@@ -12483,11 +12718,12 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithFile_capacity_(JSContext *cx, uint32_t 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -12511,11 +12747,12 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithTexture_capacity_(JSContext *cx, uint32
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -12539,11 +12776,12 @@ JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real insertChild:(CCSprite*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
@@ -12563,11 +12801,12 @@ JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	NSUInteger ret_val;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -12588,11 +12827,12 @@ JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; JSBool arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real removeChild:(CCSprite*)arg0 cleanup:(BOOL)arg1  ];
@@ -12612,11 +12852,12 @@ JSBool JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_(JSContext *cx, uint
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; JSBool arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real removeChildAtIndex:(NSUInteger)arg0 cleanup:(BOOL)arg1  ];
@@ -12636,10 +12877,11 @@ JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
@@ -12659,10 +12901,11 @@ JSBool JSPROXY_CCSpriteBatchNode_reorderBatch_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real reorderBatch:(BOOL)arg0  ];
@@ -12682,13 +12925,14 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -12708,10 +12952,11 @@ JSBool JSPROXY_CCSpriteBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -12753,10 +12998,11 @@ JSBool JSPROXY_CCSpriteBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -12903,12 +13149,13 @@ JSBool JSPROXY_CCTMXLayer_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
@@ -12928,12 +13175,13 @@ JSBool JSPROXY_CCTMXLayer_initWithTilesetInfo_layerInfo_mapInfo_(JSContext *cx, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; id arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg2);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = [(CCTMXLayer*)[proxy.klass alloc] initWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
 	[proxy setRealObj: real];
@@ -13013,12 +13261,13 @@ JSBool JSPROXY_CCTMXLayer_layerSize(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; id arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg2);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer layerWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
@@ -13063,10 +13312,11 @@ JSBool JSPROXY_CCTMXLayer_positionAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -13130,10 +13380,11 @@ JSBool JSPROXY_CCTMXLayer_removeTileAt_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real removeTileAt:(CGPoint)arg0  ];
@@ -13153,10 +13404,11 @@ JSBool JSPROXY_CCTMXLayer_setLayerName_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setLayerName:(NSString*)arg0  ];
@@ -13176,10 +13428,11 @@ JSBool JSPROXY_CCTMXLayer_setLayerOrientation_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setLayerOrientation:(NSUInteger)arg0  ];
@@ -13199,10 +13452,11 @@ JSBool JSPROXY_CCTMXLayer_setLayerSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setLayerSize:(CGSize)arg0  ];
@@ -13222,10 +13476,11 @@ JSBool JSPROXY_CCTMXLayer_setMapTileSize_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setMapTileSize:(CGSize)arg0  ];
@@ -13245,10 +13500,11 @@ JSBool JSPROXY_CCTMXLayer_setProperties_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setProperties:(NSMutableArray*)arg0  ];
@@ -13268,11 +13524,12 @@ JSBool JSPROXY_CCTMXLayer_setTileGID_at_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; CGPoint arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setTileGID:(uint32_t)arg0 at:(CGPoint)arg1  ];
@@ -13292,12 +13549,13 @@ JSBool JSPROXY_CCTMXLayer_setTileGID_at_withFlags_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; CGPoint arg1; int32_t arg2; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setTileGID:(uint32_t)arg0 at:(CGPoint)arg1 withFlags:(ccTMXTileFlags)arg2  ];
@@ -13317,10 +13575,11 @@ JSBool JSPROXY_CCTMXLayer_setTileset_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
 	[real setTileset:(CCTMXTilesetInfo*)arg0  ];
@@ -13358,10 +13617,11 @@ JSBool JSPROXY_CCTMXLayer_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSprite* ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -13385,10 +13645,11 @@ JSBool JSPROXY_CCTMXLayer_tileGIDAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	uint32_t ret_val;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
@@ -13424,10 +13685,11 @@ JSBool JSPROXY_CCTMXLayer_tileset(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTMXLayer_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0  ];
@@ -13443,11 +13705,12 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithFile__static(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -13463,10 +13726,11 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static(JSContext *cx, uint
 JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0  ];
@@ -13482,11 +13746,12 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -13613,10 +13878,11 @@ void JSPROXY_CCTexture2D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTexture2D_PVRImagesHavePremultipliedAlpha__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:(BOOL)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -13647,10 +13913,11 @@ JSBool JSPROXY_CCTexture2D_bitsPerPixelForFormat(JSContext *cx, uint32_t argc, j
 JSBool JSPROXY_CCTexture2D_bitsPerPixelForFormat__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	NSUInteger ret_val;
 
 	ret_val = [CCTexture2D bitsPerPixelForFormat:(CCTexture2DPixelFormat)arg0  ];
@@ -13725,10 +13992,11 @@ JSBool JSPROXY_CCTexture2D_drawAtPoint_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real drawAtPoint:(CGPoint)arg0  ];
@@ -13748,10 +14016,11 @@ JSBool JSPROXY_CCTexture2D_drawInRect_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real drawInRect:(CGRect)arg0  ];
@@ -13808,10 +14077,11 @@ JSBool JSPROXY_CCTexture2D_initWithPVRFile_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithPVRFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -13835,15 +14105,16 @@ JSBool JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_fontN
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; NSString* arg4; double arg5; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 fontName:(NSString*)arg4 fontSize:(CGFloat)arg5  ];
 	[proxy setRealObj: real];
@@ -13867,16 +14138,17 @@ JSBool JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_lineB
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGSize arg1; int32_t arg2; int32_t arg3; int32_t arg4; NSString* arg5; double arg6; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg5 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 dimensions:(CGSize)arg1 hAlignment:(CCTextAlignment)arg2 vAlignment:(CCVerticalTextAlignment)arg3 lineBreakMode:(CCLineBreakMode)arg4 fontName:(NSString*)arg5 fontSize:(CGFloat)arg6  ];
 	[proxy setRealObj: real];
@@ -13900,12 +14172,13 @@ JSBool JSPROXY_CCTexture2D_initWithString_fontName_fontSize_(JSContext *cx, uint
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = [(CCTexture2D*)[proxy.klass alloc] initWithString:(NSString*)arg0 fontName:(NSString*)arg1 fontSize:(CGFloat)arg2  ];
 	[proxy setRealObj: real];
@@ -14072,10 +14345,11 @@ JSBool JSPROXY_CCTexture2D_setAntiAliasTexParameters(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCTexture2D_setDefaultAlphaPixelFormat__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	[CCTexture2D setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -14094,10 +14368,11 @@ JSBool JSPROXY_CCTexture2D_setMaxS_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real setMaxS:(GLfloat)arg0  ];
@@ -14117,10 +14392,11 @@ JSBool JSPROXY_CCTexture2D_setMaxT_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real setMaxT:(GLfloat)arg0  ];
@@ -14140,10 +14416,11 @@ JSBool JSPROXY_CCTexture2D_setShaderProgram_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -14297,11 +14574,12 @@ void JSPROXY_CCAccelDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithAction_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCAccelDeccelAmplitude* ret_val;
 
 	ret_val = [CCAccelDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -14324,11 +14602,12 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_initWithAction_duration_(JSContext *cx, ui
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAccelDeccelAmplitude *real = [(CCAccelDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -14371,10 +14650,11 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAccelDeccelAmplitude *real = (CCAccelDeccelAmplitude*) [proxy realObj];
 	[real setRate:(float)arg0  ];
@@ -14387,10 +14667,11 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCAccelDeccelAmplitude* ret_val;
 
 	ret_val = [CCAccelDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
@@ -14495,16 +14776,17 @@ void JSPROXY_CCJumpTiles3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCJumpTiles3D_actionWithJumps_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpTiles3D* ret_val;
 
 	ret_val = [CCJumpTiles3D actionWithJumps:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -14565,16 +14847,17 @@ JSBool JSPROXY_CCJumpTiles3D_initWithJumps_amplitude_grid_duration_(JSContext *c
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCJumpTiles3D *real = [(CCJumpTiles3D*)[proxy.klass alloc] initWithJumps:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -14598,10 +14881,11 @@ JSBool JSPROXY_CCJumpTiles3D_setAmplitude_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCJumpTiles3D *real = (CCJumpTiles3D*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -14621,10 +14905,11 @@ JSBool JSPROXY_CCJumpTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCJumpTiles3D *real = (CCJumpTiles3D*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -14637,14 +14922,15 @@ JSBool JSPROXY_CCJumpTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCJumpTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpTiles3D* ret_val;
 
 	ret_val = [CCJumpTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -14660,10 +14946,11 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithSize_duration__static(JSContext *cx, uint
 JSBool JSPROXY_CCJumpTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpTiles3D* ret_val;
 
 	ret_val = [CCJumpTiles3D actionWithDuration:(ccTime)arg0  ];
@@ -15198,10 +15485,11 @@ JSBool JSPROXY_CCParticleSystem_initWithFile_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = [(CCParticleSystem*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -15225,10 +15513,11 @@ JSBool JSPROXY_CCParticleSystem_initWithTotalParticles_(JSContext *cx, uint32_t 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = [(CCParticleSystem*)[proxy.klass alloc] initWithTotalParticles:(NSUInteger)arg0  ];
 	[proxy setRealObj: real];
@@ -15321,10 +15610,11 @@ JSBool JSPROXY_CCParticleSystem_particleCount(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCParticleSystem_particleWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCParticleSystem* ret_val;
 
 	ret_val = [CCParticleSystem particleWithFile:(NSString*)arg0  ];
@@ -15500,10 +15790,11 @@ JSBool JSPROXY_CCParticleSystem_setAngle_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setAngle:(float)arg0  ];
@@ -15523,10 +15814,11 @@ JSBool JSPROXY_CCParticleSystem_setAngleVar_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setAngleVar:(float)arg0  ];
@@ -15546,10 +15838,11 @@ JSBool JSPROXY_CCParticleSystem_setAtlasIndex_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setAtlasIndex:(NSUInteger)arg0  ];
@@ -15569,10 +15862,11 @@ JSBool JSPROXY_CCParticleSystem_setAutoRemoveOnFinish_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setAutoRemoveOnFinish:(BOOL)arg0  ];
@@ -15592,10 +15886,11 @@ JSBool JSPROXY_CCParticleSystem_setBatchNode_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setBatchNode:(CCParticleBatchNode*)arg0  ];
@@ -15615,10 +15910,11 @@ JSBool JSPROXY_CCParticleSystem_setBlendAdditive_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setBlendAdditive:(BOOL)arg0  ];
@@ -15638,13 +15934,14 @@ JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -15664,10 +15961,11 @@ JSBool JSPROXY_CCParticleSystem_setDuration_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setDuration:(float)arg0  ];
@@ -15687,10 +15985,11 @@ JSBool JSPROXY_CCParticleSystem_setEmissionRate_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEmissionRate:(float)arg0  ];
@@ -15710,10 +16009,11 @@ JSBool JSPROXY_CCParticleSystem_setEmitterMode_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEmitterMode:(NSInteger)arg0  ];
@@ -15733,13 +16033,14 @@ JSBool JSPROXY_CCParticleSystem_setEndColor_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4F arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndColor:(ccColor4F)arg0  ];
@@ -15759,13 +16060,14 @@ JSBool JSPROXY_CCParticleSystem_setEndColorVar_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4F arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndColorVar:(ccColor4F)arg0  ];
@@ -15785,10 +16087,11 @@ JSBool JSPROXY_CCParticleSystem_setEndRadius_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndRadius:(float)arg0  ];
@@ -15808,10 +16111,11 @@ JSBool JSPROXY_CCParticleSystem_setEndRadiusVar_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndRadiusVar:(float)arg0  ];
@@ -15831,10 +16135,11 @@ JSBool JSPROXY_CCParticleSystem_setEndSize_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndSize:(float)arg0  ];
@@ -15854,10 +16159,11 @@ JSBool JSPROXY_CCParticleSystem_setEndSizeVar_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndSizeVar:(float)arg0  ];
@@ -15877,10 +16183,11 @@ JSBool JSPROXY_CCParticleSystem_setEndSpin_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndSpin:(float)arg0  ];
@@ -15900,10 +16207,11 @@ JSBool JSPROXY_CCParticleSystem_setEndSpinVar_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setEndSpinVar:(float)arg0  ];
@@ -15923,10 +16231,11 @@ JSBool JSPROXY_CCParticleSystem_setGravity_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setGravity:(CGPoint)arg0  ];
@@ -15946,10 +16255,11 @@ JSBool JSPROXY_CCParticleSystem_setLife_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setLife:(float)arg0  ];
@@ -15969,10 +16279,11 @@ JSBool JSPROXY_CCParticleSystem_setLifeVar_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setLifeVar:(float)arg0  ];
@@ -15992,10 +16303,11 @@ JSBool JSPROXY_CCParticleSystem_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -16015,10 +16327,11 @@ JSBool JSPROXY_CCParticleSystem_setPosVar_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setPosVar:(CGPoint)arg0  ];
@@ -16038,10 +16351,11 @@ JSBool JSPROXY_CCParticleSystem_setPositionType_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setPositionType:(tCCPositionType)arg0  ];
@@ -16061,10 +16375,11 @@ JSBool JSPROXY_CCParticleSystem_setRadialAccel_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setRadialAccel:(float)arg0  ];
@@ -16084,10 +16399,11 @@ JSBool JSPROXY_CCParticleSystem_setRadialAccelVar_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setRadialAccelVar:(float)arg0  ];
@@ -16107,10 +16423,11 @@ JSBool JSPROXY_CCParticleSystem_setRotatePerSecond_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setRotatePerSecond:(float)arg0  ];
@@ -16130,10 +16447,11 @@ JSBool JSPROXY_CCParticleSystem_setRotatePerSecondVar_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setRotatePerSecondVar:(float)arg0  ];
@@ -16153,10 +16471,11 @@ JSBool JSPROXY_CCParticleSystem_setSourcePosition_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setSourcePosition:(CGPoint)arg0  ];
@@ -16176,10 +16495,11 @@ JSBool JSPROXY_CCParticleSystem_setSpeed_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setSpeed:(float)arg0  ];
@@ -16199,10 +16519,11 @@ JSBool JSPROXY_CCParticleSystem_setSpeedVar_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setSpeedVar:(float)arg0  ];
@@ -16222,13 +16543,14 @@ JSBool JSPROXY_CCParticleSystem_setStartColor_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4F arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartColor:(ccColor4F)arg0  ];
@@ -16248,13 +16570,14 @@ JSBool JSPROXY_CCParticleSystem_setStartColorVar_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4F arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartColorVar:(ccColor4F)arg0  ];
@@ -16274,10 +16597,11 @@ JSBool JSPROXY_CCParticleSystem_setStartRadius_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartRadius:(float)arg0  ];
@@ -16297,10 +16621,11 @@ JSBool JSPROXY_CCParticleSystem_setStartRadiusVar_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartRadiusVar:(float)arg0  ];
@@ -16320,10 +16645,11 @@ JSBool JSPROXY_CCParticleSystem_setStartSize_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartSize:(float)arg0  ];
@@ -16343,10 +16669,11 @@ JSBool JSPROXY_CCParticleSystem_setStartSizeVar_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartSizeVar:(float)arg0  ];
@@ -16366,10 +16693,11 @@ JSBool JSPROXY_CCParticleSystem_setStartSpin_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartSpin:(float)arg0  ];
@@ -16389,10 +16717,11 @@ JSBool JSPROXY_CCParticleSystem_setStartSpinVar_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setStartSpinVar:(float)arg0  ];
@@ -16412,10 +16741,11 @@ JSBool JSPROXY_CCParticleSystem_setTangentialAccel_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setTangentialAccel:(float)arg0  ];
@@ -16435,10 +16765,11 @@ JSBool JSPROXY_CCParticleSystem_setTangentialAccelVar_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setTangentialAccelVar:(float)arg0  ];
@@ -16458,10 +16789,11 @@ JSBool JSPROXY_CCParticleSystem_setTexture_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -16481,10 +16813,11 @@ JSBool JSPROXY_CCParticleSystem_setTotalParticles_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real setTotalParticles:(NSUInteger)arg0  ];
@@ -16823,10 +17156,11 @@ JSBool JSPROXY_CCParticleSystem_update_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -17063,10 +17397,11 @@ JSBool JSPROXY_CCParticleSystemQuad_initTexCoordsWithRect_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real initTexCoordsWithRect:(CGRect)arg0  ];
@@ -17086,10 +17421,11 @@ JSBool JSPROXY_CCParticleSystemQuad_setDisplayFrame_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
@@ -17109,11 +17445,12 @@ JSBool JSPROXY_CCParticleSystemQuad_setTexture_withRect_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0 withRect:(CGRect)arg1  ];
@@ -17126,10 +17463,11 @@ JSBool JSPROXY_CCParticleSystemQuad_setTexture_withRect_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCParticleSystemQuad_particleWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCParticleSystemQuad* ret_val;
 
 	ret_val = [CCParticleSystemQuad particleWithFile:(NSString*)arg0  ];
@@ -17241,13 +17579,14 @@ JSBool JSPROXY_CCGrid3DAction_originalVertex_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
@@ -17273,17 +17612,18 @@ JSBool JSPROXY_CCGrid3DAction_setVertex_vertex_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; ccVertex3F arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccVertex3F*)JS_GetTypedArrayData( tmp_arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
 	[real setVertex:(ccGridSize)arg0 vertex:(ccVertex3F)arg1  ];
@@ -17303,13 +17643,14 @@ JSBool JSPROXY_CCGrid3DAction_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
@@ -17328,14 +17669,15 @@ JSBool JSPROXY_CCGrid3DAction_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCGrid3DAction_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCGrid3DAction* ret_val;
 
 	ret_val = [CCGrid3DAction actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -17351,10 +17693,11 @@ JSBool JSPROXY_CCGrid3DAction_actionWithSize_duration__static(JSContext *cx, uin
 JSBool JSPROXY_CCGrid3DAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCGrid3DAction* ret_val;
 
 	ret_val = [CCGrid3DAction actionWithDuration:(ccTime)arg0  ];
@@ -17488,13 +17831,14 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg2);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
 	[proxy setRealObj: real];
@@ -17511,11 +17855,12 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
@@ -17531,12 +17876,13 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSCo
 JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; js_block arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
@@ -17552,13 +17898,14 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__stati
 JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg2);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
@@ -17625,10 +17972,11 @@ JSBool JSPROXY_CCMenuItemSprite_setDisabledImage_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setDisabledImage:(CCNode*)arg0  ];
@@ -17648,10 +17996,11 @@ JSBool JSPROXY_CCMenuItemSprite_setNormalImage_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setNormalImage:(CCNode*)arg0  ];
@@ -17671,10 +18020,11 @@ JSBool JSPROXY_CCMenuItemSprite_setSelectedImage_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setSelectedImage:(CCNode*)arg0  ];
@@ -17756,13 +18106,14 @@ JSBool JSPROXY_CCMenuItemSprite_setColor_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -17782,10 +18133,11 @@ JSBool JSPROXY_CCMenuItemSprite_setOpacity_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -17805,10 +18157,11 @@ JSBool JSPROXY_CCMenuItemSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -17821,10 +18174,11 @@ JSBool JSPROXY_CCMenuItemSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCMenuItemSprite_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
 	ret_val = [CCMenuItemSprite itemWithBlock:(void (^)(id))arg0  ];
@@ -17948,13 +18302,14 @@ JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_b
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; NSString* arg2; js_block arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg2 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg2 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
 	[proxy setRealObj: real];
@@ -17971,11 +18326,12 @@ JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_b
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1  ];
@@ -17991,12 +18347,13 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static(JSConte
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; js_block arg2; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 block:(void (^)(id))arg2  ];
@@ -18012,13 +18369,14 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static(J
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; NSString* arg2; js_block arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg2 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg2 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
@@ -18041,10 +18399,11 @@ JSBool JSPROXY_CCMenuItemImage_setDisabledSpriteFrame_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setDisabledSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -18064,10 +18423,11 @@ JSBool JSPROXY_CCMenuItemImage_setNormalSpriteFrame_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setNormalSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -18087,10 +18447,11 @@ JSBool JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
 	[real setSelectedSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -18103,11 +18464,12 @@ JSBool JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
@@ -18123,12 +18485,13 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static(JSCon
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; js_block arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
@@ -18144,13 +18507,14 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; id arg2; js_block arg3; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg2);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
@@ -18166,10 +18530,11 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprit
 JSBool JSPROXY_CCMenuItemImage_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
 	ret_val = [CCMenuItemImage itemWithBlock:(void (^)(id))arg0  ];
@@ -18287,12 +18652,13 @@ JSBool JSPROXY_CCParticleBatchNode_addChild_z_tag_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; int32_t arg2; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real addChild:(CCParticleSystem*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
@@ -18305,10 +18671,11 @@ JSBool JSPROXY_CCParticleBatchNode_addChild_z_tag_(JSContext *cx, uint32_t argc,
 JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithFile:(NSString*)arg0  ];
@@ -18324,11 +18691,12 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile__static(JSContext *cx, uint
 JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -18344,10 +18712,11 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithFile_capacity__static(JSContext 
 JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
@@ -18363,11 +18732,12 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture__static(JSContext *cx, u
 JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
 	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -18414,10 +18784,11 @@ JSBool JSPROXY_CCParticleBatchNode_disableParticle_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real disableParticle:(NSUInteger)arg0  ];
@@ -18437,11 +18808,12 @@ JSBool JSPROXY_CCParticleBatchNode_initWithFile_capacity_(JSContext *cx, uint32_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -18465,11 +18837,12 @@ JSBool JSPROXY_CCParticleBatchNode_initWithTexture_capacity_(JSContext *cx, uint
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -18493,11 +18866,12 @@ JSBool JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, ui
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real insertChild:(CCParticleSystem*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
@@ -18517,11 +18891,12 @@ JSBool JSPROXY_CCParticleBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; JSBool arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real removeChild:(CCParticleSystem*)arg0 cleanup:(BOOL)arg1  ];
@@ -18541,13 +18916,14 @@ JSBool JSPROXY_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -18567,10 +18943,11 @@ JSBool JSPROXY_CCParticleBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -18612,10 +18989,11 @@ JSBool JSPROXY_CCParticleBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -18772,11 +19150,12 @@ JSBool JSPROXY_CCTransitionCrossFade_init(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCTransitionCrossFade_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionCrossFade* ret_val;
 
 	ret_val = [CCTransitionCrossFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -18900,10 +19279,11 @@ JSBool JSPROXY_CCBMFontConfiguration_atlasName(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCBMFontConfiguration_configurationWithFNTFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCBMFontConfiguration* ret_val;
 
 	ret_val = [CCBMFontConfiguration configurationWithFNTFile:(NSString*)arg0  ];
@@ -18926,10 +19306,11 @@ JSBool JSPROXY_CCBMFontConfiguration_initWithFNTfile_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCBMFontConfiguration *real = [(CCBMFontConfiguration*)[proxy.klass alloc] initWithFNTfile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -18953,10 +19334,11 @@ JSBool JSPROXY_CCBMFontConfiguration_setAtlasName_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCBMFontConfiguration *real = (CCBMFontConfiguration*) [proxy realObj];
 	[real setAtlasName:(NSString*)arg0  ];
@@ -19339,10 +19721,11 @@ JSBool JSPROXY_CCEaseElasticIn_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseElasticIn *real = (CCEaseElasticIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -19355,11 +19738,12 @@ JSBool JSPROXY_CCEaseElasticIn_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticIn* ret_val;
 
 	ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
@@ -19375,10 +19759,11 @@ JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, ui
 JSBool JSPROXY_CCEaseElasticIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticIn* ret_val;
 
 	ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -19394,10 +19779,11 @@ JSBool JSPROXY_CCEaseElasticIn_actionWithAction__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCEaseElasticIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticIn* ret_val;
 
 	ret_val = [CCEaseElasticIn actionWithDuration:(ccTime)arg0  ];
@@ -19501,11 +19887,12 @@ void JSPROXY_CCSpeed_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSpeed_actionWithAction_speed__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSpeed* ret_val;
 
 	ret_val = [CCSpeed actionWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
@@ -19528,11 +19915,12 @@ JSBool JSPROXY_CCSpeed_initWithAction_speed_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpeed *real = [(CCSpeed*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -19578,10 +19966,11 @@ JSBool JSPROXY_CCSpeed_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpeed *real = (CCSpeed*) [proxy realObj];
 	[real setInnerAction:(CCActionInterval*)arg0  ];
@@ -19601,10 +19990,11 @@ JSBool JSPROXY_CCSpeed_setSpeed_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpeed *real = (CCSpeed*) [proxy realObj];
 	[real setSpeed:(float)arg0  ];
@@ -19726,11 +20116,12 @@ void JSPROXY_CCRotateTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCRotateTo_actionWithDuration_angle__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCRotateTo* ret_val;
 
 	ret_val = [CCRotateTo actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
@@ -19753,11 +20144,12 @@ JSBool JSPROXY_CCRotateTo_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRotateTo *real = [(CCRotateTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -19774,10 +20166,11 @@ JSBool JSPROXY_CCRotateTo_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCRotateTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCRotateTo* ret_val;
 
 	ret_val = [CCRotateTo actionWithDuration:(ccTime)arg0  ];
@@ -19880,10 +20273,11 @@ void JSPROXY_CCActionCamera_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCActionCamera_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCActionCamera* ret_val;
 
 	ret_val = [CCActionCamera actionWithDuration:(ccTime)arg0  ];
@@ -20015,17 +20409,18 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_(JSContext
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; ccColor3B arg3; id arg4; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg4);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg4);
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
 	[proxy setRealObj: real];
@@ -20049,17 +20444,18 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_textureFilename_(J
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; ccColor3B arg3; NSString* arg4; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 textureFilename:(NSString*)arg4  ];
 	[proxy setRealObj: real];
@@ -20120,13 +20516,14 @@ JSBool JSPROXY_CCMotionStreak_setBlendFunc_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -20146,10 +20543,11 @@ JSBool JSPROXY_CCMotionStreak_setFastMode_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setFastMode:(BOOL)arg0  ];
@@ -20169,10 +20567,11 @@ JSBool JSPROXY_CCMotionStreak_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -20185,17 +20584,18 @@ JSBool JSPROXY_CCMotionStreak_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; ccColor3B arg3; id arg4; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg4);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg4);
+	if( ! ok ) return JS_FALSE;
 	CCMotionStreak* ret_val;
 
 	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
@@ -20211,17 +20611,18 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static(
 JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; ccColor3B arg3; NSString* arg4; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
-	error |= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCMotionStreak* ret_val;
 
 	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 textureFilename:(NSString*)arg4  ];
@@ -20266,13 +20667,14 @@ JSBool JSPROXY_CCMotionStreak_tintWithColor_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real tintWithColor:(ccColor3B)arg0  ];
@@ -20354,13 +20756,14 @@ JSBool JSPROXY_CCMotionStreak_setColor_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -20380,10 +20783,11 @@ JSBool JSPROXY_CCMotionStreak_setOpacity_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -20403,10 +20807,11 @@ JSBool JSPROXY_CCMotionStreak_setOpacityModifyRGB_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -20528,10 +20933,11 @@ JSBool JSPROXY_CCShow_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShow *real = (CCShow*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -20629,11 +21035,12 @@ void JSPROXY_CCAccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCAccelAmplitude_actionWithAction_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCAccelAmplitude* ret_val;
 
 	ret_val = [CCAccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -20656,11 +21063,12 @@ JSBool JSPROXY_CCAccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_t
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAccelAmplitude *real = [(CCAccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -20703,10 +21111,11 @@ JSBool JSPROXY_CCAccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAccelAmplitude *real = (CCAccelAmplitude*) [proxy realObj];
 	[real setRate:(float)arg0  ];
@@ -20719,10 +21128,11 @@ JSBool JSPROXY_CCAccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCAccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCAccelAmplitude* ret_val;
 
 	ret_val = [CCAccelAmplitude actionWithDuration:(ccTime)arg0  ];
@@ -20853,10 +21263,11 @@ JSBool JSPROXY_CCGridBase_afterDraw_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real afterDraw:(CCNode*)arg0  ];
@@ -20969,13 +21380,14 @@ JSBool JSPROXY_CCGridBase_gridSize(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCGridBase_gridWithSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCGridBase* ret_val;
 
 	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0  ];
@@ -20991,15 +21403,16 @@ JSBool JSPROXY_CCGridBase_gridWithSize__static(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCGridBase* ret_val;
 
 	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
@@ -21022,13 +21435,14 @@ JSBool JSPROXY_CCGridBase_initWithSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0  ];
 	[proxy setRealObj: real];
@@ -21052,15 +21466,16 @@ JSBool JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_(JSContext *cx, ui
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
 	[proxy setRealObj: real];
@@ -21140,10 +21555,11 @@ JSBool JSPROXY_CCGridBase_setActive_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setActive:(BOOL)arg0  ];
@@ -21163,10 +21579,11 @@ JSBool JSPROXY_CCGridBase_setGrabber_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setGrabber:(CCGrabber*)arg0  ];
@@ -21186,10 +21603,11 @@ JSBool JSPROXY_CCGridBase_setIsTextureFlipped_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setIsTextureFlipped:(BOOL)arg0  ];
@@ -21209,10 +21627,11 @@ JSBool JSPROXY_CCGridBase_setReuseGrid_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setReuseGrid:(int)arg0  ];
@@ -21232,10 +21651,11 @@ JSBool JSPROXY_CCGridBase_setShaderProgram_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setShaderProgram:(CCGLProgram*)arg0  ];
@@ -21255,10 +21675,11 @@ JSBool JSPROXY_CCGridBase_setStep_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setStep:(CGPoint)arg0  ];
@@ -21278,10 +21699,11 @@ JSBool JSPROXY_CCGridBase_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -21453,13 +21875,14 @@ void JSPROXY_CCTiledGrid3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTiledGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3D* ret_val;
 
 	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0  ];
@@ -21475,15 +21898,16 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3D* ret_val;
 
 	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
@@ -21577,10 +22001,11 @@ JSBool JSPROXY_CCEaseBounce_bounceTime_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	ccTime ret_val;
 
 	CCEaseBounce *real = (CCEaseBounce*) [proxy realObj];
@@ -21594,10 +22019,11 @@ JSBool JSPROXY_CCEaseBounce_bounceTime_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSPROXY_CCEaseBounce_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounce* ret_val;
 
 	ret_val = [CCEaseBounce actionWithAction:(CCActionInterval*)arg0  ];
@@ -21613,10 +22039,11 @@ JSBool JSPROXY_CCEaseBounce_actionWithAction__static(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCEaseBounce_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounce* ret_val;
 
 	ret_val = [CCEaseBounce actionWithDuration:(ccTime)arg0  ];
@@ -21726,10 +22153,11 @@ JSBool JSPROXY_CCEaseBounceOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBounceOut *real = (CCEaseBounceOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -21742,10 +22170,11 @@ JSBool JSPROXY_CCEaseBounceOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCEaseBounceOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceOut* ret_val;
 
 	ret_val = [CCEaseBounceOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -21761,10 +22190,11 @@ JSBool JSPROXY_CCEaseBounceOut_actionWithAction__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCEaseBounceOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceOut* ret_val;
 
 	ret_val = [CCEaseBounceOut actionWithDuration:(ccTime)arg0  ];
@@ -21874,10 +22304,11 @@ JSBool JSPROXY_CCFadeOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFadeOut *real = (CCFadeOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -21890,10 +22321,11 @@ JSBool JSPROXY_CCFadeOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCFadeOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFadeOut* ret_val;
 
 	ret_val = [CCFadeOut actionWithDuration:(ccTime)arg0  ];
@@ -22002,11 +22434,12 @@ JSBool JSPROXY_CCAnimationCache_addAnimation_name_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; NSString* arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real addAnimation:(CCAnimation*)arg0 name:(NSString*)arg1  ];
@@ -22026,10 +22459,11 @@ JSBool JSPROXY_CCAnimationCache_addAnimationsWithFile_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real addAnimationsWithFile:(NSString*)arg0  ];
@@ -22049,10 +22483,11 @@ JSBool JSPROXY_CCAnimationCache_animationByName_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCAnimation* ret_val;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
@@ -22086,10 +22521,11 @@ JSBool JSPROXY_CCAnimationCache_removeAnimationByName_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
 	[real removeAnimationByName:(NSString*)arg0  ];
@@ -22191,10 +22627,11 @@ void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCRepeatForever* ret_val;
 
 	ret_val = [CCRepeatForever actionWithAction:(CCActionInterval*)arg0  ];
@@ -22217,10 +22654,11 @@ JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCRepeatForever *real = [(CCRepeatForever*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
 	[proxy setRealObj: real];
@@ -22266,10 +22704,11 @@ JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
 	[real setInnerAction:(CCActionInterval*)arg0  ];
@@ -22377,10 +22816,11 @@ JSBool JSPROXY_CCFadeIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFadeIn *real = (CCFadeIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -22393,10 +22833,11 @@ JSBool JSPROXY_CCFadeIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCFadeIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFadeIn* ret_val;
 
 	ret_val = [CCFadeIn actionWithDuration:(ccTime)arg0  ];
@@ -22505,10 +22946,11 @@ JSBool JSPROXY_CCTransitionProgressVertical_progressTimerNodeWithRenderTexture_(
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressVertical *real = (CCTransitionProgressVertical*) [proxy realObj];
@@ -22525,11 +22967,12 @@ JSBool JSPROXY_CCTransitionProgressVertical_progressTimerNodeWithRenderTexture_(
 JSBool JSPROXY_CCTransitionProgressVertical_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressVertical* ret_val;
 
 	ret_val = [CCTransitionProgressVertical transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -22638,10 +23081,11 @@ JSBool JSPROXY_CCFileUtils_fullPathFromRelativePath_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	NSString* ret_val;
 
 	CCFileUtils *real = (CCFileUtils*) [proxy realObj];
@@ -22762,13 +23206,14 @@ void JSPROXY_CCAtlasNode_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCAtlasNode* ret_val;
 
 	ret_val = [CCAtlasNode atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
@@ -22839,13 +23284,14 @@ JSBool JSPROXY_CCAtlasNode_initWithTileFile_tileWidth_tileHeight_itemsToRender_(
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = [(CCAtlasNode*)[proxy.klass alloc] initWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
 	[proxy setRealObj: real];
@@ -22907,13 +23353,14 @@ JSBool JSPROXY_CCAtlasNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -22933,13 +23380,14 @@ JSBool JSPROXY_CCAtlasNode_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -22959,10 +23407,11 @@ JSBool JSPROXY_CCAtlasNode_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -22982,10 +23431,11 @@ JSBool JSPROXY_CCAtlasNode_setQuadsToDraw_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setQuadsToDraw:(NSUInteger)arg0  ];
@@ -23005,10 +23455,11 @@ JSBool JSPROXY_CCAtlasNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
@@ -23087,10 +23538,11 @@ JSBool JSPROXY_CCAtlasNode_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -23110,10 +23562,11 @@ JSBool JSPROXY_CCAtlasNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -23256,13 +23709,14 @@ JSBool JSPROXY_CCTileMapAtlas_initWithTileFile_mapFile_tileWidth_tileHeight_(JSC
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTileMapAtlas *real = [(CCTileMapAtlas*)[proxy.klass alloc] initWithTileFile:(NSString*)arg0 mapFile:(NSString*)arg1 tileWidth:(int)arg2 tileHeight:(int)arg3  ];
 	[proxy setRealObj: real];
@@ -23304,17 +23758,18 @@ JSBool JSPROXY_CCTileMapAtlas_setTile_at_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; ccGridSize arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCTileMapAtlas *real = (CCTileMapAtlas*) [proxy realObj];
 	[real setTile:(ccColor3B)arg0 at:(ccGridSize)arg1  ];
@@ -23334,13 +23789,14 @@ JSBool JSPROXY_CCTileMapAtlas_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	ccColor3B ret_val;
 
 	CCTileMapAtlas *real = (CCTileMapAtlas*) [proxy realObj];
@@ -23359,13 +23815,14 @@ JSBool JSPROXY_CCTileMapAtlas_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; int32_t arg2; int32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCTileMapAtlas* ret_val;
 
 	ret_val = [CCTileMapAtlas tileMapAtlasWithTileFile:(NSString*)arg0 mapFile:(NSString*)arg1 tileWidth:(int)arg2 tileHeight:(int)arg3  ];
@@ -23381,13 +23838,14 @@ JSBool JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHei
 JSBool JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCTileMapAtlas* ret_val;
 
 	ret_val = [CCTileMapAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
@@ -23582,10 +24040,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_rectForGID_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGRect ret_val;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
@@ -23609,10 +24068,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setFirstGid_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setFirstGid:(unsigned int)arg0  ];
@@ -23632,10 +24092,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setImageSize_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setImageSize:(CGSize)arg0  ];
@@ -23655,10 +24116,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setMargin_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setMargin:(unsigned int)arg0  ];
@@ -23678,10 +24140,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setName_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setName:(NSString*)arg0  ];
@@ -23701,10 +24164,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setSourceImage_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setSourceImage:(NSString*)arg0  ];
@@ -23724,10 +24188,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setSpacing_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setSpacing:(unsigned int)arg0  ];
@@ -23747,10 +24212,11 @@ JSBool JSPROXY_CCTMXTilesetInfo_setTileSize_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTilesetInfo *real = (CCTMXTilesetInfo*) [proxy realObj];
 	[real setTileSize:(CGSize)arg0  ];
@@ -24042,10 +24508,11 @@ JSBool JSPROXY_CCTransitionShrinkGrow_easeActionWithAction_(JSContext *cx, uint3
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionShrinkGrow *real = (CCTransitionShrinkGrow*) [proxy realObj];
@@ -24062,11 +24529,12 @@ JSBool JSPROXY_CCTransitionShrinkGrow_easeActionWithAction_(JSContext *cx, uint3
 JSBool JSPROXY_CCTransitionShrinkGrow_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionShrinkGrow* ret_val;
 
 	ret_val = [CCTransitionShrinkGrow transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -24176,10 +24644,11 @@ JSBool JSPROXY_CCEaseExponentialInOut_update_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseExponentialInOut *real = (CCEaseExponentialInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -24192,10 +24661,11 @@ JSBool JSPROXY_CCEaseExponentialInOut_update_(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCEaseExponentialInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialInOut* ret_val;
 
 	ret_val = [CCEaseExponentialInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -24211,10 +24681,11 @@ JSBool JSPROXY_CCEaseExponentialInOut_actionWithAction__static(JSContext *cx, ui
 JSBool JSPROXY_CCEaseExponentialInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialInOut* ret_val;
 
 	ret_val = [CCEaseExponentialInOut actionWithDuration:(ccTime)arg0  ];
@@ -24317,13 +24788,14 @@ void JSPROXY_CCTintBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg2 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCTintBy* ret_val;
 
 	ret_val = [CCTintBy actionWithDuration:(ccTime)arg0 red:(GLshort)arg1 green:(GLshort)arg2 blue:(GLshort)arg3  ];
@@ -24346,13 +24818,14 @@ JSBool JSPROXY_CCTintBy_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg2 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTintBy *real = [(CCTintBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 red:(GLshort)arg1 green:(GLshort)arg2 blue:(GLshort)arg3  ];
 	[proxy setRealObj: real];
@@ -24369,10 +24842,11 @@ JSBool JSPROXY_CCTintBy_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCTintBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTintBy* ret_val;
 
 	ret_val = [CCTintBy actionWithDuration:(ccTime)arg0  ];
@@ -24548,11 +25022,12 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; js_block arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemFont *real = [(CCMenuItemFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -24569,10 +25044,11 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCMenuItemFont_itemWithString__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0  ];
@@ -24588,11 +25064,12 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString__static(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; js_block arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
@@ -24608,10 +25085,11 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 JSBool JSPROXY_CCMenuItemFont_setFontName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	[CCMenuItemFont setFontName:(NSString*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -24630,10 +25108,11 @@ JSBool JSPROXY_CCMenuItemFont_setFontName_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
 	[real setFontName:(NSString*)arg0  ];
@@ -24646,10 +25125,11 @@ JSBool JSPROXY_CCMenuItemFont_setFontName_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCMenuItemFont_setFontSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	[CCMenuItemFont setFontSize:(NSUInteger)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -24668,10 +25148,11 @@ JSBool JSPROXY_CCMenuItemFont_setFontSize_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemFont *real = (CCMenuItemFont*) [proxy realObj];
 	[real setFontSize:(NSUInteger)arg0  ];
@@ -24684,10 +25165,11 @@ JSBool JSPROXY_CCMenuItemFont_setFontSize_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCMenuItemFont_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0  ];
@@ -24703,11 +25185,12 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel__static(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; js_block arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
@@ -24723,10 +25206,11 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCMenuItemFont_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
 	ret_val = [CCMenuItemFont itemWithBlock:(void (^)(id))arg0  ];
@@ -24840,10 +25324,11 @@ void JSPROXY_CCTargetedAction_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTargetedAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTargetedAction* ret_val;
 
 	ret_val = [CCTargetedAction actionWithDuration:(ccTime)arg0  ];
@@ -24944,12 +25429,13 @@ void JSPROXY_CCSkewTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSkewTo_actionWithDuration_skewX_skewY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCSkewTo* ret_val;
 
 	ret_val = [CCSkewTo actionWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
@@ -24972,12 +25458,13 @@ JSBool JSPROXY_CCSkewTo_initWithDuration_skewX_skewY_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSkewTo *real = [(CCSkewTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
 	[proxy setRealObj: real];
@@ -24994,10 +25481,11 @@ JSBool JSPROXY_CCSkewTo_initWithDuration_skewX_skewY_(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCSkewTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSkewTo* ret_val;
 
 	ret_val = [CCSkewTo actionWithDuration:(ccTime)arg0  ];
@@ -25107,12 +25595,13 @@ JSBool JSPROXY_CCSkewBy_initWithDuration_skewX_skewY_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSkewBy *real = [(CCSkewBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
 	[proxy setRealObj: real];
@@ -25129,12 +25618,13 @@ JSBool JSPROXY_CCSkewBy_initWithDuration_skewX_skewY_(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCSkewBy* ret_val;
 
 	ret_val = [CCSkewBy actionWithDuration:(ccTime)arg0 skewX:(float)arg1 skewY:(float)arg2  ];
@@ -25150,10 +25640,11 @@ JSBool JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static(JSContext *cx, ui
 JSBool JSPROXY_CCSkewBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSkewBy* ret_val;
 
 	ret_val = [CCSkewBy actionWithDuration:(ccTime)arg0  ];
@@ -25256,11 +25747,12 @@ void JSPROXY_CCSpawn_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCSpawn* ret_val;
 
 	ret_val = [CCSpawn actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
@@ -25276,10 +25768,11 @@ JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_CCSpawn_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	ok &= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSpawn* ret_val;
 
 	ret_val = [CCSpawn actionWithArray:(NSArray*)arg0  ];
@@ -25302,11 +25795,12 @@ JSBool JSPROXY_CCSpawn_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpawn *real = [(CCSpawn*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 	[proxy setRealObj: real];
@@ -25323,10 +25817,11 @@ JSBool JSPROXY_CCSpawn_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCSpawn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSpawn* ret_val;
 
 	ret_val = [CCSpawn actionWithDuration:(ccTime)arg0  ];
@@ -25437,10 +25932,11 @@ JSBool JSPROXY_CCTMXTiledMap_initWithTMXFile_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTiledMap *real = [(CCTMXTiledMap*)[proxy.klass alloc] initWithTMXFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -25464,11 +25960,12 @@ JSBool JSPROXY_CCTMXTiledMap_initWithXML_resourcePath_(JSContext *cx, uint32_t a
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTiledMap *real = [(CCTMXTiledMap*)[proxy.klass alloc] initWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -25492,10 +25989,11 @@ JSBool JSPROXY_CCTMXTiledMap_layerNamed_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
@@ -25560,10 +26058,11 @@ JSBool JSPROXY_CCTMXTiledMap_objectGroupNamed_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXObjectGroup* ret_val;
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
@@ -25609,10 +26108,11 @@ JSBool JSPROXY_CCTMXTiledMap_setObjectGroups_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXTiledMap *real = (CCTMXTiledMap*) [proxy realObj];
 	[real setObjectGroups:(NSMutableArray*)arg0  ];
@@ -25647,10 +26147,11 @@ JSBool JSPROXY_CCTMXTiledMap_tileSize(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXTiledMap* ret_val;
 
 	ret_val = [CCTMXTiledMap tiledMapWithTMXFile:(NSString*)arg0  ];
@@ -25666,11 +26167,12 @@ JSBool JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXTiledMap* ret_val;
 
 	ret_val = [CCTMXTiledMap tiledMapWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
@@ -25788,10 +26290,11 @@ JSBool JSPROXY_CCToggleVisibility_update_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCToggleVisibility *real = (CCToggleVisibility*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -25896,15 +26399,16 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; ccColor3B arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
+	if( ! ok ) return JS_FALSE;
 
 	CCTransitionFade *real = [(CCTransitionFade*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
 	[proxy setRealObj: real];
@@ -25921,17 +26425,18 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; ccColor3B arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if (argc >= 3) {
 	
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
 	}
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFade* ret_val;
 
 	if( argc == 2 ) {
@@ -26046,14 +26551,15 @@ JSBool JSPROXY_CCLabelAtlas_initWithString_charMapFile_itemWidth_itemHeight_star
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; uint32_t arg2; uint32_t arg3; uint32_t arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelAtlas *real = [(CCLabelAtlas*)[proxy.klass alloc] initWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(NSUInteger)arg2 itemHeight:(NSUInteger)arg3 startCharMap:(NSUInteger)arg4  ];
 	[proxy setRealObj: real];
@@ -26077,11 +26583,12 @@ JSBool JSPROXY_CCLabelAtlas_initWithString_fntFile_(JSContext *cx, uint32_t argc
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelAtlas *real = [(CCLabelAtlas*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -26098,14 +26605,15 @@ JSBool JSPROXY_CCLabelAtlas_initWithString_fntFile_(JSContext *cx, uint32_t argc
 JSBool JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_startCharMap__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; uint32_t arg2; uint32_t arg3; uint32_t arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelAtlas* ret_val;
 
 	ret_val = [CCLabelAtlas labelWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(NSUInteger)arg2 itemHeight:(NSUInteger)arg3 startCharMap:(NSUInteger)arg4  ];
@@ -26121,11 +26629,12 @@ JSBool JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_sta
 JSBool JSPROXY_CCLabelAtlas_labelWithString_fntFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelAtlas* ret_val;
 
 	ret_val = [CCLabelAtlas labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
@@ -26148,10 +26657,11 @@ JSBool JSPROXY_CCLabelAtlas_setString_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelAtlas *real = (CCLabelAtlas*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -26186,13 +26696,14 @@ JSBool JSPROXY_CCLabelAtlas_string(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelAtlas* ret_val;
 
 	ret_val = [CCLabelAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
@@ -26299,10 +26810,11 @@ void JSPROXY_CCPlace_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCPlace_actionWithPosition__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCPlace* ret_val;
 
 	ret_val = [CCPlace actionWithPosition:(CGPoint)arg0  ];
@@ -26325,10 +26837,11 @@ JSBool JSPROXY_CCPlace_initWithPosition_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPlace *real = [(CCPlace*)[proxy.klass alloc] initWithPosition:(CGPoint)arg0  ];
 	[proxy setRealObj: real];
@@ -26478,10 +26991,11 @@ JSBool JSPROXY_CCTransitionMoveInL_easeActionWithAction_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionMoveInL *real = (CCTransitionMoveInL*) [proxy realObj];
@@ -26498,11 +27012,12 @@ JSBool JSPROXY_CCTransitionMoveInL_easeActionWithAction_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInL* ret_val;
 
 	ret_val = [CCTransitionMoveInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -26624,11 +27139,12 @@ JSBool JSPROXY_CCTransitionMoveInR_initScenes(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCTransitionMoveInR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInR* ret_val;
 
 	ret_val = [CCTransitionMoveInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -26737,10 +27253,11 @@ JSBool JSPROXY_CCEaseExponentialIn_update_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseExponentialIn *real = (CCEaseExponentialIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -26753,10 +27270,11 @@ JSBool JSPROXY_CCEaseExponentialIn_update_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCEaseExponentialIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialIn* ret_val;
 
 	ret_val = [CCEaseExponentialIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -26772,10 +27290,11 @@ JSBool JSPROXY_CCEaseExponentialIn_actionWithAction__static(JSContext *cx, uint3
 JSBool JSPROXY_CCEaseExponentialIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialIn* ret_val;
 
 	ret_val = [CCEaseExponentialIn actionWithDuration:(ccTime)arg0  ];
@@ -26896,11 +27415,12 @@ JSBool JSPROXY_CCTransitionMoveInT_initScenes(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCTransitionMoveInT_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInT* ret_val;
 
 	ret_val = [CCTransitionMoveInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -27002,11 +27522,12 @@ void JSPROXY_CCCatmullRomTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomTo* ret_val;
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
@@ -27029,11 +27550,12 @@ JSBool JSPROXY_CCCatmullRomTo_initWithDuration_points_(JSContext *cx, uint32_t a
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCCatmullRomTo *real = [(CCCatmullRomTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
 	[proxy setRealObj: real];
@@ -27050,12 +27572,13 @@ JSBool JSPROXY_CCCatmullRomTo_initWithDuration_points_(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; double arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomTo* ret_val;
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
@@ -27071,10 +27594,11 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static(JSContex
 JSBool JSPROXY_CCCatmullRomTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCCatmullRomTo* ret_val;
 
 	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0  ];
@@ -27268,11 +27792,12 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_(JSContext *cx, uint32_t arg
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = [(CCLabelBMFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -27296,13 +27821,14 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_(JSContext *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = [(CCLabelBMFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
 	[proxy setRealObj: real];
@@ -27326,14 +27852,15 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; CGPoint arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = [(CCLabelBMFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
 	[proxy setRealObj: real];
@@ -27350,11 +27877,12 @@ JSBool JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1  ];
@@ -27370,13 +27898,14 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile__static(JSContext *cx, uint
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3  ];
@@ -27392,14 +27921,15 @@ JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static(JSC
 JSBool JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; double arg2; int32_t arg3; CGPoint arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont labelWithString:(NSString*)arg0 fntFile:(NSString*)arg1 width:(float)arg2 alignment:(CCTextAlignment)arg3 imageOffset:(CGPoint)arg4  ];
@@ -27451,10 +27981,11 @@ JSBool JSPROXY_CCLabelBMFont_setAlignment_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setAlignment:(CCTextAlignment)arg0  ];
@@ -27474,13 +28005,14 @@ JSBool JSPROXY_CCLabelBMFont_setColor_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -27500,10 +28032,11 @@ JSBool JSPROXY_CCLabelBMFont_setFntFile_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setFntFile:(NSString*)arg0  ];
@@ -27523,10 +28056,11 @@ JSBool JSPROXY_CCLabelBMFont_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -27546,10 +28080,11 @@ JSBool JSPROXY_CCLabelBMFont_setWidth_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setWidth:(float)arg0  ];
@@ -27569,10 +28104,11 @@ JSBool JSPROXY_CCLabelBMFont_setString_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setString:(NSString*)arg0  ];
@@ -27633,10 +28169,11 @@ JSBool JSPROXY_CCLabelBMFont_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -27649,10 +28186,11 @@ JSBool JSPROXY_CCLabelBMFont_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0  ];
@@ -27668,11 +28206,12 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -27688,10 +28227,11 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static(JSContext *cx, u
 JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0  ];
@@ -27707,11 +28247,12 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
 	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -27854,11 +28395,12 @@ JSBool JSPROXY_CCTransitionMoveInB_initScenes(JSContext *cx, uint32_t argc, jsva
 JSBool JSPROXY_CCTransitionMoveInB_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInB* ret_val;
 
 	ret_val = [CCTransitionMoveInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -27982,12 +28524,13 @@ JSBool JSPROXY_CCTransitionZoomFlipX_init(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipX* ret_val;
 
 	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -28003,11 +28546,12 @@ JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__s
 JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipX* ret_val;
 
 	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -28117,10 +28661,11 @@ JSBool JSPROXY_CCEaseOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseOut *real = (CCEaseOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -28133,11 +28678,12 @@ JSBool JSPROXY_CCEaseOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseOut_actionWithAction_rate__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseOut* ret_val;
 
 	ret_val = [CCEaseOut actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
@@ -28153,10 +28699,11 @@ JSBool JSPROXY_CCEaseOut_actionWithAction_rate__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCEaseOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseOut* ret_val;
 
 	ret_val = [CCEaseOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -28172,10 +28719,11 @@ JSBool JSPROXY_CCEaseOut_actionWithAction__static(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCEaseOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseOut* ret_val;
 
 	ret_val = [CCEaseOut actionWithDuration:(ccTime)arg0  ];
@@ -28286,10 +28834,11 @@ JSBool JSPROXY_CCProfiler_createAndAddTimerWithName_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCProfilingTimer* ret_val;
 
 	CCProfiler *real = (CCProfiler*) [proxy realObj];
@@ -28349,10 +28898,11 @@ JSBool JSPROXY_CCProfiler_releaseTimer_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProfiler *real = (CCProfiler*) [proxy realObj];
 	[real releaseTimer:(NSString*)arg0  ];
@@ -28484,11 +29034,12 @@ JSBool JSPROXY_CCMenuItemToggle_initWithItems_block_(JSContext *cx, uint32_t arg
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; js_block arg1; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = [(CCMenuItemToggle*)[proxy.klass alloc] initWithItems:(NSArray*)arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
@@ -28505,11 +29056,12 @@ JSBool JSPROXY_CCMenuItemToggle_initWithItems_block_(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCMenuItemToggle_itemWithItems_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; js_block arg1; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemToggle* ret_val;
 
 	ret_val = [CCMenuItemToggle itemWithItems:(NSArray*)arg0 block:(void (^)(id))arg1  ];
@@ -28592,10 +29144,11 @@ JSBool JSPROXY_CCMenuItemToggle_setSelectedIndex_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setSelectedIndex:(NSUInteger)arg0  ];
@@ -28615,10 +29168,11 @@ JSBool JSPROXY_CCMenuItemToggle_setSubItems_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setSubItems:(NSMutableArray*)arg0  ];
@@ -28679,13 +29233,14 @@ JSBool JSPROXY_CCMenuItemToggle_setColor_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -28705,10 +29260,11 @@ JSBool JSPROXY_CCMenuItemToggle_setOpacity_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -28728,10 +29284,11 @@ JSBool JSPROXY_CCMenuItemToggle_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -28744,10 +29301,11 @@ JSBool JSPROXY_CCMenuItemToggle_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCMenuItemToggle_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenuItemToggle* ret_val;
 
 	ret_val = [CCMenuItemToggle itemWithBlock:(void (^)(id))arg0  ];
@@ -28890,10 +29448,11 @@ JSBool JSPROXY_CCScheduler_pauseAllTargetsWithMinPriority_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	NSSet* ret_val;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
@@ -28917,10 +29476,11 @@ JSBool JSPROXY_CCScheduler_resumeTargets_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSSet* arg0; 
 
-	error |= jsval_to_nsset( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsset( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
 	[real resumeTargets:(NSSet*)arg0  ];
@@ -28940,10 +29500,11 @@ JSBool JSPROXY_CCScheduler_setTimeScale_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
 	[real setTimeScale:(ccTime)arg0  ];
@@ -29000,10 +29561,11 @@ JSBool JSPROXY_CCScheduler_unscheduleAllSelectorsWithMinPriority_(JSContext *cx,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
 	[real unscheduleAllSelectorsWithMinPriority:(NSInteger)arg0  ];
@@ -29023,10 +29585,11 @@ JSBool JSPROXY_CCScheduler_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -29116,10 +29679,11 @@ void JSPROXY_CCFollow_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCFollow_actionWithTarget__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCFollow* ret_val;
 
 	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0  ];
@@ -29135,11 +29699,12 @@ JSBool JSPROXY_CCFollow_actionWithTarget__static(JSContext *cx, uint32_t argc, j
 JSBool JSPROXY_CCFollow_actionWithTarget_worldBoundary__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCFollow* ret_val;
 
 	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
@@ -29181,10 +29746,11 @@ JSBool JSPROXY_CCFollow_initWithTarget_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0  ];
 	[proxy setRealObj: real];
@@ -29208,11 +29774,12 @@ JSBool JSPROXY_CCFollow_initWithTarget_worldBoundary_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -29236,10 +29803,11 @@ JSBool JSPROXY_CCFollow_setBoundarySet_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFollow *real = (CCFollow*) [proxy realObj];
 	[real setBoundarySet:(BOOL)arg0  ];
@@ -29342,16 +29910,17 @@ void JSPROXY_CCOrbitCamera_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCOrbitCamera_actionWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; double arg4; double arg5; double arg6; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	if( ! ok ) return JS_FALSE;
 	CCOrbitCamera* ret_val;
 
 	ret_val = [CCOrbitCamera actionWithDuration:(float)arg0 radius:(float)arg1 deltaRadius:(float)arg2 angleZ:(float)arg3 deltaAngleZ:(float)arg4 angleX:(float)arg5 deltaAngleX:(float)arg6  ];
@@ -29374,16 +29943,17 @@ JSBool JSPROXY_CCOrbitCamera_initWithDuration_radius_deltaRadius_angleZ_deltaAng
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 7, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; double arg4; double arg5; double arg6; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg6 );
+	if( ! ok ) return JS_FALSE;
 
 	CCOrbitCamera *real = [(CCOrbitCamera*)[proxy.klass alloc] initWithDuration:(float)arg0 radius:(float)arg1 deltaRadius:(float)arg2 angleZ:(float)arg3 deltaAngleZ:(float)arg4 angleX:(float)arg5 deltaAngleX:(float)arg6  ];
 	[proxy setRealObj: real];
@@ -29400,10 +29970,11 @@ JSBool JSPROXY_CCOrbitCamera_initWithDuration_radius_deltaRadius_angleZ_deltaAng
 JSBool JSPROXY_CCOrbitCamera_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCOrbitCamera* ret_val;
 
 	ret_val = [CCOrbitCamera actionWithDuration:(ccTime)arg0  ];
@@ -29532,10 +30103,11 @@ JSBool JSPROXY_CCAnimationFrame_setDelayUnits_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimationFrame *real = (CCAnimationFrame*) [proxy realObj];
 	[real setDelayUnits:(float)arg0  ];
@@ -29555,10 +30127,11 @@ JSBool JSPROXY_CCAnimationFrame_setSpriteFrame_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimationFrame *real = (CCAnimationFrame*) [proxy realObj];
 	[real setSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -29713,10 +30286,11 @@ JSBool JSPROXY_CCTransitionSlideInL_easeActionWithAction_(JSContext *cx, uint32_
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionSlideInL *real = (CCTransitionSlideInL*) [proxy realObj];
@@ -29733,11 +30307,12 @@ JSBool JSPROXY_CCTransitionSlideInL_easeActionWithAction_(JSContext *cx, uint32_
 JSBool JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInL* ret_val;
 
 	ret_val = [CCTransitionSlideInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -29859,11 +30434,12 @@ JSBool JSPROXY_CCTransitionSlideInB_initScenes(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCTransitionSlideInB_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInB* ret_val;
 
 	ret_val = [CCTransitionSlideInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -29972,13 +30548,14 @@ JSBool JSPROXY_CCParallaxNode_addChild_z_parallaxRatio_positionOffset_(JSContext
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; int32_t arg1; CGPoint arg2; CGPoint arg3; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCParallaxNode *real = (CCParallaxNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 parallaxRatio:(CGPoint)arg2 positionOffset:(CGPoint)arg3  ];
@@ -30083,10 +30660,11 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_progressTimerNodeWithRenderTexture
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressHorizontal *real = (CCTransitionProgressHorizontal*) [proxy realObj];
@@ -30103,11 +30681,12 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_progressTimerNodeWithRenderTexture
 JSBool JSPROXY_CCTransitionProgressHorizontal_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressHorizontal* ret_val;
 
 	ret_val = [CCTransitionProgressHorizontal transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -30209,11 +30788,12 @@ void JSPROXY_CCRepeat_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCRepeat_actionWithAction_times__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCRepeat* ret_val;
 
 	ret_val = [CCRepeat actionWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
@@ -30236,11 +30816,12 @@ JSBool JSPROXY_CCRepeat_initWithAction_times_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRepeat *real = [(CCRepeat*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -30286,10 +30867,11 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCRepeat *real = (CCRepeat*) [proxy realObj];
 	[real setInnerAction:(CCFiniteTimeAction*)arg0  ];
@@ -30302,10 +30884,11 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool JSPROXY_CCRepeat_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCRepeat* ret_val;
 
 	ret_val = [CCRepeat actionWithDuration:(ccTime)arg0  ];
@@ -30410,16 +30993,17 @@ void JSPROXY_CCShatteredTiles3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCShatteredTiles3D* ret_val;
 
 	ret_val = [CCShatteredTiles3D actionWithRange:(int)arg0 shatterZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -30442,16 +31026,17 @@ JSBool JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_(JSContex
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShatteredTiles3D *real = [(CCShatteredTiles3D*)[proxy.klass alloc] initWithRange:(int)arg0 shatterZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -30468,14 +31053,15 @@ JSBool JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_(JSContex
 JSBool JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCShatteredTiles3D* ret_val;
 
 	ret_val = [CCShatteredTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -30491,10 +31077,11 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static(JSContext *cx,
 JSBool JSPROXY_CCShatteredTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCShatteredTiles3D* ret_val;
 
 	ret_val = [CCShatteredTiles3D actionWithDuration:(ccTime)arg0  ];
@@ -30624,10 +31211,11 @@ JSBool JSPROXY_CCTimer_setInterval_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTimer *real = (CCTimer*) [proxy realObj];
 	[real setInterval:(ccTime)arg0  ];
@@ -30647,10 +31235,11 @@ JSBool JSPROXY_CCTimer_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTimer *real = (CCTimer*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -30757,12 +31346,13 @@ JSBool JSPROXY_CCTransitionFlipY_init(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipY* ret_val;
 
 	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -30778,11 +31368,12 @@ JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene_orientation__stati
 JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipY* ret_val;
 
 	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -30907,12 +31498,13 @@ JSBool JSPROXY_CCTransitionFlipX_init(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipX* ret_val;
 
 	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -30928,11 +31520,12 @@ JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene_orientation__stati
 JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipX* ret_val;
 
 	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -31035,11 +31628,12 @@ void JSPROXY_CCSpriteFrame_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
@@ -31055,14 +31649,15 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rect__static(JSContext *cx, uint32
 JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
@@ -31078,11 +31673,12 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_origin
 JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
@@ -31098,14 +31694,15 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static(JSContext *cx
 JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
 	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
@@ -31128,11 +31725,12 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rect_(JSContext *cx, uint32_t argc,
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -31156,14 +31754,15 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rectInPixels_rotated_offset_origina
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 	[proxy setRealObj: real];
@@ -31187,11 +31786,12 @@ JSBool JSPROXY_CCSpriteFrame_initWithTextureFilename_rect_(JSContext *cx, uint32
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
@@ -31215,14 +31815,15 @@ JSBool JSPROXY_CCSpriteFrame_initWithTextureFilename_rectInPixels_rotated_offset
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 	[proxy setRealObj: real];
@@ -31397,10 +31998,11 @@ JSBool JSPROXY_CCSpriteFrame_setOffset_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOffset:(CGPoint)arg0  ];
@@ -31420,10 +32022,11 @@ JSBool JSPROXY_CCSpriteFrame_setOffsetInPixels_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOffsetInPixels:(CGPoint)arg0  ];
@@ -31443,10 +32046,11 @@ JSBool JSPROXY_CCSpriteFrame_setOriginalSize_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOriginalSize:(CGSize)arg0  ];
@@ -31466,10 +32070,11 @@ JSBool JSPROXY_CCSpriteFrame_setOriginalSizeInPixels_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setOriginalSizeInPixels:(CGSize)arg0  ];
@@ -31489,10 +32094,11 @@ JSBool JSPROXY_CCSpriteFrame_setRect_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setRect:(CGRect)arg0  ];
@@ -31512,10 +32118,11 @@ JSBool JSPROXY_CCSpriteFrame_setRectInPixels_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGRect arg0; 
 
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setRectInPixels:(CGRect)arg0  ];
@@ -31535,10 +32142,11 @@ JSBool JSPROXY_CCSpriteFrame_setRotated_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setRotated:(BOOL)arg0  ];
@@ -31558,10 +32166,11 @@ JSBool JSPROXY_CCSpriteFrame_setTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -31712,11 +32321,12 @@ void JSPROXY_CCSplitRows_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSplitRows_actionWithRows_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitRows* ret_val;
 
 	ret_val = [CCSplitRows actionWithRows:(int)arg0 duration:(ccTime)arg1  ];
@@ -31739,11 +32349,12 @@ JSBool JSPROXY_CCSplitRows_initWithRows_duration_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSplitRows *real = [(CCSplitRows*)[proxy.klass alloc] initWithRows:(int)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -31760,14 +32371,15 @@ JSBool JSPROXY_CCSplitRows_initWithRows_duration_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCSplitRows_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitRows* ret_val;
 
 	ret_val = [CCSplitRows actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -31783,10 +32395,11 @@ JSBool JSPROXY_CCSplitRows_actionWithSize_duration__static(JSContext *cx, uint32
 JSBool JSPROXY_CCSplitRows_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitRows* ret_val;
 
 	ret_val = [CCSplitRows actionWithDuration:(ccTime)arg0  ];
@@ -31897,10 +32510,11 @@ JSBool JSPROXY_CCTextureCache_addImage_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
@@ -31924,10 +32538,11 @@ JSBool JSPROXY_CCTextureCache_addPVRImage_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
@@ -31997,10 +32612,11 @@ JSBool JSPROXY_CCTextureCache_removeTexture_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	[real removeTexture:(CCTexture2D*)arg0  ];
@@ -32020,10 +32636,11 @@ JSBool JSPROXY_CCTextureCache_removeTextureForKey_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
 	[real removeTextureForKey:(NSString*)arg0  ];
@@ -32075,10 +32692,11 @@ JSBool JSPROXY_CCTextureCache_textureForKey_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTexture2D* ret_val;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
@@ -32174,18 +32792,19 @@ void JSPROXY_CCRipple3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCRipple3D_actionWithPosition_radius_waves_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; double arg1; int32_t arg2; double arg3; ccGridSize arg4; double arg5; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 
 	JSObject *tmp_arg4;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
 	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 	CCRipple3D* ret_val;
 
 	ret_val = [CCRipple3D actionWithPosition:(CGPoint)arg0 radius:(float)arg1 waves:(int)arg2 amplitude:(float)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
@@ -32246,18 +32865,19 @@ JSBool JSPROXY_CCRipple3D_initWithPosition_radius_waves_amplitude_grid_duration_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; double arg1; int32_t arg2; double arg3; ccGridSize arg4; double arg5; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 
 	JSObject *tmp_arg4;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
 	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRipple3D *real = [(CCRipple3D*)[proxy.klass alloc] initWithPosition:(CGPoint)arg0 radius:(float)arg1 waves:(int)arg2 amplitude:(float)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
 	[proxy setRealObj: real];
@@ -32303,10 +32923,11 @@ JSBool JSPROXY_CCRipple3D_setAmplitude_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRipple3D *real = (CCRipple3D*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -32326,10 +32947,11 @@ JSBool JSPROXY_CCRipple3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRipple3D *real = (CCRipple3D*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -32349,10 +32971,11 @@ JSBool JSPROXY_CCRipple3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRipple3D *real = (CCRipple3D*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -32365,14 +32988,15 @@ JSBool JSPROXY_CCRipple3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCRipple3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCRipple3D* ret_val;
 
 	ret_val = [CCRipple3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -32388,10 +33012,11 @@ JSBool JSPROXY_CCRipple3D_actionWithSize_duration__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCRipple3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCRipple3D* ret_val;
 
 	ret_val = [CCRipple3D actionWithDuration:(ccTime)arg0  ];
@@ -32501,11 +33126,12 @@ void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCRotateBy_actionWithDuration_angle__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCRotateBy* ret_val;
 
 	ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0 angle:(float)arg1  ];
@@ -32528,11 +33154,12 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRotateBy *real = [(CCRotateBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 angle:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -32549,10 +33176,11 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angle_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCRotateBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCRotateBy* ret_val;
 
 	ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0  ];
@@ -32662,10 +33290,11 @@ JSBool JSPROXY_CCEaseIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseIn *real = (CCEaseIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -32678,11 +33307,12 @@ JSBool JSPROXY_CCEaseIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseIn_actionWithAction_rate__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseIn* ret_val;
 
 	ret_val = [CCEaseIn actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
@@ -32698,10 +33328,11 @@ JSBool JSPROXY_CCEaseIn_actionWithAction_rate__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCEaseIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseIn* ret_val;
 
 	ret_val = [CCEaseIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -32717,10 +33348,11 @@ JSBool JSPROXY_CCEaseIn_actionWithAction__static(JSContext *cx, uint32_t argc, j
 JSBool JSPROXY_CCEaseIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseIn* ret_val;
 
 	ret_val = [CCEaseIn actionWithDuration:(ccTime)arg0  ];
@@ -32846,10 +33478,11 @@ JSBool JSPROXY_CCTMXMapInfo_filename(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTMXMapInfo_formatWithTMXFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXMapInfo* ret_val;
 
 	ret_val = [CCTMXMapInfo formatWithTMXFile:(NSString*)arg0  ];
@@ -32865,11 +33498,12 @@ JSBool JSPROXY_CCTMXMapInfo_formatWithTMXFile__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCTMXMapInfo_formatWithXML_resourcePath__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTMXMapInfo* ret_val;
 
 	ret_val = [CCTMXMapInfo formatWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
@@ -32892,10 +33526,11 @@ JSBool JSPROXY_CCTMXMapInfo_initWithTMXFile_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = [(CCTMXMapInfo*)[proxy.klass alloc] initWithTMXFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -32919,11 +33554,12 @@ JSBool JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_(JSContext *cx, uint32_t ar
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = [(CCTMXMapInfo*)[proxy.klass alloc] initWithXML:(NSString*)arg0 resourcePath:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -33054,10 +33690,11 @@ JSBool JSPROXY_CCTMXMapInfo_setFilename_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setFilename:(NSString*)arg0  ];
@@ -33077,10 +33714,11 @@ JSBool JSPROXY_CCTMXMapInfo_setLayers_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setLayers:(NSMutableArray*)arg0  ];
@@ -33100,10 +33738,11 @@ JSBool JSPROXY_CCTMXMapInfo_setMapSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setMapSize:(CGSize)arg0  ];
@@ -33123,10 +33762,11 @@ JSBool JSPROXY_CCTMXMapInfo_setObjectGroups_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setObjectGroups:(NSMutableArray*)arg0  ];
@@ -33146,10 +33786,11 @@ JSBool JSPROXY_CCTMXMapInfo_setOrientation_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setOrientation:(int)arg0  ];
@@ -33169,10 +33810,11 @@ JSBool JSPROXY_CCTMXMapInfo_setResources_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setResources:(NSString*)arg0  ];
@@ -33192,10 +33834,11 @@ JSBool JSPROXY_CCTMXMapInfo_setTileSize_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setTileSize:(CGSize)arg0  ];
@@ -33215,10 +33858,11 @@ JSBool JSPROXY_CCTMXMapInfo_setTilesets_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXMapInfo *real = (CCTMXMapInfo*) [proxy realObj];
 	[real setTilesets:(NSMutableArray*)arg0  ];
@@ -33513,10 +34157,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setLayerSize_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setLayerSize:(CGSize)arg0  ];
@@ -33536,10 +34181,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setMaxGID_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setMaxGID:(unsigned int)arg0  ];
@@ -33559,10 +34205,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setMinGID_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setMinGID:(unsigned int)arg0  ];
@@ -33582,10 +34229,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setName_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setName:(NSString*)arg0  ];
@@ -33605,10 +34253,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setOffset_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setOffset:(CGPoint)arg0  ];
@@ -33628,10 +34277,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setOpacity_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setOpacity:(unsigned char)arg0  ];
@@ -33651,10 +34301,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setOwnTiles_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setOwnTiles:(BOOL)arg0  ];
@@ -33674,10 +34325,11 @@ JSBool JSPROXY_CCTMXLayerInfo_setVisible_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayerInfo *real = (CCTMXLayerInfo*) [proxy realObj];
 	[real setVisible:(BOOL)arg0  ];
@@ -33816,12 +34468,13 @@ JSBool JSPROXY_CCTransitionZoomFlipY_init(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipY* ret_val;
 
 	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -33837,11 +34490,12 @@ JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__s
 JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipY* ret_val;
 
 	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -34028,10 +34682,11 @@ void JSPROXY_CCReuseGrid_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCReuseGrid_actionWithTimes__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCReuseGrid* ret_val;
 
 	ret_val = [CCReuseGrid actionWithTimes:(int)arg0  ];
@@ -34054,10 +34709,11 @@ JSBool JSPROXY_CCReuseGrid_initWithTimes_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCReuseGrid *real = [(CCReuseGrid*)[proxy.klass alloc] initWithTimes:(int)arg0  ];
 	[proxy setRealObj: real];
@@ -34160,15 +34816,16 @@ void JSPROXY_CCShuffleTiles_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCShuffleTiles_actionWithSeed_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCShuffleTiles* ret_val;
 
 	ret_val = [CCShuffleTiles actionWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
@@ -34191,15 +34848,16 @@ JSBool JSPROXY_CCShuffleTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShuffleTiles *real = [(CCShuffleTiles*)[proxy.klass alloc] initWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
 	[proxy setRealObj: real];
@@ -34216,14 +34874,15 @@ JSBool JSPROXY_CCShuffleTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 JSBool JSPROXY_CCShuffleTiles_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCShuffleTiles* ret_val;
 
 	ret_val = [CCShuffleTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -34239,10 +34898,11 @@ JSBool JSPROXY_CCShuffleTiles_actionWithSize_duration__static(JSContext *cx, uin
 JSBool JSPROXY_CCShuffleTiles_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCShuffleTiles* ret_val;
 
 	ret_val = [CCShuffleTiles actionWithDuration:(ccTime)arg0  ];
@@ -34372,10 +35032,11 @@ JSBool JSPROXY_CCConfiguration_checkForGLExtension_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCConfiguration *real = (CCConfiguration*) [proxy realObj];
@@ -34642,10 +35303,11 @@ JSBool JSPROXY_CCEaseSineIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseSineIn *real = (CCEaseSineIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -34658,10 +35320,11 @@ JSBool JSPROXY_CCEaseSineIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseSineIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineIn* ret_val;
 
 	ret_val = [CCEaseSineIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -34677,10 +35340,11 @@ JSBool JSPROXY_CCEaseSineIn_actionWithAction__static(JSContext *cx, uint32_t arg
 JSBool JSPROXY_CCEaseSineIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineIn* ret_val;
 
 	ret_val = [CCEaseSineIn actionWithDuration:(ccTime)arg0  ];
@@ -34790,13 +35454,14 @@ JSBool JSPROXY_CCTransitionFadeBL_actionWithSize_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeBL *real = (CCTransitionFadeBL*) [proxy realObj];
@@ -34813,11 +35478,12 @@ JSBool JSPROXY_CCTransitionFadeBL_actionWithSize_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeBL* ret_val;
 
 	ret_val = [CCTransitionFadeBL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -34919,10 +35585,11 @@ void JSPROXY_CCAnimate_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCAnimate_actionWithAnimation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCAnimate* ret_val;
 
 	ret_val = [CCAnimate actionWithAnimation:(CCAnimation*)arg0  ];
@@ -34967,10 +35634,11 @@ JSBool JSPROXY_CCAnimate_initWithAnimation_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimate *real = [(CCAnimate*)[proxy.klass alloc] initWithAnimation:(CCAnimation*)arg0  ];
 	[proxy setRealObj: real];
@@ -34994,10 +35662,11 @@ JSBool JSPROXY_CCAnimate_setAnimation_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimate *real = (CCAnimate*) [proxy realObj];
 	[real setAnimation:(CCAnimation*)arg0  ];
@@ -35010,10 +35679,11 @@ JSBool JSPROXY_CCAnimate_setAnimation_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCAnimate_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCAnimate* ret_val;
 
 	ret_val = [CCAnimate actionWithDuration:(ccTime)arg0  ];
@@ -35221,10 +35891,11 @@ void JSPROXY_CCCallBlockN_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCCallBlockN* ret_val;
 
 	ret_val = [CCCallBlockN actionWithBlock:(void (^)(CCNode *))arg0  ];
@@ -35265,10 +35936,11 @@ JSBool JSPROXY_CCCallBlockN_initWithBlock_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	error |= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCCallBlockN *real = [(CCCallBlockN*)[proxy.klass alloc] initWithBlock:(void (^)(CCNode *))arg0  ];
 	[proxy setRealObj: real];
@@ -35372,10 +36044,11 @@ void JSPROXY_CCBezierBy_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCBezierBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCBezierBy* ret_val;
 
 	ret_val = [CCBezierBy actionWithDuration:(ccTime)arg0  ];
@@ -35483,10 +36156,11 @@ JSBool JSPROXY_CCAnimation_addSpriteFrame_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrame:(CCSpriteFrame*)arg0  ];
@@ -35506,10 +36180,11 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithFilename_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrameWithFilename:(NSString*)arg0  ];
@@ -35529,11 +36204,12 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real addSpriteFrameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
@@ -35560,12 +36236,13 @@ JSBool JSPROXY_CCAnimation_animation_static(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; double arg1; uint32_t arg2; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCAnimation* ret_val;
 
 	ret_val = [CCAnimation animationWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
@@ -35581,13 +36258,14 @@ JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__stat
 JSBool JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; double arg1; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
 	if (argc >= 2) {
-		error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCAnimation* ret_val;
 
 	if( argc == 1 ) {
@@ -35676,12 +36354,13 @@ JSBool JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_(JSContext
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; double arg1; uint32_t arg2; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = [(CCAnimation*)[proxy.klass alloc] initWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
 	[proxy setRealObj: real];
@@ -35705,10 +36384,11 @@ JSBool JSPROXY_CCAnimation_initWithSpriteFrames_(JSContext *cx, uint32_t argc, j
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = [(CCAnimation*)[proxy.klass alloc] initWithSpriteFrames:(NSArray*)arg0  ];
 	[proxy setRealObj: real];
@@ -35732,11 +36412,12 @@ JSBool JSPROXY_CCAnimation_initWithSpriteFrames_delay_(JSContext *cx, uint32_t a
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; double arg1; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = [(CCAnimation*)[proxy.klass alloc] initWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
 	[proxy setRealObj: real];
@@ -35798,10 +36479,11 @@ JSBool JSPROXY_CCAnimation_setDelayPerUnit_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real setDelayPerUnit:(float)arg0  ];
@@ -35821,10 +36503,11 @@ JSBool JSPROXY_CCAnimation_setFrames_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real setFrames:(NSMutableArray*)arg0  ];
@@ -35844,10 +36527,11 @@ JSBool JSPROXY_CCAnimation_setLoops_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real setLoops:(NSUInteger)arg0  ];
@@ -35867,10 +36551,11 @@ JSBool JSPROXY_CCAnimation_setRestoreOriginalFrame_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
 	[real setRestoreOriginalFrame:(BOOL)arg0  ];
@@ -35997,10 +36682,11 @@ JSBool JSPROXY_CCEaseSineInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseSineInOut *real = (CCEaseSineInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -36013,10 +36699,11 @@ JSBool JSPROXY_CCEaseSineInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCEaseSineInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineInOut* ret_val;
 
 	ret_val = [CCEaseSineInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -36032,10 +36719,11 @@ JSBool JSPROXY_CCEaseSineInOut_actionWithAction__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCEaseSineInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineInOut* ret_val;
 
 	ret_val = [CCEaseSineInOut actionWithDuration:(ccTime)arg0  ];
@@ -36138,16 +36826,17 @@ void JSPROXY_CCShaky3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCShaky3D* ret_val;
 
 	ret_val = [CCShaky3D actionWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -36170,16 +36859,17 @@ JSBool JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_(JSContext *cx, uint
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; JSBool arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCShaky3D *real = [(CCShaky3D*)[proxy.klass alloc] initWithRange:(int)arg0 shakeZ:(BOOL)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -36196,14 +36886,15 @@ JSBool JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_(JSContext *cx, uint
 JSBool JSPROXY_CCShaky3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCShaky3D* ret_val;
 
 	ret_val = [CCShaky3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -36219,10 +36910,11 @@ JSBool JSPROXY_CCShaky3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCShaky3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCShaky3D* ret_val;
 
 	ret_val = [CCShaky3D actionWithDuration:(ccTime)arg0  ];
@@ -36333,10 +37025,11 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_progressTimerNodeWithRenderTexture_(
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressRadialCW *real = (CCTransitionProgressRadialCW*) [proxy realObj];
@@ -36353,11 +37046,12 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_progressTimerNodeWithRenderTexture_(
 JSBool JSPROXY_CCTransitionProgressRadialCW_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressRadialCW* ret_val;
 
 	ret_val = [CCTransitionProgressRadialCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -36459,13 +37153,14 @@ void JSPROXY_CCTintTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTintTo_actionWithDuration_red_green_blue__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg2 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCTintTo* ret_val;
 
 	ret_val = [CCTintTo actionWithDuration:(ccTime)arg0 red:(GLubyte)arg1 green:(GLubyte)arg2 blue:(GLubyte)arg3  ];
@@ -36488,13 +37183,14 @@ JSBool JSPROXY_CCTintTo_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg2 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTintTo *real = [(CCTintTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 red:(GLubyte)arg1 green:(GLubyte)arg2 blue:(GLubyte)arg3  ];
 	[proxy setRealObj: real];
@@ -36511,10 +37207,11 @@ JSBool JSPROXY_CCTintTo_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 JSBool JSPROXY_CCTintTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTintTo* ret_val;
 
 	ret_val = [CCTintTo actionWithDuration:(ccTime)arg0  ];
@@ -36646,10 +37343,11 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_easeActionWithAction_(JSContext *cx, uin
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionTurnOffTiles *real = (CCTransitionTurnOffTiles*) [proxy realObj];
@@ -36666,11 +37364,12 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_easeActionWithAction_(JSContext *cx, uin
 JSBool JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionTurnOffTiles* ret_val;
 
 	ret_val = [CCTransitionTurnOffTiles transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -36791,11 +37490,12 @@ JSBool JSPROXY_CCTransitionSlideInT_initScenes(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCTransitionSlideInT_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInT* ret_val;
 
 	ret_val = [CCTransitionSlideInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -36897,11 +37597,12 @@ void JSPROXY_CCBlink_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCBlink_actionWithDuration_blinks__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint32_t arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCBlink* ret_val;
 
 	ret_val = [CCBlink actionWithDuration:(ccTime)arg0 blinks:(NSUInteger)arg1  ];
@@ -36924,11 +37625,12 @@ JSBool JSPROXY_CCBlink_initWithDuration_blinks_(JSContext *cx, uint32_t argc, js
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint32_t arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCBlink *real = [(CCBlink*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 blinks:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -36945,10 +37647,11 @@ JSBool JSPROXY_CCBlink_initWithDuration_blinks_(JSContext *cx, uint32_t argc, js
 JSBool JSPROXY_CCBlink_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCBlink* ret_val;
 
 	ret_val = [CCBlink actionWithDuration:(ccTime)arg0  ];
@@ -37077,10 +37780,11 @@ JSBool JSPROXY_CCTextureAtlas_drawNumberOfQuads_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real drawNumberOfQuads:(NSUInteger)arg0  ];
@@ -37100,11 +37804,12 @@ JSBool JSPROXY_CCTextureAtlas_drawNumberOfQuads_fromIndex_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real drawNumberOfQuads:(NSUInteger)arg0 fromIndex:(NSUInteger)arg1  ];
@@ -37142,11 +37847,12 @@ JSBool JSPROXY_CCTextureAtlas_fillWithEmptyQuadsFromIndex_amount_(JSContext *cx,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real fillWithEmptyQuadsFromIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1  ];
@@ -37166,10 +37872,11 @@ JSBool JSPROXY_CCTextureAtlas_increaseTotalQuadsWith_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real increaseTotalQuadsWith:(NSUInteger)arg0  ];
@@ -37189,11 +37896,12 @@ JSBool JSPROXY_CCTextureAtlas_initWithFile_capacity_(JSContext *cx, uint32_t arg
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -37217,11 +37925,12 @@ JSBool JSPROXY_CCTextureAtlas_initWithTexture_capacity_(JSContext *cx, uint32_t 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
@@ -37245,11 +37954,12 @@ JSBool JSPROXY_CCTextureAtlas_insertQuadFromIndex_atIndex_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real insertQuadFromIndex:(NSUInteger)arg0 atIndex:(NSUInteger)arg1  ];
@@ -37269,12 +37979,13 @@ JSBool JSPROXY_CCTextureAtlas_moveQuadsFromIndex_amount_atIndex_(JSContext *cx, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; uint32_t arg2; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real moveQuadsFromIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1 atIndex:(NSUInteger)arg2  ];
@@ -37294,11 +38005,12 @@ JSBool JSPROXY_CCTextureAtlas_moveQuadsFromIndex_to_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real moveQuadsFromIndex:(NSUInteger)arg0 to:(NSUInteger)arg1  ];
@@ -37336,10 +38048,11 @@ JSBool JSPROXY_CCTextureAtlas_removeQuadAtIndex_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real removeQuadAtIndex:(NSUInteger)arg0  ];
@@ -37359,11 +38072,12 @@ JSBool JSPROXY_CCTextureAtlas_removeQuadsAtIndex_amount_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; uint32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real removeQuadsAtIndex:(NSUInteger)arg0 amount:(NSUInteger)arg1  ];
@@ -37383,10 +38097,11 @@ JSBool JSPROXY_CCTextureAtlas_resizeCapacity_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
@@ -37407,10 +38122,11 @@ JSBool JSPROXY_CCTextureAtlas_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
 	[real setTexture:(CCTexture2D*)arg0  ];
@@ -37445,11 +38161,12 @@ JSBool JSPROXY_CCTextureAtlas_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTextureAtlas_textureAtlasWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTextureAtlas* ret_val;
 
 	ret_val = [CCTextureAtlas textureAtlasWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
@@ -37465,11 +38182,12 @@ JSBool JSPROXY_CCTextureAtlas_textureAtlasWithFile_capacity__static(JSContext *c
 JSBool JSPROXY_CCTextureAtlas_textureAtlasWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTextureAtlas* ret_val;
 
 	ret_val = [CCTextureAtlas textureAtlasWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
@@ -37611,11 +38329,12 @@ JSBool JSPROXY_CCTransitionSlideInR_initScenes(JSContext *cx, uint32_t argc, jsv
 JSBool JSPROXY_CCTransitionSlideInR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInR* ret_val;
 
 	ret_val = [CCTransitionSlideInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -37724,10 +38443,11 @@ JSBool JSPROXY_CCPointArray_addControlPoint_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real addControlPoint:(CGPoint)arg0  ];
@@ -37740,10 +38460,11 @@ JSBool JSPROXY_CCPointArray_addControlPoint_(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_CCPointArray_arrayWithCapacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCPointArray* ret_val;
 
 	ret_val = [CCPointArray arrayWithCapacity:(NSUInteger)arg0  ];
@@ -37807,10 +38528,11 @@ JSBool JSPROXY_CCPointArray_getControlPointAtIndex_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
@@ -37834,10 +38556,11 @@ JSBool JSPROXY_CCPointArray_initWithCapacity_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = [(CCPointArray*)[proxy.klass alloc] initWithCapacity:(NSUInteger)arg0  ];
 	[proxy setRealObj: real];
@@ -37861,11 +38584,12 @@ JSBool JSPROXY_CCPointArray_insertControlPoint_atIndex_(JSContext *cx, uint32_t 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; uint32_t arg1; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real insertControlPoint:(CGPoint)arg0 atIndex:(NSUInteger)arg1  ];
@@ -37885,10 +38609,11 @@ JSBool JSPROXY_CCPointArray_removeControlPointAtIndex_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real removeControlPointAtIndex:(NSUInteger)arg0  ];
@@ -37908,11 +38633,12 @@ JSBool JSPROXY_CCPointArray_replaceControlPoint_atIndex_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; uint32_t arg1; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real replaceControlPoint:(CGPoint)arg0 atIndex:(NSUInteger)arg1  ];
@@ -37972,10 +38698,11 @@ JSBool JSPROXY_CCPointArray_setControlPoints_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCPointArray *real = (CCPointArray*) [proxy realObj];
 	[real setControlPoints:(NSMutableArray*)arg0  ];
@@ -38076,10 +38803,11 @@ JSBool JSPROXY_CCTransitionProgressInOut_progressTimerNodeWithRenderTexture_(JSC
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressInOut *real = (CCTransitionProgressInOut*) [proxy realObj];
@@ -38096,11 +38824,12 @@ JSBool JSPROXY_CCTransitionProgressInOut_progressTimerNodeWithRenderTexture_(JSC
 JSBool JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressInOut* ret_val;
 
 	ret_val = [CCTransitionProgressInOut transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -38209,10 +38938,11 @@ JSBool JSPROXY_CCEaseBounceIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBounceIn *real = (CCEaseBounceIn*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -38225,10 +38955,11 @@ JSBool JSPROXY_CCEaseBounceIn_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseBounceIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceIn* ret_val;
 
 	ret_val = [CCEaseBounceIn actionWithAction:(CCActionInterval*)arg0  ];
@@ -38244,10 +38975,11 @@ JSBool JSPROXY_CCEaseBounceIn_actionWithAction__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCEaseBounceIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceIn* ret_val;
 
 	ret_val = [CCEaseBounceIn actionWithDuration:(ccTime)arg0  ];
@@ -38398,10 +39130,11 @@ JSBool JSPROXY_CCDirector_convertToGL_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
@@ -38425,10 +39158,11 @@ JSBool JSPROXY_CCDirector_convertToUI_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
@@ -38692,10 +39426,11 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real pushScene:(CCScene*)arg0  ];
@@ -38715,10 +39450,11 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real replaceScene:(CCScene*)arg0  ];
@@ -38738,10 +39474,11 @@ JSBool JSPROXY_CCDirector_reshapeProjection_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGSize arg0; 
 
-	error |= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real reshapeProjection:(CGSize)arg0  ];
@@ -38779,10 +39516,11 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real runWithScene:(CCScene*)arg0  ];
@@ -38884,10 +39622,11 @@ JSBool JSPROXY_CCDirector_setActionManager_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setActionManager:(CCActionManager*)arg0  ];
@@ -38907,10 +39646,11 @@ JSBool JSPROXY_CCDirector_setAlphaBlending_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setAlphaBlending:(BOOL)arg0  ];
@@ -38930,10 +39670,11 @@ JSBool JSPROXY_CCDirector_setAnimationInterval_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setAnimationInterval:(NSTimeInterval)arg0  ];
@@ -38953,10 +39694,11 @@ JSBool JSPROXY_CCDirector_setDepthTest_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setDepthTest:(BOOL)arg0  ];
@@ -38976,10 +39718,11 @@ JSBool JSPROXY_CCDirector_setDisplayStats_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setDisplayStats:(BOOL)arg0  ];
@@ -39017,10 +39760,11 @@ JSBool JSPROXY_CCDirector_setNextDeltaTimeZero_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setNextDeltaTimeZero:(BOOL)arg0  ];
@@ -39040,10 +39784,11 @@ JSBool JSPROXY_CCDirector_setProjection_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setProjection:(ccDirectorProjection)arg0  ];
@@ -39063,10 +39808,11 @@ JSBool JSPROXY_CCDirector_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setScheduler:(CCScheduler*)arg0  ];
@@ -39302,16 +40048,17 @@ void JSPROXY_CCLiquid_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCLiquid_actionWithWaves_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCLiquid* ret_val;
 
 	ret_val = [CCLiquid actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -39372,16 +40119,17 @@ JSBool JSPROXY_CCLiquid_initWithWaves_amplitude_grid_duration_(JSContext *cx, ui
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLiquid *real = [(CCLiquid*)[proxy.klass alloc] initWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -39405,10 +40153,11 @@ JSBool JSPROXY_CCLiquid_setAmplitude_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLiquid *real = (CCLiquid*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -39428,10 +40177,11 @@ JSBool JSPROXY_CCLiquid_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLiquid *real = (CCLiquid*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -39444,14 +40194,15 @@ JSBool JSPROXY_CCLiquid_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCLiquid_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLiquid* ret_val;
 
 	ret_val = [CCLiquid actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -39467,10 +40218,11 @@ JSBool JSPROXY_CCLiquid_actionWithSize_duration__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCLiquid_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCLiquid* ret_val;
 
 	ret_val = [CCLiquid actionWithDuration:(ccTime)arg0  ];
@@ -39631,10 +40383,11 @@ JSBool JSPROXY_CCProgressTimer_initWithSprite_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = [(CCProgressTimer*)[proxy.klass alloc] initWithSprite:(CCSprite*)arg0  ];
 	[proxy setRealObj: real];
@@ -39711,10 +40464,11 @@ JSBool JSPROXY_CCProgressTimer_percentage(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCProgressTimer_progressWithSprite__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	ret_val = [CCProgressTimer progressWithSprite:(CCSprite*)arg0  ];
@@ -39756,10 +40510,11 @@ JSBool JSPROXY_CCProgressTimer_setBarChangeRate_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setBarChangeRate:(CGPoint)arg0  ];
@@ -39779,13 +40534,14 @@ JSBool JSPROXY_CCProgressTimer_setColor_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -39805,10 +40561,11 @@ JSBool JSPROXY_CCProgressTimer_setMidpoint_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setMidpoint:(CGPoint)arg0  ];
@@ -39828,10 +40585,11 @@ JSBool JSPROXY_CCProgressTimer_setOpacity_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -39851,10 +40609,11 @@ JSBool JSPROXY_CCProgressTimer_setPercentage_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setPercentage:(float)arg0  ];
@@ -39874,10 +40633,11 @@ JSBool JSPROXY_CCProgressTimer_setReverseDirection_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setReverseDirection:(BOOL)arg0  ];
@@ -39897,10 +40657,11 @@ JSBool JSPROXY_CCProgressTimer_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setSprite:(CCSprite*)arg0  ];
@@ -39920,10 +40681,11 @@ JSBool JSPROXY_CCProgressTimer_setType_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setType:(CCProgressTimerType)arg0  ];
@@ -40022,10 +40784,11 @@ JSBool JSPROXY_CCProgressTimer_setOpacityModifyRGB_(JSContext *cx, uint32_t argc
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -40150,10 +40913,11 @@ JSBool JSPROXY_CCEaseBounceInOut_update_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBounceInOut *real = (CCEaseBounceInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -40166,10 +40930,11 @@ JSBool JSPROXY_CCEaseBounceInOut_update_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCEaseBounceInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceInOut* ret_val;
 
 	ret_val = [CCEaseBounceInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -40185,10 +40950,11 @@ JSBool JSPROXY_CCEaseBounceInOut_actionWithAction__static(JSContext *cx, uint32_
 JSBool JSPROXY_CCEaseBounceInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBounceInOut* ret_val;
 
 	ret_val = [CCEaseBounceInOut actionWithDuration:(ccTime)arg0  ];
@@ -40291,13 +41057,14 @@ void JSPROXY_CCActionTween_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCActionTween_actionWithDuration_key_from_to__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; NSString* arg1; double arg2; double arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCActionTween* ret_val;
 
 	ret_val = [CCActionTween actionWithDuration:(ccTime)arg0 key:(NSString*)arg1 from:(float)arg2 to:(float)arg3  ];
@@ -40320,13 +41087,14 @@ JSBool JSPROXY_CCActionTween_initWithDuration_key_from_to_(JSContext *cx, uint32
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; NSString* arg1; double arg2; double arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCActionTween *real = [(CCActionTween*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 key:(NSString*)arg1 from:(float)arg2 to:(float)arg3  ];
 	[proxy setRealObj: real];
@@ -40343,10 +41111,11 @@ JSBool JSPROXY_CCActionTween_initWithDuration_key_from_to_(JSContext *cx, uint32
 JSBool JSPROXY_CCActionTween_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCActionTween* ret_val;
 
 	ret_val = [CCActionTween actionWithDuration:(ccTime)arg0  ];
@@ -40456,10 +41225,11 @@ JSBool JSPROXY_CCGrabber_afterRender_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real afterRender:(CCTexture2D*)arg0  ];
@@ -40479,10 +41249,11 @@ JSBool JSPROXY_CCGrabber_beforeRender_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real beforeRender:(CCTexture2D*)arg0  ];
@@ -40502,10 +41273,11 @@ JSBool JSPROXY_CCGrabber_grab_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
 	[real grab:(CCTexture2D*)arg0  ];
@@ -40612,11 +41384,12 @@ JSBool JSPROXY_CCTransitionSplitRows_action(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCTransitionSplitRows_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionSplitRows* ret_val;
 
 	ret_val = [CCTransitionSplitRows transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -40718,11 +41491,12 @@ void JSPROXY_CCFadeTo_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCFadeTo_actionWithDuration_opacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCFadeTo* ret_val;
 
 	ret_val = [CCFadeTo actionWithDuration:(ccTime)arg0 opacity:(GLubyte)arg1  ];
@@ -40745,11 +41519,12 @@ JSBool JSPROXY_CCFadeTo_initWithDuration_opacity_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; uint16_t arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFadeTo *real = [(CCFadeTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 opacity:(GLubyte)arg1  ];
 	[proxy setRealObj: real];
@@ -40766,10 +41541,11 @@ JSBool JSPROXY_CCFadeTo_initWithDuration_opacity_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCFadeTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFadeTo* ret_val;
 
 	ret_val = [CCFadeTo actionWithDuration:(ccTime)arg0  ];
@@ -40879,10 +41655,11 @@ JSBool JSPROXY_CCEaseBackInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseBackInOut *real = (CCEaseBackInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -40895,10 +41672,11 @@ JSBool JSPROXY_CCEaseBackInOut_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCEaseBackInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackInOut* ret_val;
 
 	ret_val = [CCEaseBackInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -40914,10 +41692,11 @@ JSBool JSPROXY_CCEaseBackInOut_actionWithAction__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCEaseBackInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseBackInOut* ret_val;
 
 	ret_val = [CCEaseBackInOut actionWithDuration:(ccTime)arg0  ];
@@ -41020,10 +41799,11 @@ void JSPROXY_CCFlipX3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCFlipX3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCFlipX3D* ret_val;
 
 	ret_val = [CCFlipX3D actionWithDuration:(ccTime)arg0  ];
@@ -41046,10 +41826,11 @@ JSBool JSPROXY_CCFlipX3D_initWithDuration_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCFlipX3D *real = [(CCFlipX3D*)[proxy.klass alloc] initWithDuration:(ccTime)arg0  ];
 	[proxy setRealObj: real];
@@ -41066,14 +41847,15 @@ JSBool JSPROXY_CCFlipX3D_initWithDuration_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCFlipX3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCFlipX3D* ret_val;
 
 	ret_val = [CCFlipX3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -41183,10 +41965,11 @@ JSBool JSPROXY_CCEaseExponentialOut_update_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseExponentialOut *real = (CCEaseExponentialOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -41199,10 +41982,11 @@ JSBool JSPROXY_CCEaseExponentialOut_update_(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCEaseExponentialOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialOut* ret_val;
 
 	ret_val = [CCEaseExponentialOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -41218,10 +42002,11 @@ JSBool JSPROXY_CCEaseExponentialOut_actionWithAction__static(JSContext *cx, uint
 JSBool JSPROXY_CCEaseExponentialOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialOut* ret_val;
 
 	ret_val = [CCEaseExponentialOut actionWithDuration:(ccTime)arg0  ];
@@ -41412,11 +42197,12 @@ void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCSequence* ret_val;
 
 	ret_val = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
@@ -41432,10 +42218,11 @@ JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, js
 JSBool JSPROXY_CCSequence_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	ok &= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSequence* ret_val;
 
 	ret_val = [CCSequence actionWithArray:(NSArray*)arg0  ];
@@ -41458,11 +42245,12 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCSequence *real = [(CCSequence*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
 	[proxy setRealObj: real];
@@ -41479,10 +42267,11 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 JSBool JSPROXY_CCSequence_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSequence* ret_val;
 
 	ret_val = [CCSequence actionWithDuration:(ccTime)arg0  ];
@@ -41593,10 +42382,11 @@ JSBool JSPROXY_CCEaseElasticInOut_update_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseElasticInOut *real = (CCEaseElasticInOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -41609,11 +42399,12 @@ JSBool JSPROXY_CCEaseElasticInOut_update_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticInOut* ret_val;
 
 	ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
@@ -41629,10 +42420,11 @@ JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx,
 JSBool JSPROXY_CCEaseElasticInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticInOut* ret_val;
 
 	ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -41648,10 +42440,11 @@ JSBool JSPROXY_CCEaseElasticInOut_actionWithAction__static(JSContext *cx, uint32
 JSBool JSPROXY_CCEaseElasticInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseElasticInOut* ret_val;
 
 	ret_val = [CCEaseElasticInOut actionWithDuration:(ccTime)arg0  ];
@@ -41755,18 +42548,19 @@ void JSPROXY_CCWaves_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCWaves_actionWithWaves_amplitude_horizontal_vertical_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; JSBool arg2; JSBool arg3; ccGridSize arg4; double arg5; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg3 );
 
 	JSObject *tmp_arg4;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
 	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves* ret_val;
 
 	ret_val = [CCWaves actionWithWaves:(int)arg0 amplitude:(float)arg1 horizontal:(BOOL)arg2 vertical:(BOOL)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
@@ -41827,18 +42621,19 @@ JSBool JSPROXY_CCWaves_initWithWaves_amplitude_horizontal_vertical_grid_duration
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; JSBool arg2; JSBool arg3; ccGridSize arg4; double arg5; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg3 );
 
 	JSObject *tmp_arg4;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
 	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves *real = [(CCWaves*)[proxy.klass alloc] initWithWaves:(int)arg0 amplitude:(float)arg1 horizontal:(BOOL)arg2 vertical:(BOOL)arg3 grid:(ccGridSize)arg4 duration:(ccTime)arg5  ];
 	[proxy setRealObj: real];
@@ -41862,10 +42657,11 @@ JSBool JSPROXY_CCWaves_setAmplitude_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves *real = (CCWaves*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -41885,10 +42681,11 @@ JSBool JSPROXY_CCWaves_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves *real = (CCWaves*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -41901,14 +42698,15 @@ JSBool JSPROXY_CCWaves_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCWaves_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves* ret_val;
 
 	ret_val = [CCWaves actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -41924,10 +42722,11 @@ JSBool JSPROXY_CCWaves_actionWithSize_duration__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCWaves_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves* ret_val;
 
 	ret_val = [CCWaves actionWithDuration:(ccTime)arg0  ];
@@ -42057,12 +42856,13 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_init(JSContext *cx, uint32_t argc, js
 JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientation__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; int32_t arg2; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipAngular* ret_val;
 
 	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
@@ -42078,11 +42878,12 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientat
 JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipAngular* ret_val;
 
 	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -42192,10 +42993,11 @@ JSBool JSPROXY_CCBezierTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCBezierTo *real = (CCBezierTo*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -42208,10 +43010,11 @@ JSBool JSPROXY_CCBezierTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCBezierTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCBezierTo* ret_val;
 
 	ret_val = [CCBezierTo actionWithDuration:(ccTime)arg0  ];
@@ -42313,11 +43116,12 @@ void JSPROXY_CCDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCDeccelAmplitude_actionWithAction_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCDeccelAmplitude* ret_val;
 
 	ret_val = [CCDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
@@ -42340,11 +43144,12 @@ JSBool JSPROXY_CCDeccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDeccelAmplitude *real = [(CCDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -42387,10 +43192,11 @@ JSBool JSPROXY_CCDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCDeccelAmplitude *real = (CCDeccelAmplitude*) [proxy realObj];
 	[real setRate:(float)arg0  ];
@@ -42403,10 +43209,11 @@ JSBool JSPROXY_CCDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *v
 JSBool JSPROXY_CCDeccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCDeccelAmplitude* ret_val;
 
 	ret_val = [CCDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
@@ -42511,16 +43318,17 @@ void JSPROXY_CCLens3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCLens3D_actionWithPosition_radius_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCLens3D* ret_val;
 
 	ret_val = [CCLens3D actionWithPosition:(CGPoint)arg0 radius:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -42543,16 +43351,17 @@ JSBool JSPROXY_CCLens3D_initWithPosition_radius_grid_duration_(JSContext *cx, ui
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLens3D *real = [(CCLens3D*)[proxy.klass alloc] initWithPosition:(CGPoint)arg0 radius:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -42617,10 +43426,11 @@ JSBool JSPROXY_CCLens3D_setLensEffect_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLens3D *real = (CCLens3D*) [proxy realObj];
 	[real setLensEffect:(float)arg0  ];
@@ -42640,10 +43450,11 @@ JSBool JSPROXY_CCLens3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLens3D *real = (CCLens3D*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -42656,14 +43467,15 @@ JSBool JSPROXY_CCLens3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCLens3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCLens3D* ret_val;
 
 	ret_val = [CCLens3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -42679,10 +43491,11 @@ JSBool JSPROXY_CCLens3D_actionWithSize_duration__static(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCLens3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCLens3D* ret_val;
 
 	ret_val = [CCLens3D actionWithDuration:(ccTime)arg0  ];
@@ -42790,16 +43603,17 @@ void JSPROXY_CCWaves3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves3D* ret_val;
 
 	ret_val = [CCWaves3D actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -42860,16 +43674,17 @@ JSBool JSPROXY_CCWaves3D_initWithWaves_amplitude_grid_duration_(JSContext *cx, u
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves3D *real = [(CCWaves3D*)[proxy.klass alloc] initWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -42893,10 +43708,11 @@ JSBool JSPROXY_CCWaves3D_setAmplitude_(JSContext *cx, uint32_t argc, jsval *vp) 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves3D *real = (CCWaves3D*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -42916,10 +43732,11 @@ JSBool JSPROXY_CCWaves3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWaves3D *real = (CCWaves3D*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -42932,14 +43749,15 @@ JSBool JSPROXY_CCWaves3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *
 JSBool JSPROXY_CCWaves3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves3D* ret_val;
 
 	ret_val = [CCWaves3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -42955,10 +43773,11 @@ JSBool JSPROXY_CCWaves3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 JSBool JSPROXY_CCWaves3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCWaves3D* ret_val;
 
 	ret_val = [CCWaves3D actionWithDuration:(ccTime)arg0  ];
@@ -43073,10 +43892,11 @@ JSBool JSPROXY_CCJumpTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCJumpTo *real = (CCJumpTo*) [proxy realObj];
 	[real startWithTarget:(CCNode*)arg0  ];
@@ -43089,13 +43909,14 @@ JSBool JSPROXY_CCJumpTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCJumpTo_actionWithDuration_position_height_jumps__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; CGPoint arg1; double arg2; uint32_t arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpTo* ret_val;
 
 	ret_val = [CCJumpTo actionWithDuration:(ccTime)arg0 position:(CGPoint)arg1 height:(ccTime)arg2 jumps:(NSUInteger)arg3  ];
@@ -43111,10 +43932,11 @@ JSBool JSPROXY_CCJumpTo_actionWithDuration_position_height_jumps__static(JSConte
 JSBool JSPROXY_CCJumpTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCJumpTo* ret_val;
 
 	ret_val = [CCJumpTo actionWithDuration:(ccTime)arg0  ];
@@ -43217,16 +44039,17 @@ void JSPROXY_CCWavesTiles3D_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCWavesTiles3D_actionWithWaves_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCWavesTiles3D* ret_val;
 
 	ret_val = [CCWavesTiles3D actionWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
@@ -43287,16 +44110,17 @@ JSBool JSPROXY_CCWavesTiles3D_initWithWaves_amplitude_grid_duration_(JSContext *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; ccGridSize arg2; double arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 
 	JSObject *tmp_arg2;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
 	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWavesTiles3D *real = [(CCWavesTiles3D*)[proxy.klass alloc] initWithWaves:(int)arg0 amplitude:(float)arg1 grid:(ccGridSize)arg2 duration:(ccTime)arg3  ];
 	[proxy setRealObj: real];
@@ -43320,10 +44144,11 @@ JSBool JSPROXY_CCWavesTiles3D_setAmplitude_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWavesTiles3D *real = (CCWavesTiles3D*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -43343,10 +44168,11 @@ JSBool JSPROXY_CCWavesTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCWavesTiles3D *real = (CCWavesTiles3D*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -43359,14 +44185,15 @@ JSBool JSPROXY_CCWavesTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, js
 JSBool JSPROXY_CCWavesTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCWavesTiles3D* ret_val;
 
 	ret_val = [CCWavesTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -43382,10 +44209,11 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 JSBool JSPROXY_CCWavesTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCWavesTiles3D* ret_val;
 
 	ret_val = [CCWavesTiles3D actionWithDuration:(ccTime)arg0  ];
@@ -43493,15 +44321,16 @@ void JSPROXY_CCTurnOffTiles_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTurnOffTiles_actionWithSeed_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCTurnOffTiles* ret_val;
 
 	ret_val = [CCTurnOffTiles actionWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
@@ -43524,15 +44353,16 @@ JSBool JSPROXY_CCTurnOffTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTurnOffTiles *real = [(CCTurnOffTiles*)[proxy.klass alloc] initWithSeed:(int)arg0 grid:(ccGridSize)arg1 duration:(ccTime)arg2  ];
 	[proxy setRealObj: real];
@@ -43549,14 +44379,15 @@ JSBool JSPROXY_CCTurnOffTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 JSBool JSPROXY_CCTurnOffTiles_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTurnOffTiles* ret_val;
 
 	ret_val = [CCTurnOffTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -43572,10 +44403,11 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithSize_duration__static(JSContext *cx, uin
 JSBool JSPROXY_CCTurnOffTiles_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTurnOffTiles* ret_val;
 
 	ret_val = [CCTurnOffTiles actionWithDuration:(ccTime)arg0  ];
@@ -43701,11 +44533,12 @@ JSBool JSPROXY_CCTransitionJumpZoom_init(JSContext *cx, uint32_t argc, jsval *vp
 JSBool JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionJumpZoom* ret_val;
 
 	ret_val = [CCTransitionJumpZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -43807,11 +44640,12 @@ void JSPROXY_CCSplitCols_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCSplitCols_actionWithCols_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitCols* ret_val;
 
 	ret_val = [CCSplitCols actionWithCols:(int)arg0 duration:(ccTime)arg1  ];
@@ -43834,11 +44668,12 @@ JSBool JSPROXY_CCSplitCols_initWithCols_duration_(JSContext *cx, uint32_t argc, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; double arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSplitCols *real = [(CCSplitCols*)[proxy.klass alloc] initWithCols:(int)arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
@@ -43855,14 +44690,15 @@ JSBool JSPROXY_CCSplitCols_initWithCols_duration_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCSplitCols_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitCols* ret_val;
 
 	ret_val = [CCSplitCols actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -43878,10 +44714,11 @@ JSBool JSPROXY_CCSplitCols_actionWithSize_duration__static(JSContext *cx, uint32
 JSBool JSPROXY_CCSplitCols_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSplitCols* ret_val;
 
 	ret_val = [CCSplitCols actionWithDuration:(ccTime)arg0  ];
@@ -43992,13 +44829,14 @@ JSBool JSPROXY_CCTransitionFadeUp_actionWithSize_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeUp *real = (CCTransitionFadeUp*) [proxy realObj];
@@ -44015,11 +44853,12 @@ JSBool JSPROXY_CCTransitionFadeUp_actionWithSize_(JSContext *cx, uint32_t argc, 
 JSBool JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeUp* ret_val;
 
 	ret_val = [CCTransitionFadeUp transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
@@ -44146,13 +44985,14 @@ JSBool JSPROXY_CCRenderTexture_beginWithClear_g_b_a_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real beginWithClear:(float)arg0 g:(float)arg1 b:(float)arg2 a:(float)arg3  ];
@@ -44172,14 +45012,15 @@ JSBool JSPROXY_CCRenderTexture_beginWithClear_g_b_a_depth_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; double arg4; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real beginWithClear:(float)arg0 g:(float)arg1 b:(float)arg2 a:(float)arg3 depth:(float)arg4  ];
@@ -44199,15 +45040,16 @@ JSBool JSPROXY_CCRenderTexture_beginWithClear_g_b_a_depth_stencil_(JSContext *cx
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; double arg4; int32_t arg5; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg5 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg5 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real beginWithClear:(float)arg0 g:(float)arg1 b:(float)arg2 a:(float)arg3 depth:(float)arg4 stencil:(int)arg5  ];
@@ -44227,13 +45069,14 @@ JSBool JSPROXY_CCRenderTexture_clear_g_b_a_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; double arg2; double arg3; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real clear:(float)arg0 g:(float)arg1 b:(float)arg2 a:(float)arg3  ];
@@ -44253,10 +45096,11 @@ JSBool JSPROXY_CCRenderTexture_clearDepth_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real clearDepth:(float)arg0  ];
@@ -44276,10 +45120,11 @@ JSBool JSPROXY_CCRenderTexture_clearStencil_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real clearStencil:(int)arg0  ];
@@ -44317,12 +45162,13 @@ JSBool JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_(JSContext *cx, 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; int32_t arg1; int32_t arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = [(CCRenderTexture*)[proxy.klass alloc] initWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2  ];
 	[proxy setRealObj: real];
@@ -44346,13 +45192,14 @@ JSBool JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_depthStencilForm
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; int32_t arg1; int32_t arg2; uint32_t arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = [(CCRenderTexture*)[proxy.klass alloc] initWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2 depthStencilFormat:(GLuint)arg3  ];
 	[proxy setRealObj: real];
@@ -44369,11 +45216,12 @@ JSBool JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_depthStencilForm
 JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; int32_t arg1; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCRenderTexture* ret_val;
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1  ];
@@ -44389,12 +45237,13 @@ JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height__static(JSContext *
 JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; int32_t arg1; int32_t arg2; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCRenderTexture* ret_val;
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2  ];
@@ -44410,13 +45259,14 @@ JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat__static
 JSBool JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat_depthStencilFormat__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; int32_t arg1; int32_t arg2; uint32_t arg3; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 	CCRenderTexture* ret_val;
 
 	ret_val = [CCRenderTexture renderTextureWithWidth:(int)arg0 height:(int)arg1 pixelFormat:(CCTexture2DPixelFormat)arg2 depthStencilFormat:(GLuint)arg3  ];
@@ -44439,10 +45289,11 @@ JSBool JSPROXY_CCRenderTexture_saveToFile_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
@@ -44463,11 +45314,12 @@ JSBool JSPROXY_CCRenderTexture_saveToFile_format_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; int32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
@@ -44488,10 +45340,11 @@ JSBool JSPROXY_CCRenderTexture_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
 	[real setSprite:(CCSprite*)arg0  ];
@@ -44627,17 +45480,18 @@ void JSPROXY_CCTwirl_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_CCTwirl_actionWithPosition_twirls_amplitude_grid_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; int32_t arg1; double arg2; ccGridSize arg3; double arg4; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg3);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 	CCTwirl* ret_val;
 
 	ret_val = [CCTwirl actionWithPosition:(CGPoint)arg0 twirls:(int)arg1 amplitude:(float)arg2 grid:(ccGridSize)arg3 duration:(ccTime)arg4  ];
@@ -44698,17 +45552,18 @@ JSBool JSPROXY_CCTwirl_initWithPosition_twirls_amplitude_grid_duration_(JSContex
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; int32_t arg1; double arg2; ccGridSize arg3; double arg4; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 
 	JSObject *tmp_arg3;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
 	arg3 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg3);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTwirl *real = [(CCTwirl*)[proxy.klass alloc] initWithPosition:(CGPoint)arg0 twirls:(int)arg1 amplitude:(float)arg2 grid:(ccGridSize)arg3 duration:(ccTime)arg4  ];
 	[proxy setRealObj: real];
@@ -44754,10 +45609,11 @@ JSBool JSPROXY_CCTwirl_setAmplitude_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTwirl *real = (CCTwirl*) [proxy realObj];
 	[real setAmplitude:(float)arg0  ];
@@ -44777,10 +45633,11 @@ JSBool JSPROXY_CCTwirl_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTwirl *real = (CCTwirl*) [proxy realObj];
 	[real setAmplitudeRate:(float)arg0  ];
@@ -44800,10 +45657,11 @@ JSBool JSPROXY_CCTwirl_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTwirl *real = (CCTwirl*) [proxy realObj];
 	[real setPosition:(CGPoint)arg0  ];
@@ -44816,14 +45674,15 @@ JSBool JSPROXY_CCTwirl_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCTwirl_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 	CCTwirl* ret_val;
 
 	ret_val = [CCTwirl actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
@@ -44839,10 +45698,11 @@ JSBool JSPROXY_CCTwirl_actionWithSize_duration__static(JSContext *cx, uint32_t a
 JSBool JSPROXY_CCTwirl_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTwirl* ret_val;
 
 	ret_val = [CCTwirl actionWithDuration:(ccTime)arg0  ];
@@ -45016,10 +45876,11 @@ JSBool JSPROXY_CCTexturePVR_initWithContentsOfFile_(JSContext *cx, uint32_t argc
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexturePVR *real = [(CCTexturePVR*)[proxy.klass alloc] initWithContentsOfFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
@@ -45074,10 +45935,11 @@ JSBool JSPROXY_CCTexturePVR_numberOfMipmaps(JSContext *cx, uint32_t argc, jsval 
 JSBool JSPROXY_CCTexturePVR_pvrTextureWithContentsOfFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCTexturePVR* ret_val;
 
 	ret_val = [CCTexturePVR pvrTextureWithContentsOfFile:(NSString*)arg0  ];
@@ -45119,10 +45981,11 @@ JSBool JSPROXY_CCTexturePVR_setRetainName_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCTexturePVR *real = (CCTexturePVR*) [proxy realObj];
 	[real setRetainName:(BOOL)arg0  ];
@@ -45240,11 +46103,12 @@ JSBool JSPROXY_CCGLProgram_addAttribute_index_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; uint32_t arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real addAttribute:(NSString*)arg0 index:(GLuint)arg1  ];
@@ -45286,11 +46150,12 @@ JSBool JSPROXY_CCGLProgram_initWithVertexShaderFilename_fragmentShaderFilename_(
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = [(CCGLProgram*)[proxy.klass alloc] initWithVertexShaderFilename:(NSString*)arg0 fragmentShaderFilename:(NSString*)arg1  ];
 	[proxy setRealObj: real];
@@ -45373,11 +46238,12 @@ JSBool JSPROXY_CCGLProgram_setUniformLocation_withF1_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; double arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real setUniformLocation:(NSUInteger)arg0 withF1:(GLfloat)arg1  ];
@@ -45397,12 +46263,13 @@ JSBool JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; double arg1; double arg2; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real setUniformLocation:(NSUInteger)arg0 withF1:(GLfloat)arg1 f2:(GLfloat)arg2  ];
@@ -45422,13 +46289,14 @@ JSBool JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_(JSContext *cx, uint3
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; double arg1; double arg2; double arg3; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real setUniformLocation:(NSUInteger)arg0 withF1:(GLfloat)arg1 f2:(GLfloat)arg2 f3:(GLfloat)arg3  ];
@@ -45448,14 +46316,15 @@ JSBool JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_f4_(JSContext *cx, ui
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; double arg1; double arg2; double arg3; double arg4; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg3 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real setUniformLocation:(NSUInteger)arg0 withF1:(GLfloat)arg1 f2:(GLfloat)arg2 f3:(GLfloat)arg3 f4:(GLfloat)arg4  ];
@@ -45475,11 +46344,12 @@ JSBool JSPROXY_CCGLProgram_setUniformLocation_withI1_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; int32_t arg1; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	[real setUniformLocation:(NSUInteger)arg0 withI1:(GLint)arg1  ];
@@ -45640,13 +46510,14 @@ JSBool JSPROXY_CCGrid3D_originalVertex_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
@@ -45672,17 +46543,18 @@ JSBool JSPROXY_CCGrid3D_setVertex_vertex_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; ccVertex3F arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccVertex3F*)JS_GetTypedArrayData( tmp_arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
 	[real setVertex:(ccGridSize)arg0 vertex:(ccVertex3F)arg1  ];
@@ -45702,13 +46574,14 @@ JSBool JSPROXY_CCGrid3D_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
@@ -45727,13 +46600,14 @@ JSBool JSPROXY_CCGrid3D_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCGrid3D* ret_val;
 
 	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0  ];
@@ -45749,15 +46623,16 @@ JSBool JSPROXY_CCGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCGrid3D* ret_val;
 
 	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
@@ -45876,10 +46751,11 @@ JSBool JSPROXY_CCActionManager_removeAction_(JSContext *cx, uint32_t argc, jsval
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
 	[real removeAction:(CCAction*)arg0  ];
@@ -45917,10 +46793,11 @@ JSBool JSPROXY_CCActionManager_resumeTargets_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSSet* arg0; 
 
-	error |= jsval_to_nsset( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsset( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
 	[real resumeTargets:(NSSet*)arg0  ];
@@ -46013,11 +46890,12 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFrame_name_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; NSString* arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFrame:(CCSpriteFrame*)arg0 name:(NSString*)arg1  ];
@@ -46037,11 +46915,12 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_texture_(JSContext *cx
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; id arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0 texture:(CCTexture2D*)arg1  ];
@@ -46061,13 +46940,14 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_(JSCon
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; NSString* arg1; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	if (argc >= 2) {
-		error |= jsval_to_nsstring( cx, *argvp++, &arg1 );
+		ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
 	}
+	if( ! ok ) return JS_FALSE;
 
 	if( argc == 1 ) {
 		CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
@@ -46104,10 +46984,11 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFrameByName_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFrameByName:(NSString*)arg0  ];
@@ -46145,10 +47026,11 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromFile_(JSContext *cx, uin
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFramesFromFile:(NSString*)arg0  ];
@@ -46168,10 +47050,11 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromTexture_(JSContext *cx, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real removeSpriteFramesFromTexture:(CCTexture2D*)arg0  ];
@@ -46223,10 +47106,11 @@ JSBool JSPROXY_CCSpriteFrameCache_spriteFrameByName_(JSContext *cx, uint32_t arg
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSString* arg0; 
 
-	error |= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
@@ -46330,10 +47214,11 @@ JSBool JSPROXY_CCEaseSineOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCEaseSineOut *real = (CCEaseSineOut*) [proxy realObj];
 	[real update:(ccTime)arg0  ];
@@ -46346,10 +47231,11 @@ JSBool JSPROXY_CCEaseSineOut_update_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCEaseSineOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineOut* ret_val;
 
 	ret_val = [CCEaseSineOut actionWithAction:(CCActionInterval*)arg0  ];
@@ -46365,10 +47251,11 @@ JSBool JSPROXY_CCEaseSineOut_actionWithAction__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCEaseSineOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCEaseSineOut* ret_val;
 
 	ret_val = [CCEaseSineOut actionWithDuration:(ccTime)arg0  ];
@@ -46478,10 +47365,11 @@ JSBool JSPROXY_CCTransitionProgressOutIn_progressTimerNodeWithRenderTexture_(JSC
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressOutIn *real = (CCTransitionProgressOutIn*) [proxy realObj];
@@ -46498,11 +47386,12 @@ JSBool JSPROXY_CCTransitionProgressOutIn_progressTimerNodeWithRenderTexture_(JSC
 JSBool JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; id arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressOutIn* ret_val;
 
 	ret_val = [CCTransitionProgressOutIn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];

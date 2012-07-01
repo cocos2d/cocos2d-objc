@@ -261,10 +261,11 @@ JSBool JSPROXY_CCLayer_setIsAccelerometerEnabled_(JSContext *cx, uint32_t argc, 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real setIsAccelerometerEnabled:(BOOL)arg0  ];
@@ -284,10 +285,11 @@ JSBool JSPROXY_CCLayer_setIsTouchEnabled_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real setIsTouchEnabled:(BOOL)arg0  ];
@@ -307,11 +309,12 @@ JSBool JSPROXY_CCLayer_ccTouchBegan_withEvent_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
@@ -332,11 +335,12 @@ JSBool JSPROXY_CCLayer_ccTouchCancelled_withEvent_(JSContext *cx, uint32_t argc,
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real ccTouchCancelled:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
@@ -356,11 +360,12 @@ JSBool JSPROXY_CCLayer_ccTouchEnded_withEvent_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real ccTouchEnded:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
@@ -380,11 +385,12 @@ JSBool JSPROXY_CCLayer_ccTouchMoved_withEvent_(JSContext *cx, uint32_t argc, jsv
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	id arg0; id arg1; 
 
-	error |= jsval_to_nsobject( cx, *argvp++, &arg0);
-	error |= jsval_to_nsobject( cx, *argvp++, &arg1);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	[real ccTouchMoved:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
@@ -604,10 +610,11 @@ JSBool JSPROXY_CCLayerMultiplex_switchTo_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerMultiplex *real = (CCLayerMultiplex*) [proxy realObj];
 	[real switchTo:(unsigned int)arg0  ];
@@ -627,10 +634,11 @@ JSBool JSPROXY_CCLayerMultiplex_switchToAndReleaseMe_(JSContext *cx, uint32_t ar
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint32_t arg0; 
 
-	error |= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerMultiplex *real = (CCLayerMultiplex*) [proxy realObj];
 	[real switchToAndReleaseMe:(unsigned int)arg0  ];
@@ -745,10 +753,11 @@ JSBool JSPROXY_CCLayerColor_changeHeight_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real changeHeight:(GLfloat)arg0  ];
@@ -768,10 +777,11 @@ JSBool JSPROXY_CCLayerColor_changeWidth_(JSContext *cx, uint32_t argc, jsval *vp
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real changeWidth:(GLfloat)arg0  ];
@@ -791,11 +801,12 @@ JSBool JSPROXY_CCLayerColor_changeWidth_height_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; double arg1; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real changeWidth:(GLfloat)arg0 height:(GLfloat)arg1  ];
@@ -839,13 +850,14 @@ JSBool JSPROXY_CCLayerColor_initWithColor_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = [(CCLayerColor*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0  ];
 	[proxy setRealObj: real];
@@ -869,15 +881,16 @@ JSBool JSPROXY_CCLayerColor_initWithColor_width_height_(JSContext *cx, uint32_t 
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; double arg1; double arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = [(CCLayerColor*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
 	[proxy setRealObj: real];
@@ -894,13 +907,14 @@ JSBool JSPROXY_CCLayerColor_initWithColor_width_height_(JSContext *cx, uint32_t 
 JSBool JSPROXY_CCLayerColor_layerWithColor__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCLayerColor* ret_val;
 
 	ret_val = [CCLayerColor layerWithColor:(ccColor4B)arg0  ];
@@ -916,15 +930,16 @@ JSBool JSPROXY_CCLayerColor_layerWithColor__static(JSContext *cx, uint32_t argc,
 JSBool JSPROXY_CCLayerColor_layerWithColor_width_height__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; double arg1; double arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCLayerColor* ret_val;
 
 	ret_val = [CCLayerColor layerWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
@@ -966,13 +981,14 @@ JSBool JSPROXY_CCLayerColor_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccBlendFunc arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real setBlendFunc:(ccBlendFunc)arg0  ];
@@ -1011,13 +1027,14 @@ JSBool JSPROXY_CCLayerColor_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -1037,10 +1054,11 @@ JSBool JSPROXY_CCLayerColor_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp)
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -1060,10 +1078,11 @@ JSBool JSPROXY_CCLayerColor_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, j
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
@@ -1229,17 +1248,18 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_(JSContext *cx, uint32_t a
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; ccColor4B arg1; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
 	[proxy setRealObj: real];
@@ -1263,20 +1283,21 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; ccColor4B arg1; CGPoint arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
 	if (argc >= 3) {
-		error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
+		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
 	}
+	if( ! ok ) return JS_FALSE;
 
 	if( argc == 2 ) {
 		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
@@ -1304,20 +1325,21 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >= 2 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; ccColor4B arg1; CGPoint arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
 
 	JSObject *tmp_arg1;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
 	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
 	if (argc >= 3) {
-		error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
+		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
 	}
+	if( ! ok ) return JS_FALSE;
 	CCLayerGradient* ret_val;
 
 	if( argc == 2 ) {
@@ -1346,10 +1368,11 @@ JSBool JSPROXY_CCLayerGradient_setCompressedInterpolation_(JSContext *cx, uint32
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setCompressedInterpolation:(BOOL)arg0  ];
@@ -1369,13 +1392,14 @@ JSBool JSPROXY_CCLayerGradient_setEndColor_(JSContext *cx, uint32_t argc, jsval 
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setEndColor:(ccColor3B)arg0  ];
@@ -1395,10 +1419,11 @@ JSBool JSPROXY_CCLayerGradient_setEndOpacity_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setEndOpacity:(GLubyte)arg0  ];
@@ -1418,13 +1443,14 @@ JSBool JSPROXY_CCLayerGradient_setStartColor_(JSContext *cx, uint32_t argc, jsva
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setStartColor:(ccColor3B)arg0  ];
@@ -1444,10 +1470,11 @@ JSBool JSPROXY_CCLayerGradient_setStartOpacity_(JSContext *cx, uint32_t argc, js
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setStartOpacity:(GLubyte)arg0  ];
@@ -1467,10 +1494,11 @@ JSBool JSPROXY_CCLayerGradient_setVector_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	CGPoint arg0; 
 
-	error |= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	[real setVector:(CGPoint)arg0  ];
@@ -1548,13 +1576,14 @@ JSBool JSPROXY_CCLayerGradient_vector(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCLayerGradient_layerWithColor__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 	CCLayerGradient* ret_val;
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0  ];
@@ -1570,15 +1599,16 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor__static(JSContext *cx, uint32_t ar
 JSBool JSPROXY_CCLayerGradient_layerWithColor_width_height__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor4B arg0; double arg1; double arg2; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
-	error |= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	error |= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
+	if( ! ok ) return JS_FALSE;
 	CCLayerGradient* ret_val;
 
 	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
@@ -1705,10 +1735,11 @@ JSBool JSPROXY_CCMenu_alignItemsHorizontallyWithPadding_(JSContext *cx, uint32_t
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real alignItemsHorizontallyWithPadding:(float)arg0  ];
@@ -1746,10 +1777,11 @@ JSBool JSPROXY_CCMenu_alignItemsVerticallyWithPadding_(JSContext *cx, uint32_t a
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	double arg0; 
 
-	error |= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real alignItemsVerticallyWithPadding:(float)arg0  ];
@@ -1812,10 +1844,11 @@ JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = [(CCMenu*)[proxy.klass alloc] initWithArray:(NSArray*)arg0  ];
 	[proxy setRealObj: real];
@@ -1832,10 +1865,11 @@ JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
 JSBool JSPROXY_CCMenu_menuWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
 
-	error |= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	ok &= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	if( ! ok ) return JS_FALSE;
 	CCMenu* ret_val;
 
 	ret_val = [CCMenu menuWithArray:(NSArray*)arg0  ];
@@ -1877,10 +1911,11 @@ JSBool JSPROXY_CCMenu_setEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real setEnabled:(BOOL)arg0  ];
@@ -1900,10 +1935,11 @@ JSBool JSPROXY_CCMenu_setHandlerPriority_(JSContext *cx, uint32_t argc, jsval *v
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	int32_t arg0; 
 
-	error |= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real setHandlerPriority:(NSInteger)arg0  ];
@@ -1942,13 +1978,14 @@ JSBool JSPROXY_CCMenu_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	ccColor3B arg0; 
 
 
 	JSObject *tmp_arg0;
-	error |= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real setColor:(ccColor3B)arg0  ];
@@ -1968,10 +2005,11 @@ JSBool JSPROXY_CCMenu_setOpacity_(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	uint16_t arg0; 
 
-	error |= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToUint16( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real setOpacity:(GLubyte)arg0  ];
@@ -1991,10 +2029,11 @@ JSBool JSPROXY_CCMenu_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, jsval *
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	JSBool arg0; 
 
-	error |= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToBoolean( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	[real setOpacityModifyRGB:(BOOL)arg0  ];
