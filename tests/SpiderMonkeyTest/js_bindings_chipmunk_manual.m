@@ -115,20 +115,22 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	if( ! handler )
 		return JS_FALSE;
 	
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 
 	// args
 	cpSpace *space;
-	error |= jsval_to_opaque( cx, *argvp++, (void**)&space);
-	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &handler->typeA );
-	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &handler->typeB );
+	ok &= jsval_to_opaque( cx, *argvp++, (void**)&space);
+	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeA );
+	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeB );
+	
+
 	handler->begin =  *argvp++;
 	handler->pre = *argvp++;
 	handler->post = *argvp++;
 	handler->separate = *argvp++;
-	handler->this = JSVAL_TO_OBJECT(*argvp++);
-	
-	if( error )
+	ok &= JS_ValueToObject(cx, *argvp++, &handler->this );
+
+	if( ! ok )
 		return JS_FALSE;
 		
 	handler->cx = cx;
@@ -150,16 +152,16 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 		return  JS_FALSE;
 	
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
+	JSBool ok = JS_TRUE;
 	
 	cpSpace* space;
 	cpCollisionType typeA;
 	cpCollisionType typeB;
-	error |= jsval_to_opaque( cx, *argvp++, (void**)&space);
-	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &typeA );
-	error |= JS_ValueToInt32(cx, *argvp++, (int32_t*) &typeB );
+	ok &= jsval_to_opaque( cx, *argvp++, (void**)&space);
+	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeA );
+	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &typeB );
 	
-	if( error )
+	if( ! ok )
 		return JS_FALSE;
 
 	cpSpaceRemoveCollisionHandler(space, typeA, typeB );
@@ -177,7 +179,6 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 		return  JS_FALSE;
 	
 	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool error = JS_FALSE;
 	
 	cpArbiter* arbiter;
 	if( ! jsval_to_opaque( cx, *argvp++, (void*)&arbiter ) )

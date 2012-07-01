@@ -255,7 +255,9 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 	
 #else
 	NSCAssert( sizeof(int)==4, @"fatal!");
-	int32_t ret = JSVAL_TO_INT(vp);
+	int32_t ret;
+	if( ! JS_ValueToInt32(cx, vp, &ret ) )
+	   return JS_FALSE;
 #endif
 	*r = (void*)ret;
 	return JS_TRUE;
@@ -263,8 +265,13 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 
 JSBool jsval_to_int( JSContext *cx, jsval vp, int *ret )
 {
-	*ret = JSVAL_TO_INT(vp);
-	return JS_TRUE;
+	// Since this is called to cast uint64 to uint32,
+	// it is needed to initialize the value to 0 first
+#ifdef __LP64__
+	long *tmp = (long*)ret;
+	*tmp = 0;
+#endif
+	return JS_ValueToInt32(cx, vp, (int32_t*)ret);
 }
 
 // XXX: sizeof(long) == 8 in 64 bits on OS X... apparently on Windows it is 32 bits (???)
