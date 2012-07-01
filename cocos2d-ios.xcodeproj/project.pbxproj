@@ -1375,7 +1375,7 @@
 		A04E8609159B6B2D00F4BE65 /* js_bindings_chipmunk_manual.m in Sources */ = {isa = PBXBuildFile; fileRef = A04E85EA159B6B2D00F4BE65 /* js_bindings_chipmunk_manual.m */; };
 		A04E860C159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85F2159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.mm */; };
 		A04E860D159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85F5159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.mm */; };
-		A04E860E159B6B2D00F4BE65 /* js_bindings_NSObject.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85F8159B6B2D00F4BE65 /* js_bindings_NSObject.mm */; };
+		A04E860E159B6B2D00F4BE65 /* js_bindings_NS_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */; };
 		A04E860F159B6B2D00F4BE65 /* js_manual_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */; };
 		A04E8610159B6B2D00F4BE65 /* ScriptingCore.m in Sources */ = {isa = PBXBuildFile; fileRef = A04E85FC159B6B2D00F4BE65 /* ScriptingCore.m */; };
 		A04E8612159B6B4800F4BE65 /* javascript-spidermonkey in Resources */ = {isa = PBXBuildFile; fileRef = A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */; };
@@ -4604,8 +4604,8 @@
 		A04E85F4159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions.h; sourceTree = "<group>"; };
 		A04E85F5159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_functions.mm; sourceTree = "<group>"; };
 		A04E85F6159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
-		A04E85F7159B6B2D00F4BE65 /* js_bindings_NSObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_NSObject.h; sourceTree = "<group>"; };
-		A04E85F8159B6B2D00F4BE65 /* js_bindings_NSObject.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_NSObject.mm; sourceTree = "<group>"; };
+		A04E85F7159B6B2D00F4BE65 /* js_bindings_NS_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_NS_manual.h; sourceTree = "<group>"; };
+		A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_NS_manual.mm; sourceTree = "<group>"; };
 		A04E85F9159B6B2D00F4BE65 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
 		A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_manual_conversions.mm; sourceTree = "<group>"; };
 		A04E85FB159B6B2D00F4BE65 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
@@ -7336,8 +7336,8 @@
 				A04E85F4159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.h */,
 				A04E85F5159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.mm */,
 				A04E85F6159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions_registration.h */,
-				A04E85F7159B6B2D00F4BE65 /* js_bindings_NSObject.h */,
-				A04E85F8159B6B2D00F4BE65 /* js_bindings_NSObject.mm */,
+				A04E85F7159B6B2D00F4BE65 /* js_bindings_NS_manual.h */,
+				A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */,
 				A04E85F9159B6B2D00F4BE65 /* js_manual_conversions.h */,
 				A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */,
 				A04E85D7159B6B2D00F4BE65 /* ChipmunkSprite.h */,
@@ -12496,7 +12496,7 @@
 				A04E8609159B6B2D00F4BE65 /* js_bindings_chipmunk_manual.m in Sources */,
 				A04E860C159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.mm in Sources */,
 				A04E860D159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions.mm in Sources */,
-				A04E860E159B6B2D00F4BE65 /* js_bindings_NSObject.mm in Sources */,
+				A04E860E159B6B2D00F4BE65 /* js_bindings_NS_manual.mm in Sources */,
 				A04E860F159B6B2D00F4BE65 /* js_manual_conversions.mm in Sources */,
 				A04E8610159B6B2D00F4BE65 /* ScriptingCore.m in Sources */,
 				A04E8675159B707C00F4BE65 /* JRSwizzle.m in Sources */,

@@ -23,7 +23,7 @@
  */
 
 
-#import "js_bindings_NSObject.h"
+#import "js_bindings_NS_manual.h"
 
 #pragma mark - JSPROXY_NSObject
 
