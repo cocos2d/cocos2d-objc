@@ -6,12 +6,13 @@
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
 #import "js_manual_conversions.h"
+#import "js_bindings_config.h"
 #import "js_bindings_cocos2d_functions.h"
 
 // Arguments: CGPoint, CGPoint, CGPoint, CGPoint, CGFloat, ccTime
 // Ret value: CGPoint
 JSBool JSPROXY_ccCardinalSplineAt(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; double arg4; double arg5; 
 
@@ -34,7 +35,7 @@ JSBool JSPROXY_ccCardinalSplineAt(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CCPointArray*, CGFloat, NSUInteger
 // Ret value: void
 JSBool JSPROXY_ccDrawCardinalSpline(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; double arg1; uint32_t arg2; 
 
@@ -50,7 +51,7 @@ JSBool JSPROXY_ccDrawCardinalSpline(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CCPointArray*, NSUInteger
 // Ret value: void
 JSBool JSPROXY_ccDrawCatmullRom(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; uint32_t arg1; 
 
@@ -65,7 +66,7 @@ JSBool JSPROXY_ccDrawCatmullRom(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, float, float, NSUInteger, BOOL
 // Ret value: void
 JSBool JSPROXY_ccDrawCircle(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; double arg2; uint32_t arg3; JSBool arg4; 
 
@@ -83,7 +84,7 @@ JSBool JSPROXY_ccDrawCircle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLubyte, GLubyte, GLubyte, GLubyte
 // Ret value: void
 JSBool JSPROXY_ccDrawColor4B(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint16_t arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
@@ -100,7 +101,7 @@ JSBool JSPROXY_ccDrawColor4B(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLfloat, GLfloat, GLfloat, GLfloat
 // Ret value: void
 JSBool JSPROXY_ccDrawColor4F(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; double arg1; double arg2; double arg3; 
 
@@ -117,7 +118,7 @@ JSBool JSPROXY_ccDrawColor4F(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, CGPoint, CGPoint, NSUInteger
 // Ret value: void
 JSBool JSPROXY_ccDrawCubicBezier(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 5, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 5, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; uint32_t arg4; 
 
@@ -135,7 +136,7 @@ JSBool JSPROXY_ccDrawCubicBezier(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: void
 JSBool JSPROXY_ccDrawLine(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -150,7 +151,7 @@ JSBool JSPROXY_ccDrawLine(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: void
 JSBool JSPROXY_ccDrawPoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -164,7 +165,7 @@ JSBool JSPROXY_ccDrawPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, CGPoint, NSUInteger
 // Ret value: void
 JSBool JSPROXY_ccDrawQuadBezier(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; uint32_t arg3; 
 
@@ -181,7 +182,7 @@ JSBool JSPROXY_ccDrawQuadBezier(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: void
 JSBool JSPROXY_ccDrawRect(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -196,7 +197,7 @@ JSBool JSPROXY_ccDrawRect(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, ccColor4F
 // Ret value: void
 JSBool JSPROXY_ccDrawSolidRect(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; ccColor4F arg2; 
 
@@ -215,7 +216,7 @@ JSBool JSPROXY_ccDrawSolidRect(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLenum
 // Ret value: void
 JSBool JSPROXY_ccGLActiveTexture(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -229,7 +230,7 @@ JSBool JSPROXY_ccGLActiveTexture(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLuint
 // Ret value: void
 JSBool JSPROXY_ccGLBindTexture2D(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -243,7 +244,7 @@ JSBool JSPROXY_ccGLBindTexture2D(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLenum, GLenum
 // Ret value: void
 JSBool JSPROXY_ccGLBlendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; uint32_t arg1; 
 
@@ -258,7 +259,7 @@ JSBool JSPROXY_ccGLBlendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLuint
 // Ret value: void
 JSBool JSPROXY_ccGLDeleteProgram(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -272,7 +273,7 @@ JSBool JSPROXY_ccGLDeleteProgram(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLuint
 // Ret value: void
 JSBool JSPROXY_ccGLDeleteTexture(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -286,7 +287,7 @@ JSBool JSPROXY_ccGLDeleteTexture(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: ccGLServerState
 // Ret value: void
 JSBool JSPROXY_ccGLEnable(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -300,7 +301,7 @@ JSBool JSPROXY_ccGLEnable(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: unsigned int
 // Ret value: void
 JSBool JSPROXY_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -314,7 +315,7 @@ JSBool JSPROXY_ccGLEnableVertexAttribs(JSContext *cx, uint32_t argc, jsval *vp) 
 // Arguments: 
 // Ret value: GLenum
 JSBool JSPROXY_ccGLGetActiveTexture(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	GLenum ret_val;
 
 	ret_val = ccGLGetActiveTexture( );
@@ -325,7 +326,7 @@ JSBool JSPROXY_ccGLGetActiveTexture(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: 
 // Ret value: void
 JSBool JSPROXY_ccGLInvalidateStateCache(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	ccGLInvalidateStateCache( );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -335,7 +336,7 @@ JSBool JSPROXY_ccGLInvalidateStateCache(JSContext *cx, uint32_t argc, jsval *vp)
 // Arguments: GLuint
 // Ret value: void
 JSBool JSPROXY_ccGLUseProgram(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -349,7 +350,7 @@ JSBool JSPROXY_ccGLUseProgram(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: unsigned long
 // Ret value: unsigned long
 JSBool JSPROXY_ccNextPOT(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	long arg0; 
 
@@ -364,7 +365,7 @@ JSBool JSPROXY_ccNextPOT(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLfloat
 // Ret value: void
 JSBool JSPROXY_ccPointSize(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -378,7 +379,7 @@ JSBool JSPROXY_ccPointSize(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: 
 // Ret value: void
 JSBool JSPROXY_ccSetProjectionMatrixDirty(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	ccSetProjectionMatrixDirty( );
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -388,7 +389,7 @@ JSBool JSPROXY_ccSetProjectionMatrixDirty(JSContext *cx, uint32_t argc, jsval *v
 // Arguments: GLubyte, GLubyte, GLubyte
 // Ret value: ccColor3B
 JSBool JSPROXY_ccc3(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint16_t arg0; uint16_t arg1; uint16_t arg2; 
 
@@ -410,7 +411,7 @@ JSBool JSPROXY_ccc3(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLubyte, GLubyte, GLubyte, GLubyte
 // Ret value: ccColor4B
 JSBool JSPROXY_ccc4(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint16_t arg0; uint16_t arg1; uint16_t arg2; uint16_t arg3; 
 
@@ -433,7 +434,7 @@ JSBool JSPROXY_ccc4(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: ccColor4F, ccColor4F
 // Ret value: BOOL
 JSBool JSPROXY_ccc4FEqual(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	ccColor4F arg0; ccColor4F arg1; 
 
@@ -455,7 +456,7 @@ JSBool JSPROXY_ccc4FEqual(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: ccColor3B
 // Ret value: ccColor4F
 JSBool JSPROXY_ccc4FFromccc3B(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	ccColor3B arg0; 
 
@@ -478,7 +479,7 @@ JSBool JSPROXY_ccc4FFromccc3B(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: ccColor4B
 // Ret value: ccColor4F
 JSBool JSPROXY_ccc4FFromccc4B(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	ccColor4B arg0; 
 
@@ -501,7 +502,7 @@ JSBool JSPROXY_ccc4FFromccc4B(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: GLfloat, GLfloat, GLfloat, GLfloat
 // Ret value: ccColor4F
 JSBool JSPROXY_ccc4f(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; double arg1; double arg2; double arg3; 
 
@@ -524,7 +525,7 @@ JSBool JSPROXY_ccc4f(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: NSInteger, NSInteger
 // Ret value: ccGridSize
 JSBool JSPROXY_ccg(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; int32_t arg1; 
 
@@ -545,7 +546,7 @@ JSBool JSPROXY_ccg(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGFloat, CGFloat
 // Ret value: CGPoint
 JSBool JSPROXY_ccp(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; double arg1; 
 
@@ -564,7 +565,7 @@ JSBool JSPROXY_ccp(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -583,7 +584,7 @@ JSBool JSPROXY_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: float
 JSBool JSPROXY_ccpAngle(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -599,7 +600,7 @@ JSBool JSPROXY_ccpAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: float
 JSBool JSPROXY_ccpAngleSigned(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -615,7 +616,7 @@ JSBool JSPROXY_ccpAngleSigned(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; 
 
@@ -635,7 +636,7 @@ JSBool JSPROXY_ccpClamp(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpCompMult(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -654,7 +655,7 @@ JSBool JSPROXY_ccpCompMult(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpCross(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -670,7 +671,7 @@ JSBool JSPROXY_ccpCross(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -686,7 +687,7 @@ JSBool JSPROXY_ccpDistance(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpDistanceSQ(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -702,7 +703,7 @@ JSBool JSPROXY_ccpDistanceSQ(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpDot(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -718,7 +719,7 @@ JSBool JSPROXY_ccpDot(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGFloat
 // Ret value: CGPoint
 JSBool JSPROXY_ccpForAngle(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -736,7 +737,7 @@ JSBool JSPROXY_ccpForAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGSize
 // Ret value: CGPoint
 JSBool JSPROXY_ccpFromSize(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGSize arg0; 
 
@@ -754,7 +755,7 @@ JSBool JSPROXY_ccpFromSize(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, float
 // Ret value: BOOL
 JSBool JSPROXY_ccpFuzzyEqual(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
@@ -771,7 +772,7 @@ JSBool JSPROXY_ccpFuzzyEqual(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpIntersectPoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; 
 
@@ -792,7 +793,7 @@ JSBool JSPROXY_ccpIntersectPoint(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpLength(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -807,7 +808,7 @@ JSBool JSPROXY_ccpLength(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -822,7 +823,7 @@ JSBool JSPROXY_ccpLengthSQ(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, float
 // Ret value: CGPoint
 JSBool JSPROXY_ccpLerp(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
@@ -842,7 +843,7 @@ JSBool JSPROXY_ccpLerp(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -861,7 +862,7 @@ JSBool JSPROXY_ccpMidpoint(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGFloat
 // Ret value: CGPoint
 JSBool JSPROXY_ccpMult(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; double arg1; 
 
@@ -880,7 +881,7 @@ JSBool JSPROXY_ccpMult(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -898,7 +899,7 @@ JSBool JSPROXY_ccpNeg(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -916,7 +917,7 @@ JSBool JSPROXY_ccpNormalize(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -934,7 +935,7 @@ JSBool JSPROXY_ccpPerp(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpProject(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -953,7 +954,7 @@ JSBool JSPROXY_ccpProject(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -971,7 +972,7 @@ JSBool JSPROXY_ccpRPerp(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -990,7 +991,7 @@ JSBool JSPROXY_ccpRotate(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, float
 // Ret value: CGPoint
 JSBool JSPROXY_ccpRotateByAngle(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; double arg2; 
 
@@ -1010,7 +1011,7 @@ JSBool JSPROXY_ccpRotateByAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint, CGPoint, CGPoint
 // Ret value: BOOL
 JSBool JSPROXY_ccpSegmentIntersect(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; CGPoint arg2; CGPoint arg3; 
 
@@ -1028,7 +1029,7 @@ JSBool JSPROXY_ccpSegmentIntersect(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpSub(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 
@@ -1047,7 +1048,7 @@ JSBool JSPROXY_ccpSub(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint
 // Ret value: CGFloat
 JSBool JSPROXY_ccpToAngle(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; 
 
@@ -1062,7 +1063,7 @@ JSBool JSPROXY_ccpToAngle(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpUnrotate(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	CGPoint arg0; CGPoint arg1; 
 

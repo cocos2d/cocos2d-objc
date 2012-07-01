@@ -4520,6 +4520,7 @@
 		A01D0A43159E8AEC0029EE77 /* js_bindings_cocos2d_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_functions_registration.h; sourceTree = "<group>"; };
 		A01D0A44159E8AEC0029EE77 /* js_bindings_cocos2d_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_functions.h; sourceTree = "<group>"; };
 		A01D0A45159E8AEC0029EE77 /* js_bindings_cocos2d_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_functions.mm; sourceTree = "<group>"; };
+		A01D0A9015A000C20029EE77 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
 		A021BFD2159BAC73008450B6 /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
 		A021BFD4159BAC73008450B6 /* Barrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Barrier.h; sourceTree = "<group>"; };
 		A021BFD5159BAC73008450B6 /* Statistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Statistics.h; sourceTree = "<group>"; };
@@ -7338,6 +7339,7 @@
 				A04E85F6159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions_registration.h */,
 				A04E85F7159B6B2D00F4BE65 /* js_bindings_NS_manual.h */,
 				A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */,
+				A01D0A9015A000C20029EE77 /* js_bindings_config.h */,
 				A04E85F9159B6B2D00F4BE65 /* js_manual_conversions.h */,
 				A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */,
 				A04E85D7159B6B2D00F4BE65 /* ChipmunkSprite.h */,

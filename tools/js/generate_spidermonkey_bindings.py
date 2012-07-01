@@ -1152,15 +1152,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             if 'optional_args_since' in properties:
                 optional_args_since = int( properties['optional_args_since'] )
                 required_args = optional_args_since-1
-                method_assert_on_arguments = '\tNSCAssert( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
             elif 'variadic_2_array' in properties:
-                method_assert_on_arguments = '\tNSCAssert( argc > 0, @"Invalid number of arguments" );\n'
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );\n'
             else:
                 # default
-                method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
         except KeyError, e:
             # No, it only has required arguments
-            method_assert_on_arguments = '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
+            method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
         self.mm_file.write( method_assert_on_arguments )
 
 
@@ -1310,6 +1310,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 #import "JRSwizzle.h"
 
 #import "jstypedarray.h"
+#import "js_bindings_config.h"
 #import "ScriptingCore.h"
 
 #import "%s%s_classes.h"
@@ -1720,6 +1721,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
 #import "js_manual_conversions.h"
+#import "js_bindings_config.h"
 #import "%s%s_functions.h"
 '''
         self.generate_autogenerate_prefix( self.mm_file )
@@ -1772,7 +1774,7 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.mm_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
 
         # Number of arguments
-        self.mm_file.write( '\tNSCAssert( argc == %d, @"Invalid number of arguments" );\n' % num_of_args )
+        self.mm_file.write( '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args )
 
     def generate_function_suffix( self ):
         end_template = '''

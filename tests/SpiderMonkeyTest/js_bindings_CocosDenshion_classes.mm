@@ -8,6 +8,7 @@
 #import "JRSwizzle.h"
 
 #import "jstypedarray.h"
+#import "js_bindings_config.h"
 #import "ScriptingCore.h"
 
 #import "js_bindings_CocosDenshion_classes.h"
@@ -45,7 +46,7 @@ JSBool JSPROXY_CDBufferManager_bufferForFile_create_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; JSBool arg1; 
 
@@ -69,7 +70,7 @@ JSBool JSPROXY_CDBufferManager_initWithEngine_(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
@@ -95,7 +96,7 @@ JSBool JSPROXY_CDBufferManager_releaseBufferForFile_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -189,7 +190,7 @@ JSBool JSPROXY_CDBufferLoadRequest_filePath(JSContext *cx, uint32_t argc, jsval 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	NSString* ret_val;
 
 	CDBufferLoadRequest *real = (CDBufferLoadRequest*) [proxy realObj];
@@ -211,7 +212,7 @@ JSBool JSPROXY_CDBufferLoadRequest_init_filePath_(JSContext *cx, uint32_t argc, 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; NSString* arg1; 
 
@@ -238,7 +239,7 @@ JSBool JSPROXY_CDBufferLoadRequest_soundId(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	int ret_val;
 
 	CDBufferLoadRequest *real = (CDBufferLoadRequest*) [proxy realObj];
@@ -329,7 +330,7 @@ JSBool JSPROXY_CDSoundEngine__soundSourcePreRelease_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
@@ -351,7 +352,7 @@ JSBool JSPROXY_CDSoundEngine_asynchLoadProgress(JSContext *cx, uint32_t argc, js
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -370,7 +371,7 @@ JSBool JSPROXY_CDSoundEngine_bufferDurationInSeconds_(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -393,7 +394,7 @@ JSBool JSPROXY_CDSoundEngine_bufferFrequencyInHertz_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -416,7 +417,7 @@ JSBool JSPROXY_CDSoundEngine_bufferSizeInBytes_(JSContext *cx, uint32_t argc, js
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -439,7 +440,7 @@ JSBool JSPROXY_CDSoundEngine_defineSourceGroups_(JSContext *cx, uint32_t argc, j
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
@@ -461,7 +462,7 @@ JSBool JSPROXY_CDSoundEngine_functioning(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -480,7 +481,7 @@ JSBool JSPROXY_CDSoundEngine_getGainWorks(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -499,7 +500,7 @@ JSBool JSPROXY_CDSoundEngine_init(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDSoundEngine *real = [(CDSoundEngine*)[proxy.klass alloc] init ];
 	[proxy setRealObj: real];
@@ -521,7 +522,7 @@ JSBool JSPROXY_CDSoundEngine_lastErrorCode(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	ALenum ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -540,7 +541,7 @@ JSBool JSPROXY_CDSoundEngine_loadBuffer_filePath_(JSContext *cx, uint32_t argc, 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; NSString* arg1; 
 
@@ -564,7 +565,7 @@ JSBool JSPROXY_CDSoundEngine_loadBuffersAsynchronously_(JSContext *cx, uint32_t 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSArray* arg0; 
 
@@ -586,7 +587,7 @@ JSBool JSPROXY_CDSoundEngine_masterGain(JSContext *cx, uint32_t argc, jsval *vp)
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	ALfloat ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -605,7 +606,7 @@ JSBool JSPROXY_CDSoundEngine_playSound_sourceGroupId_pitch_pan_gain_loop_(JSCont
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 6, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 6, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; int32_t arg1; double arg2; double arg3; double arg4; JSBool arg5; 
 
@@ -633,7 +634,7 @@ JSBool JSPROXY_CDSoundEngine_setAsynchLoadProgress_(JSContext *cx, uint32_t argc
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -655,7 +656,7 @@ JSBool JSPROXY_CDSoundEngine_setMasterGain_(JSContext *cx, uint32_t argc, jsval 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -670,7 +671,7 @@ JSBool JSPROXY_CDSoundEngine_setMasterGain_(JSContext *cx, uint32_t argc, jsval 
 // Arguments: Float32
 // Ret value: void (None)
 JSBool JSPROXY_CDSoundEngine_setMixerSampleRate__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -691,7 +692,7 @@ JSBool JSPROXY_CDSoundEngine_setSourceGroupEnabled_enabled_(JSContext *cx, uint3
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; JSBool arg1; 
 
@@ -714,7 +715,7 @@ JSBool JSPROXY_CDSoundEngine_setSourceGroupNonInterruptible_isNonInterruptible_(
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; JSBool arg1; 
 
@@ -737,7 +738,7 @@ JSBool JSPROXY_CDSoundEngine_soundSourceForSound_sourceGroupId_(JSContext *cx, u
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; int32_t arg1; 
 
@@ -764,7 +765,7 @@ JSBool JSPROXY_CDSoundEngine_sourceGroupEnabled_(JSContext *cx, uint32_t argc, j
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -787,7 +788,7 @@ JSBool JSPROXY_CDSoundEngine_sourceGroupTotal(JSContext *cx, uint32_t argc, jsva
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	NSUInteger ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -806,7 +807,7 @@ JSBool JSPROXY_CDSoundEngine_sourceTotal(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	int ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -825,7 +826,7 @@ JSBool JSPROXY_CDSoundEngine_stopAllSounds(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
 	[real stopAllSounds ];
@@ -843,7 +844,7 @@ JSBool JSPROXY_CDSoundEngine_stopSound_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -865,7 +866,7 @@ JSBool JSPROXY_CDSoundEngine_stopSourceGroup_(JSContext *cx, uint32_t argc, jsva
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -887,7 +888,7 @@ JSBool JSPROXY_CDSoundEngine_unloadBuffer_(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -910,7 +911,7 @@ JSBool JSPROXY_CDSoundEngine_enabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -929,7 +930,7 @@ JSBool JSPROXY_CDSoundEngine_mute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundEngine *real = (CDSoundEngine*) [proxy realObj];
@@ -948,7 +949,7 @@ JSBool JSPROXY_CDSoundEngine_setEnabled_(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -970,7 +971,7 @@ JSBool JSPROXY_CDSoundEngine_setMute_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -1092,7 +1093,7 @@ JSBool JSPROXY_SimpleAudioEngine_backgroundMusicVolume(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1111,7 +1112,7 @@ JSBool JSPROXY_SimpleAudioEngine_effectsVolume(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1123,7 +1124,7 @@ JSBool JSPROXY_SimpleAudioEngine_effectsVolume(JSContext *cx, uint32_t argc, jsv
 // Arguments: 
 // Ret value: void (None)
 JSBool JSPROXY_SimpleAudioEngine_end_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	[SimpleAudioEngine end ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -1140,7 +1141,7 @@ JSBool JSPROXY_SimpleAudioEngine_isBackgroundMusicPlaying(JSContext *cx, uint32_
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1159,7 +1160,7 @@ JSBool JSPROXY_SimpleAudioEngine_pauseBackgroundMusic(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
 	[real pauseBackgroundMusic ];
@@ -1177,7 +1178,7 @@ JSBool JSPROXY_SimpleAudioEngine_playBackgroundMusic_(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1199,7 +1200,7 @@ JSBool JSPROXY_SimpleAudioEngine_playBackgroundMusic_loop_(JSContext *cx, uint32
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; JSBool arg1; 
 
@@ -1222,7 +1223,7 @@ JSBool JSPROXY_SimpleAudioEngine_playEffect_(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1245,7 +1246,7 @@ JSBool JSPROXY_SimpleAudioEngine_playEffect_pitch_pan_gain_(JSContext *cx, uint3
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 4, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; double arg1; double arg2; double arg3; 
 
@@ -1271,7 +1272,7 @@ JSBool JSPROXY_SimpleAudioEngine_preloadBackgroundMusic_(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1293,7 +1294,7 @@ JSBool JSPROXY_SimpleAudioEngine_preloadEffect_(JSContext *cx, uint32_t argc, js
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1315,7 +1316,7 @@ JSBool JSPROXY_SimpleAudioEngine_resumeBackgroundMusic(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
 	[real resumeBackgroundMusic ];
@@ -1333,7 +1334,7 @@ JSBool JSPROXY_SimpleAudioEngine_rewindBackgroundMusic(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
 	[real rewindBackgroundMusic ];
@@ -1351,7 +1352,7 @@ JSBool JSPROXY_SimpleAudioEngine_setBackgroundMusicVolume_(JSContext *cx, uint32
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -1373,7 +1374,7 @@ JSBool JSPROXY_SimpleAudioEngine_setEffectsVolume_(JSContext *cx, uint32_t argc,
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -1388,7 +1389,7 @@ JSBool JSPROXY_SimpleAudioEngine_setEffectsVolume_(JSContext *cx, uint32_t argc,
 // Arguments: 
 // Ret value: SimpleAudioEngine* (o)
 JSBool JSPROXY_SimpleAudioEngine_sharedEngine_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	SimpleAudioEngine* ret_val;
 
 	ret_val = [SimpleAudioEngine sharedEngine ];
@@ -1409,7 +1410,7 @@ JSBool JSPROXY_SimpleAudioEngine_soundSourceForFile_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1435,7 +1436,7 @@ JSBool JSPROXY_SimpleAudioEngine_stopBackgroundMusic(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
 	[real stopBackgroundMusic ];
@@ -1453,7 +1454,7 @@ JSBool JSPROXY_SimpleAudioEngine_stopEffect_(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; 
 
@@ -1475,7 +1476,7 @@ JSBool JSPROXY_SimpleAudioEngine_unloadEffect_(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -1497,7 +1498,7 @@ JSBool JSPROXY_SimpleAudioEngine_willPlayBackgroundMusic(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1516,7 +1517,7 @@ JSBool JSPROXY_SimpleAudioEngine_enabled(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1535,7 +1536,7 @@ JSBool JSPROXY_SimpleAudioEngine_mute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	SimpleAudioEngine *real = (SimpleAudioEngine*) [proxy realObj];
@@ -1554,7 +1555,7 @@ JSBool JSPROXY_SimpleAudioEngine_setEnabled_(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -1576,7 +1577,7 @@ JSBool JSPROXY_SimpleAudioEngine_setMute_(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -1692,7 +1693,7 @@ JSBool JSPROXY_CDSoundSource_durationInSeconds(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1711,7 +1712,7 @@ JSBool JSPROXY_CDSoundSource_gain(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1730,7 +1731,7 @@ JSBool JSPROXY_CDSoundSource_init_sourceIndex_soundEngine_(JSContext *cx, uint32
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	uint32_t arg0; int32_t arg1; id arg2; 
 
@@ -1758,7 +1759,7 @@ JSBool JSPROXY_CDSoundSource_isPlaying(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1777,7 +1778,7 @@ JSBool JSPROXY_CDSoundSource_lastError(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	ALenum ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1796,7 +1797,7 @@ JSBool JSPROXY_CDSoundSource_looping(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1815,7 +1816,7 @@ JSBool JSPROXY_CDSoundSource_pan(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1834,7 +1835,7 @@ JSBool JSPROXY_CDSoundSource_pitch(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1853,7 +1854,7 @@ JSBool JSPROXY_CDSoundSource_setGain_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -1875,7 +1876,7 @@ JSBool JSPROXY_CDSoundSource_setLooping_(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -1897,7 +1898,7 @@ JSBool JSPROXY_CDSoundSource_setPan_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -1919,7 +1920,7 @@ JSBool JSPROXY_CDSoundSource_setPitch_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -1941,7 +1942,7 @@ JSBool JSPROXY_CDSoundSource_setSoundId_(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -1963,7 +1964,7 @@ JSBool JSPROXY_CDSoundSource_soundId(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	int ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -1982,7 +1983,7 @@ JSBool JSPROXY_CDSoundSource_pause(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2001,7 +2002,7 @@ JSBool JSPROXY_CDSoundSource_play(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2020,7 +2021,7 @@ JSBool JSPROXY_CDSoundSource_rewind(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2039,7 +2040,7 @@ JSBool JSPROXY_CDSoundSource_stop(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2058,7 +2059,7 @@ JSBool JSPROXY_CDSoundSource_enabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2077,7 +2078,7 @@ JSBool JSPROXY_CDSoundSource_mute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDSoundSource *real = (CDSoundSource*) [proxy realObj];
@@ -2096,7 +2097,7 @@ JSBool JSPROXY_CDSoundSource_setEnabled_(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -2118,7 +2119,7 @@ JSBool JSPROXY_CDSoundSource_setMute_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -2224,7 +2225,7 @@ void JSPROXY_CDUtilities_finalize(JSContext *cx, JSObject *obj)
 // Arguments: NSString*
 // Ret value: NSString* (S)
 JSBool JSPROXY_CDUtilities_fullPathFromRelativePath__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -2319,7 +2320,7 @@ JSBool JSPROXY_CDLongAudioSource_audioSourceFilePath(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	NSString* ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2341,7 +2342,7 @@ JSBool JSPROXY_CDLongAudioSource_backgroundMusic(JSContext *cx, uint32_t argc, j
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2360,7 +2361,7 @@ JSBool JSPROXY_CDLongAudioSource_isPlaying(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2379,7 +2380,7 @@ JSBool JSPROXY_CDLongAudioSource_load_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -2401,7 +2402,7 @@ JSBool JSPROXY_CDLongAudioSource_numberOfLoops(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	NSInteger ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2420,7 +2421,7 @@ JSBool JSPROXY_CDLongAudioSource_pause(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
 	[real pause ];
@@ -2438,7 +2439,7 @@ JSBool JSPROXY_CDLongAudioSource_play(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
 	[real play ];
@@ -2456,7 +2457,7 @@ JSBool JSPROXY_CDLongAudioSource_resume(JSContext *cx, uint32_t argc, jsval *vp)
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
 	[real resume ];
@@ -2474,7 +2475,7 @@ JSBool JSPROXY_CDLongAudioSource_rewind(JSContext *cx, uint32_t argc, jsval *vp)
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
 	[real rewind ];
@@ -2492,7 +2493,7 @@ JSBool JSPROXY_CDLongAudioSource_setBackgroundMusic_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -2514,7 +2515,7 @@ JSBool JSPROXY_CDLongAudioSource_setNumberOfLoops_(JSContext *cx, uint32_t argc,
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -2536,7 +2537,7 @@ JSBool JSPROXY_CDLongAudioSource_setVolume_(JSContext *cx, uint32_t argc, jsval 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -2558,7 +2559,7 @@ JSBool JSPROXY_CDLongAudioSource_stop(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
 	[real stop ];
@@ -2576,7 +2577,7 @@ JSBool JSPROXY_CDLongAudioSource_volume(JSContext *cx, uint32_t argc, jsval *vp)
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2595,7 +2596,7 @@ JSBool JSPROXY_CDLongAudioSource_enabled(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2614,7 +2615,7 @@ JSBool JSPROXY_CDLongAudioSource_mute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDLongAudioSource *real = (CDLongAudioSource*) [proxy realObj];
@@ -2633,7 +2634,7 @@ JSBool JSPROXY_CDLongAudioSource_setEnabled_(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -2655,7 +2656,7 @@ JSBool JSPROXY_CDLongAudioSource_setMute_(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -2764,7 +2765,7 @@ JSBool JSPROXY_CDAudioManager_applicationDidBecomeActive(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real applicationDidBecomeActive ];
@@ -2782,7 +2783,7 @@ JSBool JSPROXY_CDAudioManager_applicationWillResignActive(JSContext *cx, uint32_
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real applicationWillResignActive ];
@@ -2800,7 +2801,7 @@ JSBool JSPROXY_CDAudioManager_audioSessionInterrupted(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real audioSessionInterrupted ];
@@ -2818,7 +2819,7 @@ JSBool JSPROXY_CDAudioManager_audioSessionResumed(JSContext *cx, uint32_t argc, 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real audioSessionResumed ];
@@ -2836,7 +2837,7 @@ JSBool JSPROXY_CDAudioManager_audioSourceForChannel_(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -2862,7 +2863,7 @@ JSBool JSPROXY_CDAudioManager_audioSourceLoad_channel_(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; int32_t arg1; 
 
@@ -2889,7 +2890,7 @@ JSBool JSPROXY_CDAudioManager_backgroundMusic(JSContext *cx, uint32_t argc, jsva
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	CDLongAudioSource* ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -2904,7 +2905,7 @@ JSBool JSPROXY_CDAudioManager_backgroundMusic(JSContext *cx, uint32_t argc, jsva
 // Arguments: tAudioManagerMode
 // Ret value: void (None)
 JSBool JSPROXY_CDAudioManager_configure__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -2918,7 +2919,7 @@ JSBool JSPROXY_CDAudioManager_configure__static(JSContext *cx, uint32_t argc, js
 // Arguments: 
 // Ret value: void (None)
 JSBool JSPROXY_CDAudioManager_end_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	[CDAudioManager end ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
@@ -2935,7 +2936,7 @@ JSBool JSPROXY_CDAudioManager_init_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -2954,7 +2955,7 @@ JSBool JSPROXY_CDAudioManager_init_(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: tAudioManagerMode
 // Ret value: void (None)
 JSBool JSPROXY_CDAudioManager_initAsynchronously__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -2975,7 +2976,7 @@ JSBool JSPROXY_CDAudioManager_isBackgroundMusicPlaying(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -2994,7 +2995,7 @@ JSBool JSPROXY_CDAudioManager_isDeviceMuted(JSContext *cx, uint32_t argc, jsval 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3013,7 +3014,7 @@ JSBool JSPROXY_CDAudioManager_isOtherAudioPlaying(JSContext *cx, uint32_t argc, 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3032,7 +3033,7 @@ JSBool JSPROXY_CDAudioManager_pauseBackgroundMusic(JSContext *cx, uint32_t argc,
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real pauseBackgroundMusic ];
@@ -3050,7 +3051,7 @@ JSBool JSPROXY_CDAudioManager_playBackgroundMusic_loop_(JSContext *cx, uint32_t 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; JSBool arg1; 
 
@@ -3073,7 +3074,7 @@ JSBool JSPROXY_CDAudioManager_preloadBackgroundMusic_(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	NSString* arg0; 
 
@@ -3095,7 +3096,7 @@ JSBool JSPROXY_CDAudioManager_resumeBackgroundMusic(JSContext *cx, uint32_t argc
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real resumeBackgroundMusic ];
@@ -3113,7 +3114,7 @@ JSBool JSPROXY_CDAudioManager_rewindBackgroundMusic(JSContext *cx, uint32_t argc
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real rewindBackgroundMusic ];
@@ -3131,7 +3132,7 @@ JSBool JSPROXY_CDAudioManager_setMode_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -3153,7 +3154,7 @@ JSBool JSPROXY_CDAudioManager_setResignBehavior_autoHandle_(JSContext *cx, uint3
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; JSBool arg1; 
 
@@ -3169,7 +3170,7 @@ JSBool JSPROXY_CDAudioManager_setResignBehavior_autoHandle_(JSContext *cx, uint3
 // Arguments: 
 // Ret value: CDAudioManager* (o)
 JSBool JSPROXY_CDAudioManager_sharedManager_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	CDAudioManager* ret_val;
 
 	ret_val = [CDAudioManager sharedManager ];
@@ -3183,7 +3184,7 @@ JSBool JSPROXY_CDAudioManager_sharedManager_static(JSContext *cx, uint32_t argc,
 // Arguments: 
 // Ret value: tAudioManagerState (i)
 JSBool JSPROXY_CDAudioManager_sharedManagerState_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	tAudioManagerState ret_val;
 
 	ret_val = [CDAudioManager sharedManagerState ];
@@ -3201,7 +3202,7 @@ JSBool JSPROXY_CDAudioManager_soundEngine(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	CDSoundEngine* ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3223,7 +3224,7 @@ JSBool JSPROXY_CDAudioManager_stopBackgroundMusic(JSContext *cx, uint32_t argc, 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
 	[real stopBackgroundMusic ];
@@ -3241,7 +3242,7 @@ JSBool JSPROXY_CDAudioManager_willPlayBackgroundMusic(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3260,7 +3261,7 @@ JSBool JSPROXY_CDAudioManager_cdAudioSourceDidFinishPlaying_(JSContext *cx, uint
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
@@ -3282,7 +3283,7 @@ JSBool JSPROXY_CDAudioManager_cdAudioSourceFileDidChange_(JSContext *cx, uint32_
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
@@ -3304,7 +3305,7 @@ JSBool JSPROXY_CDAudioManager_enabled(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3323,7 +3324,7 @@ JSBool JSPROXY_CDAudioManager_mute(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioManager *real = (CDAudioManager*) [proxy realObj];
@@ -3342,7 +3343,7 @@ JSBool JSPROXY_CDAudioManager_setEnabled_(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -3364,7 +3365,7 @@ JSBool JSPROXY_CDAudioManager_setMute_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -3487,7 +3488,7 @@ JSBool JSPROXY_CDFloatInterpolator_end(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDFloatInterpolator *real = (CDFloatInterpolator*) [proxy realObj];
@@ -3506,7 +3507,7 @@ JSBool JSPROXY_CDFloatInterpolator_init_startVal_endVal_(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( ![proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; double arg1; double arg2; 
 
@@ -3534,7 +3535,7 @@ JSBool JSPROXY_CDFloatInterpolator_interpolate_(JSContext *cx, uint32_t argc, js
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3557,7 +3558,7 @@ JSBool JSPROXY_CDFloatInterpolator_interpolationType(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	tCDInterpolationType ret_val;
 
 	CDFloatInterpolator *real = (CDFloatInterpolator*) [proxy realObj];
@@ -3576,7 +3577,7 @@ JSBool JSPROXY_CDFloatInterpolator_setEnd_(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3598,7 +3599,7 @@ JSBool JSPROXY_CDFloatInterpolator_setInterpolationType_(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -3620,7 +3621,7 @@ JSBool JSPROXY_CDFloatInterpolator_setStart_(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3642,7 +3643,7 @@ JSBool JSPROXY_CDFloatInterpolator_start(JSContext *cx, uint32_t argc, jsval *vp
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDFloatInterpolator *real = (CDFloatInterpolator*) [proxy realObj];
@@ -3738,7 +3739,7 @@ JSBool JSPROXY_CDPropertyModifier__getTargetProperty(JSContext *cx, uint32_t arg
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
@@ -3757,7 +3758,7 @@ JSBool JSPROXY_CDPropertyModifier__setTargetProperty_(JSContext *cx, uint32_t ar
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3779,7 +3780,7 @@ JSBool JSPROXY_CDPropertyModifier__stopTarget(JSContext *cx, uint32_t argc, jsva
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
 	[real _stopTarget ];
@@ -3797,7 +3798,7 @@ JSBool JSPROXY_CDPropertyModifier_endValue(JSContext *cx, uint32_t argc, jsval *
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
@@ -3816,7 +3817,7 @@ JSBool JSPROXY_CDPropertyModifier_interpolationType(JSContext *cx, uint32_t argc
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	tCDInterpolationType ret_val;
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
@@ -3835,7 +3836,7 @@ JSBool JSPROXY_CDPropertyModifier_modify_(JSContext *cx, uint32_t argc, jsval *v
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3857,7 +3858,7 @@ JSBool JSPROXY_CDPropertyModifier_setEndValue_(JSContext *cx, uint32_t argc, jsv
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3879,7 +3880,7 @@ JSBool JSPROXY_CDPropertyModifier_setInterpolationType_(JSContext *cx, uint32_t 
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	int32_t arg0; 
 
@@ -3901,7 +3902,7 @@ JSBool JSPROXY_CDPropertyModifier_setStartValue_(JSContext *cx, uint32_t argc, j
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	double arg0; 
 
@@ -3923,7 +3924,7 @@ JSBool JSPROXY_CDPropertyModifier_setStopTargetWhenComplete_(JSContext *cx, uint
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -3945,7 +3946,7 @@ JSBool JSPROXY_CDPropertyModifier_startValue(JSContext *cx, uint32_t argc, jsval
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	float ret_val;
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
@@ -3964,7 +3965,7 @@ JSBool JSPROXY_CDPropertyModifier_stopTargetWhenComplete(JSContext *cx, uint32_t
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDPropertyModifier *real = (CDPropertyModifier*) [proxy realObj];
@@ -4064,7 +4065,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_addAudioInterruptTarget_(JSContext *c
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	id arg0; 
 
@@ -4086,7 +4087,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_enabled(JSContext *cx, uint32_t argc,
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioInterruptTargetGroup *real = (CDAudioInterruptTargetGroup*) [proxy realObj];
@@ -4105,7 +4106,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_mute(JSContext *cx, uint32_t argc, js
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	BOOL ret_val;
 
 	CDAudioInterruptTargetGroup *real = (CDAudioInterruptTargetGroup*) [proxy realObj];
@@ -4124,7 +4125,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_setEnabled_(JSContext *cx, uint32_t a
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 
@@ -4146,7 +4147,7 @@ JSBool JSPROXY_CDAudioInterruptTargetGroup_setMute_(JSContext *cx, uint32_t argc
 
 	NSCAssert( proxy, @"Invalid Proxy object");
 	NSCAssert( [proxy realObj], @"Object not initialzied. error");
-	NSCAssert( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool arg0; 
 

@@ -25,6 +25,7 @@
 #import "jsapi.h"
 #import "jstypedarray.h"
 #import "ScriptingCore.h"
+#import "js_bindings_config.h"
 #import "js_bindings_NS_manual.h"
 
 
