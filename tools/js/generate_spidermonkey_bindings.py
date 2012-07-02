@@ -1130,11 +1130,9 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         template_init = '''
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-//	JSPROXY_NSObject *proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( %s[proxy realObj], @"Object not initialzied. error");
+	NSCAssert( proxy && %s[proxy realObj], @"Invalid Proxy object");
 '''
 
         selector = method['selector']
@@ -1537,7 +1535,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	%s_class->resolve = JS_ResolveStub;
 	%s_class->convert = JS_ConvertStub;
 	%s_class->finalize = %s_finalize;
-	%s_class->flags = JSCLASS_HAS_PRIVATE;
+//	%s_class->flags = JSCLASS_HAS_PRIVATE;
 '''
 
         # Properties
