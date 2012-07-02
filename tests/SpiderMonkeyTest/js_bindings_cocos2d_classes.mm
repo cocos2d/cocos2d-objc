@@ -1726,15 +1726,15 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("actionManager", JSPROXY_CCNode_actionManager, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getActionManager", JSPROXY_CCNode_actionManager, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addChild", JSPROXY_CCNode_addChild_z_tag_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("anchorPoint", JSPROXY_CCNode_anchorPoint, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("anchorPointInPoints", JSPROXY_CCNode_anchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchorPoint", JSPROXY_CCNode_anchorPoint, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnchorPointInPoints", JSPROXY_CCNode_anchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("boundingBox", JSPROXY_CCNode_boundingBox, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("camera", JSPROXY_CCNode_camera, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("children", JSPROXY_CCNode_children, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getCamera", JSPROXY_CCNode_camera, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getChildren", JSPROXY_CCNode_children, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("cleanup", JSPROXY_CCNode_cleanup, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("contentSize", JSPROXY_CCNode_contentSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getContentSize", JSPROXY_CCNode_contentSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToNodeSpace", JSPROXY_CCNode_convertToNodeSpace_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToNodeSpaceAR", JSPROXY_CCNode_convertToNodeSpaceAR_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToWorldSpace", JSPROXY_CCNode_convertToWorldSpace_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -1742,33 +1742,33 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("draw", JSPROXY_CCNode_draw, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getActionByTag", JSPROXY_CCNode_getActionByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getChildByTag", JSPROXY_CCNode_getChildByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("glServerState", JSPROXY_CCNode_glServerState, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("grid", JSPROXY_CCNode_grid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ignoreAnchorPointForPosition", JSPROXY_CCNode_ignoreAnchorPointForPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGlServerState", JSPROXY_CCNode_glServerState, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGrid", JSPROXY_CCNode_grid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIgnoreAnchorPointForPosition", JSPROXY_CCNode_ignoreAnchorPointForPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("init", JSPROXY_CCNode_init, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isRunning", JSPROXY_CCNode_isRunning, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsRunning", JSPROXY_CCNode_isRunning, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("nodeToParentTransform", JSPROXY_CCNode_nodeToParentTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("nodeToWorldTransform", JSPROXY_CCNode_nodeToWorldTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("numberOfRunningActions", JSPROXY_CCNode_numberOfRunningActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("orderOfArrival", JSPROXY_CCNode_orderOfArrival, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("parent", JSPROXY_CCNode_parent, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOrderOfArrival", JSPROXY_CCNode_orderOfArrival, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getParent", JSPROXY_CCNode_parent, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("parentToNodeTransform", JSPROXY_CCNode_parentToNodeTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("pauseSchedulerAndActions", JSPROXY_CCNode_pauseSchedulerAndActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("position", JSPROXY_CCNode_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPosition", JSPROXY_CCNode_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAllChildrenWithCleanup", JSPROXY_CCNode_removeAllChildrenWithCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildCleanup", JSPROXY_CCNode_removeChild_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildByTagCleanup", JSPROXY_CCNode_removeChildByTag_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeFromParentAndCleanup", JSPROXY_CCNode_removeFromParentAndCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reorderChildZ", JSPROXY_CCNode_reorderChild_z_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resumeSchedulerAndActions", JSPROXY_CCNode_resumeSchedulerAndActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rotation", JSPROXY_CCNode_rotation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRotation", JSPROXY_CCNode_rotation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("runAction", JSPROXY_CCNode_runAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("scale", JSPROXY_CCNode_scale, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("scaleX", JSPROXY_CCNode_scaleX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("scaleY", JSPROXY_CCNode_scaleY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getScale", JSPROXY_CCNode_scale, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getScaleX", JSPROXY_CCNode_scaleX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getScaleY", JSPROXY_CCNode_scaleY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("scheduleUpdate", JSPROXY_CCNode_scheduleUpdate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("scheduleUpdateWithPriority", JSPROXY_CCNode_scheduleUpdateWithPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("scheduler", JSPROXY_CCNode_scheduler, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getScheduler", JSPROXY_CCNode_scheduler, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setActionManager", JSPROXY_CCNode_setActionManager_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAnchorPoint", JSPROXY_CCNode_setAnchorPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setContentSize", JSPROXY_CCNode_setContentSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -1790,23 +1790,23 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("setVertexZ", JSPROXY_CCNode_setVertexZ_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVisible", JSPROXY_CCNode_setVisible_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setZOrder", JSPROXY_CCNode_setZOrder_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("shaderProgram", JSPROXY_CCNode_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("skewX", JSPROXY_CCNode_skewX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("skewY", JSPROXY_CCNode_skewY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getShaderProgram", JSPROXY_CCNode_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSkewX", JSPROXY_CCNode_skewX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSkewY", JSPROXY_CCNode_skewY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("sortAllChildren", JSPROXY_CCNode_sortAllChildren, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stopAction", JSPROXY_CCNode_stopAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stopActionByTag", JSPROXY_CCNode_stopActionByTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stopAllActions", JSPROXY_CCNode_stopAllActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tag", JSPROXY_CCNode_tag, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTag", JSPROXY_CCNode_tag, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("transform", JSPROXY_CCNode_transform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("transformAncestors", JSPROXY_CCNode_transformAncestors, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unscheduleAllSelectors", JSPROXY_CCNode_unscheduleAllSelectors, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unscheduleUpdate", JSPROXY_CCNode_unscheduleUpdate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("vertexZ", JSPROXY_CCNode_vertexZ, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("visible", JSPROXY_CCNode_visible, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVertexZ", JSPROXY_CCNode_vertexZ, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVisible", JSPROXY_CCNode_visible, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("visit", JSPROXY_CCNode_visit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("worldToNodeTransform", JSPROXY_CCNode_worldToNodeTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("zOrder", JSPROXY_CCNode_zOrder, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getZOrder", JSPROXY_CCNode_zOrder, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -2259,7 +2259,7 @@ void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("cleanup", JSPROXY_CCMenuItem_cleanup, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithBlock", JSPROXY_CCMenuItem_initWithBlock_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isEnabled", JSPROXY_CCMenuItem_isEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isSelected", JSPROXY_CCMenuItem_isSelected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsSelected", JSPROXY_CCMenuItem_isSelected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("rect", JSPROXY_CCMenuItem_rect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("selected", JSPROXY_CCMenuItem_selected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlock", JSPROXY_CCMenuItem_setBlock_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2696,9 +2696,9 @@ void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("disabledColor", JSPROXY_CCMenuItemLabel_disabledColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDisabledColor", JSPROXY_CCMenuItemLabel_disabledColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithLabelBlock", JSPROXY_CCMenuItemLabel_initWithLabel_block_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("label", JSPROXY_CCMenuItemLabel_label, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLabel", JSPROXY_CCMenuItemLabel_label, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDisabledColor", JSPROXY_CCMenuItemLabel_setDisabledColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsEnabled", JSPROXY_CCMenuItemLabel_setIsEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLabel", JSPROXY_CCMenuItemLabel_setLabel_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2937,12 +2937,12 @@ void JSPROXY_CCMenuItemAtlasFont_createClass(JSContext *cx, JSObject* globalObj,
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithStringCharmapfileItemwidthItemheightStartcharmapBlock", JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeight_startCharMap_block_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringCharMapFileItemWidthItemHeightStartCharMapBlock", JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeight_startCharMap_block_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("itemWithStringCharmapfileItemwidthItemheightStartcharmap", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithStringCharmapfileItemwidthItemheightStartcharmapBlock", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap_block__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithStringCharMapFileItemWidthItemHeightStartCharMap", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithStringCharMapFileItemWidthItemHeightStartCharMapBlock", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap_block__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithLabel", JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithLabelBlock", JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -3168,7 +3168,7 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("setTag", JSPROXY_CCAction_setTag_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("step", JSPROXY_CCAction_step_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stop", JSPROXY_CCAction_stop, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tag", JSPROXY_CCAction_tag, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTag", JSPROXY_CCAction_tag, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("update", JSPROXY_CCAction_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -3313,7 +3313,7 @@ void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("duration", JSPROXY_CCFiniteTimeAction_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDuration", JSPROXY_CCFiniteTimeAction_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverse", JSPROXY_CCFiniteTimeAction_reverse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDuration", JSPROXY_CCFiniteTimeAction_setDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -3500,7 +3500,7 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("elapsed", JSPROXY_CCActionInterval_elapsed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getElapsed", JSPROXY_CCActionInterval_elapsed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithDuration", JSPROXY_CCActionInterval_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isDone", JSPROXY_CCActionInterval_isDone, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverse", JSPROXY_CCActionInterval_reverse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -3858,9 +3858,9 @@ void JSPROXY_CCTMXObjectGroup_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("groupName", JSPROXY_CCTMXObjectGroup_groupName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("objects", JSPROXY_CCTMXObjectGroup_objects, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("positionOffset", JSPROXY_CCTMXObjectGroup_positionOffset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGroupName", JSPROXY_CCTMXObjectGroup_groupName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getObjects", JSPROXY_CCTMXObjectGroup_objects, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPositionOffset", JSPROXY_CCTMXObjectGroup_positionOffset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setGroupName", JSPROXY_CCTMXObjectGroup_setGroupName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setObjects", JSPROXY_CCTMXObjectGroup_setObjects_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPositionOffset", JSPROXY_CCTMXObjectGroup_setPositionOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -4397,13 +4397,13 @@ void JSPROXY_CCCamera_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("dirty", JSPROXY_CCCamera_dirty, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDirty", JSPROXY_CCCamera_dirty, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("locate", JSPROXY_CCCamera_locate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("restore", JSPROXY_CCCamera_restore, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setCenterXCenteryCenterz", JSPROXY_CCCamera_setCenterX_centerY_centerZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setCenterXCenterYCenterZ", JSPROXY_CCCamera_setCenterX_centerY_centerZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDirty", JSPROXY_CCCamera_setDirty_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setEyeXEyeyEyez", JSPROXY_CCCamera_setEyeX_eyeY_eyeZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUpXUpyUpz", JSPROXY_CCCamera_setUpX_upY_upZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setEyeXEyeYEyeZ", JSPROXY_CCCamera_setEyeX_eyeY_eyeZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUpXUpYUpZ", JSPROXY_CCCamera_setUpX_upY_upZ_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -5579,14 +5579,14 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("atlasIndex", JSPROXY_CCSprite_atlasIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNode", JSPROXY_CCSprite_batchNode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("blendFunc", JSPROXY_CCSprite_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCSprite_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("dirty", JSPROXY_CCSprite_dirty, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAtlasIndex", JSPROXY_CCSprite_atlasIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBatchNode", JSPROXY_CCSprite_batchNode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCSprite_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCSprite_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDirty", JSPROXY_CCSprite_dirty, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("displayFrame", JSPROXY_CCSprite_displayFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("flipX", JSPROXY_CCSprite_flipX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("flipY", JSPROXY_CCSprite_flipY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFlipX", JSPROXY_CCSprite_flipX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFlipY", JSPROXY_CCSprite_flipY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFileRect", JSPROXY_CCSprite_initWithFile_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFrame", JSPROXY_CCSprite_initWithSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -5595,8 +5595,8 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("initWithTextureRect", JSPROXY_CCSprite_initWithTexture_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureRectRotated", JSPROXY_CCSprite_initWithTexture_rect_rotated_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isFrameDisplayed", JSPROXY_CCSprite_isFrameDisplayed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("offsetPosition", JSPROXY_CCSprite_offsetPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCSprite_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOffsetPosition", JSPROXY_CCSprite_offsetPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCSprite_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAtlasIndex", JSPROXY_CCSprite_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBatchNode", JSPROXY_CCSprite_setBatchNode_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCSprite_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -5609,11 +5609,11 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("setOpacity", JSPROXY_CCSprite_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureAtlas", JSPROXY_CCSprite_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureRect", JSPROXY_CCSprite_setTextureRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setTextureRectRotatedUntrimmedsize", JSPROXY_CCSprite_setTextureRect_rotated_untrimmedSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureRectRotatedUntrimmedSize", JSPROXY_CCSprite_setTextureRect_rotated_untrimmedSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVertexRect", JSPROXY_CCSprite_setVertexRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureAtlas", JSPROXY_CCSprite_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureRect", JSPROXY_CCSprite_textureRect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureRectRotated", JSPROXY_CCSprite_textureRectRotated, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureAtlas", JSPROXY_CCSprite_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureRect", JSPROXY_CCSprite_textureRect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureRectRotated", JSPROXY_CCSprite_textureRectRotated, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateTransform", JSPROXY_CCSprite_updateTransform, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCSprite_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacityModifyRGB", JSPROXY_CCSprite_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -6228,7 +6228,7 @@ void JSPROXY_CCEaseElastic_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionPeriod", JSPROXY_CCEaseElastic_initWithAction_period_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("period", JSPROXY_CCEaseElastic_period, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPeriod", JSPROXY_CCEaseElastic_period, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPeriod", JSPROXY_CCEaseElastic_setPeriod_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -7259,7 +7259,7 @@ void JSPROXY_CCGridAction_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("grid", JSPROXY_CCGridAction_grid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gridSize", JSPROXY_CCGridAction_gridSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGridSize", JSPROXY_CCGridAction_gridSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSizeDuration", JSPROXY_CCGridAction_initWithSize_duration_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setGridSize", JSPROXY_CCGridAction_setGridSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -7580,11 +7580,11 @@ void JSPROXY_CCShakyTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithRangeShakezGridDuration", JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithRangeShakeZGridDuration", JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithRangeShakezGridDuration", JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithRangeShakeZGridDuration", JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithSizeDuration", JSPROXY_CCShakyTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCShakyTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCShakyTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -8466,30 +8466,30 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("dimensions", JSPROXY_CCLabelTTF_dimensions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("fontName", JSPROXY_CCLabelTTF_fontName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("fontSize", JSPROXY_CCLabelTTF_fontSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("horizontalAlignment", JSPROXY_CCLabelTTF_horizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFontnameFontsize", JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDimensions", JSPROXY_CCLabelTTF_dimensions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFontName", JSPROXY_CCLabelTTF_fontName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFontSize", JSPROXY_CCLabelTTF_fontSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getHorizontalAlignment", JSPROXY_CCLabelTTF_horizontalAlignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentFontNameFontSize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_fontName_fontSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentLineBreakModeFontNameFontSize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentVAlignmentFontNameFontSize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentVAlignmentLineBreakModeFontNameFontSize", JSPROXY_CCLabelTTF_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFontNameFontSize", JSPROXY_CCLabelTTF_initWithString_fontName_fontSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDimensions", JSPROXY_CCLabelTTF_setDimensions_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontName", JSPROXY_CCLabelTTF_setFontName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontSize", JSPROXY_CCLabelTTF_setFontSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setHorizontalAlignment", JSPROXY_CCLabelTTF_setHorizontalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setString", JSPROXY_CCLabelTTF_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVerticalAlignment", JSPROXY_CCLabelTTF_setVerticalAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("verticalAlignment", JSPROXY_CCLabelTTF_verticalAlignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVerticalAlignment", JSPROXY_CCLabelTTF_verticalAlignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("string", JSPROXY_CCLabelTTF_string, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("labelWithStringDimensionsHalignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringDimensionsHalignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringDimensionsHAlignmentFontNameFontSize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_fontName_fontSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringDimensionsHAlignmentLineBreakModeFontNameFontSize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_lineBreakMode_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringDimensionsHAlignmentVAlignmentFontNameFontSize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_fontName_fontSize__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringDimensionsHAlignmentVAlignmentLineBreakModeFontNameFontSize", JSPROXY_CCLabelTTF_labelWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithFile", JSPROXY_CCLabelTTF_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("spriteWithFileRect", JSPROXY_CCLabelTTF_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -9087,7 +9087,7 @@ void JSPROXY_CCShaderCache_createClass(JSContext *cx, JSObject* globalObj, const
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("addProgramForkey", JSPROXY_CCShaderCache_addProgram_forKey_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("addProgramForKey", JSPROXY_CCShaderCache_addProgram_forKey_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("loadDefaultShaders", JSPROXY_CCShaderCache_loadDefaultShaders, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("programForKey", JSPROXY_CCShaderCache_programForKey_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -9764,12 +9764,12 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithDurationScale", JSPROXY_CCScaleTo_initWithDuration_scale_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithDurationScalexScaley", JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithDurationScaleXScaleY", JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCScaleTo_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithDurationScaleXScaleY", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCScaleTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCScaleTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -9942,7 +9942,7 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCScaleBy_actionWithDuration_scale__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDurationScalexScaley", JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithDurationScaleXScaleY", JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCScaleBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCScaleBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -10718,7 +10718,7 @@ void JSPROXY_CCEaseRateAction_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionRate", JSPROXY_CCEaseRateAction_initWithAction_rate_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rate", JSPROXY_CCEaseRateAction_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRate", JSPROXY_CCEaseRateAction_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRate", JSPROXY_CCEaseRateAction_setRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -12534,23 +12534,23 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("addQuadFromSpriteQuadindex", JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("addQuadFromSpriteQuadIndex", JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("appendChild", JSPROXY_CCSpriteBatchNode_appendChild_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasIndexForChildAtz", JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("blendFunc", JSPROXY_CCSpriteBatchNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("descendants", JSPROXY_CCSpriteBatchNode_descendants, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("atlasIndexForChildAtZ", JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCSpriteBatchNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDescendants", JSPROXY_CCSpriteBatchNode_descendants, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("increaseAtlasCapacity", JSPROXY_CCSpriteBatchNode_increaseAtlasCapacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFileCapacity", JSPROXY_CCSpriteBatchNode_initWithFile_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureCapacity", JSPROXY_CCSpriteBatchNode_initWithTexture_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("insertChildInatlasatindex", JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rebuildIndexInOrderAtlasindex", JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("insertChildInAtlasAtIndex", JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("rebuildIndexInOrderAtlasIndex", JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildCleanup", JSPROXY_CCSpriteBatchNode_removeChild_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildAtIndexCleanup", JSPROXY_CCSpriteBatchNode_removeChildAtIndex_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeSpriteFromAtlas", JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reorderBatch", JSPROXY_CCSpriteBatchNode_reorderBatch_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCSpriteBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureAtlas", JSPROXY_CCSpriteBatchNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureAtlas", JSPROXY_CCSpriteBatchNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureAtlas", JSPROXY_CCSpriteBatchNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCSpriteBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("texture", JSPROXY_CCSpriteBatchNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -13221,13 +13221,13 @@ void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addChildZTag", JSPROXY_CCTMXLayer_addChild_z_tag_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTilesetInfoLayerinfoMapinfo", JSPROXY_CCTMXLayer_initWithTilesetInfo_layerInfo_mapInfo_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerName", JSPROXY_CCTMXLayer_layerName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerOrientation", JSPROXY_CCTMXLayer_layerOrientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerSize", JSPROXY_CCTMXLayer_layerSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("mapTileSize", JSPROXY_CCTMXLayer_mapTileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTilesetInfoLayerInfoMapInfo", JSPROXY_CCTMXLayer_initWithTilesetInfo_layerInfo_mapInfo_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLayerName", JSPROXY_CCTMXLayer_layerName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLayerOrientation", JSPROXY_CCTMXLayer_layerOrientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLayerSize", JSPROXY_CCTMXLayer_layerSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMapTileSize", JSPROXY_CCTMXLayer_mapTileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("positionAt", JSPROXY_CCTMXLayer_positionAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("properties", JSPROXY_CCTMXLayer_properties, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getProperties", JSPROXY_CCTMXLayer_properties, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("releaseMap", JSPROXY_CCTMXLayer_releaseMap, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeTileAt", JSPROXY_CCTMXLayer_removeTileAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayerName", JSPROXY_CCTMXLayer_setLayerName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -13236,16 +13236,16 @@ void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("setMapTileSize", JSPROXY_CCTMXLayer_setMapTileSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setProperties", JSPROXY_CCTMXLayer_setProperties_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileGIDAt", JSPROXY_CCTMXLayer_setTileGID_at_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setTileGIDAtWithflags", JSPROXY_CCTMXLayer_setTileGID_at_withFlags_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTileGIDAtWithFlags", JSPROXY_CCTMXLayer_setTileGID_at_withFlags_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileset", JSPROXY_CCTMXLayer_setTileset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setupTiles", JSPROXY_CCTMXLayer_setupTiles, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tileAt", JSPROXY_CCTMXLayer_tileAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tileGIDAt", JSPROXY_CCTMXLayer_tileGIDAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tileset", JSPROXY_CCTMXLayer_tileset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTileset", JSPROXY_CCTMXLayer_tileset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("layerWithTilesetInfoLayerinfoMapinfo", JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("layerWithTilesetInfoLayerInfoMapInfo", JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("batchNodeWithFile", JSPROXY_CCTMXLayer_batchNodeWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("batchNodeWithTexture", JSPROXY_CCTMXLayer_batchNodeWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -13870,27 +13870,27 @@ void JSPROXY_CCTexture2D_createClass(JSContext *cx, JSObject* globalObj, const c
 	static JSFunctionSpec funcs[] = {
 		JS_FN("bitsPerPixelForFormat", JSPROXY_CCTexture2D_bitsPerPixelForFormat, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("contentSize", JSPROXY_CCTexture2D_contentSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("contentSizeInPixels", JSPROXY_CCTexture2D_contentSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getContentSizeInPixels", JSPROXY_CCTexture2D_contentSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawAtPoint", JSPROXY_CCTexture2D_drawAtPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawInRect", JSPROXY_CCTexture2D_drawInRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("generateMipmap", JSPROXY_CCTexture2D_generateMipmap, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("hasPremultipliedAlpha", JSPROXY_CCTexture2D_hasPremultipliedAlpha, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getHasPremultipliedAlpha", JSPROXY_CCTexture2D_hasPremultipliedAlpha, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithPVRFile", JSPROXY_CCTexture2D_initWithPVRFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentValignmentFontnameFontsize", JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringDimensionsHalignmentValignmentLinebreakmodeFontnameFontsize", JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFontnameFontsize", JSPROXY_CCTexture2D_initWithString_fontName_fontSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxS", JSPROXY_CCTexture2D_maxS, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxT", JSPROXY_CCTexture2D_maxT, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("name", JSPROXY_CCTexture2D_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("pixelFormat", JSPROXY_CCTexture2D_pixelFormat, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("pixelsHigh", JSPROXY_CCTexture2D_pixelsHigh, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("pixelsWide", JSPROXY_CCTexture2D_pixelsWide, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentVAlignmentFontNameFontSize", JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_fontName_fontSize_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringDimensionsHAlignmentVAlignmentLineBreakModeFontNameFontSize", JSPROXY_CCTexture2D_initWithString_dimensions_hAlignment_vAlignment_lineBreakMode_fontName_fontSize_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFontNameFontSize", JSPROXY_CCTexture2D_initWithString_fontName_fontSize_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxS", JSPROXY_CCTexture2D_maxS, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxT", JSPROXY_CCTexture2D_maxT, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getName", JSPROXY_CCTexture2D_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPixelFormat", JSPROXY_CCTexture2D_pixelFormat, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPixelsHigh", JSPROXY_CCTexture2D_pixelsHigh, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPixelsWide", JSPROXY_CCTexture2D_pixelsWide, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAliasTexParameters", JSPROXY_CCTexture2D_setAliasTexParameters, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAntiAliasTexParameters", JSPROXY_CCTexture2D_setAntiAliasTexParameters, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMaxS", JSPROXY_CCTexture2D_setMaxS_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMaxT", JSPROXY_CCTexture2D_setMaxT_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setShaderProgram", JSPROXY_CCTexture2D_setShaderProgram_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("shaderProgram", JSPROXY_CCTexture2D_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getShaderProgram", JSPROXY_CCTexture2D_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stringForFormat", JSPROXY_CCTexture2D_stringForFormat, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -14087,7 +14087,7 @@ void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalO
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionDuration", JSPROXY_CCAccelDeccelAmplitude_initWithAction_duration_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rate", JSPROXY_CCAccelDeccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRate", JSPROXY_CCAccelDeccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRate", JSPROXY_CCAccelDeccelAmplitude_setRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -14355,8 +14355,8 @@ void JSPROXY_CCJumpTiles3D_createClass(JSContext *cx, JSObject* globalObj, const
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCJumpTiles3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCJumpTiles3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCJumpTiles3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCJumpTiles3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithJumpsAmplitudeGridDuration", JSPROXY_CCJumpTiles3D_initWithJumps_amplitude_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCJumpTiles3D_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCJumpTiles3D_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -16388,41 +16388,41 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("active", JSPROXY_CCParticleSystem_active, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("angle", JSPROXY_CCParticleSystem_angle, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("angleVar", JSPROXY_CCParticleSystem_angleVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasIndex", JSPROXY_CCParticleSystem_atlasIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("autoRemoveOnFinish", JSPROXY_CCParticleSystem_autoRemoveOnFinish, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNode", JSPROXY_CCParticleSystem_batchNode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("blendAdditive", JSPROXY_CCParticleSystem_blendAdditive, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("blendFunc", JSPROXY_CCParticleSystem_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getActive", JSPROXY_CCParticleSystem_active, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAngle", JSPROXY_CCParticleSystem_angle, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAngleVar", JSPROXY_CCParticleSystem_angleVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAtlasIndex", JSPROXY_CCParticleSystem_atlasIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAutoRemoveOnFinish", JSPROXY_CCParticleSystem_autoRemoveOnFinish, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBatchNode", JSPROXY_CCParticleSystem_batchNode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendAdditive", JSPROXY_CCParticleSystem_blendAdditive, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCParticleSystem_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCParticleSystem_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("duration", JSPROXY_CCParticleSystem_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("emissionRate", JSPROXY_CCParticleSystem_emissionRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("emitterMode", JSPROXY_CCParticleSystem_emitterMode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endColor", JSPROXY_CCParticleSystem_endColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endColorVar", JSPROXY_CCParticleSystem_endColorVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endRadius", JSPROXY_CCParticleSystem_endRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endRadiusVar", JSPROXY_CCParticleSystem_endRadiusVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endSize", JSPROXY_CCParticleSystem_endSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endSizeVar", JSPROXY_CCParticleSystem_endSizeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endSpin", JSPROXY_CCParticleSystem_endSpin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endSpinVar", JSPROXY_CCParticleSystem_endSpinVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gravity", JSPROXY_CCParticleSystem_gravity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDuration", JSPROXY_CCParticleSystem_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEmissionRate", JSPROXY_CCParticleSystem_emissionRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEmitterMode", JSPROXY_CCParticleSystem_emitterMode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndColor", JSPROXY_CCParticleSystem_endColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndColorVar", JSPROXY_CCParticleSystem_endColorVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndRadius", JSPROXY_CCParticleSystem_endRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndRadiusVar", JSPROXY_CCParticleSystem_endRadiusVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndSize", JSPROXY_CCParticleSystem_endSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndSizeVar", JSPROXY_CCParticleSystem_endSizeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndSpin", JSPROXY_CCParticleSystem_endSpin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndSpinVar", JSPROXY_CCParticleSystem_endSpinVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGravity", JSPROXY_CCParticleSystem_gravity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFile", JSPROXY_CCParticleSystem_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTotalParticles", JSPROXY_CCParticleSystem_initWithTotalParticles_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isFull", JSPROXY_CCParticleSystem_isFull, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("life", JSPROXY_CCParticleSystem_life, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("lifeVar", JSPROXY_CCParticleSystem_lifeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("particleCount", JSPROXY_CCParticleSystem_particleCount, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("posVar", JSPROXY_CCParticleSystem_posVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("positionType", JSPROXY_CCParticleSystem_positionType, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLife", JSPROXY_CCParticleSystem_life, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLifeVar", JSPROXY_CCParticleSystem_lifeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getParticleCount", JSPROXY_CCParticleSystem_particleCount, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPosVar", JSPROXY_CCParticleSystem_posVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPositionType", JSPROXY_CCParticleSystem_positionType, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("postStep", JSPROXY_CCParticleSystem_postStep, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("radialAccel", JSPROXY_CCParticleSystem_radialAccel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("radialAccelVar", JSPROXY_CCParticleSystem_radialAccelVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRadialAccel", JSPROXY_CCParticleSystem_radialAccel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRadialAccelVar", JSPROXY_CCParticleSystem_radialAccelVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resetSystem", JSPROXY_CCParticleSystem_resetSystem, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rotatePerSecond", JSPROXY_CCParticleSystem_rotatePerSecond, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rotatePerSecondVar", JSPROXY_CCParticleSystem_rotatePerSecondVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRotatePerSecond", JSPROXY_CCParticleSystem_rotatePerSecond, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRotatePerSecondVar", JSPROXY_CCParticleSystem_rotatePerSecondVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAngle", JSPROXY_CCParticleSystem_setAngle_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAngleVar", JSPROXY_CCParticleSystem_setAngleVar_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAtlasIndex", JSPROXY_CCParticleSystem_setAtlasIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -16466,22 +16466,22 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FN("setTangentialAccelVar", JSPROXY_CCParticleSystem_setTangentialAccelVar_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCParticleSystem_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTotalParticles", JSPROXY_CCParticleSystem_setTotalParticles_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sourcePosition", JSPROXY_CCParticleSystem_sourcePosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("speed", JSPROXY_CCParticleSystem_speed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("speedVar", JSPROXY_CCParticleSystem_speedVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startColor", JSPROXY_CCParticleSystem_startColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startColorVar", JSPROXY_CCParticleSystem_startColorVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startRadius", JSPROXY_CCParticleSystem_startRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startRadiusVar", JSPROXY_CCParticleSystem_startRadiusVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startSize", JSPROXY_CCParticleSystem_startSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startSizeVar", JSPROXY_CCParticleSystem_startSizeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startSpin", JSPROXY_CCParticleSystem_startSpin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startSpinVar", JSPROXY_CCParticleSystem_startSpinVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSourcePosition", JSPROXY_CCParticleSystem_sourcePosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpeed", JSPROXY_CCParticleSystem_speed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpeedVar", JSPROXY_CCParticleSystem_speedVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartColor", JSPROXY_CCParticleSystem_startColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartColorVar", JSPROXY_CCParticleSystem_startColorVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartRadius", JSPROXY_CCParticleSystem_startRadius, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartRadiusVar", JSPROXY_CCParticleSystem_startRadiusVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartSize", JSPROXY_CCParticleSystem_startSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartSizeVar", JSPROXY_CCParticleSystem_startSizeVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartSpin", JSPROXY_CCParticleSystem_startSpin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartSpinVar", JSPROXY_CCParticleSystem_startSpinVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stopSystem", JSPROXY_CCParticleSystem_stopSystem, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tangentialAccel", JSPROXY_CCParticleSystem_tangentialAccel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tangentialAccelVar", JSPROXY_CCParticleSystem_tangentialAccelVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCParticleSystem_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalParticles", JSPROXY_CCParticleSystem_totalParticles, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTangentialAccel", JSPROXY_CCParticleSystem_tangentialAccel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTangentialAccelVar", JSPROXY_CCParticleSystem_tangentialAccelVar, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCParticleSystem_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTotalParticles", JSPROXY_CCParticleSystem_totalParticles, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("update", JSPROXY_CCParticleSystem_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateWithNoTime", JSPROXY_CCParticleSystem_updateWithNoTime, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -16675,7 +16675,7 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 		JS_FN("initIndices", JSPROXY_CCParticleSystemQuad_initIndices, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initTexCoordsWithRect", JSPROXY_CCParticleSystemQuad_initTexCoordsWithRect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDisplayFrame", JSPROXY_CCParticleSystemQuad_setDisplayFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setTextureWithrect", JSPROXY_CCParticleSystemQuad_setTexture_withRect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setTextureWithRect", JSPROXY_CCParticleSystemQuad_setTexture_withRect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -17352,7 +17352,7 @@ void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("disabledImage", JSPROXY_CCMenuItemSprite_disabledImage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithNormalSpriteSelectedspriteDisabledspriteBlock", JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSprite_block_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSprite_block_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("normalImage", JSPROXY_CCMenuItemSprite_normalImage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("selectedImage", JSPROXY_CCMenuItemSprite_selectedImage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDisabledImage", JSPROXY_CCMenuItemSprite_setDisabledImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -17367,9 +17367,9 @@ void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("itemWithNormalSpriteSelectedsprite", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedspriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedspriteDisabledspriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSpriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItemSprite_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCMenuItemSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -17699,19 +17699,19 @@ void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithNormalImageSelectedimageDisabledimageBlock", JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_block_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithNormalImageSelectedImageDisabledImageBlock", JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_block_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDisabledSpriteFrame", JSPROXY_CCMenuItemImage_setDisabledSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setNormalSpriteFrame", JSPROXY_CCMenuItemImage_setNormalSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSelectedSpriteFrame", JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("itemWithNormalImageSelectedimage", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalImageSelectedimageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalImageSelectedimageDisabledimageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedsprite", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedspriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedspriteDisabledspriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalImageSelectedImage", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalImageSelectedImageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalImageSelectedImageDisabledImageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("itemWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItemImage_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCMenuItemImage_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -18154,15 +18154,15 @@ void JSPROXY_CCParticleBatchNode_createClass(JSContext *cx, JSObject* globalObj,
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addChildZTag", JSPROXY_CCParticleBatchNode_addChild_z_tag_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("blendFunc", JSPROXY_CCParticleBatchNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCParticleBatchNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("disableParticle", JSPROXY_CCParticleBatchNode_disableParticle_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFileCapacity", JSPROXY_CCParticleBatchNode_initWithFile_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureCapacity", JSPROXY_CCParticleBatchNode_initWithTexture_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("insertChildInatlasatindex", JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("insertChildInAtlasAtIndex", JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeChildCleanup", JSPROXY_CCParticleBatchNode_removeChild_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCParticleBatchNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureAtlas", JSPROXY_CCParticleBatchNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureAtlas", JSPROXY_CCParticleBatchNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureAtlas", JSPROXY_CCParticleBatchNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCParticleBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("texture", JSPROXY_CCParticleBatchNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -18454,7 +18454,7 @@ void JSPROXY_CCBMFontConfiguration_createClass(JSContext *cx, JSObject* globalOb
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("atlasName", JSPROXY_CCBMFontConfiguration_atlasName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAtlasName", JSPROXY_CCBMFontConfiguration_atlasName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFNTfile", JSPROXY_CCBMFontConfiguration_initWithFNTfile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAtlasName", JSPROXY_CCBMFontConfiguration_setAtlasName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -19128,10 +19128,10 @@ void JSPROXY_CCSpeed_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionSpeed", JSPROXY_CCSpeed_initWithAction_speed_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("innerAction", JSPROXY_CCSpeed_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInnerAction", JSPROXY_CCSpeed_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setInnerAction", JSPROXY_CCSpeed_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSpeed", JSPROXY_CCSpeed_setSpeed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("speed", JSPROXY_CCSpeed_speed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpeed", JSPROXY_CCSpeed_speed, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -19891,15 +19891,15 @@ void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("blendFunc", JSPROXY_CCMotionStreak_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithFadeMinsegWidthColorTexture", JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithFadeMinsegWidthColorTexturefilename", JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_textureFilename_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCMotionStreak_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithFadeMinSegWidthColorTexture", JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithFadeMinSegWidthColorTextureFilename", JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_textureFilename_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isFastMode", JSPROXY_CCMotionStreak_isFastMode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reset", JSPROXY_CCMotionStreak_reset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCMotionStreak_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFastMode", JSPROXY_CCMotionStreak_setFastMode_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCMotionStreak_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCMotionStreak_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCMotionStreak_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tintWithColor", JSPROXY_CCMotionStreak_tintWithColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("color", JSPROXY_CCMotionStreak_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMotionStreak_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -19910,8 +19910,8 @@ void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("streakWithFadeMinsegWidthColorTexture", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("streakWithFadeMinsegWidthColorTexturefilename", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("streakWithFadeMinSegWidthColorTexture", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("streakWithFadeMinSegWidthColorTextureFilename", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCMotionStreak_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -20208,7 +20208,7 @@ void JSPROXY_CCAccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionDuration", JSPROXY_CCAccelAmplitude_initWithAction_duration_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rate", JSPROXY_CCAccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRate", JSPROXY_CCAccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRate", JSPROXY_CCAccelAmplitude_setRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -20783,18 +20783,18 @@ void JSPROXY_CCGridBase_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("active", JSPROXY_CCGridBase_active, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getActive", JSPROXY_CCGridBase_active, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("afterDraw", JSPROXY_CCGridBase_afterDraw_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("beforeDraw", JSPROXY_CCGridBase_beforeDraw, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("blit", JSPROXY_CCGridBase_blit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("calculateVertexPoints", JSPROXY_CCGridBase_calculateVertexPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("grabber", JSPROXY_CCGridBase_grabber, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gridSize", JSPROXY_CCGridBase_gridSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGrabber", JSPROXY_CCGridBase_grabber, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getGridSize", JSPROXY_CCGridBase_gridSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSize", JSPROXY_CCGridBase_initWithSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithSizeTextureFlippedtexture", JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isTextureFlipped", JSPROXY_CCGridBase_isTextureFlipped, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithSizeTextureFlippedTexture", JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsTextureFlipped", JSPROXY_CCGridBase_isTextureFlipped, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reuse", JSPROXY_CCGridBase_reuse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("reuseGrid", JSPROXY_CCGridBase_reuseGrid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getReuseGrid", JSPROXY_CCGridBase_reuseGrid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setActive", JSPROXY_CCGridBase_setActive_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setGrabber", JSPROXY_CCGridBase_setGrabber_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsTextureFlipped", JSPROXY_CCGridBase_setIsTextureFlipped_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -20802,14 +20802,14 @@ void JSPROXY_CCGridBase_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("setShaderProgram", JSPROXY_CCGridBase_setShaderProgram_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setStep", JSPROXY_CCGridBase_setStep_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCGridBase_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("shaderProgram", JSPROXY_CCGridBase_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("step", JSPROXY_CCGridBase_step, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCGridBase_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getShaderProgram", JSPROXY_CCGridBase_shaderProgram, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStep", JSPROXY_CCGridBase_step, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCGridBase_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("gridWithSize", JSPROXY_CCGridBase_gridWithSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gridWithSizeTextureFlippedtexture", JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("gridWithSizeTextureFlippedTexture", JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -20928,7 +20928,7 @@ void JSPROXY_CCTiledGrid3D_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("gridWithSize", JSPROXY_CCTiledGrid3D_gridWithSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gridWithSizeTextureFlippedtexture", JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("gridWithSizeTextureFlippedTexture", JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -21717,7 +21717,7 @@ void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithAction", JSPROXY_CCRepeatForever_initWithAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("innerAction", JSPROXY_CCRepeatForever_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInnerAction", JSPROXY_CCRepeatForever_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setInnerAction", JSPROXY_CCRepeatForever_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -22556,17 +22556,17 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("blendFunc", JSPROXY_CCAtlasNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCAtlasNode_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTileFileTilewidthTileheightItemstorender", JSPROXY_CCAtlasNode_initWithTileFile_tileWidth_tileHeight_itemsToRender_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCAtlasNode_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("quadsToDraw", JSPROXY_CCAtlasNode_quadsToDraw, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCAtlasNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCAtlasNode_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCAtlasNode_initWithTileFile_tileWidth_tileHeight_itemsToRender_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCAtlasNode_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getQuadsToDraw", JSPROXY_CCAtlasNode_quadsToDraw, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCAtlasNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCAtlasNode_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacity", JSPROXY_CCAtlasNode_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setQuadsToDraw", JSPROXY_CCAtlasNode_setQuadsToDraw_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTextureAtlas", JSPROXY_CCAtlasNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureAtlas", JSPROXY_CCAtlasNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureAtlas", JSPROXY_CCAtlasNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateAtlasValues", JSPROXY_CCAtlasNode_updateAtlasValues, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCAtlasNode_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacityModifyRGB", JSPROXY_CCAtlasNode_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -22575,7 +22575,7 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("atlasWithTileFileTilewidthTileheightItemstorender", JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCAtlasNode_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -22808,15 +22808,15 @@ void JSPROXY_CCTileMapAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithTileFileMapfileTilewidthTileheight", JSPROXY_CCTileMapAtlas_initWithTileFile_mapFile_tileWidth_tileHeight_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTileFileMapFileTileWidthTileHeight", JSPROXY_CCTileMapAtlas_initWithTileFile_mapFile_tileWidth_tileHeight_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("releaseMap", JSPROXY_CCTileMapAtlas_releaseMap, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileAt", JSPROXY_CCTileMapAtlas_setTile_at_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tileAt", JSPROXY_CCTileMapAtlas_tileAt_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("tileMapAtlasWithTileFileMapfileTilewidthTileheight", JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasWithTileFileTilewidthTileheightItemstorender", JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("tileMapAtlasWithTileFileMapFileTileWidthTileHeight", JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTileMapAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -23195,10 +23195,10 @@ void JSPROXY_CCTMXTilesetInfo_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("firstGid", JSPROXY_CCTMXTilesetInfo_firstGid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("imageSize", JSPROXY_CCTMXTilesetInfo_imageSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("margin", JSPROXY_CCTMXTilesetInfo_margin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("name", JSPROXY_CCTMXTilesetInfo_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFirstGid", JSPROXY_CCTMXTilesetInfo_firstGid, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getImageSize", JSPROXY_CCTMXTilesetInfo_imageSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMargin", JSPROXY_CCTMXTilesetInfo_margin, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getName", JSPROXY_CCTMXTilesetInfo_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("rectForGID", JSPROXY_CCTMXTilesetInfo_rectForGID_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFirstGid", JSPROXY_CCTMXTilesetInfo_setFirstGid_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setImageSize", JSPROXY_CCTMXTilesetInfo_setImageSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -23207,9 +23207,9 @@ void JSPROXY_CCTMXTilesetInfo_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FN("setSourceImage", JSPROXY_CCTMXTilesetInfo_setSourceImage_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSpacing", JSPROXY_CCTMXTilesetInfo_setSpacing_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileSize", JSPROXY_CCTMXTilesetInfo_setTileSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sourceImage", JSPROXY_CCTMXTilesetInfo_sourceImage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spacing", JSPROXY_CCTMXTilesetInfo_spacing, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tileSize", JSPROXY_CCTMXTilesetInfo_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSourceImage", JSPROXY_CCTMXTilesetInfo_sourceImage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpacing", JSPROXY_CCTMXTilesetInfo_spacing, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTileSize", JSPROXY_CCTMXTilesetInfo_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -24396,11 +24396,11 @@ void JSPROXY_CCSkewTo_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationSkewxSkewy", JSPROXY_CCSkewTo_initWithDuration_skewX_skewY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithDurationSkewXSkewY", JSPROXY_CCSkewTo_initWithDuration_skewX_skewY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationSkewxSkewy", JSPROXY_CCSkewTo_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithDurationSkewXSkewY", JSPROXY_CCSkewTo_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCSkewTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCSkewTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -24553,11 +24553,11 @@ void JSPROXY_CCSkewBy_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationSkewxSkewy", JSPROXY_CCSkewBy_initWithDuration_skewX_skewY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithDurationSkewXSkewY", JSPROXY_CCSkewBy_initWithDuration_skewX_skewY_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationSkewxSkewy", JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithDurationSkewXSkewY", JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCSkewBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCSkewBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -25062,19 +25062,19 @@ void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithTMXFile", JSPROXY_CCTMXTiledMap_initWithTMXFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithXMLResourcepath", JSPROXY_CCTMXTiledMap_initWithXML_resourcePath_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithXMLResourcePath", JSPROXY_CCTMXTiledMap_initWithXML_resourcePath_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("layerNamed", JSPROXY_CCTMXTiledMap_layerNamed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("mapOrientation", JSPROXY_CCTMXTiledMap_mapOrientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("mapSize", JSPROXY_CCTMXTiledMap_mapSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMapOrientation", JSPROXY_CCTMXTiledMap_mapOrientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMapSize", JSPROXY_CCTMXTiledMap_mapSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("objectGroupNamed", JSPROXY_CCTMXTiledMap_objectGroupNamed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("objectGroups", JSPROXY_CCTMXTiledMap_objectGroups, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getObjectGroups", JSPROXY_CCTMXTiledMap_objectGroups, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setObjectGroups", JSPROXY_CCTMXTiledMap_setObjectGroups_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tileSize", JSPROXY_CCTMXTiledMap_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTileSize", JSPROXY_CCTMXTiledMap_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("tiledMapWithTMXFile", JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tiledMapWithXMLResourcepath", JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("tiledMapWithXMLResourcePath", JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTMXTiledMap_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -25327,7 +25327,7 @@ void JSPROXY_CCTransitionFade_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationSceneWithcolor", JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithDurationSceneWithColor", JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -25580,16 +25580,16 @@ void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithStringCharmapfileItemwidthItemheightStartcharmap", JSPROXY_CCLabelAtlas_initWithString_charMapFile_itemWidth_itemHeight_startCharMap_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFntfile", JSPROXY_CCLabelAtlas_initWithString_fntFile_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringCharMapFileItemWidthItemHeightStartCharMap", JSPROXY_CCLabelAtlas_initWithString_charMapFile_itemWidth_itemHeight_startCharMap_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFntFile", JSPROXY_CCLabelAtlas_initWithString_fntFile_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setString", JSPROXY_CCLabelAtlas_setString_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("string", JSPROXY_CCLabelAtlas_string, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("labelWithStringCharmapfileItemwidthItemheightStartcharmap", JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringCharMapFileItemWidthItemHeightStartCharMap", JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCLabelAtlas_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasWithTileFileTilewidthTileheightItemstorender", JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCLabelAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -27079,14 +27079,14 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("alignment", JSPROXY_CCLabelBMFont_alignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCLabelBMFont_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAlignment", JSPROXY_CCLabelBMFont_alignment, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCLabelBMFont_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createFontChars", JSPROXY_CCLabelBMFont_createFontChars, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("fntFile", JSPROXY_CCLabelBMFont_fntFile, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFntfile", JSPROXY_CCLabelBMFont_initWithString_fntFile_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCLabelBMFont_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFntFile", JSPROXY_CCLabelBMFont_fntFile, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFntFile", JSPROXY_CCLabelBMFont_initWithString_fntFile_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFntFileWidthAlignment", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithStringFntFileWidthAlignmentImageOffset", JSPROXY_CCLabelBMFont_initWithString_fntFile_width_alignment_imageOffset_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCLabelBMFont_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAlignment", JSPROXY_CCLabelBMFont_setAlignment_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCLabelBMFont_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFntFile", JSPROXY_CCLabelBMFont_setFntFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -27100,8 +27100,8 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCLabelBMFont_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringFntfileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("labelWithStringFntfileWidthAlignmentImageoffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringFntFileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("labelWithStringFntFileWidthAlignmentImageOffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("purgeCachedData", JSPROXY_CCLabelBMFont_purgeCachedData_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("batchNodeWithFile", JSPROXY_CCLabelBMFont_batchNodeWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -28094,14 +28094,14 @@ void JSPROXY_CCMenuItemToggle_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("color", JSPROXY_CCMenuItemToggle_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCMenuItemToggle_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithItemsBlock", JSPROXY_CCMenuItemToggle_initWithItems_block_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCMenuItemToggle_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("selectedIndex", JSPROXY_CCMenuItemToggle_selectedIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCMenuItemToggle_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSelectedIndex", JSPROXY_CCMenuItemToggle_selectedIndex, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("selectedItem", JSPROXY_CCMenuItemToggle_selectedItem, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSelectedIndex", JSPROXY_CCMenuItemToggle_setSelectedIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSubItems", JSPROXY_CCMenuItemToggle_setSubItems_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("subItems", JSPROXY_CCMenuItemToggle_subItems, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSubItems", JSPROXY_CCMenuItemToggle_subItems, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenuItemToggle_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCMenuItemToggle_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacity", JSPROXY_CCMenuItemToggle_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -28349,7 +28349,7 @@ void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FN("pauseAllTargetsWithMinPriority", JSPROXY_CCScheduler_pauseAllTargetsWithMinPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resumeTargets", JSPROXY_CCScheduler_resumeTargets_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTimeScale", JSPROXY_CCScheduler_setTimeScale_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("timeScale", JSPROXY_CCScheduler_timeScale, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTimeScale", JSPROXY_CCScheduler_timeScale, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unscheduleAllSelectors", JSPROXY_CCScheduler_unscheduleAllSelectors, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unscheduleAllSelectorsWithMinPriority", JSPROXY_CCScheduler_unscheduleAllSelectorsWithMinPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("update", JSPROXY_CCScheduler_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -28569,15 +28569,15 @@ void JSPROXY_CCFollow_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("boundarySet", JSPROXY_CCFollow_boundarySet, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBoundarySet", JSPROXY_CCFollow_boundarySet, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTarget", JSPROXY_CCFollow_initWithTarget_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTargetWorldboundary", JSPROXY_CCFollow_initWithTarget_worldBoundary_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTargetWorldBoundary", JSPROXY_CCFollow_initWithTarget_worldBoundary_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBoundarySet", JSPROXY_CCFollow_setBoundarySet_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithTarget", JSPROXY_CCFollow_actionWithTarget__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithTargetWorldboundary", JSPROXY_CCFollow_actionWithTarget_worldBoundary__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithTargetWorldBoundary", JSPROXY_CCFollow_actionWithTarget_worldBoundary__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFollow_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -28737,11 +28737,11 @@ void JSPROXY_CCOrbitCamera_createClass(JSContext *cx, JSObject* globalObj, const
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDurationRadiusDeltaradiusAnglezDeltaanglezAnglexDeltaanglex", JSPROXY_CCOrbitCamera_initWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithDurationRadiusDeltaRadiusAngleZDeltaAngleZAngleXDeltaAngleX", JSPROXY_CCOrbitCamera_initWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX_, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDurationRadiusDeltaradiusAnglezDeltaanglezAnglexDeltaanglex", JSPROXY_CCOrbitCamera_actionWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithDurationRadiusDeltaRadiusAngleZDeltaAngleZAngleXDeltaAngleX", JSPROXY_CCOrbitCamera_actionWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCOrbitCamera_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCOrbitCamera_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -28891,10 +28891,10 @@ void JSPROXY_CCAnimationFrame_createClass(JSContext *cx, JSObject* globalObj, co
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("delayUnits", JSPROXY_CCAnimationFrame_delayUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDelayUnits", JSPROXY_CCAnimationFrame_delayUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDelayUnits", JSPROXY_CCAnimationFrame_setDelayUnits_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSpriteFrame", JSPROXY_CCAnimationFrame_setSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteFrame", JSPROXY_CCAnimationFrame_spriteFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpriteFrame", JSPROXY_CCAnimationFrame_spriteFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -29297,7 +29297,7 @@ void JSPROXY_CCParallaxNode_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("addChildZParallaxratioPositionoffset", JSPROXY_CCParallaxNode_addChild_z_parallaxRatio_positionOffset_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("addChildZParallaxRatioPositionOffset", JSPROXY_CCParallaxNode_addChild_z_parallaxRatio_positionOffset_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -29626,7 +29626,7 @@ void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionTimes", JSPROXY_CCRepeat_initWithAction_times_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("innerAction", JSPROXY_CCRepeat_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInnerAction", JSPROXY_CCRepeat_innerAction, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setInnerAction", JSPROXY_CCRepeat_setInnerAction_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -29816,11 +29816,11 @@ void JSPROXY_CCShatteredTiles3D_createClass(JSContext *cx, JSObject* globalObj, 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithRangeShatterzGridDuration", JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithRangeShatterZGridDuration", JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithRangeShatterzGridDuration", JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithRangeShatterZGridDuration", JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithSizeDuration", JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCShatteredTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCShatteredTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -29951,7 +29951,7 @@ void JSPROXY_CCTimer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("interval", JSPROXY_CCTimer_interval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInterval", JSPROXY_CCTimer_interval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setInterval", JSPROXY_CCTimer_setInterval_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("update", JSPROXY_CCTimer_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -30881,16 +30881,16 @@ void JSPROXY_CCSpriteFrame_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithTextureRect", JSPROXY_CCSpriteFrame_initWithTexture_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTextureRectinpixelsRotatedOffsetOriginalsize", JSPROXY_CCSpriteFrame_initWithTexture_rectInPixels_rotated_offset_originalSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTextureRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_initWithTexture_rectInPixels_rotated_offset_originalSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureFilenameRect", JSPROXY_CCSpriteFrame_initWithTextureFilename_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTextureFilenameRectinpixelsRotatedOffsetOriginalsize", JSPROXY_CCSpriteFrame_initWithTextureFilename_rectInPixels_rotated_offset_originalSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("offset", JSPROXY_CCSpriteFrame_offset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("offsetInPixels", JSPROXY_CCSpriteFrame_offsetInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("originalSize", JSPROXY_CCSpriteFrame_originalSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("originalSizeInPixels", JSPROXY_CCSpriteFrame_originalSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rect", JSPROXY_CCSpriteFrame_rect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rectInPixels", JSPROXY_CCSpriteFrame_rectInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rotated", JSPROXY_CCSpriteFrame_rotated, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTextureFilenameRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_initWithTextureFilename_rectInPixels_rotated_offset_originalSize_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOffset", JSPROXY_CCSpriteFrame_offset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOffsetInPixels", JSPROXY_CCSpriteFrame_offsetInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOriginalSize", JSPROXY_CCSpriteFrame_originalSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOriginalSizeInPixels", JSPROXY_CCSpriteFrame_originalSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRect", JSPROXY_CCSpriteFrame_rect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRectInPixels", JSPROXY_CCSpriteFrame_rectInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRotated", JSPROXY_CCSpriteFrame_rotated, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOffset", JSPROXY_CCSpriteFrame_setOffset_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOffsetInPixels", JSPROXY_CCSpriteFrame_setOffsetInPixels_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOriginalSize", JSPROXY_CCSpriteFrame_setOriginalSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -30899,15 +30899,15 @@ void JSPROXY_CCSpriteFrame_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FN("setRectInPixels", JSPROXY_CCSpriteFrame_setRectInPixels_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRotated", JSPROXY_CCSpriteFrame_setRotated_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCSpriteFrame_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCSpriteFrame_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("textureFilename", JSPROXY_CCSpriteFrame_textureFilename, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCSpriteFrame_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTextureFilename", JSPROXY_CCSpriteFrame_textureFilename, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("frameWithTextureRect", JSPROXY_CCSpriteFrame_frameWithTexture_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frameWithTextureRectinpixelsRotatedOffsetOriginalsize", JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("frameWithTextureRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("frameWithTextureFilenameRect", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frameWithTextureFilenameRectinpixelsRotatedOffsetOriginalsize", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("frameWithTextureFilenameRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -31667,10 +31667,10 @@ void JSPROXY_CCRipple3D_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCRipple3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCRipple3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCRipple3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCRipple3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithPositionRadiusWavesAmplitudeGridDuration", JSPROXY_CCRipple3D_initWithPosition_radius_waves_amplitude_grid_duration_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("position", JSPROXY_CCRipple3D_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPosition", JSPROXY_CCRipple3D_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCRipple3D_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCRipple3D_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPosition", JSPROXY_CCRipple3D_setPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -32500,14 +32500,14 @@ void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("filename", JSPROXY_CCTMXMapInfo_filename, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFilename", JSPROXY_CCTMXMapInfo_filename, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTMXFile", JSPROXY_CCTMXMapInfo_initWithTMXFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithXMLResourcepath", JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layers", JSPROXY_CCTMXMapInfo_layers, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("mapSize", JSPROXY_CCTMXMapInfo_mapSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("objectGroups", JSPROXY_CCTMXMapInfo_objectGroups, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("orientation", JSPROXY_CCTMXMapInfo_orientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("resources", JSPROXY_CCTMXMapInfo_resources, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithXMLResourcePath", JSPROXY_CCTMXMapInfo_initWithXML_resourcePath_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLayers", JSPROXY_CCTMXMapInfo_layers, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMapSize", JSPROXY_CCTMXMapInfo_mapSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getObjectGroups", JSPROXY_CCTMXMapInfo_objectGroups, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOrientation", JSPROXY_CCTMXMapInfo_orientation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getResources", JSPROXY_CCTMXMapInfo_resources, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFilename", JSPROXY_CCTMXMapInfo_setFilename_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayers", JSPROXY_CCTMXMapInfo_setLayers_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMapSize", JSPROXY_CCTMXMapInfo_setMapSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -32516,13 +32516,13 @@ void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FN("setResources", JSPROXY_CCTMXMapInfo_setResources_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTileSize", JSPROXY_CCTMXMapInfo_setTileSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTilesets", JSPROXY_CCTMXMapInfo_setTilesets_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tileSize", JSPROXY_CCTMXMapInfo_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("tilesets", JSPROXY_CCTMXMapInfo_tilesets, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTileSize", JSPROXY_CCTMXMapInfo_tileSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTilesets", JSPROXY_CCTMXMapInfo_tilesets, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("formatWithTMXFile", JSPROXY_CCTMXMapInfo_formatWithTMXFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("formatWithXMLResourcepath", JSPROXY_CCTMXMapInfo_formatWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("formatWithXMLResourcePath", JSPROXY_CCTMXMapInfo_formatWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -32910,13 +32910,13 @@ void JSPROXY_CCTMXLayerInfo_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("layerSize", JSPROXY_CCTMXLayerInfo_layerSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxGID", JSPROXY_CCTMXLayerInfo_maxGID, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("minGID", JSPROXY_CCTMXLayerInfo_minGID, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("name", JSPROXY_CCTMXLayerInfo_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("offset", JSPROXY_CCTMXLayerInfo_offset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCTMXLayerInfo_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ownTiles", JSPROXY_CCTMXLayerInfo_ownTiles, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLayerSize", JSPROXY_CCTMXLayerInfo_layerSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxGID", JSPROXY_CCTMXLayerInfo_maxGID, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMinGID", JSPROXY_CCTMXLayerInfo_minGID, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getName", JSPROXY_CCTMXLayerInfo_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOffset", JSPROXY_CCTMXLayerInfo_offset, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCTMXLayerInfo_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOwnTiles", JSPROXY_CCTMXLayerInfo_ownTiles, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLayerSize", JSPROXY_CCTMXLayerInfo_setLayerSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMaxGID", JSPROXY_CCTMXLayerInfo_setMaxGID_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMinGID", JSPROXY_CCTMXLayerInfo_setMinGID_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -32925,7 +32925,7 @@ void JSPROXY_CCTMXLayerInfo_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FN("setOpacity", JSPROXY_CCTMXLayerInfo_setOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOwnTiles", JSPROXY_CCTMXLayerInfo_setOwnTiles_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVisible", JSPROXY_CCTMXLayerInfo_setVisible_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("visible", JSPROXY_CCTMXLayerInfo_visible, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVisible", JSPROXY_CCTMXLayerInfo_visible, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -33739,16 +33739,16 @@ void JSPROXY_CCConfiguration_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("OSVersion", JSPROXY_CCConfiguration_OSVersion, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOSVersion", JSPROXY_CCConfiguration_OSVersion, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("checkForGLExtension", JSPROXY_CCConfiguration_checkForGLExtension_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxModelviewStackDepth", JSPROXY_CCConfiguration_maxModelviewStackDepth, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxTextureSize", JSPROXY_CCConfiguration_maxTextureSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("maxTextureUnits", JSPROXY_CCConfiguration_maxTextureUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("supportsBGRA8888", JSPROXY_CCConfiguration_supportsBGRA8888, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("supportsDiscardFramebuffer", JSPROXY_CCConfiguration_supportsDiscardFramebuffer, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("supportsNPOT", JSPROXY_CCConfiguration_supportsNPOT, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("supportsPVRTC", JSPROXY_CCConfiguration_supportsPVRTC, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("supportsShareableVAO", JSPROXY_CCConfiguration_supportsShareableVAO, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxModelviewStackDepth", JSPROXY_CCConfiguration_maxModelviewStackDepth, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxTextureSize", JSPROXY_CCConfiguration_maxTextureSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMaxTextureUnits", JSPROXY_CCConfiguration_maxTextureUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSupportsBGRA8888", JSPROXY_CCConfiguration_supportsBGRA8888, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSupportsDiscardFramebuffer", JSPROXY_CCConfiguration_supportsDiscardFramebuffer, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSupportsNPOT", JSPROXY_CCConfiguration_supportsNPOT, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSupportsPVRTC", JSPROXY_CCConfiguration_supportsPVRTC, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSupportsShareableVAO", JSPROXY_CCConfiguration_supportsShareableVAO, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -34226,7 +34226,7 @@ void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("animation", JSPROXY_CCAnimate_animation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnimation", JSPROXY_CCAnimate_animation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithAnimation", JSPROXY_CCAnimate_initWithAnimation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAnimation", JSPROXY_CCAnimate_setAnimation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -35065,24 +35065,24 @@ void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FN("addSpriteFrame", JSPROXY_CCAnimation_addSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addSpriteFrameWithFilename", JSPROXY_CCAnimation_addSpriteFrameWithFilename_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addSpriteFrameWithTextureRect", JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("delayPerUnit", JSPROXY_CCAnimation_delayPerUnit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("duration", JSPROXY_CCAnimation_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frames", JSPROXY_CCAnimation_frames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithAnimationFramesDelayperunitLoops", JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDelayPerUnit", JSPROXY_CCAnimation_delayPerUnit, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDuration", JSPROXY_CCAnimation_duration, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFrames", JSPROXY_CCAnimation_frames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithAnimationFramesDelayPerUnitLoops", JSPROXY_CCAnimation_initWithAnimationFrames_delayPerUnit_loops_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFrames", JSPROXY_CCAnimation_initWithSpriteFrames_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFramesDelay", JSPROXY_CCAnimation_initWithSpriteFrames_delay_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("loops", JSPROXY_CCAnimation_loops, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("restoreOriginalFrame", JSPROXY_CCAnimation_restoreOriginalFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLoops", JSPROXY_CCAnimation_loops, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRestoreOriginalFrame", JSPROXY_CCAnimation_restoreOriginalFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDelayPerUnit", JSPROXY_CCAnimation_setDelayPerUnit_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFrames", JSPROXY_CCAnimation_setFrames_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLoops", JSPROXY_CCAnimation_setLoops_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRestoreOriginalFrame", JSPROXY_CCAnimation_setRestoreOriginalFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalDelayUnits", JSPROXY_CCAnimation_totalDelayUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTotalDelayUnits", JSPROXY_CCAnimation_totalDelayUnits, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("animation", JSPROXY_CCAnimation_animation_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationWithAnimationFramesDelayperunitLoops", JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("animationWithAnimationFramesDelayPerUnitLoops", JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -35415,11 +35415,11 @@ void JSPROXY_CCShaky3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithRangeShakezGridDuration", JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithRangeShakeZGridDuration", JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithRangeShakezGridDuration", JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithRangeShakeZGridDuration", JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithSizeDuration", JSPROXY_CCShaky3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCShaky3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCShaky3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -36645,24 +36645,24 @@ void JSPROXY_CCTextureAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("capacity", JSPROXY_CCTextureAtlas_capacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getCapacity", JSPROXY_CCTextureAtlas_capacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawNumberOfQuads", JSPROXY_CCTextureAtlas_drawNumberOfQuads_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("drawNumberOfQuadsFromindex", JSPROXY_CCTextureAtlas_drawNumberOfQuads_fromIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawNumberOfQuadsFromIndex", JSPROXY_CCTextureAtlas_drawNumberOfQuads_fromIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawQuads", JSPROXY_CCTextureAtlas_drawQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("fillWithEmptyQuadsFromIndexAmount", JSPROXY_CCTextureAtlas_fillWithEmptyQuadsFromIndex_amount_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("increaseTotalQuadsWith", JSPROXY_CCTextureAtlas_increaseTotalQuadsWith_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithFileCapacity", JSPROXY_CCTextureAtlas_initWithFile_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureCapacity", JSPROXY_CCTextureAtlas_initWithTexture_capacity_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("insertQuadFromIndexAtindex", JSPROXY_CCTextureAtlas_insertQuadFromIndex_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("moveQuadsFromIndexAmountAtindex", JSPROXY_CCTextureAtlas_moveQuadsFromIndex_amount_atIndex_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("insertQuadFromIndexAtIndex", JSPROXY_CCTextureAtlas_insertQuadFromIndex_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("moveQuadsFromIndexAmountAtIndex", JSPROXY_CCTextureAtlas_moveQuadsFromIndex_amount_atIndex_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("moveQuadsFromIndexTo", JSPROXY_CCTextureAtlas_moveQuadsFromIndex_to_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAllQuads", JSPROXY_CCTextureAtlas_removeAllQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeQuadAtIndex", JSPROXY_CCTextureAtlas_removeQuadAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeQuadsAtIndexAmount", JSPROXY_CCTextureAtlas_removeQuadsAtIndex_amount_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resizeCapacity", JSPROXY_CCTextureAtlas_resizeCapacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCTextureAtlas_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCTextureAtlas_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalQuads", JSPROXY_CCTextureAtlas_totalQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCTextureAtlas_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTotalQuads", JSPROXY_CCTextureAtlas_totalQuads, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -37115,13 +37115,13 @@ void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addControlPoint", JSPROXY_CCPointArray_addControlPoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("controlPoints", JSPROXY_CCPointArray_controlPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getControlPoints", JSPROXY_CCPointArray_controlPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("count", JSPROXY_CCPointArray_count, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getControlPointAtIndex", JSPROXY_CCPointArray_getControlPointAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithCapacity", JSPROXY_CCPointArray_initWithCapacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("insertControlPointAtindex", JSPROXY_CCPointArray_insertControlPoint_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("insertControlPointAtIndex", JSPROXY_CCPointArray_insertControlPoint_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeControlPointAtIndex", JSPROXY_CCPointArray_removeControlPointAtIndex_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("replaceControlPointAtindex", JSPROXY_CCPointArray_replaceControlPoint_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("replaceControlPointAtIndex", JSPROXY_CCPointArray_replaceControlPoint_atIndex_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverse", JSPROXY_CCPointArray_reverse, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reverseInline", JSPROXY_CCPointArray_reverseInline, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setControlPoints", JSPROXY_CCPointArray_setControlPoints_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -37671,8 +37671,8 @@ void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCLiquid_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCLiquid_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCLiquid_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCLiquid_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithWavesAmplitudeGridDuration", JSPROXY_CCLiquid_initWithWaves_amplitude_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCLiquid_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCLiquid_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -38194,13 +38194,13 @@ void JSPROXY_CCProgressTimer_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("barChangeRate", JSPROXY_CCProgressTimer_barChangeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCProgressTimer_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBarChangeRate", JSPROXY_CCProgressTimer_barChangeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCProgressTimer_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSprite", JSPROXY_CCProgressTimer_initWithSprite_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("midpoint", JSPROXY_CCProgressTimer_midpoint, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCProgressTimer_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("percentage", JSPROXY_CCProgressTimer_percentage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("reverseDirection", JSPROXY_CCProgressTimer_reverseDirection, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getMidpoint", JSPROXY_CCProgressTimer_midpoint, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCProgressTimer_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPercentage", JSPROXY_CCProgressTimer_percentage, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getReverseDirection", JSPROXY_CCProgressTimer_reverseDirection, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBarChangeRate", JSPROXY_CCProgressTimer_setBarChangeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCProgressTimer_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setMidpoint", JSPROXY_CCProgressTimer_setMidpoint_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -38209,9 +38209,9 @@ void JSPROXY_CCProgressTimer_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("setReverseDirection", JSPROXY_CCProgressTimer_setReverseDirection_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSprite", JSPROXY_CCProgressTimer_setSprite_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setType", JSPROXY_CCProgressTimer_setType_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sprite", JSPROXY_CCProgressTimer_sprite, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("type", JSPROXY_CCProgressTimer_type, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("vertexDataCount", JSPROXY_CCProgressTimer_vertexDataCount, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSprite", JSPROXY_CCProgressTimer_sprite, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getType", JSPROXY_CCProgressTimer_type, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVertexDataCount", JSPROXY_CCProgressTimer_vertexDataCount, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCProgressTimer_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacityModifyRGB", JSPROXY_CCProgressTimer_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -40099,8 +40099,8 @@ void JSPROXY_CCWaves_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCWaves_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCWaves_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCWaves_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCWaves_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithWavesAmplitudeHorizontalVerticalGridDuration", JSPROXY_CCWaves_initWithWaves_amplitude_horizontal_vertical_grid_duration_, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCWaves_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCWaves_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -40577,7 +40577,7 @@ void JSPROXY_CCDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithActionDuration", JSPROXY_CCDeccelAmplitude_initWithAction_duration_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("rate", JSPROXY_CCDeccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRate", JSPROXY_CCDeccelAmplitude_rate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRate", JSPROXY_CCDeccelAmplitude_setRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -40849,8 +40849,8 @@ void JSPROXY_CCLens3D_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("initWithPositionRadiusGridDuration", JSPROXY_CCLens3D_initWithPosition_radius_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("lensEffect", JSPROXY_CCLens3D_lensEffect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("position", JSPROXY_CCLens3D_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLensEffect", JSPROXY_CCLens3D_lensEffect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPosition", JSPROXY_CCLens3D_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setLensEffect", JSPROXY_CCLens3D_setLensEffect_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPosition", JSPROXY_CCLens3D_setPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -41120,8 +41120,8 @@ void JSPROXY_CCWaves3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCWaves3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCWaves3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCWaves3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCWaves3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithWavesAmplitudeGridDuration", JSPROXY_CCWaves3D_initWithWaves_amplitude_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCWaves3D_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCWaves3D_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -41544,8 +41544,8 @@ void JSPROXY_CCWavesTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCWavesTiles3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCWavesTiles3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCWavesTiles3D_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCWavesTiles3D_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithWavesAmplitudeGridDuration", JSPROXY_CCWavesTiles3D_initWithWaves_amplitude_grid_duration_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCWavesTiles3D_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCWavesTiles3D_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -42666,18 +42666,18 @@ void JSPROXY_CCRenderTexture_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("clearDepth", JSPROXY_CCRenderTexture_clearDepth_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("clearStencil", JSPROXY_CCRenderTexture_clearStencil_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("end", JSPROXY_CCRenderTexture_end, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithWidthHeightPixelformat", JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithWidthHeightPixelformatDepthstencilformat", JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_depthStencilFormat_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithWidthHeightPixelFormat", JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithWidthHeightPixelFormatDepthStencilFormat", JSPROXY_CCRenderTexture_initWithWidth_height_pixelFormat_depthStencilFormat_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("saveToFile", JSPROXY_CCRenderTexture_saveToFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("saveToFileFormat", JSPROXY_CCRenderTexture_saveToFile_format_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setSprite", JSPROXY_CCRenderTexture_setSprite_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sprite", JSPROXY_CCRenderTexture_sprite, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSprite", JSPROXY_CCRenderTexture_sprite, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("renderTextureWithWidthHeight", JSPROXY_CCRenderTexture_renderTextureWithWidth_height__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("renderTextureWithWidthHeightPixelformat", JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("renderTextureWithWidthHeightPixelformatDepthstencilformat", JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat_depthStencilFormat__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("renderTextureWithWidthHeightPixelFormat", JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("renderTextureWithWidthHeightPixelFormatDepthStencilFormat", JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat_depthStencilFormat__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCRenderTexture_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -42983,10 +42983,10 @@ void JSPROXY_CCTwirl_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("amplitude", JSPROXY_CCTwirl_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("amplitudeRate", JSPROXY_CCTwirl_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitude", JSPROXY_CCTwirl_amplitude, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAmplitudeRate", JSPROXY_CCTwirl_amplitudeRate, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithPositionTwirlsAmplitudeGridDuration", JSPROXY_CCTwirl_initWithPosition_twirls_amplitude_grid_duration_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("position", JSPROXY_CCTwirl_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getPosition", JSPROXY_CCTwirl_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitude", JSPROXY_CCTwirl_setAmplitude_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAmplitudeRate", JSPROXY_CCTwirl_setAmplitudeRate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setPosition", JSPROXY_CCTwirl_setPosition_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -43250,15 +43250,15 @@ void JSPROXY_CCTexturePVR_createClass(JSContext *cx, JSObject* globalObj, const 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("format", JSPROXY_CCTexturePVR_format, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("hasAlpha", JSPROXY_CCTexturePVR_hasAlpha, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("height", JSPROXY_CCTexturePVR_height, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getFormat", JSPROXY_CCTexturePVR_format, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getHasAlpha", JSPROXY_CCTexturePVR_hasAlpha, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getHeight", JSPROXY_CCTexturePVR_height, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithContentsOfFile", JSPROXY_CCTexturePVR_initWithContentsOfFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("name", JSPROXY_CCTexturePVR_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("numberOfMipmaps", JSPROXY_CCTexturePVR_numberOfMipmaps, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("retainName", JSPROXY_CCTexturePVR_retainName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getName", JSPROXY_CCTexturePVR_name, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getNumberOfMipmaps", JSPROXY_CCTexturePVR_numberOfMipmaps, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRetainName", JSPROXY_CCTexturePVR_retainName, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setRetainName", JSPROXY_CCTexturePVR_setRetainName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("width", JSPROXY_CCTexturePVR_width, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getWidth", JSPROXY_CCTexturePVR_width, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -43627,15 +43627,15 @@ void JSPROXY_CCGLProgram_createClass(JSContext *cx, JSObject* globalObj, const c
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addAttributeIndex", JSPROXY_CCGLProgram_addAttribute_index_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("fragmentShaderLog", JSPROXY_CCGLProgram_fragmentShaderLog, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithVertexShaderFilenameFragmentshaderfilename", JSPROXY_CCGLProgram_initWithVertexShaderFilename_fragmentShaderFilename_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithVertexShaderFilenameFragmentShaderFilename", JSPROXY_CCGLProgram_initWithVertexShaderFilename_fragmentShaderFilename_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("link", JSPROXY_CCGLProgram_link, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("programLog", JSPROXY_CCGLProgram_programLog, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setUniformForModelViewProjectionMatrix", JSPROXY_CCGLProgram_setUniformForModelViewProjectionMatrix, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithf1", JSPROXY_CCGLProgram_setUniformLocation_withF1_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithf1F2", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithf1F2F3", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithf1F2F3F4", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_f4_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUniformLocationWithi1", JSPROXY_CCGLProgram_setUniformLocation_withI1_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithF1", JSPROXY_CCGLProgram_setUniformLocation_withF1_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithF1F2", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithF1F2F3", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithF1F2F3F4", JSPROXY_CCGLProgram_setUniformLocation_withF1_f2_f3_f4_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUniformLocationWithI1", JSPROXY_CCGLProgram_setUniformLocation_withI1_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("updateUniforms", JSPROXY_CCGLProgram_updateUniforms, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("use", JSPROXY_CCGLProgram_use, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("vertexShaderLog", JSPROXY_CCGLProgram_vertexShaderLog, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -43854,7 +43854,7 @@ void JSPROXY_CCGrid3D_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("gridWithSize", JSPROXY_CCGrid3D_gridWithSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("gridWithSizeTextureFlippedtexture", JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("gridWithSizeTextureFlippedTexture", JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

@@ -578,10 +578,17 @@ class SpiderMonkey(object):
         return name.replace(':','_')
 
     def convert_selector_name_to_js( self, class_name, selector ):
-
         # Does it have a rename rule ?
         try:
             return self.method_properties[ class_name ][ selector ][ 'name' ]
+        except KeyError, e:
+            pass
+
+        # Is it a property ?
+        try:
+            if selector in self.hierarchy[ class_name ][ 'properties' ]:
+                ret = 'get%s%s' % (selector[0].capitalize(), selector[1:] )
+                return ret
         except KeyError, e:
             pass
 
@@ -590,8 +597,8 @@ class SpiderMonkey(object):
         for i,arg in enumerate(parts):
             if i==0:
                 name += arg
-            else:
-                name += arg.capitalize()
+            elif arg:
+                name += arg[0].capitalize() + arg[1:]
 
         return name
 

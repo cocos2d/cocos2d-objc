@@ -856,33 +856,33 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("actionManager", JSPROXY_CCDirector_actionManager, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationInterval", JSPROXY_CCDirector_animationInterval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getActionManager", JSPROXY_CCDirector_actionManager, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnimationInterval", JSPROXY_CCDirector_animationInterval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertEventToGL", JSPROXY_CCDirector_convertEventToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToGL", JSPROXY_CCDirector_convertToGL_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("convertToUI", JSPROXY_CCDirector_convertToUI_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createStatsLabel", JSPROXY_CCDirector_createStatsLabel, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("displayStats", JSPROXY_CCDirector_displayStats, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDisplayStats", JSPROXY_CCDirector_displayStats, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("drawScene", JSPROXY_CCDirector_drawScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("end", JSPROXY_CCDirector_end, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getZEye", JSPROXY_CCDirector_getZEye, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isAnimating", JSPROXY_CCDirector_isAnimating, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isPaused", JSPROXY_CCDirector_isPaused, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("nextDeltaTimeZero", JSPROXY_CCDirector_nextDeltaTimeZero, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsAnimating", JSPROXY_CCDirector_isAnimating, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsPaused", JSPROXY_CCDirector_isPaused, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getNextDeltaTimeZero", JSPROXY_CCDirector_nextDeltaTimeZero, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("pause", JSPROXY_CCDirector_pause, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("popScene", JSPROXY_CCDirector_popScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("popToRootScene", JSPROXY_CCDirector_popToRootScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("projection", JSPROXY_CCDirector_projection, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getProjection", JSPROXY_CCDirector_projection, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("purgeCachedData", JSPROXY_CCDirector_purgeCachedData, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("pushScene", JSPROXY_CCDirector_pushScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("replaceScene", JSPROXY_CCDirector_replaceScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reshapeProjection", JSPROXY_CCDirector_reshapeProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resume", JSPROXY_CCDirector_resume, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("runWithScene", JSPROXY_CCDirector_runWithScene_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("runningScene", JSPROXY_CCDirector_runningScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("scheduler", JSPROXY_CCDirector_scheduler, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("secondsPerFrame", JSPROXY_CCDirector_secondsPerFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("sendCleanupToScene", JSPROXY_CCDirector_sendCleanupToScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getRunningScene", JSPROXY_CCDirector_runningScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getScheduler", JSPROXY_CCDirector_scheduler, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSecondsPerFrame", JSPROXY_CCDirector_secondsPerFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSendCleanupToScene", JSPROXY_CCDirector_sendCleanupToScene, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setActionManager", JSPROXY_CCDirector_setActionManager_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAlphaBlending", JSPROXY_CCDirector_setAlphaBlending_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAnimationInterval", JSPROXY_CCDirector_setAnimationInterval_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -894,7 +894,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("setScheduler", JSPROXY_CCDirector_setScheduler_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("startAnimation", JSPROXY_CCDirector_startAnimation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("stopAnimation", JSPROXY_CCDirector_stopAnimation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("totalFrames", JSPROXY_CCDirector_totalFrames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTotalFrames", JSPROXY_CCDirector_totalFrames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("winSize", JSPROXY_CCDirector_winSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("winSizeInPixels", JSPROXY_CCDirector_winSizeInPixels, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -1128,9 +1128,9 @@ void JSPROXY_CCDirectorMac_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec funcs[] = {
 		JS_FN("convertToLogicalCoordinates", JSPROXY_CCDirectorMac_convertToLogicalCoordinates_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isFullScreen", JSPROXY_CCDirectorMac_isFullScreen, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("originalWinSize", JSPROXY_CCDirectorMac_originalWinSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("resizeMode", JSPROXY_CCDirectorMac_resizeMode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsFullScreen", JSPROXY_CCDirectorMac_isFullScreen, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOriginalWinSize", JSPROXY_CCDirectorMac_originalWinSize, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getResizeMode", JSPROXY_CCDirectorMac_resizeMode, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFullScreen", JSPROXY_CCDirectorMac_setFullScreen_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOriginalWinSize", JSPROXY_CCDirectorMac_setOriginalWinSize_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setResizeMode", JSPROXY_CCDirectorMac_setResizeMode_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -1351,75 +1351,6 @@ JSBool JSPROXY_CCLayer_touchDelegatePriority(JSContext *cx, uint32_t argc, jsval
 	CCLayer *real = (CCLayer*) [proxy realObj];
 	ret_val = [real touchDelegatePriority ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSEvent*
-// Ret value: BOOL (b)
-JSBool JSPROXY_CCLayer_ccFlagsChanged_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	BOOL ret_val;
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccFlagsChanged:(NSEvent*)arg0  ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSEvent*
-// Ret value: BOOL (b)
-JSBool JSPROXY_CCLayer_ccKeyDown_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	BOOL ret_val;
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccKeyDown:(NSEvent*)arg0  ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-// Arguments: NSEvent*
-// Ret value: BOOL (b)
-JSBool JSPROXY_CCLayer_ccKeyUp_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	BOOL ret_val;
-
-	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccKeyUp:(NSEvent*)arg0  ];
-	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
 
@@ -1761,18 +1692,15 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("isKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("isTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsKeyboardEnabled", JSPROXY_CCLayer_isKeyboardEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsMouseEnabled", JSPROXY_CCLayer_isMouseEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getIsTouchEnabled", JSPROXY_CCLayer_isTouchEnabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("keyboardDelegatePriority", JSPROXY_CCLayer_keyboardDelegatePriority, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("mouseDelegatePriority", JSPROXY_CCLayer_mouseDelegatePriority, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsKeyboardEnabled", JSPROXY_CCLayer_setIsKeyboardEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsMouseEnabled", JSPROXY_CCLayer_setIsMouseEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsTouchEnabled", JSPROXY_CCLayer_setIsTouchEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("touchDelegatePriority", JSPROXY_CCLayer_touchDelegatePriority, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ccFlagsChanged", JSPROXY_CCLayer_ccFlagsChanged_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ccKeyDown", JSPROXY_CCLayer_ccKeyDown_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("ccKeyUp", JSPROXY_CCLayer_ccKeyUp_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("ccMouseEntered", JSPROXY_CCLayer_ccMouseEntered_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("ccMouseExited", JSPROXY_CCLayer_ccMouseExited_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("ccMouseMoved", JSPROXY_CCLayer_ccMouseMoved_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2410,14 +2338,14 @@ void JSPROXY_CCLayerColor_createClass(JSContext *cx, JSObject* globalObj, const 
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("blendFunc", JSPROXY_CCLayerColor_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBlendFunc", JSPROXY_CCLayerColor_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("changeHeight", JSPROXY_CCLayerColor_changeHeight_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("changeWidth", JSPROXY_CCLayerColor_changeWidth_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("changeWidthHeight", JSPROXY_CCLayerColor_changeWidth_height_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCLayerColor_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCLayerColor_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithColor", JSPROXY_CCLayerColor_initWithColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithColorWidthHeight", JSPROXY_CCLayerColor_initWithColor_width_height_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCLayerColor_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCLayerColor_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCLayerColor_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCLayerColor_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setColor", JSPROXY_CCLayerColor_setColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2911,10 +2839,10 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 		{0, 0, 0, 0, 0}
 	};
 	static JSFunctionSpec funcs[] = {
-		JS_FN("compressedInterpolation", JSPROXY_CCLayerGradient_compressedInterpolation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endColor", JSPROXY_CCLayerGradient_endColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("endOpacity", JSPROXY_CCLayerGradient_endOpacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithColorFadingto", JSPROXY_CCLayerGradient_initWithColor_fadingTo_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getCompressedInterpolation", JSPROXY_CCLayerGradient_compressedInterpolation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndColor", JSPROXY_CCLayerGradient_endColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEndOpacity", JSPROXY_CCLayerGradient_endOpacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithColorFadingTo", JSPROXY_CCLayerGradient_initWithColor_fadingTo_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("init", JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setCompressedInterpolation", JSPROXY_CCLayerGradient_setCompressedInterpolation_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setEndColor", JSPROXY_CCLayerGradient_setEndColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -2922,9 +2850,9 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("setStartColor", JSPROXY_CCLayerGradient_setStartColor_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setStartOpacity", JSPROXY_CCLayerGradient_setStartOpacity_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setVector", JSPROXY_CCLayerGradient_setVector_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startColor", JSPROXY_CCLayerGradient_startColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("startOpacity", JSPROXY_CCLayerGradient_startOpacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("vector", JSPROXY_CCLayerGradient_vector, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartColor", JSPROXY_CCLayerGradient_startColor, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getStartOpacity", JSPROXY_CCLayerGradient_startOpacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getVector", JSPROXY_CCLayerGradient_vector, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -3309,10 +3237,10 @@ void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("alignItemsHorizontallyWithPadding", JSPROXY_CCMenu_alignItemsHorizontallyWithPadding_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("alignItemsVertically", JSPROXY_CCMenu_alignItemsVertically, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("alignItemsVerticallyWithPadding", JSPROXY_CCMenu_alignItemsVerticallyWithPadding_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("color", JSPROXY_CCMenu_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("enabled", JSPROXY_CCMenu_enabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getColor", JSPROXY_CCMenu_color, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getEnabled", JSPROXY_CCMenu_enabled, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithArray", JSPROXY_CCMenu_initWithArray_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("opacity", JSPROXY_CCMenu_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getOpacity", JSPROXY_CCMenu_opacity, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setEnabled", JSPROXY_CCMenu_setEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setHandlerPriority", JSPROXY_CCMenu_setHandlerPriority_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCMenu_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),

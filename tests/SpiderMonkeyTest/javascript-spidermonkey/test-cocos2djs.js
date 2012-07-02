@@ -135,9 +135,9 @@ BaseLayer.prototype.onEnter = function() {
 		this.sublabel = null;
 
 	// WARNING: MenuItem API will change!
-	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
-	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("r1.png", "r2.png", this.restartCallback);
-	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
+	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("b1.png", "b2.png", this.backCallback);
+	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("r1.png", "r2.png", this.restartCallback);
+	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("f1.png", "f2.png", this.nextCallback);
 
 	 [item1, item2, item3].forEach( function(item) {
 		item.normalImage().setOpacity(45);
