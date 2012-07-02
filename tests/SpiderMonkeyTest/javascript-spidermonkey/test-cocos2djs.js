@@ -11,6 +11,8 @@ var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
 var centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
+cc.log( 'WinSize: ' + winSize.width + ' ' + winSize.height );
+
 var scenes = []
 var currentScene = 0;
 var withTransition = false;
