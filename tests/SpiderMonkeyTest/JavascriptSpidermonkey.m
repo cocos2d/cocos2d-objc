@@ -231,8 +231,8 @@
 	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-cocos2djs.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-cocos2djs.js"];
 }
 @end
 

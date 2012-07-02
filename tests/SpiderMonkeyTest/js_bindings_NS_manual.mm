@@ -66,10 +66,8 @@ void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( obj );
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-	NSCAssert( proxy, @"Invalid Proxy object");
-	NSCAssert( ! [proxy realObj], @"Object already initialzied. error");
+	NSCAssert( proxy && ![proxy realObj], @"Object already initialzied. error" );
 	
 	
 	NSObject* real = [[NSObject alloc] init];
@@ -86,6 +84,32 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	return JS_TRUE;
 }
+
+// Methods
+JSBool JSPROXY_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
+	
+
+	JSObject *obj_copy;
+
+	id real = (NSObject*) [proxy realObj];
+	if( [real conformsToProtocol:@protocol(NSCopying) ] ) {
+		id native_copy = [[real copy] autorelease];
+		
+		obj_copy = create_jsobject_from_realobj(cx, [native_copy class], native_copy);
+
+	} else {
+		JS_SET_RVAL(cx, vp, JSVAL_VOID);
+		return JS_FALSE;
+	}
+
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj_copy) );
+	return JS_TRUE;
+}
+
 
 void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
@@ -109,6 +133,7 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	
 	static JSFunctionSpec funcs[] = {
 		JS_FN("init", JSPROXY_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("copy", JSPROXY_NSObject_copy, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 	
