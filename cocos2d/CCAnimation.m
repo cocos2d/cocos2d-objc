@@ -199,4 +199,9 @@
 	[self addFrame:frame];
 }
 
+- (void)setDelayPerUnit:(float)delayPerUnit {
+    delayPerUnit_ = delayPerUnit;
+    duration_ = totalDelayUnits_ * delayPerUnit_;
+}
+
 @end
