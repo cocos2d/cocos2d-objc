@@ -95,9 +95,9 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
 	// WARNING: MenuItem API will change!
-	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("b1.png", "b2.png", this.backCallback);
-	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("r1.png", "r2.png", this.restartCallback);
-	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedimageBlock("f1.png", "f2.png", this.nextCallback);
+	var item1 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("b1.png", "b2.png", this.backCallback);
+	var item2 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("r1.png", "r2.png", this.restartCallback);
+	var item3 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("f1.png", "f2.png", this.nextCallback);
 
 	var menu = cc.Menu.create( item1, item2, item3 );
 
@@ -149,7 +149,7 @@ var SpriteTouchTest = function() {
 	}
 
 	this.title = function () {
-		return "Sprite: Simnple action test";
+		return "Sprite: Simple action test";
 	}
 
 	this.subtitle = function () {
@@ -232,7 +232,7 @@ var SpriteBatchTouchTest = function() {
 	}
 
 	this.title = function () {
-		return "SpriteBatch: Simnple action test";
+		return "SpriteBatch: Simple action test";
 	}
 
 	this.subtitle = function () {
@@ -361,7 +361,7 @@ var SpriteAnchorPoint = function() {
 
 			var point = cc.Sprite.create( "r1.png" );
 			point.setScale( 0.25 );
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
 			if( i == 0 ) {
@@ -372,7 +372,7 @@ var SpriteAnchorPoint = function() {
 				sprite.setAnchorPoint( cc.p(1,1) );
 			}
 
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 
 			var rotate = cc.RotateBy.create(10, 360);
 			var action = cc.RepeatForever.create( rotate );
@@ -411,7 +411,7 @@ var SpriteBatchAnchorPoint = function() {
 
 			var point = cc.Sprite.create( "r1.png" );
 			point.setScale( 0.25 );
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
 			if( i == 0 ) {
@@ -422,7 +422,7 @@ var SpriteBatchAnchorPoint = function() {
 				sprite.setAnchorPoint( cc.p(1,1) );
 			}
 
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 
 			var rotate = cc.RotateBy.create(10, 360);
 			var action = cc.RepeatForever.create( rotate );
@@ -465,7 +465,7 @@ var SpriteOffsetAnchorFlip = function() {
 
 			var point = cc.Sprite.create( "r1.png" );
 			point.setScale( 0.25 );
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
 			if( i == 0 ) {
@@ -476,7 +476,7 @@ var SpriteOffsetAnchorFlip = function() {
 				sprite.setAnchorPoint( cc.p(1,1) );
 			}
 
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 
 			var frames = []
 			for( var j = 1; j < 15; j++) {
@@ -539,7 +539,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 
 			var point = cc.Sprite.create( "r1.png" );
 			point.setScale( 0.25 );
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
 			if( i == 0 ) {
@@ -550,7 +550,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 				sprite.setAnchorPoint( cc.p(1,1) );
 			}
 
-			point.setPosition( sprite.position() );
+			point.setPosition( sprite.getPosition() );
 
 			var frames = []
 			for( var j = 1; j < 15; j++) {
