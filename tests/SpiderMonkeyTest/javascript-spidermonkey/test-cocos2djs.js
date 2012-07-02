@@ -424,29 +424,17 @@ var ActionsEasePage = function() {
 		var move = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
 		var move_back = move.reverse();
 
-		// XXX: Copy not working yet... re-create the actions
-		var move_copy = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
-
-		var move_ease_in = cc.EaseIn.create( move_copy,  2.5 );
+		var move_ease_in = cc.EaseIn.create( move.copy(),  2.5 );
 		var move_ease_in_back = move_ease_in.reverse();
 
-		// XXX: Copy not working yet... re-create the actions
-		move_copy = cc.MoveBy.create( 3, cc.p(winSize.width-130,0) );
-
-		var move_ease_out = cc.EaseOut.create( move_copy, 2.5 );
+		var move_ease_out = cc.EaseOut.create( move.copy(), 2.5 );
 		var move_ease_out_back = move_ease_out.reverse();
 
-		// XXX: Copy not working yet... re-create the actions
-		var delay1 = cc.DelayTime.create( 0.25 );
-		var delay2 = cc.DelayTime.create( 0.25 );
-		var delay3 = cc.DelayTime.create( 0.25 );
-		var delay4 = cc.DelayTime.create( 0.25 );
-		var delay5 = cc.DelayTime.create( 0.25 );
-		var delay6 = cc.DelayTime.create( 0.25 );
+		var delay = cc.DelayTime.create( 0.25 );
 
-		var seq1 = cc.Sequence.create( move, delay1, move_back, delay2);
-		var seq2 = cc.Sequence.create( move_ease_in, delay3, move_ease_in_back, delay4 );
-		var seq3 = cc.Sequence.create( move_ease_out, delay5, move_ease_out_back, delay6 );
+		var seq1 = cc.Sequence.create( move, delay, move_back, delay.copy());
+		var seq2 = cc.Sequence.create( move_ease_in, delay.copy(), move_ease_in_back, delay.copy() );
+		var seq3 = cc.Sequence.create( move_ease_out, delay.copy(), move_ease_out_back, delay.copy() );
 
 		this.sprite1.runAction( cc.RepeatForever.create( seq1 ) );
 		this.sprite2.runAction( cc.RepeatForever.create( seq2 ) );
@@ -726,6 +714,8 @@ goog.inherits( ThanksPage, BaseLayer );
 //
 // Order of tests
 //
+scenes.push( ActionsEasePage );
+
 scenes.push( IntroPage );
 scenes.push( AboutPage );
 scenes.push( SpritesPage );
