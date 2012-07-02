@@ -714,8 +714,6 @@ goog.inherits( ThanksPage, BaseLayer );
 //
 // Order of tests
 //
-scenes.push( ActionsEasePage );
-
 scenes.push( IntroPage );
 scenes.push( AboutPage );
 scenes.push( SpritesPage );
