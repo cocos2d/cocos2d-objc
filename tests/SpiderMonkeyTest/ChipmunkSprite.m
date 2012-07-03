@@ -22,27 +22,10 @@
 #import "ChipmunkSprite.h"
 
 
-@interface ChipmunkBody : NSObject
--(cpBody *)body;
-@end
-
-
-@implementation ChipmunkSprite {
-	cpBody *_body;
-}
+@implementation ChipmunkSprite
 
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
 @synthesize body = _body;
-
--(ChipmunkBody *)chipmunkBody
-{
-	return _body->data;
-}
-
--(void)setChipmunkBody:(ChipmunkBody *)chipmunkBody
-{
-	_body = chipmunkBody.body;
-}
 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.

@@ -22,20 +22,19 @@
 #import "cocos2d.h"
 #import "chipmunk.h"
 
-@class ChipmunkBody;
-
 // A Cocos2D 2.0 sprite subclass that is bound to a Chipmunk body.
 // It works with either regular Chipmunk or Objective-Chipmunk.
 
 @interface ChipmunkSprite : CCSprite
+{
+	cpBody	*_body;
+	BOOL	_ignoreBodyRotation;
+}
 
 // Keep the sprite's rotation separate from the body.
 @property(nonatomic, assign) BOOL ignoreBodyRotation;
 
 // Body accessor when using regular Chipmunk
 @property(nonatomic, assign) cpBody *body;
-
-// Body accessor when using Objective-Chipmunk.
-@property(nonatomic, assign) ChipmunkBody *chipmunkBody;
 
 @end

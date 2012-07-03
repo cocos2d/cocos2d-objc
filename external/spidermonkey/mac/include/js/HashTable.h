@@ -830,7 +830,7 @@ struct PointerHasher
 #if JS_BYTES_PER_WORD == 4
         return HashNumber(word);
 #else
-        JS_STATIC_ASSERT(sizeof word == 8);
+//        JS_STATIC_ASSERT(sizeof word == 8);
         return HashNumber((word >> 32) ^ word);
 #endif
     }
