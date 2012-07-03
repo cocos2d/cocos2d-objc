@@ -22,10 +22,20 @@ cc.rect = function(x,y,w,h)
 
 cc.size = function(w,h)
 {
-	var rect = new Float32Array(2)
-	rect[0] = w;
-	rect[1] = h;
-	return rect;
+	var size = new Float32Array(2)
+	size[0] = w;
+	size[1] = h;
+	return size;
+}
+
+cc.size_get_width = function (size )
+{
+	return size[0];
+}
+
+cc.size_get_height = function (size )
+{
+	return size[1];
 }
 
 

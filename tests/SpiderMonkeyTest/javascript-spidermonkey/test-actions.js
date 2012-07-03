@@ -310,20 +310,22 @@ var ActionSkewRotateScale = function() {
         var boxSize = cc.size(100.0, 100.0);
         var box = cc.LayerColor.create(cc.c4(255, 255, 0, 255));
         box.setAnchorPoint(cc.p(0, 0));
-        box.setPosition( cc.p((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2));
+        box.setPosition( cc.p( (winSize.width - cc.size_get_width(boxSize) ) / 2,
+				(winSize.height - cc.size_get_height(boxSize)) / 2
+				) );
         box.setContentSize(boxSize);
 
         var markrside = 10.0;
         var uL = cc.LayerColor.create(cc.c4(255, 0, 0, 255));
         box.addChild(uL);
         uL.setContentSize(cc.size(markrside, markrside));
-        uL.setPosition(cc.p(0, boxSize.height - markrside));
+        uL.setPosition(cc.p(0, cc.size_get_height(boxSize) - markrside));
         uL.setAnchorPoint(cc.p(0, 0));
 
         var uR = cc.LayerColor.create(cc.c4(0, 0, 255, 255));
         box.addChild(uR);
         uR.setContentSize(cc.size(markrside, markrside));
-        uR.setPosition(cc.p(boxSize.width - markrside, boxSize.height - markrside));
+        uR.setPosition(cc.p( cc.size_get_width(boxSize) - markrside, cc.size_get_height(boxSize) - markrside));
         uR.setAnchorPoint(cc.p(0, 0));
 
         this.addChild(box);
