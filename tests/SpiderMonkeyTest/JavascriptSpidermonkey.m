@@ -17,20 +17,6 @@
 // SpiderMonkey
 #include "jsapi.h"  
 
-@interface Test : CCLayer
-@end
-
-@implementation Test
--(void) onEnter
-{
-	[super onEnter];
-	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];	
-}
-@end
-
 #pragma mark - AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
@@ -212,22 +198,6 @@
 	// init server
 	[self initThoMoServer];
 
-	// Load cocos2d BridgeSupport (not needed I guess)
-//	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-//	NSString *libPath = [fileUtils fullPathFromRelativePath:@"libmozjs.dylib"];
-//	void *handle = dlopen([libPath UTF8String], RTLD_NOW | RTLD_GLOBAL);
-//	if( ! handle ) {
-//		printf("\n**** FATAL ****\n");
-//		printf("Can't load libmozjs.dylib");
-//		NSAssert(NO, @"Fatal error: no libmozjs.dylib");
-//	}
-
-//
-//	CCScene *scene = [CCScene node];
-//	Test *test = [Test node];
-//	
-//	[scene addChild:test];	
-//	[[CCDirector sharedDirector] runWithScene:scene];
 	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-chipmunk.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
