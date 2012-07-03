@@ -81,6 +81,7 @@ class SpiderMonkey(object):
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
                              'method_properties' : [],
+                             'js_properties' : [],
                              'struct_properties' : [],
                              'function_prefix_to_remove' : '',
                              'import_files' : [],
@@ -168,6 +169,70 @@ class SpiderMonkey(object):
         #
         self.init_struct_properties( config['struct_properties'] )
 
+        #
+        # JS related
+        #
+        self.init_js_properties( config['js_properties'] )
+
+
+    def init_js_properties( self, properties ):
+
+        options_re = r"\s*(\w+)\(\s*(.*)\s*\)\s*"
+
+        self.js_properties = {}
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            # From Key get: Class # method
+            klass,js_method = key.split('#')
+
+            opts = {}
+            # From value get options
+            options_reg_exp = re.match( options_re, value )
+            if options_reg_exp:
+                supported_types = ['static_fn', 'fn', 'prop' ]
+                o_type = options_reg_exp.group(1)
+                if not o_type in supported_types:
+                    raise Excpetion("js_properties: type not supported %s" % o_type )
+
+                methods = {}
+                # needed to obtain the selector with greater number of args
+                max_args = 0
+                # needed for optional_args_since
+                min_args = 1000
+
+                lm = options_reg_exp.group(2).split(';')
+
+                for m in lm:
+                    m = m.strip()
+                    args = m.count(':')
+                    methods[ args ] = m
+                    if args > max_args:
+                        max_args = args
+                    if args < min_args:
+                        min_args = args
+                opts[ js_method ] = methods
+
+                expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
+                for k in expanded_klasses:
+                    if not k in self.js_properties:
+                        self.js_properties[k] = {}
+                    if not o_type in self.js_properties[k]:
+                        self.js_properties[k][o_type] = {}
+                    self.js_properties[k][o_type].update( opts )
+
+                    # Automatically add "ignore" in the method_properties, to all except with the one with greater num of args
+                    for key in methods:
+                        if key != max_args:
+                            self.set_method_property( k, methods[key], 'ignore', True )
+                    # Add rename rule, calls and optional_args_since for last method
+                    self.set_method_property( k, methods[max_args], 'name', js_method )
+                    self.set_method_property( k, methods[max_args], 'calls', methods )
+                    self.set_method_property( k, methods[max_args], 'min_args', min_args )
+                    self.set_method_property( k, methods[max_args], 'max_args', max_args )
 
     def init_hierarchy_file( self ):
         self.hierarchy = {}
@@ -525,11 +590,20 @@ class SpiderMonkey(object):
                 return True
         return False
 
-    def get_method_property( self, property, method_name, class_name ):
+    def get_method_property( self, class_name, method_name, prop ):
         try:
-            return self.method_properties[ class_name ][ method_name ][ property ]
+            return self.method_properties[ class_name ][ method_name ][ prop ]
         except KeyError, e:
             return None
+
+    def set_method_property( self, class_name, method_name, prop, value=True ):
+        if not class_name in self.method_properties:
+            self.method_properties[ class_name ] = {}
+
+        if not method_name in self.method_properties[ class_name ]:
+            self.method_properties[ class_name ][ method_name ] = {}
+
+        self.method_properties[class_name][method_name][prop] = value
 
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
@@ -1091,10 +1165,13 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         self.mm_file.write( '%s\n\n' % declared_vars )
 
 
-        if 'optional_args_since' in properties:
-            optional_args_since = int( properties['optional_args_since'] )
+        # Optional Arguments ?
+        min_args = properties.get('min_args', None)
+        max_args = properties.get('max_args', None)
+        if min_args != max_args:
+            optional_args = min_args
         else:
-            optional_args_since = None
+            optional_args = None
 
         # Use variables
 
@@ -1105,7 +1182,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         else:
             for i,arg in enumerate(args_js_type):
 
-                if optional_args_since and i >= optional_args_since-1:
+                if optional_args!=None and i >= optional_args:
                     self.mm_file.write('\tif (argc >= %d) {\n\t' % (i+1) )
 
                 if args_declared_type[i] in self.struct_opaque:
@@ -1122,7 +1199,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
                 else:
                     raise ParseException('Unsupported argument type: %s' % arg )
 
-                if optional_args_since and i >= optional_args_since-1:
+                if optional_args!=None and i >= optional_args:
                     self.mm_file.write('\t}\n' )
 
         self.mm_file.write('\tif( ! ok ) return JS_FALSE;\n');
@@ -1157,10 +1234,10 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         try:
             # Does it have optional arguments ?
             properties = self.method_properties[class_name][selector]
-            if 'optional_args_since' in properties:
-                optional_args_since = int( properties['optional_args_since'] )
-                required_args = optional_args_since-1
-                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (required_args, num_of_args)
+            min_args = properties.get('min_args', None)
+            max_args = properties.get('max_args', None)
+            if min_args != max_args:
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (min_args, max_args)
             elif 'variadic_2_array' in properties:
                 method_assert_on_arguments = '\tJSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );\n'
             else:
@@ -1215,10 +1292,12 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             properties = {}
 
         # Optional Args ?
-        try:
-            optional_args_since = int( properties['optional_args_since'] )
-        except KeyError, e:
-            optional_args_since = None
+        min_args = properties.get('min_args', None)
+        max_args = properties.get('max_args', None)
+        if min_args != max_args:
+            optional_args = min_args
+        else:
+            optional_args = None
 
         total_args = self.get_number_of_arguments( method )
         if total_args > 0:
@@ -1227,12 +1306,11 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if ret_js_type:
             self.mm_file.write( '\t%s ret_val;\n' % (ret_declared_type ) )
 
-        if optional_args_since:
-            for i in xrange(total_args):
-                if i+1 < optional_args_since-1:
-                    continue
-                call_real = self.generate_method_call_to_real_object( s, i+1, ret_js_type, args_declared_type, class_name, method_type )
-                self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i+1, call_real) )
+        if optional_args != None:
+            for i in xrange(max_args+1):
+                if i in properties['calls']:
+                    call_real = self.generate_method_call_to_real_object( properties['calls'][i], i+1, ret_js_type, args_declared_type, class_name, method_type )
+                    self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i, call_real) )
         else:
             call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )
@@ -1484,7 +1562,7 @@ extern JSClass *%s_class;
             self.mm_file.write(  template_prefix % ( class_name, class_name ) )
             for m in self.callback_methods[ class_name ]:
 
-                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                if not self.get_method_property( class_name, m, 'no_swizzle' ):
                     self.mm_file.write( template_middle % ( class_name, m, m ) )
 
             self.mm_file.write(  template_suffix % ( class_name ) )
@@ -1638,7 +1716,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
                 fullargs, args = self.get_callback_args_for_method( real_method )
                 js_ret_val, dt_ret_val = self.validate_retval(  real_method, class_name )
 
-                if not self.get_method_property( 'no_swizzle', m, class_name ):
+                if not self.get_method_property( class_name, m, 'no_swizzle' ):
                     swizzle_prefix = 'JSHook_'
                     call_native ='\t//1st call native, then JS. Order is important\n\t[self JSHook_%s];'% (args)
                 else:

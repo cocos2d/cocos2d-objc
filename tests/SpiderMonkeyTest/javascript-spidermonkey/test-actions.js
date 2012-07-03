@@ -301,30 +301,30 @@ var ActionSkewRotateScale = function() {
 	goog.base(this);
 
     this.onEnter = function () {
+
         goog.base(this, 'onEnter');
         this._tamara.removeFromParentAndCleanup(true);
         this._grossini.removeFromParentAndCleanup(true);
         this._kathia.removeFromParentAndCleanup(true);
 
-        var boxSize = cc.SizeMake(100.0, 100.0);
-        var box = cc.LayerColor.create(cc.ccc4(255, 255, 0, 255));
-        box.setAnchorPoint(cc.ccp(0, 0));
-        box.setPosition(new cc.Point((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2));
+        var boxSize = cc.size(100.0, 100.0);
+        var box = cc.LayerColor.create(cc.c4(255, 255, 0, 255));
+        box.setAnchorPoint(cc.p(0, 0));
+        box.setPosition( cc.p((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2));
         box.setContentSize(boxSize);
 
         var markrside = 10.0;
-        var uL = cc.LayerColor.create(cc.ccc4(255, 0, 0, 255));
+        var uL = cc.LayerColor.create(cc.c4(255, 0, 0, 255));
         box.addChild(uL);
-        uL.setContentSize(cc.SizeMake(markrside, markrside));
-        uL.setPosition(cc.ccp(0, boxSize.height - markrside));
-        uL.setAnchorPoint(cc.ccp(0, 0));
+        uL.setContentSize(cc.size(markrside, markrside));
+        uL.setPosition(cc.p(0, boxSize.height - markrside));
+        uL.setAnchorPoint(cc.p(0, 0));
 
-        var uR = cc.LayerColor.create(cc.ccc4(0, 0, 255, 255));
+        var uR = cc.LayerColor.create(cc.c4(0, 0, 255, 255));
         box.addChild(uR);
-        uR.setContentSize(cc.SizeMake(markrside, markrside));
-        uR.setPosition(cc.ccp(boxSize.width - markrside, boxSize.height - markrside));
-        uR.setAnchorPoint(cc.ccp(0, 0));
-
+        uR.setContentSize(cc.size(markrside, markrside));
+        uR.setPosition(cc.p(boxSize.width - markrside, boxSize.height - markrside));
+        uR.setAnchorPoint(cc.p(0, 0));
 
         this.addChild(box);
         var actionTo = cc.SkewTo.create(2, 0., 2.);
@@ -335,9 +335,9 @@ var ActionSkewRotateScale = function() {
         var rotateToBack = cc.RotateTo.create(2, 0);
         var actionToBack = cc.SkewTo.create(2, 0, 0);
 
-        box.runAction(cc.Sequence.create(actionTo, actionToBack));
-        box.runAction(cc.Sequence.create(rotateTo, rotateToBack));
-        box.runAction(cc.Sequence.create(actionScaleTo, actionScaleToBack));
+        box.runAction(cc.Sequence.create(actionTo, actionToBack) );
+        box.runAction(cc.Sequence.create(rotateTo, rotateToBack) );
+        box.runAction(cc.Sequence.create(actionScaleTo, actionScaleToBack) );
     }
 
     this.title = "Skew + Rotate + Scale";
@@ -709,7 +709,7 @@ var ActionCallFuncND = function(){
         goog.base(this, 'onEnter');
         this.centerSprites(1);
 
-        var action = cc.Sequence.create(cc.MoveBy.create(2.0, cc.ccp(200, 0)),
+        var action = cc.Sequence.create(cc.MoveBy.create(2.0, cc.p(200, 0)),
             cc.CallFunc.create(this._grossini, this.removeFromParentAndCleanup, true) );
 
         this._grossini.runAction(action);
@@ -1038,11 +1038,11 @@ var ActionCardinalSpline = function(){
 
         var array = cc.PointArray.create();
 
-        array.addControlPoint(new cc.Point(0, 0));
-        array.addControlPoint(new cc.Point(winSize.width / 2 - 30, 0));
-        array.addControlPoint(new cc.Point(winSize.width / 2 - 30, winSize.height - 80));
-        array.addControlPoint(new cc.Point(0, winSize.height - 80));
-        array.addControlPoint(new cc.Point(0, 0));
+        array.addControlPoint(cc.p(0, 0));
+        array.addControlPoint(cc.p(winSize.width / 2 - 30, 0));
+        array.addControlPoint(cc.p(winSize.width / 2 - 30, winSize.height - 80));
+        array.addControlPoint(cc.p(0, winSize.height - 80));
+        array.addControlPoint(cc.p(0, 0));
 
         //
         // sprite 1 (By)
@@ -1053,7 +1053,7 @@ var ActionCardinalSpline = function(){
         var reverse1 = action1.reverse();
         var seq = cc.Sequence.create(action1, reverse1);
 
-        this._tamara.setPosition(new cc.Point(50, 50));
+        this._tamara.setPosition(cc.p(50, 50));
         this._tamara.runAction(seq);
 
         //
@@ -1065,7 +1065,7 @@ var ActionCardinalSpline = function(){
         var reverse2 = action2.reverse();
         var seq2 = cc.Sequence.create(action2, reverse2);
 
-        this._kathia.setPosition(new cc.Point(winSize.width / 2, 50));
+        this._kathia.setPosition(cc.p(winSize.width / 2, 50));
         this._kathia.runAction(seq2);
 
         this._array = array;
@@ -1114,16 +1114,16 @@ var ActionCatmullRom = function() {
         // startPosition can be any coordinate, but since the movement
         // is relative to the Catmull Rom curve, it is better to start with (0,0).
         //
-        this._tamara.setPosition(new cc.Point(50, 50));
+        this._tamara.setPosition(cc.p(50, 50));
 
         var array = cc.PointArray.create();
-        array.addControlPoint(new cc.Point(0, 0));
-        array.addControlPoint(new cc.Point(80, 80));
-        array.addControlPoint(new cc.Point(winSize.width - 80, 80));
-        array.addControlPoint(new cc.Point(winSize.width - 80, winSize.height - 80));
-        array.addControlPoint(new cc.Point(80, winSize.height - 80));
-        array.addControlPoint(new cc.Point(80, 80));
-        array.addControlPoint(new cc.Point(winSize.width / 2, winSize.height / 2));
+        array.addControlPoint(cc.p(0, 0));
+        array.addControlPoint(cc.p(80, 80));
+        array.addControlPoint(cc.p(winSize.width - 80, 80));
+        array.addControlPoint(cc.p(winSize.width - 80, winSize.height - 80));
+        array.addControlPoint(cc.p(80, winSize.height - 80));
+        array.addControlPoint(cc.p(80, 80));
+        array.addControlPoint(cc.p(winSize.width / 2, winSize.height / 2));
 
         var action1 = cc.CatmullRomBy.create(3, array);
         var reverse1 = action1.reverse();
@@ -1139,11 +1139,11 @@ var ActionCatmullRom = function() {
         //
         var array2 = cc.PointArray.create();
 
-        array2.addControlPoint(new cc.Point(winSize.width / 2, 30));
-        array2.addControlPoint(new cc.Point(winSize.width - 80, 30));
-        array2.addControlPoint(new cc.Point(winSize.width - 80, winSize.height - 80));
-        array2.addControlPoint(new cc.Point(winSize.width / 2, winSize.height - 80));
-        array2.addControlPoint(new cc.Point(winSize.width / 2, 30));
+        array2.addControlPoint(cc.p(winSize.width / 2, 30));
+        array2.addControlPoint(cc.p(winSize.width - 80, 30));
+        array2.addControlPoint(cc.p(winSize.width - 80, winSize.height - 80));
+        array2.addControlPoint(cc.p(winSize.width / 2, winSize.height - 80));
+        array2.addControlPoint(cc.p(winSize.width / 2, 30));
 
         var action2 = cc.CatmullRomTo.create(3, array2);
         var reverse2 = action2.reverse();
@@ -1178,6 +1178,8 @@ goog.inherits( ActionCatmullRom, BaseLayer );
 //
 // Order of tests
 //
+scenes.push( ActionSkewRotateScale );
+
 scenes.push( ActionManual );
 scenes.push( ActionMove );
 scenes.push( ActionScale );

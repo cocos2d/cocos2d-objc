@@ -20,36 +20,12 @@ cc.rect = function(x,y,w,h)
 	return rect;
 }
 
-function ccc3(r, g, b)
+cc.size = function(w,h)
 {
-	var colors = new Uint8Array(3)
-	colors[0] = r;
-	colors[1] = g;
-	colors[2] = b;
-
-	return colors;
-}
-
-function ccc4b(r, g, b, a)
-{
-	var colors = new Uint8Array(4)
-	colors[0] = r;
-	colors[1] = g;
-	colors[2] = b;
-	colors[3] = a;
-
-	return colors;
-}
-
-function ccc4f(r, g, b, a)
-{
-	var colors = new Float32Array(4)
-	colors[0] = r;
-	colors[1] = g;
-	colors[2] = b;
-	colors[3] = a;
-
-	return colors;
+	var rect = new Float32Array(2)
+	rect[0] = w;
+	rect[1] = h;
+	return rect;
 }
 
 
