@@ -169,70 +169,6 @@ class SpiderMonkey(object):
         #
         self.init_struct_properties( config['struct_properties'] )
 
-        #
-        # JS related
-        #
-        self.init_js_properties( config['js_properties'] )
-
-
-    def init_js_properties( self, properties ):
-
-        options_re = r"\s*(\w+)\(\s*(.*)\s*\)\s*"
-
-        self.js_properties = {}
-        for prop in properties:
-            # key value
-            if not prop or len(prop)==0:
-                continue
-            key,value = prop.split('=')
-
-            # From Key get: Class # method
-            klass,js_method = key.split('#')
-
-            opts = {}
-            # From value get options
-            options_reg_exp = re.match( options_re, value )
-            if options_reg_exp:
-                supported_types = ['static_fn', 'fn', 'prop' ]
-                o_type = options_reg_exp.group(1)
-                if not o_type in supported_types:
-                    raise Excpetion("js_properties: type not supported %s" % o_type )
-
-                methods = {}
-                # needed to obtain the selector with greater number of args
-                max_args = 0
-                # needed for optional_args_since
-                min_args = 1000
-
-                lm = options_reg_exp.group(2).split(';')
-
-                for m in lm:
-                    m = m.strip()
-                    args = m.count(':')
-                    methods[ args ] = m
-                    if args > max_args:
-                        max_args = args
-                    if args < min_args:
-                        min_args = args
-                opts[ js_method ] = methods
-
-                expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
-                for k in expanded_klasses:
-                    if not k in self.js_properties:
-                        self.js_properties[k] = {}
-                    if not o_type in self.js_properties[k]:
-                        self.js_properties[k][o_type] = {}
-                    self.js_properties[k][o_type].update( opts )
-
-                    # Automatically add "ignore" in the method_properties, to all except with the one with greater num of args
-                    for key in methods:
-                        if key != max_args:
-                            self.set_method_property( k, methods[key], 'ignore', True )
-                    # Add rename rule, calls and optional_args_since for last method
-                    self.set_method_property( k, methods[max_args], 'name', js_method )
-                    self.set_method_property( k, methods[max_args], 'calls', methods )
-                    self.set_method_property( k, methods[max_args], 'min_args', min_args )
-                    self.set_method_property( k, methods[max_args], 'max_args', max_args )
 
     def init_hierarchy_file( self ):
         self.hierarchy = {}
@@ -272,6 +208,49 @@ class SpiderMonkey(object):
                         self.callback_methods[ class_name ] = []
                     self.callback_methods[ class_name ].append( method )
 
+    def process_method_properties( self, klass, method_name, props ):
+
+        if not klass in self.method_properties:
+            self.method_properties[klass] = {}
+        if not method_name in self.method_properties[klass]:
+            self.method_properties[klass][method_name] = {}
+        self.method_properties[klass][method_name] = props
+
+        # Process "merge"
+        if 'merge' in props:
+            lm = props['merge'].split('|')
+
+            # append self
+            lm.append( method_name )
+
+            methods = {}
+            # needed to obtain the selector with greater number of args
+            max_args = 0
+            # needed for optional_args_since
+            min_args = 1000
+
+            for m in lm:
+                m = m.strip()
+                args = m.count(':')
+                methods[ args ] = m
+                if args > max_args:
+                    max_args = args
+                if args < min_args:
+                    min_args = args
+
+                # Automatically add "ignore" in the method_properties, but not in "self"
+                if m != method_name:
+                    self.set_method_property( klass, m, 'ignore', True )
+
+            # Add max/min/calls rules
+            self.set_method_property( klass, method_name, 'calls', methods )
+            self.set_method_property( klass, method_name, 'min_args', min_args )
+            self.set_method_property( klass, method_name, 'max_args', max_args )
+
+            # safety check
+            if method_name.count(':') != max_args:
+                raise Exception("Merge methods should have less arguments that the main method. Check: %s # %s" % (klass, method_name ) )
+
     def init_method_properties( self, properties ):
         self.method_properties = {}
         for prop in properties:
@@ -282,6 +261,8 @@ class SpiderMonkey(object):
 
             # From Key get: Class # method
             klass,method = key.split('#')
+            klass = klass.strip()
+            method = method.strip()
 
             opts = {}
             # From value get options
@@ -289,8 +270,14 @@ class SpiderMonkey(object):
             for o in options:
                 # Options can have their own Key Value
                 if ':' in o:
-                    o_key, o_val = o.split(':')
-                    o_val = o_val.replace('"', '')    # remove possible "
+                    o = o.replace('"', '')
+                    o = o.replace("'", "")
+
+                    # o_value might also have some ':'
+                    # So, it should split by the first ':'
+                    o_list = o.split(':')
+                    o_key = o_list[0]
+                    o_val = ':'.join(o_list[1:])
                 else:
                     o_key = o
                     o_val = True
@@ -298,11 +285,7 @@ class SpiderMonkey(object):
 
             expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
             for k in expanded_klasses:
-                if not k in self.method_properties:
-                    self.method_properties[k] = {}
-                if not method in self.method_properties[k]:
-                    self.method_properties[k][method] = {}
-                self.method_properties[k][method] = opts
+                self.process_method_properties( k, method, opts )
 
     def init_struct_properties( self, properties ):
         self.struct_properties = {}
