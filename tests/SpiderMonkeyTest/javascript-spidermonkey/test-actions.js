@@ -1180,8 +1180,6 @@ goog.inherits( ActionCatmullRom, BaseLayer );
 //
 // Order of tests
 //
-scenes.push( ActionSkewRotateScale );
-
 scenes.push( ActionManual );
 scenes.push( ActionMove );
 scenes.push( ActionScale );
