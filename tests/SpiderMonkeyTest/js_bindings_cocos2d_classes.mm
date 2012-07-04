@@ -8605,6 +8605,27 @@ JSBool JSPROXY_CCTransitionScene_initWithDuration_scene_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionScene* (o)
+JSBool JSPROXY_CCTransitionScene_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionScene* ret_val;
+
+	ret_val = [CCTransitionScene transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionScene* (o)
 JSBool JSPROXY_CCTransitionScene_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -8643,6 +8664,7 @@ void JSPROXY_CCTransitionScene_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionScene_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionScene_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -8718,6 +8740,27 @@ JSBool JSPROXY_CCTransitionProgress_progressTimerNodeWithRenderTexture_(JSContex
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgress* (o)
+JSBool JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgress* ret_val;
+
+	ret_val = [CCTransitionProgress transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgress* (o)
 JSBool JSPROXY_CCTransitionProgress_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -8754,6 +8797,7 @@ void JSPROXY_CCTransitionProgress_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgress_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -8829,6 +8873,27 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_progressTimerNodeWithRenderTexture_
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressRadialCCW* (o)
+JSBool JSPROXY_CCTransitionProgressRadialCCW_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressRadialCCW* ret_val;
+
+	ret_val = [CCTransitionProgressRadialCCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressRadialCCW* (o)
 JSBool JSPROXY_CCTransitionProgressRadialCCW_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -8865,6 +8930,7 @@ void JSPROXY_CCTransitionProgressRadialCCW_createClass(JSContext *cx, JSObject* 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressRadialCCW_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressRadialCCW_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -9132,6 +9198,27 @@ JSBool JSPROXY_CCTransitionFadeTR_easeActionWithAction_(JSContext *cx, uint32_t 
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFadeTR* (o)
+JSBool JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFadeTR* ret_val;
+
+	ret_val = [CCTransitionFadeTR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFadeTR* (o)
 JSBool JSPROXY_CCTransitionFadeTR_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -9169,6 +9256,7 @@ void JSPROXY_CCTransitionFadeTR_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeTR_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -9417,6 +9505,27 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientatio
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSceneOriented* (o)
+JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSceneOriented* ret_val;
+
+	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSceneOriented* (o)
 JSBool JSPROXY_CCTransitionSceneOriented_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -9454,6 +9563,7 @@ void JSPROXY_CCTransitionSceneOriented_createClass(JSContext *cx, JSObject* glob
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSceneOriented_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -9942,6 +10052,27 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionPageTurn* (o)
+JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionPageTurn* ret_val;
+
+	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionPageTurn* (o)
 JSBool JSPROXY_CCTransitionPageTurn_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -9980,6 +10111,7 @@ void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionPageTurn_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10049,6 +10181,27 @@ JSBool JSPROXY_CCTransitionRotoZoom_init(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionRotoZoom* (o)
+JSBool JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionRotoZoom* ret_val;
+
+	ret_val = [CCTransitionRotoZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionRotoZoom* (o)
 JSBool JSPROXY_CCTransitionRotoZoom_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10085,6 +10238,7 @@ void JSPROXY_CCTransitionRotoZoom_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionRotoZoom_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10163,6 +10317,27 @@ JSBool JSPROXY_CCTransitionFadeDown_actionWithSize_(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFadeDown* (o)
+JSBool JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFadeDown* ret_val;
+
+	ret_val = [CCTransitionFadeDown transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFadeDown* (o)
 JSBool JSPROXY_CCTransitionFadeDown_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10199,6 +10374,7 @@ void JSPROXY_CCTransitionFadeDown_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeDown_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10810,6 +10986,27 @@ JSBool JSPROXY_CCTransitionSplitCols_easeActionWithAction_(JSContext *cx, uint32
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSplitCols* (o)
+JSBool JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSplitCols* ret_val;
+
+	ret_val = [CCTransitionSplitCols transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSplitCols* (o)
 JSBool JSPROXY_CCTransitionSplitCols_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10847,6 +11044,7 @@ void JSPROXY_CCTransitionSplitCols_createClass(JSContext *cx, JSObject* globalOb
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSplitCols_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -11445,6 +11643,27 @@ JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation_
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFlipAngular* (o)
+JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFlipAngular* ret_val;
+
+	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFlipAngular* (o)
 JSBool JSPROXY_CCTransitionFlipAngular_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -11482,6 +11701,7 @@ void JSPROXY_CCTransitionFlipAngular_createClass(JSContext *cx, JSObject* global
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFlipAngular_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -18011,6 +18231,27 @@ JSBool JSPROXY_CCTransitionCrossFade_init(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionCrossFade* (o)
+JSBool JSPROXY_CCTransitionCrossFade_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionCrossFade* ret_val;
+
+	ret_val = [CCTransitionCrossFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionCrossFade* (o)
 JSBool JSPROXY_CCTransitionCrossFade_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -18047,6 +18288,7 @@ void JSPROXY_CCTransitionCrossFade_createClass(JSContext *cx, JSObject* globalOb
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionCrossFade_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionCrossFade_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -21674,6 +21916,27 @@ JSBool JSPROXY_CCTransitionProgressVertical_progressTimerNodeWithRenderTexture_(
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressVertical* (o)
+JSBool JSPROXY_CCTransitionProgressVertical_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressVertical* ret_val;
+
+	ret_val = [CCTransitionProgressVertical transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressVertical* (o)
 JSBool JSPROXY_CCTransitionProgressVertical_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -21710,6 +21973,7 @@ void JSPROXY_CCTransitionProgressVertical_createClass(JSContext *cx, JSObject* g
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressVertical_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressVertical_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -23134,6 +23398,27 @@ JSBool JSPROXY_CCTransitionShrinkGrow_easeActionWithAction_(JSContext *cx, uint3
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionShrinkGrow* (o)
+JSBool JSPROXY_CCTransitionShrinkGrow_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionShrinkGrow* ret_val;
+
+	ret_val = [CCTransitionShrinkGrow transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionShrinkGrow* (o)
 JSBool JSPROXY_CCTransitionShrinkGrow_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -23171,6 +23456,7 @@ void JSPROXY_CCTransitionShrinkGrow_createClass(JSContext *cx, JSObject* globalO
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionShrinkGrow_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionShrinkGrow_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -24999,6 +25285,27 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFade* (o)
+JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFade* ret_val;
+
+	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFade* (o)
 JSBool JSPROXY_CCTransitionFade_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25036,6 +25343,7 @@ void JSPROXY_CCTransitionFade_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFade_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFade_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -25537,6 +25845,27 @@ JSBool JSPROXY_CCTransitionMoveInL_easeActionWithAction_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionMoveInL* (o)
+JSBool JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionMoveInL* ret_val;
+
+	ret_val = [CCTransitionMoveInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionMoveInL* (o)
 JSBool JSPROXY_CCTransitionMoveInL_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25575,6 +25904,7 @@ void JSPROXY_CCTransitionMoveInL_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionMoveInL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -25640,6 +25970,27 @@ JSBool JSPROXY_CCTransitionMoveInR_initScenes(JSContext *cx, uint32_t argc, jsva
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionMoveInR* (o)
+JSBool JSPROXY_CCTransitionMoveInR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionMoveInR* ret_val;
+
+	ret_val = [CCTransitionMoveInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionMoveInR* (o)
 JSBool JSPROXY_CCTransitionMoveInR_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25676,6 +26027,7 @@ void JSPROXY_CCTransitionMoveInR_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionMoveInR_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionMoveInR_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -25890,6 +26242,27 @@ JSBool JSPROXY_CCTransitionMoveInT_initScenes(JSContext *cx, uint32_t argc, jsva
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionMoveInT* (o)
+JSBool JSPROXY_CCTransitionMoveInT_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionMoveInT* ret_val;
+
+	ret_val = [CCTransitionMoveInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionMoveInT* (o)
 JSBool JSPROXY_CCTransitionMoveInT_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25926,6 +26299,7 @@ void JSPROXY_CCTransitionMoveInT_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionMoveInT_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionMoveInT_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -26810,6 +27184,27 @@ JSBool JSPROXY_CCTransitionMoveInB_initScenes(JSContext *cx, uint32_t argc, jsva
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionMoveInB* (o)
+JSBool JSPROXY_CCTransitionMoveInB_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionMoveInB* ret_val;
+
+	ret_val = [CCTransitionMoveInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionMoveInB* (o)
 JSBool JSPROXY_CCTransitionMoveInB_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -26846,6 +27241,7 @@ void JSPROXY_CCTransitionMoveInB_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionMoveInB_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionMoveInB_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -26937,6 +27333,27 @@ JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__s
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionZoomFlipX* (o)
+JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionZoomFlipX* ret_val;
+
+	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionZoomFlipX* (o)
 JSBool JSPROXY_CCTransitionZoomFlipX_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -26974,6 +27391,7 @@ void JSPROXY_CCTransitionZoomFlipX_createClass(JSContext *cx, JSObject* globalOb
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipX_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -28602,6 +29020,27 @@ JSBool JSPROXY_CCTransitionSlideInL_easeActionWithAction_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSlideInL* (o)
+JSBool JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSlideInL* ret_val;
+
+	ret_val = [CCTransitionSlideInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSlideInL* (o)
 JSBool JSPROXY_CCTransitionSlideInL_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -28640,6 +29079,7 @@ void JSPROXY_CCTransitionSlideInL_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSlideInL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -28705,6 +29145,27 @@ JSBool JSPROXY_CCTransitionSlideInB_initScenes(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSlideInB* (o)
+JSBool JSPROXY_CCTransitionSlideInB_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSlideInB* ret_val;
+
+	ret_val = [CCTransitionSlideInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSlideInB* (o)
 JSBool JSPROXY_CCTransitionSlideInB_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -28741,6 +29202,7 @@ void JSPROXY_CCTransitionSlideInB_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSlideInB_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSlideInB_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -28926,6 +29388,27 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_progressTimerNodeWithRenderTexture
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressHorizontal* (o)
+JSBool JSPROXY_CCTransitionProgressHorizontal_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressHorizontal* ret_val;
+
+	ret_val = [CCTransitionProgressHorizontal transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressHorizontal* (o)
 JSBool JSPROXY_CCTransitionProgressHorizontal_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -28962,6 +29445,7 @@ void JSPROXY_CCTransitionProgressHorizontal_createClass(JSContext *cx, JSObject*
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressHorizontal_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressHorizontal_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -29575,6 +30059,27 @@ JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene_orientation__stati
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFlipY* (o)
+JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFlipY* ret_val;
+
+	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFlipY* (o)
 JSBool JSPROXY_CCTransitionFlipY_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -29612,6 +30117,7 @@ void JSPROXY_CCTransitionFlipY_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionFlipY_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFlipY_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFlipY_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -29703,6 +30209,27 @@ JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene_orientation__stati
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFlipX* (o)
+JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFlipX* ret_val;
+
+	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFlipX* (o)
 JSBool JSPROXY_CCTransitionFlipX_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -29740,6 +30267,7 @@ void JSPROXY_CCTransitionFlipX_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionFlipX_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionFlipX_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFlipX_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -32503,6 +33031,27 @@ JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__s
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionZoomFlipY* (o)
+JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionZoomFlipY* ret_val;
+
+	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionZoomFlipY* (o)
 JSBool JSPROXY_CCTransitionZoomFlipY_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -32540,6 +33089,7 @@ void JSPROXY_CCTransitionZoomFlipY_createClass(JSContext *cx, JSObject* globalOb
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipY_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -33441,6 +33991,27 @@ JSBool JSPROXY_CCTransitionFadeBL_actionWithSize_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFadeBL* (o)
+JSBool JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFadeBL* ret_val;
+
+	ret_val = [CCTransitionFadeBL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFadeBL* (o)
 JSBool JSPROXY_CCTransitionFadeBL_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -33477,6 +34048,7 @@ void JSPROXY_CCTransitionFadeBL_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeBL_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -34937,6 +35509,27 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_progressTimerNodeWithRenderTexture_(
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressRadialCW* (o)
+JSBool JSPROXY_CCTransitionProgressRadialCW_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressRadialCW* ret_val;
+
+	ret_val = [CCTransitionProgressRadialCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressRadialCW* (o)
 JSBool JSPROXY_CCTransitionProgressRadialCW_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -34973,6 +35566,7 @@ void JSPROXY_CCTransitionProgressRadialCW_createClass(JSContext *cx, JSObject* g
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressRadialCW_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressRadialCW_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -35227,6 +35821,27 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_easeActionWithAction_(JSContext *cx, uin
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionTurnOffTiles* (o)
+JSBool JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionTurnOffTiles* ret_val;
+
+	ret_val = [CCTransitionTurnOffTiles transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionTurnOffTiles* (o)
 JSBool JSPROXY_CCTransitionTurnOffTiles_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -35264,6 +35879,7 @@ void JSPROXY_CCTransitionTurnOffTiles_createClass(JSContext *cx, JSObject* globa
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionTurnOffTiles_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -35329,6 +35945,27 @@ JSBool JSPROXY_CCTransitionSlideInT_initScenes(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSlideInT* (o)
+JSBool JSPROXY_CCTransitionSlideInT_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSlideInT* ret_val;
+
+	ret_val = [CCTransitionSlideInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSlideInT* (o)
 JSBool JSPROXY_CCTransitionSlideInT_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -35365,6 +36002,7 @@ void JSPROXY_CCTransitionSlideInT_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSlideInT_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSlideInT_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -36106,6 +36744,27 @@ JSBool JSPROXY_CCTransitionSlideInR_initScenes(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSlideInR* (o)
+JSBool JSPROXY_CCTransitionSlideInR_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSlideInR* ret_val;
+
+	ret_val = [CCTransitionSlideInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSlideInR* (o)
 JSBool JSPROXY_CCTransitionSlideInR_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -36142,6 +36801,7 @@ void JSPROXY_CCTransitionSlideInR_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSlideInR_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSlideInR_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -36555,6 +37215,27 @@ JSBool JSPROXY_CCTransitionProgressInOut_progressTimerNodeWithRenderTexture_(JSC
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressInOut* (o)
+JSBool JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressInOut* ret_val;
+
+	ret_val = [CCTransitionProgressInOut transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressInOut* (o)
 JSBool JSPROXY_CCTransitionProgressInOut_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -36591,6 +37272,7 @@ void JSPROXY_CCTransitionProgressInOut_createClass(JSContext *cx, JSObject* glob
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressInOut_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -38063,6 +38745,27 @@ JSBool JSPROXY_CCTransitionSplitRows_action(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionSplitRows* (o)
+JSBool JSPROXY_CCTransitionSplitRows_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionSplitRows* ret_val;
+
+	ret_val = [CCTransitionSplitRows transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionSplitRows* (o)
 JSBool JSPROXY_CCTransitionSplitRows_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -38099,6 +38802,7 @@ void JSPROXY_CCTransitionSplitRows_createClass(JSContext *cx, JSObject* globalOb
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionSplitRows_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionSplitRows_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -39509,6 +40213,27 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientat
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionZoomFlipAngular* (o)
+JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionZoomFlipAngular* ret_val;
+
+	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionZoomFlipAngular* (o)
 JSBool JSPROXY_CCTransitionZoomFlipAngular_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -39546,6 +40271,7 @@ void JSPROXY_CCTransitionZoomFlipAngular_createClass(JSContext *cx, JSObject* gl
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("transitionWithDurationSceneOrientation", JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientation__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionZoomFlipAngular_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -41098,6 +41824,27 @@ JSBool JSPROXY_CCTransitionJumpZoom_init(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionJumpZoom* (o)
+JSBool JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionJumpZoom* ret_val;
+
+	ret_val = [CCTransitionJumpZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionJumpZoom* (o)
 JSBool JSPROXY_CCTransitionJumpZoom_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -41134,6 +41881,7 @@ void JSPROXY_CCTransitionJumpZoom_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionJumpZoom_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -41392,6 +42140,27 @@ JSBool JSPROXY_CCTransitionFadeUp_actionWithSize_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionFadeUp* (o)
+JSBool JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionFadeUp* ret_val;
+
+	ret_val = [CCTransitionFadeUp transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionFadeUp* (o)
 JSBool JSPROXY_CCTransitionFadeUp_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -41428,6 +42197,7 @@ void JSPROXY_CCTransitionFadeUp_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFadeUp_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -43779,6 +44549,27 @@ JSBool JSPROXY_CCTransitionProgressOutIn_progressTimerNodeWithRenderTexture_(JSC
 	return JS_TRUE;
 }
 
+// Arguments: ccTime, CCScene*
+// Ret value: CCTransitionProgressOutIn* (o)
+JSBool JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; id arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCTransitionProgressOutIn* ret_val;
+
+	ret_val = [CCTransitionProgressOutIn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: 
 // Ret value: CCTransitionProgressOutIn* (o)
 JSBool JSPROXY_CCTransitionProgressOutIn_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -43815,6 +44606,7 @@ void JSPROXY_CCTransitionProgressOutIn_createClass(JSContext *cx, JSObject* glob
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionProgressOutIn_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

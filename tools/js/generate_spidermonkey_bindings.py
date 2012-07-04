@@ -580,13 +580,15 @@ class SpiderMonkey(object):
             return None
 
     def set_method_property( self, class_name, method_name, prop, value=True ):
+
         if not class_name in self.method_properties:
             self.method_properties[ class_name ] = {}
 
         if not method_name in self.method_properties[ class_name ]:
             self.method_properties[ class_name ][ method_name ] = {}
 
-        self.method_properties[class_name][method_name][prop] = value
+        k = self.method_properties[class_name][method_name]
+        k[prop] = value
 
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
