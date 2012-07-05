@@ -115,9 +115,6 @@ cc.LayerGradient.extend = function (prop) {
 //
 
 var BaseLayer = cc.LayerGradient.extend({
-    _grossini:null,
-    _tamara:null,
-    kathia:null,
 
     ctor:function () {
                                 

@@ -1756,8 +1756,8 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("pauseSchedulerAndActions", JSPROXY_CCNode_pauseSchedulerAndActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getPosition", JSPROXY_CCNode_position, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAllChildrenWithCleanup", JSPROXY_CCNode_removeAllChildrenWithCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeChildCleanup", JSPROXY_CCNode_removeChild_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeChildByTagCleanup", JSPROXY_CCNode_removeChildByTag_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeChild", JSPROXY_CCNode_removeChild_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeChildByTag", JSPROXY_CCNode_removeChildByTag_cleanup_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeFromParentAndCleanup", JSPROXY_CCNode_removeFromParentAndCleanup_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("reorderChildZ", JSPROXY_CCNode_reorderChild_z_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("resumeSchedulerAndActions", JSPROXY_CCNode_resumeSchedulerAndActions, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -1849,13 +1849,13 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		if( ! [CCNode jr_swizzleMethod:@selector(onExitTransitionDidStart) withMethod:@selector(JSHook_onExitTransitionDidStart) error:&error] )
 			NSLog(@"Error swizzling %@", error);
 
+		if( ! [CCNode jr_swizzleMethod:@selector(onEnterTransitionDidFinish) withMethod:@selector(JSHook_onEnterTransitionDidFinish) error:&error] )
+			NSLog(@"Error swizzling %@", error);
+
 		if( ! [CCNode jr_swizzleMethod:@selector(onEnter) withMethod:@selector(JSHook_onEnter) error:&error] )
 			NSLog(@"Error swizzling %@", error);
 
 		if( ! [CCNode jr_swizzleMethod:@selector(update:) withMethod:@selector(JSHook_update:) error:&error] )
-			NSLog(@"Error swizzling %@", error);
-
-		if( ! [CCNode jr_swizzleMethod:@selector(onEnterTransitionDidFinish) withMethod:@selector(JSHook_onEnterTransitionDidFinish) error:&error] )
 			NSLog(@"Error swizzling %@", error);
 
 		CCNode_already_swizzled = YES;
@@ -1889,6 +1889,22 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 			jsval *argv = NULL; unsigned argc=0;
 
 			JS_GetProperty(cx, _jsObj, "onExitTransitionDidStart", &fval);
+			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
+		}
+	}
+}
+
+-(void) onEnterTransitionDidFinish
+{
+	if (_jsObj) {
+		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
+		JSBool found;
+		JS_HasProperty(cx, _jsObj, "onEnterTransitionDidFinish", &found);
+		if (found == JS_TRUE) {
+			jsval rval, fval;
+			jsval *argv = NULL; unsigned argc=0;
+
+			JS_GetProperty(cx, _jsObj, "onEnterTransitionDidFinish", &fval);
 			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
 		}
 	}
@@ -1928,22 +1944,6 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	}
 }
 
--(void) onEnterTransitionDidFinish
-{
-	if (_jsObj) {
-		JSContext* cx = [[ScriptingCore sharedInstance] globalContext];
-		JSBool found;
-		JS_HasProperty(cx, _jsObj, "onEnterTransitionDidFinish", &found);
-		if (found == JS_TRUE) {
-			jsval rval, fval;
-			jsval *argv = NULL; unsigned argc=0;
-
-			JS_GetProperty(cx, _jsObj, "onEnterTransitionDidFinish", &fval);
-			JS_CallFunctionValue(cx, _jsObj, fval, argc, argv, &rval);
-		}
-	}
-}
-
 @end
 @implementation CCNode (SpiderMonkey)
 
@@ -1965,6 +1965,15 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		[proxy onExitTransitionDidStart];
 }
 
+-(void) JSHook_onEnterTransitionDidFinish
+{
+	//1st call native, then JS. Order is important
+	[self JSHook_onEnterTransitionDidFinish];
+	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
+	if( proxy )
+		[proxy onEnterTransitionDidFinish];
+}
+
 -(void) JSHook_onEnter
 {
 	//1st call native, then JS. Order is important
@@ -1981,15 +1990,6 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
 	if( proxy )
 		[proxy update:delta ];
-}
-
--(void) JSHook_onEnterTransitionDidFinish
-{
-	//1st call native, then JS. Order is important
-	[self JSHook_onEnterTransitionDidFinish];
-	JSPROXY_CCNode *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
-	if( proxy )
-		[proxy onEnterTransitionDidFinish];
 }
 @end
 
@@ -22744,7 +22744,7 @@ void JSPROXY_CCTileMapAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("tileMapAtlasWithTileFileMapFileTileWidthTileHeight", JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTileMapAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -25002,7 +25002,7 @@ void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("tiledMapWithTMXFile", JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tiledMapWithXMLResourcePath", JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTMXTiledMap_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
