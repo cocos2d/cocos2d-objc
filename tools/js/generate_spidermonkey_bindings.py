@@ -1294,7 +1294,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         if optional_args != None:
             for i in xrange(max_args+1):
                 if i in properties['calls']:
-                    call_real = self.generate_method_call_to_real_object( properties['calls'][i], i+1, ret_js_type, args_declared_type, class_name, method_type )
+                    call_real = self.generate_method_call_to_real_object( properties['calls'][i], i, ret_js_type, args_declared_type, class_name, method_type )
                     self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i, call_real) )
         else:
             call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )

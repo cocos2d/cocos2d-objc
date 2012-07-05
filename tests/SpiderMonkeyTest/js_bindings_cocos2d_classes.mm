@@ -34717,56 +34717,29 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_(JSContext *cx, uint32
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCAnimation* (o)
-JSBool JSPROXY_CCAnimation_animation_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCAnimation* ret_val;
-
-	ret_val = [CCAnimation animation ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: NSArray*, float, NSUInteger
 // Ret value: CCAnimation* (o)
 JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 0 && argc <= 3 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSArray* arg0; double arg1; uint32_t arg2; 
 
-	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCAnimation* ret_val;
-
-	ret_val = [CCAnimation animationWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSArray*, float
-// Ret value: CCAnimation* (o)
-JSBool JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSArray* arg0; double arg1; 
-
-	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	if (argc >= 1) {
+		ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
+	}
 	if (argc >= 2) {
 		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	}
+	if (argc >= 3) {
+		ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCAnimation* ret_val;
+
+	if( argc == 0 ) {
+		ret_val = [CCAnimation animation ];
+	}
 
 	if( argc == 1 ) {
 		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0  ];
@@ -34774,6 +34747,10 @@ JSBool JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static(JSContext *cx
 
 	if( argc == 2 ) {
 		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
+	}
+
+	if( argc == 3 ) {
+		ret_val = [CCAnimation animationWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
 	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
@@ -35093,9 +35070,7 @@ void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("animation", JSPROXY_CCAnimation_animation_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationWithAnimationFramesDelayPerUnitLoops", JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCAnimation_animationWithSpriteFrames_delay__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

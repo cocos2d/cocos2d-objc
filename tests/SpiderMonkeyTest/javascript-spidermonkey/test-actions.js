@@ -570,12 +570,13 @@ var ActionAnimate = BaseLayer.extend({
         this.centerSprites(1);
 
         var animation = cc.Animation.create();
+        animation.setDelayPerUnit( 0.3 );
         for (var i = 1; i < 15; i++) {
-            var frameName = "Resources/Images/grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
-            animation.addSpriteFrameWithFileName(frameName);
+            var frameName = "grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
+            animation.addSpriteFrameWithFilename(frameName);
         }
 
-        var action = cc.Animate.create(3, animation, false);
+        var action = cc.Animate.create( animation );
         var action_back = action.reverse();
 
         this._grossini.runAction(cc.Sequence.create(action, action_back ));
@@ -585,6 +586,7 @@ var ActionAnimate = BaseLayer.extend({
         return "Animation";
     }
 });
+
 //------------------------------------------------------------------
 //
 //	ActionSequence
@@ -1199,7 +1201,7 @@ scenes.push( ActionRotateJerk );
 //scenes.push( ActionCallFuncND );
 scenes.push( ActionReverseSequence );
 scenes.push( ActionReverseSequence2 );
-//scenes.push( ActionAnimate );
+scenes.push( ActionAnimate );
 
 
 //------------------------------------------------------------------
