@@ -124,11 +124,12 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeB );
 	
 
+	ok &= JS_ValueToObject(cx, *argvp++, &handler->this );
+
 	handler->begin =  *argvp++;
 	handler->pre = *argvp++;
 	handler->post = *argvp++;
 	handler->separate = *argvp++;
-	ok &= JS_ValueToObject(cx, *argvp++, &handler->this );
 
 	if( ! ok )
 		return JS_FALSE;

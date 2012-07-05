@@ -267,10 +267,15 @@ class SpiderMonkey(object):
                     print 'Deleted duplicated from %s (old:%s)  (new:%s)' % (klass, m, method_name)
 
 
+        if 'manual' in props:
+            if not klass in self.manual_methods:
+                self.manual_methods[ klass ] = []
+            self.manual_methods[ klass ].append( method_name )
 
 
     def init_method_properties( self, properties ):
         self.method_properties = {}
+        self.manual_methods = {}
         for prop in properties:
             # key value
             if not prop or len(prop)==0:
@@ -1428,6 +1433,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
     def generate_class_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode
+        # manual_methods
         # JSPROXXY_CCNode
         # JSPROXY_CCNode, JSPROXY_NSObject
         header_template = '''
@@ -1437,6 +1443,8 @@ extern "C" {
 #endif
 
 void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+%s
 
 extern JSObject *%s_object;
 extern JSClass *%s_class;
@@ -1458,7 +1466,20 @@ extern JSClass *%s_class;
 
         self.generate_pragma_mark( class_name, self.h_file )
 
+        manual = ''
+        if class_name in self.manual_methods:
+            manual += '// Manually generated methods\n'
+            tmp = 'JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
+
+            for method_name in self.manual_methods[class_name]:
+                method = self.get_method( class_name, method_name )
+                class_method = '_static' if self.is_class_method(method) else ''
+                n = self.convert_selector_name_to_native( method_name )
+                manual += tmp % (proxy_class_name, n, class_method )
+
+
         self.h_file.write( header_template % (  proxy_class_name,
+                                                manual,
                                                 proxy_class_name,
                                                 proxy_class_name,
                                                 proxy_class_name, PROXY_PREFIX + parent_name  ) )

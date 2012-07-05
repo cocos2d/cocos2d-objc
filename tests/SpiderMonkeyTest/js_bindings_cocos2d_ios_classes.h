@@ -16,6 +16,8 @@ extern "C" {
 
 void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+
+
 extern JSObject *JSPROXY_CCDirector_object;
 extern JSClass *JSPROXY_CCDirector_class;
 
@@ -42,6 +44,8 @@ extern "C" {
 #endif
 
 void JSPROXY_CCDirectorIOS_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
 
 extern JSObject *JSPROXY_CCDirectorIOS_object;
 extern JSClass *JSPROXY_CCDirectorIOS_class;
@@ -70,6 +74,8 @@ extern "C" {
 
 void JSPROXY_CCDirectorDisplayLink_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+
+
 extern JSObject *JSPROXY_CCDirectorDisplayLink_object;
 extern JSClass *JSPROXY_CCDirectorDisplayLink_class;
 
@@ -96,6 +102,8 @@ extern "C" {
 #endif
 
 void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
 
 extern JSObject *JSPROXY_CCLayer_object;
 extern JSClass *JSPROXY_CCLayer_class;
@@ -124,6 +132,8 @@ extern "C" {
 
 void JSPROXY_CCLayerMultiplex_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+
+
 extern JSObject *JSPROXY_CCLayerMultiplex_object;
 extern JSClass *JSPROXY_CCLayerMultiplex_class;
 
@@ -150,6 +160,8 @@ extern "C" {
 #endif
 
 void JSPROXY_CCLayerColor_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
 
 extern JSObject *JSPROXY_CCLayerColor_object;
 extern JSClass *JSPROXY_CCLayerColor_class;
@@ -178,6 +190,8 @@ extern "C" {
 
 void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+
+
 extern JSObject *JSPROXY_CCLayerGradient_object;
 extern JSClass *JSPROXY_CCLayerGradient_class;
 
@@ -204,6 +218,8 @@ extern "C" {
 #endif
 
 void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
 
 extern JSObject *JSPROXY_CCMenu_object;
 extern JSClass *JSPROXY_CCMenu_class;
