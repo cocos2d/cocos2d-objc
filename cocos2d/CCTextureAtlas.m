@@ -523,6 +523,9 @@
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+
+		// Apparently this is faster... need to do performance tests
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * n, quads_, GL_DYNAMIC_DRAW);
 		dirty_ = NO;
 	}
 

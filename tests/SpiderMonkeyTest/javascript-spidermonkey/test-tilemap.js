@@ -162,9 +162,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
 
         // add menu
-        var item1 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("b1.png", "b2.png", this.backCallback);
-        var item2 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("r1.png", "r2.png", this.restartCallback);
-        var item3 = cc.MenuItemImage.itemWithNormalImageSelectedImageBlock("f1.png", "f2.png", this.nextCallback);
+        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
+        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
+        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
 
         var menu = cc.Menu.create(item1, item2, item3 );
 

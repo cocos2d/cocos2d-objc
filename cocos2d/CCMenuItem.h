@@ -335,6 +335,9 @@
 /** creates a menu item with a normal and selected image*/
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2;
 
+/** creates a menu item with a normal, selected and disabled image */
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3;
+
 /** creates a menu item with a normal and selected image with target/selector */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 
