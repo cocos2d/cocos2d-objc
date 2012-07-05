@@ -6071,17 +6071,25 @@ void JSPROXY_CCEaseElastic_finalize(JSContext *cx, JSObject *obj)
 // Arguments: CCActionInterval*, float
 // Ret value: CCEaseElastic* (o)
 JSBool JSPROXY_CCEaseElastic_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if (argc >= 2) {
+		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCEaseElastic* ret_val;
 
-	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
+	}
+
+	if( argc == 2 ) {
+		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -6155,26 +6163,6 @@ JSBool JSPROXY_CCEaseElastic_setPeriod_(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCEaseElastic* (o)
-JSBool JSPROXY_CCEaseElastic_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseElastic* ret_val;
-
-	ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: ccTime
 // Ret value: CCEaseElastic* (o)
 JSBool JSPROXY_CCEaseElastic_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -6233,8 +6221,7 @@ void JSPROXY_CCEaseElastic_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithActionPeriod", JSPROXY_CCEaseElastic_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseElastic_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseElastic_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseElastic_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseElastic_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -6310,37 +6297,25 @@ JSBool JSPROXY_CCEaseElasticOut_update_(JSContext *cx, uint32_t argc, jsval *vp)
 // Arguments: CCActionInterval*, float
 // Ret value: CCEaseElasticOut* (o)
 JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if (argc >= 2) {
+		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCEaseElasticOut* ret_val;
 
-	ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0  ];
+	}
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCActionInterval*
-// Ret value: CCEaseElasticOut* (o)
-JSBool JSPROXY_CCEaseElasticOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticOut* ret_val;
-
-	ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0  ];
+	if( argc == 2 ) {
+		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -6404,8 +6379,7 @@ void JSPROXY_CCEaseElasticOut_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithActionPeriod", JSPROXY_CCEaseElasticOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseElasticOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseElasticOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseElasticOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -9404,7 +9378,7 @@ void JSPROXY_CCEaseBackOut_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBackOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBackOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBackOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBackOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -10052,27 +10026,6 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	return JS_TRUE;
 }
 
-// Arguments: ccTime, CCScene*
-// Ret value: CCTransitionPageTurn* (o)
-JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; id arg1; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	if( ! ok ) return JS_FALSE;
-	CCTransitionPageTurn* ret_val;
-
-	ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: 
 // Ret value: CCTransitionPageTurn* (o)
 JSBool JSPROXY_CCTransitionPageTurn_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -10111,7 +10064,6 @@ void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionPageTurn_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -10718,7 +10670,7 @@ void JSPROXY_CCEaseRateAction_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionRate", JSPROXY_CCEaseRateAction_actionWithAction_rate__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseRateAction_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseRateAction_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseRateAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseRateAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -11956,7 +11908,7 @@ void JSPROXY_CCEaseBackIn_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBackIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBackIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBackIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBackIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -18810,37 +18762,25 @@ JSBool JSPROXY_CCEaseElasticIn_update_(JSContext *cx, uint32_t argc, jsval *vp) 
 // Arguments: CCActionInterval*, float
 // Ret value: CCEaseElasticIn* (o)
 JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if (argc >= 2) {
+		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCEaseElasticIn* ret_val;
 
-	ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0  ];
+	}
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCActionInterval*
-// Ret value: CCEaseElasticIn* (o)
-JSBool JSPROXY_CCEaseElasticIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticIn* ret_val;
-
-	ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0  ];
+	if( argc == 2 ) {
+		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -18904,8 +18844,7 @@ void JSPROXY_CCEaseElasticIn_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithActionPeriod", JSPROXY_CCEaseElasticIn_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseElasticIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseElasticIn_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseElasticIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -21066,7 +21005,7 @@ void JSPROXY_CCEaseBounce_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBounce_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBounce_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBounce_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBounce_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -21215,7 +21154,7 @@ void JSPROXY_CCEaseBounceOut_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBounceOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBounceOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBounceOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -23604,7 +23543,7 @@ void JSPROXY_CCEaseExponentialInOut_createClass(JSContext *cx, JSObject* globalO
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseExponentialInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseExponentialInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseExponentialInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -25285,27 +25224,6 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	return JS_TRUE;
 }
 
-// Arguments: ccTime, CCScene*
-// Ret value: CCTransitionFade* (o)
-JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; id arg1; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	if( ! ok ) return JS_FALSE;
-	CCTransitionFade* ret_val;
-
-	ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: 
 // Ret value: CCTransitionFade* (o)
 JSBool JSPROXY_CCTransitionFade_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -25343,7 +25261,6 @@ void JSPROXY_CCTransitionFade_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCTransitionFade_transitionWithDuration_scene__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCTransitionFade_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
@@ -26175,7 +26092,7 @@ void JSPROXY_CCEaseExponentialIn_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseExponentialIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseExponentialIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseExponentialIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -33911,7 +33828,7 @@ void JSPROXY_CCEaseSineIn_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseSineIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseSineIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseSineIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseSineIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -35217,7 +35134,7 @@ void JSPROXY_CCEaseSineInOut_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseSineInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseSineInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseSineInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseSineInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -37395,7 +37312,7 @@ void JSPROXY_CCEaseBounceIn_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBounceIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBounceIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBounceIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -38352,7 +38269,7 @@ void JSPROXY_CCEaseBounceInOut_createClass(JSContext *cx, JSObject* globalObj, c
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBounceInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBounceInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBounceInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -39080,7 +38997,7 @@ void JSPROXY_CCEaseBackInOut_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseBackInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseBackInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseBackInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseBackInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -39386,7 +39303,7 @@ void JSPROXY_CCEaseExponentialOut_createClass(JSContext *cx, JSObject* globalObj
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseExponentialOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseExponentialOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseExponentialOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -39724,37 +39641,25 @@ JSBool JSPROXY_CCEaseElasticInOut_update_(JSContext *cx, uint32_t argc, jsval *v
 // Arguments: CCActionInterval*, float
 // Ret value: CCEaseElasticInOut* (o)
 JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; double arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if (argc >= 2) {
+		ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCEaseElasticInOut* ret_val;
 
-	ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0  ];
+	}
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCActionInterval*
-// Ret value: CCEaseElasticInOut* (o)
-JSBool JSPROXY_CCEaseElasticInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticInOut* ret_val;
-
-	ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0  ];
+	if( argc == 2 ) {
+		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	}
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -39818,8 +39723,7 @@ void JSPROXY_CCEaseElasticInOut_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithActionPeriod", JSPROXY_CCEaseElasticInOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseElasticInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseElasticInOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseElasticInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -44447,7 +44351,7 @@ void JSPROXY_CCEaseSineOut_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithAction", JSPROXY_CCEaseSineOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCEaseSineOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCEaseSineOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCEaseSineOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END

@@ -214,7 +214,7 @@ class SpiderMonkey(object):
             self.method_properties[klass] = {}
         if not method_name in self.method_properties[klass]:
             self.method_properties[klass][method_name] = {}
-        self.method_properties[klass][method_name] = props
+        self.method_properties[klass][method_name] = copy.copy( props )
 
         # Process "merge"
         if 'merge' in props:
@@ -250,6 +250,18 @@ class SpiderMonkey(object):
             # safety check
             if method_name.count(':') != max_args:
                 raise Exception("Merge methods should have less arguments that the main method. Check: %s # %s" % (klass, method_name ) )
+
+        if 'name' in props:
+            # If this name was previously used, the delete it. Only the newer one will be used
+            # this scenario can happen when defining a name using a regexp, and then change it with a single line
+            name = props['name']
+            for m in self.method_properties[klass]:
+                d = self.method_properties[klass][m]
+                old_name = d.get('name', None )
+                if m != method_name and old_name == name:
+                    del( d['name'] )
+                    print 'Deleted duplicated from %s (old:%s)  (new:%s)' % (klass, m, method_name)
+
 
     def init_method_properties( self, properties ):
         self.method_properties = {}
@@ -588,7 +600,7 @@ class SpiderMonkey(object):
             self.method_properties[ class_name ][ method_name ] = {}
 
         k = self.method_properties[class_name][method_name]
-        k[prop] = value
+        k[ prop ] = value
 
     def is_class_method( self, method ):
         return 'class_method' in method and method['class_method'] == 'true'
