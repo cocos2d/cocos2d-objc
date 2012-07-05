@@ -1,7 +1,9 @@
 //
 // http://www.cocos2d-iphone.org
+// http://www.cocos2d-html5.org
+// http://www.cocos2d-x.org
 //
-// Javascript + cocos2d sprite tests
+// Javascript + cocos2d actions tests
 //
 
 require("javascript-spidermonkey/helper.js");
