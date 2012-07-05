@@ -203,9 +203,9 @@
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-label.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-cocos2djs.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-actions.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-actions.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-easeactions.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-tilemap.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-tilemap.js"];
 }
 @end
 
