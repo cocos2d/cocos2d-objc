@@ -2331,6 +2331,7 @@
 		A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CAE1403278200EC482A /* example_Plasma.vsh */; };
 		A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBB1403278200EC482A /* example_Twist.fsh */; };
 		A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CBC1403278200EC482A /* example_Twist.vsh */; };
+		A0F3EBCE15A64D12001972B4 /* js_bindings_cocos2d_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F3EBCD15A64D12001972B4 /* js_bindings_cocos2d_manual.mm */; };
 		A0F83F7F151CAACA00EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A0F840D2151D2B8F00EBBFCB /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */; };
 		A0F840D3151D2B8F00EBBFCB /* larabie-16.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */; };
@@ -6321,6 +6322,7 @@
 		A0EC4CBB1403278200EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
 		A0EC4CBC1403278200EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		A0F1615A153CD1FA0077361C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
+		A0F3EBCD15A64D12001972B4 /* js_bindings_cocos2d_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_manual.mm; sourceTree = "<group>"; };
 		A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
 		A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
 		A0F840CF151D2B8F00EBBFCB /* larabie-16.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16.plist"; sourceTree = "<group>"; };
@@ -7875,6 +7877,7 @@
 				A04E867A159B813C00F4BE65 /* js_bindings_cocos2d_mac_functions_registration.h */,
 				A04E867B159B813C00F4BE65 /* js_bindings_cocos2d_mac_functions.h */,
 				A04E867C159B813C00F4BE65 /* js_bindings_cocos2d_mac_functions.mm */,
+				A0F3EBCD15A64D12001972B4 /* js_bindings_cocos2d_manual.mm */,
 				4AD3B95F159A5534002E68D1 /* js_bindings_CocosDenshion_classes_registration.h */,
 				4AD3B960159A5534002E68D1 /* js_bindings_CocosDenshion_classes.h */,
 				4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */,
@@ -14689,6 +14692,7 @@
 				A01D0A3E159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm in Sources */,
 				A01D0A3F159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm in Sources */,
 				A01D0A8F159FF8600029EE77 /* js_bindings_NS_manual.mm in Sources */,
+				A0F3EBCE15A64D12001972B4 /* js_bindings_cocos2d_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

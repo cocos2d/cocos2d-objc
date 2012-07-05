@@ -1608,6 +1608,7 @@ extern "C" {
 #endif
 
 void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp);
 
 extern JSObject *JSPROXY_CCMenuItemImage_object;
 extern JSClass *JSPROXY_CCMenuItemImage_class;

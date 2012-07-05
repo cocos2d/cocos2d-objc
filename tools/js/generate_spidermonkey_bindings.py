@@ -31,6 +31,10 @@ import string
 class ParseException( Exception ):
     pass
 
+class ParseOKException( Exception ):
+    pass
+
+
 # append sys argv0 to path, unless path is absolute
 def get_path_for( path ):
     if not os.path.isabs( path ):
@@ -261,6 +265,8 @@ class SpiderMonkey(object):
                 if m != method_name and old_name == name:
                     del( d['name'] )
                     print 'Deleted duplicated from %s (old:%s)  (new:%s)' % (klass, m, method_name)
+
+
 
 
     def init_method_properties( self, properties ):
@@ -1256,11 +1262,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 
     def generate_method( self, class_name, method ):
 
+        s = method['selector']
+
+        if self.get_method_property( class_name, s, 'manual' ):
+            sys.stderr.write('Ignoring method %s # %s. It should be manually generated' % (class_name, s ) )
+            return True
+
         # Variadic methods are not supported
         if 'variadic' in method and method['variadic'] == 'true':
             raise ParseException('variadic arguemnts not supported.')
-
-        s = method['selector']
 
         # Skip 'callback' and 'ignore' methods
         try:

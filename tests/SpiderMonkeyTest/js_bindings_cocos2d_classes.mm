@@ -17412,51 +17412,6 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static(JSConte
 	return JS_TRUE;
 }
 
-// Arguments: NSString*, NSString*, void (^)(id)
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; NSString* arg1; js_block arg2; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 block:(void (^)(id))arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSString*, NSString*, void (^)(id)
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; NSString* arg1; NSString* arg2; js_block arg3; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg2 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: CCSpriteFrame*
 // Ret value: void (None)
 JSBool JSPROXY_CCMenuItemImage_setDisabledSpriteFrame_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -17649,8 +17604,7 @@ void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("itemWithNormalImageSelectedImage", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalImageSelectedImageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalImageSelectedImageDisabledImageBlock", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithNormalSpriteSelectedSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
