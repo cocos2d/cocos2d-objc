@@ -131,6 +131,10 @@ var BaseLayer = cc.LayerGradient.extend({
         return "";
     },
 
+    code:function () {
+        return "";
+    },
+
     restartCallback:function (sender) {
         restartScene();
     },
@@ -165,6 +169,17 @@ var BaseLayer = cc.LayerGradient.extend({
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
         }
 
+        var strCode = this.code();
+        if( strCode !="" ) {
+            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+            label.setPosition( cc.p( winSize.width/2, winSize.height-100) );
+            this.addChild( label,10 );
+
+            var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-100 -1) );
+            this.addChild( labelbg,9);
+        }
         // Menu
         var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
         var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
@@ -235,6 +250,11 @@ var SpriteEase = BaseLayer.extend({
         return "EaseIn - EaseOut - Stop";
     },
 
+    code:function () {
+        return "var actionIn = cc.EaseIn.create( action, rate );\n" + 
+                "var actionOut = cc.EaseOut.create( action, rate );";
+    },
+
     testStopAction:function (dt) {
         elapsedTime += dt;
         
@@ -280,7 +300,11 @@ var SpriteEaseInOut = BaseLayer.extend({
     },
     title:function () {
         return "EaseInOut and rates";
-    }
+    },
+
+    code:function () {
+        return "var actionInOut = cc.EaseInOut.create( action, rate );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -314,7 +338,12 @@ var SpriteEaseExponential = BaseLayer.extend({
     },
     title:function () {
         return "ExpIn - ExpOut actions";
-    }
+    },
+
+    code:function () {
+        return "var actionIn = cc.EaseExponentialIn.create( action );\n" + 
+                "var actionOut = cc.EaseExponentialOut.create( action );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -343,7 +372,10 @@ var SpriteEaseExponentialInOut = BaseLayer.extend({
     },
     title:function () {
         return "EaseExponentialInOut action";
-    }
+    },
+    code:function () {
+        return "var actionIn = cc.EaseExponentialInOut.create( action );";
+    },
 });
 
 //------------------------------------------------------------------

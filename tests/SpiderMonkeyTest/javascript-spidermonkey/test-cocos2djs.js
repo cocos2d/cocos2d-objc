@@ -376,7 +376,7 @@ var ActionsComplexPage = function() {
 	this.addChild( this.sprite );
 
 	// This function is not portable to cocos2d-html5
-	this.sprite.texture().setAliasTexParameters();
+	this.sprite.getTexture().setAliasTexParameters();
 
 	this.onEnterTransitionDidFinish = function() {
 		var rot = cc.RotateBy.create(1, 360);
