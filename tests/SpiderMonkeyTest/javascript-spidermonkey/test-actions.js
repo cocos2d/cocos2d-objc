@@ -169,6 +169,10 @@ var BaseLayer = cc.LayerGradient.extend({
         return "";
     },
 
+    code:function () {
+        return "";
+    },
+
     restartCallback:function (sender) {
         restartScene();
     },
@@ -188,13 +192,25 @@ var BaseLayer = cc.LayerGradient.extend({
         // add title and subtitle
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
         this.addChild(label, 1);
-        label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
+        label.setPosition( cc.p(winSize.width / 2, winSize.height - 40));
 
         var strSubtitle = this.subtitle();
         if (strSubtitle != "") {
             var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
             this.addChild(l, 1);
-            l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
+            l.setPosition( cc.p(winSize.width / 2, winSize.height - 70));
+        }
+
+        var strCode = this.code();
+        if( strCode !="" ) {
+            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+            label.setPosition( cc.p( winSize.width/2, winSize.height-120) );
+            this.addChild( label,10 );
+
+            var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
+            this.addChild( labelbg,9);
         }
 
         // Menu
@@ -249,7 +265,13 @@ var ActionManual = BaseLayer.extend({
     },
     title:function () {
         return "Manual Transformation";
+    },
+    code:function () {
+        return "sprite.setPosition( cc.p(10,20) );\n" +
+                "sprite.setRotation( 90 );\n" +
+                "sprite.setScale( 2 );";
     }
+
 });
 
 
@@ -275,7 +297,11 @@ var ActionMove = BaseLayer.extend({
     },
     title:function () {
         return "MoveTo / MoveBy";
-    }
+    },
+    code:function () {
+        return "a = cc.MoveBy.create( time, cc.p(x,y) );\n" +
+               "a = cc.MoveTo.create( time, cc.p(x,y) );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -302,7 +328,11 @@ var ActionScale = BaseLayer.extend({
     },
     title:function () {
         return "ScaleTo / ScaleBy";
-    }
+    },
+    code:function () {
+        return "a = cc.ScaleBy.create( time, scale );\n" +
+               "a = cc.ScaleTo.create( time, scaleX, scaleY );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -331,7 +361,11 @@ var ActionSkew = BaseLayer.extend({
     },
     title:function () {
         return "SkewTo / SkewBy";
-    }
+    },
+    code:function () {
+        return "a = cc.SkewBy.create( time, skew );\n" +
+               "a = cc.SkewTo.create( time, skewX, skewY );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -381,7 +415,7 @@ var ActionSkewRotateScale = BaseLayer.extend({
     },
     title:function () {
         return "Skew + Rotate + Scale";
-    }
+    },
 });
 
 //------------------------------------------------------------------
@@ -407,7 +441,11 @@ var ActionRotate = BaseLayer.extend({
     },
     title:function () {
         return "RotateTo / RotateBy";
-    }
+    },
+    code:function () {
+        return "a = cc.RotateBy.create( time, degrees );\n" +
+                "a = cc.RotateTo.create( time, degrees );";
+    },
 });
 
 
@@ -433,7 +471,11 @@ var ActionJump = BaseLayer.extend({
     },
     title:function () {
         return "JumpTo / JumpBy";
-    }
+    },
+    code:function () {
+        return "a = cc.JumpBy.create( time, point, height, #_of_jumps );\n" +
+               "a = cc.JumpTo.create( time, point, height, #_of_jumps );";
+    },
 });
 
 //------------------------------------------------------------------
@@ -508,7 +550,10 @@ var ActionBlink = BaseLayer.extend({
     },
     title:function () {
         return "Blink";
-    }
+    },
+    code:function () {
+        return "a = cc.Blink.create( time, #_of_blinks );\n";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -533,7 +578,12 @@ var ActionFade = BaseLayer.extend({
     },
     title:function () {
         return "FadeIn / FadeOut";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.FadeIn.create( time );\n" +
+            "a = cc.FadeOut.create( time );\n"
+    },
 });
 //------------------------------------------------------------------
 //
@@ -555,7 +605,12 @@ var ActionTint = BaseLayer.extend({
     },
     title:function () {
         return "TintTo / TintBy";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.TintBy.create( time, red, green, blue );\n" +
+            "a = cc.TintTo.create( time, red, green, blue );\n"
+    },
 });
 
 //------------------------------------------------------------------
@@ -583,7 +638,11 @@ var ActionAnimate = BaseLayer.extend({
     },
     title:function () {
         return "Animation";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.Animate.create( animation );\n";
+    },
 });
 
 //------------------------------------------------------------------
@@ -605,7 +664,11 @@ var ActionSequence = BaseLayer.extend({
     },
     title:function () {
         return "Sequence: Move + Rotate";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.Sequence.create( a1, a2, a3,..., aN);\n";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -699,7 +762,12 @@ var ActionCallFunc = BaseLayer.extend({
     },
     title:function () {
         return "Callbacks: CallFunc and friends";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.CallFunc.create( this, this.callback );\n" +
+            "a = cc.CallFunc.create( this, this.callback, optional_arg );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -727,7 +795,12 @@ var ActionCallFuncND = BaseLayer.extend({
     },
     subtitle:function () {
         return "CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.CallFunc.create( this, this.callback );\n" +
+            "a = cc.CallFunc.create( this, this.callback, optional_arg );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -748,7 +821,11 @@ var ActionSpawn = BaseLayer.extend({
     },
     title:function () {
         return "Spawn: Jump + Rotate";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.Spawn.create( a1, a2, ..., aN );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -773,7 +850,11 @@ var ActionRepeatForever = BaseLayer.extend({
     },
     title:function () {
         return "CallFunc + RepeatForever";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.RepeatForever.create( action_to_repeat );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -797,7 +878,11 @@ var ActionRotateToRepeat = BaseLayer.extend({
     },
     title:function () {
         return "Repeat/RepeatForever + RotateTo";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.Repeat.create( action_to_repeat, #_of_times );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -839,7 +924,11 @@ var ActionReverse = BaseLayer.extend({
     },
     title:function () {
         return "Reverse an action";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = action.reverse();";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -858,7 +947,11 @@ var ActionDelayTime = BaseLayer.extend({
     },
     title:function () {
         return "DelayTime: m + delay + m";
-    }
+    },
+    code:function () {
+        return "" +
+            "a = cc.DelayTime.create( time );";
+    },
 });
 //------------------------------------------------------------------
 //
@@ -1010,7 +1103,7 @@ var ActionFollow = BaseLayer.extend({
 
         this._grossini.runAction(rep);
 
-        this.runAction(cc.Follow.create(this._grossini, cc.RectMake(0, 0, winSize.width * 2 - 100, winSize.height)));
+        this.runAction(cc.Follow.create(this._grossini, cc.rect(0, 0, winSize.width * 2 - 100, winSize.height)));
     },
     title:function () {
         return "Follow action";
@@ -1023,17 +1116,13 @@ var ActionFollow = BaseLayer.extend({
 //
 //------------------------------------------------------------------
 var ActionCardinalSpline = BaseLayer.extend({
-    _array:null,
-    ctor:function () {
-        this._array = new cc.PointArray();
-    },
 
     onEnter:function () {
         this._super();
 
         this.centerSprites(2);
 
-        var array = cc.PointArray.create();
+        var array = cc.PointArray.create(10);
 
         array.addControlPoint(cc.p(0, 0));
         array.addControlPoint(cc.p(winSize.width / 2 - 30, 0));
@@ -1064,31 +1153,20 @@ var ActionCardinalSpline = BaseLayer.extend({
 
         this._kathia.setPosition(cc.p(winSize.width / 2, 50));
         this._kathia.runAction(seq2);
-
-        this._array = array;
     },
 
-    draw:function (ctx) {
-        this._super();
-
-        var context = ctx || cc.renderContext;
-        // move to 50,50 since the "by" path will start at 50,50
-        context.save();
-        context.translate(50, -50);
-        cc.drawingUtil.drawCardinalSpline(this._array, 0, 100);
-        context.restore();
-
-        context.save();
-        context.translate(winSize.width / 2, -50);
-        cc.drawingUtil.drawCardinalSpline(this._array, 1, 100);
-        context.restore();
-    },
     subtitle:function () {
         return "Cardinal Spline paths. Testing different tensions for one array";
     },
     title:function () {
         return "CardinalSplineBy / CardinalSplineAt";
-    }
+    },
+    code:function() {
+        return "" +
+            " a = cc.CadinalSplineBy.create( time, array_of_points, tension );\n" +
+            " a = cc.CadinalSplineTo.create( time, array_of_points, tension );\n";
+    
+    },
 });
 
 //------------------------------------------------------------------
@@ -1097,17 +1175,14 @@ var ActionCardinalSpline = BaseLayer.extend({
 //
 //------------------------------------------------------------------
 var ActionCatmullRom = BaseLayer.extend({
-    _array1:null,
-    _array2:null,
-    ctor:function () {
-        this._array1 = new cc.PointArray();
-        this._array2 = new cc.PointArray();
-    },
 
     onEnter:function () {
         this._super();
 
         this.centerSprites(2);
+
+        var array1 = cc.PointArray.create( 10 );
+        var array2 = cc.PointArray.create( 10 );
 
         //
         // sprite 1 (By)
@@ -1117,16 +1192,15 @@ var ActionCatmullRom = BaseLayer.extend({
         //
         this._tamara.setPosition(cc.p(50, 50));
 
-        var array = cc.PointArray.create();
-        array.addControlPoint(cc.p(0, 0));
-        array.addControlPoint(cc.p(80, 80));
-        array.addControlPoint(cc.p(winSize.width - 80, 80));
-        array.addControlPoint(cc.p(winSize.width - 80, winSize.height - 80));
-        array.addControlPoint(cc.p(80, winSize.height - 80));
-        array.addControlPoint(cc.p(80, 80));
-        array.addControlPoint(cc.p(winSize.width / 2, winSize.height / 2));
+        array1.addControlPoint(cc.p(0, 0));
+        array1.addControlPoint(cc.p(80, 80));
+        array1.addControlPoint(cc.p(winSize.width - 80, 80));
+        array1.addControlPoint(cc.p(winSize.width - 80, winSize.height - 80));
+        array1.addControlPoint(cc.p(80, winSize.height - 80));
+        array1.addControlPoint(cc.p(80, 80));
+        array1.addControlPoint(cc.p(winSize.width / 2, winSize.height / 2));
 
-        var action1 = cc.CatmullRomBy.create(3, array);
+        var action1 = cc.CatmullRomBy.create(3, array1);
         var reverse1 = action1.reverse();
         var seq1 = cc.Sequence.create(action1, reverse1);
 
@@ -1138,8 +1212,6 @@ var ActionCatmullRom = BaseLayer.extend({
         // The startPosition is not important here, because it uses a "To" action.
         // The initial position will be the 1st point of the Catmull Rom path
         //
-        var array2 = cc.PointArray.create();
-
         array2.addControlPoint(cc.p(winSize.width / 2, 30));
         array2.addControlPoint(cc.p(winSize.width - 80, 30));
         array2.addControlPoint(cc.p(winSize.width - 80, winSize.height - 80));
@@ -1152,33 +1224,24 @@ var ActionCatmullRom = BaseLayer.extend({
         var seq2 = cc.Sequence.create(action2, reverse2);
 
         this._kathia.runAction(seq2);
-
-        this._array1 = array;
-        this._array2 = array2;
-    },
-    draw:function (ctx) {
-        this._super();
-        var context = ctx || cc.renderContext;
-
-        // move to 50,50 since the "by" path will start at 50,50
-        context.save();
-        context.translate(50, -50);
-        cc.drawingUtil.drawCatmullRom(this._array1, 50);
-        context.restore();
-
-        cc.drawingUtil.drawCatmullRom(this._array2, 50);
     },
     subtitle:function () {
         return "Catmull Rom spline paths. Testing reverse too";
     },
     title:function () {
         return "CatmullRomBy / CatmullRomTo";
-    }
+    },
+    code:function() {
+        return "" +
+            " a = cc.CatmullRomBy.create( time, array_of_points );\n" +
+            " a = cc.CatmullRomTo.create( time, array_of_points );\n";
+    },
 });
 
 //
 // Order of tests
 //
+
 scenes.push( ActionManual );
 scenes.push( ActionMove );
 scenes.push( ActionScale );
@@ -1187,8 +1250,8 @@ scenes.push( ActionSkew );
 scenes.push( ActionSkewRotateScale );
 scenes.push( ActionJump );
 //scenes.push( ActionBezier );
-//scenes.push( ActionCardinalSpline );
-//scenes.push( ActionCatmullRom );
+scenes.push( ActionCardinalSpline );
+scenes.push( ActionCatmullRom );
 scenes.push( ActionBlink );
 scenes.push( ActionFade );
 scenes.push( ActionTint );
