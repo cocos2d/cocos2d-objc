@@ -60,9 +60,13 @@ JSBool jsval_to_int( JSContext *cx, jsval vp, int *out);
 JSBool jsval_to_long( JSContext *cx, jsval vp, long *out);
 JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *out);	
 	
-/** converts a jsval to a block */
-JSBool jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis, js_block *out  );
+/** converts a jsval to a block (1 == receives 1 argument (sender) ) */
+JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *out  );
 
+/** converts a jsval to a block (2 == receives 2 argument (sender + custom) ) */
+JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, js_block *out  );
+
+	
 jsval int_to_jsval( JSContext *cx, int l);
 jsval long_to_jsval( JSContext *cx, long l);
 jsval longlong_to_jsval( JSContext *cx, long long l);
