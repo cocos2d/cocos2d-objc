@@ -2060,7 +2060,7 @@ JSBool JSPROXY_CCMenuItem_initWithBlock_(JSContext *cx, uint32_t argc, jsval *vp
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItem *real = [(CCMenuItem*)[proxy.klass alloc] initWithBlock:(void (^)(id))arg0  ];
@@ -2115,7 +2115,7 @@ JSBool JSPROXY_CCMenuItem_itemWithBlock__static(JSContext *cx, uint32_t argc, js
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItem* ret_val;
 
@@ -2176,7 +2176,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
@@ -2354,7 +2354,7 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 	id arg0; js_block arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
@@ -2396,7 +2396,7 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	id arg0; js_block arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemLabel* ret_val;
 
@@ -2652,7 +2652,7 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithBlock__static(JSContext *cx, uint32_t arg
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemLabel* ret_val;
 
@@ -2782,7 +2782,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_initWithString_charMapFile_itemWidth_itemHeig
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	ok &= JS_ValueToUint16( cx, *argvp++, &arg4 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemAtlasFont *real = [(CCMenuItemAtlasFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 charMapFile:(NSString*)arg1 itemWidth:(int)arg2 itemHeight:(int)arg3 startCharMap:(char)arg4 block:(void (^)(id))arg5  ];
@@ -2832,7 +2832,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg3 );
 	ok &= JS_ValueToUint16( cx, *argvp++, &arg4 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg5 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
@@ -2873,7 +2873,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, ui
 	id arg0; js_block arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
@@ -2893,7 +2893,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static(JSContext *cx, uint32_t
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
@@ -16931,7 +16931,7 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
@@ -16975,7 +16975,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__stati
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
@@ -16998,7 +16998,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
@@ -17249,7 +17249,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithBlock__static(JSContext *cx, uint32_t ar
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
@@ -17378,7 +17378,7 @@ JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_b
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg1 );
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg2 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:(NSString*)arg0 selectedImage:(NSString*)arg1 disabledImage:(NSString*)arg2 block:(void (^)(id))arg3  ];
@@ -17509,7 +17509,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
@@ -17532,7 +17532,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprit
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
@@ -17552,7 +17552,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithBlock__static(JSContext *cx, uint32_t arg
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
@@ -18369,292 +18369,6 @@ void JSPROXY_CCBMFontConfiguration_createClass(JSContext *cx, JSObject* globalOb
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCBMFontConfiguration_class, JSPROXY_CCBMFontConfiguration_object, NULL);
 	JSPROXY_CCBMFontConfiguration *proxy = [[JSPROXY_CCBMFontConfiguration alloc] initWithJSObject:jsobj class:[CCBMFontConfiguration class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCCallFunc
- */
-#pragma mark - CCCallFunc
-
-JSClass* JSPROXY_CCCallFunc_class = NULL;
-JSObject* JSPROXY_CCCallFunc_object = NULL;
- // Constructor
-JSBool JSPROXY_CCCallFunc_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCCallFunc createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCCallFunc_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFunc)", obj);
-}
-
-// Arguments: 
-// Ret value: void (None)
-JSBool JSPROXY_CCCallFunc_execute(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-
-	CCCallFunc *real = (CCCallFunc*) [proxy realObj];
-	[real execute ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCallFunc* (o)
-JSBool JSPROXY_CCCallFunc_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCCallFunc* ret_val;
-
-	ret_val = [CCCallFunc action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCCallFunc_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCCallFunc_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCCallFunc_class->name = name;
-	JSPROXY_CCCallFunc_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCCallFunc_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCCallFunc_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCCallFunc_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCCallFunc_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCCallFunc_class->resolve = JS_ResolveStub;
-	JSPROXY_CCCallFunc_class->convert = JS_ConvertStub;
-	JSPROXY_CCCallFunc_class->finalize = JSPROXY_CCCallFunc_finalize;
-//	JSPROXY_CCCallFunc_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("execute", JSPROXY_CCCallFunc_execute, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCCallFunc_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCCallFunc_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInstant_object, JSPROXY_CCCallFunc_class, JSPROXY_CCCallFunc_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCCallFunc
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCCallFunc_class, JSPROXY_CCCallFunc_object, NULL);
-	JSPROXY_CCCallFunc *proxy = [[JSPROXY_CCCallFunc alloc] initWithJSObject:jsobj class:[CCCallFunc class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCCallFuncN
- */
-#pragma mark - CCCallFuncN
-
-JSClass* JSPROXY_CCCallFuncN_class = NULL;
-JSObject* JSPROXY_CCCallFuncN_object = NULL;
- // Constructor
-JSBool JSPROXY_CCCallFuncN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCCallFuncN createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCCallFuncN_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncN)", obj);
-}
-
-// Arguments: 
-// Ret value: void (None)
-JSBool JSPROXY_CCCallFuncN_execute(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-
-	CCCallFuncN *real = (CCCallFuncN*) [proxy realObj];
-	[real execute ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCallFuncN* (o)
-JSBool JSPROXY_CCCallFuncN_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCCallFuncN* ret_val;
-
-	ret_val = [CCCallFuncN action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCCallFuncN_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCCallFuncN_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCCallFuncN_class->name = name;
-	JSPROXY_CCCallFuncN_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncN_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncN_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncN_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCCallFuncN_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCCallFuncN_class->resolve = JS_ResolveStub;
-	JSPROXY_CCCallFuncN_class->convert = JS_ConvertStub;
-	JSPROXY_CCCallFuncN_class->finalize = JSPROXY_CCCallFuncN_finalize;
-//	JSPROXY_CCCallFuncN_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("execute", JSPROXY_CCCallFuncN_execute, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCCallFuncN_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCCallFuncN_object = JS_InitClass(cx, globalObj, JSPROXY_CCCallFunc_object, JSPROXY_CCCallFuncN_class, JSPROXY_CCCallFuncN_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCCallFuncN
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCCallFuncN_class, JSPROXY_CCCallFuncN_object, NULL);
-	JSPROXY_CCCallFuncN *proxy = [[JSPROXY_CCCallFuncN alloc] initWithJSObject:jsobj class:[CCCallFuncN class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCCallFuncND
- */
-#pragma mark - CCCallFuncND
-
-JSClass* JSPROXY_CCCallFuncND_class = NULL;
-JSObject* JSPROXY_CCCallFuncND_object = NULL;
- // Constructor
-JSBool JSPROXY_CCCallFuncND_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCCallFuncND createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCCallFuncND_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncND)", obj);
-}
-
-// Arguments: 
-// Ret value: CCCallFuncND* (o)
-JSBool JSPROXY_CCCallFuncND_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCCallFuncND* ret_val;
-
-	ret_val = [CCCallFuncND action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCCallFuncND_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCCallFuncND_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCCallFuncND_class->name = name;
-	JSPROXY_CCCallFuncND_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncND_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncND_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncND_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCCallFuncND_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCCallFuncND_class->resolve = JS_ResolveStub;
-	JSPROXY_CCCallFuncND_class->convert = JS_ConvertStub;
-	JSPROXY_CCCallFuncND_class->finalize = JSPROXY_CCCallFuncND_finalize;
-//	JSPROXY_CCCallFuncND_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCCallFuncND_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCCallFuncND_object = JS_InitClass(cx, globalObj, JSPROXY_CCCallFuncN_object, JSPROXY_CCCallFuncND_class, JSPROXY_CCCallFuncND_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCCallFuncND
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCCallFuncND_class, JSPROXY_CCCallFuncND_object, NULL);
-	JSPROXY_CCCallFuncND *proxy = [[JSPROXY_CCCallFuncND alloc] initWithJSObject:jsobj class:[CCCallFuncND class]];
 	[proxy setRealObj:realObj];
 
 	if( realObj ) {
@@ -23783,7 +23497,7 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 	NSString* arg0; js_block arg1; 
 
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemFont *real = [(CCMenuItemFont*)[proxy.klass alloc] initWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
@@ -23825,7 +23539,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	NSString* arg0; js_block arg1; 
 
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
@@ -23942,7 +23656,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_
 	id arg0; js_block arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
@@ -23962,7 +23676,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithBlock__static(JSContext *cx, uint32_t argc
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
@@ -27687,7 +27401,7 @@ JSBool JSPROXY_CCMenuItemToggle_initWithItems_block_(JSContext *cx, uint32_t arg
 	NSArray* arg0; js_block arg1; 
 
 	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = [(CCMenuItemToggle*)[proxy.klass alloc] initWithItems:(NSArray*)arg0 block:(void (^)(id))arg1  ];
@@ -27709,7 +27423,7 @@ JSBool JSPROXY_CCMenuItemToggle_itemWithItems_block__static(JSContext *cx, uint3
 	NSArray* arg0; js_block arg1; 
 
 	ok &= jsval_to_nsarray( cx, *argvp++, &arg0 );
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemToggle* ret_val;
 
@@ -27933,7 +27647,7 @@ JSBool JSPROXY_CCMenuItemToggle_itemWithBlock__static(JSContext *cx, uint32_t ar
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemToggle* ret_val;
 
@@ -32989,90 +32703,6 @@ void JSPROXY_CCTransitionZoomFlipY_createClass(JSContext *cx, JSObject* globalOb
 @end
 
 /*
- * CCCallFuncO
- */
-#pragma mark - CCCallFuncO
-
-JSClass* JSPROXY_CCCallFuncO_class = NULL;
-JSObject* JSPROXY_CCCallFuncO_object = NULL;
- // Constructor
-JSBool JSPROXY_CCCallFuncO_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCCallFuncO createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCCallFuncO_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallFuncO)", obj);
-}
-
-// Arguments: 
-// Ret value: CCCallFuncO* (o)
-JSBool JSPROXY_CCCallFuncO_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCCallFuncO* ret_val;
-
-	ret_val = [CCCallFuncO action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCCallFuncO_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCCallFuncO_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCCallFuncO_class->name = name;
-	JSPROXY_CCCallFuncO_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncO_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncO_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCCallFuncO_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCCallFuncO_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCCallFuncO_class->resolve = JS_ResolveStub;
-	JSPROXY_CCCallFuncO_class->convert = JS_ConvertStub;
-	JSPROXY_CCCallFuncO_class->finalize = JSPROXY_CCCallFuncO_finalize;
-//	JSPROXY_CCCallFuncO_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCCallFuncO_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCCallFuncO_object = JS_InitClass(cx, globalObj, JSPROXY_CCCallFunc_object, JSPROXY_CCCallFuncO_class, JSPROXY_CCCallFuncO_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCCallFuncO
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCCallFuncO_class, JSPROXY_CCCallFuncO_object, NULL);
-	JSPROXY_CCCallFuncO *proxy = [[JSPROXY_CCCallFuncO alloc] initWithJSObject:jsobj class:[CCCallFuncO class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
  * CCReuseGrid
  */
 #pragma mark - CCReuseGrid
@@ -34145,107 +33775,6 @@ void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const cha
 @end
 
 /*
- * CCCallBlockO
- */
-#pragma mark - CCCallBlockO
-
-JSClass* JSPROXY_CCCallBlockO_class = NULL;
-JSObject* JSPROXY_CCCallBlockO_object = NULL;
- // Constructor
-JSBool JSPROXY_CCCallBlockO_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCCallBlockO createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCCallBlockO_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlockO)", obj);
-}
-
-// Arguments: 
-// Ret value: void (None)
-JSBool JSPROXY_CCCallBlockO_execute(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-
-	CCCallBlockO *real = (CCCallBlockO*) [proxy realObj];
-	[real execute ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCallBlockO* (o)
-JSBool JSPROXY_CCCallBlockO_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCCallBlockO* ret_val;
-
-	ret_val = [CCCallBlockO action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCCallBlockO_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCCallBlockO_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCCallBlockO_class->name = name;
-	JSPROXY_CCCallBlockO_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCCallBlockO_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCCallBlockO_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCCallBlockO_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCCallBlockO_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCCallBlockO_class->resolve = JS_ResolveStub;
-	JSPROXY_CCCallBlockO_class->convert = JS_ConvertStub;
-	JSPROXY_CCCallBlockO_class->finalize = JSPROXY_CCCallBlockO_finalize;
-//	JSPROXY_CCCallBlockO_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("execute", JSPROXY_CCCallBlockO_execute, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("action", JSPROXY_CCCallBlockO_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCCallBlockO_object = JS_InitClass(cx, globalObj, JSPROXY_CCActionInstant_object, JSPROXY_CCCallBlockO_class, JSPROXY_CCCallBlockO_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCCallBlockO
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCCallBlockO_class, JSPROXY_CCCallBlockO_object, NULL);
-	JSPROXY_CCCallBlockO *proxy = [[JSPROXY_CCCallBlockO alloc] initWithJSObject:jsobj class:[CCCallBlockO class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
  * CCCallBlockN
  */
 #pragma mark - CCCallBlockN
@@ -34265,26 +33794,6 @@ JSBool JSPROXY_CCCallBlockN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCCallBlockN_finalize(JSContext *cx, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlockN)", obj);
-}
-
-// Arguments: void (^)(CCNode *)
-// Ret value: CCCallBlockN* (o)
-JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCCallBlockN* ret_val;
-
-	ret_val = [CCCallBlockN actionWithBlock:(void (^)(CCNode *))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
 }
 
 // Arguments: 
@@ -34316,7 +33825,7 @@ JSBool JSPROXY_CCCallBlockN_initWithBlock_(JSContext *cx, uint32_t argc, jsval *
 	JSBool ok = JS_TRUE;
 	js_block arg0; 
 
-	ok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
+	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
 	if( ! ok ) return JS_FALSE;
 
 	CCCallBlockN *real = [(CCCallBlockN*)[proxy.klass alloc] initWithBlock:(void (^)(CCNode *))arg0  ];
@@ -34366,7 +33875,7 @@ void JSPROXY_CCCallBlockN_createClass(JSContext *cx, JSObject* globalObj, const 
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithBlock", JSPROXY_CCCallBlockN_actionWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCCallBlockN_actionWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCCallBlockN_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

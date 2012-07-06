@@ -711,17 +711,22 @@ var ActionCallFuncND = BaseLayer.extend({
         this._super();
         this.centerSprites(1);
 
-        var action = cc.Sequence.create(cc.MoveBy.create(2.0, cc.ccp(200, 0)),
-            cc.CallFunc.create(this._grossini, this.removeFromParentAndCleanup, true) );
+        var action = cc.Sequence.create(cc.MoveBy.create(2.0, cc.p(200, 0)),
+            cc.CallFunc.create(this, this.removeGrossini, this._grossini) );
 
         this._grossini.runAction(action);
 
     },
-    title:function () {
-        return "CallFuncND + auto remove";
+
+    removeGrossini : function( spriteToRemove ) {
+        spriteToRemove.removeFromParentAndCleanup( true );
     },
+
     title:function () {
-        return "CallFuncND + removeFromParentAndCleanup. Grossini dissapears in 2s";
+        return "CallFunc + auto remove";
+    },
+    subtitle:function () {
+        return "CallFunc + removeFromParentAndCleanup. Grossini dissapears in 2s";
     }
 });
 //------------------------------------------------------------------
@@ -767,7 +772,7 @@ var ActionRepeatForever = BaseLayer.extend({
         sender.runAction(repeat)
     },
     title:function () {
-        return "CallFuncN + RepeatForever";
+        return "CallFunc + RepeatForever";
     }
 });
 //------------------------------------------------------------------
@@ -1196,8 +1201,8 @@ scenes.push( ActionRepeat );
 scenes.push( ActionRepeatForever );
 scenes.push( ActionRotateToRepeat );
 scenes.push( ActionRotateJerk );
-//scenes.push( ActionCallFunc );
-//scenes.push( ActionCallFuncND );
+scenes.push( ActionCallFunc );
+scenes.push( ActionCallFuncND );
 scenes.push( ActionReverseSequence );
 scenes.push( ActionReverseSequence2 );
 scenes.push( ActionAnimate );

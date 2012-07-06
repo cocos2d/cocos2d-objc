@@ -160,7 +160,7 @@ JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray**
 	return JS_TRUE;
 }
 
-JSBool jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ret)
+JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ret)
 {
 	if( ! JS_ValueToFunction(cx, vp ) )
 		return JS_FALSE;
@@ -178,6 +178,31 @@ JSBool jsval_to_block( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ret)
 	*ret = [[block copy] autorelease];
 	return JS_TRUE;
 }
+
+JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, js_block *ret)
+{
+	if( ! JS_ValueToFunction(cx, vp ) )
+		return JS_FALSE;
+	
+	js_block block = ^(id sender) {
+		
+		jsval rval;
+		
+		JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, sender );
+		
+		jsval vals[2];
+		vals[0] = OBJECT_TO_JSVAL(jsobj);
+		
+		// arg NEEDS TO BE ROOTED! Potential crash
+		vals[1] = arg;
+		
+		JS_CallFunctionValue(cx, jsthis, vp, 2, vals, &rval);
+	};
+	
+	*ret = [[block copy] autorelease];
+	return JS_TRUE;
+}
+
 
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 {

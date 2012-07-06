@@ -1100,7 +1100,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         self.mm_file.write( template % (i) )
 
     def generate_argument_function( self, i, arg_js_type, arg_declared_type ):
-        template = '\tok &= jsval_to_block( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg%d );\n'
+        template = '\tok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg%d );\n'
         self.mm_file.write( template % (i) )
 
     def generate_argument_opaque( self, i, arg_js_type, arg_declared_type ):

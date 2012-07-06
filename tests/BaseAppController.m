@@ -122,8 +122,6 @@
 
 #elif defined(__CC_PLATFORM_MAC)
 
-#import "ScriptingCore.h"
-
 @implementation BaseAppController
 
 @synthesize window=window_;

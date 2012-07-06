@@ -1834,93 +1834,6 @@ extern JSClass *JSPROXY_CCBMFontConfiguration_class;
 @end
 
 /*
- * CCCallFunc
- */
-#pragma mark - CCCallFunc
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCCallFunc_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCCallFunc_object;
-extern JSClass *JSPROXY_CCCallFunc_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCCallFunc : JSPROXY_CCActionInstant
-{
-}
-
-@end
-
-/*
- * CCCallFuncN
- */
-#pragma mark - CCCallFuncN
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCCallFuncN_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCCallFuncN_object;
-extern JSClass *JSPROXY_CCCallFuncN_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCCallFuncN : JSPROXY_CCCallFunc
-{
-}
-
-@end
-
-/*
- * CCCallFuncND
- */
-#pragma mark - CCCallFuncND
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCCallFuncND_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCCallFuncND_object;
-extern JSClass *JSPROXY_CCCallFuncND_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCCallFuncND : JSPROXY_CCCallFuncN
-{
-}
-
-@end
-
-/*
  * CCEaseElasticIn
  */
 #pragma mark - CCEaseElasticIn
@@ -3864,35 +3777,6 @@ extern JSClass *JSPROXY_CCTransitionZoomFlipY_class;
 @end
 
 /*
- * CCCallFuncO
- */
-#pragma mark - CCCallFuncO
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCCallFuncO_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCCallFuncO_object;
-extern JSClass *JSPROXY_CCCallFuncO_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCCallFuncO : JSPROXY_CCCallFunc
-{
-}
-
-@end
-
-/*
  * CCReuseGrid
  */
 #pragma mark - CCReuseGrid
@@ -4067,35 +3951,6 @@ extern JSClass *JSPROXY_CCAnimate_class;
 @end
 
 /*
- * CCCallBlockO
- */
-#pragma mark - CCCallBlockO
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCCallBlockO_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCCallBlockO_object;
-extern JSClass *JSPROXY_CCCallBlockO_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCCallBlockO : JSPROXY_CCActionInstant
-{
-}
-
-@end
-
-/*
  * CCCallBlockN
  */
 #pragma mark - CCCallBlockN
@@ -4107,6 +3962,8 @@ extern "C" {
 
 void JSPROXY_CCCallBlockN_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCCallBlockN_object;
