@@ -1507,7 +1507,6 @@ var Issue1327 = BaseLayer.extend({
 //
 // Order of tests
 //
-scenes.push( ActionAnimate );
 
 scenes.push( ActionManual );
 scenes.push( ActionMove );
