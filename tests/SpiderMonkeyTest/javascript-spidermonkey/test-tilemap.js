@@ -118,6 +118,8 @@ cc.LayerGradient.extend = function (prop) {
 
 var BaseLayer = cc.LayerGradient.extend({
 
+    prevLocation:null,
+
     ctor:function () {
                                 
         var parent = new cc.LayerGradient();
@@ -149,6 +151,13 @@ var BaseLayer = cc.LayerGradient.extend({
         // DO NOT CALL this._super()
 //        this._super();
 
+        var platform = __getPlatform();
+        if( platform == 'OSX' ) {
+            this.setIsMouseEnabled( true );
+        } else if( platform == 'iOS' ) {
+            this.setIsTouchEnabled( true );
+        }
+
         // add title and subtitle
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
         this.addChild(label, 1);
@@ -174,7 +183,49 @@ var BaseLayer = cc.LayerGradient.extend({
         item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
 
         this.addChild(menu, 1);
-    }
+    },
+
+    onMouseDown : function( event ) {
+        this.prevLocation = director.convertEventToGL( event );
+    },
+
+    onMouseUp : function( event ) {
+        this.prevLocation = null;
+    },
+
+    onMouseDragged : function( event ) {
+        this.moveTile( director.convertEventToGL( event ) );
+    },
+
+    onTouchesBegan:function (touches, event) {
+        this.prevLocation = director.convertTouchToGL( touches[0] );
+    },
+    onTouchesEnded:function (touches, event) {
+        this.prevLocation = null;
+    },
+    onTouchesCancelled:function (touches, event) {
+        this.prevLocation = null;
+    },
+    onTouchesMoved:function (touches, event) {
+        var touchLocation = director.convertTouchToGL( touches[0] );
+        this.moveTile( touchLocation );
+    },
+
+    moveTile:function ( touchLocation ) {
+
+        if (!this.prevLocation) {
+            this.prevLocation = touchLocation;
+            return;
+        }
+        var node = this.getChildByTag(TAG_TILE_MAP);
+        var diff = cc.pSub(touchLocation, this.prevLocation);
+        var currentPos = node.getPosition();
+
+        //diff = cc.ccp(diff.x * node.getScaleX(),diff.y * node.getScaleY());
+        var curPos = cc.pAdd(currentPos, diff);
+        node.setPosition(curPos);
+        this.prevLocation = touchLocation;
+    },
 });
 
 
