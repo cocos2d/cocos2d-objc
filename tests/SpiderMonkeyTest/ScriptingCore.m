@@ -414,7 +414,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	return ok;
 }
 
--(BOOL) runScript2:(NSString*)filename
+-(BOOL) runScript:(NSString*)filename
 {
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
@@ -450,7 +450,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 /*
  * Compile a script and execute it. It roots the script
  */
--(BOOL) runScript:(NSString*)filename
+-(BOOL) runScript2:(NSString*)filename
 {
     JSScript *script;
 	
