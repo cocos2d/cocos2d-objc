@@ -125,7 +125,12 @@ var BaseLayer = cc.LayerGradient.extend({
 
     centerSprites : function (numberOfSprites) {
 
-        if (numberOfSprites == 1) {
+        if (numberOfSprites == 0) {
+            this._tamara.setVisible(false);
+            this._kathia.setVisible(false);
+            this._grossini.setVisible(false);
+        }
+        else if (numberOfSprites == 1) {
             this._tamara.setVisible(false);
             this._kathia.setVisible(false);
             this._grossini.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
@@ -621,28 +626,52 @@ var ActionTint = BaseLayer.extend({
 var ActionAnimate = BaseLayer.extend({
     onEnter:function () {
         this._super();
-        this.centerSprites(1);
+        this.centerSprites(3);
 
+        //
+        // Manual animation
+        //
         var animation = cc.Animation.create();
-        animation.setDelayPerUnit( 0.3 );
         for (var i = 1; i < 15; i++) {
             var frameName = "grossini_dance_" + ((i < 10) ? ("0" + i) : i) + ".png";
             animation.addSpriteFrameWithFilename(frameName);
         }
+        animation.setDelayPerUnit(2.8 / 14);
+        animation.setRestoreOriginalFrame(true);
 
-        var action = cc.Animate.create( animation );
-        var action_back = action.reverse();
+        var action = cc.Animate.create(animation);
+        this._grossini.runAction(cc.Sequence.create(action, action.reverse()));
 
-        this._grossini.runAction(cc.Sequence.create(action, action_back ));
+        //
+        // File animation
+        //
+        // With 2 loops and reverse
+        var animCache = cc.AnimationCache.sharedAnimationCache();
 
+        animCache.addAnimationsWithFile("animations/animations-2.plist");
+        var animation2 = animCache.animationByName("dance_1");
+
+        var action2 = cc.Animate.create(animation2);
+        this._tamara.runAction(cc.Sequence.create(action2, action2.reverse()));
+
+        //
+        // File animation
+        //
+        // with 4 loops
+        var animation3 = animation2.copy();
+        animation3.setLoops(4);
+
+        var action3 = cc.Animate.create(animation3);
+        this._kathia.runAction(action3);
     },
+
     title:function () {
         return "Animation";
     },
-    code:function () {
-        return "" +
-            "a = cc.Animate.create( animation );\n";
-    },
+
+    subtitle:function () {
+        return "Center: Manual animation. Border: using file format animation";
+    }
 });
 
 //------------------------------------------------------------------
@@ -1238,9 +1267,247 @@ var ActionCatmullRom = BaseLayer.extend({
     },
 });
 
+var ActionTargeted = BaseLayer.extend({
+    onEnter:function () {
+        this._super();
+        this.centerSprites(2);
+
+        var jump1 = cc.JumpBy.create(2, cc.p(0,0), 100, 3);
+        var jump2 = jump1.copy();
+        var rot1 =  cc.RotateBy.create(1, 360);
+        var rot2 = rot1.copy();
+
+        var t1 = cc.TargetedAction.create(this._kathia, jump2);
+        var t2 = cc.TargetedAction.create(this._kathia, rot2);
+
+        var seq = cc.Sequence.create(jump1, t1, rot1, t2);
+        var always = cc.RepeatForever.create(seq);
+
+        this._tamara.runAction(always);
+    },
+    subtitle:function () {
+        return "Action that runs on another target. Useful for sequences";
+    },
+    title:function () {
+        return "Targeted Action";
+    },
+    code:function () {
+        return "a = cc.TargetedAction.create( target, action );";
+    },
+});
+
+var PauseResumeActions = BaseLayer.extend({
+    _pausedTargets:[],
+    _elapsedTime : 0,
+    _calledResume : false,
+    _calledPause : false,
+    onEnter:function () {
+        this._super();
+        this.centerSprites(2);
+
+        this._tamara.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, 360)));
+        this._grossini.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, -360)));
+        this._kathia.runAction(cc.RepeatForever.create(cc.RotateBy.create(3, 360)));
+
+        this.scheduleUpdate();
+    },
+
+    update:function (dt) {
+        this._elapsedTime += dt;
+        if( this._elapsedTime > 3 && ! this._calledPause ) {
+            this.pause();
+            this._calledPause = true;
+        }
+        if( this._elapsedTime > 5 && ! this._calledResume) {
+            this.resume();
+            this._calledResume = true;
+        }
+    },
+
+    pause:function () {
+        cc.log("Pausing");
+        this._pausedTargets = director.getActionManager().pauseAllRunningActions();
+    },
+
+    resume:function () {
+        cc.log("Resuming");
+        director.getActionManager().resumeTargets(this._pausedTargets);
+    },
+
+    title:function () {
+        return "PauseResumeActions";
+    },
+    subtitle:function () {
+        return "All actions pause at 3s and resume at 5s";
+    }
+});
+
+var Issue1305 = BaseLayer.extend({
+    _spriteTemp:null,
+    _elapsedTime:0,
+    onEnter:function () {
+        this._super();
+        this.centerSprites(0);
+
+        this._spriteTmp = cc.Sprite.create("grossini.png");
+        /* c++ can't support block, so we use CCCallFuncN instead.
+         [spriteTmp_ runAction:[CCCallBlockN actionWithBlock:^(CCNode* node) {
+         NSLog(@"This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+         }] ];
+         */
+
+        this._spriteTmp.runAction(cc.CallFunc.create(this, this.log));
+        this.scheduleUpdate();
+    },
+    onExit:function () {
+        this._super();
+    },
+    log:function (pSender) {
+        cc.log("This message SHALL ONLY appear when the sprite is added to the scene, NOT BEFORE");
+    },
+    update:function (dt) {
+        this._elapsedTime += dt;
+        if( this._elapsedTime > 2 ) {
+            this.addSprite();
+            this.unscheduleUpdate();
+        }
+    },
+    addSprite:function () {
+        this._spriteTmp.setPosition(cc.p(250,250));
+        this.addChild(this._spriteTmp);
+    },
+    title:function () {
+        return "Issue 1305";
+    },
+    subtitle:function () {
+        return "In two seconds you should see a message on the console. NOT BEFORE.";
+    }
+});
+
+var Issue1305_2 = BaseLayer.extend({
+    onEnter:function () {
+        this._super();
+        this.centerSprites(0);
+
+        var spr = cc.Sprite.create("grossini.png");
+        spr.setPosition(cc.p(200,200));
+        this.addChild(spr);
+
+        var act1 = cc.MoveBy.create(2 ,cc.p(0, 100));
+
+        var act2 = cc.CallFunc.create(this, this.log1) ;
+        var act3 = cc.MoveBy.create(2, cc.p(0, -100));
+        var act4 = cc.CallFunc.create(this, this.log2) ;
+        var act5 = cc.MoveBy.create(2, cc.p(100, -100));
+        var act6 = cc.CallFunc.create(this, this.log3) ;
+        var act7 = cc.MoveBy.create(2, cc.p(-100, 0));
+        var act8 = cc.CallFunc.create(this, this.log4) ;
+
+        var actF = cc.Sequence.create(act1, act2, act3, act4, act5, act6, act7, act8);
+
+        //    [spr runAction:actF];
+        director.getActionManager().addAction(actF ,spr, false);
+    },
+    log1:function () {
+        cc.log("1st block");
+    },
+    log2:function () {
+        cc.log("2nd block");
+    },
+    log3:function () {
+        cc.log("3rd block");
+    },
+    log4:function () {
+        cc.log("4th block");
+    },
+    title:function () {
+        return "Issue 1305 #2";
+    },
+    subtitle:function () {
+        return "See console. You should only see one message for each block";
+    }
+});
+
+var Issue1288 = BaseLayer.extend({
+    onEnter:function () {
+        this._super();
+        this.centerSprites(0);
+
+        var spr = cc.Sprite.create("grossini.png");
+        spr.setPosition(cc.p(100, 100));
+        this.addChild(spr);
+
+        var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
+        var act2 = act1.reverse();
+        var act3 = cc.Sequence.create(act1, act2);
+        var act4 = cc.Repeat.create(act3, 2);
+
+        spr.runAction(act4);
+    },
+    title:function () {
+        return "Issue 1288";
+    },
+    subtitle:function () {
+        return "Sprite should end at the position where it started.";
+    }
+});
+
+var Issue1288_2 = BaseLayer.extend({
+    onEnter:function () {
+        this._super();
+        this.centerSprites(0);
+
+        var spr = cc.Sprite.create("grossini.png");
+        spr.setPosition(cc.p(100, 100));
+        this.addChild(spr);
+
+        var act1 = cc.MoveBy.create(0.5, cc.p(100, 0));
+        spr.runAction(cc.Repeat.create(act1, 1));
+    },
+    title:function () {
+        return "Issue 1288 #2";
+    },
+    subtitle:function () {
+        return "Sprite should move 100 pixels, and stay there";
+    }
+});
+
+var Issue1327 = BaseLayer.extend({
+    onEnter:function () {
+        this._super();
+        this.centerSprites(0);
+
+        var spr = cc.Sprite.create("grossini.png");
+        spr.setPosition(cc.p(100, 100));
+        this.addChild(spr);
+
+        var act1 = cc.CallFunc.create(this, this.logSprRotation);
+        var act2 = cc.RotateBy.create(0.25, 45);
+        var act3 = cc.CallFunc.create(this, this.logSprRotation);
+        var act4 = cc.RotateBy.create(0.25, 45);
+        var act5 = cc.CallFunc.create(this, this.logSprRotation);
+        var act6 = cc.RotateBy.create(0.25, 45);
+        var act7 = cc.CallFunc.create(this, this.logSprRotation);
+        var act8 = cc.RotateBy.create(0.25, 45);
+        var act9 = cc.CallFunc.create(this, this.logSprRotation);
+
+        var actF = cc.Sequence.create(act1, act2, act3, act4, act5, act6, act7, act8, act9);
+        spr.runAction(actF);
+    },
+    logSprRotation:function (pSender) {
+        cc.log(pSender.getRotation());
+    },
+    title:function () {
+        return "Issue 1327";
+    },
+    subtitle:function () {
+        return "See console: You should see: 0, 45, 90, 135, 180";
+    }
+});
 //
 // Order of tests
 //
+scenes.push( ActionAnimate );
 
 scenes.push( ActionManual );
 scenes.push( ActionMove );
@@ -1269,7 +1536,13 @@ scenes.push( ActionCallFuncND );
 scenes.push( ActionReverseSequence );
 scenes.push( ActionReverseSequence2 );
 scenes.push( ActionAnimate );
-
+scenes.push( ActionTargeted );
+scenes.push( PauseResumeActions );
+scenes.push( Issue1305 );
+scenes.push( Issue1305_2 );
+scenes.push( Issue1288 );
+scenes.push( Issue1288_2 );
+scenes.push( Issue1327 );
 
 //------------------------------------------------------------------
 //
