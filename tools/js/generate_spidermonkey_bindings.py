@@ -1022,6 +1022,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             for arg in args:
                 t = arg['type']
                 dt = arg['declared_type']
+
+                # Treat 'id' as NSObject*
+                if dt=='id':
+                    dt='NSObject*'
+
                 dt_class_name = dt.replace('*','')
 
                 # IMPORTANT: 1st search on declared types.

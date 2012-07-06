@@ -609,6 +609,28 @@ JSBool JSPROXY_CCDirector_setAnimationInterval_(JSContext *cx, uint32_t argc, js
 	return JS_TRUE;
 }
 
+// Arguments: NSObject*
+// Ret value: void (None)
+JSBool JSPROXY_CCDirector_setDelegate_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	id arg0; 
+
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
+
+	CCDirector *real = (CCDirector*) [proxy realObj];
+	[real setDelegate:(NSObject*)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
 // Arguments: BOOL
 // Ret value: void (None)
 JSBool JSPROXY_CCDirector_setDepthTest_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -687,6 +709,28 @@ JSBool JSPROXY_CCDirector_setNextDeltaTimeZero_(JSContext *cx, uint32_t argc, js
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
 	[real setNextDeltaTimeZero:(BOOL)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: NSObject*
+// Ret value: void (None)
+JSBool JSPROXY_CCDirector_setNotificationNode_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	id arg0; 
+
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
+	if( ! ok ) return JS_FALSE;
+
+	CCDirector *real = (CCDirector*) [proxy realObj];
+	[real setNotificationNode:(NSObject*)arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -886,10 +930,12 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("setActionManager", JSPROXY_CCDirector_setActionManager_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAlphaBlending", JSPROXY_CCDirector_setAlphaBlending_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setAnimationInterval", JSPROXY_CCDirector_setAnimationInterval_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setDelegate", JSPROXY_CCDirector_setDelegate_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDepthTest", JSPROXY_CCDirector_setDepthTest_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setDisplayStats", JSPROXY_CCDirector_setDisplayStats_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setGLDefaultValues", JSPROXY_CCDirector_setGLDefaultValues, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setNextDeltaTimeZero", JSPROXY_CCDirector_setNextDeltaTimeZero_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setNotificationNode", JSPROXY_CCDirector_setNotificationNode_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setProjection", JSPROXY_CCDirector_setProjection_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setScheduler", JSPROXY_CCDirector_setScheduler_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("startAnimation", JSPROXY_CCDirector_startAnimation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
