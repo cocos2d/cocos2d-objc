@@ -28,6 +28,7 @@ static NSString *transitions[] = {
 	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
+	@"LabelTTFMultiline2",
 	@"LabelTTFA8Test",
 	@"LabelTTFLineBreak",
 	@"BMFontOneAtlas",
@@ -1466,8 +1467,38 @@ static float menuItemPaddingCenter = 50;
 {
 	return @"Word wrap using CCLabelTTF and a custom TTF font";
 }
-
 @end
+
+#pragma mark -
+#pragma mark LabelTTFMultiline2
+
+@implementation LabelTTFMultiline2
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Line 1\nThis is line 2\nAnd this is line 3" fontName:@"Marker Felt" fontSize:32];
+		label.position = ccp(s.width/2,s.height/2);
+		
+		[self addChild:label];
+	}
+	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing CCLabelTTF multiline";
+}
+
+-(NSString *) subtitle
+{
+	return @"Multiline wihtout dimensions";
+}
+@end
+
 
 #pragma mark -
 #pragma mark LabelTTFA8Test
