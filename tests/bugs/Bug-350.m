@@ -28,6 +28,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+	useRetinaDisplay_ = NO;
+
 	[super application:application didFinishLaunchingWithOptions:launchOptions];
 
 	// Turn on display FPS

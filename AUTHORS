@@ -48,7 +48,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Gene Peterson (http://zynga.com)
 	Dimension is a property on CCLabelTTF
-	Scheduler: Fixed possible crash when dealloc was also remove itself from the Scheduler.
+	Scheduler: Patch for when dealloc was also calling removeUpdateFromHash, causing a possible double free
 
 * geraldtjy
 	Added Director.popToRootScene method
