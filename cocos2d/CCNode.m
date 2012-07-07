@@ -869,14 +869,14 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] view]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }
 
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] view]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
