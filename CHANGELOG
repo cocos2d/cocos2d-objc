@@ -1,4 +1,5 @@
 version 2.0 XX-Jul-2012
+. [FIX] EventDispatcher: fixed ccMouseEnter/Exit
 . [FIX] LabelTTF: supports multiline even if no dimensions are provided
 . [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
 . [FIX] Scheduler: removeUpdateFromHash calls [target release] at the very end to prevent a possible crash
