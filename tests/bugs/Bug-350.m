@@ -12,20 +12,30 @@
 
 // Don't create the background imate at "init" time.
 // Instead create it at "onEnter" time.
+-(id) init
+{
+	if( (self=[super init]) ) {
+	
+	}
+	
+	return self;
+}
+
 -(void) onEnter
 {
 	[super onEnter];
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	
-	CCSprite *background = nil;
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
-		background = [CCSprite spriteWithFile:@"Default.png"];
-		background.rotation = 90;
-	} else {
-		background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];			
+
+	CCSprite *_background;
+
+	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+		_background = [CCSprite spriteWithFile:@"Default.png"];
+	else {
+		_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
 	}
-	background.position = ccp(size.width/2, size.height/2);
-	[self addChild:background];	
+	_background.position = ccp(size.width/2, size.height/2);
+
+	[self addChild:_background];
 }
 @end
 
@@ -86,6 +96,11 @@
 //	kmGLPopMatrix();
 //	[glView swapBuffers];
 	
+	// create the main scene
+	CCScene *scene = [CCScene node];
+	[scene addChild: [Layer1 node]];
+	[director_ pushScene: scene];
+
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 	
@@ -97,10 +112,6 @@
 	// make main window visible
 	[window_ makeKeyAndVisible];	
 
-	// create the main scene
-	CCScene *scene = [CCScene node];
-	[scene addChild: [Layer1 node]];
-	[director_ pushScene: scene];
 
 	return YES;
 }
