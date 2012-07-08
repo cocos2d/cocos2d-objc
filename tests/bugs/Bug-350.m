@@ -9,27 +9,9 @@
 #pragma mark MemBug
 
 @implementation Layer1
--(id) init2
-{
-	if((self=[super init])) {
-		CGSize size = [[CCDirector sharedDirector] winSize];
-		
-		CCSprite *background = nil;
-		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
-			background = [CCSprite spriteWithFile:@"Default.png"];
-			background.rotation = 90;
-		} else {
-			background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];			
-		}
-		background.position = ccp(size.width/2, size.height/2);
-		[self addChild:background];
 
-	}
-
-	return self;
-}
-
-
+// Don't create the background imate at "init" time.
+// Instead create it at "onEnter" time.
 -(void) onEnter
 {
 	[super onEnter];
@@ -107,7 +89,7 @@
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 	
-	// set the Navigation Controller as the root view controller
+	// Use "setRootViewController" instead of "addSubview" to prevent flicker
 //	[window_ addSubview:navController_.view];
 	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
