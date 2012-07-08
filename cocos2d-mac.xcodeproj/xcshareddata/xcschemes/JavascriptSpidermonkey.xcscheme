@@ -13,10 +13,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "507FF8CE116D16F600B6FAB2"
-               BuildableName = "Bug350.app"
-               BlueprintName = "Bug350"
-               ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+               BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+               BuildableName = "JavascriptSpidermonkey.app"
+               BlueprintName = "JavascriptSpidermonkey"
+               ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -31,10 +31,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507FF8CE116D16F600B6FAB2"
-            BuildableName = "Bug350.app"
-            BlueprintName = "Bug350"
-            ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "JavascriptSpidermonkey.app"
+            BlueprintName = "JavascriptSpidermonkey"
+            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -46,15 +46,14 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enablesOpenGLESFrameCapture = "YES"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507FF8CE116D16F600B6FAB2"
-            BuildableName = "Bug350.app"
-            BlueprintName = "Bug350"
-            ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "JavascriptSpidermonkey.app"
+            BlueprintName = "JavascriptSpidermonkey"
+            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -69,10 +68,10 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "507FF8CE116D16F600B6FAB2"
-            BuildableName = "Bug350.app"
-            BlueprintName = "Bug350"
-            ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "JavascriptSpidermonkey.app"
+            BlueprintName = "JavascriptSpidermonkey"
+            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

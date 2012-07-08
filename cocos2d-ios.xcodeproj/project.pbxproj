@@ -2020,6 +2020,7 @@
 		A0EC4C8D140323C500EC482A /* example_Twist.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A231403236C00EC482A /* example_Twist.vsh */; };
 		A0F37B3813C3719A00F724DF /* white-512x512.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F37B3713C3719A00F724DF /* white-512x512.png */; };
 		A0F37B7913C3B39E00F724DF /* grossini_dance_atlas-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E062F9961247FC5400DE3932 /* grossini_dance_atlas-hd.png */; };
+		A0F59E4515A9FBE800634D2D /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F59E4415A9FBE800634D2D /* Default-Landscape~ipad.png */; };
 		A0F83FB5151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB3151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist */; };
 		A0F83FB6151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A0F8410B151D2C2E00EBBFCB /* larabie-16-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F84109151D2C2E00EBBFCB /* larabie-16-hd.plist */; };
@@ -4679,6 +4680,7 @@
 		A0EC4A221403236C00EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
 		A0EC4A231403236C00EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
 		A0F37B3713C3719A00F724DF /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
+		A0F59E4415A9FBE800634D2D /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "bugs/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		A0F83FB3151CAE7300EBBFCB /* tuffy_bold_italic-charmap-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap-hd.plist"; sourceTree = "<group>"; };
 		A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
 		A0F84109151D2C2E00EBBFCB /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
@@ -6638,6 +6640,7 @@
 		50B2CB260E10EE4A00AE9530 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A0F59E4615A9FBEE00634D2D /* Bugs */,
 				E0A4A24A11F899BB003B9D29 /* PVR images */,
 				50E2A52510A4AA1700D894CE /* sprites_test */,
 				508A333A0FBADD6A00D574A2 /* grossini images */,
@@ -7265,6 +7268,14 @@
 			);
 			name = Shaders;
 			path = Resources/Shaders;
+			sourceTree = "<group>";
+		};
+		A0F59E4615A9FBEE00634D2D /* Bugs */ = {
+			isa = PBXGroup;
+			children = (
+				A0F59E4415A9FBE800634D2D /* Default-Landscape~ipad.png */,
+			);
+			name = Bugs;
 			sourceTree = "<group>";
 		};
 		A0F6EABE14169976008F01A1 /* Profiling */ = {
@@ -10208,6 +10219,7 @@
 				A0B0386013EA1FE10073E59A /* r1-ipad.png in Resources */,
 				A0B0389113EA1FE30073E59A /* r2-ipad.png in Resources */,
 				A093FC4C150D0ED40039327A /* fps_images-ipadhd.png in Resources */,
+				A0F59E4515A9FBE800634D2D /* Default-Landscape~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13754,7 +13766,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/Info350.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Bug350;
 			};
@@ -13770,7 +13782,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/Info350.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = Bug350;
 				ZERO_LINK = NO;

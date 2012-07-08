@@ -118,6 +118,11 @@
 }
 @end
 
+@interface LabelTTFMultiline2 : AtlasDemo
+{
+}
+@end
+
 
 @interface LabelTTFA8Test : AtlasDemo
 {
