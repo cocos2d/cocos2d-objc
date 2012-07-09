@@ -787,7 +787,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	[shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];
+	[shaderProgram_ setUniformsForBuiltins];
 
 	ccGLBindTexture2D( name_ );
 
@@ -815,7 +815,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
 
 	[shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];    
+	[shaderProgram_ setUniformsForBuiltins];    
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 
