@@ -17,6 +17,25 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* Lam Pham (http://www.fancyratstudios.com/)
+	New skew action that matches flash functionality
+
+* Nicolas Gramlich (http://andengine.org):
+	Contributed the remote Javascript console
+
+* Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
+	Many improvements in the OpenGL ES 2.0 code
+
+
+cocos2d for iPhone 2.0 authors
+------------------------------
+
+Lead Developer:
+	Ricardo Quesada (http://zynga.com/)
+
+
+People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
+
 * Andrew0 (https://github.com/andrew0)
 	Fixed crash on NSThread+block
 	CatmullRom action compiles OK on Mac Release mode

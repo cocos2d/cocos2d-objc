@@ -90,7 +90,7 @@ enum {
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
- -# The node will be rotated (rotation)
+ -# The node will be rotated (rotation, rotationX, rotationY)
  -# The node will be skewed (skewX, skewY)
  -# The node will be scaled (scale, scaleX, scaleY)
  -# The grid will capture the screen
@@ -103,7 +103,7 @@ enum {
 @interface CCNode : NSObject
 {
 	// rotation angle
-	float rotation_;
+	float rotationX_, rotationY_;
 
 	// scaling factors
 	float scaleX_, scaleY_;
@@ -207,6 +207,11 @@ enum {
 @property(nonatomic,readwrite,assign) float skewY;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationX;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationY;
+
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
