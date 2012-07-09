@@ -465,7 +465,7 @@ enum {
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 	[shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];
+	[shaderProgram_ setUniformsForBuiltins];
 	[shaderProgram_ setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
 	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
 

@@ -144,7 +144,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		orderOfArrival_ = 0;
 
-		glServerState_ = CC_GL_BLEND;
+		glServerState_ = 0;
 		
 		// set default scheduler and actionManager
 		CCDirector *director = [CCDirector sharedDirector];

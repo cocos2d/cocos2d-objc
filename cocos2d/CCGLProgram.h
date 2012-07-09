@@ -40,7 +40,13 @@ enum {
 };
 
 enum {
+	kCCUniformPMatrix,
+	kCCUniformMVMatrix,
 	kCCUniformMVPMatrix,
+	kCCUniformTime,
+	kCCUniformSinTime,
+	kCCUniformCosTime,
+	kCCUniformRandom01,
 	kCCUniformSampler,
 
 	kCCUniform_MAX,
@@ -55,12 +61,18 @@ enum {
 #define kCCShader_Position_uColor				@"ShaderPosition_uColor"
 
 // uniform names
-#define kCCUniformMVPMatrix_s			"u_MVPMatrix"
-#define kCCUniformSampler_s				"u_texture"
-#define kCCUniformAlphaTestValue		"u_alpha_value"
+#define kCCUniformPMatrix_s			  "CC_PMatrix"
+#define kCCUniformMVMatrix_s			"CC_MVMatrix"
+#define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
+#define kCCUniformTime_s          "CC_Time"
+#define kCCUniformSinTime_s       "CC_SinTime"
+#define kCCUniformCosTime_s       "CC_CosTime"
+#define kCCUniformRandom01_s      "CC_Random01"
+#define kCCUniformSampler_s				"CC_Texture0"
+#define kCCUniformAlphaTestValue	"u_alpha_value"
 
 // Attribute names
-#define	kCCAttributeNameColor			@"a_color"
+#define	kCCAttributeNameColor			  @"a_color"
 #define	kCCAttributeNamePosition		@"a_position"
 #define	kCCAttributeNameTexCoord		@"a_texCoord"
 
@@ -83,7 +95,10 @@ struct _hashUniformEntry;
 					fragShader_;
 
 	GLint			uniforms_[kCCUniform_MAX];
+	BOOL usesTime_;
 }
+
+@property(nonatomic, readonly) GLint program;
 
 /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
@@ -100,9 +115,10 @@ struct _hashUniformEntry;
 /** it will call glUseProgram() */
 - (void)use;
 
-/** It will create 3 uniforms:
+/** It will create 4 uniforms:
 	- kCCUniformPMatrix
 	- kCCUniformMVMatrix
+	- kCCUniformMVPMatrix
 	- kCCUniformSampler
 
  And it will bind "kCCUniformSampler" to 0
@@ -110,34 +126,37 @@ struct _hashUniformEntry;
 - (void) updateUniforms;
 
 /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withI1:(GLint)i1;
+-(void) setUniformLocation:(GLint)location withI1:(GLint)i1;
 
 /** calls glUniform1f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1;
+-(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1;
 
 /** calls glUniform2f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2;
+-(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2;
 
 /** calls glUniform3f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
+-(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3;
 
 /** calls glUniform4f only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
+-(void) setUniformLocation:(GLint)location withF1:(GLfloat)f1 f2:(GLfloat)f2 f3:(GLfloat)f3 f4:(GLfloat)f4;
 
 /** calls glUniform2fv only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
+-(void) setUniformLocation:(GLint)location with2fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
 
 /** calls glUniform3fv only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
+-(void) setUniformLocation:(GLint)location with3fv:(GLfloat*)floats count:(NSUInteger)numberOfArrays;
 
 /** calls glUniform4fv only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays;
+-(void) setUniformLocation:(GLint)location with4fv:(GLvoid*)floats count:(NSUInteger)numberOfArrays;
 
 /** calls glUniformMatrix4fv only if the values are different than the previous call for this same shader program. */
--(void) setUniformLocation:(NSUInteger)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
+-(void) setUniformLocation:(GLint)location withMatrix4fv:(GLvoid*)matrix_array count:(NSUInteger)numberOfMatrix;
 
-/** will update the MVP matrix on the MVP uniform if it is different than the previous call for this same shader program. */
--(void) setUniformForModelViewProjectionMatrix;
+/** will update the builtin uniforms if they are different than the previous call for this same shader program. */
+-(void) setUniformsForBuiltins;
+
+/** Deprecated alias for setUniformsForBuiltins */
+-(void)setUniformForModelViewProjectionMatrix __attribute__((__deprecated__));
 
 /** returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
