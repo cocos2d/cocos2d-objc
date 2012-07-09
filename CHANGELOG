@@ -1,6 +1,9 @@
 version 2.1-alpha XX-Ago-2012
-. [NEW] Javascript bindings for cocos2d, CocosDenshion and Chipmunk
-. [NEW] Javascript remote console
+. [NEW] GL ES 2.0 code: General improvements in the shader and cache code. Better error reporting.
+. [NEW] Javascript bindings for cocos2d, CocosDenshion and Chipmunk.
+			Includes Javascript remote console
+. [NEW] Node: Added RotationalSkew featur (compatible with Flash)
+. [NEW[ Tests: Tests for RotationalSkew feature
 
 version 2.0.0 8-Jul-2012
 . [FIX] EventDispatcher: fixed ccMouseEnter/Exit

@@ -131,7 +131,9 @@ typedef void (*GLLogFunction) (GLuint program,
         return NO;
 		
 		const GLchar *sources[] = {
+#ifdef __CC_PLATFORM_IOS
 			(type == GL_VERTEX_SHADER ? "precision highp float;\n" : "precision mediump float;\n"),
+#endif
 			"uniform mat4 CC_PMatrix;\n"
 			"uniform mat4 CC_MVMatrix;\n"
 			"uniform mat4 CC_MVPMatrix;\n"
