@@ -106,7 +106,7 @@
 	navController_.navigationBarHidden = YES;
 
 	// set the Navigation Controller as the root view controller
-	[window_ `:navController_];
+	[window_ setRootViewController:navController_];
 
 	[navController_ release];
 

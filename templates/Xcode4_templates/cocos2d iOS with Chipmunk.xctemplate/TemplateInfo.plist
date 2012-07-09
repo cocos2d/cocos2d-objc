@@ -43,6 +43,18 @@
 			<key>Path</key>
 			<string>HelloWorldLayer.m</string>
 		</dict>
+		<key>IntroLayer.h</key>
+		<dict>
+			<key>Path</key>
+			<string>IntroLayer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>IntroLayer.m</key>
+		<dict>
+			<key>Path</key>
+			<string>IntroLayer.m</string>
+		</dict>
 		<key>AppDelegate.h</key>
 		<dict>
 			<key>Path</key>
@@ -87,6 +99,8 @@
 		<string>AppDelegate.m</string>
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
+		<string>IntroLayer.h</string>
+		<string>IntroLayer.m</string>
 		<string>PhysicsSprite.h</string>
 		<string>PhysicsSprite.m</string>
 		<string>Resources/grossini_dance_atlas.png</string>

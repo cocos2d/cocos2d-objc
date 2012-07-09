@@ -1,7 +1,10 @@
-version 2.0 XX-Jul-2012
+version 2.0.0 8-Jul-2012
+. [FIX] EventDispatcher: fixed ccMouseEnter/Exit
 . [FIX] LabelTTF: supports multiline even if no dimensions are provided
 . [FIX] Macros: CCLOGERROR defined in ccDeprecated as CCLOGWARN
 . [FIX] Scheduler: removeUpdateFromHash calls [target release] at the very end to prevent a possible crash
+. [FIX] Templates: Generate no-flicker-at-startup code
+		Improved Physics templates: multitouch and gravity+accel works OK
 . [FIX] TexturePVR: wrong type when calculating PVR lenght
 . [FIX] Xcode: Fixed compile errors and warnings in Xcode 4.5
 . [3RD] libpng: updated to 1.2.49

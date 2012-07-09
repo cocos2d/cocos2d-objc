@@ -33,9 +33,11 @@
 	<string>1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Paint Boy.ttf</string>
+	</array>
 	<key>UIPrerenderedIcon</key>
-	<true/>
-	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>UIRequiredDeviceCapabilities</key>
 	<dict>
@@ -44,6 +46,8 @@
 		<key>opengles-2</key>
 		<true/>
 	</dict>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
