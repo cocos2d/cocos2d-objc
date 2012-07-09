@@ -40,8 +40,6 @@ enum {
 	kCCLabelAutomaticWidth = -1,
 };
 
-struct _KerningHashElement;
-
 /** @struct ccBMFontDef
  BMFont definition
  */
@@ -73,6 +71,22 @@ typedef struct _BMFontPadding {
 	int bottom;
 } ccBMFontPadding;
 
+#pragma mark - Hash Element
+typedef struct _FontDefHashElement
+{
+	NSUInteger		key;		// key. Font Unicode value
+	ccBMFontDef		fontDef;	// font definition
+	UT_hash_handle	hh;
+} tCCFontDefHashElement;
+
+// Equal function for targetSet.
+typedef struct _KerningHashElement
+{
+	int				key;		// key for the hash. 16-bit for 1st element, 16-bit for 2nd element
+	int				amount;
+	UT_hash_handle	hh;
+} tCCKerningHashElement;
+#pragma mark -
 
 /** CCBMFontConfiguration has parsed configuration of the the .fnt file
  @since v0.8
@@ -81,21 +95,21 @@ typedef struct _BMFontPadding {
 {
 	// atlas name
 	NSString		*atlasName_;
-
+    
     // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
 @public
-
+    
 	// BMFont definitions
-	struct _FontDefHashElement	*fontDefDictionary_;
-
+	tCCFontDefHashElement	*fontDefDictionary_;
+    
 	// FNTConfig: Common Height. Should be signed (issue #1343)
 	NSInteger		commonHeight_;
-
+    
 	// Padding
 	ccBMFontPadding	padding_;
-
+    
 	// values for kerning
-	struct _KerningHashElement	*kerningDictionary_;
+	tCCKerningHashElement	*kerningDictionary_;
 }
 
 // atlasName
@@ -109,7 +123,7 @@ typedef struct _BMFontPadding {
 
 
 /** CCLabelBMFont is a subclass of CCSpriteBatchNode
-
+ 
  Features:
  - Treats each character like a CCSprite. This means that each individual character can be:
  - rotated
@@ -120,22 +134,22 @@ typedef struct _BMFontPadding {
  - It can be used as part of a menu item.
  - anchorPoint can be used to align the "label"
  - Supports AngelCode text format
-
+ 
  Limitations:
  - All inner characters are using an anchorPoint of (0.5f, 0.5f) and it is not recommend to change it
  because it might affect the rendering
-
+ 
  CCLabelBMFont implements the protocol CCLabelProtocol, like CCLabel and CCLabelAtlas.
  CCLabelBMFont has the flexibility of CCLabel, the speed of CCLabelAtlas and all the features of CCSprite.
  If in doubt, use CCLabelBMFont instead of CCLabelAtlas / CCLabel.
-
+ 
  Supported editors:
  - http://glyphdesigner.71squared.com/
  - http://www.bmglyph.com/
  - http://www.n4te.com/hiero/hiero.jnlp
  - http://slick.cokeandcode.com/demos/hiero.jnlp
  - http://www.angelcode.com/products/bmfont/
-
+ 
  @since v0.8
  */
 
@@ -146,16 +160,16 @@ typedef struct _BMFontPadding {
     
     // name of fntFile
     NSString        *fntFile_;
-
+    
     // initial string without line breaks
     NSString *initialString_;
     // max width until a line break is added
     float width_;
     // alignment of all lines
     CCTextAlignment alignment_;
-
+    
 	CCBMFontConfiguration	*configuration_;
-
+    
 	// texture RGBA
 	GLubyte		opacity_;
 	ccColor3B	color_;
