@@ -18,13 +18,14 @@ Lead Developer:
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
 * Lam Pham (http://www.fancyratstudios.com/)
-	New skew action that matches flash functionality
+	New RotationalSkew action that matches flash functionality
+	Added Tests for RotationSkew feature
 
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
-	Many improvements in the OpenGL ES 2.0 code
+	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
 
 
 cocos2d for iPhone 2.0 authors

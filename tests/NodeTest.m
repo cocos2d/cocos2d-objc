@@ -981,7 +981,7 @@ Class restartAction()
 
 		for( int i=0; i<50; i++) {
 			background = [CCSprite spriteWithFile:@"background1.jpg"];
-			background.glServerState &= ~CC_GL_BLEND;
+			[background setBlendFunc: kCCBlendFuncDisable];
 			[background setAnchorPoint:CGPointZero];
 			[self addChild:background];
 		}
@@ -1012,7 +1012,7 @@ Class restartAction()
 
 		for( int i=0; i<50; i++) {
 			background = [CCSprite spriteWithFile:@"background1.jpg"];
-			background.glServerState |= CC_GL_BLEND;
+			[background setBlendFunc: (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 			[background setAnchorPoint:CGPointZero];
 			[self addChild:background];
 		}
