@@ -20,6 +20,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Andrew0 (https://github.com/andrew0)
 	Fixed crash on NSThread+block
 	CatmullRom action compiles OK on Mac Release mode
+	Fixed ccMouseEnter/Exit events on EventDispatcher
 
 * Atte Kotiranta (https://github.com/akotiranta)
 	EaseActions: Ease Actions works OK with floating point values

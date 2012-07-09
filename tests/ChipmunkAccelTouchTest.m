@@ -133,10 +133,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// init chipmunk
-//	cpInitChipmunk();
 
 	space_ = cpSpaceNew();
-
 	cpSpaceSetGravity(space_, cpv(0, -100) );
 
 	//
@@ -156,8 +154,8 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
 	for( int i=0;i<4;i++) {
-		walls_[i]->e = 1.0f;
-		walls_[i]->u = 1.0f;
+		cpShapeSetElasticity(walls_[i], 1.0f );
+		cpShapeSetFriction(walls_[i], 1.0f );
 		cpSpaceAddStaticShape(space_, walls_[i] );
 	}
 }
@@ -230,13 +228,12 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	};
 
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
-
-	cpBodySetPos(body, cpv(pos.x, pos.y) );
+	cpBodySetPos( body, cpv(pos.x, pos.y) );
 	cpSpaceAddBody(space_, body);
 
 	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
-	cpShapeSetElasticity(shape, 0.5f);
-	cpShapeSetFriction(shape, 0.5f);
+	cpShapeSetElasticity( shape, 0.5f );
+	cpShapeSetFriction(shape, 0.5f );
 	cpSpaceAddShape(space_, shape);
 
 	[sprite setPhysicsBody:body];
@@ -264,20 +261,24 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{
+{	
 	static float prevX=0, prevY=0;
-
+	
 #define kFilterFactor 0.05f
-
+	
 	float accelX = (float) acceleration.x * kFilterFactor + (1- kFilterFactor)*prevX;
 	float accelY = (float) acceleration.y * kFilterFactor + (1- kFilterFactor)*prevY;
-
+	
 	prevX = accelX;
 	prevY = accelY;
-
-	CGPoint v = ccp( accelX, accelY);
-
-	cpSpaceSetGravity( space_, ccpMult(v, 200) );
+	
+	cpVect v;
+	if( [[CCDirector sharedDirector] interfaceOrientation] == UIInterfaceOrientationLandscapeRight )
+		v = cpv( -accelY, accelX);
+	else
+		v = cpv( accelY, -accelX);
+	
+	cpSpaceSetGravity( space_, cpvmult(v, 200) );
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -342,6 +343,11 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	[director_ pushScene:scene];
 
 	return YES;
+}
+
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
 @end
 

@@ -49,8 +49,12 @@ enum {
 	if( (self=[super init])) {
 		
 		// enable events
+#ifdef __CC_PLATFORM_IOS
 		self.isTouchEnabled = YES;
 		self.isAccelerometerEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.isMouseEnabled = YES;
+#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
@@ -92,27 +96,27 @@ enum {
 	
 	space_ = cpSpaceNew();
 	
-	space_->gravity = ccp(0, -100);
+	cpSpaceSetGravity( space_, cpv(0, -100) );
 	
 	//
 	// rogue shapes
 	// We have to free them manually
 	//
 	// bottom
-	walls_[0] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(s.width,0), 0.0f);
+	walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 	
 	// top
-	walls_[1] = cpSegmentShapeNew( space_->staticBody, ccp(0,s.height), ccp(s.width,s.height), 0.0f);
+	walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 	
 	// left
-	walls_[2] = cpSegmentShapeNew( space_->staticBody, ccp(0,0), ccp(0,s.height), 0.0f);
+	walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 	
 	// right
-	walls_[3] = cpSegmentShapeNew( space_->staticBody, ccp(s.width,0), ccp(s.width,s.height), 0.0f);
+	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 	
 	for( int i=0;i<4;i++) {
-		walls_[i]->e = 1.0f;
-		walls_[i]->u = 1.0f;
+		cpShapeSetElasticity( walls_[i], 1.0f );
+		cpShapeSetFriction( walls_[i], 1.0f );
 		cpSpaceAddStaticShape(space_, walls_[i] );
 	}	
 }
@@ -145,12 +149,12 @@ enum {
 {
 	// Default font size will be 22 points.
 	[CCMenuItemFont setFontSize:22];
-
+	
 	// Reset Button
 	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
 		[[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]];
 	}];
-		
+	
 	// Achievement Menu Item using blocks
 	CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
 		
@@ -208,20 +212,20 @@ enum {
 	sprite.position = pos;
 	
 	int num = 4;
-	CGPoint verts[] = {
-		ccp(-24,-54),
-		ccp(-24, 54),
-		ccp( 24, 54),
-		ccp( 24,-54),
+	cpVect verts[] = {
+		cpv(-24,-54),
+		cpv(-24, 54),
+		cpv( 24, 54),
+		cpv( 24,-54),
 	};
 	
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
-	
-	body->p = pos;
+	cpBodySetPos( body, pos );
 	cpSpaceAddBody(space_, body);
 	
 	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
-	shape->e = 0.5f; shape->u = 0.5f;
+	cpShapeSetElasticity( shape, 0.5f );
+	cpShapeSetFriction( shape, 0.5f );
 	cpSpaceAddShape(space_, shape);
 	
 	[sprite setPhysicsBody:body];
@@ -250,9 +254,13 @@ enum {
 	prevX = accelX;
 	prevY = accelY;
 	
-	CGPoint v = ccp( accelX, accelY);
+	cpVect v;
+	if( [[CCDirector sharedDirector] interfaceOrientation] == UIInterfaceOrientationLandscapeRight )
+		v = cpv( -accelY, accelX);
+	else
+		v = cpv( accelY, -accelX);
 	
-	space_->gravity = ccpMult(v, 200);
+	cpSpaceSetGravity( space_, cpvmult(v, 200) );
 }
 
 
