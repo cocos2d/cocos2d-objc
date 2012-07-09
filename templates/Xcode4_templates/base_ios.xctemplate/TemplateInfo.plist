@@ -66,6 +66,13 @@
 			<key>Path</key>
 			<string>Resources/Default.png</string>
 		</dict>
+		<key>Resources/Default-Landscape~ipad.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/Default-Landscape~ipad.png</string>
+		</dict>
 		<key>Resources/fps_images.png</key>
 		<dict>
 			<key>Group</key>
@@ -149,6 +156,7 @@
 	<key>Nodes</key>
 	<array>
 		<string>Resources/Default.png</string>
+		<string>Resources/Default-Landscape~ipad.png</string>
 		<string>Resources/fps_images.png</string>
 		<string>Resources/fps_images-hd.png</string>
 		<string>Resources/fps_images-ipadhd.png</string>

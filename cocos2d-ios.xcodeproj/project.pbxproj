@@ -2989,13 +2989,6 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		501504F311330E2E00A9CA65 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
-		};
 		501945570F964C620059CE7C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3009,13 +3002,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		502BF54611E39CC30030C477 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
 		};
 		502BF54811E39CC30030C477 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3241,13 +3227,6 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		507C0EE811D609290075E747 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
-		};
 		507C0EEA11D609290075E747 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3275,13 +3254,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 50B2C5CE0E100EF000AE9530;
 			remoteInfo = ChipmunkAccelTouchTest;
-		};
-		507FF8D0116D16F600B6FAB2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
 		};
 		507FF8D2116D16F600B6FAB2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3563,13 +3535,6 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		50CBA46511CBD6FB007B009D /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
-		};
 		50CBA46711CBD6FB007B009D /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3654,26 +3619,12 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		E02BC2AB1270E489006E46A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
-		};
 		E02BC2AD1270E489006E46A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		E037DA1D1281C7F0003D39D7 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
 		};
 		E037DA1F1281C7F0003D39D7 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3751,13 +3702,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = E02BC2A91270E489006E46A2;
 			remoteInfo = Bug624;
-		};
-		E0EA5675134B9CA800F212C8 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 501504CD11330E1700A9CA65;
-			remoteInfo = ProgressActionsTest;
 		};
 		E0EA5677134B9CA800F212C8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -7853,7 +7797,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				502BF54511E39CC30030C477 /* PBXTargetDependency */,
 				502BF54711E39CC30030C477 /* PBXTargetDependency */,
 			);
 			name = Bug914;
@@ -8272,7 +8215,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				507C0EE711D609290075E747 /* PBXTargetDependency */,
 				507C0EE911D609290075E747 /* PBXTargetDependency */,
 			);
 			name = Bug899;
@@ -8291,7 +8233,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				507FF8CF116D16F600B6FAB2 /* PBXTargetDependency */,
 				507FF8D1116D16F600B6FAB2 /* PBXTargetDependency */,
 			);
 			name = Bug350;
@@ -8537,7 +8478,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				50CBA46411CBD6FB007B009D /* PBXTargetDependency */,
 				50CBA46611CBD6FB007B009D /* PBXTargetDependency */,
 			);
 			name = Bug886;
@@ -8663,7 +8603,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				501504F411330E2E00A9CA65 /* PBXTargetDependency */,
 				DA5F0EC20FFE96D400C7C82E /* PBXTargetDependency */,
 			);
 			name = Bug422;
@@ -8700,7 +8639,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E02BC2AA1270E489006E46A2 /* PBXTargetDependency */,
 				E02BC2AC1270E489006E46A2 /* PBXTargetDependency */,
 			);
 			name = Bug624;
@@ -8719,7 +8657,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E037DA1C1281C7F0003D39D7 /* PBXTargetDependency */,
 				E037DA1E1281C7F0003D39D7 /* PBXTargetDependency */,
 			);
 			name = Bug458;
@@ -8774,7 +8711,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				E0EA5674134B9CA800F212C8 /* PBXTargetDependency */,
 				E0EA5676134B9CA800F212C8 /* PBXTargetDependency */,
 			);
 			name = Bug1159;
@@ -12034,11 +11970,6 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 501504CF11330E1700A9CA65 /* PBXContainerItemProxy */;
 		};
-		501504F411330E2E00A9CA65 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = 501504F311330E2E00A9CA65 /* PBXContainerItemProxy */;
-		};
 		501945560F964C620059CE7C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -12048,11 +11979,6 @@
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 501C7C6F0F91EFFF0024A296 /* PBXContainerItemProxy */;
-		};
-		502BF54511E39CC30030C477 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = 502BF54611E39CC30030C477 /* PBXContainerItemProxy */;
 		};
 		502BF54711E39CC30030C477 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12214,11 +12140,6 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 5078B5190E3E43540004233A /* PBXContainerItemProxy */;
 		};
-		507C0EE711D609290075E747 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = 507C0EE811D609290075E747 /* PBXContainerItemProxy */;
-		};
 		507C0EE911D609290075E747 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -12238,11 +12159,6 @@
 			isa = PBXTargetDependency;
 			target = 50B2C5CE0E100EF000AE9530 /* ChipmunkAccelTouchTest */;
 			targetProxy = 507D3385117F366A00B6684B /* PBXContainerItemProxy */;
-		};
-		507FF8CF116D16F600B6FAB2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = 507FF8D0116D16F600B6FAB2 /* PBXContainerItemProxy */;
 		};
 		507FF8D1116D16F600B6FAB2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12444,11 +12360,6 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = 50C93A970E0BF6E000517B01 /* PBXContainerItemProxy */;
 		};
-		50CBA46411CBD6FB007B009D /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = 50CBA46511CBD6FB007B009D /* PBXContainerItemProxy */;
-		};
 		50CBA46611CBD6FB007B009D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
@@ -12509,20 +12420,10 @@
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = DAABAA7F1059A42E00794EB3 /* PBXContainerItemProxy */;
 		};
-		E02BC2AA1270E489006E46A2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = E02BC2AB1270E489006E46A2 /* PBXContainerItemProxy */;
-		};
 		E02BC2AC1270E489006E46A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
 			targetProxy = E02BC2AD1270E489006E46A2 /* PBXContainerItemProxy */;
-		};
-		E037DA1C1281C7F0003D39D7 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = E037DA1D1281C7F0003D39D7 /* PBXContainerItemProxy */;
 		};
 		E037DA1E1281C7F0003D39D7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -12578,11 +12479,6 @@
 			isa = PBXTargetDependency;
 			target = E02BC2A91270E489006E46A2 /* Bug624 */;
 			targetProxy = E0D44E1A129198750094708A /* PBXContainerItemProxy */;
-		};
-		E0EA5674134B9CA800F212C8 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 501504CD11330E1700A9CA65 /* ActionsProgressTest */;
-			targetProxy = E0EA5675134B9CA800F212C8 /* PBXContainerItemProxy */;
 		};
 		E0EA5676134B9CA800F212C8 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
