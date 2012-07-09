@@ -74,7 +74,6 @@
 	
 	// attach the openglView to the director
 	[director_ setView:glView];
-	CHECK_GL_ERROR_DEBUG();
 	
 	// for rotation and other messages
 	[director_ setDelegate:self];
@@ -87,14 +86,6 @@
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	CHECK_GL_ERROR_DEBUG();
-
-//	kmGLPushMatrix();
-//	CCSprite *sprite = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
-//	sprite.anchorPoint = CGPointZero;
-//	[sprite draw];
-//	kmGLPopMatrix();
-//	[glView swapBuffers];
 	
 	// create the main scene
 	CCScene *scene = [CCScene node];
