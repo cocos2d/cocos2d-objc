@@ -245,9 +245,12 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 
 			CCDirector *director = [CCDirector sharedDirector];
 			
-			[[director runningScene] walkSceneGraph:0];
+
 			[[director runningScene] addChild:node];
+
+#if DEBUG
 			[[director runningScene] walkSceneGraph:0];
+#endif // DEBUG
 		}
 		return JS_TRUE;
 	}
