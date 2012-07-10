@@ -1250,6 +1250,15 @@
 		A0094321151818400029A5C6 /* stars2.png in Resources */ = {isa = PBXBuildFile; fileRef = 503841930FA4E66B008411FB /* stars2.png */; };
 		A0094322151818400029A5C6 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
 		A009432315181B940029A5C6 /* TileMaps in Resources */ = {isa = PBXBuildFile; fileRef = 50CA8BF810B6AE340072E0D3 /* TileMaps */; };
+		A0137E6415ABE788000AA1C2 /* menuitemsprite.png in Resources */ = {isa = PBXBuildFile; fileRef = 503909FA0FDFDC0B009F63EE /* menuitemsprite.png */; };
+		A0137E6515ABE788000AA1C2 /* btn-about-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4780EE5C7D100BD237C /* btn-about-normal.png */; };
+		A0137E6615ABE788000AA1C2 /* btn-about-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D4790EE5C7D100BD237C /* btn-about-selected.png */; };
+		A0137E6715ABE788000AA1C2 /* btn-highscores-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47A0EE5C7D100BD237C /* btn-highscores-normal.png */; };
+		A0137E6815ABE788000AA1C2 /* btn-highscores-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47B0EE5C7D100BD237C /* btn-highscores-selected.png */; };
+		A0137E6915ABE788000AA1C2 /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47C0EE5C7D100BD237C /* btn-play-normal.png */; };
+		A0137E6A15ABE788000AA1C2 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
+		A0137E6B15ABE788000AA1C2 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
+		A0137E6C15ABE788000AA1C2 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
 		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
 		A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB013B826D800C73E76 /* mat4stack.h */; };
 		A015BFCF13B826D800C73E76 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB113B826D800C73E76 /* matrix.h */; };
@@ -11334,6 +11343,15 @@
 				A0AA855B159E1A9900E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */,
 				A0CBFF1C159E304500E29210 /* Particles in Resources */,
 				A0F3EBD215A65D67001972B4 /* TileMaps in Resources */,
+				A0137E6415ABE788000AA1C2 /* menuitemsprite.png in Resources */,
+				A0137E6515ABE788000AA1C2 /* btn-about-normal.png in Resources */,
+				A0137E6615ABE788000AA1C2 /* btn-about-selected.png in Resources */,
+				A0137E6715ABE788000AA1C2 /* btn-highscores-normal.png in Resources */,
+				A0137E6815ABE788000AA1C2 /* btn-highscores-selected.png in Resources */,
+				A0137E6915ABE788000AA1C2 /* btn-play-normal.png in Resources */,
+				A0137E6A15ABE788000AA1C2 /* btn-play-selected.png in Resources */,
+				A0137E6B15ABE788000AA1C2 /* SendScoreButton.png in Resources */,
+				A0137E6C15ABE788000AA1C2 /* SendScoreButtonPressed.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
