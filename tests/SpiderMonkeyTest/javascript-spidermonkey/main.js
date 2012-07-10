@@ -308,10 +308,11 @@ var MainTest = BaseLayer.extend({
         var item5 = cc.MenuItemFont.create("Menu Tests", this, function() { require("javascript-spidermonkey/test-menu.js"); } );
         var item6 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
         var item7 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
-        var item8 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
+        var item8 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("javascript-spidermonkey/test-cocosdenshion.js"); } );
+        var item9 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
 
 
-        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );

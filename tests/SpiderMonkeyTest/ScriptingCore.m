@@ -234,31 +234,6 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 };
 
 
-JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	if (argc == 1) {
-		JSObject *o = NULL;
-		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "o", &o) == JS_TRUE) {
-			JSPROXY_NSObject *proxy = get_proxy_for_jsobject( o );
-//			JSPROXY_CCNode *proxy = JS_GetPrivate(o);
-			CCNode *node = [proxy realObj];
-
-			CCDirector *director = [CCDirector sharedDirector];
-			
-
-			[[director runningScene] addChild:node];
-
-#if DEBUG
-			[[director runningScene] walkSceneGraph:0];
-#endif // DEBUG
-		}
-		return JS_TRUE;
-	}
-	return JS_FALSE;
-};
-
-
-
 @implementation ScriptingCore
 
 @synthesize globalObject = _object;
@@ -321,7 +296,6 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
 
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, cocos2d, "addToRunningScene", ScriptingCore_addToRunningScene, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 		// Register classes: base classes should be registered first
@@ -340,29 +314,29 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 #endif
 		
 		//
+		// CocosDenshion
+		//
+		//		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
+		//		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
+		//		JS_SetProperty(_cx, _object, "cd", &denshionVal);
+		
+		// Reuse "cc" namespace for CocosDenshion
+		JSObject *CocosDenshion = cocos2d;
+#import "js_bindings_CocosDenshion_classes_registration.h"
+
+		//
 		// Chipmunk
 		//
 		JSObject *chipmunk = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval chipmunkVal = OBJECT_TO_JSVAL(chipmunk);
 		JS_SetProperty(_cx, _object, "cp", &chipmunkVal);
 #import "js_bindings_chipmunk_functions_registration.h"
-
 		
 		// manual
 		JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSPROXY_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSPROXY_cpSpaceRemoveCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, chipmunk, "arbiterGetBodies", JSPROXY_cpArbiterGetBodies, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 		JS_DefineFunction(_cx, chipmunk, "arbiterGetShapes", JSPROXY_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-
-		//
-		// CocosDenshion
-		//
-		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
-		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
-		JS_SetProperty(_cx, _object, "cd", &denshionVal);
-#import "js_bindings_CocosDenshion_classes_registration.h"
-
-
 	}
 	
 	return self;
@@ -417,7 +391,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 	return ok;
 }
 
--(BOOL) runScript:(NSString*)filename
+-(BOOL) runScript2:(NSString*)filename
 {
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
@@ -453,7 +427,7 @@ JSBool ScriptingCore_addToRunningScene(JSContext *cx, uint32_t argc, jsval *vp)
 /*
  * Compile a script and execute it. It roots the script
  */
--(BOOL) runScript2:(NSString*)filename
+-(BOOL) runScript:(NSString*)filename
 {
     JSScript *script;
 	

@@ -1252,7 +1252,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             if min_args != max_args:
                 method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (min_args, max_args)
             elif 'variadic_2_array' in properties:
-                method_assert_on_arguments = '\tJSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );\n'
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );\n'
             else:
                 # default
                 method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
@@ -1324,10 +1324,13 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             self.mm_file.write( '\t%s ret_val;\n' % (ret_declared_type ) )
 
         if optional_args != None:
+            else_str = ''
             for i in xrange(max_args+1):
                 if i in properties['calls']:
                     call_real = self.generate_method_call_to_real_object( properties['calls'][i], i, ret_js_type, args_declared_type, class_name, method_type )
-                    self.mm_file.write( '\n\tif( argc == %d ) {\n\t%s\n\t}\n' % (i, call_real) )
+                    self.mm_file.write( '\n\t%sif( argc == %d ) {\n\t%s\n\t}' % ( else_str, i, call_real) )
+                    else_str = 'else '
+            self.mm_file.write( '\n\telse\n\t\treturn JS_FALSE;\n\n' )
         else:
             call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )

@@ -2540,8 +2540,7 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		CCLayerGradient *real = [(CCLayerGradient*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
@@ -2549,6 +2548,9 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
 	}
+	else
+		return JS_FALSE;
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -2578,10 +2580,12 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSCon
 	if( argc == 2 ) {
 		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 fadingTo:(ccColor4B)arg1 alongVector:(CGPoint)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -3063,7 +3067,7 @@ JSBool JSPROXY_CCMenu_initWithArray_(JSContext *cx, uint32_t argc, jsval *vp) {
 // Arguments: NSArray*
 // Ret value: CCMenu* (o)
 JSBool JSPROXY_CCMenu_menuWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSArray* arg0; 

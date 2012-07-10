@@ -82,16 +82,17 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 		CCNode *real = (CCNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
 	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -5406,10 +5407,12 @@ JSBool JSPROXY_CCSprite_spriteWithFile_rect__static(JSContext *cx, uint32_t argc
 	if( argc == 1 ) {
 		ret_val = [CCSprite spriteWithFile:(NSString*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCSprite spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -5837,10 +5840,12 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithFile_rect__static(JSContext *cx, uint32_
 	if( argc == 1 ) {
 		ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [ChipmunkSprite spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -6150,10 +6155,12 @@ JSBool JSPROXY_CCEaseElastic_actionWithAction_period__static(JSContext *cx, uint
 	if( argc == 1 ) {
 		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -6376,10 +6383,12 @@ JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, u
 	if( argc == 1 ) {
 		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -9670,10 +9679,12 @@ JSBool JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 	if( argc == 2 ) {
 		ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -9885,10 +9896,12 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 	if( argc == 2 ) {
 		ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scale:(float)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0 scaleX:(float)arg1 scaleY:(float)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -10079,10 +10092,12 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	if( argc == 2 ) {
 		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -12133,10 +12148,12 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static(JSContext *c
 	if( argc == 1 ) {
 		ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCSpriteBatchNode batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -12162,10 +12179,12 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static(JSContext
 	if( argc == 1 ) {
 		ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -18509,10 +18528,12 @@ JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, ui
 	if( argc == 1 ) {
 		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24399,7 +24420,7 @@ JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval
 // Arguments: NSArray*
 // Ret value: CCSpawn* (o)
 JSBool JSPROXY_CCSpawn_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
@@ -25051,10 +25072,12 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	if( argc == 2 ) {
 		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -34483,18 +34506,18 @@ JSBool JSPROXY_CCAnimation_animationWithAnimationFrames_delayPerUnit_loops__stat
 	if( argc == 0 ) {
 		ret_val = [CCAnimation animation ];
 	}
-
-	if( argc == 1 ) {
+	else if( argc == 1 ) {
 		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCAnimation animationWithSpriteFrames:(NSArray*)arg0 delay:(float)arg1  ];
 	}
-
-	if( argc == 3 ) {
+	else if( argc == 3 ) {
 		ret_val = [CCAnimation animationWithAnimationFrames:(NSArray*)arg0 delayPerUnit:(float)arg1 loops:(NSUInteger)arg2  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -39290,7 +39313,7 @@ JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, js
 // Arguments: NSArray*
 // Ret value: CCSequence* (o)
 JSBool JSPROXY_CCSequence_actionWithArray__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc > 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSArray* arg0; 
@@ -39482,10 +39505,12 @@ JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx,
 	if( argc == 1 ) {
 		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -44047,11 +44072,13 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_textureFilename_(JSCon
 		CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0  ];
 	}
-
-	if( argc == 2 ) {
+	else if( argc == 2 ) {
 		CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
 	[real addSpriteFramesWithFile:(NSString*)arg0 textureFilename:(NSString*)arg1  ];
 	}
+	else
+		return JS_FALSE;
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }

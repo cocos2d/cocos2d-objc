@@ -289,6 +289,22 @@
 		A009FB8F150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
 		A009FB90150EC87500897349 /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB81150EC87500897349 /* ccShaders.h */; };
 		A009FB91150EC87600897349 /* ccShaders.m in Sources */ = {isa = PBXBuildFile; fileRef = A009FB82150EC87500897349 /* ccShaders.m */; };
+		A0137E9915ACE678000AA1C2 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */; };
+		A0137E9A15ACE678000AA1C2 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8B15ACE678000AA1C2 /* ballbounce.wav */; };
+		A0137E9B15ACE678000AA1C2 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8C15ACE678000AA1C2 /* cowbell.wav */; };
+		A0137E9C15ACE678000AA1C2 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8D15ACE678000AA1C2 /* explodelow.wav */; };
+		A0137E9D15ACE678000AA1C2 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8E15ACE678000AA1C2 /* karate.wav */; };
+		A0137E9E15ACE678000AA1C2 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8F15ACE678000AA1C2 /* machinegun.caf */; };
+		A0137E9F15ACE678000AA1C2 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9015ACE678000AA1C2 /* machinegun.wav */; };
+		A0137EA015ACE678000AA1C2 /* mula_tito_on_timbales.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9115ACE678000AA1C2 /* mula_tito_on_timbales.mp3 */; };
+		A0137EA115ACE678000AA1C2 /* onesample.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9215ACE678000AA1C2 /* onesample.wav */; };
+		A0137EA215ACE678000AA1C2 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9315ACE678000AA1C2 /* rustylow.wav */; };
+		A0137EA315ACE678000AA1C2 /* silencio.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9415ACE678000AA1C2 /* silencio.wav */; };
+		A0137EA415ACE678000AA1C2 /* sine256samples.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9515ACE678000AA1C2 /* sine256samples.wav */; };
+		A0137EA515ACE678000AA1C2 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9615ACE678000AA1C2 /* sine440.caf */; };
+		A0137EA615ACE678000AA1C2 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9715ACE678000AA1C2 /* sine440.wav */; };
+		A0137EA715ACE678000AA1C2 /* sixteensamples.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9815ACE678000AA1C2 /* sixteensamples.wav */; };
+		A0137EAA15ACE7F6000AA1C2 /* Cyber Advance!.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */; };
 		A01D0A3E159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */; };
 		A01D0A3F159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3D159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm */; };
 		A01D0A8F159FF8600029EE77 /* js_bindings_NS_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A8E159FF8600029EE77 /* js_bindings_NS_manual.mm */; };
@@ -5955,6 +5971,22 @@
 		A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		A009FB81150EC87500897349 /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A009FB82150EC87500897349 /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
+		A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 808_120bpm.wav; path = TestsAndDemos/DrumPad/Sounds/808_120bpm.wav; sourceTree = "<group>"; };
+		A0137E8B15ACE678000AA1C2 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ballbounce.wav; path = TestsAndDemos/DrumPad/Sounds/ballbounce.wav; sourceTree = "<group>"; };
+		A0137E8C15ACE678000AA1C2 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cowbell.wav; path = TestsAndDemos/DrumPad/Sounds/cowbell.wav; sourceTree = "<group>"; };
+		A0137E8D15ACE678000AA1C2 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = explodelow.wav; path = TestsAndDemos/DrumPad/Sounds/explodelow.wav; sourceTree = "<group>"; };
+		A0137E8E15ACE678000AA1C2 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = karate.wav; path = TestsAndDemos/DrumPad/Sounds/karate.wav; sourceTree = "<group>"; };
+		A0137E8F15ACE678000AA1C2 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = machinegun.caf; path = TestsAndDemos/DrumPad/Sounds/machinegun.caf; sourceTree = "<group>"; };
+		A0137E9015ACE678000AA1C2 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = machinegun.wav; path = TestsAndDemos/DrumPad/Sounds/machinegun.wav; sourceTree = "<group>"; };
+		A0137E9115ACE678000AA1C2 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = mula_tito_on_timbales.mp3; path = TestsAndDemos/DrumPad/Sounds/mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
+		A0137E9215ACE678000AA1C2 /* onesample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = onesample.wav; path = TestsAndDemos/DrumPad/Sounds/onesample.wav; sourceTree = "<group>"; };
+		A0137E9315ACE678000AA1C2 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = rustylow.wav; path = TestsAndDemos/DrumPad/Sounds/rustylow.wav; sourceTree = "<group>"; };
+		A0137E9415ACE678000AA1C2 /* silencio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = silencio.wav; path = TestsAndDemos/DrumPad/Sounds/silencio.wav; sourceTree = "<group>"; };
+		A0137E9515ACE678000AA1C2 /* sine256samples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sine256samples.wav; path = TestsAndDemos/DrumPad/Sounds/sine256samples.wav; sourceTree = "<group>"; };
+		A0137E9615ACE678000AA1C2 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sine440.caf; path = TestsAndDemos/DrumPad/Sounds/sine440.caf; sourceTree = "<group>"; };
+		A0137E9715ACE678000AA1C2 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sine440.wav; path = TestsAndDemos/DrumPad/Sounds/sine440.wav; sourceTree = "<group>"; };
+		A0137E9815ACE678000AA1C2 /* sixteensamples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sixteensamples.wav; path = TestsAndDemos/DrumPad/Sounds/sixteensamples.wav; sourceTree = "<group>"; };
+		A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = "<group>"; };
 		A01D0A38159E82EA0029EE77 /* js_bindings_cocos2d_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes_registration.h; sourceTree = "<group>"; };
 		A01D0A39159E82EA0029EE77 /* js_bindings_cocos2d_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes.h; sourceTree = "<group>"; };
 		A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_classes.mm; sourceTree = "<group>"; };
@@ -7438,6 +7470,7 @@
 		4AD3B8A9159A54CD002E68D1 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
+				A0137EA815ACE680000AA1C2 /* Sounds */,
 				4AD3B8AA159A54CD002E68D1 /* CocosDenshion */,
 				4AD3B8B4159A54CD002E68D1 /* CocosDenshionExtras */,
 				4AD3B8B9159A54CD002E68D1 /* README.mdown */,
@@ -7470,6 +7503,29 @@
 				4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */,
 			);
 			path = CocosDenshionExtras;
+			sourceTree = "<group>";
+		};
+		A0137EA815ACE680000AA1C2 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */,
+				A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */,
+				A0137E8B15ACE678000AA1C2 /* ballbounce.wav */,
+				A0137E8C15ACE678000AA1C2 /* cowbell.wav */,
+				A0137E8D15ACE678000AA1C2 /* explodelow.wav */,
+				A0137E8E15ACE678000AA1C2 /* karate.wav */,
+				A0137E8F15ACE678000AA1C2 /* machinegun.caf */,
+				A0137E9015ACE678000AA1C2 /* machinegun.wav */,
+				A0137E9115ACE678000AA1C2 /* mula_tito_on_timbales.mp3 */,
+				A0137E9215ACE678000AA1C2 /* onesample.wav */,
+				A0137E9315ACE678000AA1C2 /* rustylow.wav */,
+				A0137E9415ACE678000AA1C2 /* silencio.wav */,
+				A0137E9515ACE678000AA1C2 /* sine256samples.wav */,
+				A0137E9615ACE678000AA1C2 /* sine440.caf */,
+				A0137E9715ACE678000AA1C2 /* sine440.wav */,
+				A0137E9815ACE678000AA1C2 /* sixteensamples.wav */,
+			);
+			name = Sounds;
 			sourceTree = "<group>";
 		};
 		A03416E01548801100AE4D93 /* JSCocoa */ = {
@@ -11578,6 +11634,22 @@
 				A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
 				A0AA855C159E1AA700E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */,
 				A0AA855D159E286200E77CC9 /* Particles in Resources */,
+				A0137E9915ACE678000AA1C2 /* 808_120bpm.wav in Resources */,
+				A0137E9A15ACE678000AA1C2 /* ballbounce.wav in Resources */,
+				A0137E9B15ACE678000AA1C2 /* cowbell.wav in Resources */,
+				A0137E9C15ACE678000AA1C2 /* explodelow.wav in Resources */,
+				A0137E9D15ACE678000AA1C2 /* karate.wav in Resources */,
+				A0137E9E15ACE678000AA1C2 /* machinegun.caf in Resources */,
+				A0137E9F15ACE678000AA1C2 /* machinegun.wav in Resources */,
+				A0137EA015ACE678000AA1C2 /* mula_tito_on_timbales.mp3 in Resources */,
+				A0137EA115ACE678000AA1C2 /* onesample.wav in Resources */,
+				A0137EA215ACE678000AA1C2 /* rustylow.wav in Resources */,
+				A0137EA315ACE678000AA1C2 /* silencio.wav in Resources */,
+				A0137EA415ACE678000AA1C2 /* sine256samples.wav in Resources */,
+				A0137EA515ACE678000AA1C2 /* sine440.caf in Resources */,
+				A0137EA615ACE678000AA1C2 /* sine440.wav in Resources */,
+				A0137EA715ACE678000AA1C2 /* sixteensamples.wav in Resources */,
+				A0137EAA15ACE7F6000AA1C2 /* Cyber Advance!.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
