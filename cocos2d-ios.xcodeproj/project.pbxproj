@@ -1259,6 +1259,22 @@
 		A0137E6A15ABE788000AA1C2 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D47D0EE5C7D100BD237C /* btn-play-selected.png */; };
 		A0137E6B15ABE788000AA1C2 /* SendScoreButton.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFBF0E612F2D003B6155 /* SendScoreButton.png */; };
 		A0137E6C15ABE788000AA1C2 /* SendScoreButtonPressed.png in Resources */ = {isa = PBXBuildFile; fileRef = 5036DFC00E612F2D003B6155 /* SendScoreButtonPressed.png */; };
+		A0137EAB15ACEE83000AA1C2 /* Cyber Advance!.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 5052298111B3DDBE0061670F /* Cyber Advance!.mp3 */; };
+		A0137EAC15ACEE95000AA1C2 /* 808_120bpm.caf in Resources */ = {isa = PBXBuildFile; fileRef = 505228D511B3DC410061670F /* 808_120bpm.caf */; };
+		A0137EAD15ACEE95000AA1C2 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228D611B3DC410061670F /* 808_120bpm.wav */; };
+		A0137EAE15ACEE95000AA1C2 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228D811B3DC410061670F /* ballbounce.wav */; };
+		A0137EAF15ACEE95000AA1C2 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228D911B3DC410061670F /* cowbell.wav */; };
+		A0137EB015ACEE95000AA1C2 /* explodelow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228DA11B3DC410061670F /* explodelow.wav */; };
+		A0137EB115ACEE95000AA1C2 /* karate.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228DB11B3DC410061670F /* karate.wav */; };
+		A0137EB215ACEE95000AA1C2 /* machinegun.caf in Resources */ = {isa = PBXBuildFile; fileRef = 505228DC11B3DC410061670F /* machinegun.caf */; };
+		A0137EB315ACEE95000AA1C2 /* machinegun.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228DD11B3DC410061670F /* machinegun.wav */; };
+		A0137EB415ACEE95000AA1C2 /* onesample.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228DF11B3DC410061670F /* onesample.wav */; };
+		A0137EB515ACEE95000AA1C2 /* rustylow.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E011B3DC410061670F /* rustylow.wav */; };
+		A0137EB615ACEE95000AA1C2 /* silencio.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E111B3DC410061670F /* silencio.wav */; };
+		A0137EB715ACEE95000AA1C2 /* sine256samples.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E211B3DC410061670F /* sine256samples.wav */; };
+		A0137EB815ACEE95000AA1C2 /* sine440.caf in Resources */ = {isa = PBXBuildFile; fileRef = 505228E311B3DC410061670F /* sine440.caf */; };
+		A0137EB915ACEE95000AA1C2 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E411B3DC410061670F /* sine440.wav */; };
+		A0137EBA15ACEE95000AA1C2 /* sixteensamples.wav in Resources */ = {isa = PBXBuildFile; fileRef = 505228E511B3DC410061670F /* sixteensamples.wav */; };
 		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
 		A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB013B826D800C73E76 /* mat4stack.h */; };
 		A015BFCF13B826D800C73E76 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB113B826D800C73E76 /* matrix.h */; };
@@ -11352,6 +11368,22 @@
 				A0137E6A15ABE788000AA1C2 /* btn-play-selected.png in Resources */,
 				A0137E6B15ABE788000AA1C2 /* SendScoreButton.png in Resources */,
 				A0137E6C15ABE788000AA1C2 /* SendScoreButtonPressed.png in Resources */,
+				A0137EAB15ACEE83000AA1C2 /* Cyber Advance!.mp3 in Resources */,
+				A0137EAC15ACEE95000AA1C2 /* 808_120bpm.caf in Resources */,
+				A0137EAD15ACEE95000AA1C2 /* 808_120bpm.wav in Resources */,
+				A0137EAE15ACEE95000AA1C2 /* ballbounce.wav in Resources */,
+				A0137EAF15ACEE95000AA1C2 /* cowbell.wav in Resources */,
+				A0137EB015ACEE95000AA1C2 /* explodelow.wav in Resources */,
+				A0137EB115ACEE95000AA1C2 /* karate.wav in Resources */,
+				A0137EB215ACEE95000AA1C2 /* machinegun.caf in Resources */,
+				A0137EB315ACEE95000AA1C2 /* machinegun.wav in Resources */,
+				A0137EB415ACEE95000AA1C2 /* onesample.wav in Resources */,
+				A0137EB515ACEE95000AA1C2 /* rustylow.wav in Resources */,
+				A0137EB615ACEE95000AA1C2 /* silencio.wav in Resources */,
+				A0137EB715ACEE95000AA1C2 /* sine256samples.wav in Resources */,
+				A0137EB815ACEE95000AA1C2 /* sine440.caf in Resources */,
+				A0137EB915ACEE95000AA1C2 /* sine440.wav in Resources */,
+				A0137EBA15ACEE95000AA1C2 /* sixteensamples.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
