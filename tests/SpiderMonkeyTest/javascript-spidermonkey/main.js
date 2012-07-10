@@ -174,26 +174,6 @@ var BaseLayer = cc.LayerGradient.extend({
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }
-
-        // Menu
-        var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-        var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-        var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
-        var item4 = cc.MenuItemFont.create("back", this, function() { require("javascript-spidermonkey/main.js"); } );
-        item4.setFontSize( 22 );
-
-        var menu = cc.Menu.create(item1, item2, item3, item4 );
-
-        menu.setPosition( cc.p(0,0) );
-        item1.setPosition( cc.p(winSize.width / 2 - 100, 30));
-        item2.setPosition( cc.p(winSize.width / 2, 30));
-        item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
-        item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
-
-        this.addChild(menu, 1);
-
-
-        // back menu
     }
 });
 
@@ -310,10 +290,10 @@ var MenuItemImageTest = BaseLayer.extend({
 
 //------------------------------------------------------------------
 //
-// MenuItemSpriteTest
+// MainTest
 //
 //------------------------------------------------------------------
-var MenuItemSpriteTest = BaseLayer.extend({
+var MainTest = BaseLayer.extend({
 
     _vertically : true,
     _menu : null,
@@ -321,28 +301,17 @@ var MenuItemSpriteTest = BaseLayer.extend({
     onEnter:function () {
         this._super();
    
-        // Sprites can't be reused since they are children of MenuItem
-        // If you want to reuse them, use "MenuItemImage" instead
-        var sprite1_1 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_1 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite1_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite3_2 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
-        var sprite1_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*2, 115, 23) );
-        var sprite2_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*1, 115, 23) );
-        var sprite3_3 = cc.Sprite.create("menuitemsprite.png", cc.rect(0, 23*0, 115, 23) );
+        var item1 = cc.MenuItemFont.create("Action Tests", this, function() { require("javascript-spidermonkey/test-actions.js"); } );
+        var item2 = cc.MenuItemFont.create("Ease Action Tests", this, function() { require("javascript-spidermonkey/test-easeactions.js"); } );
+        var item3 = cc.MenuItemFont.create("Chipmunk Tests", this, function() { require("javascript-spidermonkey/test-chipmunk.js"); } );
+        var item4 = cc.MenuItemFont.create("Label Tests", this, function() { require("javascript-spidermonkey/test-label.js"); } );
+        var item5 = cc.MenuItemFont.create("Menu Tests", this, function() { require("javascript-spidermonkey/test-menu.js"); } );
+        var item6 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
+        var item7 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
+        var item8 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
 
-        var item1 = cc.MenuItemSprite.create(sprite1_1, sprite2_1);
-        var item2 = cc.MenuItemSprite.create(sprite1_2, sprite2_2, sprite3_2, this, this.item_cb);
-        var item3 = cc.MenuItemSprite.create(sprite1_3, sprite2_3, sprite3_3, this, this.item_cb);
 
-        // callback function can be modified in runtime
-        item1.setCallback( this, this.item_cb );
-
-        // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
-
-        this._menu = cc.Menu.create( item1, item2, item3 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
@@ -351,25 +320,7 @@ var MenuItemSpriteTest = BaseLayer.extend({
     },
 
     title:function () {
-        return "Menu Item Sprite";
-    },
-    subtitle:function () {
-        return "3 items. 3rd should be disabled.";
-    },
-    code:function () {
-        return "item = cc.MenuItemSprite.create(spr_normal, spr_selected, spr_disabled, this, this.cb )";
-    },
-
-    // callback
-    item_cb:function(sender) {
-        cc.log("Item " + sender + " pressed");
-        if( this._vertically )
-            this._menu.alignItemsHorizontally();
-        else
-            this._menu.alignItemsVertically();
-
-        this._vertically = ! this._vertically;
-
+        return "Javascript tests";
     },
 
 });
@@ -379,9 +330,7 @@ var MenuItemSpriteTest = BaseLayer.extend({
 // Order of tests
 //
 
-scenes.push( MenuItemFontTest );
-scenes.push( MenuItemImageTest );
-scenes.push( MenuItemSpriteTest );
+scenes.push( MainTest);
 
 //------------------------------------------------------------------
 //
@@ -398,7 +347,7 @@ function run()
     if( runningScene == null )
         director.runWithScene( scene );
     else
-        director.replaceScene( cc.TransitionFade.create(0.5, scene ) );
+        director.replaceScene( cc.TransitionSplitCols.create(1, scene ) );
 }
 
 run();
