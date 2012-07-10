@@ -105,9 +105,11 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
 {
-	
 	const GLchar * vertexSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:vShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
 	const GLchar * fragmentSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+    
+    NSAssert1( !vShaderFilename || (vShaderFilename && vertexSource),    @"vertex shader:   %@ - file not found", vShaderFilename );
+    NSAssert1( !fShaderFilename || (fShaderFilename && fragmentSource),  @"fragment shader: %@ - file not found", fShaderFilename );
 
 	return [self initWithVertexShaderByteArray:vertexSource fragmentShaderByteArray:fragmentSource];
 }
@@ -131,13 +133,14 @@ typedef void (*GLLogFunction) (GLuint program,
 	
     glGetShaderiv(*shader, GL_COMPILE_STATUS, &status);
 	
-	if( ! status ) {
+	if( ! status )
+    {
 		if( type == GL_VERTEX_SHADER )
-			CCLOG(@"cocos2d: %@", [self vertexShaderLog] );
+			NSLog(@"cocos2d: %@", [self vertexShaderLog] );
 		else
-			CCLOG(@"cocos2d: %@", [self fragmentShaderLog] );
-		
+			NSLog(@"cocos2d: %@", [self fragmentShaderLog] );
 	}
+    
     return ( status == GL_TRUE );
 }
 
@@ -150,8 +153,11 @@ typedef void (*GLLogFunction) (GLuint program,
 						 [attributeName UTF8String]);
 }
 
--(void) updateUniforms
+- (void)updateUniforms
 {
+    // All of the below gl methods will fail if _program is not valid
+    NSAssert( program_ != 0, @"Cannot update uniforms without a valid shader program" );
+
 	// Since sample most probably won't change, set it to 0 now.
 
 	uniforms_[kCCUniformMVPMatrix] = glGetUniformLocation(program_, kCCUniformMVPMatrix_s);
@@ -167,23 +173,28 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (BOOL)link
 {
+    NSAssert(program_ != 0, @"Cannot link invalid program");
+    
+    GLint status = GL_TRUE;
+    
     glLinkProgram(program_);
 
 #if DEBUG
-	GLint status;
-    glValidateProgram(program_);
-
     glGetProgramiv(program_, GL_LINK_STATUS, &status);
-    if (status == GL_FALSE) {
-		CCLOG(@"cocos2d: ERROR: Failed to link program: %i", program_);
-		if( vertShader_ )
-			glDeleteShader( vertShader_ );
-		if( fragShader_ )
-			glDeleteShader( fragShader_ );
+    
+    NSString* log = self.programLog;
+    
+    if (status == GL_FALSE)
+		NSLog(@"cocos2d: ERROR: Failed to link program: %i - %@", program_, self.programLog);
+    else if( log != nil )
+        NSLog(@"cocos2d: Link INFO: %@", log);
+    
+    if( status == GL_FALSE)
+    {
 		ccGLDeleteProgram( program_ );
-		vertShader_ = fragShader_ = program_ = 0;
-        return NO;
-	}
+		program_ = 0;
+    }
+
 #endif
 
     if (vertShader_)
@@ -193,7 +204,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	vertShader_ = fragShader_ = 0;
 
-    return YES;
+    return status == GL_TRUE;
 }
 
 - (void)use
@@ -367,6 +378,13 @@ typedef void (*GLLogFunction) (GLuint program,
 	[self setUniformLocation:uniforms_[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
 }
 
+- (GLint)uniformLocationForName:(NSString*)name
+{
+    NSAssert(name != nil, @"Invalid uniform name" );
+    NSAssert(program_ != 0, @"Invalid operation. Cannot get uniform location when program is not initialized");
+    
+    return glGetUniformLocation(program_, [name UTF8String]);
+}
 
 #pragma mark -
 

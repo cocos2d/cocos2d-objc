@@ -139,6 +139,9 @@ struct _hashUniformEntry;
 /** will update the MVP matrix on the MVP uniform if it is different than the previous call for this same shader program. */
 -(void) setUniformForModelViewProjectionMatrix;
 
+/** calls glGetUniformLocation only if the shader program has been properly initialized **/
+- (GLint)uniformLocationForName:(NSString*)name;
+
 /** returns the vertexShader error log */
 - (NSString *)vertexShaderLog;
 

@@ -190,7 +190,7 @@ static CCShaderCache *_sharedShaderCache;
 	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPosition_uColor_vert
 								   fragmentShaderByteArray:ccPosition_uColor_frag];	
 	
-	[p addAttribute:@"aVertex" index:kCCVertexAttrib_Position];
+	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
 	
 	[p link];
 	[p updateUniforms];
