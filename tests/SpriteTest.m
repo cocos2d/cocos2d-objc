@@ -23,9 +23,13 @@ static NSString *transitions[] = {
 	@"SpriteOffsetAnchorScale",
 	@"SpriteBatchNodeOffsetAnchorScale",
 	@"SpriteOffsetAnchorSkew",
+	@"SpriteOffsetAnchorRotationalSkew",
 	@"SpriteBatchNodeOffsetAnchorSkew",
+  @"SpriteBatchNodeOffsetAnchorRotationalSkew",
 	@"SpriteOffsetAnchorSkewScale",
+  @"SpriteOffsetAnchorRotationalSkewScale",
 	@"SpriteBatchNodeOffsetAnchorSkewScale",
+	@"SpriteBatchNodeOffsetAnchorRotationalSkewScale",
 	@"SpriteOffsetAnchorFlip",
 	@"SpriteBatchNodeOffsetAnchorFlip",
 	@"SpriteAnimationSplit",
@@ -60,7 +64,9 @@ static NSString *transitions[] = {
 	@"SpriteChildrenChildren",
 	@"SpriteBatchNodeChildrenChildren",
 	@"SpriteSkewNegativeScaleChildren",
+	@"SpriteRotationalSkewNegativeScaleChildren",
 	@"SpriteBatchNodeSkewNegativeScaleChildren",
+	@"SpriteBatchNodeRotationalSkewNegativeScaleChildren",
 	@"SpriteNilTexture",
 	@"SpriteSubclass",
 	@"SpriteDoubleResolution",
@@ -2483,6 +2489,86 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark -
+#pragma mark Example SpriteOffsetAnchorRotationalSkew
+
+@implementation SpriteOffsetAnchorRotationalSkew
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+    
+		for(int i=0;i<3;i++) {
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+      
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+      
+			point.position = sprite.position;
+      
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+        
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.3f];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation] ]];
+      
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			[self addChild:sprite z:0];
+		}
+	}
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite offset + anchor + rotational skew";
+}
+@end
+
 #pragma mark -
 #pragma mark Example SpriteBatchNodeOffsetAnchorSkew
 
@@ -2563,6 +2649,89 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"SpriteBatchNode offset + anchor + skew";
+}
+@end
+
+#pragma mark -
+#pragma mark Example SpriteBatchNodeOffsetAnchorRotationalSkew
+
+@implementation SpriteBatchNodeOffsetAnchorRotationalSkew
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+    
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+		
+		for(int i=0;i<3;i++) {
+      
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:200];
+      
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+      
+			point.position = sprite.position;
+      
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+        
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.3f];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation ]]];
+      
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			[spritebatch addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode offset + anchor + rot skew";
 }
 @end
 
@@ -2654,6 +2823,93 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark Example SpriteOffsetAnchorRotationalSkewScale
+
+@implementation SpriteOffsetAnchorRotationalSkewScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+		
+		for(int i=0;i<3;i++) {
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+      
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+      
+			point.position = sprite.position;
+      
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+        
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.3f];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation ]]];
+      
+			// Skew
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			// Scale
+			id scale = [CCScaleBy actionWithDuration:2 scale:2];
+			id scale_back = [scale reverse];
+			id seq_scale = [CCSequence actions:scale, scale_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_scale]];
+      
+      
+			[self addChild:sprite z:0];
+		}
+	}
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite anchor + rot skew + scale";
+}
+@end
+
+#pragma mark -
 #pragma mark Example SpriteBatchNodeOffsetAnchorSkewScale
 
 @implementation SpriteBatchNodeOffsetAnchorSkewScale
@@ -2741,6 +2997,98 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"SpriteBatchNode anchor + skew + scale";
+}
+@end
+
+
+#pragma mark -
+#pragma mark Example SpriteBatchNodeOffsetAnchorRotationalSkewScale
+
+@implementation SpriteBatchNodeOffsetAnchorRotationalSkewScale
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+    
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+    
+		for(int i=0;i<3;i++) {
+      
+			//
+			// Animation using Sprite batch
+			//
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:200];
+      
+			switch(i) {
+				case 0:
+					sprite.anchorPoint = CGPointZero;
+					break;
+				case 1:
+					sprite.anchorPoint = ccp(0.5f, 0.5f);
+					break;
+				case 2:
+					sprite.anchorPoint = ccp(1,1);
+					break;
+			}
+      
+			point.position = sprite.position;
+      
+      
+			NSMutableArray *animFrames = [NSMutableArray array];
+			for(int i = 0; i < 14; i++) {
+        
+				CCSpriteFrame *frame = [cache spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+				[animFrames addObject:frame];
+			}
+			CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.3f];
+			[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation ]]];
+      
+			// Skew
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			// Scale
+			id scale = [CCScaleBy actionWithDuration:2 scale:2];
+			id scale_back = [scale reverse];
+			id seq_scale = [CCSequence actions:scale, scale_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_scale]];
+      
+			[spritebatch addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode anchor + rot skew + scale";
 }
 @end
 
@@ -4013,6 +4361,74 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark Example SpriteBatchNodeSkewNegativeScaleChildren
+
+@implementation SpriteBatchNodeRotationalSkewNegativeScaleChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+    
+		CCSpriteBatchNode *spritebatch = [CCSpriteBatchNode batchNodeWithFile:@"animations/grossini.pvr.gz"];
+		[self addChild:spritebatch];
+    
+		for(int i=0;i<2;i++) {
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			// Skew
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			if(i == 1)
+			{
+				[sprite setScale:-1.0f];
+			}
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
+      
+			[child1 setScale:0.8];
+      
+			[sprite addChild: child1];
+      
+			[spritebatch addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"SpriteBatchNode + children + rot skew";
+}
+
+-(NSString *) subtitle
+{
+	return @"SpriteBatchNode rot skew + negative scale with children";
+}
+@end
+
+#pragma mark -
 #pragma mark Example SpriteSkewNegativeScaleChildren
 
 @implementation SpriteSkewNegativeScaleChildren
@@ -4077,6 +4493,75 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Sprite skew + negative scale with children";
+}
+@end
+
+
+#pragma mark -
+#pragma mark Example SpriteSkewNegativeScaleChildren
+
+@implementation SpriteRotationalSkewNegativeScaleChildren
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+    
+		CGSize s = [[CCDirector sharedDirector] winSize];
+    
+		CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+		[cache addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[cache addSpriteFramesWithFile:@"animations/grossini_gray.plist" textureFilename:@"animations/grossini_gray.png"];
+    
+		CCNode *parent = [CCNode node];
+		[self addChild:parent];
+    
+		for(int i=0;i<2;i++) {
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/4*(i+1), s.height/2);
+      
+			// Skew
+			id skewX = [CCRotateBy actionWithDuration:2 angleX:45 angleY:0];
+			id skewX_back = [skewX reverse];
+			id skewY = [CCRotateBy actionWithDuration:2 angleX:0 angleY:45];
+			id skewY_back = [skewY reverse];
+      
+			if(i == 1)
+			{
+				[sprite setScale:-1.0f];
+			}
+      
+			id seq_skew = [CCSequence actions:skewX, skewX_back, skewY, skewY_back, nil];
+			[sprite runAction:[CCRepeatForever actionWithAction:seq_skew]];
+      
+			CCSprite *child1 = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			[child1 setPosition: ccp(sprite.contentSize.width / 2.0f, sprite.contentSize.height / 2.0f)];
+      
+			[sprite addChild: child1];
+      
+			[child1 setScale:0.8f];
+      
+			[parent addChild:sprite z:i];
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	CCSpriteFrameCache *cache = [CCSpriteFrameCache sharedSpriteFrameCache];
+	[cache removeSpriteFramesFromFile:@"animations/grossini.plist"];
+	[cache removeSpriteFramesFromFile:@"animations/grossini_gray.plist"];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite + children + rot skew";
+}
+
+-(NSString *) subtitle
+{
+	return @"Sprite rot skew + negative scale with children";
 }
 @end
 
