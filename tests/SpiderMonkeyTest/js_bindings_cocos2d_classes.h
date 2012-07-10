@@ -45,6 +45,8 @@ extern "C" {
 
 void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCMenuItem_setBlock_(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCMenuItem_object;
@@ -1698,6 +1700,8 @@ extern "C" {
 
 void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCMenuItemSprite_object;
@@ -2541,6 +2545,8 @@ extern "C" {
 
 void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCMenuItemFont_object;

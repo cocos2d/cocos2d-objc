@@ -2268,28 +2268,6 @@ JSBool JSPROXY_CCMenuItem_selected(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: void (^)(id)
-// Ret value: void (None)
-JSBool JSPROXY_CCMenuItem_setBlock_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-
-	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
-	[real setBlock:(void (^)(id))arg0  ];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
 // Arguments: BOOL
 // Ret value: void (None)
 JSBool JSPROXY_CCMenuItem_setIsEnabled_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -2367,7 +2345,7 @@ void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("getIsSelected", JSPROXY_CCMenuItem_isSelected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("rect", JSPROXY_CCMenuItem_rect, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("selected", JSPROXY_CCMenuItem_selected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setBlock", JSPROXY_CCMenuItem_setBlock_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setCallback", JSPROXY_CCMenuItem_setBlock_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setIsEnabled", JSPROXY_CCMenuItem_setIsEnabled_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("unselected", JSPROXY_CCMenuItem_unselected, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -17116,51 +17094,6 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSCo
 	return JS_TRUE;
 }
 
-// Arguments: CCNode*, CCNode*, void (^)(id)
-// Ret value: CCMenuItemSprite* (o)
-JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; id arg1; js_block arg2; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemSprite* ret_val;
-
-	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCNode*, CCNode*, CCNode*, void (^)(id)
-// Ret value: CCMenuItemSprite* (o)
-JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; id arg1; id arg2; js_block arg3; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemSprite* ret_val;
-
-	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: 
 // Ret value: CCNode* (o)
 JSBool JSPROXY_CCMenuItemSprite_normalImage(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -17461,8 +17394,7 @@ void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedSpriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItemSprite_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("node", JSPROXY_CCMenuItemSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
@@ -23760,47 +23692,6 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 }
 
 // Arguments: NSString*
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_itemWithString__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, void (^)(id)
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; js_block arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont itemWithString:(NSString*)arg0 block:(void (^)(id))arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
 // Ret value: void (None)
 JSBool JSPROXY_CCMenuItemFont_setFontName__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
@@ -23979,8 +23870,7 @@ void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, cons
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("fontName", JSPROXY_CCMenuItemFont_fontName_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("fontSize", JSPROXY_CCMenuItemFont_fontSize_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithString", JSPROXY_CCMenuItemFont_itemWithString__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithStringBlock", JSPROXY_CCMenuItemFont_itemWithString_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCMenuItemFont_itemWithString_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontName", JSPROXY_CCMenuItemFont_setFontName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontSize", JSPROXY_CCMenuItemFont_setFontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithLabel", JSPROXY_CCMenuItemFont_itemWithLabel__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
