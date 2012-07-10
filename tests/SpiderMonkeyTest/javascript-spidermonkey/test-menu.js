@@ -285,7 +285,7 @@ var MenuItemImageTest = BaseLayer.extend({
 
 
     title:function () {
-        return "Menu Item Sprite";
+        return "Menu Item Image";
     },
     subtitle:function () {
         return "3 items. 3rd should be disabled.";
@@ -375,6 +375,64 @@ var MenuItemSpriteTest = BaseLayer.extend({
 });
 
 
+//------------------------------------------------------------------
+//
+// MenuItemLabelTest
+//
+//------------------------------------------------------------------
+var MenuItemLabelTest = BaseLayer.extend({
+
+    _vertically : true,
+    _menu : null,
+
+    onEnter:function () {
+        this._super();
+   
+        var label1 = cc.LabelTTF.create("This is a LabelTTF item", "Arial", 24 );
+        var label2 = cc.LabelBMFont.create("And this is a LabelBMFont item", "futura-48.fnt" );
+        var label3 = cc.LabelTTF.create("Disabled Item", "Arial", 24 );
+
+        var item1 = cc.MenuItemLabel.create(label1);
+        var item2 = cc.MenuItemLabel.create(label2, this, this.item_cb);
+        var item3 = cc.MenuItemLabel.create(label3, this, this.item_cb);
+
+        // callback function can be modified in runtime
+        item1.setCallback( this, this.item_cb );
+
+        // item could be enabled / disabled in runtime
+        item3.setIsEnabled( false );
+
+        this._menu = cc.Menu.create( item1, item2, item3 );
+        this._menu.alignItemsVertically();
+
+        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
+
+        this.addChild( this._menu );
+    },
+
+    title:function () {
+        return "Menu Item Label";
+    },
+    subtitle:function () {
+        return "3 items. 3rd should be disabled.";
+    },
+    code:function () {
+        return "item = cc.MenuItemLabel.create(label, this, this.cb )";
+    },
+
+    // callback
+    item_cb:function(sender) {
+        cc.log("Item " + sender + " pressed");
+        if( this._vertically )
+            this._menu.alignItemsHorizontally();
+        else
+            this._menu.alignItemsVertically();
+
+        this._vertically = ! this._vertically;
+
+    },
+
+});
 //
 // Order of tests
 //
@@ -382,6 +440,7 @@ var MenuItemSpriteTest = BaseLayer.extend({
 scenes.push( MenuItemFontTest );
 scenes.push( MenuItemImageTest );
 scenes.push( MenuItemSpriteTest );
+scenes.push( MenuItemLabelTest );
 
 //------------------------------------------------------------------
 //
