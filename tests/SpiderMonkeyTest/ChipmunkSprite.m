@@ -63,7 +63,7 @@
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {	
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(rotation_)) : _body->rot);
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(rotationX_)) : _body->rot);
 	CGFloat x = _body->p.x + rot.x*-anchorPointInPoints_.x - rot.y*-anchorPointInPoints_.y;
 	CGFloat y = _body->p.y + rot.y*-anchorPointInPoints_.x + rot.x*-anchorPointInPoints_.y;
 	
