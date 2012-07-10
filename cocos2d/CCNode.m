@@ -788,36 +788,35 @@ static NSUInteger globalOrderOfArrival = 1;
 			y += anchorPointInPoints_.y;
 		}
     
-    // Rotation values
-    // Change rotation code to handle X and Y
-    // If we skew with the exact same value for both x and y then we're simply just rotating
-    float cx = 1, sx = 0, cy = 1, sy = 0;
-    if( rotationX_ || rotationY_ ) {
-      float radiansX = -CC_DEGREES_TO_RADIANS(rotationX_);
-      float radiansY = -CC_DEGREES_TO_RADIANS(rotationY_);
-      cx = cosf(radiansX);
-      sx = sinf(radiansX);
-      cy = cosf(radiansY);
-      sy = sinf(radiansY);
-    }
+		// Rotation values
+		// Change rotation code to handle X and Y
+		// If we skew with the exact same value for both x and y then we're simply just rotating
+		float cx = 1, sx = 0, cy = 1, sy = 0;
+		if( rotationX_ || rotationY_ ) {
+			float radiansX = -CC_DEGREES_TO_RADIANS(rotationX_);
+			float radiansY = -CC_DEGREES_TO_RADIANS(rotationY_);
+			cx = cosf(radiansX);
+			sx = sinf(radiansX);
+			cy = cosf(radiansY);
+			sy = sinf(radiansY);
+		}
 
 		BOOL needsSkewMatrix = ( skewX_ || skewY_ );
 
-
 		// optimization:
 		// inline anchor point calculation if skew is not needed
-    // Adjusted transform calculation for rotational skew
-    if( !needsSkewMatrix && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ) {
-      x += cy * -anchorPointInPoints_.x * scaleX_ + -sx * -anchorPointInPoints_.y * scaleY_;
-      y += sy * -anchorPointInPoints_.x * scaleX_ +  cx * -anchorPointInPoints_.y * scaleY_;
-    }
+		// Adjusted transform calculation for rotational skew
+		if( !needsSkewMatrix && !CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ) {
+			x += cy * -anchorPointInPoints_.x * scaleX_ + -sx * -anchorPointInPoints_.y * scaleY_;
+			y += sy * -anchorPointInPoints_.x * scaleX_ +  cx * -anchorPointInPoints_.y * scaleY_;
+		}
 
 
 		// Build Transform Matrix
-    // Adjusted transfor m calculation for rotational skew
-    transform_ = CGAffineTransformMake( cy * scaleX_,  sy * scaleX_,
-                                         -sx * scaleY_, cx * scaleY_,
-                                         x, y );
+		// Adjusted transfor m calculation for rotational skew
+		transform_ = CGAffineTransformMake( cy * scaleX_, sy * scaleX_,
+										   -sx * scaleY_, cx * scaleY_,
+										   x, y );
 
 		// XXX: Try to inline skew
 		// If skew is needed, apply skew and then anchor point
