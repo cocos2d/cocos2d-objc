@@ -206,7 +206,7 @@
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-actions.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-easeactions.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-tilemap.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-menu.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
 }
 @end
 

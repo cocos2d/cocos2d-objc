@@ -138,18 +138,21 @@ BaseLayer.prototype.onEnter = function() {
     var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
     var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
     var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+    var item4 = cc.MenuItemFont.create("back", this, function() { require("javascript-spidermonkey/main.js"); } );
+    item4.setFontSize( 22 );
 
-	 [item1, item2, item3].forEach( function(item) {
+	 [item1, item2, item3 ].forEach( function(item) {
 		item.normalImage().setOpacity(45);
 		item.selectedImage().setOpacity(45);
 		} );
 
-	var menu = cc.Menu.create( item1, item2, item3 );
+	var menu = cc.Menu.create( item1, item2, item3, item4 );
 
 	menu.setPosition( cc.p(0,0) );
 	item1.setPosition( cc.p(winSize.width / 2 - 100, 30));
 	item2.setPosition( cc.p(winSize.width / 2, 30));
 	item3.setPosition( cc.p(winSize.width / 2 + 100, 30));
+    item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
 
 	this.addChild(menu, 80);
 }
@@ -738,14 +741,18 @@ scenes.push( ThanksPage );
 //------------------------------------------------------------------
 function run()
 {
-	var scene = new cc.Scene();
-	scene.init();
-	var layer = new scenes[currentScene]();
-	scene.addChild( layer );
+    var scene = cc.Scene.create();
+    var layer = new scenes[currentScene]();
+    scene.addChild( layer );
 
 	director.setDisplayStats( false );
 
-	director.runWithScene( scene );
+    var runningScene = director.getRunningScene();
+    if( runningScene == null )
+        director.runWithScene( scene );
+    else
+        director.replaceScene( cc.TransitionFade.create(0.5, scene ) );
 }
 
 run();
+
