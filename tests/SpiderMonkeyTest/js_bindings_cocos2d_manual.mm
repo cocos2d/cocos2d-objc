@@ -69,6 +69,40 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	
 	return JS_TRUE;
 }
+
+// "create" in JS
+JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc ==1 || argc == 3, @"Invalid number of arguments. Expecting 1 or 3 args" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	CCNode<CCLabelProtocol, CCRGBAProtocol> *label;
+	js_block js_func;
+	JSObject *js_this;
+	
+	ok &= jsval_to_nsobject( cx, *argvp++, &label );
+	
+	// cannot merge with previous if() since argvp needs to be incremented
+	if( argc ==3 ) {
+		// this
+		js_this= JSVAL_TO_OBJECT( *argvp++);
+		
+		// function
+		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+	}
+	
+	CCMenuItemLabel *ret_val;
+	
+	if( argc == 1 )
+		ret_val = [CCMenuItemLabel itemWithLabel:label];
+	else if (argc ==3 )
+		ret_val = [CCMenuItemLabel itemWithLabel:label block:(void(^)(id sender))js_func];
+	
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	
+	return JS_TRUE;
+}
+
 // "create" in JS
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >=2 && argc <= 5, @"Invalid number of arguments. Expecting: 2 <= args <= 5" );
