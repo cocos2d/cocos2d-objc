@@ -91,7 +91,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) dealloc
 {
 	[block_ release];
-
+    [pressblock_ release];
 	[super dealloc];
 }
 
@@ -99,6 +99,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	[block_ release];
 	block_ = nil;
+	[pressblock_ release];
+	pressblock_ = nil;
 
 	[super cleanup];
 }
@@ -111,6 +113,12 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) unselected
 {
 	isSelected_ = NO;
+}
+
+-(void) pressactivate
+{
+	if(isEnabled_&& pressblock_ )
+		pressblock_(self);
 }
 
 -(void) activate
@@ -135,6 +143,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 					  position_.y - contentSize_.height*anchorPoint_.y,
 					  contentSize_.width, contentSize_.height);
 }
+
+-(void) setPressBlock:(void (^)(id sender))block
+{
+    [pressblock_ release];
+    pressblock_ = [block copy];
+}
+
 
 -(void) setBlock:(void(^)(id sender))block
 {

@@ -42,6 +42,7 @@
 {
 	// used for menu items using a block
 	void (^block_)(id sender);
+    void (^pressblock_)(id sender);
 
 	BOOL isEnabled_;
 	BOOL isSelected_;
@@ -74,6 +75,9 @@
 /** Returns the outside box in points */
 -(CGRect) rect;
 
+/** Activate the press block only */
+-(void) pressactivate;
+
 /** Activate the item */
 -(void) activate;
 
@@ -88,6 +92,11 @@
 
 /** Returns whether or not the CCMenuItem is enabled */
 -(BOOL) isEnabled;
+
+/** Sets the block that is called when the item is pressed.
+ The block will be "copied".
+ */
+-(void) setPressBlock:(void (^)(id sender))block;
 
 /** Sets the block that is called when the item is tapped.
  The block will be "copied".
