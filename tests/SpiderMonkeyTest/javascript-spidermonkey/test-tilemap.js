@@ -159,11 +159,10 @@ var BaseLayer = cc.Layer.extend({
 //        this._super();
 
         var platform = __getPlatform();
-        if( platform == 'OSX' ) {
-            this.setIsMouseEnabled( true );
-        } else if( platform == 'iOS' ) {
-            this.setIsTouchEnabled( true );
-        }
+        if( platform.substring(0,7) == 'desktop' )
+            this.setMouseEnabled( true );
+        else if( platform.substring(0,6) == 'mobile' )
+            this.setTouchEnabled( true );
 
         // add title and subtitle
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
