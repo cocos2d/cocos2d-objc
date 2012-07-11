@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1070</int>
-		<string key="IBDocument.SystemVersion">11D50d</string>
+		<string key="IBDocument.SystemVersion">11D50</string>
 		<string key="IBDocument.InterfaceBuilderVersion">2182</string>
 		<string key="IBDocument.AppKitVersion">1138.32</string>
 		<string key="IBDocument.HIToolboxVersion">568.00</string>
@@ -44,7 +44,7 @@
 				<array class="NSMutableArray" key="NSMenuItems">
 					<object class="NSMenuItem" id="694149608">
 						<reference key="NSMenu" ref="649796088"/>
-						<string key="NSTitle">cocos2d-ios-jsconsole-client</string>
+						<string key="NSTitle">cocos2d-jsconsole-client</string>
 						<string key="NSKeyEquiv"/>
 						<int key="NSKeyEquivModMask">1048576</int>
 						<int key="NSMnemonicLoc">2147483647</int>
@@ -58,11 +58,11 @@
 						</object>
 						<string key="NSAction">submenuAction:</string>
 						<object class="NSMenu" key="NSSubmenu" id="110575045">
-							<string key="NSTitle">cocos2d-ios-jsconsole-client</string>
+							<string key="NSTitle">cocos2d-jsconsole-client</string>
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="238522557">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">About cocos2d-ios-jsconsole-client</string>
+									<string key="NSTitle">About cocos2d-jsconsole-client</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="35465992"/>
@@ -127,7 +127,7 @@
 								</object>
 								<object class="NSMenuItem" id="755159360">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Hide cocos2d-ios-jsconsole-client</string>
+									<string key="NSTitle">Hide cocos2d-jsconsole-client</string>
 									<string key="NSKeyEquiv">h</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -165,7 +165,7 @@
 								</object>
 								<object class="NSMenuItem" id="632727374">
 									<reference key="NSMenu" ref="110575045"/>
-									<string key="NSTitle">Quit cocos2d-ios-jsconsole-client</string>
+									<string key="NSTitle">Quit cocos2d-jsconsole-client</string>
 									<string key="NSKeyEquiv">q</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1280,7 +1280,7 @@
 							<array class="NSMutableArray" key="NSMenuItems">
 								<object class="NSMenuItem" id="105068016">
 									<reference key="NSMenu" ref="992780483"/>
-									<string key="NSTitle">cocos2d-ios-jsconsole-client Help</string>
+									<string key="NSTitle">cocos2d-jsconsole-client Help</string>
 									<string key="NSKeyEquiv">?</string>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
@@ -1310,7 +1310,7 @@
 				<nil key="NSViewClass"/>
 				<nil key="NSUserInterfaceItemIdentifier"/>
 				<object class="NSView" key="NSWindowView" id="1070673519">
-					<reference key="NSNextResponder"/>
+					<nil key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<array class="NSMutableArray" key="NSSubviews">
 						<object class="NSButton" id="93805865">
@@ -1318,8 +1318,6 @@
 							<int key="NSvFlags">289</int>
 							<string key="NSFrame">{{395, 0}, {71, 32}}</string>
 							<reference key="NSSuperview" ref="1070673519"/>
-							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="545103412">
@@ -1350,7 +1348,6 @@
 									<int key="NSvFlags">266</int>
 									<string key="NSFrameSize">{440, 107}</string>
 									<reference key="NSSuperview" ref="1013286982"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="238194467"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
@@ -1360,7 +1357,6 @@
 									<int key="NSvFlags">274</int>
 									<string key="NSFrame">{{0, 117}, {440, 111}}</string>
 									<reference key="NSSuperview" ref="1013286982"/>
-									<reference key="NSWindow"/>
 									<reference key="NSNextKeyView" ref="93805865"/>
 									<string key="NSReuseIdentifierKey">_NS:9</string>
 									<string key="NSClassName">NSView</string>
@@ -1368,15 +1364,12 @@
 							</array>
 							<string key="NSFrame">{{20, 34}, {440, 228}}</string>
 							<reference key="NSSuperview" ref="1070673519"/>
-							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="235151002"/>
 							<string key="NSReuseIdentifierKey">_NS:9</string>
 							<int key="NSDividerStyle">3</int>
 						</object>
 					</array>
 					<string key="NSFrameSize">{480, 282}</string>
-					<reference key="NSSuperview"/>
-					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="1013286982"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>

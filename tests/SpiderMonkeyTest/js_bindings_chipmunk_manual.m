@@ -26,10 +26,11 @@
 #import "js_bindings_chipmunk_manual.h"
 #import "jsapi.h"
 #import "js_manual_conversions.h"
+#import "uthash.h"
 
 #pragma mark - Collision Handler
 
-struct collision_data {
+struct collision_handler {
 	cpCollisionType		typeA;
 	cpCollisionType		typeB;
 	jsval				begin;
@@ -38,12 +39,27 @@ struct collision_data {
 	jsval				separate;
 	JSObject			*this;
 	JSContext			*cx;
+
+	unsigned long		hash_key;
+	UT_hash_handle  hh;
 };
 
+// hash
+struct collision_handler* collision_handler_hash = NULL;
+
+// helper pair
+static unsigned long pair_ints( unsigned long A, unsigned long B )
+{
+	// order is not important
+	unsigned long k1 = MIN(A, B );
+	unsigned long k2 = MAX(A, B );
+	
+	return (k1 + k2) * (k1 + k2 + 1) /2 + k2;
+}
 
 static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 {
-	struct collision_data *handler = (struct collision_data*) data;
+	struct collision_handler *handler = (struct collision_handler*) data;
 	
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
@@ -61,7 +77,7 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 
 static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 {
-	struct collision_data *handler = (struct collision_data*) data;
+	struct collision_handler *handler = (struct collision_handler*) data;
 	
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
@@ -79,7 +95,7 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 
 static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 {
-	struct collision_data *handler = (struct collision_data*) data;
+	struct collision_handler *handler = (struct collision_handler*) data;
 	
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
@@ -91,7 +107,7 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 {
-	struct collision_data *handler = (struct collision_data*) data;
+	struct collision_handler *handler = (struct collision_handler*) data;
 	
 	jsval args[2];
 	args[0] = opaque_to_jsval( handler->cx, arb);
@@ -108,10 +124,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	//
-	// XXX MEMORY LEAK
-	//
-	struct collision_data *handler = malloc( sizeof(*handler) );
+	struct collision_handler *handler = malloc( sizeof(*handler) );
 	if( ! handler )
 		return JS_FALSE;
 	
@@ -142,8 +155,25 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 							   JSVAL_IS_NULL(handler->post) ? NULL : &myCollisionPost,
 							   JSVAL_IS_NULL(handler->separate) ? NULL : &myCollisionSeparate,
 							   handler );
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
 
+	//
+	// Already added ? If so, remove it.
+	// Then add new entry
+	//
+	struct collision_handler *hashElement = NULL;
+	unsigned long paired_key = pair_ints(handler->typeA, handler->typeB );
+	HASH_FIND_INT(collision_handler_hash, &paired_key, hashElement);
+    if( hashElement ) {
+		HASH_DEL( collision_handler_hash, hashElement );
+		free( hashElement );
+	}
+
+	handler->hash_key = paired_key;
+	HASH_ADD_INT( collision_handler_hash, hash_key, handler );
+
+		
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -167,8 +197,16 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 
 	cpSpaceRemoveCollisionHandler(space, typeA, typeB );
 	
+	// Remove it
+	struct collision_handler *hashElement = NULL;
+	unsigned long key = pair_ints(typeA, typeB );
+	HASH_FIND_INT(collision_handler_hash, &key, hashElement);
+    if( hashElement ) {
+		HASH_DEL( collision_handler_hash, hashElement );
+		free( hashElement );
+	}
+	
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-
 	return JS_TRUE;
 }
 
