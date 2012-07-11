@@ -28,7 +28,7 @@
         
         // access the NSTextView
         mJavaScriptConsoleInputTextView = [mJavaScriptConsoleInputViewFragaria objectForKey:ro_MGSFOTextView];
-        [mJavaScriptConsoleInputTextView setString:@"var director = cc.Director.getInstance();\nvar runningScene = director.runningScene();\n\nvar sprite = cc.Sprite.create(\"grossini.png\");\nrunningScene.addChild(sprite);"];
+        [mJavaScriptConsoleInputTextView setString:@"var director = cc.Director.getInstance();\nvar runningScene = director.getRunningScene();\n\nvar sprite = cc.Sprite.create(\"grossini.png\");\nrunningScene.addChild(sprite);"];
     }
     /* Output View. */
     {
