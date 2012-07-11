@@ -315,9 +315,9 @@ var ChipmunkCollisionTest = function() {
 	}
 
 	this.onEnter = function () {
-
 		goog.base(this, 'onEnter');
 
+        this.initPhysics();
 		this.scheduleUpdate();
 
 		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "grossini.png", 1);
@@ -327,6 +327,15 @@ var ChipmunkCollisionTest = function() {
 		this.addChild( sprite2 );
 
 		cp.spaceAddCollisionHandler( this.space, 1, 2, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+	}
+
+	this.onExit = function() {
+		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
+        cp.spaceFree( this.space );
+	}
+
+	this.update = function( delta ) {
+		cp.spaceStep( this.space, delta );
 	}
 
 	this.collisionBegin = function ( arbiter, space ) {
@@ -360,18 +369,60 @@ var ChipmunkCollisionTest = function() {
 		cc.log('collision separate');
 	}
 
-	this.onExit = function() {
-		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
-	}
-
-	this.update = function( delta ) {
-		cp.spaceStep( this.space, delta );
-	}
-
-	this.initPhysics();
 }
 goog.inherits( ChipmunkCollisionTest, BaseLayer );
 
+//------------------------------------------------------------------
+//
+// Chipmunk Collision Memory Leak Test
+//
+//------------------------------------------------------------------
+var ChipmunkCollisionMemoryLeakTest = function() {
+
+	goog.base(this);
+
+	this.title = function() {
+		return 'Chipmunk Memory Leak Test';
+	}
+
+	this.subtitle = function() {
+		return 'Testing possible memory leak on the collision handler. No visual feedback';
+	}
+
+	this.collisionBegin = function ( arbiter, space ) {
+		return true
+	}
+
+	this.collisionPre = function ( arbiter, space ) {
+		return true;
+	}
+
+	this.collisionPost = function ( arbiter, space ) {
+		cc.log('collision post');
+	}
+
+	this.collisionSeparate = function ( arbiter, space ) {
+		cc.log('collision separate');
+	}
+
+    this.onEnter = function() {
+        goog.base(this, 'onEnter');
+		this.space =  cp.spaceNew();
+
+        for( var i=1 ; i < 100 ; i++ )
+            cp.spaceAddCollisionHandler( this.space, i, i+1, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+
+    }
+
+	this.onExit = function() {
+
+        for( var i=1 ; i < 100 ; i++ )
+            cp.spaceRemoveCollisionHandler( this.space, i, i+1 );
+
+        cp.spaceFree( this.space );
+	}
+}
+goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 //
 // Instance 'base' methods
 // XXX: Should be defined after "goog.inherits"
@@ -382,10 +433,10 @@ goog.inherits( ChipmunkCollisionTest, BaseLayer );
 //
 // Order of tests
 //
-scenes.push( ChipmunkCollisionTest );
 
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
+scenes.push( ChipmunkCollisionMemoryLeakTest );
 
 
 //------------------------------------------------------------------
