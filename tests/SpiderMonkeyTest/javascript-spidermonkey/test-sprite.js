@@ -138,10 +138,10 @@ var SpriteTouchTest = function() {
 
 	this.initialize = function() {
 		var platform = __getPlatform();
-		if( platform == 'OSX' ) {
-			this.setIsMouseEnabled( true );
-		} else if( platform == 'iOS' ) {
-			this.setIsTouchEnabled( true );
+		if( platform.substring(0,7) == 'desktop' ) {
+			this.setMouseEnabled( true );
+		} else if( platform.substring(0,6) == 'mobile' ) {
+			this.setTouchEnabled( true );
 		}
 		this.addSprite( centerPos );
 	}
