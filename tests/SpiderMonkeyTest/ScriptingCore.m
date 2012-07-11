@@ -163,9 +163,9 @@ JSBool ScriptingCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSString * platform;
 #ifdef __CC_PLATFORM_IOS
-	platform = JS_InternString(cx, "iOS");
+	platform = JS_InternString(cx, "mobile/iOS");
 #elif defined(__CC_PLATFORM_MAC)
-	platform = JS_InternString(cx, "OSX");
+	platform = JS_InternString(cx, "desktop/OSX");
 #else
 #error "Unsupported platform"
 #endif
