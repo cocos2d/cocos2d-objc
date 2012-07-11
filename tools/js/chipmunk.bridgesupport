@@ -33,14 +33,14 @@
 <field declared_type='cpFloat' name='t' type='f'/>
 </struct>
 <struct name='cpBody' type='{cpBody=&quot;velocity_func&quot;^?&quot;position_func&quot;^?&quot;m&quot;f&quot;m_inv&quot;f&quot;i&quot;f&quot;i_inv&quot;f&quot;p&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;v&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;f&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;a&quot;f&quot;w&quot;f&quot;t&quot;f&quot;rot&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;data&quot;^v&quot;v_limit&quot;f&quot;w_limit&quot;f&quot;v_bias_private&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;w_bias_private&quot;f&quot;space_private&quot;^{cpSpace}&quot;shapeList_private&quot;^{cpShape}&quot;arbiterList_private&quot;^{cpArbiter}&quot;constraintList_private&quot;^{cpConstraint}&quot;node_private&quot;{cpComponentNode=&quot;root&quot;^{cpBody}&quot;next&quot;^{cpBody}&quot;idleTime&quot;f}}'>
-<field function_pointer='true' declared_type='cpBodyVelocityFunc' name='velocity_func' type='^?'>
+<field declared_type='cpBodyVelocityFunc' name='velocity_func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
 <arg declared_type='cpFloat' type='f'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpBodyPositionFunc' name='position_func' type='^?'>
+<field declared_type='cpBodyPositionFunc' name='position_func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='void' type='v'/>
@@ -76,25 +76,25 @@
 <struct name='cpCollisionHandler' type='{cpCollisionHandler=&quot;a&quot;I&quot;b&quot;I&quot;begin&quot;^?&quot;preSolve&quot;^?&quot;postSolve&quot;^?&quot;separate&quot;^?&quot;data&quot;^v}'>
 <field declared_type='cpCollisionType' name='a' type='L'/>
 <field declared_type='cpCollisionType' name='b' type='L'/>
-<field function_pointer='true' declared_type='cpCollisionBeginFunc' name='begin' type='^?'>
+<field declared_type='cpCollisionBeginFunc' name='begin' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </field>
-<field function_pointer='true' declared_type='cpCollisionPreSolveFunc' name='preSolve' type='^?'>
+<field declared_type='cpCollisionPreSolveFunc' name='preSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </field>
-<field function_pointer='true' declared_type='cpCollisionPostSolveFunc' name='postSolve' type='^?'>
+<field declared_type='cpCollisionPostSolveFunc' name='postSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpCollisionSeparateFunc' name='separate' type='^?'>
+<field declared_type='cpCollisionSeparateFunc' name='separate' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
@@ -108,7 +108,7 @@
 <field declared_type='cpFloat' name='idleTime' type='f'/>
 </struct>
 <struct name='cpConstraint' type='{cpConstraint=&quot;klass_private&quot;^{cpConstraintClass}&quot;a&quot;^{cpBody}&quot;b&quot;^{cpBody}&quot;space_private&quot;^{cpSpace}&quot;next_a_private&quot;^{cpConstraint}&quot;next_b_private&quot;^{cpConstraint}&quot;maxForce&quot;f&quot;errorBias&quot;f&quot;maxBias&quot;f&quot;preSolve&quot;^?&quot;postSolve&quot;^?&quot;data&quot;^v}'>
-<field declared_type='cpConstraintClass*' name='klass_private' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<field declared_type='cpConstraintClass*' name='klass_private' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 <field declared_type='cpBody*' name='a' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <field declared_type='cpBody*' name='b' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <field declared_type='cpSpace*' name='space_private' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
@@ -117,12 +117,12 @@
 <field declared_type='cpFloat' name='maxForce' type='f'/>
 <field declared_type='cpFloat' name='errorBias' type='f'/>
 <field declared_type='cpFloat' name='maxBias' type='f'/>
-<field function_pointer='true' declared_type='cpConstraintPreSolveFunc' name='preSolve' type='^?'>
+<field declared_type='cpConstraintPreSolveFunc' name='preSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpConstraintPostSolveFunc' name='postSolve' type='^?'>
+<field declared_type='cpConstraintPostSolveFunc' name='postSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
@@ -130,21 +130,21 @@
 <field declared_type='cpDataPointer' name='data' type='^v'/>
 </struct>
 <struct name='cpConstraintClass' type='{cpConstraintClass=&quot;preStep&quot;^?&quot;applyCachedImpulse&quot;^?&quot;applyImpulse&quot;^?&quot;getImpulse&quot;^?}'>
-<field function_pointer='true' declared_type='cpConstraintPreStepImpl' name='preStep' type='^?'>
+<field declared_type='cpConstraintPreStepImpl' name='preStep' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpConstraintApplyCachedImpulseImpl' name='applyCachedImpulse' type='^?'>
+<field declared_type='cpConstraintApplyCachedImpulseImpl' name='applyCachedImpulse' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpConstraintApplyImpulseImpl' name='applyImpulse' type='^?'>
+<field declared_type='cpConstraintApplyImpulseImpl' name='applyImpulse' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpConstraintGetImpulseImpl' name='getImpulse' type='^?'>
+<field declared_type='cpConstraintGetImpulseImpl' name='getImpulse' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </field>
@@ -173,7 +173,7 @@
 <field declared_type='cpFloat' name='restAngle' type='f'/>
 <field declared_type='cpFloat' name='stiffness' type='f'/>
 <field declared_type='cpFloat' name='damping' type='f'/>
-<field function_pointer='true' declared_type='cpDampedRotarySpringTorqueFunc' name='springTorqueFunc' type='^?'>
+<field declared_type='cpDampedRotarySpringTorqueFunc' name='springTorqueFunc' function_pointer='true' type='^?'>
 <arg declared_type='struct cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
@@ -189,7 +189,7 @@
 <field declared_type='cpFloat' name='restLength' type='f'/>
 <field declared_type='cpFloat' name='stiffness' type='f'/>
 <field declared_type='cpFloat' name='damping' type='f'/>
-<field function_pointer='true' declared_type='cpDampedSpringForceFunc' name='springForceFunc' type='^?'>
+<field declared_type='cpDampedSpringForceFunc' name='springForceFunc' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
@@ -302,7 +302,7 @@
 <field declared_type='cpVect' name='b_tangent' type='{CGPoint=&quot;x&quot;f&quot;y&quot;f}'/>
 </struct>
 <struct name='cpShape' type='{cpShape=&quot;klass_private&quot;^{cpShapeClass}&quot;body&quot;^{cpBody}&quot;bb&quot;{cpBB=&quot;l&quot;f&quot;b&quot;f&quot;r&quot;f&quot;t&quot;f}&quot;sensor&quot;i&quot;e&quot;f&quot;u&quot;f&quot;surface_v&quot;{CGPoint=&quot;x&quot;f&quot;y&quot;f}&quot;data&quot;^v&quot;collision_type&quot;I&quot;group&quot;I&quot;layers&quot;I&quot;space_private&quot;^{cpSpace}&quot;next_private&quot;^{cpShape}&quot;prev_private&quot;^{cpShape}&quot;hashid_private&quot;I}'>
-<field declared_type='cpShapeClass*' name='klass_private' type='^{cpShapeClass=i^?^?^?^?}' const='true'/>
+<field declared_type='cpShapeClass*' name='klass_private' const='true' type='^{cpShapeClass=i^?^?^?^?}'/>
 <field declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <field declared_type='cpBB' name='bb' type='{cpBB=&quot;l&quot;f&quot;b&quot;f&quot;r&quot;f&quot;t&quot;f}'/>
 <field declared_type='cpBool' name='sensor' type='i'/>
@@ -320,23 +320,23 @@
 </struct>
 <struct name='cpShapeClass' type='{cpShapeClass=&quot;type&quot;i&quot;cacheData&quot;^?&quot;destroy&quot;^?&quot;nearestPointQuery&quot;^?&quot;segmentQuery&quot;^?}'>
 <field declared_type='cpShapeType' name='type' type='i'/>
-<field function_pointer='true' declared_type='cpShapeCacheDataImpl' name='cacheData' type='^?'>
+<field declared_type='cpShapeCacheDataImpl' name='cacheData' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </field>
-<field function_pointer='true' declared_type='cpShapeDestroyImpl' name='destroy' type='^?'>
+<field declared_type='cpShapeDestroyImpl' name='destroy' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpShapeNearestPointQueryImpl' name='nearestPointQuery' type='^?'>
+<field declared_type='cpShapeNearestPointQueryImpl' name='nearestPointQuery' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
 <arg declared_type='cpNearestPointQueryInfo*' type='^{cpNearestPointQueryInfo=^{cpShape}{CGPoint=ff}f}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpShapeSegmentQueryImpl' name='segmentQuery' type='^?'>
+<field declared_type='cpShapeSegmentQueryImpl' name='segmentQuery' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
@@ -399,7 +399,7 @@
 </struct>
 <struct name='cpSpatialIndex' type='{cpSpatialIndex=&quot;klass&quot;^{cpSpatialIndexClass}&quot;bbfunc&quot;^?&quot;staticIndex&quot;^{cpSpatialIndex}&quot;dynamicIndex&quot;^{cpSpatialIndex}}'>
 <field declared_type='cpSpatialIndexClass*' name='klass' type='^{cpSpatialIndexClass=^?^?^?^?^?^?^?^?^?^?^?}'/>
-<field function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<field declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </field>
@@ -407,55 +407,55 @@
 <field declared_type='cpSpatialIndex*' name='dynamicIndex' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 </struct>
 <struct name='cpSpatialIndexClass' type='{cpSpatialIndexClass=&quot;destroy&quot;^?&quot;count&quot;^?&quot;each&quot;^?&quot;contains&quot;^?&quot;insert&quot;^?&quot;remove&quot;^?&quot;reindex&quot;^?&quot;reindexObject&quot;^?&quot;reindexQuery&quot;^?&quot;query&quot;^?&quot;segmentQuery&quot;^?}'>
-<field function_pointer='true' declared_type='cpSpatialIndexDestroyImpl' name='destroy' type='^?'>
+<field declared_type='cpSpatialIndexDestroyImpl' name='destroy' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexCountImpl' name='count' type='^?'>
+<field declared_type='cpSpatialIndexCountImpl' name='count' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <retval declared_type='int' type='i'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexEachImpl' name='each' type='^?'>
+<field declared_type='cpSpatialIndexEachImpl' name='each' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='cpSpatialIndexIteratorFunc' type='^?'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexContainsImpl' name='contains' type='^?'>
+<field declared_type='cpSpatialIndexContainsImpl' name='contains' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpHashValue' type='L'/>
 <retval declared_type='cpBool' type='i'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexInsertImpl' name='insert' type='^?'>
+<field declared_type='cpSpatialIndexInsertImpl' name='insert' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpHashValue' type='L'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexRemoveImpl' name='remove' type='^?'>
+<field declared_type='cpSpatialIndexRemoveImpl' name='remove' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpHashValue' type='L'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexReindexImpl' name='reindex' type='^?'>
+<field declared_type='cpSpatialIndexReindexImpl' name='reindex' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexReindexObjectImpl' name='reindexObject' type='^?'>
+<field declared_type='cpSpatialIndexReindexObjectImpl' name='reindexObject' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpHashValue' type='L'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexReindexQueryImpl' name='reindexQuery' type='^?'>
+<field declared_type='cpSpatialIndexReindexQueryImpl' name='reindexQuery' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='cpSpatialIndexQueryFunc' type='^?'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexQueryImpl' name='query' type='^?'>
+<field declared_type='cpSpatialIndexQueryImpl' name='query' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpBB' type='{cpBB=ffff}'/>
@@ -463,7 +463,7 @@
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </field>
-<field function_pointer='true' declared_type='cpSpatialIndexSegmentQueryImpl' name='segmentQuery' type='^?'>
+<field declared_type='cpSpatialIndexSegmentQueryImpl' name='segmentQuery' function_pointer='true' type='^?'>
 <arg declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
@@ -488,29 +488,29 @@
 <opaque name='cpSpaceHash' type='^{cpSpaceHash=}'/>
 <opaque name='cpSweep1D' type='^{cpSweep1D=}'/>
 <constant declared_type='cpCollisionHandler' name='cpDefaultCollisionHandler' type='{cpCollisionHandler=II^?^?^?^?^v}'/>
-<constant declared_type='char*' name='cpVersionString' type='*' const='true'/>
-<constant declared_type='cpVect' name='cpvzero' type='{CGPoint=ff}' const='true'/>
-<enum value='1' name='CP_ALLOW_PRIVATE_ACCESS'/>
-<enum value='4294967295' name='CP_ALL_LAYERS'/>
-<enum value='32768' name='CP_BUFFER_BYTES'/>
-<enum value='0' name='CP_CIRCLE_SHAPE'/>
-<enum value='3344921057' name='CP_HASH_COEF'/>
-<enum value='4' name='CP_MAX_CONTACTS_PER_ARBITER'/>
-<enum value='0' name='CP_NO_GROUP'/>
-<enum value='3' name='CP_NUM_SHAPES'/>
-<enum value='2' name='CP_POLY_SHAPE'/>
-<enum value='1' name='CP_SEGMENT_SHAPE'/>
-<enum value='1' name='CP_USE_CGPOINTS'/>
-<enum value='0' name='CP_USE_DOUBLES'/>
-<enum value='6' name='CP_VERSION_MAJOR'/>
-<enum value='1' name='CP_VERSION_MINOR'/>
-<enum value='1' name='CP_VERSION_RELEASE'/>
-<enum value='3' name='cpArbiterStateCached'/>
-<enum value='0' name='cpArbiterStateFirstColl'/>
-<enum value='2' name='cpArbiterStateIgnore'/>
-<enum value='1' name='cpArbiterStateNormal'/>
-<enum value='0' name='cpFalse'/>
-<enum value='1' name='cpTrue'/>
+<constant declared_type='char*' name='cpVersionString' const='true' type='*'/>
+<constant declared_type='cpVect' name='cpvzero' const='true' type='{CGPoint=ff}'/>
+<enum name='CP_ALLOW_PRIVATE_ACCESS' value='1'/>
+<enum name='CP_ALL_LAYERS' value='4294967295'/>
+<enum name='CP_BUFFER_BYTES' value='32768'/>
+<enum name='CP_CIRCLE_SHAPE' value='0'/>
+<enum name='CP_HASH_COEF' value='3344921057'/>
+<enum name='CP_MAX_CONTACTS_PER_ARBITER' value='4'/>
+<enum name='CP_NO_GROUP' value='0'/>
+<enum name='CP_NUM_SHAPES' value='3'/>
+<enum name='CP_POLY_SHAPE' value='2'/>
+<enum name='CP_SEGMENT_SHAPE' value='1'/>
+<enum name='CP_USE_CGPOINTS' value='1'/>
+<enum name='CP_USE_DOUBLES' value='0'/>
+<enum name='CP_VERSION_MAJOR' value='6'/>
+<enum name='CP_VERSION_MINOR' value='1'/>
+<enum name='CP_VERSION_RELEASE' value='1'/>
+<enum name='cpArbiterStateCached' value='3'/>
+<enum name='cpArbiterStateFirstColl' value='0'/>
+<enum name='cpArbiterStateIgnore' value='2'/>
+<enum name='cpArbiterStateNormal' value='1'/>
+<enum name='cpFalse' value='0'/>
+<enum name='cpTrue' value='1'/>
 <function inline='true' name='apply_bias_impulse'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpVect' name='j' type='{CGPoint=ff}'/>
@@ -559,50 +559,50 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpArbiterGetBodies'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpBody**' name='a' type='^^{cpBody}'/>
 <arg declared_type='cpBody**' name='b' type='^^{cpBody}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpArbiterGetContactPointSet'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpContactPointSet' type='{cpContactPointSet=i[4{?={CGPoint=ff}{CGPoint=ff}f}]}'/>
 </function>
 <function name='cpArbiterGetCount'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='int' type='i'/>
 </function>
 <function name='cpArbiterGetDepth'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='int' name='i' type='i'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpArbiterGetElasticity'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpArbiterGetFriction'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpArbiterGetNormal'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='int' name='i' type='i'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpArbiterGetPoint'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='int' name='i' type='i'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpArbiterGetShapes'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpShape**' name='a' type='^^{cpShape}'/>
 <arg declared_type='cpShape**' name='b' type='^^{cpShape}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpArbiterGetSurfaceVelocity'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpArbiterIgnore'>
@@ -616,7 +616,7 @@
 <retval declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 </function>
 <function name='cpArbiterIsFirstContact'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpArbiterNext'>
@@ -652,15 +652,15 @@
 <retval declared_type='struct cpArbiterThread*' type='^{cpArbiterThread=^{cpArbiter}^{cpArbiter}}'/>
 </function>
 <function name='cpArbiterTotalImpulse'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpArbiterTotalImpulseWithFriction'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpArbiterTotalKE'>
-<arg declared_type='cpArbiter*' name='arb' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}' const='true'/>
+<arg declared_type='cpArbiter*' name='arb' const='true' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpArbiterUnthread'>
@@ -682,8 +682,8 @@
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpAreaForPoly'>
-<arg declared_type='int' name='numVerts' type='i' const='true'/>
-<arg declared_type='cpVect*' name='verts' type='^{CGPoint=ff}' const='true'/>
+<arg declared_type='int' name='numVerts' const='true' type='i'/>
+<arg declared_type='cpVect*' name='verts' const='true' type='^{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpAreaForSegment'>
@@ -708,7 +708,7 @@
 </function>
 <function name='cpArrayFreeEach'>
 <arg declared_type='cpArray*' name='arr' type='^{cpArray=ii^^v}'/>
-<arg function_pointer='true' declared_type='void (*)(void *)' name='freeFunc' type='^?'>
+<arg declared_type='void (*)(void *)' name='freeFunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </arg>
@@ -732,28 +732,28 @@
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpBBClampVect'>
-<arg declared_type='cpBB' name='bb' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBB' name='bb' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpBBContainsBB'>
-<arg declared_type='cpBB' name='bb' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpBB' name='other' type='{cpBB=ffff}' const='true'/>
+<arg declared_type='cpBB' name='bb' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpBB' name='other' const='true' type='{cpBB=ffff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBBContainsVect'>
-<arg declared_type='cpBB' name='bb' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBB' name='bb' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBBExpand'>
-<arg declared_type='cpBB' name='bb' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBB' name='bb' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </function>
 <function inline='true' name='cpBBIntersects'>
-<arg declared_type='cpBB' name='a' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpBB' name='b' type='{cpBB=ffff}' const='true'/>
+<arg declared_type='cpBB' name='a' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpBB' name='b' const='true' type='{cpBB=ffff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBBIntersectsSegment'>
@@ -763,8 +763,8 @@
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBBMerge'>
-<arg declared_type='cpBB' name='a' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpBB' name='b' type='{cpBB=ffff}' const='true'/>
+<arg declared_type='cpBB' name='a' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpBB' name='b' const='true' type='{cpBB=ffff}'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </function>
 <function inline='true' name='cpBBMergedArea'>
@@ -773,15 +773,15 @@
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBBNew'>
-<arg declared_type='cpFloat' name='l' type='f' const='true'/>
-<arg declared_type='cpFloat' name='b' type='f' const='true'/>
-<arg declared_type='cpFloat' name='r' type='f' const='true'/>
-<arg declared_type='cpFloat' name='t' type='f' const='true'/>
+<arg declared_type='cpFloat' name='l' const='true' type='f'/>
+<arg declared_type='cpFloat' name='b' const='true' type='f'/>
+<arg declared_type='cpFloat' name='r' const='true' type='f'/>
+<arg declared_type='cpFloat' name='t' const='true' type='f'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </function>
 <function inline='true' name='cpBBNewForCircle'>
-<arg declared_type='cpVect' name='p' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='r' type='f' const='true'/>
+<arg declared_type='cpVect' name='p' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='r' const='true' type='f'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </function>
 <function inline='true' name='cpBBSegmentQuery'>
@@ -795,7 +795,7 @@
 </function>
 <function name='cpBBTreeInit'>
 <arg declared_type='cpBBTree*' name='tree' type='^{cpBBTree=}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -803,7 +803,7 @@
 <retval declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 </function>
 <function name='cpBBTreeNew'>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -816,15 +816,15 @@
 </function>
 <function name='cpBBTreeSetVelocityFunc'>
 <arg declared_type='cpSpatialIndex*' name='index' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
-<arg function_pointer='true' declared_type='cpBBTreeVelocityFunc' name='func' type='^?'>
+<arg declared_type='cpBBTreeVelocityFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </arg>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBBWrapVect'>
-<arg declared_type='cpBB' name='bb' type='{cpBB=ffff}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBB' name='bb' const='true' type='{cpBB=ffff}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpBodyActivate'>
@@ -846,14 +846,14 @@
 </function>
 <function name='cpBodyApplyForce'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpVect' name='f' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='r' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='f' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='r' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBodyApplyImpulse'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpVect' name='j' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='r' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='j' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='r' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBodyDestroy'>
@@ -862,7 +862,7 @@
 </function>
 <function name='cpBodyEachArbiter'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg function_pointer='true' declared_type='cpBodyArbiterIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpBodyArbiterIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='void*' type='^v'/>
@@ -873,7 +873,7 @@
 </function>
 <function name='cpBodyEachConstraint'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg function_pointer='true' declared_type='cpBodyConstraintIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpBodyConstraintIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='void*' type='^v'/>
@@ -884,7 +884,7 @@
 </function>
 <function name='cpBodyEachShape'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg function_pointer='true' declared_type='cpBodyShapeIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpBodyShapeIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='void*' type='^v'/>
@@ -898,51 +898,51 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodyGetAngVel'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetAngVelLimit'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetAngle'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetForce'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpBodyGetMass'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetMoment'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetPos'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpBodyGetRot'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpBodyGetSpace'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 </function>
 <function inline='true' name='cpBodyGetTorque'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyGetUserData'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpDataPointer' type='^v'/>
 </function>
 <function inline='true' name='cpBodyGetVel'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpBodyGetVelAtLocalPoint'>
@@ -956,7 +956,7 @@
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpBodyGetVelLimit'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpBodyInit'>
@@ -970,24 +970,24 @@
 <retval declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 </function>
 <function inline='true' name='cpBodyIsRogue'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBodyIsSleeping'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBodyIsStatic'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpBodyKineticEnergy'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpBodyLocal2World'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpBodyNew'>
@@ -1014,12 +1014,12 @@
 </function>
 <function inline='true' name='cpBodySetAngVel'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpFloat' name='value' type='f' const='true'/>
+<arg declared_type='cpFloat' name='value' const='true' type='f'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodySetAngVelLimit'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpFloat' name='value' type='f' const='true'/>
+<arg declared_type='cpFloat' name='value' const='true' type='f'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBodySetAngle'>
@@ -1029,7 +1029,7 @@
 </function>
 <function inline='true' name='cpBodySetForce'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpVect' name='value' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='value' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBodySetMass'>
@@ -1049,22 +1049,22 @@
 </function>
 <function inline='true' name='cpBodySetTorque'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpFloat' name='value' type='f' const='true'/>
+<arg declared_type='cpFloat' name='value' const='true' type='f'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodySetUserData'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpDataPointer' name='value' type='^v' const='true'/>
+<arg declared_type='cpDataPointer' name='value' const='true' type='^v'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodySetVel'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpVect' name='value' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='value' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodySetVelLimit'>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
-<arg declared_type='cpFloat' name='value' type='f' const='true'/>
+<arg declared_type='cpFloat' name='value' const='true' type='f'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpBodySleep'>
@@ -1089,8 +1089,8 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpBodyWorld2Local'>
-<arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpBody*' name='body' const='true' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpBoxShapeInit'>
@@ -1118,19 +1118,19 @@
 <retval declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 </function>
 <function name='cpCentroidForPoly'>
-<arg declared_type='int' name='numVerts' type='i' const='true'/>
-<arg declared_type='cpVect*' name='verts' type='^{CGPoint=ff}' const='true'/>
+<arg declared_type='int' name='numVerts' const='true' type='i'/>
+<arg declared_type='cpVect*' name='verts' const='true' type='^{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpCircleShapeAlloc'>
 <retval declared_type='cpCircleShape*' type='^{cpCircleShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}{CGPoint=ff}{CGPoint=ff}f}'/>
 </function>
 <function name='cpCircleShapeGetOffset'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpCircleShapeGetRadius'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpCircleShapeInit'>
@@ -1157,14 +1157,14 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpClosetPointOnSegment'>
-<arg declared_type='cpVect' name='p' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='a' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='b' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='p' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='a' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='b' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpCollideShapes'>
-<arg declared_type='cpShape*' name='a' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
-<arg declared_type='cpShape*' name='b' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='a' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
+<arg declared_type='cpShape*' name='b' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpContact*' name='arr' type='^{cpContact={CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}{CGPoint=ff}fffffffI}'/>
 <retval declared_type='int' type='i'/>
 </function>
@@ -1181,15 +1181,15 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpConstraintGetA'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 </function>
 <function inline='true' name='cpConstraintGetB'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 </function>
 <function inline='true' name='cpConstraintGetErrorBias'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpConstraintGetImpulse'>
@@ -1197,40 +1197,40 @@
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpConstraintGetMaxBias'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpConstraintGetMaxForce'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpConstraintGetPostSolveFunc'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
-<retval function_pointer='true' declared_type='cpConstraintPostSolveFunc' type='^?'>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
+<retval declared_type='cpConstraintPostSolveFunc' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
 </retval>
 </function>
 <function inline='true' name='cpConstraintGetPreSolveFunc'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
-<retval function_pointer='true' declared_type='cpConstraintPreSolveFunc' type='^?'>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
+<retval declared_type='cpConstraintPreSolveFunc' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
 </retval>
 </function>
 <function inline='true' name='cpConstraintGetSpace'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 </function>
 <function inline='true' name='cpConstraintGetUserData'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpDataPointer' type='^v'/>
 </function>
 <function name='cpConstraintInit'>
 <arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
-<arg declared_type='cpConstraintClass*' name='klass' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<arg declared_type='cpConstraintClass*' name='klass' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 <arg declared_type='cpBody*' name='a' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='cpBody*' name='b' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='void' type='v'/>
@@ -1257,7 +1257,7 @@
 </function>
 <function inline='true' name='cpConstraintSetPostSolveFunc'>
 <arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
-<arg function_pointer='true' declared_type='cpConstraintPostSolveFunc' name='value' type='^?'>
+<arg declared_type='cpConstraintPostSolveFunc' name='value' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
@@ -1266,7 +1266,7 @@
 </function>
 <function inline='true' name='cpConstraintSetPreSolveFunc'>
 <arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
-<arg function_pointer='true' declared_type='cpConstraintPreSolveFunc' name='value' type='^?'>
+<arg declared_type='cpConstraintPreSolveFunc' name='value' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='void' type='v'/>
@@ -1302,26 +1302,26 @@
 <retval declared_type='cpDampedRotarySpring*' type='^{cpDampedRotarySpring={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}fff^?fff}'/>
 </function>
 <function name='cpDampedRotarySpringGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpDampedRotarySpringGetDamping'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpDampedRotarySpringGetRestAngle'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpDampedRotarySpringGetSpringTorqueFunc'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
-<retval function_pointer='true' declared_type='cpDampedRotarySpringTorqueFunc' type='^?'>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
+<retval declared_type='cpDampedRotarySpringTorqueFunc' function_pointer='true' type='^?'>
 <arg declared_type='struct cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
 </retval>
 </function>
 <function inline='true' name='cpDampedRotarySpringGetStiffness'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpDampedRotarySpringInit'>
@@ -1353,7 +1353,7 @@
 </function>
 <function inline='true' name='cpDampedRotarySpringSetSpringTorqueFunc'>
 <arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
-<arg function_pointer='true' declared_type='cpDampedRotarySpringTorqueFunc' name='value' type='^?'>
+<arg declared_type='cpDampedRotarySpringTorqueFunc' name='value' function_pointer='true' type='^?'>
 <arg declared_type='struct cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
@@ -1369,34 +1369,34 @@
 <retval declared_type='cpDampedSpring*' type='^{cpDampedSpring={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}fff^?ff{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}}'/>
 </function>
 <function inline='true' name='cpDampedSpringGetAnchr1'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpDampedSpringGetAnchr2'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpDampedSpringGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpDampedSpringGetDamping'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpDampedSpringGetRestLength'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpDampedSpringGetSpringForceFunc'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
-<retval function_pointer='true' declared_type='cpDampedSpringForceFunc' type='^?'>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
+<retval declared_type='cpDampedSpringForceFunc' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
 </retval>
 </function>
 <function inline='true' name='cpDampedSpringGetStiffness'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpDampedSpringInit'>
@@ -1442,7 +1442,7 @@
 </function>
 <function inline='true' name='cpDampedSpringSetSpringForceFunc'>
 <arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
-<arg function_pointer='true' declared_type='cpDampedSpringForceFunc' name='value' type='^?'>
+<arg declared_type='cpDampedSpringForceFunc' name='value' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='cpFloat' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
@@ -1458,14 +1458,14 @@
 <retval declared_type='cpGearJoint*' type='^{cpGearJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}fffffff}'/>
 </function>
 <function name='cpGearJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpGearJointGetPhase'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpGearJointGetRatio'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpGearJointInit'>
@@ -1497,18 +1497,18 @@
 <retval declared_type='cpGrooveJoint*' type='^{cpGrooveJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}}'/>
 </function>
 <function inline='true' name='cpGrooveJointGetAnchr2'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpGrooveJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpGrooveJointGetGrooveA'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpGrooveJointGetGrooveB'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpGrooveJointInit'>
@@ -1549,7 +1549,7 @@
 </function>
 <function name='cpHashSetEach'>
 <arg declared_type='cpHashSet*' name='set' type='^{cpHashSet=}'/>
-<arg function_pointer='true' declared_type='cpHashSetIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpHashSetIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -1559,7 +1559,7 @@
 </function>
 <function name='cpHashSetFilter'>
 <arg declared_type='cpHashSet*' name='set' type='^{cpHashSet=}'/>
-<arg function_pointer='true' declared_type='cpHashSetFilterFunc' name='func' type='^?'>
+<arg declared_type='cpHashSetFilterFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
@@ -1582,7 +1582,7 @@
 <arg declared_type='cpHashValue' name='hash' type='L'/>
 <arg declared_type='void*' name='ptr' type='^v'/>
 <arg declared_type='void*' name='data' type='^v'/>
-<arg function_pointer='true' declared_type='cpHashSetTransFunc' name='trans' type='^?'>
+<arg declared_type='cpHashSetTransFunc' name='trans' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void*' type='^v'/>
@@ -1591,7 +1591,7 @@
 </function>
 <function name='cpHashSetNew'>
 <arg declared_type='int' name='size' type='i'/>
-<arg function_pointer='true' declared_type='cpHashSetEqlFunc' name='eqlFunc' type='^?'>
+<arg declared_type='cpHashSetEqlFunc' name='eqlFunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
@@ -1619,13 +1619,13 @@
 <arg declared_type='int*' name='end' type='^i'/>
 <retval declared_type='void' type='v'/>
 </function>
-<function variadic='true' name='cpMessage'>
-<arg declared_type='char*' name='condition' type='*' const='true'/>
-<arg declared_type='char*' name='file' type='*' const='true'/>
+<function name='cpMessage' variadic='true'>
+<arg declared_type='char*' name='condition' const='true' type='*'/>
+<arg declared_type='char*' name='file' const='true' type='*'/>
 <arg declared_type='int' name='line' type='i'/>
 <arg declared_type='int' name='isError' type='i'/>
 <arg declared_type='int' name='isHardError' type='i'/>
-<arg declared_type='char*' name='message' type='*' const='true'/>
+<arg declared_type='char*' name='message' const='true' type='*'/>
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpMomentForBox'>
@@ -1649,7 +1649,7 @@
 <function name='cpMomentForPoly'>
 <arg declared_type='cpFloat' name='m' type='f'/>
 <arg declared_type='int' name='numVerts' type='i'/>
-<arg declared_type='cpVect*' name='verts' type='^{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect*' name='verts' const='true' type='^{CGPoint=ff}'/>
 <arg declared_type='cpVect' name='offset' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
@@ -1663,18 +1663,18 @@
 <retval declared_type='cpPinJoint*' type='^{cpPinJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}ffff}'/>
 </function>
 <function inline='true' name='cpPinJointGetAnchr1'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpPinJointGetAnchr2'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpPinJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpPinJointGetDist'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpPinJointInit'>
@@ -1711,15 +1711,15 @@
 <retval declared_type='cpPivotJoint*' type='^{cpPivotJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}}'/>
 </function>
 <function inline='true' name='cpPivotJointGetAnchr1'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpPivotJointGetAnchr2'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpPivotJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function name='cpPivotJointInit'>
 <arg declared_type='cpPivotJoint*' name='joint' type='^{cpPivotJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}}'/>
@@ -1756,14 +1756,14 @@
 <retval declared_type='cpPolyShape*' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}'/>
 </function>
 <function inline='true' name='cpPolyShapeContainsVert'>
-<arg declared_type='cpPolyShape*' name='poly' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpPolyShape*' name='poly' const='true' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpPolyShapeContainsVertPartial'>
-<arg declared_type='cpPolyShape*' name='poly' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}' const='true'/>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='n' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpPolyShape*' name='poly' const='true' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='n' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function name='cpPolyShapeGetNumVerts'>
@@ -1798,32 +1798,32 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpPolyShapeValueOnAxis'>
-<arg declared_type='cpPolyShape*' name='poly' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}' const='true'/>
-<arg declared_type='cpVect' name='n' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='d' type='f' const='true'/>
+<arg declared_type='cpPolyShape*' name='poly' const='true' type='^{cpPolyShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}i^{CGPoint}^{CGPoint}^{cpSplittingPlane}^{cpSplittingPlane}}'/>
+<arg declared_type='cpVect' name='n' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='d' const='true' type='f'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpPolyValidate'>
-<arg declared_type='cpVect*' name='verts' type='^{CGPoint=ff}' const='true'/>
-<arg declared_type='int' name='numVerts' type='i' const='true'/>
+<arg declared_type='cpVect*' name='verts' const='true' type='^{CGPoint=ff}'/>
+<arg declared_type='int' name='numVerts' const='true' type='i'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function name='cpRatchetJointAlloc'>
 <retval declared_type='cpRatchetJoint*' type='^{cpRatchetJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}fffffff}'/>
 </function>
 <function inline='true' name='cpRatchetJointGetAngle'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpRatchetJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpRatchetJointGetPhase'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpRatchetJointGetRatchet'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpRatchetJointInit'>
@@ -1857,7 +1857,7 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function name='cpRecenterPoly'>
-<arg declared_type='int' name='numVerts' type='i' const='true'/>
+<arg declared_type='int' name='numVerts' const='true' type='i'/>
 <arg declared_type='cpVect*' name='verts' type='^{CGPoint=ff}'/>
 <retval declared_type='void' type='v'/>
 </function>
@@ -1868,14 +1868,14 @@
 <retval declared_type='cpRotaryLimitJoint*' type='^{cpRotaryLimitJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}ffffff}'/>
 </function>
 <function name='cpRotaryLimitJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpRotaryLimitJointGetMax'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpRotaryLimitJointGetMin'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpRotaryLimitJointInit'>
@@ -1904,34 +1904,34 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpSegmentQueryHitDist'>
-<arg declared_type='cpVect' name='start' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='end' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpSegmentQueryInfo' name='info' type='{cpSegmentQueryInfo=^{cpShape}f{CGPoint=ff}}' const='true'/>
+<arg declared_type='cpVect' name='start' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='end' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpSegmentQueryInfo' name='info' const='true' type='{cpSegmentQueryInfo=^{cpShape}f{CGPoint=ff}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSegmentQueryHitPoint'>
-<arg declared_type='cpVect' name='start' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='end' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpSegmentQueryInfo' name='info' type='{cpSegmentQueryInfo=^{cpShape}f{CGPoint=ff}}' const='true'/>
+<arg declared_type='cpVect' name='start' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='end' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpSegmentQueryInfo' name='info' const='true' type='{cpSegmentQueryInfo=^{cpShape}f{CGPoint=ff}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpSegmentShapeAlloc'>
 <retval declared_type='cpSegmentShape*' type='^{cpSegmentShape={cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}f{CGPoint=ff}{CGPoint=ff}}'/>
 </function>
 <function name='cpSegmentShapeGetA'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpSegmentShapeGetB'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpSegmentShapeGetNormal'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpSegmentShapeGetRadius'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpSegmentShapeInit'>
@@ -1983,52 +1983,52 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpShapeGetBB'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </function>
 <function inline='true' name='cpShapeGetBody'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 </function>
 <function inline='true' name='cpShapeGetCollisionType'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpCollisionType' type='L'/>
 </function>
 <function inline='true' name='cpShapeGetElasticity'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpShapeGetFriction'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpShapeGetGroup'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpGroup' type='L'/>
 </function>
 <function inline='true' name='cpShapeGetLayers'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpLayers' type='I'/>
 </function>
 <function inline='true' name='cpShapeGetSensor'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpShapeGetSpace'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 </function>
 <function inline='true' name='cpShapeGetSurfaceVelocity'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpShapeGetUserData'>
-<arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}' const='true'/>
+<arg declared_type='cpShape*' name='shape' const='true' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <retval declared_type='cpDataPointer' type='^v'/>
 </function>
 <function name='cpShapeInit'>
 <arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
-<arg declared_type='cpShapeClass*' name='klass' type='^{cpShapeClass=i^?^?^?^?}' const='true'/>
+<arg declared_type='cpShapeClass*' name='klass' const='true' type='^{cpShapeClass=i^?^?^?^?}'/>
 <arg declared_type='cpBody*' name='body' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <retval declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 </function>
@@ -2110,10 +2110,10 @@
 <retval declared_type='cpSimpleMotor*' type='^{cpSimpleMotor={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}ffff}'/>
 </function>
 <function name='cpSimpleMotorGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpSimpleMotorGetRate'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpSimpleMotorInit'>
@@ -2138,22 +2138,22 @@
 <retval declared_type='cpSlideJoint*' type='^{cpSlideJoint={cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}{CGPoint=ff}{CGPoint=ff}ff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}ffff}'/>
 </function>
 <function inline='true' name='cpSlideJointGetAnchr1'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpSlideJointGetAnchr2'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpSlideJointGetClass'>
-<retval declared_type='cpConstraintClass*' type='^{cpConstraintClass=^?^?^?^?}' const='true'/>
+<retval declared_type='cpConstraintClass*' const='true' type='^{cpConstraintClass=^?^?^?^?}'/>
 </function>
 <function inline='true' name='cpSlideJointGetMax'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSlideJointGetMin'>
-<arg declared_type='cpConstraint*' name='constraint' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}' const='true'/>
+<arg declared_type='cpConstraint*' name='constraint' const='true' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function name='cpSlideJointInit'>
@@ -2214,25 +2214,25 @@
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='cpCollisionType' name='a' type='L'/>
 <arg declared_type='cpCollisionType' name='b' type='L'/>
-<arg function_pointer='true' declared_type='cpCollisionBeginFunc' name='begin' type='^?'>
+<arg declared_type='cpCollisionBeginFunc' name='begin' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionPreSolveFunc' name='preSolve' type='^?'>
+<arg declared_type='cpCollisionPreSolveFunc' name='preSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionPostSolveFunc' name='postSolve' type='^?'>
+<arg declared_type='cpCollisionPostSolveFunc' name='postSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionSeparateFunc' name='separate' type='^?'>
+<arg declared_type='cpCollisionSeparateFunc' name='separate' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
@@ -2248,7 +2248,7 @@
 </function>
 <function name='cpSpaceAddPostStepCallback'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
-<arg function_pointer='true' declared_type='cpPostStepFunc' name='func' type='^?'>
+<arg declared_type='cpPostStepFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
@@ -2281,7 +2281,7 @@
 <arg declared_type='cpBB' name='bb' type='{cpBB=ffff}'/>
 <arg declared_type='cpLayers' name='layers' type='I'/>
 <arg declared_type='cpGroup' name='group' type='L'/>
-<arg function_pointer='true' declared_type='cpSpaceBBQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceBBQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2316,7 +2316,7 @@
 </function>
 <function name='cpSpaceEachBody'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
-<arg function_pointer='true' declared_type='cpSpaceBodyIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceBodyIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2326,7 +2326,7 @@
 </function>
 <function name='cpSpaceEachConstraint'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
-<arg function_pointer='true' declared_type='cpSpaceConstraintIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceConstraintIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpConstraint*' type='^{cpConstraint=^{cpConstraintClass}^{cpBody}^{cpBody}^{cpSpace}^{cpConstraint}^{cpConstraint}fff^?^?^v}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2336,7 +2336,7 @@
 </function>
 <function name='cpSpaceEachShape'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
-<arg function_pointer='true' declared_type='cpSpaceShapeIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceShapeIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2355,39 +2355,39 @@
 <retval declared_type='void' type='v'/>
 </function>
 <function inline='true' name='cpSpaceGetCollisionBias'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetCollisionPersistence'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpTimestamp' type='I'/>
 </function>
 <function inline='true' name='cpSpaceGetCollisionSlop'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetCurrentTimeStep'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetDamping'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetEnableContactGraph'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpSpaceGetGravity'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpSpaceGetIdleSpeedThreshold'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetIterations'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='int' type='i'/>
 </function>
 <function name='cpSpaceGetPostStepData'>
@@ -2396,15 +2396,15 @@
 <retval declared_type='void*' type='^v'/>
 </function>
 <function inline='true' name='cpSpaceGetSleepTimeThreshold'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpSpaceGetStaticBody'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpBody*' type='^{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}'/>
 </function>
 <function inline='true' name='cpSpaceGetUserData'>
-<arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}' const='true'/>
+<arg declared_type='cpSpace*' name='space' const='true' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <retval declared_type='cpDataPointer' type='^v'/>
 </function>
 <function name='cpSpaceHashAlloc'>
@@ -2414,7 +2414,7 @@
 <arg declared_type='cpSpaceHash*' name='hash' type='^{cpSpaceHash=}'/>
 <arg declared_type='cpFloat' name='celldim' type='f'/>
 <arg declared_type='int' name='numcells' type='i'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -2424,7 +2424,7 @@
 <function name='cpSpaceHashNew'>
 <arg declared_type='cpFloat' name='celldim' type='f'/>
 <arg declared_type='int' name='cells' type='i'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -2461,7 +2461,7 @@
 <arg declared_type='cpFloat' name='maxDistance' type='f'/>
 <arg declared_type='cpLayers' name='layers' type='I'/>
 <arg declared_type='cpGroup' name='group' type='L'/>
-<arg function_pointer='true' declared_type='cpSpaceNearestPointQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceNearestPointQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpFloat' type='f'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
@@ -2488,7 +2488,7 @@
 <arg declared_type='cpVect' name='point' type='{CGPoint=ff}'/>
 <arg declared_type='cpLayers' name='layers' type='I'/>
 <arg declared_type='cpGroup' name='group' type='L'/>
-<arg function_pointer='true' declared_type='cpSpacePointQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpacePointQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2563,7 +2563,7 @@
 <arg declared_type='cpVect' name='end' type='{CGPoint=ff}'/>
 <arg declared_type='cpLayers' name='layers' type='I'/>
 <arg declared_type='cpGroup' name='group' type='L'/>
-<arg function_pointer='true' declared_type='cpSpaceSegmentQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceSegmentQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpFloat' type='f'/>
 <arg declared_type='cpVect' type='{CGPoint=ff}'/>
@@ -2604,25 +2604,25 @@
 </function>
 <function name='cpSpaceSetDefaultCollisionHandler'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
-<arg function_pointer='true' declared_type='cpCollisionBeginFunc' name='begin' type='^?'>
+<arg declared_type='cpCollisionBeginFunc' name='begin' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionPreSolveFunc' name='preSolve' type='^?'>
+<arg declared_type='cpCollisionPreSolveFunc' name='preSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBool' type='i'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionPostSolveFunc' name='postSolve' type='^?'>
+<arg declared_type='cpCollisionPostSolveFunc' name='postSolve' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
 </arg>
-<arg function_pointer='true' declared_type='cpCollisionSeparateFunc' name='separate' type='^?'>
+<arg declared_type='cpCollisionSeparateFunc' name='separate' function_pointer='true' type='^?'>
 <arg declared_type='cpArbiter*' type='^{cpArbiter=ff{CGPoint=ff}^{cpShape}^{cpShape}^{cpBody}^{cpBody}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}{cpArbiterThread=^{cpArbiter}^{cpArbiter}}i^{cpContact}I^{cpCollisionHandler}ii}'/>
 <arg declared_type='cpSpace*' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='void*' type='^v'/>
@@ -2664,7 +2664,7 @@
 <function name='cpSpaceShapeQuery'>
 <arg declared_type='cpSpace*' name='space' type='^{cpSpace=i{CGPoint=ff}fffffIi^v^{cpBody}If^{cpArray}^{cpArray}^{cpArray}^{cpSpatialIndex}^{cpSpatialIndex}^{cpArray}^{cpContactBufferHeader}^{cpHashSet}^{cpArray}^{cpArray}^{cpArray}i^{cpHashSet}{cpCollisionHandler=II^?^?^?^?^v}i^{cpArray}{cpBody=^?^?ffff{CGPoint=ff}{CGPoint=ff}{CGPoint=ff}fff{CGPoint=ff}^vff{CGPoint=ff}f^{cpSpace}^{cpShape}^{cpArbiter}^{cpConstraint}{cpComponentNode=^{cpBody}^{cpBody}f}}}'/>
 <arg declared_type='cpShape*' name='shape' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
-<arg function_pointer='true' declared_type='cpSpaceShapeQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpaceShapeQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='cpShape*' type='^{cpShape=^{cpShapeClass}^{cpBody}{cpBB=ffff}iff{CGPoint=ff}^vIII^{cpSpace}^{cpShape}^{cpShape}I}'/>
 <arg declared_type='cpContactPointSet*' type='^{cpContactPointSet=i[4{?={CGPoint=ff}{CGPoint=ff}f}]}'/>
 <arg declared_type='void*' type='^v'/>
@@ -2697,7 +2697,7 @@
 <function name='cpSpatialIndexCollideStatic'>
 <arg declared_type='cpSpatialIndex*' name='dynamicIndex' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='cpSpatialIndex*' name='staticIndex' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpatialIndexQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
@@ -2722,7 +2722,7 @@
 </function>
 <function inline='true' name='cpSpatialIndexEach'>
 <arg declared_type='cpSpatialIndex*' name='index' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexIteratorFunc' name='func' type='^?'>
+<arg declared_type='cpSpatialIndexIteratorFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='void' type='v'/>
@@ -2737,7 +2737,7 @@
 <function name='cpSpatialIndexInit'>
 <arg declared_type='cpSpatialIndex*' name='index' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='cpSpatialIndexClass*' name='klass' type='^{cpSpatialIndexClass=^?^?^?^?^?^?^?^?^?^?^?}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -2754,7 +2754,7 @@
 <arg declared_type='cpSpatialIndex*' name='index' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 <arg declared_type='void*' name='obj' type='^v'/>
 <arg declared_type='cpBB' name='bb' type='{cpBB=ffff}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpatialIndexQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
@@ -2775,7 +2775,7 @@
 </function>
 <function inline='true' name='cpSpatialIndexReindexQuery'>
 <arg declared_type='cpSpatialIndex*' name='index' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpatialIndexQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
@@ -2796,7 +2796,7 @@
 <arg declared_type='cpVect' name='a' type='{CGPoint=ff}'/>
 <arg declared_type='cpVect' name='b' type='{CGPoint=ff}'/>
 <arg declared_type='cpFloat' name='t_exit' type='f'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexSegmentQueryFunc' name='func' type='^?'>
+<arg declared_type='cpSpatialIndexSegmentQueryFunc' name='func' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
 <arg declared_type='void*' type='^v'/>
@@ -2820,7 +2820,7 @@
 </function>
 <function name='cpSweep1DInit'>
 <arg declared_type='cpSweep1D*' name='sweep' type='^{cpSweep1D=}'/>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -2828,7 +2828,7 @@
 <retval declared_type='cpSpatialIndex*' type='^{cpSpatialIndex=^{cpSpatialIndexClass}^?^{cpSpatialIndex}^{cpSpatialIndex}}'/>
 </function>
 <function name='cpSweep1DNew'>
-<arg function_pointer='true' declared_type='cpSpatialIndexBBFunc' name='bbfunc' type='^?'>
+<arg declared_type='cpSpatialIndexBBFunc' name='bbfunc' function_pointer='true' type='^?'>
 <arg declared_type='void*' type='^v'/>
 <retval declared_type='cpBB' type='{cpBB=ffff}'/>
 </arg>
@@ -2872,61 +2872,61 @@
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpv'>
-<arg declared_type='cpFloat' name='x' type='f' const='true'/>
-<arg declared_type='cpFloat' name='y' type='f' const='true'/>
+<arg declared_type='cpFloat' name='x' const='true' type='f'/>
+<arg declared_type='cpFloat' name='y' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvadd'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvclamp'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='len' type='f' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='len' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvcross'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvdist'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvdistsq'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvdot'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpveql'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function name='cpvforangle'>
-<arg declared_type='cpFloat' name='a' type='f' const='true'/>
+<arg declared_type='cpFloat' name='a' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpvlength'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvlengthsq'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvlerp'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='t' type='f' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='t' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvlerpconst'>
@@ -2936,74 +2936,74 @@
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvmult'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='s' type='f' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='s' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvnear'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='dist' type='f' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='dist' const='true' type='f'/>
 <retval declared_type='cpBool' type='i'/>
 </function>
 <function inline='true' name='cpvneg'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvnormalize'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvnormalize_safe'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvperp'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvproject'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvrotate'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='cpvrperp'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpvslerp'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='t' type='f' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='t' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpvslerpconst'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpFloat' name='a' type='f' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpFloat' name='a' const='true' type='f'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpvstr'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='char*' type='*'/>
 </function>
 <function inline='true' name='cpvsub'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function name='cpvtoangle'>
-<arg declared_type='cpVect' name='v' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpFloat' type='f'/>
 </function>
 <function inline='true' name='cpvunrotate'>
-<arg declared_type='cpVect' name='v1' type='{CGPoint=ff}' const='true'/>
-<arg declared_type='cpVect' name='v2' type='{CGPoint=ff}' const='true'/>
+<arg declared_type='cpVect' name='v1' const='true' type='{CGPoint=ff}'/>
+<arg declared_type='cpVect' name='v2' const='true' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
 <function inline='true' name='k_scalar'>
@@ -3050,17 +3050,17 @@
 <arg declared_type='cpVect' name='r2' type='{CGPoint=ff}'/>
 <retval declared_type='cpVect' type='{CGPoint=ff}'/>
 </function>
-<function_alias original='calloc' name='cpcalloc'/>
-<function_alias original='acosf' name='cpfacos'/>
-<function_alias original='atan2f' name='cpfatan2'/>
-<function_alias original='ceilf' name='cpfceil'/>
-<function_alias original='cosf' name='cpfcos'/>
-<function_alias original='expf' name='cpfexp'/>
-<function_alias original='floorf' name='cpffloor'/>
-<function_alias original='fmodf' name='cpfmod'/>
-<function_alias original='powf' name='cpfpow'/>
-<function_alias original='free' name='cpfree'/>
-<function_alias original='sinf' name='cpfsin'/>
-<function_alias original='sqrtf' name='cpfsqrt'/>
-<function_alias original='realloc' name='cprealloc'/>
+<function_alias name='cpcalloc' original='calloc'/>
+<function_alias name='cpfacos' original='acosf'/>
+<function_alias name='cpfatan2' original='atan2f'/>
+<function_alias name='cpfceil' original='ceilf'/>
+<function_alias name='cpfcos' original='cosf'/>
+<function_alias name='cpfexp' original='expf'/>
+<function_alias name='cpffloor' original='floorf'/>
+<function_alias name='cpfmod' original='fmodf'/>
+<function_alias name='cpfpow' original='powf'/>
+<function_alias name='cpfree' original='free'/>
+<function_alias name='cpfsin' original='sinf'/>
+<function_alias name='cpfsqrt' original='sqrtf'/>
+<function_alias name='cprealloc' original='realloc'/>
 </signatures>
