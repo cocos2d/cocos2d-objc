@@ -24,12 +24,15 @@
 
 
 #import "js_bindings_NS_manual.h"
+#import "js_bindings_config.h"
 
 #pragma mark - JSPROXY_NSObject
 
 enum {
 	kJSPropertyNativeObject = 1,
 };
+
+#pragma mark - NSObject
 
 JSClass* JSPROXY_NSObject_class = NULL;
 JSObject* JSPROXY_NSObject_object = NULL;
@@ -53,6 +56,8 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 // Destructor
 void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
 {
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSObject)", obj);
+
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	if (proxy) {
@@ -203,3 +208,119 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 }
 
 @end
+
+
+#ifdef __CC_PLATFORM_MAC
+
+#pragma mark - NSEvent
+
+JSClass* JSPROXY_NSEvent_class = NULL;
+JSObject* JSPROXY_NSEvent_object = NULL;
+
+// Constructor
+JSBool JSPROXY_NSEvent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSEvent_class, JSPROXY_NSEvent_object, NULL);
+	
+    JSPROXY_NSEvent *proxy = [[JSPROXY_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
+	
+	set_proxy_for_jsobject(proxy, jsobj);
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	
+    /* no callbacks */
+    
+    return JS_TRUE;
+}
+
+// Methods
+JSBool JSPROXY_NSEvent_getDeltaX(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
+	
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+
+	NSEvent* real = (NSEvent*) [proxy realObj];
+	CGFloat ret_val = [real deltaX];
+	
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+JSBool JSPROXY_NSEvent_getDeltaY(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
+	
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	
+	NSEvent* real = (NSEvent*) [proxy realObj];
+	CGFloat ret_val = [real deltaY];
+	
+	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+	return JS_TRUE;
+}
+
+
+// Destructor
+void JSPROXY_NSEvent_finalize(JSContext *cx, JSObject *obj)
+{
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSEvent)", obj);
+}
+
+void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char *name )
+{
+	JSPROXY_NSEvent_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_NSEvent_class->name = name;
+	JSPROXY_NSEvent_class->addProperty = JS_PropertyStub;
+	JSPROXY_NSEvent_class->delProperty = JS_PropertyStub;
+	JSPROXY_NSEvent_class->getProperty = JS_PropertyStub;
+	JSPROXY_NSEvent_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_NSEvent_class->enumerate = JS_EnumerateStub;
+	JSPROXY_NSEvent_class->resolve = JS_ResolveStub;
+	JSPROXY_NSEvent_class->convert = JS_ConvertStub;
+	JSPROXY_NSEvent_class->finalize = JSPROXY_NSEvent_finalize;
+	JSPROXY_NSEvent_class->flags = JSCLASS_HAS_PRIVATE;
+	
+	static JSPropertySpec properties[] = {
+//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSEvent_getProperty, JSPROXY_NSEvent_setProperty},
+		{0, 0, 0, 0, 0}
+	};
+	
+	
+	static JSFunctionSpec funcs[] = {
+		JS_FN("getDeltaX", JSPROXY_NSEvent_getDeltaX, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("getDeltaY", JSPROXY_NSEvent_getDeltaY, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FS_END
+	};
+	
+	static JSFunctionSpec st_funcs[] = {
+		JS_FS_END
+	};
+	
+	JSPROXY_NSEvent_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_NSEvent_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_NSEvent
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSEvent_class, JSPROXY_NSEvent_object, NULL);
+    JSPROXY_NSEvent *proxy = [[JSPROXY_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
+	
+	
+	[proxy setRealObj:realObj];
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		[proxy release];
+	}
+	
+	[self swizzleMethods];
+	
+	return jsobj;
+}
+@end
+
+#endif // __CC_PLATFORM_MAC

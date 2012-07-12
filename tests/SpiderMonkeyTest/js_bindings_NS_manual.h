@@ -55,3 +55,25 @@ extern JSClass* JSPROXY_NSObject_class;
 }
 #endif
 
+
+
+#ifdef __CC_PLATFORM_MAC
+
+@interface JSPROXY_NSEvent : JSPROXY_NSObject
+{
+}
+@end
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSPROXY_NSEvent_object;
+	extern JSClass* JSPROXY_NSEvent_class;
+	
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __CC_PLATFORM_MAC
+

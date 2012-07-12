@@ -18332,7 +18332,7 @@ void JSPROXY_CCParticleBatchNode_createClass(JSContext *cx, JSObject* globalObj,
 		JS_FN("setTextureAtlas", JSPROXY_CCParticleBatchNode_setTextureAtlas_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getTextureAtlas", JSPROXY_CCParticleBatchNode_textureAtlas, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCParticleBatchNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCParticleBatchNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCParticleBatchNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
@@ -22958,7 +22958,7 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 		JS_FN("doesOpacityModifyRGB", JSPROXY_CCAtlasNode_doesOpacityModifyRGB, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setOpacityModifyRGB", JSPROXY_CCAtlasNode_setOpacityModifyRGB_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setTexture", JSPROXY_CCAtlasNode_setTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("texture", JSPROXY_CCAtlasNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getTexture", JSPROXY_CCAtlasNode_texture, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
