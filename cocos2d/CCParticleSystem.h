@@ -419,6 +419,12 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  */
 +(id) particleWithFile:(NSString*)plistFile;
 
+/* creates an void particle emitter with a maximun number of particles.
+ @since v2.1
+*/
++(id) particleWithTotalParticles:(NSUInteger) numberOfParticles;
+
+
 /** initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
 	http://particledesigner.71squared.com/

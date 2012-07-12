@@ -164,14 +164,14 @@ var SpriteTouchTest = function() {
 goog.inherits(SpriteTouchTest, BaseLayer );
 
 SpriteTouchTest.prototype.onMouseDown = function( event ) {
-	pos = director.convertEventToGL( event );
+	var pos = director.convertEventToGL( event );
 	this.addSprite( pos );
 }
 
 SpriteTouchTest.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
-		pos = director.convertTouchToGL( touches[i] );
+		var pos = director.convertTouchToGL( touches[i] );
 		this.addSprite( pos );
 	}
 }
