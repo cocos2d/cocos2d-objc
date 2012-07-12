@@ -214,7 +214,7 @@ ParallaxTest1 = BaseLayer.extend({
         // Top Layer, a simple image
         var cocosImage = cc.Sprite.create("powered.png");
         // scale the image (optional)
-        cocosImage.setScale(2.5);
+        cocosImage.setScale(1.5);
         // change the transform anchor point to 0,0 (optional)
         cocosImage.setAnchorPoint(cc.p(0, 0));
 
@@ -245,18 +245,18 @@ ParallaxTest1 = BaseLayer.extend({
         voidNode.addChild(background, -1, cc.p(0.4, 0.5), cc.p(0,0));
 
         // tiles are moved at a ratio of 2.2x, 1.0y
-        voidNode.addChild(tilemap, 1, cc.p(2.2, 1.0), cc.p(0, 0));
+        voidNode.addChild(tilemap, 1, cc.p(2.2, 1.0), cc.p(0, -200));
 
         // top image is moved at a ratio of 3.0x, 2.5y
-        voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(0, 0));
+        voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(200, 800));
 
 
         // now create some actions that will move the 'void' node
         // and the children of the 'void' node will move at different
         // speed, thus, simulation the 3D environment
-        var goUp = cc.MoveBy.create(4, cc.p(0, 100));
+        var goUp = cc.MoveBy.create(4, cc.p(0, -500));
         var goDown = goUp.reverse();
-        var go = cc.MoveBy.create(8, cc.p(200, 0));
+        var go = cc.MoveBy.create(8, cc.p(-1000, 0));
         var goBack = go.reverse();
         var seq = cc.Sequence.create(goUp, go, goDown, goBack );
         voidNode.runAction((cc.RepeatForever.create(seq) ));
@@ -292,7 +292,7 @@ ParallaxTest2 = BaseLayer.extend({
         // Top Layer, a simple image
         var cocosImage = cc.Sprite.create("powered.png");
         // scale the image (optional)
-        cocosImage.setScale(2.5);
+        cocosImage.setScale(1.5);
         // change the transform anchor point to 0,0 (optional)
         cocosImage.setAnchorPoint(cc.p(0, 0));
 
@@ -320,13 +320,13 @@ ParallaxTest2 = BaseLayer.extend({
         // NOW add the 3 layers to the 'void' node
 
         // background image is moved at a ratio of 0.4x, 0.5y
-        voidNode.addChild(background, -1, cc.p(0.4, 0.5), cc.p(0,0) );
+        voidNode.addChild(background, -1, cc.p(0.4, 0.5), cc.p(0,0));
 
-        // tiles are moved at a ratio of 1.0, 1.0y
-        voidNode.addChild(tilemap, 1, cc.p(1.0, 1.0), cc.p(0, 0));
+        // tiles are moved at a ratio of 2.2x, 1.0y
+        voidNode.addChild(tilemap, 1, cc.p(2.2, 1.0), cc.p(0, -200));
 
         // top image is moved at a ratio of 3.0x, 2.5y
-        voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(0, 0));
+        voidNode.addChild(cocosImage, 2, cc.p(3.0, 2.5), cc.p(200, 800));
         this.addChild(voidNode, 0, TAG_NODE);
 
     },
@@ -341,23 +341,18 @@ ParallaxTest2 = BaseLayer.extend({
         this._prevLocation = null;
     },
 
-    onTouceshMoved:function (touches, event) {
+    onTouchesMoved:function (touches, event) {
 
         if (this._prevLocation == null) {
-            this._prevLocation = touch.locationInView();
+            this._prevLocation = director.convertTouchToGL( touches[0] );
             return;
         }
 
-        var touchLocation = touch.locationInView();
-        //var prevLocation = touch.previousLocationInView();
-
-        //touchLocation = cc.Director.sharedDirector().convertToGL(touchLocation);
-        //prevLocation = cc.PointZero()//cc.Director.sharedDirector().convertToGL(prevLocation);
+        var touchLocation = director.convertTouchToGL( touches[0] );
 
         var diff = cc.pSub(touchLocation, this._prevLocation);
 
-        this._prevLocation = cc.p(touchLocation.x, touchLocation.y);
-
+        this._prevLocation = touchLocation;
 
         var node = this.getChildByTag(TAG_NODE);
         var currentPos = node.getPosition();

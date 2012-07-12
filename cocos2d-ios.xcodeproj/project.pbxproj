@@ -1288,6 +1288,8 @@
 		A0137F6915AE4A93000AA1C2 /* snow.png in Resources */ = {isa = PBXBuildFile; fileRef = 5085BFAD0F7D67FF008DBA21 /* snow.png */; };
 		A0137F6A15AE4AB2000AA1C2 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		A0137F6B15AE4AC0000AA1C2 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
+		A0137F6C15AE842C000AA1C2 /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
+		A0137F6D15AE8458000AA1C2 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
 		A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB013B826D800C73E76 /* mat4stack.h */; };
 		A015BFCF13B826D800C73E76 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB113B826D800C73E76 /* matrix.h */; };
@@ -11414,6 +11416,8 @@
 				A0137F6915AE4A93000AA1C2 /* snow.png in Resources */,
 				A0137F6A15AE4AB2000AA1C2 /* background3.png in Resources */,
 				A0137F6B15AE4AC0000AA1C2 /* background3-hd.png in Resources */,
+				A0137F6C15AE842C000AA1C2 /* powered.png in Resources */,
+				A0137F6D15AE8458000AA1C2 /* background.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
