@@ -312,7 +312,7 @@
 <enum name='CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP' value='0'/>
 <enum name='CC_TEXTURE_ATLAS_USE_VAO' value='1'/>
 <enum name='CC_USE_LA88_LABELS' value='1'/>
-<enum name='COCOS2D_VERSION' value='131072'/>
+<enum name='COCOS2D_VERSION' value='131328'/>
 <enum name='HASH_BKT_CAPACITY_THRESH' value='10'/>
 <enum name='HASH_BLOOM_SIGNATURE' value='2971803890'/>
 <enum name='HASH_INITIAL_NUM_BUCKETS' value='32'/>
@@ -4345,6 +4345,61 @@
 <retval declared_type='CCTextureAtlas*' type='@'/>
 </method>
 </class>
+<class name='CCParticleExplosion'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFire'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFireworks'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFlower'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleGalaxy'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleMeteor'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleRain'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSmoke'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSnow'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSpiral'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSun'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCParticleSystem'>
 <method selector='active'>
 <retval declared_type='BOOL' type='B'/>
@@ -4435,6 +4490,10 @@
 </method>
 <method selector='particleWithFile:' class_method='true'>
 <arg name='plistFile' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='particleWithTotalParticles:' class_method='true'>
+<arg name='numberOfParticles' declared_type='NSUInteger' type='I' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='posVar'>

@@ -305,6 +305,7 @@
 		A0137EA615ACE678000AA1C2 /* sine440.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9715ACE678000AA1C2 /* sine440.wav */; };
 		A0137EA715ACE678000AA1C2 /* sixteensamples.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E9815ACE678000AA1C2 /* sixteensamples.wav */; };
 		A0137EAA15ACE7F6000AA1C2 /* Cyber Advance!.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */; };
+		A0137F6015AE39A9000AA1C2 /* fps_images.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0137F5F15AE39A9000AA1C2 /* fps_images.plist */; };
 		A01D0A3E159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */; };
 		A01D0A3F159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3D159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm */; };
 		A01D0A8F159FF8600029EE77 /* js_bindings_NS_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A8E159FF8600029EE77 /* js_bindings_NS_manual.mm */; };
@@ -5987,6 +5988,7 @@
 		A0137E9715ACE678000AA1C2 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sine440.wav; path = TestsAndDemos/DrumPad/Sounds/sine440.wav; sourceTree = "<group>"; };
 		A0137E9815ACE678000AA1C2 /* sixteensamples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sixteensamples.wav; path = TestsAndDemos/DrumPad/Sounds/sixteensamples.wav; sourceTree = "<group>"; };
 		A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = "<group>"; };
+		A0137F5F15AE39A9000AA1C2 /* fps_images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fps_images.plist; sourceTree = "<group>"; };
 		A01D0A38159E82EA0029EE77 /* js_bindings_cocos2d_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes_registration.h; sourceTree = "<group>"; };
 		A01D0A39159E82EA0029EE77 /* js_bindings_cocos2d_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes.h; sourceTree = "<group>"; };
 		A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_classes.mm; sourceTree = "<group>"; };
@@ -8544,6 +8546,7 @@
 				E076E7AE1225EDD000DE0DA2 /* bitmapFontTest4.png */,
 				E076E7AF1225EDD000DE0DA2 /* bitmapFontTest5.fnt */,
 				E076E7B01225EDD000DE0DA2 /* bitmapFontTest5.png */,
+				A0137F5F15AE39A9000AA1C2 /* fps_images.plist */,
 				E076E7B11225EDD000DE0DA2 /* fps_images.png */,
 				E076E7B21225EDD000DE0DA2 /* Paint Boy.ttf */,
 				E076E7B31225EDD000DE0DA2 /* Schwarzwald Regular.ttf */,
@@ -11650,6 +11653,7 @@
 				A0137EA615ACE678000AA1C2 /* sine440.wav in Resources */,
 				A0137EA715ACE678000AA1C2 /* sixteensamples.wav in Resources */,
 				A0137EAA15ACE7F6000AA1C2 /* Cyber Advance!.mp3 in Resources */,
+				A0137F6015AE39A9000AA1C2 /* fps_images.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
