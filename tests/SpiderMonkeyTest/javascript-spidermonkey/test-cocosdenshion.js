@@ -209,7 +209,7 @@ CocosDenshionTest = cc.LayerGradient.extend({
         this._menu = cc.Menu.create();
         var s = winSize;
         for (var i = 0; i < DenshionTests.length; i++) {
-            var label = cc.LabelTTF.create(DenshionTests[i].title, "Arial", 24);
+            var label = cc.LabelTTF.create(DenshionTests[i].title, "Arial", 20);
             var menuItem = cc.MenuItemLabel.create(label, this, this.menuCallback);
             this._menu.addChild(menuItem, i + 10000);
         }
