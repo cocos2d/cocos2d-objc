@@ -75,5 +75,25 @@ extern "C" {
 }
 #endif
 
-#endif // __CC_PLATFORM_MAC
+#elif defined(__CC_PLATFORM_IOS)
+
+@interface JSPROXY_UITouch : JSPROXY_NSObject
+{
+}
+@end
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSPROXY_UITouch_object;
+	extern JSClass* JSPROXY_UITouch_class;
+	
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __CC_PLATFORM_IOS
+
+
 
