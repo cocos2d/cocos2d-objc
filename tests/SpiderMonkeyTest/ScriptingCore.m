@@ -300,6 +300,8 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
 #ifdef __CC_PLATFORM_MAC
 		JSPROXY_NSEvent_createClass(_cx, cocos2d, "Event");
+#elif defined(__CC_PLATFORM_IOS)
+		JSPROXY_UITouch_createClass(_cx, cocos2d, "Touch");
 #endif
 
 		// Register classes: base classes should be registered first
