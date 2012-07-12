@@ -28972,6 +28972,26 @@ JSBool JSPROXY_CCMenuItemToggle_initWithItems_block_(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
+// Arguments: NSArray*
+// Ret value: CCMenuItemToggle* (o)
+JSBool JSPROXY_CCMenuItemToggle_itemWithItems__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSArray* arg0; 
+
+	ok &= jsvals_variadic_to_nsarray( cx, argvp, argc, &arg0 );
+	if( ! ok ) return JS_FALSE;
+	CCMenuItemToggle* ret_val;
+
+	ret_val = [CCMenuItemToggle itemWithItems:(NSArray*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
 // Arguments: NSArray*, void (^)(id)
 // Ret value: CCMenuItemToggle* (o)
 JSBool JSPROXY_CCMenuItemToggle_itemWithItems_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -29264,9 +29284,10 @@ void JSPROXY_CCMenuItemToggle_createClass(JSContext *cx, JSObject* globalObj, co
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCMenuItemToggle_itemWithItems__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithItemsBlock", JSPROXY_CCMenuItemToggle_itemWithItems_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItemToggle_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCMenuItemToggle_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("node", JSPROXY_CCMenuItemToggle_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

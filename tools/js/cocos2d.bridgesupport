@@ -3741,6 +3741,10 @@
 </arg>
 <retval declared_type='id' type='@'/>
 </method>
+<method selector='itemWithItems:' class_method='true'>
+<arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
 <method selector='itemWithItems:block:' class_method='true'>
 <arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
 <arg name='block' function_pointer='true' declared_type='void (^)(id)' type='@?' index='1'>
