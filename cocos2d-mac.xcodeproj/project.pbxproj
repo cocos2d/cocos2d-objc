@@ -5989,6 +5989,7 @@
 		A0137E9815ACE678000AA1C2 /* sixteensamples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sixteensamples.wav; path = TestsAndDemos/DrumPad/Sounds/sixteensamples.wav; sourceTree = "<group>"; };
 		A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = "<group>"; };
 		A0137F5F15AE39A9000AA1C2 /* fps_images.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = fps_images.plist; sourceTree = "<group>"; };
+		A0137F7715AF4BE8000AA1C2 /* js_bindings_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_config.h; sourceTree = "<group>"; };
 		A01D0A38159E82EA0029EE77 /* js_bindings_cocos2d_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes_registration.h; sourceTree = "<group>"; };
 		A01D0A39159E82EA0029EE77 /* js_bindings_cocos2d_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_classes.h; sourceTree = "<group>"; };
 		A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_classes.mm; sourceTree = "<group>"; };
@@ -7973,6 +7974,7 @@
 				4AD3B95E159A5534002E68D1 /* js_bindings_chipmunk_manual.m */,
 				A01D0A8D159FF8600029EE77 /* js_bindings_NS_manual.h */,
 				A01D0A8E159FF8600029EE77 /* js_bindings_NS_manual.mm */,
+				A0137F7715AF4BE8000AA1C2 /* js_bindings_config.h */,
 				A0BCD719157FDBC600CCE291 /* js_manual_conversions.h */,
 				A0BCD71A157FDBC700CCE291 /* js_manual_conversions.mm */,
 				4AD3B95B159A5534002E68D1 /* ChipmunkSprite.h */,

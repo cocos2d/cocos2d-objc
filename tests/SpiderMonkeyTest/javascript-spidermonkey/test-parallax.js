@@ -279,16 +279,6 @@ ParallaxTest2 = BaseLayer.extend({
 
     },
 
-    _prevLocation:null,
-
-    onTouchesEnded:function (touches, event) {
-        this._prevLocation = null;
-    },
-
-    onTouchesCancelled:function (touches, event) {
-        this._prevLocation = null;
-    },
-
     onTouchesMoved:function (touches, event) {
         var node = this.getChildByTag(TAG_NODE);
         var currentPos = node.getPosition();
