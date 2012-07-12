@@ -164,22 +164,13 @@ var BaseLayer = cc.LayerGradient.extend({
         var selfPoint = this;
 
 
-        this._freeMovementButton = cc.MenuItemFont.create("Free movement", this,
-            function () {
-                selfPoint._emitter.setPositionType(PARTICLE_TYPE_RELATIVE);
-            });
+        var itemFree = cc.MenuItemFont.create("Free movement");
+        var itemRel = cc.MenuItemFont.create("Relative movement");
+        var itemGroup = cc.MenuItemFont.create("Group movement");
+        var toggle = cc.MenuItemToggle.create( itemFree, itemRel, itemGroup );
+        toggle.setCallback( this, this.toggleCB );
 
-        this._relativeMovementButton = cc.MenuItemFont.create("Relative movement", this,
-            function () {
-                selfPoint._emitter.setPositionType(PARTICLE_TYPE_GROUPED);
-            });
-
-        this._groupMovementButton = cc.MenuItemFont.create("Group movement", this,
-            function () {
-                selfPoint._emitter.setPositionType(PARTICLE_TYPE_FREE);
-            });
-
-        var menu = cc.Menu.create( this._freeMovementButton, this._relativeMovementButton, this._groupMovementButton);
+        var menu = cc.Menu.create( toggle );
         menu.alignItemsVertically();
         menu.setPosition( cc.p( 100, 100 ) );
         this.addChild(menu, 1);
@@ -218,6 +209,16 @@ var BaseLayer = cc.LayerGradient.extend({
         this._background.runAction(cc.RepeatForever.create(seq));
 
         this.scheduleUpdate();
+    },
+
+    toggleCB:function(sender) {
+        var type = this._emitter.getPositionType();
+        if( type == PARTICLE_TYPE_GROUPED )
+            this._emitter.setPositionType( PARTICLE_TYPE_FREE );
+        else if( type == PARTICLE_TYPE_FREE )
+            this._emitter.setPositionType( PARTICLE_TYPE_RELATIVE );
+        else if( type == PARTICLE_TYPE_RELATIVE )
+            this._emitter.setPositionType( PARTICLE_TYPE_GROUPED );
     },
 
     onEnter:function () {

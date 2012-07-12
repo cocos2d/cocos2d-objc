@@ -433,6 +433,58 @@ var MenuItemLabelTest = BaseLayer.extend({
     },
 
 });
+
+//------------------------------------------------------------------
+//
+// MenuItemToggleTest
+//
+//------------------------------------------------------------------
+var MenuItemToggleTest = BaseLayer.extend({
+
+    _vertically : true,
+    _menu : null,
+
+    onEnter:function () {
+        this._super();
+   
+        var label1 = cc.LabelBMFont.create("Volume Off", "futura-48.fnt" );
+        var item1 = cc.MenuItemLabel.create(label1);
+        var label2 = cc.LabelBMFont.create("Volume On", "futura-48.fnt" );
+        var item2 = cc.MenuItemLabel.create(label2);
+
+        var itema = cc.MenuItemFont.create("Sound Off");
+        var itemb = cc.MenuItemFont.create("Sound 50%");
+        var itemc = cc.MenuItemFont.create("Sound 100%");
+
+        var toggle1 = cc.MenuItemToggle.create( item1, item2 );
+        var toggle2 = cc.MenuItemToggle.create( itema, itemb, itemc );
+
+        toggle1.setCallback( this, this.item_cb);
+        toggle2.setCallback( this, this.item_cb);
+
+        this._menu = cc.Menu.create( toggle1, toggle2 );
+        this._menu.alignItemsVertically();
+        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
+
+        this.addChild( this._menu );
+    },
+
+    title:function () {
+        return "Menu Item Toggle";
+    },
+    subtitle:function () {
+        return "2 Toggle Items";
+    },
+    code:function () {
+        return "item = cc.MenuItemToggle.create( item1, item2, item3 );";
+    },
+
+    // callback
+    item_cb:function(sender) {
+        cc.log("toggle pressed");
+    },
+});
+
 //
 // Order of tests
 //
@@ -441,6 +493,7 @@ scenes.push( MenuItemFontTest );
 scenes.push( MenuItemImageTest );
 scenes.push( MenuItemSpriteTest );
 scenes.push( MenuItemLabelTest );
+scenes.push( MenuItemToggleTest );
 
 //------------------------------------------------------------------
 //
