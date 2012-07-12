@@ -155,46 +155,20 @@ var BaseLayer = cc.Layer.extend({
         // nothing
     },
 
-    onMouseDown : function( event ) {
-        this.prevLocation = director.convertEventToGL( event );
-    },
-
-    onMouseUp : function( event ) {
-        this.prevLocation = null;
+    onTouchesMoved:function (touches, event) {
+        this.moveTile( touches[0].getDelta() );
     },
 
     onMouseDragged : function( event ) {
-        this.moveTile( director.convertEventToGL( event ) );
+        this.moveTile( event.getDelta() );
     },
 
-    onTouchesBegan:function (touches, event) {
-        this.prevLocation = director.convertTouchToGL( touches[0] );
-    },
-    onTouchesEnded:function (touches, event) {
-        this.prevLocation = null;
-    },
-    onTouchesCancelled:function (touches, event) {
-        this.prevLocation = null;
-    },
-    onTouchesMoved:function (touches, event) {
-        var touchLocation = director.convertTouchToGL( touches[0] );
-        this.moveTile( touchLocation );
-    },
+    moveTile:function ( delta ) {
 
-    moveTile:function ( touchLocation ) {
-
-        if (!this.prevLocation) {
-            this.prevLocation = touchLocation;
-            return;
-        }
         var node = this.getChildByTag(TAG_TILE_MAP);
-        var diff = cc.pSub(touchLocation, this.prevLocation);
         var currentPos = node.getPosition();
-
-        //diff = cc.p(diff.x * node.getScaleX(),diff.y * node.getScaleY());
-        var curPos = cc.pAdd(currentPos, diff);
-        node.setPosition(curPos);
-        this.prevLocation = touchLocation;
+        var newPos = cc.pAdd(currentPos, delta );
+        node.setPosition(newPos);
     },
 });
 

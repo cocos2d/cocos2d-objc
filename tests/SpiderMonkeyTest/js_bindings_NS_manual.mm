@@ -26,6 +26,7 @@
 #import "js_bindings_NS_manual.h"
 #import "js_bindings_config.h"
 #import "js_manual_conversions.h"
+#import "js_bindings_config.h"
 
 #pragma mark - JSPROXY_NSObject
 
@@ -96,7 +97,7 @@ JSBool JSPROXY_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
+	NSCAssert( proxy && [proxy realObj], @"Object no initialzied. error");
 	
 
 	JSObject *obj_copy;
@@ -113,6 +114,32 @@ JSBool JSPROXY_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
 	}
 
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj_copy) );
+	return JS_TRUE;
+}
+
+JSBool JSPROXY_NSObject_retain(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	NSCAssert( proxy && [proxy realObj], @"Object not initialzied. error");
+	
+	id real = (NSObject*) [proxy realObj];
+	[real retain];
+	
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(obj) );
+	return JS_TRUE;
+}
+
+JSBool JSPROXY_NSObject_release(JSContext *cx, uint32_t argc, jsval *vp) {
+	
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	NSCAssert( proxy && [proxy realObj], @"Object not initialzied. error");
+	
+	id real = (NSObject*) [proxy realObj];
+	[real release];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
 
@@ -140,6 +167,8 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	static JSFunctionSpec funcs[] = {
 		JS_FN("init", JSPROXY_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("copy", JSPROXY_NSObject_copy, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("retain", JSPROXY_NSObject_retain, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("release", JSPROXY_NSObject_release, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
 	
@@ -234,22 +263,7 @@ JSBool JSPROXY_NSEvent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Methods
-JSBool JSPROXY_NSEvent_getDeltaX(JSContext *cx, uint32_t argc, jsval *vp) {
-	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
-	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-
-	NSEvent* real = (NSEvent*) [proxy realObj];
-	CGFloat ret_val = [real deltaX];
-	
-	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
-	return JS_TRUE;
-}
-
-JSBool JSPROXY_NSEvent_getDeltaY(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSPROXY_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
@@ -257,12 +271,15 @@ JSBool JSPROXY_NSEvent_getDeltaY(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	
-	NSEvent* real = (NSEvent*) [proxy realObj];
-
-	// Negate Y: Needed for OpenGL coordinates
-	CGFloat ret_val = -[real deltaY];
+	NSEvent* event = (NSEvent*) [proxy realObj];
 	
-	JS_SET_RVAL(cx, vp, DOUBLE_TO_JSVAL(ret_val));
+#ifdef JSB_USE_COCOS2D
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+#else
+	CGPoint location = [event locationInWindow];
+#endif
+	
+	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, location ) );
 	return JS_TRUE;
 }
 
@@ -277,8 +294,12 @@ JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSEvent* real = (NSEvent*) [proxy realObj];
 	CGFloat x = [real deltaX];
 	
+#ifdef JSB_USE_COCOS2D
 	// Negate Y: Needed for OpenGL coordinates
 	CGFloat y = -[real deltaY];
+#else
+	CGFloat y = [real deltaY];
+#endif
 	
 	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, CGPointMake(x,y) ) );
 	return JS_TRUE;
@@ -312,8 +333,7 @@ void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char 
 	
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getDeltaX", JSPROXY_NSEvent_getDeltaX, 0, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("getDeltaY", JSPROXY_NSEvent_getDeltaY, 0, JSPROP_PERMANENT | JSPROP_SHARED),
+		JS_FN("getLocation", JSPROXY_NSEvent_getLocation, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("getDelta", JSPROXY_NSEvent_getDelta, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};
@@ -377,24 +397,14 @@ JSBool JSPROXY_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
 	
 	UITouch* real = (UITouch*) [proxy realObj];
-	CGPoint ret_val = [real locationInView: [real view]];
 	
-	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, ret_val) );
-	return JS_TRUE;
-}
-
-JSBool JSPROXY_UITouch_previousLocation(JSContext *cx, uint32_t argc, jsval *vp) {
+#ifdef JSB_USE_COCOS2D
+	CGPoint location = [[CCDirector sharedDirector] convertTouchToGL:real];
+#else
+	CGPoint location = [real locationInView: [real view]];
+#endif
 	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
-	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	
-	UITouch* real = (UITouch*) [proxy realObj];
-	CGPoint ret_val = [real previousLocationInView: [real view]];
-	
-	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, ret_val) );
+	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, location) );
 	return JS_TRUE;
 }
 
@@ -411,8 +421,14 @@ JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 	CGPoint now = [real locationInView: view];
 	CGPoint prev = [real previousLocationInView: view];
 	
+#ifdef JSB_USE_COCOS2D
 	// Negate Y: Needed for OpenGL coordinates
-	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, CGPointMake(now.x-prev.x, prev.y-now.y) ) );
+	CGPoint delta = CGPointMake(now.x-prev.x, prev.y-now.y);
+#else
+	CGPoint delta = CGPointMake(now.x-prev.x, now.y-prev.y);
+#endif
+
+	JS_SET_RVAL(cx, vp, CGPoint_to_jsval(cx, delta ) );
 	return JS_TRUE;
 }
 
@@ -444,7 +460,6 @@ void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char 
 	
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getLocation", JSPROXY_UITouch_location, 0, JSPROP_PERMANENT | JSPROP_SHARED),
-		JS_FN("getPreviousLocation", JSPROXY_UITouch_previousLocation, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FN("getDelta", JSPROXY_UITouch_delta, 0, JSPROP_PERMANENT | JSPROP_SHARED),
 		JS_FS_END
 	};

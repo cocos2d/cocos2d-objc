@@ -217,16 +217,13 @@ ChipmunkSpriteTest.prototype.update = function( delta ) {
 }
 
 ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
-	pos = director.convertEventToGL( event );
-	cc.log("Mouse Down:" + pos );
-	this.addSprite( pos );
+	this.addSprite( event.getLocation() );
 }
 
 ChipmunkSpriteTest.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
-		pos = director.convertTouchToGL( touches[i] );
-		this.addSprite( pos );
+		this.addSprite( touches[i].getLocation() );
 	}
 }
 

@@ -208,7 +208,7 @@ var BaseLayer = cc.LayerGradient.extend({
     },
 
     onTouchesEnded:function (touches, event) {
-        var location = director.convertTouchToGL( touches[0] );
+        var location = touches[0].getLocation();
 
         var pos = cc.p( 0, 0 );
         if (this._background)
@@ -225,7 +225,7 @@ var BaseLayer = cc.LayerGradient.extend({
     },
 
     onMouseEnded: function(  event ) {
-        var location = director.convertEventToGL( event );
+        var location = event.getLocation();
         var pos = cc.p(0,0);
         if (this._background)
             pos = this._background.convertToWorldSpace( cc.p(0,0) );
