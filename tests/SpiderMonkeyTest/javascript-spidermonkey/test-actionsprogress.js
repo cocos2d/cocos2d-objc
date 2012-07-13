@@ -57,8 +57,6 @@ var loadScene = function (sceneIdx)
 //    __jsc__.garbageCollect();
 }
 
-cc.PROGRESS_TIMER_TYPE_RADIAL = 0;
-cc.PROGRESS_TIMER_TYPE_BAR = 1;
 var s_pathSister1 = "grossinis_sister1.png";
 var s_pathSister2 = "grossinis_sister2.png";
 var s_pathBlock = "blocks.png";
