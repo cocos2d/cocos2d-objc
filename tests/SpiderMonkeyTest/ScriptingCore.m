@@ -302,7 +302,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 		JSPROXY_NSEvent_createClass(_cx, cocos2d, "Event");
 #elif defined(__CC_PLATFORM_IOS)
 		JSPROXY_UITouch_createClass(_cx, cocos2d, "Touch");
-		JSPROXY_UIAccelerometer_createClass(_cx, cocos2d, "Hola");
+		JSPROXY_UIAccelerometer_createClass(_cx, cocos2d, "Accelerometer");
 #endif
 
 		// Register classes: base classes should be registered first

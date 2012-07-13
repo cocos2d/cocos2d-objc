@@ -344,7 +344,7 @@ void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char 
 		JS_FS_END
 	};
 	
-	JSPROXY_NSEvent_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_NSEvent_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_NSEvent_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_NSEvent_class, JSPROXY_NSEvent_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 @implementation JSPROXY_NSEvent
@@ -470,7 +470,7 @@ void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char 
 		JS_FS_END
 	};
 	
-	JSPROXY_UITouch_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_UITouch_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_UITouch_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_UITouch_class, JSPROXY_UITouch_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 @implementation JSPROXY_UITouch
@@ -628,16 +628,23 @@ JSBool JSPROXY_UIAccelerometer_setDelegate(JSContext *cx, uint32_t argc, jsval *
 
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSObject *js_this;
-	JSFunction *js_function;
+	jsval js_function;
 
 	js_this= JSVAL_TO_OBJECT( *argvp++ );
-	js_function = JS_ValueToFunction(cx, *argvp++ );
-	
-	if( ! js_this || ! js_function ) {
+
+	if( ! js_this  ) {
 		[real setDelegate:nil];
+		return JS_TRUE;
 	}
+
+	if( ! JS_ValueToFunction(cx, *argvp ) )
+		return JS_FALSE;
+
+	js_function = *argvp++;
 	
-	[real setDelegate: [JSAccelerometer sharedInstance]];
+	JSAccelerometer *jsaccel = [JSAccelerometer sharedInstance];
+	[real setDelegate: jsaccel];
+	[jsaccel setTarget:js_this functionValue:js_function context:cx];
 	
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;	
@@ -676,7 +683,7 @@ void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, con
 		JS_FS_END
 	};
 	
-	JSPROXY_UIAccelerometer_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_UIAccelerometer_constructor,0,properties,funcs,NULL,st_funcs);
+	JSPROXY_UIAccelerometer_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_UIAccelerometer_class, JSPROXY_UIAccelerometer_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
 @implementation JSPROXY_UIAccelerometer
