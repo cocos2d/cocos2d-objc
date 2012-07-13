@@ -8,7 +8,6 @@
 
 require("javascript-spidermonkey/helper.js");
 
-var ok = cc.Hola.getInstance();
 var director = cc.Director.getInstance();
 var _winSize = director.winSize();
 var winSize = {width:_winSize[0], height:_winSize[1]};
@@ -155,7 +154,9 @@ var Playground = BaseLayer.extend({
          if( platform.substring(0,6) == 'mobile' ) {
             var accel = cc.Accelerometer.getInstance();
             accel.setCallback( this, this.onAccelerometer );
-            accel.setUpdateInterval( 1/60 );
+
+            // 2 times per second
+            accel.setUpdateInterval( 1/2 );
         }
     },
 
@@ -164,7 +165,11 @@ var Playground = BaseLayer.extend({
     },
     
     title:function () {
-        return "Playground";
+        return "Testing Accelerometer";
+    },
+
+    subtitle:function () {
+        return "See console on device";
     },
     code:function () {
         return "";
