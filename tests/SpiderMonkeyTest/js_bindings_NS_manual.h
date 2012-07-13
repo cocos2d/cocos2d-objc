@@ -93,6 +93,24 @@ extern "C" {
 }
 #endif
 
+
+@interface JSPROXY_UIAccelerometer : JSPROXY_NSObject
+{
+}
+@end
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+	void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSPROXY_UIAccelerometer_object;
+	extern JSClass* JSPROXY_UIAccelerometer_class;
+	
+#ifdef __cplusplus
+}
+#endif
+
+
 #endif // __CC_PLATFORM_IOS
 
 
