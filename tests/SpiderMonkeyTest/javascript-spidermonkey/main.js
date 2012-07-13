@@ -125,116 +125,6 @@ var BaseLayer = cc.LayerGradient.extend({
     }
 });
 
-//------------------------------------------------------------------
-//
-// MenuItemFontTest
-//
-//------------------------------------------------------------------
-var MenuItemFontTest = BaseLayer.extend({
-    onEnter:function () {
-        this._super();
-
-        var item1 = cc.MenuItemFont.create("Item 1. Should be RED");
-        var item2 = cc.MenuItemFont.create("This item is bigger", this, this.item_cb);
-        var item3 = cc.MenuItemFont.create("This item should be disabled", this, this.item_cb);
-
-        // callback function can be modified in runtime
-        item1.setCallback( this, this.item_cb );
-
-        // font color can be changed in runtime
-        item1.setColor( cc.c3(255,0,0) );
-
-        // font size can be changed in runtime (it is faster to do it before creating the item)
-        item2.setFontSize( 48 );
-
-        // font name can be changed in runtime (it is faster to do it before creating the item)
-        item3.setFontName( "Courier New");
-
-        // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
-
-        var menu = cc.Menu.create( item1, item2, item3 );
-        menu.alignItemsVertically();
-
-        menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
-
-        this.addChild( menu );
-    },
-
-    title:function () {
-        return "Menu Item Font";
-    },
-    subtitle:function () {
-        return "3 items. 3rd should be disabled. Smaller font";
-    },
-    code:function () {
-        return "item = cc.MenuItemFont.create('Press me', this, this.callback)";
-    },
-
-    // callback
-    item_cb:function(sender) {
-        cc.log("Item " + sender + " pressed");
-    },
-
-
-});
-
-//------------------------------------------------------------------
-//
-// MenuItemImage
-//
-//------------------------------------------------------------------
-var MenuItemImageTest = BaseLayer.extend({
-
-    _vertically : true,
-
-    _menu : null,
-
-    onEnter:function () {
-        this._super();
-  
-        var item1 = cc.MenuItemImage.create("btn-play-normal.png", "btn-play-selected.png" );
-        var item2 = cc.MenuItemImage.create("btn-highscores-normal.png", "btn-highscores-selected.png", this, this.item_cb  );
-        var item3 = cc.MenuItemImage.create("btn-about-normal.png", "btn-about-selected.png", this, this.item_cb  );
-        
-        // callback function can be modified in runtime
-        item1.setCallback( this, this.item_cb );
-
-        // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
-
-        this._menu = cc.Menu.create( item1, item2, item3 );
-        this._menu.alignItemsVertically();
-
-        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
-
-        this.addChild( this._menu );
-    },
-
-
-    title:function () {
-        return "Menu Item Sprite";
-    },
-    subtitle:function () {
-        return "3 items. 3rd should be disabled.";
-    },
-    code:function () {
-        return "item = cc.MenuItemImage.create('normal.png', 'selected.png' , 'disabled.png', this, this.cb )";
-    },
-
-    // callback
-    item_cb:function(sender) {
-        cc.log("Item " + sender + " pressed");
-        if( this._vertically )
-            this._menu.alignItemsHorizontally();
-        else
-            this._menu.alignItemsVertically();
-
-        this._vertically = ! this._vertically;
-
-    },
-
-});
 
 //------------------------------------------------------------------
 //
@@ -243,13 +133,12 @@ var MenuItemImageTest = BaseLayer.extend({
 //------------------------------------------------------------------
 var MainTest = BaseLayer.extend({
 
-    _vertically : true,
     _menu : null,
 
     onEnter:function () {
         this._super();
   
-        cc.MenuItemFont.setFontSize(20);
+        cc.MenuItemFont.setFontSize(24);
         var item1 = cc.MenuItemFont.create("Actions: Basic Tests", this, function() { require("javascript-spidermonkey/test-actions.js"); } );
         var item2 = cc.MenuItemFont.create("Actions: Ease Tests", this, function() { require("javascript-spidermonkey/test-easeactions.js"); } );
         var item3 = cc.MenuItemFont.create("Actions: Progress Tests", this, function() { require("javascript-spidermonkey/test-actionsprogress.js"); } );
@@ -258,18 +147,39 @@ var MainTest = BaseLayer.extend({
         var item6 = cc.MenuItemFont.create("Menu Tests", this, function() { require("javascript-spidermonkey/test-menu.js"); } );
         var item7 = cc.MenuItemFont.create("Parallax Tests", this, function() { require("javascript-spidermonkey/test-parallax.js"); } );
         var item8 = cc.MenuItemFont.create("Particle Tests", this, function() { require("javascript-spidermonkey/test-particles.js"); } );
-        var item9 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
-        var item10 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
-        var item11 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("javascript-spidermonkey/test-cocosdenshion.js"); } );
-        var item12 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
+        var item9 = cc.MenuItemFont.create("RenderTexture Tests", this, function() { require("javascript-spidermonkey/test-rendertexture.js"); } );
+        var item10 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
+        var item11 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
+        var item12 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("javascript-spidermonkey/test-cocosdenshion.js"); } );
+        var item13 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
 
 
-        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
 
         this.addChild( this._menu );
+
+        var platform = __getPlatform();
+        if( platform.substring(0,7) == 'desktop' )
+            this.setMouseEnabled( true );
+        else if( platform.substring(0,6) == 'mobile' )
+            this.setTouchEnabled( true );
+    },
+
+    onTouchesMoved:function (touches, event) {
+        var delta = touches[0].getDelta();
+        var current = this._menu.getPosition();
+        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        return true;
+    },
+
+    onMouseDragged : function( event ) {
+        var delta = event.getDelta();
+        var current = this._menu.getPosition();
+        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        return true;
     },
 
     title:function () {

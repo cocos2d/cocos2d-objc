@@ -229,17 +229,13 @@ var RenderTextureSave = BaseLayer.extend({
     },
 
     onTouchesBegan:function (touches, event) {
-        var location = touches[0].getLocation();
+        this._lastLocation = touches[0].getLocation();
         return true;
     },
 
     onTouchesMoved:function (touches, event) {
         this.drawInLocation( touches[0].getLocation() );
         return true;
-    },
-
-    onTouchesEnded:function (touches, event) {
-        var location = touches[0].getLocation();
     },
 
     onMouseDown : function( event ) {
@@ -249,11 +245,6 @@ var RenderTextureSave = BaseLayer.extend({
 
     onMouseDragged : function( event ) {
         this.drawInLocation( event.getLocation() );
-        return true;
-    },
-
-    onMouseEnded: function(  event ) {
-        this._lastLocation = event.getLocation();
         return true;
     },
 
