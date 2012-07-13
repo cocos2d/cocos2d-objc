@@ -188,6 +188,7 @@ var RenderTextureSave = BaseLayer.extend({
         this._target = target;
 
         this._lastLocation = cc.p( winSize.width/2, winSize.height/2);
+
     },
 
     onExit:function() {
@@ -195,11 +196,11 @@ var RenderTextureSave = BaseLayer.extend({
     },
 
     saveCB:function(sender) {
-        var namePNG = "image-" + this.counter + ".png";
-        var nameJPG = "image-" + this.counter + ".jpg";
+        var namePNG = "image-" + this._counter + ".png";
+        var nameJPG = "image-" + this._counter + ".jpg";
 
-        this._target.saveToFile( namePNG, cc.IMAGE_FORMAT_PNG );
         this._target.saveToFile( nameJPG, cc.IMAGE_FORMAT_JPEG );
+        this._target.saveToFile( namePNG, cc.IMAGE_FORMAT_PNG );
 
         cc.log("images saved!");
         this._counter++;
@@ -214,13 +215,15 @@ var RenderTextureSave = BaseLayer.extend({
         if( distance > 1 ) {
             this._target.begin();
             for( var i=0; i < distance; i++ ) {
-                var diff = cc.pSub( this._lastLocation, location );
+                var diffX = this._lastLocation[0] - location[0];
+                var diffY = this._lastLocation[1] - location[1];
+
                 var delta = i / distance;
 
-                this._brush.setPosition( cc.p( location[0] + diff[0] * delta, location[1] + diff[1] *delta ) );
+                this._brush.setPosition( cc._p( location[0] + diffX * delta, location[1] + diffY * delta ) );
                 this._brush.setRotation( Math.random() * 360 );
                 this._brush.setScale( Math.random() * 2 );
-                this._brush.setColor( cc.c3( Math.random()*255, 255, 255) );
+                this._brush.setColor( cc._c3( Math.random()*255, 255, 255) );
                 this._brush.visit();
             }
             this._target.end();

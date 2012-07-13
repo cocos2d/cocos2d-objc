@@ -48,6 +48,24 @@ cc.WHITE = cc.c3(255,255,255);
 
 cc.POINT_ZERO = cc.p(0,0);
 
+cc._reuse_point = cc.p(0,0);
+cc._reuse_color3b = cc.c3(255, 255, 255 );
+
+cc._p = function( x, y )
+{
+    cc._reuse_point[0] = x;
+    cc._reuse_point[1] = y;
+    return cc._reuse_point;
+}
+
+cc._c3 = function( r, g, b )
+{
+    cc._reuse_color3b[0] = r;
+    cc._reuse_color3b[1] = g;
+    cc._reuse_color3b[2] = b;
+    return cc._reuse_color3b;
+}
+
 cc.rect = function(x,y,w,h)
 {
 	var rect = new Float32Array(4)
