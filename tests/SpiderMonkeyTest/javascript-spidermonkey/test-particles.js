@@ -62,15 +62,6 @@ var loadScene = function (sceneIdx)
 //
 var TAG_LABEL_ATLAS = 100;
 
-var PARTICLE_TYPE_RELATIVE = 0;
-var PARTICLE_TYPE_GROUPED = 1;
-var PARTICLE_TYPE_FREE = 2;
-var PARTICLE_DURATION_INFINITY = -1;
-var PARTICLE_MODE_GRAVITY = 0;
-var PARTICLE_MODE_RADIUS = 1;
-var PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
-var PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
-
 var s_stars1 = 'stars.png';
 var s_stars2 = 'stars2.png';
 var s_starsGrayscale = 'stars-grayscale.png';
@@ -161,12 +152,12 @@ var BaseLayer = cc.LayerGradient.extend({
 
     toggleCB:function(sender) {
         var type = this._emitter.getPositionType();
-        if( type == PARTICLE_TYPE_GROUPED )
-            this._emitter.setPositionType( PARTICLE_TYPE_FREE );
-        else if( type == PARTICLE_TYPE_FREE )
-            this._emitter.setPositionType( PARTICLE_TYPE_RELATIVE );
-        else if( type == PARTICLE_TYPE_RELATIVE )
-            this._emitter.setPositionType( PARTICLE_TYPE_GROUPED );
+        if( type == cc.PARTICLE_TYPE_GROUPED )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_FREE );
+        else if( type == cc.PARTICLE_TYPE_FREE )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
+        else if( type == cc.PARTICLE_TYPE_RELATIVE )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_GROUPED );
     },
 
     onEnter:function () {
@@ -191,12 +182,12 @@ var BaseLayer = cc.LayerGradient.extend({
     },
 
     toggleCallback:function (sender) {
-        if (this._emitter.getPositionType() == PARTICLE_TYPE_GROUPED )
-            this._emitter.setPositionType( PARTICLE_TYPE_FREE );
-        else if (this._emitter.getPositionType() == PARTICLE_TYPE_FREE )
-            this._emitter.setPositionType( PARTICLE_TYPE_RELATIVE );
-        else if (this._emitter.getPositionType() ==  PARTICLE_TYPE_RELATIVE )
-            this._emitter.setPositionType( PARTICLE_TYPE_GROUPED );
+        if (this._emitter.getPositionType() == cc.PARTICLE_TYPE_GROUPED )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_FREE );
+        else if (this._emitter.getPositionType() == cc.PARTICLE_TYPE_FREE )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
+        else if (this._emitter.getPositionType() ==  cc.PARTICLE_TYPE_RELATIVE )
+            this._emitter.setPositionType( cc.PARTICLE_TYPE_GROUPED );
     },
 
     onTouchesBegan:function (touches, event) {
@@ -241,7 +232,9 @@ var BaseLayer = cc.LayerGradient.extend({
         }
     },
     setEmitterPosition:function () {
-        this._emitter.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
+        var p = this._emitter.getSourcePosition();
+        if( p[0]==0 && p[1]==0 )
+            this._emitter.setPosition( cc.p(200, 70) );
     }
 });
 
@@ -846,10 +839,10 @@ var RadiusMode1 = BaseLayer.extend({
         this._emitter.setTexture(cc.TextureCache.getInstance().addImage(s_starsGrayscale));
 
         // duration
-        this._emitter.setDuration(PARTICLE_DURATION_INFINITY);
+        this._emitter.setDuration(cc.PARTICLE_DURATION_INFINITY);
 
         // radius mode
-        this._emitter.setEmitterMode(PARTICLE_MODE_RADIUS);
+        this._emitter.setEmitterMode(cc.PARTICLE_MODE_RADIUS);
 
         // radius mode: start and end radius in pixels
         this._emitter.setStartRadius(0);
@@ -896,7 +889,7 @@ var RadiusMode1 = BaseLayer.extend({
         // size, in pixels
         this._emitter.setStartSize(32);
         this._emitter.setStartSizeVar(0);
-        this._emitter.setEndSize(PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
+        this._emitter.setEndSize(cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
 
         // emits per second
         this._emitter.setEmissionRate(this._emitter.getTotalParticles() / this._emitter.getLife());
@@ -921,15 +914,15 @@ var RadiusMode2 = BaseLayer.extend({
         this._emitter.setTexture(cc.TextureCache.getInstance().addImage(s_starsGrayscale));
 
         // duration
-        this._emitter.setDuration(PARTICLE_DURATION_INFINITY);
+        this._emitter.setDuration(cc.PARTICLE_DURATION_INFINITY);
 
         // radius mode
-        this._emitter.setEmitterMode(PARTICLE_MODE_RADIUS);
+        this._emitter.setEmitterMode(cc.PARTICLE_MODE_RADIUS);
 
         // radius mode: start and end radius in pixels
         this._emitter.setStartRadius(100);
         this._emitter.setStartRadiusVar(0);
-        this._emitter.setEndRadius(PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS);
+        this._emitter.setEndRadius(cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS);
         this._emitter.setEndRadiusVar(0);
 
         // radius mode: degrees per second
@@ -971,7 +964,7 @@ var RadiusMode2 = BaseLayer.extend({
         // size, in pixels
         this._emitter.setStartSize(32);
         this._emitter.setStartSizeVar(0);
-        this._emitter.setEndSize(PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
+        this._emitter.setEndSize(cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
 
         // emits per second
         this._emitter.setEmissionRate(this._emitter.getTotalParticles() / this._emitter.getLife());
@@ -996,15 +989,15 @@ var Issue704 = BaseLayer.extend({
         this.addChild(this._emitter, 10);
         this._emitter.setTexture(cc.TextureCache.getInstance().addImage(s_fire));
         // duration
-        this._emitter.setDuration(PARTICLE_DURATION_INFINITY);
+        this._emitter.setDuration(cc.PARTICLE_DURATION_INFINITY);
 
         // radius mode
-        this._emitter.setEmitterMode(PARTICLE_MODE_RADIUS);
+        this._emitter.setEmitterMode(cc.PARTICLE_MODE_RADIUS);
 
         // radius mode: start and end radius in pixels
         this._emitter.setStartRadius(50);
         this._emitter.setStartRadiusVar(0);
-        this._emitter.setEndRadius(PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS);
+        this._emitter.setEndRadius(cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS);
         this._emitter.setEndRadiusVar(0);
 
         // radius mode: degrees per second
@@ -1046,7 +1039,7 @@ var Issue704 = BaseLayer.extend({
         // size, in pixels
         this._emitter.setStartSize(16);
         this._emitter.setStartSizeVar(0);
-        this._emitter.setEndSize(PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
+        this._emitter.setEndSize(cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE);
 
         // emits per second
         this._emitter.setEmissionRate(this._emitter.getTotalParticles() / this._emitter.getLife());
