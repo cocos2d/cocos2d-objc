@@ -202,8 +202,10 @@
 	[self initThoMoServer];
 #endif
 	
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-rendertexture.js"];
+
 }
 @end
 
