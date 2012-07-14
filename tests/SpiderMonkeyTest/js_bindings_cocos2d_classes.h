@@ -4889,6 +4889,64 @@ extern JSClass *JSPROXY_CCTransitionSplitRows_class;
 @end
 
 /*
+ * CCFlipX3D
+ */
+#pragma mark - CCFlipX3D
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
+
+extern JSObject *JSPROXY_CCFlipX3D_object;
+extern JSClass *JSPROXY_CCFlipX3D_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCFlipX3D : JSPROXY_CCGrid3DAction
+{
+}
+
+@end
+
+/*
+ * CCFlipY3D
+ */
+#pragma mark - CCFlipY3D
+
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+void JSPROXY_CCFlipY3D_createClass(JSContext *cx, JSObject* globalObj, const char* name );
+
+
+
+extern JSObject *JSPROXY_CCFlipY3D_object;
+extern JSClass *JSPROXY_CCFlipY3D_class;
+
+#ifdef __cplusplus
+}
+#endif
+
+
+/* Proxy class */
+@interface JSPROXY_CCFlipY3D : JSPROXY_CCFlipX3D
+{
+}
+
+@end
+
+/*
  * CCFadeTo
  */
 #pragma mark - CCFadeTo
@@ -4941,35 +4999,6 @@ extern JSClass *JSPROXY_CCEaseBackInOut_class;
 
 /* Proxy class */
 @interface JSPROXY_CCEaseBackInOut : JSPROXY_CCActionEase
-{
-}
-
-@end
-
-/*
- * CCFlipX3D
- */
-#pragma mark - CCFlipX3D
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
-void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const char* name );
-
-
-
-extern JSObject *JSPROXY_CCFlipX3D_object;
-extern JSClass *JSPROXY_CCFlipX3D_class;
-
-#ifdef __cplusplus
-}
-#endif
-
-
-/* Proxy class */
-@interface JSPROXY_CCFlipX3D : JSPROXY_CCGrid3DAction
 {
 }
 

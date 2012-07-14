@@ -1290,6 +1290,8 @@
 		A0137F6B15AE4AC0000AA1C2 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		A0137F6C15AE842C000AA1C2 /* powered.png in Resources */ = {isa = PBXBuildFile; fileRef = 5084D25C0EE5906100BD237C /* powered.png */; };
 		A0137F6D15AE8458000AA1C2 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
+		A0137FAD15B0DC95000AA1C2 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		A0137FAE15B0DC95000AA1C2 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		A015BFCD13B826D800C73E76 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFAE13B826D800C73E76 /* aabb.h */; };
 		A015BFCE13B826D800C73E76 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB013B826D800C73E76 /* mat4stack.h */; };
 		A015BFCF13B826D800C73E76 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A015BFB113B826D800C73E76 /* matrix.h */; };
@@ -11418,6 +11420,8 @@
 				A0137F6B15AE4AC0000AA1C2 /* background3-hd.png in Resources */,
 				A0137F6C15AE842C000AA1C2 /* powered.png in Resources */,
 				A0137F6D15AE8458000AA1C2 /* background.png in Resources */,
+				A0137FAD15B0DC95000AA1C2 /* blocks.png in Resources */,
+				A0137FAE15B0DC95000AA1C2 /* blocks-hd.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

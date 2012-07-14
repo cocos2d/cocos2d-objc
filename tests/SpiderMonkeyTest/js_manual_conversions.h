@@ -23,6 +23,11 @@
  */
 
 #import <Foundation/Foundation.h>
+#import "js_bindings_config.h"
+
+#ifdef JSB_USE_COCOS2D
+#import "cocos2d.h"
+#endif
 
 #ifdef __cplusplus
 extern "C" {
@@ -51,7 +56,6 @@ JSBool jsval_to_nsset( JSContext *cx , jsval vp, NSSet** out );
 /** converts a variadic jsvals to a NSArray */
 JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray** out );
 	
-	
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *out );
 JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *out );
 JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *out );
@@ -76,7 +80,12 @@ jsval CGRect_to_jsval( JSContext *cx, CGRect r);
 jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
 jsval NSSet_to_jsval( JSContext *cx, NSSet *set);
 jsval opaque_to_jsval( JSContext *cx, void* opaque);
-	
+
+#ifdef JSB_USE_COCOS2D
+JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret );
+jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p );
+#endif // JSB_USE_COCOS2D
+
 	
 #ifdef __cplusplus
 }

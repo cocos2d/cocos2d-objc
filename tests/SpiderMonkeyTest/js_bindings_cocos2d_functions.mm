@@ -609,11 +609,9 @@ JSBool JSPROXY_ccg(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	ret_val = ccg((NSInteger)arg0 , (NSInteger)arg1  );
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_INT32, 2 );
-	ccGridSize* buffer = (ccGridSize*)JS_GetTypedArrayData(typedArray);
-	*buffer = ret_val;
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
-	
+	jsval ret_jsval = ccGridSize_to_jsval( cx, (ccGridSize)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
 	return JS_TRUE;
 }
 

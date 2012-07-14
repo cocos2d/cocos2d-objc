@@ -2471,6 +2471,12 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCFlipY3D'>
+<method selector='update:'>
+<arg name='time' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCFollow'>
 <method selector='actionWithTarget:' class_method='true'>
 <arg name='followedNode' declared_type='CCNode*' type='@' index='0'/>

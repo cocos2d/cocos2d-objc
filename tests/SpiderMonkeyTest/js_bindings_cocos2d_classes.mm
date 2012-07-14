@@ -9643,10 +9643,7 @@ JSBool JSPROXY_CCGridAction_actionWithSize_duration__static(JSContext *cx, uint3
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCGridAction* ret_val;
@@ -9693,11 +9690,9 @@ JSBool JSPROXY_CCGridAction_gridSize(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGridAction *real = (CCGridAction*) [proxy realObj];
 	ret_val = [real gridSize ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_INT32, 2 );
-	ccGridSize* buffer = (ccGridSize*)JS_GetTypedArrayData(typedArray);
-	*buffer = ret_val;
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
-	
+	jsval ret_jsval = ccGridSize_to_jsval( cx, (ccGridSize)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
 	return JS_TRUE;
 }
 
@@ -9714,10 +9709,7 @@ JSBool JSPROXY_CCGridAction_initWithSize_duration_(JSContext *cx, uint32_t argc,
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
@@ -9744,10 +9736,7 @@ JSBool JSPROXY_CCGridAction_setGridSize_(JSContext *cx, uint32_t argc, jsval *vp
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 
 	CCGridAction *real = (CCGridAction*) [proxy realObj];
@@ -9874,10 +9863,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static(JSContext *cx
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3DAction* ret_val;
@@ -10006,10 +9992,7 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static(JSCon
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCShakyTiles3D* ret_val;
@@ -10037,10 +10020,7 @@ JSBool JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_(JSContext *cx,
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -10062,10 +10042,7 @@ JSBool JSPROXY_CCShakyTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCShakyTiles3D* ret_val;
@@ -11706,10 +11683,7 @@ JSBool JSPROXY_CCTransitionFadeTR_actionWithSize_(JSContext *cx, uint32_t argc, 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
@@ -12532,10 +12506,7 @@ JSBool JSPROXY_CCTransitionPageTurn_actionWithSize_(JSContext *cx, uint32_t argc
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
@@ -12835,10 +12806,7 @@ JSBool JSPROXY_CCTransitionFadeDown_actionWithSize_(JSContext *cx, uint32_t argc
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
@@ -16704,10 +16672,7 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithJumps_amplitude_grid_duration__static(JSC
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCJumpTiles3D* ret_val;
@@ -16769,10 +16734,7 @@ JSBool JSPROXY_CCJumpTiles3D_initWithJumps_amplitude_grid_duration_(JSContext *c
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -16838,10 +16800,7 @@ JSBool JSPROXY_CCJumpTiles3D_actionWithSize_duration__static(JSContext *cx, uint
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCJumpTiles3D* ret_val;
@@ -16979,10 +16938,7 @@ JSBool JSPROXY_CCGrid3DAction_originalVertex_(JSContext *cx, uint32_t argc, jsva
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
@@ -17010,10 +16966,7 @@ JSBool JSPROXY_CCGrid3DAction_setVertex_vertex_(JSContext *cx, uint32_t argc, js
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; ccVertex3F arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
@@ -17039,10 +16992,7 @@ JSBool JSPROXY_CCGrid3DAction_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
@@ -17065,10 +17015,7 @@ JSBool JSPROXY_CCGrid3DAction_actionWithSize_duration__static(JSContext *cx, uin
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCGrid3DAction* ret_val;
@@ -20478,11 +20425,9 @@ JSBool JSPROXY_CCGridBase_gridSize(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
 	ret_val = [real gridSize ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_INT32, 2 );
-	ccGridSize* buffer = (ccGridSize*)JS_GetTypedArrayData(typedArray);
-	*buffer = ret_val;
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
-	
+	jsval ret_jsval = ccGridSize_to_jsval( cx, (ccGridSize)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
 	return JS_TRUE;
 }
 
@@ -20494,10 +20439,7 @@ JSBool JSPROXY_CCGridBase_gridWithSize__static(JSContext *cx, uint32_t argc, jsv
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCGridBase* ret_val;
 
@@ -20517,10 +20459,7 @@ JSBool JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static(JSContext 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -20547,10 +20486,7 @@ JSBool JSPROXY_CCGridBase_initWithSize_(JSContext *cx, uint32_t argc, jsval *vp)
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0  ];
@@ -20576,10 +20512,7 @@ JSBool JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_(JSContext *cx, ui
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -20959,10 +20892,7 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3D* ret_val;
 
@@ -20982,10 +20912,7 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static(JSConte
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -23074,10 +23001,7 @@ JSBool JSPROXY_CCTileMapAtlas_setTile_at_(JSContext *cx, uint32_t argc, jsval *v
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
 	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
-
-	JSObject *tmp_arg1;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	if( ! ok ) return JS_FALSE;
 
 	CCTileMapAtlas *real = (CCTileMapAtlas*) [proxy realObj];
@@ -23099,10 +23023,7 @@ JSBool JSPROXY_CCTileMapAtlas_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	ccColor3B ret_val;
 
@@ -31156,10 +31077,7 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCShatteredTiles3D* ret_val;
@@ -31187,10 +31105,7 @@ JSBool JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_(JSContex
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -31212,10 +31127,7 @@ JSBool JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static(JSContext *cx,
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCShatteredTiles3D* ret_val;
@@ -32476,10 +32388,7 @@ JSBool JSPROXY_CCSplitRows_actionWithSize_duration__static(JSContext *cx, uint32
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCSplitRows* ret_val;
@@ -32885,10 +32794,7 @@ JSBool JSPROXY_CCRipple3D_actionWithPosition_radius_waves_amplitude_grid_duratio
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg4 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
 	if( ! ok ) return JS_FALSE;
 	CCRipple3D* ret_val;
@@ -32952,10 +32858,7 @@ JSBool JSPROXY_CCRipple3D_initWithPosition_radius_waves_amplitude_grid_duration_
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg4 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
 	if( ! ok ) return JS_FALSE;
 
@@ -33063,10 +32966,7 @@ JSBool JSPROXY_CCRipple3D_actionWithSize_duration__static(JSContext *cx, uint32_
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCRipple3D* ret_val;
@@ -34931,10 +34831,7 @@ JSBool JSPROXY_CCShuffleTiles_actionWithSeed_grid_duration__static(JSContext *cx
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 	CCShuffleTiles* ret_val;
@@ -34961,10 +34858,7 @@ JSBool JSPROXY_CCShuffleTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
@@ -34986,10 +34880,7 @@ JSBool JSPROXY_CCShuffleTiles_actionWithSize_duration__static(JSContext *cx, uin
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCShuffleTiles* ret_val;
@@ -35542,10 +35433,7 @@ JSBool JSPROXY_CCTransitionFadeBL_actionWithSize_(JSContext *cx, uint32_t argc, 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
@@ -36724,10 +36612,7 @@ JSBool JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static(JSContext 
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCShaky3D* ret_val;
@@ -36755,10 +36640,7 @@ JSBool JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_(JSContext *cx, uint
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -36780,10 +36662,7 @@ JSBool JSPROXY_CCShaky3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCShaky3D* ret_val;
@@ -36852,7 +36731,7 @@ void JSPROXY_CCShaky3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithRangeShakeZGridDuration", JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithSizeDuration", JSPROXY_CCShaky3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCShaky3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCShaky3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -38902,10 +38781,7 @@ JSBool JSPROXY_CCLiquid_actionWithWaves_amplitude_grid_duration__static(JSContex
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCLiquid* ret_val;
@@ -38967,10 +38843,7 @@ JSBool JSPROXY_CCLiquid_initWithWaves_amplitude_grid_duration_(JSContext *cx, ui
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -39036,10 +38909,7 @@ JSBool JSPROXY_CCLiquid_actionWithSize_duration__static(JSContext *cx, uint32_t 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCLiquid* ret_val;
@@ -40252,6 +40122,310 @@ void JSPROXY_CCTransitionSplitRows_createClass(JSContext *cx, JSObject* globalOb
 @end
 
 /*
+ * CCFlipX3D
+ */
+#pragma mark - CCFlipX3D
+
+JSClass* JSPROXY_CCFlipX3D_class = NULL;
+JSObject* JSPROXY_CCFlipX3D_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCFlipX3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCFlipX3D createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCFlipX3D_finalize(JSContext *cx, JSObject *obj)
+{
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX3D)", obj);
+}
+
+// Arguments: ccTime
+// Ret value: CCFlipX3D* (o)
+JSBool JSPROXY_CCFlipX3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
+	CCFlipX3D* ret_val;
+
+	ret_val = [CCFlipX3D actionWithDuration:(ccTime)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccTime
+// Ret value: None (None)
+JSBool JSPROXY_CCFlipX3D_initWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
+
+	CCFlipX3D *real = [(CCFlipX3D*)[proxy.klass alloc] initWithDuration:(ccTime)arg0  ];
+	[proxy setRealObj: real];
+	[real autorelease];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: ccGridSize, ccTime
+// Ret value: CCFlipX3D* (o)
+JSBool JSPROXY_CCFlipX3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	ccGridSize arg0; double arg1; 
+
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
+	CCFlipX3D* ret_val;
+
+	ret_val = [CCFlipX3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCFlipX3D* (o)
+JSBool JSPROXY_CCFlipX3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	CCFlipX3D* ret_val;
+
+	ret_val = [CCFlipX3D action ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCFlipX3D_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCFlipX3D_class->name = name;
+	JSPROXY_CCFlipX3D_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCFlipX3D_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCFlipX3D_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCFlipX3D_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCFlipX3D_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCFlipX3D_class->resolve = JS_ResolveStub;
+	JSPROXY_CCFlipX3D_class->convert = JS_ConvertStub;
+	JSPROXY_CCFlipX3D_class->finalize = JSPROXY_CCFlipX3D_finalize;
+//	JSPROXY_CCFlipX3D_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("initWithDuration", JSPROXY_CCFlipX3D_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCFlipX3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithSizeDuration", JSPROXY_CCFlipX3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("action", JSPROXY_CCFlipX3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	JSPROXY_CCFlipX3D_object = JS_InitClass(cx, globalObj, JSPROXY_CCGrid3DAction_object, JSPROXY_CCFlipX3D_class, JSPROXY_CCFlipX3D_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCFlipX3D
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFlipX3D_class, JSPROXY_CCFlipX3D_object, NULL);
+	JSPROXY_CCFlipX3D *proxy = [[JSPROXY_CCFlipX3D alloc] initWithJSObject:jsobj class:[CCFlipX3D class]];
+	[proxy setRealObj:realObj];
+
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		[proxy release];
+	}
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
+ * CCFlipY3D
+ */
+#pragma mark - CCFlipY3D
+
+JSClass* JSPROXY_CCFlipY3D_class = NULL;
+JSObject* JSPROXY_CCFlipY3D_object = NULL;
+ // Constructor
+JSBool JSPROXY_CCFlipY3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+{
+    JSObject *jsobj = [JSPROXY_CCFlipY3D createJSObjectWithRealObject:nil context:cx];
+    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+    return JS_TRUE;
+}
+
+// Destructor
+void JSPROXY_CCFlipY3D_finalize(JSContext *cx, JSObject *obj)
+{
+	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipY3D)", obj);
+}
+
+// Arguments: ccTime
+// Ret value: void (None)
+JSBool JSPROXY_CCFlipY3D_update_(JSContext *cx, uint32_t argc, jsval *vp) {
+
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
+
+	CCFlipY3D *real = (CCFlipY3D*) [proxy realObj];
+	[real update:(ccTime)arg0  ];
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+// Arguments: ccTime
+// Ret value: CCFlipY3D* (o)
+JSBool JSPROXY_CCFlipY3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
+	CCFlipY3D* ret_val;
+
+	ret_val = [CCFlipY3D actionWithDuration:(ccTime)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: ccGridSize, ccTime
+// Ret value: CCFlipY3D* (o)
+JSBool JSPROXY_CCFlipY3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	ccGridSize arg0; double arg1; 
+
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
+	CCFlipY3D* ret_val;
+
+	ret_val = [CCFlipY3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: 
+// Ret value: CCFlipY3D* (o)
+JSBool JSPROXY_CCFlipY3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	CCFlipY3D* ret_val;
+
+	ret_val = [CCFlipY3D action ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+void JSPROXY_CCFlipY3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
+{
+	JSPROXY_CCFlipY3D_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSPROXY_CCFlipY3D_class->name = name;
+	JSPROXY_CCFlipY3D_class->addProperty = JS_PropertyStub;
+	JSPROXY_CCFlipY3D_class->delProperty = JS_PropertyStub;
+	JSPROXY_CCFlipY3D_class->getProperty = JS_PropertyStub;
+	JSPROXY_CCFlipY3D_class->setProperty = JS_StrictPropertyStub;
+	JSPROXY_CCFlipY3D_class->enumerate = JS_EnumerateStub;
+	JSPROXY_CCFlipY3D_class->resolve = JS_ResolveStub;
+	JSPROXY_CCFlipY3D_class->convert = JS_ConvertStub;
+	JSPROXY_CCFlipY3D_class->finalize = JSPROXY_CCFlipY3D_finalize;
+//	JSPROXY_CCFlipY3D_class->flags = JSCLASS_HAS_PRIVATE;
+
+	static JSPropertySpec properties[] = {
+		{0, 0, 0, 0, 0}
+	};
+	static JSFunctionSpec funcs[] = {
+		JS_FN("update", JSPROXY_CCFlipY3D_update_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+	static JSFunctionSpec st_funcs[] = {
+		JS_FN("create", JSPROXY_CCFlipY3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("actionWithSizeDuration", JSPROXY_CCFlipY3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("action", JSPROXY_CCFlipY3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FS_END
+	};
+
+	JSPROXY_CCFlipY3D_object = JS_InitClass(cx, globalObj, JSPROXY_CCFlipX3D_object, JSPROXY_CCFlipY3D_class, JSPROXY_CCFlipY3D_constructor,0,properties,funcs,NULL,st_funcs);
+}
+
+@implementation JSPROXY_CCFlipY3D
+
++(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
+{
+	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFlipY3D_class, JSPROXY_CCFlipY3D_object, NULL);
+	JSPROXY_CCFlipY3D *proxy = [[JSPROXY_CCFlipY3D alloc] initWithJSObject:jsobj class:[CCFlipY3D class]];
+	[proxy setRealObj:realObj];
+
+	if( realObj ) {
+		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		[proxy release];
+	}
+
+	[self swizzleMethods];
+
+	return jsobj;
+}
+
+@end
+
+/*
  * CCFadeTo
  */
 #pragma mark - CCFadeTo
@@ -40541,163 +40715,6 @@ void JSPROXY_CCEaseBackInOut_createClass(JSContext *cx, JSObject* globalObj, con
 {
 	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCEaseBackInOut_class, JSPROXY_CCEaseBackInOut_object, NULL);
 	JSPROXY_CCEaseBackInOut *proxy = [[JSPROXY_CCEaseBackInOut alloc] initWithJSObject:jsobj class:[CCEaseBackInOut class]];
-	[proxy setRealObj:realObj];
-
-	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-		[proxy release];
-	}
-
-	[self swizzleMethods];
-
-	return jsobj;
-}
-
-@end
-
-/*
- * CCFlipX3D
- */
-#pragma mark - CCFlipX3D
-
-JSClass* JSPROXY_CCFlipX3D_class = NULL;
-JSObject* JSPROXY_CCFlipX3D_object = NULL;
- // Constructor
-JSBool JSPROXY_CCFlipX3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
-{
-    JSObject *jsobj = [JSPROXY_CCFlipX3D createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-    return JS_TRUE;
-}
-
-// Destructor
-void JSPROXY_CCFlipX3D_finalize(JSContext *cx, JSObject *obj)
-{
-	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX3D)", obj);
-}
-
-// Arguments: ccTime
-// Ret value: CCFlipX3D* (o)
-JSBool JSPROXY_CCFlipX3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCFlipX3D* ret_val;
-
-	ret_val = [CCFlipX3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: None (None)
-JSBool JSPROXY_CCFlipX3D_initWithDuration_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
-
-	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-
-	CCFlipX3D *real = [(CCFlipX3D*)[proxy.klass alloc] initWithDuration:(ccTime)arg0  ];
-	[proxy setRealObj: real];
-	[real autorelease];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-	[proxy release];
-	JS_SET_RVAL(cx, vp, JSVAL_VOID);
-	return JS_TRUE;
-}
-
-// Arguments: ccGridSize, ccTime
-// Ret value: CCFlipX3D* (o)
-JSBool JSPROXY_CCFlipX3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCFlipX3D* ret_val;
-
-	ret_val = [CCFlipX3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFlipX3D* (o)
-JSBool JSPROXY_CCFlipX3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
-	CCFlipX3D* ret_val;
-
-	ret_val = [CCFlipX3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
-{
-	JSPROXY_CCFlipX3D_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_CCFlipX3D_class->name = name;
-	JSPROXY_CCFlipX3D_class->addProperty = JS_PropertyStub;
-	JSPROXY_CCFlipX3D_class->delProperty = JS_PropertyStub;
-	JSPROXY_CCFlipX3D_class->getProperty = JS_PropertyStub;
-	JSPROXY_CCFlipX3D_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_CCFlipX3D_class->enumerate = JS_EnumerateStub;
-	JSPROXY_CCFlipX3D_class->resolve = JS_ResolveStub;
-	JSPROXY_CCFlipX3D_class->convert = JS_ConvertStub;
-	JSPROXY_CCFlipX3D_class->finalize = JSPROXY_CCFlipX3D_finalize;
-//	JSPROXY_CCFlipX3D_class->flags = JSCLASS_HAS_PRIVATE;
-
-	static JSPropertySpec properties[] = {
-		{0, 0, 0, 0, 0}
-	};
-	static JSFunctionSpec funcs[] = {
-		JS_FN("initWithDuration", JSPROXY_CCFlipX3D_initWithDuration_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithDuration", JSPROXY_CCFlipX3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCFlipX3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFlipX3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FS_END
-	};
-
-	JSPROXY_CCFlipX3D_object = JS_InitClass(cx, globalObj, JSPROXY_CCGrid3DAction_object, JSPROXY_CCFlipX3D_class, JSPROXY_CCFlipX3D_constructor,0,properties,funcs,NULL,st_funcs);
-}
-
-@implementation JSPROXY_CCFlipX3D
-
-+(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
-{
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_CCFlipX3D_class, JSPROXY_CCFlipX3D_object, NULL);
-	JSPROXY_CCFlipX3D *proxy = [[JSPROXY_CCFlipX3D alloc] initWithJSObject:jsobj class:[CCFlipX3D class]];
 	[proxy setRealObj:realObj];
 
 	if( realObj ) {
@@ -41317,10 +41334,7 @@ JSBool JSPROXY_CCWaves_actionWithWaves_amplitude_horizontal_vertical_grid_durati
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg4 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
 	if( ! ok ) return JS_FALSE;
 	CCWaves* ret_val;
@@ -41384,10 +41398,7 @@ JSBool JSPROXY_CCWaves_initWithWaves_amplitude_horizontal_vertical_grid_duration
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg3 );
-
-	JSObject *tmp_arg4;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg4 );
-	arg4 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg4);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg4 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg5 );
 	if( ! ok ) return JS_FALSE;
 
@@ -41453,10 +41464,7 @@ JSBool JSPROXY_CCWaves_actionWithSize_duration__static(JSContext *cx, uint32_t a
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCWaves* ret_val;
@@ -42065,10 +42073,7 @@ JSBool JSPROXY_CCLens3D_actionWithPosition_radius_grid_duration__static(JSContex
 
 	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCLens3D* ret_val;
@@ -42096,10 +42101,7 @@ JSBool JSPROXY_CCLens3D_initWithPosition_radius_grid_duration_(JSContext *cx, ui
 
 	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -42202,10 +42204,7 @@ JSBool JSPROXY_CCLens3D_actionWithSize_duration__static(JSContext *cx, uint32_t 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCLens3D* ret_val;
@@ -42340,10 +42339,7 @@ JSBool JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static(JSConte
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCWaves3D* ret_val;
@@ -42405,10 +42401,7 @@ JSBool JSPROXY_CCWaves3D_initWithWaves_amplitude_grid_duration_(JSContext *cx, u
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -42474,10 +42467,7 @@ JSBool JSPROXY_CCWaves3D_actionWithSize_duration__static(JSContext *cx, uint32_t
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCWaves3D* ret_val;
@@ -42550,7 +42540,7 @@ void JSPROXY_CCWaves3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithWavesAmplitudeGridDuration", JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithSizeDuration", JSPROXY_CCWaves3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDuration", JSPROXY_CCWaves3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCWaves3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -42764,10 +42754,7 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithWaves_amplitude_grid_duration__static(JS
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 	CCWavesTiles3D* ret_val;
@@ -42829,10 +42816,7 @@ JSBool JSPROXY_CCWavesTiles3D_initWithWaves_amplitude_grid_duration_(JSContext *
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-
-	JSObject *tmp_arg2;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg2);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg2 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg3 );
 	if( ! ok ) return JS_FALSE;
 
@@ -42898,10 +42882,7 @@ JSBool JSPROXY_CCWavesTiles3D_actionWithSize_duration__static(JSContext *cx, uin
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCWavesTiles3D* ret_val;
@@ -43035,10 +43016,7 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithSeed_grid_duration__static(JSContext *cx
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 	CCTurnOffTiles* ret_val;
@@ -43065,10 +43043,7 @@ JSBool JSPROXY_CCTurnOffTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	int32_t arg0; ccGridSize arg1; double arg2; 
 
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg0 );
-
-	JSObject *tmp_arg1;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg1);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
@@ -43090,10 +43065,7 @@ JSBool JSPROXY_CCTurnOffTiles_actionWithSize_duration__static(JSContext *cx, uin
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCTurnOffTiles* ret_val;
@@ -43397,10 +43369,7 @@ JSBool JSPROXY_CCSplitCols_actionWithSize_duration__static(JSContext *cx, uint32
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCSplitCols* ret_val;
@@ -43534,10 +43503,7 @@ JSBool JSPROXY_CCTransitionFadeUp_actionWithSize_(JSContext *cx, uint32_t argc, 
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCActionInterval* ret_val;
 
@@ -44117,10 +44083,7 @@ JSBool JSPROXY_CCTwirl_actionWithPosition_twirls_amplitude_grid_duration__static
 	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
-
-	JSObject *tmp_arg3;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg3);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg3 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
 	if( ! ok ) return JS_FALSE;
 	CCTwirl* ret_val;
@@ -44183,10 +44146,7 @@ JSBool JSPROXY_CCTwirl_initWithPosition_twirls_amplitude_grid_duration_(JSContex
 	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg0 );
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
-
-	JSObject *tmp_arg3;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg3);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg3 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg4 );
 	if( ! ok ) return JS_FALSE;
 
@@ -44294,10 +44254,7 @@ JSBool JSPROXY_CCTwirl_actionWithSize_duration__static(JSContext *cx, uint32_t a
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; double arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 	CCTwirl* ret_val;
@@ -45117,10 +45074,7 @@ JSBool JSPROXY_CCGrid3D_originalVertex_(JSContext *cx, uint32_t argc, jsval *vp)
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
@@ -45148,10 +45102,7 @@ JSBool JSPROXY_CCGrid3D_setVertex_vertex_(JSContext *cx, uint32_t argc, jsval *v
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; ccVertex3F arg1; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
@@ -45177,10 +45128,7 @@ JSBool JSPROXY_CCGrid3D_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	ccVertex3F ret_val;
 
@@ -45203,10 +45151,7 @@ JSBool JSPROXY_CCGrid3D_gridWithSize__static(JSContext *cx, uint32_t argc, jsval
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	if( ! ok ) return JS_FALSE;
 	CCGrid3D* ret_val;
 
@@ -45226,10 +45171,7 @@ JSBool JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static(JSContext *c
 	JSBool ok = JS_TRUE;
 	ccGridSize arg0; id arg1; JSBool arg2; 
 
-
-	JSObject *tmp_arg0;
-	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccGridSize*)JS_GetTypedArrayData( tmp_arg0);
+	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
