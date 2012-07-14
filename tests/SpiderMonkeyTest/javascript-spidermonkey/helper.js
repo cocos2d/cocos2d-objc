@@ -50,12 +50,20 @@ cc.POINT_ZERO = cc.p(0,0);
 
 cc._reuse_point = cc.p(0,0);
 cc._reuse_color3b = cc.c3(255, 255, 255 );
+cc._reuse_grid = cc.g(0,0);
 
 cc._p = function( x, y )
 {
     cc._reuse_point[0] = x;
     cc._reuse_point[1] = y;
     return cc._reuse_point;
+}
+
+cc._g = function( x, y )
+{
+    cc._reuse_grid[0] = x;
+    cc._reuse_grid[1] = y;
+    return cc._reuse_grid;
 }
 
 cc._c3 = function( r, g, b )
