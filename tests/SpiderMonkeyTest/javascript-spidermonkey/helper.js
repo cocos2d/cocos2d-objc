@@ -50,6 +50,7 @@ cc.POINT_ZERO = cc.p(0,0);
 
 cc._reuse_point = cc.p(0,0);
 cc._reuse_color3b = cc.c3(255, 255, 255 );
+cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
 cc._reuse_grid = cc.g(0,0);
 
 cc._p = function( x, y )
@@ -72,6 +73,15 @@ cc._c3 = function( r, g, b )
     cc._reuse_color3b[1] = g;
     cc._reuse_color3b[2] = b;
     return cc._reuse_color3b;
+}
+
+cc._c4 = function( r, g, b, a )
+{
+    cc._reuse_color4b[0] = r;
+    cc._reuse_color4b[1] = g;
+    cc._reuse_color4b[2] = b;
+    cc._reuse_color4b[3] = a;
+    return cc._reuse_color4b;
 }
 
 cc.rect = function(x,y,w,h)
@@ -215,3 +225,18 @@ cc.Layer.extend = function (prop) {
 };
 
 cc.LayerGradient.extend = cc.Layer.extend;
+
+//
+// Chipmunk helpers
+//
+var cc = cc || {};
+
+cp.vzero  = cp.v(0,0);
+cp._reuse_v= cp.v(0,0);
+
+cp._v = function( x, y )
+{
+    cp._reuse_v[0] = x;
+    cp._reuse_v[1] = y;
+    return cp._reuse_v;
+}
