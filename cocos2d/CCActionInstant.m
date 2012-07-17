@@ -413,7 +413,7 @@
 
 -(void) dealloc
 {
-	[block_ release];
+	_Block_release(block_);
 	[super dealloc];
 }
 
@@ -431,7 +431,7 @@
 -(id) initWithBlock:(void(^)(CCNode *node))block
 {
 	if ((self = [super init]))
-		block_ = [block copy];
+		block_ = _Block_copy(block);
 
 	return self;
 }
@@ -454,7 +454,7 @@
 
 -(void) dealloc
 {
-	[block_ release];
+	_Block_release(block_);
 	[super dealloc];
 }
 
@@ -474,7 +474,7 @@
 -(id) initWithBlock:(void(^)(id object))block object:(id)object
 {
 	if ((self = [super init])) {
-		block_ = [block copy];
+		block_ = _Block_copy(block);
 		object_ = [object retain];
 	}
 
@@ -500,7 +500,7 @@
 -(void) dealloc
 {
 	[object_ release];
-	[block_ release];
+	_Block_release(block_);
 
 	[super dealloc];
 }

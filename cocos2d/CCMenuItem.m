@@ -78,7 +78,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if((self=[super init]) ) {
 
 		if( block )
-			block_ = [block copy];
+			block_ = _Block_copy(block);
 
 		anchorPoint_ = ccp(0.5f, 0.5f);
 		isEnabled_ = YES;
@@ -90,14 +90,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) dealloc
 {
-	[block_ release];
+	_Block_release(block_);
 
 	[super dealloc];
 }
 
 -(void) cleanup
 {
-	[block_ release];
+	_Block_release(block_);
 	block_ = nil;
 
 	[super cleanup];
@@ -138,8 +138,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setBlock:(void(^)(id sender))block
 {
-    [block_ release];
-    block_ = [block copy];
+	_Block_release(block_);
+    block_ = _Block_copy(block);
 }
 
 -(void) setTarget:(id)target selector:(SEL)selector
