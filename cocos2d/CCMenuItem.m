@@ -769,6 +769,11 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 }
 
 
++(id) itemWithItems:(NSArray*)arrayOfItems
+{
+	return [[[self alloc] initWithItems:arrayOfItems block:NULL] autorelease];
+}
+
 +(id) itemWithItems:(NSArray*)arrayOfItems block:(void(^)(id))block
 {
 	return [[[self alloc] initWithItems:arrayOfItems block:block] autorelease];

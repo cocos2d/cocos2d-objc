@@ -298,6 +298,13 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
 		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
+#ifdef __CC_PLATFORM_MAC
+		JSPROXY_NSEvent_createClass(_cx, cocos2d, "Event");
+#elif defined(__CC_PLATFORM_IOS)
+		JSPROXY_UITouch_createClass(_cx, cocos2d, "Touch");
+		JSPROXY_UIAccelerometer_createClass(_cx, cocos2d, "Accelerometer");
+#endif
+
 		// Register classes: base classes should be registered first
 
 #import "js_bindings_cocos2d_classes_registration.h"

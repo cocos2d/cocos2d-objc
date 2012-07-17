@@ -57,58 +57,6 @@ var loadScene = function (sceneIdx)
 }
 
 
-cc.LayerGradient.extend = function (prop) {
-    var _super = this.prototype;
-
-    // Instantiate a base class (but only create the instance,
-    // don't run the init constructor)
-    initializing = true;
-    var prototype = new this();
-    initializing = false;
-    fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-
-    // Copy the properties over onto the new prototype
-    for (var name in prop) {
-        // Check if we're overwriting an existing function
-        prototype[name] = typeof prop[name] == "function" &&
-            typeof _super[name] == "function" && fnTest.test(prop[name]) ?
-            (function (name, fn) {
-                return function () {
-                    var tmp = this._super;
-
-                    // Add a new ._super() method that is the same method
-                    // but on the super-class
-                    this._super = _super[name];
-
-                    // The method only need to be bound temporarily, so we
-                    // remove it when we're done executing
-                    var ret = fn.apply(this, arguments);
-                    this._super = tmp;
-
-                    return ret;
-                };
-            })(name, prop[name]) :
-            prop[name];
-    }
-
-    // The dummy class constructor
-    function Class() {
-        // All construction is actually done in the init method
-        if (!initializing && this.ctor)
-            this.ctor.apply(this, arguments);
-    }
-
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
-
-    // And make this class extendable
-    Class.extend = arguments.callee;
-
-    return Class;
-};
 
 //
 // Base Layer
@@ -433,6 +381,58 @@ var MenuItemLabelTest = BaseLayer.extend({
     },
 
 });
+
+//------------------------------------------------------------------
+//
+// MenuItemToggleTest
+//
+//------------------------------------------------------------------
+var MenuItemToggleTest = BaseLayer.extend({
+
+    _vertically : true,
+    _menu : null,
+
+    onEnter:function () {
+        this._super();
+   
+        var label1 = cc.LabelBMFont.create("Volume Off", "futura-48.fnt" );
+        var item1 = cc.MenuItemLabel.create(label1);
+        var label2 = cc.LabelBMFont.create("Volume On", "futura-48.fnt" );
+        var item2 = cc.MenuItemLabel.create(label2);
+
+        var itema = cc.MenuItemFont.create("Sound Off");
+        var itemb = cc.MenuItemFont.create("Sound 50%");
+        var itemc = cc.MenuItemFont.create("Sound 100%");
+
+        var toggle1 = cc.MenuItemToggle.create( item1, item2 );
+        var toggle2 = cc.MenuItemToggle.create( itema, itemb, itemc );
+
+        toggle1.setCallback( this, this.item_cb);
+        toggle2.setCallback( this, this.item_cb);
+
+        this._menu = cc.Menu.create( toggle1, toggle2 );
+        this._menu.alignItemsVertically();
+        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
+
+        this.addChild( this._menu );
+    },
+
+    title:function () {
+        return "Menu Item Toggle";
+    },
+    subtitle:function () {
+        return "2 Toggle Items";
+    },
+    code:function () {
+        return "item = cc.MenuItemToggle.create( item1, item2, item3 );";
+    },
+
+    // callback
+    item_cb:function(sender) {
+        cc.log("toggle pressed");
+    },
+});
+
 //
 // Order of tests
 //
@@ -441,6 +441,7 @@ scenes.push( MenuItemFontTest );
 scenes.push( MenuItemImageTest );
 scenes.push( MenuItemSpriteTest );
 scenes.push( MenuItemLabelTest );
+scenes.push( MenuItemToggleTest );
 
 //------------------------------------------------------------------
 //

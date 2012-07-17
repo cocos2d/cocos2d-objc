@@ -475,8 +475,7 @@ var ParticlesPage = function() {
         this.setTouchEnabled( true );
 
 	this.onMouseDown = function( event ) {
-		pos = director.convertEventToGL( event );
-		this.particle.setPosition( pos );
+		this.particle.setPosition( event.getLocation() );
 	}
 
 	this.onMouseDragged = function( event ) {
@@ -486,8 +485,7 @@ var ParticlesPage = function() {
 	this.onTouchesEnded = function( touches, event ) {
 		var l = touches.length;
 		for( var i=0; i < l; i++) {
-			pos = director.convertTouchToGL( touches[i] );
-			this.particle.setPosition( pos );
+			this.particle.setPosition( touches[i].getLocation() );
 		}
 	}
 
@@ -576,10 +574,10 @@ ChipmunkPage.prototype.onEnter = function () {
 	}
 
 	var platform = __getPlatform();
-	if( platform == 'OSX' )
-		this.setIsMouseEnabled( true );
-	else if( platform == 'iOS' )
-		this.setIsTouchEnabled( true );
+    if( platform.substring(0,7) == 'desktop' )
+        this.setMouseEnabled( true );
+    else if( platform.substring(0,6) == 'mobile' )
+        this.setTouchEnabled( true );
 }
 
 ChipmunkPage.prototype.onEnterTransitionDidFinish = function () {
@@ -592,16 +590,13 @@ ChipmunkPage.prototype.update = function( delta ) {
 }
 
 ChipmunkPage.prototype.onMouseDown = function( event ) {
-	pos = director.convertEventToGL( event );
-	cc.log("Mouse Down:" + pos );
-	this.addSprite( pos );
+	this.addSprite( event.getLocation() );
 }
 
 ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
-		pos = director.convertTouchToGL( touches[i] );
-		this.addSprite( pos );
+		this.addSprite( touches[i].getLocation() );
 	}
 }
 

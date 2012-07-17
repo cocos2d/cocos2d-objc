@@ -64,7 +64,8 @@
 @interface CCFlipY3D : CCFlipX3D
 {
 }
-
+// Needed for bridge support
+-(void)update:(ccTime)time;
 @end
 
 ////////////////////////////////////////////////////////////

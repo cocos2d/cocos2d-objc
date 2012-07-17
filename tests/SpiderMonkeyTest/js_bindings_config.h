@@ -46,3 +46,12 @@
 #endif
 
 #endif // __JS_BINDINGS_CONFIG_H
+
+
+/** @def JSB_USE_COCOS2D
+ Whether or not it should assume that cocos2d is being used.
+ Useful, for example, to send the touches/events in cocos2d format
+*/
+#ifndef JSB_USE_COCOS2D
+#define JSB_USE_COCOS2D 1
+#endif // JSB_USE_COCOS2D

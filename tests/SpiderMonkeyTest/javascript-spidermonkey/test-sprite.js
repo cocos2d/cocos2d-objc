@@ -138,11 +138,10 @@ var SpriteTouchTest = function() {
 
 	this.initialize = function() {
 		var platform = __getPlatform();
-		if( platform.substring(0,7) == 'desktop' ) {
+		if( platform.substring(0,7) == 'desktop' )
 			this.setMouseEnabled( true );
-		} else if( platform.substring(0,6) == 'mobile' ) {
+		else if( platform.substring(0,6) == 'mobile' )
 			this.setTouchEnabled( true );
-		}
 		this.addSprite( centerPos );
 	}
 
@@ -164,15 +163,13 @@ var SpriteTouchTest = function() {
 goog.inherits(SpriteTouchTest, BaseLayer );
 
 SpriteTouchTest.prototype.onMouseDown = function( event ) {
-	pos = director.convertEventToGL( event );
-	this.addSprite( pos );
+	this.addSprite( event.getLocation() );
 }
 
 SpriteTouchTest.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
-		pos = director.convertTouchToGL( touches[i] );
-		this.addSprite( pos );
+		this.addSprite( touches[i].getLocation() );
 	}
 }
 
