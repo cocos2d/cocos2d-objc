@@ -88,6 +88,11 @@
 	return [[[self alloc] initWithFile:plistFile] autorelease];
 }
 
++(id) particleWithTotalParticles:(NSUInteger) numberOfParticles
+{
+	return [[[self alloc] initWithTotalParticles:numberOfParticles] autorelease];
+}
+
 -(id) init {
 	return [self initWithTotalParticles:150];
 }

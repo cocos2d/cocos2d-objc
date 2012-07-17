@@ -41,6 +41,11 @@
 /** RGB color composed of bytes 3 bytes
 @since v0.8
  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _ccColor3B
 {
 	GLubyte	r;
@@ -374,3 +379,8 @@ typedef float ccTime;
 //typedef double ccTime;
 
 typedef float ccMat4[16];
+	
+#ifdef __cplusplus
+}
+#endif
+

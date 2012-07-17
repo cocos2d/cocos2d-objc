@@ -57,58 +57,6 @@ var loadScene = function (sceneIdx)
 }
 
 
-cc.LayerGradient.extend = function (prop) {
-    var _super = this.prototype;
-
-    // Instantiate a base class (but only create the instance,
-    // don't run the init constructor)
-    initializing = true;
-    var prototype = new this();
-    initializing = false;
-    fnTest = /xyz/.test(function(){xyz;}) ? /\b_super\b/ : /.*/;
-
-    // Copy the properties over onto the new prototype
-    for (var name in prop) {
-        // Check if we're overwriting an existing function
-        prototype[name] = typeof prop[name] == "function" &&
-            typeof _super[name] == "function" && fnTest.test(prop[name]) ?
-            (function (name, fn) {
-                return function () {
-                    var tmp = this._super;
-
-                    // Add a new ._super() method that is the same method
-                    // but on the super-class
-                    this._super = _super[name];
-
-                    // The method only need to be bound temporarily, so we
-                    // remove it when we're done executing
-                    var ret = fn.apply(this, arguments);
-                    this._super = tmp;
-
-                    return ret;
-                };
-            })(name, prop[name]) :
-            prop[name];
-    }
-
-    // The dummy class constructor
-    function Class() {
-        // All construction is actually done in the init method
-        if (!initializing && this.ctor)
-            this.ctor.apply(this, arguments);
-    }
-
-    // Populate our constructed prototype object
-    Class.prototype = prototype;
-
-    // Enforce the constructor to be what we expect
-    Class.prototype.constructor = Class;
-
-    // And make this class extendable
-    Class.extend = arguments.callee;
-
-    return Class;
-};
 
 //
 // Base Layer
@@ -177,116 +125,6 @@ var BaseLayer = cc.LayerGradient.extend({
     }
 });
 
-//------------------------------------------------------------------
-//
-// MenuItemFontTest
-//
-//------------------------------------------------------------------
-var MenuItemFontTest = BaseLayer.extend({
-    onEnter:function () {
-        this._super();
-
-        var item1 = cc.MenuItemFont.create("Item 1. Should be RED");
-        var item2 = cc.MenuItemFont.create("This item is bigger", this, this.item_cb);
-        var item3 = cc.MenuItemFont.create("This item should be disabled", this, this.item_cb);
-
-        // callback function can be modified in runtime
-        item1.setCallback( this, this.item_cb );
-
-        // font color can be changed in runtime
-        item1.setColor( cc.c3(255,0,0) );
-
-        // font size can be changed in runtime (it is faster to do it before creating the item)
-        item2.setFontSize( 48 );
-
-        // font name can be changed in runtime (it is faster to do it before creating the item)
-        item3.setFontName( "Courier New");
-
-        // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
-
-        var menu = cc.Menu.create( item1, item2, item3 );
-        menu.alignItemsVertically();
-
-        menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
-
-        this.addChild( menu );
-    },
-
-    title:function () {
-        return "Menu Item Font";
-    },
-    subtitle:function () {
-        return "3 items. 3rd should be disabled. Smaller font";
-    },
-    code:function () {
-        return "item = cc.MenuItemFont.create('Press me', this, this.callback)";
-    },
-
-    // callback
-    item_cb:function(sender) {
-        cc.log("Item " + sender + " pressed");
-    },
-
-
-});
-
-//------------------------------------------------------------------
-//
-// MenuItemImage
-//
-//------------------------------------------------------------------
-var MenuItemImageTest = BaseLayer.extend({
-
-    _vertically : true,
-
-    _menu : null,
-
-    onEnter:function () {
-        this._super();
-  
-        var item1 = cc.MenuItemImage.create("btn-play-normal.png", "btn-play-selected.png" );
-        var item2 = cc.MenuItemImage.create("btn-highscores-normal.png", "btn-highscores-selected.png", this, this.item_cb  );
-        var item3 = cc.MenuItemImage.create("btn-about-normal.png", "btn-about-selected.png", this, this.item_cb  );
-        
-        // callback function can be modified in runtime
-        item1.setCallback( this, this.item_cb );
-
-        // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
-
-        this._menu = cc.Menu.create( item1, item2, item3 );
-        this._menu.alignItemsVertically();
-
-        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
-
-        this.addChild( this._menu );
-    },
-
-
-    title:function () {
-        return "Menu Item Sprite";
-    },
-    subtitle:function () {
-        return "3 items. 3rd should be disabled.";
-    },
-    code:function () {
-        return "item = cc.MenuItemImage.create('normal.png', 'selected.png' , 'disabled.png', this, this.cb )";
-    },
-
-    // callback
-    item_cb:function(sender) {
-        cc.log("Item " + sender + " pressed");
-        if( this._vertically )
-            this._menu.alignItemsHorizontally();
-        else
-            this._menu.alignItemsVertically();
-
-        this._vertically = ! this._vertically;
-
-    },
-
-});
 
 //------------------------------------------------------------------
 //
@@ -295,29 +133,54 @@ var MenuItemImageTest = BaseLayer.extend({
 //------------------------------------------------------------------
 var MainTest = BaseLayer.extend({
 
-    _vertically : true,
     _menu : null,
 
     onEnter:function () {
         this._super();
-   
-        var item1 = cc.MenuItemFont.create("Action Tests", this, function() { require("javascript-spidermonkey/test-actions.js"); } );
-        var item2 = cc.MenuItemFont.create("Ease Action Tests", this, function() { require("javascript-spidermonkey/test-easeactions.js"); } );
-        var item3 = cc.MenuItemFont.create("Chipmunk Tests", this, function() { require("javascript-spidermonkey/test-chipmunk.js"); } );
-        var item4 = cc.MenuItemFont.create("Label Tests", this, function() { require("javascript-spidermonkey/test-label.js"); } );
-        var item5 = cc.MenuItemFont.create("Menu Tests", this, function() { require("javascript-spidermonkey/test-menu.js"); } );
-        var item6 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
-        var item7 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
-        var item8 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("javascript-spidermonkey/test-cocosdenshion.js"); } );
-        var item9 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
+  
+        cc.MenuItemFont.setFontSize(24);
+        var item1 = cc.MenuItemFont.create("Actions: Basic Tests", this, function() { require("javascript-spidermonkey/test-actions.js"); } );
+        var item2 = cc.MenuItemFont.create("Actions: Ease Tests", this, function() { require("javascript-spidermonkey/test-easeactions.js"); } );
+        var item3 = cc.MenuItemFont.create("Actions: Progress Tests", this, function() { require("javascript-spidermonkey/test-actionsprogress.js"); } );
+        var item4 = cc.MenuItemFont.create("Chipmunk Tests", this, function() { require("javascript-spidermonkey/test-chipmunk.js"); } );
+        var item5 = cc.MenuItemFont.create("Effects Tests", this, function() { require("javascript-spidermonkey/test-effects.js"); } );
+        var item6 = cc.MenuItemFont.create("Label Tests", this, function() { require("javascript-spidermonkey/test-label.js"); } );
+        var item7 = cc.MenuItemFont.create("Menu Tests", this, function() { require("javascript-spidermonkey/test-menu.js"); } );
+        var item8 = cc.MenuItemFont.create("Parallax Tests", this, function() { require("javascript-spidermonkey/test-parallax.js"); } );
+        var item9 = cc.MenuItemFont.create("Particle Tests", this, function() { require("javascript-spidermonkey/test-particles.js"); } );
+        var item10 = cc.MenuItemFont.create("RenderTexture Tests", this, function() { require("javascript-spidermonkey/test-rendertexture.js"); } );
+        var item11 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("javascript-spidermonkey/test-sprite.js"); } );
+        var item12 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("javascript-spidermonkey/test-tilemap.js"); } );
+        var item13 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("javascript-spidermonkey/test-cocosdenshion.js"); } );
+        var item14 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("javascript-spidermonkey/test-cocos2djs.js"); } );
 
 
-        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
 
         this.addChild( this._menu );
+
+        var platform = __getPlatform();
+        if( platform.substring(0,7) == 'desktop' )
+            this.setMouseEnabled( true );
+        else if( platform.substring(0,6) == 'mobile' )
+            this.setTouchEnabled( true );
+    },
+
+    onTouchesMoved:function (touches, event) {
+        var delta = touches[0].getDelta();
+        var current = this._menu.getPosition();
+        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        return true;
+    },
+
+    onMouseDragged : function( event ) {
+        var delta = event.getDelta();
+        var current = this._menu.getPosition();
+        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        return true;
     },
 
     title:function () {
@@ -349,6 +212,8 @@ function run()
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionSplitCols.create(1, scene ) );
+
+    director.setDisplayStats(true);
 }
 
 run();

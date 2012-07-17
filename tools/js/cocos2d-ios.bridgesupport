@@ -1758,6 +1758,12 @@
 <retval declared_type='id' type='@'/>
 </method>
 </class>
+<class name='CCFlipY3D'>
+<method selector='update:'>
+<arg name='time' declared_type='ccTime' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
 <class name='CCFollow'>
 <method selector='actionWithTarget:' class_method='true'>
 <arg name='followedNode' declared_type='CCNode*' index='0' type='@'/>
@@ -3104,6 +3110,10 @@
 </arg>
 <retval declared_type='id' type='@'/>
 </method>
+<method selector='itemWithItems:' class_method='true'>
+<arg name='arrayOfItems' declared_type='NSArray*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
 <method selector='itemWithItems:block:' class_method='true'>
 <arg name='arrayOfItems' declared_type='NSArray*' index='0' type='@'/>
 <arg name='block' declared_type='void (^)(id)' index='1' function_pointer='true' type='@?'>
@@ -3716,6 +3726,61 @@
 <retval declared_type='CCTextureAtlas*' type='@'/>
 </method>
 </class>
+<class name='CCParticleExplosion'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFire'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFireworks'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleFlower'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleGalaxy'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleMeteor'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleRain'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSmoke'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSnow'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSpiral'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCParticleSun'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
 <class name='CCParticleSystem'>
 <method selector='active'>
 <retval declared_type='BOOL' type='B'/>
@@ -3806,6 +3871,10 @@
 </method>
 <method selector='particleWithFile:' class_method='true'>
 <arg name='plistFile' declared_type='NSString*' index='0' type='@'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='particleWithTotalParticles:' class_method='true'>
+<arg name='numberOfParticles' declared_type='NSUInteger' type='I' index='0'/>
 <retval declared_type='id' type='@'/>
 </method>
 <method selector='posVar'>
