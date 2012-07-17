@@ -1570,6 +1570,15 @@
 		A0600CE413C2757D00BB6F49 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A0601FD01534B2F600C4EECA /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
 		A0601FD21534B31F00C4EECA /* only_in_hd-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */; };
+		A0644AD415B61C75004AB807 /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACB15B61C75004AB807 /* konqa32-hd.fnt */; };
+		A0644AD515B61C75004AB807 /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACC15B61C75004AB807 /* konqa32-hd.png */; };
+		A0644AD615B61C75004AB807 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACD15B61C75004AB807 /* konqa32.fnt */; };
+		A0644AD715B61C75004AB807 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACE15B61C75004AB807 /* konqa32.png */; };
+		A0644AD815B61C75004AB807 /* MainMenu.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACF15B61C75004AB807 /* MainMenu.ccb */; };
+		A0644AD915B61C75004AB807 /* MainMenu.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0644AD015B61C75004AB807 /* MainMenu.ccbi */; };
+		A0644ADA15B61C75004AB807 /* MainMenu.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = A0644AD115B61C75004AB807 /* MainMenu.ccbproj */; };
+		A0644ADB15B61C75004AB807 /* MainMenu.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = A0644AD215B61C75004AB807 /* MainMenu.ccbresourcelog */; };
+		A0644ADC15B61C75004AB807 /* stars2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644AD315B61C75004AB807 /* stars2.png */; };
 		A07273C0155B1F07003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273BC155B1F07003E961F /* test_1021x1024.png */; };
 		A07273C7155B217E003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273C8155B217E003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */; };
@@ -4752,6 +4761,15 @@
 		A05B5B09156F35C100ADAB65 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A05B5B0A156F35C100ADAB65 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
+		A0644ACB15B61C75004AB807 /* konqa32-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-hd.fnt"; sourceTree = "<group>"; };
+		A0644ACC15B61C75004AB807 /* konqa32-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-hd.png"; sourceTree = "<group>"; };
+		A0644ACD15B61C75004AB807 /* konqa32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = konqa32.fnt; sourceTree = "<group>"; };
+		A0644ACE15B61C75004AB807 /* konqa32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = konqa32.png; sourceTree = "<group>"; };
+		A0644ACF15B61C75004AB807 /* MainMenu.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainMenu.ccb; sourceTree = "<group>"; };
+		A0644AD015B61C75004AB807 /* MainMenu.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = MainMenu.ccbi; sourceTree = "<group>"; };
+		A0644AD115B61C75004AB807 /* MainMenu.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainMenu.ccbproj; sourceTree = "<group>"; };
+		A0644AD215B61C75004AB807 /* MainMenu.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = MainMenu.ccbresourcelog; sourceTree = "<group>"; };
+		A0644AD315B61C75004AB807 /* stars2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stars2.png; sourceTree = "<group>"; };
 		A07273BC155B1F07003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
 		A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
@@ -7400,6 +7418,7 @@
 		A029007015B4D84700D64F82 /* Game */ = {
 			isa = PBXGroup;
 			children = (
+				A0644ACA15B61C75004AB807 /* CCB */,
 				A029007115B4D84700D64F82 /* Button-hd.png */,
 				A029007215B4D84700D64F82 /* Button.png */,
 				A029007315B4D84700D64F82 /* Chassis-hd.png */,
@@ -7598,6 +7617,22 @@
 				A05B5AF8156F35C100ADAB65 /* cpSlideJoint.c */,
 			);
 			path = constraints;
+			sourceTree = "<group>";
+		};
+		A0644ACA15B61C75004AB807 /* CCB */ = {
+			isa = PBXGroup;
+			children = (
+				A0644ACB15B61C75004AB807 /* konqa32-hd.fnt */,
+				A0644ACC15B61C75004AB807 /* konqa32-hd.png */,
+				A0644ACD15B61C75004AB807 /* konqa32.fnt */,
+				A0644ACE15B61C75004AB807 /* konqa32.png */,
+				A0644ACF15B61C75004AB807 /* MainMenu.ccb */,
+				A0644AD015B61C75004AB807 /* MainMenu.ccbi */,
+				A0644AD115B61C75004AB807 /* MainMenu.ccbproj */,
+				A0644AD215B61C75004AB807 /* MainMenu.ccbresourcelog */,
+				A0644AD315B61C75004AB807 /* stars2.png */,
+			);
+			path = CCB;
 			sourceTree = "<group>";
 		};
 		A0793447141990CC00AC44D4 /* Testbed */ = {
@@ -11620,6 +11655,15 @@
 				A029009C15B4D84700D64F82 /* TerrainMix.png in Resources */,
 				A029009D15B4D84700D64F82 /* Wheel-hd.png in Resources */,
 				A029009E15B4D84700D64F82 /* Wheel.png in Resources */,
+				A0644AD415B61C75004AB807 /* konqa32-hd.fnt in Resources */,
+				A0644AD515B61C75004AB807 /* konqa32-hd.png in Resources */,
+				A0644AD615B61C75004AB807 /* konqa32.fnt in Resources */,
+				A0644AD715B61C75004AB807 /* konqa32.png in Resources */,
+				A0644AD815B61C75004AB807 /* MainMenu.ccb in Resources */,
+				A0644AD915B61C75004AB807 /* MainMenu.ccbi in Resources */,
+				A0644ADA15B61C75004AB807 /* MainMenu.ccbproj in Resources */,
+				A0644ADB15B61C75004AB807 /* MainMenu.ccbresourcelog in Resources */,
+				A0644ADC15B61C75004AB807 /* stars2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

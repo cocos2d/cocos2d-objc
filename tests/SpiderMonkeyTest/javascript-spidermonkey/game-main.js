@@ -53,7 +53,7 @@ var GROUP_BUGGY = 1;
 // Game Layer
 //
 
-var GameLayer = cc.LayerGradient.extend({
+var GameLayer = cc.Layer.extend({
 
     _space:null,
     _motor:null,
@@ -64,9 +64,9 @@ var GameLayer = cc.LayerGradient.extend({
 
     ctor:function () {
                                 
-        var parent = new cc.LayerGradient();
+        var parent = new cc.Layer();
         __associateObjWithNative(this, parent);
-        this.init(cc._c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init();
 
         this.scheduleUpdate();
 
@@ -299,8 +299,15 @@ function run()
     centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
     var scene = cc.Scene.create();
+
+    // background
+    var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi");
+    scene.addChild( node );
+
+    // game
     var layer = new GameLayer();
     scene.addChild( layer );
+
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )

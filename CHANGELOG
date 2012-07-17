@@ -1,10 +1,12 @@
 version 2.1-alpha XX-Ago-2012
 . [NEW] GL ES 2.0 code: General improvements in the shader and cache code. Better error reporting.
-. [NEW] Javascript bindings for cocos2d, CocosDenshion and Chipmunk.
+. [NEW] Javascript bindings for cocos2d, CocosDenshion, CocosBuilder Reader and Chipmunk.
 			Includes Javascript remote console
+			Removed old JSCocoa code and samples
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Tests: Tests for RotationalSkew feature
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
+
 
 version 2.0.0 8-Jul-2012
 . [FIX] EventDispatcher: fixed ccMouseEnter/Exit
