@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A034160515487C3C00AE4D93"
-               BuildableName = "JavascriptJSCocoaTest.app"
-               BlueprintName = "JavascriptJSCocoaTest"
+               BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+               BuildableName = "Javascript.app"
+               BlueprintName = "Javascript"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,9 +31,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A034160515487C3C00AE4D93"
-            BuildableName = "JavascriptJSCocoaTest.app"
-            BlueprintName = "JavascriptJSCocoaTest"
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "Javascript.app"
+            BlueprintName = "Javascript"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -50,9 +50,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A034160515487C3C00AE4D93"
-            BuildableName = "JavascriptJSCocoaTest.app"
-            BlueprintName = "JavascriptJSCocoaTest"
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "Javascript.app"
+            BlueprintName = "Javascript"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -68,9 +68,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A034160515487C3C00AE4D93"
-            BuildableName = "JavascriptJSCocoaTest.app"
-            BlueprintName = "JavascriptJSCocoaTest"
+            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
+            BuildableName = "Javascript.app"
+            BlueprintName = "Javascript"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

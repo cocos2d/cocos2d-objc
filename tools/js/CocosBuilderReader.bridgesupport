@@ -1,0 +1,396 @@
+<?xml version='1.0'?>
+<signatures version='1.0'>
+<enum name='kCCBFloat0' value='0'/>
+<enum name='kCCBFloat05' value='3'/>
+<enum name='kCCBFloat1' value='1'/>
+<enum name='kCCBFloatFull' value='5'/>
+<enum name='kCCBFloatInteger' value='4'/>
+<enum name='kCCBFloatMinus1' value='2'/>
+<enum name='kCCBKeyframeEasingBackIn' value='11'/>
+<enum name='kCCBKeyframeEasingBackInOut' value='13'/>
+<enum name='kCCBKeyframeEasingBackOut' value='12'/>
+<enum name='kCCBKeyframeEasingBounceIn' value='8'/>
+<enum name='kCCBKeyframeEasingBounceInOut' value='10'/>
+<enum name='kCCBKeyframeEasingBounceOut' value='9'/>
+<enum name='kCCBKeyframeEasingCubicIn' value='2'/>
+<enum name='kCCBKeyframeEasingCubicInOut' value='4'/>
+<enum name='kCCBKeyframeEasingCubicOut' value='3'/>
+<enum name='kCCBKeyframeEasingElasticIn' value='5'/>
+<enum name='kCCBKeyframeEasingElasticInOut' value='7'/>
+<enum name='kCCBKeyframeEasingElasticOut' value='6'/>
+<enum name='kCCBKeyframeEasingInstant' value='0'/>
+<enum name='kCCBKeyframeEasingLinear' value='1'/>
+<enum name='kCCBPlatformAll' value='0'/>
+<enum name='kCCBPlatformIOS' value='1'/>
+<enum name='kCCBPlatformMac' value='2'/>
+<enum name='kCCBPositionTypePercent' value='4'/>
+<enum name='kCCBPositionTypeRelativeBottomLeft' value='0'/>
+<enum name='kCCBPositionTypeRelativeBottomRight' value='3'/>
+<enum name='kCCBPositionTypeRelativeTopLeft' value='1'/>
+<enum name='kCCBPositionTypeRelativeTopRight' value='2'/>
+<enum name='kCCBPropTypeAnimation' value='22'/>
+<enum name='kCCBPropTypeBlendmode' value='16'/>
+<enum name='kCCBPropTypeBlock' value='21'/>
+<enum name='kCCBPropTypeBlockCCControl' value='25'/>
+<enum name='kCCBPropTypeByte' value='12'/>
+<enum name='kCCBPropTypeCCBFile' value='23'/>
+<enum name='kCCBPropTypeCheck' value='9'/>
+<enum name='kCCBPropTypeColor3' value='13'/>
+<enum name='kCCBPropTypeColor4FVar' value='14'/>
+<enum name='kCCBPropTypeDegrees' value='5'/>
+<enum name='kCCBPropTypeFlip' value='15'/>
+<enum name='kCCBPropTypeFloat' value='7'/>
+<enum name='kCCBPropTypeFloatScale' value='26'/>
+<enum name='kCCBPropTypeFloatVar' value='8'/>
+<enum name='kCCBPropTypeFntFile' value='17'/>
+<enum name='kCCBPropTypeFontTTF' value='19'/>
+<enum name='kCCBPropTypeInteger' value='6'/>
+<enum name='kCCBPropTypeIntegerLabeled' value='20'/>
+<enum name='kCCBPropTypePoint' value='2'/>
+<enum name='kCCBPropTypePointLock' value='3'/>
+<enum name='kCCBPropTypePosition' value='0'/>
+<enum name='kCCBPropTypeScaleLock' value='4'/>
+<enum name='kCCBPropTypeSize' value='1'/>
+<enum name='kCCBPropTypeSpriteFrame' value='10'/>
+<enum name='kCCBPropTypeString' value='24'/>
+<enum name='kCCBPropTypeText' value='18'/>
+<enum name='kCCBPropTypeTexture' value='11'/>
+<enum name='kCCBScaleTypeAbsolute' value='0'/>
+<enum name='kCCBScaleTypeMultiplyResolution' value='1'/>
+<enum name='kCCBSizeTypeAbsolute' value='0'/>
+<enum name='kCCBSizeTypeHorizontalPercent' value='3'/>
+<enum name='kCCBSizeTypePercent' value='1'/>
+<enum name='kCCBSizeTypeRelativeContainer' value='2'/>
+<enum name='kCCBSzieTypeVerticalPercent' value='4'/>
+<enum name='kCCBTargetTypeDocumentRoot' value='1'/>
+<enum name='kCCBTargetTypeNone' value='0'/>
+<enum name='kCCBTargetTypeOwner' value='2'/>
+<enum name='kCCBVersion' value='3'/>
+<class name='CCBActionManager'>
+<method selector='addNode:andSequences:'>
+<arg name='node' declared_type='CCNode*' type='@' index='0'/>
+<arg name='seq' declared_type='NSDictionary*' type='@' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='autoPlaySequenceId'>
+<retval declared_type='int' type='i'/>
+</method>
+<method selector='containerSize:'>
+<arg name='node' declared_type='CCNode*' type='@' index='0'/>
+<retval declared_type='CGSize' type='{CGSize=ff}'/>
+</method>
+<method selector='debug'>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='delegate'>
+<retval declared_type='NSObject*' type='@'/>
+</method>
+<method selector='rootContainerSize'>
+<retval declared_type='CGSize' type='{CGSize=ff}'/>
+</method>
+<method selector='rootNode'>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='runActionsForSequenceId:tweenDuration:'>
+<arg name='seqId' declared_type='int' type='i' index='0'/>
+<arg name='tweenDuration' declared_type='float' type='f' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='runActionsForSequenceNamed:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='runActionsForSequenceNamed:tweenDuration:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<arg name='tweenDuration' declared_type='float' type='f' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='runningSequenceName'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='sequences'>
+<retval declared_type='NSMutableArray*' type='@'/>
+</method>
+<method selector='setAutoPlaySequenceId:'>
+<arg name='autoPlaySequenceId' declared_type='int' type='i' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setBaseValue:forNode:propertyName:'>
+<arg name='value' declared_type='id' type='@' index='0'/>
+<arg name='node' declared_type='CCNode*' type='@' index='1'/>
+<arg name='propName' declared_type='NSString*' type='@' index='2'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDelegate:'>
+<arg name='delegate' declared_type='NSObject*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRootContainerSize:'>
+<arg name='rootContainerSize' declared_type='CGSize' type='{CGSize=ff}' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRootNode:'>
+<arg name='rootNode' declared_type='CCNode*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCBFile'>
+<method selector='ccbFile'>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='setCcbFile:'>
+<arg name='ccbFile' declared_type='CCNode*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCBFileUtils'>
+<method selector='ccbDirectoryPath'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setCcbDirectoryPath:'>
+<arg name='ccbDirectoryPath' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCBKeyframe'>
+<method selector='easingOpt'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='easingType'>
+<retval declared_type='int' type='i'/>
+</method>
+<method selector='setEasingOpt:'>
+<arg name='easingOpt' declared_type='float' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setEasingType:'>
+<arg name='easingType' declared_type='int' type='i' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setTime:'>
+<arg name='time' declared_type='float' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setValue:'>
+<arg name='value' declared_type='id' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='time'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='value'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCBReader'>
+<method selector='actionManager'>
+<retval declared_type='CCBActionManager*' type='@'/>
+</method>
+<method selector='ccbDirectoryPath' class_method='true'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='nodeGraphFromFile:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='nodeGraphFromFile:owner:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='nodeGraphFromFile:owner:actionManager:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='actionManager' declared_type='CCBActionManager**' type='^@' index='2'/>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='nodeGraphFromFile:owner:parentSize:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='nodeGraphFromFile:owner:parentSize:actionManager:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<arg name='actionManager' declared_type='CCBActionManager**' type='^@' index='3'/>
+<retval declared_type='CCNode*' type='@'/>
+</method>
+<method selector='sceneWithNodeGraphFromFile:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='CCScene*' type='@'/>
+</method>
+<method selector='sceneWithNodeGraphFromFile:owner:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<retval declared_type='CCScene*' type='@'/>
+</method>
+<method selector='sceneWithNodeGraphFromFile:owner:actionManager:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='actionManager' declared_type='CCBActionManager**' type='^@' index='2'/>
+<retval declared_type='CCScene*' type='@'/>
+</method>
+<method selector='sceneWithNodeGraphFromFile:owner:parentSize:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<retval declared_type='CCScene*' type='@'/>
+</method>
+<method selector='sceneWithNodeGraphFromFile:owner:parentSize:actionManager:' class_method='true'>
+<arg name='file' declared_type='NSString*' type='@' index='0'/>
+<arg name='owner' declared_type='id' type='@' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<arg name='actionManager' declared_type='CCBActionManager**' type='^@' index='3'/>
+<retval declared_type='CCScene*' type='@'/>
+</method>
+<method selector='setActionManager:'>
+<arg name='actionManager' declared_type='CCBActionManager*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCBSequence'>
+<method selector='chainedSequenceId'>
+<retval declared_type='int' type='i'/>
+</method>
+<method selector='duration'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='sequenceId'>
+<retval declared_type='int' type='i'/>
+</method>
+<method selector='setChainedSequenceId:'>
+<arg name='chainedSequenceId' declared_type='int' type='i' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setDuration:'>
+<arg name='duration' declared_type='float' type='f' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setName:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setSequenceId:'>
+<arg name='sequenceId' declared_type='int' type='i' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCBSequenceProperty'>
+<method selector='keyframes'>
+<retval declared_type='NSMutableArray*' type='@'/>
+</method>
+<method selector='name'>
+<retval declared_type='NSString*' type='@'/>
+</method>
+<method selector='setName:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setType:'>
+<arg name='type' declared_type='int' type='i' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='type'>
+<retval declared_type='int' type='i'/>
+</method>
+</class>
+<class name='CCBSetSpriteFrame'>
+<method selector='actionWithSpriteFrame:' class_method='true'>
+<arg name='sf' declared_type='CCSpriteFrame*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+<method selector='initWithSpriteFrame:'>
+<arg name='sf' declared_type='CCSpriteFrame*' type='@' index='0'/>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='CCNode'>
+<method selector='absolutePositionFromRelative:type:parentSize:propertyName:'>
+<arg name='pt' declared_type='CGPoint' type='{CGPoint=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='containerSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<arg name='propertyName' declared_type='NSString*' type='@' index='3'/>
+<retval declared_type='CGPoint' type='{CGPoint=ff}'/>
+</method>
+<method selector='resolutionScale'>
+<retval declared_type='float' type='f'/>
+</method>
+<method selector='setRelativeFloat:type:propertyName:'>
+<arg name='f' declared_type='float' type='f' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='propertyName' declared_type='NSString*' type='@' index='2'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativePosition:type:'>
+<arg name='position' declared_type='CGPoint' type='{CGPoint=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativePosition:type:parentSize:'>
+<arg name='position' declared_type='CGPoint' type='{CGPoint=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativePosition:type:parentSize:propertyName:'>
+<arg name='pt' declared_type='CGPoint' type='{CGPoint=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='containerSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<arg name='propertyName' declared_type='NSString*' type='@' index='3'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativeScaleX:Y:type:'>
+<arg name='x' declared_type='float' type='f' index='0'/>
+<arg name='y' declared_type='float' type='f' index='1'/>
+<arg name='type' declared_type='int' type='i' index='2'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativeScaleX:Y:type:propertyName:'>
+<arg name='x' declared_type='float' type='f' index='0'/>
+<arg name='y' declared_type='float' type='f' index='1'/>
+<arg name='type' declared_type='int' type='i' index='2'/>
+<arg name='propertyName' declared_type='NSString*' type='@' index='3'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativeSize:type:'>
+<arg name='size' declared_type='CGSize' type='{CGSize=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativeSize:type:parentSize:'>
+<arg name='size' declared_type='CGSize' type='{CGSize=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='parentSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<retval declared_type='void' type='v'/>
+</method>
+<method selector='setRelativeSize:type:parentSize:propertyName:'>
+<arg name='size' declared_type='CGSize' type='{CGSize=ff}' index='0'/>
+<arg name='type' declared_type='int' type='i' index='1'/>
+<arg name='containerSize' declared_type='CGSize' type='{CGSize=ff}' index='2'/>
+<arg name='propertyName' declared_type='NSString*' type='@' index='3'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<class name='CCScene'>
+<method selector='init'>
+<retval declared_type='id' type='@'/>
+</method>
+</class>
+<class name='NSObject'>
+<method selector='completedAnimationSequenceNamed:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</class>
+<informal_protocol name='CCBActionManagerDelegate'>
+<method type='v12@0:4@8' selector='completedAnimationSequenceNamed:'>
+<arg name='name' declared_type='NSString*' type='@' index='0'/>
+<retval declared_type='void' type='v'/>
+</method>
+</informal_protocol>
+</signatures>

@@ -13,10 +13,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-               BuildableName = "JavascriptSpidermonkey.app"
-               BlueprintName = "JavascriptSpidermonkey"
-               ReferencedContainer = "container:cocos2d-mac.xcodeproj">
+               BlueprintIdentifier = "A02900AF15B5FA9E00D64F82"
+               BuildableName = "libCocosBuilderReader.a"
+               BlueprintName = "CocosBuilderReader"
+               ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -28,15 +28,6 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "JavascriptSpidermonkey.app"
-            BlueprintName = "JavascriptSpidermonkey"
-            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -47,15 +38,6 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "JavascriptSpidermonkey.app"
-            BlueprintName = "JavascriptSpidermonkey"
-            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -65,15 +47,6 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "JavascriptSpidermonkey.app"
-            BlueprintName = "JavascriptSpidermonkey"
-            ReferencedContainer = "container:cocos2d-mac.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
