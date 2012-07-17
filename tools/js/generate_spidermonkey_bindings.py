@@ -1437,7 +1437,8 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
     def generate_class_header_prefix( self ):
         self.generate_autogenerate_prefix( self.h_file )
         for i in self.import_files:
-            self.h_file.write('#import "%s"\n' % i )
+            if i and i != '':
+                self.h_file.write('#import "%s"\n' % i )
 
     def generate_class_header( self, class_name, parent_name ):
         # JSPROXXY_CCNode

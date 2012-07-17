@@ -40,7 +40,7 @@
 #import "js_bindings_chipmunk_functions.h"
 #import "js_bindings_chipmunk_manual.h"
 #import "js_bindings_CocosDenshion_classes.h"
-
+#import "js_bindings_CocosBuilderReader_classes.h"
 
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
@@ -323,13 +323,16 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 		//
 		// CocosDenshion
 		//
-		//		JSObject *CocosDenshion = JS_NewObject( _cx, NULL, NULL, NULL);
-		//		jsval denshionVal = OBJECT_TO_JSVAL(CocosDenshion);
-		//		JS_SetProperty(_cx, _object, "cd", &denshionVal);
-		
 		// Reuse "cc" namespace for CocosDenshion
 		JSObject *CocosDenshion = cocos2d;
 #import "js_bindings_CocosDenshion_classes_registration.h"
+
+		//
+		// CocosBuilderReader
+		//
+		// Reuse "cc" namespace for CocosBuilderReader
+		JSObject *CocosBuilderReader = cocos2d;
+#import "js_bindings_CocosBuilderReader_classes_registration.h"
 
 		//
 		// Chipmunk
