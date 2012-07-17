@@ -262,7 +262,7 @@ static BOOL configured = FALSE;
 		return NO;
 	}
 }
-
+ 
 // Init
 + (CDAudioManager *) sharedManager
 {
