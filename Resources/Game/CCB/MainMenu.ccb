@@ -1116,7 +1116,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>buttonA:</string>
+									<string>buttonC:</string>
 									<integer>2</integer>
 								</array>
 							</dict>
@@ -1268,7 +1268,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>buttonF:</string>
+									<string>buttonA:</string>
 									<integer>2</integer>
 								</array>
 							</dict>
@@ -1420,7 +1420,7 @@
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>buttonC:</string>
+									<string>buttonB:</string>
 									<integer>2</integer>
 								</array>
 							</dict>

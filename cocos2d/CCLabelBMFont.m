@@ -731,7 +731,10 @@ void FNTConfigRemoveCache( void )
 		// unichar is a short, and an int is needed on HASH_FIND_INT
 		NSUInteger key = (NSUInteger)c;
 		HASH_FIND_INT(configuration_->fontDefDictionary_ , &key, element);
-		NSAssert(element, @"FontDefinition could not be found!");
+		if( ! element ) {
+			CCLOGWARN(@"cocos2d: LabelBMFont: characer not found %c", c);
+			continue;
+		}
         
 		ccBMFontDef fontDef = element->fontDef;
         

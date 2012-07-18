@@ -6,6 +6,7 @@ version 2.1-alpha XX-Ago-2012
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Tests: Tests for RotationalSkew feature
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
+			Don't assert if character is not found. Just continue with logging the warning.
 
 
 version 2.0.0 8-Jul-2012
