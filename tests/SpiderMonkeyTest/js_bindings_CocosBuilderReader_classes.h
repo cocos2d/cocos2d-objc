@@ -17,6 +17,8 @@ extern "C" {
 
 void JSPROXY_CCBReader_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCBReader_nodeGraphFromFile_owner__static(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCBReader_object;
