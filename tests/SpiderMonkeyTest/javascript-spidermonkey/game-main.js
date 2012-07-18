@@ -82,6 +82,25 @@ var GameLayer = cc.LayerGradient.extend({
         var menu = cc.Menu.create( menuItem );
         this.addChild( menu );
         menu.setPosition( cc._p( 40,60)  );
+    
+        var animCache = cc.AnimationCache.getInstance();
+        animCache.addAnimationsWithFile("coins_animation.plist");
+        var animation = animCache.animationByName("coin");
+
+
+        var coin = cc.Sprite.createWithSpriteFrameName("coin01.png");
+        var batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 20 );
+        this.addChild( batch );
+
+        var action = cc.RepeatForever.create( cc.Animate.create( animation ) );
+
+        for( var i = 1; i < 21; i++ ) {
+            var frameName = "coin" + ((i < 10) ? ("0" + i) : i) + ".png";
+            var coin = cc.Sprite.createWithSpriteFrameName( frameName );
+            coin.runAction( action.copy() );
+            coin.setPosition( cc._p( 0 + i * _winSize[0]/21, _winSize[1]/2) );
+            batch.addChild( coin );
+        }
     },
 
     reset:function() {
@@ -112,7 +131,7 @@ var GameLayer = cc.LayerGradient.extend({
 		var staticBody = cp.spaceGetStaticBody( this._space );
 
 		// Walls
-		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,50), 0 ),				        // bottom
+		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,50), 0 ),				    // bottom
 				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
 				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				            // left
 				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
@@ -303,10 +322,7 @@ var MainMenu = cc.Layer.extend({
     },
 
     buttonA:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new GameLayer();
-        scene.addChild( layer );
-        director.replaceScene( scene );
+        run();
     },
 
     buttonB:function( sender) {

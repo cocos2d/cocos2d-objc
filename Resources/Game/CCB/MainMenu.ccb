@@ -547,8 +547,8 @@
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<real>50.5</real>
-							<real>81.25</real>
+							<real>50.400001525878906</real>
+							<real>81</real>
 						</array>
 						<key>name</key>
 						<string>position</string>
@@ -556,8 +556,8 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>50.5</real>
-							<real>81.25</real>
+							<real>50.400001525878906</real>
+							<real>81</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -648,9 +648,9 @@
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>32</integer>
+							<integer>32</integer>
+							<integer>32</integer>
 						</array>
 						<key>name</key>
 						<string>color</string>
@@ -658,9 +658,9 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>0</integer>
-							<integer>0</integer>
-							<integer>0</integer>
+							<integer>32</integer>
+							<integer>32</integer>
+							<integer>32</integer>
 						</array>
 					</dict>
 					<dict>
@@ -701,7 +701,7 @@
 						<key>baseValue</key>
 						<array>
 							<real>50</real>
-							<real>81.770835876464844</real>
+							<real>82</real>
 						</array>
 						<key>name</key>
 						<string>position</string>
@@ -710,7 +710,7 @@
 						<key>value</key>
 						<array>
 							<real>50</real>
-							<real>81.770835876464844</real>
+							<real>82</real>
 							<integer>4</integer>
 						</array>
 					</dict>

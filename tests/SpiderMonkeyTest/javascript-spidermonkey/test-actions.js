@@ -596,7 +596,7 @@ var ActionAnimate = BaseLayer.extend({
         // File animation
         //
         // With 2 loops and reverse
-        var animCache = cc.AnimationCache.sharedAnimationCache();
+        var animCache = cc.AnimationCache.getInstance();
 
         animCache.addAnimationsWithFile("animations/animations-2.plist");
         var animation2 = animCache.animationByName("dance_1");
