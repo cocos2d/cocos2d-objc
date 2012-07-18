@@ -8,7 +8,7 @@
 //	return floats;
 //}
 
-var cc = cc || {};
+//var cc = cc || {};
 
 //
 // cocos2d constants
@@ -229,7 +229,7 @@ cc.LayerGradient.extend = cc.Layer.extend;
 //
 // Chipmunk helpers
 //
-var cc = cc || {};
+//var cp = cp || {};
 
 cp.vzero  = cp.v(0,0);
 cp._reuse_v= cp.v(0,0);

@@ -40,7 +40,7 @@
         absPt.y = (int)(containerSize.height * pt.y / 100.0f);
     }
     
-    NSLog(@"pt: (%f,%f) absPt: (%f,%f)",pt.x,pt.y,absPt.x,absPt.y);
+//    NSLog(@"pt: (%f,%f) absPt: (%f,%f)",pt.x,pt.y,absPt.x,absPt.y);
     
     return absPt;
 }
