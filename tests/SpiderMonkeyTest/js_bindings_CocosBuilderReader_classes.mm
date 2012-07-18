@@ -50,47 +50,6 @@ JSBool JSPROXY_CCBReader_ccbDirectoryPath_static(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: CCNode* (o)
-JSBool JSPROXY_CCBReader_nodeGraphFromFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCNode* ret_val;
-
-	ret_val = [CCBReader nodeGraphFromFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSObject*
-// Ret value: CCNode* (o)
-JSBool JSPROXY_CCBReader_nodeGraphFromFile_owner__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; id arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	if( ! ok ) return JS_FALSE;
-	CCNode* ret_val;
-
-	ret_val = [CCBReader nodeGraphFromFile:(NSString*)arg0 owner:(NSObject*)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: NSString*, NSObject*, CGSize
 // Ret value: CCNode* (o)
 JSBool JSPROXY_CCBReader_nodeGraphFromFile_owner_parentSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -109,6 +68,72 @@ JSBool JSPROXY_CCBReader_nodeGraphFromFile_owner_parentSize__static(JSContext *c
 	CCNode* ret_val;
 
 	ret_val = [CCBReader nodeGraphFromFile:(NSString*)arg0 owner:(NSObject*)arg1 parentSize:(CGSize)arg2  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*
+// Ret value: CCScene* (o)
+JSBool JSPROXY_CCBReader_sceneWithNodeGraphFromFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSString* arg0; 
+
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	if( ! ok ) return JS_FALSE;
+	CCScene* ret_val;
+
+	ret_val = [CCBReader sceneWithNodeGraphFromFile:(NSString*)arg0  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSObject*
+// Ret value: CCScene* (o)
+JSBool JSPROXY_CCBReader_sceneWithNodeGraphFromFile_owner__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSString* arg0; id arg1; 
+
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+	if( ! ok ) return JS_FALSE;
+	CCScene* ret_val;
+
+	ret_val = [CCBReader sceneWithNodeGraphFromFile:(NSString*)arg0 owner:(NSObject*)arg1  ];
+
+	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	return JS_TRUE;
+}
+
+// Arguments: NSString*, NSObject*, CGSize
+// Ret value: CCScene* (o)
+JSBool JSPROXY_CCBReader_sceneWithNodeGraphFromFile_owner_parentSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 3, @"Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSString* arg0; id arg1; CGSize arg2; 
+
+	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
+	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
+
+	JSObject *tmp_arg2;
+	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
+	arg2 = *(CGSize*)JS_GetTypedArrayData( tmp_arg2);
+	if( ! ok ) return JS_FALSE;
+	CCScene* ret_val;
+
+	ret_val = [CCBReader sceneWithNodeGraphFromFile:(NSString*)arg0 owner:(NSObject*)arg1 parentSize:(CGSize)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -138,9 +163,11 @@ void JSPROXY_CCBReader_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("ccbDirectoryPath", JSPROXY_CCBReader_ccbDirectoryPath_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("nodeGraphFromFile", JSPROXY_CCBReader_nodeGraphFromFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("nodeGraphFromFileOwner", JSPROXY_CCBReader_nodeGraphFromFile_owner__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("nodeGraphFromFile", JSPROXY_CCBReader_nodeGraphFromFile_owner__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("nodeGraphFromFileOwnerParentSize", JSPROXY_CCBReader_nodeGraphFromFile_owner_parentSize__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("sceneWithNodeGraphFromFile", JSPROXY_CCBReader_sceneWithNodeGraphFromFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("sceneWithNodeGraphFromFileOwner", JSPROXY_CCBReader_sceneWithNodeGraphFromFile_owner__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("sceneWithNodeGraphFromFileOwnerParentSize", JSPROXY_CCBReader_sceneWithNodeGraphFromFile_owner_parentSize__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

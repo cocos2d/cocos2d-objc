@@ -52,8 +52,7 @@ var GROUP_BUGGY = 1;
 //
 // Game Layer
 //
-
-var GameLayer = cc.Layer.extend({
+var GameLayer = cc.LayerGradient.extend({
 
     _space:null,
     _motor:null,
@@ -64,9 +63,9 @@ var GameLayer = cc.Layer.extend({
 
     ctor:function () {
                                 
-        var parent = new cc.Layer();
+        var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init();
+        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
 
         this.scheduleUpdate();
 
@@ -286,6 +285,38 @@ var GameLayer = cc.Layer.extend({
     },
 });
 
+//
+// Main Menu
+//
+var MainMenu = cc.Layer.extend({
+
+    ctor:function () {
+                                
+        var parent = new cc.Layer();
+        __associateObjWithNative(this, parent);
+        this.init();
+
+
+        // background
+        var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi", this);
+        this.addChild( node );
+    },
+
+    buttonA:function( sender) {
+        var scene = cc.Scene.create();
+        var layer = new GameLayer();
+        scene.addChild( layer );
+        director.replaceScene( scene );
+    },
+
+    buttonB:function( sender) {
+        var scene = cc.Scene.create();
+        var layer = new GameLayer();
+        scene.addChild( layer );
+        director.replaceScene( cc.TransitionSplitCols.create(1, scene) );
+    },
+
+});
 //------------------------------------------------------------------
 //
 // Main entry point
@@ -300,14 +331,13 @@ function run()
 
     var scene = cc.Scene.create();
 
-    // background
-    var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi");
-    scene.addChild( node );
+    // main menu
+    var menu = new MainMenu();
+    scene.addChild( menu);
 
     // game
-    var layer = new GameLayer();
-    scene.addChild( layer );
-
+//    var layer = new GameLayer();
+//    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )
