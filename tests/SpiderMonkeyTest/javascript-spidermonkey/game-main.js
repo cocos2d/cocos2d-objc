@@ -298,7 +298,7 @@ var MainMenu = cc.Layer.extend({
 
 
         // background
-        var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi", this);
+        var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi", this, _winSize);
         this.addChild( node );
     },
 
@@ -314,6 +314,12 @@ var MainMenu = cc.Layer.extend({
         var layer = new GameLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionSplitCols.create(1, scene) );
+    },
+
+    buttonC:function( sender ) {
+        var hi = cc.LabelTTF.create("Callbacks are working", "Arial", 28 );
+        this.addChild( hi );
+        hi.setPosition(  centerPos );
     },
 
 });

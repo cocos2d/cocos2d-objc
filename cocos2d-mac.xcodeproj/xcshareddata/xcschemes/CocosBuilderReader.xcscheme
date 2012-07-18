@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0644A1415B609D3004AB807"
-               BuildableName = "libchipmunk copy.a"
+               BuildableName = "libCocosBuilderReader.a"
                BlueprintName = "CocosBuilderReader"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
