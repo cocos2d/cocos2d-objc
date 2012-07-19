@@ -1574,6 +1574,10 @@
 		A091135C15B7BEA2006DD5AA /* HUD.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A091135515B7BEA2006DD5AA /* HUD.ccbi */; };
 		A091135D15B7BEA2006DD5AA /* pickup_coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091135615B7BEA2006DD5AA /* pickup_coin.wav */; };
 		A091135E15B7BEA2006DD5AA /* pickup_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091135715B7BEA2006DD5AA /* pickup_star.wav */; };
+		A091137A15B8A1B5006DD5AA /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A091137515B8A1B5006DD5AA /* ChipmunkDebugNode.m */; };
+		A091137B15B8A1B5006DD5AA /* HMVectorNode.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A091137615B8A1B5006DD5AA /* HMVectorNode.fsh */; };
+		A091137C15B8A1B5006DD5AA /* HMVectorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A091137815B8A1B5006DD5AA /* HMVectorNode.m */; };
+		A091137D15B8A1B5006DD5AA /* HMVectorNode.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A091137915B8A1B5006DD5AA /* HMVectorNode.vsh */; };
 		A093FC25150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
 		A093FC26150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
 		A093FC27150D0ED40039327A /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
@@ -4797,6 +4801,12 @@
 		A091135515B7BEA2006DD5AA /* HUD.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HUD.ccbi; sourceTree = "<group>"; };
 		A091135615B7BEA2006DD5AA /* pickup_coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pickup_coin.wav; path = Resources/Game/pickup_coin.wav; sourceTree = SOURCE_ROOT; };
 		A091135715B7BEA2006DD5AA /* pickup_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pickup_star.wav; path = Resources/Game/pickup_star.wav; sourceTree = SOURCE_ROOT; };
+		A091137415B8A1B5006DD5AA /* ChipmunkDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkDebugNode.h; sourceTree = "<group>"; };
+		A091137515B8A1B5006DD5AA /* ChipmunkDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChipmunkDebugNode.m; sourceTree = "<group>"; };
+		A091137615B8A1B5006DD5AA /* HMVectorNode.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = HMVectorNode.fsh; sourceTree = "<group>"; };
+		A091137715B8A1B5006DD5AA /* HMVectorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVectorNode.h; sourceTree = "<group>"; };
+		A091137815B8A1B5006DD5AA /* HMVectorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVectorNode.m; sourceTree = "<group>"; };
+		A091137915B8A1B5006DD5AA /* HMVectorNode.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = HMVectorNode.vsh; sourceTree = "<group>"; };
 		A093FC24150D0ED40039327A /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
 		A093FF07150E9BE00039327A /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A093FF08150E9BE00039327A /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
@@ -7464,6 +7474,12 @@
 				A04E85D8159B6B2D00F4BE65 /* ChipmunkSprite.m */,
 				A04E85FB159B6B2D00F4BE65 /* ScriptingCore.h */,
 				A04E85FC159B6B2D00F4BE65 /* ScriptingCore.m */,
+				A091137415B8A1B5006DD5AA /* ChipmunkDebugNode.h */,
+				A091137515B8A1B5006DD5AA /* ChipmunkDebugNode.m */,
+				A091137615B8A1B5006DD5AA /* HMVectorNode.fsh */,
+				A091137715B8A1B5006DD5AA /* HMVectorNode.h */,
+				A091137815B8A1B5006DD5AA /* HMVectorNode.m */,
+				A091137915B8A1B5006DD5AA /* HMVectorNode.vsh */,
 				A04E85E4159B6B2D00F4BE65 /* JavascriptSpidermonkey.h */,
 				A04E85E5159B6B2D00F4BE65 /* JavascriptSpidermonkey.m */,
 			);
@@ -11615,6 +11631,8 @@
 				A091135C15B7BEA2006DD5AA /* HUD.ccbi in Resources */,
 				A091135D15B7BEA2006DD5AA /* pickup_coin.wav in Resources */,
 				A091135E15B7BEA2006DD5AA /* pickup_star.wav in Resources */,
+				A091137B15B8A1B5006DD5AA /* HMVectorNode.fsh in Resources */,
+				A091137D15B8A1B5006DD5AA /* HMVectorNode.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12759,6 +12777,8 @@
 				A0F3EBD015A65D42001972B4 /* js_bindings_cocos2d_manual.mm in Sources */,
 				A029011315B602B400D64F82 /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
 				A0644B2515B63977004AB807 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A091137A15B8A1B5006DD5AA /* ChipmunkDebugNode.m in Sources */,
+				A091137C15B8A1B5006DD5AA /* HMVectorNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,7 +9,6 @@ version 2.1-alpha XX-Ago-2012
 			Don't assert if character is not found. Just continue with logging the warning.
 . [FIX] LabelTTF: loads custom fonts correctly on Mac
 
-
 version 2.0.0 8-Jul-2012
 . [FIX] EventDispatcher: fixed ccMouseEnter/Exit
 . [FIX] LabelTTF: supports multiline even if no dimensions are provided

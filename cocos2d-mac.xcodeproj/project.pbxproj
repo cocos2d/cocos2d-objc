@@ -1029,6 +1029,10 @@
 		A091136315B7C8CA006DD5AA /* Gas-40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A091136015B7C8CA006DD5AA /* Gas-40.fnt */; };
 		A091136415B7C8CA006DD5AA /* Gas-40.png in Resources */ = {isa = PBXBuildFile; fileRef = A091136115B7C8CA006DD5AA /* Gas-40.png */; };
 		A091136515B7C8CA006DD5AA /* HUD.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A091136215B7C8CA006DD5AA /* HUD.ccbi */; };
+		A091137015B8A002006DD5AA /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A091136B15B8A001006DD5AA /* ChipmunkDebugNode.m */; };
+		A091137115B8A002006DD5AA /* HMVectorNode.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A091136C15B8A001006DD5AA /* HMVectorNode.fsh */; };
+		A091137215B8A002006DD5AA /* HMVectorNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A091136E15B8A002006DD5AA /* HMVectorNode.m */; };
+		A091137315B8A002006DD5AA /* HMVectorNode.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A091136F15B8A002006DD5AA /* HMVectorNode.vsh */; };
 		A0980EA514B92A7A004812AD /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0980EA614B92A7A004812AD /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0980EA714B92A7A004812AD /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -6134,6 +6138,12 @@
 		A091136015B7C8CA006DD5AA /* Gas-40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40.fnt"; sourceTree = "<group>"; };
 		A091136115B7C8CA006DD5AA /* Gas-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40.png"; sourceTree = "<group>"; };
 		A091136215B7C8CA006DD5AA /* HUD.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HUD.ccbi; sourceTree = "<group>"; };
+		A091136A15B8A001006DD5AA /* ChipmunkDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkDebugNode.h; sourceTree = "<group>"; };
+		A091136B15B8A001006DD5AA /* ChipmunkDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChipmunkDebugNode.m; sourceTree = "<group>"; };
+		A091136C15B8A001006DD5AA /* HMVectorNode.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = HMVectorNode.fsh; sourceTree = "<group>"; };
+		A091136D15B8A002006DD5AA /* HMVectorNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HMVectorNode.h; sourceTree = "<group>"; };
+		A091136E15B8A002006DD5AA /* HMVectorNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HMVectorNode.m; sourceTree = "<group>"; };
+		A091136F15B8A002006DD5AA /* HMVectorNode.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = HMVectorNode.vsh; sourceTree = "<group>"; };
 		A0980E9214B92A26004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
 		A0980E9314B92A26004812AD /* ActionsProgressTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ActionsProgressTest.m; path = tests/ActionsProgressTest.m; sourceTree = "<group>"; };
 		A0980EFD14B92A7A004812AD /* ActionProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7890,6 +7900,12 @@
 				A0BCD71A157FDBC700CCE291 /* js_manual_conversions.mm */,
 				4AD3B95B159A5534002E68D1 /* ChipmunkSprite.h */,
 				4AD3B95C159A5534002E68D1 /* ChipmunkSprite.m */,
+				A091136A15B8A001006DD5AA /* ChipmunkDebugNode.h */,
+				A091136B15B8A001006DD5AA /* ChipmunkDebugNode.m */,
+				A091136C15B8A001006DD5AA /* HMVectorNode.fsh */,
+				A091136F15B8A002006DD5AA /* HMVectorNode.vsh */,
+				A091136D15B8A002006DD5AA /* HMVectorNode.h */,
+				A091136E15B8A002006DD5AA /* HMVectorNode.m */,
 				A09C8D911567165B00ADFDA9 /* ScriptingCore.h */,
 				A0BCCBCF15792F5300CCE291 /* ScriptingCore.m */,
 				A09C8D8E156715F700ADFDA9 /* JavascriptSpidermonkey.h */,
@@ -11357,6 +11373,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A091137115B8A002006DD5AA /* HMVectorNode.fsh in Resources */,
+				A091137315B8A002006DD5AA /* HMVectorNode.vsh in Resources */,
 				A09C8CC31566FB4100ADFDA9 /* A Damn Mess.ttf in Resources */,
 				A09C8CC41566FB4100ADFDA9 /* Abberancy.ttf in Resources */,
 				A09C8CC51566FB4100ADFDA9 /* Abduction.ttf in Resources */,
@@ -14633,6 +14651,8 @@
 				A0F3EBCE15A64D12001972B4 /* js_bindings_cocos2d_manual.mm in Sources */,
 				A0644A6F15B60B01004AB807 /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
 				A0644ADF15B62314004AB807 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A091137015B8A002006DD5AA /* ChipmunkDebugNode.m in Sources */,
+				A091137215B8A002006DD5AA /* HMVectorNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

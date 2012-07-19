@@ -29,6 +29,7 @@
 #import "cocos2d.h"
 #import "chipmunk.h"
 #import "ChipmunkSprite.h"
+#import "ChipmunkDebugNode.h"
 #import "SimpleAudioEngine.h"
 
 // Globals
