@@ -56,6 +56,9 @@ DIFFERENTIAL_TORQUE = 0.5;
 GROUP_BUGGY = 1;
 GROUP_COIN = 2;
 
+// Node Tags (used by CocosBuilder)
+SCORE_LABEL_TAG = 10;
+
 //
 // Game Layer
 //
@@ -69,6 +72,8 @@ var GameLayer = cc.LayerGradient.extend({
     _chassis:null,
     _batch:null,
     _shapesToRemove:[],
+    _score:0,
+    _scoreLabel:null,
 
     ctor:function () {
                                 
@@ -99,10 +104,35 @@ var GameLayer = cc.LayerGradient.extend({
         var coin = cc.Sprite.createWithSpriteFrameName("coin01.png");
         this._batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 100 );
         this.addChild( this._batch );
+
+        this._shapesToRemove = [];
+
+        this.initHUD();
+
+        this._score = 0;
+    },
+
+    // HUD stuff
+    initHUD:function() {
+        var hud = cc.Reader.nodeGraphFromFile("HUD.ccbi", this);
+        this.addChild( hud );
+        this._scoreLabel = hud.getChildByTag( SCORE_LABEL_TAG );
     },
 
     reset:function() {
         run();
+    },
+
+    addScore:function(value) {
+        this._score += value;
+        this._scoreLabel.setString( this._score );
+        this._scoreLabel.stopAllActions();
+
+        var scaleUpTo = cc.ScaleTo.create(0.05, 1.2);
+        var scaleDownTo = cc.ScaleTo.create(0.05, 1.0);
+        var seq = cc.Sequence.create( scaleUpTo, scaleDownTo );
+        this._scoreLabel.runAction( seq );
+
     },
 
     // Events
@@ -132,6 +162,7 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onExit:function() {
+        // XXX: Leak... all Shapes and Bodies should be freed
         cp.spaceFree( this._space );
     },
 
@@ -154,6 +185,7 @@ var GameLayer = cc.LayerGradient.extend({
             audioEngine.playEffect("pickup_coin.wav");
 
             cc.log("Adding shape: " + shapeCoin[0] + " : " + shapeCoin[1] );
+            this.addScore(1);
         }
         return true;
 	},
@@ -162,8 +194,6 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceStep( this._space, dt);
 
         var l = this._shapesToRemove.length;
-        if( l > 0 )
-            cc.log("----");
 
         for( var i=0; i < l; i++ ) {
             var shape = this._shapesToRemove[i];
@@ -454,12 +484,12 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-//    var menu = new MainMenu();
-//    scene.addChild( menu);
+    var menu = new MainMenu();
+    scene.addChild( menu);
 
     // game
-    var layer = new GameLayer();
-    scene.addChild( layer );
+//    var layer = new GameLayer();
+//    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )
