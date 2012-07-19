@@ -39,7 +39,7 @@
 #else
 #define JSB_PRECONDITION( condition, error_msg) do {							\
 	if( ! (condition) ) {														\
-		CCLOG(@"jsb: ERROR in %s: %@", __FUNCTION__, error_msg);				\
+		CCLOG(@"jsb: ERROR in %s: %s", __FUNCTION__, error_msg);				\
 		return JS_FALSE;														\
 	}																			\
 } while(0)

@@ -25,6 +25,7 @@
 @implementation ChipmunkSprite
 
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
+@synthesize body = _body;
 
 // this method will only get called if the sprite is batched.
 // return YES if the physic's values (angles, position ) changed.
@@ -32,18 +33,6 @@
 -(BOOL) dirty
 {
 	return YES;
-}
-
--(void) setBody:(cpBody *)body
-{
-	_body = body;
-//	cpBodySetMass(_body, INFINITY);
-//	cpBodySetMoment(_body, INFINITY);
-}
-
--(cpBody*) body
-{
-	return _body;
 }
 
 // Override the setters and getters to always reflect the body's properties.
