@@ -20,6 +20,20 @@ winSize = {width:_winSize[0], height:_winSize[1]};
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 //
+// Levels
+//
+level0 = {'coins' : [ {x:20,y:20}, {x:30,y:30}, {x:40,y:40}, {x:50,y:50}, {x:60,y:60} ],
+          'car' : {x:80, y:30}, 
+
+          // points in absolute position.
+//          'segments' : [ {x0:0, y0:0, x1:100, y1:50}, ],
+          'segments' : [],
+
+          // points relatives to the previous point
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:20}, {x:100, y:-20}, {x:200, y:200}, ],
+          'background' : "background1.png",
+          };
+//
 // Physics constants
 //
 
@@ -110,6 +124,7 @@ var GameLayer = cc.LayerGradient.extend({
         this.initHUD();
 
         this._score = 0;
+
     },
 
     // HUD stuff
@@ -158,7 +173,7 @@ var GameLayer = cc.LayerGradient.extend({
 //        this._super();
 
         this.initPhysics();
-        this.setupLevel("level0.txt");
+        this.setupLevel(0);
     },
 
     onExit:function() {
@@ -184,7 +199,8 @@ var GameLayer = cc.LayerGradient.extend({
             this._shapesToRemove.push( shapeCoin );
             audioEngine.playEffect("pickup_coin.wav");
 
-            cc.log("Adding shape: " + shapeCoin[0] + " : " + shapeCoin[1] );
+//            cc.log("Adding shape: " + shapeCoin[0] + " : " + shapeCoin[1] );
+            cc.log("Adding shape: " + shapeCoin );
             this.addScore(1);
         }
         return true;
@@ -198,7 +214,8 @@ var GameLayer = cc.LayerGradient.extend({
         for( var i=0; i < l; i++ ) {
             var shape = this._shapesToRemove[i];
 
-            cc.log("removing shape: " + shape[0] + " : " + shape[1] );
+//            cc.log("removing shape: " + shape[0] + " : " + shape[1] );
+            cc.log("removing shape: " + shape );
 
             cp.spaceRemoveStaticShape( this._space, shape );
             cp.shapeFree( shape );
@@ -219,9 +236,37 @@ var GameLayer = cc.LayerGradient.extend({
     //
     // Level Setup
     //
-    setupLevel : function(levelname) {
-        for( var i=1; i < 15; i++ ) {
-            this.createCoin( cc._p(winSize.width/2 + i*35, 60 + i*3) );
+    setupLevel : function(lvl) {
+        if( lvl == 0 ) {
+            // Coins
+            var coins = level0['coins']; 
+            for( var i=0;i < coins.length; i++) {
+                var coin = coins[i];
+                this.createCoin( cc._p( coin.x, coin.y) ); 
+            }
+
+            // car
+            var car = level0['car'];
+            this.createCar( cp.v( car.x, car.y) );
+
+            // Segments
+            var segments = level0['segments']; 
+            for( var i=0; i < segments.length; i++) {
+                var segment = segments[i];
+                this.createSegment( cp._v(segment.x0, segment.y0), cp._v(segment.x1, segment.y1) ); 
+            }
+
+            //lines  
+            var p = {x:0, y:0};
+            var lines = level0['lines']; 
+            for( var i=0; i < lines.length; i++) {
+                var line = lines[i];
+                if( i > 0 ) {
+                    this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
+                }
+
+                p = {x:p.x+line.x, y:p.y+line.y};
+            }
         }
     },
 
@@ -233,10 +278,10 @@ var GameLayer = cc.LayerGradient.extend({
 		var staticBody = cp.spaceGetStaticBody( this._space );
 
 		// Walls
-		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,50), 0 ),				    // bottom
-				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				            // left
-				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
+		var walls = [cp.segmentShapeNew( staticBody, cp._v(0,0), cp._v(winSize.width,0), 0 ),				    // bottom
+				cp.segmentShapeNew( staticBody, cp._v(0,winSize.height), cp._v(winSize.width,winSize.height), 0),	// top
+				cp.segmentShapeNew( staticBody, cp._v(0,0), cp._v(0,winSize.height), 0),				            // left
+				cp.segmentShapeNew( staticBody, cp._v(winSize.width,0), cp._v(winSize.width,winSize.height), 0)	// right
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
@@ -246,13 +291,15 @@ var GameLayer = cc.LayerGradient.extend({
 		}
 
 		// Gravity
-		cp.spaceSetGravity( this._space, cp.v(0, -GRAVITY) );
-
-        // create Car
-        this.createCar();
+		cp.spaceSetGravity( this._space, cp._v(0, -GRAVITY) );
 
         // collision handler
 		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBegin, null, null, null );
+
+        // debug only
+        var debug = cc.ChipmunkDebugNode.create( this._space );
+        debug.setVisible( true );
+        this.addChild( debug, 100 );
 	},
 
     setThrottle : function( throttle ) {
@@ -284,17 +331,16 @@ var GameLayer = cc.LayerGradient.extend({
         }
     },
 
-    createCar : function() {
-        var pos = cp.v(winSize.width*0.20, 100);
+    createCar : function(pos) {
         var front = this.createWheel( cp.vadd(pos, cp._v(47,-20) ) );
         this._chassis = this.createChassis( cp.vadd( pos, COG_ADJUSTMENT ) );
         this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-41, -20) ) );
-        this.createFrontJoint( this._chassis, front, this._rearWheel );
+        this.createCarJoints( this._chassis, front, this._rearWheel );
 
         this.setThrottle( 0 );
     },
 
-    createFrontJoint : function( chassis, front, rear ) {
+    createCarJoints: function( chassis, front, rear ) {
 
         // The front wheel strut telescopes, so we'll attach the center of the wheel to a groov joint on the chassis.
         // I created the graphics specifically to have a 45 degree angle. So it's easy to just fudge the numbers.
@@ -432,6 +478,14 @@ var GameLayer = cc.LayerGradient.extend({
         return body;
     },
 
+    createSegment: function( src, dst) {
+		var staticBody = cp.spaceGetStaticBody( this._space );
+		var segment = cp.segmentShapeNew( staticBody, src, dst, 5 );
+        cp.shapeSetElasticity(segment, 1);
+        cp.shapeSetFriction(segment, 1);
+        cp.spaceAddStaticShape( this._space, segment );
+    },
+
 });
 
 //
@@ -484,12 +538,12 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-    var menu = new MainMenu();
-    scene.addChild( menu);
+//    var menu = new MainMenu();
+//    scene.addChild( menu);
 
     // game
-//    var layer = new GameLayer();
-//    scene.addChild( layer );
+    var layer = new GameLayer();
+    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )
