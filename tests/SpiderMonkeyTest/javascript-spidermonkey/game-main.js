@@ -114,7 +114,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     // HUD stuff
     initHUD:function() {
-        var hud = cc.Reader.nodeGraphFromFile("HUD.ccbi", this);
+        var hud = cc.Reader.load("HUD.ccbi", this);
         this.addChild( hud );
         this._scoreLabel = hud.getChildByTag( SCORE_LABEL_TAG );
     },
@@ -447,7 +447,7 @@ var MainMenu = cc.Layer.extend({
 
 
         // background
-        var node = cc.Reader.nodeGraphFromFile("MainMenu.ccbi", this, _winSize);
+        var node = cc.Reader.load("MainMenu.ccbi", this, _winSize);
         this.addChild( node );
     },
 
