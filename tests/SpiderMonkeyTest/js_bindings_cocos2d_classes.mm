@@ -21561,7 +21561,7 @@ void JSPROXY_CCAnimationCache_createClass(JSContext *cx, JSObject* globalObj, co
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addAnimationName", JSPROXY_CCAnimationCache_addAnimation_name_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addAnimationsWithFile", JSPROXY_CCAnimationCache_addAnimationsWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("animationByName", JSPROXY_CCAnimationCache_animationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnimationByName", JSPROXY_CCAnimationCache_animationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeAnimationByName", JSPROXY_CCAnimationCache_removeAnimationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
