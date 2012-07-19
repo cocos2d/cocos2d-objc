@@ -1250,15 +1250,15 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             min_args = properties.get('min_args', None)
             max_args = properties.get('max_args', None)
             if min_args != max_args:
-                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , @"Invalid number of arguments" );\n' % (min_args, max_args)
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= %d && argc <= %d , "Invalid number of arguments" );\n' % (min_args, max_args)
             elif 'variadic_2_array' in properties:
-                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= 0, @"Invalid number of arguments" );\n'
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc >= 0, "Invalid number of arguments" );\n'
             else:
                 # default
-                method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
+                method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, "Invalid number of arguments" );\n' % num_of_args
         except KeyError, e:
             # No, it only has required arguments
-            method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args
+            method_assert_on_arguments = '\tJSB_PRECONDITION( argc == %d, "Invalid number of arguments" );\n' % num_of_args
         self.mm_file.write( method_assert_on_arguments )
 
 
@@ -1897,7 +1897,7 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.mm_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
 
         # Number of arguments
-        self.mm_file.write( '\tJSB_PRECONDITION( argc == %d, @"Invalid number of arguments" );\n' % num_of_args )
+        self.mm_file.write( '\tJSB_PRECONDITION( argc == %d, "Invalid number of arguments" );\n' % num_of_args )
 
     def generate_function_suffix( self ):
         end_template = '''

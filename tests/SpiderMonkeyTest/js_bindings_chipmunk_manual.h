@@ -34,4 +34,7 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp);
 JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp);
 
+JSBool JSPROXY_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSPROXY_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp);
+
 #endif // __js_bindings_chipmunk_manual

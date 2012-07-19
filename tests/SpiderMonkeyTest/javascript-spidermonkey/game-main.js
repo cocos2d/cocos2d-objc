@@ -13,6 +13,7 @@
 
 require("javascript-spidermonkey/helper.js");
 
+audioEngine = cc.AudioEngine.getInstance();
 director = cc.Director.getInstance();
 _winSize = director.winSize();
 winSize = {width:_winSize[0], height:_winSize[1]};
@@ -23,6 +24,9 @@ centerPos = cc.p( winSize.width/2, winSize.height/2 );
 //
 
 INFINITY = 1e50;
+
+COLLISION_TYPE_CAR = 1;
+COLLISION_TYPE_COIN = 2;
 
 // Create some collision rules for fancy layer based filtering.
 // There is more information about how this works in the Chipmunk docs.
@@ -48,11 +52,6 @@ ENGINE_MAX_W = 60;
 BRAKING_TORQUE = 3.0e4;
 DIFFERENTIAL_TORQUE = 0.5;
 
-// 
-COIN_MASS3 = Infinity;
-COIN_MASS = INFINITY;
-COIN_MASS2 = 1;
-
 // Groups
 GROUP_BUGGY = 1;
 GROUP_COIN = 2;
@@ -69,6 +68,7 @@ var GameLayer = cc.LayerGradient.extend({
     _rearWheel:null,
     _chassis:null,
     _batch:null,
+    _shapesToRemove:[],
 
     ctor:function () {
                                 
@@ -135,16 +135,64 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceFree( this._space );
     },
 
+	onCollisionBegin : function ( arbiter, space ) {
+
+		var bodies = cp.arbiterGetBodies( arbiter );
+		var shapes = cp.arbiterGetShapes( arbiter );
+		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
+		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+
+        var shapeCoin =  (collTypeA == COLLISION_TYPE_COIN) ? shapes[0] : shapes[1];
+
+        // XXX: hack to prevent double deletion... argh...
+        // Since shapeCoin in 64bits is a typedArray and in 32-bits is an integer
+        // a ad-hoc solution needs to be implemented
+        if( this._shapesToRemove.length == 0 ) {
+            // since Coin is a sensor, it can't be removed at PostStep.
+            // PostStep is not called for Sensors
+            this._shapesToRemove.push( shapeCoin );
+            audioEngine.playEffect("pickup_coin.wav");
+
+            cc.log("Adding shape: " + shapeCoin[0] + " : " + shapeCoin[1] );
+        }
+        return true;
+	},
+
     update:function(dt) {
         cp.spaceStep( this._space, dt);
+
+        var l = this._shapesToRemove.length;
+        if( l > 0 )
+            cc.log("----");
+
+        for( var i=0; i < l; i++ ) {
+            var shape = this._shapesToRemove[i];
+
+            cc.log("removing shape: " + shape[0] + " : " + shape[1] );
+
+            cp.spaceRemoveStaticShape( this._space, shape );
+            cp.shapeFree( shape );
+
+            var body = cp.shapeGetBody( shape );
+
+            var sprite = cp.bodyGetUserData( body );
+            sprite.removeFromParentAndCleanup(true);
+
+            cp.bodyFree( body );
+
+        }
+
+        if( l > 0 )
+            this._shapesToRemove = [];
     },
 
     //
     // Level Setup
     //
     setupLevel : function(levelname) {
-        this.createCoin( cc._p(winSize.width/2, 60) );
-
+        for( var i=1; i < 15; i++ ) {
+            this.createCoin( cc._p(winSize.width/2 + i*35, 60 + i*3) );
+        }
     },
 
     //
@@ -172,6 +220,9 @@ var GameLayer = cc.LayerGradient.extend({
 
         // create Car
         this.createCar();
+
+        // collision handler
+		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBegin, null, null, null );
 	},
 
     setThrottle : function( throttle ) {
@@ -284,6 +335,7 @@ var GameLayer = cc.LayerGradient.extend({
         cp.shapeSetFriction( shape, 1 );
         cp.shapeSetGroup( shape, GROUP_BUGGY );
         cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
 
         cp.spaceAddBody( this._space, body );
         cp.spaceAddShape( this._space, shape );
@@ -309,6 +361,7 @@ var GameLayer = cc.LayerGradient.extend({
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
 
         cp.spaceAddBody( this._space, body );
         cp.spaceAddShape( this._space, shape );
@@ -322,15 +375,19 @@ var GameLayer = cc.LayerGradient.extend({
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("coin01.png");  
         var radius = 0.95 * sprite.getContentSize()[0] / 2;
 
-		var body = cp.spaceGetStaticBody( this._space );
+        var body = cp.bodyNew(1, 1);
+        cp.bodyInitStatic(body);
+//		var body = cp.spaceGetStaticBody( this._space );
 		cp.bodySetPos( body, pos );
         sprite.setBody( body );
 
         var shape = cp.circleShapeNew( body, radius, cp.vzero );
         cp.shapeSetFriction( shape, 1 );
         cp.shapeSetGroup( shape, GROUP_COIN );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_COIN );
         cp.shapeSetSensor( shape, true );
 
+//        cp.spaceAddBody( this._space, body );
         cp.spaceAddStaticShape( this._space, shape );
         this._batch.addChild( sprite, 10 );
 
@@ -338,6 +395,9 @@ var GameLayer = cc.LayerGradient.extend({
         var animate = cc.Animate.create(animation); 
         var repeat = cc.RepeatForever.create( animate );
         sprite.runAction( repeat );
+
+        // Needed for deletion
+        cp.bodySetUserData( body, sprite );
 
         return body;
     },
