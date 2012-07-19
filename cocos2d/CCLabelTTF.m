@@ -45,7 +45,7 @@
 
 @interface CCLabelTTF ()
 -(void) updateTexture;
-- (NSString*) fixFontName:(NSString*)fontName;
+- (NSString*) getFontName:(NSString*)fontName;
 @end
 
 @implementation CCLabelTTF
@@ -119,7 +119,7 @@
 		dimensions_ = dimensions;
 		hAlignment_ = alignment;
 		vAlignment_ = vertAlignment;
-		fontName_ = [[self fixFontName: name] retain];
+		fontName_ = [[self getFontName: name] copy];
 		fontSize_ = size;
 		lineBreakMode_ = lineBreakMode;
 
@@ -145,26 +145,27 @@
 	return string_;
 }
 
-- (NSString*) fixFontName:(NSString*)fontName
+- (NSString*) getFontName:(NSString*)fontName
 {
 #ifdef __CC_PLATFORM_MAC
+	// Custom .ttf file ?
     if ([[fontName lowercaseString] hasSuffix:@".ttf"])
     {
         // This is a file, register font with font manager
         NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fontName];
         NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
         CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
-        NSString *newFontName = [[fontFile lastPathComponent] stringByDeletingPathExtension];
-        
-        fontName = [newFontName copy];
+
+		return [[fontFile lastPathComponent] stringByDeletingPathExtension];
     }
-#endif
+#endif //
+
     return fontName;
 }
 
 - (void)setFontName:(NSString*)fontName
 {
-    fontName = [self fixFontName:fontName];
+    fontName = [self getFontName:fontName];
     
 	if( fontName.hash != fontName_.hash ) {
 		[fontName_ release];
