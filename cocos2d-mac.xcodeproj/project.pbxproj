@@ -1026,6 +1026,9 @@
 		A07273E1155B23A8003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273DC155B23A8003E961F /* test_1021x1024.png */; };
 		A091134015B796D0006DD5AA /* pickup_coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091133E15B796D0006DD5AA /* pickup_coin.wav */; };
 		A091134115B796D0006DD5AA /* pickup_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091133F15B796D0006DD5AA /* pickup_star.wav */; };
+		A091136315B7C8CA006DD5AA /* Gas-40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A091136015B7C8CA006DD5AA /* Gas-40.fnt */; };
+		A091136415B7C8CA006DD5AA /* Gas-40.png in Resources */ = {isa = PBXBuildFile; fileRef = A091136115B7C8CA006DD5AA /* Gas-40.png */; };
+		A091136515B7C8CA006DD5AA /* HUD.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A091136215B7C8CA006DD5AA /* HUD.ccbi */; };
 		A0980EA514B92A7A004812AD /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0980EA614B92A7A004812AD /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0980EA714B92A7A004812AD /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -6128,6 +6131,9 @@
 		A07273DC155B23A8003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
 		A091133E15B796D0006DD5AA /* pickup_coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pickup_coin.wav; sourceTree = "<group>"; };
 		A091133F15B796D0006DD5AA /* pickup_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = pickup_star.wav; sourceTree = "<group>"; };
+		A091136015B7C8CA006DD5AA /* Gas-40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40.fnt"; sourceTree = "<group>"; };
+		A091136115B7C8CA006DD5AA /* Gas-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40.png"; sourceTree = "<group>"; };
+		A091136215B7C8CA006DD5AA /* HUD.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HUD.ccbi; sourceTree = "<group>"; };
 		A0980E9214B92A26004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
 		A0980E9314B92A26004812AD /* ActionsProgressTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ActionsProgressTest.m; path = tests/ActionsProgressTest.m; sourceTree = "<group>"; };
 		A0980EFD14B92A7A004812AD /* ActionProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7716,6 +7722,9 @@
 		A0644A8215B6161A004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
+				A091136015B7C8CA006DD5AA /* Gas-40.fnt */,
+				A091136115B7C8CA006DD5AA /* Gas-40.png */,
+				A091136215B7C8CA006DD5AA /* HUD.ccbi */,
 				A0644A9315B61A8F004AB807 /* MainMenu.ccbi */,
 				A0644A8415B6161A004AB807 /* konqa32-hd.fnt */,
 				A0644A8515B6161A004AB807 /* konqa32-hd.png */,
@@ -11484,6 +11493,9 @@
 				A0644B9B15B75EBD004AB807 /* coins.png in Resources */,
 				A091134015B796D0006DD5AA /* pickup_coin.wav in Resources */,
 				A091134115B796D0006DD5AA /* pickup_star.wav in Resources */,
+				A091136315B7C8CA006DD5AA /* Gas-40.fnt in Resources */,
+				A091136415B7C8CA006DD5AA /* Gas-40.png in Resources */,
+				A091136515B7C8CA006DD5AA /* HUD.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
