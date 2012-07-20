@@ -1412,6 +1412,8 @@
 		A03A1D5014F5E1160019B6F3 /* arial-unicode-26.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D4E14F5E1160019B6F3 /* arial-unicode-26.png */; };
 		A04298E915B9CFAD00509473 /* konqa32-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A04298E715B9CFAD00509473 /* konqa32-ipad.fnt */; };
 		A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A04298E815B9CFAD00509473 /* konqa32-ipad.png */; };
+		A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */; };
+		A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EC15B9D0B400509473 /* coins.pvr.ccz */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -1559,9 +1561,7 @@
 		A0644B2515B63977004AB807 /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0644B2415B63977004AB807 /* js_bindings_CocosBuilderReader_manual.mm */; };
 		A0644BD615B767C5004AB807 /* coins_animation.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0644BD115B767C5004AB807 /* coins_animation.plist */; };
 		A0644BD715B767C5004AB807 /* coins-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0644BD215B767C5004AB807 /* coins-hd.plist */; };
-		A0644BD815B767C5004AB807 /* coins-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644BD315B767C5004AB807 /* coins-hd.png */; };
 		A0644BD915B767C5004AB807 /* coins.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0644BD415B767C5004AB807 /* coins.plist */; };
-		A0644BDA15B767C5004AB807 /* coins.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644BD515B767C5004AB807 /* coins.png */; };
 		A07273C0155B1F07003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273BC155B1F07003E961F /* test_1021x1024.png */; };
 		A07273C7155B217E003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273C8155B217E003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */; };
@@ -4636,6 +4636,8 @@
 		A03A1D4E14F5E1160019B6F3 /* arial-unicode-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arial-unicode-26.png"; sourceTree = "<group>"; };
 		A04298E715B9CFAD00509473 /* konqa32-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-ipad.fnt"; sourceTree = "<group>"; };
 		A04298E815B9CFAD00509473 /* konqa32-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-ipad.png"; sourceTree = "<group>"; };
+		A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coins-hd.pvr.ccz"; sourceTree = "<group>"; };
+		A04298EC15B9D0B400509473 /* coins.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = coins.pvr.ccz; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -4743,9 +4745,7 @@
 		A0644B2415B63977004AB807 /* js_bindings_CocosBuilderReader_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosBuilderReader_manual.mm; sourceTree = "<group>"; };
 		A0644BD115B767C5004AB807 /* coins_animation.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coins_animation.plist; sourceTree = "<group>"; };
 		A0644BD215B767C5004AB807 /* coins-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "coins-hd.plist"; sourceTree = "<group>"; };
-		A0644BD315B767C5004AB807 /* coins-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "coins-hd.png"; sourceTree = "<group>"; };
 		A0644BD415B767C5004AB807 /* coins.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coins.plist; sourceTree = "<group>"; };
-		A0644BD515B767C5004AB807 /* coins.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = coins.png; sourceTree = "<group>"; };
 		A07273BC155B1F07003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
 		A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
@@ -7410,9 +7410,9 @@
 				A0644ACA15B61C75004AB807 /* CCB */,
 				A0644BD115B767C5004AB807 /* coins_animation.plist */,
 				A0644BD215B767C5004AB807 /* coins-hd.plist */,
-				A0644BD315B767C5004AB807 /* coins-hd.png */,
+				A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */,
 				A0644BD415B767C5004AB807 /* coins.plist */,
-				A0644BD515B767C5004AB807 /* coins.png */,
+				A04298EC15B9D0B400509473 /* coins.pvr.ccz */,
 			);
 			name = Game;
 			path = Resources/Game;
@@ -11625,9 +11625,7 @@
 				A0644ADC15B61C75004AB807 /* stars2.png in Resources */,
 				A0644BD615B767C5004AB807 /* coins_animation.plist in Resources */,
 				A0644BD715B767C5004AB807 /* coins-hd.plist in Resources */,
-				A0644BD815B767C5004AB807 /* coins-hd.png in Resources */,
 				A0644BD915B767C5004AB807 /* coins.plist in Resources */,
-				A0644BDA15B767C5004AB807 /* coins.png in Resources */,
 				A091135815B7BEA2006DD5AA /* Gas-40-hd.fnt in Resources */,
 				A091135915B7BEA2006DD5AA /* Gas-40-hd.png in Resources */,
 				A091135A15B7BEA2006DD5AA /* Gas-40.fnt in Resources */,
@@ -11639,6 +11637,8 @@
 				A091137D15B8A1B5006DD5AA /* HMVectorNode.vsh in Resources */,
 				A04298E915B9CFAD00509473 /* konqa32-ipad.fnt in Resources */,
 				A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */,
+				A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */,
+				A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
