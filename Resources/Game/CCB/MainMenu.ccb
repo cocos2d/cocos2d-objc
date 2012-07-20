@@ -568,7 +568,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>226</real>
+							<real>353</real>
 							<real>40</real>
 							<integer>0</integer>
 						</array>
@@ -680,7 +680,7 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>RACE WITH ME</string>
+						<string>WATERMELON WITH ME</string>
 					</dict>
 				</array>
 			</dict>
@@ -721,7 +721,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>226</real>
+							<real>353</real>
 							<real>40</real>
 							<integer>0</integer>
 						</array>
@@ -827,7 +827,7 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>RACE WITH ME</string>
+						<string>WATERMELON WITH ME</string>
 					</dict>
 				</array>
 			</dict>

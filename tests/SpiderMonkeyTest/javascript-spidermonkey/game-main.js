@@ -203,6 +203,8 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onExit:function() {
+		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
+		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
         // XXX: Leak... all Shapes and Bodies should be freed
         cp.spaceFree( this._space );
     },
@@ -622,12 +624,12 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-//    var menu = new MainMenu();
-//    scene.addChild( menu);
+    var menu = new MainMenu();
+    scene.addChild( menu);
 
     // game
-    var layer = new GameLayer();
-    scene.addChild( layer );
+//    var layer = new GameLayer();
+//    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )

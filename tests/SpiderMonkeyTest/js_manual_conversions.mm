@@ -211,14 +211,10 @@ JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 	
 	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGPoint), @"jsb: Invalid length");
 	
-#ifdef __LP64__
-	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	*ret = ccp(arg_array[0], arg_array[1] );	
-#else
 	*ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
-#endif
+
 	return JS_TRUE;
 }
 
@@ -230,14 +226,9 @@ JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 
 	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"jsb: Invalid length" );
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGSize), @"jsb: Invalid length" );
 	
-#ifdef __LP64__
-	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	*ret = CGSizeMake( arg_array[0], arg_array[1] );
-#else
 	*ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
-#endif
 	return JS_TRUE;
 }
 
@@ -249,15 +240,10 @@ JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
 
 	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*4, @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGRect), @"jsb: Invalid length");
 	
-#ifdef __LP64__
-	float* arg_array = (float*)JS_GetTypedArrayData( tmp_arg );
-	*ret = CGRectMake( arg_array[0], arg_array[1], arg_array[2], arg_array[3] );
-
-#else
 	*ret = *(CGRect*)JS_GetTypedArrayData( tmp_arg );
-#endif
+
 	return JS_TRUE;
 }
 
@@ -377,30 +363,39 @@ jsval NSSet_to_jsval( JSContext *cx, NSSet *set)
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 {
+#ifdef __LP64__
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT64, 2 );
+#else
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
-	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = p.x;
-	buffer[1] = p.y;
+#endif
+
+	CGPoint *buffer = (CGPoint*)JS_GetTypedArrayData(typedArray);
+	*buffer = p;
 	return OBJECT_TO_JSVAL(typedArray);
 }
 
 jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 {
+#ifdef __LP64__
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT64, 2 );
+#else
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 2 );
-	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = s.width;
-	buffer[1] = s.height;
+#endif
+	CGSize *buffer = (CGSize*)JS_GetTypedArrayData(typedArray);
+	*buffer = s;
 	return OBJECT_TO_JSVAL(typedArray);
 }
 
 jsval CGRect_to_jsval( JSContext *cx, CGRect s)
 {
+#ifdef __LP64__
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT64, 4 );
+#else
 	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
-	float *buffer = (float*)JS_GetTypedArrayData(typedArray);
-	buffer[0] = s.origin.x;
-	buffer[1] = s.origin.y;
-	buffer[2] = s.size.width;
-	buffer[3] = s.size.height;
+#endif
+
+	CGRect *buffer = (CGRect*)JS_GetTypedArrayData(typedArray);
+	*buffer = s;
 	return OBJECT_TO_JSVAL(typedArray);
 }
 
