@@ -1414,8 +1414,18 @@
 		A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A04298E815B9CFAD00509473 /* konqa32-ipad.png */; };
 		A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */; };
 		A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EC15B9D0B400509473 /* coins.pvr.ccz */; };
-		A042990215B9DA1B00509473 /* Gas-40-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */; };
-		A042990315B9DA1B00509473 /* Gas-40-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990115B9DA1B00509473 /* Gas-40-ipad.png */; };
+		A042990E15B9E0D600509473 /* Gas40-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990815B9E0D500509473 /* Gas40-hd.fnt */; };
+		A042990F15B9E0D600509473 /* Gas40-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990915B9E0D600509473 /* Gas40-hd.png */; };
+		A042991015B9E0D600509473 /* Gas40-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990A15B9E0D600509473 /* Gas40-ipad.fnt */; };
+		A042991115B9E0D600509473 /* Gas40-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990B15B9E0D600509473 /* Gas40-ipad.png */; };
+		A042991215B9E0D600509473 /* Gas40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990C15B9E0D600509473 /* Gas40.fnt */; };
+		A042991315B9E0D600509473 /* Gas40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990D15B9E0D600509473 /* Gas40.png */; };
+		A042993E15B9FCF600509473 /* Abadi40-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042993815B9FCF400509473 /* Abadi40-hd.fnt */; };
+		A042993F15B9FCF600509473 /* Abadi40-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993915B9FCF500509473 /* Abadi40-hd.png */; };
+		A042994015B9FCF600509473 /* Abadi40-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042993A15B9FCF500509473 /* Abadi40-ipad.fnt */; };
+		A042994115B9FCF600509473 /* Abadi40-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993B15B9FCF500509473 /* Abadi40-ipad.png */; };
+		A042994215B9FCF600509473 /* Abadi40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042993C15B9FCF500509473 /* Abadi40.fnt */; };
+		A042994315B9FCF600509473 /* Abadi40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993D15B9FCF500509473 /* Abadi40.png */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -1571,10 +1581,6 @@
 		A07273CA155B217E003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273C6155B217D003E961F /* test_1021x1024_rgba8888.pvr.gz */; };
 		A08C378F14144FC6004538FD /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = A08C378E14144FBB004538FD /* neon_matrix_impl.h */; };
 		A08C379114144FDE004538FD /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = A08C379014144FDE004538FD /* neon_matrix_impl.c */; };
-		A091135815B7BEA2006DD5AA /* Gas-40-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A091135115B7BEA2006DD5AA /* Gas-40-hd.fnt */; };
-		A091135915B7BEA2006DD5AA /* Gas-40-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A091135215B7BEA2006DD5AA /* Gas-40-hd.png */; };
-		A091135A15B7BEA2006DD5AA /* Gas-40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A091135315B7BEA2006DD5AA /* Gas-40.fnt */; };
-		A091135B15B7BEA2006DD5AA /* Gas-40.png in Resources */ = {isa = PBXBuildFile; fileRef = A091135415B7BEA2006DD5AA /* Gas-40.png */; };
 		A091135C15B7BEA2006DD5AA /* HUD.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A091135515B7BEA2006DD5AA /* HUD.ccbi */; };
 		A091135D15B7BEA2006DD5AA /* pickup_coin.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091135615B7BEA2006DD5AA /* pickup_coin.wav */; };
 		A091135E15B7BEA2006DD5AA /* pickup_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = A091135715B7BEA2006DD5AA /* pickup_star.wav */; };
@@ -4640,8 +4646,18 @@
 		A04298E815B9CFAD00509473 /* konqa32-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-ipad.png"; sourceTree = "<group>"; };
 		A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coins-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A04298EC15B9D0B400509473 /* coins.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = coins.pvr.ccz; sourceTree = "<group>"; };
-		A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40-ipad.fnt"; sourceTree = "<group>"; };
-		A042990115B9DA1B00509473 /* Gas-40-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40-ipad.png"; sourceTree = "<group>"; };
+		A042990815B9E0D500509473 /* Gas40-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas40-hd.fnt"; sourceTree = "<group>"; };
+		A042990915B9E0D600509473 /* Gas40-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas40-hd.png"; sourceTree = "<group>"; };
+		A042990A15B9E0D600509473 /* Gas40-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas40-ipad.fnt"; sourceTree = "<group>"; };
+		A042990B15B9E0D600509473 /* Gas40-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas40-ipad.png"; sourceTree = "<group>"; };
+		A042990C15B9E0D600509473 /* Gas40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gas40.fnt; sourceTree = "<group>"; };
+		A042990D15B9E0D600509473 /* Gas40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gas40.png; sourceTree = "<group>"; };
+		A042993815B9FCF400509473 /* Abadi40-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Abadi40-hd.fnt"; sourceTree = "<group>"; };
+		A042993915B9FCF500509473 /* Abadi40-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Abadi40-hd.png"; sourceTree = "<group>"; };
+		A042993A15B9FCF500509473 /* Abadi40-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Abadi40-ipad.fnt"; sourceTree = "<group>"; };
+		A042993B15B9FCF500509473 /* Abadi40-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Abadi40-ipad.png"; sourceTree = "<group>"; };
+		A042993C15B9FCF500509473 /* Abadi40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Abadi40.fnt; sourceTree = "<group>"; };
+		A042993D15B9FCF500509473 /* Abadi40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Abadi40.png; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -4801,10 +4817,6 @@
 		A07EC9B2141A8D32008C1F12 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
 		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
-		A091135115B7BEA2006DD5AA /* Gas-40-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40-hd.fnt"; sourceTree = "<group>"; };
-		A091135215B7BEA2006DD5AA /* Gas-40-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40-hd.png"; sourceTree = "<group>"; };
-		A091135315B7BEA2006DD5AA /* Gas-40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40.fnt"; sourceTree = "<group>"; };
-		A091135415B7BEA2006DD5AA /* Gas-40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40.png"; sourceTree = "<group>"; };
 		A091135515B7BEA2006DD5AA /* HUD.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HUD.ccbi; sourceTree = "<group>"; };
 		A091135615B7BEA2006DD5AA /* pickup_coin.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pickup_coin.wav; path = Resources/Game/pickup_coin.wav; sourceTree = SOURCE_ROOT; };
 		A091135715B7BEA2006DD5AA /* pickup_star.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = pickup_star.wav; path = Resources/Game/pickup_star.wav; sourceTree = SOURCE_ROOT; };
@@ -7603,12 +7615,18 @@
 		A0644ACA15B61C75004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
-				A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */,
-				A042990115B9DA1B00509473 /* Gas-40-ipad.png */,
-				A091135115B7BEA2006DD5AA /* Gas-40-hd.fnt */,
-				A091135215B7BEA2006DD5AA /* Gas-40-hd.png */,
-				A091135315B7BEA2006DD5AA /* Gas-40.fnt */,
-				A091135415B7BEA2006DD5AA /* Gas-40.png */,
+				A042993815B9FCF400509473 /* Abadi40-hd.fnt */,
+				A042993915B9FCF500509473 /* Abadi40-hd.png */,
+				A042993A15B9FCF500509473 /* Abadi40-ipad.fnt */,
+				A042993B15B9FCF500509473 /* Abadi40-ipad.png */,
+				A042993C15B9FCF500509473 /* Abadi40.fnt */,
+				A042993D15B9FCF500509473 /* Abadi40.png */,
+				A042990815B9E0D500509473 /* Gas40-hd.fnt */,
+				A042990915B9E0D600509473 /* Gas40-hd.png */,
+				A042990A15B9E0D600509473 /* Gas40-ipad.fnt */,
+				A042990B15B9E0D600509473 /* Gas40-ipad.png */,
+				A042990C15B9E0D600509473 /* Gas40.fnt */,
+				A042990D15B9E0D600509473 /* Gas40.png */,
 				A091135515B7BEA2006DD5AA /* HUD.ccbi */,
 				A091135615B7BEA2006DD5AA /* pickup_coin.wav */,
 				A091135715B7BEA2006DD5AA /* pickup_star.wav */,
@@ -11632,10 +11650,6 @@
 				A0644BD615B767C5004AB807 /* coins_animation.plist in Resources */,
 				A0644BD715B767C5004AB807 /* coins-hd.plist in Resources */,
 				A0644BD915B767C5004AB807 /* coins.plist in Resources */,
-				A091135815B7BEA2006DD5AA /* Gas-40-hd.fnt in Resources */,
-				A091135915B7BEA2006DD5AA /* Gas-40-hd.png in Resources */,
-				A091135A15B7BEA2006DD5AA /* Gas-40.fnt in Resources */,
-				A091135B15B7BEA2006DD5AA /* Gas-40.png in Resources */,
 				A091135C15B7BEA2006DD5AA /* HUD.ccbi in Resources */,
 				A091135D15B7BEA2006DD5AA /* pickup_coin.wav in Resources */,
 				A091135E15B7BEA2006DD5AA /* pickup_star.wav in Resources */,
@@ -11645,8 +11659,18 @@
 				A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */,
 				A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */,
 				A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */,
-				A042990215B9DA1B00509473 /* Gas-40-ipad.fnt in Resources */,
-				A042990315B9DA1B00509473 /* Gas-40-ipad.png in Resources */,
+				A042990E15B9E0D600509473 /* Gas40-hd.fnt in Resources */,
+				A042990F15B9E0D600509473 /* Gas40-hd.png in Resources */,
+				A042991015B9E0D600509473 /* Gas40-ipad.fnt in Resources */,
+				A042991115B9E0D600509473 /* Gas40-ipad.png in Resources */,
+				A042991215B9E0D600509473 /* Gas40.fnt in Resources */,
+				A042991315B9E0D600509473 /* Gas40.png in Resources */,
+				A042993E15B9FCF600509473 /* Abadi40-hd.fnt in Resources */,
+				A042993F15B9FCF600509473 /* Abadi40-hd.png in Resources */,
+				A042994015B9FCF600509473 /* Abadi40-ipad.fnt in Resources */,
+				A042994115B9FCF600509473 /* Abadi40-ipad.png in Resources */,
+				A042994215B9FCF600509473 /* Abadi40.fnt in Resources */,
+				A042994315B9FCF600509473 /* Abadi40.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

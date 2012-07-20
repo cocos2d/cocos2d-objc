@@ -17,8 +17,10 @@ Z_WATERMELON = 5;
 Z_COIN = 8;
 Z_CHASSIS = 10;
 Z_WHEEL = 11;
+Z_HUD = 15;
 Z_LABEL = 20;
-Z_DEBUG = 50;
+Z_DEBUG_MENU = 20;
+Z_DEBUG_PHYSICS = 50;
 
 // Game state
 STATE_PAUSE = 0;
@@ -123,13 +125,12 @@ var GameLayer = cc.LayerGradient.extend({
             this.setTouchEnabled( true );
         }
 
-
         cc.MenuItemFont.setFontSize(16);
         var item1 = cc.MenuItemFont.create("Reset", this, this.onReset);
         var item2 = cc.MenuItemFont.create("Debug On/Off", this, this.onToggleDebug);
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
-        this.addChild( menu );
+        this.addChild( menu, Z_DEBUG_MENU );
         menu.setPosition( cc._p( winSize.width-40, winSize.height-80 )  );
     
         var animCache = cc.AnimationCache.getInstance();
@@ -151,7 +152,7 @@ var GameLayer = cc.LayerGradient.extend({
     // HUD stuff
     initHUD:function() {
         var hud = cc.Reader.load("HUD.ccbi", this);
-        this.addChild( hud );
+        this.addChild( hud, Z_HUD );
         this._scoreLabel = hud.getChildByTag( SCORE_LABEL_TAG );
     },
 
@@ -338,7 +339,7 @@ var GameLayer = cc.LayerGradient.extend({
         // debug only
         this._debugNode = cc.ChipmunkDebugNode.create( this._space );
         this._debugNode.setVisible( false );
-        this.addChild( this._debugNode, Z_DEBUG);
+        this.addChild( this._debugNode, Z_DEBUG_PHYSICS);
 	},
 
     setThrottle : function( throttle ) {
@@ -568,7 +569,7 @@ var GameLayer = cc.LayerGradient.extend({
     //
     setGameState: function( state ) {
         if( state == STATE_GAME_OVER ) {
-            var label = cc.LabelBMFont.create("GAME OVER", "futura-48.fnt" );
+            var label = cc.LabelBMFont.create("GAME OVER", "Abadi40.fnt" );
             label.setPosition( centerPos );
             this.addChild( label, Z_LABEL );
         }

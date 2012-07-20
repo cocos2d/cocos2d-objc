@@ -36,14 +36,16 @@
 	NSMutableDictionary *fullPathCache_;
 	NSMutableDictionary *removeSuffixCache_;
 	
-	
-#ifdef __CC_PLATFORM_IOS
 	BOOL	enableFallbackSuffixes_;
 	
+#ifdef __CC_PLATFORM_IOS	
 	NSString *iPhoneRetinaDisplaySuffix_;
 	NSString *iPadSuffix_;
 	NSString *iPadRetinaDisplaySuffix_;
-#endif // __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
+	NSString *macSuffix_;
+	NSString *macRetinaDisplaySuffix_;
+#endif // __CC_PLATFORM_MAC
 }
 
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].
@@ -55,6 +57,19 @@
  @since v2.0
  */
 @property (nonatomic, readwrite, retain) NSFileManager	*fileManager;
+
+/** Whether of not the fallback sufixes is enabled.
+ When enabled it will try to search for the following suffixes in the following order until one is found:
+ * On iPad HD  : iPad HD suffix, iPad suffix, iPhone HD suffix, Without suffix
+ * On iPad     : iPad suffix, iPhone HD suffix, Without suffix
+ * On iPhone HD: iPhone HD suffix, Without suffix
+ * On Mac HD   : Mac HD suffix, Mac suffix, Without suffix
+ * On Mac      : Mac suffix, Without suffix
+ 
+ By default this functionality is off;
+ */
+@property (nonatomic, readwrite) BOOL enableFallbackSuffixes;
+
 
 #ifdef __CC_PLATFORM_IOS
 /** The iPhone RetinaDisplay suffixes to load resources.
@@ -82,17 +97,25 @@
  */
 @property (nonatomic,readwrite, copy, setter = setiPadRetinaDisplaySuffix:) NSString *iPadRetinaDisplaySuffix;
 
-/** Whether of not the fallback sufixes is enabled.
- When enabled it will try to search for the following suffixes in the following order until one is found:
-   * On iPad HD  : iPad HD suffix, iPad suffix, iPhone HD suffix, Without suffix
-   * On iPad     : iPad suffix, iPhone HD suffix, Without suffix
-   * On iPhone HD: iPhone HD suffix, Without suffix
+#elif defined(__CC_PLATFORM_MAC)
+/** The Mac suffixes to load resources.
+ By default it is "-mac", "" in that order.
+ Only valid on OS X. Not valid for iOS.
  
- By default this functionality is off;
-*/
-@property (nonatomic, readwrite) BOOL enableFallbackSuffixes;
+ @since v2.1
+ */
+@property (nonatomic,readwrite, copy, setter = setMacSuffix:) NSString *macSuffix;
 
- #endif // __CC_PLATFORM_IOS
+/** The Mac Retina Display suffixes to load resources.
+ By default it is "-machd", "-mac", "" in that order.
+ Only valid on OS X. Not valid for iOS.
+ 
+ @since v2.1
+ */
+@property (nonatomic,readwrite, copy, setter = setMacRetinaDisplaySuffix:) NSString *macRetinaDisplaySuffix;
+
+#endif // __CC_PLATFORM_MAC
+
 
 /** returns the shared file utils instance */
 +(CCFileUtils*) sharedFileUtils;
@@ -128,6 +151,7 @@
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
  * In iPhone RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
+ * In Mac RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  
  If an iPad file is found, it will set resolution type to kCCResolutioniPad
  If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
@@ -166,7 +190,22 @@
  */
 -(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
-#endif // __CC_PLATFORM_IOS
+#elif defined(__CC_PLATFORM_MAC)
+
+/** Returns whether or not a given filename exists with the Mac RetinaDisplay suffix.
+ Only available on OS  X. Not supported on iOS
+ @since v2.1
+ */
+-(BOOL) macRetinaDisplayFileExistsAtPath:(NSString*)filename;
+
+/** Returns whether or not a given filename exists with the Mac RetinaDisplay suffix.
+ Only available on OS  X. Not supported on iOS
+ @since v2.1
+ */
+-(BOOL) macFileExistsAtPath:(NSString*)filename;
+
+#endif // __CC_PLATFORM_MAC
+
 
 @end
 

@@ -1,4 +1,5 @@
 version 2.1-alpha XX-Ago-2012
+. [NEW] FileUtils: Added support for mac and retinaDisplay Mac suffix.
 . [NEW] GL ES 2.0 code: General improvements in the shader and cache code. Better error reporting.
 . [NEW] Javascript bindings for cocos2d, CocosDenshion, CocosBuilder Reader and Chipmunk.
 			Includes Javascript remote console
