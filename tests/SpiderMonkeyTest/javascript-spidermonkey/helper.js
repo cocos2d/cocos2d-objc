@@ -86,7 +86,12 @@ cc._c4 = function( r, g, b, a )
 
 cc.rect = function(x,y,w,h)
 {
-	var rect = new Float32Array(4)
+    var platform = __getPlatform();
+    if( platform.substring(0,7) == 'desktop' )
+        var rect = new Float64Array(4)
+    else
+        var rect = new Float32Array(4)
+
 	rect[0] = x;
 	rect[1] = y;
 	rect[2] = w;
@@ -96,7 +101,11 @@ cc.rect = function(x,y,w,h)
 
 cc.size = function(w,h)
 {
-	var size = new Float32Array(2)
+    var platform = __getPlatform();
+    if( platform.substring(0,7) == 'desktop' )
+        var size = new Float64Array(2)
+    else
+        var size = new Float32Array(2)
 	size[0] = w;
 	size[1] = h;
 	return size;

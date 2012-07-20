@@ -8,11 +8,11 @@
 
 require("javascript-spidermonkey/helper.js");
 
-var director = cc.Director.getInstance();
-var _winSize = director.winSize();
-var winSize = {width:_winSize[0], height:_winSize[1]};
-var centerPos = cc.p( winSize.width/2, winSize.height/2 );
-var spriteFrameCache = cc.SpriteFrameCache.getInstance();
+director = cc.Director.getInstance();
+_winSize = director.getWinSize();
+winSize = {width:_winSize[0], height:_winSize[1]};
+centerPos = cc.p( winSize.width/2, winSize.height/2 );
+spriteFrameCache = cc.SpriteFrameCache.getInstance();
 
 var scenes = [];
 var currentScene = 0;
@@ -41,7 +41,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.winSize();
+	_winSize = director.getWinSize();
 	winSize = {width:_winSize[0], height:_winSize[1]};
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
