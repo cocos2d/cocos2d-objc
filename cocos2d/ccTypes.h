@@ -338,7 +338,7 @@ typedef enum
 	//! Mac resolution type
 	kCCResolutionMac,
 
-	//! Mac RetinaDisplay resolution type (???)
+	//! Mac RetinaDisplay resolution type
 	kCCResolutionMacRetinaDisplay,
 #endif // platform
 
