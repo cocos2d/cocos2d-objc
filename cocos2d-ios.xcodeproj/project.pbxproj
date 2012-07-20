@@ -1410,6 +1410,8 @@
 		A03A1D0A14F5BEFA0019B6F3 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D0714F5BEFA0019B6F3 /* helvetica-geneva-32.png */; };
 		A03A1D4F14F5E1160019B6F3 /* arial-unicode-26.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D4D14F5E1160019B6F3 /* arial-unicode-26.fnt */; };
 		A03A1D5014F5E1160019B6F3 /* arial-unicode-26.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D4E14F5E1160019B6F3 /* arial-unicode-26.png */; };
+		A04298E915B9CFAD00509473 /* konqa32-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A04298E715B9CFAD00509473 /* konqa32-ipad.fnt */; };
+		A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A04298E815B9CFAD00509473 /* konqa32-ipad.png */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -4632,6 +4634,8 @@
 		A03A1D0714F5BEFA0019B6F3 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
 		A03A1D4D14F5E1160019B6F3 /* arial-unicode-26.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-unicode-26.fnt"; sourceTree = "<group>"; };
 		A03A1D4E14F5E1160019B6F3 /* arial-unicode-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arial-unicode-26.png"; sourceTree = "<group>"; };
+		A04298E715B9CFAD00509473 /* konqa32-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "konqa32-ipad.fnt"; sourceTree = "<group>"; };
+		A04298E815B9CFAD00509473 /* konqa32-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-ipad.png"; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -4653,7 +4657,6 @@
 		A04E85F1159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes.h; sourceTree = "<group>"; };
 		A04E85F2159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_classes.mm; sourceTree = "<group>"; };
 		A04E85F3159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes_registration.h; sourceTree = "<group>"; };
-		A04E85F6159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
 		A04E85F7159B6B2D00F4BE65 /* js_bindings_NS_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_NS_manual.h; sourceTree = "<group>"; };
 		A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_NS_manual.mm; sourceTree = "<group>"; };
 		A04E85F9159B6B2D00F4BE65 /* js_manual_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_manual_conversions.h; sourceTree = "<group>"; };
@@ -7460,7 +7463,6 @@
 				A04E85F1159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.h */,
 				A04E85F2159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes.mm */,
 				A04E85F3159B6B2D00F4BE65 /* js_bindings_CocosDenshion_classes_registration.h */,
-				A04E85F6159B6B2D00F4BE65 /* js_bindings_CocosDenshion_functions_registration.h */,
 				A029010D15B602B400D64F82 /* js_bindings_CocosBuilderReader_classes_registration.h */,
 				A029010E15B602B400D64F82 /* js_bindings_CocosBuilderReader_classes.h */,
 				A029010F15B602B400D64F82 /* js_bindings_CocosBuilderReader_classes.mm */,
@@ -7604,6 +7606,8 @@
 				A091135515B7BEA2006DD5AA /* HUD.ccbi */,
 				A091135615B7BEA2006DD5AA /* pickup_coin.wav */,
 				A091135715B7BEA2006DD5AA /* pickup_star.wav */,
+				A04298E715B9CFAD00509473 /* konqa32-ipad.fnt */,
+				A04298E815B9CFAD00509473 /* konqa32-ipad.png */,
 				A0644ACB15B61C75004AB807 /* konqa32-hd.fnt */,
 				A0644ACC15B61C75004AB807 /* konqa32-hd.png */,
 				A0644ACD15B61C75004AB807 /* konqa32.fnt */,
@@ -11633,6 +11637,8 @@
 				A091135E15B7BEA2006DD5AA /* pickup_star.wav in Resources */,
 				A091137B15B8A1B5006DD5AA /* HMVectorNode.fsh in Resources */,
 				A091137D15B8A1B5006DD5AA /* HMVectorNode.vsh in Resources */,
+				A04298E915B9CFAD00509473 /* konqa32-ipad.fnt in Resources */,
+				A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
