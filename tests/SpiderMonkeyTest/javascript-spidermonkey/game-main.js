@@ -10,8 +10,20 @@
 // A JS game using cocos2d and Chipmunk
 //
 
-
 require("javascript-spidermonkey/helper.js");
+
+// Z Orders
+Z_WATERMELON = 5;
+Z_COIN = 8;
+Z_CHASSIS = 10;
+Z_WHEEL = 11;
+Z_LABEL = 20;
+Z_DEBUG = 50;
+
+// Game state
+STATE_PAUSE = 0;
+STATE_PLAYING = 1;
+STATE_GAME_OVER = 2;
 
 audioEngine = cc.AudioEngine.getInstance();
 director = cc.Director.getInstance();
@@ -22,8 +34,8 @@ centerPos = cc.p( winSize.width/2, winSize.height/2 );
 //
 // Levels
 //
-level0 = {'coins' : [ {x:20,y:20}, {x:30,y:30}, {x:40,y:40}, {x:50,y:50}, {x:60,y:60} ],
-          'car' : {x:80, y:30}, 
+level0 = {'coins' : [ {x:220,y:80}, {x:430,y:130}, ],
+          'car' : {x:80, y:60}, 
 
           // points in absolute position.
 //          'segments' : [ {x0:0, y0:0, x1:100, y1:50}, ],
@@ -42,6 +54,8 @@ INFINITY = 1e50;
 
 COLLISION_TYPE_CAR = 1;
 COLLISION_TYPE_COIN = 2;
+COLLISION_TYPE_WATERMELON = 3;
+COLLISION_TYPE_FLOOR = 4;
 
 // Create some collision rules for fancy layer based filtering.
 // There is more information about how this works in the Chipmunk docs.
@@ -55,7 +69,7 @@ COLLISION_LAYERS_BUGGY = (COLLISION_RULE_TERRAIN_BUGGY | COLLISION_RULE_BUGGY_ON
 // Some constants for controlling the car and world:
 GRAVITY =  1200.0;
 WHEEL_MASS = 0.25;
-CHASSIS_MASS = 1.0;
+CHASSIS_MASS = 0.7;
 FRONT_SPRING = 150.0;
 FRONT_DAMPING = 3.0;
 COG_ADJUSTMENT = cp.v(0.0, -10.0);
@@ -70,6 +84,8 @@ DIFFERENTIAL_TORQUE = 0.5;
 // Groups
 GROUP_BUGGY = 1;
 GROUP_COIN = 2;
+
+WATERMELON_MASS = 0.05;
 
 // Node Tags (used by CocosBuilder)
 SCORE_LABEL_TAG = 10;
@@ -89,6 +105,8 @@ var GameLayer = cc.LayerGradient.extend({
     _shapesToRemove:[],
     _score:0,
     _scoreLabel:null,
+    _state:STATE_PAUSE,
+    _debugNode:null,
 
     ctor:function () {
                                 
@@ -107,10 +125,12 @@ var GameLayer = cc.LayerGradient.extend({
 
 
         cc.MenuItemFont.setFontSize(16);
-        var menuItem = cc.MenuItemFont.create("Reset", this, this.reset );
-        var menu = cc.Menu.create( menuItem );
+        var item1 = cc.MenuItemFont.create("Reset", this, this.onReset);
+        var item2 = cc.MenuItemFont.create("Debug On/Off", this, this.onToggleDebug);
+        var menu = cc.Menu.create( item1, item2 );
+        menu.alignItemsVertically();
         this.addChild( menu );
-        menu.setPosition( cc._p( 40,60)  );
+        menu.setPosition( cc._p( winSize.width-40, winSize.height-80 )  );
     
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimationsWithFile("coins_animation.plist");
@@ -135,10 +155,6 @@ var GameLayer = cc.LayerGradient.extend({
         this._scoreLabel = hud.getChildByTag( SCORE_LABEL_TAG );
     },
 
-    reset:function() {
-        run();
-    },
-
     addScore:function(value) {
         this._score += value;
         this._scoreLabel.setString( this._score );
@@ -152,6 +168,15 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     // Events
+    onReset:function(sender) {
+        run();
+    },
+
+    onToggleDebug:function(sender) {
+        var state = this._debugNode.getVisible();
+        this._debugNode.setVisible( !state );
+    },
+
     onMouseDown:function(event) {
         this.setThrottle(1);
         return true;
@@ -182,7 +207,8 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceFree( this._space );
     },
 
-	onCollisionBegin : function ( arbiter, space ) {
+    // Coin and Car
+	onCollisionBeginCoin : function ( arbiter, space ) {
 
 		var bodies = cp.arbiterGetBodies( arbiter );
 		var shapes = cp.arbiterGetShapes( arbiter );
@@ -204,6 +230,12 @@ var GameLayer = cc.LayerGradient.extend({
             cc.log("Adding shape: " + shapeCoin );
             this.addScore(1);
         }
+        return true;
+	},
+
+    // Floor and Watermelon
+	onCollisionBeginWatermelon : function ( arbiter, space ) {
+        this.setGameState( STATE_GAME_OVER );
         return true;
 	},
 
@@ -288,6 +320,7 @@ var GameLayer = cc.LayerGradient.extend({
 			var wall = walls[i];
 			cp.shapeSetElasticity(wall, 1);
 			cp.shapeSetFriction(wall, 1);
+            cp.shapeSetCollisionType(wall, COLLISION_TYPE_FLOOR);
 			cp.spaceAddStaticShape( this._space, wall );
 		}
 
@@ -295,12 +328,13 @@ var GameLayer = cc.LayerGradient.extend({
 		cp.spaceSetGravity( this._space, cp._v(0, -GRAVITY) );
 
         // collision handler
-		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBegin, null, null, null );
+		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBeginCoin, null, null, null );
+		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this, this.onCollisionBeginWatermelon, null, null, null );
 
         // debug only
-        var debug = cc.ChipmunkDebugNode.create( this._space );
-        debug.setVisible( true );
-        this.addChild( debug, 100 );
+        this._debugNode = cc.ChipmunkDebugNode.create( this._space );
+        this._debugNode.setVisible( false );
+        this.addChild( this._debugNode, Z_DEBUG);
 	},
 
     setThrottle : function( throttle ) {
@@ -337,6 +371,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._chassis = this.createChassis( cp.vadd( pos, COG_ADJUSTMENT ) );
         this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-35, -25) ) );
         this.createCarJoints( this._chassis, front, this._rearWheel );
+        this.createCarFruits( pos );
 
         this.setThrottle( 0 );
     },
@@ -416,7 +451,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         cp.spaceAddBody( this._space, body );
         cp.spaceAddShape( this._space, shape );
-        this._batch.addChild( sprite, 10 );
+        this._batch.addChild( sprite, Z_WHEEL);
 
         return body;
     },
@@ -435,7 +470,7 @@ var GameLayer = cc.LayerGradient.extend({
         sprite.setBody( body );
 
         cp.spaceAddBody( this._space, body );
-        this._batch.addChild( sprite );
+        this._batch.addChild( sprite, Z_CHASSIS );
 
         // bottom of chassis
         var shape = cp.boxShapeNew( body, cs[0], 15 );
@@ -462,19 +497,36 @@ var GameLayer = cc.LayerGradient.extend({
         cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
         cp.spaceAddShape( this._space, shape );
 
-
-
         return body;
+    },
+
+    createCarFruits : function(pos) {
+        // create some fruits
+        for(var i=0; i < 4;i++) {
+            var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("watermelon.png");  
+            var radius = 0.95 * sprite.getContentSize()[0] / 2;
+
+            var body = cp.bodyNew(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
+            cp.bodySetPos( body, pos );
+            sprite.setBody( body );
+
+            var shape = cp.circleShapeNew( body, radius, cp.vzero );
+            cp.shapeSetFriction( shape, 1 );
+            cp.shapeSetCollisionType( shape, COLLISION_TYPE_WATERMELON);
+
+            cp.spaceAddShape( this._space, shape );
+            cp.spaceAddBody( this._space, body );
+            this._batch.addChild( sprite, Z_WATERMELON );
+        }
     },
 
     createCoin: function( pos ) {
         // coins are static bodies and sensors
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("coin01.png");  
         var radius = 0.95 * sprite.getContentSize()[0] / 2;
-
+        
         var body = cp.bodyNew(1, 1);
         cp.bodyInitStatic(body);
-//		var body = cp.spaceGetStaticBody( this._space );
 		cp.bodySetPos( body, pos );
         sprite.setBody( body );
 
@@ -484,9 +536,8 @@ var GameLayer = cc.LayerGradient.extend({
         cp.shapeSetCollisionType( shape, COLLISION_TYPE_COIN );
         cp.shapeSetSensor( shape, true );
 
-//        cp.spaceAddBody( this._space, body );
         cp.spaceAddStaticShape( this._space, shape );
-        this._batch.addChild( sprite, 10 );
+        this._batch.addChild( sprite, Z_COIN);
 
         var animation = cc.AnimationCache.getInstance().getAnimationByName("coin");
         var animate = cc.Animate.create(animation); 
@@ -504,7 +555,19 @@ var GameLayer = cc.LayerGradient.extend({
 		var segment = cp.segmentShapeNew( staticBody, src, dst, 5 );
         cp.shapeSetElasticity(segment, 1);
         cp.shapeSetFriction(segment, 1);
+        cp.shapeSetCollisionType(segment, COLLISION_TYPE_FLOOR);
         cp.spaceAddStaticShape( this._space, segment );
+    },
+
+    //
+    // Game State
+    //
+    setGameState: function( state ) {
+        if( state == STATE_GAME_OVER ) {
+            var label = cc.LabelBMFont.create("GAME OVER", "futura-48.fnt" );
+            label.setPosition( centerPos );
+            this.addChild( label, Z_LABEL );
+        }
     },
 
 });

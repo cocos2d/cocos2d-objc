@@ -137,7 +137,7 @@
             <key>coin09.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{212,282},{34,54}}</string>
+                <string>{{212,316},{34,54}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -290,6 +290,19 @@
                 <key>sourceSize</key>
                 <string>{64,64}</string>
             </dict>
+            <key>watermelon.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{212,282},{35,32}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{35,32}}</string>
+                <key>sourceSize</key>
+                <string>{35,32}</string>
+            </dict>
         </dict>
         <key>metadata</key>
         <dict>
@@ -300,7 +313,7 @@
             <key>size</key>
             <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:b0977503ce8ea0e5a8dea2894415c7ba$</string>
+            <string>$TexturePacker:SmartUpdate:a2727a028286fb64e000fe7f4aec3997$</string>
             <key>textureFileName</key>
             <string>coins-hd.png</string>
         </dict>
