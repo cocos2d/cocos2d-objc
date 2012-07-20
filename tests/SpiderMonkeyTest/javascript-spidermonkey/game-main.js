@@ -30,7 +30,8 @@ level0 = {'coins' : [ {x:20,y:20}, {x:30,y:30}, {x:40,y:40}, {x:50,y:50}, {x:60,
           'segments' : [],
 
           // points relatives to the previous point
-          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:20}, {x:100, y:-20}, {x:200, y:200}, ],
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:20}, {x:100, y:-20}, {x:200, y:100}, {x:100, y:-100} ],
+
           'background' : "background1.png",
           };
 //
@@ -57,7 +58,7 @@ WHEEL_MASS = 0.25;
 CHASSIS_MASS = 1.0;
 FRONT_SPRING = 150.0;
 FRONT_DAMPING = 3.0;
-COG_ADJUSTMENT = cp.v(5.0, -10.0);
+COG_ADJUSTMENT = cp.v(0.0, -10.0);
 REAR_SPRING = 100.0;
 REAR_DAMPING = 3.0;
 ROLLING_FRICTION = 5e2;
@@ -332,9 +333,9 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     createCar : function(pos) {
-        var front = this.createWheel( cp.vadd(pos, cp._v(47,-20) ) );
+        var front = this.createWheel( cp.vadd(pos, cp._v(47,-25) ) );
         this._chassis = this.createChassis( cp.vadd( pos, COG_ADJUSTMENT ) );
-        this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-41, -20) ) );
+        this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-35, -25) ) );
         this.createCarJoints( this._chassis, front, this._rearWheel );
 
         this.setThrottle( 0 );
@@ -422,9 +423,9 @@ var GameLayer = cc.LayerGradient.extend({
 
     createChassis : function(pos) {
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Chassis.png"); 
-//        var anchor = cp.vadd( sprite.getAnchorPointInPoints, COG_ADJUSTMENT );
+        var anchor = cp.vadd( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
         var cs = sprite.getContentSize();
-//        sprite.setAnchorPoint( anchor[0] / cs[0], anchor[1]/cs[1] );
+        sprite.setAnchorPoint( cc.p(anchor[0] / cs[0], anchor[1]/cs[1]) );
 
         // XXX: Space Patrol uses a nice poly for the chassis.
         // XXX: Add something similar here, instead of a boxed chassis
@@ -433,15 +434,35 @@ var GameLayer = cc.LayerGradient.extend({
         cp.bodySetPos( body, pos );
         sprite.setBody( body );
 
-        var shape = cp.boxShapeNew( body, cs[0], cs[1] );
+        cp.spaceAddBody( this._space, body );
+        this._batch.addChild( sprite );
+
+        // bottom of chassis
+        var shape = cp.boxShapeNew( body, cs[0], 15 );
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
         cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
 
-        cp.spaceAddBody( this._space, body );
         cp.spaceAddShape( this._space, shape );
-        this._batch.addChild( sprite );
+
+        // box for fruits (left)
+        var shape = cp.boxShapeNew2( body, cp.bBNew(-48,0, -44,30) );
+		cp.shapeSetFriction(shape, 0.3);
+		cp.shapeSetGroup( shape, GROUP_BUGGY );
+		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
+        cp.spaceAddShape( this._space, shape );
+
+        // box for fruits (right)
+        var shape = cp.boxShapeNew2( body, cp.bBNew(8,0, 12,30) );
+		cp.shapeSetFriction(shape, 0.3);
+		cp.shapeSetGroup( shape, GROUP_BUGGY );
+		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
+        cp.spaceAddShape( this._space, shape );
+
+
 
         return body;
     },

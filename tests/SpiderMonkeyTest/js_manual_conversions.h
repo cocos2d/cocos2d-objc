@@ -85,6 +85,11 @@ jsval opaque_to_jsval( JSContext *cx, void* opaque);
 JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret );
 jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p );
 #endif // JSB_USE_COCOS2D
+	
+#ifdef JSB_USE_CHIPMUNK
+JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );
+jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
+#endif // JSB_USE_CHIPMUNK
 
 	
 #ifdef __cplusplus

@@ -484,3 +484,34 @@ JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 #endif // JSB_USE_COCOS2D
 
 
+#ifdef JSB_USE_CHIPMUNK
+
+JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
+{
+	JSObject *tmp_arg;
+	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(cpFloat)*4, @"jsb: Invalid length");
+	
+	*ret = *(cpBB*)JS_GetTypedArrayData( tmp_arg );
+
+	return JS_TRUE;	
+}
+
+jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
+{
+#ifdef __LP64__
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT64, 4 );
+#else
+	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
+#endif
+	cpBB *buffer = (cpBB*)JS_GetTypedArrayData(typedArray);
+	
+	*buffer = bb;
+	return OBJECT_TO_JSVAL(typedArray);
+}
+
+#endif // JSB_USE_CHIPMUNK
