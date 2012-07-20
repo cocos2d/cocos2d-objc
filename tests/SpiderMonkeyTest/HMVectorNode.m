@@ -180,6 +180,8 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	glBindVertexArray(_vao);
 	glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
 	
+	CC_INCREMENT_GL_DRAWS(1);
+	
 	PRINT_GL_ERRORS();
 }
 

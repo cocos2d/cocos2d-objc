@@ -55,3 +55,10 @@
 #ifndef JSB_USE_COCOS2D
 #define JSB_USE_COCOS2D 1
 #endif // JSB_USE_COCOS2D
+
+/** @def JSB_USE_CHIPMUNK
+ Whether or not it should assume that Chipmunk is being used.
+ */
+#ifndef JSB_USE_CHIPMUNK
+#define JSB_USE_CHIPMUNK 1
+#endif // JSB_USE_CHIPMUNK
