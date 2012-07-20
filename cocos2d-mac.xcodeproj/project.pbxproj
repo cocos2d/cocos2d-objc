@@ -5850,7 +5850,6 @@
 		4AD3B95F159A5534002E68D1 /* js_bindings_CocosDenshion_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes_registration.h; sourceTree = "<group>"; };
 		4AD3B960159A5534002E68D1 /* js_bindings_CocosDenshion_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_classes.h; sourceTree = "<group>"; };
 		4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_classes.mm; sourceTree = "<group>"; };
-		4AD3B962159A5534002E68D1 /* js_bindings_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
 		A009440015181C8D0029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009440315181D150029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009440415181D150029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -7883,7 +7882,6 @@
 				4AD3B95F159A5534002E68D1 /* js_bindings_CocosDenshion_classes_registration.h */,
 				4AD3B960159A5534002E68D1 /* js_bindings_CocosDenshion_classes.h */,
 				4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */,
-				4AD3B962159A5534002E68D1 /* js_bindings_CocosDenshion_functions_registration.h */,
 				A0644A6C15B60B01004AB807 /* js_bindings_CocosBuilderReader_classes_registration.h */,
 				A0644A6D15B60B01004AB807 /* js_bindings_CocosBuilderReader_classes.h */,
 				A0644A6E15B60B01004AB807 /* js_bindings_CocosBuilderReader_classes.mm */,
