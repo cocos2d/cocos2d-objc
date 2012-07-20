@@ -278,37 +278,41 @@ class SpiderMonkey(object):
         self.manual_methods = {}
         for prop in properties:
             # key value
-            if not prop or len(prop)==0:
-                continue
-            key,value = prop.split('=')
+            try:
+                if not prop or len(prop)==0:
+                    continue
+                key,value = prop.split('=')
 
-            # From Key get: Class # method
-            klass,method = key.split('#')
-            klass = klass.strip()
-            method = method.strip()
+                # From Key get: Class # method
+                klass,method = key.split('#')
+                klass = klass.strip()
+                method = method.strip()
 
-            opts = {}
-            # From value get options
-            options = value.split(';')
-            for o in options:
-                # Options can have their own Key Value
-                if ':' in o:
-                    o = o.replace('"', '')
-                    o = o.replace("'", "")
+                opts = {}
+                # From value get options
+                options = value.split(';')
+                for o in options:
+                    # Options can have their own Key Value
+                    if ':' in o:
+                        o = o.replace('"', '')
+                        o = o.replace("'", "")
 
-                    # o_value might also have some ':'
-                    # So, it should split by the first ':'
-                    o_list = o.split(':')
-                    o_key = o_list[0]
-                    o_val = ':'.join(o_list[1:])
-                else:
-                    o_key = o
-                    o_val = True
-                opts[ o_key ] = o_val
+                        # o_value might also have some ':'
+                        # So, it should split by the first ':'
+                        o_list = o.split(':')
+                        o_key = o_list[0]
+                        o_val = ':'.join(o_list[1:])
+                    else:
+                        o_key = o
+                        o_val = True
+                    opts[ o_key ] = o_val
 
-            expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
-            for k in expanded_klasses:
-                self.process_method_properties( k, method, opts )
+                expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
+                for k in expanded_klasses:
+                    self.process_method_properties( k, method, opts )
+            except ValueError, e:
+                sys.stderr.write("\nERROR parsing line: %s\n\n" % (prop) )
+                raise
 
     def init_struct_properties( self, properties ):
         self.struct_properties = {}

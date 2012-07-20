@@ -29642,40 +29642,30 @@ void JSPROXY_CCFollow_finalize(JSContext *cx, JSObject *obj)
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFollow)", obj);
 }
 
-// Arguments: CCNode*
-// Ret value: CCFollow* (o)
-JSBool JSPROXY_CCFollow_actionWithTarget__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCFollow* ret_val;
-
-	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: CCNode*, CGRect
 // Ret value: CCFollow* (o)
 JSBool JSPROXY_CCFollow_actionWithTarget_worldBoundary__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if (argc >= 2) {
+		ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCFollow* ret_val;
 
-	ret_val = [CCFollow actionWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
+	if( argc == 1 ) {
+		ret_val = [CCFollow actionWithTarget:(CCNode*)arg0  ];
+	}
+	else if( argc == 2 ) {
+		ret_val = [CCFollow actionWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
+	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -29814,8 +29804,7 @@ void JSPROXY_CCFollow_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("actionWithTarget", JSPROXY_CCFollow_actionWithTarget__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithTargetWorldBoundary", JSPROXY_CCFollow_actionWithTarget_worldBoundary__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCFollow_actionWithTarget_worldBoundary__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("action", JSPROXY_CCFollow_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
