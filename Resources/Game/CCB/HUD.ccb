@@ -213,8 +213,8 @@
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<real>55</real>
-							<real>24</real>
+							<real>11.458333015441895</real>
+							<real>37.5</real>
 						</array>
 						<key>name</key>
 						<string>position</string>
@@ -222,9 +222,9 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>55</real>
-							<real>24</real>
-							<integer>0</integer>
+							<real>11.458333015441895</real>
+							<real>37.5</real>
+							<integer>4</integer>
 						</array>
 					</dict>
 					<dict>
@@ -301,7 +301,7 @@
 						<key>type</key>
 						<string>FntFile</string>
 						<key>value</key>
-						<string>Gas-40.fnt</string>
+						<string>Gas40.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -360,8 +360,8 @@
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<real>161</real>
-							<real>24</real>
+							<real>33.541667938232422</real>
+							<real>37.5</real>
 						</array>
 						<key>name</key>
 						<string>position</string>
@@ -369,9 +369,9 @@
 						<string>Position</string>
 						<key>value</key>
 						<array>
-							<real>199</real>
-							<real>24</real>
-							<integer>0</integer>
+							<real>41.458332061767578</real>
+							<real>37.5</real>
+							<integer>4</integer>
 						</array>
 					</dict>
 					<dict>
@@ -448,7 +448,7 @@
 						<key>type</key>
 						<string>FntFile</string>
 						<key>value</key>
-						<string>Gas-40.fnt</string>
+						<string>Gas40.fnt</string>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -504,7 +504,7 @@
 				<key>baseValue</key>
 				<array>
 					<real>0.0</real>
-					<real>50</real>
+					<real>84.375</real>
 				</array>
 				<key>name</key>
 				<string>position</string>
@@ -513,8 +513,8 @@
 				<key>value</key>
 				<array>
 					<real>0.0</real>
-					<real>50</real>
-					<integer>1</integer>
+					<real>84.375</real>
+					<integer>4</integer>
 				</array>
 			</dict>
 			<dict>
@@ -609,13 +609,13 @@
 			<key>centeredOrigin</key>
 			<false/>
 			<key>ext</key>
-			<string> </string>
+			<string>ipad hd</string>
 			<key>height</key>
 			<integer>768</integer>
 			<key>name</key>
 			<string>iPad Landscape</string>
 			<key>scale</key>
-			<real>1</real>
+			<real>2</real>
 			<key>width</key>
 			<integer>1024</integer>
 		</dict>

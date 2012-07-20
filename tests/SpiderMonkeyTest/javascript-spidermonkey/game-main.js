@@ -167,7 +167,9 @@ var GameLayer = cc.LayerGradient.extend({
 
     },
 
+    //
     // Events
+    //
     onReset:function(sender) {
         run();
     },
@@ -617,7 +619,7 @@ var MainMenu = cc.Layer.extend({
 function run()
 {
     // update globals
-    _winSize = director.winSize();
+    _winSize = director.getWinSize();
     winSize = {width:_winSize[0], height:_winSize[1]};
     centerPos = cc.p( winSize.width/2, winSize.height/2 );
 

@@ -1414,6 +1414,8 @@
 		A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A04298E815B9CFAD00509473 /* konqa32-ipad.png */; };
 		A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */; };
 		A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EC15B9D0B400509473 /* coins.pvr.ccz */; };
+		A042990215B9DA1B00509473 /* Gas-40-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */; };
+		A042990315B9DA1B00509473 /* Gas-40-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990115B9DA1B00509473 /* Gas-40-ipad.png */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -4638,6 +4640,8 @@
 		A04298E815B9CFAD00509473 /* konqa32-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "konqa32-ipad.png"; sourceTree = "<group>"; };
 		A04298EB15B9D0B400509473 /* coins-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "coins-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A04298EC15B9D0B400509473 /* coins.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = coins.pvr.ccz; sourceTree = "<group>"; };
+		A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas-40-ipad.fnt"; sourceTree = "<group>"; };
+		A042990115B9DA1B00509473 /* Gas-40-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Gas-40-ipad.png"; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -7599,6 +7603,8 @@
 		A0644ACA15B61C75004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
+				A042990015B9DA1B00509473 /* Gas-40-ipad.fnt */,
+				A042990115B9DA1B00509473 /* Gas-40-ipad.png */,
 				A091135115B7BEA2006DD5AA /* Gas-40-hd.fnt */,
 				A091135215B7BEA2006DD5AA /* Gas-40-hd.png */,
 				A091135315B7BEA2006DD5AA /* Gas-40.fnt */,
@@ -11639,6 +11645,8 @@
 				A04298EA15B9CFAD00509473 /* konqa32-ipad.png in Resources */,
 				A04298ED15B9D0B500509473 /* coins-hd.pvr.ccz in Resources */,
 				A04298EE15B9D0B500509473 /* coins.pvr.ccz in Resources */,
+				A042990215B9DA1B00509473 /* Gas-40-ipad.fnt in Resources */,
+				A042990315B9DA1B00509473 /* Gas-40-ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

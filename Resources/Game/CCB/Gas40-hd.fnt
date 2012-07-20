@@ -1,6 +1,6 @@
 info face="Gas" size=80 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=0,0,0,0 spacing=2,2
 common lineHeight=90 base=75 scaleW=1024 scaleH=512 pages=1 packed=0
-page id=0 file="Gas-40-hd.png"
+page id=0 file="Gas40-hd.png"
 chars count=95
 char id=124 x=2 y=2 width=16 height=91 xoffset=6 yoffset=-1 xadvance=18 page=0 chnl=0 letter="|"
 char id=109 x=20 y=2 width=62 height=67 xoffset=6 yoffset=11 xadvance=64 page=0 chnl=0 letter="m"
