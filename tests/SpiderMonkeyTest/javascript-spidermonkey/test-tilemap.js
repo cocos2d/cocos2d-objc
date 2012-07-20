@@ -10,10 +10,10 @@ require("javascript-spidermonkey/helper.js");
 
 var TAG_TILE_MAP = 1;
 
-var director = cc.Director.getInstance();
-var _winSize = director.winSize();
-var winSize = {width:_winSize[0], height:_winSize[1]};
-var centerPos = cc.p( winSize.width/2, winSize.height/2 );
+director = cc.Director.getInstance();
+_winSize = director.getWinSize();
+winSize = {width:_winSize[0], height:_winSize[1]};
+centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
 var currentScene = 0;
@@ -42,7 +42,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.winSize();
+	_winSize = director.getWinSize();
 	winSize = {width:_winSize[0], height:_winSize[1]};
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 

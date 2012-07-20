@@ -8,15 +8,15 @@
 
 require("javascript-spidermonkey/helper.js");
 
-var director = cc.Director.getInstance();
-var _winSize = director.winSize();
-var winSize = {width:_winSize[0], height:_winSize[1]};
-var centerPos = cc.p( winSize.width/2, winSize.height/2 );
+director = cc.Director.getInstance();
+_winSize = director.getWinSize();
+winSize = {width:_winSize[0], height:_winSize[1]};
+centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
-var currentScene = 0;
+scenes = []
+currentScene = 0;
 
-var nextScene = function () {
+nextScene = function () {
 	currentScene = currentScene + 1;
 	if( currentScene >= scenes.length )
 		currentScene = 0;
@@ -25,7 +25,7 @@ var nextScene = function () {
 	loadScene(currentScene);
 };
 
-var previousScene = function () {
+previousScene = function () {
 	currentScene = currentScene -1;
 	if( currentScene < 0 )
 		currentScene = scenes.length -1;
@@ -34,13 +34,13 @@ var previousScene = function () {
 	loadScene(currentScene);
 };
 
-var restartScene = function () {
+restartScene = function () {
 	loadScene( currentScene );
 };
 
-var loadScene = function (sceneIdx)
+loadScene = function (sceneIdx)
 {
-	_winSize = director.winSize();
+	_winSize = director.getWinSize();
 	winSize = {width:_winSize[0], height:_winSize[1]};
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
@@ -62,7 +62,7 @@ var loadScene = function (sceneIdx)
 // Base Layer
 //
 
-var BaseLayer = cc.LayerGradient.extend({
+BaseLayer = cc.LayerGradient.extend({
 
     ctor:function () {
                                 
@@ -131,7 +131,7 @@ var BaseLayer = cc.LayerGradient.extend({
 // MainTest
 //
 //------------------------------------------------------------------
-var MainTest = BaseLayer.extend({
+MainTest = BaseLayer.extend({
 
     _menu : null,
 

@@ -8,11 +8,11 @@
 //
 require("javascript-spidermonkey/helper.js");
 
-var director = cc.Director.getInstance();
-var audioEngine = cc.AudioEngine.getInstance();
-var _winSize = director.winSize();
-var winSize = {width:_winSize[0], height:_winSize[1]};
-var centerPos = cc.p( winSize.width/2, winSize.height/2 );
+director = cc.Director.getInstance();
+audioEngine = cc.AudioEngine.getInstance();
+_winSize = director.getWinSize();
+winSize = {width:_winSize[0], height:_winSize[1]};
+centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var MUSIC_FILE = "Cyber Advance!.mp3";
 var EFFECT_FILE = "cowbell.wav";
