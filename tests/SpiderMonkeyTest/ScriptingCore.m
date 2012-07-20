@@ -162,11 +162,21 @@ JSBool ScriptingCore_platform(JSContext *cx, uint32_t argc, jsval *vp)
 		return JS_FALSE;
 
 	JSString * platform;
+
+// iOS is always 32 bits
 #ifdef __CC_PLATFORM_IOS
-	platform = JS_InternString(cx, "mobile/iOS");
+	platform = JS_InternString(cx, "mobile/iOS/32");
+
+// Mac can be 32 or 64 bits
 #elif defined(__CC_PLATFORM_MAC)
-	platform = JS_InternString(cx, "desktop/OSX");
+
+#ifdef __LP64__
+	platform = JS_InternString(cx, "desktop/OSX/64");
 #else
+	platform = JS_InternString(cx, "desktop/OSX/32");
+#endif // 32 or 64
+
+#else // unknown platform
 #error "Unsupported platform"
 #endif
 	jsval ret = STRING_TO_JSVAL(platform);

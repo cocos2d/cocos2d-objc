@@ -12,15 +12,20 @@
 
 require("javascript-spidermonkey/helper.js");
 
-// Z Orders
+// Z Orders (grouped by parent)
+
+// parent is scroll node
 Z_WATERMELON = 5;
 Z_COIN = 8;
 Z_CHASSIS = 10;
 Z_WHEEL = 11;
+Z_DEBUG_PHYSICS = 50;
+
+// parent is game layer
+Z_SCROLL = 10;
 Z_HUD = 15;
 Z_LABEL = 20;
 Z_DEBUG_MENU = 20;
-Z_DEBUG_PHYSICS = 50;
 
 // Game state
 STATE_PAUSE = 0;
@@ -33,6 +38,8 @@ _winSize = director.getWinSize();
 winSize = {width:_winSize[0], height:_winSize[1]};
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
+sizeRatio = winSize.width / 480;
+
 //
 // Levels
 //
@@ -44,7 +51,7 @@ level0 = {'coins' : [ {x:220,y:80}, {x:430,y:130}, ],
           'segments' : [],
 
           // points relatives to the previous point
-          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:20}, {x:100, y:-20}, {x:200, y:100}, {x:100, y:-100} ],
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, ],
 
           'background' : "background1.png",
           };
@@ -91,6 +98,7 @@ WATERMELON_MASS = 0.05;
 
 // Node Tags (used by CocosBuilder)
 SCORE_LABEL_TAG = 10;
+TIME_LABEL_TAG = 11;
 
 //
 // Game Layer
@@ -107,8 +115,12 @@ var GameLayer = cc.LayerGradient.extend({
     _shapesToRemove:[],
     _score:0,
     _scoreLabel:null,
+    _time:0,
+    _timeLabel:null,
     _state:STATE_PAUSE,
     _debugNode:null,
+    _scrollNode:null,
+    _carSprite:null,
 
     ctor:function () {
                                 
@@ -125,27 +137,34 @@ var GameLayer = cc.LayerGradient.extend({
             this.setTouchEnabled( true );
         }
 
-        cc.MenuItemFont.setFontSize(16);
+        cc.MenuItemFont.setFontSize(16 * sizeRatio );
         var item1 = cc.MenuItemFont.create("Reset", this, this.onReset);
         var item2 = cc.MenuItemFont.create("Debug On/Off", this, this.onToggleDebug);
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
-        menu.setPosition( cc._p( winSize.width-40, winSize.height-80 )  );
+        menu.setPosition( cc._p( winSize.width-(40*sizeRatio), winSize.height-(80*sizeRatio) )  );
     
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimationsWithFile("coins_animation.plist");
 
+        // scrollng Node.. all game objects are children of this node (or one of its subchildre)
+        var scroll = cc.Node.create();
+        this.addChild( scroll, Z_SCROLL );
+        this._scrollNode = scroll;
+
         // coin only needed to obtain the texture for the Batch Node
         var coin = cc.Sprite.createWithSpriteFrameName("coin01.png");
         this._batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 100 );
-        this.addChild( this._batch );
+        scroll.addChild( this._batch );
 
         this._shapesToRemove = [];
 
         this.initHUD();
 
         this._score = 0;
+        this._time = 0;
+        this._state = STATE_PAUSE;
 
     },
 
@@ -154,6 +173,11 @@ var GameLayer = cc.LayerGradient.extend({
         var hud = cc.Reader.load("HUD.ccbi", this);
         this.addChild( hud, Z_HUD );
         this._scoreLabel = hud.getChildByTag( SCORE_LABEL_TAG );
+        this._timeLabel = hud.getChildByTag( TIME_LABEL_TAG );
+
+        // bug in cocosbuilder
+        this._scoreLabel.setAnchorPoint( cc._p(1, 0.5) );
+        this._timeLabel.setAnchorPoint( cc._p(0, 0.5) );
     },
 
     addScore:function(value) {
@@ -240,11 +264,17 @@ var GameLayer = cc.LayerGradient.extend({
 
     // Floor and Watermelon
 	onCollisionBeginWatermelon : function ( arbiter, space ) {
+        this.setThrottle(0);
         this.setGameState( STATE_GAME_OVER );
         return true;
 	},
 
     update:function(dt) {
+
+        // update time
+        this._time += dt;
+        this._timeLabel.setString( '' + this._time.toFixed(1) );
+
         cp.spaceStep( this._space, dt);
 
         var l = this._shapesToRemove.length;
@@ -275,51 +305,75 @@ var GameLayer = cc.LayerGradient.extend({
     // Level Setup
     //
     setupLevel : function(lvl) {
-        if( lvl == 0 ) {
-            // Coins
-            var coins = level0['coins']; 
-            for( var i=0;i < coins.length; i++) {
-                var coin = coins[i];
-                this.createCoin( cc._p( coin.x, coin.y) ); 
-            }
 
-            // car
-            var car = level0['car'];
-            this.createCar( cp.v( car.x, car.y) );
+        var x = 0;
+        var y = 0;
+        var width = winSize.width;
+        var height = winSize.height;
 
-            // Segments
-            var segments = level0['segments']; 
-            for( var i=0; i < segments.length; i++) {
-                var segment = segments[i];
-                this.createSegment( cp._v(segment.x0, segment.y0), cp._v(segment.x1, segment.y1) ); 
-            }
+        var level = level0;
 
-            //lines  
-            var p = {x:0, y:0};
-            var lines = level0['lines']; 
-            for( var i=0; i < lines.length; i++) {
-                var line = lines[i];
-                if( i > 0 ) {
-                    this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
-                }
-
-                p = {x:p.x+line.x, y:p.y+line.y};
-            }
+        if( lvl == 0 )
+            level = level0;
+        
+        // Coins
+        var coins = level['coins']; 
+        for( var i=0;i < coins.length; i++) {
+            var coin = coins[i];
+            this.createCoin( cc._p( coin.x, coin.y) ); 
         }
+
+        // car
+        var car = level['car'];
+        this.createCar( cp.v( car.x, car.y) );
+
+        // Segments
+        var segments = level['segments']; 
+        for( var i=0; i < segments.length; i++) {
+            var segment = segments[i];
+            this.createSegment( cp._v(segment.x0, segment.y0), cp._v(segment.x1, segment.y1) ); 
+        }
+
+        //lines  
+        var p = {x:0, y:0};
+        var lines = level['lines']; 
+        for( var i=0; i < lines.length; i++) {
+            var line = lines[i];
+            if( i > 0 ) {
+                this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
+            }
+
+            p = {x:p.x+line.x, y:p.y+line.y};
+
+            x = Math.min(x, p.x);
+            y = Math.min(y, p.y);
+            width = Math.max( width, p.x);
+            height = Math.max( height, p.y);
+        }
+
+        cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
+
+        var rect = cc.rect(x,y,width,height); 
+        var a = cc.Follow.create( this._carSprite, rect );
+        this._scrollNode.runAction( a );
+
+        this.createWorldBoundary( rect );
     },
 
-    //
-    // Physics
-    //
-	initPhysics :  function() {
-		this._space =  cp.spaceNew();
+    createWorldBoundary:function( rect ) {
+
 		var staticBody = cp.spaceGetStaticBody( this._space );
 
+        var x = rect[0];
+        var y = rect[1];
+        var w = rect[2];
+        var h = rect[3];
+
 		// Walls
-		var walls = [cp.segmentShapeNew( staticBody, cp._v(0,0), cp._v(winSize.width,0), 0 ),				    // bottom
-				cp.segmentShapeNew( staticBody, cp._v(0,winSize.height), cp._v(winSize.width,winSize.height), 0),	// top
-				cp.segmentShapeNew( staticBody, cp._v(0,0), cp._v(0,winSize.height), 0),				            // left
-				cp.segmentShapeNew( staticBody, cp._v(winSize.width,0), cp._v(winSize.width,winSize.height), 0)	// right
+		var walls =[cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(w,y), 0 ),   // bottom
+			     	cp.segmentShapeNew( staticBody, cp._v(x,h), cp._v(w,h), 0),	    // top
+                    cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(x,h), 0),     // left
+                    cp.segmentShapeNew( staticBody, cp._v(w,y), cp._v(w,h), 0)  	// right
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
@@ -328,6 +382,13 @@ var GameLayer = cc.LayerGradient.extend({
             cp.shapeSetCollisionType(wall, COLLISION_TYPE_FLOOR);
 			cp.spaceAddStaticShape( this._space, wall );
 		}
+    },
+
+    //
+    // Physics
+    //
+	initPhysics :  function() {
+		this._space =  cp.spaceNew();
 
 		// Gravity
 		cp.spaceSetGravity( this._space, cp._v(0, -GRAVITY) );
@@ -339,7 +400,7 @@ var GameLayer = cc.LayerGradient.extend({
         // debug only
         this._debugNode = cc.ChipmunkDebugNode.create( this._space );
         this._debugNode.setVisible( false );
-        this.addChild( this._debugNode, Z_DEBUG_PHYSICS);
+        this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS);
 	},
 
     setThrottle : function( throttle ) {
@@ -476,6 +537,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         cp.spaceAddBody( this._space, body );
         this._batch.addChild( sprite, Z_CHASSIS );
+        this._carSprite = sprite;
 
         // bottom of chassis
         var shape = cp.boxShapeNew( body, cs[0], 15 );
@@ -568,10 +630,25 @@ var GameLayer = cc.LayerGradient.extend({
     // Game State
     //
     setGameState: function( state ) {
-        if( state == STATE_GAME_OVER ) {
-            var label = cc.LabelBMFont.create("GAME OVER", "Abadi40.fnt" );
-            label.setPosition( centerPos );
-            this.addChild( label, Z_LABEL );
+        if( state != this._state ) {
+
+            if( state == STATE_GAME_OVER  ) {
+                var label = cc.LabelBMFont.create("GAME OVER", "Abadi40.fnt" );
+                label.setPosition( centerPos );
+                this.addChild( label, Z_LABEL );
+
+                // disable events
+                var platform = __getPlatform();
+                if( platform.substring(0,7) == 'desktop' ) {
+                    this.setMouseEnabled( false );
+                } else if( platform.substring(0,6) == 'mobile' ) {
+                    this.setTouchEnabled( false );
+                }
+
+                audioEngine.playEffect("GameOver.wav");
+            }
+
+            this._state = state;
         }
     },
 
@@ -627,12 +704,12 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-    var menu = new MainMenu();
-    scene.addChild( menu);
+//    var menu = new MainMenu();
+//    scene.addChild( menu);
 
     // game
-//    var layer = new GameLayer();
-//    scene.addChild( layer );
+    var layer = new GameLayer();
+    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )
