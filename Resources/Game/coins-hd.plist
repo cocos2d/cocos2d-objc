@@ -309,13 +309,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>coins-hd.png</string>
+            <string>coins-hd.pvr.ccz</string>
             <key>size</key>
             <string>{256,512}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:a2727a028286fb64e000fe7f4aec3997$</string>
+            <string>$TexturePacker:SmartUpdate:8c4817fefc78ccf7917edbedb5fdc644$</string>
             <key>textureFileName</key>
-            <string>coins-hd.png</string>
+            <string>coins-hd.pvr.ccz</string>
         </dict>
     </dict>
 </plist>
