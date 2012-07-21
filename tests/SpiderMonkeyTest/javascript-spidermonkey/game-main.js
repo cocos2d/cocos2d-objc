@@ -806,12 +806,12 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-//    var menu = new MainMenu();
-//    scene.addChild( menu);
+    var menu = new MainMenu();
+    scene.addChild( menu);
 
     // game
-    var layer = new GameLayer();
-    scene.addChild( layer );
+//    var layer = new GameLayer();
+//    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )
