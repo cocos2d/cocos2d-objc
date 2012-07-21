@@ -1427,6 +1427,7 @@
 		A042994215B9FCF600509473 /* Abadi40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042993C15B9FCF500509473 /* Abadi40.fnt */; };
 		A042994315B9FCF600509473 /* Abadi40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993D15B9FCF500509473 /* Abadi40.png */; };
 		A042994715BA015300509473 /* GameOver.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994615BA015300509473 /* GameOver.wav */; };
+		A042994E15BA41E100509473 /* LevelComplete.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994D15BA41E000509473 /* LevelComplete.wav */; };
 		A046E29314C1DB7D0005BBF2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */; };
 		A046E29414C1DB7D0005BBF2 /* CCDirectorMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */; };
 		A046E29514C1DB7D0005BBF2 /* CCEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */; };
@@ -4660,6 +4661,7 @@
 		A042993C15B9FCF500509473 /* Abadi40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Abadi40.fnt; sourceTree = "<group>"; };
 		A042993D15B9FCF500509473 /* Abadi40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Abadi40.png; sourceTree = "<group>"; };
 		A042994615BA015300509473 /* GameOver.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOver.wav; sourceTree = "<group>"; };
+		A042994D15BA41E000509473 /* LevelComplete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = LevelComplete.wav; sourceTree = "<group>"; };
 		A046E28B14C1DB7D0005BBF2 /* CCDirectorMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirectorMac.h; sourceTree = "<group>"; };
 		A046E28C14C1DB7D0005BBF2 /* CCDirectorMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirectorMac.m; sourceTree = "<group>"; };
 		A046E28D14C1DB7D0005BBF2 /* CCEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCEventDispatcher.h; sourceTree = "<group>"; };
@@ -7432,6 +7434,7 @@
 				A042994615BA015300509473 /* GameOver.wav */,
 				A091135615B7BEA2006DD5AA /* pickup_coin.wav */,
 				A091135715B7BEA2006DD5AA /* pickup_star.wav */,
+				A042994D15BA41E000509473 /* LevelComplete.wav */,
 				A0644BD415B767C5004AB807 /* coins.plist */,
 				A04298EC15B9D0B400509473 /* coins.pvr.ccz */,
 			);
@@ -11675,6 +11678,7 @@
 				A042994215B9FCF600509473 /* Abadi40.fnt in Resources */,
 				A042994315B9FCF600509473 /* Abadi40.png in Resources */,
 				A042994715BA015300509473 /* GameOver.wav in Resources */,
+				A042994E15BA41E100509473 /* LevelComplete.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

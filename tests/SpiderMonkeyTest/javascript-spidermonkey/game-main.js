@@ -2,12 +2,35 @@
 // http://www.cocos2d-iphone.org
 // http://www.chipmunk-physics.org
 //
-// Physics code from on Space Patrol:
+// Watermelon with Me
+// A JS game using cocos2d and Chipmunk
+// 
+//
+// Physics code based on Space Patrol:
 // https://github.com/slembcke/SpacePatrol
 //
-// All the comments in the physics code were copied+pased from Space Patrol
+// Most of the comments in the physics code were copied+pased from Space Patrol
 //
-// A JS game using cocos2d and Chipmunk
+//
+// LICENSE:
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
 //
 
 require("javascript-spidermonkey/helper.js");
@@ -19,6 +42,7 @@ Z_WATERMELON = 5;
 Z_COIN = 8;
 Z_CHASSIS = 10;
 Z_WHEEL = 11;
+Z_FINISH = 15;
 Z_DEBUG_PHYSICS = 50;
 
 // parent is game layer
@@ -31,6 +55,7 @@ Z_DEBUG_MENU = 20;
 STATE_PAUSE = 0;
 STATE_PLAYING = 1;
 STATE_GAME_OVER = 2;
+STATE_LEVEL_COMPLETE = 3;
 
 audioEngine = cc.AudioEngine.getInstance();
 director = cc.Director.getInstance();
@@ -43,17 +68,18 @@ sizeRatio = winSize.width / 480;
 //
 // Levels
 //
-level0 = {'coins' : [ {x:220,y:80}, {x:430,y:130}, ],
+level0 = {'coins' : [ {x:1120,y:150}, {x:1160,y:140}, {x:1200,y:130}, {x:1240,y:120}, {x:1280,y:110}, ],
+
           'car' : {x:80, y:60}, 
+          'finish' : {x:3400, y:20},
 
           // points in absolute position.
 //          'segments' : [ {x0:0, y0:0, x1:100, y1:50}, ],
           'segments' : [],
 
           // points relatives to the previous point
-          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, {x:400,y:100}, {x:200,y:-100}, {x:400,y:0}, {x:20,y:20}, {x:20,y:-20}, {x:400,y:0}, ],
-
-          'background' : "background1.png",
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, {x:400,y:100}, {x:200,y:-100}, {x:400,y:0}, {x:20,y:15}, {x:20,y:-15}, {x:400,y:0}, ],
+          'map' : 'map.png',
           };
 //
 // Physics constants
@@ -65,6 +91,7 @@ COLLISION_TYPE_CAR = 1;
 COLLISION_TYPE_COIN = 2;
 COLLISION_TYPE_WATERMELON = 3;
 COLLISION_TYPE_FLOOR = 4;
+COLLISION_TYPE_FINISH = 5;
 
 // Create some collision rules for fancy layer based filtering.
 // There is more information about how this works in the Chipmunk docs.
@@ -118,6 +145,7 @@ var GameLayer = cc.LayerGradient.extend({
     _time:0,
     _timeLabel:null,
     _state:STATE_PAUSE,
+    _deferredState:null,
     _debugNode:null,
     _scrollNode:null,
     _carSprite:null,
@@ -130,12 +158,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         this.scheduleUpdate();
 
-        var platform = __getPlatform();
-        if( platform.substring(0,7) == 'desktop' ) {
-            this.setMouseEnabled( true );
-        } else if( platform.substring(0,6) == 'mobile' ) {
-            this.setTouchEnabled( true );
-        }
+        this.enableEvents( true );
 
         cc.MenuItemFont.setFontSize(16 * sizeRatio );
         var item1 = cc.MenuItemFont.create("Reset", this, this.onReset);
@@ -158,10 +181,11 @@ var GameLayer = cc.LayerGradient.extend({
         this._batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 100 );
         scroll.addChild( this._batch, 0, cc._p(1,1), cc.POINT_ZERO );
 
-        // background
-        var background = cc.Sprite.create("background.png");
-        background.setScale(3);
+        // "endless" background image
+        var background = cc.Sprite.create("Parallax.png", cc.rect(0,0,4096,512) );
         scroll.addChild(background, -1, cc._p(0.2, 0.2), cc.POINT_ZERO);
+        background.setAnchorPoint( cc.POINT_ZERO );
+        background.getTexture().setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.CLAMP_TO_EDGE);
 
         this._shapesToRemove = [];
 
@@ -235,8 +259,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     onExit:function() {
 
-		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
-		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
+        this.enableCollisionEvents( false );
         // XXX: Leak... all Shapes and Bodies should be freed
         cp.spaceFree( this._space );
     },
@@ -270,21 +293,31 @@ var GameLayer = cc.LayerGradient.extend({
     // Floor and Watermelon
 	onCollisionBeginWatermelon : function ( arbiter, space ) {
         this.setThrottle(0);
-        this.setGameState( STATE_GAME_OVER );
+        this.setGameStateDeferred( STATE_GAME_OVER );
+        return true;
+	},
+
+    // Car and Finish line
+	onCollisionBeginFinish : function ( arbiter, space ) {
+        this.setThrottle(0);
+        this.setGameStateDeferred( STATE_LEVEL_COMPLETE );
         return true;
 	},
 
     update:function(dt) {
 
-        // update time
+        // update state if necessary
+        if( this._deferredState )
+            this.setGameState( this._deferredState );
 
         if( this._state == STATE_PLAYING ) {
+            // update time
             this._time += dt;
             this._timeLabel.setString( '' + this._time.toFixed(1) );
         }
 
         // Don't update physics on game over
-        if( this._state == STATE_PLAYING || this._state == STATE_GAME_OVER )
+        if( this._state != STATE_PAUSE )
             cp.spaceStep( this._space, dt);
 
         var l = this._shapesToRemove.length;
@@ -337,6 +370,10 @@ var GameLayer = cc.LayerGradient.extend({
         var car = level['car'];
         this.createCar( cp.v( car.x, car.y) );
 
+        // finish
+        var finish = level['finish'];
+        this.createFinish( cp._v(finish.x, finish.y) );
+
         // Segments
         var segments = level['segments']; 
         for( var i=0; i < segments.length; i++) {
@@ -387,8 +424,8 @@ var GameLayer = cc.LayerGradient.extend({
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
-			cp.shapeSetElasticity(wall, 1);
-			cp.shapeSetFriction(wall, 1);
+			cp.shapeSetElasticity(wall, 0);
+			cp.shapeSetFriction(wall, 0);
             cp.shapeSetCollisionType(wall, COLLISION_TYPE_FLOOR);
 			cp.spaceAddStaticShape( this._space, wall );
 		}
@@ -403,9 +440,7 @@ var GameLayer = cc.LayerGradient.extend({
 		// Gravity
 		cp.spaceSetGravity( this._space, cp._v(0, -GRAVITY) );
 
-        // collision handler
-		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBeginCoin, null, null, null );
-		cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this, this.onCollisionBeginWatermelon, null, null, null );
+        this.enableCollisionEvents( true );
 
         // debug only
         this._debugNode = cc.ChipmunkDebugNode.create( this._space );
@@ -560,7 +595,7 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceAddShape( this._space, shape );
 
         // box for fruits (left)
-        var shape = cp.boxShapeNew2( body, cp.bBNew(-48,0, -44,30) );
+        var shape = cp.boxShapeNew2( body, cp.bBNew(-50,0, -46,30) );
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
@@ -628,6 +663,22 @@ var GameLayer = cc.LayerGradient.extend({
         return body;
     },
 
+    createFinish:function( pos ) {
+        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("farmers-market.png"); 
+        var cs = sprite.getContentSize();
+        var body = cp.bodyNew( 1, 1);
+        cp.bodyInitStatic( body );
+        sprite.setBody( body );
+        cp.bodySetPos( body, pos );
+
+        var shape = cp.boxShapeNew( body, cs[0], cs[1] );
+        cp.shapeSetCollisionType( shape, COLLISION_TYPE_FINISH );
+        cp.shapeSetSensor( shape, true );
+
+        cp.spaceAddStaticShape( this._space, shape );
+        this._batch.addChild( sprite, Z_FINISH);
+    },
+
     createSegment: function( src, dst) {
 		var staticBody = cp.spaceGetStaticBody( this._space );
 		var segment = cp.segmentShapeNew( staticBody, src, dst, 5 );
@@ -640,6 +691,12 @@ var GameLayer = cc.LayerGradient.extend({
     //
     // Game State
     //
+    
+    // call the 'deferred' option if you want to modify Chipmunk's state from a Chipmunk's callback
+    setGameStateDeferred: function( state ) {
+        this._deferredState = state; 
+    },
+
     setGameState: function( state ) {
         if( state != this._state ) {
 
@@ -648,20 +705,54 @@ var GameLayer = cc.LayerGradient.extend({
                 label.setPosition( centerPos );
                 this.addChild( label, Z_LABEL );
 
-                // disable events
-                var platform = __getPlatform();
-                if( platform.substring(0,7) == 'desktop' ) {
-                    this.setMouseEnabled( false );
-                } else if( platform.substring(0,6) == 'mobile' ) {
-                    this.setTouchEnabled( false );
-                }
+                this.enableEvents( false );
+                this.enableCollisionEvents( false );
 
                 audioEngine.playEffect("GameOver.wav");
             }
 
+            else if (state == STATE_LEVEL_COMPLETE ) {
+                var label = cc.LabelBMFont.create("LEVEL COMPLETE", "Abadi40.fnt" );
+                label.setPosition( centerPos );
+                this.addChild( label, Z_LABEL );
+
+                this.enableEvents( false );
+                this.enableCollisionEvents( false );
+
+                audioEngine.playEffect("LevelComplete.wav");
+            }
+
             this._state = state;
         }
+        this._deferredState = null;
     },
+
+
+    //
+    // Helpers
+    //
+    enableEvents:function(enabled) {
+        var platform = __getPlatform();
+        if( platform.substring(0,7) == 'desktop' ) {
+            this.setMouseEnabled( enabled );
+        } else if( platform.substring(0,6) == 'mobile' ) {
+            this.setTouchEnabled( enabled );
+        }
+    },
+
+    enableCollisionEvents:function(enabled) {
+        if( enabled ) {
+            // collision handler
+            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBeginCoin, null, null, null );
+            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_FINISH, this, this.onCollisionBeginFinish, null, null, null );
+            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this, this.onCollisionBeginWatermelon, null, null, null );
+        } else {
+            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
+            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
+            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FINISH, COLLISION_TYPE_CAR );
+        }
+    },
+
 
 });
 

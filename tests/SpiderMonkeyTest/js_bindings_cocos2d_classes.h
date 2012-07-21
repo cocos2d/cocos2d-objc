@@ -1615,6 +1615,8 @@ extern "C" {
 
 void JSPROXY_CCTexture2D_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCTexture2D_object;

@@ -329,6 +329,8 @@
 		A042993615B9FCE500509473 /* Abadi40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042993215B9FCE500509473 /* Abadi40.fnt */; };
 		A042993715B9FCE500509473 /* Abadi40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993315B9FCE500509473 /* Abadi40.png */; };
 		A042994515BA013D00509473 /* GameOver.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994415BA013D00509473 /* GameOver.wav */; };
+		A042994C15BA41C800509473 /* LevelComplete.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994B15BA41C700509473 /* LevelComplete.wav */; };
+		A042995415BA487300509473 /* Parallax.png in Resources */ = {isa = PBXBuildFile; fileRef = A042995315BA487300509473 /* Parallax.png */; };
 		A0443DBB14A42E4500E62742 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0443DBC14A42E4500E62742 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0443DBD14A42E4500E62742 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -5928,6 +5930,8 @@
 		A042993215B9FCE500509473 /* Abadi40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Abadi40.fnt; sourceTree = "<group>"; };
 		A042993315B9FCE500509473 /* Abadi40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Abadi40.png; sourceTree = "<group>"; };
 		A042994415BA013D00509473 /* GameOver.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOver.wav; sourceTree = "<group>"; };
+		A042994B15BA41C700509473 /* LevelComplete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = LevelComplete.wav; sourceTree = "<group>"; };
+		A042995315BA487300509473 /* Parallax.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Parallax.png; sourceTree = "<group>"; };
 		A0443E8414A42E4500E62742 /* EffectsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0443E8814A42EBB00E62742 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsTest.h; path = tests/EffectsTest.h; sourceTree = "<group>"; };
 		A0443E8914A42EBB00E62742 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
@@ -8062,6 +8066,8 @@
 				A0644B9615B75EBD004AB807 /* coins_animation.plist */,
 				A0644B9715B75EBD004AB807 /* coins.plist */,
 				A04298EF15B9D11A00509473 /* coins.pvr.ccz */,
+				A042995315BA487300509473 /* Parallax.png */,
+				A042994B15BA41C700509473 /* LevelComplete.wav */,
 				A042994415BA013D00509473 /* GameOver.wav */,
 				A091133E15B796D0006DD5AA /* pickup_coin.wav */,
 				A091133F15B796D0006DD5AA /* pickup_star.wav */,
@@ -11548,6 +11554,8 @@
 				A042993615B9FCE500509473 /* Abadi40.fnt in Resources */,
 				A042993715B9FCE500509473 /* Abadi40.png in Resources */,
 				A042994515BA013D00509473 /* GameOver.wav in Resources */,
+				A042994C15BA41C800509473 /* LevelComplete.wav in Resources */,
+				A042995415BA487300509473 /* Parallax.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
