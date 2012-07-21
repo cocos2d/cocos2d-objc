@@ -51,7 +51,7 @@ level0 = {'coins' : [ {x:220,y:80}, {x:430,y:130}, ],
           'segments' : [],
 
           // points relatives to the previous point
-          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, ],
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, {x:400,y:100}, {x:200,y:-100}, {x:400,y:0}, {x:20,y:20}, {x:20,y:-20}, {x:400,y:0}, ],
 
           'background' : "background1.png",
           };
@@ -149,14 +149,19 @@ var GameLayer = cc.LayerGradient.extend({
         animCache.addAnimationsWithFile("coins_animation.plist");
 
         // scrollng Node.. all game objects are children of this node (or one of its subchildre)
-        var scroll = cc.Node.create();
+        var scroll = cc.ParallaxNode.create();
         this.addChild( scroll, Z_SCROLL );
         this._scrollNode = scroll;
 
         // coin only needed to obtain the texture for the Batch Node
         var coin = cc.Sprite.createWithSpriteFrameName("coin01.png");
         this._batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 100 );
-        scroll.addChild( this._batch );
+        scroll.addChild( this._batch, 0, cc._p(1,1), cc.POINT_ZERO );
+
+        // background
+        var background = cc.Sprite.create("background.png");
+        background.setScale(3);
+        scroll.addChild(background, -1, cc._p(0.2, 0.2), cc.POINT_ZERO);
 
         this._shapesToRemove = [];
 
@@ -221,15 +226,15 @@ var GameLayer = cc.LayerGradient.extend({
         return true;
     },
 
-    onEnter:function () {
-        // DO NOT CALL this._super()
-//        this._super();
+    onEnterTransitionDidFinish:function() {
 
         this.initPhysics();
         this.setupLevel(0);
+        this._state = STATE_PLAYING;
     },
 
     onExit:function() {
+
 		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
 		cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
         // XXX: Leak... all Shapes and Bodies should be freed
@@ -272,10 +277,15 @@ var GameLayer = cc.LayerGradient.extend({
     update:function(dt) {
 
         // update time
-        this._time += dt;
-        this._timeLabel.setString( '' + this._time.toFixed(1) );
 
-        cp.spaceStep( this._space, dt);
+        if( this._state == STATE_PLAYING ) {
+            this._time += dt;
+            this._timeLabel.setString( '' + this._time.toFixed(1) );
+        }
+
+        // Don't update physics on game over
+        if( this._state == STATE_PLAYING || this._state == STATE_GAME_OVER )
+            cp.spaceStep( this._space, dt);
 
         var l = this._shapesToRemove.length;
 
@@ -400,7 +410,8 @@ var GameLayer = cc.LayerGradient.extend({
         // debug only
         this._debugNode = cc.ChipmunkDebugNode.create( this._space );
         this._debugNode.setVisible( false );
-        this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS);
+        // Parallax ratio and offset
+        this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS, cc._p(1,1), cc.POINT_ZERO );
 	},
 
     setThrottle : function( throttle ) {

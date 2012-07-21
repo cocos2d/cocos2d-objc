@@ -161,9 +161,9 @@
 					<dict>
 						<key>baseValue</key>
 						<array>
-							<integer>57</integer>
-							<integer>63</integer>
-							<integer>63</integer>
+							<integer>32</integer>
+							<integer>32</integer>
+							<integer>32</integer>
 						</array>
 						<key>name</key>
 						<string>color</string>
@@ -171,18 +171,20 @@
 						<string>Color3</string>
 						<key>value</key>
 						<array>
-							<integer>57</integer>
-							<integer>63</integer>
-							<integer>63</integer>
+							<integer>32</integer>
+							<integer>32</integer>
+							<integer>32</integer>
 						</array>
 					</dict>
 					<dict>
+						<key>baseValue</key>
+						<integer>128</integer>
 						<key>name</key>
 						<string>opacity</string>
 						<key>type</key>
 						<string>Byte</string>
 						<key>value</key>
-						<integer>255</integer>
+						<integer>128</integer>
 					</dict>
 					<dict>
 						<key>name</key>
