@@ -251,6 +251,14 @@ cc.LayerGradient.extend = cc.Layer.extend;
 //var cp = cp || {};
 
 cp.vzero  = cp.v(0,0);
-
 cp._v = cc._p
 
+
+var gl = gl || {};
+gl.NEAREST = 0x2600;
+gl.LINEAR = 0x2601;
+gl.REPEAT = 0x2901;
+gl.CLAMP_TO_EDGE = 0x812F;
+gl.CLAMP_TO_BORDER = 0x812D;
+gl.LINEAR_MIPMAP_NEAREST = 0x2701;
+gl.GL_NEAREST_MIPMAP_NEAREST = 0x2700;

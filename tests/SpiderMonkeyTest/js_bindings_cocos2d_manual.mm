@@ -224,3 +224,36 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	
 	return JS_TRUE;	
 }
+
+JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments. Expecting 4 args" );
+
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+
+	GLint arg0, arg1, arg2, arg3;
+	
+	ok &= JS_ValueToInt32(cx, *argvp++, &arg0);
+	ok &= JS_ValueToInt32(cx, *argvp++, &arg1);
+	ok &= JS_ValueToInt32(cx, *argvp++, &arg2);
+	ok &= JS_ValueToInt32(cx, *argvp++, &arg3);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ccTexParams param = { arg0, arg1, arg2, arg3 };
+
+	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
+	[real setTexParameters:&param];
+
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
+	return JS_TRUE;		
+}
+
