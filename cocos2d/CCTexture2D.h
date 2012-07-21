@@ -121,9 +121,7 @@ typedef enum {
 	BOOL						hasPremultipliedAlpha_;
 	BOOL						hasMipmaps_;
 
-#ifdef __CC_PLATFORM_IOS
 	ccResolutionType			resolutionType_;
-#endif
 
 	// needed for drawAtRect, drawInPoint
 	CCGLProgram					*shaderProgram_;
@@ -159,17 +157,15 @@ typedef enum {
 /** shader program used by drawAtPoint and drawInRect */
 @property(nonatomic,readwrite,retain) CCGLProgram *shaderProgram;
 
-#ifdef __CC_PLATFORM_IOS
 /** Returns the resolution type of the texture.
- Is it a RetinaDisplay texture, an iPad texture or an standard texture ?
- Only valid on iOS. Not valid on OS X.
+ Is it a RetinaDisplay texture, an iPad texture, a Mac, a Mac RetinaDisplay or an standard texture ?
 
  Should be a readonly property. It is readwrite as a hack.
 
  @since v1.1
  */
 @property (nonatomic, readwrite) ccResolutionType resolutionType;
-#endif
+
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
@@ -194,11 +190,7 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture2D (Image)
 /** Initializes a texture from a CGImage object */
-#ifdef __CC_PLATFORM_IOS
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
-#elif defined(__CC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage;
-#endif
 @end
 
 /**
