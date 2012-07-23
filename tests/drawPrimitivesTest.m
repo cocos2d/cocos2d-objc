@@ -12,8 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"TestDrawingPrimitives",
-			@"TestDrawNode",
+	@"TestDrawNode",
+	@"TestDrawingPrimitives",
 };
 
 Class nextAction(void);
@@ -281,11 +281,42 @@ Class restartAction()
 		}
 
 		// Draw polygons
-		CGPoint points[] = { {0,0}, {s.width,0}, {s.width,s.height} };
-		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) width:4 fillColor:ccc4f(1,0,0,0.5) borderColor:ccc4f(0,0,1,1)];
+		CGPoint points[] = { {s.height/4,0}, {s.width,s.height/5}, {s.width/3*2,s.height} };
+		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:4 borderColor:ccc4f(0,0,1,1)];
+		
+		// star poly (triggers buggs)
+		{
+			const float o=80;
+			const float w=20;
+			const float h=50;
+			CGPoint star[] = {
+				{o+w,o-h}, {o+w*2, o},						// lower spike
+				{o + w*2 + h, o+w }, {o + w*2, o+w*2},		// right spike
+//				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
+//				{o -h, o+w}, {o,o},							// left spike
+			};
+
+			[draw drawPolyWithVerts:star count:sizeof(star)/sizeof(star[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:1 borderColor:ccc4f(0,0,1,1)];
+		}
+
+		// star poly (doesn't trigger bug... order is important un tesselation is supported.
+		{
+			const float o=180;
+			const float w=20;
+			const float h=50;
+			CGPoint star[] = {
+				{o,o}, {o+w,o-h}, {o+w*2, o},				// lower spike
+				{o + w*2 + h, o+w }, {o + w*2, o+w*2},		// right spike
+				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
+				{o -h, o+w},								// left spike
+			};
+			
+			[draw drawPolyWithVerts:star count:sizeof(star)/sizeof(star[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:1 borderColor:ccc4f(0,0,1,1)];
+		}
+
 		
 		// Draw segment
-		[draw drawSegmentFrom:ccp(20,50) to:ccp(20,180) radius:10 color:ccc4f(0, 1, 0, 1)];
+		[draw drawSegmentFrom:ccp(20,s.height) to:ccp(20,s.height/2) radius:10 color:ccc4f(0, 1, 0, 1)];
 
 		[draw drawSegmentFrom:ccp(10,s.height/2) to:ccp(s.width/2, s.height/2) radius:40 color:ccc4f(1, 0, 1, 0.5)];
 
@@ -303,7 +334,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"Testing DrawNode - batched draws";
+	return @"Testing DrawNode - batched draws. Concave polygons are BROKEN";
 }
 
 @end

@@ -61,7 +61,7 @@ JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 JSBool jsval_to_nsstring( JSContext *cx, jsval vp, NSString **ret )
 {
 	JSString *jsstr = JS_ValueToString( cx, vp );
-	JSB_PRECONDITION( jsstr, @"invalid string" );
+	JSB_PRECONDITION( jsstr, "invalid string" );
 	
 	// root it
 	vp = STRING_TO_JSVAL(jsstr);
@@ -95,7 +95,7 @@ JSBool jsval_to_nsarray( JSContext *cx, jsval vp, NSArray**ret )
 	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( JS_IsArrayObject( cx, jsobj),  @"Object must be an array");
+	JSB_PRECONDITION( jsobj && JS_IsArrayObject( cx, jsobj),  "Object must be an array");
 
 	
 	uint32_t len;
@@ -124,7 +124,7 @@ JSBool jsval_to_nsset( JSContext *cx, jsval vp, NSSet** ret)
 	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( JS_IsArrayObject( cx, jsobj),  @"Object must be an array");
+	JSB_PRECONDITION( jsobj && JS_IsArrayObject( cx, jsobj), "Object must be an array");
 
 	uint32_t len;
 	JS_GetArrayLength(cx, jsobj,&len);
@@ -209,9 +209,9 @@ JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGPoint), @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGPoint), "Invalid length");
 	
 	*ret = *(CGPoint*)JS_GetTypedArrayData( tmp_arg );
 
@@ -224,9 +224,9 @@ JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGSize), @"jsb: Invalid length" );
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGSize), "Invalid length" );
 	
 	*ret = *(CGSize*)JS_GetTypedArrayData( tmp_arg );
 	return JS_TRUE;
@@ -238,9 +238,9 @@ JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGRect), @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(CGRect), "Invalid length");
 	
 	*ret = *(CGRect*)JS_GetTypedArrayData( tmp_arg );
 
@@ -254,9 +254,9 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), @"jsb: Invalid Typed Array lenght");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(void*), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	uint64 ret =  arg_array[0];
@@ -294,9 +294,9 @@ JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), @"jsb: Invalid Typed Array lenght");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	long ret =  arg_array[0];
@@ -319,9 +319,9 @@ JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *r )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( tmp_arg && js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), @"jsb: Invalid Typed Array lenght");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(long long), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
 	long long ret =  arg_array[0];
@@ -464,9 +464,9 @@ JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(float)*2, "Invalid length");
 	
 #ifdef __LP64__
 	int32_t* arg_array = (int32_t*)JS_GetTypedArrayData( tmp_arg );
@@ -487,9 +487,9 @@ JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 	
-	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), @"jsb: Not a TypedArray object");
+	JSB_PRECONDITION( js_IsTypedArray( tmp_arg ), "Not a TypedArray object");
 	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(cpFloat)*4, @"jsb: Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg ) == sizeof(cpFloat)*4, "Invalid length");
 	
 	*ret = *(cpBB*)JS_GetTypedArrayData( tmp_arg );
 

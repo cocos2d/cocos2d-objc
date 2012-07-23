@@ -37,12 +37,17 @@ require("javascript-spidermonkey/helper.js");
 
 // Z Orders (grouped by parent)
 
-// parent is scroll node
+// parent is scroll batch node 
 Z_WATERMELON = 5;
 Z_COIN = 8;
 Z_CHASSIS = 10;
 Z_WHEEL = 11;
 Z_FINISH = 15;
+
+// parent is scroll node (parallax node)
+Z_TERRAIN = 2;
+Z_SPRITES = 0;
+Z_MOUNTAINS = -1;
 Z_DEBUG_PHYSICS = 50;
 
 // parent is game layer
@@ -148,6 +153,7 @@ var GameLayer = cc.LayerGradient.extend({
     _deferredState:null,
     _debugNode:null,
     _scrollNode:null,
+    _terrain:null,
     _carSprite:null,
 
     ctor:function () {
@@ -179,13 +185,17 @@ var GameLayer = cc.LayerGradient.extend({
         // coin only needed to obtain the texture for the Batch Node
         var coin = cc.Sprite.createWithSpriteFrameName("coin01.png");
         this._batch = cc.SpriteBatchNode.createWithTexture( coin.getTexture(), 100 );
-        scroll.addChild( this._batch, 0, cc._p(1,1), cc.POINT_ZERO );
+        scroll.addChild( this._batch, Z_SPRITES, cc._p(1,1), cc.POINT_ZERO );
 
         // "endless" background image
         var background = cc.Sprite.create("Parallax.png", cc.rect(0,0,4096,512) );
-        scroll.addChild(background, -1, cc._p(0.2, 0.2), cc.POINT_ZERO);
+        scroll.addChild(background, Z_MOUNTAINS , cc._p(0.2, 0.2), cc.POINT_ZERO);
         background.setAnchorPoint( cc.POINT_ZERO );
         background.getTexture().setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.CLAMP_TO_EDGE);
+
+        // Terrain
+        this._terrain = cc.DrawNode.create();
+        scroll.addChild( this._terrain, Z_TERRAIN, cc._p(1,1), cc.POINT_ZERO );
 
         this._shapesToRemove = [];
 
@@ -382,6 +392,7 @@ var GameLayer = cc.LayerGradient.extend({
         }
 
         //lines  
+        var poly = [];
         var p = {x:0, y:0};
         var lines = level['lines']; 
         for( var i=0; i < lines.length; i++) {
@@ -396,7 +407,14 @@ var GameLayer = cc.LayerGradient.extend({
             y = Math.min(y, p.y);
             width = Math.max( width, p.x);
             height = Math.max( height, p.y);
+
+            poly.push( cc.p(p.x, p.y) );
         }
+
+        // Bug in CCDrawNode: No tesselation, so "fill" is disabled
+        poly.unshift( cc.p(x,y) );
+        poly.push( cc.p(width,y) );
+        this._terrain.drawPoly( poly, cc.c4f(0.67, 0.16, 0.16, 0 ), 5, cc.c4f(0.82,0.41,0.04,1) );
 
         cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
 

@@ -253,11 +253,11 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	_bufferCount += vertex_count;
 }
 
--(void)drawPolyWithVerts:(CGPoint *)verts count:(NSUInteger)count width:(CGFloat)width fillColor:(ccColor4F)fill borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
 {
 	struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts extrude[count];
-	bzero(extrude, sizeof(struct ExtrudeVerts)*count);
+	bzero(extrude, sizeof(extrude) );
 	
 	for(int i=0; i<count; i++){
 		ccVertex2F v0 = __v2f( verts[(i-1+count)%count] );

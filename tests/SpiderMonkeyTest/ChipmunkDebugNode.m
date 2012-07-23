@@ -72,7 +72,7 @@ DrawShape(cpShape *shape, CCDrawNode *renderer)
 				ccColor4F line = color;
 				line.a = cpflerp(color.a, 1.0, 0.5);
 				
-				[renderer drawPolyWithVerts:poly->tVerts count:poly->numVerts width:1.0 fillColor:color borderColor:line];
+				[renderer drawPolyWithVerts:poly->tVerts count:poly->numVerts fillColor:color borderWidth:1.0 borderColor:line];
 			}break;
 		default:
 			cpAssertHard(FALSE, "Bad assertion in DrawShape()");
