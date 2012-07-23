@@ -22,11 +22,9 @@
 #import "cocos2d.h"
 #import "chipmunk.h"
 
-#import "HMVectorNode.h"
-
 @class ChipmunkSpace;
 
-@interface ChipmunkDebugNode : HMVectorNode
+@interface ChipmunkDebugNode : CCDrawNode
 
 /// Create a debug node for an Objective-Chipmunk space.
 + debugNodeForChipmunkSpace:(ChipmunkSpace *)space;
