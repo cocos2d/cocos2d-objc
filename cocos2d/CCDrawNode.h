@@ -37,6 +37,7 @@
 
 @interface CCDrawNode : CCNode
 {
+	BOOL _dirty;
 }
 
 @property(nonatomic, assign) ccBlendFunc blendFunc;

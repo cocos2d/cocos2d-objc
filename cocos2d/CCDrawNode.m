@@ -96,7 +96,7 @@ static inline ccVertex2F __v2f(CGPoint v )
 //#define PRINT_GL_ERRORS() for(GLenum err = glGetError(); err; err = glGetError()) NSLog(@"GLError(%s:%d) 0x%04X", __FILE__, __LINE__, err);
 #define PRINT_GL_ERRORS() 
 
-typedef struct Vertex {ccVertex2F vertex, texcoord; ccColor4F color;} Vertex;
+typedef struct Vertex {ccVertex2F vertex, texcoord; ccColor4B color;} Vertex;
 typedef struct Triangle {Vertex a, b, c;} Triangle;
 
 @interface CCDrawNode(){
@@ -114,7 +114,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 
 @synthesize blendFunc = _blendFunc;
 
-//MARK: Memory
+#pragma mark memory
 
 -(void)ensureCapacity:(NSUInteger)count
 {
@@ -147,11 +147,13 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, texcoord));
 		
 		glEnableVertexAttribArray(kCCVertexAttrib_Color);
-		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, color));
+		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, color));
     
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 		PRINT_GL_ERRORS();
+		
+		_dirty = NO;
 	}
 	
 	return self;
@@ -171,14 +173,18 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	[super dealloc];
 }
 
-//MARK: Rendering
+#pragma mark Rendering
 
 -(void)render
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
-		
-	glBindVertexArray(_vao);
+	if( _dirty ) {
+		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		_dirty = NO;
+	}
+	
+	ccGLBindVAO(_vao);
 	glDrawArrays(GL_TRIANGLES, 0, _bufferCount);
 	
 	CC_INCREMENT_GL_DRAWS(1);
@@ -193,29 +199,28 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	[shaderProgram_ use];
 	[shaderProgram_ setUniformsForBuiltins];
 	
-	[self render];
-	
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-	glBindVertexArray(0);
+	[self render];	
 }
 
-//MARK: Immediate Mode
+#pragma mark Immediate Mode
 
 -(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(ccColor4F)color;
 {
 	NSUInteger vertex_count = 2*3;
 	[self ensureCapacity:vertex_count];
 	
-	Vertex a = {{pos.x - radius, pos.y - radius}, {-1.0, -1.0}, color};
-	Vertex b = {{pos.x - radius, pos.y + radius}, {-1.0,  1.0}, color};
-	Vertex c = {{pos.x + radius, pos.y + radius}, { 1.0,  1.0}, color};
-	Vertex d = {{pos.x + radius, pos.y - radius}, { 1.0, -1.0}, color};
+	Vertex a = {{pos.x - radius, pos.y - radius}, {-1.0, -1.0}, ccc4BFromccc4F(color) };
+	Vertex b = {{pos.x - radius, pos.y + radius}, {-1.0,  1.0}, ccc4BFromccc4F(color) };
+	Vertex c = {{pos.x + radius, pos.y + radius}, { 1.0,  1.0}, ccc4BFromccc4F(color) };
+	Vertex d = {{pos.x + radius, pos.y - radius}, { 1.0, -1.0}, ccc4BFromccc4F(color) };
 	
 	Triangle *triangles = (Triangle *)(_buffer + _bufferCount);
 	triangles[0] = (Triangle){a, b, c};
 	triangles[1] = (Triangle){a, c, d};
 	
 	_bufferCount += vertex_count;
+	
+	_dirty = YES;
 }
 
 -(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(ccColor4F)color;
@@ -243,14 +248,16 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	
 	
 	Triangle *triangles = (Triangle *)(_buffer + _bufferCount);
-	triangles[0] = (Triangle){{v0, v2fneg(v2fadd(n, t)), color}, {v1, v2fsub(n, t), color}, {v2, v2fneg(n), color},};
-	triangles[1] = (Triangle){{v3, n, color}, {v1, v2fsub(n, t), color}, {v2, v2fneg(n), color},};
-	triangles[2] = (Triangle){{v3, n, color}, {v4, v2fneg(n), color}, {v2, v2fneg(n), color},};
-	triangles[3] = (Triangle){{v3, n, color}, {v4, v2fneg(n), color}, {v5, n, color},};
-	triangles[4] = (Triangle){{v6, v2fsub(t, n), color}, {v4, v2fneg(n), color}, {v5, n, color},};
-	triangles[5] = (Triangle){{v6, v2fsub(t, n), color}, {v7, v2fadd(n, t), color}, {v5, n, color},};
+	triangles[0] = (Triangle){{v0, v2fneg(v2fadd(n, t)), ccc4BFromccc4F(color) }, {v1, v2fsub(n, t), ccc4BFromccc4F(color) }, {v2, v2fneg(n), ccc4BFromccc4F(color)},};
+	triangles[1] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v1, v2fsub(n, t), ccc4BFromccc4F(color)}, {v2, v2fneg(n), ccc4BFromccc4F(color) },};
+	triangles[2] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v2, v2fneg(n), ccc4BFromccc4F(color)},};
+	triangles[3] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
+	triangles[4] = (Triangle){{v6, v2fsub(t, n), ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
+	triangles[5] = (Triangle){{v6, v2fsub(t, n), ccc4BFromccc4F(color)}, {v7, v2fadd(n, t), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
 	
 	_bufferCount += vertex_count;
+	
+	_dirty = YES;
 }
 
 -(void)drawPolyWithVerts:(CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
@@ -286,7 +293,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 		ccVertex2F v1 = v2fsub( __v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
 		ccVertex2F v2 = v2fsub( __v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
 		
-		*cursor++ = (Triangle){{v0, v2fzero, fill}, {v1, v2fzero, fill}, {v2, v2fzero, fill},};
+		*cursor++ = (Triangle){{v0, v2fzero, ccc4BFromccc4F(fill)}, {v1, v2fzero, ccc4BFromccc4F(fill)}, {v2, v2fzero, ccc4BFromccc4F(fill)},};
 	}
 	
 	for(int i=0; i<count; i++){
@@ -305,20 +312,22 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 			ccVertex2F outer0 = v2fadd(v0, v2fmult(offset0, width));
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, width));
 			
-			*cursor++ = (Triangle){{inner0, v2fneg(n0), line}, {inner1, v2fneg(n0), line}, {outer1, n0, line}};
-			*cursor++ = (Triangle){{inner0, v2fneg(n0), line}, {outer0, n0, line}, {outer1, n0, line}};
+			*cursor++ = (Triangle){{inner0, v2fneg(n0), ccc4BFromccc4F(line)}, {inner1, v2fneg(n0), ccc4BFromccc4F(line)}, {outer1, n0, ccc4BFromccc4F(line)}};
+			*cursor++ = (Triangle){{inner0, v2fneg(n0), ccc4BFromccc4F(line)}, {outer0, n0, ccc4BFromccc4F(line)}, {outer1, n0, ccc4BFromccc4F(line) }};
 		} else {
 			ccVertex2F inner0 = v2fsub(v0, v2fmult(offset0, 0.5));
 			ccVertex2F inner1 = v2fsub(v1, v2fmult(offset1, 0.5));
 			ccVertex2F outer0 = v2fadd(v0, v2fmult(offset0, 0.5));
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
 			
-			*cursor++ = (Triangle){{inner0, v2fzero, fill}, {inner1, v2fzero, fill}, {outer1, n0, fill}};
-			*cursor++ = (Triangle){{inner0, v2fzero, fill}, {outer0, n0, fill}, {outer1, n0, fill}};
+			*cursor++ = (Triangle){{inner0, v2fzero, ccc4BFromccc4F(fill)}, {inner1, v2fzero, ccc4BFromccc4F(fill)}, {outer1, n0, ccc4BFromccc4F(fill)}};
+			*cursor++ = (Triangle){{inner0, v2fzero, ccc4BFromccc4F(fill)}, {outer0, n0, ccc4BFromccc4F(fill)}, {outer1, n0, ccc4BFromccc4F(fill)}};
 		}
 	}
 	
 	_bufferCount += vertex_count;
+	
+	_dirty = YES;
 }
 
 -(void)clear
