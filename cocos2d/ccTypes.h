@@ -60,7 +60,8 @@ ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 	ccColor3B c = {r, g, b};
 	return c;
 }
-//ccColor3B predefined colors
+
+	//ccColor3B predefined colors
 //! White color (255,255,255)
 static const ccColor3B ccWHITE = {255,255,255};
 //! Yellow color (255,255,0)
@@ -97,7 +98,6 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 	ccColor4B c = {r, g, b, o};
 	return c;
 }
-
 
 /** RGBA color composed of 4 floats
 @since v0.8
@@ -139,6 +139,13 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 {
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
+	
+static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+{
+	return (ccColor4B){c.r*255.f, c.g*255.f, c.b*255.f, c.a*255.f};
+}
+	
+
 
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8

@@ -40,9 +40,9 @@ require("javascript-spidermonkey/helper.js");
 // parent is scroll batch node 
 Z_WATERMELON = 5;
 Z_COIN = 8;
+Z_FINISH = 9;
 Z_CHASSIS = 10;
 Z_WHEEL = 11;
-Z_FINISH = 15;
 
 // parent is scroll node (parallax node)
 Z_TERRAIN = 2;
@@ -403,18 +403,20 @@ var GameLayer = cc.LayerGradient.extend({
 
             p = {x:p.x+line.x, y:p.y+line.y};
 
+            poly.push( cc.p(p.x, p.y) );
+
+            // needed for world boundary
             x = Math.min(x, p.x);
             y = Math.min(y, p.y);
             width = Math.max( width, p.x);
             height = Math.max( height, p.y);
-
-            poly.push( cc.p(p.x, p.y) );
         }
 
-        // Bug in CCDrawNode: No tesselation, so "fill" is disabled
         poly.unshift( cc.p(x,y) );
-        poly.push( cc.p(width,y) );
-        this._terrain.drawPoly( poly, cc.c4f(0.67, 0.16, 0.16, 0 ), 5, cc.c4f(0.82,0.41,0.04,1) );
+
+        // Bug in CCDrawNode: No tesselation, so "fill" is disabled
+        // poly, fill color, border width, border color
+        this._terrain.drawPoly( poly, cc.c4f(0,0,0,0 ), 1, cc.c4f(0.82,0.41,0.04,1) );
 
         cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
 
