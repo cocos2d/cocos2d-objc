@@ -59,20 +59,21 @@ enum {
 #define kCCShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
 #define kCCShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
 #define kCCShader_Position_uColor				@"ShaderPosition_uColor"
+#define kCCShader_PositionLengthTexureColor		@"ShaderPositionLengthTextureColor"
 
 // uniform names
-#define kCCUniformPMatrix_s			  "CC_PMatrix"
+#define kCCUniformPMatrix_s				"CC_PMatrix"
 #define kCCUniformMVMatrix_s			"CC_MVMatrix"
 #define kCCUniformMVPMatrix_s			"CC_MVPMatrix"
-#define kCCUniformTime_s          "CC_Time"
-#define kCCUniformSinTime_s       "CC_SinTime"
-#define kCCUniformCosTime_s       "CC_CosTime"
-#define kCCUniformRandom01_s      "CC_Random01"
+#define kCCUniformTime_s				"CC_Time"
+#define kCCUniformSinTime_s				"CC_SinTime"
+#define kCCUniformCosTime_s				"CC_CosTime"
+#define kCCUniformRandom01_s			"CC_Random01"
 #define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue	"u_alpha_value"
+#define kCCUniformAlphaTestValue		"CC_alpha_value"
 
 // Attribute names
-#define	kCCAttributeNameColor			  @"a_color"
+#define	kCCAttributeNameColor			@"a_color"
 #define	kCCAttributeNamePosition		@"a_position"
 #define	kCCAttributeNameTexCoord		@"a_texCoord"
 

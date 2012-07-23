@@ -485,6 +485,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCDrawingPrimitives.m</string>
 		</dict>
+		<key>libs/cocos2d/CCDrawNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCDrawNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.m</string>
+		</dict>
 		<key>libs/cocos2d/CCGLProgram.h</key>
 		<dict>
 			<key>Group</key>
@@ -1038,6 +1060,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -2251,6 +2297,8 @@
 		<string>libs/cocos2d/CCDirector.m</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.h</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.m</string>
+		<string>libs/cocos2d/CCDrawNode.h</string>
+		<string>libs/cocos2d/CCDrawNode.m</string>
 		<string>libs/cocos2d/CCGLProgram.h</string>
 		<string>libs/cocos2d/CCGLProgram.m</string>
 		<string>libs/cocos2d/ccGLStateCache.h</string>
@@ -2301,6 +2349,8 @@
 		<string>libs/cocos2d/ccShader_Position_uColor_vert.h</string>
 		<string>libs/cocos2d/ccShader_PositionColor_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_uColor_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_uColor_vert.h</string>

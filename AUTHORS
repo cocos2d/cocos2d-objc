@@ -29,6 +29,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
+	Author of CCDrawNode: a node that batches drawing primitives
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac

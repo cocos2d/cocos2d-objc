@@ -2250,6 +2250,10 @@
 		A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */; };
 		A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
 		A0CBEC2E156C2812009D35B4 /* javascript-spidermonkey in Resources */ = {isa = PBXBuildFile; fileRef = A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */; };
+		A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */; };
+		A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */; };
+		A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
+		A0DA0BDB15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD915BCEB0800E80A92 /* ccShader_PositionColorLengthTexture_vert.h */; };
 		A0DB13D814FC2B8500F7CC49 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0DB13D914FC2B8500F7CC49 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
 		A0DB13DC14FC355300F7CC49 /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60677128ECC110099367C /* konqa32-hd.fnt */; };
@@ -6294,6 +6298,10 @@
 		A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		A0CBEC20156ABF3B009D35B4 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
 		A0CBEC2D156C2812009D35B4 /* javascript-spidermonkey */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "javascript-spidermonkey"; sourceTree = "<group>"; };
+		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
+		A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
+		A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
+		A0DA0BD915BCEB0800E80A92 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
 		A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
 		A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
 		A0DB13DF14FC418100F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
@@ -8035,6 +8043,17 @@
 			path = external/JRSwizzle;
 			sourceTree = "<group>";
 		};
+		A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */,
+				A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */,
+				E076E64E1225EC7400DE0DA2 /* CCDrawingPrimitives.h */,
+				E076E64F1225EC7400DE0DA2 /* CCDrawingPrimitives.m */,
+			);
+			name = "Drawing Nodes";
+			sourceTree = "<group>";
+		};
 		A0EC4CA11403278200EC482A /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
@@ -8079,6 +8098,8 @@
 		E0506A8413169AE100EAE33F /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
+				A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */,
+				A0DA0BD915BCEB0800E80A92 /* ccShader_PositionColorLengthTexture_vert.h */,
 				A009FB74150EC87500897349 /* ccShader_Position_uColor_frag.h */,
 				A009FB75150EC87500897349 /* ccShader_Position_uColor_vert.h */,
 				A009FB76150EC87500897349 /* ccShader_PositionColor_frag.h */,
@@ -8177,6 +8198,7 @@
 				E076E7751225ECB100DE0DA2 /* Sprite Nodes */,
 				E076E7731225EC9400DE0DA2 /* Menu Nodes */,
 				E076E7741225EC9D00DE0DA2 /* Particle Nodes */,
+				A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */,
 				E076E7771225ECBF00DE0DA2 /* TiledMap & Parallax Nodes */,
 				E076E7781225ECC900DE0DA2 /* Layer, Scene & Transition Nodes */,
 				E076E7791225ECF700DE0DA2 /* Misc Nodes */,
@@ -8199,8 +8221,6 @@
 				E076E64B1225EC7400DE0DA2 /* CCConfiguration.m */,
 				E076E64C1225EC7400DE0DA2 /* CCDirector.h */,
 				E076E64D1225EC7400DE0DA2 /* CCDirector.m */,
-				E076E64E1225EC7400DE0DA2 /* CCDrawingPrimitives.h */,
-				E076E64F1225EC7400DE0DA2 /* CCDrawingPrimitives.m */,
 				E076E6711225EC7400DE0DA2 /* CCProtocols.h */,
 				E076E6781225EC7400DE0DA2 /* CCScheduler.h */,
 				E076E6791225EC7400DE0DA2 /* CCScheduler.m */,
@@ -9032,6 +9052,9 @@
 				A009FB90150EC87500897349 /* ccShaders.h in Headers */,
 				A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */,
 				A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */,
+				A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */,
+				A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
+				A0DA0BDB15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14883,6 +14906,7 @@
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
 				A0C1EDC91562F979000709DA /* ccCArray.m in Sources */,
+				A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

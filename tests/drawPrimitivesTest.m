@@ -12,7 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"Test1",
+			@"TestDrawingPrimitives",
+			@"TestDrawNode",
 };
 
 Class nextAction(void);
@@ -51,7 +52,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark Base Class
 
-@implementation TestDemo
+@implementation BaseLayer
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -61,6 +62,13 @@ Class restartAction()
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -72,7 +80,7 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
 		item2.position = ccp( s.width/2, item2.contentSize.height/2);
 		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
-		[self addChild: menu z:-1];
+		[self addChild: menu z:100];
 	}
 
 	return self;
@@ -109,12 +117,17 @@ Class restartAction()
 {
 	return @"No title";
 }
+
+-(NSString*) subtitle
+{
+	return nil;
+}
 @end
 
 #pragma mark -
 #pragma mark Drawing Primitives Test 1
 
-@implementation Test1
+@implementation TestDrawingPrimitives
 //
 // TIP:
 // Every CCNode has a "draw" method.
@@ -242,6 +255,57 @@ Class restartAction()
 {
 	return @"draw primitives";
 }
+
+-(NSString*) subtitle
+{
+	return @"Drawing Primitives. Use CCDrawNode instead";
+}
+
+@end
+
+@implementation TestDrawNode
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCDrawNode *draw = [[CCDrawNode alloc] init];
+		[self addChild:draw z:10];
+		[draw release];
+
+		// Draw 10 circles
+		for( int i=0; i < 10; i++) {
+			[draw drawDot:ccp(s.width/2, s.height/2) radius:10*(10-i) color:ccc4f(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1)];
+		}
+
+		// Draw polygons
+		CGPoint points[] = { {0,0}, {s.width,0}, {s.width,s.height} };
+		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) width:4 fill:ccc4f(1,0,0,0.5) line:ccc4f(0,0,1,1)];
+		
+		// Draw segment
+		[draw drawSegmentFrom:ccp(20,50) to:ccp(20,180) radius:10 color:ccc4f(0, 1, 0, 1)];
+
+		[draw drawSegmentFrom:ccp(10,s.height/2) to:ccp(s.width/2, s.height/2) radius:40 color:ccc4f(1, 0, 1, 0.5)];
+
+
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Test CCDrawNode";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing DrawNode - batched draws";
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS
