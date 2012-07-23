@@ -361,11 +361,7 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 
-#ifdef __CC_PLATFORM_IOS
 	tex = [[CCTexture2D alloc] initWithCGImage:imageref resolutionType:kCCResolutionUnknown];
-#elif __CC_PLATFORM_MAC
-	tex = [[CCTexture2D alloc] initWithCGImage:imageref];
-#endif
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{

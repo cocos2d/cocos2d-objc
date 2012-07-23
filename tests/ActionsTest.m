@@ -25,7 +25,7 @@ static NSString *transitions[] = {
 	@"ActionScale",
 	@"ActionSkew",
 	@"ActionRotationalSkew",
-  @"ActionRotationalSkewVSStandardSkew",
+	@"ActionRotationalSkewVSStandardSkew",
 	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionCardinalSpline",

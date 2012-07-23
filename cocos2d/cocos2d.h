@@ -112,6 +112,7 @@
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
 #import "CCConfiguration.h"
+#import "CCDrawNode.h"
 
 // Shaders
 #import "CCGLProgram.h"
