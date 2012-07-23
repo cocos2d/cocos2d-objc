@@ -8,7 +8,6 @@
 #import "js_bindings_CocosBuilderReader_classes.h"
 #import "js_manual_conversions.h"
 
-
 @interface CCBReaderForwarder : NSObject
 {
 	JSObject *_jsthis;

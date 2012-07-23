@@ -1526,11 +1526,11 @@
 <arg name='color' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='2'/>
 <retval declared_type='void' type='v'/>
 </method>
-<method selector='drawPolyWithVerts:count:width:fill:line:'>
+<method selector='drawPolyWithVerts:count:fillColor:borderWidth:borderColor:'>
 <arg name='verts' declared_type='CGPoint*' type64='^{CGPoint=dd}' type='^{CGPoint=ff}' index='0'/>
 <arg name='count' declared_type='NSUInteger' type64='Q' type='I' index='1'/>
-<arg name='width' declared_type='CGFloat' type64='d' type='f' index='2'/>
-<arg name='fill' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='3'/>
+<arg name='fill' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='2'/>
+<arg name='width' declared_type='CGFloat' type64='d' type='f' index='3'/>
 <arg name='line' declared_type='ccColor4F' type='{ccColor4F=ffff}' index='4'/>
 <retval declared_type='void' type='v'/>
 </method>

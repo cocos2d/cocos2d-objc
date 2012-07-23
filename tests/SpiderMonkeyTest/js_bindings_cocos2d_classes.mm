@@ -43055,8 +43055,9 @@ void JSPROXY_CCDrawNode_createClass(JSContext *cx, JSObject* globalObj, const ch
 	static JSFunctionSpec funcs[] = {
 		JS_FN("getBlendFunc", JSPROXY_CCDrawNode_blendFunc, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("clear", JSPROXY_CCDrawNode_clear, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("drawDotRadiusColor", JSPROXY_CCDrawNode_drawDot_radius_color_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("drawSegmentFromToRadiusColor", JSPROXY_CCDrawNode_drawSegmentFrom_to_radius_color_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawDot", JSPROXY_CCDrawNode_drawDot_radius_color_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawPoly", JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderColor_, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("drawSegment", JSPROXY_CCDrawNode_drawSegmentFrom_to_radius_color_, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setBlendFunc", JSPROXY_CCDrawNode_setBlendFunc_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};

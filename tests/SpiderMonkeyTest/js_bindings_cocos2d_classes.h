@@ -5366,6 +5366,8 @@ extern "C" {
 
 void JSPROXY_CCDrawNode_createClass(JSContext *cx, JSObject* globalObj, const char* name );
 
+// Manually generated methods
+JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderColor_(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 extern JSObject *JSPROXY_CCDrawNode_object;
