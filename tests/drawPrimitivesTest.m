@@ -282,7 +282,7 @@ Class restartAction()
 
 		// Draw polygons
 		CGPoint points[] = { {0,0}, {s.width,0}, {s.width,s.height} };
-		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) width:4 fill:ccc4f(1,0,0,0.5) line:ccc4f(0,0,1,1)];
+		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) width:4 fillColor:ccc4f(1,0,0,0.5) borderColor:ccc4f(0,0,1,1)];
 		
 		// Draw segment
 		[draw drawSegmentFrom:ccp(20,50) to:ccp(20,180) radius:10 color:ccc4f(0, 1, 0, 1)];
