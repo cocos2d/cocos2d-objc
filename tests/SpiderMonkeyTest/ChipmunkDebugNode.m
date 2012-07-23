@@ -50,7 +50,7 @@ static ccColor4F ColorForBody(cpBody *body)
 }
 
 static void
-DrawShape(cpShape *shape, HMVectorNode *renderer)
+DrawShape(cpShape *shape, CCDrawNode *renderer)
 {
 	cpBody *body = shape->body;
 	ccColor4F color = ColorForBody(body);
@@ -82,7 +82,7 @@ DrawShape(cpShape *shape, HMVectorNode *renderer)
 ccColor4F CONSTRAINT_COLOR = {0, 1, 0, 0.5};
 
 static void
-DrawConstraint(cpConstraint *constraint, HMVectorNode *renderer)
+DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 {
 	cpBody *body_a = constraint->a;
 	cpBody *body_b = constraint->b;
