@@ -91,7 +91,7 @@ JSBool JSPROXY_CCDirector_convertEventToGL_(JSContext *cx, uint32_t argc, jsval 
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	ret_val = [real convertEventToGL:(NSEvent*)arg0  ];
+	ret_val = [real convertEventToGL:arg0  ];
 
 	jsval ret_jsval = CGPoint_to_jsval( cx, (CGPoint)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
@@ -382,7 +382,7 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real pushScene:(CCScene*)arg0  ];
+	[real pushScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -404,7 +404,7 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real replaceScene:(CCScene*)arg0  ];
+	[real replaceScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -464,7 +464,7 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real runWithScene:(CCScene*)arg0  ];
+	[real runWithScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -560,7 +560,7 @@ JSBool JSPROXY_CCDirector_setActionManager_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setActionManager:(CCActionManager*)arg0  ];
+	[real setActionManager:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -626,7 +626,7 @@ JSBool JSPROXY_CCDirector_setDelegate_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setDelegate:(NSObject*)arg0  ];
+	[real setDelegate:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -730,7 +730,7 @@ JSBool JSPROXY_CCDirector_setNotificationNode_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setNotificationNode:(NSObject*)arg0  ];
+	[real setNotificationNode:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -774,7 +774,7 @@ JSBool JSPROXY_CCDirector_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setScheduler:(CCScheduler*)arg0  ];
+	[real setScheduler:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1417,7 +1417,7 @@ JSBool JSPROXY_CCLayer_ccMouseEntered_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real ccMouseEntered:(NSEvent*)arg0  ];
+	[real ccMouseEntered:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1439,7 +1439,7 @@ JSBool JSPROXY_CCLayer_ccMouseExited_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real ccMouseExited:(NSEvent*)arg0  ];
+	[real ccMouseExited:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1462,7 +1462,7 @@ JSBool JSPROXY_CCLayer_ccMouseMoved_(JSContext *cx, uint32_t argc, jsval *vp) {
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccMouseMoved:(NSEvent*)arg0  ];
+	ret_val = [real ccMouseMoved:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1485,7 +1485,7 @@ JSBool JSPROXY_CCLayer_ccOtherMouseDown_(JSContext *cx, uint32_t argc, jsval *vp
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccOtherMouseDown:(NSEvent*)arg0  ];
+	ret_val = [real ccOtherMouseDown:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1508,7 +1508,7 @@ JSBool JSPROXY_CCLayer_ccOtherMouseDragged_(JSContext *cx, uint32_t argc, jsval 
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccOtherMouseDragged:(NSEvent*)arg0  ];
+	ret_val = [real ccOtherMouseDragged:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1531,7 +1531,7 @@ JSBool JSPROXY_CCLayer_ccOtherMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) 
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccOtherMouseUp:(NSEvent*)arg0  ];
+	ret_val = [real ccOtherMouseUp:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1554,7 +1554,7 @@ JSBool JSPROXY_CCLayer_ccRightMouseDown_(JSContext *cx, uint32_t argc, jsval *vp
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccRightMouseDown:(NSEvent*)arg0  ];
+	ret_val = [real ccRightMouseDown:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1577,7 +1577,7 @@ JSBool JSPROXY_CCLayer_ccRightMouseDragged_(JSContext *cx, uint32_t argc, jsval 
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccRightMouseDragged:(NSEvent*)arg0  ];
+	ret_val = [real ccRightMouseDragged:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1600,7 +1600,7 @@ JSBool JSPROXY_CCLayer_ccRightMouseUp_(JSContext *cx, uint32_t argc, jsval *vp) 
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccRightMouseUp:(NSEvent*)arg0  ];
+	ret_val = [real ccRightMouseUp:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1623,7 +1623,7 @@ JSBool JSPROXY_CCLayer_ccScrollWheel_(JSContext *cx, uint32_t argc, jsval *vp) {
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccScrollWheel:(NSEvent*)arg0  ];
+	ret_val = [real ccScrollWheel:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1646,7 +1646,7 @@ JSBool JSPROXY_CCLayer_ccTouchesBeganWithEvent_(JSContext *cx, uint32_t argc, js
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccTouchesBeganWithEvent:(NSEvent*)arg0  ];
+	ret_val = [real ccTouchesBeganWithEvent:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1669,7 +1669,7 @@ JSBool JSPROXY_CCLayer_ccTouchesCancelledWithEvent_(JSContext *cx, uint32_t argc
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccTouchesCancelledWithEvent:(NSEvent*)arg0  ];
+	ret_val = [real ccTouchesCancelledWithEvent:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1692,7 +1692,7 @@ JSBool JSPROXY_CCLayer_ccTouchesEndedWithEvent_(JSContext *cx, uint32_t argc, js
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccTouchesEndedWithEvent:(NSEvent*)arg0  ];
+	ret_val = [real ccTouchesEndedWithEvent:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1715,7 +1715,7 @@ JSBool JSPROXY_CCLayer_ccTouchesMovedWithEvent_(JSContext *cx, uint32_t argc, js
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccTouchesMovedWithEvent:(NSEvent*)arg0  ];
+	ret_val = [real ccTouchesMovedWithEvent:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }

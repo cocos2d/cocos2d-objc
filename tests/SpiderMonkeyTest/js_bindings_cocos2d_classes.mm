@@ -80,15 +80,15 @@ JSBool JSPROXY_CCNode_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	if( argc == 1 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
-	[real addChild:(CCNode*)arg0  ];
+	[real addChild:arg0  ];
 	}
 	else if( argc == 2 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
-	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1  ];
+	[real addChild:arg0 z:(NSInteger)arg1  ];
 	}
 	else if( argc == 3 ) {
 		CCNode *real = (CCNode*) [proxy realObj];
-	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
+	[real addChild:arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
 	}
 	else
 		return JS_FALSE;
@@ -706,7 +706,7 @@ JSBool JSPROXY_CCNode_removeChild_cleanup_(JSContext *cx, uint32_t argc, jsval *
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real removeChild:(CCNode*)arg0 cleanup:(BOOL)arg1  ];
+	[real removeChild:arg0 cleanup:(BOOL)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -774,7 +774,7 @@ JSBool JSPROXY_CCNode_reorderChild_z_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real reorderChild:(CCNode*)arg0 z:(NSInteger)arg1  ];
+	[real reorderChild:arg0 z:(NSInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -864,7 +864,7 @@ JSBool JSPROXY_CCNode_runAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCAction* ret_val;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	ret_val = [real runAction:(CCAction*)arg0  ];
+	ret_val = [real runAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -998,7 +998,7 @@ JSBool JSPROXY_CCNode_setActionManager_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setActionManager:(CCActionManager*)arg0  ];
+	[real setActionManager:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1086,7 +1086,7 @@ JSBool JSPROXY_CCNode_setGrid_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setGrid:(CCGridBase*)arg0  ];
+	[real setGrid:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1152,7 +1152,7 @@ JSBool JSPROXY_CCNode_setParent_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setParent:(CCNode*)arg0  ];
+	[real setParent:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1328,7 +1328,7 @@ JSBool JSPROXY_CCNode_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setScheduler:(CCScheduler*)arg0  ];
+	[real setScheduler:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1350,7 +1350,7 @@ JSBool JSPROXY_CCNode_setShaderProgram_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setShaderProgram:(CCGLProgram*)arg0  ];
+	[real setShaderProgram:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1438,7 +1438,7 @@ JSBool JSPROXY_CCNode_setUserObject_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real setUserObject:(NSObject*)arg0  ];
+	[real setUserObject:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1596,7 +1596,7 @@ JSBool JSPROXY_CCNode_stopAction_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCNode *real = (CCNode*) [proxy realObj];
-	[real stopAction:(CCAction*)arg0  ];
+	[real stopAction:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -2901,7 +2901,7 @@ JSBool JSPROXY_CCParticleSystem_setBatchNode_(JSContext *cx, uint32_t argc, jsva
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
-	[real setBatchNode:(CCParticleBatchNode*)arg0  ];
+	[real setBatchNode:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -3730,7 +3730,7 @@ JSBool JSPROXY_CCParticleSystem_setTexture_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -4319,7 +4319,7 @@ JSBool JSPROXY_CCParticleSystemQuad_setDisplayFrame_(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
-	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
+	[real setDisplayFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -4342,7 +4342,7 @@ JSBool JSPROXY_CCParticleSystemQuad_setTexture_withRect_(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystemQuad *real = (CCParticleSystemQuad*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0 withRect:(CGRect)arg1  ];
+	[real setTexture:arg0 withRect:(CGRect)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -4944,7 +4944,7 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCMenuItemLabel *real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
+	CCMenuItemLabel *real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:arg0 block:(void (^)(id))arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -5038,7 +5038,7 @@ JSBool JSPROXY_CCMenuItemLabel_setLabel_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
-	[real setLabel:(CCNode*)arg0  ];
+	[real setLabel:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -5401,7 +5401,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
-	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0  ];
+	ret_val = [CCMenuItemAtlasFont itemWithLabel:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -5422,7 +5422,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, ui
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemAtlasFont* ret_val;
 
-	ret_val = [CCMenuItemAtlasFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
+	ret_val = [CCMenuItemAtlasFont itemWithLabel:arg0 block:(void (^)(id))arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -5630,7 +5630,7 @@ JSBool JSPROXY_CCAction_startWithTarget_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCAction *real = (CCAction*) [proxy realObj];
-	[real startWithTarget:(NSObject*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -7036,7 +7036,7 @@ JSBool JSPROXY_CCReverseTime_actionWithAction__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCReverseTime* ret_val;
 
-	ret_val = [CCReverseTime actionWithAction:(CCFiniteTimeAction*)arg0  ];
+	ret_val = [CCReverseTime actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -7060,7 +7060,7 @@ JSBool JSPROXY_CCReverseTime_initWithAction_(JSContext *cx, uint32_t argc, jsval
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCReverseTime *real = [(CCReverseTime*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0  ];
+	CCReverseTime *real = [(CCReverseTime*)[proxy.klass alloc] initWithAction:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -7398,7 +7398,7 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrame_(JSContext *cx, uint32_t argc, jsval
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrame:(CCSpriteFrame*)arg0  ];
+	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithSpriteFrame:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -7450,7 +7450,7 @@ JSBool JSPROXY_CCSprite_initWithTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0  ];
+	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -7477,7 +7477,7 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_(JSContext *cx, uint32_t argc, jsva
 	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -7505,7 +7505,7 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_rotated_(JSContext *cx, uint32_t ar
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1 rotated:(BOOL)arg2  ];
+	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0 rect:(CGRect)arg1 rotated:(BOOL)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -7533,7 +7533,7 @@ JSBool JSPROXY_CCSprite_isFrameDisplayed_(JSContext *cx, uint32_t argc, jsval *v
 	BOOL ret_val;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
-	ret_val = [real isFrameDisplayed:(CCSpriteFrame*)arg0  ];
+	ret_val = [real isFrameDisplayed:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -7614,7 +7614,7 @@ JSBool JSPROXY_CCSprite_setBatchNode_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setBatchNode:(CCSpriteBatchNode*)arg0  ];
+	[real setBatchNode:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -7708,7 +7708,7 @@ JSBool JSPROXY_CCSprite_setDisplayFrame_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setDisplayFrame:(CCSpriteFrame*)arg0  ];
+	[real setDisplayFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -7819,7 +7819,7 @@ JSBool JSPROXY_CCSprite_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	[real setTextureAtlas:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -7935,7 +7935,7 @@ JSBool JSPROXY_CCSprite_spriteWithSpriteFrame__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCSprite* ret_val;
 
-	ret_val = [CCSprite spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
+	ret_val = [CCSprite spriteWithSpriteFrame:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -8092,7 +8092,7 @@ JSBool JSPROXY_CCSprite_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -8368,7 +8368,7 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrame__static(JSContext *cx, uint3
 	if( ! ok ) return JS_FALSE;
 	ChipmunkSprite* ret_val;
 
-	ret_val = [ChipmunkSprite spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
+	ret_val = [ChipmunkSprite spriteWithSpriteFrame:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -8499,7 +8499,7 @@ JSBool JSPROXY_CCActionEase_actionWithAction__static(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 	CCActionEase* ret_val;
 
-	ret_val = [CCActionEase actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCActionEase actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -8523,7 +8523,7 @@ JSBool JSPROXY_CCActionEase_initWithAction_(JSContext *cx, uint32_t argc, jsval 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCActionEase *real = [(CCActionEase*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
+	CCActionEase *real = [(CCActionEase*)[proxy.klass alloc] initWithAction:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -8656,10 +8656,10 @@ JSBool JSPROXY_CCEaseElastic_actionWithAction_period__static(JSContext *cx, uint
 	CCEaseElastic* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0  ];
+		ret_val = [CCEaseElastic actionWithAction:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCEaseElastic actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+		ret_val = [CCEaseElastic actionWithAction:arg0 period:(float)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -8688,7 +8688,7 @@ JSBool JSPROXY_CCEaseElastic_initWithAction_period_(JSContext *cx, uint32_t argc
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCEaseElastic *real = [(CCEaseElastic*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+	CCEaseElastic *real = [(CCEaseElastic*)[proxy.klass alloc] initWithAction:arg0 period:(float)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -8884,10 +8884,10 @@ JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, u
 	CCEaseElasticOut* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0  ];
+		ret_val = [CCEaseElasticOut actionWithAction:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCEaseElasticOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+		ret_val = [CCEaseElasticOut actionWithAction:arg0 period:(float)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -10892,7 +10892,7 @@ JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
-	ret_val = [CCLabelTTF spriteWithSpriteFrame:(CCSpriteFrame*)arg0  ];
+	ret_val = [CCLabelTTF spriteWithSpriteFrame:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -10932,7 +10932,7 @@ JSBool JSPROXY_CCLabelTTF_spriteWithTexture__static(JSContext *cx, uint32_t argc
 	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
-	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0  ];
+	ret_val = [CCLabelTTF spriteWithTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -10953,7 +10953,7 @@ JSBool JSPROXY_CCLabelTTF_spriteWithTexture_rect__static(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 	CCLabelTTF* ret_val;
 
-	ret_val = [CCLabelTTF spriteWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+	ret_val = [CCLabelTTF spriteWithTexture:arg0 rect:(CGRect)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11122,7 +11122,7 @@ JSBool JSPROXY_CCTransitionScene_initWithDuration_scene_(JSContext *cx, uint32_t
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCTransitionScene *real = [(CCTransitionScene*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	CCTransitionScene *real = [(CCTransitionScene*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -11145,7 +11145,7 @@ JSBool JSPROXY_CCTransitionScene_transitionWithDuration_scene__static(JSContext 
 	if( ! ok ) return JS_FALSE;
 	CCTransitionScene* ret_val;
 
-	ret_val = [CCTransitionScene transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionScene transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11259,7 +11259,7 @@ JSBool JSPROXY_CCTransitionProgress_progressTimerNodeWithRenderTexture_(JSContex
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgress *real = (CCTransitionProgress*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11280,7 +11280,7 @@ JSBool JSPROXY_CCTransitionProgress_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgress* ret_val;
 
-	ret_val = [CCTransitionProgress transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgress transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11392,7 +11392,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_progressTimerNodeWithRenderTexture_
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressRadialCCW *real = (CCTransitionProgressRadialCCW*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11413,7 +11413,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_transitionWithDuration_scene__stati
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressRadialCCW* ret_val;
 
-	ret_val = [CCTransitionProgressRadialCCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressRadialCCW transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11525,7 +11525,7 @@ JSBool JSPROXY_CCShaderCache_addProgram_forKey_(JSContext *cx, uint32_t argc, js
 	if( ! ok ) return JS_FALSE;
 
 	CCShaderCache *real = (CCShaderCache*) [proxy realObj];
-	[real addProgram:(CCGLProgram*)arg0 forKey:(NSString*)arg1  ];
+	[real addProgram:arg0 forKey:(NSString*)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -11714,7 +11714,7 @@ JSBool JSPROXY_CCTransitionFadeTR_easeActionWithAction_(JSContext *cx, uint32_t 
 	CCActionInterval* ret_val;
 
 	CCTransitionFadeTR *real = (CCTransitionFadeTR*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11735,7 +11735,7 @@ JSBool JSPROXY_CCTransitionFadeTR_transitionWithDuration_scene__static(JSContext
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeTR* ret_val;
 
-	ret_val = [CCTransitionFadeTR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFadeTR transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11864,7 +11864,7 @@ JSBool JSPROXY_CCEaseBackOut_actionWithAction__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCEaseBackOut* ret_val;
 
-	ret_val = [CCEaseBackOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBackOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -11997,7 +11997,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_initWithDuration_scene_orientation_(JSC
 	ok &= JS_ValueToECMAInt32( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
-	CCTransitionSceneOriented *real = [(CCTransitionSceneOriented*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	CCTransitionSceneOriented *real = [(CCTransitionSceneOriented*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -12021,7 +12021,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene_orientatio
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSceneOriented* ret_val;
 
-	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -12042,7 +12042,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_transitionWithDuration_scene__static(JS
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSceneOriented* ret_val;
 
-	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSceneOriented transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -12349,7 +12349,7 @@ JSBool JSPROXY_CCScaleBy_startWithTarget_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCScaleBy *real = (CCScaleBy*) [proxy realObj];
-	[real startWithTarget:(CCNode*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -12537,7 +12537,7 @@ JSBool JSPROXY_CCTransitionPageTurn_initWithDuration_scene_backwards_(JSContext 
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
-	CCTransitionPageTurn *real = [(CCTransitionPageTurn*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
+	CCTransitionPageTurn *real = [(CCTransitionPageTurn*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:arg1 backwards:(BOOL)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -12564,10 +12564,10 @@ JSBool JSPROXY_CCTransitionPageTurn_transitionWithDuration_scene_backwards__stat
 	CCTransitionPageTurn* ret_val;
 
 	if( argc == 2 ) {
-		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 	}
 	else if( argc == 3 ) {
-		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 backwards:(BOOL)arg2  ];
+		ret_val = [CCTransitionPageTurn transitionWithDuration:(ccTime)arg0 scene:arg1 backwards:(BOOL)arg2  ];
 	}
 	else
 		return JS_FALSE;
@@ -12699,7 +12699,7 @@ JSBool JSPROXY_CCTransitionRotoZoom_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionRotoZoom* ret_val;
 
-	ret_val = [CCTransitionRotoZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionRotoZoom transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -12832,7 +12832,7 @@ JSBool JSPROXY_CCTransitionFadeDown_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeDown* ret_val;
 
-	ret_val = [CCTransitionFadeDown transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFadeDown transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13067,7 +13067,7 @@ JSBool JSPROXY_CCEaseRateAction_actionWithAction_rate__static(JSContext *cx, uin
 	if( ! ok ) return JS_FALSE;
 	CCEaseRateAction* ret_val;
 
-	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
+	ret_val = [CCEaseRateAction actionWithAction:arg0 rate:(float)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13092,7 +13092,7 @@ JSBool JSPROXY_CCEaseRateAction_initWithAction_rate_(JSContext *cx, uint32_t arg
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCEaseRateAction *real = [(CCEaseRateAction*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
+	CCEaseRateAction *real = [(CCEaseRateAction*)[proxy.klass alloc] initWithAction:arg0 rate:(float)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -13153,7 +13153,7 @@ JSBool JSPROXY_CCEaseRateAction_actionWithAction__static(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 	CCEaseRateAction* ret_val;
 
-	ret_val = [CCEaseRateAction actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseRateAction actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13306,7 +13306,7 @@ JSBool JSPROXY_CCEaseInOut_actionWithAction_rate__static(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 	CCEaseInOut* ret_val;
 
-	ret_val = [CCEaseInOut actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
+	ret_val = [CCEaseInOut actionWithAction:arg0 rate:(float)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13326,7 +13326,7 @@ JSBool JSPROXY_CCEaseInOut_actionWithAction__static(JSContext *cx, uint32_t argc
 	if( ! ok ) return JS_FALSE;
 	CCEaseInOut* ret_val;
 
-	ret_val = [CCEaseInOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseInOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13480,7 +13480,7 @@ JSBool JSPROXY_CCTransitionSplitCols_easeActionWithAction_(JSContext *cx, uint32
 	CCActionInterval* ret_val;
 
 	CCTransitionSplitCols *real = (CCTransitionSplitCols*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13501,7 +13501,7 @@ JSBool JSPROXY_CCTransitionSplitCols_transitionWithDuration_scene__static(JSCont
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSplitCols* ret_val;
 
-	ret_val = [CCTransitionSplitCols transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSplitCols transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13610,7 +13610,7 @@ JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration_points_tension__static(JSCo
 	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineTo* ret_val;
 
-	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
+	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13636,7 +13636,7 @@ JSBool JSPROXY_CCCardinalSplineTo_initWithDuration_points_tension_(JSContext *cx
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
-	CCCardinalSplineTo *real = [(CCCardinalSplineTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
+	CCCardinalSplineTo *real = [(CCCardinalSplineTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -13683,7 +13683,7 @@ JSBool JSPROXY_CCCardinalSplineTo_setPoints_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCCardinalSplineTo *real = (CCCardinalSplineTo*) [proxy realObj];
-	[real setPoints:(CCPointArray*)arg0  ];
+	[real setPoints:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -13814,7 +13814,7 @@ JSBool JSPROXY_CCCardinalSplineBy_startWithTarget_(JSContext *cx, uint32_t argc,
 	if( ! ok ) return JS_FALSE;
 
 	CCCardinalSplineBy *real = (CCCardinalSplineBy*) [proxy realObj];
-	[real startWithTarget:(NSObject*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -13833,7 +13833,7 @@ JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static(JSCo
 	if( ! ok ) return JS_FALSE;
 	CCCardinalSplineBy* ret_val;
 
-	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
+	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13961,7 +13961,7 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points__static(JSContext *cx, u
 	if( ! ok ) return JS_FALSE;
 	CCCatmullRomBy* ret_val;
 
-	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
+	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -13986,7 +13986,7 @@ JSBool JSPROXY_CCCatmullRomBy_initWithDuration_points_(JSContext *cx, uint32_t a
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCCatmullRomBy *real = [(CCCatmullRomBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
+	CCCatmullRomBy *real = [(CCCatmullRomBy*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -14010,7 +14010,7 @@ JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCCatmullRomBy* ret_val;
 
-	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
+	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -14160,7 +14160,7 @@ JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene_orientation_
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipAngular* ret_val;
 
-	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -14181,7 +14181,7 @@ JSBool JSPROXY_CCTransitionFlipAngular_transitionWithDuration_scene__static(JSCo
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipAngular* ret_val;
 
-	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFlipAngular transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -14417,7 +14417,7 @@ JSBool JSPROXY_CCEaseBackIn_actionWithAction__static(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 	CCEaseBackIn* ret_val;
 
-	ret_val = [CCEaseBackIn actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBackIn actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -14550,7 +14550,7 @@ JSBool JSPROXY_CCSpriteBatchNode_addQuadFromSprite_quadIndex_(JSContext *cx, uin
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real addQuadFromSprite:(CCSprite*)arg0 quadIndex:(NSUInteger)arg1  ];
+	[real addQuadFromSprite:arg0 quadIndex:(NSUInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14572,7 +14572,7 @@ JSBool JSPROXY_CCSpriteBatchNode_appendChild_(JSContext *cx, uint32_t argc, jsva
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real appendChild:(CCSprite*)arg0  ];
+	[real appendChild:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14596,7 +14596,7 @@ JSBool JSPROXY_CCSpriteBatchNode_atlasIndexForChild_atZ_(JSContext *cx, uint32_t
 	NSUInteger ret_val;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	ret_val = [real atlasIndexForChild:(CCSprite*)arg0 atZ:(NSInteger)arg1  ];
+	ret_val = [real atlasIndexForChild:arg0 atZ:(NSInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -14648,10 +14648,10 @@ JSBool JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static(JSContext
 	CCSpriteBatchNode* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
+		ret_val = [CCSpriteBatchNode batchNodeWithTexture:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCSpriteBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+		ret_val = [CCSpriteBatchNode batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -14765,7 +14765,7 @@ JSBool JSPROXY_CCSpriteBatchNode_initWithTexture_capacity_(JSContext *cx, uint32
 	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	CCSpriteBatchNode *real = [(CCSpriteBatchNode*)[proxy.klass alloc] initWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -14793,7 +14793,7 @@ JSBool JSPROXY_CCSpriteBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, uint
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real insertChild:(CCSprite*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
+	[real insertChild:arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14817,7 +14817,7 @@ JSBool JSPROXY_CCSpriteBatchNode_rebuildIndexInOrder_atlasIndex_(JSContext *cx, 
 	NSUInteger ret_val;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	ret_val = [real rebuildIndexInOrder:(CCSprite*)arg0 atlasIndex:(NSUInteger)arg1  ];
+	ret_val = [real rebuildIndexInOrder:arg0 atlasIndex:(NSUInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -14840,7 +14840,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real removeChild:(CCSprite*)arg0 cleanup:(BOOL)arg1  ];
+	[real removeChild:arg0 cleanup:(BOOL)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14885,7 +14885,7 @@ JSBool JSPROXY_CCSpriteBatchNode_removeSpriteFromAtlas_(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real removeSpriteFromAtlas:(CCSprite*)arg0  ];
+	[real removeSpriteFromAtlas:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14954,7 +14954,7 @@ JSBool JSPROXY_CCSpriteBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc, 
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	[real setTextureAtlas:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -14996,7 +14996,7 @@ JSBool JSPROXY_CCSpriteBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -15145,7 +15145,7 @@ JSBool JSPROXY_CCTMXLayer_addChild_z_tag_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
-	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
+	[real addChild:arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -15168,7 +15168,7 @@ JSBool JSPROXY_CCTMXLayer_initWithTilesetInfo_layerInfo_mapInfo_(JSContext *cx, 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
 	if( ! ok ) return JS_FALSE;
 
-	CCTMXLayer *real = [(CCTMXLayer*)[proxy.klass alloc] initWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
+	CCTMXLayer *real = [(CCTMXLayer*)[proxy.klass alloc] initWithTilesetInfo:arg0 layerInfo:arg1 mapInfo:arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -15249,7 +15249,7 @@ JSBool JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
-	ret_val = [CCTMXLayer layerWithTilesetInfo:(CCTMXTilesetInfo*)arg0 layerInfo:(CCTMXLayerInfo*)arg1 mapInfo:(CCTMXMapInfo*)arg2  ];
+	ret_val = [CCTMXLayer layerWithTilesetInfo:arg0 layerInfo:arg1 mapInfo:arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -15535,7 +15535,7 @@ JSBool JSPROXY_CCTMXLayer_setTileset_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCTMXLayer *real = (CCTMXLayer*) [proxy realObj];
-	[real setTileset:(CCTMXTilesetInfo*)arg0  ];
+	[real setTileset:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -15678,7 +15678,7 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture__static(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
-	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0  ];
+	ret_val = [CCTMXLayer batchNodeWithTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -15699,7 +15699,7 @@ JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture_capacity__static(JSContext *cx, u
 	if( ! ok ) return JS_FALSE;
 	CCTMXLayer* ret_val;
 
-	ret_val = [CCTMXLayer batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	ret_val = [CCTMXLayer batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -16346,7 +16346,7 @@ JSBool JSPROXY_CCTexture2D_setShaderProgram_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCTexture2D *real = (CCTexture2D*) [proxy realObj];
-	[real setShaderProgram:(CCGLProgram*)arg0  ];
+	[real setShaderProgram:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -16503,7 +16503,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithAction_duration__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCAccelDeccelAmplitude* ret_val;
 
-	ret_val = [CCAccelDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	ret_val = [CCAccelDeccelAmplitude actionWithAction:arg0 duration:(ccTime)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -16528,7 +16528,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_initWithAction_duration_(JSContext *cx, ui
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCAccelDeccelAmplitude *real = [(CCAccelDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	CCAccelDeccelAmplitude *real = [(CCAccelDeccelAmplitude*)[proxy.klass alloc] initWithAction:arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -17200,7 +17200,7 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
 	if( ! ok ) return JS_FALSE;
 
-	CCMenuItemSprite *real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
+	CCMenuItemSprite *real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:arg0 selectedSprite:arg1 disabledSprite:arg2 block:(void (^)(id))arg3  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -17223,7 +17223,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static(JSCo
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemSprite* ret_val;
 
-	ret_val = [CCMenuItemSprite itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
+	ret_val = [CCMenuItemSprite itemWithNormalSprite:arg0 selectedSprite:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -17288,7 +17288,7 @@ JSBool JSPROXY_CCMenuItemSprite_setDisabledImage_(JSContext *cx, uint32_t argc, 
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
-	[real setDisabledImage:(CCNode*)arg0  ];
+	[real setDisabledImage:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17310,7 +17310,7 @@ JSBool JSPROXY_CCMenuItemSprite_setNormalImage_(JSContext *cx, uint32_t argc, js
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
-	[real setNormalImage:(CCNode*)arg0  ];
+	[real setNormalImage:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17332,7 +17332,7 @@ JSBool JSPROXY_CCMenuItemSprite_setSelectedImage_(JSContext *cx, uint32_t argc, 
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
-	[real setSelectedImage:(CCNode*)arg0  ];
+	[real setSelectedImage:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17671,7 +17671,7 @@ JSBool JSPROXY_CCMenuItemImage_setDisabledSpriteFrame_(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
-	[real setDisabledSpriteFrame:(CCSpriteFrame*)arg0  ];
+	[real setDisabledSpriteFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17693,7 +17693,7 @@ JSBool JSPROXY_CCMenuItemImage_setNormalSpriteFrame_(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
-	[real setNormalSpriteFrame:(CCSpriteFrame*)arg0  ];
+	[real setNormalSpriteFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17715,7 +17715,7 @@ JSBool JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemImage *real = (CCMenuItemImage*) [proxy realObj];
-	[real setSelectedSpriteFrame:(CCSpriteFrame*)arg0  ];
+	[real setSelectedSpriteFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17733,7 +17733,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static(JSCon
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
-	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1  ];
+	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -17755,7 +17755,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
-	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 block:(void (^)(id))arg2  ];
+	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1 block:(void (^)(id))arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -17778,7 +17778,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprit
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemImage* ret_val;
 
-	ret_val = [CCMenuItemImage itemWithNormalSprite:(CCNode*)arg0 selectedSprite:(CCNode*)arg1 disabledSprite:(CCNode*)arg2 block:(void (^)(id))arg3  ];
+	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1 disabledSprite:arg2 block:(void (^)(id))arg3  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -17920,7 +17920,7 @@ JSBool JSPROXY_CCParticleBatchNode_addChild_z_tag_(JSContext *cx, uint32_t argc,
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
-	[real addChild:(CCParticleSystem*)arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
+	[real addChild:arg0 z:(NSInteger)arg1 tag:(NSInteger)arg2  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -17978,7 +17978,7 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture__static(JSContext *cx, u
 	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
-	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0  ];
+	ret_val = [CCParticleBatchNode batchNodeWithTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -17999,7 +17999,7 @@ JSBool JSPROXY_CCParticleBatchNode_batchNodeWithTexture_capacity__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCParticleBatchNode* ret_val;
 
-	ret_val = [CCParticleBatchNode batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	ret_val = [CCParticleBatchNode batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -18095,7 +18095,7 @@ JSBool JSPROXY_CCParticleBatchNode_initWithTexture_capacity_(JSContext *cx, uint
 	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	CCParticleBatchNode *real = [(CCParticleBatchNode*)[proxy.klass alloc] initWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -18123,7 +18123,7 @@ JSBool JSPROXY_CCParticleBatchNode_insertChild_inAtlasAtIndex_(JSContext *cx, ui
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
-	[real insertChild:(CCParticleSystem*)arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
+	[real insertChild:arg0 inAtlasAtIndex:(NSUInteger)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -18146,7 +18146,7 @@ JSBool JSPROXY_CCParticleBatchNode_removeChild_cleanup_(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
-	[real removeChild:(CCParticleSystem*)arg0 cleanup:(BOOL)arg1  ];
+	[real removeChild:arg0 cleanup:(BOOL)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -18193,7 +18193,7 @@ JSBool JSPROXY_CCParticleBatchNode_setTextureAtlas_(JSContext *cx, uint32_t argc
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
-	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	[real setTextureAtlas:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -18235,7 +18235,7 @@ JSBool JSPROXY_CCParticleBatchNode_setTexture_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -18393,7 +18393,7 @@ JSBool JSPROXY_CCTransitionCrossFade_transitionWithDuration_scene__static(JSCont
 	if( ! ok ) return JS_FALSE;
 	CCTransitionCrossFade* ret_val;
 
-	ret_val = [CCTransitionCrossFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionCrossFade transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -18686,10 +18686,10 @@ JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, ui
 	CCEaseElasticIn* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0  ];
+		ret_val = [CCEaseElasticIn actionWithAction:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCEaseElasticIn actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+		ret_val = [CCEaseElasticIn actionWithAction:arg0 period:(float)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -18821,7 +18821,7 @@ JSBool JSPROXY_CCSpeed_actionWithAction_speed__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCSpeed* ret_val;
 
-	ret_val = [CCSpeed actionWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
+	ret_val = [CCSpeed actionWithAction:arg0 speed:(float)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -18846,7 +18846,7 @@ JSBool JSPROXY_CCSpeed_initWithAction_speed_(JSContext *cx, uint32_t argc, jsval
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSpeed *real = [(CCSpeed*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0 speed:(float)arg1  ];
+	CCSpeed *real = [(CCSpeed*)[proxy.klass alloc] initWithAction:arg0 speed:(float)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -18893,7 +18893,7 @@ JSBool JSPROXY_CCSpeed_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCSpeed *real = (CCSpeed*) [proxy realObj];
-	[real setInnerAction:(CCActionInterval*)arg0  ];
+	[real setInnerAction:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -19251,7 +19251,7 @@ JSBool JSPROXY_CCActionCamera_startWithTarget_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCActionCamera *real = (CCActionCamera*) [proxy realObj];
-	[real startWithTarget:(NSObject*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -19554,7 +19554,7 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_(JSContext
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg4);
 	if( ! ok ) return JS_FALSE;
 
-	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
+	CCMotionStreak *real = [(CCMotionStreak*)[proxy.klass alloc] initWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:arg4  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -19694,7 +19694,7 @@ JSBool JSPROXY_CCMotionStreak_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -19718,7 +19718,7 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static(
 	if( ! ok ) return JS_FALSE;
 	CCMotionStreak* ret_val;
 
-	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:(CCTexture2D*)arg4  ];
+	ret_val = [CCMotionStreak streakWithFade:(float)arg0 minSeg:(float)arg1 width:(float)arg2 color:(ccColor3B)arg3 texture:arg4  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -20145,7 +20145,7 @@ JSBool JSPROXY_CCAccelAmplitude_actionWithAction_duration__static(JSContext *cx,
 	if( ! ok ) return JS_FALSE;
 	CCAccelAmplitude* ret_val;
 
-	ret_val = [CCAccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	ret_val = [CCAccelAmplitude actionWithAction:arg0 duration:(ccTime)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -20170,7 +20170,7 @@ JSBool JSPROXY_CCAccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_t
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCAccelAmplitude *real = [(CCAccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	CCAccelAmplitude *real = [(CCAccelAmplitude*)[proxy.klass alloc] initWithAction:arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -20362,7 +20362,7 @@ JSBool JSPROXY_CCGridBase_afterDraw_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
-	[real afterDraw:(CCNode*)arg0  ];
+	[real afterDraw:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -20489,7 +20489,7 @@ JSBool JSPROXY_CCGridBase_gridWithSize_texture_flippedTexture__static(JSContext 
 	if( ! ok ) return JS_FALSE;
 	CCGridBase* ret_val;
 
-	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
+	ret_val = [CCGridBase gridWithSize:(ccGridSize)arg0 texture:arg1 flippedTexture:(BOOL)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -20541,7 +20541,7 @@ JSBool JSPROXY_CCGridBase_initWithSize_texture_flippedTexture_(JSContext *cx, ui
 	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
 
-	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
+	CCGridBase *real = [(CCGridBase*)[proxy.klass alloc] initWithSize:(ccGridSize)arg0 texture:arg1 flippedTexture:(BOOL)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -20640,7 +20640,7 @@ JSBool JSPROXY_CCGridBase_setGrabber_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
-	[real setGrabber:(CCGrabber*)arg0  ];
+	[real setGrabber:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -20706,7 +20706,7 @@ JSBool JSPROXY_CCGridBase_setShaderProgram_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
-	[real setShaderProgram:(CCGLProgram*)arg0  ];
+	[real setShaderProgram:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -20750,7 +20750,7 @@ JSBool JSPROXY_CCGridBase_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCGridBase *real = (CCGridBase*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -20942,7 +20942,7 @@ JSBool JSPROXY_CCTiledGrid3D_gridWithSize_texture_flippedTexture__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTiledGrid3D* ret_val;
 
-	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
+	ret_val = [CCTiledGrid3D gridWithSize:(ccGridSize)arg0 texture:arg1 flippedTexture:(BOOL)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -21056,7 +21056,7 @@ JSBool JSPROXY_CCEaseBounce_actionWithAction__static(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 	CCEaseBounce* ret_val;
 
-	ret_val = [CCEaseBounce actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBounce actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -21205,7 +21205,7 @@ JSBool JSPROXY_CCEaseBounceOut_actionWithAction__static(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 	CCEaseBounceOut* ret_val;
 
-	ret_val = [CCEaseBounceOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBounceOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -21466,7 +21466,7 @@ JSBool JSPROXY_CCAnimationCache_addAnimation_name_(JSContext *cx, uint32_t argc,
 	if( ! ok ) return JS_FALSE;
 
 	CCAnimationCache *real = (CCAnimationCache*) [proxy realObj];
-	[real addAnimation:(CCAnimation*)arg0 name:(NSString*)arg1  ];
+	[real addAnimation:arg0 name:(NSString*)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -21652,7 +21652,7 @@ JSBool JSPROXY_CCRepeatForever_actionWithAction__static(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 	CCRepeatForever* ret_val;
 
-	ret_val = [CCRepeatForever actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCRepeatForever actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -21676,7 +21676,7 @@ JSBool JSPROXY_CCRepeatForever_initWithAction_(JSContext *cx, uint32_t argc, jsv
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCRepeatForever *real = [(CCRepeatForever*)[proxy.klass alloc] initWithAction:(CCActionInterval*)arg0  ];
+	CCRepeatForever *real = [(CCRepeatForever*)[proxy.klass alloc] initWithAction:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -21723,7 +21723,7 @@ JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCRepeatForever *real = (CCRepeatForever*) [proxy realObj];
-	[real setInnerAction:(CCActionInterval*)arg0  ];
+	[real setInnerAction:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -22109,7 +22109,7 @@ JSBool JSPROXY_CCTransitionProgressVertical_progressTimerNodeWithRenderTexture_(
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressVertical *real = (CCTransitionProgressVertical*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -22130,7 +22130,7 @@ JSBool JSPROXY_CCTransitionProgressVertical_transitionWithDuration_scene__static
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressVertical* ret_val;
 
-	ret_val = [CCTransitionProgressVertical transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressVertical transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -22781,7 +22781,7 @@ JSBool JSPROXY_CCAtlasNode_setTextureAtlas_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
-	[real setTextureAtlas:(CCTextureAtlas*)arg0  ];
+	[real setTextureAtlas:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -22878,7 +22878,7 @@ JSBool JSPROXY_CCAtlasNode_setTexture_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -23920,7 +23920,7 @@ JSBool JSPROXY_CCTransitionShrinkGrow_easeActionWithAction_(JSContext *cx, uint3
 	CCActionInterval* ret_val;
 
 	CCTransitionShrinkGrow *real = (CCTransitionShrinkGrow*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -23941,7 +23941,7 @@ JSBool JSPROXY_CCTransitionShrinkGrow_transitionWithDuration_scene__static(JSCon
 	if( ! ok ) return JS_FALSE;
 	CCTransitionShrinkGrow* ret_val;
 
-	ret_val = [CCTransitionShrinkGrow transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionShrinkGrow transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24070,7 +24070,7 @@ JSBool JSPROXY_CCEaseExponentialInOut_actionWithAction__static(JSContext *cx, ui
 	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialInOut* ret_val;
 
-	ret_val = [CCEaseExponentialInOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseExponentialInOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24509,7 +24509,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel__static(JSContext *cx, uint32_t argc
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
-	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0  ];
+	ret_val = [CCMenuItemFont itemWithLabel:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24530,7 +24530,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_
 	if( ! ok ) return JS_FALSE;
 	CCMenuItemFont* ret_val;
 
-	ret_val = [CCMenuItemFont itemWithLabel:(CCNode*)arg0 block:(void (^)(id))arg1  ];
+	ret_val = [CCMenuItemFont itemWithLabel:arg0 block:(void (^)(id))arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24668,7 +24668,7 @@ JSBool JSPROXY_CCTargetedAction_actionWithTarget_action__static(JSContext *cx, u
 	if( ! ok ) return JS_FALSE;
 	CCTargetedAction* ret_val;
 
-	ret_val = [CCTargetedAction actionWithTarget:(NSObject*)arg0 action:(CCFiniteTimeAction*)arg1  ];
+	ret_val = [CCTargetedAction actionWithTarget:arg0 action:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -24693,7 +24693,7 @@ JSBool JSPROXY_CCTargetedAction_initWithTarget_action_(JSContext *cx, uint32_t a
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCTargetedAction *real = [(CCTargetedAction*)[proxy.klass alloc] initWithTarget:(NSObject*)arg0 action:(CCFiniteTimeAction*)arg1  ];
+	CCTargetedAction *real = [(CCTargetedAction*)[proxy.klass alloc] initWithTarget:arg0 action:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -24720,7 +24720,7 @@ JSBool JSPROXY_CCTargetedAction_setForcedTarget_(JSContext *cx, uint32_t argc, j
 	if( ! ok ) return JS_FALSE;
 
 	CCTargetedAction *real = (CCTargetedAction*) [proxy realObj];
-	[real setForcedTarget:(NSObject*)arg0  ];
+	[real setForcedTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -25307,7 +25307,7 @@ JSBool JSPROXY_CCSpawn_actionOne_two__static(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 	CCSpawn* ret_val;
 
-	ret_val = [CCSpawn actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	ret_val = [CCSpawn actionOne:arg0 two:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -25352,7 +25352,7 @@ JSBool JSPROXY_CCSpawn_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCSpawn *real = [(CCSpawn*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	CCSpawn *real = [(CCSpawn*)[proxy.klass alloc] initOne:arg0 two:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -26085,7 +26085,7 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
 	if( ! ok ) return JS_FALSE;
 
-	CCTransitionFade *real = [(CCTransitionFade*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
+	CCTransitionFade *real = [(CCTransitionFade*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:arg1 withColor:(ccColor3B)arg2  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -26115,10 +26115,10 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	CCTransitionFade* ret_val;
 
 	if( argc == 2 ) {
-		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 	}
 	else if( argc == 3 ) {
-		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 withColor:(ccColor3B)arg2  ];
+		ret_val = [CCTransitionFade transitionWithDuration:(ccTime)arg0 scene:arg1 withColor:(ccColor3B)arg2  ];
 	}
 	else
 		return JS_FALSE;
@@ -26528,7 +26528,7 @@ JSBool JSPROXY_CCTransitionMoveInL_easeActionWithAction_(JSContext *cx, uint32_t
 	CCActionInterval* ret_val;
 
 	CCTransitionMoveInL *real = (CCTransitionMoveInL*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -26549,7 +26549,7 @@ JSBool JSPROXY_CCTransitionMoveInL_transitionWithDuration_scene__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInL* ret_val;
 
-	ret_val = [CCTransitionMoveInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionMoveInL transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -26674,7 +26674,7 @@ JSBool JSPROXY_CCTransitionMoveInT_transitionWithDuration_scene__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInT* ret_val;
 
-	ret_val = [CCTransitionMoveInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionMoveInT transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -26797,7 +26797,7 @@ JSBool JSPROXY_CCTransitionMoveInR_transitionWithDuration_scene__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInR* ret_val;
 
-	ret_val = [CCTransitionMoveInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionMoveInR transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -26925,7 +26925,7 @@ JSBool JSPROXY_CCEaseExponentialIn_actionWithAction__static(JSContext *cx, uint3
 	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialIn* ret_val;
 
-	ret_val = [CCEaseExponentialIn actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseExponentialIn actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -27332,7 +27332,7 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points__static(JSContext *cx, u
 	if( ! ok ) return JS_FALSE;
 	CCCatmullRomTo* ret_val;
 
-	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
+	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -27357,7 +27357,7 @@ JSBool JSPROXY_CCCatmullRomTo_initWithDuration_points_(JSContext *cx, uint32_t a
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCCatmullRomTo *real = [(CCCatmullRomTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1  ];
+	CCCatmullRomTo *real = [(CCCatmullRomTo*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 points:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -27381,7 +27381,7 @@ JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCCatmullRomTo* ret_val;
 
-	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:(CCPointArray*)arg1 tension:(CGFloat)arg2  ];
+	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28000,7 +28000,7 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture__static(JSContext *cx, uint32_
 	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
-	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0  ];
+	ret_val = [CCLabelBMFont batchNodeWithTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28021,7 +28021,7 @@ JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture_capacity__static(JSContext *cx
 	if( ! ok ) return JS_FALSE;
 	CCLabelBMFont* ret_val;
 
-	ret_val = [CCLabelBMFont batchNodeWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	ret_val = [CCLabelBMFont batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28167,7 +28167,7 @@ JSBool JSPROXY_CCTransitionMoveInB_transitionWithDuration_scene__static(JSContex
 	if( ! ok ) return JS_FALSE;
 	CCTransitionMoveInB* ret_val;
 
-	ret_val = [CCTransitionMoveInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionMoveInB transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28295,7 +28295,7 @@ JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene_orientation__s
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipX* ret_val;
 
-	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28316,7 +28316,7 @@ JSBool JSPROXY_CCTransitionZoomFlipX_transitionWithDuration_scene__static(JSCont
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipX* ret_val;
 
-	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionZoomFlipX transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28446,7 +28446,7 @@ JSBool JSPROXY_CCEaseOut_actionWithAction_rate__static(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 	CCEaseOut* ret_val;
 
-	ret_val = [CCEaseOut actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
+	ret_val = [CCEaseOut actionWithAction:arg0 rate:(float)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -28466,7 +28466,7 @@ JSBool JSPROXY_CCEaseOut_actionWithAction__static(JSContext *cx, uint32_t argc, 
 	if( ! ok ) return JS_FALSE;
 	CCEaseOut* ret_val;
 
-	ret_val = [CCEaseOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -29181,7 +29181,7 @@ JSBool JSPROXY_CCScheduler_isTargetPaused_(JSContext *cx, uint32_t argc, jsval *
 	BOOL ret_val;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	ret_val = [real isTargetPaused:(NSObject*)arg0  ];
+	ret_val = [real isTargetPaused:arg0  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -29249,7 +29249,7 @@ JSBool JSPROXY_CCScheduler_pauseTarget_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	[real pauseTarget:(NSObject*)arg0  ];
+	[real pauseTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -29271,7 +29271,7 @@ JSBool JSPROXY_CCScheduler_resumeTarget_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	[real resumeTarget:(NSObject*)arg0  ];
+	[real resumeTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -29317,7 +29317,7 @@ JSBool JSPROXY_CCScheduler_scheduleUpdateForTarget_priority_paused_(JSContext *c
 	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	[real scheduleUpdateForTarget:(NSObject*)arg0 priority:(NSInteger)arg1 paused:(BOOL)arg2  ];
+	[real scheduleUpdateForTarget:arg0 priority:(NSInteger)arg1 paused:(BOOL)arg2  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -29394,7 +29394,7 @@ JSBool JSPROXY_CCScheduler_unscheduleAllSelectorsForTarget_(JSContext *cx, uint3
 	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	[real unscheduleAllSelectorsForTarget:(NSObject*)arg0  ];
+	[real unscheduleAllSelectorsForTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -29438,7 +29438,7 @@ JSBool JSPROXY_CCScheduler_unscheduleUpdateForTarget_(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 
 	CCScheduler *real = (CCScheduler*) [proxy realObj];
-	[real unscheduleUpdateForTarget:(NSObject*)arg0  ];
+	[real unscheduleUpdateForTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -29564,10 +29564,10 @@ JSBool JSPROXY_CCFollow_actionWithTarget_worldBoundary__static(JSContext *cx, ui
 	CCFollow* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCFollow actionWithTarget:(CCNode*)arg0  ];
+		ret_val = [CCFollow actionWithTarget:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCFollow actionWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
+		ret_val = [CCFollow actionWithTarget:arg0 worldBoundary:(CGRect)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -29612,7 +29612,7 @@ JSBool JSPROXY_CCFollow_initWithTarget_(JSContext *cx, uint32_t argc, jsval *vp)
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0  ];
+	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -29639,7 +29639,7 @@ JSBool JSPROXY_CCFollow_initWithTarget_worldBoundary_(JSContext *cx, uint32_t ar
 	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:(CCNode*)arg0 worldBoundary:(CGRect)arg1  ];
+	CCFollow *real = [(CCFollow*)[proxy.klass alloc] initWithTarget:arg0 worldBoundary:(CGRect)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -29981,7 +29981,7 @@ JSBool JSPROXY_CCAnimationFrame_setSpriteFrame_(JSContext *cx, uint32_t argc, js
 	if( ! ok ) return JS_FALSE;
 
 	CCAnimationFrame *real = (CCAnimationFrame*) [proxy realObj];
-	[real setSpriteFrame:(CCSpriteFrame*)arg0  ];
+	[real setSpriteFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -30133,7 +30133,7 @@ JSBool JSPROXY_CCTransitionSlideInL_easeActionWithAction_(JSContext *cx, uint32_
 	CCActionInterval* ret_val;
 
 	CCTransitionSlideInL *real = (CCTransitionSlideInL*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30154,7 +30154,7 @@ JSBool JSPROXY_CCTransitionSlideInL_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInL* ret_val;
 
-	ret_val = [CCTransitionSlideInL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSlideInL transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30279,7 +30279,7 @@ JSBool JSPROXY_CCTransitionSlideInB_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInB* ret_val;
 
-	ret_val = [CCTransitionSlideInB transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSlideInB transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30393,7 +30393,7 @@ JSBool JSPROXY_CCParallaxNode_addChild_z_parallaxRatio_positionOffset_(JSContext
 	if( ! ok ) return JS_FALSE;
 
 	CCParallaxNode *real = (CCParallaxNode*) [proxy realObj];
-	[real addChild:(CCNode*)arg0 z:(NSInteger)arg1 parallaxRatio:(CGPoint)arg2 positionOffset:(CGPoint)arg3  ];
+	[real addChild:arg0 z:(NSInteger)arg1 parallaxRatio:(CGPoint)arg2 positionOffset:(CGPoint)arg3  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -30501,7 +30501,7 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_progressTimerNodeWithRenderTexture
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressHorizontal *real = (CCTransitionProgressHorizontal*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30522,7 +30522,7 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_transitionWithDuration_scene__stat
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressHorizontal* ret_val;
 
-	ret_val = [CCTransitionProgressHorizontal transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressHorizontal transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30629,7 +30629,7 @@ JSBool JSPROXY_CCRepeat_actionWithAction_times__static(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 	CCRepeat* ret_val;
 
-	ret_val = [CCRepeat actionWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
+	ret_val = [CCRepeat actionWithAction:arg0 times:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -30654,7 +30654,7 @@ JSBool JSPROXY_CCRepeat_initWithAction_times_(JSContext *cx, uint32_t argc, jsva
 	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCRepeat *real = [(CCRepeat*)[proxy.klass alloc] initWithAction:(CCFiniteTimeAction*)arg0 times:(NSUInteger)arg1  ];
+	CCRepeat *real = [(CCRepeat*)[proxy.klass alloc] initWithAction:arg0 times:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -30701,7 +30701,7 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCRepeat *real = (CCRepeat*) [proxy realObj];
-	[real setInnerAction:(CCFiniteTimeAction*)arg0  ];
+	[real setInnerAction:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -31310,7 +31310,7 @@ JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene_orientation__stati
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipY* ret_val;
 
-	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31331,7 +31331,7 @@ JSBool JSPROXY_CCTransitionFlipY_transitionWithDuration_scene__static(JSContext 
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipY* ret_val;
 
-	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFlipY transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31460,7 +31460,7 @@ JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene_orientation__stati
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipX* ret_val;
 
-	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31481,7 +31481,7 @@ JSBool JSPROXY_CCTransitionFlipX_transitionWithDuration_scene__static(JSContext 
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFlipX* ret_val;
 
-	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFlipX transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31589,7 +31589,7 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rect__static(JSContext *cx, uint32
 	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
-	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+	ret_val = [CCSpriteFrame frameWithTexture:arg0 rect:(CGRect)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31613,7 +31613,7 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_origin
 	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
-	ret_val = [CCSpriteFrame frameWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	ret_val = [CCSpriteFrame frameWithTexture:arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31683,7 +31683,7 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rect_(JSContext *cx, uint32_t argc,
 	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:arg0 rect:(CGRect)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -31713,7 +31713,7 @@ JSBool JSPROXY_CCSpriteFrame_initWithTexture_rectInPixels_rotated_offset_origina
 	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
 	if( ! ok ) return JS_FALSE;
 
-	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	CCSpriteFrame *real = [(CCSpriteFrame*)[proxy.klass alloc] initWithTexture:arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -32088,7 +32088,7 @@ JSBool JSPROXY_CCSpriteFrame_setTexture_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrame *real = (CCSpriteFrame*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -32620,7 +32620,7 @@ JSBool JSPROXY_CCTextureCache_removeTexture_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCTextureCache *real = (CCTextureCache*) [proxy realObj];
-	[real removeTexture:(CCTexture2D*)arg0  ];
+	[real removeTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -33335,7 +33335,7 @@ JSBool JSPROXY_CCEaseIn_actionWithAction_rate__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCEaseIn* ret_val;
 
-	ret_val = [CCEaseIn actionWithAction:(CCActionInterval*)arg0 rate:(float)arg1  ];
+	ret_val = [CCEaseIn actionWithAction:arg0 rate:(float)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -33355,7 +33355,7 @@ JSBool JSPROXY_CCEaseIn_actionWithAction__static(JSContext *cx, uint32_t argc, j
 	if( ! ok ) return JS_FALSE;
 	CCEaseIn* ret_val;
 
-	ret_val = [CCEaseIn actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseIn actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -34574,7 +34574,7 @@ JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene_orientation__s
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipY* ret_val;
 
-	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -34595,7 +34595,7 @@ JSBool JSPROXY_CCTransitionZoomFlipY_transitionWithDuration_scene__static(JSCont
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipY* ret_val;
 
-	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionZoomFlipY transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -35305,7 +35305,7 @@ JSBool JSPROXY_CCEaseSineIn_actionWithAction__static(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 	CCEaseSineIn* ret_val;
 
-	ret_val = [CCEaseSineIn actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseSineIn actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -35459,7 +35459,7 @@ JSBool JSPROXY_CCTransitionFadeBL_transitionWithDuration_scene__static(JSContext
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeBL* ret_val;
 
-	ret_val = [CCTransitionFadeBL transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFadeBL transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -35565,7 +35565,7 @@ JSBool JSPROXY_CCAnimate_actionWithAnimation__static(JSContext *cx, uint32_t arg
 	if( ! ok ) return JS_FALSE;
 	CCAnimate* ret_val;
 
-	ret_val = [CCAnimate actionWithAnimation:(CCAnimation*)arg0  ];
+	ret_val = [CCAnimate actionWithAnimation:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -35609,7 +35609,7 @@ JSBool JSPROXY_CCAnimate_initWithAnimation_(JSContext *cx, uint32_t argc, jsval 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCAnimate *real = [(CCAnimate*)[proxy.klass alloc] initWithAnimation:(CCAnimation*)arg0  ];
+	CCAnimate *real = [(CCAnimate*)[proxy.klass alloc] initWithAnimation:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -35636,7 +35636,7 @@ JSBool JSPROXY_CCAnimate_setAnimation_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCAnimate *real = (CCAnimate*) [proxy realObj];
-	[real setAnimation:(CCAnimation*)arg0  ];
+	[real setAnimation:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -36001,7 +36001,7 @@ JSBool JSPROXY_CCAnimation_addSpriteFrame_(JSContext *cx, uint32_t argc, jsval *
 	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
-	[real addSpriteFrame:(CCSpriteFrame*)arg0  ];
+	[real addSpriteFrame:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -36046,7 +36046,7 @@ JSBool JSPROXY_CCAnimation_addSpriteFrameWithTexture_rect_(JSContext *cx, uint32
 	if( ! ok ) return JS_FALSE;
 
 	CCAnimation *real = (CCAnimation*) [proxy realObj];
-	[real addSpriteFrameWithTexture:(CCTexture2D*)arg0 rect:(CGRect)arg1  ];
+	[real addSpriteFrameWithTexture:arg0 rect:(CGRect)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -36487,7 +36487,7 @@ JSBool JSPROXY_CCEaseSineInOut_actionWithAction__static(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 	CCEaseSineInOut* ret_val;
 
-	ret_val = [CCEaseSineInOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseSineInOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -36801,7 +36801,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_progressTimerNodeWithRenderTexture_(
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressRadialCW *real = (CCTransitionProgressRadialCW*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -36822,7 +36822,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_transitionWithDuration_scene__static
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressRadialCW* ret_val;
 
-	ret_val = [CCTransitionProgressRadialCW transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressRadialCW transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -37113,7 +37113,7 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_easeActionWithAction_(JSContext *cx, uin
 	CCActionInterval* ret_val;
 
 	CCTransitionTurnOffTiles *real = (CCTransitionTurnOffTiles*) [proxy realObj];
-	ret_val = [real easeActionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [real easeActionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -37134,7 +37134,7 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_transitionWithDuration_scene__static(JSC
 	if( ! ok ) return JS_FALSE;
 	CCTransitionTurnOffTiles* ret_val;
 
-	ret_val = [CCTransitionTurnOffTiles transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionTurnOffTiles transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -37258,7 +37258,7 @@ JSBool JSPROXY_CCTransitionSlideInT_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInT* ret_val;
 
-	ret_val = [CCTransitionSlideInT transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSlideInT transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -37674,7 +37674,7 @@ JSBool JSPROXY_CCTextureAtlas_initWithTexture_capacity_(JSContext *cx, uint32_t 
 	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	CCTextureAtlas *real = [(CCTextureAtlas*)[proxy.klass alloc] initWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -37855,7 +37855,7 @@ JSBool JSPROXY_CCTextureAtlas_setTexture_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCTextureAtlas *real = (CCTextureAtlas*) [proxy realObj];
-	[real setTexture:(CCTexture2D*)arg0  ];
+	[real setTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -37914,7 +37914,7 @@ JSBool JSPROXY_CCTextureAtlas_textureAtlasWithTexture_capacity__static(JSContext
 	if( ! ok ) return JS_FALSE;
 	CCTextureAtlas* ret_val;
 
-	ret_val = [CCTextureAtlas textureAtlasWithTexture:(CCTexture2D*)arg0 capacity:(NSUInteger)arg1  ];
+	ret_val = [CCTextureAtlas textureAtlasWithTexture:arg0 capacity:(NSUInteger)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -38057,7 +38057,7 @@ JSBool JSPROXY_CCTransitionSlideInR_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSlideInR* ret_val;
 
-	ret_val = [CCTransitionSlideInR transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSlideInR transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -38507,7 +38507,7 @@ JSBool JSPROXY_CCTransitionProgressInOut_progressTimerNodeWithRenderTexture_(JSC
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressInOut *real = (CCTransitionProgressInOut*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -38528,7 +38528,7 @@ JSBool JSPROXY_CCTransitionProgressInOut_transitionWithDuration_scene__static(JS
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressInOut* ret_val;
 
-	ret_val = [CCTransitionProgressInOut transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressInOut transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -38656,7 +38656,7 @@ JSBool JSPROXY_CCEaseBounceIn_actionWithAction__static(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 	CCEaseBounceIn* ret_val;
 
-	ret_val = [CCEaseBounceIn actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBounceIn actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -39092,7 +39092,7 @@ JSBool JSPROXY_CCProgressTimer_initWithSprite_(JSContext *cx, uint32_t argc, jsv
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	if( ! ok ) return JS_FALSE;
 
-	CCProgressTimer *real = [(CCProgressTimer*)[proxy.klass alloc] initWithSprite:(CCSprite*)arg0  ];
+	CCProgressTimer *real = [(CCProgressTimer*)[proxy.klass alloc] initWithSprite:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -39168,7 +39168,7 @@ JSBool JSPROXY_CCProgressTimer_progressWithSprite__static(JSContext *cx, uint32_
 	if( ! ok ) return JS_FALSE;
 	CCProgressTimer* ret_val;
 
-	ret_val = [CCProgressTimer progressWithSprite:(CCSprite*)arg0  ];
+	ret_val = [CCProgressTimer progressWithSprite:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -39345,7 +39345,7 @@ JSBool JSPROXY_CCProgressTimer_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
-	[real setSprite:(CCSprite*)arg0  ];
+	[real setSprite:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -39604,7 +39604,7 @@ JSBool JSPROXY_CCEaseBounceInOut_actionWithAction__static(JSContext *cx, uint32_
 	if( ! ok ) return JS_FALSE;
 	CCEaseBounceInOut* ret_val;
 
-	ret_val = [CCEaseBounceInOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBounceInOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -39895,7 +39895,7 @@ JSBool JSPROXY_CCGrabber_afterRender_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
-	[real afterRender:(CCTexture2D*)arg0  ];
+	[real afterRender:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -39917,7 +39917,7 @@ JSBool JSPROXY_CCGrabber_beforeRender_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
-	[real beforeRender:(CCTexture2D*)arg0  ];
+	[real beforeRender:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -39939,7 +39939,7 @@ JSBool JSPROXY_CCGrabber_grab_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCGrabber *real = (CCGrabber*) [proxy realObj];
-	[real grab:(CCTexture2D*)arg0  ];
+	[real grab:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -40049,7 +40049,7 @@ JSBool JSPROXY_CCTransitionSplitRows_transitionWithDuration_scene__static(JSCont
 	if( ! ok ) return JS_FALSE;
 	CCTransitionSplitRows* ret_val;
 
-	ret_val = [CCTransitionSplitRows transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionSplitRows transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -40636,7 +40636,7 @@ JSBool JSPROXY_CCEaseBackInOut_actionWithAction__static(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 	CCEaseBackInOut* ret_val;
 
-	ret_val = [CCEaseBackInOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseBackInOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -40785,7 +40785,7 @@ JSBool JSPROXY_CCEaseExponentialOut_actionWithAction__static(JSContext *cx, uint
 	if( ! ok ) return JS_FALSE;
 	CCEaseExponentialOut* ret_val;
 
-	ret_val = [CCEaseExponentialOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseExponentialOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -40999,7 +40999,7 @@ JSBool JSPROXY_CCSequence_actionOne_two__static(JSContext *cx, uint32_t argc, js
 	if( ! ok ) return JS_FALSE;
 	CCSequence* ret_val;
 
-	ret_val = [CCSequence actionOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	ret_val = [CCSequence actionOne:arg0 two:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -41044,7 +41044,7 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
 	if( ! ok ) return JS_FALSE;
 
-	CCSequence *real = [(CCSequence*)[proxy.klass alloc] initOne:(CCFiniteTimeAction*)arg0 two:(CCFiniteTimeAction*)arg1  ];
+	CCSequence *real = [(CCSequence*)[proxy.klass alloc] initOne:arg0 two:arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -41200,10 +41200,10 @@ JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx,
 	CCEaseElasticInOut* ret_val;
 
 	if( argc == 1 ) {
-		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0  ];
+		ret_val = [CCEaseElasticInOut actionWithAction:arg0  ];
 	}
 	else if( argc == 2 ) {
-		ret_val = [CCEaseElasticInOut actionWithAction:(CCActionInterval*)arg0 period:(float)arg1  ];
+		ret_val = [CCEaseElasticInOut actionWithAction:arg0 period:(float)arg1  ];
 	}
 	else
 		return JS_FALSE;
@@ -41623,7 +41623,7 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene_orientat
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipAngular* ret_val;
 
-	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1 orientation:(tOrientation)arg2  ];
+	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:arg1 orientation:(tOrientation)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -41644,7 +41644,7 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_transitionWithDuration_scene__static(
 	if( ! ok ) return JS_FALSE;
 	CCTransitionZoomFlipAngular* ret_val;
 
-	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionZoomFlipAngular transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -41915,7 +41915,7 @@ JSBool JSPROXY_CCBezierTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *
 	if( ! ok ) return JS_FALSE;
 
 	CCBezierTo *real = (CCBezierTo*) [proxy realObj];
-	[real startWithTarget:(CCNode*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -42039,7 +42039,7 @@ JSBool JSPROXY_CCDeccelAmplitude_actionWithAction_duration__static(JSContext *cx
 	if( ! ok ) return JS_FALSE;
 	CCDeccelAmplitude* ret_val;
 
-	ret_val = [CCDeccelAmplitude actionWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	ret_val = [CCDeccelAmplitude actionWithAction:arg0 duration:(ccTime)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -42064,7 +42064,7 @@ JSBool JSPROXY_CCDeccelAmplitude_initWithAction_duration_(JSContext *cx, uint32_
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	if( ! ok ) return JS_FALSE;
 
-	CCDeccelAmplitude *real = [(CCDeccelAmplitude*)[proxy.klass alloc] initWithAction:(CCAction*)arg0 duration:(ccTime)arg1  ];
+	CCDeccelAmplitude *real = [(CCDeccelAmplitude*)[proxy.klass alloc] initWithAction:arg0 duration:(ccTime)arg1  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
@@ -42768,7 +42768,7 @@ JSBool JSPROXY_CCJumpTo_startWithTarget_(JSContext *cx, uint32_t argc, jsval *vp
 	if( ! ok ) return JS_FALSE;
 
 	CCJumpTo *real = (CCJumpTo*) [proxy realObj];
-	[real startWithTarget:(CCNode*)arg0  ];
+	[real startWithTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -43586,7 +43586,7 @@ JSBool JSPROXY_CCTransitionJumpZoom_transitionWithDuration_scene__static(JSConte
 	if( ! ok ) return JS_FALSE;
 	CCTransitionJumpZoom* ret_val;
 
-	ret_val = [CCTransitionJumpZoom transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionJumpZoom transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -43896,7 +43896,7 @@ JSBool JSPROXY_CCTransitionFadeUp_transitionWithDuration_scene__static(JSContext
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFadeUp* ret_val;
 
-	ret_val = [CCTransitionFadeUp transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionFadeUp transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -44316,7 +44316,7 @@ JSBool JSPROXY_CCRenderTexture_setSprite_(JSContext *cx, uint32_t argc, jsval *v
 	if( ! ok ) return JS_FALSE;
 
 	CCRenderTexture *real = (CCRenderTexture*) [proxy realObj];
-	[real setSprite:(CCSprite*)arg0  ];
+	[real setSprite:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45527,7 +45527,7 @@ JSBool JSPROXY_CCGrid3D_gridWithSize_texture_flippedTexture__static(JSContext *c
 	if( ! ok ) return JS_FALSE;
 	CCGrid3D* ret_val;
 
-	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0 texture:(CCTexture2D*)arg1 flippedTexture:(BOOL)arg2  ];
+	ret_val = [CCGrid3D gridWithSize:(ccGridSize)arg0 texture:arg1 flippedTexture:(BOOL)arg2  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -45628,7 +45628,7 @@ JSBool JSPROXY_CCActionManager_addAction_target_paused_(JSContext *cx, uint32_t 
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real addAction:(CCAction*)arg0 target:(NSObject*)arg1 paused:(BOOL)arg2  ];
+	[real addAction:arg0 target:arg1 paused:(BOOL)arg2  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45652,7 +45652,7 @@ JSBool JSPROXY_CCActionManager_getActionByTag_target_(JSContext *cx, uint32_t ar
 	CCAction* ret_val;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	ret_val = [real getActionByTag:(NSInteger)arg0 target:(NSObject*)arg1  ];
+	ret_val = [real getActionByTag:(NSInteger)arg0 target:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -45678,7 +45678,7 @@ JSBool JSPROXY_CCActionManager_numberOfRunningActionsInTarget_(JSContext *cx, ui
 	NSUInteger ret_val;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	ret_val = [real numberOfRunningActionsInTarget:(NSObject*)arg0  ];
+	ret_val = [real numberOfRunningActionsInTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, INT_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -45720,7 +45720,7 @@ JSBool JSPROXY_CCActionManager_pauseTarget_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real pauseTarget:(NSObject*)arg0  ];
+	[real pauseTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45742,7 +45742,7 @@ JSBool JSPROXY_CCActionManager_removeAction_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real removeAction:(CCAction*)arg0  ];
+	[real removeAction:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45765,7 +45765,7 @@ JSBool JSPROXY_CCActionManager_removeActionByTag_target_(JSContext *cx, uint32_t
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real removeActionByTag:(NSInteger)arg0 target:(NSObject*)arg1  ];
+	[real removeActionByTag:(NSInteger)arg0 target:arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45803,7 +45803,7 @@ JSBool JSPROXY_CCActionManager_removeAllActionsFromTarget_(JSContext *cx, uint32
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real removeAllActionsFromTarget:(NSObject*)arg0  ];
+	[real removeAllActionsFromTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45825,7 +45825,7 @@ JSBool JSPROXY_CCActionManager_resumeTarget_(JSContext *cx, uint32_t argc, jsval
 	if( ! ok ) return JS_FALSE;
 
 	CCActionManager *real = (CCActionManager*) [proxy realObj];
-	[real resumeTarget:(NSObject*)arg0  ];
+	[real resumeTarget:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45950,7 +45950,7 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFrame_name_(JSContext *cx, uint32_t a
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
-	[real addSpriteFrame:(CCSpriteFrame*)arg0 name:(NSString*)arg1  ];
+	[real addSpriteFrame:arg0 name:(NSString*)arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -45973,7 +45973,7 @@ JSBool JSPROXY_CCSpriteFrameCache_addSpriteFramesWithFile_texture_(JSContext *cx
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
-	[real addSpriteFramesWithFile:(NSString*)arg0 texture:(CCTexture2D*)arg1  ];
+	[real addSpriteFramesWithFile:(NSString*)arg0 texture:arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -46099,7 +46099,7 @@ JSBool JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromTexture_(JSContext *cx, 
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteFrameCache *real = (CCSpriteFrameCache*) [proxy realObj];
-	[real removeSpriteFramesFromTexture:(CCTexture2D*)arg0  ];
+	[real removeSpriteFramesFromTexture:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -46274,7 +46274,7 @@ JSBool JSPROXY_CCEaseSineOut_actionWithAction__static(JSContext *cx, uint32_t ar
 	if( ! ok ) return JS_FALSE;
 	CCEaseSineOut* ret_val;
 
-	ret_val = [CCEaseSineOut actionWithAction:(CCActionInterval*)arg0  ];
+	ret_val = [CCEaseSineOut actionWithAction:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -46407,7 +46407,7 @@ JSBool JSPROXY_CCTransitionProgressOutIn_progressTimerNodeWithRenderTexture_(JSC
 	CCProgressTimer* ret_val;
 
 	CCTransitionProgressOutIn *real = (CCTransitionProgressOutIn*) [proxy realObj];
-	ret_val = [real progressTimerNodeWithRenderTexture:(CCRenderTexture*)arg0  ];
+	ret_val = [real progressTimerNodeWithRenderTexture:arg0  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -46428,7 +46428,7 @@ JSBool JSPROXY_CCTransitionProgressOutIn_transitionWithDuration_scene__static(JS
 	if( ! ok ) return JS_FALSE;
 	CCTransitionProgressOutIn* ret_val;
 
-	ret_val = [CCTransitionProgressOutIn transitionWithDuration:(ccTime)arg0 scene:(CCScene*)arg1  ];
+	ret_val = [CCTransitionProgressOutIn transitionWithDuration:(ccTime)arg0 scene:arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));

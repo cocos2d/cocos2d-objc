@@ -80,16 +80,15 @@ JSBool ScriptingCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 
 JSBool ScriptingCore_executeScript(JSContext *cx, uint32_t argc, jsval *vp)
 {
+	JSBool ok = JS_FALSE;
 	if (argc == 1) {
 		JSString *string;
 		if (JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string) == JS_TRUE) {
-			[[ScriptingCore sharedInstance]	runScript: [NSString stringWithCString:JS_EncodeString(cx, string) encoding:NSUTF8StringEncoding] ];
+			ok = [[ScriptingCore sharedInstance] runScript: [NSString stringWithCString:JS_EncodeString(cx, string) encoding:NSUTF8StringEncoding] ];
 		}
-		
-		return JS_TRUE;
 	}
 	
-	return JS_FALSE;
+	return ok;
 };
 
 JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsval *vp)
@@ -405,7 +404,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 		outVal = &rval;
 	}
 	const char *cstr = [string UTF8String];
-	ok = JS_EvaluateScript( _cx, _object, cstr, strlen(cstr), filename, lineno, outVal);
+	ok = JS_EvaluateScript( _cx, _object, cstr, (unsigned)strlen(cstr), filename, lineno, outVal);
 	if (ok == JS_FALSE) {
 		CCLOGWARN(@"error evaluating script:%@", string);
 	}
@@ -413,8 +412,10 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 	return ok;
 }
 
--(BOOL) runScript2:(NSString*)filename
+-(JSBool) runScript2:(NSString*)filename
 {
+	JSBool ok = JS_FALSE;
+
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 #ifdef DEBUG
 	/**
@@ -434,23 +435,24 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 	unsigned char *content = NULL;
 	size_t contentSize = ccLoadFileIntoMemory([fullpath UTF8String], &content);
 	if (content && contentSize) {
-		JSBool ok;
 		jsval rval;
-		ok = JS_EvaluateScript( _cx, _object, (char *)content, contentSize, [filename UTF8String], 1, &rval);
-		if (ok == JS_FALSE) {
-			CCLOGWARN(@"error evaluating script: %@", filename);
-		}
+		ok = JS_EvaluateScript( _cx, _object, (char *)content, (unsigned)contentSize, [filename UTF8String], 1, &rval);
 		free(content);
+		
+		if (ok == JS_FALSE)
+			CCLOGWARN(@"error evaluating script: %@", filename);
 	}
 	
-	return YES;
+	return ok;
 }
 
 /*
  * Compile a script and execute it. It roots the script
  */
--(BOOL) runScript:(NSString*)filename
+-(JSBool) runScript:(NSString*)filename
 {
+	JSBool ok = JS_FALSE;
+
     JSScript *script;
 	
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
@@ -465,13 +467,14 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
         return NO;
 	
 	jsval result;	
-	if (!JS_ExecuteScript(_cx, _object, script, &result)) {
+	ok = JS_ExecuteScript(_cx, _object, script, &result);
+	
+	if( ! ok )
 		NSLog(@"Failed to execute script");
-    }
 	
 //    JS_RemoveScriptRoot(_cx, &script);  /* scriptObj becomes unreachable
 //										   and will eventually be collected. */
-    return YES;
+    return ok;
 }
 
 -(void) dealloc

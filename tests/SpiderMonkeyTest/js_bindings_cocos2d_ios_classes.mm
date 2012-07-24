@@ -160,7 +160,7 @@ JSBool JSPROXY_CCDirector_convertTouchToGL_(JSContext *cx, uint32_t argc, jsval 
 	CGPoint ret_val;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	ret_val = [real convertTouchToGL:(UITouch*)arg0  ];
+	ret_val = [real convertTouchToGL:arg0  ];
 
 	jsval ret_jsval = CGPoint_to_jsval( cx, (CGPoint)ret_val );
 	JS_SET_RVAL(cx, vp, ret_jsval);
@@ -422,7 +422,7 @@ JSBool JSPROXY_CCDirector_pushScene_(JSContext *cx, uint32_t argc, jsval *vp) {
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real pushScene:(CCScene*)arg0  ];
+	[real pushScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -444,7 +444,7 @@ JSBool JSPROXY_CCDirector_replaceScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real replaceScene:(CCScene*)arg0  ];
+	[real replaceScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -504,7 +504,7 @@ JSBool JSPROXY_CCDirector_runWithScene_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real runWithScene:(CCScene*)arg0  ];
+	[real runWithScene:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -600,7 +600,7 @@ JSBool JSPROXY_CCDirector_setActionManager_(JSContext *cx, uint32_t argc, jsval 
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setActionManager:(CCActionManager*)arg0  ];
+	[real setActionManager:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -688,7 +688,7 @@ JSBool JSPROXY_CCDirector_setDelegate_(JSContext *cx, uint32_t argc, jsval *vp) 
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setDelegate:(NSObject*)arg0  ];
+	[real setDelegate:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -792,7 +792,7 @@ JSBool JSPROXY_CCDirector_setNotificationNode_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setNotificationNode:(NSObject*)arg0  ];
+	[real setNotificationNode:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -836,7 +836,7 @@ JSBool JSPROXY_CCDirector_setScheduler_(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok ) return JS_FALSE;
 
 	CCDirector *real = (CCDirector*) [proxy realObj];
-	[real setScheduler:(CCScheduler*)arg0  ];
+	[real setScheduler:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1178,7 +1178,7 @@ JSBool JSPROXY_CCDirectorDisplayLink_mainLoop_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCDirectorDisplayLink *real = (CCDirectorDisplayLink*) [proxy realObj];
-	[real mainLoop:(NSObject*)arg0  ];
+	[real mainLoop:arg0  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1381,7 +1381,7 @@ JSBool JSPROXY_CCLayer_ccTouchBegan_withEvent_(JSContext *cx, uint32_t argc, jsv
 	BOOL ret_val;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	ret_val = [real ccTouchBegan:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	ret_val = [real ccTouchBegan:arg0 withEvent:arg1  ];
 	JS_SET_RVAL(cx, vp, BOOLEAN_TO_JSVAL(ret_val));
 	return JS_TRUE;
 }
@@ -1404,7 +1404,7 @@ JSBool JSPROXY_CCLayer_ccTouchCancelled_withEvent_(JSContext *cx, uint32_t argc,
 	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real ccTouchCancelled:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	[real ccTouchCancelled:arg0 withEvent:arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1427,7 +1427,7 @@ JSBool JSPROXY_CCLayer_ccTouchEnded_withEvent_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real ccTouchEnded:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	[real ccTouchEnded:arg0 withEvent:arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
@@ -1450,7 +1450,7 @@ JSBool JSPROXY_CCLayer_ccTouchMoved_withEvent_(JSContext *cx, uint32_t argc, jsv
 	if( ! ok ) return JS_FALSE;
 
 	CCLayer *real = (CCLayer*) [proxy realObj];
-	[real ccTouchMoved:(UITouch*)arg0 withEvent:(UIEvent*)arg1  ];
+	[real ccTouchMoved:arg0 withEvent:arg1  ];
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }

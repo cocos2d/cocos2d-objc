@@ -768,7 +768,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     # Method generator functions
     #
-    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_js_type, args_declared_type, class_name, method_type ):
+    def generate_method_call_to_real_object( self, selector_name, num_of_args, ret_js_type, args_declared_type, args_js_type, class_name, method_type ):
 
         args = selector_name.split(':')
 
@@ -803,8 +803,11 @@ void %s_finalize(JSContext *cx, JSObject *obj)
             elif i+1 > num_of_args:
                 break
             elif arg:   # empty arg?
-                # cast needed to prevent compiler errors
-                call += '%s:(%s)arg%d ' % (arg, args_declared_type[i], i)
+                if args_js_type[i] == 'o':
+                    call += '%s:arg%d ' % (arg, i )
+                else:
+                    # cast needed to prevent compiler errors
+                    call += '%s:(%s)arg%d ' % (arg, args_declared_type[i], i)
 
         call += ' ];';
 
@@ -1338,12 +1341,12 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             else_str = ''
             for i in xrange(max_args+1):
                 if i in properties['calls']:
-                    call_real = self.generate_method_call_to_real_object( properties['calls'][i], i, ret_js_type, args_declared_type, class_name, method_type )
+                    call_real = self.generate_method_call_to_real_object( properties['calls'][i], i, ret_js_type, args_declared_type, args_js_type, class_name, method_type )
                     self.mm_file.write( '\n\t%sif( argc == %d ) {\n\t%s\n\t}' % ( else_str, i, call_real) )
                     else_str = 'else '
             self.mm_file.write( '\n\telse\n\t\treturn JS_FALSE;\n\n' )
         else:
-            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, class_name, method_type )
+            call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, args_js_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )
 
         ret_string = self.generate_retval( ret_declared_type, ret_js_type )

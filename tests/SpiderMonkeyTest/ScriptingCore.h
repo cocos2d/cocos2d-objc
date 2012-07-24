@@ -110,7 +110,7 @@ extern char * JSPROXY_association_proxy_key;
  * will run the specified string
  * @param string The path of the script to be run
  */
--(BOOL) runScript:(NSString*)filename;
+-(JSBool) runScript:(NSString*)filename;
 
 @end
 
