@@ -220,7 +220,16 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 //		JS_SetPrivate(jsobj, self);
 		set_proxy_for_jsobject(self, _jsObj);
 
-		JS_AddNamedObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj, [[self description] UTF8String] );
+		// Can't use "[self description] since it returns an autorelease version. The string needs to be copied to an static location
+		const char *tmp= [[self description] UTF8String];
+		size_t len = strlen(tmp);
+		_description = (char*)malloc(len+1);
+		strncpy(_description, tmp, len);
+		
+		JSBool ok = JS_AddNamedObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj, _description  );
+		if( ! ok )
+			CCLOGWARN(@"Failed to add object to root");
+		
 	}
 	
 	return self;
@@ -232,8 +241,13 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	CCLOGINFO(@"spidermonkey: deallocing %@", self);
 
 	del_proxy_for_jsobject(_jsObj);
+	
+	if( _description )
+		free(_description);
 
-	JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
+	JSBool ok = JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
+	if( ! ok )
+		CCLOGWARN(@"Failed to removed object from root");
 
 	
 	[super dealloc];

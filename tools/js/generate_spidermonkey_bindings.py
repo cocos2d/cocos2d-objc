@@ -1240,8 +1240,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
 JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         template_init = '''
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
 	NSCAssert( proxy && %s[proxy realObj], @"Invalid Proxy object");
 '''
