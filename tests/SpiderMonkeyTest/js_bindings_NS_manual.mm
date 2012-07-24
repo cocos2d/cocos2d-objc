@@ -396,7 +396,7 @@ JSBool JSPROXY_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	
 	UITouch* real = (UITouch*) [proxy realObj];
 	
@@ -416,7 +416,7 @@ JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	
 	UITouch* real = (UITouch*) [proxy realObj];
 	UIView *view = [real view];
@@ -568,7 +568,7 @@ void JSPROXY_UIAccelerometer_finalize(JSContext *cx, JSObject *obj)
 // Arguments: 
 // Ret value: UIAccelerometer (o)
 JSBool JSPROXY_UIAccelerometer_sharedAccelerometer_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	UIAccelerometer* ret_val;
 	
 	ret_val = [UIAccelerometer sharedAccelerometer];
@@ -586,7 +586,7 @@ JSBool JSPROXY_UIAccelerometer_getUpdateInterval(JSContext *cx, uint32_t argc, j
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	
 	UIAccelerometer* real = (UIAccelerometer*) [proxy realObj];
 	
@@ -602,7 +602,7 @@ JSBool JSPROXY_UIAccelerometer_setUpdateInterval(JSContext *cx, uint32_t argc, j
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 1, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
 	
 	jsval *argvp = JS_ARGV(cx,vp);
 	double interval;
@@ -622,7 +622,7 @@ JSBool JSPROXY_UIAccelerometer_setDelegate(JSContext *cx, uint32_t argc, jsval *
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
 
 	UIAccelerometer* real = (UIAccelerometer*) [proxy realObj];
 

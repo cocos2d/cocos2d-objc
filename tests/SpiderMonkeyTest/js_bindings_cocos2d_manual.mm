@@ -18,7 +18,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 2, @"Invalid number of arguments. Expecting 2 args" );
+	JSB_PRECONDITION( argc == 2, "Invalid number of arguments. Expecting 2 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block js_func;
 	JSObject *js_this;
@@ -41,7 +41,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc ==1 || argc == 3, @"Invalid number of arguments. Expecting 1 or 3 args" );
+	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSString *normal;
@@ -74,7 +74,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc ==1 || argc == 3, @"Invalid number of arguments. Expecting 1 or 3 args" );
+	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *label;
@@ -107,7 +107,7 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc >=2 && argc <= 5, @"Invalid number of arguments. Expecting: 2 <= args <= 5" );
+	JSB_PRECONDITION( argc >=2 && argc <= 5, "Invalid number of arguments. Expecting: 2 <= args <= 5" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSString *normal, *selected, *disabled;
@@ -151,7 +151,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, @"Invalid number of arguments. 2 <= args <= 5 but not 3" );
+	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, "Invalid number of arguments. 2 <= args <= 5 but not 3" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	CCSprite *normal, *selected, *disabled;
@@ -193,7 +193,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 
 JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	JSB_PRECONDITION( argc == 2 || argc == 3,  @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 2 || argc == 3,  "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	js_block js_func;
@@ -233,7 +233,7 @@ JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 4, @"Invalid number of arguments. Expecting 4 args" );
+	JSB_PRECONDITION( argc == 4, "Invalid number of arguments. Expecting 4 args" );
 
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
