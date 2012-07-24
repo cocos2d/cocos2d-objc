@@ -170,12 +170,12 @@
 			}
 			else if(JSVAL_IS_DOUBLE(out))
 			{
-				string = [NSString stringWithFormat:@"Result(double): %d.\n", JSVAL_TO_DOUBLE(out)];
+				string = [NSString stringWithFormat:@"Result(double): %f.\n", JSVAL_TO_DOUBLE(out)];
 			}
 			else if(JSVAL_IS_STRING(out)) {
 				NSString *tmp;
 				jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out, &tmp );
-				string = [NSString stringWithFormat:@"Result(string): %d.\n", tmp];
+				string = [NSString stringWithFormat:@"Result(string): %@.\n", tmp];
 			}
 			else if (JSVAL_IS_VOID(out) )
 				string = @"Result(void):\n";
