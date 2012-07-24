@@ -238,7 +238,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
  */
 JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	ScriptingCore_dumpRoot(cx, 0, vp);
+//	ScriptingCore_dumpRoot(cx, 0, vp);
 	JS_GC(cx);
 	return JS_TRUE;
 };
@@ -465,7 +465,11 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
     if (script == NULL)
         return JS_FALSE;   /* compilation error */
 		
-    if (!JS_AddNamedScriptRoot(_cx, &script, [[NSString stringWithFormat:@"script %@", filename] UTF8String] ) )
+	const char * name = [[NSString stringWithFormat:@"script %@", filename] UTF8String];
+	char *static_name = (char*) malloc(strlen(name)+1);
+	strcpy(static_name, name );
+
+    if (!JS_AddNamedScriptRoot(_cx, &script, static_name ) )
         return JS_FALSE;
 	
 	jsval result;	
@@ -476,6 +480,8 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 	
 //    JS_RemoveScriptRoot(_cx, &script);  /* scriptObj becomes unreachable
 //										   and will eventually be collected. */
+//	free( static_name);
+
     return ok;
 }
 
