@@ -297,7 +297,7 @@
     [self setFirstFrameForNode:node sequenceProperty:seqProp tweenDuration:tweenDuration];
     
     NSArray* keyframes = [seqProp keyframes];
-    int numKeyframes = keyframes.count;
+    NSUInteger numKeyframes = keyframes.count;
     
     if (numKeyframes > 1)
     {

@@ -271,7 +271,7 @@ JSBool JSPROXY_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	
 	NSEvent* event = (NSEvent*) [proxy realObj];
 	
@@ -291,7 +291,7 @@ JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
-	JSB_PRECONDITION( argc == 0, @"Invalid number of arguments" );
+	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	
 	NSEvent* real = (NSEvent*) [proxy realObj];
 	CGFloat x = [real deltaX];
