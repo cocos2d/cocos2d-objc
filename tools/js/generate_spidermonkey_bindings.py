@@ -600,6 +600,13 @@ class SpiderMonkey(object):
                 return True
         return False
 
+    def requires_swizzle( self, class_name ):
+        if class_name in self.callback_methods:
+            for m in self.callback_methods[ class_name ]:
+                if not self.get_method_property( class_name, m, 'no_swizzle' ):
+                    return True
+        return False
+
     def get_method_property( self, class_name, method_name, prop ):
         try:
             return self.method_properties[ class_name ][ method_name ][ prop ]
@@ -1598,7 +1605,6 @@ extern JSClass *%s_class;
 	}
 }
 '''
-
         if class_name in self.callback_methods:
             self.mm_file.write(  template_prefix % ( class_name, class_name ) )
             for m in self.callback_methods[ class_name ]:
@@ -1640,7 +1646,8 @@ extern JSClass *%s_class;
 
         self.mm_file.write( create_object_template_suffix )
 
-        self.generate_implementation_swizzle( class_name )
+        if self.requires_swizzle( class_name ):
+            self.generate_implementation_swizzle( class_name )
 
         self.generate_implementation_callback( class_name )
 

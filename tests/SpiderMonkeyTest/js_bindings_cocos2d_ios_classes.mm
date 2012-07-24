@@ -1509,18 +1509,6 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 	return jsobj;
 }
 
-+(void) swizzleMethods
-{
-	[super swizzleMethods];
-
-	static BOOL CCLayer_already_swizzled = NO;
-	if( ! CCLayer_already_swizzled ) {
-		NSError *error;
-
-		CCLayer_already_swizzled = YES;
-	}
-}
-
 -(void) ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent*)event 
 {
 	if (_jsObj) {
