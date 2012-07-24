@@ -167,8 +167,6 @@ var SpriteProgressToRadial = BaseLayer.extend({
         var right = cc.ProgressTimer.create(cc.Sprite.create(s_pathBlock));
         right.setType(cc.PROGRESS_TIMER_TYPE_RADIAL);
 
-        // XXX-riq      cocos2d-html5 changed the API ??
-//        right.setReverseProgress(true); 
         right.setReverseDirection(true);
 
         this.addChild(right);
