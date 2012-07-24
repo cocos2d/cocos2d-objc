@@ -220,16 +220,7 @@ JSBool ScriptingCore_removeRootJS(JSContext *cx, uint32_t argc, jsval *vp)
 };
 
 /*
- * Force a cycle of GC
- */
-JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
-{
-	JS_GC(cx);
-	return JS_TRUE;
-};
-
-/*
- * Force a cycle of GC
+ * Dumps GC
  */
 static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void *data)
 {
@@ -237,10 +228,21 @@ static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void
 }
 JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
-//	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
-//	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
+	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 	return JS_TRUE;
 };
+
+/*
+ * Force a cycle of GC
+ */
+JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	ScriptingCore_dumpRoot(cx, 0, vp);
+	JS_GC(cx);
+	return JS_TRUE;
+};
+
 
 
 @implementation ScriptingCore
@@ -461,10 +463,10 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 	script = JS_CompileUTF8File(_cx, _object, [fullpath UTF8String] );
 
     if (script == NULL)
-        return NO;   /* compilation error */
+        return JS_FALSE;   /* compilation error */
 		
-    if (!JS_AddNamedScriptRoot(_cx, &script, "compiled script"))
-        return NO;
+    if (!JS_AddNamedScriptRoot(_cx, &script, [[NSString stringWithFormat:@"script %@", filename] UTF8String] ) )
+        return JS_FALSE;
 	
 	jsval result;	
 	ok = JS_ExecuteScript(_cx, _object, script, &result);

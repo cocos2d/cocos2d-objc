@@ -30,6 +30,7 @@
 	JSObject	*_jsObj;
 	id			_realObj;  // weak ref
 	Class		_klass;
+	char		*_description;
 }
 
 @property (nonatomic, readwrite, assign) JSObject *jsObj;
