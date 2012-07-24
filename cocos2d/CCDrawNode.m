@@ -103,7 +103,8 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	GLuint _vao;
 	GLuint _vbo;
 	
-	NSUInteger _bufferCapacity, _bufferCount;
+	NSUInteger _bufferCapacity;
+	GLsizei _bufferCount;
 	Vertex *_buffer;
 }
 
