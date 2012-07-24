@@ -6170,8 +6170,8 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				A0DA0BC615BCDCAE00E80A92 /* Draw Nodes */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
+				A0DA0BC615BCDCAE00E80A92 /* Draw Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
 				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
@@ -6198,8 +6198,6 @@
 				509E665D0E06CD940050992C /* CCCamera.m */,
 				E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */,
 				503862D911007181005D2C92 /* CCConfiguration.m */,
-				50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */,
-				50B2CCC30E119B8E00AE9530 /* CCDrawingPrimitives.m */,
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
 				5066020F0E38A70D000B500E /* CCScheduler.h */,
 				506602100E38A70D000B500E /* CCScheduler.m */,
@@ -7713,6 +7711,8 @@
 			children = (
 				A0DA0BC115BCDCA200E80A92 /* CCDrawNode.h */,
 				A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */,
+				50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */,
+				50B2CCC30E119B8E00AE9530 /* CCDrawingPrimitives.m */,
 			);
 			name = "Draw Nodes";
 			sourceTree = "<group>";
