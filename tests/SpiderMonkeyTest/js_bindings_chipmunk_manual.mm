@@ -37,7 +37,7 @@ struct collision_handler {
 	jsval				pre;
 	jsval				post;
 	jsval				separate;
-	JSObject			*this;
+	JSObject			*jsthis;
 	JSContext			*cx;
 
 	unsigned long		hash_key;
@@ -66,7 +66,7 @@ static cpBool myCollisionBegin(cpArbiter *arb, cpSpace *space, void *data)
 	args[1] = opaque_to_jsval( handler->cx, space );
 	
 	jsval rval;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->begin, 2, args, &rval);
+	JS_CallFunctionValue( handler->cx, handler->jsthis, handler->begin, 2, args, &rval);
 	
 	if( JSVAL_IS_BOOLEAN(rval) ) {
 		JSBool ret = JSVAL_TO_BOOLEAN(rval);
@@ -84,7 +84,7 @@ static cpBool myCollisionPre(cpArbiter *arb, cpSpace *space, void *data)
 	args[1] = opaque_to_jsval( handler->cx, space );
 	
 	jsval rval;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->pre, 2, args, &rval);
+	JS_CallFunctionValue( handler->cx, handler->jsthis, handler->pre, 2, args, &rval);
 	
 	if( JSVAL_IS_BOOLEAN(rval) ) {
 		JSBool ret = JSVAL_TO_BOOLEAN(rval);
@@ -102,7 +102,7 @@ static void myCollisionPost(cpArbiter *arb, cpSpace *space, void *data)
 	args[1] = opaque_to_jsval( handler->cx, space );
 	
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->post, 2, args, &ignore);
+	JS_CallFunctionValue( handler->cx, handler->jsthis, handler->post, 2, args, &ignore);
 }
 
 static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
@@ -114,7 +114,7 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 	args[1] = opaque_to_jsval( handler->cx, space );
 	
 	jsval ignore;
-	JS_CallFunctionValue( handler->cx, handler->this, handler->separate, 2, args, &ignore);
+	JS_CallFunctionValue( handler->cx, handler->jsthis, handler->separate, 2, args, &ignore);
 }
 
 JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
@@ -123,7 +123,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 
 	jsval *argvp = JS_ARGV(cx,vp);
 
-	struct collision_handler *handler = malloc( sizeof(*handler) );
+	struct collision_handler *handler = (struct collision_handler*) malloc( sizeof(*handler) );
 	if( ! handler )
 		return JS_FALSE;
 	
@@ -136,7 +136,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	ok &= jsval_to_int(cx, *argvp++, (int32_t*) &handler->typeB );
 	
 
-	ok &= JS_ValueToObject(cx, *argvp++, &handler->this );
+	ok &= JS_ValueToObject(cx, *argvp++, &handler->jsthis );
 
 	handler->begin =  *argvp++;
 	handler->pre = *argvp++;
@@ -217,7 +217,7 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 	jsval *argvp = JS_ARGV(cx,vp);
 	
 	cpArbiter* arbiter;
-	if( ! jsval_to_opaque( cx, *argvp++, (void*)&arbiter ) )
+	if( ! jsval_to_opaque( cx, *argvp++, (void**)&arbiter ) )
 		return JS_FALSE;
 
 	cpBody *bodyA;

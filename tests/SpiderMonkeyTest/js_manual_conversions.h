@@ -29,10 +29,6 @@
 #import "cocos2d.h"
 #endif
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef void (^js_block)(id sender);
 	
 /** Creates a JSObject, a ProxyObject and associates them with the real object */
@@ -70,7 +66,7 @@ JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ou
 /** converts a jsval to a block (2 == receives 2 argument (sender + custom) ) */
 JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, js_block *out  );
 
-	
+
 jsval int_to_jsval( JSContext *cx, int l);
 jsval long_to_jsval( JSContext *cx, long l);
 jsval longlong_to_jsval( JSContext *cx, long long l);
@@ -92,9 +88,5 @@ jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
 #endif // JSB_USE_CHIPMUNK
 
 	
-#ifdef __cplusplus
-}
-#endif
-
 #define cpVect_to_jsval CGPoint_to_jsval
 #define jsval_to_cpVect jsval_to_CGPoint
