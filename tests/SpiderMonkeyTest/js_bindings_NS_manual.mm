@@ -224,7 +224,7 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 		const char *tmp= [[self description] UTF8String];
 		size_t len = strlen(tmp);
 		_description = (char*)malloc(len+1);
-		strncpy(_description, tmp, len);
+		strcpy(_description, tmp );
 		
 		JSBool ok = JS_AddNamedObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj, _description  );
 		if( ! ok )
