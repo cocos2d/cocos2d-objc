@@ -7,7 +7,7 @@
 #import "cocos2d.h"
 
 // local import
-#import "JavascriptSpidermonkey.h"
+#import "AppController.h"
 #import "ScriptingCore.h"
 #import "js_manual_conversions.h"
 

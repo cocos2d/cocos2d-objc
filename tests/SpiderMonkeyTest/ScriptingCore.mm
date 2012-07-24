@@ -513,7 +513,7 @@ void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
 	
 //	printf("Setting proxy for: %p - %p (%s)\n", obj, proxy, [[proxy description] UTF8String] );
 	
-	tHashJSObject *element = malloc( sizeof( *element ) );
+	tHashJSObject *element = (tHashJSObject*) malloc( sizeof( *element ) );
 
 	// XXX: Do not retain it here.
 //	[proxy retain];
