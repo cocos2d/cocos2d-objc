@@ -825,8 +825,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string></string>
+									<string>labels.plist</string>
+									<string>button_options_selected.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -977,8 +977,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string></string>
+									<string>labels.plist</string>
+									<string>button_about_selected.png</string>
 								</array>
 							</dict>
 							<dict>
@@ -1129,8 +1129,8 @@
 								<string>SpriteFrame</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<string></string>
+									<string>labels.plist</string>
+									<string>button_play_selected.png</string>
 								</array>
 							</dict>
 							<dict>

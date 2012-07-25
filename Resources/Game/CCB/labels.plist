@@ -7,7 +7,7 @@
             <key>button_about_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,32},{82,28}}</string>
+                <string>{{2,92},{82,28}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
@@ -17,10 +17,23 @@
                 <key>sourceSize</key>
                 <string>{128,32}</string>
             </dict>
+            <key>button_about_selected.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,62},{82,28}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{24,2},{82,28}}</string>
+                <key>sourceSize</key>
+                <string>{128,32}</string>
+            </dict>
             <key>button_options_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{102,28}}</string>
+                <string>{{2,32},{102,28}}</string>
                 <key>offset</key>
                 <string>{0,1}</string>
                 <key>rotated</key>
@@ -30,16 +43,42 @@
                 <key>sourceSize</key>
                 <string>{128,32}</string>
             </dict>
+            <key>button_options_selected.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{104,28}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{13,2},{104,28}}</string>
+                <key>sourceSize</key>
+                <string>{128,32}</string>
+            </dict>
             <key>button_play_normal.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,62},{66,28}}</string>
+                <string>{{2,152},{66,28}}</string>
                 <key>offset</key>
                 <string>{-1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
                 <string>{{30,1},{66,28}}</string>
+                <key>sourceSize</key>
+                <string>{128,32}</string>
+            </dict>
+            <key>button_play_selected.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,122},{66,28}}</string>
+                <key>offset</key>
+                <string>{1,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{32,2},{66,28}}</string>
                 <key>sourceSize</key>
                 <string>{128,32}</string>
             </dict>
@@ -51,9 +90,9 @@
             <key>realTextureFileName</key>
             <string>labels.pvr.gz</string>
             <key>size</key>
-            <string>{128,128}</string>
+            <string>{128,256}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:90148cc32589ecb6e68e11bc772fc33f$</string>
+            <string>$TexturePacker:SmartUpdate:101602364defa93017595ecf32d95c5f$</string>
             <key>textureFileName</key>
             <string>labels.pvr.gz</string>
         </dict>
