@@ -286,6 +286,10 @@
 		A009FB8F150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */; };
 		A009FB90150EC87500897349 /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB81150EC87500897349 /* ccShaders.h */; };
 		A009FB91150EC87600897349 /* ccShaders.m in Sources */ = {isa = PBXBuildFile; fileRef = A009FB82150EC87500897349 /* ccShaders.m */; };
+		A012B0BE15C09F3F0041E364 /* coins.plist in Resources */ = {isa = PBXBuildFile; fileRef = A012B0BA15C09F3F0041E364 /* coins.plist */; };
+		A012B0BF15C09F3F0041E364 /* coins.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A012B0BB15C09F3F0041E364 /* coins.pvr.ccz */; };
+		A012B0C015C09F3F0041E364 /* labels-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = A012B0BC15C09F3F0041E364 /* labels-ipad.plist */; };
+		A012B0C115C09F3F0041E364 /* labels-ipad.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A012B0BD15C09F3F0041E364 /* labels-ipad.pvr.gz */; };
 		A0137E9915ACE678000AA1C2 /* 808_120bpm.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */; };
 		A0137E9A15ACE678000AA1C2 /* ballbounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8B15ACE678000AA1C2 /* ballbounce.wav */; };
 		A0137E9B15ACE678000AA1C2 /* cowbell.wav in Resources */ = {isa = PBXBuildFile; fileRef = A0137E8C15ACE678000AA1C2 /* cowbell.wav */; };
@@ -316,7 +320,6 @@
 		A03A1CBC14F5B3F00019B6F3 /* helvetica-geneva-32.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */; };
 		A03A1D1914F5DF490019B6F3 /* arial-unicode-26.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D1714F5DF490019B6F3 /* arial-unicode-26.fnt */; };
 		A03A1D1A14F5DF490019B6F3 /* arial-unicode-26.png in Resources */ = {isa = PBXBuildFile; fileRef = A03A1D1814F5DF490019B6F3 /* arial-unicode-26.png */; };
-		A04298F015B9D11A00509473 /* coins.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = A04298EF15B9D11A00509473 /* coins.pvr.ccz */; };
 		A042990615B9E0BE00509473 /* Gas40.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042990415B9E0BE00509473 /* Gas40.fnt */; };
 		A042990715B9E0BE00509473 /* Gas40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042990515B9E0BE00509473 /* Gas40.png */; };
 		A042991815B9F97600509473 /* Gas40-ipad.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A042991415B9F97600509473 /* Gas40-ipad.fnt */; };
@@ -1030,7 +1033,6 @@
 		A0644A9415B61A8F004AB807 /* MainMenu.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0644A9315B61A8F004AB807 /* MainMenu.ccbi */; };
 		A0644ADF15B62314004AB807 /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0644ADE15B62314004AB807 /* js_bindings_CocosBuilderReader_manual.mm */; };
 		A0644B9915B75EBD004AB807 /* coins_animation.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0644B9615B75EBD004AB807 /* coins_animation.plist */; };
-		A0644B9A15B75EBD004AB807 /* coins.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0644B9715B75EBD004AB807 /* coins.plist */; };
 		A07273DD155B23A8003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273DE155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */; };
 		A07273DF155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */; };
@@ -5882,6 +5884,10 @@
 		A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		A009FB81150EC87500897349 /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A009FB82150EC87500897349 /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
+		A012B0BA15C09F3F0041E364 /* coins.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coins.plist; sourceTree = "<group>"; };
+		A012B0BB15C09F3F0041E364 /* coins.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = coins.pvr.ccz; sourceTree = "<group>"; };
+		A012B0BC15C09F3F0041E364 /* labels-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "labels-ipad.plist"; sourceTree = "<group>"; };
+		A012B0BD15C09F3F0041E364 /* labels-ipad.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "labels-ipad.pvr.gz"; sourceTree = "<group>"; };
 		A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 808_120bpm.wav; path = TestsAndDemos/DrumPad/Sounds/808_120bpm.wav; sourceTree = "<group>"; };
 		A0137E8B15ACE678000AA1C2 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ballbounce.wav; path = TestsAndDemos/DrumPad/Sounds/ballbounce.wav; sourceTree = "<group>"; };
 		A0137E8C15ACE678000AA1C2 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cowbell.wav; path = TestsAndDemos/DrumPad/Sounds/cowbell.wav; sourceTree = "<group>"; };
@@ -5921,7 +5927,6 @@
 		A03A1CB914F5B3F00019B6F3 /* helvetica-geneva-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "helvetica-geneva-32.png"; sourceTree = "<group>"; };
 		A03A1D1714F5DF490019B6F3 /* arial-unicode-26.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-unicode-26.fnt"; sourceTree = "<group>"; };
 		A03A1D1814F5DF490019B6F3 /* arial-unicode-26.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arial-unicode-26.png"; sourceTree = "<group>"; };
-		A04298EF15B9D11A00509473 /* coins.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = coins.pvr.ccz; sourceTree = "<group>"; };
 		A042990415B9E0BE00509473 /* Gas40.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Gas40.fnt; sourceTree = "<group>"; };
 		A042990515B9E0BE00509473 /* Gas40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Gas40.png; sourceTree = "<group>"; };
 		A042991415B9F97600509473 /* Gas40-ipad.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Gas40-ipad.fnt"; sourceTree = "<group>"; };
@@ -6153,7 +6158,6 @@
 		A0644A9315B61A8F004AB807 /* MainMenu.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = MainMenu.ccbi; sourceTree = "<group>"; };
 		A0644ADE15B62314004AB807 /* js_bindings_CocosBuilderReader_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosBuilderReader_manual.mm; sourceTree = "<group>"; };
 		A0644B9615B75EBD004AB807 /* coins_animation.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coins_animation.plist; sourceTree = "<group>"; };
-		A0644B9715B75EBD004AB807 /* coins.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = coins.plist; sourceTree = "<group>"; };
 		A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
 		A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba4444.pvr.gz; sourceTree = "<group>"; };
@@ -7759,6 +7763,10 @@
 		A0644A8215B6161A004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
+				A012B0BA15C09F3F0041E364 /* coins.plist */,
+				A012B0BB15C09F3F0041E364 /* coins.pvr.ccz */,
+				A012B0BC15C09F3F0041E364 /* labels-ipad.plist */,
+				A012B0BD15C09F3F0041E364 /* labels-ipad.pvr.gz */,
 				A042993015B9FCE500509473 /* Abadi40-ipad.fnt */,
 				A042993115B9FCE500509473 /* Abadi40-ipad.png */,
 				A042993215B9FCE500509473 /* Abadi40.fnt */,
@@ -8079,8 +8087,6 @@
 			children = (
 				A0644A8215B6161A004AB807 /* CCB */,
 				A0644B9615B75EBD004AB807 /* coins_animation.plist */,
-				A0644B9715B75EBD004AB807 /* coins.plist */,
-				A04298EF15B9D11A00509473 /* coins.pvr.ccz */,
 				A042995315BA487300509473 /* Parallax.png */,
 				A042994B15BA41C700509473 /* LevelComplete.wav */,
 				A042994415BA013D00509473 /* GameOver.wav */,
@@ -11555,11 +11561,9 @@
 				A0644A9215B6161A004AB807 /* stars2.png in Resources */,
 				A0644A9415B61A8F004AB807 /* MainMenu.ccbi in Resources */,
 				A0644B9915B75EBD004AB807 /* coins_animation.plist in Resources */,
-				A0644B9A15B75EBD004AB807 /* coins.plist in Resources */,
 				A091134015B796D0006DD5AA /* pickup_coin.wav in Resources */,
 				A091134115B796D0006DD5AA /* pickup_star.wav in Resources */,
 				A091136515B7C8CA006DD5AA /* HUD.ccbi in Resources */,
-				A04298F015B9D11A00509473 /* coins.pvr.ccz in Resources */,
 				A042990615B9E0BE00509473 /* Gas40.fnt in Resources */,
 				A042990715B9E0BE00509473 /* Gas40.png in Resources */,
 				A042991815B9F97600509473 /* Gas40-ipad.fnt in Resources */,
@@ -11576,6 +11580,10 @@
 				A0CFE6A015BF592400264229 /* js.msg in Resources */,
 				A0CFE6A115BF592400264229 /* jsatom.tbl in Resources */,
 				A0CFE6A215BF592400264229 /* jsproto.tbl in Resources */,
+				A012B0BE15C09F3F0041E364 /* coins.plist in Resources */,
+				A012B0BF15C09F3F0041E364 /* coins.pvr.ccz in Resources */,
+				A012B0C015C09F3F0041E364 /* labels-ipad.plist in Resources */,
+				A012B0C115C09F3F0041E364 /* labels-ipad.pvr.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
