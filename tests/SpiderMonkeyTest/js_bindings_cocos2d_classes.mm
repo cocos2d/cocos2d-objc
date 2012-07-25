@@ -7,7 +7,7 @@
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
 
-#import "jstypedarray.h"
+#import "jsfriendapi.h"
 #import "js_bindings_config.h"
 #import "ScriptingCore.h"
 
@@ -31,7 +31,7 @@ JSBool JSPROXY_CCNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCNode)", obj);
 }
@@ -524,8 +524,8 @@ JSBool JSPROXY_CCNode_nodeToParentTransform(JSContext *cx, uint32_t argc, jsval 
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real nodeToParentTransform ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 6 );
-	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 6 );
+	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -546,8 +546,8 @@ JSBool JSPROXY_CCNode_nodeToWorldTransform(JSContext *cx, uint32_t argc, jsval *
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real nodeToWorldTransform ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 6 );
-	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 6 );
+	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -622,8 +622,8 @@ JSBool JSPROXY_CCNode_parentToNodeTransform(JSContext *cx, uint32_t argc, jsval 
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real parentToNodeTransform ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 6 );
-	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 6 );
+	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -1784,8 +1784,8 @@ JSBool JSPROXY_CCNode_worldToNodeTransform(JSContext *cx, uint32_t argc, jsval *
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real worldToNodeTransform ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 6 );
-	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 6 );
+	CGAffineTransform* buffer = (CGAffineTransform*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2116,7 +2116,7 @@ JSBool JSPROXY_CCParticleSystem_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCParticleSystem_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSystem_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSystem)", obj);
 }
@@ -2257,8 +2257,8 @@ JSBool JSPROXY_CCParticleSystem_blendFunc(JSContext *cx, uint32_t argc, jsval *v
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2347,8 +2347,8 @@ JSBool JSPROXY_CCParticleSystem_endColor(JSContext *cx, uint32_t argc, jsval *vp
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real endColor ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
-	ccColor4F* buffer = (ccColor4F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 4 );
+	ccColor4F* buffer = (ccColor4F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2369,8 +2369,8 @@ JSBool JSPROXY_CCParticleSystem_endColorVar(JSContext *cx, uint32_t argc, jsval 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real endColorVar ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
-	ccColor4F* buffer = (ccColor4F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 4 );
+	ccColor4F* buffer = (ccColor4F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2944,7 +2944,7 @@ JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsva
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
@@ -3035,7 +3035,7 @@ JSBool JSPROXY_CCParticleSystem_setEndColor_(JSContext *cx, uint32_t argc, jsval
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
@@ -3060,7 +3060,7 @@ JSBool JSPROXY_CCParticleSystem_setEndColorVar_(JSContext *cx, uint32_t argc, js
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
@@ -3503,7 +3503,7 @@ JSBool JSPROXY_CCParticleSystem_setStartColor_(JSContext *cx, uint32_t argc, jsv
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
@@ -3528,7 +3528,7 @@ JSBool JSPROXY_CCParticleSystem_setStartColorVar_(JSContext *cx, uint32_t argc, 
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
@@ -3825,8 +3825,8 @@ JSBool JSPROXY_CCParticleSystem_startColor(JSContext *cx, uint32_t argc, jsval *
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real startColor ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
-	ccColor4F* buffer = (ccColor4F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 4 );
+	ccColor4F* buffer = (ccColor4F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -3847,8 +3847,8 @@ JSBool JSPROXY_CCParticleSystem_startColorVar(JSContext *cx, uint32_t argc, jsva
 	CCParticleSystem *real = (CCParticleSystem*) [proxy realObj];
 	ret_val = [real startColorVar ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 4 );
-	ccColor4F* buffer = (ccColor4F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 4 );
+	ccColor4F* buffer = (ccColor4F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -4259,7 +4259,7 @@ JSBool JSPROXY_CCParticleSystemQuad_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCParticleSystemQuad_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSystemQuad_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSystemQuad)", obj);
 }
@@ -4472,7 +4472,7 @@ JSBool JSPROXY_CCParticleMeteor_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCParticleMeteor_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleMeteor_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleMeteor)", obj);
 }
@@ -4619,7 +4619,7 @@ JSBool JSPROXY_CCMenuItem_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCMenuItem_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItem_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItem)", obj);
 }
@@ -4900,7 +4900,7 @@ JSBool JSPROXY_CCMenuItemLabel_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCMenuItemLabel_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemLabel_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemLabel)", obj);
 }
@@ -4919,8 +4919,8 @@ JSBool JSPROXY_CCMenuItemLabel_disabledColor(JSContext *cx, uint32_t argc, jsval
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	ret_val = [real disabledColor ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -4990,7 +4990,7 @@ JSBool JSPROXY_CCMenuItemLabel_setDisabledColor_(JSContext *cx, uint32_t argc, j
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
@@ -5079,8 +5079,8 @@ JSBool JSPROXY_CCMenuItemLabel_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -5137,7 +5137,7 @@ JSBool JSPROXY_CCMenuItemLabel_setColor_(JSContext *cx, uint32_t argc, jsval *vp
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemLabel *real = (CCMenuItemLabel*) [proxy realObj];
@@ -5304,7 +5304,7 @@ JSBool JSPROXY_CCMenuItemAtlasFont_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCMenuItemAtlasFont_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemAtlasFont_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemAtlasFont)", obj);
 }
@@ -5535,7 +5535,7 @@ JSBool JSPROXY_CCAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAction)", obj);
 }
@@ -5785,7 +5785,7 @@ JSBool JSPROXY_CCFiniteTimeAction_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCFiniteTimeAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFiniteTimeAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFiniteTimeAction)", obj);
 }
@@ -5931,7 +5931,7 @@ JSBool JSPROXY_CCActionInterval_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCActionInterval_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionInterval_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionInterval)", obj);
 }
@@ -6120,7 +6120,7 @@ JSBool JSPROXY_CCProgressFromTo_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCProgressFromTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCProgressFromTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressFromTo)", obj);
 }
@@ -6277,7 +6277,7 @@ JSBool JSPROXY_CCTMXObjectGroup_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCTMXObjectGroup_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXObjectGroup_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXObjectGroup)", obj);
 }
@@ -6478,7 +6478,7 @@ JSBool JSPROXY_CCMoveTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCMoveTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMoveTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMoveTo)", obj);
 }
@@ -6633,7 +6633,7 @@ JSBool JSPROXY_CCMoveBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCMoveBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMoveBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMoveBy)", obj);
 }
@@ -6788,7 +6788,7 @@ JSBool JSPROXY_CCCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCCamera_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCamera_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCamera)", obj);
 }
@@ -7019,7 +7019,7 @@ JSBool JSPROXY_CCReverseTime_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCReverseTime_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCReverseTime_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCReverseTime)", obj);
 }
@@ -7172,7 +7172,7 @@ JSBool JSPROXY_CCSprite_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSprite_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSprite)", obj);
 }
@@ -7228,8 +7228,8 @@ JSBool JSPROXY_CCSprite_blendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -7250,8 +7250,8 @@ JSBool JSPROXY_CCSprite_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCSprite *real = (CCSprite*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -7635,7 +7635,7 @@ JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -7660,7 +7660,7 @@ JSBool JSPROXY_CCSprite_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCSprite *real = (CCSprite*) [proxy realObj];
@@ -8239,7 +8239,7 @@ JSBool JSPROXY_ChipmunkSprite_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_ChipmunkSprite_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_ChipmunkSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (ChipmunkSprite)", obj);
 }
@@ -8482,7 +8482,7 @@ JSBool JSPROXY_CCActionEase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCActionEase_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionEase_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionEase)", obj);
 }
@@ -8635,7 +8635,7 @@ JSBool JSPROXY_CCEaseElastic_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCEaseElastic_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseElastic_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseElastic)", obj);
 }
@@ -8841,7 +8841,7 @@ JSBool JSPROXY_CCEaseElasticOut_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCEaseElasticOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseElasticOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseElasticOut)", obj);
 }
@@ -9001,7 +9001,7 @@ JSBool JSPROXY_CCProgressTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCProgressTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCProgressTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressTo)", obj);
 }
@@ -9156,7 +9156,7 @@ JSBool JSPROXY_CCScene_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCScene_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCScene_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScene)", obj);
 }
@@ -9261,7 +9261,7 @@ JSBool JSPROXY_CCActionInstant_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCActionInstant_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionInstant_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionInstant)", obj);
 }
@@ -9366,7 +9366,7 @@ JSBool JSPROXY_CCFlipX_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFlipX_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFlipX_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX)", obj);
 }
@@ -9498,7 +9498,7 @@ JSBool JSPROXY_CCFlipY_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFlipY_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFlipY_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipY)", obj);
 }
@@ -9630,7 +9630,7 @@ JSBool JSPROXY_CCGridAction_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCGridAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGridAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGridAction)", obj);
 }
@@ -9850,7 +9850,7 @@ JSBool JSPROXY_CCTiledGrid3DAction_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCTiledGrid3DAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTiledGrid3DAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTiledGrid3DAction)", obj);
 }
@@ -9977,7 +9977,7 @@ JSBool JSPROXY_CCShakyTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCShakyTiles3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShakyTiles3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShakyTiles3D)", obj);
 }
@@ -10158,7 +10158,7 @@ JSBool JSPROXY_CCJumpBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCJumpBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCJumpBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpBy)", obj);
 }
@@ -10317,7 +10317,7 @@ JSBool JSPROXY_CCLabelTTF_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLabelTTF_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLabelTTF_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelTTF)", obj);
 }
@@ -11068,7 +11068,7 @@ JSBool JSPROXY_CCTransitionScene_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCTransitionScene_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionScene_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionScene)", obj);
 }
@@ -11236,7 +11236,7 @@ JSBool JSPROXY_CCTransitionProgress_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgress_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgress_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgress)", obj);
 }
@@ -11369,7 +11369,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCCW_constructor(JSContext *cx, uint32_t
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressRadialCCW_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressRadialCCW_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressRadialCCW)", obj);
 }
@@ -11502,7 +11502,7 @@ JSBool JSPROXY_CCShaderCache_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCShaderCache_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShaderCache_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShaderCache)", obj);
 }
@@ -11665,7 +11665,7 @@ JSBool JSPROXY_CCTransitionFadeTR_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCTransitionFadeTR_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFadeTR_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFadeTR)", obj);
 }
@@ -11825,7 +11825,7 @@ JSBool JSPROXY_CCEaseBackOut_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCEaseBackOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBackOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBackOut)", obj);
 }
@@ -11974,7 +11974,7 @@ JSBool JSPROXY_CCTransitionSceneOriented_constructor(JSContext *cx, uint32_t arg
 }
 
 // Destructor
-void JSPROXY_CCTransitionSceneOriented_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSceneOriented_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSceneOriented)", obj);
 }
@@ -12132,7 +12132,7 @@ JSBool JSPROXY_CCScaleTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCScaleTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCScaleTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScaleTo)", obj);
 }
@@ -12327,7 +12327,7 @@ JSBool JSPROXY_CCScaleBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCScaleBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCScaleBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScaleBy)", obj);
 }
@@ -12488,7 +12488,7 @@ JSBool JSPROXY_CCTransitionPageTurn_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionPageTurn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionPageTurn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionPageTurn)", obj);
 }
@@ -12661,7 +12661,7 @@ JSBool JSPROXY_CCTransitionRotoZoom_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionRotoZoom_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionRotoZoom_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionRotoZoom)", obj);
 }
@@ -12788,7 +12788,7 @@ JSBool JSPROXY_CCTransitionFadeDown_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionFadeDown_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFadeDown_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFadeDown)", obj);
 }
@@ -12921,7 +12921,7 @@ JSBool JSPROXY_CCDelayTime_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCDelayTime_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDelayTime_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDelayTime)", obj);
 }
@@ -13049,7 +13049,7 @@ JSBool JSPROXY_CCEaseRateAction_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCEaseRateAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseRateAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseRateAction)", obj);
 }
@@ -13266,7 +13266,7 @@ JSBool JSPROXY_CCEaseInOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseInOut)", obj);
 }
@@ -13437,7 +13437,7 @@ JSBool JSPROXY_CCTransitionSplitCols_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCTransitionSplitCols_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSplitCols_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSplitCols)", obj);
 }
@@ -13591,7 +13591,7 @@ JSBool JSPROXY_CCCardinalSplineTo_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCCardinalSplineTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCardinalSplineTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCardinalSplineTo)", obj);
 }
@@ -13792,7 +13792,7 @@ JSBool JSPROXY_CCCardinalSplineBy_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCCardinalSplineBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCardinalSplineBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCardinalSplineBy)", obj);
 }
@@ -13943,7 +13943,7 @@ JSBool JSPROXY_CCCatmullRomBy_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCCatmullRomBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCatmullRomBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCatmullRomBy)", obj);
 }
@@ -14121,7 +14121,7 @@ JSBool JSPROXY_CCTransitionFlipAngular_constructor(JSContext *cx, uint32_t argc,
 }
 
 // Destructor
-void JSPROXY_CCTransitionFlipAngular_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFlipAngular_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFlipAngular)", obj);
 }
@@ -14271,7 +14271,7 @@ JSBool JSPROXY_CCHide_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCHide_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCHide_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCHide)", obj);
 }
@@ -14378,7 +14378,7 @@ JSBool JSPROXY_CCEaseBackIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseBackIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBackIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBackIn)", obj);
 }
@@ -14527,7 +14527,7 @@ JSBool JSPROXY_CCSpriteBatchNode_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCSpriteBatchNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpriteBatchNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteBatchNode)", obj);
 }
@@ -14677,8 +14677,8 @@ JSBool JSPROXY_CCSpriteBatchNode_blendFunc(JSContext *cx, uint32_t argc, jsval *
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -14928,7 +14928,7 @@ JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsv
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCSpriteBatchNode *real = (CCSpriteBatchNode*) [proxy realObj];
@@ -15121,7 +15121,7 @@ JSBool JSPROXY_CCTMXLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTMXLayer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXLayer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXLayer)", obj);
 }
@@ -15813,7 +15813,7 @@ JSBool JSPROXY_CCTexture2D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTexture2D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTexture2D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTexture2D)", obj);
 }
@@ -16485,7 +16485,7 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_constructor(JSContext *cx, uint32_t argc, 
 }
 
 // Destructor
-void JSPROXY_CCAccelDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAccelDeccelAmplitude_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAccelDeccelAmplitude)", obj);
 }
@@ -16681,7 +16681,7 @@ JSBool JSPROXY_CCJumpTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCJumpTiles3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCJumpTiles3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpTiles3D)", obj);
 }
@@ -16944,7 +16944,7 @@ JSBool JSPROXY_CCGrid3DAction_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCGrid3DAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGrid3DAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrid3DAction)", obj);
 }
@@ -16969,8 +16969,8 @@ JSBool JSPROXY_CCGrid3DAction_originalVertex_(JSContext *cx, uint32_t argc, jsva
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
 	ret_val = [real originalVertex:(ccGridSize)arg0  ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
-	ccVertex3F* buffer = (ccVertex3F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 3 );
+	ccVertex3F* buffer = (ccVertex3F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -16994,7 +16994,7 @@ JSBool JSPROXY_CCGrid3DAction_setVertex_vertex_(JSContext *cx, uint32_t argc, js
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccVertex3F*)JS_GetTypedArrayData( tmp_arg1);
+	arg1 = *(ccVertex3F*)JS_GetArrayBufferViewData( tmp_arg1, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
@@ -17023,8 +17023,8 @@ JSBool JSPROXY_CCGrid3DAction_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGrid3DAction *real = (CCGrid3DAction*) [proxy realObj];
 	ret_val = [real vertex:(ccGridSize)arg0  ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
-	ccVertex3F* buffer = (ccVertex3F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 3 );
+	ccVertex3F* buffer = (ccVertex3F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -17156,7 +17156,7 @@ JSBool JSPROXY_CCMenuItemSprite_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCMenuItemSprite_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemSprite_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemSprite)", obj);
 }
@@ -17351,8 +17351,8 @@ JSBool JSPROXY_CCMenuItemSprite_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -17409,7 +17409,7 @@ JSBool JSPROXY_CCMenuItemSprite_setColor_(JSContext *cx, uint32_t argc, jsval *v
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemSprite *real = (CCMenuItemSprite*) [proxy realObj];
@@ -17577,7 +17577,7 @@ JSBool JSPROXY_CCMenuItemImage_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCMenuItemImage_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemImage_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemImage)", obj);
 }
@@ -17896,7 +17896,7 @@ JSBool JSPROXY_CCParticleBatchNode_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCParticleBatchNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleBatchNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleBatchNode)", obj);
 }
@@ -18021,8 +18021,8 @@ JSBool JSPROXY_CCParticleBatchNode_blendFunc(JSContext *cx, uint32_t argc, jsval
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -18167,7 +18167,7 @@ JSBool JSPROXY_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, j
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCParticleBatchNode *real = (CCParticleBatchNode*) [proxy realObj];
@@ -18355,7 +18355,7 @@ JSBool JSPROXY_CCTransitionCrossFade_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCTransitionCrossFade_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionCrossFade_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionCrossFade)", obj);
 }
@@ -18482,7 +18482,7 @@ JSBool JSPROXY_CCBMFontConfiguration_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCBMFontConfiguration_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCBMFontConfiguration_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBMFontConfiguration)", obj);
 }
@@ -18643,7 +18643,7 @@ JSBool JSPROXY_CCEaseElasticIn_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCEaseElasticIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseElasticIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseElasticIn)", obj);
 }
@@ -18803,7 +18803,7 @@ JSBool JSPROXY_CCSpeed_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSpeed_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpeed_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpeed)", obj);
 }
@@ -19022,7 +19022,7 @@ JSBool JSPROXY_CCRotateTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCRotateTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRotateTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRotateTo)", obj);
 }
@@ -19229,7 +19229,7 @@ JSBool JSPROXY_CCActionCamera_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCActionCamera_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionCamera_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionCamera)", obj);
 }
@@ -19357,7 +19357,7 @@ JSBool JSPROXY_CCParticleGalaxy_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCParticleGalaxy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleGalaxy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleGalaxy)", obj);
 }
@@ -19504,7 +19504,7 @@ JSBool JSPROXY_CCMotionStreak_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCMotionStreak_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMotionStreak_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMotionStreak)", obj);
 }
@@ -19523,8 +19523,8 @@ JSBool JSPROXY_CCMotionStreak_blendFunc(JSContext *cx, uint32_t argc, jsval *vp)
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -19550,7 +19550,7 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_texture_(JSContext
 
 	JSObject *tmp_arg3;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
+	arg3 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg3, cx );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg4);
 	if( ! ok ) return JS_FALSE;
 
@@ -19583,7 +19583,7 @@ JSBool JSPROXY_CCMotionStreak_initWithFade_minSeg_width_color_textureFilename_(J
 
 	JSObject *tmp_arg3;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
+	arg3 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg3, cx );
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
 	if( ! ok ) return JS_FALSE;
 
@@ -19646,7 +19646,7 @@ JSBool JSPROXY_CCMotionStreak_setBlendFunc_(JSContext *cx, uint32_t argc, jsval 
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
@@ -19713,7 +19713,7 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static(
 
 	JSObject *tmp_arg3;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
+	arg3 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg3, cx );
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg4);
 	if( ! ok ) return JS_FALSE;
 	CCMotionStreak* ret_val;
@@ -19740,7 +19740,7 @@ JSBool JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename_
 
 	JSObject *tmp_arg3;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg3);
+	arg3 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg3, cx );
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg4 );
 	if( ! ok ) return JS_FALSE;
 	CCMotionStreak* ret_val;
@@ -19789,7 +19789,7 @@ JSBool JSPROXY_CCMotionStreak_tintWithColor_(JSContext *cx, uint32_t argc, jsval
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
@@ -19812,8 +19812,8 @@ JSBool JSPROXY_CCMotionStreak_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -19870,7 +19870,7 @@ JSBool JSPROXY_CCMotionStreak_setColor_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMotionStreak *real = (CCMotionStreak*) [proxy realObj];
@@ -20020,7 +20020,7 @@ JSBool JSPROXY_CCShow_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCShow_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShow_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShow)", obj);
 }
@@ -20127,7 +20127,7 @@ JSBool JSPROXY_CCAccelAmplitude_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCAccelAmplitude_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAccelAmplitude_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAccelAmplitude)", obj);
 }
@@ -20323,7 +20323,7 @@ JSBool JSPROXY_CCGridBase_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCGridBase_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGridBase_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGridBase)", obj);
 }
@@ -20903,7 +20903,7 @@ JSBool JSPROXY_CCTiledGrid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCTiledGrid3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTiledGrid3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTiledGrid3D)", obj);
 }
@@ -21016,7 +21016,7 @@ JSBool JSPROXY_CCEaseBounce_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseBounce_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBounce_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBounce)", obj);
 }
@@ -21166,7 +21166,7 @@ JSBool JSPROXY_CCEaseBounceOut_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCEaseBounceOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBounceOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBounceOut)", obj);
 }
@@ -21315,7 +21315,7 @@ JSBool JSPROXY_CCFadeOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFadeOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFadeOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeOut)", obj);
 }
@@ -21443,7 +21443,7 @@ JSBool JSPROXY_CCAnimationCache_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCAnimationCache_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAnimationCache_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimationCache)", obj);
 }
@@ -21635,7 +21635,7 @@ JSBool JSPROXY_CCRepeatForever_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCRepeatForever_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRepeatForever_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRepeatForever)", obj);
 }
@@ -21811,7 +21811,7 @@ JSBool JSPROXY_CCFadeIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFadeIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFadeIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeIn)", obj);
 }
@@ -21939,7 +21939,7 @@ JSBool JSPROXY_CCParticleSun_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCParticleSun_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSun_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSun)", obj);
 }
@@ -22086,7 +22086,7 @@ JSBool JSPROXY_CCTransitionProgressVertical_constructor(JSContext *cx, uint32_t 
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressVertical_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressVertical_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressVertical)", obj);
 }
@@ -22219,7 +22219,7 @@ JSBool JSPROXY_CCFileUtils_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFileUtils_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFileUtils_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFileUtils)", obj);
 }
@@ -22388,7 +22388,7 @@ JSBool JSPROXY_CCParticleSpiral_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCParticleSpiral_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSpiral_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSpiral)", obj);
 }
@@ -22535,7 +22535,7 @@ JSBool JSPROXY_CCAtlasNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCAtlasNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAtlasNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAtlasNode)", obj);
 }
@@ -22577,8 +22577,8 @@ JSBool JSPROXY_CCAtlasNode_blendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -22599,8 +22599,8 @@ JSBool JSPROXY_CCAtlasNode_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -22686,7 +22686,7 @@ JSBool JSPROXY_CCAtlasNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
@@ -22711,7 +22711,7 @@ JSBool JSPROXY_CCAtlasNode_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCAtlasNode *real = (CCAtlasNode*) [proxy realObj];
@@ -22999,7 +22999,7 @@ JSBool JSPROXY_CCTileMapAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCTileMapAtlas_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTileMapAtlas_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTileMapAtlas)", obj);
 }
@@ -23065,7 +23065,7 @@ JSBool JSPROXY_CCTileMapAtlas_setTile_at_(JSContext *cx, uint32_t argc, jsval *v
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg1 );
 	if( ! ok ) return JS_FALSE;
 
@@ -23095,8 +23095,8 @@ JSBool JSPROXY_CCTileMapAtlas_tileAt_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCTileMapAtlas *real = (CCTileMapAtlas*) [proxy realObj];
 	ret_val = [real tileAt:(ccGridSize)arg0  ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -23234,7 +23234,7 @@ JSBool JSPROXY_CCTMXTilesetInfo_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCTMXTilesetInfo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXTilesetInfo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXTilesetInfo)", obj);
 }
@@ -23629,7 +23629,7 @@ JSBool JSPROXY_CCParticleFlower_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCParticleFlower_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleFlower_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleFlower)", obj);
 }
@@ -23776,7 +23776,7 @@ JSBool JSPROXY_CCCallBlock_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCCallBlock_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCallBlock_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlock)", obj);
 }
@@ -23877,7 +23877,7 @@ JSBool JSPROXY_CCTransitionShrinkGrow_constructor(JSContext *cx, uint32_t argc, 
 }
 
 // Destructor
-void JSPROXY_CCTransitionShrinkGrow_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionShrinkGrow_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionShrinkGrow)", obj);
 }
@@ -24031,7 +24031,7 @@ JSBool JSPROXY_CCEaseExponentialInOut_constructor(JSContext *cx, uint32_t argc, 
 }
 
 // Destructor
-void JSPROXY_CCEaseExponentialInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseExponentialInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseExponentialInOut)", obj);
 }
@@ -24180,7 +24180,7 @@ JSBool JSPROXY_CCParticleRain_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCParticleRain_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleRain_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleRain)", obj);
 }
@@ -24327,7 +24327,7 @@ JSBool JSPROXY_CCMenuItemFont_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCMenuItemFont_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemFont_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemFont)", obj);
 }
@@ -24650,7 +24650,7 @@ JSBool JSPROXY_CCTargetedAction_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCTargetedAction_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTargetedAction_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTargetedAction)", obj);
 }
@@ -24828,7 +24828,7 @@ JSBool JSPROXY_CCSkewTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSkewTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSkewTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSkewTo)", obj);
 }
@@ -24985,7 +24985,7 @@ JSBool JSPROXY_CCSkewBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSkewBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSkewBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSkewBy)", obj);
 }
@@ -25142,7 +25142,7 @@ JSBool JSPROXY_CCParticleFireworks_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCParticleFireworks_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleFireworks_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleFireworks)", obj);
 }
@@ -25289,7 +25289,7 @@ JSBool JSPROXY_CCSpawn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSpawn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpawn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpawn)", obj);
 }
@@ -25465,7 +25465,7 @@ JSBool JSPROXY_CCTMXTiledMap_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCTMXTiledMap_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXTiledMap_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXTiledMap)", obj);
 }
@@ -25805,7 +25805,7 @@ JSBool JSPROXY_CCParticleExplosion_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCParticleExplosion_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleExplosion_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleExplosion)", obj);
 }
@@ -25952,7 +25952,7 @@ JSBool JSPROXY_CCToggleVisibility_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCToggleVisibility_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCToggleVisibility_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCToggleVisibility)", obj);
 }
@@ -26059,7 +26059,7 @@ JSBool JSPROXY_CCTransitionFade_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCTransitionFade_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFade_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFade)", obj);
 }
@@ -26082,7 +26082,7 @@ JSBool JSPROXY_CCTransitionFade_initWithDuration_scene_withColor_(JSContext *cx,
 
 	JSObject *tmp_arg2;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
+	arg2 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg2, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCTransitionFade *real = [(CCTransitionFade*)[proxy.klass alloc] initWithDuration:(ccTime)arg0 scene:arg1 withColor:(ccColor3B)arg2  ];
@@ -26109,7 +26109,7 @@ JSBool JSPROXY_CCTransitionFade_transitionWithDuration_scene_withColor__static(J
 	
 	JSObject *tmp_arg2;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg2);
+	arg2 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg2, cx );
 	}
 	if( ! ok ) return JS_FALSE;
 	CCTransitionFade* ret_val;
@@ -26211,7 +26211,7 @@ JSBool JSPROXY_CCLabelAtlas_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLabelAtlas_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLabelAtlas_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelAtlas)", obj);
 }
@@ -26469,7 +26469,7 @@ JSBool JSPROXY_CCTransitionMoveInL_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCTransitionMoveInL_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionMoveInL_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionMoveInL)", obj);
 }
@@ -26640,7 +26640,7 @@ JSBool JSPROXY_CCTransitionMoveInT_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCTransitionMoveInT_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionMoveInT_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionMoveInT)", obj);
 }
@@ -26763,7 +26763,7 @@ JSBool JSPROXY_CCTransitionMoveInR_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCTransitionMoveInR_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionMoveInR_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionMoveInR)", obj);
 }
@@ -26886,7 +26886,7 @@ JSBool JSPROXY_CCEaseExponentialIn_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCEaseExponentialIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseExponentialIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseExponentialIn)", obj);
 }
@@ -27035,7 +27035,7 @@ JSBool JSPROXY_CCPlace_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCPlace_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCPlace_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCPlace)", obj);
 }
@@ -27167,7 +27167,7 @@ JSBool JSPROXY_CCParticleFire_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCParticleFire_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleFire_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleFire)", obj);
 }
@@ -27314,7 +27314,7 @@ JSBool JSPROXY_CCCatmullRomTo_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCCatmullRomTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCatmullRomTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCatmullRomTo)", obj);
 }
@@ -27492,7 +27492,7 @@ JSBool JSPROXY_CCLabelBMFont_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCLabelBMFont_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLabelBMFont_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLabelBMFont)", obj);
 }
@@ -27528,8 +27528,8 @@ JSBool JSPROXY_CCLabelBMFont_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -27791,7 +27791,7 @@ JSBool JSPROXY_CCLabelBMFont_setColor_(JSContext *cx, uint32_t argc, jsval *vp) 
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLabelBMFont *real = (CCLabelBMFont*) [proxy realObj];
@@ -28133,7 +28133,7 @@ JSBool JSPROXY_CCTransitionMoveInB_constructor(JSContext *cx, uint32_t argc, jsv
 }
 
 // Destructor
-void JSPROXY_CCTransitionMoveInB_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionMoveInB_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionMoveInB)", obj);
 }
@@ -28256,7 +28256,7 @@ JSBool JSPROXY_CCTransitionZoomFlipX_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCTransitionZoomFlipX_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionZoomFlipX_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionZoomFlipX)", obj);
 }
@@ -28406,7 +28406,7 @@ JSBool JSPROXY_CCEaseOut_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseOut)", obj);
 }
@@ -28577,7 +28577,7 @@ JSBool JSPROXY_CCProfiler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCProfiler_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCProfiler_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProfiler)", obj);
 }
@@ -28745,7 +28745,7 @@ JSBool JSPROXY_CCMenuItemToggle_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCMenuItemToggle_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenuItemToggle_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenuItemToggle)", obj);
 }
@@ -28764,8 +28764,8 @@ JSBool JSPROXY_CCMenuItemToggle_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -28991,7 +28991,7 @@ JSBool JSPROXY_CCMenuItemToggle_setColor_(JSContext *cx, uint32_t argc, jsval *v
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenuItemToggle *real = (CCMenuItemToggle*) [proxy realObj];
@@ -29158,7 +29158,7 @@ JSBool JSPROXY_CCScheduler_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCScheduler_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCScheduler_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCScheduler)", obj);
 }
@@ -29543,7 +29543,7 @@ JSBool JSPROXY_CCFollow_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFollow_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFollow_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFollow)", obj);
 }
@@ -29755,7 +29755,7 @@ JSBool JSPROXY_CCOrbitCamera_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCOrbitCamera_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCOrbitCamera_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCOrbitCamera)", obj);
 }
@@ -29920,7 +29920,7 @@ JSBool JSPROXY_CCAnimationFrame_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCAnimationFrame_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAnimationFrame_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimationFrame)", obj);
 }
@@ -30074,7 +30074,7 @@ JSBool JSPROXY_CCTransitionSlideInL_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionSlideInL_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSlideInL_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSlideInL)", obj);
 }
@@ -30245,7 +30245,7 @@ JSBool JSPROXY_CCTransitionSlideInB_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionSlideInB_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSlideInB_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSlideInB)", obj);
 }
@@ -30368,7 +30368,7 @@ JSBool JSPROXY_CCParallaxNode_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCParallaxNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParallaxNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParallaxNode)", obj);
 }
@@ -30478,7 +30478,7 @@ JSBool JSPROXY_CCTransitionProgressHorizontal_constructor(JSContext *cx, uint32_
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressHorizontal_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressHorizontal_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressHorizontal)", obj);
 }
@@ -30611,7 +30611,7 @@ JSBool JSPROXY_CCRepeat_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCRepeat_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRepeat_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRepeat)", obj);
 }
@@ -30810,7 +30810,7 @@ JSBool JSPROXY_CCParticleSnow_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCParticleSnow_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSnow_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSnow)", obj);
 }
@@ -30957,7 +30957,7 @@ JSBool JSPROXY_CCShatteredTiles3D_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCShatteredTiles3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShatteredTiles3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShatteredTiles3D)", obj);
 }
@@ -31138,7 +31138,7 @@ JSBool JSPROXY_CCTimer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTimer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTimer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTimer)", obj);
 }
@@ -31271,7 +31271,7 @@ JSBool JSPROXY_CCTransitionFlipY_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCTransitionFlipY_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFlipY_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFlipY)", obj);
 }
@@ -31421,7 +31421,7 @@ JSBool JSPROXY_CCTransitionFlipX_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCTransitionFlipX_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFlipX_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFlipX)", obj);
 }
@@ -31571,7 +31571,7 @@ JSBool JSPROXY_CCSpriteFrame_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCSpriteFrame_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpriteFrame_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteFrame)", obj);
 }
@@ -32222,7 +32222,7 @@ JSBool JSPROXY_CCSplitRows_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSplitRows_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSplitRows_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSplitRows)", obj);
 }
@@ -32399,7 +32399,7 @@ JSBool JSPROXY_ChipmunkDebugNode_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_ChipmunkDebugNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_ChipmunkDebugNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (ChipmunkDebugNode)", obj);
 }
@@ -32504,7 +32504,7 @@ JSBool JSPROXY_CCTextureCache_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCTextureCache_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTextureCache_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTextureCache)", obj);
 }
@@ -32777,7 +32777,7 @@ JSBool JSPROXY_CCRipple3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCRipple3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRipple3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRipple3D)", obj);
 }
@@ -33088,7 +33088,7 @@ JSBool JSPROXY_CCRotateBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCRotateBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRotateBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRotateBy)", obj);
 }
@@ -33295,7 +33295,7 @@ JSBool JSPROXY_CCEaseIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseIn)", obj);
 }
@@ -33466,7 +33466,7 @@ JSBool JSPROXY_CCTMXMapInfo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTMXMapInfo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXMapInfo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXMapInfo)", obj);
 }
@@ -33982,7 +33982,7 @@ JSBool JSPROXY_CCParticleSmoke_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCParticleSmoke_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCParticleSmoke_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCParticleSmoke)", obj);
 }
@@ -34129,7 +34129,7 @@ JSBool JSPROXY_CCTMXLayerInfo_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCTMXLayerInfo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTMXLayerInfo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTMXLayerInfo)", obj);
 }
@@ -34535,7 +34535,7 @@ JSBool JSPROXY_CCTransitionZoomFlipY_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCTransitionZoomFlipY_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionZoomFlipY_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionZoomFlipY)", obj);
 }
@@ -34685,7 +34685,7 @@ JSBool JSPROXY_CCReuseGrid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCReuseGrid_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCReuseGrid_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCReuseGrid)", obj);
 }
@@ -34817,7 +34817,7 @@ JSBool JSPROXY_CCShuffleTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCShuffleTiles_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShuffleTiles_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShuffleTiles)", obj);
 }
@@ -34996,7 +34996,7 @@ JSBool JSPROXY_CCConfiguration_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCConfiguration_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCConfiguration_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCConfiguration)", obj);
 }
@@ -35266,7 +35266,7 @@ JSBool JSPROXY_CCEaseSineIn_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCEaseSineIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseSineIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseSineIn)", obj);
 }
@@ -35415,7 +35415,7 @@ JSBool JSPROXY_CCTransitionFadeBL_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCTransitionFadeBL_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFadeBL_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFadeBL)", obj);
 }
@@ -35548,7 +35548,7 @@ JSBool JSPROXY_CCAnimate_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCAnimate_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAnimate_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimate)", obj);
 }
@@ -35745,7 +35745,7 @@ JSBool JSPROXY_CCCallBlockN_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCCallBlockN_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCCallBlockN_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCCallBlockN)", obj);
 }
@@ -35874,7 +35874,7 @@ JSBool JSPROXY_CCBezierBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCBezierBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCBezierBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBezierBy)", obj);
 }
@@ -35979,7 +35979,7 @@ JSBool JSPROXY_CCAnimation_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCAnimation_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCAnimation_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCAnimation)", obj);
 }
@@ -36448,7 +36448,7 @@ JSBool JSPROXY_CCEaseSineInOut_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCEaseSineInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseSineInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseSineInOut)", obj);
 }
@@ -36597,7 +36597,7 @@ JSBool JSPROXY_CCShaky3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCShaky3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCShaky3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCShaky3D)", obj);
 }
@@ -36778,7 +36778,7 @@ JSBool JSPROXY_CCTransitionProgressRadialCW_constructor(JSContext *cx, uint32_t 
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressRadialCW_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressRadialCW_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressRadialCW)", obj);
 }
@@ -36911,7 +36911,7 @@ JSBool JSPROXY_CCTintTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTintTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTintTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTintTo)", obj);
 }
@@ -37070,7 +37070,7 @@ JSBool JSPROXY_CCTransitionTurnOffTiles_constructor(JSContext *cx, uint32_t argc
 }
 
 // Destructor
-void JSPROXY_CCTransitionTurnOffTiles_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionTurnOffTiles_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionTurnOffTiles)", obj);
 }
@@ -37224,7 +37224,7 @@ JSBool JSPROXY_CCTransitionSlideInT_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionSlideInT_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSlideInT_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSlideInT)", obj);
 }
@@ -37347,7 +37347,7 @@ JSBool JSPROXY_CCBlink_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCBlink_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCBlink_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBlink)", obj);
 }
@@ -37502,7 +37502,7 @@ JSBool JSPROXY_CCTextureAtlas_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCTextureAtlas_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTextureAtlas_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTextureAtlas)", obj);
 }
@@ -38023,7 +38023,7 @@ JSBool JSPROXY_CCTransitionSlideInR_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionSlideInR_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSlideInR_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSlideInR)", obj);
 }
@@ -38146,7 +38146,7 @@ JSBool JSPROXY_CCPointArray_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCPointArray_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCPointArray_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCPointArray)", obj);
 }
@@ -38484,7 +38484,7 @@ JSBool JSPROXY_CCTransitionProgressInOut_constructor(JSContext *cx, uint32_t arg
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressInOut)", obj);
 }
@@ -38617,7 +38617,7 @@ JSBool JSPROXY_CCEaseBounceIn_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCEaseBounceIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBounceIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBounceIn)", obj);
 }
@@ -38766,7 +38766,7 @@ JSBool JSPROXY_CCLiquid_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLiquid_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLiquid_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLiquid)", obj);
 }
@@ -39029,7 +39029,7 @@ JSBool JSPROXY_CCProgressTimer_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCProgressTimer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCProgressTimer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProgressTimer)", obj);
 }
@@ -39068,8 +39068,8 @@ JSBool JSPROXY_CCProgressTimer_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -39231,7 +39231,7 @@ JSBool JSPROXY_CCProgressTimer_setColor_(JSContext *cx, uint32_t argc, jsval *vp
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCProgressTimer *real = (CCProgressTimer*) [proxy realObj];
@@ -39565,7 +39565,7 @@ JSBool JSPROXY_CCEaseBounceInOut_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCEaseBounceInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBounceInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBounceInOut)", obj);
 }
@@ -39714,7 +39714,7 @@ JSBool JSPROXY_CCActionTween_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCActionTween_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionTween_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionTween)", obj);
 }
@@ -39873,7 +39873,7 @@ JSBool JSPROXY_CCGrabber_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCGrabber_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGrabber_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrabber)", obj);
 }
@@ -40011,7 +40011,7 @@ JSBool JSPROXY_CCTransitionSplitRows_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCTransitionSplitRows_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionSplitRows_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionSplitRows)", obj);
 }
@@ -40138,7 +40138,7 @@ JSBool JSPROXY_CCFlipX3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFlipX3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFlipX3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipX3D)", obj);
 }
@@ -40292,7 +40292,7 @@ JSBool JSPROXY_CCFlipY3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFlipY3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFlipY3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFlipY3D)", obj);
 }
@@ -40442,7 +40442,7 @@ JSBool JSPROXY_CCFadeTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCFadeTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCFadeTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCFadeTo)", obj);
 }
@@ -40597,7 +40597,7 @@ JSBool JSPROXY_CCEaseBackInOut_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCEaseBackInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseBackInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseBackInOut)", obj);
 }
@@ -40746,7 +40746,7 @@ JSBool JSPROXY_CCEaseExponentialOut_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCEaseExponentialOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseExponentialOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseExponentialOut)", obj);
 }
@@ -40895,7 +40895,7 @@ JSBool JSPROXY_CCProfilingTimer_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCProfilingTimer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCProfilingTimer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCProfilingTimer)", obj);
 }
@@ -40981,7 +40981,7 @@ JSBool JSPROXY_CCSequence_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSequence_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSequence_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSequence)", obj);
 }
@@ -41157,7 +41157,7 @@ JSBool JSPROXY_CCEaseElasticInOut_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCEaseElasticInOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseElasticInOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseElasticInOut)", obj);
 }
@@ -41317,7 +41317,7 @@ JSBool JSPROXY_CCWaves_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCWaves_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCWaves_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWaves)", obj);
 }
@@ -41584,7 +41584,7 @@ JSBool JSPROXY_CCTransitionZoomFlipAngular_constructor(JSContext *cx, uint32_t a
 }
 
 // Destructor
-void JSPROXY_CCTransitionZoomFlipAngular_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionZoomFlipAngular_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionZoomFlipAngular)", obj);
 }
@@ -41734,7 +41734,7 @@ JSBool JSPROXY_CCTintBy_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTintBy_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTintBy_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTintBy)", obj);
 }
@@ -41893,7 +41893,7 @@ JSBool JSPROXY_CCBezierTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCBezierTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCBezierTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBezierTo)", obj);
 }
@@ -42021,7 +42021,7 @@ JSBool JSPROXY_CCDeccelAmplitude_constructor(JSContext *cx, uint32_t argc, jsval
 }
 
 // Destructor
-void JSPROXY_CCDeccelAmplitude_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDeccelAmplitude_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDeccelAmplitude)", obj);
 }
@@ -42217,7 +42217,7 @@ JSBool JSPROXY_CCLens3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLens3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLens3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLens3D)", obj);
 }
@@ -42483,7 +42483,7 @@ JSBool JSPROXY_CCWaves3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCWaves3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCWaves3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWaves3D)", obj);
 }
@@ -42746,7 +42746,7 @@ JSBool JSPROXY_CCJumpTo_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCJumpTo_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCJumpTo_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCJumpTo)", obj);
 }
@@ -42898,7 +42898,7 @@ JSBool JSPROXY_CCDrawNode_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCDrawNode_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDrawNode_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDrawNode)", obj);
 }
@@ -42917,8 +42917,8 @@ JSBool JSPROXY_CCDrawNode_blendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCDrawNode *real = (CCDrawNode*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -42959,7 +42959,7 @@ JSBool JSPROXY_CCDrawNode_drawDot_radius_color_(JSContext *cx, uint32_t argc, js
 
 	JSObject *tmp_arg2;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg2 );
-	arg2 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg2);
+	arg2 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg2, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCDrawNode *real = (CCDrawNode*) [proxy realObj];
@@ -42987,7 +42987,7 @@ JSBool JSPROXY_CCDrawNode_drawSegmentFrom_to_radius_color_(JSContext *cx, uint32
 
 	JSObject *tmp_arg3;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg3 );
-	arg3 = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg3);
+	arg3 = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg3, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCDrawNode *real = (CCDrawNode*) [proxy realObj];
@@ -43012,7 +43012,7 @@ JSBool JSPROXY_CCDrawNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCDrawNode *real = (CCDrawNode*) [proxy realObj];
@@ -43106,7 +43106,7 @@ JSBool JSPROXY_CCWavesTiles3D_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCWavesTiles3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCWavesTiles3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCWavesTiles3D)", obj);
 }
@@ -43369,7 +43369,7 @@ JSBool JSPROXY_CCTurnOffTiles_constructor(JSContext *cx, uint32_t argc, jsval *v
 }
 
 // Destructor
-void JSPROXY_CCTurnOffTiles_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTurnOffTiles_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTurnOffTiles)", obj);
 }
@@ -43548,7 +43548,7 @@ JSBool JSPROXY_CCTransitionJumpZoom_constructor(JSContext *cx, uint32_t argc, js
 }
 
 // Destructor
-void JSPROXY_CCTransitionJumpZoom_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionJumpZoom_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionJumpZoom)", obj);
 }
@@ -43675,7 +43675,7 @@ JSBool JSPROXY_CCSplitCols_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCSplitCols_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSplitCols_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSplitCols)", obj);
 }
@@ -43852,7 +43852,7 @@ JSBool JSPROXY_CCTransitionFadeUp_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCTransitionFadeUp_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionFadeUp_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionFadeUp)", obj);
 }
@@ -43985,7 +43985,7 @@ JSBool JSPROXY_CCRenderTexture_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCRenderTexture_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCRenderTexture_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCRenderTexture)", obj);
 }
@@ -44434,7 +44434,7 @@ JSBool JSPROXY_CCTwirl_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTwirl_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTwirl_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTwirl)", obj);
 }
@@ -44743,7 +44743,7 @@ JSBool JSPROXY_CCTexturePVR_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCTexturePVR_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTexturePVR_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTexturePVR)", obj);
 }
@@ -45009,7 +45009,7 @@ JSBool JSPROXY_CCGLProgram_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCGLProgram_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGLProgram_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGLProgram)", obj);
 }
@@ -45406,7 +45406,7 @@ JSBool JSPROXY_CCGrid3D_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCGrid3D_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCGrid3D_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCGrid3D)", obj);
 }
@@ -45431,8 +45431,8 @@ JSBool JSPROXY_CCGrid3D_originalVertex_(JSContext *cx, uint32_t argc, jsval *vp)
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
 	ret_val = [real originalVertex:(ccGridSize)arg0  ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
-	ccVertex3F* buffer = (ccVertex3F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 3 );
+	ccVertex3F* buffer = (ccVertex3F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -45456,7 +45456,7 @@ JSBool JSPROXY_CCGrid3D_setVertex_vertex_(JSContext *cx, uint32_t argc, jsval *v
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccVertex3F*)JS_GetTypedArrayData( tmp_arg1);
+	arg1 = *(ccVertex3F*)JS_GetArrayBufferViewData( tmp_arg1, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
@@ -45485,8 +45485,8 @@ JSBool JSPROXY_CCGrid3D_vertex_(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCGrid3D *real = (CCGrid3D*) [proxy realObj];
 	ret_val = [real vertex:(ccGridSize)arg0  ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_FLOAT32, 3 );
-	ccVertex3F* buffer = (ccVertex3F*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewFloat32Array(cx, 3 );
+	ccVertex3F* buffer = (ccVertex3F*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -45604,7 +45604,7 @@ JSBool JSPROXY_CCActionManager_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCActionManager_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCActionManager_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCActionManager)", obj);
 }
@@ -45927,7 +45927,7 @@ JSBool JSPROXY_CCSpriteFrameCache_constructor(JSContext *cx, uint32_t argc, jsva
 }
 
 // Destructor
-void JSPROXY_CCSpriteFrameCache_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCSpriteFrameCache_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCSpriteFrameCache)", obj);
 }
@@ -46235,7 +46235,7 @@ JSBool JSPROXY_CCEaseSineOut_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCEaseSineOut_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCEaseSineOut_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCEaseSineOut)", obj);
 }
@@ -46384,7 +46384,7 @@ JSBool JSPROXY_CCTransitionProgressOutIn_constructor(JSContext *cx, uint32_t arg
 }
 
 // Destructor
-void JSPROXY_CCTransitionProgressOutIn_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCTransitionProgressOutIn_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCTransitionProgressOutIn)", obj);
 }

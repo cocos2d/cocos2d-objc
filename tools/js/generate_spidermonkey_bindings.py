@@ -513,14 +513,14 @@ class SpiderMonkey(object):
         # PRECOND: Structure must be valid
 
         # BridgeSupport to TypedArray
-        bs_to_type_array =  { 'c' : 'TYPE_INT8',
-                              'C' : 'TYPE_UINT8',
-                              's' : 'TYPE_INT16',
-                              'S' : 'TYPE_UINT16',
-                              'i' : 'TYPE_INT32',
-                              'I' : 'TYPE_UINT32',
-                              'f' : 'TYPE_FLOAT32',
-                              'd' : 'TYPE_FLOAT64',
+        bs_to_type_array =  { 'c' : 'JS_NewInt8Array',
+                              'C' : 'JS_NewUint8Array',
+                              's' : 'JS_NewInt16Array',
+                              'S' : 'JS_NewUint16Array',
+                              'i' : 'JS_NewInt32Array',
+                              'I' : 'JS_NewUint32Array',
+                              'f' : 'JS_NewFloat32Array',
+                              'd' : 'JS_NewFloat64Array',
                               }
 
         inner = struct.replace('{', '')
@@ -756,7 +756,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
     def generate_destructor( self, class_name ):
         destructor_template = '''
 // Destructor
-void %s_finalize(JSContext *cx, JSObject *obj)
+void %s_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %%p (%s)", obj);
 }
@@ -860,8 +860,8 @@ void %s_finalize(JSContext *cx, JSObject *obj)
     #
     def generate_retval_struct_automatic( self, declared_type, js_type ):
         template = '''
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::%s, %d );
-	%s* buffer = (%s*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = %s(cx, %d );
+	%s* buffer = (%s*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	'''
@@ -1101,7 +1101,7 @@ void %s_finalize(JSContext *cx, JSObject *obj)
         template = '''
 	JSObject *tmp_arg%d;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg%d );
-	arg%d = *(%s*)JS_GetTypedArrayData( tmp_arg%d);
+	arg%d = *(%s*)JS_GetArrayBufferViewData( tmp_arg%d, cx );
 '''
         proxy_class_name = PROXY_PREFIX + arg_declared_type
 
@@ -1429,7 +1429,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
 
-#import "jstypedarray.h"
+#import "jsfriendapi.h"
 #import "js_bindings_config.h"
 #import "ScriptingCore.h"
 
@@ -1855,7 +1855,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 
     def generate_function_mm_prefix( self ):
         import_template = '''
-#import "jstypedarray.h"
+#import "jsfriendapi.h"
 #import "ScriptingCore.h"
 #import "js_manual_conversions.h"
 #import "js_bindings_config.h"

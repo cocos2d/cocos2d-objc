@@ -2,7 +2,7 @@
 // cocos2d manually generated bindings
 //
 
-#import "jstypedarray.h"
+#import "jsfriendapi.h"
 
 #import "js_bindings_config.h"
 #import "ScriptingCore.h"
@@ -278,12 +278,12 @@ JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderCo
 	
 	JSObject *tmp_arg;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
-	argFillColor = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg);
+	argFillColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
 
 	ok &= JS_ValueToNumber( cx, *argvp++, &argWidth );
 	
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg );
-	argBorderColor = *(ccColor4F*)JS_GetTypedArrayData( tmp_arg);
+	argBorderColor = *(ccColor4F*)JS_GetArrayBufferViewData( tmp_arg, cx );
 
 	if( ! ok )
 		return JS_FALSE;

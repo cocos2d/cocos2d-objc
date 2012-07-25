@@ -7,7 +7,7 @@
 #import <objc/runtime.h>
 #import "JRSwizzle.h"
 
-#import "jstypedarray.h"
+#import "jsfriendapi.h"
 #import "js_bindings_config.h"
 #import "ScriptingCore.h"
 
@@ -31,7 +31,7 @@ JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCDirector_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDirector_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirector)", obj);
 }
@@ -1055,7 +1055,7 @@ JSBool JSPROXY_CCDirectorIOS_constructor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Destructor
-void JSPROXY_CCDirectorIOS_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDirectorIOS_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirectorIOS)", obj);
 }
@@ -1156,7 +1156,7 @@ JSBool JSPROXY_CCDirectorDisplayLink_constructor(JSContext *cx, uint32_t argc, j
 }
 
 // Destructor
-void JSPROXY_CCDirectorDisplayLink_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCDirectorDisplayLink_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirectorDisplayLink)", obj);
 }
@@ -1263,7 +1263,7 @@ JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLayer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLayer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayer)", obj);
 }
@@ -1638,7 +1638,7 @@ JSBool JSPROXY_CCLayerMultiplex_constructor(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Destructor
-void JSPROXY_CCLayerMultiplex_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLayerMultiplex_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerMultiplex)", obj);
 }
@@ -1753,7 +1753,7 @@ JSBool JSPROXY_CCLayerColor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCLayerColor_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLayerColor_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerColor)", obj);
 }
@@ -1772,8 +1772,8 @@ JSBool JSPROXY_CCLayerColor_blendFunc(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	ret_val = [real blendFunc ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT32, 2 );
-	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint32Array(cx, 2 );
+	ccBlendFunc* buffer = (ccBlendFunc*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -1861,8 +1861,8 @@ JSBool JSPROXY_CCLayerColor_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -1885,7 +1885,7 @@ JSBool JSPROXY_CCLayerColor_initWithColor_(JSContext *cx, uint32_t argc, jsval *
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = [(CCLayerColor*)[proxy.klass alloc] initWithColor:(ccColor4B)arg0  ];
@@ -1914,7 +1914,7 @@ JSBool JSPROXY_CCLayerColor_initWithColor_width_height_(JSContext *cx, uint32_t 
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -1940,7 +1940,7 @@ JSBool JSPROXY_CCLayerColor_layerWithColor__static(JSContext *cx, uint32_t argc,
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 	CCLayerColor* ret_val;
 
@@ -1963,7 +1963,7 @@ JSBool JSPROXY_CCLayerColor_layerWithColor_width_height__static(JSContext *cx, u
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -2010,7 +2010,7 @@ JSBool JSPROXY_CCLayerColor_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *v
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccBlendFunc*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccBlendFunc*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
@@ -2052,7 +2052,7 @@ JSBool JSPROXY_CCLayerColor_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLayerColor *real = (CCLayerColor*) [proxy realObj];
@@ -2184,7 +2184,7 @@ JSBool JSPROXY_CCLayerGradient_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_CCLayerGradient_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCLayerGradient_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerGradient)", obj);
 }
@@ -2220,8 +2220,8 @@ JSBool JSPROXY_CCLayerGradient_endColor(JSContext *cx, uint32_t argc, jsval *vp)
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	ret_val = [real endColor ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2261,11 +2261,11 @@ JSBool JSPROXY_CCLayerGradient_initWithColor_fadingTo_alongVector_(JSContext *cx
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
+	arg1 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg1, cx );
 	if (argc >= 3) {
 		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
 	}
@@ -2305,11 +2305,11 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static(JSCon
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 
 	JSObject *tmp_arg1;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg1 );
-	arg1 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg1);
+	arg1 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg1, cx );
 	if (argc >= 3) {
 		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg2 );
 	}
@@ -2370,7 +2370,7 @@ JSBool JSPROXY_CCLayerGradient_setEndColor_(JSContext *cx, uint32_t argc, jsval 
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
@@ -2417,7 +2417,7 @@ JSBool JSPROXY_CCLayerGradient_setStartColor_(JSContext *cx, uint32_t argc, jsva
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
@@ -2484,8 +2484,8 @@ JSBool JSPROXY_CCLayerGradient_startColor(JSContext *cx, uint32_t argc, jsval *v
 	CCLayerGradient *real = (CCLayerGradient*) [proxy realObj];
 	ret_val = [real startColor ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2540,7 +2540,7 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor__static(JSContext *cx, uint32_t ar
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 	CCLayerGradient* ret_val;
 
@@ -2563,7 +2563,7 @@ JSBool JSPROXY_CCLayerGradient_layerWithColor_width_height__static(JSContext *cx
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor4B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor4B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
 	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
 	if( ! ok ) return JS_FALSE;
@@ -2657,7 +2657,7 @@ JSBool JSPROXY_CCMenu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_CCMenu_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_CCMenu_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenu)", obj);
 }
@@ -2752,8 +2752,8 @@ JSBool JSPROXY_CCMenu_color(JSContext *cx, uint32_t argc, jsval *vp) {
 	CCMenu *real = (CCMenu*) [proxy realObj];
 	ret_val = [real color ];
 
-	JSObject *typedArray = js_CreateTypedArray(cx, js::TypedArray::TYPE_UINT8, 3 );
-	ccColor3B* buffer = (ccColor3B*)JS_GetTypedArrayData(typedArray);
+	JSObject *typedArray = JS_NewUint8Array(cx, 3 );
+	ccColor3B* buffer = (ccColor3B*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = ret_val;
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(typedArray));
 	
@@ -2917,7 +2917,7 @@ JSBool JSPROXY_CCMenu_setColor_(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject *tmp_arg0;
 	ok &= JS_ValueToObject( cx, *argvp++, &tmp_arg0 );
-	arg0 = *(ccColor3B*)JS_GetTypedArrayData( tmp_arg0);
+	arg0 = *(ccColor3B*)JS_GetArrayBufferViewData( tmp_arg0, cx );
 	if( ! ok ) return JS_FALSE;
 
 	CCMenu *real = (CCMenu*) [proxy realObj];

@@ -45,10 +45,18 @@
 // Globals
 char * JSPROXY_association_proxy_key = NULL;
 
+static void
+its_finalize(JSFreeOp *fop, JSObject *obj)
+{
+	CCLOGINFO(@"Finalizing global class");
+}
+
 static JSClass global_class = {
 	"global", JSCLASS_GLOBAL_FLAGS,
-	JS_PropertyStub, JS_PropertyStub, JS_PropertyStub, JS_StrictPropertyStub,
-	JS_EnumerateStub, JS_ResolveStub, JS_ConvertStub, JS_FinalizeStub,
+	JS_PropertyStub, JS_PropertyStub,
+	JS_PropertyStub, JS_StrictPropertyStub,
+	JS_EnumerateStub, JS_ResolveStub,
+	JS_ConvertStub, its_finalize,
 	JSCLASS_NO_OPTIONAL_MEMBERS
 };
 
@@ -228,8 +236,10 @@ static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void
 }
 JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
+#if SPIDERMONKEY_DEBUG
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
 	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+#endif
 	return JS_TRUE;
 };
 
@@ -239,7 +249,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
 //	ScriptingCore_dumpRoot(cx, 0, vp);
-	JS_GC(cx);
+	JS_GC( [[ScriptingCore sharedInstance] runtime] );
 	return JS_TRUE;
 };
 
@@ -455,7 +465,7 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSBool ok = JS_FALSE;
 
-    JSScript *script;
+	static JSScript *script;
 	
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
