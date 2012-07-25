@@ -399,6 +399,7 @@ var GameLayer = cc.LayerGradient.extend({
             var line = lines[i];
             if( i > 0 ) {
                 this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
+                this._terrain.drawSegment( cp._v(p.x, p.y), cp._v(p.x+line.x, p.y+line.y), 5, cc.c4f(0.32,0.23,0,1) );
             }
 
             p = {x:p.x+line.x, y:p.y+line.y};
@@ -414,9 +415,10 @@ var GameLayer = cc.LayerGradient.extend({
 
         poly.unshift( cc.p(x,y) );
 
-        // Bug in CCDrawNode: No tesselation, so "fill" is disabled
+        // XXX: Bug in CCDrawNode: No tesselation, so "fill" is disabled
+        // XXX: CCDrawNode#drawPoly is super expensive... using drawSegment instead
         // poly, fill color, border width, border color
-        this._terrain.drawPoly( poly, cc.c4f(0,0,0,0 ), 1, cc.c4f(0.82,0.41,0.04,1) );
+//        this._terrain.drawPoly( poly, cc.c4f(0,0,0,0 ), 1, cc.c4f(0.82,0.41,0.04,1) );
 
         cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
 
