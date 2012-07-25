@@ -34,6 +34,7 @@ JSBool JSPROXY_CCDirector_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCDirector_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirector)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 
@@ -993,6 +994,7 @@ JSBool JSPROXY_CCDirectorMac_constructor(JSContext *cx, uint32_t argc, jsval *vp
 void JSPROXY_CCDirectorMac_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirectorMac)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: CGPoint
@@ -1230,6 +1232,7 @@ JSBool JSPROXY_CCLayer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCLayer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayer)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 
@@ -1890,6 +1893,7 @@ JSBool JSPROXY_CCLayerMultiplex_constructor(JSContext *cx, uint32_t argc, jsval 
 void JSPROXY_CCLayerMultiplex_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerMultiplex)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: unsigned int
@@ -2005,6 +2009,7 @@ JSBool JSPROXY_CCLayerColor_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCLayerColor_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerColor)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 
@@ -2436,6 +2441,7 @@ JSBool JSPROXY_CCLayerGradient_constructor(JSContext *cx, uint32_t argc, jsval *
 void JSPROXY_CCLayerGradient_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCLayerGradient)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 
@@ -2909,6 +2915,7 @@ JSBool JSPROXY_CCMenu_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCMenu_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCMenu)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 

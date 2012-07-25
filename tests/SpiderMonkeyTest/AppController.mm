@@ -212,8 +212,9 @@
 	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground_gc.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground_gc2.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 
 }
 @end

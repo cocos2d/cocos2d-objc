@@ -34,6 +34,7 @@ JSBool JSPROXY_SimpleAudioEngine_constructor(JSContext *cx, uint32_t argc, jsval
 void JSPROXY_SimpleAudioEngine_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (SimpleAudioEngine)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 

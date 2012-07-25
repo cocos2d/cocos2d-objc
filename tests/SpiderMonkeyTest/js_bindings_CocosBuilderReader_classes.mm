@@ -34,6 +34,7 @@ JSBool JSPROXY_CCBReader_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void JSPROXY_CCBReader_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCBReader)", obj);
+	del_proxy_for_jsobject( obj );
 }
 
 // Arguments: 

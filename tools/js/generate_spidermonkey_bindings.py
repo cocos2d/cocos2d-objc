@@ -759,6 +759,7 @@ JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 void %s_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %%p (%s)", obj);
+	del_proxy_for_jsobject( obj );
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
