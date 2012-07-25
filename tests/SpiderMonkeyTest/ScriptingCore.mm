@@ -236,7 +236,7 @@ static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void
 }
 JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
-#if SPIDERMONKEY_DEBUG
+#ifdef __CC_PLATFORM_MAC
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
 	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 #endif
