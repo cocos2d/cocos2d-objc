@@ -58,7 +58,7 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_NSObject_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_NSObject_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSObject)", obj);
 
@@ -209,6 +209,11 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	// override
 }
 
+- (NSString*) description
+{
+	return [NSString stringWithFormat:@"<%@ = %p | JSObject = %p>", [self class], self, _jsObj];
+}
+
 -(id) initWithJSObject:(JSObject*)object class:(Class)klass
 {
 	self = [super init];
@@ -245,10 +250,7 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	if( _description )
 		free(_description);
 
-	JSBool ok = JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
-	if( ! ok )
-		CCLOGWARN(@"Failed to removed object from root");
-
+	JS_RemoveObjectRoot( [[ScriptingCore sharedInstance] globalContext], &_jsObj);
 	
 	[super dealloc];
 }
@@ -323,7 +325,7 @@ JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 
 
 // Destructor
-void JSPROXY_NSEvent_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_NSEvent_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSEvent)", obj);
 }
@@ -449,7 +451,7 @@ JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Destructor
-void JSPROXY_UITouch_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_UITouch_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (UITouch)", obj);
 }
@@ -574,7 +576,7 @@ JSBool JSPROXY_UIAccelerometer_constructor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Destructor
-void JSPROXY_UIAccelerometer_finalize(JSContext *cx, JSObject *obj)
+void JSPROXY_UIAccelerometer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirector)", obj);
 }

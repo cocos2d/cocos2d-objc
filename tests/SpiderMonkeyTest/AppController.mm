@@ -211,8 +211,9 @@
 #endif
 	
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground_gc.js"];
 
 }
 @end
