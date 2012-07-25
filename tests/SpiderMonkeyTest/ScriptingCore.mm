@@ -236,7 +236,9 @@ static void dumpNamedRoot(const char *name, void *addr,  JSGCRootType type, void
 }
 JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
-#ifdef __CC_PLATFORM_MAC
+	// JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
+	// Mac and Simulator versions were compiled with DEBUG.
+#if defined(__CC_PLATFORM_MAC) || TARGET_IPHONE_SIMULATOR
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
 	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 #endif
@@ -248,7 +250,6 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
  */
 JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 {
-//	ScriptingCore_dumpRoot(cx, 0, vp);
 	JS_GC( [[ScriptingCore sharedInstance] runtime] );
 	return JS_TRUE;
 };
@@ -429,21 +430,8 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 	JSBool ok = JS_FALSE;
 
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
-#ifdef DEBUG
-	/**
-	 * dpath should point to the parent directory of the "JS" folder. If this is
-	 * set to "" (as it is now) then it will take the scripts from the app bundle.
-	 * By setting the absolute path you can iterate the development only by
-	 * modifying those scripts and reloading from the simulator (no recompiling/
-	 * relaunching)
-	 */
-//	std::string dpath("/Users/rabarca/Desktop/testjs/testjs/");
-//	std::string dpath("");
-//	dpath += path;
 	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
-#else
-	NSString *fullpath = [fileUtils fullPathFromRelativePath:filename];
-#endif
+
 	unsigned char *content = NULL;
 	size_t contentSize = ccLoadFileIntoMemory([fullpath UTF8String], &content);
 	if (content && contentSize) {
@@ -488,9 +476,9 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 	if( ! ok )
 		NSLog(@"Failed to execute script");
 	
-//    JS_RemoveScriptRoot(_cx, &script);  /* scriptObj becomes unreachable
-//										   and will eventually be collected. */
-//	free( static_name);
+    JS_RemoveScriptRoot(_cx, &script);  /* scriptObj becomes unreachable
+										   and will eventually be collected. */
+	free( static_name);
 
     return ok;
 }
