@@ -72,8 +72,8 @@
 	navController_.navigationBarHidden = YES;
 
 	// set the Navigation Controller as the root view controller
-	[window_ setRootViewController:navController_];
-//	[window_ addSubview:navController_.view];
+//	[window_ setRootViewController:navController_];
+	[window_ addSubview:navController_.view];
 
 	// make main window visible
 	[window_ makeKeyAndVisible];
@@ -210,9 +210,9 @@
 	[self initThoMoServer];
 #endif
 	
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
+//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground_gc2.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
 //	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-actions.js"];

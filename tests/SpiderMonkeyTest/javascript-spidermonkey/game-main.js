@@ -793,21 +793,19 @@ var MainMenu = cc.Layer.extend({
         this.addChild( node );
     },
 
-    buttonA:function( sender) {
-        run();
-    },
-
-    buttonB:function( sender) {
+    onPlay:function( sender) {
         var scene = cc.Scene.create();
         var layer = new GameLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionSplitCols.create(1, scene) );
     },
 
-    buttonC:function( sender ) {
-        var hi = cc.LabelTTF.create("Callbacks are working", "Arial", 28 );
-        this.addChild( hi );
-        hi.setPosition(  centerPos );
+    onOptions:function( sender) {
+        cc.log("Options");
+    },
+
+    onAbout:function( sender ) {
+        cc.log("About");
     },
 
 });
