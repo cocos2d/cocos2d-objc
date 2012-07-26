@@ -93,8 +93,8 @@ static inline ccVertex2F __v2f(CGPoint v )
 
 
 
-//#define PRINT_GL_ERRORS() for(GLenum err = glGetError(); err; err = glGetError()) NSLog(@"GLError(%s:%d) 0x%04X", __FILE__, __LINE__, err);
-#define PRINT_GL_ERRORS() 
+#define PRINT_GL_ERRORS() for(GLenum err = glGetError(); err; err = glGetError()) NSLog(@"GLError(%s:%d) 0x%04X", __FILE__, __LINE__, err);
+//#define PRINT_GL_ERRORS() 
 
 typedef struct Vertex {ccVertex2F vertex, texcoord; ccColor4B color;} Vertex;
 typedef struct Triangle {Vertex a, b, c;} Triangle;
@@ -130,7 +130,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 -(id)init
 {
 	if((self = [super init])){
-		self.blendFunc = (ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA};
+		self.blendFunc = (ccBlendFunc){CC_BLEND_SRC, CC_BLEND_DST};
 		
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionLengthTexureColor];
 		
@@ -166,7 +166,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	NSAssert([EAGLContext currentContext], @"No GL context set!");
 #endif
 	
-	free(_buffer); _buffer = 0;
+	free(_buffer); _buffer = NULL;
 	
 	glDeleteBuffers(1, &_vbo); _vbo = 0;
 	glDeleteVertexArrays(1, &_vao); _vao = 0;
@@ -180,7 +180,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 {
 	if( _dirty ) {
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		_dirty = NO;
 	}
