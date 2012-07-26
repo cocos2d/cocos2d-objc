@@ -68,16 +68,6 @@
 //	if( ! [director_ enableRetinaDisplay:YES] )
 //		CCLOG(@"Retina Display Not supported");
 
-	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
-	navController_.navigationBarHidden = YES;
-
-	// set the Navigation Controller as the root view controller
-//	[window_ setRootViewController:navController_];
-	[window_ addSubview:navController_.view];
-
-	// make main window visible
-	[window_ makeKeyAndVisible];
-
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -97,6 +87,17 @@
 
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+
+	// Create a Navigation Controller with the Director
+	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_.navigationBarHidden = YES;
+	
+	// set the Navigation Controller as the root view controller
+	[window_ addSubview:navController_.view];	// Generates flicker.
+//	[window_ setRootViewController:navController_];
+	
+	// make main window visible
+	[window_ makeKeyAndVisible];
 
 
 	[self run];
@@ -213,12 +214,12 @@
 	[self initThoMoServer];
 #endif
 	
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground.js"];
-	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/playground_gc2.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-sprite.js"];
-//	[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/test-actions.js"];
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"Javascript Game"] )
+		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+	else 
+		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];	
 
 }
 @end
