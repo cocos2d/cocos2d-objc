@@ -78,7 +78,7 @@ JSBool ScriptingCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
 			char *cstr = JS_EncodeString(cx, string);
-			CCLOG(@"%s", cstr);
+			NSLog(@"%s", cstr);
 		}
 		
 		return JS_TRUE;

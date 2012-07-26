@@ -45,7 +45,7 @@ Z_CHASSIS = 10;
 Z_WHEEL = 11;
 
 // parent is scroll node (parallax node)
-Z_MOUNTAINS = -1;
+Z_MOUNTAINS = 0;
 Z_SPRITES = 10;
 Z_TERRAIN = 20;
 Z_DEBUG_PHYSICS = 50;
@@ -239,7 +239,7 @@ var GameLayer = cc.LayerGradient.extend({
         scroll.addChild( this._batch, Z_SPRITES, cc._p(1,1), cc.POINT_ZERO );
 
         // "endless" background image
-        var background = cc.Sprite.create("Parallax.png", cc.rect(0,0,4096,512) );
+        var background = cc.Sprite.create("Parallax.pvr.gz", cc.rect(0,0,4096,512) );
         scroll.addChild(background, Z_MOUNTAINS , cc._p(0.2, 0.2), cc._p(0,-150));
         background.setAnchorPoint( cc.POINT_ZERO );
         background.getTexture().setTexParameters(gl.LINEAR, gl.LINEAR, gl.REPEAT, gl.CLAMP_TO_EDGE);
@@ -247,15 +247,13 @@ var GameLayer = cc.LayerGradient.extend({
         // Terrain
         this._terrain = cc.DrawNode.create();
         scroll.addChild( this._terrain, Z_TERRAIN, cc._p(1,1), cc.POINT_ZERO );
+//        this._terrain.setVisible( false );
 
         // Smoke
         this._carSmoke = cc.ParticleSystem.create( "car_smoke.plist" );
         this._carSmoke.setPosition( cc.POINT_ZERO );
-//        scroll.addChild( this._carSmoke, Z_SMOKE, cc._p(1,1), cc.POINT_ZERO );
         this.addChild( this._carSmoke, Z_SMOKE );
-//        this._carSmoke.setPositionType( cc.PARTICLE_TYPE_FREE );
         this._carSmoke.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
-//        this._carSmoke.setPositionType( cc.PARTICLE_TYPE_GROUPED );
 
         this._shapesToRemove = [];
 
@@ -494,11 +492,12 @@ var GameLayer = cc.LayerGradient.extend({
         var poly = [];
         var p = {x:0, y:0};
         var lines = level['lines']; 
+
         for( var i=0; i < lines.length; i++) {
             var line = lines[i];
             if( i > 0 ) {
                 this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
-                this._terrain.drawSegment( cp._v(p.x, p.y), cp._v(p.x+line.x, p.y+line.y), 5, cc.c4f(0.43,0.39,0.34,1) );
+                this._terrain.drawSegment( cc._p(p.x, p.y), cc._p(p.x+line.x, p.y+line.y), 5, cc.c4f(0.43,0.39,0.34,1) );
             }
 
             p = {x:p.x+line.x, y:p.y+line.y};
@@ -578,7 +577,6 @@ var GameLayer = cc.LayerGradient.extend({
             // _motor.maxForce = cpfclamp01(1.0 - (_chassis.body.angVel - _rearWheel.body.angVel)/ENGINE_MAX_W)*ENGINE_MAX_TORQUE;
             var maxForce = cp.fclamp01(1.0 - ( (cp.bodyGetAngVel(this._chassis) - cp.bodyGetAngVel(this._rearWheel)) / ENGINE_MAX_W)) * ENGINE_MAX_TORQUE;
             cp.constraintSetMaxForce( this._motor, maxForce );
-            cc.log(" MAX FORCE: " + maxForce );
 
             // Set the brakes to apply the baseline rolling friction torque.
             cp.constraintSetMaxForce( this._frontBrake, ROLLING_FRICTION );
@@ -942,6 +940,10 @@ var BootLayer = cc.Layer.extend({
 
         // music
         audioEngine.playBackgroundMusic("game-music.mp3");
+        audioEngine.preloadEffect("pickup_coin.wav");
+
+		var cache = cc.SpriteFrameCache.getInstance();
+		cache.addSpriteFrames( "coins.plist" );
     },
     
     onEnter:function() {

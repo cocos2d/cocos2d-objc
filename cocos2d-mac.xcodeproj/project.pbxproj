@@ -332,7 +332,6 @@
 		A042993715B9FCE500509473 /* Abadi40.png in Resources */ = {isa = PBXBuildFile; fileRef = A042993315B9FCE500509473 /* Abadi40.png */; };
 		A042994515BA013D00509473 /* GameOver.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994415BA013D00509473 /* GameOver.wav */; };
 		A042994C15BA41C800509473 /* LevelComplete.wav in Resources */ = {isa = PBXBuildFile; fileRef = A042994B15BA41C700509473 /* LevelComplete.wav */; };
-		A042995415BA487300509473 /* Parallax.png in Resources */ = {isa = PBXBuildFile; fileRef = A042995315BA487300509473 /* Parallax.png */; };
 		A0443DBB14A42E4500E62742 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0443DBC14A42E4500E62742 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0443DBD14A42E4500E62742 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -2267,6 +2266,7 @@
 		A0E5F63515C0DE5F00D44C32 /* About.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63415C0DE5F00D44C32 /* About.ccbi */; };
 		A0E5F63915C10F6100D44C32 /* watermelon.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63815C10F6100D44C32 /* watermelon.png */; };
 		A0E5F63D15C111E400D44C32 /* car_smoke.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63C15C111E400D44C32 /* car_smoke.plist */; };
+		A0E5F64915C1231700D44C32 /* Parallax.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F64815C1231700D44C32 /* Parallax.pvr.gz */; };
 		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
 		A0F1615B153CD1FA0077361C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F1615A153CD1FA0077361C /* Icon-Small-50.png */; };
 		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
@@ -5943,7 +5943,6 @@
 		A042993315B9FCE500509473 /* Abadi40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Abadi40.png; sourceTree = "<group>"; };
 		A042994415BA013D00509473 /* GameOver.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = GameOver.wav; sourceTree = "<group>"; };
 		A042994B15BA41C700509473 /* LevelComplete.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = LevelComplete.wav; sourceTree = "<group>"; };
-		A042995315BA487300509473 /* Parallax.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Parallax.png; sourceTree = "<group>"; };
 		A0443E8414A42E4500E62742 /* EffectsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EffectsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0443E8814A42EBB00E62742 /* EffectsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EffectsTest.h; path = tests/EffectsTest.h; sourceTree = "<group>"; };
 		A0443E8914A42EBB00E62742 /* EffectsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EffectsTest.m; path = tests/EffectsTest.m; sourceTree = "<group>"; };
@@ -6317,6 +6316,7 @@
 		A0E5F63415C0DE5F00D44C32 /* About.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = About.ccbi; sourceTree = "<group>"; };
 		A0E5F63815C10F6100D44C32 /* watermelon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watermelon.png; sourceTree = "<group>"; };
 		A0E5F63C15C111E400D44C32 /* car_smoke.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = car_smoke.plist; sourceTree = "<group>"; };
+		A0E5F64815C1231700D44C32 /* Parallax.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = Parallax.pvr.gz; sourceTree = "<group>"; };
 		A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0EC4CA21403278200EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4CA31403278200EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -8098,7 +8098,7 @@
 				A0644A8215B6161A004AB807 /* CCB */,
 				A0644B9615B75EBD004AB807 /* coins_animation.plist */,
 				A0E5F63C15C111E400D44C32 /* car_smoke.plist */,
-				A042995315BA487300509473 /* Parallax.png */,
+				A0E5F64815C1231700D44C32 /* Parallax.pvr.gz */,
 				A042994B15BA41C700509473 /* LevelComplete.wav */,
 				A042994415BA013D00509473 /* GameOver.wav */,
 				A091133E15B796D0006DD5AA /* pickup_coin.wav */,
@@ -11588,7 +11588,6 @@
 				A042993715B9FCE500509473 /* Abadi40.png in Resources */,
 				A042994515BA013D00509473 /* GameOver.wav in Resources */,
 				A042994C15BA41C800509473 /* LevelComplete.wav in Resources */,
-				A042995415BA487300509473 /* Parallax.png in Resources */,
 				A0CFE6A015BF592400264229 /* js.msg in Resources */,
 				A0CFE6A115BF592400264229 /* jsatom.tbl in Resources */,
 				A0CFE6A215BF592400264229 /* jsproto.tbl in Resources */,
@@ -11600,6 +11599,7 @@
 				A0E5F63515C0DE5F00D44C32 /* About.ccbi in Resources */,
 				A0E5F63915C10F6100D44C32 /* watermelon.png in Resources */,
 				A0E5F63D15C111E400D44C32 /* car_smoke.plist in Resources */,
+				A0E5F64915C1231700D44C32 /* Parallax.pvr.gz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
