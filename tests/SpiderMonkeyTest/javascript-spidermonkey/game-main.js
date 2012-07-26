@@ -45,16 +45,17 @@ Z_CHASSIS = 10;
 Z_WHEEL = 11;
 
 // parent is scroll node (parallax node)
-Z_TERRAIN = 2;
-Z_SPRITES = 0;
 Z_MOUNTAINS = -1;
+Z_SPRITES = 10;
+Z_TERRAIN = 20;
 Z_DEBUG_PHYSICS = 50;
 
 // parent is game layer
 Z_SCROLL = 10;
-Z_HUD = 15;
-Z_LABEL = 20;
-Z_DEBUG_MENU = 20;
+Z_SMOKE = 15;
+Z_HUD = 20;
+Z_LABEL = 30;
+Z_DEBUG_MENU = 30;
 
 // Game state
 STATE_PAUSE = 0;
@@ -174,6 +175,7 @@ WATERMELON_MASS = 0.05;
 // Node Tags (used by CocosBuilder)
 SCORE_LABEL_TAG = 10;
 TIME_LABEL_TAG = 11;
+TITLE_TAG = 50;
 
 //
 // Game Layer
@@ -199,6 +201,7 @@ var GameLayer = cc.LayerGradient.extend({
     _scrollNode:null,
     _terrain:null,
     _carSprite:null,
+    _carSmoke:null,
 
     ctor:function (level) {
                                 
@@ -244,6 +247,15 @@ var GameLayer = cc.LayerGradient.extend({
         // Terrain
         this._terrain = cc.DrawNode.create();
         scroll.addChild( this._terrain, Z_TERRAIN, cc._p(1,1), cc.POINT_ZERO );
+
+        // Smoke
+        this._carSmoke = cc.ParticleSystem.create( "car_smoke.plist" );
+        this._carSmoke.setPosition( cc.POINT_ZERO );
+//        scroll.addChild( this._carSmoke, Z_SMOKE, cc._p(1,1), cc.POINT_ZERO );
+        this.addChild( this._carSmoke, Z_SMOKE );
+//        this._carSmoke.setPositionType( cc.PARTICLE_TYPE_FREE );
+        this._carSmoke.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
+//        this._carSmoke.setPositionType( cc.PARTICLE_TYPE_GROUPED );
 
         this._shapesToRemove = [];
 
@@ -337,8 +349,10 @@ var GameLayer = cc.LayerGradient.extend({
 
         this.initPhysics();
         this.setupLevel(this._level);
+
         this._state = STATE_PLAYING;
 
+        // Level Label
         var label = cc.LabelBMFont.create("LEVEL " + this._level, "Abadi40.fnt" );
         label.setPosition( centerPos );
         this.addChild( label, Z_LABEL );
@@ -418,6 +432,12 @@ var GameLayer = cc.LayerGradient.extend({
         // Don't update physics on game over
         if( this._state != STATE_PAUSE )
             cp.spaceStep( this._space, dt);
+
+        // sync smoke with car
+        if( this._carSprite ) {
+            var p = this._carSprite.convertToWorldSpace( cc.POINT_ZERO );
+            this._carSmoke.setPosition( p );
+        }
 
         var l = this._shapesToRemove.length;
 
@@ -946,6 +966,16 @@ var MenuLayer = cc.Layer.extend({
         // background
         var node = cc.Reader.load("MainMenu.ccbi", this, _winSize);
         this.addChild( node );
+        var label = node.getChildByTag( TITLE_TAG );
+        var o = label.getChildByTag( 8 );
+
+        var a_delay = cc.DelayTime.create(6);
+        var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
+        var a_rotate = cc.RotateBy.create( 4, 360 );
+        var a_rep = cc.Repeat.create( a_rotate, 1000 );
+        var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
+        o.runAction( a_seq );
+
     },
 
     onPlay:function( sender) {
@@ -966,7 +996,7 @@ var MenuLayer = cc.Layer.extend({
         var scene = cc.Scene.create();
         var layer = new AboutLayer();
         scene.addChild( layer );
-        director.replaceScene( cc.TransitionZoomFlipX.create(1, scene) );
+        director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
     },
 });
 
@@ -984,6 +1014,7 @@ var AboutLayer = cc.Layer.extend({
         this.addChild( about )
 
         var back = cc.MenuItemFont.create("Back", this, this.onBack );
+        back.setColor( cc.BLACK );
         var menu = cc.Menu.create( back );
         this.addChild( menu );
         menu.alignItemsVertically();
