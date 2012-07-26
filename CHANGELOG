@@ -8,6 +8,7 @@ version 2.1-alpha XX-Ago-2012
 			Uses Spidermonkey JS VM from Firefox 14.0.1
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Tests: Tests for RotationalSkew feature
+. [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 			Don't assert if character is not found. Just continue with logging the warning.
 . [FIX] LabelTTF: loads custom fonts correctly on Mac
