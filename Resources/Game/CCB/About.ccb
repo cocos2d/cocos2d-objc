@@ -882,7 +882,7 @@
 						<string>Size</string>
 						<key>value</key>
 						<array>
-							<real>946</real>
+							<real>1462</real>
 							<real>83</real>
 							<integer>0</integer>
 						</array>
@@ -999,7 +999,7 @@
 						<key>type</key>
 						<string>Text</string>
 						<key>value</key>
-						<string>GAME IDEA: SMUGGLE TRUCK</string>
+						<string>GAME MECHANIC BASED ON SMUGGLE TRUCK</string>
 					</dict>
 				</array>
 			</dict>
