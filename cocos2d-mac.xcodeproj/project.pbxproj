@@ -2263,6 +2263,8 @@
 		A0DB13E014FC418200F7CC49 /* west_england-64.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */; };
 		A0DB13E114FC418200F7CC49 /* west_england-64.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DB13DF14FC418100F7CC49 /* west_england-64.png */; };
 		A0DC2F611491B3FA005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F601491B3FA005B814E /* test_image_rgb888.pvr */; };
+		A0E5F63015C0D11100D44C32 /* game-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F62F15C0D11100D44C32 /* game-music.mp3 */; };
+		A0E5F63515C0DE5F00D44C32 /* About.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63415C0DE5F00D44C32 /* About.ccbi */; };
 		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
 		A0F1615B153CD1FA0077361C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F1615A153CD1FA0077361C /* Icon-Small-50.png */; };
 		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
@@ -6309,6 +6311,8 @@
 		A0DB13DF14FC418100F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
 		A0DC2F601491B3FA005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0E55417141EAEEE003F1E5A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		A0E5F62F15C0D11100D44C32 /* game-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-music.mp3"; sourceTree = "<group>"; };
+		A0E5F63415C0DE5F00D44C32 /* About.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = About.ccbi; sourceTree = "<group>"; };
 		A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0EC4CA21403278200EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4CA31403278200EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -7763,6 +7767,7 @@
 		A0644A8215B6161A004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
+				A0E5F63415C0DE5F00D44C32 /* About.ccbi */,
 				A012B0BA15C09F3F0041E364 /* coins.plist */,
 				A012B0BB15C09F3F0041E364 /* coins.pvr.ccz */,
 				A012B0BC15C09F3F0041E364 /* labels-ipad.plist */,
@@ -8092,6 +8097,7 @@
 				A042994415BA013D00509473 /* GameOver.wav */,
 				A091133E15B796D0006DD5AA /* pickup_coin.wav */,
 				A091133F15B796D0006DD5AA /* pickup_star.wav */,
+				A0E5F62F15C0D11100D44C32 /* game-music.mp3 */,
 			);
 			name = Game;
 			path = Resources/Game;
@@ -11584,6 +11590,8 @@
 				A012B0BF15C09F3F0041E364 /* coins.pvr.ccz in Resources */,
 				A012B0C015C09F3F0041E364 /* labels-ipad.plist in Resources */,
 				A012B0C115C09F3F0041E364 /* labels-ipad.pvr.gz in Resources */,
+				A0E5F63015C0D11100D44C32 /* game-music.mp3 in Resources */,
+				A0E5F63515C0DE5F00D44C32 /* About.ccbi in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

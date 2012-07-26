@@ -211,12 +211,16 @@ var GameLayer = cc.LayerGradient.extend({
         this.enableEvents( true );
 
         cc.MenuItemFont.setFontSize(16 * sizeRatio );
-        var item1 = cc.MenuItemFont.create("Restart", this, this.onRestart);
+
+        var item1_pause = cc.MenuItemFont.create("Pause" );
+        var item1_resume = cc.MenuItemFont.create("Resume" );
+        var item1 = cc.MenuItemToggle.create( item1_pause, item1_resume );
+        item1.setCallback( this, this.onPause);
         var item2 = cc.MenuItemFont.create("Debug On/Off", this, this.onToggleDebug);
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
-        menu.setPosition( cc._p( winSize.width-(40*sizeRatio), winSize.height-(80*sizeRatio) )  );
+        menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
     
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimationsWithFile("coins_animation.plist");
@@ -286,6 +290,13 @@ var GameLayer = cc.LayerGradient.extend({
         director.replaceScene( cc.TransitionFade.create(1, scene) );
     },
 
+    onPause:function(sender) {
+        if( this._state == STATE_PAUSE )
+            this._state = STATE_PLAYING;
+        else
+            this._state = STATE_PAUSE;
+    },
+
     onNextLevel:function(sender) {
         var scene = cc.Scene.create();
         var layer = new GameLayer(this._level+1);
@@ -295,7 +306,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     onMainMenu:function(sender) {
         var scene = cc.Scene.create();
-        var layer = new MainMenu();
+        var layer = new MenuLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionProgressRadialCCW.create(1, scene) );
     },
@@ -332,8 +343,8 @@ var GameLayer = cc.LayerGradient.extend({
         label.setPosition( centerPos );
         this.addChild( label, Z_LABEL );
         var d = cc.DelayTime.create(1);
-        var scale = cc.ScaleBy.create(2, 40);
-        var fade = cc.FadeOut.create(2);
+        var scale = cc.ScaleBy.create(1.1, 5);
+        var fade = cc.FadeOut.create(1.1);
         var s = cc.Spawn.create( scale, fade );
         var selfremove = cc.CallFunc.create(this, this.onRemoveMe );
         var seq = cc.Sequence.create(d, s, selfremove );
@@ -814,6 +825,13 @@ var GameLayer = cc.LayerGradient.extend({
 
             var legend = "LEVEL COMPLETE";
         } else {
+            cc.MenuItemFont.setFontSize(16 * sizeRatio );
+            var item1 = cc.MenuItemFont.create("Main Menu", this, this.onMainMenu);
+            var menu = cc.Menu.create( item1 );
+            menu.alignItemsVertically();
+            this.addChild( menu, Z_DEBUG_MENU );
+            menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
+
             var legend = "GAME COMPLETE";
         }
 
@@ -892,9 +910,9 @@ var GameLayer = cc.LayerGradient.extend({
 });
 
 //
-// Main Menu
+// Boot Layer
 //
-var MainMenu = cc.Layer.extend({
+var BootLayer = cc.Layer.extend({
 
     ctor:function () {
                                 
@@ -902,6 +920,28 @@ var MainMenu = cc.Layer.extend({
         __associateObjWithNative(this, parent);
         this.init();
 
+        // music
+        audioEngine.playBackgroundMusic("game-music.mp3");
+    },
+    
+    onEnter:function() {
+        var scene = cc.Scene.create();
+        var layer = new MenuLayer();
+        scene.addChild( layer );
+        director.replaceScene( scene );
+    },
+});
+
+//
+// Main Menu
+//
+var MenuLayer = cc.Layer.extend({
+
+    ctor:function () {
+                                
+        var parent = new cc.Layer();
+        __associateObjWithNative(this, parent);
+        this.init();
 
         // background
         var node = cc.Reader.load("MainMenu.ccbi", this, _winSize);
@@ -910,17 +950,93 @@ var MainMenu = cc.Layer.extend({
 
     onPlay:function( sender) {
         var scene = cc.Scene.create();
-        var layer = new GameLayer(2);
+        var layer = new GameLayer(0);
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFade.create(1, scene) );
     },
 
     onOptions:function( sender) {
-        cc.log("Options");
+        var scene = cc.Scene.create();
+        var layer = new OptionsLayer();
+        scene.addChild( layer );
+        director.replaceScene( cc.TransitionFlipY.create(1, scene) );
     },
 
     onAbout:function( sender ) {
-        cc.log("About");
+        var scene = cc.Scene.create();
+        var layer = new AboutLayer();
+        scene.addChild( layer );
+        director.replaceScene( cc.TransitionZoomFlipX.create(1, scene) );
+    },
+});
+
+//
+// About
+//
+var AboutLayer = cc.Layer.extend({
+
+    ctor:function () {
+        var parent = new cc.LayerGradient();
+        __associateObjWithNative(this, parent);
+        this.init();
+
+        var about = cc.Reader.load("About.ccbi", this);
+        this.addChild( about )
+
+        var back = cc.MenuItemFont.create("Back", this, this.onBack );
+        var menu = cc.Menu.create( back );
+        this.addChild( menu );
+        menu.alignItemsVertically();
+        menu.setPosition( cc._p( winSize.width - 50, 50) );
+
+    },
+
+    onBack:function( sender) {
+        var scene = cc.Scene.create();
+        var layer = new MenuLayer();
+        scene.addChild( layer );
+        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
+    },
+});
+
+//
+// Options 
+//
+var OptionsLayer = cc.LayerGradient.extend({
+
+    ctor:function () {
+        var parent = new cc.LayerGradient();
+        __associateObjWithNative(this, parent);
+        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
+
+        var label1 = cc.LabelBMFont.create("MUSIC ON", "konqa32.fnt" );
+        var item1 = cc.MenuItemLabel.create(label1);
+        var label2 = cc.LabelBMFont.create("MUSIC OFF", "konqa32.fnt" );
+        var item2 = cc.MenuItemLabel.create(label2);
+        var toggle = cc.MenuItemToggle.create( item1, item2 );
+        toggle.setCallback( this, this.onMusicToggle);
+
+        var back = cc.MenuItemFont.create("Back", this, this.onBack );
+        var menu = cc.Menu.create( toggle, back );
+        this.addChild( menu );
+        menu.alignItemsVertically();
+        menu.setPosition( centerPos );
+    },
+
+    onBack:function( sender) {
+        var scene = cc.Scene.create();
+        var layer = new MenuLayer();
+        scene.addChild( layer );
+        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
+    },
+
+    onMusicToggle:function( sender ) {
+        // music
+        if ( audioEngine.isBackgroundMusicPlaying() ) {
+            audioEngine.stopBackgroundMusic();
+        } else {
+            audioEngine.playBackgroundMusic("game-music.mp3");
+        }
     },
 });
 
@@ -939,12 +1055,8 @@ function run()
     var scene = cc.Scene.create();
 
     // main menu
-    var menu = new MainMenu();
+    var menu = new BootLayer();
     scene.addChild( menu);
-
-    // game
-//    var layer = new GameLayer();
-//    scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
     if( runningScene == null )

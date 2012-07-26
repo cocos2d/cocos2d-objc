@@ -2261,6 +2261,8 @@
 		A0E55EEF1424171E003F1E5A /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165A00E72DB470085673F /* f2.png */; };
 		A0E55EF01424171E003F1E5A /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		A0E55EF11424171E003F1E5A /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
+		A0E5F63215C0DE5300D44C32 /* About.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63115C0DE5300D44C32 /* About.ccbi */; };
+		A0E5F63715C0E0CF00D44C32 /* game-music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0E5F63615C0E0CF00D44C32 /* game-music.mp3 */; };
 		A0E6415B15AB8B8B008735E6 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E6415A15AB8B8B008735E6 /* Default-Landscape~ipad.png */; };
 		A0EC4C7F140323C500EC482A /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A091403236C00EC482A /* example_Blur.fsh */; };
 		A0EC4C80140323C500EC482A /* example_Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4A0A1403236C00EC482A /* example_Flower.fsh */; };
@@ -5066,6 +5068,8 @@
 		A0E1DBF4159E3FC20056725B /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
 		A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
 		A0E1DBF6159E3FC20056725B /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
+		A0E5F63115C0DE5300D44C32 /* About.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = About.ccbi; sourceTree = "<group>"; };
+		A0E5F63615C0E0CF00D44C32 /* game-music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "game-music.mp3"; sourceTree = "<group>"; };
 		A0E6415A15AB8B8B008735E6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "bugs/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -7467,6 +7471,7 @@
 				A091135615B7BEA2006DD5AA /* pickup_coin.wav */,
 				A091135715B7BEA2006DD5AA /* pickup_star.wav */,
 				A042994D15BA41E000509473 /* LevelComplete.wav */,
+				A0E5F63615C0E0CF00D44C32 /* game-music.mp3 */,
 				A042998E15BA4E7300509473 /* Parallax.png */,
 			);
 			name = Game;
@@ -7650,6 +7655,7 @@
 		A0644ACA15B61C75004AB807 /* CCB */ = {
 			isa = PBXGroup;
 			children = (
+				A0E5F63115C0DE5300D44C32 /* About.ccbi */,
 				A0CFE6EF15C0840200264229 /* coins-hd.plist */,
 				A0CFE6F015C0840200264229 /* coins-hd.pvr.ccz */,
 				A0CFE6F115C0840200264229 /* coins.plist */,
@@ -11831,6 +11837,8 @@
 				A012B0A915C09E5D0041E364 /* labels-ipad.pvr.gz in Resources */,
 				A012B0AA15C09E5D0041E364 /* labels.plist in Resources */,
 				A012B0AB15C09E5D0041E364 /* labels.pvr.gz in Resources */,
+				A0E5F63215C0DE5300D44C32 /* About.ccbi in Resources */,
+				A0E5F63715C0E0CF00D44C32 /* game-music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
