@@ -383,7 +383,7 @@
 						<string>FloatVar</string>
 						<key>value</key>
 						<array>
-							<real>40</real>
+							<real>30</real>
 							<real>10</real>
 						</array>
 					</dict>
@@ -417,7 +417,7 @@
 						<key>value</key>
 						<array>
 							<real>0.0</real>
-							<real>360</real>
+							<real>720</real>
 						</array>
 					</dict>
 					<dict>
@@ -439,16 +439,16 @@
 						<key>value</key>
 						<array>
 							<array>
-								<real>0.0</real>
-								<real>0.0</real>
-								<real>0.0</real>
+								<real>1</real>
+								<real>1</real>
+								<real>1</real>
 								<real>1</real>
 							</array>
 							<array>
 								<real>0.0</real>
 								<real>0.0</real>
 								<real>0.0</real>
-								<real>1</real>
+								<real>0.0</real>
 							</array>
 						</array>
 					</dict>
@@ -463,13 +463,13 @@
 								<real>1</real>
 								<real>1</real>
 								<real>1</real>
-								<real>1</real>
+								<real>0.0</real>
 							</array>
 							<array>
 								<real>0.0</real>
 								<real>0.0</real>
 								<real>0.0</real>
-								<real>1</real>
+								<real>0.0</real>
 							</array>
 						</array>
 					</dict>
@@ -534,7 +534,7 @@
 						<key>type</key>
 						<string>Texture</string>
 						<key>value</key>
-						<string>stars2.png</string>
+						<string>watermelon.png</string>
 					</dict>
 				</array>
 			</dict>
@@ -618,7 +618,7 @@
 						<key>type</key>
 						<string>Integer</string>
 						<key>value</key>
-						<integer>-1</integer>
+						<integer>50</integer>
 					</dict>
 					<dict>
 						<key>name</key>
