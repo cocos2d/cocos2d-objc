@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0450"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-               BuildableName = "Javascript.app"
-               BlueprintName = "Javascript"
+               BuildableName = "Javascript Tests.app"
+               BlueprintName = "Javascript Tests"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -33,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "Javascript.app"
-            BlueprintName = "Javascript"
+            BuildableName = "Javascript Tests.app"
+            BlueprintName = "Javascript Tests"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -47,14 +46,13 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "Javascript.app"
-            BlueprintName = "Javascript"
+            BuildableName = "Javascript Tests.app"
+            BlueprintName = "Javascript Tests"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A09C8CBA1566FB4100ADFDA9"
-            BuildableName = "Javascript.app"
-            BlueprintName = "Javascript"
+            BuildableName = "Javascript Tests.app"
+            BlueprintName = "Javascript Tests"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
