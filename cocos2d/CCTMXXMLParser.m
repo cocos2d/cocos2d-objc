@@ -229,7 +229,7 @@
 		else if( [orientationStr isEqualToString:@"hexagonal"])
 			orientation_ = CCTMXOrientationHex;
 		else
-			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %@", orientation_);
+			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %d", orientation_);
 
 		mapSize_.width = [[attributeDict valueForKey:@"width"] intValue];
 		mapSize_.height = [[attributeDict valueForKey:@"height"] intValue];

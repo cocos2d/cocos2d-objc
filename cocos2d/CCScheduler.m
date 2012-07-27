@@ -128,7 +128,7 @@ typedef struct _hashSelectorEntry
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
+	return [NSString stringWithFormat:@"<%@ = %p | target:%@ selector:(%@)>", [self class], self, [target class], NSStringFromSelector(selector)];
 }
 
 -(void) dealloc

@@ -281,7 +281,7 @@ static SEL selSortMethod = NULL;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
 			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
 			tag_,
 			atlasIndex_
