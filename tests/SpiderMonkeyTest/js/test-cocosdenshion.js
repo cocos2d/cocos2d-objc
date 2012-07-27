@@ -6,7 +6,7 @@
 // Javascript + CocosDenshion tests
 //
 //
-require("javascript-spidermonkey/helper.js");
+require("js/helper.js");
 
 director = cc.Director.getInstance();
 audioEngine = cc.AudioEngine.getInstance();
@@ -168,7 +168,7 @@ CocosDenshionTest = cc.LayerGradient.extend({
         audioEngine.setBackgroundMusicVolume(0.5);
 
         // Back button
-        var itemBack = cc.MenuItemFont.create("back", this, function() { require("javascript-spidermonkey/main.js"); } );
+        var itemBack = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
         itemBack.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
         itemBack.setFontSize( 22 );
         var menuBack = cc.Menu.create( itemBack );

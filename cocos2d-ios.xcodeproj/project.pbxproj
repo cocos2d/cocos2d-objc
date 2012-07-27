@@ -1454,7 +1454,7 @@
 		A04E860E159B6B2D00F4BE65 /* js_bindings_NS_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85F8159B6B2D00F4BE65 /* js_bindings_NS_manual.mm */; };
 		A04E860F159B6B2D00F4BE65 /* js_manual_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */; };
 		A04E8610159B6B2D00F4BE65 /* ScriptingCore.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E85FC159B6B2D00F4BE65 /* ScriptingCore.mm */; };
-		A04E8612159B6B4800F4BE65 /* javascript-spidermonkey in Resources */ = {isa = PBXBuildFile; fileRef = A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */; };
+		A04E8612159B6B4800F4BE65 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A04E8611159B6B4800F4BE65 /* js */; };
 		A04E8617159B6B6900F4BE65 /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
 		A04E8618159B6B7100F4BE65 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		A04E8619159B6B8B00F4BE65 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3877010446C6E00150883 /* OpenAL.framework */; };
@@ -2322,7 +2322,7 @@
 		A0E5F81815C1AE5F00D44C32 /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
 		A0E5F81915C1AE5F00D44C32 /* grossini_dance_14.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */; };
 		A0E5F81A15C1AE5F00D44C32 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
-		A0E5F81B15C1AE5F00D44C32 /* javascript-spidermonkey in Resources */ = {isa = PBXBuildFile; fileRef = A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */; };
+		A0E5F81B15C1AE5F00D44C32 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A04E8611159B6B4800F4BE65 /* js */; };
 		A0E5F81C15C1AE5F00D44C32 /* README.markdown in Resources */ = {isa = PBXBuildFile; fileRef = A04E8674159B707C00F4BE65 /* README.markdown */; };
 		A0E5F81D15C1AE5F00D44C32 /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */; };
 		A0E5F81E15C1AE5F00D44C32 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
@@ -4934,7 +4934,7 @@
 		A04E85FA159B6B2D00F4BE65 /* js_manual_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_manual_conversions.mm; sourceTree = "<group>"; };
 		A04E85FB159B6B2D00F4BE65 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		A04E85FC159B6B2D00F4BE65 /* ScriptingCore.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ScriptingCore.mm; sourceTree = "<group>"; };
-		A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "javascript-spidermonkey"; sourceTree = "<group>"; };
+		A04E8611159B6B4800F4BE65 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		A04E8672159B707C00F4BE65 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		A04E8673159B707C00F4BE65 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		A04E8674159B707C00F4BE65 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
@@ -7756,7 +7756,7 @@
 		A04E85D6159B6B2D00F4BE65 /* SpiderMonkeyTest */ = {
 			isa = PBXGroup;
 			children = (
-				A04E8611159B6B4800F4BE65 /* javascript-spidermonkey */,
+				A04E8611159B6B4800F4BE65 /* js */,
 				A01D0A40159E8AEC0029EE77 /* js_bindings_cocos2d_classes_registration.h */,
 				A01D0A41159E8AEC0029EE77 /* js_bindings_cocos2d_classes.h */,
 				A01D0A42159E8AEC0029EE77 /* js_bindings_cocos2d_classes.mm */,
@@ -12016,7 +12016,7 @@
 				A0D6C025159B6A25008EED97 /* grossini_dance_13.png in Resources */,
 				A0D6C026159B6A25008EED97 /* grossini_dance_14.png in Resources */,
 				A0D6C027159B6A25008EED97 /* fps_images-ipadhd.png in Resources */,
-				A04E8612159B6B4800F4BE65 /* javascript-spidermonkey in Resources */,
+				A04E8612159B6B4800F4BE65 /* js in Resources */,
 				A04E8676159B707C00F4BE65 /* README.markdown in Resources */,
 				A00495DC159B8B1500B5D4DF /* tuffy_bold_italic-charmap.png in Resources */,
 				A00495DD159B8B1500B5D4DF /* tuffy_bold_italic-charmap.plist in Resources */,
@@ -12183,7 +12183,7 @@
 				A0E5F81815C1AE5F00D44C32 /* grossini_dance_13.png in Resources */,
 				A0E5F81915C1AE5F00D44C32 /* grossini_dance_14.png in Resources */,
 				A0E5F81A15C1AE5F00D44C32 /* fps_images-ipadhd.png in Resources */,
-				A0E5F81B15C1AE5F00D44C32 /* javascript-spidermonkey in Resources */,
+				A0E5F81B15C1AE5F00D44C32 /* js in Resources */,
 				A0E5F81C15C1AE5F00D44C32 /* README.markdown in Resources */,
 				A0E5F81D15C1AE5F00D44C32 /* tuffy_bold_italic-charmap.png in Resources */,
 				A0E5F81E15C1AE5F00D44C32 /* tuffy_bold_italic-charmap.plist in Resources */,
