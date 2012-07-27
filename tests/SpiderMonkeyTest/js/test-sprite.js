@@ -4,7 +4,7 @@
 // Javascript + cocos2d sprite tests
 //
 
-require("javascript-spidermonkey/helper.js");
+require("js/helper.js");
 
 director = cc.Director.getInstance();
 _winSize = director.getWinSize();
@@ -98,7 +98,7 @@ BaseLayer.prototype.onEnter = function() {
     var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
     var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
     var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
-    var item4 = cc.MenuItemFont.create("back", this, function() { require("javascript-spidermonkey/main.js"); } );
+    var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
     item4.setFontSize( 22 );
 
     var menu = cc.Menu.create(item1, item2, item3, item4 );
