@@ -315,12 +315,12 @@ static CCDirector *_sharedDirector = nil;
 
 		// set size
 		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view_ bounds].size );
-
-		[self createStatsLabel];
 		
 		// it could be nil
-		if( view )
+		if( view ) {
+            [self createStatsLabel];
 			[self setGLDefaultValues];
+        }
 
 		CHECK_GL_ERROR_DEBUG();
 	}
