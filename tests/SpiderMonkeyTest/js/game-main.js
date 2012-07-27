@@ -33,7 +33,7 @@
 // THE SOFTWARE.
 //
 
-require("javascript-spidermonkey/helper.js");
+require("js/helper.js");
 
 // Z Orders (grouped by parent)
 
