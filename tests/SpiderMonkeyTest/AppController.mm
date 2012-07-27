@@ -217,9 +217,9 @@
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
 	if( [name isEqual:@"Javascript Game"] )
-		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
+		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
 	else 
-		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];	
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
 
 }
 @end
