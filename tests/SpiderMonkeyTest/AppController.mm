@@ -216,11 +216,12 @@
 	
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
-	if( [name isEqual:@"Javascript Game"] )
+	if( [name isEqual:@"JS Watermelon"] )
 		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
-	else 
+	else if( [name isEqual:@"JS Tests"] )
 		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
-
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];	
 }
 @end
 

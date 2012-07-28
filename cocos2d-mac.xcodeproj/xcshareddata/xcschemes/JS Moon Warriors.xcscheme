@@ -13,9 +13,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A0E5F8B115C1B21700D44C32"
-               BuildableName = "Javascript Game.app"
-               BlueprintName = "Javascript Game"
+               BlueprintIdentifier = "A0D467EF15C339E100588ADE"
+               BuildableName = "JS Moon Warriors.app"
+               BlueprintName = "JS Moon Warriors"
                ReferencedContainer = "container:cocos2d-mac.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -31,9 +31,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A0E5F8B115C1B21700D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BlueprintIdentifier = "A0D467EF15C339E100588ADE"
+            BuildableName = "JS Moon Warriors.app"
+            BlueprintName = "JS Moon Warriors"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -50,9 +50,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A0E5F8B115C1B21700D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BlueprintIdentifier = "A0D467EF15C339E100588ADE"
+            BuildableName = "JS Moon Warriors.app"
+            BlueprintName = "JS Moon Warriors"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -68,9 +68,9 @@
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "A0E5F8B115C1B21700D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BlueprintIdentifier = "A0D467EF15C339E100588ADE"
+            BuildableName = "JS Moon Warriors.app"
+            BlueprintName = "JS Moon Warriors"
             ReferencedContainer = "container:cocos2d-mac.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

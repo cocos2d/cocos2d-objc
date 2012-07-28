@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A00193FD15C3786B00F3D80E /* PBXTargetDependency */,
+				A00193FF15C3786B00F3D80E /* PBXTargetDependency */,
 				A0137E6115ABB7C3000AA1C2 /* PBXTargetDependency */,
 				A0137E6315ABB7C3000AA1C2 /* PBXTargetDependency */,
 				A098134014B9DECD004812AD /* PBXTargetDependency */,
@@ -2252,6 +2254,89 @@
 		A0CFE6A215BF592400264229 /* jsproto.tbl in Resources */ = {isa = PBXBuildFile; fileRef = A0CFE68715BF592400264229 /* jsproto.tbl */; };
 		A0D467B615C31E1C00588ADE /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D467B515C31E1C00588ADE /* js */; };
 		A0D467B715C31E1C00588ADE /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D467B515C31E1C00588ADE /* js */; };
+		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
+		A0D4682A15C339E100588ADE /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D467B515C31E1C00588ADE /* js */; };
+		A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
+		A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
+		A0D4682E15C339E100588ADE /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
+		A0D4682F15C339E100588ADE /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
+		A0D4683015C339E100588ADE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
+		A0D4683115C339E100588ADE /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A0D4683215C339E100588ADE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
+		A0D4683315C339E100588ADE /* js_manual_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0BCD71A157FDBC700CCE291 /* js_manual_conversions.mm */; };
+		A0D4683415C339E100588ADE /* js_bindings_chipmunk_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A02F6E40159157AA000975D7 /* js_bindings_chipmunk_functions.mm */; };
+		A0D4683515C339E100588ADE /* ChipmunkSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B95C159A5534002E68D1 /* ChipmunkSprite.m */; };
+		A0D4683615C339E100588ADE /* js_bindings_CocosDenshion_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B961159A5534002E68D1 /* js_bindings_CocosDenshion_classes.mm */; };
+		A0D4683715C339E100588ADE /* js_bindings_cocos2d_mac_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E8679159B813C00F4BE65 /* js_bindings_cocos2d_mac_classes.mm */; };
+		A0D4683815C339E100588ADE /* js_bindings_cocos2d_mac_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A04E867C159B813C00F4BE65 /* js_bindings_cocos2d_mac_functions.mm */; };
+		A0D4683915C339E100588ADE /* js_bindings_cocos2d_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3A159E82EA0029EE77 /* js_bindings_cocos2d_classes.mm */; };
+		A0D4683A15C339E100588ADE /* js_bindings_cocos2d_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A3D159E82EA0029EE77 /* js_bindings_cocos2d_functions.mm */; };
+		A0D4683B15C339E100588ADE /* js_bindings_NS_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A01D0A8E159FF8600029EE77 /* js_bindings_NS_manual.mm */; };
+		A0D4683C15C339E100588ADE /* js_bindings_cocos2d_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0F3EBCD15A64D12001972B4 /* js_bindings_cocos2d_manual.mm */; };
+		A0D4683D15C339E100588ADE /* js_bindings_CocosBuilderReader_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0644A6E15B60B01004AB807 /* js_bindings_CocosBuilderReader_classes.mm */; };
+		A0D4683E15C339E100588ADE /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0644ADE15B62314004AB807 /* js_bindings_CocosBuilderReader_manual.mm */; };
+		A0D4683F15C339E100588ADE /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A091136B15B8A001006DD5AA /* ChipmunkDebugNode.m */; };
+		A0D4684015C339E100588ADE /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0CFE66015BF0E6500264229 /* AppController.mm */; };
+		A0D4684115C339E100588ADE /* ScriptingCore.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0CFE66215BF0E7900264229 /* ScriptingCore.mm */; };
+		A0D4684215C339E100588ADE /* js_bindings_chipmunk_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0CFE66415BF0EB800264229 /* js_bindings_chipmunk_manual.mm */; };
+		A0D4684415C339E100588ADE /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */; };
+		A0D4684515C339E100588ADE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04E862B159B6E5800F4BE65 /* AudioToolbox.framework */; };
+		A0D4684615C339E100588ADE /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04E8629159B6E4C00F4BE65 /* OpenAL.framework */; };
+		A0D4684715C339E100588ADE /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */; };
+		A0D4684815C339E100588ADE /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8A614A51386002DF395 /* libchipmunk.a */; };
+		A0D4684915C339E100588ADE /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		A0D4684A15C339E100588ADE /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		A0D4684B15C339E100588ADE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
+		A0D4684C15C339E100588ADE /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E663D121CA00A001A484F /* libcocos2d.a */; };
+		A0D4684D15C339E100588ADE /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
+		A0D4684E15C339E100588ADE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
+		A0D4684F15C339E100588ADE /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
+		A0D4685015C339E100588ADE /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A01D2CC2158BF30F005FCA72 /* libjs_static.a */; };
+		A0D4688C15C33B3A00588ADE /* MoonWarriors.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4685915C33B3A00588ADE /* MoonWarriors.js */; };
+		A0D4688E15C33B3A00588ADE /* b01.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4685C15C33B3A00588ADE /* b01.png */; };
+		A0D4688F15C33B3A00588ADE /* bg01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4685D15C33B3A00588ADE /* bg01.jpg */; };
+		A0D4689015C33B3A00588ADE /* bullet.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0D4685E15C33B3A00588ADE /* bullet.plist */; };
+		A0D4689115C33B3A00588ADE /* bullet.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4685F15C33B3A00588ADE /* bullet.png */; };
+		A0D4689215C33B3A00588ADE /* cocos2d-html5.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686015C33B3A00588ADE /* cocos2d-html5.png */; };
+		A0D4689315C33B3A00588ADE /* Enemy.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686115C33B3A00588ADE /* Enemy.plist */; };
+		A0D4689415C33B3A00588ADE /* Enemy.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686215C33B3A00588ADE /* Enemy.png */; };
+		A0D4689515C33B3A00588ADE /* explode1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686315C33B3A00588ADE /* explode1.jpg */; };
+		A0D4689615C33B3A00588ADE /* explode2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686415C33B3A00588ADE /* explode2.jpg */; };
+		A0D4689715C33B3A00588ADE /* explode3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686515C33B3A00588ADE /* explode3.jpg */; };
+		A0D4689815C33B3A00588ADE /* explosion.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686615C33B3A00588ADE /* explosion.plist */; };
+		A0D4689915C33B3A00588ADE /* explosion.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686715C33B3A00588ADE /* explosion.png */; };
+		A0D4689A15C33B3A00588ADE /* flare.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686815C33B3A00588ADE /* flare.jpg */; };
+		A0D4689B15C33B3A00588ADE /* gameOver.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686915C33B3A00588ADE /* gameOver.png */; };
+		A0D4689C15C33B3A00588ADE /* hit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686A15C33B3A00588ADE /* hit.jpg */; };
+		A0D4689D15C33B3A00588ADE /* level01.tmx in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686B15C33B3A00588ADE /* level01.tmx */; };
+		A0D4689E15C33B3A00588ADE /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686C15C33B3A00588ADE /* loading.png */; };
+		A0D4689F15C33B3A00588ADE /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686D15C33B3A00588ADE /* logo.png */; };
+		A0D468A015C33B3A00588ADE /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686E15C33B3A00588ADE /* menu.png */; };
+		A0D468A115C33B3A00588ADE /* menuTitle.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4686F15C33B3A00588ADE /* menuTitle.png */; };
+		A0D468A215C33B3A00588ADE /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687115C33B3A00588ADE /* bgMusic.mp3 */; };
+		A0D468A315C33B3A00588ADE /* buttonEffet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687215C33B3A00588ADE /* buttonEffet.mp3 */; };
+		A0D468A415C33B3A00588ADE /* explodeEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687315C33B3A00588ADE /* explodeEffect.mp3 */; };
+		A0D468A515C33B3A00588ADE /* fireEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687415C33B3A00588ADE /* fireEffect.mp3 */; };
+		A0D468A615C33B3A00588ADE /* mainMainMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687515C33B3A00588ADE /* mainMainMusic.mp3 */; };
+		A0D468A715C33B3A00588ADE /* shipDestroyEffect.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687615C33B3A00588ADE /* shipDestroyEffect.mp3 */; };
+		A0D468A815C33B3A00588ADE /* ship01.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687715C33B3A00588ADE /* ship01.png */; };
+		A0D468A915C33B3A00588ADE /* AboutLayer.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687915C33B3A00588ADE /* AboutLayer.js */; };
+		A0D468AA15C33B3A00588ADE /* AppDelegate.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687A15C33B3A00588ADE /* AppDelegate.js */; };
+		A0D468AB15C33B3A00588ADE /* Bullet.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687B15C33B3A00588ADE /* Bullet.js */; };
+		A0D468AC15C33B3A00588ADE /* EnemyType.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687D15C33B3A00588ADE /* EnemyType.js */; };
+		A0D468AD15C33B3A00588ADE /* global.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687E15C33B3A00588ADE /* global.js */; };
+		A0D468AE15C33B3A00588ADE /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4687F15C33B3A00588ADE /* Level.js */; };
+		A0D468AF15C33B3A00588ADE /* Effect.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688015C33B3A00588ADE /* Effect.js */; };
+		A0D468B015C33B3A00588ADE /* Enemy.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688115C33B3A00588ADE /* Enemy.js */; };
+		A0D468B115C33B3A00588ADE /* Explosion.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688215C33B3A00588ADE /* Explosion.js */; };
+		A0D468B215C33B3A00588ADE /* GameControlMenu.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688315C33B3A00588ADE /* GameControlMenu.js */; };
+		A0D468B315C33B3A00588ADE /* GameLayer.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688415C33B3A00588ADE /* GameLayer.js */; };
+		A0D468B415C33B3A00588ADE /* GameOver.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688515C33B3A00588ADE /* GameOver.js */; };
+		A0D468B515C33B3A00588ADE /* LevelManager.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688615C33B3A00588ADE /* LevelManager.js */; };
+		A0D468B615C33B3A00588ADE /* Resource.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688715C33B3A00588ADE /* Resource.js */; };
+		A0D468B715C33B3A00588ADE /* SettingsLayer.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688815C33B3A00588ADE /* SettingsLayer.js */; };
+		A0D468B815C33B3A00588ADE /* Ship.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688915C33B3A00588ADE /* Ship.js */; };
+		A0D468B915C33B3A00588ADE /* SysMenu.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D4688A15C33B3A00588ADE /* SysMenu.js */; };
 		A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */; };
 		A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */; };
 		A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
@@ -5394,6 +5479,20 @@
 			remoteGlobalIDString = 4AD3B7DD159A5415002E68D1;
 			remoteInfo = CocosDenshion;
 		};
+		A00193FC15C3786B00F3D80E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0E5F8B115C1B21700D44C32;
+			remoteInfo = "JS Watermelon";
+		};
+		A00193FE15C3786B00F3D80E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0D467EF15C339E100588ADE;
+			remoteInfo = "JS Moon Warriors";
+		};
 		A009433115181C8D0029A5C6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -5680,6 +5779,41 @@
 			proxyType = 1;
 			remoteGlobalIDString = E01E663C121CA00A001A484F;
 			remoteInfo = cocos2d;
+		};
+		A0D467F115C339E100588ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0644A1415B609D3004AB807;
+			remoteInfo = CocosBuilderReader;
+		};
+		A0D467F315C339E100588ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4AD3B7DD159A5415002E68D1;
+			remoteInfo = CocosDenshion;
+		};
+		A0D467F515C339E100588ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0FBA8A514A51386002DF395;
+			remoteInfo = chipmunk;
+		};
+		A0D467F715C339E100588ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E01E663C121CA00A001A484F;
+			remoteInfo = cocos2d;
+		};
+		A0D467F915C339E100588ADE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E076EDB81225FEAA00DE0DA2;
+			remoteInfo = libpng;
 		};
 		A0E5F8B315C1B21700D44C32 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -6309,7 +6443,7 @@
 		A098125C14B9DE3A004812AD /* SceneTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SceneTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A098133C14B9DE55004812AD /* RotateWorldTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RotateWorldTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A098134B14B9E0C1004812AD /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
-		A09C8D3E1566FB4100ADFDA9 /* Javascript Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Javascript Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A09C8D3E1566FB4100ADFDA9 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A09C8D911567165B00ADFDA9 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
@@ -6422,6 +6556,53 @@
 		A0CFE69E15BF592400264229 /* Types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Types.h; sourceTree = "<group>"; };
 		A0CFE69F15BF592400264229 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		A0D467B515C31E1C00588ADE /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0D4685615C339E100588ADE /* Javascript Game copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Javascript Game copy-Info.plist"; path = "/Users/rquesada/progs/cocos2d-iphone/Javascript Game copy-Info.plist"; sourceTree = "<absolute>"; };
+		A0D4685915C33B3A00588ADE /* MoonWarriors.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MoonWarriors.js; sourceTree = "<group>"; };
+		A0D4685C15C33B3A00588ADE /* b01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b01.png; sourceTree = "<group>"; };
+		A0D4685D15C33B3A00588ADE /* bg01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg01.jpg; sourceTree = "<group>"; };
+		A0D4685E15C33B3A00588ADE /* bullet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = bullet.plist; sourceTree = "<group>"; };
+		A0D4685F15C33B3A00588ADE /* bullet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bullet.png; sourceTree = "<group>"; };
+		A0D4686015C33B3A00588ADE /* cocos2d-html5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cocos2d-html5.png"; sourceTree = "<group>"; };
+		A0D4686115C33B3A00588ADE /* Enemy.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Enemy.plist; sourceTree = "<group>"; };
+		A0D4686215C33B3A00588ADE /* Enemy.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Enemy.png; sourceTree = "<group>"; };
+		A0D4686315C33B3A00588ADE /* explode1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = explode1.jpg; sourceTree = "<group>"; };
+		A0D4686415C33B3A00588ADE /* explode2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = explode2.jpg; sourceTree = "<group>"; };
+		A0D4686515C33B3A00588ADE /* explode3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = explode3.jpg; sourceTree = "<group>"; };
+		A0D4686615C33B3A00588ADE /* explosion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = explosion.plist; sourceTree = "<group>"; };
+		A0D4686715C33B3A00588ADE /* explosion.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = explosion.png; sourceTree = "<group>"; };
+		A0D4686815C33B3A00588ADE /* flare.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = flare.jpg; sourceTree = "<group>"; };
+		A0D4686915C33B3A00588ADE /* gameOver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameOver.png; sourceTree = "<group>"; };
+		A0D4686A15C33B3A00588ADE /* hit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hit.jpg; sourceTree = "<group>"; };
+		A0D4686B15C33B3A00588ADE /* level01.tmx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = level01.tmx; sourceTree = "<group>"; };
+		A0D4686C15C33B3A00588ADE /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading.png; sourceTree = "<group>"; };
+		A0D4686D15C33B3A00588ADE /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		A0D4686E15C33B3A00588ADE /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		A0D4686F15C33B3A00588ADE /* menuTitle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menuTitle.png; sourceTree = "<group>"; };
+		A0D4687115C33B3A00588ADE /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bgMusic.mp3; sourceTree = "<group>"; };
+		A0D4687215C33B3A00588ADE /* buttonEffet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = buttonEffet.mp3; sourceTree = "<group>"; };
+		A0D4687315C33B3A00588ADE /* explodeEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = explodeEffect.mp3; sourceTree = "<group>"; };
+		A0D4687415C33B3A00588ADE /* fireEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = fireEffect.mp3; sourceTree = "<group>"; };
+		A0D4687515C33B3A00588ADE /* mainMainMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mainMainMusic.mp3; sourceTree = "<group>"; };
+		A0D4687615C33B3A00588ADE /* shipDestroyEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shipDestroyEffect.mp3; sourceTree = "<group>"; };
+		A0D4687715C33B3A00588ADE /* ship01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship01.png; sourceTree = "<group>"; };
+		A0D4687915C33B3A00588ADE /* AboutLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AboutLayer.js; sourceTree = "<group>"; };
+		A0D4687A15C33B3A00588ADE /* AppDelegate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AppDelegate.js; sourceTree = "<group>"; };
+		A0D4687B15C33B3A00588ADE /* Bullet.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Bullet.js; sourceTree = "<group>"; };
+		A0D4687D15C33B3A00588ADE /* EnemyType.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EnemyType.js; sourceTree = "<group>"; };
+		A0D4687E15C33B3A00588ADE /* global.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = global.js; sourceTree = "<group>"; };
+		A0D4687F15C33B3A00588ADE /* Level.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Level.js; sourceTree = "<group>"; };
+		A0D4688015C33B3A00588ADE /* Effect.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Effect.js; sourceTree = "<group>"; };
+		A0D4688115C33B3A00588ADE /* Enemy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Enemy.js; sourceTree = "<group>"; };
+		A0D4688215C33B3A00588ADE /* Explosion.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Explosion.js; sourceTree = "<group>"; };
+		A0D4688315C33B3A00588ADE /* GameControlMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameControlMenu.js; sourceTree = "<group>"; };
+		A0D4688415C33B3A00588ADE /* GameLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameLayer.js; sourceTree = "<group>"; };
+		A0D4688515C33B3A00588ADE /* GameOver.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameOver.js; sourceTree = "<group>"; };
+		A0D4688615C33B3A00588ADE /* LevelManager.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LevelManager.js; sourceTree = "<group>"; };
+		A0D4688715C33B3A00588ADE /* Resource.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Resource.js; sourceTree = "<group>"; };
+		A0D4688815C33B3A00588ADE /* SettingsLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SettingsLayer.js; sourceTree = "<group>"; };
+		A0D4688915C33B3A00588ADE /* Ship.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Ship.js; sourceTree = "<group>"; };
+		A0D4688A15C33B3A00588ADE /* SysMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SysMenu.js; sourceTree = "<group>"; };
 		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
@@ -6436,7 +6617,7 @@
 		A0E5F63815C10F6100D44C32 /* watermelon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watermelon.png; sourceTree = "<group>"; };
 		A0E5F63C15C111E400D44C32 /* car_smoke.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = car_smoke.plist; sourceTree = "<group>"; };
 		A0E5F64815C1231700D44C32 /* Parallax.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = Parallax.pvr.gz; sourceTree = "<group>"; };
-		A0E5F98515C1B21800D44C32 /* Javascript Game.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Javascript Game.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0E5F98515C1B21800D44C32 /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0EC4CA21403278200EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4CA31403278200EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -7133,6 +7314,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A0D4684315C339E100588ADE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0D4684415C339E100588ADE /* libCocosBuilderReader.a in Frameworks */,
+				A0D4684515C339E100588ADE /* AudioToolbox.framework in Frameworks */,
+				A0D4684615C339E100588ADE /* OpenAL.framework in Frameworks */,
+				A0D4684715C339E100588ADE /* libCocosDenshion.a in Frameworks */,
+				A0D4684815C339E100588ADE /* libchipmunk.a in Frameworks */,
+				A0D4684915C339E100588ADE /* Cocoa.framework in Frameworks */,
+				A0D4684A15C339E100588ADE /* OpenGL.framework in Frameworks */,
+				A0D4684B15C339E100588ADE /* QuartzCore.framework in Frameworks */,
+				A0D4684C15C339E100588ADE /* libcocos2d.a in Frameworks */,
+				A0D4684D15C339E100588ADE /* ApplicationServices.framework in Frameworks */,
+				A0D4684E15C339E100588ADE /* libz.dylib in Frameworks */,
+				A0D4684F15C339E100588ADE /* liblibpng.a in Frameworks */,
+				A0D4685015C339E100588ADE /* libjs_static.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0E5F97415C1B21700D44C32 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -7448,10 +7649,11 @@
 				A098125C14B9DE3A004812AD /* SceneTest.app */,
 				A098133C14B9DE55004812AD /* RotateWorldTest.app */,
 				A009440015181C8D0029A5C6 /* MultithreadTest.app */,
-				A09C8D3E1566FB4100ADFDA9 /* Javascript Tests.app */,
+				A09C8D3E1566FB4100ADFDA9 /* JS Tests.app */,
 				4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */,
 				A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */,
-				A0E5F98515C1B21800D44C32 /* Javascript Game.app */,
+				A0E5F98515C1B21800D44C32 /* JS Watermelon.app */,
+				A0D4685415C339E100588ADE /* JS Moon Warriors.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -7478,6 +7680,7 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				A0D4685615C339E100588ADE /* Javascript Game copy-Info.plist */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";
@@ -8198,6 +8401,91 @@
 			path = mozilla;
 			sourceTree = "<group>";
 		};
+		A0D4685715C33B3A00588ADE /* MoonWarriors */ = {
+			isa = PBXGroup;
+			children = (
+				A0D4685915C33B3A00588ADE /* MoonWarriors.js */,
+				A0D4685B15C33B3A00588ADE /* res */,
+				A0D4687815C33B3A00588ADE /* src */,
+			);
+			name = MoonWarriors;
+			path = tests/MoonWarriors;
+			sourceTree = "<group>";
+		};
+		A0D4685B15C33B3A00588ADE /* res */ = {
+			isa = PBXGroup;
+			children = (
+				A0D4685C15C33B3A00588ADE /* b01.png */,
+				A0D4685D15C33B3A00588ADE /* bg01.jpg */,
+				A0D4685E15C33B3A00588ADE /* bullet.plist */,
+				A0D4685F15C33B3A00588ADE /* bullet.png */,
+				A0D4686015C33B3A00588ADE /* cocos2d-html5.png */,
+				A0D4686115C33B3A00588ADE /* Enemy.plist */,
+				A0D4686215C33B3A00588ADE /* Enemy.png */,
+				A0D4686315C33B3A00588ADE /* explode1.jpg */,
+				A0D4686415C33B3A00588ADE /* explode2.jpg */,
+				A0D4686515C33B3A00588ADE /* explode3.jpg */,
+				A0D4686615C33B3A00588ADE /* explosion.plist */,
+				A0D4686715C33B3A00588ADE /* explosion.png */,
+				A0D4686815C33B3A00588ADE /* flare.jpg */,
+				A0D4686915C33B3A00588ADE /* gameOver.png */,
+				A0D4686A15C33B3A00588ADE /* hit.jpg */,
+				A0D4686B15C33B3A00588ADE /* level01.tmx */,
+				A0D4686C15C33B3A00588ADE /* loading.png */,
+				A0D4686D15C33B3A00588ADE /* logo.png */,
+				A0D4686E15C33B3A00588ADE /* menu.png */,
+				A0D4686F15C33B3A00588ADE /* menuTitle.png */,
+				A0D4687015C33B3A00588ADE /* Music */,
+				A0D4687715C33B3A00588ADE /* ship01.png */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		A0D4687015C33B3A00588ADE /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				A0D4687115C33B3A00588ADE /* bgMusic.mp3 */,
+				A0D4687215C33B3A00588ADE /* buttonEffet.mp3 */,
+				A0D4687315C33B3A00588ADE /* explodeEffect.mp3 */,
+				A0D4687415C33B3A00588ADE /* fireEffect.mp3 */,
+				A0D4687515C33B3A00588ADE /* mainMainMusic.mp3 */,
+				A0D4687615C33B3A00588ADE /* shipDestroyEffect.mp3 */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		A0D4687815C33B3A00588ADE /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A0D4687915C33B3A00588ADE /* AboutLayer.js */,
+				A0D4687A15C33B3A00588ADE /* AppDelegate.js */,
+				A0D4687B15C33B3A00588ADE /* Bullet.js */,
+				A0D4687C15C33B3A00588ADE /* config */,
+				A0D4688015C33B3A00588ADE /* Effect.js */,
+				A0D4688115C33B3A00588ADE /* Enemy.js */,
+				A0D4688215C33B3A00588ADE /* Explosion.js */,
+				A0D4688315C33B3A00588ADE /* GameControlMenu.js */,
+				A0D4688415C33B3A00588ADE /* GameLayer.js */,
+				A0D4688515C33B3A00588ADE /* GameOver.js */,
+				A0D4688615C33B3A00588ADE /* LevelManager.js */,
+				A0D4688715C33B3A00588ADE /* Resource.js */,
+				A0D4688815C33B3A00588ADE /* SettingsLayer.js */,
+				A0D4688915C33B3A00588ADE /* Ship.js */,
+				A0D4688A15C33B3A00588ADE /* SysMenu.js */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		A0D4687C15C33B3A00588ADE /* config */ = {
+			isa = PBXGroup;
+			children = (
+				A0D4687D15C33B3A00588ADE /* EnemyType.js */,
+				A0D4687E15C33B3A00588ADE /* global.js */,
+				A0D4687F15C33B3A00588ADE /* Level.js */,
+			);
+			path = config;
+			sourceTree = "<group>";
+		};
 		A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -8283,6 +8571,7 @@
 		E076E4531225C53300DE0DA2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A0D4685715C33B3A00588ADE /* MoonWarriors */,
 				A044439514A6027B00E62742 /* Box2dTest Helper */,
 				A09C8D8D156715F700ADFDA9 /* Javascript */,
 				A04443E014A91DB600E62742 /* BaseAppController.h */,
@@ -9495,9 +9784,9 @@
 			productReference = A098133C14B9DE55004812AD /* RotateWorldTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A09C8CBA1566FB4100ADFDA9 /* Javascript Tests */ = {
+		A09C8CBA1566FB4100ADFDA9 /* JS Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A09C8D3B1566FB4100ADFDA9 /* Build configuration list for PBXNativeTarget "Javascript Tests" */;
+			buildConfigurationList = A09C8D3B1566FB4100ADFDA9 /* Build configuration list for PBXNativeTarget "JS Tests" */;
 			buildPhases = (
 				A09C8CBF1566FB4100ADFDA9 /* Resources */,
 				A09C8D271566FB4100ADFDA9 /* Sources */,
@@ -9512,10 +9801,10 @@
 				A09C8CBB1566FB4100ADFDA9 /* PBXTargetDependency */,
 				A09C8CBD1566FB4100ADFDA9 /* PBXTargetDependency */,
 			);
-			name = "Javascript Tests";
+			name = "JS Tests";
 			productInstallPath = "$(HOME)/Applications";
 			productName = "cocos2d-mac";
-			productReference = A09C8D3E1566FB4100ADFDA9 /* Javascript Tests.app */;
+			productReference = A09C8D3E1566FB4100ADFDA9 /* JS Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A0ADEF6014584BD3009A71F1 /* ShaderTest */ = {
@@ -9537,9 +9826,32 @@
 			productReference = A0ADF04414584BD3009A71F1 /* ShaderTest.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A0E5F8B115C1B21700D44C32 /* Javascript Game */ = {
+		A0D467EF15C339E100588ADE /* JS Moon Warriors */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A0E5F98215C1B21700D44C32 /* Build configuration list for PBXNativeTarget "Javascript Game" */;
+			buildConfigurationList = A0D4685115C339E100588ADE /* Build configuration list for PBXNativeTarget "JS Moon Warriors" */;
+			buildPhases = (
+				A0D467FA15C339E100588ADE /* Resources */,
+				A0D4682B15C339E100588ADE /* Sources */,
+				A0D4684315C339E100588ADE /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0D467F015C339E100588ADE /* PBXTargetDependency */,
+				A0D467F215C339E100588ADE /* PBXTargetDependency */,
+				A0D467F415C339E100588ADE /* PBXTargetDependency */,
+				A0D467F615C339E100588ADE /* PBXTargetDependency */,
+				A0D467F815C339E100588ADE /* PBXTargetDependency */,
+			);
+			name = "JS Moon Warriors";
+			productInstallPath = "$(HOME)/Applications";
+			productName = "cocos2d-mac";
+			productReference = A0D4685415C339E100588ADE /* JS Moon Warriors.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A0E5F8B115C1B21700D44C32 /* JS Watermelon */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0E5F98215C1B21700D44C32 /* Build configuration list for PBXNativeTarget "JS Watermelon" */;
 			buildPhases = (
 				A0E5F8BC15C1B21700D44C32 /* Resources */,
 				A0E5F95C15C1B21700D44C32 /* Sources */,
@@ -9554,10 +9866,10 @@
 				A0E5F8B815C1B21700D44C32 /* PBXTargetDependency */,
 				A0E5F8BA15C1B21700D44C32 /* PBXTargetDependency */,
 			);
-			name = "Javascript Game";
+			name = "JS Watermelon";
 			productInstallPath = "$(HOME)/Applications";
 			productName = "cocos2d-mac";
-			productReference = A0E5F98515C1B21800D44C32 /* Javascript Game.app */;
+			productReference = A0E5F98515C1B21800D44C32 /* JS Watermelon.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A0FBA8A514A51386002DF395 /* chipmunk */ = {
@@ -9958,8 +10270,9 @@
 				E0B92E111226A621003FF67E /* EffectsAdvancedTest */,
 				E0D2CDF912B93736008D5DBB /* EventsTest */,
 				E0DA425B12A03A3C00210ACE /* FullScreenTest */,
-				A09C8CBA1566FB4100ADFDA9 /* Javascript Tests */,
-				A0E5F8B115C1B21700D44C32 /* Javascript Game */,
+				A09C8CBA1566FB4100ADFDA9 /* JS Tests */,
+				A0E5F8B115C1B21700D44C32 /* JS Watermelon */,
+				A0D467EF15C339E100588ADE /* JS Moon Warriors */,
 				E0AC084812280B7000EFA814 /* LabelTest */,
 				A098109F14B9DE1B004812AD /* LayerTest */,
 				E076E3771225C4BE00DE0DA2 /* MenuTest */,
@@ -11869,6 +12182,60 @@
 				A0F17003150FFB2A00CE6E92 /* example_Plasma.vsh in Resources */,
 				A0F17004150FFB2A00CE6E92 /* example_Twist.fsh in Resources */,
 				A0F17005150FFB2A00CE6E92 /* example_Twist.vsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0D467FA15C339E100588ADE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0D4688C15C33B3A00588ADE /* MoonWarriors.js in Resources */,
+				A0D468A915C33B3A00588ADE /* AboutLayer.js in Resources */,
+				A0D468AA15C33B3A00588ADE /* AppDelegate.js in Resources */,
+				A0D468AB15C33B3A00588ADE /* Bullet.js in Resources */,
+				A0D468AC15C33B3A00588ADE /* EnemyType.js in Resources */,
+				A0D468AD15C33B3A00588ADE /* global.js in Resources */,
+				A0D468AE15C33B3A00588ADE /* Level.js in Resources */,
+				A0D468AF15C33B3A00588ADE /* Effect.js in Resources */,
+				A0D468B015C33B3A00588ADE /* Enemy.js in Resources */,
+				A0D468B115C33B3A00588ADE /* Explosion.js in Resources */,
+				A0D468B215C33B3A00588ADE /* GameControlMenu.js in Resources */,
+				A0D468B315C33B3A00588ADE /* GameLayer.js in Resources */,
+				A0D468B415C33B3A00588ADE /* GameOver.js in Resources */,
+				A0D468B515C33B3A00588ADE /* LevelManager.js in Resources */,
+				A0D468B615C33B3A00588ADE /* Resource.js in Resources */,
+				A0D468B715C33B3A00588ADE /* SettingsLayer.js in Resources */,
+				A0D468B815C33B3A00588ADE /* Ship.js in Resources */,
+				A0D468B915C33B3A00588ADE /* SysMenu.js in Resources */,
+				A0D467FB15C339E100588ADE /* fps_images.png in Resources */,
+				A0D4682A15C339E100588ADE /* js in Resources */,
+				A0D4688E15C33B3A00588ADE /* b01.png in Resources */,
+				A0D4688F15C33B3A00588ADE /* bg01.jpg in Resources */,
+				A0D4689015C33B3A00588ADE /* bullet.plist in Resources */,
+				A0D4689115C33B3A00588ADE /* bullet.png in Resources */,
+				A0D4689215C33B3A00588ADE /* cocos2d-html5.png in Resources */,
+				A0D4689315C33B3A00588ADE /* Enemy.plist in Resources */,
+				A0D4689415C33B3A00588ADE /* Enemy.png in Resources */,
+				A0D4689515C33B3A00588ADE /* explode1.jpg in Resources */,
+				A0D4689615C33B3A00588ADE /* explode2.jpg in Resources */,
+				A0D4689715C33B3A00588ADE /* explode3.jpg in Resources */,
+				A0D4689815C33B3A00588ADE /* explosion.plist in Resources */,
+				A0D4689915C33B3A00588ADE /* explosion.png in Resources */,
+				A0D4689A15C33B3A00588ADE /* flare.jpg in Resources */,
+				A0D4689B15C33B3A00588ADE /* gameOver.png in Resources */,
+				A0D4689C15C33B3A00588ADE /* hit.jpg in Resources */,
+				A0D4689D15C33B3A00588ADE /* level01.tmx in Resources */,
+				A0D4689E15C33B3A00588ADE /* loading.png in Resources */,
+				A0D4689F15C33B3A00588ADE /* logo.png in Resources */,
+				A0D468A015C33B3A00588ADE /* menu.png in Resources */,
+				A0D468A115C33B3A00588ADE /* menuTitle.png in Resources */,
+				A0D468A215C33B3A00588ADE /* bgMusic.mp3 in Resources */,
+				A0D468A315C33B3A00588ADE /* buttonEffet.mp3 in Resources */,
+				A0D468A415C33B3A00588ADE /* explodeEffect.mp3 in Resources */,
+				A0D468A515C33B3A00588ADE /* fireEffect.mp3 in Resources */,
+				A0D468A615C33B3A00588ADE /* mainMainMusic.mp3 in Resources */,
+				A0D468A715C33B3A00588ADE /* shipDestroyEffect.mp3 in Resources */,
+				A0D468A815C33B3A00588ADE /* ship01.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14971,6 +15338,36 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A0D4682B15C339E100588ADE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */,
+				A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */,
+				A0D4682E15C339E100588ADE /* ThoMoServerStub.m in Sources */,
+				A0D4682F15C339E100588ADE /* ThoMoTCPConnection.m in Sources */,
+				A0D4683015C339E100588ADE /* main.m in Sources */,
+				A0D4683115C339E100588ADE /* BaseAppController.m in Sources */,
+				A0D4683215C339E100588ADE /* JRSwizzle.m in Sources */,
+				A0D4683315C339E100588ADE /* js_manual_conversions.mm in Sources */,
+				A0D4683415C339E100588ADE /* js_bindings_chipmunk_functions.mm in Sources */,
+				A0D4683515C339E100588ADE /* ChipmunkSprite.m in Sources */,
+				A0D4683615C339E100588ADE /* js_bindings_CocosDenshion_classes.mm in Sources */,
+				A0D4683715C339E100588ADE /* js_bindings_cocos2d_mac_classes.mm in Sources */,
+				A0D4683815C339E100588ADE /* js_bindings_cocos2d_mac_functions.mm in Sources */,
+				A0D4683915C339E100588ADE /* js_bindings_cocos2d_classes.mm in Sources */,
+				A0D4683A15C339E100588ADE /* js_bindings_cocos2d_functions.mm in Sources */,
+				A0D4683B15C339E100588ADE /* js_bindings_NS_manual.mm in Sources */,
+				A0D4683C15C339E100588ADE /* js_bindings_cocos2d_manual.mm in Sources */,
+				A0D4683D15C339E100588ADE /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
+				A0D4683E15C339E100588ADE /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A0D4683F15C339E100588ADE /* ChipmunkDebugNode.m in Sources */,
+				A0D4684015C339E100588ADE /* AppController.mm in Sources */,
+				A0D4684115C339E100588ADE /* ScriptingCore.mm in Sources */,
+				A0D4684215C339E100588ADE /* js_bindings_chipmunk_manual.mm in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A0E5F95C15C1B21700D44C32 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -15362,6 +15759,16 @@
 			target = 4AD3B7DD159A5415002E68D1 /* CocosDenshion */;
 			targetProxy = 4AD3B958159A54ED002E68D1 /* PBXContainerItemProxy */;
 		};
+		A00193FD15C3786B00F3D80E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0E5F8B115C1B21700D44C32 /* JS Watermelon */;
+			targetProxy = A00193FC15C3786B00F3D80E /* PBXContainerItemProxy */;
+		};
+		A00193FF15C3786B00F3D80E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0D467EF15C339E100588ADE /* JS Moon Warriors */;
+			targetProxy = A00193FE15C3786B00F3D80E /* PBXContainerItemProxy */;
+		};
 		A009433015181C8D0029A5C6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E01E663C121CA00A001A484F /* cocos2d */;
@@ -15374,7 +15781,7 @@
 		};
 		A0137E6115ABB7C3000AA1C2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A09C8CBA1566FB4100ADFDA9 /* Javascript Tests */;
+			target = A09C8CBA1566FB4100ADFDA9 /* JS Tests */;
 			targetProxy = A0137E6015ABB7C3000AA1C2 /* PBXContainerItemProxy */;
 		};
 		A0137E6315ABB7C3000AA1C2 /* PBXTargetDependency */ = {
@@ -15566,6 +15973,31 @@
 			isa = PBXTargetDependency;
 			target = E01E663C121CA00A001A484F /* cocos2d */;
 			targetProxy = A0ADEF6214584BD3009A71F1 /* PBXContainerItemProxy */;
+		};
+		A0D467F015C339E100588ADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0644A1415B609D3004AB807 /* CocosBuilderReader */;
+			targetProxy = A0D467F115C339E100588ADE /* PBXContainerItemProxy */;
+		};
+		A0D467F215C339E100588ADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4AD3B7DD159A5415002E68D1 /* CocosDenshion */;
+			targetProxy = A0D467F315C339E100588ADE /* PBXContainerItemProxy */;
+		};
+		A0D467F415C339E100588ADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0FBA8A514A51386002DF395 /* chipmunk */;
+			targetProxy = A0D467F515C339E100588ADE /* PBXContainerItemProxy */;
+		};
+		A0D467F615C339E100588ADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E01E663C121CA00A001A484F /* cocos2d */;
+			targetProxy = A0D467F715C339E100588ADE /* PBXContainerItemProxy */;
+		};
+		A0D467F815C339E100588ADE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E076EDB81225FEAA00DE0DA2 /* libpng */;
+			targetProxy = A0D467F915C339E100588ADE /* PBXContainerItemProxy */;
 		};
 		A0E5F8B215C1B21700D44C32 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -16238,7 +16670,7 @@
 					"\"$(SRCROOT)/Resources-Mac\"",
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
-				PRODUCT_NAME = "Javascript Tests";
+				PRODUCT_NAME = "JS Tests";
 			};
 			name = Debug;
 		};
@@ -16273,7 +16705,7 @@
 					"\"$(SRCROOT)/Resources-Mac\"",
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
-				PRODUCT_NAME = "Javascript Tests";
+				PRODUCT_NAME = "JS Tests";
 			};
 			name = Release;
 		};
@@ -16306,6 +16738,78 @@
 				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = ShaderTest;
+			};
+			name = Release;
+		};
+		A0D4685215C339E100588ADE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/ThoMoNetworking\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					external/Box2d,
+					external/Chipmunk/include/chipmunk,
+					external/kazmath/include,
+					external/spidermonkey/mac/include,
+					external/Fragaria,
+					external/ThoMoNetworking,
+					CocosDenshion/CocosDenshion,
+					CocosDenshion/CocosDenshionExtras,
+				);
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Resources-Mac\"",
+					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
+				);
+				PRODUCT_NAME = "JS Moon Warriors";
+			};
+			name = Debug;
+		};
+		A0D4685315C339E100588ADE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/external/ThoMoNetworking\"",
+				);
+				GCC_ENABLE_OBJC_GC = unsupported;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					external/Box2d,
+					external/Chipmunk/include/chipmunk,
+					external/kazmath/include,
+					external/spidermonkey/mac/include,
+					external/Fragaria,
+					external/ThoMoNetworking,
+					CocosDenshion/CocosDenshion,
+					CocosDenshion/CocosDenshionExtras,
+				);
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/Resources-Mac\"",
+					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
+				);
+				PRODUCT_NAME = "JS Moon Warriors";
 			};
 			name = Release;
 		};
@@ -16342,7 +16846,7 @@
 					"\"$(SRCROOT)/Resources-Mac\"",
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
-				PRODUCT_NAME = "Javascript Game";
+				PRODUCT_NAME = "JS Watermelon";
 			};
 			name = Debug;
 		};
@@ -16377,7 +16881,7 @@
 					"\"$(SRCROOT)/Resources-Mac\"",
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
-				PRODUCT_NAME = "Javascript Game";
+				PRODUCT_NAME = "JS Watermelon";
 			};
 			name = Release;
 		};
@@ -17172,7 +17676,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A09C8D3B1566FB4100ADFDA9 /* Build configuration list for PBXNativeTarget "Javascript Tests" */ = {
+		A09C8D3B1566FB4100ADFDA9 /* Build configuration list for PBXNativeTarget "JS Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A09C8D3C1566FB4100ADFDA9 /* Debug */,
@@ -17190,7 +17694,16 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A0E5F98215C1B21700D44C32 /* Build configuration list for PBXNativeTarget "Javascript Game" */ = {
+		A0D4685115C339E100588ADE /* Build configuration list for PBXNativeTarget "JS Moon Warriors" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0D4685215C339E100588ADE /* Debug */,
+				A0D4685315C339E100588ADE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0E5F98215C1B21700D44C32 /* Build configuration list for PBXNativeTarget "JS Watermelon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A0E5F98315C1B21700D44C32 /* Debug */,

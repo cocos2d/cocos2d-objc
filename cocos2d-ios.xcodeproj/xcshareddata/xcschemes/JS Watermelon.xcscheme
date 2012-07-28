@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0E5F7D815C1AE5F00D44C32"
-               BuildableName = "Javascript Game.app"
-               BlueprintName = "Javascript Game"
+               BuildableName = "JS Watermelon.app"
+               BlueprintName = "JS Watermelon"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0E5F7D815C1AE5F00D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BuildableName = "JS Watermelon.app"
+            BlueprintName = "JS Watermelon"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0E5F7D815C1AE5F00D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BuildableName = "JS Watermelon.app"
+            BlueprintName = "JS Watermelon"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0E5F7D815C1AE5F00D44C32"
-            BuildableName = "Javascript Game.app"
-            BlueprintName = "Javascript Game"
+            BuildableName = "JS Watermelon.app"
+            BlueprintName = "JS Watermelon"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

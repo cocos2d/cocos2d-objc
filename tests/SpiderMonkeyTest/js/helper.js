@@ -244,6 +244,7 @@ cc.Layer.extend = function (prop) {
 };
 
 cc.LayerGradient.extend = cc.Layer.extend;
+cc.Sprite.extend = cc.Layer.extend;
 
 //
 // Chipmunk helpers

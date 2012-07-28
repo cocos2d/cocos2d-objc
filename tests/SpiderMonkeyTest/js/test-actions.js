@@ -139,7 +139,7 @@ var BaseLayer = cc.LayerGradient.extend({
     },
 
     onEnter:function () {
-        this._super();
+//        this._super();
 
         // add title and subtitle
         var label = cc.LabelTTF.create(this.title(), "Arial", 28);
