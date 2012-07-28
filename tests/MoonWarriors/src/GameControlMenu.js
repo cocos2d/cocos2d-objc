@@ -1,12 +1,18 @@
 var GameControlMenu = cc.Layer.extend({
+
+    ctor:function () {
+        var parent = new cc.Layer();
+        __associateObjWithNative(this, parent);
+    },
+
     init:function () {
         var bRet = false;
-        if (this._super()) {
+        if( this._super() ) {
             cc.MenuItemFont.setFontSize(18);
             cc.MenuItemFont.setFontName("Arial");
             var systemMenu = cc.MenuItemFont.create("Main Menu", this, this.sysMenu);
             var menu = cc.Menu.create(systemMenu, null);
-            menu.setPosition(cc.p(0, 0));
+            menu.setPosition(cc.POINT_ZERO);
             systemMenu.setAnchorPoint(cc.p(0, 0));
             systemMenu.setPosition(cc.p(winSize.width-95, 5));
             this.addChild(menu, 1, 2);

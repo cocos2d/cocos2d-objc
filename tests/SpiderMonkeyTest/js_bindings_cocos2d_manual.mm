@@ -24,8 +24,8 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	JSObject *js_this;
 	JSBool ok;
 
-	js_this= JSVAL_TO_OBJECT( *argvp++);	
-	ok = jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+	ok &= JS_ValueToObject(cx, *argvp++, &js_this);
+	ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
 	
 	if( ! ok )
 		return JS_FALSE;
@@ -53,7 +53,7 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc ==3 ) {
 		// this
-		js_this= JSVAL_TO_OBJECT( *argvp++);
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 		
 		// function
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
@@ -86,7 +86,7 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc ==3 ) {
 		// this
-		js_this= JSVAL_TO_OBJECT( *argvp++);
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 		
 		// function
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
@@ -126,7 +126,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc >=4 ) {
 		// this
-		js_this= JSVAL_TO_OBJECT( *argvp++);
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 
 		// function
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
@@ -170,7 +170,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc >=4 ) {
 		// this
-		js_this= JSVAL_TO_OBJECT( *argvp++);
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 		
 		// function
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
@@ -200,7 +200,7 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	JSObject *js_this;
 	
 	// this
-	js_this= JSVAL_TO_OBJECT( *argvp++);
+	ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 	
 	NSObject *ret_val;
 	if( argc == 2 ) {
@@ -313,3 +313,87 @@ JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderCo
 	return JS_TRUE;	
 }
 
+// this, func, [interval], [repeat], [delay]
+JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc >=1 && argc <=4, "Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+
+	CCNode *real = (CCNode*) [proxy realObj];
+	CCScheduler *scheduler = [real scheduler];
+	
+	//
+	// "function"
+	//
+	jsval funcval = *argvp++;
+	JSFunction *func = JS_ValueToFunction(cx, funcval);
+	if(!func)
+		return JS_FALSE;
+
+	NSString *key = nil;
+	JSString *funcname = JS_GetFunctionId(func);
+
+	// named function
+	if( funcname ) {
+		char *key_c = JS_EncodeString(cx, funcname);
+		key = [NSString stringWithUTF8String:key_c];
+	} else {
+		// anonymous function
+		key = [NSString stringWithFormat:@"anonfunc at %p", func];
+	}
+	
+	void (^block)(ccTime dt) = ^(ccTime dt) {
+			
+		jsval rval;
+		jsval jsdt = DOUBLE_TO_JSVAL(dt);
+		
+		JS_CallFunctionValue(cx, jsthis, funcval, 1, &jsdt, &rval);
+	};
+	
+	//
+	// Interval
+	//
+	double interval;
+	if( argc >= 2 ) {
+		if( ! JS_ValueToNumber(cx, *argvp++, &interval ) )
+		   return JS_FALSE;
+	}
+
+	//
+	// repeat
+	//
+	double repeat;
+	if( argc >= 3 ) {
+		if( ! JS_ValueToNumber(cx, *argvp++, &repeat ) )
+			return JS_FALSE;
+	}
+
+	//
+	// delay
+	//
+	double delay;
+	if( argc >= 4 ) {
+		if( ! JS_ValueToNumber(cx, *argvp++, &delay ) )
+			return JS_FALSE;
+	}
+
+
+	if( argc==1)
+		[scheduler scheduleBlockForKey:key target:real interval:0 paused:![real isRunning] repeat:kCCRepeatForever delay:0 block:block];
+		
+	else if (argc == 2 )
+		[scheduler scheduleBlockForKey:key target:real interval:interval paused:![real isRunning] repeat:kCCRepeatForever delay:0 block:block];		
+
+	else if (argc == 3 )
+		[scheduler scheduleBlockForKey:key target:real interval:interval paused:![real isRunning] repeat:repeat delay:0 block:block];		
+
+	else if( argc == 4 )
+		[scheduler scheduleBlockForKey:key target:real interval:interval paused:![real isRunning] repeat:repeat delay:delay block:block];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}

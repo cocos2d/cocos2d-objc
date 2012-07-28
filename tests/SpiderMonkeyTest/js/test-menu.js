@@ -171,7 +171,7 @@ var MenuItemFontTest = BaseLayer.extend({
         item3.setFontName( "Courier New");
 
         // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
+        item3.setEnabled( false );
 
         var menu = cc.Menu.create( item1, item2, item3 );
         menu.alignItemsVertically();
@@ -221,7 +221,7 @@ var MenuItemImageTest = BaseLayer.extend({
         item1.setCallback( this, this.item_cb );
 
         // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
+        item3.setEnabled( false );
 
         this._menu = cc.Menu.create( item1, item2, item3 );
         this._menu.alignItemsVertically();
@@ -288,7 +288,7 @@ var MenuItemSpriteTest = BaseLayer.extend({
         item1.setCallback( this, this.item_cb );
 
         // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
+        item3.setEnabled( false );
 
         this._menu = cc.Menu.create( item1, item2, item3 );
         this._menu.alignItemsVertically();
@@ -348,7 +348,7 @@ var MenuItemLabelTest = BaseLayer.extend({
         item1.setCallback( this, this.item_cb );
 
         // item could be enabled / disabled in runtime
-        item3.setIsEnabled( false );
+        item3.setEnabled( false );
 
         this._menu = cc.Menu.create( item1, item2, item3 );
         this._menu.alignItemsVertically();

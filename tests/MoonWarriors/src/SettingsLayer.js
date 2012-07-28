@@ -5,8 +5,7 @@ var SettingsLayer = cc.Layer.extend({
     },
     init:function () {
         var bRet = false;
-        this._super();
-        {
+        if( this._super() ) {
             var sp = cc.Sprite.create(s_loading);
             sp.setAnchorPoint(cc.POINT_ZERO);
             this.addChild(sp, 0, 1);

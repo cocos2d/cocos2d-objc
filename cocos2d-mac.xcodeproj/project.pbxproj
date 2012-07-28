@@ -6557,7 +6557,6 @@
 		A0CFE69F15BF592400264229 /* Util.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Util.h; sourceTree = "<group>"; };
 		A0D467B515C31E1C00588ADE /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0D4685615C339E100588ADE /* Javascript Game copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Javascript Game copy-Info.plist"; path = "/Users/rquesada/progs/cocos2d-iphone/Javascript Game copy-Info.plist"; sourceTree = "<absolute>"; };
 		A0D4685915C33B3A00588ADE /* MoonWarriors.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MoonWarriors.js; sourceTree = "<group>"; };
 		A0D4685C15C33B3A00588ADE /* b01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = b01.png; sourceTree = "<group>"; };
 		A0D4685D15C33B3A00588ADE /* bg01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg01.jpg; sourceTree = "<group>"; };
@@ -7680,7 +7679,6 @@
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
-				A0D4685615C339E100588ADE /* Javascript Game copy-Info.plist */,
 			);
 			name = "cocos2d-mac";
 			sourceTree = "<group>";

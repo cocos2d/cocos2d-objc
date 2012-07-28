@@ -16,9 +16,15 @@ var GameLayer = cc.Layer.extend({
     explosionAnimation:[],
     isMouseDown:false,
     _beginPos:cc.POINT_ZERO,
+
+    ctor:function () {
+        var parent = new cc.Layer();
+        __associateObjWithNative(this, parent);
+    },
+
     init:function () {
         var bRet = false;
-        if (this._super()) {
+        if( this._super() ) {
             global.bulletNum = 0;
             global.enemyNum = 0;
             Explosion.sharedExplosion();
@@ -26,16 +32,16 @@ var GameLayer = cc.Layer.extend({
             winSize = cc.Director.getInstance().getWinSize();
             this._levelManager = new LevelManager(this);
             this.initBackground();
-            this.screenRect = new cc.Rect(0, 0, winSize.width, winSize.height + 10);
+            this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
 
             // score
-            this.lbScore = cc.LabelTTF.create("Score: 0", cc.SizeMake(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT, "Arial", 14);
+            this.lbScore = cc.LabelTTF.create("Score: 0", cc.size(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT, "Arial", 14);
             this.addChild(this.lbScore, 1000);
             this.lbScore.setPosition(cc.p(winSize.width - 80, winSize.height - 30));
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
-            var life = cc.Sprite.createWithTexture(shipTexture, cc.RectMake(0, 0, 60, 38));
+            var life = cc.Sprite.createWithTexture(shipTexture, cc.size(0, 0, 60, 38));
             life.setScale(0.6);
             life.setPosition(cc.p(30, 460));
             this.addChild(life, 1, 5);
@@ -57,7 +63,10 @@ var GameLayer = cc.Layer.extend({
             this.setKeypadEnabled(true);
 
             // schedule
-            this.schedule(this.update);
+            
+            // XXX riq XXX
+//            this.schedule(this.update);
+            this.scheduleUpdate();
             this.schedule(this.scoreCounter, 1);
 
             if (global.sound) {
@@ -211,14 +220,14 @@ var GameLayer = cc.Layer.extend({
 
         this._backSkyHeight -= 48;
         this._backTileMapHeight -= 200;
-        this._backSky.runAction(cc.MoveBy.create(3, new cc.Point(0, -48)));
-        this._backTileMap.runAction(cc.MoveBy.create(3, new cc.Point(0, -200)));
+        this._backSky.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
+        this._backTileMap.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
 
         this.schedule(this.movingBackground, 3);
     },
     movingBackground:function () {
-        this._backSky.runAction(cc.MoveBy.create(3, new cc.Point(0, -48)));
-        this._backTileMap.runAction(cc.MoveBy.create(3, new cc.Point(0, -200)));
+        this._backSky.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
+        this._backTileMap.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         this._backSkyHeight -= 48;
         this._backTileMapHeight -= 200;
 
@@ -227,10 +236,10 @@ var GameLayer = cc.Layer.extend({
                 this._backSkyRe = cc.Sprite.create(s_bg01);
                 this._backSkyRe.setAnchorPoint(cc.POINT_ZERO);
                 this.addChild(this._backSkyRe, -10);
-                this._backSkyRe.setPosition(new cc.Point(0, winSize.height));
+                this._backSkyRe.setPosition(cc.p(0, winSize.height));
                 this._isBackSkyReload = true;
             }
-            this._backSkyRe.runAction(cc.MoveBy.create(3, new cc.Point(0, -48)));
+            this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         }
         if (this._backSkyHeight <= 0) {
             this._backSkyHeight = this._backSky.getContentSize().height;
@@ -244,10 +253,10 @@ var GameLayer = cc.Layer.extend({
             if (!this._isBackTileReload) {
                 this._backTileMapRe = cc.TMXTiledMap.create(s_level01);
                 this.addChild(this._backTileMapRe, -9);
-                this._backTileMapRe.setPosition(new cc.Point(0, winSize.height));
+                this._backTileMapRe.setPosition(cc.p(0, winSize.height));
                 this._isBackTileReload = true;
             }
-            this._backTileMapRe.runAction(cc.MoveBy.create(3, new cc.Point(0, -200)));
+            this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         }
         if (this._backTileMapHeight <= 0) {
             this._backTileMapHeight = this._backTileMapRe.getMapSize().height * this._backTileMapRe.getTileSize().height;
