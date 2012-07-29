@@ -226,7 +226,7 @@ var GameLayer = cc.LayerGradient.extend({
         menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
     
         var animCache = cc.AnimationCache.getInstance();
-        animCache.addAnimationsWithFile("coins_animation.plist");
+        animCache.addAnimations("coins_animation.plist");
 
         // scrollng Node.. all game objects are children of this node (or one of its subchildre)
         var scroll = cc.ParallaxNode.create();
