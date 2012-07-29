@@ -11,7 +11,9 @@ var GameControlMenu = cc.Layer.extend({
             cc.MenuItemFont.setFontSize(18);
             cc.MenuItemFont.setFontName("Arial");
             var systemMenu = cc.MenuItemFont.create("Main Menu", this, this.sysMenu);
-            var menu = cc.Menu.create(systemMenu, null);
+            // XXX riq XXX
+            // removed null from possible elements
+            var menu = cc.Menu.create(systemMenu);
             menu.setPosition(cc.POINT_ZERO);
             systemMenu.setAnchorPoint(cc.p(0, 0));
             systemMenu.setPosition(cc.p(winSize.width-95, 5));

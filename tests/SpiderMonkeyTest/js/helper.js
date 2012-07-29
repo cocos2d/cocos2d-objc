@@ -190,7 +190,9 @@ goog.base = function(me, opt_methodName, var_args) {
 // Simple subclass
 //
 
-cc.Layer.extend = function (prop) {
+cc.Class = function(){};
+
+cc.Class.extend = function (prop) {
     var _super = this.prototype;
 
     // Instantiate a base class (but only create the instance,
@@ -243,8 +245,9 @@ cc.Layer.extend = function (prop) {
     return Class;
 };
 
-cc.LayerGradient.extend = cc.Layer.extend;
-cc.Sprite.extend = cc.Layer.extend;
+cc.Layer.extend = cc.Class.extend;
+cc.LayerGradient.extend = cc.Class.extend;
+cc.Sprite.extend = cc.Class.extend;
 
 //
 // Chipmunk helpers

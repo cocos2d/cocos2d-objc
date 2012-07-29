@@ -32,16 +32,17 @@ var GameLayer = cc.Layer.extend({
             winSize = cc.Director.getInstance().getWinSize();
             this._levelManager = new LevelManager(this);
             this.initBackground();
+
             this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
 
             // score
-            this.lbScore = cc.LabelTTF.create("Score: 0", cc.size(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT, "Arial", 14);
+            this.lbScore = cc.LabelTTF.create("Score: 0", "Arial", 14, cc.size(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT );
             this.addChild(this.lbScore, 1000);
             this.lbScore.setPosition(cc.p(winSize.width - 80, winSize.height - 30));
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
-            var life = cc.Sprite.createWithTexture(shipTexture, cc.size(0, 0, 60, 38));
+            var life = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
             life.setScale(0.6);
             life.setPosition(cc.p(30, 460));
             this.addChild(life, 1, 5);
@@ -49,25 +50,24 @@ var GameLayer = cc.Layer.extend({
             // ship Life count
             this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
             this._lbLife.setPosition(cc.p(60, 463));
-            this._lbLife.setColor(cc.RED());
+            this._lbLife.setColor(cc.RED);
             this.addChild(this._lbLife, 1000);
 
             // ship
             this._ship = new Ship();
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
 
+
             // accept touch now!
-            this.setTouchEnabled(true);
+//            this.setTouchEnabled(true);
 
             //accept keypad
-            this.setKeypadEnabled(true);
+//            this.setKeypadEnabled(true);
 
             // schedule
             
-            // XXX riq XXX
 //            this.schedule(this.update);
-            this.scheduleUpdate();
-            this.schedule(this.scoreCounter, 1);
+//            this.schedule(this.scoreCounter, 1);
 
             if (global.sound) {
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
