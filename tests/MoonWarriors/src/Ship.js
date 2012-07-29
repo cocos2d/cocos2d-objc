@@ -13,30 +13,41 @@ var Ship = cc.Sprite.extend({
     _hurtColorLife:0,
     active:true,
     ctor:function () {
+        var parent = new cc.Sprite();
+        __associateObjWithNative(this, parent);
+
         //init life
         var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
-        this.initWithTexture(shipTexture, cc.RectMake(0, 0, 60, 38));
+        this.initWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
         this.setTag(this.zOrder);
         this.setPosition(this.appearPosition);
 
         // set frame
-        var frame0 = cc.SpriteFrame.create(shipTexture, cc.RectMake(0, 0, 60, 38));
-        var frame1 = cc.SpriteFrame.create(shipTexture, cc.RectMake(60, 0, 60, 38));
+
+        // XXX API INCONSISTENCY XXX riq XXX
+        // renamed: create() -> crateWithTexture() like in cc.Sprite
+        // cc.SpriteFrame.create( filename, rect );
+        // cc.SpriteFrame.createWithTexture( texture, rect );
+        var frame0 = cc.SpriteFrame.createWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
+        var frame1 = cc.SpriteFrame.createWithTexture(shipTexture, cc.rect(60, 0, 60, 38));
 
         var animFrames = [];
         animFrames.push(frame0);
         animFrames.push(frame1);
 
         // ship animate
-        var animation = cc.Animation.createWithSpriteFrames(animFrames, 0.1);
+        
+        // XXX riq XXX
+        // renamed createWithSpriteFrames() -> create()
+        var animation = cc.Animation.create(animFrames, 0.1);
         var animate = cc.Animate.create(animation);
         this.runAction(cc.RepeatForever.create(animate));
-        this.schedule(this.shoot, 1 / 6);
+//        this.schedule(this.shoot, 1 / 6);
 
         //revive effect
         this.canBeAttack = false;
-        var ghostSprite = cc.Sprite.createWithTexture(shipTexture, cc.RectMake(0, 45, 60, 38))
-        ghostSprite.setBlendFunc(new cc.BlendFunc(cc.GL_SRC_ALPHA, cc.GL_ONE));
+        var ghostSprite = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 45, 60, 38))
+//        ghostSprite.setBlendFunc(new cc.BlendFunc(cc.GL_SRC_ALPHA, cc.GL_ONE));
         ghostSprite.setScale(8);
         ghostSprite.setPosition(cc.p(this.getContentSize().width / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);

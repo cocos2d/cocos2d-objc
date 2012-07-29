@@ -1,4 +1,4 @@
-var LevelManager = {
+var LevelManager = cc.Class.extend({
     _currentLevel:null,
     _gameLayer:null,
     ctor:function(gameLayer){
@@ -90,5 +90,5 @@ var LevelManager = {
         global.enemyContainer.push(addEnemy);
         addEnemy.runAction(tmpAction);
     }
-};
+});
 

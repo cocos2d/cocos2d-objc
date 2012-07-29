@@ -7347,32 +7347,6 @@ JSBool JSPROXY_CCSprite_flipY(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: None (None)
-JSBool JSPROXY_CCSprite_initWithFile_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
-
-	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
-	[proxy setRealObj: real];
-	[real autorelease];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-	[proxy release];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
 // Arguments: NSString*, CGRect
 // Ret value: None (None)
 JSBool JSPROXY_CCSprite_initWithFile_rect_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -7381,21 +7355,36 @@ JSBool JSPROXY_CCSprite_initWithFile_rect_(JSContext *cx, uint32_t argc, jsval *
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
 	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; 
 
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if (argc >= 2) {
+		ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
+	if( argc == 1 ) {
+		CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
 	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
+	}
+	else if( argc == 2 ) {
+		CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
+	[proxy setRealObj: real];
+	[real autorelease];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	}
+	else
+		return JS_FALSE;
+
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -7452,32 +7441,6 @@ JSBool JSPROXY_CCSprite_initWithSpriteFrameName_(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-// Arguments: CCTexture2D*
-// Ret value: None (None)
-JSBool JSPROXY_CCSprite_initWithTexture_(JSContext *cx, uint32_t argc, jsval *vp) {
-
-	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
-
-	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0  ];
-	[proxy setRealObj: real];
-	[real autorelease];
-
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
-	[proxy release];
-	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
-	return JS_TRUE;
-}
-
 // Arguments: CCTexture2D*, CGRect
 // Ret value: None (None)
 JSBool JSPROXY_CCSprite_initWithTexture_rect_(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -7486,21 +7449,36 @@ JSBool JSPROXY_CCSprite_initWithTexture_rect_(JSContext *cx, uint32_t argc, jsva
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
 	NSCAssert( proxy && ![proxy realObj], @"Invalid Proxy object");
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 1 && argc <= 2 , "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	if (argc >= 2) {
+		ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
+	}
 	if( ! ok ) return JS_FALSE;
 
-	CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0 rect:(CGRect)arg1  ];
+	if( argc == 1 ) {
+		CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0  ];
 	[proxy setRealObj: real];
 	[real autorelease];
 
 	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
+	}
+	else if( argc == 2 ) {
+		CCSprite *real = [(CCSprite*)[proxy.klass alloc] initWithTexture:arg0 rect:(CGRect)arg1  ];
+	[proxy setRealObj: real];
+	[real autorelease];
+
+	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	[proxy release];
+	}
+	else
+		return JS_FALSE;
+
 	JS_SET_RVAL(cx, vp, JSVAL_TRUE);
 	return JS_TRUE;
 }
@@ -8206,12 +8184,10 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("displayFrame", JSPROXY_CCSprite_displayFrame, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getFlipX", JSPROXY_CCSprite_flipX, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getFlipY", JSPROXY_CCSprite_flipY, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithFile", JSPROXY_CCSprite_initWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithFileRect", JSPROXY_CCSprite_initWithFile_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("init", JSPROXY_CCSprite_initWithFile_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFrame", JSPROXY_CCSprite_initWithSpriteFrame_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithSpriteFrameName", JSPROXY_CCSprite_initWithSpriteFrameName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTexture", JSPROXY_CCSprite_initWithTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("initWithTextureRect", JSPROXY_CCSprite_initWithTexture_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("initWithTexture", JSPROXY_CCSprite_initWithTexture_rect_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("initWithTextureRectRotated", JSPROXY_CCSprite_initWithTexture_rect_rotated_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("isFrameDisplayed", JSPROXY_CCSprite_isFrameDisplayed_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getOffsetPosition", JSPROXY_CCSprite_offsetPosition, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -31844,65 +31820,37 @@ void JSPROXY_CCSpriteFrame_finalize(JSFreeOp *fop, JSObject *obj)
 	del_proxy_for_jsobject( obj );
 }
 
-// Arguments: CCTexture2D*, CGRect
-// Ret value: CCSpriteFrame* (o)
-JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; CGRect arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCSpriteFrame* ret_val;
-
-	ret_val = [CCSpriteFrame frameWithTexture:arg0 rect:(CGRect)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 // Arguments: CCTexture2D*, CGRect, BOOL, CGPoint, CGSize
 // Ret value: CCSpriteFrame* (o)
 JSBool JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 5, "Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 2 && argc <= 5 , "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	id arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
 	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
 	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if (argc >= 3) {
+		ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	}
+	if (argc >= 4) {
+		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	}
+	if (argc >= 5) {
+		ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
-	ret_val = [CCSpriteFrame frameWithTexture:arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	if( argc == 2 ) {
+		ret_val = [CCSpriteFrame frameWithTexture:arg0 rect:(CGRect)arg1  ];
+	}
+	else if( argc == 5 ) {
+		ret_val = [CCSpriteFrame frameWithTexture:arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	}
+	else
+		return JS_FALSE;
 
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGRect
-// Ret value: CCSpriteFrame* (o)
-JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; CGRect arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCSpriteFrame* ret_val;
-
-	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -31913,20 +31861,34 @@ JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static(JSContext *cx
 // Arguments: NSString*, CGRect, BOOL, CGPoint, CGSize
 // Ret value: CCSpriteFrame* (o)
 JSBool JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 5, "Invalid number of arguments" );
+	JSB_PRECONDITION( argc >= 2 && argc <= 5 , "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
 	NSString* arg0; CGRect arg1; JSBool arg2; CGPoint arg3; CGSize arg4; 
 
 	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
 	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
-	ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
-	ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	if (argc >= 3) {
+		ok &= JS_ValueToBoolean( cx, *argvp++, &arg2 );
+	}
+	if (argc >= 4) {
+		ok &= jsval_to_CGPoint( cx, *argvp++, (CGPoint*) &arg3 );
+	}
+	if (argc >= 5) {
+		ok &= jsval_to_CGSize( cx, *argvp++, (CGSize*) &arg4 );
+	}
 	if( ! ok ) return JS_FALSE;
 	CCSpriteFrame* ret_val;
 
-	ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	if( argc == 2 ) {
+		ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rect:(CGRect)arg1  ];
+	}
+	else if( argc == 5 ) {
+		ret_val = [CCSpriteFrame frameWithTextureFilename:(NSString*)arg0 rectInPixels:(CGRect)arg1 rotated:(BOOL)arg2 offset:(CGPoint)arg3 originalSize:(CGSize)arg4  ];
+	}
+	else
+		return JS_FALSE;
+
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -32443,10 +32405,8 @@ void JSPROXY_CCSpriteFrame_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("frameWithTextureRect", JSPROXY_CCSpriteFrame_frameWithTexture_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frameWithTextureRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frameWithTextureFilenameRect", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("frameWithTextureFilenameRectInPixelsRotatedOffsetOriginalSize", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("createWithTexture", JSPROXY_CCSpriteFrame_frameWithTexture_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("create", JSPROXY_CCSpriteFrame_frameWithTextureFilename_rectInPixels_rotated_offset_originalSize__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
