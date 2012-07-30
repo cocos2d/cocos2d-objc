@@ -10,11 +10,16 @@ var Bullet = cc.Sprite.extend({
     attackMode:global.AttackMode.Normal,
     parentType:global.bulletType.Ship,
     ctor:function (bulletSpeed, weaponType, attackMode) {
+        var parent = new cc.Sprite();
+        __associateObjWithNative(this, parent);
+
         this.yVolocity = -bulletSpeed;
         this.attackMode = attackMode;
         cc.SpriteFrameCache.getInstance().addSpriteFrames(s_bullet_plist);
         this.initWithSpriteFrameName(weaponType);
-        this.setBlendFunc(new cc.BlendFunc(cc.GL_SRC_ALPHA, cc.GL_ONE));
+        // XXX riq XXX
+        // New Blending function API. Similar to OpenGL / WebGL
+        this.setBlendFunc( gl.SRC_ALPHA, gl.ONE );
         /*var tmpAction;
          switch (this.attackMode) {
          case global.AttackMode.Normal:
@@ -27,7 +32,9 @@ var Bullet = cc.Sprite.extend({
          this.runAction(tmpAction);*/
     },
     update:function (dt) {
-        var newX = this.getPositionX(), newY = this.getPositionY();
+        var pos = this.getPosition();
+        var newX = pos[0];
+        var newY = pos[1]
         newX -= this.xVolocity * dt;
         newY -= this.yVolocity * dt;
         this.setPosition(cc.p(newX, newY));
@@ -37,7 +44,9 @@ var Bullet = cc.Sprite.extend({
     },
     destroy:function () {
         var explode = cc.Sprite.create(s_hit);
-        explode.setBlendFunc(new cc.BlendFunc(cc.GL_SRC_ALPHA, cc.GL_ONE));
+        // XXX riq XXX
+        // New Blending function API. Similar to OpenGL / WebGL
+        explode.setBlendFunc( gl.SRC_ALPHA, gl.ONE );
         explode.setPosition(this.getPosition());
         explode.setRotation(Math.random()*360);
         explode.setScale(0.75);
@@ -53,8 +62,8 @@ var Bullet = cc.Sprite.extend({
         this.HP--;
     },
     collideRect:function(){
-        var a = this.getContentSize();
-        var r = new cc.RectMake(this.getPositionX() - 3,this.getPositionY() - 3,6,6);
+        var pos = this.getPosition();
+        var r = new cc.rect( pos[0] - 3, pos[1] - 3,6,6);
         return r;
     }
 });

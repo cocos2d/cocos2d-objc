@@ -397,3 +397,61 @@ JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t ar
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;
 }
+
+#pragma mark - setBlendFunc friends
+// setBlendFunc
+JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( argc==2, "Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	
+	id real = (id) [proxy realObj];
+	JSBool ok = JS_TRUE;
+
+	GLenum src, dst;
+	
+	ok &= JS_ValueToInt32(cx, *argvp++, (int32_t*)&src);
+	ok &= JS_ValueToInt32(cx, *argvp++, (int32_t*)&dst);
+	
+	if( ! ok )
+		return JS_FALSE;
+
+	[real setBlendFunc:(ccBlendFunc){src, dst}];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	return JS_TRUE;
+}
+
+JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}
+
+JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}
+
+JSBool JSPROXY_CCMotionStreak_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}
+
+JSBool JSPROXY_CCDrawNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}
+
+JSBool JSPROXY_CCAtlasNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}
+
+JSBool JSPROXY_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+{
+	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+}

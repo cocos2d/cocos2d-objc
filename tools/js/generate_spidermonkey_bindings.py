@@ -28,6 +28,9 @@ import datetime
 import ConfigParser
 import string
 
+class MethodNotFoundException( Exception ):
+    pass
+
 class ParseException( Exception ):
     pass
 
@@ -647,7 +650,7 @@ class SpiderMonkey(object):
                             if m['selector'] == method_name:
                                 return m
 
-        raise Exception("Method not found for %s # %s" % (class_name, method_name) )
+        raise MethodNotFoundException("Method not found for %s # %s" % (class_name, method_name) )
 
     def get_method_type( self, method ):
         if self.is_class_constructor( method ):
@@ -1499,10 +1502,13 @@ extern JSClass *%s_class;
             tmp = 'JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
 
             for method_name in self.manual_methods[class_name]:
-                method = self.get_method( class_name, method_name )
-                class_method = '_static' if self.is_class_method(method) else ''
-                n = self.convert_selector_name_to_native( method_name )
-                manual += tmp % (proxy_class_name, n, class_method )
+                try:
+                    method = self.get_method( class_name, method_name )
+                    class_method = '_static' if self.is_class_method(method) else ''
+                    n = self.convert_selector_name_to_native( method_name )
+                    manual += tmp % (proxy_class_name, n, class_method )
+                except MethodNotFoundException, e:
+                    sys.stderr.write('WARN: Ignoring regular expression rule. Method not found: %s\n' % str(e) )
 
 
         self.h_file.write( header_template % (  proxy_class_name,
