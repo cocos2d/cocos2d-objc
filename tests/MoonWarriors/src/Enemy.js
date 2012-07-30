@@ -12,6 +12,9 @@ var Enemy = cc.Sprite.extend({
     attackMode:global.AttackMode.Normal,
     _hurtColorLife:0,
     ctor:function (arg) {
+        var parent = new cc.Sprite();
+        __associateObjWithNative(this, parent);
+
         this.HP = arg.HP;
         this.moveType = arg.moveType;
         this.scoreValue = arg.scoreValue;
@@ -32,7 +35,9 @@ var Enemy = cc.Sprite.extend({
                 this._hurtColorLife--;
             }
             if (this._hurtColorLife == 1) {
-                this.setColor(new cc.Color3B(255, 255, 255));
+                // XXX riq XXX
+                // Uses new cc.c3 API
+                this.setColor( cc.c3(255, 255, 255) );
             }
         }
     },
@@ -52,16 +57,24 @@ var Enemy = cc.Sprite.extend({
         var b = new Bullet(this.bulletSpeed, "W2.png", this.attackMode);
         global.ebulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.EnemyBullet);
-        b.setPosition(cc.p(this.getPosition().x, this.getPosition().y - this.getContentSize().height * 0.2));
+        var _pos = this.getPosition();
+        var pos = {x:_pos[0], y:_pos[1]};
+        var _cs = this.getContentSize();
+        var cs = {width:_cs[0], height:_cs[1]};
+        b.setPosition( cc.p(pos.x, pos.y - cs.height * 0.2) );
     },
     hurt:function () {
         this._hurtColorLife = 2;
         this.HP--;
-        this.setColor(cc.RED());
+        this.setColor( cc.RED );
     },
     collideRect:function(){
-        var a = this.getContentSize();
-        var r = new cc.RectMake(this.getPositionX() - a.width/2,this.getPositionY() - a.height/4,a.width,a.height/2);
+        var _a = this.getContentSize();
+        var a = {width:_a[0], height:_a[1]};
+        var _pos = this.getPosition();
+        var pos = {x:_pos[0], y:_pos[1]};
+
+        var r = cc.rect(pos.x - a.width/2, pos.y - a.height/4,a.width,a.height/2);
         return r;
     }
 });

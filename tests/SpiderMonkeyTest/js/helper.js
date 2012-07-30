@@ -25,6 +25,14 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
+cc.TEXT_ALIGNMENT_LEFT  = 0;
+cc.TEXT_ALIGNMENT_CENTER = 1;
+cc.TEXT_ALIGNMENT_RIGHT = 2;
+
+cc.VERTICAL_TEXT_ALIGNMENT_TOP = 0;
+cc.VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
+cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
+
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
 
@@ -70,6 +78,16 @@ cc._p = function( x, y )
     }
 }
 
+cc._to_p = function( point )
+{
+    return cc.p( x.width, y.height );
+}
+
+cc._from_p = function( size )
+{
+    return { x:size[0], y:size[1] };
+}
+
 cc._g = function( x, y )
 {
     cc._reuse_grid[0] = x;
@@ -109,6 +127,16 @@ cc.rect = function(x,y,w,h)
 	return rect;
 }
 
+cc._to_rect = function( rect )
+{
+    return cc.rect( rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+}
+
+cc._from_rect = function( rect )
+{
+    return {origin:{x:rect[0], y:rect[1]}, size:{width:rect[2], height:rect[3]} };
+}
+
 cc.size = function(w,h)
 {
     var platform = __getPlatform();
@@ -121,16 +149,15 @@ cc.size = function(w,h)
 	return size;
 }
 
-cc.size_get_width = function (size )
+cc._to_size = function( size )
 {
-	return size[0];
+    return cc.size( size.width, size.height);
 }
 
-cc.size_get_height = function (size )
+cc._from_size = function( size )
 {
-	return size[1];
+    return { width:size[0], height:size[1] };
 }
-
 
 //
 // Google "subclasses"
@@ -265,7 +292,7 @@ gl.REPEAT                       = 0x2901;
 gl.CLAMP_TO_EDGE                = 0x812F;
 gl.CLAMP_TO_BORDER              = 0x812D;
 gl.LINEAR_MIPMAP_NEAREST        = 0x2701;
-gl.NEAREST_MIPMAP_NEAREST    = 0x2700;
+gl.NEAREST_MIPMAP_NEAREST       = 0x2700;
 gl.ZERO                         = 0;
 gl.ONE                          = 1;
 gl.SRC_COLOR                    = 0x0300;

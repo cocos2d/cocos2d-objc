@@ -1,6 +1,12 @@
 var GameOver = cc.Layer.extend({
     _ship:null,
     _lbScore:0,
+
+    ctor:function () {
+        var parent = new cc.Layer();
+        __associateObjWithNative(this, parent);
+    },
+
     init:function () {
         var bRet = false;
         if (this._super) {
@@ -16,9 +22,9 @@ var GameOver = cc.Layer.extend({
             logo.setPosition(cc.p(0,300));
             this.addChild(logo,10,1);
 
-            var playAgainNormal = cc.Sprite.create(s_menu, cc.RectMake(378, 0, 126, 33));
-            var playAgainSelected = cc.Sprite.create(s_menu, cc.RectMake(378, 33, 126, 33));
-            var playAgainDisabled = cc.Sprite.create(s_menu, cc.RectMake(378, 33 * 2, 126, 33));
+            var playAgainNormal = cc.Sprite.create(s_menu, cc.rect(378, 0, 126, 33));
+            var playAgainSelected = cc.Sprite.create(s_menu, cc.rect(378, 33, 126, 33));
+            var playAgainDisabled = cc.Sprite.create(s_menu, cc.rect(378, 33 * 2, 126, 33));
 
             var cocos2dhtml5 = cc.Sprite.create(s_cocos2dhtml5);
             cocos2dhtml5.setPosition(cc.p(160,150))

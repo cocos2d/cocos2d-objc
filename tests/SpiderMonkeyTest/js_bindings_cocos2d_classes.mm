@@ -50,6 +50,7 @@ JSBool JSPROXY_CCNode_actionManager(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real actionManager ];
+	
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -46214,7 +46215,7 @@ void JSPROXY_CCSpriteFrameCache_createClass(JSContext *cx, JSObject* globalObj, 
 		JS_FN("removeSpriteFramesFromFile", JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeSpriteFramesFromTexture", JSPROXY_CCSpriteFrameCache_removeSpriteFramesFromTexture_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("removeUnusedSpriteFrames", JSPROXY_CCSpriteFrameCache_removeUnusedSpriteFrames, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteFrameByName", JSPROXY_CCSpriteFrameCache_spriteFrameByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getSpriteFrame", JSPROXY_CCSpriteFrameCache_spriteFrameByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

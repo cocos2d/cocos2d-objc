@@ -29,7 +29,8 @@ var GameLayer = cc.Layer.extend({
             global.enemyNum = 0;
             Explosion.sharedExplosion();
             Enemy.sharedEnemy();
-            winSize = cc.Director.getInstance().getWinSize();
+            var _winSize = cc.Director.getInstance().getWinSize();
+            winSize = cc._from_size(_winSize);
             this._levelManager = new LevelManager(this);
             this.initBackground();
 
@@ -67,7 +68,7 @@ var GameLayer = cc.Layer.extend({
             // schedule
             
 //            this.schedule(this.update);
-//            this.schedule(this.scoreCounter, 1);
+            this.schedule(this.scoreCounter, 1);
 
             if (global.sound) {
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
@@ -210,13 +211,19 @@ var GameLayer = cc.Layer.extend({
         // bg
         this._backSky = cc.Sprite.create(s_bg01);
         this._backSky.setAnchorPoint(cc.POINT_ZERO);
-        this._backSkyHeight = this._backSky.getContentSize().height;
+        var _cs = this._backSky.getContentSize();
+        var cs =  cc._from_size(_cs);
+        this._backSkyHeight = cs.height;
         this.addChild(this._backSky, -10);
 
         //tilemap
         this._backTileMap = cc.TMXTiledMap.create(s_level01);
         this.addChild(this._backTileMap, -9);
-        this._backTileMapHeight = this._backTileMap.getMapSize().height * this._backTileMap.getTileSize().height;
+        var _mapSize = this._backTileMap.getMapSize();
+        var mapSize = cc._from_size( _mapSize );
+        var _tileSize = this._backTileMap.getTileSize();
+        var tileSize = cc._from_size( _tileSize );
+        this._backTileMapHeight = mapSize.height * tileSize.height;
 
         this._backSkyHeight -= 48;
         this._backTileMapHeight -= 200;
@@ -226,6 +233,11 @@ var GameLayer = cc.Layer.extend({
         this.schedule(this.movingBackground, 3);
     },
     movingBackground:function () {
+        cc.log("**********************************");
+        cc.log( winSize );
+        cc.log( winSize.width );
+        cc.log( winSize.height);
+
         this._backSky.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         this._backTileMap.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         this._backSkyHeight -= 48;
@@ -242,7 +254,9 @@ var GameLayer = cc.Layer.extend({
             this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         }
         if (this._backSkyHeight <= 0) {
-            this._backSkyHeight = this._backSky.getContentSize().height;
+            var _cs = this._backSky.getContentSize();
+            var cs = cc._from_size( _cs );
+            this._backSkyHeight = cs.height;
             this.removeChild(this._backSky,true);
             this._backSky = this._backSkyRe;
             this._backSkyRe = null;
@@ -259,7 +273,11 @@ var GameLayer = cc.Layer.extend({
             this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         }
         if (this._backTileMapHeight <= 0) {
-            this._backTileMapHeight = this._backTileMapRe.getMapSize().height * this._backTileMapRe.getTileSize().height;
+            var _mapSize = this._backTileMapRe.getMapSize();
+            var mapSize = cc._from_size( _mapSize );
+            var _tileSize = this._backTileMapRe.getTileSize();
+            var tileSize = cc._from_size( _tileSize );
+            this._backTileMapHeight = mapSize.height * tileSize.height;
             this.removeChild(this._backTileMap,true);
             this._backTileMap = this._backTileMapRe;
             this._backTileMapRe = null;
