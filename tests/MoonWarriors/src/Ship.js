@@ -42,12 +42,14 @@ var Ship = cc.Sprite.extend({
         var animation = cc.Animation.create(animFrames, 0.1);
         var animate = cc.Animate.create(animation);
         this.runAction(cc.RepeatForever.create(animate));
-//        this.schedule(this.shoot, 1 / 6);
+        this.schedule(this.shoot, 1 / 6);
 
         //revive effect
         this.canBeAttack = false;
         var ghostSprite = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 45, 60, 38))
-//        ghostSprite.setBlendFunc(new cc.BlendFunc(cc.GL_SRC_ALPHA, cc.GL_ONE));
+        // XXX riq XXX
+        // New Blending function API. Similar to OpenGL / WebGL
+        ghostSprite.setBlendFunc( gl.SRC_ALPHA, gl.ONE )
         ghostSprite.setScale(8);
         ghostSprite.setPosition(cc.p(this.getContentSize().width / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);
@@ -93,19 +95,25 @@ var Ship = cc.Sprite.extend({
     shoot:function (dt) {
         //this.shootEffect();
         var offset = 13;
+        var _pos = this.getPosition();
+        var pos = {x:_pos[0], y:_pos[1]};
+        var _cs = this.getContentSize();
+        var cs = {width:_cs[0], height:_cs[1]};
         var a = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(a);
         this.getParent().addChild(a, a.zOrder, global.Tag.ShipBullet);
-        a.setPosition(cc.p(this.getPosition().x + offset, this.getPosition().y + 3 + this.getContentSize().height * 0.3));
+        a.setPosition(cc.p(pos.x + offset, pos.y + 3 + cs.height * 0.3));
 
         var b = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.ShipBullet);
-        b.setPosition(cc.p(this.getPosition().x - offset, this.getPosition().y + 3 + this.getContentSize().height * 0.3));
+        b.setPosition(cc.p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
     },
     destroy:function () {
+        var _pos = this.getPosition();
+        var pos = {x:_pos[0], y:_pos[1]};
         global.life--;
-        this.getParent().addChild(new Explosion(this.getPosition().x, this.getPosition().y));
+        this.getParent().addChild(new Explosion(pos.x, pos.y));
         this.getParent().removeChild(this,true);
         if (global.sound) {
             cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect,false);
@@ -115,12 +123,13 @@ var Ship = cc.Sprite.extend({
         if (this.canBeAttack) {
             this._hurtColorLife = 2;
             this.HP--;
-            this.setColor(cc.RED());
+            this.setColor(cc.RED);
         }
     },
     collideRect:function(){
-        var a = this.getContentSize();
-        var r = new cc.RectMake(this.getPositionX() - a.width/2,this.getPositionY() - a.height/2,a.width,a.height/2);
+        var _a = this.getContentSize();
+        var a = {width:_a[0], height:_a[1]};
+        var r = cc.rect(this.getPositionX() - a.width/2,this.getPositionY() - a.height/2,a.width,a.height/2);
         return r;
     }
 });

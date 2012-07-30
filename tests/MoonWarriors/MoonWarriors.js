@@ -47,7 +47,6 @@ var appFiles = [
 ];
 
 for( var i=0; i < appFiles.length; i++) {
-    cc.log( appFiles[i] );
     require( appFiles[i] );
 }
 
