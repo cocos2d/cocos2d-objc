@@ -63,20 +63,22 @@ var Ship = cc.Sprite.extend({
         this.runAction(cc.Sequence.create(cc.DelayTime.create(0.5), blinks, makeBeAttack));
     },
     update:function (dt) {
-        var newX = this.getPosition().x, newY = this.getPosition().y;
-        if ((keys[cc.KEY.w] || keys[cc.KEY.up]) && this.getPosition().y <= winSize.height) {
-            newY += dt * this.speed;
-        }
-        if ((keys[cc.KEY.s] || keys[cc.KEY.down]) && this.getPosition().y >= 0) {
-            newY -= dt * this.speed;
-        }
-        if ((keys[cc.KEY.a] || keys[cc.KEY.left]) && this.getPosition().x >= 0) {
-            newX -= dt * this.speed;
-        }
-        if ((keys[cc.KEY.d] || keys[cc.KEY.right]) && this.getPosition().x <= winSize.width) {
-            newX += dt * this.speed;
-        }
-        this.setPosition(cc.p(newX, newY));
+        var newPos = this.getPosition();
+        // XXX riq XXX
+        // Keyboard not supported yet
+//        if ((keys[cc.KEY.w] || keys[cc.KEY.up]) && this.getPosition().y <= winSize.height) {
+//            newY += dt * this.speed;
+//        }
+//        if ((keys[cc.KEY.s] || keys[cc.KEY.down]) && this.getPosition().y >= 0) {
+//            newY -= dt * this.speed;
+//        }
+//        if ((keys[cc.KEY.a] || keys[cc.KEY.left]) && this.getPosition().x >= 0) {
+//            newX -= dt * this.speed;
+//        }
+//        if ((keys[cc.KEY.d] || keys[cc.KEY.right]) && this.getPosition().x <= winSize.width) {
+//            newX += dt * this.speed;
+//        }
+        this.setPosition( newPos );
 
         if (this.HP <= 0) {
             this.active = false;
@@ -88,7 +90,7 @@ var Ship = cc.Sprite.extend({
                 this._hurtColorLife--;
             }
             if (this._hurtColorLife == 1) {
-                this.setColor(new cc.Color3B(255, 255, 255));
+                this.setColor( cc.c3(255, 255, 255));
             }
         }
     },
@@ -96,9 +98,9 @@ var Ship = cc.Sprite.extend({
         //this.shootEffect();
         var offset = 13;
         var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
+        var pos = cc._from_p(_pos);
         var _cs = this.getContentSize();
-        var cs = {width:_cs[0], height:_cs[1]};
+        var cs = cc._from_size(_cs);
         var a = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(a);
         this.getParent().addChild(a, a.zOrder, global.Tag.ShipBullet);
@@ -111,7 +113,7 @@ var Ship = cc.Sprite.extend({
     },
     destroy:function () {
         var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
+        var pos = cc._from_p(_pos);
         global.life--;
         this.getParent().addChild(new Explosion(pos.x, pos.y));
         this.getParent().removeChild(this,true);
@@ -128,8 +130,10 @@ var Ship = cc.Sprite.extend({
     },
     collideRect:function(){
         var _a = this.getContentSize();
-        var a = {width:_a[0], height:_a[1]};
-        var r = cc.rect(this.getPositionX() - a.width/2,this.getPositionY() - a.height/2,a.width,a.height/2);
+        var a = cc._from_s(_a);
+        var _p = this.getPosition();
+        var p = cc._from_p(_p);
+        var r = cc.rect(p.x - a.width/2, p.y - a.height/2,a.width,a.height/2);
         return r;
     }
 });

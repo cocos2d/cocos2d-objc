@@ -67,7 +67,7 @@ var GameLayer = cc.Layer.extend({
 
             // schedule
             
-//            this.schedule(this.update);
+            this.schedule(this.update);
             this.schedule(this.scoreCounter, 1);
 
             if (global.sound) {
@@ -124,8 +124,8 @@ var GameLayer = cc.Layer.extend({
         this.removeInactiveUnit(dt);
         this.checkIsReborn();
         this.updateUI();
-        cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + global.enemyContainer.length
-            + ", Bullet:" + global.ebulletContainer.length + "," + global.sbulletContainer.length + " all:" + this.getChildren().length;
+//        cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + global.enemyContainer.length
+//            + ", Bullet:" + global.ebulletContainer.length + "," + global.sbulletContainer.length + " all:" + this.getChildren().length;
     },
     checkIsCollide:function () {
         var selChild, bulletChild;
@@ -171,11 +171,16 @@ var GameLayer = cc.Layer.extend({
         for (var i in layerChildren) {
             selChild = layerChildren[i];
             if (selChild) {
-                selChild.update(dt);
-                if ((selChild.getTag() == global.Tag.Ship) || (selChild.getTag() == global.Tag.ShipBullet) ||
-                    (selChild.getTag() == global.Tag.Enemy) || (selChild.getTag() == global.Tag.EnemyBullet)) {
-                    if (selChild && !selChild.active) {
-                        selChild.destroy();
+                // XXX riq XXX. 
+                // It should only send "update" and "destroy" to Ships and Bullets.
+                // Added 'type of ...'
+                if( typeof selChild.update == 'function' ) {
+                    selChild.update(dt);
+                    if ((selChild.getTag() == global.Tag.Ship) || (selChild.getTag() == global.Tag.ShipBullet) ||
+                        (selChild.getTag() == global.Tag.Enemy) || (selChild.getTag() == global.Tag.EnemyBullet)) {
+                        if (selChild && !selChild.active) {
+                            selChild.destroy();
+                        }
                     }
                 }
             }
@@ -233,11 +238,6 @@ var GameLayer = cc.Layer.extend({
         this.schedule(this.movingBackground, 3);
     },
     movingBackground:function () {
-        cc.log("**********************************");
-        cc.log( winSize );
-        cc.log( winSize.width );
-        cc.log( winSize.height);
-
         this._backSky.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         this._backTileMap.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         this._backSkyHeight -= 48;
