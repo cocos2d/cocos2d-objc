@@ -50,7 +50,7 @@ var SysMenu = cc.Layer.extend({
             this._ship = cc.Sprite.createWithTexture(tmp,cc.rect(0, 45, 60, 38));
             this.addChild(this._ship, 0, 4);
             this._ship.setPosition(cc.p(Math.random() * winSize.width, 0));
-            this._ship.runAction(cc.MoveBy.create(2, cc.p(Math.random() * winSize.width, this._ship.getPosition()[0] + winSize.height + 100)));
+            this._ship.runAction(cc.MoveBy.create(2, cc.p( Math.random() * winSize.width, this._ship.getPosition()[0] + winSize.height + 100) ));
 
             if (global.sound) {
                 cc.AudioEngine.getInstance().setBackgroundMusicVolume(0.7);

@@ -29,7 +29,6 @@ var flareEffect = function (parent, target, callback) {
     flare.runAction(bigger);
 }
 
-
 var spark = function (ccpoint, parent, scale, duration) {
     scale = scale || 0.3;
     duration = duration || 0.5;
