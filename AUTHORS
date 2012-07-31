@@ -185,6 +185,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Vit Valentin:
 	Author of cocos2d-x's Catmull Rom actions. 
 	
+* Yannick Loriot (http://yannickloriot.com/):
+	MenuItemToggle does not remove the tag of the added Menu Items.
+	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used
 

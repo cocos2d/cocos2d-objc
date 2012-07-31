@@ -61,7 +61,7 @@ var spark = function (ccpoint, parent, scale, duration) {
     var fadeOut = cc.FadeOut.create(duration);
 
     // XXX riq XXX
-    // replace setTimeout() with a CAllFunc in a sequence
+    // replaced setTimeout() with a cc.CallFunc in a sequence
     var remove = cc.CallFunc.create(this, removeFromParent );
     var seq = cc.Sequence.create( fadeOut, remove );
 
