@@ -131,6 +131,7 @@
 	[sharedFileUtils setEnableFallbackSuffixes:YES];		// Default: NO. No fallback suffixes are going to be used
 	
 	[director_ setResizeMode:kCCDirectorResize_AutoScale];
+//	[director_ setResizeMode:kCCDirectorResize_NoScale];
 
 	[self run];
 }

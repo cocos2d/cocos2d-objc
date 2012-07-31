@@ -29,6 +29,11 @@ var flareEffect = function (parent, target, callback) {
     flare.runAction(bigger);
 }
 
+var removeFromParent = function( sprite )
+{
+    sprite.removeFromParentAndCleanup( true );
+}
+
 var spark = function (ccpoint, parent, scale, duration) {
     scale = scale || 0.3;
     duration = duration || 0.5;
@@ -54,17 +59,24 @@ var spark = function (ccpoint, parent, scale, duration) {
     var right = cc.RotateBy.create(duration, 45);
     var scaleBy = cc.ScaleBy.create(duration, 3, 3);
     var fadeOut = cc.FadeOut.create(duration);
+
+    // XXX riq XXX
+    // replace setTimeout() with a CAllFunc in a sequence
+    var remove = cc.CallFunc.create(this, removeFromParent );
+    var seq = cc.Sequence.create( fadeOut, remove );
+
     one.runAction(left);
     two.runAction(right);
     one.runAction(scaleBy);
     two.runAction(scaleBy.copy());
     three.runAction(scaleBy.copy());
-    one.runAction(fadeOut);
-    two.runAction(fadeOut.copy());
-    three.runAction(fadeOut.copy());
-    setTimeout(function () {
-        parent.removeChild(one,true);
-        parent.removeChild(two,true);
-        parent.removeChild(three,true);
-    }, duration * 1000);
+    one.runAction(seq);
+    two.runAction(seq.copy());
+    three.runAction(seq.copy());
+
+//    setTimeout(function () {
+//        parent.removeChild(one,true);
+//        parent.removeChild(two,true);
+//        parent.removeChild(three,true);
+//    }, duration * 1000);
 }
