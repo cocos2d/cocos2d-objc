@@ -42,44 +42,62 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 /** Light weight timer */
 @interface CCTimer : NSObject
 {
-	id target;
-	TICK_IMP impMethod;
-
-	ccTime elapsed;
-	BOOL runForever;
-	BOOL useDelay;
-	uint nTimesExecuted;
-	uint repeat; //0 = once, 1 is 2 x executed
-	ccTime delay;
-
-@public					// optimization
-	ccTime interval;
-	SEL selector;
+	ccTime		_interval;
+	ccTime		_elapsed;
+	BOOL		_runForever;
+	BOOL		_useDelay;
+	uint		_nTimesExecuted;
+	uint		_repeat; //0 = once, 1 is 2 x executed
+	ccTime		_delay;
 }
+
 /** interval in seconds */
 @property (nonatomic,readwrite,assign) ccTime interval;
-
-/** Allocates a timer with a target and a selector.
-*/
-+(id) timerWithTarget:(id) t selector:(SEL)s;
-
-/** Allocates a timer with a target, a selector and an interval in seconds.
-*/
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
-
-/** Initializes a timer with a target and a selector.
-*/
- -(id) initWithTarget:(id) t selector:(SEL)s;
-
-/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds
-*/
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d;
 
 
 /** triggers the timer */
 -(void) update: (ccTime) dt;
 @end
 
+@interface CCTimerTargetSelector : CCTimer
+{
+	id			_target;
+	SEL			_selector;
+	TICK_IMP	_impMethod;
+}
+
+/** selector */
+@property (nonatomic,readonly)	SEL selector;
+
+/** Allocates a timer with a target and a selector. */
++(id) timerWithTarget:(id) t selector:(SEL)s;
+
+/** Allocates a timer with a target, a selector and an interval in seconds. */
++(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
+
+/** Initializes a timer with a target and a selector. */
+-(id) initWithTarget:(id) t selector:(SEL)s;
+
+/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds */
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d;
+@end
+
+
+@interface CCTimerBlock : CCTimer
+{
+	void (^_block)(ccTime delta);
+	NSString	*_key;
+}
+
+/** unique identifier of the block */
+@property (nonatomic, readonly) NSString *key;
+
+/** Allocates a timer with a target, a selector and an interval in seconds. */
++(id) timerWithInterval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block;
+
+/** Initializes a timer Interval in seconds, repeat in number of times to repeat, delay in seconds and a block */
+-(id) initWithInterval:(ccTime)seconds repeat:(uint)r delay:(ccTime) d key:(NSString*)key block:(void(^)(ccTime delta)) block;
+@end
 
 
 //
@@ -114,7 +132,7 @@ struct _hashUpdateEntry;
 	struct _hashUpdateEntry		*hashForUpdates;	// hash used to fetch quickly the list entries for pause,delete,etc.
 
 	// Used for "selectors with interval"
-	struct _hashSelectorEntry	*hashForSelectors;
+	struct _hashSelectorEntry	*hashForTimers;
 	struct _hashSelectorEntry	*currentTarget;
 	BOOL						currentTargetSalvaged;
 
@@ -143,7 +161,7 @@ struct _hashUpdateEntry;
  If paused is YES, then it won't be called until it is resumed.
  If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
  If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- repeat let the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
+ repeat lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
  delay is the amount of time the action will wait before it'll start
 
  @since v0.99.3, repeat and delay added in v1.1
@@ -160,11 +178,29 @@ struct _hashUpdateEntry;
  */
 -(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused;
 
+/** The scheduled block will be called every 'interval' seconds.
+ If paused is YES, then it won't be called until it is resumed.
+ If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+ If the block is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
+ 'repeat' lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously.
+ 'delay' is the amount of time the action will wait before it'll start.
+ 'target' is needed for all the method related to "target" like "pause" and "unschedule"
+ 'key' is a unique identifier of the block. Needed to unschedule the block or update its interval.
+ @since v2.1
+ */
+-(void) scheduleBlockForKey:(NSString*)key target:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint)repeat delay:(ccTime)delay block:(void(^)(ccTime dt))block;
+
 /** Unshedules a selector for a given target.
  If you want to unschedule the "update", use unscheudleUpdateForTarget.
  @since v0.99.3
  */
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target;
+
+/** Unshedules a block for a given key / target pair.
+ If you want to unschedule the "update", use unscheudleUpdateForTarget.
+ @since v2.1
+ */
+-(void) unscheduleBlockForKey:(NSString*)key target:(id)target;
 
 /** Unschedules the update selector for a given target
  @since v0.99.3

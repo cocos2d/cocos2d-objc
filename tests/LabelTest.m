@@ -360,17 +360,17 @@ Class restartAction()
 	if( (self=[super init] )) {
         CGSize s = [[CCDirector sharedDirector] winSize];
         
-        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0\nnew line" dimensions:CGSizeMake(256, 32) hAlignment:0 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf0 = [CCLabelTTF labelWithString:@"Alignment 0\nnew line" fontName:@"Helvetica" fontSize:12 dimensions:CGSizeMake(256, 32) hAlignment:0];
         ttf0.position = ccp(s.width/2,(s.height/6)*2);
         ttf0.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf0];
         
-        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1\nnew line" dimensions:CGSizeMake(245, 32) hAlignment:1 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf1 = [CCLabelTTF labelWithString:@"Alignment 1\nnew line" fontName:@"Helvetica" fontSize:12 dimensions:CGSizeMake(245, 32) hAlignment:1];
         ttf1.position = ccp(s.width/2,(s.height/6)*3);
         ttf1.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf1];
         
-        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2\nnew line" dimensions:CGSizeMake(245, 32) hAlignment:2 fontName:@"Helvetica" fontSize:12];
+        CCLabelTTF* ttf2 = [CCLabelTTF labelWithString:@"Alignment 2\nnew line" fontName:@"Helvetica" fontSize:12 dimensions:CGSizeMake(245, 32) hAlignment:2];
         ttf2.position = ccp(s.width/2,(s.height/6)*4);
         ttf2.anchorPoint = ccp(0.5f,0.5f);
         [self addChild:ttf2];
@@ -1346,11 +1346,12 @@ static float menuItemPaddingCenter = 50;
 
     [self.label removeFromParentAndCleanup:YES];
     self.label = [CCLabelTTF labelWithString:[self currentAlignment]
+									fontName:@"Marker Felt"
+                                    fontSize:32
                                   dimensions:blockSize
 								  hAlignment:horizAlign
 								  vAlignment:vertAlign
-                                    fontName:@"Marker Felt"
-                                    fontSize:32];
+				  ];
     self.label.anchorPoint = ccp(0,0);
     self.label.position = ccp((s.width - blockSize.width) / 2, (s.height - blockSize.height)/2 );
     
@@ -1449,7 +1450,13 @@ static float menuItemPaddingCenter = 50;
 		// CCLabelBMFont
 //		CCLabelTTF *center =  [[CCLabelTTF alloc] initWithString:@"Bla bla bla bla bla bla bla bla bla bla bla (bla)" dimensions:CGSizeMake(150,84) alignment:UITextAlignmentLeft fontName: @"MarkerFelt.ttc" fontSize: 14];
 
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\"" dimensions:CGSizeMake(s.width/2,200) hAlignment:kCCTextAlignmentCenter vAlignment:kCCVerticalTextAlignmentTop fontName:@"Paint Boy" fontSize:32];
+		CCLabelTTF *center = [CCLabelTTF labelWithString:@"word wrap \"testing\" (bla0) bla1 'bla2' [bla3] (bla4) {bla5} {bla6} [bla7] (bla8) [bla9] 'bla0' \"bla1\""
+												fontName:@"Paint Boy"
+												fontSize:32
+											  dimensions:CGSizeMake(s.width/2,200)
+											  hAlignment:kCCTextAlignmentCenter
+											  vAlignment:kCCVerticalTextAlignmentTop
+							  ];
 		center.position = ccp(s.width/2,150);
 
 		[self addChild:center];
@@ -1552,46 +1559,50 @@ static float menuItemPaddingCenter = 50;
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
+												  fontName:@"Marker Felt"
+												  fontSize:16
 												dimensions:CGSizeMake(s.width/4,40)
 												hAlignment:kCCTextAlignmentCenter
 												vAlignment:kCCVerticalTextAlignmentTop
 											 lineBreakMode:kCCLineBreakModeWordWrap
-												  fontName:@"Marker Felt"
-												  fontSize:16];
+								];
 		wordwrap.position = ccp(s.width/2,60);
 
 		[self addChild:wordwrap];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"A really long line of text that is longer than the width of the label"
+											   fontName:@"Impact"
+											   fontSize:14
 											 dimensions:CGSizeMake(280, 60)
 											 hAlignment:kCCTextAlignmentCenter
 											 vAlignment:kCCVerticalTextAlignmentTop
-											   fontName:@"Impact"
-											   fontSize:14];
+							 ];
 		label.position = ccp(s.width/2,90);
 		[self addChild:label];
 
 #ifdef __CC_PLATFORM_IOS
 
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
+												  fontName:@"Marker Felt"
+												  fontSize:16
 												dimensions:CGSizeMake(s.width/4,40)
 												hAlignment:kCCTextAlignmentCenter
 												vAlignment:kCCVerticalTextAlignmentTop
 											 lineBreakMode:kCCLineBreakModeCharacterWrap
-												  fontName:@"Marker Felt"
-												  fontSize:16];
+								];
 		charwrap.position = ccp(s.width/2,140);
 
 		[self addChild:charwrap];
 
 
 		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
+											  fontName:@"Marker Felt"
+											  fontSize:16
 											dimensions:CGSizeMake(s.width/4,40)
 											hAlignment:kCCTextAlignmentCenter
 											vAlignment:kCCVerticalTextAlignmentTop
 										 lineBreakMode:kCCLineBreakModeClip
-											  fontName:@"Marker Felt"
-											  fontSize:16];
+							];
 		clip.position = ccp(s.width/2,200);
 
 		[self addChild:clip];
