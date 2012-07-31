@@ -771,7 +771,7 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceAddStaticShape( this._space, shape );
         this._batch.addChild( sprite, Z_COIN);
 
-        var animation = cc.AnimationCache.getInstance().getAnimationByName("coin");
+        var animation = cc.AnimationCache.getInstance().getAnimation("coin");
         var animate = cc.Animate.create(animation); 
         var repeat = cc.RepeatForever.create( animate );
         sprite.runAction( repeat );

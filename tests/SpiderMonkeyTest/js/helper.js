@@ -63,6 +63,9 @@ cc._reuse_color3b = cc.c3(255, 255, 255 );
 cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
 cc._reuse_grid = cc.g(0,0);
 
+//
+// Point
+//
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index == 0 ) {
@@ -88,6 +91,9 @@ cc._from_p = function( size )
     return { x:size[0], y:size[1] };
 }
 
+//
+// Grid 
+//
 cc._g = function( x, y )
 {
     cc._reuse_grid[0] = x;
@@ -95,6 +101,9 @@ cc._g = function( x, y )
     return cc._reuse_grid;
 }
 
+//
+// Color
+//
 cc._c3 = function( r, g, b )
 {
     cc._reuse_color3b[0] = r;
@@ -112,6 +121,34 @@ cc._c4 = function( r, g, b, a )
     return cc._reuse_color4b;
 }
 
+//
+// Size
+//
+cc.size = function(w,h)
+{
+    var platform = __getPlatform();
+    if( platform.substring(0,7) == 'desktop' )
+        var size = new Float64Array(2)
+    else
+        var size = new Float32Array(2)
+	size[0] = w;
+	size[1] = h;
+	return size;
+}
+
+cc._to_size = function( size )
+{
+    return cc.size( size.width, size.height);
+}
+
+cc._from_size = function( size )
+{
+    return { width:size[0], height:size[1] };
+}
+
+//
+// Rect
+//
 cc.rect = function(x,y,w,h)
 {
     var platform = __getPlatform();
@@ -137,27 +174,25 @@ cc._from_rect = function( rect )
     return {origin:{x:rect[0], y:rect[1]}, size:{width:rect[2], height:rect[3]} };
 }
 
-cc.size = function(w,h)
+// XXX Should be done in native
+cc.rectIntersectsRect = function( rectA, rectB )
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var size = new Float64Array(2)
-    else
-        var size = new Float32Array(2)
-	size[0] = w;
-	size[1] = h;
-	return size;
+    return ! (  rectA[0] > rectB[0]+rectB[2] ||
+                rectA[0]+rectA[2] < rectB[0] ||
+                rectA[1] > rectB[1]+rectB[3] ||
+                rectA[1]+rectA[3] < rectB[1] );
 }
 
-cc._to_size = function( size )
-{
-    return cc.size( size.width, size.height);
-}
-
-cc._from_size = function( size )
-{
-    return { width:size[0], height:size[1] };
-}
+//
+// Array: for cocos2d-hmtl5 compatibility
+//
+cc.ArrayRemoveObject = function (arr, delObj) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == delObj) {
+            arr.splice(i, 1);
+        }
+    }
+};
 
 //
 // Google "subclasses"

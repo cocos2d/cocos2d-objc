@@ -50,7 +50,6 @@ JSBool JSPROXY_CCNode_actionManager(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	CCNode *real = (CCNode*) [proxy realObj];
 	ret_val = [real actionManager ];
-	
 
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -1833,7 +1832,7 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 		JS_FN("addChild", JSPROXY_CCNode_addChild_z_tag_, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getAnchorPoint", JSPROXY_CCNode_anchorPoint, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getAnchorPointInPoints", JSPROXY_CCNode_anchorPointInPoints, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("boundingBox", JSPROXY_CCNode_boundingBox, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getBoundingBox", JSPROXY_CCNode_boundingBox, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getCamera", JSPROXY_CCNode_camera, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("getChildren", JSPROXY_CCNode_children, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("cleanup", JSPROXY_CCNode_cleanup, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
@@ -21422,8 +21421,8 @@ void JSPROXY_CCAnimationCache_createClass(JSContext *cx, JSObject* globalObj, co
 	static JSFunctionSpec funcs[] = {
 		JS_FN("addAnimation", JSPROXY_CCAnimationCache_addAnimation_name_, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("addAnimations", JSPROXY_CCAnimationCache_addAnimationsWithFile_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getAnimationByName", JSPROXY_CCAnimationCache_animationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("removeAnimationByName", JSPROXY_CCAnimationCache_removeAnimationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getAnimation", JSPROXY_CCAnimationCache_animationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("removeAnimation", JSPROXY_CCAnimationCache_removeAnimationByName_, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	static JSFunctionSpec st_funcs[] = {

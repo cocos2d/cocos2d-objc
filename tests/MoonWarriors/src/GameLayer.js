@@ -98,7 +98,9 @@ var GameLayer = cc.Layer.extend({
     onTouchesMoved:function (touches, event) {
         if (this.isMouseDown) {
             var curPos = this._ship.getPosition();
-            if(cc.Rect.CCRectIntersectsRect(this._ship.boundingBox(),this.screenRect)){
+            // XXX riq XXX
+            // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
+            if(cc.rectIntersectsRect(this._ship.boundingBox(),this.screenRect)){
                 var touch = touches[0];
                 var location = touch.getLocation();
 
@@ -127,6 +129,15 @@ var GameLayer = cc.Layer.extend({
 //        cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + global.enemyContainer.length
 //            + ", Bullet:" + global.ebulletContainer.length + "," + global.sbulletContainer.length + " all:" + this.getChildren().length;
     },
+
+    getBoundingBoxToWorld:function(node) {
+        var p = node.convertToWorldSpace( cc.POINT_ZERO );
+        var bb = node.getBoundingBox();
+        bb[0] += p[0];
+        bb[1] += p[1];
+        return bb;
+    },
+
     checkIsCollide:function () {
         var selChild, bulletChild;
         //check collide
@@ -138,7 +149,9 @@ var GameLayer = cc.Layer.extend({
                     bulletChild.hurt();
                     selChild.hurt();
                 }
-                if (!cc.Rect.CCRectIntersectsRect(this.screenRect, bulletChild.boundingBoxToWorld())) {
+                // XXX riq XXX
+                // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
+                if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( bulletChild ) ) ) {
                         bulletChild.destroy();
                 }
             }
@@ -148,7 +161,9 @@ var GameLayer = cc.Layer.extend({
                     this._ship.hurt();
                 }
             }
-            if (!cc.Rect.CCRectIntersectsRect(this.screenRect, selChild.boundingBoxToWorld())) {
+            // XXX riq XXX
+            // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
+            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( selChild ) ) ) {
                     selChild.destroy();
             }
         }
@@ -161,7 +176,9 @@ var GameLayer = cc.Layer.extend({
                     this._ship.hurt();
                 }
             }
-            if (!cc.Rect.CCRectIntersectsRect(this.screenRect, selChild.boundingBoxToWorld())) {
+            // XXX riq XXX
+            // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
+            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld(selChild))) {
                     selChild.destroy();
             }
         }
@@ -208,7 +225,9 @@ var GameLayer = cc.Layer.extend({
     collide:function (a, b) {
         var aRect = a.collideRect();
         var bRect = b.collideRect();
-        if (cc.Rect.CCRectIntersectsRect(aRect, bRect)) {
+        // XXX riq XXX
+        // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
+        if (cc.rectIntersectsRect(aRect, bRect)) {
             return true;
         }
     },

@@ -130,7 +130,7 @@ var Ship = cc.Sprite.extend({
     },
     collideRect:function(){
         var _a = this.getContentSize();
-        var a = cc._from_s(_a);
+        var a = cc._from_size(_a);
         var _p = this.getPosition();
         var p = cc._from_p(_p);
         var r = cc.rect(p.x - a.width/2, p.y - a.height/2,a.width,a.height/2);
