@@ -22,7 +22,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block js_func;
 	JSObject *js_this;
-	JSBool ok;
+	JSBool ok = JS_TRUE;
 
 	ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 	ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
