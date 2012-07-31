@@ -25,6 +25,14 @@ cc.TEXTURE_PIXELFORMAT_PVRTC4 = 8;
 cc.TEXTURE_PIXELFORMAT_PVRTC4 = 9;
 cc.TEXTURE_PIXELFORMAT_DEFAULT = cc.TEXTURE_PIXELFORMAT_RGBA8888;
 
+cc.TEXT_ALIGNMENT_LEFT  = 0;
+cc.TEXT_ALIGNMENT_CENTER = 1;
+cc.TEXT_ALIGNMENT_RIGHT = 2;
+
+cc.VERTICAL_TEXT_ALIGNMENT_TOP = 0;
+cc.VERTICAL_TEXT_ALIGNMENT_CENTER = 1;
+cc.VERTICAL_TEXT_ALIGNMENT_BOTTOM = 2;
+
 cc.IMAGE_FORMAT_JPEG = 0;
 cc.IMAGE_FORMAT_PNG = 0;
 
@@ -55,6 +63,9 @@ cc._reuse_color3b = cc.c3(255, 255, 255 );
 cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
 cc._reuse_grid = cc.g(0,0);
 
+//
+// Point
+//
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index == 0 ) {
@@ -70,6 +81,19 @@ cc._p = function( x, y )
     }
 }
 
+cc._to_p = function( point )
+{
+    return cc.p( x.width, y.height );
+}
+
+cc._from_p = function( size )
+{
+    return { x:size[0], y:size[1] };
+}
+
+//
+// Grid 
+//
 cc._g = function( x, y )
 {
     cc._reuse_grid[0] = x;
@@ -77,6 +101,9 @@ cc._g = function( x, y )
     return cc._reuse_grid;
 }
 
+//
+// Color
+//
 cc._c3 = function( r, g, b )
 {
     cc._reuse_color3b[0] = r;
@@ -94,6 +121,34 @@ cc._c4 = function( r, g, b, a )
     return cc._reuse_color4b;
 }
 
+//
+// Size
+//
+cc.size = function(w,h)
+{
+    var platform = __getPlatform();
+    if( platform.substring(0,7) == 'desktop' )
+        var size = new Float64Array(2)
+    else
+        var size = new Float32Array(2)
+	size[0] = w;
+	size[1] = h;
+	return size;
+}
+
+cc._to_size = function( size )
+{
+    return cc.size( size.width, size.height);
+}
+
+cc._from_size = function( size )
+{
+    return { width:size[0], height:size[1] };
+}
+
+//
+// Rect
+//
 cc.rect = function(x,y,w,h)
 {
     var platform = __getPlatform();
@@ -109,28 +164,35 @@ cc.rect = function(x,y,w,h)
 	return rect;
 }
 
-cc.size = function(w,h)
+cc._to_rect = function( rect )
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var size = new Float64Array(2)
-    else
-        var size = new Float32Array(2)
-	size[0] = w;
-	size[1] = h;
-	return size;
+    return cc.rect( rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
 }
 
-cc.size_get_width = function (size )
+cc._from_rect = function( rect )
 {
-	return size[0];
+    return {origin:{x:rect[0], y:rect[1]}, size:{width:rect[2], height:rect[3]} };
 }
 
-cc.size_get_height = function (size )
+// XXX Should be done in native
+cc.rectIntersectsRect = function( rectA, rectB )
 {
-	return size[1];
+    return ! (  rectA[0] > rectB[0]+rectB[2] ||
+                rectA[0]+rectA[2] < rectB[0] ||
+                rectA[1] > rectB[1]+rectB[3] ||
+                rectA[1]+rectA[3] < rectB[1] );
 }
 
+//
+// Array: for cocos2d-hmtl5 compatibility
+//
+cc.ArrayRemoveObject = function (arr, delObj) {
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] == delObj) {
+            arr.splice(i, 1);
+        }
+    }
+};
 
 //
 // Google "subclasses"
@@ -190,7 +252,9 @@ goog.base = function(me, opt_methodName, var_args) {
 // Simple subclass
 //
 
-cc.Layer.extend = function (prop) {
+cc.Class = function(){};
+
+cc.Class.extend = function (prop) {
     var _super = this.prototype;
 
     // Instantiate a base class (but only create the instance,
@@ -243,7 +307,9 @@ cc.Layer.extend = function (prop) {
     return Class;
 };
 
-cc.LayerGradient.extend = cc.Layer.extend;
+cc.Layer.extend = cc.Class.extend;
+cc.LayerGradient.extend = cc.Class.extend;
+cc.Sprite.extend = cc.Class.extend;
 
 //
 // Chipmunk helpers
@@ -255,10 +321,22 @@ cp._v = cc._p
 
 
 var gl = gl || {};
-gl.NEAREST = 0x2600;
-gl.LINEAR = 0x2601;
-gl.REPEAT = 0x2901;
-gl.CLAMP_TO_EDGE = 0x812F;
-gl.CLAMP_TO_BORDER = 0x812D;
-gl.LINEAR_MIPMAP_NEAREST = 0x2701;
-gl.GL_NEAREST_MIPMAP_NEAREST = 0x2700;
+gl.NEAREST                      = 0x2600;
+gl.LINEAR                       = 0x2601;
+gl.REPEAT                       = 0x2901;
+gl.CLAMP_TO_EDGE                = 0x812F;
+gl.CLAMP_TO_BORDER              = 0x812D;
+gl.LINEAR_MIPMAP_NEAREST        = 0x2701;
+gl.NEAREST_MIPMAP_NEAREST       = 0x2700;
+gl.ZERO                         = 0;
+gl.ONE                          = 1;
+gl.SRC_COLOR                    = 0x0300;
+gl.ONE_MINUS_SRC_COLOR          = 0x0301;
+gl.SRC_ALPHA                    = 0x0302;
+gl.ONE_MINUS_SRC_ALPHA          = 0x0303;
+gl.DST_ALPHA                    = 0x0304;
+gl.ONE_MINUS_DST_ALPHA          = 0x0305;
+gl.DST_COLOR                    = 0x0306;
+gl.ONE_MINUS_DST_COLOR          = 0x0307;
+gl.SRC_ALPHA_SATURATE           = 0x0308;
+

@@ -288,7 +288,7 @@ var SpriteFrameTest = function() {
 				var name = "grossini_dance_" + i + ".png";
 			}
 
-			var frame = cache.spriteFrameByName( name );
+			var frame = cache.getSpriteFrame( name );
 			frames.push( frame );
 		}
 
@@ -312,12 +312,12 @@ var SpriteFrameTest = function() {
 			} else {
 				var name = "grossini_dance_gray_" + i + ".png";
 			}
-			var frame = cache.spriteFrameByName( name );
+			var frame = cache.getSpriteFrame( name );
 			moreFrames.push( frame );
 		}
 		for( var i = 1; i < 5; i++) {
 			var name = "grossini_blue_0" + i + ".png";
-			var frame = cache.spriteFrameByName( name );
+			var frame = cache.getSpriteFrame( name );
 			moreFrames.push( frame );
 		}
 
@@ -487,7 +487,7 @@ var SpriteOffsetAnchorFlip = function() {
 					var name = "grossini_dance_" + j + ".png";
 				}
 
-				var frame = cache.spriteFrameByName( name );
+				var frame = cache.getSpriteFrame( name );
 				frames.push( frame );
 			}
 
@@ -561,7 +561,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 					var name = "grossini_dance_" + j + ".png";
 				}
 
-				var frame = cache.spriteFrameByName( name );
+				var frame = cache.getSpriteFrame( name );
 				frames.push( frame );
 			}
 

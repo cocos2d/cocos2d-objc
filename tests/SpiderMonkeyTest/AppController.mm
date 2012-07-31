@@ -131,6 +131,7 @@
 	[sharedFileUtils setEnableFallbackSuffixes:YES];		// Default: NO. No fallback suffixes are going to be used
 	
 	[director_ setResizeMode:kCCDirectorResize_AutoScale];
+//	[director_ setResizeMode:kCCDirectorResize_NoScale];
 
 	[self run];
 }
@@ -216,11 +217,12 @@
 	
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
-	if( [name isEqual:@"Javascript Game"] )
-		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/game-main.js"];
-	else 
-		[[ScriptingCore sharedInstance] runScript:@"javascript-spidermonkey/main.js"];	
-
+	if( [name isEqual:@"JS Watermelon"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
+	else if( [name isEqual:@"JS Tests"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];	
 }
 @end
 

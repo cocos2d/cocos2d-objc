@@ -6,6 +6,11 @@ version 2.1-alpha XX-Ago-2012
 			Includes Javascript remote console
 			Removed old JSCocoa code and samples
 			Uses Spidermonkey JS VM from Firefox 14.0.1
+. [NEW] LabelTTF API consistency changes:
+       "font" and "size" are always the 2nd and 3rd params. eg:
+			labelWithString:font:size:  -> Not changed
+			labelWithString:dimension:hAlign:font:size -> labelWithString:font:size:dimension:hAlign:
+			labelWithString:dimension:hAlign:vAlign:font:size -> labelWithString:font:size:dimension:hAlign:vAlign:
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Tests: Tests for RotationalSkew feature
 . [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.

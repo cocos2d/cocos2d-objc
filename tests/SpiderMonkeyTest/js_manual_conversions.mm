@@ -66,8 +66,17 @@ JSBool jsval_to_nsstring( JSContext *cx, jsval vp, NSString **ret )
 	// root it
 	vp = STRING_TO_JSVAL(jsstr);
 
-	*ret = [NSString stringWithUTF8String: JS_EncodeString(cx, jsstr)];
+	char *ptr = JS_EncodeString(cx, jsstr);
+	if( ! ptr )
+		return JS_FALSE;
 	
+	NSString *tmp = [NSString stringWithUTF8String: ptr];
+	if( ! tmp )
+		return JS_FALSE;
+	
+	*ret = tmp;
+	JS_free( cx, ptr );
+
 	return JS_TRUE;
 }
 
@@ -80,8 +89,9 @@ JSBool jsval_to_nsobject( JSContext *cx, jsval vp, NSObject **ret )
 	// root it
 	vp = OBJECT_TO_JSVAL(jsobj);
 	
-//	JSPROXY_NSObject* proxy = (JSPROXY_NSObject*) JS_GetPrivate( jsobj ); 
 	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
+	if( ! proxy )
+		return JS_FALSE;
 
 	*ret = [proxy realObj];
 	
@@ -151,9 +161,31 @@ JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray**
 	for( int i=0; i < argc; i++ )
 	{
 		id obj;
-		if( ! jsval_to_nsobject( cx, *vp++, &obj ) )
+		JSBool ok = JS_FALSE;
+		
+		// Native Object ?
+		ok = jsval_to_nsobject( cx, *vp, &obj );
+
+		// Number ?
+		if( ! ok ) {
+			double num;
+			ok = JS_ValueToNumber(cx, *vp, &num );
+			
+			if( ok ) {
+				obj = [NSNumber numberWithDouble:num];
+			}
+		}
+		
+		// String ?
+		if( ! ok )
+			ok = jsval_to_nsstring(cx, *vp, (NSString**)&obj );
+		
+		if( ! ok )
 			return JS_FALSE;
 
+		// next
+		vp++;
+		
 		[array addObject:obj];
 	}
 	*ret = array;

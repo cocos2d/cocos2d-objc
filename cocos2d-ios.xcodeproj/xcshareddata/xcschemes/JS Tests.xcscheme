@@ -14,8 +14,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A0D6BFEB159B6A25008EED97"
-               BuildableName = "Javascript Test.app"
-               BlueprintName = "Javascript Tests"
+               BuildableName = "JS Tests.app"
+               BlueprintName = "JS Tests"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,8 +32,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D6BFEB159B6A25008EED97"
-            BuildableName = "Javascript Test.app"
-            BlueprintName = "Javascript Tests"
+            BuildableName = "JS Tests.app"
+            BlueprintName = "JS Tests"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -51,8 +51,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D6BFEB159B6A25008EED97"
-            BuildableName = "Javascript Test.app"
-            BlueprintName = "Javascript Tests"
+            BuildableName = "JS Tests.app"
+            BlueprintName = "JS Tests"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -69,8 +69,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "A0D6BFEB159B6A25008EED97"
-            BuildableName = "Javascript Test.app"
-            BlueprintName = "Javascript Tests"
+            BuildableName = "JS Tests.app"
+            BlueprintName = "JS Tests"
             ReferencedContainer = "container:cocos2d-ios.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
