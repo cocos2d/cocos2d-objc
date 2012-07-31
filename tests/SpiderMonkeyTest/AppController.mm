@@ -108,7 +108,16 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 //	return YES;
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"JS Watermelon"] )
+		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	else if( [name isEqual:@"JS Tests"] )
+		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+	
+	return YES;
 }
 
 #pragma mark - AppController - Mac
