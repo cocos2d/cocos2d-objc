@@ -92,21 +92,10 @@ static inline ccVertex2F __v2f(CGPoint v )
 #endif
 }
 
-
-
-typedef struct Vertex {ccVertex2F vertex, texcoord; ccColor4B color;} Vertex;
-typedef struct Triangle {Vertex a, b, c;} Triangle;
-
-@interface CCDrawNode(){
-	GLuint _vao;
-	GLuint _vbo;
-	
-	NSUInteger _bufferCapacity;
-	GLsizei _bufferCount;
-	Vertex *_buffer;
+static inline ccTex2F __t(ccVertex2F v )
+{
+	return *(ccTex2F*)&v;
 }
-
-@end
 
 
 @implementation CCDrawNode
@@ -119,7 +108,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 {
 	if(_bufferCount + count > _bufferCapacity){
 		_bufferCapacity += MAX(_bufferCapacity, count);
-		_buffer = realloc(_buffer, _bufferCapacity*sizeof(Vertex));
+		_buffer = realloc(_buffer, _bufferCapacity*sizeof(ccV2F_C4B_T2F));
 		
 //		NSLog(@"Resized vertex buffer to %d", _bufferCapacity);
 	}
@@ -139,17 +128,17 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 			
 		glGenBuffers(1, &_vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
 
 		glEnableVertexAttribArray(kCCVertexAttrib_Position);
-		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, vertex));
-		
-		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
-		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, texcoord));
+		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, vertices));
 		
 		glEnableVertexAttribArray(kCCVertexAttrib_Color);
-		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, color));
-    
+		glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, colors));
+
+		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
+		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV2F_C4B_T2F), (GLvoid *)offsetof(ccV2F_C4B_T2F, texCoords));
+		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		ccGLBindVAO(0);
 
@@ -181,7 +170,7 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 {
 	if( _dirty ) {
 		glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(ccV2F_C4B_T2F)*_bufferCapacity, _buffer, GL_STREAM_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 		_dirty = NO;
 	}
@@ -211,14 +200,14 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	NSUInteger vertex_count = 2*3;
 	[self ensureCapacity:vertex_count];
 	
-	Vertex a = {{pos.x - radius, pos.y - radius}, {-1.0, -1.0}, ccc4BFromccc4F(color) };
-	Vertex b = {{pos.x - radius, pos.y + radius}, {-1.0,  1.0}, ccc4BFromccc4F(color) };
-	Vertex c = {{pos.x + radius, pos.y + radius}, { 1.0,  1.0}, ccc4BFromccc4F(color) };
-	Vertex d = {{pos.x + radius, pos.y - radius}, { 1.0, -1.0}, ccc4BFromccc4F(color) };
+	ccV2F_C4B_T2F a = {{pos.x - radius, pos.y - radius}, ccc4BFromccc4F(color), {-1.0, -1.0} };
+	ccV2F_C4B_T2F b = {{pos.x - radius, pos.y + radius}, ccc4BFromccc4F(color), {-1.0,  1.0} };
+	ccV2F_C4B_T2F c = {{pos.x + radius, pos.y + radius}, ccc4BFromccc4F(color), { 1.0,  1.0} };
+	ccV2F_C4B_T2F d = {{pos.x + radius, pos.y - radius}, ccc4BFromccc4F(color), { 1.0, -1.0} };
 	
-	Triangle *triangles = (Triangle *)(_buffer + _bufferCount);
-	triangles[0] = (Triangle){a, b, c};
-	triangles[1] = (Triangle){a, c, d};
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+	triangles[0] = (ccV2F_C4B_T2F_Triangle){a, b, c};
+	triangles[1] = (ccV2F_C4B_T2F_Triangle){a, c, d};
 	
 	_bufferCount += vertex_count;
 	
@@ -249,13 +238,40 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	ccVertex2F v7 = v2fadd(a, v2fadd(nw, tw));
 	
 	
-	Triangle *triangles = (Triangle *)(_buffer + _bufferCount);
-	triangles[0] = (Triangle){{v0, v2fneg(v2fadd(n, t)), ccc4BFromccc4F(color) }, {v1, v2fsub(n, t), ccc4BFromccc4F(color) }, {v2, v2fneg(n), ccc4BFromccc4F(color)},};
-	triangles[1] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v1, v2fsub(n, t), ccc4BFromccc4F(color)}, {v2, v2fneg(n), ccc4BFromccc4F(color) },};
-	triangles[2] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v2, v2fneg(n), ccc4BFromccc4F(color)},};
-	triangles[3] = (Triangle){{v3, n, ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
-	triangles[4] = (Triangle){{v6, v2fsub(t, n), ccc4BFromccc4F(color)}, {v4, v2fneg(n), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
-	triangles[5] = (Triangle){{v6, v2fsub(t, n), ccc4BFromccc4F(color)}, {v7, v2fadd(n, t), ccc4BFromccc4F(color)}, {v5, n, ccc4BFromccc4F(color)},};
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+	
+	triangles[0] = (ccV2F_C4B_T2F_Triangle) {
+		{v0, ccc4BFromccc4F(color), __t(v2fneg(v2fadd(n, t))) },
+		{v1, ccc4BFromccc4F(color), __t(v2fsub(n, t)) },
+		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+	};
+	
+	triangles[1] = (ccV2F_C4B_T2F_Triangle){
+		{v3, ccc4BFromccc4F(color), __t(n)},
+		{v1, ccc4BFromccc4F(color), __t(v2fsub(n, t)) },
+		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+	};
+	
+	triangles[2] = (ccV2F_C4B_T2F_Triangle){
+		{v3, ccc4BFromccc4F(color), __t(n)},
+		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v2, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+	};
+	triangles[3] = (ccV2F_C4B_T2F_Triangle){
+		{v3, ccc4BFromccc4F(color), __t(n) }, 
+		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v5, ccc4BFromccc4F(color), __t(n) },
+	};
+	triangles[4] = (ccV2F_C4B_T2F_Triangle){
+		{v6, ccc4BFromccc4F(color), __t(v2fsub(t, n))},
+		{v4, ccc4BFromccc4F(color), __t(v2fneg(n)) },
+		{v5, ccc4BFromccc4F(color), __t(n)},
+	};
+	triangles[5] = (ccV2F_C4B_T2F_Triangle){
+		{v6, ccc4BFromccc4F(color), __t(v2fsub(t, n)) },
+		{v7, ccc4BFromccc4F(color), __t(v2fadd(n, t)) },
+		{v5, ccc4BFromccc4F(color), __t(n)},
+	};
 	
 	_bufferCount += vertex_count;
 	
@@ -286,8 +302,8 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 	NSUInteger vertex_count = 3*triangle_count;
 	[self ensureCapacity:vertex_count];
 	
-	Triangle *triangles = (Triangle *)(_buffer + _bufferCount);
-	Triangle *cursor = triangles;
+	ccV2F_C4B_T2F_Triangle *triangles = (ccV2F_C4B_T2F_Triangle *)(_buffer + _bufferCount);
+	ccV2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	CGFloat inset = (outline == 0.0 ? 0.5 : 0.0);
 	for(int i=0; i<count-2; i++){
@@ -295,7 +311,11 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 		ccVertex2F v1 = v2fsub( __v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
 		ccVertex2F v2 = v2fsub( __v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
 		
-		*cursor++ = (Triangle){{v0, v2fzero, ccc4BFromccc4F(fill)}, {v1, v2fzero, ccc4BFromccc4F(fill)}, {v2, v2fzero, ccc4BFromccc4F(fill)},};
+		*cursor++ = (ccV2F_C4B_T2F_Triangle){
+			{v0, ccc4BFromccc4F(fill), __t(v2fzero) },
+			{v1, ccc4BFromccc4F(fill), __t(v2fzero) },
+			{v2, ccc4BFromccc4F(fill), __t(v2fzero) },
+		};
 	}
 	
 	for(int i=0; i<count; i++){
@@ -314,16 +334,32 @@ typedef struct Triangle {Vertex a, b, c;} Triangle;
 			ccVertex2F outer0 = v2fadd(v0, v2fmult(offset0, width));
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, width));
 			
-			*cursor++ = (Triangle){{inner0, v2fneg(n0), ccc4BFromccc4F(line)}, {inner1, v2fneg(n0), ccc4BFromccc4F(line)}, {outer1, n0, ccc4BFromccc4F(line)}};
-			*cursor++ = (Triangle){{inner0, v2fneg(n0), ccc4BFromccc4F(line)}, {outer0, n0, ccc4BFromccc4F(line)}, {outer1, n0, ccc4BFromccc4F(line) }};
+			*cursor++ = (ccV2F_C4B_T2F_Triangle){
+				{inner0, ccc4BFromccc4F(line), __t(v2fneg(n0))},
+				{inner1, ccc4BFromccc4F(line), __t(v2fneg(n0))},
+				{outer1, ccc4BFromccc4F(line), __t(n0)}
+			};
+			*cursor++ = (ccV2F_C4B_T2F_Triangle){
+				{inner0, ccc4BFromccc4F(line), __t(v2fneg(n0))},
+				{outer0, ccc4BFromccc4F(line), __t(n0)},
+				{outer1, ccc4BFromccc4F(line), __t(n0)}
+			};
 		} else {
 			ccVertex2F inner0 = v2fsub(v0, v2fmult(offset0, 0.5));
 			ccVertex2F inner1 = v2fsub(v1, v2fmult(offset1, 0.5));
 			ccVertex2F outer0 = v2fadd(v0, v2fmult(offset0, 0.5));
 			ccVertex2F outer1 = v2fadd(v1, v2fmult(offset1, 0.5));
 			
-			*cursor++ = (Triangle){{inner0, v2fzero, ccc4BFromccc4F(fill)}, {inner1, v2fzero, ccc4BFromccc4F(fill)}, {outer1, n0, ccc4BFromccc4F(fill)}};
-			*cursor++ = (Triangle){{inner0, v2fzero, ccc4BFromccc4F(fill)}, {outer0, n0, ccc4BFromccc4F(fill)}, {outer1, n0, ccc4BFromccc4F(fill)}};
+			*cursor++ = (ccV2F_C4B_T2F_Triangle){
+				{inner0, ccc4BFromccc4F(fill), __t(v2fzero)}, 
+				{inner1, ccc4BFromccc4F(fill), __t(v2fzero)},
+				{outer1, ccc4BFromccc4F(fill), __t(n0)}
+			};
+			*cursor++ = (ccV2F_C4B_T2F_Triangle){
+				{inner0, ccc4BFromccc4F(fill), __t(v2fzero)},
+				{outer0, ccc4BFromccc4F(fill), __t(n0)},
+				{outer1, ccc4BFromccc4F(fill), __t(n0)}
+			};
 		}
 	}
 	
