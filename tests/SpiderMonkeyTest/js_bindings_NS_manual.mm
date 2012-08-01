@@ -158,7 +158,7 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 	JSPROXY_NSObject_class->resolve = JS_ResolveStub;
 	JSPROXY_NSObject_class->convert = JS_ConvertStub;
 	JSPROXY_NSObject_class->finalize = JSPROXY_NSObject_finalize;
-	JSPROXY_NSObject_class->flags = 0; //JSCLASS_HAS_PRIVATE;
+	JSPROXY_NSObject_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
 //		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSObject_getProperty, JSPROXY_NSObject_setProperty},
@@ -342,7 +342,7 @@ void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char 
 	JSPROXY_NSEvent_class->resolve = JS_ResolveStub;
 	JSPROXY_NSEvent_class->convert = JS_ConvertStub;
 	JSPROXY_NSEvent_class->finalize = JSPROXY_NSEvent_finalize;
-	JSPROXY_NSEvent_class->flags = 0; //JSCLASS_HAS_PRIVATE;
+	JSPROXY_NSEvent_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
 //		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSEvent_getProperty, JSPROXY_NSEvent_setProperty},
@@ -468,7 +468,7 @@ void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char 
 	JSPROXY_UITouch_class->resolve = JS_ResolveStub;
 	JSPROXY_UITouch_class->convert = JS_ConvertStub;
 	JSPROXY_UITouch_class->finalize = JSPROXY_UITouch_finalize;
-	JSPROXY_UITouch_class->flags = 0; //JSCLASS_HAS_PRIVATE;
+	JSPROXY_UITouch_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
 //		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_UITouch_getProperty, JSPROXY_UITouch_setProperty},
@@ -680,7 +680,7 @@ void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, con
 	JSPROXY_UIAccelerometer_class->resolve = JS_ResolveStub;
 	JSPROXY_UIAccelerometer_class->convert = JS_ConvertStub;
 	JSPROXY_UIAccelerometer_class->finalize = JSPROXY_UIAccelerometer_finalize;
-	JSPROXY_UIAccelerometer_class->flags = 0; //JSCLASS_HAS_PRIVATE;
+	JSPROXY_UIAccelerometer_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}

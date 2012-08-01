@@ -196,7 +196,7 @@ JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *re
 {
 	if( ! JS_ValueToFunction(cx, vp ) )
 		return JS_FALSE;
-
+	
 	js_block block = ^(id sender) {
 
 		jsval rval;
@@ -215,7 +215,7 @@ JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, j
 {
 	if( ! JS_ValueToFunction(cx, vp ) )
 		return JS_FALSE;
-	
+		
 	js_block block = ^(id sender) {
 		
 		jsval rval;

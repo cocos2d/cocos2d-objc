@@ -17,23 +17,27 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 2, "Invalid number of arguments. Expecting 2 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	js_block js_func;
 	JSObject *js_this;
 	JSBool ok = JS_TRUE;
 
-	ok &= JS_ValueToObject(cx, *argvp++, &js_this);
-	ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+	ok &= JS_ValueToObject(cx, *argvp, &js_this);
+	ok &= set_reserved_slot(obj, 0, *argvp++ );
+
+	ok &= jsval_to_block_1( cx, *argvp, js_this, &js_func );
+	ok &= set_reserved_slot(obj, 1, *argvp++ );
 	
 	if( ! ok )
 		return JS_FALSE;
-
+	
+	
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
 
 	[real setBlock:(void(^)(id sender))js_func];
-	
+
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 
 	return JS_TRUE;
@@ -48,15 +52,14 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	js_block js_func;
 	JSObject *js_this;
 	
-	ok &= jsval_to_nsstring( cx, *argvp++, &normal );
+	ok &= jsval_to_nsstring( cx, argvp[0], &normal );
 		
-	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc ==3 ) {
 		// this
-		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
-		
+		ok &= JS_ValueToObject(cx, argvp[1], &js_this);
+
 		// function
-		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+		ok &= jsval_to_block_1( cx, argvp[2], js_this, &js_func );
 	}
 	
 	CCMenuItemFont *ret_val;
@@ -67,8 +70,13 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 		ret_val = [CCMenuItemFont itemWithString:normal block:(void(^)(id sender))js_func];
 	
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+
+	// "root" object and function
+	set_reserved_slot(jsobj, 0, argvp[1] );
+	set_reserved_slot(jsobj, 1, argvp[2] );
+
 	return JS_TRUE;
 }
 
@@ -81,15 +89,14 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	js_block js_func;
 	JSObject *js_this;
 	
-	ok &= jsval_to_nsobject( cx, *argvp++, &label );
+	ok &= jsval_to_nsobject( cx, argvp[0], &label );
 	
-	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc ==3 ) {
 		// this
-		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
+		ok &= JS_ValueToObject(cx, argvp[1], &js_this);
 		
 		// function
-		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+		ok &= jsval_to_block_1( cx, argvp[2], js_this, &js_func );
 	}
 	
 	CCMenuItemLabel *ret_val;
@@ -102,6 +109,10 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
+	// "root" object and function
+	set_reserved_slot(jsobj, 0, argvp[1] );
+	set_reserved_slot(jsobj, 1, argvp[2] );
+	
 	return JS_TRUE;
 }
 
@@ -113,6 +124,7 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	NSString *normal, *selected, *disabled;
 	js_block js_func;
 	JSObject *js_this;
+	jsval valthis, valfn;
 	
 	ok &= jsval_to_nsstring( cx, *argvp++, &normal );
 	
@@ -126,9 +138,11 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc >=4 ) {
 		// this
+		valthis = *argvp;
 		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 
 		// function
+		valfn = *argvp;
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
 	}
 
@@ -146,6 +160,10 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
+	// "root" object and function
+	set_reserved_slot(jsobj, 0, valthis );
+	set_reserved_slot(jsobj, 1, valfn );
+	
 	return JS_TRUE;
 }
 
@@ -157,6 +175,7 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	CCSprite *normal, *selected, *disabled;
 	js_block js_func;
 	JSObject *js_this;
+	jsval valthis, valfn;
 	
 	ok &= jsval_to_nsobject( cx, *argvp++, &normal );
 	
@@ -170,9 +189,11 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	// cannot merge with previous if() since argvp needs to be incremented
 	if( argc >=4 ) {
 		// this
+		valthis = *argvp;
 		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 		
 		// function
+		valfn = *argvp;
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
 	}
 	
@@ -188,6 +209,10 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
+	// "root" object and function
+	set_reserved_slot(jsobj, 0, valthis );
+	set_reserved_slot(jsobj, 1, valfn );
+
 	return JS_TRUE;
 }
 
@@ -198,13 +223,16 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	JSBool ok = JS_TRUE;
 	js_block js_func;
 	JSObject *js_this;
+	jsval valthis, valfn;
 	
 	// this
+	valthis = *argvp;
 	ok &= JS_ValueToObject(cx, *argvp++, &js_this);
 	
 	NSObject *ret_val;
 	if( argc == 2 ) {
 		// function
+		valfn = *argvp;
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
 		if( ! ok )
 			return JS_FALSE;
@@ -224,6 +252,10 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
 	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
+	// "root" object and function
+	set_reserved_slot(jsobj, 0, valthis );
+	set_reserved_slot(jsobj, 1, valfn );
+	
 	return JS_TRUE;	
 }
 
@@ -232,7 +264,7 @@ JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 4, "Invalid number of arguments. Expecting 4 args" );
 
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -266,7 +298,7 @@ JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderCo
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 4, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
@@ -319,7 +351,7 @@ JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t ar
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc >=1 && argc <=4, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 
@@ -405,7 +437,7 @@ JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsva
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
-	NSCAssert( proxy && [proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc==2, "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	

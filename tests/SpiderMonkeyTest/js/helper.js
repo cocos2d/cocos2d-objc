@@ -177,10 +177,19 @@ cc._from_rect = function( rect )
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
-    return ! (  rectA[0] > rectB[0]+rectB[2] ||
+    var _ra = cc._from_rect(rectA);
+    var _rb = cc._from_rect(rectB);
+
+    var bool = ! (  rectA[0] > rectB[0]+rectB[2] ||
                 rectA[0]+rectA[2] < rectB[0] ||
                 rectA[1] > rectB[1]+rectB[3] ||
                 rectA[1]+rectA[3] < rectB[1] );
+
+    cc.log("----: " + bool);
+    cc.log( 'x:' + rectA[0] + ' y:' + rectA[1] + ' widht:' + rectA[2] + ' height:' + rectA[3] );
+    cc.log( 'x:' + rectB[0] + ' y:' + rectB[1] + ' widht:' + rectB[2] + ' height:' + rectB[3] );
+
+    return bool;
 }
 
 //

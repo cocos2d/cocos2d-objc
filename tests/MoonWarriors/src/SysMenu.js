@@ -10,7 +10,7 @@ var SysMenu = cc.Layer.extend({
         var bRet = false;
         if( this._super() ) {
             var _winSize = cc.Director.getInstance().getWinSize();
-            winSize = {width:_winSize[0], height:_winSize[1] };
+            winSize = cc._from_size(_winSize);
             var sp = cc.Sprite.create(s_loading);
             sp.setAnchorPoint(cc.POINT_ZERO);
             this.addChild(sp, 0, 1);
@@ -50,7 +50,9 @@ var SysMenu = cc.Layer.extend({
             this._ship = cc.Sprite.createWithTexture(tmp,cc.rect(0, 45, 60, 38));
             this.addChild(this._ship, 0, 4);
             this._ship.setPosition(cc.p(Math.random() * winSize.width, 0));
-            this._ship.runAction(cc.MoveBy.create(2, cc.p( Math.random() * winSize.width, this._ship.getPosition()[0] + winSize.height + 100) ));
+            // XXX riq XXX
+            // getPosition()[0] ouch.
+            this._ship.runAction(cc.MoveBy.create(2, cc.p( Math.random() * winSize.width, this._ship.getPosition()[1] + winSize.height + 100) ));
 
             if (global.sound) {
                 cc.AudioEngine.getInstance().setBackgroundMusicVolume(0.7);
@@ -80,8 +82,12 @@ var SysMenu = cc.Layer.extend({
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
     },
     update:function (dt) {
+        // XXX riq XXX
+        // getPosition()[1] ouch
         if (this._ship.getPosition()[1] > 480) {
             this._ship.setPosition(cc.p(Math.random() * winSize.width, 10));
+            // XXX riq XXX
+            // getPosition()[1] ouch
             this._ship.runAction(cc.MoveBy.create(parseInt(5 * Math.random()), cc.p(Math.random() * winSize.width, this._ship.getPosition()[1] + 480)));
         }
     },

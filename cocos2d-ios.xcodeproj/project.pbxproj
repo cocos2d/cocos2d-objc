@@ -4827,12 +4827,6 @@
 		A001948C15C37A6800F3D80E /* mainMainMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = mainMainMusic.mp3; sourceTree = "<group>"; };
 		A001948D15C37A6800F3D80E /* shipDestroyEffect.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shipDestroyEffect.mp3; sourceTree = "<group>"; };
 		A001948E15C37A6800F3D80E /* ship01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ship01.png; sourceTree = "<group>"; };
-		A001949015C37A6800F3D80E /* .AboutLayer.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .AboutLayer.js.swp; sourceTree = "<group>"; };
-		A001949115C37A6800F3D80E /* .GameLayer.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .GameLayer.js.swp; sourceTree = "<group>"; };
-		A001949215C37A6800F3D80E /* .LevelManager.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .LevelManager.js.swp; sourceTree = "<group>"; };
-		A001949315C37A6800F3D80E /* .Resource.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .Resource.js.swp; sourceTree = "<group>"; };
-		A001949415C37A6800F3D80E /* .SettingsLayer.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .SettingsLayer.js.swp; sourceTree = "<group>"; };
-		A001949515C37A6800F3D80E /* .SysMenu.js.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .SysMenu.js.swp; sourceTree = "<group>"; };
 		A001949615C37A6800F3D80E /* AboutLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AboutLayer.js; sourceTree = "<group>"; };
 		A001949715C37A6800F3D80E /* AppDelegate.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AppDelegate.js; sourceTree = "<group>"; };
 		A001949815C37A6800F3D80E /* Bullet.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Bullet.js; sourceTree = "<group>"; };
@@ -7717,12 +7711,6 @@
 		A001948F15C37A6800F3D80E /* src */ = {
 			isa = PBXGroup;
 			children = (
-				A001949015C37A6800F3D80E /* .AboutLayer.js.swp */,
-				A001949115C37A6800F3D80E /* .GameLayer.js.swp */,
-				A001949215C37A6800F3D80E /* .LevelManager.js.swp */,
-				A001949315C37A6800F3D80E /* .Resource.js.swp */,
-				A001949415C37A6800F3D80E /* .SettingsLayer.js.swp */,
-				A001949515C37A6800F3D80E /* .SysMenu.js.swp */,
 				A001949615C37A6800F3D80E /* AboutLayer.js */,
 				A001949715C37A6800F3D80E /* AppDelegate.js */,
 				A001949815C37A6800F3D80E /* Bullet.js */,

@@ -122,6 +122,8 @@ extern "C" {
 	void set_proxy_for_jsobject(JSPROXY_NSObject* proxy, JSObject *jsobj);
 	void del_proxy_for_jsobject(JSObject *jsobj);
 	
+	JSBool set_reserved_slot(JSObject *obj, NSUInteger idx, jsval value);
+	
 #ifdef __cplusplus
 }
 #endif

@@ -1250,7 +1250,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
-	NSCAssert( proxy && %s[proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && %s[proxy realObj], "Invalid Proxy object");
 '''
 
         selector = method['selector']
@@ -1681,7 +1681,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	%s_class->resolve = JS_ResolveStub;
 	%s_class->convert = JS_ConvertStub;
 	%s_class->finalize = %s_finalize;
-//	%s_class->flags = JSCLASS_HAS_PRIVATE;
+	%s_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
 '''
 
         # Properties
