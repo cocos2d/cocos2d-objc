@@ -319,6 +319,7 @@ cc.Class.extend = function (prop) {
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.MenuItemFont.extend = cc.Class.extend;
 
 //
 // Chipmunk helpers
