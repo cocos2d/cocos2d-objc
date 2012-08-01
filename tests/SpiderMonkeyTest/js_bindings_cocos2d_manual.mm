@@ -11,11 +11,13 @@
 #import "js_manual_conversions.h"
 
 
+#pragma mark - MenuItem 
+
 // "setCallback" in JS
 JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	
-	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 2, "Invalid number of arguments. Expecting 2 args" );
@@ -25,14 +27,13 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	JSBool ok = JS_TRUE;
 
 	ok &= JS_ValueToObject(cx, *argvp, &js_this);
-	ok &= set_reserved_slot(obj, 0, *argvp++ );
+	ok &= set_reserved_slot(jsthis, 0, *argvp++ );
 
 	ok &= jsval_to_block_1( cx, *argvp, js_this, &js_func );
-	ok &= set_reserved_slot(obj, 1, *argvp++ );
+	ok &= set_reserved_slot(jsthis, 1, *argvp++ );
 	
 	if( ! ok )
 		return JS_FALSE;
-	
 	
 	CCMenuItem *real = (CCMenuItem*) [proxy realObj];
 
@@ -42,6 +43,8 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 
 	return JS_TRUE;
 }
+
+#pragma mark - MenuItemFont
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -80,6 +83,51 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 	return JS_TRUE;
 }
 
+// "init" in JS
+JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	JSB_PRECONDITION( proxy && ![proxy realObj], "Invalid Proxy object");
+	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
+	
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSString *normal;
+	js_block js_func;
+	JSObject *js_this;
+	
+	ok &= jsval_to_nsstring( cx, argvp[0], &normal );
+	
+	if( argc ==3 ) {
+		// this
+		ok &= JS_ValueToObject(cx, argvp[1], &js_this);
+		
+		// function
+		ok &= jsval_to_block_1( cx, argvp[2], js_this, &js_func );
+	}
+	
+	CCMenuItemFont *real;
+	
+	if( argc == 1 )
+		real = [(CCMenuItemFont*)[proxy.klass alloc] initWithString:normal target:nil selector:nil];
+	else if (argc ==3 )
+		real = [(CCMenuItemFont*)[proxy.klass alloc] initWithString:normal block:(void(^)(id sender))js_func];
+
+	[proxy setRealObj: real];
+
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
+	// "root" object and function
+	set_reserved_slot(jsthis, 0, argvp[1] );
+	set_reserved_slot(jsthis, 1, argvp[2] );
+		
+	return JS_TRUE;
+}
+
+
+#pragma mark - MenuItemLabel
+
 // "create" in JS
 JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
@@ -115,6 +163,48 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 	
 	return JS_TRUE;
 }
+
+// "init" in JS
+JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
+	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	CCNode<CCLabelProtocol, CCRGBAProtocol> *label;
+	js_block js_func;
+	JSObject *js_this;
+	
+	ok &= jsval_to_nsobject( cx, argvp[0], &label );
+	
+	if( argc ==3 ) {
+		// this
+		ok &= JS_ValueToObject(cx, argvp[1], &js_this);
+		
+		// function
+		ok &= jsval_to_block_1( cx, argvp[2], js_this, &js_func );
+	}
+	
+	CCMenuItemLabel *real = nil;
+	if( argc == 1 )
+		real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:label target:nil selector:NULL];
+	else if (argc ==3 )
+		real = [(CCMenuItemLabel*)[proxy.klass alloc] initWithLabel:label block:(void(^)(id sender))js_func];
+
+	[proxy setRealObj:real];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
+	// "root" object and function
+	set_reserved_slot(jsthis, 0, argvp[1] );
+	set_reserved_slot(jsthis, 1, argvp[2] );
+	
+	return JS_TRUE;
+}
+
+#pragma mark - MenuItemImage
 
 // "create" in JS
 JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
@@ -167,6 +257,65 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 	return JS_TRUE;
 }
 
+// "init" in JS
+JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
+	JSB_PRECONDITION( argc >=2 && argc <= 5, "Invalid number of arguments. Expecting: 2 <= args <= 5" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	NSString *normal, *selected, *disabled;
+	js_block js_func;
+	JSObject *js_this;
+	jsval valthis, valfn;
+	
+	ok &= jsval_to_nsstring( cx, *argvp++, &normal );
+	
+	if( argc >= 2 )
+		ok &= jsval_to_nsstring( cx, *argvp++, &selected );
+	
+	if( argc == 3 || argc == 5)
+		ok &= jsval_to_nsstring( cx, *argvp++, &disabled );
+	
+	
+	// cannot merge with previous if() since argvp needs to be incremented
+	if( argc >=4 ) {
+		// this
+		valthis = *argvp;
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
+		
+		// function
+		valfn = *argvp;
+		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+	}
+	
+	CCMenuItemImage *real = nil;
+	
+	if( argc == 2 )
+		real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:normal selectedImage:selected disabledImage:nil target:nil selector:NULL];
+	else if (argc ==3 )
+		real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:normal selectedImage:selected disabledImage:disabled target:nil selector:NULL];
+	else if (argc == 4 )
+		real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:normal selectedImage:selected disabledImage:nil block:(void(^)(id sender))js_func];
+	else if (argc == 5 )
+		real = [(CCMenuItemImage*)[proxy.klass alloc] initWithNormalImage:normal selectedImage:selected disabledImage:disabled block:(void(^)(id sender))js_func];
+	
+	[proxy setRealObj:real];
+
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
+	// "root" object and function
+	set_reserved_slot(jsthis, 0, valthis );
+	set_reserved_slot(jsthis, 1, valfn );
+	
+	return JS_TRUE;
+}
+
+
+#pragma mark - MenuItemSprite
+
 // "create" in JS
 JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, "Invalid number of arguments. 2 <= args <= 5 but not 3" );
@@ -197,8 +346,8 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
 	}
 	
-	CCMenuItemImage *ret_val;
-	
+	CCMenuItemSprite *ret_val;
+
 	if( argc == 2 )
 		ret_val = [CCMenuItemSprite itemWithNormalSprite:normal selectedSprite:selected];
 	else if (argc == 4 )
@@ -212,9 +361,65 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 	// "root" object and function
 	set_reserved_slot(jsobj, 0, valthis );
 	set_reserved_slot(jsobj, 1, valfn );
+	
+	return JS_TRUE;
+}
+
+// "init" in JS
+JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSprite_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
+	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	
+	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
+	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, "Invalid number of arguments. 2 <= args <= 5 but not 3" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	CCSprite *normal, *selected, *disabled;
+	js_block js_func;
+	JSObject *js_this;
+	jsval valthis, valfn;
+	
+	ok &= jsval_to_nsobject( cx, *argvp++, &normal );
+	
+	if( argc >= 2 )
+		ok &= jsval_to_nsobject( cx, *argvp++, &selected );
+	
+	if( argc == 5 )
+		ok &= jsval_to_nsobject( cx, *argvp++, &disabled );
+	
+	
+	// cannot merge with previous if() since argvp needs to be incremented
+	if( argc >=4 ) {
+		// this
+		valthis = *argvp;
+		ok &= JS_ValueToObject(cx, *argvp++, &js_this);
+		
+		// function
+		valfn = *argvp;
+		ok &= jsval_to_block_1( cx, *argvp++, js_this, &js_func );
+	}
+	
+	CCMenuItemSprite *real = nil;
+	
+	if( argc == 2 )
+		real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:normal selectedSprite:selected disabledSprite:nil target:nil selector:NULL];
+	else if (argc == 4 )
+		real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:normal selectedSprite:selected disabledSprite:nil block:(void(^)(id sender))js_func];
+	else if (argc == 5 )
+		real = [(CCMenuItemSprite*)[proxy.klass alloc] initWithNormalSprite:normal selectedSprite:selected disabledSprite:disabled block:(void(^)(id sender))js_func];
+	
+	[proxy setRealObj:real];
+	
+	JS_SET_RVAL(cx, vp, JSVAL_VOID);
+	
+	// "root" object and function
+	set_reserved_slot(jsthis, 0, valthis );
+	set_reserved_slot(jsthis, 1, valfn );
 
 	return JS_TRUE;
 }
+
+#pragma mark - CallFunc
 
 JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp)
 {
@@ -259,6 +464,8 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 	return JS_TRUE;	
 }
 
+#pragma mark - Texture2D
+
 JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -290,6 +497,8 @@ JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval
 	
 	return JS_TRUE;		
 }
+
+#pragma mark - CCDrawNode
 
 // Arguments: Array of points, fill color (ccc4f), width(float), border color (ccc4f)
 // Ret value: void
@@ -344,6 +553,8 @@ JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderCo
 	JS_SET_RVAL(cx, vp, JSVAL_VOID);
 	return JS_TRUE;	
 }
+
+#pragma mark - CCNode
 
 // this, func, [interval], [repeat], [delay]
 JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t argc, jsval *vp)
