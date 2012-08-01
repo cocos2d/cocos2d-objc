@@ -185,9 +185,9 @@ cc.rectIntersectsRect = function( rectA, rectB )
                 rectA[1] > rectB[1]+rectB[3] ||
                 rectA[1]+rectA[3] < rectB[1] );
 
-    cc.log("----: " + bool);
-    cc.log( 'x:' + rectA[0] + ' y:' + rectA[1] + ' widht:' + rectA[2] + ' height:' + rectA[3] );
-    cc.log( 'x:' + rectB[0] + ' y:' + rectB[1] + ' widht:' + rectB[2] + ' height:' + rectB[3] );
+//    cc.log("----: " + bool);
+//    cc.log( 'x:' + rectA[0] + ' y:' + rectA[1] + ' widht:' + rectA[2] + ' height:' + rectA[3] );
+//    cc.log( 'x:' + rectB[0] + ' y:' + rectB[1] + ' widht:' + rectB[2] + ' height:' + rectB[3] );
 
     return bool;
 }

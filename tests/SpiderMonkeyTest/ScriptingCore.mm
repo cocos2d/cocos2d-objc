@@ -241,7 +241,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	// JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
 	// Mac and Simulator versions were compiled with DEBUG.
-#if defined(__CC_PLATFORM_MAC) || TARGET_IPHONE_SIMULATOR
+#if defined(__CC_PLATFORM_MAC) //|| TARGET_IPHONE_SIMULATOR
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
 	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 #endif

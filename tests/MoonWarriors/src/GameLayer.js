@@ -1,3 +1,4 @@
+
 var GameLayer = cc.Layer.extend({
     _time:null,
     _ship:null,
@@ -15,7 +16,7 @@ var GameLayer = cc.Layer.extend({
     screenRect:null,
     explosionAnimation:[],
     isMouseDown:false,
-    _beginPos:cc.POINT_ZERO,
+    _state:global.STATE_PLAYING,
 
     ctor:function () {
         var parent = new cc.Layer();
@@ -58,12 +59,16 @@ var GameLayer = cc.Layer.extend({
             this._ship = new Ship();
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
 
-
             // accept touch now!
-//            this.setTouchEnabled(true);
+            var platform = __getPlatform();
+            if( platform.substring(0,7) == 'desktop' ) {
+//                this.setMouseEnabled( true );
+//            this.setKeypadEnabled(true);
+            }
+            else if( platform.substring(0,6) == 'mobile' )
+                this.setTouchEnabled( true );
 
             //accept keypad
-//            this.setKeypadEnabled(true);
 
             // schedule
             
@@ -73,6 +78,8 @@ var GameLayer = cc.Layer.extend({
             if (global.sound) {
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
             }
+
+            this._state = global.STATE_PLAYING;
 
             bRet = true;
         }
@@ -88,33 +95,16 @@ var GameLayer = cc.Layer.extend({
         var curTime = minute + ":" + second;
         this._levelManager.loadLevelResource(this._time);
     },
-    onTouchesBegan:function (touches, event) {
-        if (!this.isMouseDown) {
-            var touch = touches[0];
-            this._beginPos = touch.getLocation(0);
-        }
-        this.isMouseDown = true;
-    },
-    onTouchesMoved:function (touches, event) {
-        if (this.isMouseDown) {
-            var curPos = this._ship.getPosition();
-            // XXX riq XXX
-            // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if(cc.rectIntersectsRect(this._ship.boundingBox(),this.screenRect)){
-                var touch = touches[0];
-                var location = touch.getLocation();
 
-                var move = cc.pSub(location,this._beginPos);
-                var nextPos = cc.pAdd(curPos,move);
-                this._ship.setPosition(nextPos);
-                this._beginPos = location;
-                curPos = nextPos;
-            }
+    onTouchesMoved:function (touches, event) {
+        if( this._ship ) {
+            var delta = touches[0].getDelta();
+            var curPos = this._ship.getPosition();
+            curPos[0] += delta[0];
+            this._ship.setPosition( curPos );
         }
     },
-    onTouchesEnded:function () {
-        this.isMouseDown = false;
-    },
+
     keyDown:function (e) {
         keys[e] = true;
     },
@@ -122,28 +112,14 @@ var GameLayer = cc.Layer.extend({
         keys[e] = false;
     },
     update:function (dt) {
-        this.checkIsCollide();
-        this.removeInactiveUnit(dt);
-        this.checkIsReborn();
-        this.updateUI();
+        if( this._state == global.STATE_PLAYING ) {
+            this.checkIsCollide();
+            this.removeInactiveUnit(dt);
+            this.checkIsReborn();
+            this.updateUI();
+        }
 //        cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + global.enemyContainer.length
 //            + ", Bullet:" + global.ebulletContainer.length + "," + global.sbulletContainer.length + " all:" + this.getChildren().length;
-    },
-
-    getBoundingBoxToWorld:function(node) {
-        var p = node.convertToWorldSpace( cc.POINT_ZERO );
-        var bb = node.getBoundingBox();
-
-        cc.log("--------------------------");
-        cc.log("prev: bb is x:" + bb[0] + " y:" + bb[1] + " width:" + bb[2] + " height: " + bb[3] );
-
-        bb[0] += p[0] - 4;
-        bb[1] += p[1] - 4;
-        bb[2] += p[0] + 8;
-        bb[3] += p[1] + 8;
-
-        cc.log("post: bb is x:" + bb[0] + " y:" + bb[1] + " width:" + bb[2] + " height: " + bb[3] );
-        return bb;
     },
 
     checkIsCollide:function () {
@@ -159,7 +135,7 @@ var GameLayer = cc.Layer.extend({
                 }
                 // XXX riq XXX
                 // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-                if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( bulletChild ) ) ) {
+                if (!cc.rectIntersectsRect(this.screenRect, bulletChild.getBoundingBox() ) ) {
                         bulletChild.destroy();
                 }
             }
@@ -171,8 +147,8 @@ var GameLayer = cc.Layer.extend({
             }
             // XXX riq XXX
             // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( selChild ) ) ) {
-                    selChild.destroy();
+            if (!cc.rectIntersectsRect(this.screenRect, selChild.getBoundingBox() ) ) {
+                selChild.destroy();
             }
         }
 
@@ -186,7 +162,7 @@ var GameLayer = cc.Layer.extend({
             }
             // XXX riq XXX
             // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld(selChild))) {
+            if (!cc.rectIntersectsRect(this.screenRect, selChild.getBoundingBox() )) {
                     selChild.destroy();
             }
         }
@@ -201,8 +177,9 @@ var GameLayer = cc.Layer.extend({
                 // Added 'type of ...'
                 if( typeof selChild.update == 'function' ) {
                     selChild.update(dt);
-                    if ((selChild.getTag() == global.Tag.Ship) || (selChild.getTag() == global.Tag.ShipBullet) ||
-                        (selChild.getTag() == global.Tag.Enemy) || (selChild.getTag() == global.Tag.EnemyBullet)) {
+                    var tag = selChild.getTag();
+                    if ((tag == global.Tag.Ship) || (tag == global.Tag.ShipBullet) ||
+                        (tag == global.Tag.Enemy) || (tag == global.Tag.EnemyBullet)) {
                         if (selChild && !selChild.active) {
                             selChild.destroy();
                         }
@@ -218,9 +195,10 @@ var GameLayer = cc.Layer.extend({
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
         }
         else if (global.life <= 0 && !this._ship.active) {
+            this._state = global.GAME_OVER;
             this.runAction(cc.Sequence.create(
                 cc.DelayTime.create(3),
-                cc.CallFunc.create(this, this.onGameOver)))
+                cc.CallFunc.create(this, this.onGameOver)));
         }
     },
     updateUI:function () {
@@ -316,7 +294,7 @@ var GameLayer = cc.Layer.extend({
         var scene = cc.Scene.create();
         scene.addChild(GameOver.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
-        this.getParent().removeChild(this,true);
+//        this.getParent().removeChild(this,true);
     }
 });
 
