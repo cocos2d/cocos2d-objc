@@ -895,7 +895,7 @@ void JSPROXY_CCDirector_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCDirector_class->resolve = JS_ResolveStub;
 	JSPROXY_CCDirector_class->convert = JS_ConvertStub;
 	JSPROXY_CCDirector_class->finalize = JSPROXY_CCDirector_finalize;
-	JSPROXY_CCDirector_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCDirector_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -1169,7 +1169,7 @@ void JSPROXY_CCDirectorMac_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCDirectorMac_class->resolve = JS_ResolveStub;
 	JSPROXY_CCDirectorMac_class->convert = JS_ConvertStub;
 	JSPROXY_CCDirectorMac_class->finalize = JSPROXY_CCDirectorMac_finalize;
-	JSPROXY_CCDirectorMac_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCDirectorMac_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -1735,7 +1735,7 @@ void JSPROXY_CCLayer_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCLayer_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLayer_class->convert = JS_ConvertStub;
 	JSPROXY_CCLayer_class->finalize = JSPROXY_CCLayer_finalize;
-	JSPROXY_CCLayer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLayer_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -1952,7 +1952,7 @@ void JSPROXY_CCLayerMultiplex_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCLayerMultiplex_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLayerMultiplex_class->convert = JS_ConvertStub;
 	JSPROXY_CCLayerMultiplex_class->finalize = JSPROXY_CCLayerMultiplex_finalize;
-	JSPROXY_CCLayerMultiplex_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLayerMultiplex_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -2371,7 +2371,7 @@ void JSPROXY_CCLayerColor_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCLayerColor_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLayerColor_class->convert = JS_ConvertStub;
 	JSPROXY_CCLayerColor_class->finalize = JSPROXY_CCLayerColor_finalize;
-	JSPROXY_CCLayerColor_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLayerColor_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -2844,7 +2844,7 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCLayerGradient_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLayerGradient_class->convert = JS_ConvertStub;
 	JSPROXY_CCLayerGradient_class->finalize = JSPROXY_CCLayerGradient_finalize;
-	JSPROXY_CCLayerGradient_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLayerGradient_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -3282,7 +3282,7 @@ void JSPROXY_CCMenu_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCMenu_class->resolve = JS_ResolveStub;
 	JSPROXY_CCMenu_class->convert = JS_ConvertStub;
 	JSPROXY_CCMenu_class->finalize = JSPROXY_CCMenu_finalize;
-	JSPROXY_CCMenu_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCMenu_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}

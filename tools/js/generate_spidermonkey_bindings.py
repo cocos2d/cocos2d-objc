@@ -142,7 +142,7 @@ class SpiderMonkey(object):
         # Classes related
         #
         self.class_prefix = config['obj_class_prefix_to_remove']
-        self.inherit_class_methods = config['inherit_class_methods']
+        self._inherit_class_methods = config['inherit_class_methods']
         self.import_files = config['import_files']
 
         # Add here manually generated classes
@@ -373,6 +373,11 @@ class SpiderMonkey(object):
         self.functions_to_bind = copy_set
 
     def init_class_properties( self, properties ):
+        ref_list = []
+        if 'class' in self.bs['signatures']:
+            for k in self.bs['signatures']['class']:
+                ref_list.append( k['name'] )
+
         self.supported_classes = set()
         self.class_manual = []
         self.class_properties = {}
@@ -380,28 +385,37 @@ class SpiderMonkey(object):
             # key value
             if not prop or len(prop)==0:
                 continue
-            key,value = prop.split('=')
+            klass_name,value = prop.split('=')
 
-            opts = {}
-            # From value get options
-            options = value.split(';')
-            for o in options:
-                # Options can have their own Key Value
-                if ':' in o:
-                    o_key, o_val = o.split(':')
-                    o_val = o_val.replace('"', '')    # remove possible "
-                else:
-                    o_key = o
-                    o_val = None
-                opts[ o_key ] = o_val
+            # expand regular expression of class name
+            keys = self.expand_regexp_names( [klass_name], ref_list )
 
-                # populate lists. easier to code
-                if o_key == 'manual':
-                    # '*' is needed for opaque structs
-                    self.supported_classes.add( key )
-                    self.class_manual.append( key )
+            # Hack to support "manual" classes here since they are not part of the classes to parse yet
+            if keys == []:
+                keys = [klass_name]
 
-            self.class_properties[key] = opts
+            for key in keys:
+                opts = {}
+                # From value get options
+                options = value.split(';')
+                for o in options:
+                    # Options can have their own Key Value
+                    if ':' in o:
+                        o_key, o_val = o.split(':')
+                        o_val = o_val.replace('"', '')    # remove possible "
+                    else:
+                        o_key = o
+                        o_val = None
+                    opts[ o_key ] = o_val
+
+                    # populate lists. easier to code
+                    if o_key == 'manual':
+                        # '*' is needed for opaque structs
+                        self.supported_classes.add( key )
+                        self.class_manual.append( key )
+
+                self.class_properties[key] = opts
+
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
@@ -550,6 +564,11 @@ class SpiderMonkey(object):
         except KeyError, e:
             return None
 
+    def get_class_property( self, property, class_name ):
+        try:
+            return self.class_properties[ class_name ][ property ]
+        except KeyError, e:
+            return None
 
     def is_valid_structure( self, struct ):
         # Only support non-nested structures of only one type
@@ -602,6 +621,17 @@ class SpiderMonkey(object):
             if method['selector'].startswith('init') and dt == 'id':
                 return True
         return False
+
+    def inherits_class_methods( self,class_name ):
+        i = self.get_class_property( 'inherit_class_methods', class_name );
+        if self._inherit_class_methods == False:
+            if i== None or i==False:
+                return False
+            return True
+        else:
+            if i== None or i==True:
+                return True
+            return False
 
     def requires_swizzle( self, class_name ):
         if class_name in self.callback_methods:
@@ -1410,7 +1440,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                                     sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, m['selector'], str(e) ) )
 
         # Parse class methods from base classes
-        if self.inherit_class_methods:
+        if self.inherits_class_methods( class_name ):
             parent = self.get_parent_class( class_name )
             while (parent != None) and (not parent in self.classes_to_ignore):
                 class_methods = self.get_class_method( parent )
@@ -1681,7 +1711,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	%s_class->resolve = JS_ResolveStub;
 	%s_class->convert = JS_ConvertStub;
 	%s_class->finalize = %s_finalize;
-	%s_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	%s_class->flags = %s;
 '''
 
         # Properties
@@ -1706,11 +1736,16 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         proxy_parent_name = '%s%s' % (PROXY_PREFIX, parent_name )
 
+        reserved_slots = self.get_class_property('reserved_slots', class_name)
+        flags =  "JSCLASS_HAS_RESERVED_SLOTS(%s)"%reserved_slots if reserved_slots!=None else "0"
+
         self.mm_file.write( implementation_template % ( proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
-                                                        proxy_class_name, proxy_class_name, proxy_class_name ) )
+                                                        proxy_class_name, proxy_class_name, proxy_class_name,
+                                                        flags,
+                                                        ) )
 
         self.mm_file.write( properties_template )
 

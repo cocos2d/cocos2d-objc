@@ -1822,7 +1822,7 @@ void JSPROXY_CCNode_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCNode_class->finalize = JSPROXY_CCNode_finalize;
-	JSPROXY_CCNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -4064,7 +4064,7 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCParticleSystem_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSystem_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSystem_class->finalize = JSPROXY_CCParticleSystem_finalize;
-	JSPROXY_CCParticleSystem_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSystem_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -4369,7 +4369,7 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCParticleSystemQuad_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSystemQuad_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSystemQuad_class->finalize = JSPROXY_CCParticleSystemQuad_finalize;
-	JSPROXY_CCParticleSystemQuad_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSystemQuad_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -4520,7 +4520,7 @@ void JSPROXY_CCParticleMeteor_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCParticleMeteor_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleMeteor_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleMeteor_class->finalize = JSPROXY_CCParticleMeteor_finalize;
-	JSPROXY_CCParticleMeteor_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleMeteor_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -4768,20 +4768,6 @@ JSBool JSPROXY_CCMenuItem_unselected(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCMenuItem* (o)
-JSBool JSPROXY_CCMenuItem_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItem* ret_val;
-
-	ret_val = [CCMenuItem node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItem_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4814,7 +4800,6 @@ void JSPROXY_CCMenuItem_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("itemWithBlock", JSPROXY_CCMenuItem_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCMenuItem_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -5122,40 +5107,6 @@ JSBool JSPROXY_CCMenuItemLabel_setOpacityModifyRGB_(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemLabel* (o)
-JSBool JSPROXY_CCMenuItemLabel_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemLabel* ret_val;
-
-	ret_val = [CCMenuItemLabel itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemLabel* (o)
-JSBool JSPROXY_CCMenuItemLabel_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemLabel* ret_val;
-
-	ret_val = [CCMenuItemLabel node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemLabel_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -5191,8 +5142,6 @@ void JSPROXY_CCMenuItemLabel_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCMenuItemLabel_itemWithLabel_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemLabel_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCMenuItemLabel_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -5322,81 +5271,6 @@ JSBool JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeig
 	return JS_TRUE;
 }
 
-// Arguments: CCNode*
-// Ret value: CCMenuItemAtlasFont* (o)
-JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemAtlasFont* ret_val;
-
-	ret_val = [CCMenuItemAtlasFont itemWithLabel:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCNode*, void (^)(id)
-// Ret value: CCMenuItemAtlasFont* (o)
-JSBool JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; js_block arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemAtlasFont* ret_val;
-
-	ret_val = [CCMenuItemAtlasFont itemWithLabel:arg0 block:(void (^)(id))arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemAtlasFont* (o)
-JSBool JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemAtlasFont* ret_val;
-
-	ret_val = [CCMenuItemAtlasFont itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemAtlasFont* (o)
-JSBool JSPROXY_CCMenuItemAtlasFont_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemAtlasFont* ret_val;
-
-	ret_val = [CCMenuItemAtlasFont node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemAtlasFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemAtlasFont_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -5421,10 +5295,6 @@ void JSPROXY_CCMenuItemAtlasFont_createClass(JSContext *cx, JSObject* globalObj,
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("itemWithStringCharMapFileItemWidthItemHeightStartCharMap", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithStringCharMapFileItemWidthItemHeightStartCharMapBlock", JSPROXY_CCMenuItemAtlasFont_itemWithString_charMapFile_itemWidth_itemHeight_startCharMap_block__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithLabel", JSPROXY_CCMenuItemAtlasFont_itemWithLabel__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithLabelBlock", JSPROXY_CCMenuItemAtlasFont_itemWithLabel_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemAtlasFont_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCMenuItemAtlasFont_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -5658,7 +5528,7 @@ void JSPROXY_CCAction_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCAction_class->finalize = JSPROXY_CCAction_finalize;
-	JSPROXY_CCAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -5810,7 +5680,7 @@ void JSPROXY_CCFiniteTimeAction_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCFiniteTimeAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFiniteTimeAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCFiniteTimeAction_class->finalize = JSPROXY_CCFiniteTimeAction_finalize;
-	JSPROXY_CCFiniteTimeAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFiniteTimeAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -5998,7 +5868,7 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCActionInterval_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionInterval_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionInterval_class->finalize = JSPROXY_CCActionInterval_finalize;
-	JSPROXY_CCActionInterval_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionInterval_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -6158,7 +6028,7 @@ void JSPROXY_CCProgressFromTo_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCProgressFromTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCProgressFromTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCProgressFromTo_class->finalize = JSPROXY_CCProgressFromTo_finalize;
-	JSPROXY_CCProgressFromTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCProgressFromTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -6358,7 +6228,7 @@ void JSPROXY_CCTMXObjectGroup_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCTMXObjectGroup_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXObjectGroup_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXObjectGroup_class->finalize = JSPROXY_CCTMXObjectGroup_finalize;
-	JSPROXY_CCTMXObjectGroup_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXObjectGroup_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -6516,7 +6386,7 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCMoveTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCMoveTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCMoveTo_class->finalize = JSPROXY_CCMoveTo_finalize;
-	JSPROXY_CCMoveTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCMoveTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -6672,7 +6542,7 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCMoveBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCMoveBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCMoveBy_class->finalize = JSPROXY_CCMoveBy_finalize;
-	JSPROXY_CCMoveBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCMoveBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -6900,7 +6770,7 @@ void JSPROXY_CCCamera_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCCamera_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCamera_class->convert = JS_ConvertStub;
 	JSPROXY_CCCamera_class->finalize = JSPROXY_CCCamera_finalize;
-	JSPROXY_CCCamera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCamera_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -7058,7 +6928,7 @@ void JSPROXY_CCReverseTime_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCReverseTime_class->resolve = JS_ResolveStub;
 	JSPROXY_CCReverseTime_class->convert = JS_ConvertStub;
 	JSPROXY_CCReverseTime_class->finalize = JSPROXY_CCReverseTime_finalize;
-	JSPROXY_CCReverseTime_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCReverseTime_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -8048,7 +7918,7 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCSprite_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSprite_class->convert = JS_ConvertStub;
 	JSPROXY_CCSprite_class->finalize = JSPROXY_CCSprite_finalize;
-	JSPROXY_CCSprite_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSprite_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -8326,7 +8196,7 @@ void JSPROXY_ChipmunkSprite_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_ChipmunkSprite_class->resolve = JS_ResolveStub;
 	JSPROXY_ChipmunkSprite_class->convert = JS_ConvertStub;
 	JSPROXY_ChipmunkSprite_class->finalize = JSPROXY_ChipmunkSprite_finalize;
-	JSPROXY_ChipmunkSprite_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_ChipmunkSprite_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -8484,7 +8354,7 @@ void JSPROXY_CCActionEase_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCActionEase_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionEase_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionEase_class->finalize = JSPROXY_CCActionEase_finalize;
-	JSPROXY_CCActionEase_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionEase_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -8689,7 +8559,7 @@ void JSPROXY_CCEaseElastic_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCEaseElastic_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseElastic_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseElastic_class->finalize = JSPROXY_CCEaseElastic_finalize;
-	JSPROXY_CCEaseElastic_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseElastic_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -8852,7 +8722,7 @@ void JSPROXY_CCEaseElasticOut_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCEaseElasticOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseElasticOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseElasticOut_class->finalize = JSPROXY_CCEaseElasticOut_finalize;
-	JSPROXY_CCEaseElasticOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseElasticOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9008,7 +8878,7 @@ void JSPROXY_CCProgressTo_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCProgressTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCProgressTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCProgressTo_class->finalize = JSPROXY_CCProgressTo_finalize;
-	JSPROXY_CCProgressTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCProgressTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9116,7 +8986,7 @@ void JSPROXY_CCScene_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCScene_class->resolve = JS_ResolveStub;
 	JSPROXY_CCScene_class->convert = JS_ConvertStub;
 	JSPROXY_CCScene_class->finalize = JSPROXY_CCScene_finalize;
-	JSPROXY_CCScene_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCScene_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9222,7 +9092,7 @@ void JSPROXY_CCActionInstant_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCActionInstant_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionInstant_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionInstant_class->finalize = JSPROXY_CCActionInstant_finalize;
-	JSPROXY_CCActionInstant_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionInstant_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9354,7 +9224,7 @@ void JSPROXY_CCFlipX_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCFlipX_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFlipX_class->convert = JS_ConvertStub;
 	JSPROXY_CCFlipX_class->finalize = JSPROXY_CCFlipX_finalize;
-	JSPROXY_CCFlipX_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFlipX_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9487,7 +9357,7 @@ void JSPROXY_CCFlipY_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCFlipY_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFlipY_class->convert = JS_ConvertStub;
 	JSPROXY_CCFlipY_class->finalize = JSPROXY_CCFlipY_finalize;
-	JSPROXY_CCFlipY_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFlipY_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9704,7 +9574,7 @@ void JSPROXY_CCGridAction_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCGridAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGridAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCGridAction_class->finalize = JSPROXY_CCGridAction_finalize;
-	JSPROXY_CCGridAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGridAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -9836,7 +9706,7 @@ void JSPROXY_CCTiledGrid3DAction_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCTiledGrid3DAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTiledGrid3DAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCTiledGrid3DAction_class->finalize = JSPROXY_CCTiledGrid3DAction_finalize;
-	JSPROXY_CCTiledGrid3DAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTiledGrid3DAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -10016,7 +9886,7 @@ void JSPROXY_CCShakyTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCShakyTiles3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShakyTiles3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCShakyTiles3D_class->finalize = JSPROXY_CCShakyTiles3D_finalize;
-	JSPROXY_CCShakyTiles3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShakyTiles3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -10177,7 +10047,7 @@ void JSPROXY_CCJumpBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCJumpBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCJumpBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCJumpBy_class->finalize = JSPROXY_CCJumpBy_finalize;
-	JSPROXY_CCJumpBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCJumpBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -10746,142 +10616,6 @@ JSBool JSPROXY_CCLabelTTF_string(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, CGRect
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithFile_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; CGRect arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithFile:(NSString*)arg0 rect:(CGRect)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCSpriteFrame*
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithSpriteFrame:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithSpriteFrameName__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithSpriteFrameName:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithTexture:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*, CGRect
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_spriteWithTexture_rect__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; CGRect arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_CGRect( cx, *argvp++, (CGRect*) &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF spriteWithTexture:arg0 rect:(CGRect)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCLabelTTF* (o)
-JSBool JSPROXY_CCLabelTTF_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCLabelTTF* ret_val;
-
-	ret_val = [CCLabelTTF node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelTTF_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -10894,7 +10628,7 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCLabelTTF_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLabelTTF_class->convert = JS_ConvertStub;
 	JSPROXY_CCLabelTTF_class->finalize = JSPROXY_CCLabelTTF_finalize;
-	JSPROXY_CCLabelTTF_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLabelTTF_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -10924,13 +10658,6 @@ void JSPROXY_CCLabelTTF_createClass(JSContext *cx, JSObject* globalObj, const ch
 		JS_FN("labelWithStringFontNameFontSizeDimensionsHAlignmentLineBreakMode", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_dimensions_hAlignment_lineBreakMode__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringFontNameFontSizeDimensionsHAlignmentVAlignment", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_dimensions_hAlignment_vAlignment__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringFontNameFontSizeDimensionsHAlignmentVAlignmentLineBreakMode", JSPROXY_CCLabelTTF_labelWithString_fontName_fontSize_dimensions_hAlignment_vAlignment_lineBreakMode__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithFile", JSPROXY_CCLabelTTF_spriteWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithFileRect", JSPROXY_CCLabelTTF_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithSpriteFrame", JSPROXY_CCLabelTTF_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithSpriteFrameName", JSPROXY_CCLabelTTF_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithTexture", JSPROXY_CCLabelTTF_spriteWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("spriteWithTextureRect", JSPROXY_CCLabelTTF_spriteWithTexture_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCLabelTTF_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -11086,7 +10813,7 @@ void JSPROXY_CCTransitionScene_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCTransitionScene_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionScene_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionScene_class->finalize = JSPROXY_CCTransitionScene_finalize;
-	JSPROXY_CCTransitionScene_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionScene_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11222,7 +10949,7 @@ void JSPROXY_CCTransitionProgress_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionProgress_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgress_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgress_class->finalize = JSPROXY_CCTransitionProgress_finalize;
-	JSPROXY_CCTransitionProgress_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgress_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11356,7 +11083,7 @@ void JSPROXY_CCTransitionProgressRadialCCW_createClass(JSContext *cx, JSObject* 
 	JSPROXY_CCTransitionProgressRadialCCW_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressRadialCCW_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressRadialCCW_class->finalize = JSPROXY_CCTransitionProgressRadialCCW_finalize;
-	JSPROXY_CCTransitionProgressRadialCCW_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressRadialCCW_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11518,7 +11245,7 @@ void JSPROXY_CCShaderCache_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCShaderCache_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShaderCache_class->convert = JS_ConvertStub;
 	JSPROXY_CCShaderCache_class->finalize = JSPROXY_CCShaderCache_finalize;
-	JSPROXY_CCShaderCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShaderCache_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11680,7 +11407,7 @@ void JSPROXY_CCTransitionFadeTR_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCTransitionFadeTR_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFadeTR_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFadeTR_class->finalize = JSPROXY_CCTransitionFadeTR_finalize;
-	JSPROXY_CCTransitionFadeTR_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFadeTR_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11830,7 +11557,7 @@ void JSPROXY_CCEaseBackOut_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCEaseBackOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBackOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBackOut_class->finalize = JSPROXY_CCEaseBackOut_finalize;
-	JSPROXY_CCEaseBackOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBackOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -11989,7 +11716,7 @@ void JSPROXY_CCTransitionSceneOriented_createClass(JSContext *cx, JSObject* glob
 	JSPROXY_CCTransitionSceneOriented_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSceneOriented_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSceneOriented_class->finalize = JSPROXY_CCTransitionSceneOriented_finalize;
-	JSPROXY_CCTransitionSceneOriented_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSceneOriented_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12184,7 +11911,7 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCScaleTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCScaleTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCScaleTo_class->finalize = JSPROXY_CCScaleTo_finalize;
-	JSPROXY_CCScaleTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCScaleTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12347,7 +12074,7 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCScaleBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCScaleBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCScaleBy_class->finalize = JSPROXY_CCScaleBy_finalize;
-	JSPROXY_CCScaleBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCScaleBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12521,7 +12248,7 @@ void JSPROXY_CCTransitionPageTurn_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionPageTurn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionPageTurn_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionPageTurn_class->finalize = JSPROXY_CCTransitionPageTurn_finalize;
-	JSPROXY_CCTransitionPageTurn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionPageTurn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12650,7 +12377,7 @@ void JSPROXY_CCTransitionRotoZoom_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionRotoZoom_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionRotoZoom_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionRotoZoom_class->finalize = JSPROXY_CCTransitionRotoZoom_finalize;
-	JSPROXY_CCTransitionRotoZoom_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionRotoZoom_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12784,7 +12511,7 @@ void JSPROXY_CCTransitionFadeDown_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionFadeDown_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFadeDown_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFadeDown_class->finalize = JSPROXY_CCTransitionFadeDown_finalize;
-	JSPROXY_CCTransitionFadeDown_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFadeDown_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -12913,7 +12640,7 @@ void JSPROXY_CCDelayTime_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCDelayTime_class->resolve = JS_ResolveStub;
 	JSPROXY_CCDelayTime_class->convert = JS_ConvertStub;
 	JSPROXY_CCDelayTime_class->finalize = JSPROXY_CCDelayTime_finalize;
-	JSPROXY_CCDelayTime_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCDelayTime_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13127,7 +12854,7 @@ void JSPROXY_CCEaseRateAction_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCEaseRateAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseRateAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseRateAction_class->finalize = JSPROXY_CCEaseRateAction_finalize;
-	JSPROXY_CCEaseRateAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseRateAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13301,7 +13028,7 @@ void JSPROXY_CCEaseInOut_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCEaseInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseInOut_class->finalize = JSPROXY_CCEaseInOut_finalize;
-	JSPROXY_CCEaseInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13457,7 +13184,7 @@ void JSPROXY_CCTransitionSplitCols_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTransitionSplitCols_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSplitCols_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSplitCols_class->finalize = JSPROXY_CCTransitionSplitCols_finalize;
-	JSPROXY_CCTransitionSplitCols_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSplitCols_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13657,7 +13384,7 @@ void JSPROXY_CCCardinalSplineTo_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCCardinalSplineTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCardinalSplineTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCCardinalSplineTo_class->finalize = JSPROXY_CCCardinalSplineTo_finalize;
-	JSPROXY_CCCardinalSplineTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCardinalSplineTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13811,7 +13538,7 @@ void JSPROXY_CCCardinalSplineBy_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCCardinalSplineBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCardinalSplineBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCCardinalSplineBy_class->finalize = JSPROXY_CCCardinalSplineBy_finalize;
-	JSPROXY_CCCardinalSplineBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCardinalSplineBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -13989,7 +13716,7 @@ void JSPROXY_CCCatmullRomBy_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCCatmullRomBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCatmullRomBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCCatmullRomBy_class->finalize = JSPROXY_CCCatmullRomBy_finalize;
-	JSPROXY_CCCatmullRomBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCatmullRomBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -14141,7 +13868,7 @@ void JSPROXY_CCTransitionFlipAngular_createClass(JSContext *cx, JSObject* global
 	JSPROXY_CCTransitionFlipAngular_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFlipAngular_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFlipAngular_class->finalize = JSPROXY_CCTransitionFlipAngular_finalize;
-	JSPROXY_CCTransitionFlipAngular_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFlipAngular_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -14251,7 +13978,7 @@ void JSPROXY_CCHide_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCHide_class->resolve = JS_ResolveStub;
 	JSPROXY_CCHide_class->convert = JS_ConvertStub;
 	JSPROXY_CCHide_class->finalize = JSPROXY_CCHide_finalize;
-	JSPROXY_CCHide_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCHide_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -14399,7 +14126,7 @@ void JSPROXY_CCEaseBackIn_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCEaseBackIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBackIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBackIn_class->finalize = JSPROXY_CCEaseBackIn_finalize;
-	JSPROXY_CCEaseBackIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBackIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -14929,7 +14656,7 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCSpriteBatchNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSpriteBatchNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCSpriteBatchNode_class->finalize = JSPROXY_CCSpriteBatchNode_finalize;
-	JSPROXY_CCSpriteBatchNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSpriteBatchNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -15615,7 +15342,7 @@ void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCTMXLayer_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXLayer_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXLayer_class->finalize = JSPROXY_CCTMXLayer_finalize;
-	JSPROXY_CCTMXLayer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXLayer_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -16286,7 +16013,7 @@ void JSPROXY_CCTexture2D_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCTexture2D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTexture2D_class->convert = JS_ConvertStub;
 	JSPROXY_CCTexture2D_class->finalize = JSPROXY_CCTexture2D_finalize;
-	JSPROXY_CCTexture2D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTexture2D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -16507,7 +16234,7 @@ void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalO
 	JSPROXY_CCAccelDeccelAmplitude_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAccelDeccelAmplitude_class->convert = JS_ConvertStub;
 	JSPROXY_CCAccelDeccelAmplitude_class->finalize = JSPROXY_CCAccelDeccelAmplitude_finalize;
-	JSPROXY_CCAccelDeccelAmplitude_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAccelDeccelAmplitude_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -16768,7 +16495,7 @@ void JSPROXY_CCJumpTiles3D_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCJumpTiles3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCJumpTiles3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCJumpTiles3D_class->finalize = JSPROXY_CCJumpTiles3D_finalize;
-	JSPROXY_CCJumpTiles3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCJumpTiles3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -16984,7 +16711,7 @@ void JSPROXY_CCGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCGrid3DAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGrid3DAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCGrid3DAction_class->finalize = JSPROXY_CCGrid3DAction_finalize;
-	JSPROXY_CCGrid3DAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGrid3DAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -17320,40 +17047,6 @@ JSBool JSPROXY_CCMenuItemSprite_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemSprite* (o)
-JSBool JSPROXY_CCMenuItemSprite_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemSprite* ret_val;
-
-	ret_val = [CCMenuItemSprite itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemSprite* (o)
-JSBool JSPROXY_CCMenuItemSprite_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemSprite* ret_val;
-
-	ret_val = [CCMenuItemSprite node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -17390,8 +17083,6 @@ void JSPROXY_CCMenuItemSprite_createClass(JSContext *cx, JSObject* globalObj, co
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemSprite_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCMenuItemSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -17550,106 +17241,6 @@ JSBool JSPROXY_CCMenuItemImage_setSelectedSpriteFrame_(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: CCNode*, CCNode*
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; id arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCNode*, CCNode*, void (^)(id)
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; id arg1; js_block arg2; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1 block:(void (^)(id))arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCNode*, CCNode*, CCNode*, void (^)(id)
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 4, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; id arg1; id arg2; js_block arg3; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg2);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg3 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithNormalSprite:arg0 selectedSprite:arg1 disabledSprite:arg2 block:(void (^)(id))arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemImage* (o)
-JSBool JSPROXY_CCMenuItemImage_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemImage* ret_val;
-
-	ret_val = [CCMenuItemImage node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemImage_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -17678,11 +17269,6 @@ void JSPROXY_CCMenuItemImage_createClass(JSContext *cx, JSObject* globalObj, con
 		JS_FN("itemWithNormalImageSelectedImage", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithNormalImageSelectedImageDisabledImage", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedSprite", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_block__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithNormalSpriteSelectedSpriteDisabledSpriteBlock", JSPROXY_CCMenuItemImage_itemWithNormalSprite_selectedSprite_disabledSprite_block__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemImage_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCMenuItemImage_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -18070,7 +17656,7 @@ void JSPROXY_CCParticleBatchNode_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCParticleBatchNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleBatchNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleBatchNode_class->finalize = JSPROXY_CCParticleBatchNode_finalize;
-	JSPROXY_CCParticleBatchNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleBatchNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -18211,7 +17797,7 @@ void JSPROXY_CCTransitionCrossFade_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTransitionCrossFade_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionCrossFade_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionCrossFade_class->finalize = JSPROXY_CCTransitionCrossFade_finalize;
-	JSPROXY_CCTransitionCrossFade_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionCrossFade_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -18372,7 +17958,7 @@ void JSPROXY_CCBMFontConfiguration_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCBMFontConfiguration_class->resolve = JS_ResolveStub;
 	JSPROXY_CCBMFontConfiguration_class->convert = JS_ConvertStub;
 	JSPROXY_CCBMFontConfiguration_class->finalize = JSPROXY_CCBMFontConfiguration_finalize;
-	JSPROXY_CCBMFontConfiguration_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCBMFontConfiguration_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -18533,7 +18119,7 @@ void JSPROXY_CCEaseElasticIn_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCEaseElasticIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseElasticIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseElasticIn_class->finalize = JSPROXY_CCEaseElasticIn_finalize;
-	JSPROXY_CCEaseElasticIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseElasticIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -18750,7 +18336,7 @@ void JSPROXY_CCSpeed_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCSpeed_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSpeed_class->convert = JS_ConvertStub;
 	JSPROXY_CCSpeed_class->finalize = JSPROXY_CCSpeed_finalize;
-	JSPROXY_CCSpeed_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSpeed_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -18959,7 +18545,7 @@ void JSPROXY_CCRotateTo_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCRotateTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRotateTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCRotateTo_class->finalize = JSPROXY_CCRotateTo_finalize;
-	JSPROXY_CCRotateTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRotateTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -19091,7 +18677,7 @@ void JSPROXY_CCActionCamera_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCActionCamera_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionCamera_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionCamera_class->finalize = JSPROXY_CCActionCamera_finalize;
-	JSPROXY_CCActionCamera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionCamera_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -19238,7 +18824,7 @@ void JSPROXY_CCParticleGalaxy_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCParticleGalaxy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleGalaxy_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleGalaxy_class->finalize = JSPROXY_CCParticleGalaxy_finalize;
-	JSPROXY_CCParticleGalaxy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleGalaxy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -19693,7 +19279,7 @@ void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCMotionStreak_class->resolve = JS_ResolveStub;
 	JSPROXY_CCMotionStreak_class->convert = JS_ConvertStub;
 	JSPROXY_CCMotionStreak_class->finalize = JSPROXY_CCMotionStreak_finalize;
-	JSPROXY_CCMotionStreak_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCMotionStreak_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -19817,7 +19403,7 @@ void JSPROXY_CCShow_createClass(JSContext *cx, JSObject* globalObj, const char* 
 	JSPROXY_CCShow_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShow_class->convert = JS_ConvertStub;
 	JSPROXY_CCShow_class->finalize = JSPROXY_CCShow_finalize;
-	JSPROXY_CCShow_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShow_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -20010,7 +19596,7 @@ void JSPROXY_CCAccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCAccelAmplitude_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAccelAmplitude_class->convert = JS_ConvertStub;
 	JSPROXY_CCAccelAmplitude_class->finalize = JSPROXY_CCAccelAmplitude_finalize;
-	JSPROXY_CCAccelAmplitude_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAccelAmplitude_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -20573,7 +20159,7 @@ void JSPROXY_CCGridBase_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCGridBase_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGridBase_class->convert = JS_ConvertStub;
 	JSPROXY_CCGridBase_class->finalize = JSPROXY_CCGridBase_finalize;
-	JSPROXY_CCGridBase_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGridBase_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -20709,7 +20295,7 @@ void JSPROXY_CCTiledGrid3D_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCTiledGrid3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTiledGrid3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCTiledGrid3D_class->finalize = JSPROXY_CCTiledGrid3D_finalize;
-	JSPROXY_CCTiledGrid3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTiledGrid3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -20858,7 +20444,7 @@ void JSPROXY_CCEaseBounce_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCEaseBounce_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBounce_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBounce_class->finalize = JSPROXY_CCEaseBounce_finalize;
-	JSPROXY_CCEaseBounce_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBounce_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21008,7 +20594,7 @@ void JSPROXY_CCEaseBounceOut_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCEaseBounceOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBounceOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBounceOut_class->finalize = JSPROXY_CCEaseBounceOut_finalize;
-	JSPROXY_CCEaseBounceOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBounceOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21138,7 +20724,7 @@ void JSPROXY_CCFadeOut_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCFadeOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFadeOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCFadeOut_class->finalize = JSPROXY_CCFadeOut_finalize;
-	JSPROXY_CCFadeOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFadeOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21328,7 +20914,7 @@ void JSPROXY_CCAnimationCache_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCAnimationCache_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAnimationCache_class->convert = JS_ConvertStub;
 	JSPROXY_CCAnimationCache_class->finalize = JSPROXY_CCAnimationCache_finalize;
-	JSPROXY_CCAnimationCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAnimationCache_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21506,7 +21092,7 @@ void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCRepeatForever_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRepeatForever_class->convert = JS_ConvertStub;
 	JSPROXY_CCRepeatForever_class->finalize = JSPROXY_CCRepeatForever_finalize;
-	JSPROXY_CCRepeatForever_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRepeatForever_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21637,7 +21223,7 @@ void JSPROXY_CCFadeIn_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCFadeIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFadeIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCFadeIn_class->finalize = JSPROXY_CCFadeIn_finalize;
-	JSPROXY_CCFadeIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFadeIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21784,7 +21370,7 @@ void JSPROXY_CCParticleSun_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCParticleSun_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSun_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSun_class->finalize = JSPROXY_CCParticleSun_finalize;
-	JSPROXY_CCParticleSun_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSun_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -21919,7 +21505,7 @@ void JSPROXY_CCTransitionProgressVertical_createClass(JSContext *cx, JSObject* g
 	JSPROXY_CCTransitionProgressVertical_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressVertical_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressVertical_class->finalize = JSPROXY_CCTransitionProgressVertical_finalize;
-	JSPROXY_CCTransitionProgressVertical_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressVertical_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -22087,7 +21673,7 @@ void JSPROXY_CCFileUtils_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCFileUtils_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFileUtils_class->convert = JS_ConvertStub;
 	JSPROXY_CCFileUtils_class->finalize = JSPROXY_CCFileUtils_finalize;
-	JSPROXY_CCFileUtils_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFileUtils_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -22236,7 +21822,7 @@ void JSPROXY_CCParticleSpiral_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCParticleSpiral_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSpiral_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSpiral_class->finalize = JSPROXY_CCParticleSpiral_finalize;
-	JSPROXY_CCParticleSpiral_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSpiral_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -22640,7 +22226,7 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCAtlasNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAtlasNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCAtlasNode_class->finalize = JSPROXY_CCAtlasNode_finalize;
-	JSPROXY_CCAtlasNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAtlasNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -22886,7 +22472,7 @@ void JSPROXY_CCTileMapAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCTileMapAtlas_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTileMapAtlas_class->convert = JS_ConvertStub;
 	JSPROXY_CCTileMapAtlas_class->finalize = JSPROXY_CCTileMapAtlas_finalize;
-	JSPROXY_CCTileMapAtlas_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTileMapAtlas_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23274,7 +22860,7 @@ void JSPROXY_CCTMXTilesetInfo_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCTMXTilesetInfo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXTilesetInfo_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXTilesetInfo_class->finalize = JSPROXY_CCTMXTilesetInfo_finalize;
-	JSPROXY_CCTMXTilesetInfo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXTilesetInfo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23433,7 +23019,7 @@ void JSPROXY_CCParticleFlower_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCParticleFlower_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleFlower_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleFlower_class->finalize = JSPROXY_CCParticleFlower_finalize;
-	JSPROXY_CCParticleFlower_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleFlower_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23537,7 +23123,7 @@ void JSPROXY_CCCallBlock_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCCallBlock_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCallBlock_class->convert = JS_ConvertStub;
 	JSPROXY_CCCallBlock_class->finalize = JSPROXY_CCCallBlock_finalize;
-	JSPROXY_CCCallBlock_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCallBlock_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23690,7 +23276,7 @@ void JSPROXY_CCTransitionShrinkGrow_createClass(JSContext *cx, JSObject* globalO
 	JSPROXY_CCTransitionShrinkGrow_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionShrinkGrow_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionShrinkGrow_class->finalize = JSPROXY_CCTransitionShrinkGrow_finalize;
-	JSPROXY_CCTransitionShrinkGrow_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionShrinkGrow_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23840,7 +23426,7 @@ void JSPROXY_CCEaseExponentialInOut_createClass(JSContext *cx, JSObject* globalO
 	JSPROXY_CCEaseExponentialInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseExponentialInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseExponentialInOut_class->finalize = JSPROXY_CCEaseExponentialInOut_finalize;
-	JSPROXY_CCEaseExponentialInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseExponentialInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -23988,7 +23574,7 @@ void JSPROXY_CCParticleRain_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCParticleRain_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleRain_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleRain_class->finalize = JSPROXY_CCParticleRain_finalize;
-	JSPROXY_CCParticleRain_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleRain_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -24188,81 +23774,6 @@ JSBool JSPROXY_CCMenuItemFont_setFontSize_(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
-// Arguments: CCNode*
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_itemWithLabel__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont itemWithLabel:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCNode*, void (^)(id)
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; js_block arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont itemWithLabel:arg0 block:(void (^)(id))arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemFont* (o)
-JSBool JSPROXY_CCMenuItemFont_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemFont* ret_val;
-
-	ret_val = [CCMenuItemFont node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemFont_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -24294,10 +23805,6 @@ void JSPROXY_CCMenuItemFont_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FN("create", JSPROXY_CCMenuItemFont_itemWithString_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontName", JSPROXY_CCMenuItemFont_setFontName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("setFontSize", JSPROXY_CCMenuItemFont_setFontSize__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithLabel", JSPROXY_CCMenuItemFont_itemWithLabel__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithLabelBlock", JSPROXY_CCMenuItemFont_itemWithLabel_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemFont_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCMenuItemFont_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -24463,7 +23970,7 @@ void JSPROXY_CCTargetedAction_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCTargetedAction_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTargetedAction_class->convert = JS_ConvertStub;
 	JSPROXY_CCTargetedAction_class->finalize = JSPROXY_CCTargetedAction_finalize;
-	JSPROXY_CCTargetedAction_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTargetedAction_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -24622,7 +24129,7 @@ void JSPROXY_CCSkewTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCSkewTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSkewTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCSkewTo_class->finalize = JSPROXY_CCSkewTo_finalize;
-	JSPROXY_CCSkewTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSkewTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -24780,7 +24287,7 @@ void JSPROXY_CCSkewBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCSkewBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSkewBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCSkewBy_class->finalize = JSPROXY_CCSkewBy_finalize;
-	JSPROXY_CCSkewBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSkewBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -24928,7 +24435,7 @@ void JSPROXY_CCParticleFireworks_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCParticleFireworks_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleFireworks_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleFireworks_class->finalize = JSPROXY_CCParticleFireworks_finalize;
-	JSPROXY_CCParticleFireworks_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleFireworks_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -25104,7 +24611,7 @@ void JSPROXY_CCSpawn_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCSpawn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSpawn_class->convert = JS_ConvertStub;
 	JSPROXY_CCSpawn_class->finalize = JSPROXY_CCSpawn_finalize;
-	JSPROXY_CCSpawn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSpawn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -25438,7 +24945,7 @@ void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCTMXTiledMap_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXTiledMap_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXTiledMap_class->finalize = JSPROXY_CCTMXTiledMap_finalize;
-	JSPROXY_CCTMXTiledMap_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXTiledMap_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -25594,7 +25101,7 @@ void JSPROXY_CCParticleExplosion_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCParticleExplosion_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleExplosion_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleExplosion_class->finalize = JSPROXY_CCParticleExplosion_finalize;
-	JSPROXY_CCParticleExplosion_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleExplosion_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -25704,7 +25211,7 @@ void JSPROXY_CCToggleVisibility_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCToggleVisibility_class->resolve = JS_ResolveStub;
 	JSPROXY_CCToggleVisibility_class->convert = JS_ConvertStub;
 	JSPROXY_CCToggleVisibility_class->finalize = JSPROXY_CCToggleVisibility_finalize;
-	JSPROXY_CCToggleVisibility_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCToggleVisibility_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -25856,7 +25363,7 @@ void JSPROXY_CCTransitionFade_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCTransitionFade_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFade_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFade_class->finalize = JSPROXY_CCTransitionFade_finalize;
-	JSPROXY_CCTransitionFade_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFade_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26061,43 +25568,6 @@ JSBool JSPROXY_CCLabelAtlas_string(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: NSString*, NSUInteger, NSUInteger, NSUInteger
-// Ret value: CCLabelAtlas* (o)
-JSBool JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 4, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelAtlas* ret_val;
-
-	ret_val = [CCLabelAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCLabelAtlas* (o)
-JSBool JSPROXY_CCLabelAtlas_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCLabelAtlas* ret_val;
-
-	ret_val = [CCLabelAtlas node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelAtlas_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -26110,7 +25580,7 @@ void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCLabelAtlas_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLabelAtlas_class->convert = JS_ConvertStub;
 	JSPROXY_CCLabelAtlas_class->finalize = JSPROXY_CCLabelAtlas_finalize;
-	JSPROXY_CCLabelAtlas_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLabelAtlas_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26125,8 +25595,6 @@ void JSPROXY_CCLabelAtlas_createClass(JSContext *cx, JSObject* globalObj, const 
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("labelWithStringCharMapFileItemWidthItemHeightStartCharMap", JSPROXY_CCLabelAtlas_labelWithString_charMapFile_itemWidth_itemHeight_startCharMap__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCLabelAtlas_labelWithString_fntFile__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCLabelAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCLabelAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -26285,7 +25753,7 @@ void JSPROXY_CCTransitionMoveInL_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCTransitionMoveInL_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionMoveInL_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionMoveInL_class->finalize = JSPROXY_CCTransitionMoveInL_finalize;
-	JSPROXY_CCTransitionMoveInL_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionMoveInL_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26411,7 +25879,7 @@ void JSPROXY_CCTransitionMoveInT_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCTransitionMoveInT_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionMoveInT_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionMoveInT_class->finalize = JSPROXY_CCTransitionMoveInT_finalize;
-	JSPROXY_CCTransitionMoveInT_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionMoveInT_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26535,7 +26003,7 @@ void JSPROXY_CCTransitionMoveInR_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCTransitionMoveInR_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionMoveInR_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionMoveInR_class->finalize = JSPROXY_CCTransitionMoveInR_finalize;
-	JSPROXY_CCTransitionMoveInR_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionMoveInR_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26684,7 +26152,7 @@ void JSPROXY_CCEaseExponentialIn_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCEaseExponentialIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseExponentialIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseExponentialIn_class->finalize = JSPROXY_CCEaseExponentialIn_finalize;
-	JSPROXY_CCEaseExponentialIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseExponentialIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26818,7 +26286,7 @@ void JSPROXY_CCPlace_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCPlace_class->resolve = JS_ResolveStub;
 	JSPROXY_CCPlace_class->convert = JS_ConvertStub;
 	JSPROXY_CCPlace_class->finalize = JSPROXY_CCPlace_finalize;
-	JSPROXY_CCPlace_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCPlace_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -26965,7 +26433,7 @@ void JSPROXY_CCParticleFire_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCParticleFire_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleFire_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleFire_class->finalize = JSPROXY_CCParticleFire_finalize;
-	JSPROXY_CCParticleFire_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleFire_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -27143,7 +26611,7 @@ void JSPROXY_CCCatmullRomTo_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCCatmullRomTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCCatmullRomTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCCatmullRomTo_class->finalize = JSPROXY_CCCatmullRomTo_finalize;
-	JSPROXY_CCCatmullRomTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCCatmullRomTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -27656,102 +27124,6 @@ JSBool JSPROXY_CCLabelBMFont_setOpacityModifyRGB_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: CCLabelBMFont* (o)
-JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelBMFont* ret_val;
-
-	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSUInteger
-// Ret value: CCLabelBMFont* (o)
-JSBool JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; uint32_t arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelBMFont* ret_val;
-
-	ret_val = [CCLabelBMFont batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*
-// Ret value: CCLabelBMFont* (o)
-JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCLabelBMFont* ret_val;
-
-	ret_val = [CCLabelBMFont batchNodeWithTexture:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*, NSUInteger
-// Ret value: CCLabelBMFont* (o)
-JSBool JSPROXY_CCLabelBMFont_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; uint32_t arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLabelBMFont* ret_val;
-
-	ret_val = [CCLabelBMFont batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCLabelBMFont* (o)
-JSBool JSPROXY_CCLabelBMFont_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCLabelBMFont* ret_val;
-
-	ret_val = [CCLabelBMFont node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLabelBMFont_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -27764,7 +27136,7 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCLabelBMFont_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLabelBMFont_class->convert = JS_ConvertStub;
 	JSPROXY_CCLabelBMFont_class->finalize = JSPROXY_CCLabelBMFont_finalize;
-	JSPROXY_CCLabelBMFont_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLabelBMFont_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -27794,11 +27166,6 @@ void JSPROXY_CCLabelBMFont_createClass(JSContext *cx, JSObject* globalObj, const
 		JS_FN("labelWithStringFntFileWidthAlignment", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("labelWithStringFntFileWidthAlignmentImageOffset", JSPROXY_CCLabelBMFont_labelWithString_fntFile_width_alignment_imageOffset__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("purgeCachedData", JSPROXY_CCLabelBMFont_purgeCachedData_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithFile", JSPROXY_CCLabelBMFont_batchNodeWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCLabelBMFont_batchNodeWithFile_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithTexture", JSPROXY_CCLabelBMFont_batchNodeWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithTextureCapacity", JSPROXY_CCLabelBMFont_batchNodeWithTexture_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCLabelBMFont_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -27911,7 +27278,7 @@ void JSPROXY_CCTransitionMoveInB_createClass(JSContext *cx, JSObject* globalObj,
 	JSPROXY_CCTransitionMoveInB_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionMoveInB_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionMoveInB_class->finalize = JSPROXY_CCTransitionMoveInB_finalize;
-	JSPROXY_CCTransitionMoveInB_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionMoveInB_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -28061,7 +27428,7 @@ void JSPROXY_CCTransitionZoomFlipX_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTransitionZoomFlipX_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionZoomFlipX_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionZoomFlipX_class->finalize = JSPROXY_CCTransitionZoomFlipX_finalize;
-	JSPROXY_CCTransitionZoomFlipX_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionZoomFlipX_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -28232,7 +27599,7 @@ void JSPROXY_CCEaseOut_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCEaseOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseOut_class->finalize = JSPROXY_CCEaseOut_finalize;
-	JSPROXY_CCEaseOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -28401,7 +27768,7 @@ void JSPROXY_CCProfiler_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCProfiler_class->resolve = JS_ResolveStub;
 	JSPROXY_CCProfiler_class->convert = JS_ConvertStub;
 	JSPROXY_CCProfiler_class->finalize = JSPROXY_CCProfiler_finalize;
-	JSPROXY_CCProfiler_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCProfiler_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -28758,40 +28125,6 @@ JSBool JSPROXY_CCMenuItemToggle_setOpacityModifyRGB_(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: void (^)(id)
-// Ret value: CCMenuItemToggle* (o)
-JSBool JSPROXY_CCMenuItemToggle_itemWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	js_block arg0; 
-
-	ok &= jsval_to_block_1( cx, *argvp++, JS_THIS_OBJECT(cx, vp), &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMenuItemToggle* ret_val;
-
-	ret_val = [CCMenuItemToggle itemWithBlock:(void (^)(id))arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMenuItemToggle* (o)
-JSBool JSPROXY_CCMenuItemToggle_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMenuItemToggle* ret_val;
-
-	ret_val = [CCMenuItemToggle node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMenuItemToggle_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMenuItemToggle_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -28827,8 +28160,6 @@ void JSPROXY_CCMenuItemToggle_createClass(JSContext *cx, JSObject* globalObj, co
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCMenuItemToggle_itemWithItems__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("itemWithItemsBlock", JSPROXY_CCMenuItemToggle_itemWithItems_block__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("itemWithBlock", JSPROXY_CCMenuItemToggle_itemWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCMenuItemToggle_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -29215,7 +28546,7 @@ void JSPROXY_CCScheduler_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCScheduler_class->resolve = JS_ResolveStub;
 	JSPROXY_CCScheduler_class->convert = JS_ConvertStub;
 	JSPROXY_CCScheduler_class->finalize = JSPROXY_CCScheduler_finalize;
-	JSPROXY_CCScheduler_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCScheduler_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -29437,7 +28768,7 @@ void JSPROXY_CCFollow_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCFollow_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFollow_class->convert = JS_ConvertStub;
 	JSPROXY_CCFollow_class->finalize = JSPROXY_CCFollow_finalize;
-	JSPROXY_CCFollow_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFollow_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -29605,7 +28936,7 @@ void JSPROXY_CCOrbitCamera_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCOrbitCamera_class->resolve = JS_ResolveStub;
 	JSPROXY_CCOrbitCamera_class->convert = JS_ConvertStub;
 	JSPROXY_CCOrbitCamera_class->finalize = JSPROXY_CCOrbitCamera_finalize;
-	JSPROXY_CCOrbitCamera_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCOrbitCamera_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -29760,7 +29091,7 @@ void JSPROXY_CCAnimationFrame_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCAnimationFrame_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAnimationFrame_class->convert = JS_ConvertStub;
 	JSPROXY_CCAnimationFrame_class->finalize = JSPROXY_CCAnimationFrame_finalize;
-	JSPROXY_CCAnimationFrame_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAnimationFrame_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -29931,7 +29262,7 @@ void JSPROXY_CCTransitionSlideInL_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionSlideInL_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSlideInL_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSlideInL_class->finalize = JSPROXY_CCTransitionSlideInL_finalize;
-	JSPROXY_CCTransitionSlideInL_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSlideInL_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30057,7 +29388,7 @@ void JSPROXY_CCTransitionSlideInB_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionSlideInB_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSlideInB_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSlideInB_class->finalize = JSPROXY_CCTransitionSlideInB_finalize;
-	JSPROXY_CCTransitionSlideInB_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSlideInB_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30191,7 +29522,7 @@ void JSPROXY_CCTimer_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCTimer_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTimer_class->convert = JS_ConvertStub;
 	JSPROXY_CCTimer_class->finalize = JSPROXY_CCTimer_finalize;
-	JSPROXY_CCTimer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTimer_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30284,7 +29615,7 @@ void JSPROXY_CCTimerBlock_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCTimerBlock_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTimerBlock_class->convert = JS_ConvertStub;
 	JSPROXY_CCTimerBlock_class->finalize = JSPROXY_CCTimerBlock_finalize;
-	JSPROXY_CCTimerBlock_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTimerBlock_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30394,7 +29725,7 @@ void JSPROXY_CCParallaxNode_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCParallaxNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParallaxNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCParallaxNode_class->finalize = JSPROXY_CCParallaxNode_finalize;
-	JSPROXY_CCParallaxNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParallaxNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30527,7 +29858,7 @@ void JSPROXY_CCTransitionProgressHorizontal_createClass(JSContext *cx, JSObject*
 	JSPROXY_CCTransitionProgressHorizontal_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressHorizontal_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressHorizontal_class->finalize = JSPROXY_CCTransitionProgressHorizontal_finalize;
-	JSPROXY_CCTransitionProgressHorizontal_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressHorizontal_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30724,7 +30055,7 @@ void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCRepeat_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRepeat_class->convert = JS_ConvertStub;
 	JSPROXY_CCRepeat_class->finalize = JSPROXY_CCRepeat_finalize;
-	JSPROXY_CCRepeat_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRepeat_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -30874,7 +30205,7 @@ void JSPROXY_CCParticleSnow_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCParticleSnow_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSnow_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSnow_class->finalize = JSPROXY_CCParticleSnow_finalize;
-	JSPROXY_CCParticleSnow_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSnow_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -31055,7 +30386,7 @@ void JSPROXY_CCShatteredTiles3D_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCShatteredTiles3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShatteredTiles3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCShatteredTiles3D_class->finalize = JSPROXY_CCShatteredTiles3D_finalize;
-	JSPROXY_CCShatteredTiles3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShatteredTiles3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -31207,7 +30538,7 @@ void JSPROXY_CCTransitionFlipY_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCTransitionFlipY_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFlipY_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFlipY_class->finalize = JSPROXY_CCTransitionFlipY_finalize;
-	JSPROXY_CCTransitionFlipY_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFlipY_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -31358,7 +30689,7 @@ void JSPROXY_CCTransitionFlipX_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCTransitionFlipX_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFlipX_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFlipX_class->finalize = JSPROXY_CCTransitionFlipX_finalize;
-	JSPROXY_CCTransitionFlipX_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFlipX_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -31975,7 +31306,7 @@ void JSPROXY_CCSpriteFrame_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCSpriteFrame_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSpriteFrame_class->convert = JS_ConvertStub;
 	JSPROXY_CCSpriteFrame_class->finalize = JSPROXY_CCSpriteFrame_finalize;
-	JSPROXY_CCSpriteFrame_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSpriteFrame_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -32171,7 +31502,7 @@ void JSPROXY_CCSplitRows_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCSplitRows_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSplitRows_class->convert = JS_ConvertStub;
 	JSPROXY_CCSplitRows_class->finalize = JSPROXY_CCSplitRows_finalize;
-	JSPROXY_CCSplitRows_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSplitRows_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -32280,7 +31611,7 @@ void JSPROXY_ChipmunkDebugNode_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_ChipmunkDebugNode_class->resolve = JS_ResolveStub;
 	JSPROXY_ChipmunkDebugNode_class->convert = JS_ConvertStub;
 	JSPROXY_ChipmunkDebugNode_class->finalize = JSPROXY_ChipmunkDebugNode_finalize;
-	JSPROXY_ChipmunkDebugNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_ChipmunkDebugNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -32546,7 +31877,7 @@ void JSPROXY_CCTextureCache_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCTextureCache_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTextureCache_class->convert = JS_ConvertStub;
 	JSPROXY_CCTextureCache_class->finalize = JSPROXY_CCTextureCache_finalize;
-	JSPROXY_CCTextureCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTextureCache_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -32857,7 +32188,7 @@ void JSPROXY_CCRipple3D_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCRipple3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRipple3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCRipple3D_class->finalize = JSPROXY_CCRipple3D_finalize;
-	JSPROXY_CCRipple3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRipple3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -33070,7 +32401,7 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCRotateBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRotateBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCRotateBy_class->finalize = JSPROXY_CCRotateBy_finalize;
-	JSPROXY_CCRotateBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRotateBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -33243,7 +32574,7 @@ void JSPROXY_CCEaseIn_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCEaseIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseIn_class->finalize = JSPROXY_CCEaseIn_finalize;
-	JSPROXY_CCEaseIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -33745,7 +33076,7 @@ void JSPROXY_CCTMXMapInfo_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCTMXMapInfo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXMapInfo_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXMapInfo_class->finalize = JSPROXY_CCTMXMapInfo_finalize;
-	JSPROXY_CCTMXMapInfo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXMapInfo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -33909,7 +33240,7 @@ void JSPROXY_CCParticleSmoke_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCParticleSmoke_class->resolve = JS_ResolveStub;
 	JSPROXY_CCParticleSmoke_class->convert = JS_ConvertStub;
 	JSPROXY_CCParticleSmoke_class->finalize = JSPROXY_CCParticleSmoke_finalize;
-	JSPROXY_CCParticleSmoke_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCParticleSmoke_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -34304,7 +33635,7 @@ void JSPROXY_CCTMXLayerInfo_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCTMXLayerInfo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTMXLayerInfo_class->convert = JS_ConvertStub;
 	JSPROXY_CCTMXLayerInfo_class->finalize = JSPROXY_CCTMXLayerInfo_finalize;
-	JSPROXY_CCTMXLayerInfo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTMXLayerInfo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -34467,7 +33798,7 @@ void JSPROXY_CCTransitionZoomFlipY_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTransitionZoomFlipY_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionZoomFlipY_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionZoomFlipY_class->finalize = JSPROXY_CCTransitionZoomFlipY_finalize;
-	JSPROXY_CCTransitionZoomFlipY_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionZoomFlipY_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -34601,7 +33932,7 @@ void JSPROXY_CCReuseGrid_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCReuseGrid_class->resolve = JS_ResolveStub;
 	JSPROXY_CCReuseGrid_class->convert = JS_ConvertStub;
 	JSPROXY_CCReuseGrid_class->finalize = JSPROXY_CCReuseGrid_finalize;
-	JSPROXY_CCReuseGrid_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCReuseGrid_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -34779,7 +34110,7 @@ void JSPROXY_CCShuffleTiles_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCShuffleTiles_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShuffleTiles_class->convert = JS_ConvertStub;
 	JSPROXY_CCShuffleTiles_class->finalize = JSPROXY_CCShuffleTiles_finalize;
-	JSPROXY_CCShuffleTiles_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShuffleTiles_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -35044,7 +34375,7 @@ void JSPROXY_CCConfiguration_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCConfiguration_class->resolve = JS_ResolveStub;
 	JSPROXY_CCConfiguration_class->convert = JS_ConvertStub;
 	JSPROXY_CCConfiguration_class->finalize = JSPROXY_CCConfiguration_finalize;
-	JSPROXY_CCConfiguration_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCConfiguration_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -35201,7 +34532,7 @@ void JSPROXY_CCEaseSineIn_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCEaseSineIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseSineIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseSineIn_class->finalize = JSPROXY_CCEaseSineIn_finalize;
-	JSPROXY_CCEaseSineIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseSineIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -35336,7 +34667,7 @@ void JSPROXY_CCTransitionFadeBL_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCTransitionFadeBL_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFadeBL_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFadeBL_class->finalize = JSPROXY_CCTransitionFadeBL_finalize;
-	JSPROXY_CCTransitionFadeBL_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFadeBL_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -35531,7 +34862,7 @@ void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCAnimate_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAnimate_class->convert = JS_ConvertStub;
 	JSPROXY_CCAnimate_class->finalize = JSPROXY_CCAnimate_finalize;
-	JSPROXY_CCAnimate_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAnimate_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -35771,7 +35102,7 @@ void JSPROXY_CCBezierBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCBezierBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCBezierBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCBezierBy_class->finalize = JSPROXY_CCBezierBy_finalize;
-	JSPROXY_CCBezierBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCBezierBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -36226,7 +35557,7 @@ void JSPROXY_CCAnimation_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCAnimation_class->resolve = JS_ResolveStub;
 	JSPROXY_CCAnimation_class->convert = JS_ConvertStub;
 	JSPROXY_CCAnimation_class->finalize = JSPROXY_CCAnimation_finalize;
-	JSPROXY_CCAnimation_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCAnimation_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -36389,7 +35720,7 @@ void JSPROXY_CCEaseSineInOut_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCEaseSineInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseSineInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseSineInOut_class->finalize = JSPROXY_CCEaseSineInOut_finalize;
-	JSPROXY_CCEaseSineInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseSineInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -36570,7 +35901,7 @@ void JSPROXY_CCShaky3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCShaky3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCShaky3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCShaky3D_class->finalize = JSPROXY_CCShaky3D_finalize;
-	JSPROXY_CCShaky3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCShaky3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -36706,7 +36037,7 @@ void JSPROXY_CCTransitionProgressRadialCW_createClass(JSContext *cx, JSObject* g
 	JSPROXY_CCTransitionProgressRadialCW_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressRadialCW_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressRadialCW_class->finalize = JSPROXY_CCTransitionProgressRadialCW_finalize;
-	JSPROXY_CCTransitionProgressRadialCW_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressRadialCW_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -36865,7 +36196,7 @@ void JSPROXY_CCTintTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCTintTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTintTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCTintTo_class->finalize = JSPROXY_CCTintTo_finalize;
-	JSPROXY_CCTintTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTintTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -37020,7 +36351,7 @@ void JSPROXY_CCTransitionTurnOffTiles_createClass(JSContext *cx, JSObject* globa
 	JSPROXY_CCTransitionTurnOffTiles_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionTurnOffTiles_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionTurnOffTiles_class->finalize = JSPROXY_CCTransitionTurnOffTiles_finalize;
-	JSPROXY_CCTransitionTurnOffTiles_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionTurnOffTiles_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -37145,7 +36476,7 @@ void JSPROXY_CCTransitionSlideInT_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionSlideInT_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSlideInT_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSlideInT_class->finalize = JSPROXY_CCTransitionSlideInT_finalize;
-	JSPROXY_CCTransitionSlideInT_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSlideInT_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -37300,7 +36631,7 @@ void JSPROXY_CCBlink_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCBlink_class->resolve = JS_ResolveStub;
 	JSPROXY_CCBlink_class->convert = JS_ConvertStub;
 	JSPROXY_CCBlink_class->finalize = JSPROXY_CCBlink_finalize;
-	JSPROXY_CCBlink_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCBlink_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -37806,7 +37137,7 @@ void JSPROXY_CCTextureAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCTextureAtlas_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTextureAtlas_class->convert = JS_ConvertStub;
 	JSPROXY_CCTextureAtlas_class->finalize = JSPROXY_CCTextureAtlas_finalize;
-	JSPROXY_CCTextureAtlas_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTextureAtlas_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -37947,7 +37278,7 @@ void JSPROXY_CCTransitionSlideInR_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionSlideInR_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSlideInR_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSlideInR_class->finalize = JSPROXY_CCTransitionSlideInR_finalize;
-	JSPROXY_CCTransitionSlideInR_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSlideInR_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -38277,7 +37608,7 @@ void JSPROXY_CCPointArray_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCPointArray_class->resolve = JS_ResolveStub;
 	JSPROXY_CCPointArray_class->convert = JS_ConvertStub;
 	JSPROXY_CCPointArray_class->finalize = JSPROXY_CCPointArray_finalize;
-	JSPROXY_CCPointArray_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCPointArray_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -38420,7 +37751,7 @@ void JSPROXY_CCTransitionProgressInOut_createClass(JSContext *cx, JSObject* glob
 	JSPROXY_CCTransitionProgressInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressInOut_class->finalize = JSPROXY_CCTransitionProgressInOut_finalize;
-	JSPROXY_CCTransitionProgressInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -38569,7 +37900,7 @@ void JSPROXY_CCEaseBounceIn_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCEaseBounceIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBounceIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBounceIn_class->finalize = JSPROXY_CCEaseBounceIn_finalize;
-	JSPROXY_CCEaseBounceIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBounceIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -38828,7 +38159,7 @@ void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCLiquid_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLiquid_class->convert = JS_ConvertStub;
 	JSPROXY_CCLiquid_class->finalize = JSPROXY_CCLiquid_finalize;
-	JSPROXY_CCLiquid_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLiquid_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -39352,7 +38683,7 @@ void JSPROXY_CCProgressTimer_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCProgressTimer_class->resolve = JS_ResolveStub;
 	JSPROXY_CCProgressTimer_class->convert = JS_ConvertStub;
 	JSPROXY_CCProgressTimer_class->finalize = JSPROXY_CCProgressTimer_finalize;
-	JSPROXY_CCProgressTimer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCProgressTimer_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -39520,7 +38851,7 @@ void JSPROXY_CCEaseBounceInOut_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCEaseBounceInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBounceInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBounceInOut_class->finalize = JSPROXY_CCEaseBounceInOut_finalize;
-	JSPROXY_CCEaseBounceInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBounceInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -39680,7 +39011,7 @@ void JSPROXY_CCActionTween_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCActionTween_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionTween_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionTween_class->finalize = JSPROXY_CCActionTween_finalize;
-	JSPROXY_CCActionTween_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionTween_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -39820,7 +39151,7 @@ void JSPROXY_CCGrabber_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCGrabber_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGrabber_class->convert = JS_ConvertStub;
 	JSPROXY_CCGrabber_class->finalize = JSPROXY_CCGrabber_finalize;
-	JSPROXY_CCGrabber_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGrabber_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -39948,7 +39279,7 @@ void JSPROXY_CCTransitionSplitRows_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTransitionSplitRows_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionSplitRows_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionSplitRows_class->finalize = JSPROXY_CCTransitionSplitRows_finalize;
-	JSPROXY_CCTransitionSplitRows_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionSplitRows_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40102,7 +39433,7 @@ void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCFlipX3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFlipX3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCFlipX3D_class->finalize = JSPROXY_CCFlipX3D_finalize;
-	JSPROXY_CCFlipX3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFlipX3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40253,7 +39584,7 @@ void JSPROXY_CCFlipY3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCFlipY3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFlipY3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCFlipY3D_class->finalize = JSPROXY_CCFlipY3D_finalize;
-	JSPROXY_CCFlipY3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFlipY3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40409,7 +39740,7 @@ void JSPROXY_CCFadeTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCFadeTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCFadeTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCFadeTo_class->finalize = JSPROXY_CCFadeTo_finalize;
-	JSPROXY_CCFadeTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCFadeTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40559,7 +39890,7 @@ void JSPROXY_CCEaseBackInOut_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCEaseBackInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseBackInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseBackInOut_class->finalize = JSPROXY_CCEaseBackInOut_finalize;
-	JSPROXY_CCEaseBackInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseBackInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40709,7 +40040,7 @@ void JSPROXY_CCEaseExponentialOut_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCEaseExponentialOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseExponentialOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseExponentialOut_class->finalize = JSPROXY_CCEaseExponentialOut_finalize;
-	JSPROXY_CCEaseExponentialOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseExponentialOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40799,7 +40130,7 @@ void JSPROXY_CCProfilingTimer_createClass(JSContext *cx, JSObject* globalObj, co
 	JSPROXY_CCProfilingTimer_class->resolve = JS_ResolveStub;
 	JSPROXY_CCProfilingTimer_class->convert = JS_ConvertStub;
 	JSPROXY_CCProfilingTimer_class->finalize = JSPROXY_CCProfilingTimer_finalize;
-	JSPROXY_CCProfilingTimer_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCProfilingTimer_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -40972,7 +40303,7 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCSequence_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSequence_class->convert = JS_ConvertStub;
 	JSPROXY_CCSequence_class->finalize = JSPROXY_CCSequence_finalize;
-	JSPROXY_CCSequence_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSequence_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -41134,7 +40465,7 @@ void JSPROXY_CCEaseElasticInOut_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCEaseElasticInOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseElasticInOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseElasticInOut_class->finalize = JSPROXY_CCEaseElasticInOut_finalize;
-	JSPROXY_CCEaseElasticInOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseElasticInOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -41397,7 +40728,7 @@ void JSPROXY_CCWaves_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCWaves_class->resolve = JS_ResolveStub;
 	JSPROXY_CCWaves_class->convert = JS_ConvertStub;
 	JSPROXY_CCWaves_class->finalize = JSPROXY_CCWaves_finalize;
-	JSPROXY_CCWaves_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCWaves_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -41553,7 +40884,7 @@ void JSPROXY_CCTransitionZoomFlipAngular_createClass(JSContext *cx, JSObject* gl
 	JSPROXY_CCTransitionZoomFlipAngular_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionZoomFlipAngular_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionZoomFlipAngular_class->finalize = JSPROXY_CCTransitionZoomFlipAngular_finalize;
-	JSPROXY_CCTransitionZoomFlipAngular_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionZoomFlipAngular_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -41713,7 +41044,7 @@ void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCTintBy_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTintBy_class->convert = JS_ConvertStub;
 	JSPROXY_CCTintBy_class->finalize = JSPROXY_CCTintBy_finalize;
-	JSPROXY_CCTintBy_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTintBy_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -41843,7 +41174,7 @@ void JSPROXY_CCBezierTo_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCBezierTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCBezierTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCBezierTo_class->finalize = JSPROXY_CCBezierTo_finalize;
-	JSPROXY_CCBezierTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCBezierTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -42037,7 +41368,7 @@ void JSPROXY_CCDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, c
 	JSPROXY_CCDeccelAmplitude_class->resolve = JS_ResolveStub;
 	JSPROXY_CCDeccelAmplitude_class->convert = JS_ConvertStub;
 	JSPROXY_CCDeccelAmplitude_class->finalize = JSPROXY_CCDeccelAmplitude_finalize;
-	JSPROXY_CCDeccelAmplitude_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCDeccelAmplitude_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -42301,7 +41632,7 @@ void JSPROXY_CCLens3D_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCLens3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCLens3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCLens3D_class->finalize = JSPROXY_CCLens3D_finalize;
-	JSPROXY_CCLens3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCLens3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -42565,7 +41896,7 @@ void JSPROXY_CCWaves3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	JSPROXY_CCWaves3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCWaves3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCWaves3D_class->finalize = JSPROXY_CCWaves3D_finalize;
-	JSPROXY_CCWaves3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCWaves3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -42723,7 +42054,7 @@ void JSPROXY_CCJumpTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCJumpTo_class->resolve = JS_ResolveStub;
 	JSPROXY_CCJumpTo_class->convert = JS_ConvertStub;
 	JSPROXY_CCJumpTo_class->finalize = JSPROXY_CCJumpTo_finalize;
-	JSPROXY_CCJumpTo_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCJumpTo_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -42882,7 +42213,7 @@ void JSPROXY_CCDrawNode_createClass(JSContext *cx, JSObject* globalObj, const ch
 	JSPROXY_CCDrawNode_class->resolve = JS_ResolveStub;
 	JSPROXY_CCDrawNode_class->convert = JS_ConvertStub;
 	JSPROXY_CCDrawNode_class->finalize = JSPROXY_CCDrawNode_finalize;
-	JSPROXY_CCDrawNode_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCDrawNode_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43143,7 +42474,7 @@ void JSPROXY_CCWavesTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCWavesTiles3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCWavesTiles3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCWavesTiles3D_class->finalize = JSPROXY_CCWavesTiles3D_finalize;
-	JSPROXY_CCWavesTiles3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCWavesTiles3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43327,7 +42658,7 @@ void JSPROXY_CCTurnOffTiles_createClass(JSContext *cx, JSObject* globalObj, cons
 	JSPROXY_CCTurnOffTiles_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTurnOffTiles_class->convert = JS_ConvertStub;
 	JSPROXY_CCTurnOffTiles_class->finalize = JSPROXY_CCTurnOffTiles_finalize;
-	JSPROXY_CCTurnOffTiles_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTurnOffTiles_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43457,7 +42788,7 @@ void JSPROXY_CCTransitionJumpZoom_createClass(JSContext *cx, JSObject* globalObj
 	JSPROXY_CCTransitionJumpZoom_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionJumpZoom_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionJumpZoom_class->finalize = JSPROXY_CCTransitionJumpZoom_finalize;
-	JSPROXY_CCTransitionJumpZoom_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionJumpZoom_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43633,7 +42964,7 @@ void JSPROXY_CCSplitCols_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCSplitCols_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSplitCols_class->convert = JS_ConvertStub;
 	JSPROXY_CCSplitCols_class->finalize = JSPROXY_CCSplitCols_finalize;
-	JSPROXY_CCSplitCols_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSplitCols_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43769,7 +43100,7 @@ void JSPROXY_CCTransitionFadeUp_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCTransitionFadeUp_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionFadeUp_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionFadeUp_class->finalize = JSPROXY_CCTransitionFadeUp_finalize;
-	JSPROXY_CCTransitionFadeUp_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionFadeUp_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -43842,7 +43173,7 @@ void JSPROXY_CCTimerTargetSelector_createClass(JSContext *cx, JSObject* globalOb
 	JSPROXY_CCTimerTargetSelector_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTimerTargetSelector_class->convert = JS_ConvertStub;
 	JSPROXY_CCTimerTargetSelector_class->finalize = JSPROXY_CCTimerTargetSelector_finalize;
-	JSPROXY_CCTimerTargetSelector_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTimerTargetSelector_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -44277,7 +43608,7 @@ void JSPROXY_CCRenderTexture_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCRenderTexture_class->resolve = JS_ResolveStub;
 	JSPROXY_CCRenderTexture_class->convert = JS_ConvertStub;
 	JSPROXY_CCRenderTexture_class->finalize = JSPROXY_CCRenderTexture_finalize;
-	JSPROXY_CCRenderTexture_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCRenderTexture_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -44591,7 +43922,7 @@ void JSPROXY_CCTwirl_createClass(JSContext *cx, JSObject* globalObj, const char*
 	JSPROXY_CCTwirl_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTwirl_class->convert = JS_ConvertStub;
 	JSPROXY_CCTwirl_class->finalize = JSPROXY_CCTwirl_finalize;
-	JSPROXY_CCTwirl_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTwirl_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -44859,7 +44190,7 @@ void JSPROXY_CCTexturePVR_createClass(JSContext *cx, JSObject* globalObj, const 
 	JSPROXY_CCTexturePVR_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTexturePVR_class->convert = JS_ConvertStub;
 	JSPROXY_CCTexturePVR_class->finalize = JSPROXY_CCTexturePVR_finalize;
-	JSPROXY_CCTexturePVR_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTexturePVR_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -45252,7 +44583,7 @@ void JSPROXY_CCGLProgram_createClass(JSContext *cx, JSObject* globalObj, const c
 	JSPROXY_CCGLProgram_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGLProgram_class->convert = JS_ConvertStub;
 	JSPROXY_CCGLProgram_class->finalize = JSPROXY_CCGLProgram_finalize;
-	JSPROXY_CCGLProgram_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGLProgram_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -45461,7 +44792,7 @@ void JSPROXY_CCGrid3D_createClass(JSContext *cx, JSObject* globalObj, const char
 	JSPROXY_CCGrid3D_class->resolve = JS_ResolveStub;
 	JSPROXY_CCGrid3D_class->convert = JS_ConvertStub;
 	JSPROXY_CCGrid3D_class->finalize = JSPROXY_CCGrid3D_finalize;
-	JSPROXY_CCGrid3D_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCGrid3D_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -45779,7 +45110,7 @@ void JSPROXY_CCActionManager_createClass(JSContext *cx, JSObject* globalObj, con
 	JSPROXY_CCActionManager_class->resolve = JS_ResolveStub;
 	JSPROXY_CCActionManager_class->convert = JS_ConvertStub;
 	JSPROXY_CCActionManager_class->finalize = JSPROXY_CCActionManager_finalize;
-	JSPROXY_CCActionManager_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCActionManager_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -46088,7 +45419,7 @@ void JSPROXY_CCSpriteFrameCache_createClass(JSContext *cx, JSObject* globalObj, 
 	JSPROXY_CCSpriteFrameCache_class->resolve = JS_ResolveStub;
 	JSPROXY_CCSpriteFrameCache_class->convert = JS_ConvertStub;
 	JSPROXY_CCSpriteFrameCache_class->finalize = JSPROXY_CCSpriteFrameCache_finalize;
-	JSPROXY_CCSpriteFrameCache_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCSpriteFrameCache_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -46245,7 +45576,7 @@ void JSPROXY_CCEaseSineOut_createClass(JSContext *cx, JSObject* globalObj, const
 	JSPROXY_CCEaseSineOut_class->resolve = JS_ResolveStub;
 	JSPROXY_CCEaseSineOut_class->convert = JS_ConvertStub;
 	JSPROXY_CCEaseSineOut_class->finalize = JSPROXY_CCEaseSineOut_finalize;
-	JSPROXY_CCEaseSineOut_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCEaseSineOut_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -46380,7 +45711,7 @@ void JSPROXY_CCTransitionProgressOutIn_createClass(JSContext *cx, JSObject* glob
 	JSPROXY_CCTransitionProgressOutIn_class->resolve = JS_ResolveStub;
 	JSPROXY_CCTransitionProgressOutIn_class->convert = JS_ConvertStub;
 	JSPROXY_CCTransitionProgressOutIn_class->finalize = JSPROXY_CCTransitionProgressOutIn_finalize;
-	JSPROXY_CCTransitionProgressOutIn_class->flags = JSCLASS_HAS_RESERVED_SLOTS(2);
+	JSPROXY_CCTransitionProgressOutIn_class->flags = 0;
 
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
