@@ -133,8 +133,16 @@ var GameLayer = cc.Layer.extend({
     getBoundingBoxToWorld:function(node) {
         var p = node.convertToWorldSpace( cc.POINT_ZERO );
         var bb = node.getBoundingBox();
-        bb[0] += p[0];
-        bb[1] += p[1];
+
+        cc.log("--------------------------");
+        cc.log("prev: bb is x:" + bb[0] + " y:" + bb[1] + " width:" + bb[2] + " height: " + bb[3] );
+
+        bb[0] += p[0] - 4;
+        bb[1] += p[1] - 4;
+        bb[2] += p[0] + 8;
+        bb[3] += p[1] + 8;
+
+        cc.log("post: bb is x:" + bb[0] + " y:" + bb[1] + " width:" + bb[2] + " height: " + bb[3] );
         return bb;
     },
 
@@ -230,6 +238,7 @@ var GameLayer = cc.Layer.extend({
         if (cc.rectIntersectsRect(aRect, bRect)) {
             return true;
         }
+        return false;
     },
     initBackground:function () {
         // bg

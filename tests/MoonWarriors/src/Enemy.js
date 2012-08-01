@@ -58,9 +58,9 @@ var Enemy = cc.Sprite.extend({
         global.ebulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.EnemyBullet);
         var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
+        var pos = cc._from_p(_pos);
         var _cs = this.getContentSize();
-        var cs = {width:_cs[0], height:_cs[1]};
+        var cs = cc._from_size(_cs);
         b.setPosition( cc.p(pos.x, pos.y - cs.height * 0.2) );
     },
     hurt:function () {
@@ -70,9 +70,9 @@ var Enemy = cc.Sprite.extend({
     },
     collideRect:function(){
         var _a = this.getContentSize();
-        var a = {width:_a[0], height:_a[1]};
+        var a = cc._from_size(_a);
         var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
+        var pos = cc._from_p(_pos);
 
         var r = cc.rect(pos.x - a.width/2, pos.y - a.height/4,a.width,a.height/2);
         return r;
@@ -82,3 +82,4 @@ var Enemy = cc.Sprite.extend({
 Enemy.sharedEnemy = function(){
     cc.SpriteFrameCache.getInstance().addSpriteFrames(s_Enemy_plist, s_Enemy);
 };
+

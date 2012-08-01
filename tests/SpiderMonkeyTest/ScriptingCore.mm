@@ -106,11 +106,14 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 		jsval *argvp = JS_ARGV(cx,vp);
 		JSObject *pureJSObj;
 		JSObject *nativeJSObj;
-		JS_ValueToObject( cx, *argvp++, &pureJSObj );
-		JS_ValueToObject( cx, *argvp++, &nativeJSObj );
+		JSBool ok = JS_TRUE;
+		ok &= JS_ValueToObject( cx, *argvp++, &pureJSObj );
+		ok &= JS_ValueToObject( cx, *argvp++, &nativeJSObj );
+		
+		if( ! (ok && pureJSObj && nativeJSObj) )
+			return JS_FALSE;
 		
 		JSPROXY_NSObject *proxy = get_proxy_for_jsobject( nativeJSObj );
-//		JSPROXY_NSObject *proxy = JS_GetPrivate( nativeJSObj );
 		set_proxy_for_jsobject( proxy, pureJSObj );
 		[proxy setJsObj:pureJSObj];
 		
@@ -543,3 +546,14 @@ void del_proxy_for_jsobject(JSObject *obj)
 	}
 }
 
+JSBool set_reserved_slot(JSObject *obj, NSUInteger idx, jsval value)
+{
+	JSClass *klass = JS_GetClass(obj);
+	NSUInteger slots = JSCLASS_RESERVED_SLOTS(klass);
+	if( idx >= slots )
+		return JS_FALSE;
+	
+	JS_SetReservedSlot(obj, idx, value);
+	
+	return JS_TRUE;
+}
