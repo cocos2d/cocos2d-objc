@@ -51,7 +51,9 @@ var Ship = cc.Sprite.extend({
         // New Blending function API. Similar to OpenGL / WebGL
         ghostSprite.setBlendFunc( gl.SRC_ALPHA, gl.ONE )
         ghostSprite.setScale(8);
-        ghostSprite.setPosition(cc.p(this.getContentSize().width / 2, 12));
+        // XXX riq XXX
+        // contentSize[0] ouch
+        ghostSprite.setPosition(cc.p(this.getContentSize()[0] / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);
         ghostSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
         var blinks = cc.Blink.create(3, 9);
@@ -115,10 +117,13 @@ var Ship = cc.Sprite.extend({
         var _pos = this.getPosition();
         var pos = cc._from_p(_pos);
         global.life--;
-        this.getParent().addChild(new Explosion(pos.x, pos.y));
-        this.getParent().removeChild(this,true);
+        var explosion = new Explosion();
+        explosion.setPosition( this.getPosition() );
+        this.getParent().addChild( explosion );
+        this.removeFromParentAndCleanup(true);
         if (global.sound) {
-            cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect,false);
+            cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect);
+            cc.log("6");
         }
     },
     hurt:function () {
