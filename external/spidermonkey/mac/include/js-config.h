@@ -94,6 +94,6 @@
 
 /* Some mozilla code uses JS-friend APIs that depend on JS_METHODJIT being
    correct. */
-#define JS_METHODJIT 1
+/* #undef JS_METHODJIT */
 
 #endif /* js_config_h___ */

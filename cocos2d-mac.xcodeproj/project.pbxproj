@@ -77,6 +77,7 @@
 		4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A00198E415C9FA5700F3D80E /* arial-14.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A00198E215C9FA5600F3D80E /* arial-14.fnt */; };
 		A00198E515C9FA5700F3D80E /* arial-14.png in Resources */ = {isa = PBXBuildFile; fileRef = A00198E315C9FA5600F3D80E /* arial-14.png */; };
+		A00198EB15CA142000F3D80E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -12242,6 +12243,7 @@
 				A0D468A815C33B3A00588ADE /* ship01.png in Resources */,
 				A00198E415C9FA5700F3D80E /* arial-14.fnt in Resources */,
 				A00198E515C9FA5700F3D80E /* arial-14.png in Resources */,
+				A00198EB15CA142000F3D80E /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16659,6 +16661,12 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"COCOS2D_DEBUG=2",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16694,6 +16702,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16763,6 +16777,12 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"COCOS2D_DEBUG=2",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16798,6 +16818,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16835,6 +16861,12 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					DEBUG,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"COCOS2D_DEBUG=2",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16870,6 +16902,12 @@
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					NDEBUG,
+					NS_BLOCK_ASSERTIONS,
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CC_DIRECTOR_MAC_THREAD=2",
+				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
 					external/Chipmunk/include/chipmunk,
@@ -16946,7 +16984,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -16969,13 +17007,14 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Debug;
 		};
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
@@ -16996,6 +17035,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Release;
 		};

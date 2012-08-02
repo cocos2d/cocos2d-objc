@@ -21,6 +21,25 @@
 
 // CLASS IMPLEMENTATIONS
 
+@interface BootLayer : CCLayer
+@end
+@implementation  BootLayer
+-(void) onEnter
+{
+	[super onEnter];
+	
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"JS Watermelon"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
+	else if( [name isEqual:@"JS Tests"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+}
+@end
+
+
 @implementation AppController
 
 #pragma mark - AppController - iOS
@@ -223,15 +242,11 @@
 	// init server
 	[self initThoMoServer];
 #endif
-	
-	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
-	
-	if( [name isEqual:@"JS Watermelon"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
-	else if( [name isEqual:@"JS Tests"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
-	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];	
+
+	CCScene *scene = [CCScene node];
+	BootLayer *layer = [BootLayer node];
+	[scene addChild:layer];
+	[[CCDirector sharedDirector] runWithScene:scene];
 }
 @end
 

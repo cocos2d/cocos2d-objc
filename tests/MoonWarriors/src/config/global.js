@@ -2,7 +2,7 @@ var winSize = null;
 var keys = [];
 var global = {
     level:1,
-    life:1,
+    life:4,
     score:0,
     sound:true,
     DELTA_X:-100,
