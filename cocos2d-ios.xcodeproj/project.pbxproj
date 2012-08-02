@@ -1279,6 +1279,8 @@
 		A00194E115C37B8000F3D80E /* konqa32-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACC15B61C75004AB807 /* konqa32-hd.png */; };
 		A00194E215C37B8000F3D80E /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACD15B61C75004AB807 /* konqa32.fnt */; };
 		A00194E315C37B8000F3D80E /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = A0644ACE15B61C75004AB807 /* konqa32.png */; };
+		A00198E815C9FADB00F3D80E /* arial-14.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A00198E615C9FADB00F3D80E /* arial-14.fnt */; };
+		A00198E915C9FADB00F3D80E /* arial-14.png in Resources */ = {isa = PBXBuildFile; fileRef = A00198E715C9FADB00F3D80E /* arial-14.png */; };
 		A00495DA159B8ACB00B5D4DF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		A00495DC159B8B1500B5D4DF /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */; };
 		A00495DD159B8B1500B5D4DF /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
@@ -4845,6 +4847,8 @@
 		A00194A615C37A6800F3D80E /* SettingsLayer.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SettingsLayer.js; sourceTree = "<group>"; };
 		A00194A715C37A6800F3D80E /* Ship.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Ship.js; sourceTree = "<group>"; };
 		A00194A815C37A6800F3D80E /* SysMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = SysMenu.js; sourceTree = "<group>"; };
+		A00198E615C9FADB00F3D80E /* arial-14.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "arial-14.fnt"; sourceTree = "<group>"; };
+		A00198E715C9FADB00F3D80E /* arial-14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arial-14.png"; sourceTree = "<group>"; };
 		A009431115180C730029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009431515180E1F0029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009431615180E1F0029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -7669,6 +7673,8 @@
 		A001947215C37A6700F3D80E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				A00198E615C9FADB00F3D80E /* arial-14.fnt */,
+				A00198E715C9FADB00F3D80E /* arial-14.png */,
 				A001947315C37A6700F3D80E /* b01.png */,
 				A001947415C37A6700F3D80E /* bg01.jpg */,
 				A001947515C37A6700F3D80E /* bullet.plist */,
@@ -12050,6 +12056,8 @@
 				A00194C515C37A6800F3D80E /* mainMainMusic.mp3 in Resources */,
 				A00194C615C37A6800F3D80E /* shipDestroyEffect.mp3 in Resources */,
 				A00194C715C37A6800F3D80E /* ship01.png in Resources */,
+				A00198E815C9FADB00F3D80E /* arial-14.fnt in Resources */,
+				A00198E915C9FADB00F3D80E /* arial-14.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

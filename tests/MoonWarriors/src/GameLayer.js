@@ -38,9 +38,11 @@ var GameLayer = cc.Layer.extend({
             this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
 
             // score
-            this.lbScore = cc.LabelTTF.create("Score: 0", "Arial", 14, cc.size(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT );
+            this.lbScore = cc.LabelBMFont.create("Score: 0", "arial-14.fnt");
+            this.lbScore.setAnchorPoint( cc.p(1,0) );
+            this.lbScore.setAlignment( cc.TEXT_ALIGNMENT_RIGHT );
             this.addChild(this.lbScore, 1000);
-            this.lbScore.setPosition(cc.p(winSize.width - 80, winSize.height - 30));
+            this.lbScore.setPosition(cc.p(winSize.width - 5 , winSize.height - 30));
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
@@ -62,7 +64,7 @@ var GameLayer = cc.Layer.extend({
             // accept touch now!
             var platform = __getPlatform();
             if( platform.substring(0,7) == 'desktop' ) {
-//                this.setMouseEnabled( true );
+                this.setMouseEnabled( true );
 //            this.setKeypadEnabled(true);
             }
             else if( platform.substring(0,6) == 'mobile' )
@@ -99,6 +101,15 @@ var GameLayer = cc.Layer.extend({
     onTouchesMoved:function (touches, event) {
         if( this._ship ) {
             var delta = touches[0].getDelta();
+            var curPos = this._ship.getPosition();
+            curPos[0] += delta[0];
+            this._ship.setPosition( curPos );
+        }
+    },
+
+    onMouseDragged:function( event ) {
+        if( this._ship ) {
+            var delta = event.getDelta();
             var curPos = this._ship.getPosition();
             curPos[0] += delta[0];
             this._ship.setPosition( curPos );
