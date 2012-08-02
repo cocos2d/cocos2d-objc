@@ -158,8 +158,8 @@
 	[sharedFileUtils setMacSuffix:@"-ipad"];
 	[sharedFileUtils setEnableFallbackSuffixes:YES];		// Default: NO. No fallback suffixes are going to be used
 	
-//	[director_ setResizeMode:kCCDirectorResize_AutoScale];
-	[director_ setResizeMode:kCCDirectorResize_NoScale];
+	[director_ setResizeMode:kCCDirectorResize_AutoScale];
+//	[director_ setResizeMode:kCCDirectorResize_NoScale];
 
 	[self run];
 }
@@ -243,10 +243,20 @@
 	[self initThoMoServer];
 #endif
 
-	CCScene *scene = [CCScene node];
-	BootLayer *layer = [BootLayer node];
-	[scene addChild:layer];
-	[[CCDirector sharedDirector] runWithScene:scene];
+//	CCScene *scene = [CCScene node];
+//	BootLayer *layer = [BootLayer node];
+//	[scene addChild:layer];
+//	[[CCDirector sharedDirector] runWithScene:scene];
+	
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"JS Watermelon"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
+	else if( [name isEqual:@"JS Tests"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+
 }
 @end
 

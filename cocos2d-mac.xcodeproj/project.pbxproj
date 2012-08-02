@@ -77,7 +77,6 @@
 		4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A00198E415C9FA5700F3D80E /* arial-14.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A00198E215C9FA5600F3D80E /* arial-14.fnt */; };
 		A00198E515C9FA5700F3D80E /* arial-14.png in Resources */ = {isa = PBXBuildFile; fileRef = A00198E315C9FA5600F3D80E /* arial-14.png */; };
-		A00198EB15CA142000F3D80E /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -2114,6 +2113,8 @@
 		A09C8D3A1566FB4100ADFDA9 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A0A10B2014F3003600FA38C1 /* ccDeprecated.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */; };
 		A0A10B2114F3003600FA38C1 /* ccDeprecated.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */; };
+		A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */; };
+		A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
 		A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */; };
 		A0AA8551159D3AFF00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8550159D3AFF00E77CC9 /* Presentation */; };
@@ -2363,7 +2364,6 @@
 		A0E5F8DD15C1B21700D44C32 /* btn-highscores-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C41225EDD000DE0DA2 /* btn-highscores-selected.png */; };
 		A0E5F8DE15C1B21700D44C32 /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C51225EDD000DE0DA2 /* btn-play-normal.png */; };
 		A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C61225EDD000DE0DA2 /* btn-play-selected.png */; };
-		A0E5F91A15C1B21700D44C32 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */; };
 		A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0E5F92615C1B21700D44C32 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0137F5F15AE39A9000AA1C2 /* fps_images.plist */; };
@@ -2440,6 +2440,7 @@
 		A0E5F98015C1B21700D44C32 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A0E5F98115C1B21700D44C32 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A01D2CC2158BF30F005FCA72 /* libjs_static.a */; };
 		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
+		A0EE7F3A15CADC6F0010D916 /* MoonWarriors.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */; };
 		A0F1615B153CD1FA0077361C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F1615A153CD1FA0077361C /* Icon-Small-50.png */; };
 		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
 		A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* example_Flower.fsh */; };
@@ -6452,6 +6453,7 @@
 		A09C8D911567165B00ADFDA9 /* ScriptingCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptingCore.h; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
+		A0A1C1DE15CAE2130058D96F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/WatermelonWithMe.xib"; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AA8550159D3AFF00E77CC9 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = Resources/Presentation; sourceTree = "<group>"; };
@@ -6638,6 +6640,7 @@
 		A0EC4CAE1403278200EC482A /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
 		A0EC4CBB1403278200EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
 		A0EC4CBC1403278200EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
+		A0EE7F3915CADC6F0010D916 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/MoonWarriors.xib"; sourceTree = "<group>"; };
 		A0F1615A153CD1FA0077361C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
 		A0F3EBCD15A64D12001972B4 /* js_bindings_cocos2d_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_manual.mm; sourceTree = "<group>"; };
 		A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
@@ -7691,6 +7694,8 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */,
+				A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
 				E02A8537129F11BF00341C97 /* icon.icns */,
 				E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */,
@@ -12243,7 +12248,8 @@
 				A0D468A815C33B3A00588ADE /* ship01.png in Resources */,
 				A00198E415C9FA5700F3D80E /* arial-14.fnt in Resources */,
 				A00198E515C9FA5700F3D80E /* arial-14.png in Resources */,
-				A00198EB15CA142000F3D80E /* MainMenu.xib in Resources */,
+				A0EE7F3A15CADC6F0010D916 /* MoonWarriors.xib in Resources */,
+				A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12258,7 +12264,6 @@
 				A0E5F8DD15C1B21700D44C32 /* btn-highscores-selected.png in Resources */,
 				A0E5F8DE15C1B21700D44C32 /* btn-play-normal.png in Resources */,
 				A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */,
-				A0E5F91A15C1B21700D44C32 /* MainMenu.xib in Resources */,
 				A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */,
 				A0E5F92615C1B21700D44C32 /* Particles in Resources */,
 				A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */,
@@ -12299,6 +12304,7 @@
 				A0E5F95A15C1B21700D44C32 /* car_smoke.plist in Resources */,
 				A0E5F95B15C1B21700D44C32 /* Parallax.pvr.gz in Resources */,
 				A0D467B715C31E1C00588ADE /* js in Resources */,
+				A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16200,6 +16206,22 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0A1C1DE15CAE2130058D96F /* English */,
+			);
+			name = WatermelonWithMe.xib;
+			sourceTree = "<group>";
+		};
+		A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0EE7F3915CADC6F0010D916 /* English */,
+			);
+			name = MoonWarriors.xib;
+			sourceTree = "<group>";
+		};
 		E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -16793,7 +16815,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/MoonWarriors-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16834,7 +16856,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/MoonWarriors-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16877,7 +16899,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/WatermelonWithMe-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -16918,7 +16940,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-Info.plist";
+				INFOPLIST_FILE = "Resources-Mac/WatermelonWithMe-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
