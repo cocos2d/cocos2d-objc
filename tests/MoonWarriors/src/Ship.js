@@ -109,7 +109,6 @@ var Ship = cc.Sprite.extend({
         this.removeFromParentAndCleanup(true);
         if (global.sound) {
             cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect);
-            cc.log("6");
         }
     },
     hurt:function () {

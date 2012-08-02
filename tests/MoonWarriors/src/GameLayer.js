@@ -81,7 +81,11 @@ var GameLayer = cc.Layer.extend({
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
             }
 
+            // Reset state
             this._state = global.STATE_PLAYING;
+            global.enemyContainer = [];
+            global.ebulletContainer = [];
+            global.sbulletContainer = [];
 
             bRet = true;
         }
