@@ -42,18 +42,18 @@ var GameLayer = cc.Layer.extend({
             this.lbScore.setAnchorPoint( cc.p(1,0) );
             this.lbScore.setAlignment( cc.TEXT_ALIGNMENT_RIGHT );
             this.addChild(this.lbScore, 1000);
-            this.lbScore.setPosition(cc.p(winSize.width - 5 , winSize.height - 30));
+            this.lbScore.setPosition(cc._p(winSize.width - 5 , winSize.height - 30));
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
             var life = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
             life.setScale(0.6);
-            life.setPosition(cc.p(30, 460));
+            life.setPosition(cc._p(30, 460));
             this.addChild(life, 1, 5);
 
             // ship Life count
             this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
-            this._lbLife.setPosition(cc.p(60, 463));
+            this._lbLife.setPosition(cc._p(60, 463));
             this._lbLife.setColor(cc.RED);
             this.addChild(this._lbLife, 1000);
 
@@ -206,9 +206,9 @@ var GameLayer = cc.Layer.extend({
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
         }
         else if (global.life <= 0 && !this._ship.active) {
-            this._state = global.GAME_OVER;
+            this._state = global.STATE_GAME_OVER;
             this.runAction(cc.Sequence.create(
-                cc.DelayTime.create(3),
+                cc.DelayTime.create(1),
                 cc.CallFunc.create(this, this.onGameOver)));
         }
     },
@@ -265,7 +265,7 @@ var GameLayer = cc.Layer.extend({
                 this._backSkyRe = cc.Sprite.create(s_bg01);
                 this._backSkyRe.setAnchorPoint(cc.POINT_ZERO);
                 this.addChild(this._backSkyRe, -10);
-                this._backSkyRe.setPosition(cc.p(0, winSize.height));
+                this._backSkyRe.setPosition(cc._p(0, winSize.height));
                 this._isBackSkyReload = true;
             }
             this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
@@ -284,7 +284,7 @@ var GameLayer = cc.Layer.extend({
             if (!this._isBackTileReload) {
                 this._backTileMapRe = cc.TMXTiledMap.create(s_level01);
                 this.addChild(this._backTileMapRe, -9);
-                this._backTileMapRe.setPosition(cc.p(0, winSize.height));
+                this._backTileMapRe.setPosition(cc._p(0, winSize.height));
                 this._isBackTileReload = true;
             }
             this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));

@@ -37,14 +37,10 @@ var GameOver = cc.Layer.extend({
             this.addChild(menu, 1, 2);
             menu.setPosition(cc.p(winSize.width / 2, 220));
 
-            cc.log("Game over 1");
             var lbScore = cc.LabelTTF.create("Your Score:"+global.score,"Arial",16);
-            cc.log("Game over 2");
             lbScore.setPosition(cc.p(160,280));
             lbScore.setColor(cc.c3(250,179,0));
             this.addChild(lbScore,10);
-
-            cc.log("Game over 3");
 
             var b1 = cc.LabelTTF.create("Download Cocos2d-html5","Arial",14);
             var b2 = cc.LabelTTF.create("Download This Sample","Arial",14);
@@ -55,22 +51,14 @@ var GameOver = cc.Layer.extend({
 //                window.location.href = "https://github.com/ShengxiangChen/MoonWarriors";
             });
 
-            cc.log("Game over 4");
             var cocos2dMenu = cc.Menu.create(menu1,menu2);
             cocos2dMenu.alignItemsVerticallyWithPadding(10);
-            cc.log("Game over 5");
             cocos2dMenu.setPosition(cc.p(160,80));
-            cc.log("Game over 6");
             this.addChild(cocos2dMenu);
-            cc.log("Game over 7");
-
-            cc.log("Game over 8");
 
             if(global.sound){
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic)
             }
-
-            cc.log("Game over 9");
 
             bRet = true;
         }

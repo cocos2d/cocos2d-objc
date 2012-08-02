@@ -37,7 +37,7 @@ var Bullet = cc.Sprite.extend({
         var newY = pos[1]
         newX -= this.xVolocity * dt;
         newY -= this.yVolocity * dt;
-        this.setPosition(cc.p(newX, newY));
+        this.setPosition(cc._p(newX, newY));
         if (this.HP <= 0) {
             this.active = false;
         }
