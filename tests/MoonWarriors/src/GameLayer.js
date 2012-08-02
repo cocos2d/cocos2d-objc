@@ -106,7 +106,7 @@ var GameLayer = cc.Layer.extend({
         if( this._ship ) {
             var delta = touches[0].getDelta();
             var curPos = this._ship.getPosition();
-            curPos[0] += delta[0];
+            curPos= cc.pAdd( curPos, delta );
             this._ship.setPosition( curPos );
         }
     },
@@ -115,7 +115,7 @@ var GameLayer = cc.Layer.extend({
         if( this._ship ) {
             var delta = event.getDelta();
             var curPos = this._ship.getPosition();
-            curPos[0] += delta[0];
+            curPos= cc.pAdd( curPos, delta );
             this._ship.setPosition( curPos );
         }
     },
