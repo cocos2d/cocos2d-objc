@@ -243,7 +243,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 	// Mac and Simulator versions were compiled with DEBUG.
 #if DEBUG && defined(__CC_PLATFORM_MAC) //|| TARGET_IPHONE_SIMULATOR
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
-//	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
+	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 #endif
 	return JS_TRUE;
 };
@@ -546,7 +546,7 @@ void del_proxy_for_jsobject(JSObject *obj)
 	}
 }
 
-JSBool set_reserved_slot(JSObject *obj, NSUInteger idx, jsval value)
+JSBool set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
 {
 	JSClass *klass = JS_GetClass(obj);
 	NSUInteger slots = JSCLASS_RESERVED_SLOTS(klass);
