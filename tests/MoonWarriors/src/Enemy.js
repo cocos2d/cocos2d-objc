@@ -61,7 +61,7 @@ var Enemy = cc.Sprite.extend({
         var pos = cc._from_p(_pos);
         var _cs = this.getContentSize();
         var cs = cc._from_size(_cs);
-        b.setPosition( cc.p(pos.x, pos.y - cs.height * 0.2) );
+        b.setPosition( cc._p(pos.x, pos.y - cs.height * 0.2) );
     },
     hurt:function () {
         this._hurtColorLife = 2;

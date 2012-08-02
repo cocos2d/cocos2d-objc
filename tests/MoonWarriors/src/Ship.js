@@ -53,7 +53,7 @@ var Ship = cc.Sprite.extend({
         ghostSprite.setScale(8);
         // XXX riq XXX
         // contentSize[0] ouch
-        ghostSprite.setPosition(cc.p(this.getContentSize()[0] / 2, 12));
+        ghostSprite.setPosition(cc._p(this.getContentSize()[0] / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);
         ghostSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
         var blinks = cc.Blink.create(3, 9);
@@ -63,24 +63,10 @@ var Ship = cc.Sprite.extend({
             t.removeChild(ghostSprite,true);
         });
         this.runAction(cc.Sequence.create(cc.DelayTime.create(0.5), blinks, makeBeAttack));
+
+        this.active = true;
     },
     update:function (dt) {
-        var newPos = this.getPosition();
-        // XXX riq XXX
-        // Keyboard not supported yet
-//        if ((keys[cc.KEY.w] || keys[cc.KEY.up]) && this.getPosition().y <= winSize.height) {
-//            newY += dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.s] || keys[cc.KEY.down]) && this.getPosition().y >= 0) {
-//            newY -= dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.a] || keys[cc.KEY.left]) && this.getPosition().x >= 0) {
-//            newX -= dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.d] || keys[cc.KEY.right]) && this.getPosition().x <= winSize.width) {
-//            newX += dt * this.speed;
-//        }
-        this.setPosition( newPos );
 
         if (this.HP <= 0) {
             this.active = false;
@@ -106,12 +92,12 @@ var Ship = cc.Sprite.extend({
         var a = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(a);
         this.getParent().addChild(a, a.zOrder, global.Tag.ShipBullet);
-        a.setPosition(cc.p(pos.x + offset, pos.y + 3 + cs.height * 0.3));
+        a.setPosition(cc._p(pos.x + offset, pos.y + 3 + cs.height * 0.3));
 
         var b = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.ShipBullet);
-        b.setPosition(cc.p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
+        b.setPosition(cc._p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
     },
     destroy:function () {
         var _pos = this.getPosition();
