@@ -177,8 +177,8 @@ cc._from_rect = function( rect )
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
-    var _ra = cc._from_rect(rectA);
-    var _rb = cc._from_rect(rectB);
+//    var _ra = cc._from_rect(rectA);
+//    var _rb = cc._from_rect(rectB);
 
     var bool = ! (  rectA[0] > rectB[0]+rectB[2] ||
                 rectA[0]+rectA[2] < rectB[0] ||
