@@ -206,7 +206,7 @@ var GameLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         this.scheduleUpdate();
 
@@ -1039,7 +1039,7 @@ var OptionsLayer = cc.LayerGradient.extend({
     ctor:function () {
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         var label1 = cc.LabelBMFont.create("MUSIC ON", "konqa32.fnt" );
         var item1 = cc.MenuItemLabel.create(label1);

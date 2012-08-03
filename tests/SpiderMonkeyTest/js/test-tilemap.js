@@ -70,7 +70,7 @@ var BaseLayer = cc.Layer.extend({
         __associateObjWithNative(this, parent);
         this.init();
 
-//        var gradient = cc.LayerGradient.create( cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255) );
+//        var gradient = cc.LayerGradient.create( cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255) );
 //        this.addChild( gradient, -100 );
     },
 
@@ -127,7 +127,7 @@ var BaseLayer = cc.Layer.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-100 -1) );
             this.addChild( labelbg,9);
         }
@@ -516,7 +516,7 @@ var TMXReadWriteTest = BaseLayer.extend({
 var TMXHexTest = BaseLayer.extend({
     ctor:function () {
         this._super();
-        var color = cc.LayerColor.create(cc.c4(64, 64, 64, 255));
+        var color = cc.LayerColor.create(cc.c4b(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = cc.TMXTiledMap.create("TileMaps/hexa-test.tmx");
@@ -535,7 +535,7 @@ var TMXHexTest = BaseLayer.extend({
 var TMXIsoTest = BaseLayer.extend({
     ctor:function () {
         this._super();
-        var color = cc.LayerColor.create(cc.c4(64, 64, 64, 255));
+        var color = cc.LayerColor.create(cc.c4b(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = cc.TMXTiledMap.create("TileMaps/iso-test.tmx");
@@ -560,7 +560,7 @@ var TMXIsoTest = BaseLayer.extend({
 var TMXIsoTest1 = BaseLayer.extend({
     ctor:function () {
         this._super();
-        var color = cc.LayerColor.create(cc.c4(64, 64, 64, 255));
+        var color = cc.LayerColor.create(cc.c4b(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = cc.TMXTiledMap.create("TileMaps/iso-test1.tmx");
@@ -581,7 +581,7 @@ var TMXIsoTest1 = BaseLayer.extend({
 var TMXIsoTest2 = BaseLayer.extend({
     ctor:function () {
         this._super();
-        var color = cc.LayerColor.create(cc.c4(64, 64, 64, 255));
+        var color = cc.LayerColor.create(cc.c4b(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = cc.TMXTiledMap.create("TileMaps/iso-test2.tmx");
@@ -606,7 +606,7 @@ var TMXIsoTest2 = BaseLayer.extend({
 var TMXUncompressedTest = BaseLayer.extend({
     ctor:function () {
         this._super();
-        var color = cc.LayerColor.create(cc.c4(64, 64, 64, 255));
+        var color = cc.LayerColor.create(cc.c4b(64, 64, 64, 255));
         this.addChild(color, -1);
 
         var map = cc.TMXTiledMap.create("TileMaps/iso-test2-uncompressed.tmx");

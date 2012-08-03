@@ -1,4 +1,8 @@
+//
+//
 // cocos2d Helper
+//
+//
 
 //
 // cocos2d constants
@@ -38,28 +42,66 @@ cc.PARTICLE_MODE_RADIUS = 1;
 cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
 cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
 
-cc.RED = cc.c3(255,0,0);
-cc.GREEN = cc.c3(0,255,0);
-cc.BLUE = cc.c3(0,0,255);
-cc.BLACK = cc.c3(0,0,0);
-cc.WHITE = cc.c3(255,255,255);
+cc.RED = {r:255, g:0, b:0};
+cc.GREEN = {r:0, g:255, b:0};
+cc.BLUE = {r:0, g:0, b:255};
+cc.BLACK = {r:0, g:0, b:0};
+cc.WHITE = {r:255, g:255, b:255};
 
 cc.POINT_ZERO = {x:0, y:0};
 
 cc._reuse_p0 = {x:0, y:0};
 cc._reuse_p1 = {x:0, y:0};
 cc._reuse_p_index = 0;
-cc._reuse_color3b = cc.c3(255, 255, 255 );
-cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
+cc._reuse_color3b = {r:255, g:255, b:255 };
+cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc._reuse_grid = cc.g(0,0);
 
-// dump config info, but only in debug mode
-cc.dumpConfig = function()
+//
+// Color 3B
+//
+cc.c3b = function( r, g, b )
 {
-    if( cc.config.debug ) {
-        for( i in cc.config )
-            cc.log( i + " = " + cc.config[i] );
-    }
+    return {r:r, g:g, b:b };
+}
+cc._c3b = function( r, g, b )
+{
+    cc._reuse_color3b.r = r;
+    cc._reuse_color3b.g = g;
+    cc._reuse_color3b.b = b;
+    return cc._reuse_color3b;
+}
+// compatibility
+cc.c3 = cc.c3b;
+cc._c3 = cc._c3b;
+
+//
+// Color 4B
+//
+cc.c4b = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
+}
+cc._c4b = function( r, g, b, a )
+{
+    cc._reuse_color4b.r = r;
+    cc._reuse_color4b.g = g;
+    cc._reuse_color4b.b = b;
+    cc._reuse_color4b.a = a;
+    return cc._reuse_color4b;
+}
+// compatibility
+cc.c4 = cc.c4b;
+cc._c4 = cc._c4b;
+
+
+
+//
+// Color 4F
+//
+cc.c4f = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
 }
 
 //
@@ -105,26 +147,6 @@ cc._g = function( x, y )
 }
 
 //
-// Color
-//
-cc._c3 = function( r, g, b )
-{
-    cc._reuse_color3b[0] = r;
-    cc._reuse_color3b[1] = g;
-    cc._reuse_color3b[2] = b;
-    return cc._reuse_color3b;
-}
-
-cc._c4 = function( r, g, b, a )
-{
-    cc._reuse_color4b[0] = r;
-    cc._reuse_color4b[1] = g;
-    cc._reuse_color4b[2] = b;
-    cc._reuse_color4b[3] = a;
-    return cc._reuse_color4b;
-}
-
-//
 // Size
 //
 cc.size = function(w,h)
@@ -160,6 +182,16 @@ cc._from_rect = function( rect )
     return rect;
 }
 
+
+// dump config info, but only in debug mode
+cc.dumpConfig = function()
+{
+    if( cc.config.debug ) {
+        for( i in cc.config )
+            cc.log( i + " = " + cc.config[i] );
+    }
+}
+
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
@@ -181,6 +213,7 @@ cc.ArrayRemoveObject = function (arr, delObj) {
         }
     }
 };
+
 
 //
 // Google "subclasses"

@@ -70,7 +70,7 @@ var BaseLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
     },
 
     title:function () {
@@ -120,7 +120,7 @@ var BaseLayer = cc.LayerGradient.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }
@@ -221,7 +221,7 @@ var RenderTextureSave = BaseLayer.extend({
                 this._brush.setPosition( cc._p( location.x + diffX * delta, location.y + diffY * delta ) );
                 this._brush.setRotation( Math.random() * 360 );
                 this._brush.setScale( Math.random() * 2 );
-                this._brush.setColor( cc._c3( Math.random()*255, 255, 255) );
+                this._brush.setColor( cc._c3b( Math.random()*255, 255, 255) );
                 this._brush.visit();
             }
             this._target.end();

@@ -66,7 +66,7 @@ var BaseLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
     },
 
     centerSprites : function (numberOfSprites) {
@@ -158,7 +158,7 @@ var BaseLayer = cc.LayerGradient.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }
@@ -210,10 +210,10 @@ var ActionManual = BaseLayer.extend({
 
         this._grossini.setRotation(120);
         this._grossini.setPosition(cc.p(winSize.width / 2, winSize.height / 2));
-        this._grossini.setColor( cc.c3(255, 0, 0) );
+        this._grossini.setColor( cc.c3b(255, 0, 0) );
 
         this._kathia.setPosition(cc.p(winSize.width - 100, winSize.height / 2));
-        this._kathia.setColor(cc.c3(0,0,255) );
+        this._kathia.setColor(cc.c3b(0,0,255) );
 
     },
     title:function () {
@@ -334,19 +334,19 @@ var ActionSkewRotateScale = BaseLayer.extend({
         this._kathia.removeFromParentAndCleanup(true);
 
         var boxSize = cc.size(100.0, 100.0);
-        var box = cc.LayerColor.create(cc.c4(255, 255, 0, 255));
+        var box = cc.LayerColor.create(cc.c4b(255, 255, 0, 255));
         box.setAnchorPoint(cc.p(0, 0));
         box.setPosition(cc.p((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2));
         box.setContentSize(boxSize);
 
         var markrside = 10.0;
-        var uL = cc.LayerColor.create(cc.c4(255, 0, 0, 255));
+        var uL = cc.LayerColor.create(cc.c4b(255, 0, 0, 255));
         box.addChild(uL);
         uL.setContentSize(cc.size(markrside, markrside));
         uL.setPosition(cc.p(0, boxSize.height - markrside));
         uL.setAnchorPoint(cc.p(0, 0));
 
-        var uR = cc.LayerColor.create(cc.c4(0, 0, 255, 255));
+        var uR = cc.LayerColor.create(cc.c4b(0, 0, 255, 255));
         box.addChild(uR);
         uR.setContentSize(cc.size(markrside, markrside));
         uR.setPosition(cc.p(boxSize.width - markrside, boxSize.height - markrside));
