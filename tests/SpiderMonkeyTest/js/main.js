@@ -66,7 +66,7 @@ BaseLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
     },
 
     title:function () {
@@ -116,7 +116,7 @@ BaseLayer = cc.LayerGradient.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }

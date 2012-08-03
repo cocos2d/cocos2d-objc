@@ -29,7 +29,7 @@ if (value != ret) {
 }
 
 var s = cc.Sprite.create("grossini.png");
-s.setColor( ccc3(255,0,0) );
+s.setColor( ccc3b(255,0,0) );
 
 // Testing Position
 parent1.setPosition( cc.p(100,200) );

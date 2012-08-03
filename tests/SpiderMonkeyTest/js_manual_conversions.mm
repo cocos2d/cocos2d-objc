@@ -660,6 +660,153 @@ JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 #endif
 	return JS_TRUE;
 }
+
+JSBool jsval_to_ccColor3B( JSContext *cx, jsval vp, ccColor3B *ret )
+{
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+	
+	jsval valr, valg, valb;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
+	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
+	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	uint16_t r,g,b;
+	ok &= JS_ValueToUint16(cx, valr, &r);
+	ok &= JS_ValueToUint16(cx, valg, &g);
+	ok &= JS_ValueToUint16(cx, valb, &b);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->r = r;
+	ret->g = g;
+	ret->b = b;
+	
+	return JS_TRUE;	
+}
+
+JSBool jsval_to_ccColor4B( JSContext *cx, jsval vp, ccColor4B *ret )
+{
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+	
+	jsval valr, valg, valb, vala;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
+	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
+	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
+	ok &= JS_GetProperty(cx, jsobj, "a", &vala);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	uint16_t r,g,b,a;
+	ok &= JS_ValueToUint16(cx, valr, &r);
+	ok &= JS_ValueToUint16(cx, valg, &g);
+	ok &= JS_ValueToUint16(cx, valb, &b);
+	ok &= JS_ValueToUint16(cx, vala, &a);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->r = r;
+	ret->g = g;
+	ret->b = b;
+	ret->a = a;
+	
+	return JS_TRUE;
+}
+
+JSBool jsval_to_ccColor4F( JSContext *cx, jsval vp, ccColor4F *ret )
+{
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+	
+	jsval valr, valg, valb, vala;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
+	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
+	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
+	ok &= JS_GetProperty(cx, jsobj, "a", &vala);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	double r,g,b,a;
+	ok &= JS_ValueToNumber(cx, valr, &r);
+	ok &= JS_ValueToNumber(cx, valg, &g);
+	ok &= JS_ValueToNumber(cx, valb, &b);
+	ok &= JS_ValueToNumber(cx, vala, &a);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->r = r;
+	ret->g = g;
+	ret->b = b;
+	ret->a = a;
+	
+	return JS_TRUE;	
+}
+
+jsval ccColor3B_to_jsval( JSContext *cx, ccColor3B p )
+{
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+	
+	if (!JS_DefineProperty(cx, object, "r", UINT_TO_JSVAL(p.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "g", UINT_TO_JSVAL(p.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "b", UINT_TO_JSVAL(p.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);	
+}
+
+jsval ccColor4B_to_jsval( JSContext *cx, ccColor4B p )
+{
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+	
+	if (!JS_DefineProperty(cx, object, "r", UINT_TO_JSVAL(p.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "g", UINT_TO_JSVAL(p.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "b", UINT_TO_JSVAL(p.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "a", UINT_TO_JSVAL(p.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);		
+}
+
+jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p )
+{
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+	
+	if (!JS_DefineProperty(cx, object, "r", DOUBLE_TO_JSVAL(p.r), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "g", DOUBLE_TO_JSVAL(p.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "b", DOUBLE_TO_JSVAL(p.g), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "a", DOUBLE_TO_JSVAL(p.b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);		
+}
+
 #endif // JSB_USE_COCOS2D
 
 

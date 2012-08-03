@@ -80,7 +80,7 @@ var BaseLayer = cc.LayerGradient.extend({
     ctor:function () {
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
 
         this._emitter = null;
 
@@ -553,9 +553,9 @@ var DemoSnow = BaseLayer.extend({
 
 
         var startColor = this._emitter.getStartColor();
-        startColor[0] = 0.9;
-        startColor[1] = 0.9;
-        startColor[2] = 0.9;
+        startColor.r = 0.9;
+        startColor.g = 0.9;
+        startColor.b = 0.9;
         this._emitter.setStartColor(startColor);
 
         var startColorVar = this._emitter.getStartColorVar();

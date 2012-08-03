@@ -148,7 +148,7 @@ CocosDenshionTest = cc.LayerGradient.extend({
 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
 
         // add menu items for tests
         this._menu = cc.Menu.create();
