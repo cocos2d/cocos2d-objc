@@ -53,11 +53,13 @@ cc._reuse_color3b = cc.c3(255, 255, 255 );
 cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
 cc._reuse_grid = cc.g(0,0);
 
-// Config
+// dump config info, but only in debug mode
 cc.dumpConfig = function()
 {
-    for( i in cc.config )
-        cc.log( i + " = " + cc.config[i] );
+    if( cc.config.debug ) {
+        for( i in cc.config )
+            cc.log( i + " = " + cc.config[i] );
+    }
 }
 
 //
@@ -303,10 +305,13 @@ cc.MenuItemFont.extend = cc.Class.extend;
 //
 //var cp = cp || {};
 
+cp.v = cc.p;
+cp._v = cc._p;
 cp.vzero  = cp.v(0,0);
-cp._v = cc._p
 
-
+//
+// OpenGL Helpers
+//
 var gl = gl || {};
 gl.NEAREST                      = 0x2600;
 gl.LINEAR                       = 0x2601;
