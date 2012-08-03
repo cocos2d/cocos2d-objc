@@ -431,6 +431,52 @@ var MenuItemToggleTest = BaseLayer.extend({
     },
 });
 
+//------------------------------------------------------------------
+//
+// MenuItemSubclass
+//
+//------------------------------------------------------------------
+
+var MyMenuItemFont = cc.MenuItemFont.extend({
+
+    ctor:function( label ) {
+        var parent = new cc.MenuItemFont();
+        __associateObjWithNative(this, parent);
+        this.init( label, this, this.callback );
+        },
+
+    callback:function(sender) {
+        cc.log("Button clicked");
+    },
+});
+
+var MenuItemSubclass = BaseLayer.extend({
+
+    _vertically : true,
+    _menu : null,
+
+    onEnter:function () {
+        this._super();
+   
+        var item1 = new MyMenuItemFont("Item 1");
+        var item2 = new MyMenuItemFont("Item 2");
+
+        this._menu = cc.Menu.create( item1, item2 );
+        this._menu.alignItemsVertically();
+        this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
+
+        this.addChild( this._menu );
+    },
+
+    title:function () {
+        return "Menu Item Subclass";
+    },
+    subtitle:function () {
+        return "2 items should appear";
+    },
+});
+
+
 //
 // Order of tests
 //
@@ -440,6 +486,7 @@ scenes.push( MenuItemImageTest );
 scenes.push( MenuItemSpriteTest );
 scenes.push( MenuItemLabelTest );
 scenes.push( MenuItemToggleTest );
+scenes.push( MenuItemSubclass );
 
 //------------------------------------------------------------------
 //
