@@ -30,8 +30,7 @@ var GameLayer = cc.Layer.extend({
             global.enemyNum = 0;
             Explosion.sharedExplosion();
             Enemy.sharedEnemy();
-            var _winSize = cc.Director.getInstance().getWinSize();
-            winSize = cc._from_size(_winSize);
+            var winSize = cc.Director.getInstance().getWinSize();
             this._levelManager = new LevelManager(this);
             this.initBackground();
 
@@ -61,13 +60,13 @@ var GameLayer = cc.Layer.extend({
             this._ship = new Ship();
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
 
-            // accept touch now!
-            var platform = __getPlatform();
-            if( platform.substring(0,7) == 'desktop' ) {
+            // accept touches now!
+            var devicetype = cc.config.deviceType;
+            if( devicetype == 'desktop' ) {
                 this.setMouseEnabled( true );
 //            this.setKeypadEnabled(true);
             }
-            else if( platform.substring(0,6) == 'mobile' )
+            else if( deviceType == 'mobile' )
                 this.setTouchEnabled( true );
 
             //accept keypad
@@ -86,6 +85,8 @@ var GameLayer = cc.Layer.extend({
             global.enemyContainer = [];
             global.ebulletContainer = [];
             global.sbulletContainer = [];
+            global.score = 0;
+            global.life = 4;
 
             bRet = true;
         }
@@ -237,18 +238,15 @@ var GameLayer = cc.Layer.extend({
         // bg
         this._backSky = cc.Sprite.create(s_bg01);
         this._backSky.setAnchorPoint(cc.POINT_ZERO);
-        var _cs = this._backSky.getContentSize();
-        var cs =  cc._from_size(_cs);
+        var cs = this._backSky.getContentSize();
         this._backSkyHeight = cs.height;
         this.addChild(this._backSky, -10);
 
         //tilemap
         this._backTileMap = cc.TMXTiledMap.create(s_level01);
         this.addChild(this._backTileMap, -9);
-        var _mapSize = this._backTileMap.getMapSize();
-        var mapSize = cc._from_size( _mapSize );
-        var _tileSize = this._backTileMap.getTileSize();
-        var tileSize = cc._from_size( _tileSize );
+        var mapSize = this._backTileMap.getMapSize();
+        var tileSize = this._backTileMap.getTileSize();
         this._backTileMapHeight = mapSize.height * tileSize.height;
 
         this._backSkyHeight -= 48;
@@ -275,8 +273,7 @@ var GameLayer = cc.Layer.extend({
             this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         }
         if (this._backSkyHeight <= 0) {
-            var _cs = this._backSky.getContentSize();
-            var cs = cc._from_size( _cs );
+            var cs = this._backSky.getContentSize();
             this._backSkyHeight = cs.height;
             this.removeChild(this._backSky,true);
             this._backSky = this._backSkyRe;
@@ -294,10 +291,8 @@ var GameLayer = cc.Layer.extend({
             this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         }
         if (this._backTileMapHeight <= 0) {
-            var _mapSize = this._backTileMapRe.getMapSize();
-            var mapSize = cc._from_size( _mapSize );
-            var _tileSize = this._backTileMapRe.getTileSize();
-            var tileSize = cc._from_size( _tileSize );
+            var mapSize = this._backTileMapRe.getMapSize();
+            var tileSize = this._backTileMapRe.getTileSize();
             this._backTileMapHeight = mapSize.height * tileSize.height;
             this.removeChild(this._backTileMap,true);
             this._backTileMap = this._backTileMapRe;

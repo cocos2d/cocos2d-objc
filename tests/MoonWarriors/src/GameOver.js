@@ -57,7 +57,7 @@ var GameOver = cc.Layer.extend({
             this.addChild(cocos2dMenu);
 
             if(global.sound){
-                cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic)
+                cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic);
             }
 
             bRet = true;

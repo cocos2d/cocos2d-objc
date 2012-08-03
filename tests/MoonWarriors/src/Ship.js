@@ -51,9 +51,9 @@ var Ship = cc.Sprite.extend({
         // New Blending function API. Similar to OpenGL / WebGL
         ghostSprite.setBlendFunc( gl.SRC_ALPHA, gl.ONE )
         ghostSprite.setScale(8);
-        // XXX riq XXX
-        // contentSize[0] ouch
-        ghostSprite.setPosition(cc._p(this.getContentSize()[0] / 2, 12));
+
+        var cs = this.getContentSize();
+        ghostSprite.setPosition(cc._p(cs.width / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);
         ghostSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
         var blinks = cc.Blink.create(3, 9);
@@ -85,10 +85,8 @@ var Ship = cc.Sprite.extend({
     shoot:function (dt) {
         //this.shootEffect();
         var offset = 13;
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
-        var _cs = this.getContentSize();
-        var cs = cc._from_size(_cs);
+        var pos = this.getPosition();
+        var cs = this.getContentSize();
         var a = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(a);
         this.getParent().addChild(a, a.zOrder, global.Tag.ShipBullet);
@@ -100,8 +98,7 @@ var Ship = cc.Sprite.extend({
         b.setPosition(cc._p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
     },
     destroy:function () {
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
+        var pos = this.getPosition();
         global.life--;
         var explosion = new Explosion();
         explosion.setPosition( this.getPosition() );
@@ -119,10 +116,8 @@ var Ship = cc.Sprite.extend({
         }
     },
     collideRect:function(){
-        var _a = this.getContentSize();
-        var a = cc._from_size(_a);
-        var _p = this.getPosition();
-        var p = cc._from_p(_p);
+        var a = this.getContentSize();
+        var p = this.getPosition();
         var r = cc.rect(p.x - a.width/2, p.y - a.height/2,a.width,a.height/2);
         return r;
     }

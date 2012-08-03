@@ -53,12 +53,10 @@ var LevelManager = cc.Class.extend({
 
     addEnemyToGameLayer:function(enemyType){
         var addEnemy = new Enemy(EnemyType[enemyType]);
-        var _enemyPos = cc.p( 80 + (winSize.width - 160) * Math.random(), winSize.height);
-        var enemyPos = cc._from_p(_enemyPos);
-        var _enemycs =  addEnemy.getContentSize();
-        var enemycs = cc._from_size(_enemycs);
+        var enemyPos = cc.p( 80 + (winSize.width - 160) * Math.random(), winSize.height);
+        var enemycs =  addEnemy.getContentSize();
         
-        addEnemy.setPosition( _enemyPos );
+        addEnemy.setPosition( enemyPos );
 
         var offset, tmpAction;
         switch (addEnemy.moveType) {

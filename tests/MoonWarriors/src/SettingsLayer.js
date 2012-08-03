@@ -56,7 +56,7 @@ var SettingsLayer = cc.Layer.extend({
             this.addChild(menu);
 
             var cp_back = back.getPosition();
-            cp_back[1] -= 50.0;
+            cp_back.y -= 50.0;
             back.setPosition(cp_back);
 
             bRet = true;
