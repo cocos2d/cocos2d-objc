@@ -9,8 +9,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
@@ -40,8 +39,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -338,20 +336,20 @@ var ActionSkewRotateScale = BaseLayer.extend({
         var boxSize = cc.size(100.0, 100.0);
         var box = cc.LayerColor.create(cc.c4(255, 255, 0, 255));
         box.setAnchorPoint(cc.p(0, 0));
-        box.setPosition(cc.p((winSize.width - boxSize[0]) / 2, (winSize.height - boxSize[1]) / 2));
+        box.setPosition(cc.p((winSize.width - boxSize.width) / 2, (winSize.height - boxSize.height) / 2));
         box.setContentSize(boxSize);
 
         var markrside = 10.0;
         var uL = cc.LayerColor.create(cc.c4(255, 0, 0, 255));
         box.addChild(uL);
         uL.setContentSize(cc.size(markrside, markrside));
-        uL.setPosition(cc.p(0, boxSize[1] - markrside));
+        uL.setPosition(cc.p(0, boxSize.height - markrside));
         uL.setAnchorPoint(cc.p(0, 0));
 
         var uR = cc.LayerColor.create(cc.c4(0, 0, 255, 255));
         box.addChild(uR);
         uR.setContentSize(cc.size(markrside, markrside));
-        uR.setPosition(cc.p(boxSize[0] - markrside, boxSize[1] - markrside));
+        uR.setPosition(cc.p(boxSize.width - markrside, boxSize.height - markrside));
         uR.setAnchorPoint(cc.p(0, 0));
 
 

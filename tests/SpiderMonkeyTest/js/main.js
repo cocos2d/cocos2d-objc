@@ -9,8 +9,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 scenes = []
@@ -40,8 +39,7 @@ restartScene = function () {
 
 loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -172,14 +170,14 @@ MainTest = BaseLayer.extend({
     onTouchesMoved:function (touches, event) {
         var delta = touches[0].getDelta();
         var current = this._menu.getPosition();
-        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        this._menu.setPosition( cc.p( current.x, current.y + delta.y ) );
         return true;
     },
 
     onMouseDragged : function( event ) {
         var delta = event.getDelta();
         var current = this._menu.getPosition();
-        this._menu.setPosition( cc.p( current[0], current[1] + delta[1] ) );
+        this._menu.setPosition( cc.p( current.x, current.y + delta.y ) );
         return true;
     },
 

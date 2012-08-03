@@ -9,8 +9,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 spriteFrameCache = cc.SpriteFrameCache.getInstance();
 
@@ -41,8 +40,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -191,7 +189,7 @@ var Shaky3DTest = BaseLayer.extend({
         return "a = cc.Shaky3D.create(range, shakeZ, gridSize, duration )";
     },
     getEffect:function(duration) {
-        return cc.Shaky3D.create(5, false, cc._g(15,10), duration );
+        return cc.Shaky3D.create(5, false, cc.g(15,10), duration );
     },
 });
 
@@ -203,7 +201,7 @@ var Waves3DTest = BaseLayer.extend({
         return "a = cc.Waves3D.create(range, shakeZ, gridSize, duration )";
     },
     getEffect:function(duration) {
-        return cc.Waves3D.create(5, 40, cc._g(15,10), duration );
+        return cc.Waves3D.create(5, 40, cc.g(15,10), duration );
     },
 });
 

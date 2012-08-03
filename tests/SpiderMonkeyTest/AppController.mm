@@ -253,7 +253,7 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/playground2.js"];
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
 
