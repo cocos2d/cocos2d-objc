@@ -636,7 +636,7 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p)
 {
 	JSObject *typedArray = JS_NewInt32Array( cx, 2 );
-	float *buffer = (float*)JS_GetArrayBufferViewData(typedArray, cx);
+	int32_t *buffer = (int32_t*)JS_GetArrayBufferViewData(typedArray, cx);
 	buffer[0] = p.x;
 	buffer[1] = p.y;
 	return OBJECT_TO_JSVAL(typedArray);
@@ -650,7 +650,7 @@ JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 	
 	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
 	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(float)*2, "Invalid length");
+	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(int32_t)*2, "Invalid length");
 	
 #ifdef __LP64__
 	int32_t* arg_array = (int32_t*)JS_GetArrayBufferViewData( tmp_arg, cx );

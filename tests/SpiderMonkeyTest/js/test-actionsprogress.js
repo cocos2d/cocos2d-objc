@@ -9,8 +9,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 spriteFrameCache = cc.SpriteFrameCache.getInstance();
 
@@ -41,8 +40,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
