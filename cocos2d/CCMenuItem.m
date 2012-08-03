@@ -76,9 +76,17 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 #if NS_BLOCKS_AVAILABLE
 			if ([sig numberOfArguments] == 3) 
 #endif
+        #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_USE_FOUNDATION2C)
+        #else
 			[invocation_ setArgument:&self atIndex:2];
+		#endif
 			
 			[invocation_ retain];
+            
+        #if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_USE_FOUNDATION2C)
+            _target = rec;
+            _action = cb;
+        #endif
 		}
 		
 		isEnabled_ = YES;
@@ -124,8 +132,16 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) activate
 {
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_USE_FOUNDATION2C)
+    if (isEnabled_) {
+        if ([_target respondsToSelector: _action]) {
+            [_target performSelector: _action withObject: self];
+        }
+    }
+#else
 	if(isEnabled_)
         [invocation_ invoke];
+#endif
 }
 
 -(void) setIsEnabled: (BOOL)enabled

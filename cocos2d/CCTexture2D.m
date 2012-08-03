@@ -618,7 +618,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 // By default PVR images are treated as if they don't have the alpha channel premultiplied
 static BOOL PVRHaveAlphaPremultiplied_ = NO;
 
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* PVRTC */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat
 {
 	//	GLint					saveName;
@@ -781,7 +781,10 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 {
 	NSAssert( width_ == ccNextPOT(width_) && height_ == ccNextPOT(height_), @"Mimpap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, name_ );
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MIPMAP */
+#else
 	ccglGenerateMipmap(GL_TEXTURE_2D);
+#endif
 }
 
 -(void) setTexParameters: (ccTexParams*) texParams

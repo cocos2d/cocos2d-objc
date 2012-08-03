@@ -41,8 +41,13 @@
 #import "CCActionManager.h"
 #import "CCActionInstant.h"
 
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* EGLCONTEXT */
 static EAGLContext *auxGLcontext = nil;
+
+#elif defined (__STELLA_VERSION_MAX_ALLOWED)
+/**/
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 static NSOpenGLContext *auxGLcontext = nil;
 #endif
@@ -127,8 +132,11 @@ static CCTextureCache *sharedTextureCache;
 	[textures_ release];
 	[dictLock_ release];
 	[contextLock_ release];
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* EGLCONTEXT */
+#else
 	[auxGLcontext release];
 	auxGLcontext = nil;
+#endif
 	sharedTextureCache = nil;
 	[super dealloc];
 }
@@ -139,7 +147,7 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAutoreleasePool *autoreleasepool = [[NSAutoreleasePool alloc] init];
 	
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* EGLCONTEXT */
 	// textures will be created on the main OpenGL context
 	// it seems that in SDK 2.2.x there can't be 2 threads creating textures at the same time
 	// the lock is used for this purpose: issue #472
@@ -168,6 +176,9 @@ static CCTextureCache *sharedTextureCache;
 	[contextLock_ unlock];
 	
 	[autoreleasepool release];
+
+#elif defined (__STELLA_VERSION_MAX_ALLOWED)
+    [autoreleasepool release];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
@@ -267,6 +278,8 @@ static CCTextureCache *sharedTextureCache;
 		// Only iPhone
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* IMAGEWRITE */
+	#else
 		// Issue #886: TEMPORARY FIX FOR TRANSPARENT JPEGS IN IOS4
 		else if ( ( [[CCConfiguration sharedConfiguration] OSVersion] >= kCCiOSVersion_4_0) &&
 				  ( [lowerCase hasSuffix:@".jpg"] || [lowerCase hasSuffix:@".jpeg"] ) 
@@ -291,8 +304,10 @@ static CCTextureCache *sharedTextureCache;
 			[tex autorelease];
 		}
 		
-		else {
-			
+		else
+    #endif
+
+		{
 			ccResolutionType resolution;
 			NSString *fullpath = [CCFileUtils fullPathFromRelativePath:path resolutionType:&resolution];
 
@@ -417,7 +432,7 @@ static CCTextureCache *sharedTextureCache;
 
 @implementation CCTextureCache (PVRSupport)
 
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* PVRTC */
 // XXX deprecated
 -(CCTexture2D*) addPVRTCImage:(NSString*)path bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w
 {

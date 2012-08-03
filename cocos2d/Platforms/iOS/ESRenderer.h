@@ -32,7 +32,7 @@
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 
 #if defined (__STELLA_VERSION_MAX_ALLOWED)
-#import <StellaAnimation/StellaAnimation.h>
+#import <StellaGraphics/StellaGraphics.h>
 #else
 #import <QuartzCore/QuartzCore.h>
 #endif
@@ -44,11 +44,17 @@
 
 - (id) initWithDepthFormat:(unsigned int)depthFormat withPixelFormat:(unsigned int)pixelFormat withSharegroup:(EAGLSharegroup*)sharegroup withMultiSampling:(BOOL) multiSampling withNumberOfSamples:(unsigned int) requestedSamples;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* EGLLAYER */
+#else
 - (BOOL) resizeFromLayer:(CAEAGLLayer *)layer;
+#endif
 
 - (EAGLContext*) context;
 - (CGSize) backingSize;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+- (void) bindDefaultFramebuffer;
+#endif
 - (unsigned int) colorRenderBuffer;
 - (unsigned int) defaultFrameBuffer;
 - (unsigned int) msaaFrameBuffer;

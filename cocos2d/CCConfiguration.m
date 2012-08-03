@@ -87,8 +87,12 @@ static char * glExtensions;
 		
 		// Obtain iOS version
 		OSVersion_ = 0;
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* OSVER */
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
+
+#elif defined (__STELLA_VERSION_MAX_ALLOWED) /* OSVER */
+		NSString *OSVer = nil;
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		NSString *OSVer = [self getMacVersion];
 #endif
@@ -109,11 +113,15 @@ static char * glExtensions;
 		
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* MULTISAMPLING */
 		if( OSVersion_ >= kCCiOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
 			maxSamplesAllowed_ = 0;
+
+#elif defined (__STELLA_VERSION_MAX_ALLOWED) /* MULTISAMPLING */
+        maxSamplesAllowed_  = 0;
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
 #endif

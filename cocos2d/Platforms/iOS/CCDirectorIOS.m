@@ -78,11 +78,18 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	if( type == CCDirectorTypeDisplayLink ) {
 		NSString *reqSysVer = @"3.1";
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+		NSString *currSysVer = nil;
+    #else
 		NSString *currSysVer = [[UIDevice currentDevice] systemVersion];
+    #endif
 		
 		if([currSysVer compare:reqSysVer options:NSNumericSearch] == NSOrderedAscending)
 			return NO;
 	}
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    type    = CCDirectorTypeDisplayLink;
+#endif
 	switch (type) {
 		case CCDirectorTypeNSTimer:
 			[CCDirectorTimer sharedDirector];
@@ -144,6 +151,14 @@ CGFloat	__ccContentScaleFactor = 1;
 //
 - (void) drawScene
 {    
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    [openGLView_ bindDefaultFramebuffer];
+#endif
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_NANDROID)
+    glViewport(0, 0, winSizeInPixels_.width, winSizeInPixels_.height);
+#endif
+
 	/* calculate "global" dt */
 	[self calculateDeltaTime];
 	
@@ -280,8 +295,11 @@ CGFloat	__ccContentScaleFactor = 1;
 	// Based on code snippet from: http://developer.apple.com/iphone/prerelease/library/snippets/sp2010/sp28.html
 	if ([openGLView_ respondsToSelector:@selector(setContentScaleFactor:)])
 	{			
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+    #else
 		[openGLView_ setContentScaleFactor: __ccContentScaleFactor];
 		
+    #endif
 		isContentScaleSupported_ = YES;
 	}
 	else
@@ -303,7 +321,10 @@ CGFloat	__ccContentScaleFactor = 1;
 		return NO;
 
 	// SD device
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 	if ([[UIScreen mainScreen] scale] == 1.0)
+#endif
 		return NO;
 
 	float newScale = enabled ? 2 : 1;
@@ -406,6 +427,8 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	if( deviceOrientation_ != orientation ) {
 		deviceOrientation_ = orientation;
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+    #else
 		switch( deviceOrientation_) {
 			case CCDeviceOrientationPortrait:
 				[[UIApplication sharedApplication] setStatusBarOrientation: UIInterfaceOrientationPortrait animated:NO];
@@ -423,6 +446,7 @@ CGFloat	__ccContentScaleFactor = 1;
 				NSLog(@"Director: Unknown device orientation");
 				break;
 		}
+    #endif
 	}
 }
 
@@ -589,6 +613,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 		NSAutoreleasePool *loopPool = [NSAutoreleasePool new];
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
+
 #if CC_DIRECTOR_DISPATCH_FAST_EVENTS
 		while( CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0.004f, FALSE) == kCFRunLoopRunHandledSource);
 #else
@@ -607,6 +634,7 @@ CGFloat	__ccContentScaleFactor = 1;
 		while(CFRunLoopRunInMode(kCFRunLoopDefaultMode, 0, TRUE) == kCFRunLoopRunHandledSource);
 #endif
 
+#endif
 		[loopPool release];
 	}	
 }
@@ -711,7 +739,12 @@ CGFloat	__ccContentScaleFactor = 1;
 	
 	CCLOG(@"cocos2d: Frame interval: %d", frameInterval);
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+	displayLink = [NSClassFromString(@"SADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
+#else
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
+#endif
+
 	[displayLink setFrameInterval:frameInterval];
 	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }

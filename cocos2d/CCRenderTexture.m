@@ -322,11 +322,15 @@
 		
 		
 		
+    #if defined (__STELLA_VERSION_MAX_ALLOWED) /* IMAGEWRITE */
+        data    = nil;
+    #else
 		if (format == kCCImageFormatPNG)
 			data = UIImagePNGRepresentation(image);
 		else
 			data = UIImageJPEGRepresentation(image, 1.0f);
-		
+    #endif
+    
 		[image release];
 		
 		free(pixels);

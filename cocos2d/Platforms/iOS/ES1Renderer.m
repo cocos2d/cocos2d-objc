@@ -93,7 +93,10 @@
 		if (multiSampling_)
 		{
 			GLint maxSamplesAllowed;
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* MULTISAMPLINGS */
+#else
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
+#endif
 			samplesToUse_ = MIN(maxSamplesAllowed,requestedSamples);
 			
 			/* Create the MSAA framebuffer (offscreen) */
@@ -108,6 +111,15 @@
     return self;
 }
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+- (void) bindDefaultFramebuffer
+{
+        glBindFramebufferOES(GL_FRAMEBUFFER_OES, defaultFramebuffer_);
+}
+#endif
+
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* EGLLAYER */
+#else
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer
 {	
     // Allocate color buffer backing based on the current layer size
@@ -177,6 +189,7 @@
 
     return YES;
 }
+#endif
 
 -(CGSize) backingSize
 {
@@ -193,6 +206,8 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* EGLLAYER */
+#else
     // Tear down GL
     if(defaultFramebuffer_)
     {
@@ -230,6 +245,7 @@
 
     [context_ release];
     context_ = nil;
+#endif
 
     [super dealloc];
 }

@@ -145,6 +145,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** touch delegate */
 @property(nonatomic,readwrite,assign) id<EAGLTouchDelegate> touchDelegate;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+- (void) bindDefaultFramebuffer;
+#endif
+
 /** EAGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;
 

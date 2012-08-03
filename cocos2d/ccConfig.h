@@ -66,9 +66,9 @@
  Only valid for cocos2d-ios. Not supported on cocos2d-mac
  */
 #ifndef CC_FONT_LABEL_SUPPORT
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* FONTLABEL */
 #define CC_FONT_LABEL_SUPPORT	1
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED) /* FONTLABEL */
 #define CC_FONT_LABEL_SUPPORT	0
 #endif
 #endif
@@ -154,7 +154,7 @@
  @since v0.99.5
  */
 #ifndef CC_USES_VBO
-#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#if defined(__ARM_NEON__) || TARGET_IPHONE_SIMULATOR || defined(__MAC_OS_X_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #define CC_USES_VBO 1
 #else
 #define CC_USES_VBO 0

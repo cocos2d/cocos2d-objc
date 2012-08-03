@@ -49,7 +49,7 @@
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
 #import <CoreGraphics/CGGeometry.h>
 #elif defined (__STELLA_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
-#import <StellaGraphics/SGGeometry.h>
+#import <StellaGraphics/SGGeometry.h>	// CGPoint
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import <Foundation/Foundation.h>
 #endif

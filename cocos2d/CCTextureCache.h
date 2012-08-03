@@ -128,7 +128,7 @@
  *
  * @deprecated Will be removed in 2.0. Use addPVRImage instead.
  */
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* PVRTC */
 -(CCTexture2D*) addPVRTCImage:(NSString*)fileimage bpp:(int)bpp hasAlpha:(BOOL)alpha width:(int)w;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 

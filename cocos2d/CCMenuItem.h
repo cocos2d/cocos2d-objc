@@ -49,6 +49,11 @@
 	
 	BOOL isEnabled_;
 	BOOL isSelected_;
+    
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+    id  _target;
+    SEL _action;
+#endif
 }
 
 /** returns whether or not the item is selected

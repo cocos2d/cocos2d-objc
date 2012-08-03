@@ -86,7 +86,11 @@ enum {
 		// XXX: in v0.7, winSize should return the visible size
 		// XXX: so the bar calculation should be done there
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+    #if defined (__STELLA_VERSION_MAX_ALLOWED)
+        CGRect r = CGRectMake(0,0,480,23);
+    #else
 		CGRect r = [[UIApplication sharedApplication] statusBarFrame];
+    #endif
 		ccDeviceOrientation orientation = [[CCDirector sharedDirector] deviceOrientation];
 		if( orientation == CCDeviceOrientationLandscapeLeft || orientation == CCDeviceOrientationLandscapeRight )
 			s.height -= r.size.width;

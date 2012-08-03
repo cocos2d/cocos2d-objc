@@ -228,7 +228,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  * 
  * @deprecated Use initWithPVRFile instead. Will be removed in 2.0
  */
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* PVRTC */
 -(id) initWithPVRTCData: (const void*)data level:(int)level bpp:(int)bpp hasAlpha:(BOOL)hasAlpha length:(int)length pixelFormat:(CCTexture2DPixelFormat)pixelFormat;
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 /** Initializes a texture from a PVR file.

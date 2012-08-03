@@ -207,9 +207,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 	size_ = [renderer_ backingSize];
 
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+#endif
 
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
@@ -219,6 +222,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
 }	
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+- (void) bindDefaultFramebuffer
+{
+        [renderer_ bindDefaultFramebuffer];
+}
+#endif
 - (void) swapBuffers
 {
 	// IMPORTANT:
@@ -226,6 +235,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> context_ MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
 #ifdef __IPHONE_4_0
 	
 	if (multiSampling_)
@@ -265,6 +275,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	
 #endif // __IPHONE_4_0
 	
+#endif
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
@@ -284,11 +295,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	GLenum pFormat;
 	
 	
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
 		pFormat = GL_RGB565_OES;
 	else 
 		pFormat = GL_RGBA8_OES;
 	
+#endif
 	return pFormat;
 }
 

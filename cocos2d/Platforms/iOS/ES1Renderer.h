@@ -65,7 +65,10 @@
 /** EAGLContext */
 @property (nonatomic,readonly) EAGLContext* context;
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* EGLLAYER */
+#else
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;
+#endif
 
 @end
 

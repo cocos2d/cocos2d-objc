@@ -122,11 +122,14 @@ static const uint32_t tableFormats[][7] = {
 	{ kPVRTexturePixelTypeA_8,		GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,					8,	NO, kCCTexture2DPixelFormat_A8			},
 	{ kPVRTexturePixelTypeI_8,		GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,			8,	NO, kCCTexture2DPixelFormat_I8			},
 	{ kPVRTexturePixelTypeAI_88,		GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,	16,	NO, kCCTexture2DPixelFormat_AI88		},
-#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) || defined (__STELLA_VERSION_MAX_ALLOWED)
+#if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* PVRTC */
 	{ kPVRTexturePixelTypePVRTC_2,	GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,				2,	YES, kCCTexture2DPixelFormat_PVRTC2		},
 	{ kPVRTexturePixelTypePVRTC_4,	GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,				4,	YES, kCCTexture2DPixelFormat_PVRTC4		},
 #endif // iphone only
+#if defined (__STELLA_VERSION_MAX_ALLOWED) /* BGRA */
+#else
 	{ kPVRTexturePixelTypeBGRA_8888, GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,						32,	NO, kCCTexture2DPixelFormat_RGBA8888	},
+#endif
 };
 #define MAX_TABLE_ELEMENTS (sizeof(tableFormats) / sizeof(tableFormats[0]))
 

@@ -162,11 +162,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		*resolutionType = kCCResolutionRetinaDisplay;
 	}
 	
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 	// iPad ?
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
 		ret = [self getPath:fullpath forSuffix:__suffixiPad];
 		*resolutionType = kCCResolutioniPad;
 	}
+#endif
 	
 	// It should be an iPhone in non Retina Display mode. So, do nothing
 	else
@@ -228,8 +231,11 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( CC_CONTENT_SCALE_FACTOR() == 2 )
 		ret = [self removeSuffix:__suffixRetinaDisplay fromPath:path];
 	
+#if defined (__STELLA_VERSION_MAX_ALLOWED)
+#else
 	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 		ret = [self removeSuffix:__suffixiPad fromPath:path];
+#endif
 	
 	else 
 		ret = path;

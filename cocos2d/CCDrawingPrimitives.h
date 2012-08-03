@@ -33,7 +33,7 @@
 #if defined (__IPHONE_OS_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
 #import <CoreGraphics/CGGeometry.h>	// for CGPoint
 #elif defined (__STELLA_VERSION_MAX_ALLOWED) /* COREGRAPHICS */
-#import <StellaGraphics/SGGeometry.h>	// for CGPoint
+#import <StellaGraphics/SGGeometry.h>	// CGPoint
 #endif
 
 

@@ -60,6 +60,10 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
+#if defined (__STELLA_VERSION_MAX_ALLOWED) && defined (__STELLA_USE_FOUNDATION2C)
+#define GL_DEPTH_COMPONENT24_OES                                0x81A6
+#endif
+
 #import "Support/CCProfiling.h"
 
 #define kDefaultFPS		60.0	// 60 frames per second
@@ -509,7 +513,8 @@ static CCDirector *_sharedDirector = nil;
 //		sprintf(format,"%.1f",frameRate);
 //		[FPSLabel setCString:format];
 
-		NSString *str = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
+        /* STELLA - workaround a nasty alignment issue on ARM */
+		NSString *str = [[NSString alloc] initWithFormat:@"%s%.1f", "", frameRate_];
 		[FPSLabel_ setString:str];
 		[str release];
 	}
