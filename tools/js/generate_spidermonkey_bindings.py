@@ -84,7 +84,7 @@ class SpiderMonkey(object):
                              'class_properties' : [],
                              'bridge_support_file' : [],
                              'hierarchy_protocol_file' : [],
-                             'inherit_class_methods' : True,
+                             'inherit_class_methods' : 'Auto',
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
                              'function_properties' : [],
@@ -655,16 +655,24 @@ class SpiderMonkey(object):
                 return True
         return False
 
-    def inherits_class_methods( self,class_name ):
+    def inherits_class_methods( self,class_name, methods_to_parse=[] ):
         i = self.get_class_property( 'inherit_class_methods', class_name );
-        if self._inherit_class_methods == False:
-            if i== None or i==False:
-                return False
-            return True
-        else:
-            if i== None or i==True:
-                return True
+        if i != None:
+            return i;
+
+        inherit = self._inherit_class_methods.lower()
+        if inherit == 'false':
             return False
+        elif inherit == 'true':
+            return True
+        elif inherit == 'auto':
+            for m in methods_to_parse:
+                if self.is_class_constructor( m ):
+                    return False
+        else:
+            raise Exception("Unknonw value for inherit_class_methods: %s", self._inherit_class_methods)
+
+        return True
 
     def requires_swizzle( self, class_name ):
         if class_name in self.callback_methods:
@@ -1477,20 +1485,19 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                                     sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, m['selector'], str(e) ) )
 
         # Parse class methods from base classes
-        if self.inherits_class_methods( class_name ):
-            parent = self.get_parent_class( class_name )
-            while (parent != None) and (not parent in self.classes_to_ignore):
-                class_methods = self.get_class_method( parent )
-                for cm in class_methods:
-                    if not cm['selector'] in ok_method_name:
-                        self.current_method = cm
-                        try:
-                            ok = self.generate_method( class_name, cm )
-                            ok_methods.append( cm )
-                            ok_method_name.append( cm['selector'] )
-                        except ParseException, e:
-                            sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, cm['selector'], str(e) ) )
-                parent = self.get_parent_class( parent )
+        parent = self.get_parent_class( class_name )
+        while self.inherits_class_methods( class_name, ok_methods ) and (parent != None) and (not parent in self.classes_to_ignore):
+            class_methods = self.get_class_method( parent )
+            for cm in class_methods:
+                if not cm['selector'] in ok_method_name:
+                    self.current_method = cm
+                    try:
+                        ok = self.generate_method( class_name, cm )
+                        ok_methods.append( cm )
+                        ok_method_name.append( cm['selector'] )
+                    except ParseException, e:
+                        sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, cm['selector'], str(e) ) )
+            parent = self.get_parent_class( parent )
 
         self.current_method = None
         self.is_a_protocol = False

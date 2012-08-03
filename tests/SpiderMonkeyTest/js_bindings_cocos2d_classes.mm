@@ -4018,20 +4018,6 @@ JSBool JSPROXY_CCParticleSystem_updateWithNoTime(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCParticleSystem* (o)
-JSBool JSPROXY_CCParticleSystem_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCParticleSystem* ret_val;
-
-	ret_val = [CCParticleSystem node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCParticleSystem_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4150,7 +4136,6 @@ void JSPROXY_CCParticleSystem_createClass(JSContext *cx, JSObject* globalObj, co
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("particleWithFile", JSPROXY_CCParticleSystem_particleWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("particleWithTotalParticles", JSPROXY_CCParticleSystem_particleWithTotalParticles__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCParticleSystem_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -4323,20 +4308,6 @@ JSBool JSPROXY_CCParticleSystemQuad_particleWithTotalParticles__static(JSContext
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCParticleSystemQuad* (o)
-JSBool JSPROXY_CCParticleSystemQuad_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCParticleSystemQuad* ret_val;
-
-	ret_val = [CCParticleSystemQuad node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCParticleSystemQuad_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -4364,7 +4335,6 @@ void JSPROXY_CCParticleSystemQuad_createClass(JSContext *cx, JSObject* globalObj
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCParticleSystemQuad_particleWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithTotalParticles", JSPROXY_CCParticleSystemQuad_particleWithTotalParticles__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCParticleSystemQuad_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -5812,20 +5782,6 @@ JSBool JSPROXY_CCActionInterval_reverse(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCActionInterval* (o)
-JSBool JSPROXY_CCActionInterval_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCActionInterval* ret_val;
-
-	ret_val = [CCActionInterval action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionInterval_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -5852,7 +5808,6 @@ void JSPROXY_CCActionInterval_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDuration", JSPROXY_CCActionInterval_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCActionInterval_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -5952,40 +5907,6 @@ JSBool JSPROXY_CCProgressFromTo_initWithDuration_from_to_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCProgressFromTo* (o)
-JSBool JSPROXY_CCProgressFromTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCProgressFromTo* ret_val;
-
-	ret_val = [CCProgressFromTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCProgressFromTo* (o)
-JSBool JSPROXY_CCProgressFromTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCProgressFromTo* ret_val;
-
-	ret_val = [CCProgressFromTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCProgressFromTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCProgressFromTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -6009,8 +5930,6 @@ void JSPROXY_CCProgressFromTo_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCProgressFromTo_actionWithDuration_from_to__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCProgressFromTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCProgressFromTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -6310,40 +6229,6 @@ JSBool JSPROXY_CCMoveTo_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCMoveTo* (o)
-JSBool JSPROXY_CCMoveTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMoveTo* ret_val;
-
-	ret_val = [CCMoveTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMoveTo* (o)
-JSBool JSPROXY_CCMoveTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMoveTo* ret_val;
-
-	ret_val = [CCMoveTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMoveTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -6367,8 +6252,6 @@ void JSPROXY_CCMoveTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCMoveTo_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCMoveTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCMoveTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -6466,40 +6349,6 @@ JSBool JSPROXY_CCMoveBy_initWithDuration_position_(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCMoveBy* (o)
-JSBool JSPROXY_CCMoveBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCMoveBy* ret_val;
-
-	ret_val = [CCMoveBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCMoveBy* (o)
-JSBool JSPROXY_CCMoveBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMoveBy* ret_val;
-
-	ret_val = [CCMoveBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMoveBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -6523,8 +6372,6 @@ void JSPROXY_CCMoveBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCMoveBy_actionWithDuration_position__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCMoveBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCMoveBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -6852,40 +6699,6 @@ JSBool JSPROXY_CCReverseTime_initWithAction_(JSContext *cx, uint32_t argc, jsval
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCReverseTime* (o)
-JSBool JSPROXY_CCReverseTime_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCReverseTime* ret_val;
-
-	ret_val = [CCReverseTime actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCReverseTime* (o)
-JSBool JSPROXY_CCReverseTime_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCReverseTime* ret_val;
-
-	ret_val = [CCReverseTime action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCReverseTime_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCReverseTime_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -6909,8 +6722,6 @@ void JSPROXY_CCReverseTime_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithAction", JSPROXY_CCReverseTime_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCReverseTime_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCReverseTime_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -7857,20 +7668,6 @@ JSBool JSPROXY_CCSprite_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCSprite* (o)
-JSBool JSPROXY_CCSprite_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSprite* ret_val;
-
-	ret_val = [CCSprite node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -7933,7 +7730,6 @@ void JSPROXY_CCSprite_createClass(JSContext *cx, JSObject* globalObj, const char
 		JS_FN("createWithSpriteFrame", JSPROXY_CCSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithSpriteFrameName", JSPROXY_CCSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithTexture", JSPROXY_CCSprite_spriteWithTexture_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -8135,20 +7931,6 @@ JSBool JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static(JSContext *cx, u
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: ChipmunkSprite* (o)
-JSBool JSPROXY_ChipmunkSprite_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	ChipmunkSprite* ret_val;
-
-	ret_val = [ChipmunkSprite node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_ChipmunkSprite_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_ChipmunkSprite_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8177,7 +7959,6 @@ void JSPROXY_ChipmunkSprite_createClass(JSContext *cx, JSObject* globalObj, cons
 		JS_FN("create", JSPROXY_ChipmunkSprite_spriteWithFile_rect__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithSpriteFrame", JSPROXY_ChipmunkSprite_spriteWithSpriteFrame__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithSpriteFrameName", JSPROXY_ChipmunkSprite_spriteWithSpriteFrameName__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_ChipmunkSprite_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -8273,40 +8054,6 @@ JSBool JSPROXY_CCActionEase_initWithAction_(JSContext *cx, uint32_t argc, jsval 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCActionEase* (o)
-JSBool JSPROXY_CCActionEase_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCActionEase* ret_val;
-
-	ret_val = [CCActionEase actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCActionEase* (o)
-JSBool JSPROXY_CCActionEase_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCActionEase* ret_val;
-
-	ret_val = [CCActionEase action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCActionEase_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionEase_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8330,8 +8077,6 @@ void JSPROXY_CCActionEase_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithAction", JSPROXY_CCActionEase_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCActionEase_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCActionEase_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -8478,40 +8223,6 @@ JSBool JSPROXY_CCEaseElastic_setPeriod_(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseElastic* (o)
-JSBool JSPROXY_CCEaseElastic_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseElastic* ret_val;
-
-	ret_val = [CCEaseElastic actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseElastic* (o)
-JSBool JSPROXY_CCEaseElastic_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseElastic* ret_val;
-
-	ret_val = [CCEaseElastic action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseElastic_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseElastic_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8537,8 +8248,6 @@ void JSPROXY_CCEaseElastic_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseElastic_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseElastic_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseElastic_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -8641,40 +8350,6 @@ JSBool JSPROXY_CCEaseElasticOut_actionWithAction_period__static(JSContext *cx, u
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseElasticOut* (o)
-JSBool JSPROXY_CCEaseElasticOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticOut* ret_val;
-
-	ret_val = [CCEaseElasticOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseElasticOut* (o)
-JSBool JSPROXY_CCEaseElasticOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseElasticOut* ret_val;
-
-	ret_val = [CCEaseElasticOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseElasticOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseElasticOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8698,8 +8373,6 @@ void JSPROXY_CCEaseElasticOut_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseElasticOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseElasticOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -8797,40 +8470,6 @@ JSBool JSPROXY_CCProgressTo_initWithDuration_percent_(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCProgressTo* (o)
-JSBool JSPROXY_CCProgressTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCProgressTo* ret_val;
-
-	ret_val = [CCProgressTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCProgressTo* (o)
-JSBool JSPROXY_CCProgressTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCProgressTo* ret_val;
-
-	ret_val = [CCProgressTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCProgressTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCProgressTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -8854,8 +8493,6 @@ void JSPROXY_CCProgressTo_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCProgressTo_actionWithDuration_percent__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCProgressTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCProgressTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9163,20 +8800,6 @@ JSBool JSPROXY_CCFlipX_initWithFlipX_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCFlipX* (o)
-JSBool JSPROXY_CCFlipX_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFlipX* ret_val;
-
-	ret_val = [CCFlipX action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFlipX_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFlipX_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9200,7 +8823,6 @@ void JSPROXY_CCFlipX_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFlipX_actionWithFlipX__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFlipX_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9296,20 +8918,6 @@ JSBool JSPROXY_CCFlipY_initWithFlipY_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCFlipY* (o)
-JSBool JSPROXY_CCFlipY_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFlipY* ret_val;
-
-	ret_val = [CCFlipY action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFlipY_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFlipY_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9333,7 +8941,6 @@ void JSPROXY_CCFlipY_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFlipY_actionWithFlipY__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFlipY_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9493,40 +9100,6 @@ JSBool JSPROXY_CCGridAction_setGridSize_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCGridAction* (o)
-JSBool JSPROXY_CCGridAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCGridAction* ret_val;
-
-	ret_val = [CCGridAction actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCGridAction* (o)
-JSBool JSPROXY_CCGridAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCGridAction* ret_val;
-
-	ret_val = [CCGridAction action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCGridAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCGridAction_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9553,8 +9126,6 @@ void JSPROXY_CCGridAction_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithSizeDuration", JSPROXY_CCGridAction_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCGridAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCGridAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9625,40 +9196,6 @@ JSBool JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static(JSContext *cx
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCTiledGrid3DAction* (o)
-JSBool JSPROXY_CCTiledGrid3DAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTiledGrid3DAction* ret_val;
-
-	ret_val = [CCTiledGrid3DAction actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTiledGrid3DAction* (o)
-JSBool JSPROXY_CCTiledGrid3DAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTiledGrid3DAction* ret_val;
-
-	ret_val = [CCTiledGrid3DAction action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTiledGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTiledGrid3DAction_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9681,8 +9218,6 @@ void JSPROXY_CCTiledGrid3DAction_createClass(JSContext *cx, JSObject* globalObj,
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithSizeDuration", JSPROXY_CCTiledGrid3DAction_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTiledGrid3DAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTiledGrid3DAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9784,61 +9319,6 @@ JSBool JSPROXY_CCShakyTiles3D_initWithRange_shakeZ_grid_duration_(JSContext *cx,
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCShakyTiles3D* (o)
-JSBool JSPROXY_CCShakyTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCShakyTiles3D* ret_val;
-
-	ret_val = [CCShakyTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCShakyTiles3D* (o)
-JSBool JSPROXY_CCShakyTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCShakyTiles3D* ret_val;
-
-	ret_val = [CCShakyTiles3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCShakyTiles3D* (o)
-JSBool JSPROXY_CCShakyTiles3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCShakyTiles3D* ret_val;
-
-	ret_val = [CCShakyTiles3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCShakyTiles3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCShakyTiles3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -9862,9 +9342,6 @@ void JSPROXY_CCShakyTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithRangeShakeZGridDuration", JSPROXY_CCShakyTiles3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCShakyTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCShakyTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCShakyTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -9966,40 +9443,6 @@ JSBool JSPROXY_CCJumpBy_initWithDuration_position_height_jumps_(JSContext *cx, u
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCJumpBy* (o)
-JSBool JSPROXY_CCJumpBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCJumpBy* ret_val;
-
-	ret_val = [CCJumpBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCJumpBy* (o)
-JSBool JSPROXY_CCJumpBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCJumpBy* ret_val;
-
-	ret_val = [CCJumpBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCJumpBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCJumpBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -10023,8 +9466,6 @@ void JSPROXY_CCJumpBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCJumpBy_actionWithDuration_position_height_jumps__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCJumpBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCJumpBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -11476,40 +10917,6 @@ JSBool JSPROXY_CCEaseBackOut_actionWithAction__static(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBackOut* (o)
-JSBool JSPROXY_CCEaseBackOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBackOut* ret_val;
-
-	ret_val = [CCEaseBackOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBackOut* (o)
-JSBool JSPROXY_CCEaseBackOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBackOut* ret_val;
-
-	ret_val = [CCEaseBackOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBackOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBackOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -11533,8 +10940,6 @@ void JSPROXY_CCEaseBackOut_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBackOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBackOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBackOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -11830,40 +11235,6 @@ JSBool JSPROXY_CCScaleTo_initWithDuration_scaleX_scaleY_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCScaleTo* (o)
-JSBool JSPROXY_CCScaleTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCScaleTo* ret_val;
-
-	ret_val = [CCScaleTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCScaleTo* (o)
-JSBool JSPROXY_CCScaleTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCScaleTo* ret_val;
-
-	ret_val = [CCScaleTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCScaleTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -11888,8 +11259,6 @@ void JSPROXY_CCScaleTo_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCScaleTo_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCScaleTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCScaleTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -11993,40 +11362,6 @@ JSBool JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static(JSContext *cx,
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCScaleBy* (o)
-JSBool JSPROXY_CCScaleBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCScaleBy* ret_val;
-
-	ret_val = [CCScaleBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCScaleBy* (o)
-JSBool JSPROXY_CCScaleBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCScaleBy* ret_val;
-
-	ret_val = [CCScaleBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCScaleBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -12050,8 +11385,6 @@ void JSPROXY_CCScaleBy_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCScaleBy_actionWithDuration_scaleX_scaleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCScaleBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCScaleBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -12579,20 +11912,6 @@ JSBool JSPROXY_CCDelayTime_actionWithDuration__static(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCDelayTime* (o)
-JSBool JSPROXY_CCDelayTime_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCDelayTime* ret_val;
-
-	ret_val = [CCDelayTime action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCDelayTime_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCDelayTime_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -12616,7 +11935,6 @@ void JSPROXY_CCDelayTime_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCDelayTime_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCDelayTime_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -12753,60 +12071,6 @@ JSBool JSPROXY_CCEaseRateAction_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCEaseRateAction* (o)
-JSBool JSPROXY_CCEaseRateAction_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseRateAction* ret_val;
-
-	ret_val = [CCEaseRateAction actionWithAction:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCEaseRateAction* (o)
-JSBool JSPROXY_CCEaseRateAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseRateAction* ret_val;
-
-	ret_val = [CCEaseRateAction actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseRateAction* (o)
-JSBool JSPROXY_CCEaseRateAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseRateAction* ret_val;
-
-	ret_val = [CCEaseRateAction action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseRateAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseRateAction_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -12832,9 +12096,6 @@ void JSPROXY_CCEaseRateAction_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionRate", JSPROXY_CCEaseRateAction_actionWithAction_rate__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCEaseRateAction_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseRateAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseRateAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -12927,60 +12188,6 @@ JSBool JSPROXY_CCEaseInOut_actionWithAction_rate__static(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCEaseInOut* (o)
-JSBool JSPROXY_CCEaseInOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseInOut* ret_val;
-
-	ret_val = [CCEaseInOut actionWithAction:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCEaseInOut* (o)
-JSBool JSPROXY_CCEaseInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseInOut* ret_val;
-
-	ret_val = [CCEaseInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseInOut* (o)
-JSBool JSPROXY_CCEaseInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseInOut* ret_val;
-
-	ret_val = [CCEaseInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -13004,9 +12211,6 @@ void JSPROXY_CCEaseInOut_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseInOut_actionWithAction_rate__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -13303,40 +12507,6 @@ JSBool JSPROXY_CCCardinalSplineTo_setPoints_(JSContext *cx, uint32_t argc, jsval
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCCardinalSplineTo* (o)
-JSBool JSPROXY_CCCardinalSplineTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCCardinalSplineTo* ret_val;
-
-	ret_val = [CCCardinalSplineTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCardinalSplineTo* (o)
-JSBool JSPROXY_CCCardinalSplineTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCCardinalSplineTo* ret_val;
-
-	ret_val = [CCCardinalSplineTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCCardinalSplineTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCCardinalSplineTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -13362,8 +12532,6 @@ void JSPROXY_CCCardinalSplineTo_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCCardinalSplineTo_actionWithDuration_points_tension__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCCardinalSplineTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCCardinalSplineTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -13457,40 +12625,6 @@ JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static(JSCo
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCCardinalSplineBy* (o)
-JSBool JSPROXY_CCCardinalSplineBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCCardinalSplineBy* ret_val;
-
-	ret_val = [CCCardinalSplineBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCardinalSplineBy* (o)
-JSBool JSPROXY_CCCardinalSplineBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCCardinalSplineBy* ret_val;
-
-	ret_val = [CCCardinalSplineBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCCardinalSplineBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCCardinalSplineBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -13514,8 +12648,6 @@ void JSPROXY_CCCardinalSplineBy_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCCardinalSplineBy_actionWithDuration_points_tension__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCCardinalSplineBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCCardinalSplineBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -13613,62 +12745,6 @@ JSBool JSPROXY_CCCatmullRomBy_initWithDuration_points_(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: ccTime, CCPointArray*, CGFloat
-// Ret value: CCCatmullRomBy* (o)
-JSBool JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; id arg1; double arg2; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCCatmullRomBy* ret_val;
-
-	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCCatmullRomBy* (o)
-JSBool JSPROXY_CCCatmullRomBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCCatmullRomBy* ret_val;
-
-	ret_val = [CCCatmullRomBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCatmullRomBy* (o)
-JSBool JSPROXY_CCCatmullRomBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCCatmullRomBy* ret_val;
-
-	ret_val = [CCCatmullRomBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCCatmullRomBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCCatmullRomBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -13692,9 +12768,6 @@ void JSPROXY_CCCatmullRomBy_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCCatmullRomBy_actionWithDuration_points__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDurationPointsTension", JSPROXY_CCCatmullRomBy_actionWithDuration_points_tension__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCCatmullRomBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCCatmullRomBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -14045,40 +13118,6 @@ JSBool JSPROXY_CCEaseBackIn_actionWithAction__static(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBackIn* (o)
-JSBool JSPROXY_CCEaseBackIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBackIn* ret_val;
-
-	ret_val = [CCEaseBackIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBackIn* (o)
-JSBool JSPROXY_CCEaseBackIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBackIn* ret_val;
-
-	ret_val = [CCEaseBackIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBackIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBackIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -14102,8 +13141,6 @@ void JSPROXY_CCEaseBackIn_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBackIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBackIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBackIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -14595,20 +13632,6 @@ JSBool JSPROXY_CCSpriteBatchNode_texture(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCSpriteBatchNode* (o)
-JSBool JSPROXY_CCSpriteBatchNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSpriteBatchNode* ret_val;
-
-	ret_val = [CCSpriteBatchNode node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSpriteBatchNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -14650,7 +13673,6 @@ void JSPROXY_CCSpriteBatchNode_createClass(JSContext *cx, JSObject* globalObj, c
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCSpriteBatchNode_batchNodeWithFile_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("createWithTexture", JSPROXY_CCSpriteBatchNode_batchNodeWithTexture_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCSpriteBatchNode_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -15199,102 +14221,6 @@ JSBool JSPROXY_CCTMXLayer_tileset(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: NSString*
-// Ret value: CCTMXLayer* (o)
-JSBool JSPROXY_CCTMXLayer_batchNodeWithFile__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTMXLayer* ret_val;
-
-	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: NSString*, NSUInteger
-// Ret value: CCTMXLayer* (o)
-JSBool JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; uint32_t arg1; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCTMXLayer* ret_val;
-
-	ret_val = [CCTMXLayer batchNodeWithFile:(NSString*)arg0 capacity:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*
-// Ret value: CCTMXLayer* (o)
-JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCTMXLayer* ret_val;
-
-	ret_val = [CCTMXLayer batchNodeWithTexture:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: CCTexture2D*, NSUInteger
-// Ret value: CCTMXLayer* (o)
-JSBool JSPROXY_CCTMXLayer_batchNodeWithTexture_capacity__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; uint32_t arg1; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCTMXLayer* ret_val;
-
-	ret_val = [CCTMXLayer batchNodeWithTexture:arg0 capacity:(NSUInteger)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTMXLayer* (o)
-JSBool JSPROXY_CCTMXLayer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTMXLayer* ret_val;
-
-	ret_val = [CCTMXLayer node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTMXLayer_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -15339,11 +14265,6 @@ void JSPROXY_CCTMXLayer_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("layerWithTilesetInfoLayerInfoMapInfo", JSPROXY_CCTMXLayer_layerWithTilesetInfo_layerInfo_mapInfo__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithFile", JSPROXY_CCTMXLayer_batchNodeWithFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithFileCapacity", JSPROXY_CCTMXLayer_batchNodeWithFile_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithTexture", JSPROXY_CCTMXLayer_batchNodeWithTexture__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("batchNodeWithTextureCapacity", JSPROXY_CCTMXLayer_batchNodeWithTexture_capacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCTMXLayer_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -16153,40 +15074,6 @@ JSBool JSPROXY_CCAccelDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCAccelDeccelAmplitude* (o)
-JSBool JSPROXY_CCAccelDeccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCAccelDeccelAmplitude* ret_val;
-
-	ret_val = [CCAccelDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCAccelDeccelAmplitude* (o)
-JSBool JSPROXY_CCAccelDeccelAmplitude_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCAccelDeccelAmplitude* ret_val;
-
-	ret_val = [CCAccelDeccelAmplitude action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCAccelDeccelAmplitude_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -16212,8 +15099,6 @@ void JSPROXY_CCAccelDeccelAmplitude_createClass(JSContext *cx, JSObject* globalO
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionDuration", JSPROXY_CCAccelDeccelAmplitude_actionWithAction_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCAccelDeccelAmplitude_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCAccelDeccelAmplitude_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -16393,61 +15278,6 @@ JSBool JSPROXY_CCJumpTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCJumpTiles3D* (o)
-JSBool JSPROXY_CCJumpTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCJumpTiles3D* ret_val;
-
-	ret_val = [CCJumpTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCJumpTiles3D* (o)
-JSBool JSPROXY_CCJumpTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCJumpTiles3D* ret_val;
-
-	ret_val = [CCJumpTiles3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCJumpTiles3D* (o)
-JSBool JSPROXY_CCJumpTiles3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCJumpTiles3D* ret_val;
-
-	ret_val = [CCJumpTiles3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCJumpTiles3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCJumpTiles3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -16475,9 +15305,6 @@ void JSPROXY_CCJumpTiles3D_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithJumpsAmplitudeGridDuration", JSPROXY_CCJumpTiles3D_actionWithJumps_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCJumpTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCJumpTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCJumpTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -16630,40 +15457,6 @@ JSBool JSPROXY_CCGrid3DAction_actionWithSize_duration__static(JSContext *cx, uin
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCGrid3DAction* (o)
-JSBool JSPROXY_CCGrid3DAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCGrid3DAction* ret_val;
-
-	ret_val = [CCGrid3DAction actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCGrid3DAction* (o)
-JSBool JSPROXY_CCGrid3DAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCGrid3DAction* ret_val;
-
-	ret_val = [CCGrid3DAction action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCGrid3DAction_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -16689,8 +15482,6 @@ void JSPROXY_CCGrid3DAction_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithSizeDuration", JSPROXY_CCGrid3DAction_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCGrid3DAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCGrid3DAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -18033,40 +16824,6 @@ JSBool JSPROXY_CCEaseElasticIn_actionWithAction_period__static(JSContext *cx, ui
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseElasticIn* (o)
-JSBool JSPROXY_CCEaseElasticIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticIn* ret_val;
-
-	ret_val = [CCEaseElasticIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseElasticIn* (o)
-JSBool JSPROXY_CCEaseElasticIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseElasticIn* ret_val;
-
-	ret_val = [CCEaseElasticIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseElasticIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseElasticIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -18090,8 +16847,6 @@ void JSPROXY_CCEaseElasticIn_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseElasticIn_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseElasticIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -18270,20 +17025,6 @@ JSBool JSPROXY_CCSpeed_speed(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCSpeed* (o)
-JSBool JSPROXY_CCSpeed_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSpeed* ret_val;
-
-	ret_val = [CCSpeed action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSpeed_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSpeed_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -18311,7 +17052,6 @@ void JSPROXY_CCSpeed_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionSpeed", JSPROXY_CCSpeed_actionWithAction_speed__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSpeed_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -18459,40 +17199,6 @@ JSBool JSPROXY_CCRotateTo_initWithDuration_angleX_angleY_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCRotateTo* (o)
-JSBool JSPROXY_CCRotateTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCRotateTo* ret_val;
-
-	ret_val = [CCRotateTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCRotateTo* (o)
-JSBool JSPROXY_CCRotateTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRotateTo* ret_val;
-
-	ret_val = [CCRotateTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRotateTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRotateTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -18518,8 +17224,6 @@ void JSPROXY_CCRotateTo_createClass(JSContext *cx, JSObject* globalObj, const ch
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCRotateTo_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDurationAngleXAngleY", JSPROXY_CCRotateTo_actionWithDuration_angleX_angleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCRotateTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCRotateTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -18611,20 +17315,6 @@ JSBool JSPROXY_CCActionCamera_actionWithDuration__static(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCActionCamera* (o)
-JSBool JSPROXY_CCActionCamera_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCActionCamera* ret_val;
-
-	ret_val = [CCActionCamera action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCActionCamera_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionCamera_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -18648,7 +17338,6 @@ void JSPROXY_CCActionCamera_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDuration", JSPROXY_CCActionCamera_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCActionCamera_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -19193,20 +17882,6 @@ JSBool JSPROXY_CCMotionStreak_setOpacityModifyRGB_(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCMotionStreak* (o)
-JSBool JSPROXY_CCMotionStreak_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCMotionStreak* ret_val;
-
-	ret_val = [CCMotionStreak node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCMotionStreak_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -19245,7 +17920,6 @@ void JSPROXY_CCMotionStreak_createClass(JSContext *cx, JSObject* globalObj, cons
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("streakWithFadeMinSegWidthColorTexture", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_texture__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("streakWithFadeMinSegWidthColorTextureFilename", JSPROXY_CCMotionStreak_streakWithFade_minSeg_width_color_textureFilename__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCMotionStreak_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -19490,40 +18164,6 @@ JSBool JSPROXY_CCAccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCAccelAmplitude* (o)
-JSBool JSPROXY_CCAccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCAccelAmplitude* ret_val;
-
-	ret_val = [CCAccelAmplitude actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCAccelAmplitude* (o)
-JSBool JSPROXY_CCAccelAmplitude_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCAccelAmplitude* ret_val;
-
-	ret_val = [CCAccelAmplitude action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCAccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCAccelAmplitude_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -19549,8 +18189,6 @@ void JSPROXY_CCAccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionDuration", JSPROXY_CCAccelAmplitude_actionWithAction_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCAccelAmplitude_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCAccelAmplitude_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -20338,40 +18976,6 @@ JSBool JSPROXY_CCEaseBounce_actionWithAction__static(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBounce* (o)
-JSBool JSPROXY_CCEaseBounce_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBounce* ret_val;
-
-	ret_val = [CCEaseBounce actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBounce* (o)
-JSBool JSPROXY_CCEaseBounce_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBounce* ret_val;
-
-	ret_val = [CCEaseBounce action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBounce_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBounce_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -20395,8 +18999,6 @@ void JSPROXY_CCEaseBounce_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBounce_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBounce_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBounce_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -20488,40 +19090,6 @@ JSBool JSPROXY_CCEaseBounceOut_actionWithAction__static(JSContext *cx, uint32_t 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBounceOut* (o)
-JSBool JSPROXY_CCEaseBounceOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBounceOut* ret_val;
-
-	ret_val = [CCEaseBounceOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBounceOut* (o)
-JSBool JSPROXY_CCEaseBounceOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBounceOut* ret_val;
-
-	ret_val = [CCEaseBounceOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBounceOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBounceOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -20545,8 +19113,6 @@ void JSPROXY_CCEaseBounceOut_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBounceOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBounceOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -20638,20 +19204,6 @@ JSBool JSPROXY_CCFadeOut_actionWithDuration__static(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCFadeOut* (o)
-JSBool JSPROXY_CCFadeOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFadeOut* ret_val;
-
-	ret_val = [CCFadeOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFadeOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFadeOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -20675,7 +19227,6 @@ void JSPROXY_CCFadeOut_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFadeOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFadeOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -21006,20 +19557,6 @@ JSBool JSPROXY_CCRepeatForever_setInnerAction_(JSContext *cx, uint32_t argc, jsv
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCRepeatForever* (o)
-JSBool JSPROXY_CCRepeatForever_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRepeatForever* ret_val;
-
-	ret_val = [CCRepeatForever action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRepeatForever_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -21045,7 +19582,6 @@ void JSPROXY_CCRepeatForever_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCRepeatForever_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCRepeatForever_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -21137,20 +19673,6 @@ JSBool JSPROXY_CCFadeIn_actionWithDuration__static(JSContext *cx, uint32_t argc,
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCFadeIn* (o)
-JSBool JSPROXY_CCFadeIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFadeIn* ret_val;
-
-	ret_val = [CCFadeIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFadeIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFadeIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -21174,7 +19696,6 @@ void JSPROXY_CCFadeIn_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFadeIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFadeIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -22135,20 +20656,6 @@ JSBool JSPROXY_CCAtlasNode_texture(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCAtlasNode* (o)
-JSBool JSPROXY_CCAtlasNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCAtlasNode* ret_val;
-
-	ret_val = [CCAtlasNode node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCAtlasNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -22186,7 +20693,6 @@ void JSPROXY_CCAtlasNode_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCAtlasNode_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("create", JSPROXY_CCAtlasNode_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -22353,43 +20859,6 @@ JSBool JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHei
 	return JS_TRUE;
 }
 
-// Arguments: NSString*, NSUInteger, NSUInteger, NSUInteger
-// Ret value: CCTileMapAtlas* (o)
-JSBool JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 4, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	NSString* arg0; uint32_t arg1; uint32_t arg2; uint32_t arg3; 
-
-	ok &= jsval_to_nsstring( cx, *argvp++, &arg0 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg1 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg2 );
-	ok &= JS_ValueToECMAUint32( cx, *argvp++, &arg3 );
-	if( ! ok ) return JS_FALSE;
-	CCTileMapAtlas* ret_val;
-
-	ret_val = [CCTileMapAtlas atlasWithTileFile:(NSString*)arg0 tileWidth:(NSUInteger)arg1 tileHeight:(NSUInteger)arg2 itemsToRender:(NSUInteger)arg3  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTileMapAtlas* (o)
-JSBool JSPROXY_CCTileMapAtlas_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTileMapAtlas* ret_val;
-
-	ret_val = [CCTileMapAtlas node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTileMapAtlas_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTileMapAtlas_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -22416,8 +20885,6 @@ void JSPROXY_CCTileMapAtlas_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTileMapAtlas_tileMapAtlasWithTileFile_mapFile_tileWidth_tileHeight__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("atlasWithTileFileTileWidthTileHeightItemsToRender", JSPROXY_CCTileMapAtlas_atlasWithTileFile_tileWidth_tileHeight_itemsToRender__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCTileMapAtlas_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -23310,40 +21777,6 @@ JSBool JSPROXY_CCEaseExponentialInOut_actionWithAction__static(JSContext *cx, ui
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseExponentialInOut* (o)
-JSBool JSPROXY_CCEaseExponentialInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseExponentialInOut* ret_val;
-
-	ret_val = [CCEaseExponentialInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseExponentialInOut* (o)
-JSBool JSPROXY_CCEaseExponentialInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseExponentialInOut* ret_val;
-
-	ret_val = [CCEaseExponentialInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseExponentialInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseExponentialInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -23367,8 +21800,6 @@ void JSPROXY_CCEaseExponentialInOut_createClass(JSContext *cx, JSObject* globalO
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseExponentialInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseExponentialInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -23854,40 +22285,6 @@ JSBool JSPROXY_CCTargetedAction_setForcedTarget_(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCTargetedAction* (o)
-JSBool JSPROXY_CCTargetedAction_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTargetedAction* ret_val;
-
-	ret_val = [CCTargetedAction actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTargetedAction* (o)
-JSBool JSPROXY_CCTargetedAction_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTargetedAction* ret_val;
-
-	ret_val = [CCTargetedAction action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTargetedAction_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTargetedAction_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -23912,8 +22309,6 @@ void JSPROXY_CCTargetedAction_createClass(JSContext *cx, JSObject* globalObj, co
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTargetedAction_actionWithTarget_action__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTargetedAction_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTargetedAction_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -24013,40 +22408,6 @@ JSBool JSPROXY_CCSkewTo_initWithDuration_skewX_skewY_(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCSkewTo* (o)
-JSBool JSPROXY_CCSkewTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSkewTo* ret_val;
-
-	ret_val = [CCSkewTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSkewTo* (o)
-JSBool JSPROXY_CCSkewTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSkewTo* ret_val;
-
-	ret_val = [CCSkewTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSkewTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSkewTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -24070,8 +22431,6 @@ void JSPROXY_CCSkewTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCSkewTo_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSkewTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSkewTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -24171,40 +22530,6 @@ JSBool JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static(JSContext *cx, ui
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCSkewBy* (o)
-JSBool JSPROXY_CCSkewBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSkewBy* ret_val;
-
-	ret_val = [CCSkewBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSkewBy* (o)
-JSBool JSPROXY_CCSkewBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSkewBy* ret_val;
-
-	ret_val = [CCSkewBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSkewBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSkewBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -24228,8 +22553,6 @@ void JSPROXY_CCSkewBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCSkewBy_actionWithDuration_skewX_skewY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSkewBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSkewBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -24495,40 +22818,6 @@ JSBool JSPROXY_CCSpawn_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCSpawn* (o)
-JSBool JSPROXY_CCSpawn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSpawn* ret_val;
-
-	ret_val = [CCSpawn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSpawn* (o)
-JSBool JSPROXY_CCSpawn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSpawn* ret_val;
-
-	ret_val = [CCSpawn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSpawn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSpawn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -24553,8 +22842,6 @@ void JSPROXY_CCSpawn_createClass(JSContext *cx, JSObject* globalObj, const char*
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionOneTwo", JSPROXY_CCSpawn_actionOne_two__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCSpawn_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSpawn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSpawn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -24849,20 +23136,6 @@ JSBool JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static(JSContext *cx,
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCTMXTiledMap* (o)
-JSBool JSPROXY_CCTMXTiledMap_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTMXTiledMap* ret_val;
-
-	ret_val = [CCTMXTiledMap node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTMXTiledMap_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -24895,7 +23168,6 @@ void JSPROXY_CCTMXTiledMap_createClass(JSContext *cx, JSObject* globalObj, const
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTMXTiledMap_tiledMapWithTMXFile__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("tiledMapWithXMLResourcePath", JSPROXY_CCTMXTiledMap_tiledMapWithXML_resourcePath__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCTMXTiledMap_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -26030,40 +24302,6 @@ JSBool JSPROXY_CCEaseExponentialIn_actionWithAction__static(JSContext *cx, uint3
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseExponentialIn* (o)
-JSBool JSPROXY_CCEaseExponentialIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseExponentialIn* ret_val;
-
-	ret_val = [CCEaseExponentialIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseExponentialIn* (o)
-JSBool JSPROXY_CCEaseExponentialIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseExponentialIn* ret_val;
-
-	ret_val = [CCEaseExponentialIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseExponentialIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseExponentialIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -26087,8 +24325,6 @@ void JSPROXY_CCEaseExponentialIn_createClass(JSContext *cx, JSObject* globalObj,
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseExponentialIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseExponentialIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -26184,20 +24420,6 @@ JSBool JSPROXY_CCPlace_initWithPosition_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCPlace* (o)
-JSBool JSPROXY_CCPlace_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCPlace* ret_val;
-
-	ret_val = [CCPlace action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCPlace_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCPlace_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -26221,7 +24443,6 @@ void JSPROXY_CCPlace_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCPlace_actionWithPosition__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCPlace_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -26467,62 +24688,6 @@ JSBool JSPROXY_CCCatmullRomTo_initWithDuration_points_(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: ccTime, CCPointArray*, CGFloat
-// Ret value: CCCatmullRomTo* (o)
-JSBool JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; id arg1; double arg2; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg1);
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCCatmullRomTo* ret_val;
-
-	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0 points:arg1 tension:(CGFloat)arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCCatmullRomTo* (o)
-JSBool JSPROXY_CCCatmullRomTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCCatmullRomTo* ret_val;
-
-	ret_val = [CCCatmullRomTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCCatmullRomTo* (o)
-JSBool JSPROXY_CCCatmullRomTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCCatmullRomTo* ret_val;
-
-	ret_val = [CCCatmullRomTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCCatmullRomTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCCatmullRomTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -26546,9 +24711,6 @@ void JSPROXY_CCCatmullRomTo_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCCatmullRomTo_actionWithDuration_points__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDurationPointsTension", JSPROXY_CCCatmullRomTo_actionWithDuration_points_tension__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCCatmullRomTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCCatmullRomTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -27452,60 +25614,6 @@ JSBool JSPROXY_CCEaseOut_actionWithAction_rate__static(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCEaseOut* (o)
-JSBool JSPROXY_CCEaseOut_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseOut* ret_val;
-
-	ret_val = [CCEaseOut actionWithAction:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCEaseOut* (o)
-JSBool JSPROXY_CCEaseOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseOut* ret_val;
-
-	ret_val = [CCEaseOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseOut* (o)
-JSBool JSPROXY_CCEaseOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseOut* ret_val;
-
-	ret_val = [CCEaseOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -27529,9 +25637,6 @@ void JSPROXY_CCEaseOut_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseOut_actionWithAction_rate__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -28656,20 +26761,6 @@ JSBool JSPROXY_CCFollow_setBoundarySet_(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCFollow* (o)
-JSBool JSPROXY_CCFollow_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFollow* ret_val;
-
-	ret_val = [CCFollow action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFollow_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFollow_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -28696,7 +26787,6 @@ void JSPROXY_CCFollow_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFollow_actionWithTarget_worldBoundary__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFollow_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -28804,40 +26894,6 @@ JSBool JSPROXY_CCOrbitCamera_initWithDuration_radius_deltaRadius_angleZ_deltaAng
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCOrbitCamera* (o)
-JSBool JSPROXY_CCOrbitCamera_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCOrbitCamera* ret_val;
-
-	ret_val = [CCOrbitCamera actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCOrbitCamera* (o)
-JSBool JSPROXY_CCOrbitCamera_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCOrbitCamera* ret_val;
-
-	ret_val = [CCOrbitCamera action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCOrbitCamera_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCOrbitCamera_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -28861,8 +26917,6 @@ void JSPROXY_CCOrbitCamera_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDurationRadiusDeltaRadiusAngleZDeltaAngleZAngleXDeltaAngleX", JSPROXY_CCOrbitCamera_actionWithDuration_radius_deltaRadius_angleZ_deltaAngleZ_angleX_deltaAngleX__static, 7, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCOrbitCamera_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCOrbitCamera_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -29923,40 +27977,6 @@ JSBool JSPROXY_CCRepeat_setInnerAction_(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCRepeat* (o)
-JSBool JSPROXY_CCRepeat_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCRepeat* ret_val;
-
-	ret_val = [CCRepeat actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCRepeat* (o)
-JSBool JSPROXY_CCRepeat_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRepeat* ret_val;
-
-	ret_val = [CCRepeat action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRepeat_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -29982,8 +28002,6 @@ void JSPROXY_CCRepeat_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCRepeat_actionWithAction_times__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCRepeat_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCRepeat_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -30233,61 +28251,6 @@ JSBool JSPROXY_CCShatteredTiles3D_initWithRange_shatterZ_grid_duration_(JSContex
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCShatteredTiles3D* (o)
-JSBool JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCShatteredTiles3D* ret_val;
-
-	ret_val = [CCShatteredTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCShatteredTiles3D* (o)
-JSBool JSPROXY_CCShatteredTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCShatteredTiles3D* ret_val;
-
-	ret_val = [CCShatteredTiles3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCShatteredTiles3D* (o)
-JSBool JSPROXY_CCShatteredTiles3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCShatteredTiles3D* ret_val;
-
-	ret_val = [CCShatteredTiles3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCShatteredTiles3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCShatteredTiles3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -30311,9 +28274,6 @@ void JSPROXY_CCShatteredTiles3D_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithRangeShatterZGridDuration", JSPROXY_CCShatteredTiles3D_actionWithRange_shatterZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCShatteredTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCShatteredTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCShatteredTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -31349,61 +29309,6 @@ JSBool JSPROXY_CCSplitRows_initWithRows_duration_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCSplitRows* (o)
-JSBool JSPROXY_CCSplitRows_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCSplitRows* ret_val;
-
-	ret_val = [CCSplitRows actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCSplitRows* (o)
-JSBool JSPROXY_CCSplitRows_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSplitRows* ret_val;
-
-	ret_val = [CCSplitRows actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSplitRows* (o)
-JSBool JSPROXY_CCSplitRows_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSplitRows* ret_val;
-
-	ret_val = [CCSplitRows action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSplitRows_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSplitRows_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -31427,9 +29332,6 @@ void JSPROXY_CCSplitRows_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithRowsDuration", JSPROXY_CCSplitRows_actionWithRows_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCSplitRows_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSplitRows_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSplitRows_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -31499,20 +29401,6 @@ JSBool JSPROXY_ChipmunkDebugNode_debugNodeForCPSpace__static(JSContext *cx, uint
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: ChipmunkDebugNode* (o)
-JSBool JSPROXY_ChipmunkDebugNode_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	ChipmunkDebugNode* ret_val;
-
-	ret_val = [ChipmunkDebugNode node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_ChipmunkDebugNode_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_ChipmunkDebugNode_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -31535,7 +29423,6 @@ void JSPROXY_ChipmunkDebugNode_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_ChipmunkDebugNode_debugNodeForCPSpace__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_ChipmunkDebugNode_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -32035,61 +29922,6 @@ JSBool JSPROXY_CCRipple3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCRipple3D* (o)
-JSBool JSPROXY_CCRipple3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCRipple3D* ret_val;
-
-	ret_val = [CCRipple3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCRipple3D* (o)
-JSBool JSPROXY_CCRipple3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCRipple3D* ret_val;
-
-	ret_val = [CCRipple3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCRipple3D* (o)
-JSBool JSPROXY_CCRipple3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRipple3D* ret_val;
-
-	ret_val = [CCRipple3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRipple3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRipple3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -32119,9 +29951,6 @@ void JSPROXY_CCRipple3D_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithPositionRadiusWavesAmplitudeGridDuration", JSPROXY_CCRipple3D_actionWithPosition_radius_waves_amplitude_grid_duration__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCRipple3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCRipple3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCRipple3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -32269,40 +30098,6 @@ JSBool JSPROXY_CCRotateBy_initWithDuration_angleX_angleY_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCRotateBy* (o)
-JSBool JSPROXY_CCRotateBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCRotateBy* ret_val;
-
-	ret_val = [CCRotateBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCRotateBy* (o)
-JSBool JSPROXY_CCRotateBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRotateBy* ret_val;
-
-	ret_val = [CCRotateBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRotateBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -32328,8 +30123,6 @@ void JSPROXY_CCRotateBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCRotateBy_actionWithDuration_angle__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("actionWithDurationAngleXAngleY", JSPROXY_CCRotateBy_actionWithDuration_angleX_angleY__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCRotateBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCRotateBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -32422,60 +30215,6 @@ JSBool JSPROXY_CCEaseIn_actionWithAction_rate__static(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: CCActionInterval*
-// Ret value: CCEaseIn* (o)
-JSBool JSPROXY_CCEaseIn_actionWithAction__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	id arg0; 
-
-	ok &= jsval_to_nsobject( cx, *argvp++, &arg0);
-	if( ! ok ) return JS_FALSE;
-	CCEaseIn* ret_val;
-
-	ret_val = [CCEaseIn actionWithAction:arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCEaseIn* (o)
-JSBool JSPROXY_CCEaseIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseIn* ret_val;
-
-	ret_val = [CCEaseIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseIn* (o)
-JSBool JSPROXY_CCEaseIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseIn* ret_val;
-
-	ret_val = [CCEaseIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -32499,9 +30238,6 @@ void JSPROXY_CCEaseIn_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseIn_actionWithAction_rate__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithAction", JSPROXY_CCEaseIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -33820,20 +31556,6 @@ JSBool JSPROXY_CCReuseGrid_initWithTimes_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCReuseGrid* (o)
-JSBool JSPROXY_CCReuseGrid_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCReuseGrid* ret_val;
-
-	ret_val = [CCReuseGrid action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCReuseGrid_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCReuseGrid_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -33857,7 +31579,6 @@ void JSPROXY_CCReuseGrid_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithTimes", JSPROXY_CCReuseGrid_actionWithTimes__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCReuseGrid_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -33957,61 +31678,6 @@ JSBool JSPROXY_CCShuffleTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCShuffleTiles* (o)
-JSBool JSPROXY_CCShuffleTiles_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCShuffleTiles* ret_val;
-
-	ret_val = [CCShuffleTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCShuffleTiles* (o)
-JSBool JSPROXY_CCShuffleTiles_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCShuffleTiles* ret_val;
-
-	ret_val = [CCShuffleTiles actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCShuffleTiles* (o)
-JSBool JSPROXY_CCShuffleTiles_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCShuffleTiles* ret_val;
-
-	ret_val = [CCShuffleTiles action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCShuffleTiles_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCShuffleTiles_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -34035,9 +31701,6 @@ void JSPROXY_CCShuffleTiles_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithSeedGridDuration", JSPROXY_CCShuffleTiles_actionWithSeed_grid_duration__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCShuffleTiles_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCShuffleTiles_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCShuffleTiles_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -34400,40 +32063,6 @@ JSBool JSPROXY_CCEaseSineIn_actionWithAction__static(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseSineIn* (o)
-JSBool JSPROXY_CCEaseSineIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseSineIn* ret_val;
-
-	ret_val = [CCEaseSineIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseSineIn* (o)
-JSBool JSPROXY_CCEaseSineIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseSineIn* ret_val;
-
-	ret_val = [CCEaseSineIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseSineIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseSineIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -34457,8 +32086,6 @@ void JSPROXY_CCEaseSineIn_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseSineIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseSineIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseSineIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -34730,40 +32357,6 @@ JSBool JSPROXY_CCAnimate_setAnimation_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCAnimate* (o)
-JSBool JSPROXY_CCAnimate_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCAnimate* ret_val;
-
-	ret_val = [CCAnimate actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCAnimate* (o)
-JSBool JSPROXY_CCAnimate_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCAnimate* ret_val;
-
-	ret_val = [CCAnimate action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCAnimate_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -34789,8 +32382,6 @@ void JSPROXY_CCAnimate_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCAnimate_actionWithAnimation__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCAnimate_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCAnimate_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -34882,20 +32473,6 @@ JSBool JSPROXY_CCCallBlockN_initWithBlock_(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCCallBlockN* (o)
-JSBool JSPROXY_CCCallBlockN_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCCallBlockN* ret_val;
-
-	ret_val = [CCCallBlockN action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCCallBlockN_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCCallBlockN_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -34920,7 +32497,6 @@ void JSPROXY_CCCallBlockN_createClass(JSContext *cx, JSObject* globalObj, const 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCCallBlockN_actionWithBlock__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCCallBlockN_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -34990,20 +32566,6 @@ JSBool JSPROXY_CCBezierBy_actionWithDuration__static(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCBezierBy* (o)
-JSBool JSPROXY_CCBezierBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCBezierBy* ret_val;
-
-	ret_val = [CCBezierBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCBezierBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCBezierBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -35026,7 +32588,6 @@ void JSPROXY_CCBezierBy_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDuration", JSPROXY_CCBezierBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCBezierBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -35588,40 +33149,6 @@ JSBool JSPROXY_CCEaseSineInOut_actionWithAction__static(JSContext *cx, uint32_t 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseSineInOut* (o)
-JSBool JSPROXY_CCEaseSineInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseSineInOut* ret_val;
-
-	ret_val = [CCEaseSineInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseSineInOut* (o)
-JSBool JSPROXY_CCEaseSineInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseSineInOut* ret_val;
-
-	ret_val = [CCEaseSineInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseSineInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseSineInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -35645,8 +33172,6 @@ void JSPROXY_CCEaseSineInOut_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseSineInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseSineInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseSineInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -35748,61 +33273,6 @@ JSBool JSPROXY_CCShaky3D_initWithRange_shakeZ_grid_duration_(JSContext *cx, uint
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCShaky3D* (o)
-JSBool JSPROXY_CCShaky3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCShaky3D* ret_val;
-
-	ret_val = [CCShaky3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCShaky3D* (o)
-JSBool JSPROXY_CCShaky3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCShaky3D* ret_val;
-
-	ret_val = [CCShaky3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCShaky3D* (o)
-JSBool JSPROXY_CCShaky3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCShaky3D* ret_val;
-
-	ret_val = [CCShaky3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCShaky3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCShaky3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -35826,9 +33296,6 @@ void JSPROXY_CCShaky3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCShaky3D_actionWithRange_shakeZ_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCShaky3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCShaky3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCShaky3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -36064,40 +33531,6 @@ JSBool JSPROXY_CCTintTo_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCTintTo* (o)
-JSBool JSPROXY_CCTintTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTintTo* ret_val;
-
-	ret_val = [CCTintTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTintTo* (o)
-JSBool JSPROXY_CCTintTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTintTo* ret_val;
-
-	ret_val = [CCTintTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTintTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTintTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -36121,8 +33554,6 @@ void JSPROXY_CCTintTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTintTo_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTintTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTintTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -36499,40 +33930,6 @@ JSBool JSPROXY_CCBlink_initWithDuration_blinks_(JSContext *cx, uint32_t argc, js
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCBlink* (o)
-JSBool JSPROXY_CCBlink_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCBlink* ret_val;
-
-	ret_val = [CCBlink actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCBlink* (o)
-JSBool JSPROXY_CCBlink_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCBlink* ret_val;
-
-	ret_val = [CCBlink action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCBlink_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCBlink_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -36556,8 +33953,6 @@ void JSPROXY_CCBlink_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCBlink_actionWithDuration_blinks__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCBlink_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCBlink_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -37768,40 +35163,6 @@ JSBool JSPROXY_CCEaseBounceIn_actionWithAction__static(JSContext *cx, uint32_t a
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBounceIn* (o)
-JSBool JSPROXY_CCEaseBounceIn_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBounceIn* ret_val;
-
-	ret_val = [CCEaseBounceIn actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBounceIn* (o)
-JSBool JSPROXY_CCEaseBounceIn_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBounceIn* ret_val;
-
-	ret_val = [CCEaseBounceIn action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBounceIn_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBounceIn_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -37825,8 +35186,6 @@ void JSPROXY_CCEaseBounceIn_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBounceIn_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceIn_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBounceIn_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -38006,61 +35365,6 @@ JSBool JSPROXY_CCLiquid_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCLiquid* (o)
-JSBool JSPROXY_CCLiquid_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLiquid* ret_val;
-
-	ret_val = [CCLiquid actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCLiquid* (o)
-JSBool JSPROXY_CCLiquid_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLiquid* ret_val;
-
-	ret_val = [CCLiquid actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCLiquid* (o)
-JSBool JSPROXY_CCLiquid_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCLiquid* ret_val;
-
-	ret_val = [CCLiquid action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLiquid_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -38088,9 +35392,6 @@ void JSPROXY_CCLiquid_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithWavesAmplitudeGridDuration", JSPROXY_CCLiquid_actionWithWaves_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCLiquid_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCLiquid_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCLiquid_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -38566,20 +35867,6 @@ JSBool JSPROXY_CCProgressTimer_setOpacityModifyRGB_(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCProgressTimer* (o)
-JSBool JSPROXY_CCProgressTimer_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCProgressTimer* ret_val;
-
-	ret_val = [CCProgressTimer node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCProgressTimer_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCProgressTimer_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -38622,7 +35909,6 @@ void JSPROXY_CCProgressTimer_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCProgressTimer_progressWithSprite__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCProgressTimer_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -38714,40 +36000,6 @@ JSBool JSPROXY_CCEaseBounceInOut_actionWithAction__static(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBounceInOut* (o)
-JSBool JSPROXY_CCEaseBounceInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBounceInOut* ret_val;
-
-	ret_val = [CCEaseBounceInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBounceInOut* (o)
-JSBool JSPROXY_CCEaseBounceInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBounceInOut* ret_val;
-
-	ret_val = [CCEaseBounceInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBounceInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBounceInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -38771,8 +36023,6 @@ void JSPROXY_CCEaseBounceInOut_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBounceInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBounceInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBounceInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -38874,40 +36124,6 @@ JSBool JSPROXY_CCActionTween_initWithDuration_key_from_to_(JSContext *cx, uint32
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCActionTween* (o)
-JSBool JSPROXY_CCActionTween_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCActionTween* ret_val;
-
-	ret_val = [CCActionTween actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCActionTween* (o)
-JSBool JSPROXY_CCActionTween_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCActionTween* ret_val;
-
-	ret_val = [CCActionTween action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCActionTween_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCActionTween_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -38931,8 +36147,6 @@ void JSPROXY_CCActionTween_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDurationKeyFromTo", JSPROXY_CCActionTween_actionWithDuration_key_from_to__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCActionTween_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCActionTween_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -39295,41 +36509,6 @@ JSBool JSPROXY_CCFlipX3D_initWithDuration_(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCFlipX3D* (o)
-JSBool JSPROXY_CCFlipX3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCFlipX3D* ret_val;
-
-	ret_val = [CCFlipX3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFlipX3D* (o)
-JSBool JSPROXY_CCFlipX3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFlipX3D* ret_val;
-
-	ret_val = [CCFlipX3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFlipX3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -39353,8 +36532,6 @@ void JSPROXY_CCFlipX3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFlipX3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCFlipX3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFlipX3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -39446,41 +36623,6 @@ JSBool JSPROXY_CCFlipY3D_actionWithDuration__static(JSContext *cx, uint32_t argc
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCFlipY3D* (o)
-JSBool JSPROXY_CCFlipY3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCFlipY3D* ret_val;
-
-	ret_val = [CCFlipY3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFlipY3D* (o)
-JSBool JSPROXY_CCFlipY3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFlipY3D* ret_val;
-
-	ret_val = [CCFlipY3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFlipY3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFlipY3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -39504,8 +36646,6 @@ void JSPROXY_CCFlipY3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFlipY3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCFlipY3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFlipY3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -39603,40 +36743,6 @@ JSBool JSPROXY_CCFadeTo_initWithDuration_opacity_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCFadeTo* (o)
-JSBool JSPROXY_CCFadeTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCFadeTo* ret_val;
-
-	ret_val = [CCFadeTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCFadeTo* (o)
-JSBool JSPROXY_CCFadeTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCFadeTo* ret_val;
-
-	ret_val = [CCFadeTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCFadeTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCFadeTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -39660,8 +36766,6 @@ void JSPROXY_CCFadeTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCFadeTo_actionWithDuration_opacity__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCFadeTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCFadeTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -39753,40 +36857,6 @@ JSBool JSPROXY_CCEaseBackInOut_actionWithAction__static(JSContext *cx, uint32_t 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseBackInOut* (o)
-JSBool JSPROXY_CCEaseBackInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseBackInOut* ret_val;
-
-	ret_val = [CCEaseBackInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseBackInOut* (o)
-JSBool JSPROXY_CCEaseBackInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseBackInOut* ret_val;
-
-	ret_val = [CCEaseBackInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseBackInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseBackInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -39810,8 +36880,6 @@ void JSPROXY_CCEaseBackInOut_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseBackInOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseBackInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseBackInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -39903,40 +36971,6 @@ JSBool JSPROXY_CCEaseExponentialOut_actionWithAction__static(JSContext *cx, uint
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseExponentialOut* (o)
-JSBool JSPROXY_CCEaseExponentialOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseExponentialOut* ret_val;
-
-	ret_val = [CCEaseExponentialOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseExponentialOut* (o)
-JSBool JSPROXY_CCEaseExponentialOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseExponentialOut* ret_val;
-
-	ret_val = [CCEaseExponentialOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseExponentialOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseExponentialOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -39960,8 +36994,6 @@ void JSPROXY_CCEaseExponentialOut_createClass(JSContext *cx, JSObject* globalObj
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseExponentialOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseExponentialOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseExponentialOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -40166,40 +37198,6 @@ JSBool JSPROXY_CCSequence_initOne_two_(JSContext *cx, uint32_t argc, jsval *vp) 
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCSequence* (o)
-JSBool JSPROXY_CCSequence_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSequence* ret_val;
-
-	ret_val = [CCSequence actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSequence* (o)
-JSBool JSPROXY_CCSequence_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSequence* ret_val;
-
-	ret_val = [CCSequence action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSequence_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -40224,8 +37222,6 @@ void JSPROXY_CCSequence_createClass(JSContext *cx, JSObject* globalObj, const ch
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionOneTwo", JSPROXY_CCSequence_actionOne_two__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FN("create", JSPROXY_CCSequence_actionWithArray__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSequence_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSequence_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -40328,40 +37324,6 @@ JSBool JSPROXY_CCEaseElasticInOut_actionWithAction_period__static(JSContext *cx,
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseElasticInOut* (o)
-JSBool JSPROXY_CCEaseElasticInOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseElasticInOut* ret_val;
-
-	ret_val = [CCEaseElasticInOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseElasticInOut* (o)
-JSBool JSPROXY_CCEaseElasticInOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseElasticInOut* ret_val;
-
-	ret_val = [CCEaseElasticInOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseElasticInOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseElasticInOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -40385,8 +37347,6 @@ void JSPROXY_CCEaseElasticInOut_createClass(JSContext *cx, JSObject* globalObj, 
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseElasticInOut_actionWithAction_period__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseElasticInOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseElasticInOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -40570,61 +37530,6 @@ JSBool JSPROXY_CCWaves_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *vp
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCWaves* (o)
-JSBool JSPROXY_CCWaves_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCWaves* ret_val;
-
-	ret_val = [CCWaves actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCWaves* (o)
-JSBool JSPROXY_CCWaves_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCWaves* ret_val;
-
-	ret_val = [CCWaves actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCWaves* (o)
-JSBool JSPROXY_CCWaves_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCWaves* ret_val;
-
-	ret_val = [CCWaves action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCWaves_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCWaves_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -40652,9 +37557,6 @@ void JSPROXY_CCWaves_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithWavesAmplitudeHorizontalVerticalGridDuration", JSPROXY_CCWaves_actionWithWaves_amplitude_horizontal_vertical_grid_duration__static, 6, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCWaves_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCWaves_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCWaves_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -40907,40 +37809,6 @@ JSBool JSPROXY_CCTintBy_initWithDuration_red_green_blue_(JSContext *cx, uint32_t
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCTintBy* (o)
-JSBool JSPROXY_CCTintBy_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTintBy* ret_val;
-
-	ret_val = [CCTintBy actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTintBy* (o)
-JSBool JSPROXY_CCTintBy_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTintBy* ret_val;
-
-	ret_val = [CCTintBy action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTintBy_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -40964,8 +37832,6 @@ void JSPROXY_CCTintBy_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCTintBy_actionWithDuration_red_green_blue__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTintBy_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTintBy_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -41057,20 +37923,6 @@ JSBool JSPROXY_CCBezierTo_actionWithDuration__static(JSContext *cx, uint32_t arg
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCBezierTo* (o)
-JSBool JSPROXY_CCBezierTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCBezierTo* ret_val;
-
-	ret_val = [CCBezierTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCBezierTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCBezierTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -41094,7 +37946,6 @@ void JSPROXY_CCBezierTo_createClass(JSContext *cx, JSObject* globalObj, const ch
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithDuration", JSPROXY_CCBezierTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCBezierTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -41231,40 +38082,6 @@ JSBool JSPROXY_CCDeccelAmplitude_setRate_(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCDeccelAmplitude* (o)
-JSBool JSPROXY_CCDeccelAmplitude_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCDeccelAmplitude* ret_val;
-
-	ret_val = [CCDeccelAmplitude actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCDeccelAmplitude* (o)
-JSBool JSPROXY_CCDeccelAmplitude_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCDeccelAmplitude* ret_val;
-
-	ret_val = [CCDeccelAmplitude action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCDeccelAmplitude_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -41290,8 +38107,6 @@ void JSPROXY_CCDeccelAmplitude_createClass(JSContext *cx, JSObject* globalObj, c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithActionDuration", JSPROXY_CCDeccelAmplitude_actionWithAction_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCDeccelAmplitude_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCDeccelAmplitude_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -41474,61 +38289,6 @@ JSBool JSPROXY_CCLens3D_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCLens3D* (o)
-JSBool JSPROXY_CCLens3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCLens3D* ret_val;
-
-	ret_val = [CCLens3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCLens3D* (o)
-JSBool JSPROXY_CCLens3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLens3D* ret_val;
-
-	ret_val = [CCLens3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCLens3D* (o)
-JSBool JSPROXY_CCLens3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCLens3D* ret_val;
-
-	ret_val = [CCLens3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLens3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLens3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -41556,9 +38316,6 @@ void JSPROXY_CCLens3D_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithPositionRadiusGridDuration", JSPROXY_CCLens3D_actionWithPosition_radius_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCLens3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCLens3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCLens3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -41738,61 +38495,6 @@ JSBool JSPROXY_CCWaves3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, jsval *
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCWaves3D* (o)
-JSBool JSPROXY_CCWaves3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCWaves3D* ret_val;
-
-	ret_val = [CCWaves3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCWaves3D* (o)
-JSBool JSPROXY_CCWaves3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCWaves3D* ret_val;
-
-	ret_val = [CCWaves3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCWaves3D* (o)
-JSBool JSPROXY_CCWaves3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCWaves3D* ret_val;
-
-	ret_val = [CCWaves3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCWaves3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCWaves3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -41820,9 +38522,6 @@ void JSPROXY_CCWaves3D_createClass(JSContext *cx, JSObject* globalObj, const cha
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCWaves3D_actionWithWaves_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCWaves3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCWaves3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCWaves3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -41917,40 +38616,6 @@ JSBool JSPROXY_CCJumpTo_actionWithDuration_position_height_jumps__static(JSConte
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCJumpTo* (o)
-JSBool JSPROXY_CCJumpTo_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCJumpTo* ret_val;
-
-	ret_val = [CCJumpTo actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCJumpTo* (o)
-JSBool JSPROXY_CCJumpTo_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCJumpTo* ret_val;
-
-	ret_val = [CCJumpTo action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCJumpTo_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCJumpTo_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -41974,8 +38639,6 @@ void JSPROXY_CCJumpTo_createClass(JSContext *cx, JSObject* globalObj, const char
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCJumpTo_actionWithDuration_position_height_jumps__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCJumpTo_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCJumpTo_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -42310,61 +38973,6 @@ JSBool JSPROXY_CCWavesTiles3D_setAmplitudeRate_(JSContext *cx, uint32_t argc, js
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCWavesTiles3D* (o)
-JSBool JSPROXY_CCWavesTiles3D_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCWavesTiles3D* ret_val;
-
-	ret_val = [CCWavesTiles3D actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCWavesTiles3D* (o)
-JSBool JSPROXY_CCWavesTiles3D_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCWavesTiles3D* ret_val;
-
-	ret_val = [CCWavesTiles3D actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCWavesTiles3D* (o)
-JSBool JSPROXY_CCWavesTiles3D_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCWavesTiles3D* ret_val;
-
-	ret_val = [CCWavesTiles3D action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCWavesTiles3D_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCWavesTiles3D_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -42392,9 +39000,6 @@ void JSPROXY_CCWavesTiles3D_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithWavesAmplitudeGridDuration", JSPROXY_CCWavesTiles3D_actionWithWaves_amplitude_grid_duration__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCWavesTiles3D_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCWavesTiles3D_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCWavesTiles3D_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -42494,61 +39099,6 @@ JSBool JSPROXY_CCTurnOffTiles_initWithSeed_grid_duration_(JSContext *cx, uint32_
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCTurnOffTiles* (o)
-JSBool JSPROXY_CCTurnOffTiles_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCTurnOffTiles* ret_val;
-
-	ret_val = [CCTurnOffTiles actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCTurnOffTiles* (o)
-JSBool JSPROXY_CCTurnOffTiles_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTurnOffTiles* ret_val;
-
-	ret_val = [CCTurnOffTiles actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTurnOffTiles* (o)
-JSBool JSPROXY_CCTurnOffTiles_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTurnOffTiles* ret_val;
-
-	ret_val = [CCTurnOffTiles action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTurnOffTiles_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTurnOffTiles_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -42572,9 +39122,6 @@ void JSPROXY_CCTurnOffTiles_createClass(JSContext *cx, JSObject* globalObj, cons
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithSeedGridDuration", JSPROXY_CCTurnOffTiles_actionWithSeed_grid_duration__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCTurnOffTiles_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTurnOffTiles_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTurnOffTiles_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -42800,61 +39347,6 @@ JSBool JSPROXY_CCSplitCols_initWithCols_duration_(JSContext *cx, uint32_t argc, 
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCSplitCols* (o)
-JSBool JSPROXY_CCSplitCols_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCSplitCols* ret_val;
-
-	ret_val = [CCSplitCols actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCSplitCols* (o)
-JSBool JSPROXY_CCSplitCols_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCSplitCols* ret_val;
-
-	ret_val = [CCSplitCols actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCSplitCols* (o)
-JSBool JSPROXY_CCSplitCols_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCSplitCols* ret_val;
-
-	ret_val = [CCSplitCols action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCSplitCols_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCSplitCols_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -42878,9 +39370,6 @@ void JSPROXY_CCSplitCols_createClass(JSContext *cx, JSObject* globalObj, const c
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithColsDuration", JSPROXY_CCSplitCols_actionWithCols_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCSplitCols_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCSplitCols_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCSplitCols_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -43485,20 +39974,6 @@ JSBool JSPROXY_CCRenderTexture_sprite(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: 
-// Ret value: CCRenderTexture* (o)
-JSBool JSPROXY_CCRenderTexture_node_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCRenderTexture* ret_val;
-
-	ret_val = [CCRenderTexture node ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCRenderTexture_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCRenderTexture_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -43534,7 +40009,6 @@ void JSPROXY_CCRenderTexture_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCRenderTexture_renderTextureWithWidth_height_pixelFormat_depthStencilFormat__static, 4, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("node", JSPROXY_CCRenderTexture_node_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -43758,61 +40232,6 @@ JSBool JSPROXY_CCTwirl_setPosition_(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: ccGridSize, ccTime
-// Ret value: CCTwirl* (o)
-JSBool JSPROXY_CCTwirl_actionWithSize_duration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccGridSize arg0; double arg1; 
-
-	ok &= jsval_to_ccGridSize( cx, *argvp++, (ccGridSize*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	if( ! ok ) return JS_FALSE;
-	CCTwirl* ret_val;
-
-	ret_val = [CCTwirl actionWithSize:(ccGridSize)arg0 duration:(ccTime)arg1  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccTime
-// Ret value: CCTwirl* (o)
-JSBool JSPROXY_CCTwirl_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCTwirl* ret_val;
-
-	ret_val = [CCTwirl actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCTwirl* (o)
-JSBool JSPROXY_CCTwirl_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCTwirl* ret_val;
-
-	ret_val = [CCTwirl action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCTwirl_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCTwirl_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -43842,9 +40261,6 @@ void JSPROXY_CCTwirl_createClass(JSContext *cx, JSObject* globalObj, const char*
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("actionWithPositionTwirlsAmplitudeGridDuration", JSPROXY_CCTwirl_actionWithPosition_twirls_amplitude_grid_duration__static, 5, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithSizeDuration", JSPROXY_CCTwirl_actionWithSize_duration__static, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCTwirl_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCTwirl_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
@@ -45433,40 +41849,6 @@ JSBool JSPROXY_CCEaseSineOut_actionWithAction__static(JSContext *cx, uint32_t ar
 	return JS_TRUE;
 }
 
-// Arguments: ccTime
-// Ret value: CCEaseSineOut* (o)
-JSBool JSPROXY_CCEaseSineOut_actionWithDuration__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	double arg0; 
-
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCEaseSineOut* ret_val;
-
-	ret_val = [CCEaseSineOut actionWithDuration:(ccTime)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: 
-// Ret value: CCEaseSineOut* (o)
-JSBool JSPROXY_CCEaseSineOut_action_static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	CCEaseSineOut* ret_val;
-
-	ret_val = [CCEaseSineOut action ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCEaseSineOut_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCEaseSineOut_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -45490,8 +41872,6 @@ void JSPROXY_CCEaseSineOut_createClass(JSContext *cx, JSObject* globalObj, const
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCEaseSineOut_actionWithAction__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("actionWithDuration", JSPROXY_CCEaseSineOut_actionWithDuration__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("action", JSPROXY_CCEaseSineOut_action_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 

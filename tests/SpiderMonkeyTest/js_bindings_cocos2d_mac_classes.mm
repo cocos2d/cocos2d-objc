@@ -2745,48 +2745,6 @@ JSBool JSPROXY_CCLayerGradient_vector(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-// Arguments: ccColor4B
-// Ret value: CCLayerGradient* (o)
-JSBool JSPROXY_CCLayerGradient_layerWithColor__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccColor4B arg0; 
-
-	ok &= jsval_to_ccColor4B( cx, *argvp++, (ccColor4B*) &arg0 );
-	if( ! ok ) return JS_FALSE;
-	CCLayerGradient* ret_val;
-
-	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
-// Arguments: ccColor4B, GLfloat, GLfloat
-// Ret value: CCLayerGradient* (o)
-JSBool JSPROXY_CCLayerGradient_layerWithColor_width_height__static(JSContext *cx, uint32_t argc, jsval *vp) {
-	JSB_PRECONDITION( argc == 3, "Invalid number of arguments" );
-	jsval *argvp = JS_ARGV(cx,vp);
-	JSBool ok = JS_TRUE;
-	ccColor4B arg0; double arg1; double arg2; 
-
-	ok &= jsval_to_ccColor4B( cx, *argvp++, (ccColor4B*) &arg0 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
-	ok &= JS_ValueToNumber( cx, *argvp++, &arg2 );
-	if( ! ok ) return JS_FALSE;
-	CCLayerGradient* ret_val;
-
-	ret_val = [CCLayerGradient layerWithColor:(ccColor4B)arg0 width:(GLfloat)arg1 height:(GLfloat)arg2  ];
-
-	JSObject *jsobj = get_or_create_jsobject_from_realobj( cx, ret_val );
-	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
-
-	return JS_TRUE;
-}
-
 void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
 	JSPROXY_CCLayerGradient_class = (JSClass *)calloc(1, sizeof(JSClass));
@@ -2822,8 +2780,6 @@ void JSPROXY_CCLayerGradient_createClass(JSContext *cx, JSObject* globalObj, con
 	};
 	static JSFunctionSpec st_funcs[] = {
 		JS_FN("create", JSPROXY_CCLayerGradient_layerWithColor_fadingTo_alongVector__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerWithColor", JSPROXY_CCLayerGradient_layerWithColor__static, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("layerWithColorWidthHeight", JSPROXY_CCLayerGradient_layerWithColor_width_height__static, 3, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 
