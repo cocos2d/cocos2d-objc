@@ -776,10 +776,10 @@ JSObject* %s_object = NULL;
         constructor_template = '''// Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
-    return JS_TRUE;
+	return JS_TRUE;
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )

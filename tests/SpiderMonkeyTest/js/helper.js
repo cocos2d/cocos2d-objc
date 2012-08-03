@@ -1,14 +1,4 @@
 // cocos2d Helper
-//function ccp(x, y)
-//{
-//	var floats = new Float32Array(2);
-//	floats[0] = x;
-//	floats[1] = y;
-//
-//	return floats;
-//}
-
-//var cc = cc || {};
 
 //
 // cocos2d constants
@@ -54,28 +44,39 @@ cc.BLUE = cc.c3(0,0,255);
 cc.BLACK = cc.c3(0,0,0);
 cc.WHITE = cc.c3(255,255,255);
 
-cc.POINT_ZERO = cc.p(0,0);
+cc.POINT_ZERO = {x:0, y:0};
 
-cc._reuse_p0 = cc.p(0,0);
-cc._reuse_p1 = cc.p(0,0);
+cc._reuse_p0 = {x:0, y:0};
+cc._reuse_p1 = {x:0, y:0};
 cc._reuse_p_index = 0;
 cc._reuse_color3b = cc.c3(255, 255, 255 );
 cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
 cc._reuse_grid = cc.g(0,0);
 
+// Config
+cc.dumpConfig = function()
+{
+    for( i in cc.config )
+        cc.log( i + " = " + cc.config[i] );
+}
+
 //
 // Point
 //
+cc.p = function( x, y )
+{
+    return {x:x, y:y};
+}
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index == 0 ) {
-        cc._reuse_p0[0] = x;
-        cc._reuse_p0[1] = y;
+        cc._reuse_p0.x = x;
+        cc._reuse_p0.y = y;
         cc._reuse_p_index = 1;
         return cc._reuse_p0;
     } else {
-        cc._reuse_p1[0] = x;
-        cc._reuse_p1[1] = y;
+        cc._reuse_p1.x = x;
+        cc._reuse_p1.y = y;
         cc._reuse_p_index = 0;
         return cc._reuse_p1;
     }
@@ -83,12 +84,12 @@ cc._p = function( x, y )
 
 cc._to_p = function( point )
 {
-    return cc.p( x.width, y.height );
+    return point;
 }
 
 cc._from_p = function( size )
 {
-    return { x:size[0], y:size[1] };
+    return size;
 }
 
 //
@@ -96,8 +97,8 @@ cc._from_p = function( size )
 //
 cc._g = function( x, y )
 {
-    cc._reuse_grid[0] = x;
-    cc._reuse_grid[1] = y;
+    cc._reuse_grid.x = x;
+    cc._reuse_grid.y = y;
     return cc._reuse_grid;
 }
 
@@ -126,24 +127,17 @@ cc._c4 = function( r, g, b, a )
 //
 cc.size = function(w,h)
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var size = new Float64Array(2)
-    else
-        var size = new Float32Array(2)
-	size[0] = w;
-	size[1] = h;
-	return size;
+    return {width:w, height:h};
 }
 
 cc._to_size = function( size )
 {
-    return cc.size( size.width, size.height);
+    return size;
 }
 
 cc._from_size = function( size )
 {
-    return { width:size[0], height:size[1] };
+    return size;
 }
 
 //
@@ -151,43 +145,26 @@ cc._from_size = function( size )
 //
 cc.rect = function(x,y,w,h)
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var rect = new Float64Array(4)
-    else
-        var rect = new Float32Array(4)
-
-	rect[0] = x;
-	rect[1] = y;
-	rect[2] = w;
-	rect[3] = h;
-	return rect;
+    return {x:x, y:y, width:w, height:h};
 }
 
 cc._to_rect = function( rect )
 {
-    return cc.rect( rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    return rect;
 }
 
 cc._from_rect = function( rect )
 {
-    return {origin:{x:rect[0], y:rect[1]}, size:{width:rect[2], height:rect[3]} };
+    return rect;
 }
 
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
-//    var _ra = cc._from_rect(rectA);
-//    var _rb = cc._from_rect(rectB);
-
-    var bool = ! (  rectA[0] > rectB[0]+rectB[2] ||
-                rectA[0]+rectA[2] < rectB[0] ||
-                rectA[1] > rectB[1]+rectB[3] ||
-                rectA[1]+rectA[3] < rectB[1] );
-
-//    cc.log("----: " + bool);
-//    cc.log( 'x:' + rectA[0] + ' y:' + rectA[1] + ' widht:' + rectA[2] + ' height:' + rectA[3] );
-//    cc.log( 'x:' + rectB[0] + ' y:' + rectB[1] + ' widht:' + rectB[2] + ' height:' + rectB[3] );
+    var bool = ! (  rectA.x > rectB.x + rectB.width ||
+                    rectA.x + rectA.width < rectB.x ||
+                    rectA.y > rectB.y +rectB.height ||
+                    rectA.y + rectA.height < rectB.y );
 
     return bool;
 }

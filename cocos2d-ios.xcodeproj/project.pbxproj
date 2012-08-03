@@ -7419,7 +7419,8 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
-				A04E85D6159B6B2D00F4BE65 /* SpiderMonkeyTest */,
+				A001946D15C37A6700F3D80E /* MoonWarriors */,
+				A04E85D6159B6B2D00F4BE65 /* Javascript */,
 				504828C70F45B15700A30CEF /* attachDemo */,
 				05CA7B0910ED679000F12774 /* blocks */,
 				500111EA103B878B0059EC2E /* Box2DTestBed-Cocos2dIntegration */,
@@ -7952,10 +7953,9 @@
 			path = external/CocosBuilderReader;
 			sourceTree = "<group>";
 		};
-		A04E85D6159B6B2D00F4BE65 /* SpiderMonkeyTest */ = {
+		A04E85D6159B6B2D00F4BE65 /* Javascript */ = {
 			isa = PBXGroup;
 			children = (
-				A001946D15C37A6700F3D80E /* MoonWarriors */,
 				A04E8611159B6B4800F4BE65 /* js */,
 				A01D0A40159E8AEC0029EE77 /* js_bindings_cocos2d_classes_registration.h */,
 				A01D0A41159E8AEC0029EE77 /* js_bindings_cocos2d_classes.h */,
@@ -7996,7 +7996,7 @@
 				A04E85E4159B6B2D00F4BE65 /* AppController.h */,
 				A04E85E5159B6B2D00F4BE65 /* AppController.mm */,
 			);
-			name = SpiderMonkeyTest;
+			name = Javascript;
 			path = tests/SpiderMonkeyTest;
 			sourceTree = "<group>";
 		};

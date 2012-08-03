@@ -27,6 +27,7 @@
 #import "ScriptingCore.h"
 #import "js_bindings_config.h"
 #import "js_bindings_NS_manual.h"
+#import "js_bindings_config.h"
 
 
 #pragma mark - helpers
@@ -237,21 +238,82 @@ JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, j
 
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 {
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+
+	jsval valx, valy;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
+	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
+
+	if( ! ok )
+		return JS_FALSE;
+	
+	double x, y;
+	ok &= JS_ValueToNumber(cx, valx, &x);
+	ok &= JS_ValueToNumber(cx, valy, &y);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->x = x;
+	ret->y = y;
+
+	return JS_TRUE;
+
+#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
 	JSObject *tmp_arg;
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
 	
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
+	
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGPoint), "Invalid length");
 	
 	*ret = *(CGPoint*)JS_GetArrayBufferViewData( tmp_arg, cx );
-
+	
 	return JS_TRUE;
+#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 {
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+	
+	jsval valw, valh;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "width", &valw);
+	ok &= JS_GetProperty(cx, jsobj, "height", &valh);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	double w, h;
+	ok &= JS_ValueToNumber(cx, valw, &w);
+	ok &= JS_ValueToNumber(cx, valh, &h);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->width = w;
+	ret->height = h;
+	
+	return JS_TRUE;
+	
+#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
 	JSObject *tmp_arg;
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
@@ -262,10 +324,48 @@ JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 	
 	*ret = *(CGSize*)JS_GetArrayBufferViewData( tmp_arg, cx );
 	return JS_TRUE;
+
+#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
 {
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	
+	JSObject *jsobj;
+	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
+		return JS_FALSE;
+	
+	JSB_PRECONDITION( jsobj, "Not a valid JS object");
+	
+	jsval valx, valy, valw, valh;
+	JSBool ok = JS_TRUE;
+	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
+	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
+	ok &= JS_GetProperty(cx, jsobj, "width", &valw);
+	ok &= JS_GetProperty(cx, jsobj, "height", &valh);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	double x, y, w, h;
+	ok &= JS_ValueToNumber(cx, valx, &x);
+	ok &= JS_ValueToNumber(cx, valy, &y);
+	ok &= JS_ValueToNumber(cx, valw, &w);
+	ok &= JS_ValueToNumber(cx, valh, &h);
+	
+	if( ! ok )
+		return JS_FALSE;
+	
+	ret->origin.x = x;
+	ret->origin.y = y;
+	ret->size.width = w;
+	ret->size.height = h;
+	
+	return JS_TRUE;
+	
+#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
 	JSObject *tmp_arg;
 	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
 		return JS_FALSE;
@@ -277,6 +377,8 @@ JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
 	*ret = *(CGRect*)JS_GetArrayBufferViewData( tmp_arg, cx );
 
 	return JS_TRUE;
+
+#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
@@ -395,6 +497,21 @@ jsval NSSet_to_jsval( JSContext *cx, NSSet *set)
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 {
+	
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+
+	if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(p.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(p.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);
+
+#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	
 #ifdef __LP64__
 	JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
 #else
@@ -404,10 +521,25 @@ jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 	CGPoint *buffer = (CGPoint*)JS_GetArrayBufferViewData(typedArray, cx );
 	*buffer = p;
 	return OBJECT_TO_JSVAL(typedArray);
+#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 {
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+	
+	if (!JS_DefineProperty(cx, object, "width", DOUBLE_TO_JSVAL(s.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "height", DOUBLE_TO_JSVAL(s.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);
+	
+#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
 #ifdef __LP64__
 	JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
 #else
@@ -416,10 +548,28 @@ jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 	CGSize *buffer = (CGSize*)JS_GetArrayBufferViewData(typedArray, cx);
 	*buffer = s;
 	return OBJECT_TO_JSVAL(typedArray);
+	
+#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
-jsval CGRect_to_jsval( JSContext *cx, CGRect s)
+jsval CGRect_to_jsval( JSContext *cx, CGRect rect)
 {
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	
+	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
+	if (!object)
+		return JSVAL_VOID;
+	
+	if (!JS_DefineProperty(cx, object, "x", DOUBLE_TO_JSVAL(rect.origin.x), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "y", DOUBLE_TO_JSVAL(rect.origin.y), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "width", DOUBLE_TO_JSVAL(rect.size.width), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) ||
+		!JS_DefineProperty(cx, object, "height", DOUBLE_TO_JSVAL(rect.size.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
+		return JSVAL_VOID;
+	
+	return OBJECT_TO_JSVAL(object);
+	
+#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+
 #ifdef __LP64__
 	JSObject *typedArray = JS_NewFloat64Array( cx, 4 );
 #else
@@ -427,8 +577,10 @@ jsval CGRect_to_jsval( JSContext *cx, CGRect s)
 #endif
 
 	CGRect *buffer = (CGRect*)JS_GetArrayBufferViewData(typedArray, cx);
-	*buffer = s;
+	*buffer = rect;
 	return OBJECT_TO_JSVAL(typedArray);
+	
+#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 jsval opaque_to_jsval( JSContext *cx, void *opaque )

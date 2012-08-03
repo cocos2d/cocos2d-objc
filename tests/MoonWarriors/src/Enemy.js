@@ -57,10 +57,8 @@ var Enemy = cc.Sprite.extend({
         var b = new Bullet(this.bulletSpeed, "W2.png", this.attackMode);
         global.ebulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.EnemyBullet);
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
-        var _cs = this.getContentSize();
-        var cs = cc._from_size(_cs);
+        var pos = this.getPosition();
+        var cs = this.getContentSize();
         b.setPosition( cc._p(pos.x, pos.y - cs.height * 0.2) );
     },
     hurt:function () {
@@ -69,10 +67,8 @@ var Enemy = cc.Sprite.extend({
         this.setColor( cc.RED );
     },
     collideRect:function(){
-        var _a = this.getContentSize();
-        var a = cc._from_size(_a);
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
+        var a = this.getContentSize();
+        var pos = this.getPosition();
 
         var r = cc.rect(pos.x - a.width/2, pos.y - a.height/4,a.width,a.height/2);
         return r;
