@@ -640,6 +640,27 @@ JSBool JSPROXY_ccg(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
+// Arguments: CGFloat, CGFloat
+// Ret value: CGPoint
+JSBool JSPROXY_ccp(JSContext *cx, uint32_t argc, jsval *vp) {
+	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
+	jsval *argvp = JS_ARGV(cx,vp);
+	JSBool ok = JS_TRUE;
+	double arg0; double arg1; 
+
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg0 );
+	ok &= JS_ValueToNumber( cx, *argvp++, &arg1 );
+	if( ! ok ) return JS_FALSE;
+	CGPoint ret_val;
+
+	ret_val = ccp((CGFloat)arg0 , (CGFloat)arg1  );
+
+	jsval ret_jsval = CGPoint_to_jsval( cx, (CGPoint)ret_val );
+	JS_SET_RVAL(cx, vp, ret_jsval);
+
+	return JS_TRUE;
+}
+
 // Arguments: CGPoint, CGPoint
 // Ret value: CGPoint
 JSBool JSPROXY_ccpAdd(JSContext *cx, uint32_t argc, jsval *vp) {

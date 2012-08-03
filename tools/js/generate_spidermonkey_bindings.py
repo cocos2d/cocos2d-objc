@@ -87,10 +87,10 @@ class SpiderMonkey(object):
                              'inherit_class_methods' : True,
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
-                             'method_properties' : [],
-                             'js_properties' : [],
-                             'struct_properties' : [],
+                             'function_properties' : [],
                              'function_prefix_to_remove' : '',
+                             'method_properties' : [],
+                             'struct_properties' : [],
                              'import_files' : [],
                              }
 
@@ -168,6 +168,7 @@ class SpiderMonkey(object):
         self.function_prefix = config['function_prefix_to_remove']
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
+        self.init_function_properties( config['function_properties'] )
         self.current_function = None
         self.callback_functions = []
 
@@ -317,6 +318,32 @@ class SpiderMonkey(object):
                 sys.stderr.write("\nERROR parsing line: %s\n\n" % (prop) )
                 raise
 
+    def init_function_properties( self, properties ):
+        self.function_properties = {}
+        self.struct_manual = []
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                if o_key == 'manual':
+                    self.function_manual.append( key )
+            self.function_properties[key] = opts
+
     def init_struct_properties( self, properties ):
         self.struct_properties = {}
         self.struct_opaque = []
@@ -371,6 +398,12 @@ class SpiderMonkey(object):
                 copy_set.remove( i )
 
         self.functions_to_bind = copy_set
+
+    def get_function_property( self, func_name, property  ):
+        try:
+            return self.function_properties[ func_name ][ property ]
+        except KeyError, e:
+            return None
 
     def init_class_properties( self, properties ):
         ref_list = []
@@ -553,12 +586,12 @@ class SpiderMonkey(object):
         return (bs_to_type_array[k], len(value) )
 
     def get_name_for_manual_struct( self, struct_name ):
-        value = self.get_struct_property( 'manual', struct_name )
+        value = self.get_struct_property( struct_name, 'manual' )
         if not value:
             return struct_name
         return value
 
-    def get_struct_property( self, property, struct_name ):
+    def get_struct_property( self, struct_name, property ):
         try:
             return self.struct_properties[ struct_name ][ property ]
         except KeyError, e:
@@ -729,6 +762,10 @@ class SpiderMonkey(object):
         return name
 
     def convert_function_name_to_js( self, function_name ):
+        name = self.get_function_property( function_name, 'name' );
+        if name != None:
+            return name
+
         name = function_name
         if function_name.startswith( self.function_prefix ):
             name = name[ len(self.function_prefix) : ]
@@ -2013,7 +2050,7 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_args = self.get_number_of_arguments( function )
         template = 'JS_DefineFunction(_cx, %s, "%s", %s, %d, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );\n' % \
                  ( self.namespace,
-                   self.convert_function_name_to_js( func_name),
+                   self.convert_function_name_to_js(func_name),
                    PROXY_PREFIX + func_name,
                    num_args )
 
