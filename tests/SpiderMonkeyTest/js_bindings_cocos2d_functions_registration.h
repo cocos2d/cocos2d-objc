@@ -36,6 +36,7 @@ JS_DefineFunction(_cx, cocos2d, "c4FFromccc3B", JSPROXY_ccc4FFromccc3B, 1, JSPRO
 JS_DefineFunction(_cx, cocos2d, "c4FFromccc4B", JSPROXY_ccc4FFromccc4B, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d, "c4f", JSPROXY_ccc4f, 4, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d, "g", JSPROXY_ccg, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+JS_DefineFunction(_cx, cocos2d, "_native_p", JSPROXY_ccp, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d, "pAdd", JSPROXY_ccpAdd, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d, "pAngle", JSPROXY_ccpAngle, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 JS_DefineFunction(_cx, cocos2d, "pAngleSigned", JSPROXY_ccpAngleSigned, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );

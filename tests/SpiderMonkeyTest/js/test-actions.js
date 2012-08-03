@@ -52,7 +52,7 @@ var loadScene = function (sceneIdx)
 
 	director.replaceScene( scene );
     __jsc__.dumpRoot();
-//    __jsc__.garbageCollect();
+    __jsc__.garbageCollect();
 }
 
 
