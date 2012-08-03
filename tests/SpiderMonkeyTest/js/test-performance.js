@@ -56,66 +56,39 @@ var elapsed = (endMSec - startMSec) / 1000;
 
 cc.log("It took " + elapsed + " seconds to create " + n + " points in JS using new Float32Array()" );
 
-//
-// Testing "getting" points
-//
-var node = cc.Node.create();
-node.setPosition( cc.p(1,1) );
 
-var startMSec = Date.now();
+//
+// Testing querying properties
+// Valid only when using Typed Arrays for Point
+//
 var n=50000;
-for( var i=0; i < n; i++ )
-    var p = node.getPosition();
-
+var p = new Float32Array(2);
+p[0] = 10;
+p[1] = 20;
+var startMSec = Date.now();
+for( var i=0; i < n; i++ ) {
+    var x = p[0];
+    var y = p[1];
+}
 var endMSec = Date.now();
 var elapsed = (endMSec - startMSec) / 1000;
+cc.log("It took " + elapsed + " seconds to parse " + n + " points using p[0], p[1]" );
 
-cc.log("It took " + elapsed + " seconds to 'node.getPosition()' " + n + " times" );
-
-
-if( cc.config.usesTypedArrays ) {
-    //
-    // Testing querying properties
-    // Valid only when using Typed Arrays for Point
-    //
-    var node = cc.Node.create();
-    node.setPosition( cc.p(1,1) );
-
-    var startMSec = Date.now();
-    var n=50000;
-    var p = node.getPosition();
-    for( var i=0; i < n; i++ ) {
-        var x = p[0];
-        var y = p[1];
-    }
-
-    var endMSec = Date.now();
-    var elapsed = (endMSec - startMSec) / 1000;
-
-    cc.log("It took " + elapsed + " seconds to parse " + n + " points using p[0], p[1]" );
-
-} else {
-
-    //
-    // Testing querying properties
-    // Valid only when using Object for Point
-    //
-    var node = cc.Node.create();
-    node.setPosition( cc.p(1,1) );
-
-    var startMSec = Date.now();
-    var n=50000;
-    var p = node.getPosition();
-    for( var i=0; i < n; i++ ) {
-        var x = p.x;
-        var y = p.y;
-    }
-
-    var endMSec = Date.now();
-    var elapsed = (endMSec - startMSec) / 1000;
-
-    cc.log("It took " + elapsed + " seconds to parse " + n + " points using p.x, p.y" );
+//
+// Testing querying properties
+// Valid only when using Object for Point
+//
+var n=50000;
+var p = {x:10,y:20};
+var startMSec = Date.now();
+for( var i=0; i < n; i++ ) {
+    var x = p.x;
+    var y = p.y;
 }
+var endMSec = Date.now();
+var elapsed = (endMSec - startMSec) / 1000;
+cc.log("It took " + elapsed + " seconds to parse " + n + " points using p.x, p.y" );
+
 
 //
 // Testing native calls
@@ -123,16 +96,27 @@ if( cc.config.usesTypedArrays ) {
 var node = cc.Node.create();
 node.setPosition( cc.p(1,1) );
 
-var startMSec = Date.now();
 var n=50000;
 var p = node.getPosition();
+var startMSec = Date.now();
 for( var i=0; i < n; i++ ) {
     node.cleanup();
 }
-
 var endMSec = Date.now();
 var elapsed = (endMSec - startMSec) / 1000;
-
 cc.log("It took " + elapsed + " seconds to send " + n + " calls using node.cleanup()" );
+
+//
+// Testing creating nodes
+//
+var n=1000;
+var startMSec = Date.now();
+for( var i=0; i < n; i++ ) {
+    var node = cc.Node.create();
+}
+var endMSec = Date.now();
+var elapsed = (endMSec - startMSec) / 1000;
+cc.log("It took " + elapsed + " seconds to create " + n + " cc.Node objects" );
+
 
 cc.log('----------------');

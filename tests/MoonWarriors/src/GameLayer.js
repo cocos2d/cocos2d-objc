@@ -66,7 +66,7 @@ var GameLayer = cc.Layer.extend({
                 this.setMouseEnabled( true );
 //            this.setKeypadEnabled(true);
             }
-            else if( deviceType == 'mobile' )
+            else if( devicetype == 'mobile' )
                 this.setTouchEnabled( true );
 
             //accept keypad
