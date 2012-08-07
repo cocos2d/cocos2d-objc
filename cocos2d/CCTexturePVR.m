@@ -580,16 +580,11 @@ typedef struct {
 		_pixelFormatInfo = NULL;
 
 		retainName_ = NO; // cocos2d integration
-		BOOL ok = YES;
 		
-		ok = [self unpackPVRv2Data:pvrdata PVRLen:pvrlen];
-		if( ! ok )
-			ok = [self unpackPVRv3Data:pvrdata PVRLen:pvrlen];
-			
-		if( ok )
-			ok = [self createGLTexture];
 		
-		if( ! ok ) {
+		if( ! (([self unpackPVRv2Data:pvrdata PVRLen:pvrlen] || [self unpackPVRv3Data:pvrdata PVRLen:pvrlen]) &&
+		   [self createGLTexture] ) )
+		{
 			free(pvrdata);
 			[self release];
 			return nil;
