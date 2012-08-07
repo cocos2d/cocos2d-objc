@@ -1713,6 +1713,44 @@ return @"Skew Comparison";
 
 #pragma mark AppController - iOS
 
+@interface BootLayer : CCLayer
+@end
+
+@implementation BootLayer
+
+// Don't create the background imate at "init" time.
+// Instead create it at "onEnter" time.
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		CCSprite *_background;
+		
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			_background = [CCSprite spriteWithFile:@"Default.png"];
+			_background.rotation = 90;
+		} else {
+			_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
+		}
+		_background.position = ccp(size.width/2, size.height/2);
+		
+		[self addChild:_background];
+	}
+	return self;
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	[[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:1 scene:scene]];
+}
+@end
+
 @implementation AppController
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -1741,13 +1779,20 @@ return @"Skew Comparison";
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
 
 	return YES;
 }
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [BootLayer node]];
+		[director runWithScene: scene];
+	}
+}
+
 
 //-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 //{

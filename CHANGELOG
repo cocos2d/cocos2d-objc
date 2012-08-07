@@ -14,6 +14,8 @@ version 2.1-alpha XX-Ago-2012
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Tests: Tests for RotationalSkew feature
 . [NEW] Texture: Supports PVR v3 file format
+. [FIX] Director: Fixed flicker again.
+		Autorotation works on iOS6.
 . [FIX] MenuItemToggle: Don't remove tag of added item.
 . [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.

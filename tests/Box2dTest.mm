@@ -377,15 +377,20 @@ enum {
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	// add layer
-	CCScene *scene = [CCScene node];
-	id box2dLayer = [MainLayer node];
-	[scene addChild:box2dLayer z:0];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		id box2dLayer = [MainLayer node];
+		[scene addChild:box2dLayer z:0];
+		[director runWithScene: scene];
+	}
+}
+
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

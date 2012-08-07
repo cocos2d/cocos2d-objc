@@ -45,6 +45,7 @@
 #pragma mark - AppController - iOS
 
 #ifdef __CC_PLATFORM_IOS
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Don't call super
@@ -112,17 +113,25 @@
 	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];	// Generates flicker.
-//	[window_ setRootViewController:navController_];
+	[window_ setRootViewController:navController_];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
 
-
-	[self run];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil) {
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		[self run];
+	}
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

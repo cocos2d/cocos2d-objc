@@ -409,7 +409,7 @@ typedef struct {
 	
 	// unsupported / bad pixel format
 	if(!infoValid) {
-		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %x", pixelFormat );
+		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %llx", pixelFormat );
 		return FALSE;
 	}
 		
@@ -462,7 +462,7 @@ typedef struct {
 			heightBlocks = 2;
 		
 		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
-		unsigned int packetLength = (dataLength-dataOffset);
+		unsigned int packetLength = ((unsigned int)dataLength-dataOffset);
 		packetLength = packetLength > dataSize ? dataSize : packetLength;
 		
 		mipmaps_[i].address = bytes+dataOffset;
@@ -524,7 +524,7 @@ typedef struct {
 		}
 
 		unsigned char *data = mipmaps_[i].address;
-		unsigned int datalen = mipmaps_[i].len;
+		GLsizei datalen = mipmaps_[i].len;
 
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
