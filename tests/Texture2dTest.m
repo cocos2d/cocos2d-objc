@@ -19,27 +19,6 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
-	@"TexturePVRRGBA8888",
-	@"TexturePVRRGBA8888v3",	
-	@"TexturePVRBGRA8888",
-	@"TexturePVRBGRA8888v3",
-	@"TexturePVRRGBA4444",
-	@"TexturePVRRGBA4444v3",
-	@"TexturePVRRGBA4444GZ",
-	@"TexturePVRRGBA4444CCZ",
-	@"TexturePVRRGBA5551",
-	@"TexturePVRRGBA5551v3",
-	@"TexturePVRRGB565",
-	@"TexturePVRRGB565v3",
-	@"TexturePVRRGB888",
-	@"TexturePVRRGB888v3",
-	@"TexturePVRA8",
-	@"TexturePVRA8v3",
-	@"TexturePVRI8",
-	@"TexturePVRI8v3",
-	@"TexturePVRAI88",
-	@"TexturePVRAI88v3",
-	
 	@"TextureMemoryAlloc",
 
 	@"TextureAlias",

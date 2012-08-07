@@ -236,7 +236,6 @@ typedef struct _PVRTexHeader
 	uint32_t numSurfs;
 } ccPVRv2TexHeader;
 
-
 typedef struct {
 	uint32_t version;
 	uint32_t flags;
@@ -250,7 +249,7 @@ typedef struct {
 	uint32_t numberOfFaces;
 	uint32_t numberOfMipmaps;
 	uint32_t metadataLength;
-} ccPVRv3TexHeader;
+} __attribute__((packed)) ccPVRv3TexHeader ;
 
 @implementation CCTexturePVR
 @synthesize name = name_;
