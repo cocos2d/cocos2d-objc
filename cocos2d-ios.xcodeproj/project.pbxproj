@@ -1421,6 +1421,19 @@
 		A015BFF113B826D800C73E76 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCB13B826D800C73E76 /* vec3.c */; };
 		A015BFF313B826D800C73E76 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A015BFCC13B826D800C73E76 /* vec4.c */; };
 		A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
+		A01889D415D092E600FF6F4E /* test_image_a8_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889C715D092E600FF6F4E /* test_image_a8_v3.pvr */; };
+		A01889D515D092E600FF6F4E /* test_image_ai88_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889C815D092E600FF6F4E /* test_image_ai88_v3.pvr */; };
+		A01889D615D092E600FF6F4E /* test_image_bgra8888_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889C915D092E600FF6F4E /* test_image_bgra8888_v3.pvr */; };
+		A01889D715D092E600FF6F4E /* test_image_i8_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CA15D092E600FF6F4E /* test_image_i8_v3.pvr */; };
+		A01889D815D092E600FF6F4E /* test_image_pvrtc2bpp_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CB15D092E600FF6F4E /* test_image_pvrtc2bpp_v3.pvr */; };
+		A01889D915D092E600FF6F4E /* test_image_pvrtc4bpp_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CC15D092E600FF6F4E /* test_image_pvrtc4bpp_v3.pvr */; };
+		A01889DA15D092E600FF6F4E /* test_image_pvrtcii2bpp_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CD15D092E600FF6F4E /* test_image_pvrtcii2bpp_v3.pvr */; };
+		A01889DB15D092E600FF6F4E /* test_image_pvrtcii4bpp_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CE15D092E600FF6F4E /* test_image_pvrtcii4bpp_v3.pvr */; };
+		A01889DC15D092E600FF6F4E /* test_image_rgb565_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889CF15D092E600FF6F4E /* test_image_rgb565_v3.pvr */; };
+		A01889DD15D092E600FF6F4E /* test_image_rgb888_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889D015D092E600FF6F4E /* test_image_rgb888_v3.pvr */; };
+		A01889DE15D092E600FF6F4E /* test_image_rgba4444_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889D115D092E600FF6F4E /* test_image_rgba4444_v3.pvr */; };
+		A01889DF15D092E600FF6F4E /* test_image_rgba5551_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889D215D092E600FF6F4E /* test_image_rgba5551_v3.pvr */; };
+		A01889E015D092E600FF6F4E /* test_image_rgba8888_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A01889D315D092E600FF6F4E /* test_image_rgba8888_v3.pvr */; };
 		A01AB8C7149709E300C93DB6 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A01AB8C8149709E300C93DB6 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A01AB8C9149709E300C93DB6 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -4935,6 +4948,19 @@
 		A015BFCA13B826D800C73E76 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
 		A015BFCB13B826D800C73E76 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
 		A015BFCC13B826D800C73E76 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		A01889C715D092E600FF6F4E /* test_image_a8_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_a8_v3.pvr; sourceTree = "<group>"; };
+		A01889C815D092E600FF6F4E /* test_image_ai88_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_ai88_v3.pvr; sourceTree = "<group>"; };
+		A01889C915D092E600FF6F4E /* test_image_bgra8888_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_bgra8888_v3.pvr; sourceTree = "<group>"; };
+		A01889CA15D092E600FF6F4E /* test_image_i8_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_i8_v3.pvr; sourceTree = "<group>"; };
+		A01889CB15D092E600FF6F4E /* test_image_pvrtc2bpp_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc2bpp_v3.pvr; sourceTree = "<group>"; };
+		A01889CC15D092E600FF6F4E /* test_image_pvrtc4bpp_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtc4bpp_v3.pvr; sourceTree = "<group>"; };
+		A01889CD15D092E600FF6F4E /* test_image_pvrtcii2bpp_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtcii2bpp_v3.pvr; sourceTree = "<group>"; };
+		A01889CE15D092E600FF6F4E /* test_image_pvrtcii4bpp_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_pvrtcii4bpp_v3.pvr; sourceTree = "<group>"; };
+		A01889CF15D092E600FF6F4E /* test_image_rgb565_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb565_v3.pvr; sourceTree = "<group>"; };
+		A01889D015D092E600FF6F4E /* test_image_rgb888_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888_v3.pvr; sourceTree = "<group>"; };
+		A01889D115D092E600FF6F4E /* test_image_rgba4444_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444_v3.pvr; sourceTree = "<group>"; };
+		A01889D215D092E600FF6F4E /* test_image_rgba5551_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba5551_v3.pvr; sourceTree = "<group>"; };
+		A01889D315D092E600FF6F4E /* test_image_rgba8888_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba8888_v3.pvr; sourceTree = "<group>"; };
 		A01AB91A149709E300C93DB6 /* DirectorTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DirectorTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
@@ -8581,6 +8607,19 @@
 		E0A4A24A11F899BB003B9D29 /* PVR images */ = {
 			isa = PBXGroup;
 			children = (
+				A01889C715D092E600FF6F4E /* test_image_a8_v3.pvr */,
+				A01889C815D092E600FF6F4E /* test_image_ai88_v3.pvr */,
+				A01889C915D092E600FF6F4E /* test_image_bgra8888_v3.pvr */,
+				A01889CA15D092E600FF6F4E /* test_image_i8_v3.pvr */,
+				A01889CB15D092E600FF6F4E /* test_image_pvrtc2bpp_v3.pvr */,
+				A01889CC15D092E600FF6F4E /* test_image_pvrtc4bpp_v3.pvr */,
+				A01889CD15D092E600FF6F4E /* test_image_pvrtcii2bpp_v3.pvr */,
+				A01889CE15D092E600FF6F4E /* test_image_pvrtcii4bpp_v3.pvr */,
+				A01889CF15D092E600FF6F4E /* test_image_rgb565_v3.pvr */,
+				A01889D015D092E600FF6F4E /* test_image_rgb888_v3.pvr */,
+				A01889D115D092E600FF6F4E /* test_image_rgba4444_v3.pvr */,
+				A01889D215D092E600FF6F4E /* test_image_rgba5551_v3.pvr */,
+				A01889D315D092E600FF6F4E /* test_image_rgba8888_v3.pvr */,
 				A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */,
 				A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */,
 				A07273C5155B217D003E961F /* test_1021x1024_rgba4444.pvr.gz */,
@@ -11148,6 +11187,19 @@
 				A07273C9155B217E003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */,
 				A07273CA155B217E003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */,
 				A0A1C27715CAEA180058D96F /* Default-Landscape.png in Resources */,
+				A01889D415D092E600FF6F4E /* test_image_a8_v3.pvr in Resources */,
+				A01889D515D092E600FF6F4E /* test_image_ai88_v3.pvr in Resources */,
+				A01889D615D092E600FF6F4E /* test_image_bgra8888_v3.pvr in Resources */,
+				A01889D715D092E600FF6F4E /* test_image_i8_v3.pvr in Resources */,
+				A01889D815D092E600FF6F4E /* test_image_pvrtc2bpp_v3.pvr in Resources */,
+				A01889D915D092E600FF6F4E /* test_image_pvrtc4bpp_v3.pvr in Resources */,
+				A01889DA15D092E600FF6F4E /* test_image_pvrtcii2bpp_v3.pvr in Resources */,
+				A01889DB15D092E600FF6F4E /* test_image_pvrtcii4bpp_v3.pvr in Resources */,
+				A01889DC15D092E600FF6F4E /* test_image_rgb565_v3.pvr in Resources */,
+				A01889DD15D092E600FF6F4E /* test_image_rgb888_v3.pvr in Resources */,
+				A01889DE15D092E600FF6F4E /* test_image_rgba4444_v3.pvr in Resources */,
+				A01889DF15D092E600FF6F4E /* test_image_rgba5551_v3.pvr in Resources */,
+				A01889E015D092E600FF6F4E /* test_image_rgba8888_v3.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14596,6 +14648,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14619,6 +14672,7 @@
 				);
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14806,6 +14860,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = libpng;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14817,6 +14872,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = libpng;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -14868,6 +14924,7 @@
 				HEADER_SEARCH_PATHS = external/Box2d;
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				PRODUCT_NAME = box2d;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -14884,6 +14941,7 @@
 				INCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "";
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = box2d;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -15720,6 +15778,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -15737,6 +15796,7 @@
 				HEADER_SEARCH_PATHS = external/Chipmunk/include/chipmunk;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = Chipmunk;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -15900,6 +15960,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -15911,6 +15972,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosDenshion;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -16035,6 +16097,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -16057,6 +16120,7 @@
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Moon Warriors";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -16065,6 +16129,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -16086,6 +16151,7 @@
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Moon Warriors";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				ZERO_LINK = NO;
 			};
@@ -16168,6 +16234,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = CocosBuilderReader;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -16184,6 +16251,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				OTHER_CFLAGS = "";
 				PRODUCT_NAME = CocosBuilderReader;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -16198,6 +16266,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = kazmath;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 			};
 			name = Debug;
 		};
@@ -16210,6 +16279,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = kazmath;
 				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -16276,6 +16346,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -16298,6 +16369,7 @@
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Watermelon";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -16305,6 +16377,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -16326,6 +16399,7 @@
 					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Watermelon";
+				PROVISIONING_PROFILE = "";
 				ZERO_LINK = NO;
 			};
 			name = Release;
