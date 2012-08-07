@@ -315,6 +315,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	winSizeInPixels_ = CGSizeMake(winSizeInPoints_.width * __ccContentScaleFactor, winSizeInPoints_.height *__ccContentScaleFactor);
 
 	[self setProjection:projection_];
+  
+  if( [delegate_ respondsToSelector:@selector(directorDidReshapeProjection)] )
+    [delegate_ directorDidReshapeProjection];
 }
 
 #pragma mark Director Point Convertion
