@@ -17,6 +17,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
+	Director: Fixed the initial flicker + correct size at startup
+
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 
