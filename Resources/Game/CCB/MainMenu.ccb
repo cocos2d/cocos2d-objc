@@ -278,6 +278,11 @@
 						</array>
 					</dict>
 					<dict>
+						<key>baseValue</key>
+						<array>
+							<real>1</real>
+							<real>1</real>
+						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -287,7 +292,7 @@
 							<real>1</real>
 							<real>1</real>
 							<false/>
-							<integer>0</integer>
+							<integer>1</integer>
 						</array>
 					</dict>
 					<dict>
@@ -337,7 +342,7 @@
 						<string>Point</string>
 						<key>value</key>
 						<array>
-							<real>400</real>
+							<real>240</real>
 							<real>0.0</real>
 						</array>
 					</dict>

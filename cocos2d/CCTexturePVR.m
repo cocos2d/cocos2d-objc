@@ -74,6 +74,52 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #define PVR_TEXTURE_FLAG_TYPE_MASK	0xff
 
+#pragma mark PVR File format - common
+
+//
+// XXX DO NO ALTER THE ORDER IN THIS LIST XXX
+//
+static const ccPVRTexturePixelFormatInfo PVRTableFormats[] = {
+	
+	// 0: BGRA_8888
+	{GL_RGBA, GL_BGRA, GL_UNSIGNED_BYTE, 32, NO, YES, kCCTexture2DPixelFormat_RGBA8888},
+	// 1: RGBA_8888
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_BYTE, 32, NO, YES, kCCTexture2DPixelFormat_RGBA8888},
+	// 2: RGBA_4444
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, 16, NO, YES, kCCTexture2DPixelFormat_RGBA4444},
+	// 3: RGBA_5551
+	{GL_RGBA, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, 16, NO, YES, kCCTexture2DPixelFormat_RGB5A1},
+	// 4: RGB_565
+	{GL_RGB, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, 16, NO, NO, kCCTexture2DPixelFormat_RGB565},
+	// 5: RGB_888
+	{GL_RGB, GL_RGB, GL_UNSIGNED_BYTE, 24, NO, NO, kCCTexture2DPixelFormat_RGB888},
+	// 6: A_8
+	{GL_ALPHA, GL_ALPHA, GL_UNSIGNED_BYTE, 8, NO, NO, kCCTexture2DPixelFormat_A8},
+	// 7: L_8
+	{GL_LUMINANCE, GL_LUMINANCE, GL_UNSIGNED_BYTE, 8, NO, NO, kCCTexture2DPixelFormat_I8},
+	// 8: LA_88
+	{GL_LUMINANCE_ALPHA, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, 16, NO, YES, kCCTexture2DPixelFormat_AI88},
+	
+#ifdef __CC_PLATFORM_IOS
+	// 9: PVRTC 2BPP RGB
+	{GL_COMPRESSED_RGB_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, NO, kCCTexture2DPixelFormat_PVRTC2},
+	// 10: PVRTC 2BPP RGBA
+	{GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1, 2, YES, YES, kCCTexture2DPixelFormat_PVRTC2},
+	// 11: PVRTC 4BPP RGB
+	{GL_COMPRESSED_RGB_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, NO, kCCTexture2DPixelFormat_PVRTC4},
+	// 12: PVRTC 4BPP RGBA
+	{GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1, 4, YES, YES, kCCTexture2DPixelFormat_PVRTC4},
+#endif // #__CC_PLATFORM_IOS
+};
+
+struct _pixelformat_hash {
+	uint32_t pixelFormat;
+	const ccPVRTexturePixelFormatInfo * pixelFormatInfo;
+};
+
+
+#pragma  mark PVR File format - v2
+
 // Values taken from PVRTexture.h from http://www.imgtec.com
 enum {
 	kPVRTextureFlagMipmap		= (1<<8),		// has mip map levels
@@ -92,44 +138,40 @@ static char gPVRTexIdentifier[4] = "PVR!";
 
 enum
 {
-	kPVRTexturePixelTypeRGBA_4444= 0x10,
-	kPVRTexturePixelTypeRGBA_5551,
-	kPVRTexturePixelTypeRGBA_8888,
-	kPVRTexturePixelTypeRGB_565,
-	kPVRTexturePixelTypeRGB_555,				// unsupported
-	kPVRTexturePixelTypeRGB_888,
-	kPVRTexturePixelTypeI_8,
-	kPVRTexturePixelTypeAI_88,
-	kPVRTexturePixelTypePVRTC_2,
-	kPVRTexturePixelTypePVRTC_4,
-	kPVRTexturePixelTypeBGRA_8888,
-	kPVRTexturePixelTypeA_8,
+	kPVR2TexturePixelFormat_RGBA_4444= 0x10,
+	kPVR2TexturePixelFormat_RGBA_5551,
+	kPVR2TexturePixelFormat_RGBA_8888,
+	kPVR2TexturePixelFormat_RGB_565,
+	kPVR2TexturePixelFormat_RGB_555,				// unsupported
+	kPVR2TexturePixelFormat_RGB_888,
+	kPVR2TexturePixelFormat_I_8,
+	kPVR2TexturePixelFormat_AI_88,
+	kPVR2TexturePixelFormat_PVRTC_2,
+	kPVR2TexturePixelFormat_PVRTC_4,
+	kPVR2TexturePixelFormat_BGRA_8888,
+	kPVR2TexturePixelFormat_A_8,
 };
 
-static const uint32_t tableFormats[][7] = {
+static struct _pixelformat_hash v2_pixelformat_hash[] = {
 
-	// - PVR texture format
-	// - OpenGL internal format
-	// - OpenGL format
-	// - OpenGL type
-	// - bpp
-	// - compressed
-	// - Cocos2d texture format constant
-	{ kPVRTexturePixelTypeRGBA_4444,	GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4,				16, NO, kCCTexture2DPixelFormat_RGBA4444	},
-	{ kPVRTexturePixelTypeRGBA_5551,	GL_RGBA,	GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1,				16, NO, kCCTexture2DPixelFormat_RGB5A1		},
-	{ kPVRTexturePixelTypeRGBA_8888,	GL_RGBA,	GL_RGBA, GL_UNSIGNED_BYTE,						32, NO, kCCTexture2DPixelFormat_RGBA8888	},
-	{ kPVRTexturePixelTypeRGB_565,		GL_RGB,		GL_RGB,	 GL_UNSIGNED_SHORT_5_6_5,				16, NO, kCCTexture2DPixelFormat_RGB565		},
-	{ kPVRTexturePixelTypeRGB_888,		GL_RGB,		GL_RGB,	 GL_UNSIGNED_BYTE,						24, NO,	kCCTexture2DPixelFormat_RGB888		},
-	{ kPVRTexturePixelTypeA_8,			GL_ALPHA,	GL_ALPHA,	GL_UNSIGNED_BYTE,					8,	NO, kCCTexture2DPixelFormat_A8			},
-	{ kPVRTexturePixelTypeI_8,			GL_LUMINANCE,	GL_LUMINANCE,	GL_UNSIGNED_BYTE,			8,	NO, kCCTexture2DPixelFormat_I8			},
-	{ kPVRTexturePixelTypeAI_88,		GL_LUMINANCE_ALPHA,	GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE,	16,	NO, kCCTexture2DPixelFormat_AI88		},
+	{ kPVR2TexturePixelFormat_BGRA_8888,	&PVRTableFormats[0] },
+	{ kPVR2TexturePixelFormat_RGBA_8888,	&PVRTableFormats[1] },
+	{ kPVR2TexturePixelFormat_RGBA_4444,	&PVRTableFormats[2] },
+	{ kPVR2TexturePixelFormat_RGBA_5551,	&PVRTableFormats[3] },
+	{ kPVR2TexturePixelFormat_RGB_565,		&PVRTableFormats[4] },
+	{ kPVR2TexturePixelFormat_RGB_888,		&PVRTableFormats[5] },
+	{ kPVR2TexturePixelFormat_A_8,			&PVRTableFormats[6] },
+	{ kPVR2TexturePixelFormat_I_8,			&PVRTableFormats[7] },
+	{ kPVR2TexturePixelFormat_AI_88,		&PVRTableFormats[8] },
+
 #ifdef __CC_PLATFORM_IOS
-	{ kPVRTexturePixelTypePVRTC_2,		GL_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG, -1, -1,				2,	YES, kCCTexture2DPixelFormat_PVRTC2		},
-	{ kPVRTexturePixelTypePVRTC_4,		GL_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG, -1, -1,				4,	YES, kCCTexture2DPixelFormat_PVRTC4		},
+	{ kPVR2TexturePixelFormat_PVRTC_2,		&PVRTableFormats[10] },
+	{ kPVR2TexturePixelFormat_PVRTC_4,		&PVRTableFormats[12] },
 #endif // iphone only
-	{ kPVRTexturePixelTypeBGRA_8888,	GL_RGBA,	GL_BGRA, GL_UNSIGNED_BYTE,						32,	NO, kCCTexture2DPixelFormat_RGBA8888	},
 };
-#define MAX_TABLE_ELEMENTS (sizeof(tableFormats) / sizeof(tableFormats[0]))
+
+#define PVR2_MAX_TABLE_ELEMENTS (sizeof(v2_pixelformat_hash) / sizeof(v2_pixelformat_hash[0]))
+
 
 enum {
 	kCCInternalPVRTextureFormat,
@@ -158,9 +200,66 @@ typedef struct _PVRTexHeader
 	uint32_t numSurfs;
 } PVRTexHeader;
 
+#pragma  mark PVR File format - v3
+
+typedef enum {
+	/* supported predefined formats */
+	kPVR3TexturePixelFormat_PVRTC_2BPP_RGB = 0,
+	kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA = 1,
+	kPVR3TexturePixelFormat_PVRTC_4BPP_RGB = 2,
+	kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA = 3,
+	
+	/* supported channel type formats */
+	kPVR3TexturePixelFormat_PVR_BGRA_8888 = 9999,
+	kPVR3TexturePixelFormat_PVR_RGBA_8888,
+	kPVR3TexturePixelFormat_PVR_RGBA_4444,
+	kPVR3TexturePixelFormat_PVR_RGBA_5551,
+	kPVR3TexturePixelFormat_PVR_RGB_565,
+	kPVR3TexturePixelFormat_PVR_RGB_888,
+	kPVR3TexturePixelFormat_PVR_A_8,
+	kPVR3TexturePixelFormat_PVR_L_8,
+	kPVR3TexturePixelFormat_PVR_LA_8,
+} CCPVR3TexturePixelFormat;
+
+struct _pixelformat_hash v3_pixelformat_hash[] = {
+
+	{kPVR3TexturePixelFormat_PVR_BGRA_8888,	&PVRTableFormats[0] },
+	{kPVR3TexturePixelFormat_PVR_RGBA_8888,	&PVRTableFormats[1] },
+	{kPVR3TexturePixelFormat_PVR_RGBA_4444, &PVRTableFormats[2] },
+	{kPVR3TexturePixelFormat_PVR_RGBA_5551, &PVRTableFormats[3] },
+	{kPVR3TexturePixelFormat_PVR_RGB_565,	&PVRTableFormats[4] },
+	{kPVR3TexturePixelFormat_PVR_RGB_888,	&PVRTableFormats[5] },
+	{kPVR3TexturePixelFormat_PVR_A_8,		&PVRTableFormats[6] },
+	{kPVR3TexturePixelFormat_PVR_L_8,		&PVRTableFormats[7] },
+	{kPVR3TexturePixelFormat_PVR_LA_8,		&PVRTableFormats[8] },
+
+#ifdef __CC_PLATFORM_IOS
+	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGB,	&PVRTableFormats[9] },
+	{kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA,	&PVRTableFormats[10] },
+	{kPVR3TexturePixelFormat_PVRTC_4BPP_RGB,	&PVRTableFormats[11] },
+	{kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA,	&PVRTableFormats[12] },
+#endif // #__CC_PLATFORM_IOS
+};
+
+#define PVR3_MAX_TABLE_ELEMENTS (sizeof(v3_pixelformat_hash) / sizeof(v3_pixelformat_hash[0]))
+
+
+typedef struct {
+	uint32_t version;
+	uint32_t flags;
+	uint64_t pixelFormat;
+	uint32_t colorSpace;
+	uint32_t channelType;
+	uint32_t height;
+	uint32_t width;
+	uint32_t depth;
+	uint32_t numberOfSurfaces;
+	uint32_t numberOfFaces;
+	uint32_t numberOfMipmaps;
+	uint32_t metadataLength;
+} CCPVR3TextureHeader;
 
 @implementation CCTexturePVR
-
 @synthesize name = name_;
 @synthesize width = width_;
 @synthesize height = height_;
@@ -172,7 +271,7 @@ typedef struct _PVRTexHeader
 @synthesize format = format_;
 
 
-- (BOOL)unpackPVRData:(unsigned char*)data PVRLen:(NSUInteger)len
+- (BOOL)unpackPVRv2Data:(unsigned char*)data PVRLen:(NSUInteger)len
 {
 	BOOL success = FALSE;
 	PVRTexHeader *header = NULL;
@@ -192,7 +291,6 @@ typedef struct _PVRTexHeader
 		(uint32_t)gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
 		(uint32_t)gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
 	{
-		CCLOG(@"Unsupported PVR format. Use the Legacy format until the new format is supported");
 		return FALSE;
 	}
 
@@ -210,9 +308,10 @@ typedef struct _PVRTexHeader
 		return FALSE;
 	}
 
-	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
-		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
+	for( NSUInteger i=0; i < (unsigned int)PVR2_MAX_TABLE_ELEMENTS ; i++) {
+		if( v2_pixelformat_hash[i].pixelFormat == formatFlags ) {
 
+			_pixelFormatInfo = v2_pixelformat_hash[i].pixelFormatInfo;
 			numberOfMipmaps_ = 0;
 
 			width_ = width = CFSwapInt32LittleToHost(header->width);
@@ -225,24 +324,24 @@ typedef struct _PVRTexHeader
 
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
 			bytes = ((uint8_t *)data) + sizeof(PVRTexHeader);
-			format_ = tableFormats[tableFormatIndex_][kCCInternalCCTexture2DPixelFormat];
-			bpp = tableFormats[tableFormatIndex_][kCCInternalBPP];
+			format_ = _pixelFormatInfo->ccPixelFormat;
+			bpp = _pixelFormatInfo->bpp;
 
 			// Calculate the data size for each texture level and respect the minimum number of blocks
 			while (dataOffset < dataLength)
 			{
 				switch (formatFlags) {
-					case kPVRTexturePixelTypePVRTC_2:
+					case kPVR2TexturePixelFormat_PVRTC_2:
 						blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
 						widthBlocks = width / 8;
 						heightBlocks = height / 4;
 						break;
-					case kPVRTexturePixelTypePVRTC_4:
+					case kPVR2TexturePixelFormat_PVRTC_4:
 						blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
 						widthBlocks = width / 4;
 						heightBlocks = height / 4;
 						break;
-					case kPVRTexturePixelTypeBGRA_8888:
+					case kPVR2TexturePixelFormat_BGRA_8888:
 						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
 							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
 							return FALSE;
@@ -287,6 +386,198 @@ typedef struct _PVRTexHeader
 	return success;
 }
 
+- (BOOL)unpackPVRv3Data:(unsigned char*)dataPointer PVRLen:(NSUInteger)dataLength
+{
+	if(dataLength < sizeof(CCPVR3TextureHeader)) {
+		return FALSE;
+	}
+	
+	CCPVR3TextureHeader *header = (CCPVR3TextureHeader *)dataPointer;
+	
+	// validate version
+	if(CFSwapInt32BigToHost(header->version) != 0x50565203) {
+		CCLOG(@"cocos2d: WARNING: pvr file version mismatch");
+		return FALSE;
+	}
+	
+	// parse pixel format
+	uint64_t pixelFormat = header->pixelFormat;
+	uint32_t least = (uint32_t)(pixelFormat >> 0);
+	uint32_t most = (uint32_t)(pixelFormat >> 32);
+	CCPVR3TexturePixelFormat parsedPixelFormat = -1;
+	NSMutableString *formatName = nil;
+
+	// pre-defined format
+	if(!most) {
+		parsedPixelFormat = least;
+	}
+	// channel type format
+	else {
+		formatName = [NSMutableString stringWithCapacity:10];
+		
+		unichar channelsBuffer[4] = {
+			((least >> 0) & 0xff),
+			((least >> 8) & 0xff),
+			((least >> 16) & 0xff),
+			((least >> 24) & 0xff),
+		};
+		for(int i = 0; i < 4; i++) {
+			const unichar c = channelsBuffer[i];
+			if(c > 0) {
+				[formatName appendString:[NSString stringWithCharacters:&c length:1]];
+			}
+		}
+		uint8_t channelDepthsBuffer[4] = {
+			((most >> 0) & 0xff),
+			((most >> 8) & 0xff),
+			((most >> 16) & 0xff),
+			((most >> 24) & 0xff),
+		};
+		for(int i = 0; i < 4; i++) {
+			uint8_t c = channelDepthsBuffer[i];
+			if(c > 0) {
+				[formatName appendFormat:@"%i", c];
+			}
+		}
+		
+		parsedPixelFormat = -1;
+		if([formatName isEqualToString:@"bgra8888"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_BGRA_8888;
+		
+		else if([formatName isEqualToString:@"rgba8888"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_RGBA_8888;
+		
+		else if([formatName isEqualToString:@"rgba4444"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_RGBA_4444;
+		
+		else if([formatName isEqualToString:@"rgba5551"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_RGBA_5551;
+		
+		else if([formatName isEqualToString:@"rgb565"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_RGB_565;
+		
+		else if([formatName isEqualToString:@"rgb888"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_RGB_888;
+		
+		else if([formatName isEqualToString:@"a8"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_A_8;
+		
+		else if([formatName isEqualToString:@"l8"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_L_8;
+		
+		else if([formatName isEqualToString:@"la88"])
+			parsedPixelFormat = kPVR3TexturePixelFormat_PVR_A_8;		
+	}
+	
+	BOOL infoValid = NO;
+	
+	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
+		if( v3_pixelformat_hash[i].pixelFormat == parsedPixelFormat ) {
+			_pixelFormatInfo = v3_pixelformat_hash[i].pixelFormatInfo;
+			hasAlpha_ = _pixelFormatInfo->alpha;
+			infoValid = YES;
+			break;
+		}
+	}
+	
+	// unsupported / bad pixel format
+	if(!infoValid) {
+		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %@", formatName);
+		return FALSE;
+	}
+		
+	// sizing
+	uint32_t width = CFSwapInt32LittleToHost(header->width);
+	uint32_t height = CFSwapInt32LittleToHost(header->height);
+	width_ = width;
+	height_ = height;
+	uint32_t dataOffset = 0, dataSize = 0;
+	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
+	uint8_t *bytes = NULL;
+
+	switch(parsedPixelFormat) {
+		case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :
+		case kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA :
+			blockSize = 8 * 4;
+			widthBlocks = width / 8;
+			heightBlocks = height / 4;
+			break;
+		case kPVR3TexturePixelFormat_PVRTC_4BPP_RGB :
+		case kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA :
+			blockSize = 4 * 4;
+			widthBlocks = width / 4;
+			heightBlocks = height / 4;
+			break;
+		default :
+			blockSize = 1;
+			widthBlocks = width;
+			heightBlocks = height;
+			break;
+	}
+	if(widthBlocks < 2) {
+		widthBlocks = 2;
+	}
+	if(heightBlocks < 2) {
+		heightBlocks = 2;
+	}
+	
+	dataOffset = (sizeof(CCPVR3TextureHeader) + header->metadataLength);
+	bytes = dataPointer;
+	
+	numberOfMipmaps_ = header->numberOfMipmaps;
+	NSAssert( numberOfMipmaps_ < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
+
+	for(int i = 0; i < numberOfMipmaps_; i++) {
+		
+		switch(parsedPixelFormat) {
+			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :
+			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGBA :
+				blockSize = 8 * 4; // Pixel by pixel block size for 2bpp
+				widthBlocks = width / 8;
+				heightBlocks = height / 4;
+				break;
+			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGB :
+			case kPVR3TexturePixelFormat_PVRTC_4BPP_RGBA :
+				blockSize = 4 * 4; // Pixel by pixel block size for 4bpp
+				widthBlocks = width / 4;
+				heightBlocks = height / 4;
+				break;
+			case kPVR3TexturePixelFormat_PVR_BGRA_8888:
+				if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
+					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
+					return FALSE;
+				}
+			default:
+				blockSize = 1;
+				widthBlocks = width;
+				heightBlocks = height;
+				break;
+		}
+			
+		// Clamp to minimum number of blocks
+		if (widthBlocks < 2)
+			widthBlocks = 2;
+		if (heightBlocks < 2)
+			heightBlocks = 2;
+		
+		dataSize = widthBlocks * heightBlocks * ((blockSize  * _pixelFormatInfo->bpp) / 8);
+		unsigned int packetLength = (dataLength-dataOffset);
+		packetLength = packetLength > dataSize ? dataSize : packetLength;
+		
+		mipmaps_[i].address = bytes+dataOffset;
+		mipmaps_[i].len = packetLength;
+		
+		dataOffset += packetLength;
+		NSAssert( dataOffset <= dataLength, @"CCTexurePVR: Invalid lenght");
+		
+		
+		width = MAX(width >> 1, 1);
+		height = MAX(height >> 1, 1);
+	}
+	
+	return TRUE;
+}
+
 
 - (BOOL)createGLTexture
 {
@@ -318,10 +609,10 @@ typedef struct _PVRTexHeader
 	
 	CHECK_GL_ERROR(); // clean possible GL error
 
-	GLenum internalFormat = tableFormats[tableFormatIndex_][kCCInternalOpenGLInternalFormat];
-	GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
-	GLenum type = tableFormats[tableFormatIndex_][kCCInternalOpenGLType];
-	BOOL compressed = tableFormats[tableFormatIndex_][kCCInternalCompressedImage];
+	GLenum internalFormat = _pixelFormatInfo->internalFormat;
+	GLenum format = _pixelFormatInfo->format;
+	GLenum type = _pixelFormatInfo->type;
+	BOOL compressed = _pixelFormatInfo->compressed;
 
 	// Generate textures with mipmaps
 	for (GLint i=0; i < numberOfMipmaps_; i++)
@@ -384,12 +675,20 @@ typedef struct _PVRTexHeader
 
 		name_ = 0;
 		width_ = height_ = 0;
-		tableFormatIndex_ = -1;
 		hasAlpha_ = FALSE;
+		_pixelFormatInfo = NULL;
 
 		retainName_ = NO; // cocos2d integration
-
-		if( ! [self unpackPVRData:pvrdata PVRLen:pvrlen] || ![self createGLTexture]  ) {
+		BOOL ok = YES;
+		
+		ok = [self unpackPVRv2Data:pvrdata PVRLen:pvrlen];
+		if( ! ok )
+			ok = [self unpackPVRv3Data:pvrdata PVRLen:pvrlen];
+			
+		if( ok )
+			ok = [self createGLTexture];
+		
+		if( ! ok ) {
 			free(pvrdata);
 			[self release];
 			return nil;
@@ -397,7 +696,7 @@ typedef struct _PVRTexHeader
 		
 #if defined(__CC_PLATFORM_IOS) && defined(DEBUG)
 
-		GLenum pixelFormat = tableFormats[tableFormatIndex_][kCCInternalCCTexture2DPixelFormat];
+		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 		
 		if( [conf OSVersion] >= kCCiOSVersion_5_0 )
