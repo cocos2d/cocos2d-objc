@@ -366,13 +366,17 @@ static CCDirector *_sharedDirector = nil;
 - (void)runWithScene:(CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
+	NSAssert(runningScene_ == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
 	[self pushScene:scene];
-	[self startAnimation];
+	
+	NSThread *thread = [self runningThread];
+	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
 -(void) replaceScene: (CCScene*) scene
 {
+	NSAssert( runningScene_, @"Use runWithScene: instead to start the director");
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
 	NSUInteger index = [scenesStack_ count];
