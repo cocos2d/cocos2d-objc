@@ -93,6 +93,9 @@ typedef struct _KerningHashElement
  */
 @interface CCBMFontConfiguration : NSObject
 {
+  // Character Set defines the letters that actually exist in the font
+  NSCharacterSet *characterSet_;
+  
 	// atlas name
 	NSString		*atlasName_;
     
@@ -111,6 +114,9 @@ typedef struct _KerningHashElement
 	// values for kerning
 	tCCKerningHashElement	*kerningDictionary_;
 }
+
+// Character set
+@property (nonatomic, retain, readonly) NSCharacterSet *characterSet;
 
 // atlasName
 @property (nonatomic, readwrite, retain) NSString *atlasName;
