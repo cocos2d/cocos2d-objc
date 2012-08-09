@@ -9,12 +9,12 @@ var GameOver = cc.Layer.extend({
 
     init:function () {
         var bRet = false;
-        if (this._super) {
+        if (this._super()) {
             global.enemyContainer = [];
             global.ebulletContainer = [];
             global.sbulletContainer = [];
             var sp = cc.Sprite.create(s_loading);
-            sp.setAnchorPoint(cc.PointZero());
+            sp.setAnchorPoint(cc.POINT_ZERO);
             this.addChild(sp, 0, 1);
 
             var logo = cc.Sprite.create(s_gameOver);
@@ -37,7 +37,7 @@ var GameOver = cc.Layer.extend({
             this.addChild(menu, 1, 2);
             menu.setPosition(cc.p(winSize.width / 2, 220));
 
-            var lbScore = cc.LabelTTF.create("Your Score:"+global.score,"Arial Bold",16);
+            var lbScore = cc.LabelTTF.create("Your Score:"+global.score,"Arial",16);
             lbScore.setPosition(cc.p(160,280));
             lbScore.setColor(cc.c3(250,179,0));
             this.addChild(lbScore,10);
@@ -45,21 +45,20 @@ var GameOver = cc.Layer.extend({
             var b1 = cc.LabelTTF.create("Download Cocos2d-html5","Arial",14);
             var b2 = cc.LabelTTF.create("Download This Sample","Arial",14);
             var menu1 = cc.MenuItemLabel.create(b1,this,function(){
-                window.location.href = "http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-html5";
-            })
+//                window.location.href = "http://www.cocos2d-x.org/projects/cocos2d-x/wiki/Cocos2d-html5";
+            });
             var menu2 = cc.MenuItemLabel.create(b2,this,function(){
-                window.location.href = "https://github.com/ShengxiangChen/MoonWarriors";
-            })
+//                window.location.href = "https://github.com/ShengxiangChen/MoonWarriors";
+            });
+
             var cocos2dMenu = cc.Menu.create(menu1,menu2);
             cocos2dMenu.alignItemsVerticallyWithPadding(10);
             cocos2dMenu.setPosition(cc.p(160,80));
             this.addChild(cocos2dMenu);
 
-            this.schedule(this.update,0.1);
-
-                if(global.sound){
-                    cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic)
-                }
+            if(global.sound){
+                cc.AudioEngine.getInstance().playBackgroundMusic(s_mainMainMusic);
+            }
 
             bRet = true;
         }

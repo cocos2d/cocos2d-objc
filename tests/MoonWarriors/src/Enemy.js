@@ -57,11 +57,9 @@ var Enemy = cc.Sprite.extend({
         var b = new Bullet(this.bulletSpeed, "W2.png", this.attackMode);
         global.ebulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.EnemyBullet);
-        var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
-        var _cs = this.getContentSize();
-        var cs = {width:_cs[0], height:_cs[1]};
-        b.setPosition( cc.p(pos.x, pos.y - cs.height * 0.2) );
+        var pos = this.getPosition();
+        var cs = this.getContentSize();
+        b.setPosition( cc._p(pos.x, pos.y - cs.height * 0.2) );
     },
     hurt:function () {
         this._hurtColorLife = 2;
@@ -69,10 +67,8 @@ var Enemy = cc.Sprite.extend({
         this.setColor( cc.RED );
     },
     collideRect:function(){
-        var _a = this.getContentSize();
-        var a = {width:_a[0], height:_a[1]};
-        var _pos = this.getPosition();
-        var pos = {x:_pos[0], y:_pos[1]};
+        var a = this.getContentSize();
+        var pos = this.getPosition();
 
         var r = cc.rect(pos.x - a.width/2, pos.y - a.height/4,a.width,a.height/2);
         return r;
@@ -82,3 +78,4 @@ var Enemy = cc.Sprite.extend({
 Enemy.sharedEnemy = function(){
     cc.SpriteFrameCache.getInstance().addSpriteFrames(s_Enemy_plist, s_Enemy);
 };
+

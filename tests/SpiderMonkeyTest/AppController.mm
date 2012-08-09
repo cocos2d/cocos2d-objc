@@ -21,11 +21,31 @@
 
 // CLASS IMPLEMENTATIONS
 
+@interface BootLayer : CCLayer
+@end
+@implementation  BootLayer
+-(void) onEnter
+{
+	[super onEnter];
+	
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"JS Watermelon"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
+	else if( [name isEqual:@"JS Tests"] )
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+}
+@end
+
+
 @implementation AppController
 
 #pragma mark - AppController - iOS
 
 #ifdef __CC_PLATFORM_IOS
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Don't call super
@@ -93,22 +113,39 @@
 	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];	// Generates flicker.
-//	[window_ setRootViewController:navController_];
+	[window_ setRootViewController:navController_];
 	
 	// make main window visible
 	[window_ makeKeyAndVisible];
 
-
-	[self run];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil) {
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		[self run];
+	}
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 //	return YES;
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	
+	if( [name isEqual:@"JS Watermelon"] )
+		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	else if( [name isEqual:@"JS Tests"] )
+		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	else if( [name isEqual:@"JS Moon Warriors"] )
+		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+	
+	return YES;
 }
 
 #pragma mark - AppController - Mac
@@ -214,15 +251,21 @@
 	// init server
 	[self initThoMoServer];
 #endif
+
+//	CCScene *scene = [CCScene node];
+//	BootLayer *layer = [BootLayer node];
+//	[scene addChild:layer];
+//	[[CCDirector sharedDirector] runWithScene:scene];
 	
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
 	if( [name isEqual:@"JS Watermelon"] )
 		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
+		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];	
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+
 }
 @end
 

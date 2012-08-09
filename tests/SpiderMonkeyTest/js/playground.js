@@ -62,15 +62,32 @@ var loadScene = function (sceneIdx)
 // Base Layer
 //
 
+var MyMenuItemFont = cc.MenuItemFont.extend({
+
+    ctor:function () {
+        var parent = new cc.MenuItemFont();
+        __associateObjWithNative(this, parent);
+        this.init( "hello", this, this.callback );
+        },
+
+    callback:function(sender) {
+        cc.log("Button clicked");
+    },
+});
+
 var BaseLayer = cc.LayerGradient.extend({
 
     ctor:function () {
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
-        cc.log("1");
-        __jsc__.dumpRoot();
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
+
+
+        var item = new MyMenuItemFont();
+        var menu = cc.Menu.create( item );
+        this.addChild( menu );
+        menu.setPosition( centerPos );
     },
 
     title:function () {
@@ -123,7 +140,7 @@ var BaseLayer = cc.LayerGradient.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }

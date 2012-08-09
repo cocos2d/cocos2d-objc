@@ -51,7 +51,9 @@ var Ship = cc.Sprite.extend({
         // New Blending function API. Similar to OpenGL / WebGL
         ghostSprite.setBlendFunc( gl.SRC_ALPHA, gl.ONE )
         ghostSprite.setScale(8);
-        ghostSprite.setPosition(cc.p(this.getContentSize().width / 2, 12));
+
+        var cs = this.getContentSize();
+        ghostSprite.setPosition(cc._p(cs.width / 2, 12));
         this.addChild(ghostSprite, 3000, 99999);
         ghostSprite.runAction(cc.ScaleTo.create(0.5, 1, 1));
         var blinks = cc.Blink.create(3, 9);
@@ -61,24 +63,10 @@ var Ship = cc.Sprite.extend({
             t.removeChild(ghostSprite,true);
         });
         this.runAction(cc.Sequence.create(cc.DelayTime.create(0.5), blinks, makeBeAttack));
+
+        this.active = true;
     },
     update:function (dt) {
-        var newPos = this.getPosition();
-        // XXX riq XXX
-        // Keyboard not supported yet
-//        if ((keys[cc.KEY.w] || keys[cc.KEY.up]) && this.getPosition().y <= winSize.height) {
-//            newY += dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.s] || keys[cc.KEY.down]) && this.getPosition().y >= 0) {
-//            newY -= dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.a] || keys[cc.KEY.left]) && this.getPosition().x >= 0) {
-//            newX -= dt * this.speed;
-//        }
-//        if ((keys[cc.KEY.d] || keys[cc.KEY.right]) && this.getPosition().x <= winSize.width) {
-//            newX += dt * this.speed;
-//        }
-        this.setPosition( newPos );
 
         if (this.HP <= 0) {
             this.active = false;
@@ -97,28 +85,27 @@ var Ship = cc.Sprite.extend({
     shoot:function (dt) {
         //this.shootEffect();
         var offset = 13;
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
-        var _cs = this.getContentSize();
-        var cs = cc._from_size(_cs);
+        var pos = this.getPosition();
+        var cs = this.getContentSize();
         var a = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(a);
         this.getParent().addChild(a, a.zOrder, global.Tag.ShipBullet);
-        a.setPosition(cc.p(pos.x + offset, pos.y + 3 + cs.height * 0.3));
+        a.setPosition(cc._p(pos.x + offset, pos.y + 3 + cs.height * 0.3));
 
         var b = new Bullet(this.bulletSpeed, "W1.png", global.AttackMode.Normal);
         global.sbulletContainer.push(b);
         this.getParent().addChild(b, b.zOrder, global.Tag.ShipBullet);
-        b.setPosition(cc.p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
+        b.setPosition(cc._p(pos.x - offset, pos.y + 3 + cs.height * 0.3));
     },
     destroy:function () {
-        var _pos = this.getPosition();
-        var pos = cc._from_p(_pos);
+        var pos = this.getPosition();
         global.life--;
-        this.getParent().addChild(new Explosion(pos.x, pos.y));
-        this.getParent().removeChild(this,true);
+        var explosion = new Explosion();
+        explosion.setPosition( this.getPosition() );
+        this.getParent().addChild( explosion );
+        this.removeFromParentAndCleanup(true);
         if (global.sound) {
-            cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect,false);
+            cc.AudioEngine.getInstance().playEffect(s_shipDestroyEffect);
         }
     },
     hurt:function () {
@@ -129,10 +116,8 @@ var Ship = cc.Sprite.extend({
         }
     },
     collideRect:function(){
-        var _a = this.getContentSize();
-        var a = cc._from_size(_a);
-        var _p = this.getPosition();
-        var p = cc._from_p(_p);
+        var a = this.getContentSize();
+        var p = this.getPosition();
         var r = cc.rect(p.x - a.width/2, p.y - a.height/2,a.width,a.height/2);
         return r;
     }

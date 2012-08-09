@@ -80,6 +80,12 @@ jsval opaque_to_jsval( JSContext *cx, void* opaque);
 #ifdef JSB_USE_COCOS2D
 JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret );
 jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p );
+JSBool jsval_to_ccColor3B( JSContext *cx, jsval vp, ccColor3B *ret );
+JSBool jsval_to_ccColor4B( JSContext *cx, jsval vp, ccColor4B *ret );
+JSBool jsval_to_ccColor4F( JSContext *cx, jsval vp, ccColor4F *ret );
+jsval ccColor3B_to_jsval( JSContext *cx, ccColor3B p );
+jsval ccColor4B_to_jsval( JSContext *cx, ccColor4B p );
+jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p );
 #endif // JSB_USE_COCOS2D
 	
 #ifdef JSB_USE_CHIPMUNK

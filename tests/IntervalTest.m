@@ -152,12 +152,20 @@
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
-	CCScene *scene = [CCScene node];
-
-	[scene addChild: [Layer1 node] z:0];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [Layer1 node] z:0];		
+		[director runWithScene: scene];
+	}
+}
+
 @end

@@ -78,7 +78,7 @@ JSBool ScriptingCore_log(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_ConvertArguments(cx, argc, JS_ARGV(cx, vp), "S", &string);
 		if (string) {
 			char *cstr = JS_EncodeString(cx, string);
-			NSLog(@"%s", cstr);
+			printf("%s\n", cstr);
 		}
 		
 		return JS_TRUE;
@@ -106,11 +106,14 @@ JSBool ScriptingCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsv
 		jsval *argvp = JS_ARGV(cx,vp);
 		JSObject *pureJSObj;
 		JSObject *nativeJSObj;
-		JS_ValueToObject( cx, *argvp++, &pureJSObj );
-		JS_ValueToObject( cx, *argvp++, &nativeJSObj );
+		JSBool ok = JS_TRUE;
+		ok &= JS_ValueToObject( cx, *argvp++, &pureJSObj );
+		ok &= JS_ValueToObject( cx, *argvp++, &nativeJSObj );
+		
+		if( ! (ok && pureJSObj && nativeJSObj) )
+			return JS_FALSE;
 		
 		JSPROXY_NSObject *proxy = get_proxy_for_jsobject( nativeJSObj );
-//		JSPROXY_NSObject *proxy = JS_GetPrivate( nativeJSObj );
 		set_proxy_for_jsobject( proxy, pureJSObj );
 		[proxy setJsObj:pureJSObj];
 		
@@ -238,7 +241,7 @@ JSBool ScriptingCore_dumpRoot(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	// JS_DumpNamedRoots is only available on DEBUG versions of SpiderMonkey.
 	// Mac and Simulator versions were compiled with DEBUG.
-#if defined(__CC_PLATFORM_MAC) || TARGET_IPHONE_SIMULATOR
+#if DEBUG && (defined(__CC_PLATFORM_MAC) || TARGET_IPHONE_SIMULATOR )
 	JSRuntime *rt = [[ScriptingCore sharedInstance] runtime];
 	JS_DumpNamedRoots(rt, dumpNamedRoot, NULL);
 #endif
@@ -316,6 +319,67 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 		JSObject *cocos2d = JS_NewObject( _cx, NULL, NULL, NULL);
 		jsval cocosVal = OBJECT_TO_JSVAL(cocos2d);
 		JS_SetProperty(_cx, _object, "cc", &cocosVal);
+		
+		// Config Object
+		JSObject *ccconfig = JS_NewObject(_cx, NULL, NULL, NULL);
+		// config.os: The Operating system
+		// osx, ios, android, windows, linux, etc..
+#ifdef __CC_PLATFORM_MAC
+		JSString *str = JS_InternString(_cx, "osx");
+#elif defined(__CC_PLATFORM_IOS)
+		JSString *str = JS_InternString(_cx, "ios");
+#endif
+		JS_DefineProperty(_cx, ccconfig, "os", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+		// config.deviceType: Device Type
+		// 'mobile' for any kind of mobile devices, 'desktop' for PCs
+#ifdef __CC_PLATFORM_MAC
+		str = JS_InternString(_cx, "desktop");
+#elif defined(__CC_PLATFORM_IOS)
+		str = JS_InternString(_cx, "mobile");
+#endif
+		JS_DefineProperty(_cx, ccconfig, "deviceType", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+		// config.engine: Type of renderer
+		// 'cocos2d', 'cocos2d-x', 'cocos2d-html5/canvas', 'cocos2d-html5/webgl', etc..
+		str = JS_InternString(_cx, "cocos2d");
+		JS_DefineProperty(_cx, ccconfig, "engine", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+		
+		// config.arch: CPU Architecture
+		// i386, ARM, x86_64
+#ifdef __LP64__
+		str = JS_InternString(_cx, "x86_64");
+#elif defined(__arm__) || defined(__ARM_NEON__)
+		str = JS_InternString(_cx, "arm");
+#else
+		str = JS_InternString(_cx, "i386");
+#endif
+		JS_DefineProperty(_cx, ccconfig, "arch", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+		// config.version: Version of cocos2d + renderer
+		str = JS_InternString(_cx, [cocos2dVersion() UTF8String] );
+		JS_DefineProperty(_cx, ccconfig, "version", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+		// config.usesTypedArrays
+#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+		JSBool b = JS_FALSE;
+#else
+		JSBool b = JS_TRUE;
+#endif
+		JS_DefineProperty(_cx, ccconfig, "usesTypedArrays", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+		
+		// config.debug: Debug build ?
+#ifdef DEBUG
+		b = JS_TRUE;
+#else
+		b = JS_FALSE;
+#endif
+		JS_DefineProperty(_cx, ccconfig, "debug", BOOLEAN_TO_JSVAL(b), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
+		
+		// Add "config" to "cc"
+		JS_DefineProperty(_cx, cocos2d, "config", OBJECT_TO_JSVAL(ccconfig), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
+
 
 		JS_DefineFunction(_cx, cocos2d, "log", ScriptingCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
@@ -543,3 +607,14 @@ void del_proxy_for_jsobject(JSObject *obj)
 	}
 }
 
+JSBool set_reserved_slot(JSObject *obj, uint32_t idx, jsval value)
+{
+	JSClass *klass = JS_GetClass(obj);
+	NSUInteger slots = JSCLASS_RESERVED_SLOTS(klass);
+	if( idx >= slots )
+		return JS_FALSE;
+	
+	JS_SetReservedSlot(obj, idx, value);
+	
+	return JS_TRUE;
+}

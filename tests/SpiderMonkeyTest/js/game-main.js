@@ -65,8 +65,7 @@ STATE_LEVEL_COMPLETE = 3;
 
 audioEngine = cc.AudioEngine.getInstance();
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 sizeRatio = winSize.width / 480;
@@ -207,7 +206,7 @@ var GameLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         this.scheduleUpdate();
 
@@ -531,10 +530,10 @@ var GameLayer = cc.LayerGradient.extend({
 
 		var staticBody = cp.spaceGetStaticBody( this._space );
 
-        var x = rect[0];
-        var y = rect[1];
-        var w = rect[2];
-        var h = rect[3];
+        var x = rect.x;
+        var y = rect.y;
+        var w = rect.width;
+        var h = rect.height;
 
 		// Walls
 		var walls =[cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(w,y), 0 ),   // bottom
@@ -668,7 +667,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     createWheel : function( pos ) {
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Wheel.png");  
-        var radius = 0.95 * sprite.getContentSize()[0] / 2;
+        var radius = 0.95 * sprite.getContentSize().width / 2;
 
 		var body = cp.bodyNew(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
 		cp.bodySetPos( body, pos );
@@ -691,12 +690,12 @@ var GameLayer = cc.LayerGradient.extend({
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Chassis.png"); 
         var anchor = cp.vadd( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
         var cs = sprite.getContentSize();
-        sprite.setAnchorPoint( cc.p(anchor[0] / cs[0], anchor[1]/cs[1]) );
+        sprite.setAnchorPoint( cc.p(anchor.x / cs.width, anchor.y/cs.height) );
 
         // XXX: Space Patrol uses a nice poly for the chassis.
         // XXX: Add something similar here, instead of a boxed chassis
 
-        var body = cp.bodyNew( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs[0], cs[1] ) );
+        var body = cp.bodyNew( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs.width, cs.height ) );
         cp.bodySetPos( body, pos );
         sprite.setBody( body );
 
@@ -705,7 +704,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._carSprite = sprite;
 
         // bottom of chassis
-        var shape = cp.boxShapeNew( body, cs[0], 15 );
+        var shape = cp.boxShapeNew( body, cs.width, 15 );
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
@@ -736,7 +735,7 @@ var GameLayer = cc.LayerGradient.extend({
         // create some fruits
         for(var i=0; i < 4;i++) {
             var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("watermelon.png");  
-            var radius = 0.95 * sprite.getContentSize()[0] / 2;
+            var radius = 0.95 * sprite.getContentSize().width / 2;
 
             var body = cp.bodyNew(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
             cp.bodySetPos( body, pos );
@@ -755,7 +754,7 @@ var GameLayer = cc.LayerGradient.extend({
     createCoin: function( pos ) {
         // coins are static bodies and sensors
         var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("coin01.png");  
-        var radius = 0.95 * sprite.getContentSize()[0] / 2;
+        var radius = 0.95 * sprite.getContentSize().width / 2;
         
         var body = cp.bodyNew(1, 1);
         cp.bodyInitStatic(body);
@@ -790,7 +789,7 @@ var GameLayer = cc.LayerGradient.extend({
         sprite.setBody( body );
         cp.bodySetPos( body, pos );
 
-        var shape = cp.boxShapeNew( body, cs[0], cs[1] );
+        var shape = cp.boxShapeNew( body, cs.width, cs.height );
         cp.shapeSetCollisionType( shape, COLLISION_TYPE_FINISH );
         cp.shapeSetSensor( shape, true );
 
@@ -966,7 +965,7 @@ var MenuLayer = cc.Layer.extend({
         this.init();
 
         // background
-        var node = cc.Reader.load("MainMenu.ccbi", this, _winSize);
+        var node = cc.Reader.load("MainMenu.ccbi", this, winSize);
         this.addChild( node );
         var label = node.getChildByTag( TITLE_TAG );
         var o = label.getChildByTag( 8 );
@@ -1040,7 +1039,7 @@ var OptionsLayer = cc.LayerGradient.extend({
     ctor:function () {
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(255, 255, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         var label1 = cc.LabelBMFont.create("MUSIC ON", "konqa32.fnt" );
         var item1 = cc.MenuItemLabel.create(label1);
@@ -1081,8 +1080,7 @@ var OptionsLayer = cc.LayerGradient.extend({
 function run()
 {
     // update globals
-    _winSize = director.getWinSize();
-    winSize = {width:_winSize[0], height:_winSize[1]};
+    winSize = director.getWinSize();
     centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
     var scene = cc.Scene.create();

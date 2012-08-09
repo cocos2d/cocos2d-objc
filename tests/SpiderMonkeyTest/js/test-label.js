@@ -7,8 +7,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
@@ -34,8 +33,7 @@ var restartSpriteTestAction = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -189,19 +187,19 @@ var BMFontColorTest = function(file) {
 
 		var label = cc.LabelBMFont.create("Blue", "bitmapFontTest5.fnt");
 		this.addChild( label );
-		label.setColor( cc.c3(0,0,255) );
+		label.setColor( cc.c3b(0,0,255) );
 		label.setPosition( cc.p( winSize.width/2, 1*winSize.height/4) );
 		label.setAnchorPoint( cc.p(0.5, 0.5) );
 
 		label = cc.LabelBMFont.create("Red", "bitmapFontTest5.fnt");
 		this.addChild( label );
-		label.setColor( cc.c3(255,0,0) );
+		label.setColor( cc.c3b(255,0,0) );
 		label.setPosition( cc.p( winSize.width/2, 2*winSize.height/4) );
 		label.setAnchorPoint( cc.p(0.5, 0.5) );
 
 		label = cc.LabelBMFont.create("Red", "bitmapFontTest5.fnt");
 		this.addChild( label );
-		label.setColor( cc.c3(0,255,0) );
+		label.setColor( cc.c3b(0,255,0) );
 		label.setPosition( cc.p( winSize.width/2, 3*winSize.height/4) );
 		label.setAnchorPoint( cc.p(0.5, 0.5) );
 	}
