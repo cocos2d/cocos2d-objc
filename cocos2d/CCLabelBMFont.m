@@ -75,7 +75,7 @@ void FNTConfigRemoveCache( void )
 #pragma mark BitmapFontConfiguration
 
 @interface CCBMFontConfiguration ()
--(BOOL) parseConfigFile:(NSString*)controlFile;
+-(NSMutableString *) parseConfigFile:(NSString*)controlFile;
 -(void) parseCharacterDefinition:(NSString*)line charDef:(ccBMFontDef*)characterDefinition;
 -(void) parseInfoArguments:(NSString*)line;
 -(void) parseCommonArguments:(NSString*)line;
@@ -89,6 +89,7 @@ void FNTConfigRemoveCache( void )
 #pragma mark CCBMFontConfiguration
 
 @implementation CCBMFontConfiguration
+@synthesize characterSet=characterSet_;
 @synthesize atlasName=atlasName_;
 
 +(id) configurationWithFNTFile:(NSString*)FNTfile
@@ -102,11 +103,15 @@ void FNTConfigRemoveCache( void )
         
 		kerningDictionary_ = NULL;
 		fontDefDictionary_ = NULL;
-        
-		if( ! [self parseConfigFile:fntFile] ) {
+    
+    NSMutableString *validCharsString	= [self parseConfigFile:fntFile];
+		  
+		if( ! validCharsString ) {
 			[self release];
 			return nil;
 		}
+    
+		characterSet_				= [[NSCharacterSet characterSetWithCharactersInString:validCharsString] retain];
 	}
 	return self;
 }
@@ -114,6 +119,7 @@ void FNTConfigRemoveCache( void )
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
+  [characterSet_ release];
 	[self purgeFontDefDictionary];
 	[self purgeKerningDictionary];
 	[atlasName_ release];
@@ -150,15 +156,17 @@ void FNTConfigRemoveCache( void )
 	}
 }
 
-- (BOOL)parseConfigFile:(NSString*)fntFile
+- (NSMutableString *)parseConfigFile:(NSString*)fntFile
 {
 	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fntFile];
 	NSError *error;
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
+  
+  NSMutableString *validCharsString	= [[NSMutableString alloc] initWithCapacity:512];
     
 	if( ! contents ) {
 		NSLog(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, error);
-		return NO;
+		return nil;
 	}
     
 	// Move all lines in the string, which are denoted by \n, into an array
@@ -196,6 +204,8 @@ void FNTConfigRemoveCache( void )
 			
 			element->key = element->fontDef.charID;
 			HASH_ADD_INT(fontDefDictionary_, key, element);
+      
+      [validCharsString appendString:[NSString stringWithFormat:@"%C", element->fontDef.charID]];
 		}
         //		else if([line hasPrefix:@"kernings count"]) {
         //			[self parseKerningCapacity:line];
@@ -207,7 +217,7 @@ void FNTConfigRemoveCache( void )
 	// Finished with lines so release it
 	[lines release];
 	
-	return  YES;
+	return [validCharsString autorelease];
 }
 
 -(void) parseImageFileName:(NSString*)line fntFile:(NSString*)fntFile
@@ -698,6 +708,8 @@ void FNTConfigRemoveCache( void )
 	NSUInteger totalHeight = 0;
     
 	NSUInteger quantityOfLines = 1;
+  
+  NSCharacterSet *charSet	= configuration_.characterSet;
     
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )
@@ -720,6 +732,11 @@ void FNTConfigRemoveCache( void )
 		if (c == '\n') {
 			nextFontPositionX = 0;
 			nextFontPositionY -= configuration_->commonHeight_;
+			continue;
+		}
+    
+    if(![charSet characterIsMember:c]){
+			CCLOGWARN(@"CCLabelBMFont: Attempted to use character not defined in this bitmap: %C", c);
 			continue;
 		}
         
