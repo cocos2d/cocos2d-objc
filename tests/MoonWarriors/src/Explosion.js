@@ -13,8 +13,7 @@ var Explosion = cc.Sprite.extend({
         // XXX riq XXX.
         // super doesn't work here
 //        this._super();
-        var _cs = this.getContentSize();
-        var cs = cc._from_size(_cs);
+        var cs = this.getContentSize();
         this.tmpWidth = cs.width;
         this.tmpHeight = cs.height;
 

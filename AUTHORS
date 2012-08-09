@@ -17,6 +17,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
+	Director: Fixed the initial flicker + correct size at startup
+
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 
@@ -29,6 +32,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
+
+* Robert J Payne (http://www.zwopple.com/)
+	Initial PVR v3 file format support
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
@@ -184,6 +190,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Vit Valentin:
 	Author of cocos2d-x's Catmull Rom actions. 
+	
+* Yannick Loriot (http://yannickloriot.com/):
+	MenuItemToggle does not remove the tag of the added Menu Items.
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used

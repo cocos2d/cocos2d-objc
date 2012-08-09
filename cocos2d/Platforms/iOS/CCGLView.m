@@ -224,10 +224,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	// Avoid flicker. Issue #350
 	// Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
-	if(director.runningScene){
-		NSThread *thread = [director runningThread];
-		[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
-	}
+//	if(director.runningScene){
+//		NSThread *thread = [director runningThread];
+//		[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+//	}
 }
 
 - (void) swapBuffers

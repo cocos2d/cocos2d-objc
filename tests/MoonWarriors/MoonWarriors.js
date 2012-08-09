@@ -46,6 +46,8 @@ var appFiles = [
 	'SysMenu.js'
 ];
 
+cc.dumpConfig();
+
 for( var i=0; i < appFiles.length; i++) {
     require( appFiles[i] );
 }

@@ -10,8 +10,7 @@ require("js/helper.js");
 
 director = cc.Director.getInstance();
 audioEngine = cc.AudioEngine.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var MUSIC_FILE = "Cyber Advance!.mp3";
@@ -149,7 +148,7 @@ CocosDenshionTest = cc.LayerGradient.extend({
 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
 
         // add menu items for tests
         this._menu = cc.Menu.create();

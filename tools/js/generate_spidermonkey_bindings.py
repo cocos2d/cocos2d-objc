@@ -84,13 +84,13 @@ class SpiderMonkey(object):
                              'class_properties' : [],
                              'bridge_support_file' : [],
                              'hierarchy_protocol_file' : [],
-                             'inherit_class_methods' : True,
+                             'inherit_class_methods' : 'Auto',
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
-                             'method_properties' : [],
-                             'js_properties' : [],
-                             'struct_properties' : [],
+                             'function_properties' : [],
                              'function_prefix_to_remove' : '',
+                             'method_properties' : [],
+                             'struct_properties' : [],
                              'import_files' : [],
                              }
 
@@ -142,7 +142,7 @@ class SpiderMonkey(object):
         # Classes related
         #
         self.class_prefix = config['obj_class_prefix_to_remove']
-        self.inherit_class_methods = config['inherit_class_methods']
+        self._inherit_class_methods = config['inherit_class_methods']
         self.import_files = config['import_files']
 
         # Add here manually generated classes
@@ -168,6 +168,7 @@ class SpiderMonkey(object):
         self.function_prefix = config['function_prefix_to_remove']
         self.init_functions_to_bind( config['functions_to_parse'] )
         self.init_functions_to_ignore( config['functions_to_ignore'] )
+        self.init_function_properties( config['function_properties'] )
         self.current_function = None
         self.callback_functions = []
 
@@ -317,6 +318,32 @@ class SpiderMonkey(object):
                 sys.stderr.write("\nERROR parsing line: %s\n\n" % (prop) )
                 raise
 
+    def init_function_properties( self, properties ):
+        self.function_properties = {}
+        self.struct_manual = []
+        for prop in properties:
+            # key value
+            if not prop or len(prop)==0:
+                continue
+            key,value = prop.split('=')
+
+            opts = {}
+            # From value get options
+            options = value.split(';')
+            for o in options:
+                # Options can have their own Key Value
+                if ':' in o:
+                    o_key, o_val = o.split(':')
+                    o_val = o_val.replace('"', '')    # remove possible "
+                else:
+                    o_key = o
+                    o_val = None
+                opts[ o_key ] = o_val
+
+                if o_key == 'manual':
+                    self.function_manual.append( key )
+            self.function_properties[key] = opts
+
     def init_struct_properties( self, properties ):
         self.struct_properties = {}
         self.struct_opaque = []
@@ -372,7 +399,18 @@ class SpiderMonkey(object):
 
         self.functions_to_bind = copy_set
 
+    def get_function_property( self, func_name, property  ):
+        try:
+            return self.function_properties[ func_name ][ property ]
+        except KeyError, e:
+            return None
+
     def init_class_properties( self, properties ):
+        ref_list = []
+        if 'class' in self.bs['signatures']:
+            for k in self.bs['signatures']['class']:
+                ref_list.append( k['name'] )
+
         self.supported_classes = set()
         self.class_manual = []
         self.class_properties = {}
@@ -380,28 +418,37 @@ class SpiderMonkey(object):
             # key value
             if not prop or len(prop)==0:
                 continue
-            key,value = prop.split('=')
+            klass_name,value = prop.split('=')
 
-            opts = {}
-            # From value get options
-            options = value.split(';')
-            for o in options:
-                # Options can have their own Key Value
-                if ':' in o:
-                    o_key, o_val = o.split(':')
-                    o_val = o_val.replace('"', '')    # remove possible "
-                else:
-                    o_key = o
-                    o_val = None
-                opts[ o_key ] = o_val
+            # expand regular expression of class name
+            keys = self.expand_regexp_names( [klass_name], ref_list )
 
-                # populate lists. easier to code
-                if o_key == 'manual':
-                    # '*' is needed for opaque structs
-                    self.supported_classes.add( key )
-                    self.class_manual.append( key )
+            # Hack to support "manual" classes here since they are not part of the classes to parse yet
+            if keys == []:
+                keys = [klass_name]
 
-            self.class_properties[key] = opts
+            for key in keys:
+                opts = {}
+                # From value get options
+                options = value.split(';')
+                for o in options:
+                    # Options can have their own Key Value
+                    if ':' in o:
+                        o_key, o_val = o.split(':')
+                        o_val = o_val.replace('"', '')    # remove possible "
+                    else:
+                        o_key = o
+                        o_val = None
+                    opts[ o_key ] = o_val
+
+                    # populate lists. easier to code
+                    if o_key == 'manual':
+                        # '*' is needed for opaque structs
+                        self.supported_classes.add( key )
+                        self.class_manual.append( key )
+
+                self.class_properties[key] = opts
+
 
     def init_classes_to_bind( self, klasses ):
         self._classes_to_bind = set( klasses )
@@ -539,17 +586,22 @@ class SpiderMonkey(object):
         return (bs_to_type_array[k], len(value) )
 
     def get_name_for_manual_struct( self, struct_name ):
-        value = self.get_struct_property( 'manual', struct_name )
+        value = self.get_struct_property( struct_name, 'manual' )
         if not value:
             return struct_name
         return value
 
-    def get_struct_property( self, property, struct_name ):
+    def get_struct_property( self, struct_name, property ):
         try:
             return self.struct_properties[ struct_name ][ property ]
         except KeyError, e:
             return None
 
+    def get_class_property( self, property, class_name ):
+        try:
+            return self.class_properties[ class_name ][ property ]
+        except KeyError, e:
+            return None
 
     def is_valid_structure( self, struct ):
         # Only support non-nested structures of only one type
@@ -602,6 +654,25 @@ class SpiderMonkey(object):
             if method['selector'].startswith('init') and dt == 'id':
                 return True
         return False
+
+    def inherits_class_methods( self,class_name, methods_to_parse=[] ):
+        i = self.get_class_property( 'inherit_class_methods', class_name );
+        if i != None:
+            return i;
+
+        inherit = self._inherit_class_methods.lower()
+        if inherit == 'false':
+            return False
+        elif inherit == 'true':
+            return True
+        elif inherit == 'auto':
+            for m in methods_to_parse:
+                if self.is_class_constructor( m ):
+                    return False
+        else:
+            raise Exception("Unknonw value for inherit_class_methods: %s", self._inherit_class_methods)
+
+        return True
 
     def requires_swizzle( self, class_name ):
         if class_name in self.callback_methods:
@@ -699,6 +770,10 @@ class SpiderMonkey(object):
         return name
 
     def convert_function_name_to_js( self, function_name ):
+        name = self.get_function_property( function_name, 'name' );
+        if name != None:
+            return name
+
         name = function_name
         if function_name.startswith( self.function_prefix ):
             name = name[ len(self.function_prefix) : ]
@@ -746,10 +821,10 @@ JSObject* %s_object = NULL;
         constructor_template = '''// Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
-    JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
+	JSObject *jsobj = [%s createJSObjectWithRealObject:nil context:cx];
+	JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 
-    return JS_TRUE;
+	return JS_TRUE;
 }
 '''
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
@@ -1250,7 +1325,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
 	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
-	NSCAssert( proxy && %s[proxy realObj], @"Invalid Proxy object");
+	JSB_PRECONDITION( proxy && %s[proxy realObj], "Invalid Proxy object");
 '''
 
         selector = method['selector']
@@ -1410,20 +1485,19 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                                     sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, m['selector'], str(e) ) )
 
         # Parse class methods from base classes
-        if self.inherit_class_methods:
-            parent = self.get_parent_class( class_name )
-            while (parent != None) and (not parent in self.classes_to_ignore):
-                class_methods = self.get_class_method( parent )
-                for cm in class_methods:
-                    if not cm['selector'] in ok_method_name:
-                        self.current_method = cm
-                        try:
-                            ok = self.generate_method( class_name, cm )
-                            ok_methods.append( cm )
-                            ok_method_name.append( cm['selector'] )
-                        except ParseException, e:
-                            sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, cm['selector'], str(e) ) )
-                parent = self.get_parent_class( parent )
+        parent = self.get_parent_class( class_name )
+        while self.inherits_class_methods( class_name, ok_methods ) and (parent != None) and (not parent in self.classes_to_ignore):
+            class_methods = self.get_class_method( parent )
+            for cm in class_methods:
+                if not cm['selector'] in ok_method_name:
+                    self.current_method = cm
+                    try:
+                        ok = self.generate_method( class_name, cm )
+                        ok_methods.append( cm )
+                        ok_method_name.append( cm['selector'] )
+                    except ParseException, e:
+                        sys.stderr.write( 'NOT OK: "%s#%s" Error: %s\n' % ( class_name, cm['selector'], str(e) ) )
+            parent = self.get_parent_class( parent )
 
         self.current_method = None
         self.is_a_protocol = False
@@ -1681,7 +1755,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 	%s_class->resolve = JS_ResolveStub;
 	%s_class->convert = JS_ConvertStub;
 	%s_class->finalize = %s_finalize;
-//	%s_class->flags = JSCLASS_HAS_PRIVATE;
+	%s_class->flags = %s;
 '''
 
         # Properties
@@ -1706,11 +1780,16 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         proxy_class_name = '%s%s' % (PROXY_PREFIX, class_name )
         proxy_parent_name = '%s%s' % (PROXY_PREFIX, parent_name )
 
+        reserved_slots = self.get_class_property('reserved_slots', class_name)
+        flags =  "JSCLASS_HAS_RESERVED_SLOTS(%s)"%reserved_slots if reserved_slots!=None else "0"
+
         self.mm_file.write( implementation_template % ( proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
                                                         proxy_class_name, proxy_class_name, proxy_class_name,
-                                                        proxy_class_name, proxy_class_name, proxy_class_name ) )
+                                                        proxy_class_name, proxy_class_name, proxy_class_name,
+                                                        flags,
+                                                        ) )
 
         self.mm_file.write( properties_template )
 
@@ -1978,7 +2057,7 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         num_args = self.get_number_of_arguments( function )
         template = 'JS_DefineFunction(_cx, %s, "%s", %s, %d, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );\n' % \
                  ( self.namespace,
-                   self.convert_function_name_to_js( func_name),
+                   self.convert_function_name_to_js(func_name),
                    PROXY_PREFIX + func_name,
                    num_args )
 

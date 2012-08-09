@@ -316,8 +316,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	[self setProjection:projection_];
   
-  if( [delegate_ respondsToSelector:@selector(directorDidReshapeProjection)] )
-    [delegate_ directorDidReshapeProjection];
+	if( [delegate_ respondsToSelector:@selector(directorDidReshapeProjection:)] )
+		[delegate_ directorDidReshapeProjection:self];
 }
 
 #pragma mark Director Point Convertion

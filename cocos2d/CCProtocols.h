@@ -25,7 +25,10 @@
 
 #import "ccMacros.h"
 #import "ccTypes.h"
-#import "CCTexture2D.h"
+
+
+@class CCTexture2D;
+@class CCDirector;
 
 #pragma mark -
 #pragma mark CCRGBAProtocol
@@ -129,7 +132,7 @@
 
 /** Called when projection is resized (due to layoutSubviews on the view). This is important to respond to in order to setup your scene with the proper dimensions (which only exist after the first call to layoutSubviews) so that you can set your scene as early as possible to avoid startup flicker
  */
--(void) directorDidReshapeProjection;
+-(void) directorDidReshapeProjection:(CCDirector*)director;
 
 #endif // __CC_PLATFORM_IOS
 

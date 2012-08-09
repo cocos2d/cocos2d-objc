@@ -1,3 +1,4 @@
+
 var GameLayer = cc.Layer.extend({
     _time:null,
     _ship:null,
@@ -15,7 +16,7 @@ var GameLayer = cc.Layer.extend({
     screenRect:null,
     explosionAnimation:[],
     isMouseDown:false,
-    _beginPos:cc.POINT_ZERO,
+    _state:global.STATE_PLAYING,
 
     ctor:function () {
         var parent = new cc.Layer();
@@ -29,28 +30,29 @@ var GameLayer = cc.Layer.extend({
             global.enemyNum = 0;
             Explosion.sharedExplosion();
             Enemy.sharedEnemy();
-            var _winSize = cc.Director.getInstance().getWinSize();
-            winSize = cc._from_size(_winSize);
+            var winSize = cc.Director.getInstance().getWinSize();
             this._levelManager = new LevelManager(this);
             this.initBackground();
 
             this.screenRect = cc.rect(0, 0, winSize.width, winSize.height + 10);
 
             // score
-            this.lbScore = cc.LabelTTF.create("Score: 0", "Arial", 14, cc.size(winSize.width / 2, 50), cc.TEXT_ALIGNMENT_RIGHT );
+            this.lbScore = cc.LabelBMFont.create("Score: 0", "arial-14.fnt");
+            this.lbScore.setAnchorPoint( cc.p(1,0) );
+            this.lbScore.setAlignment( cc.TEXT_ALIGNMENT_RIGHT );
             this.addChild(this.lbScore, 1000);
-            this.lbScore.setPosition(cc.p(winSize.width - 80, winSize.height - 30));
+            this.lbScore.setPosition(cc._p(winSize.width - 5 , winSize.height - 30));
 
             // ship life
             var shipTexture = cc.TextureCache.getInstance().addImage(s_ship01);
             var life = cc.Sprite.createWithTexture(shipTexture, cc.rect(0, 0, 60, 38));
             life.setScale(0.6);
-            life.setPosition(cc.p(30, 460));
+            life.setPosition(cc._p(30, 460));
             this.addChild(life, 1, 5);
 
             // ship Life count
             this._lbLife = cc.LabelTTF.create("0", "Arial", 20);
-            this._lbLife.setPosition(cc.p(60, 463));
+            this._lbLife.setPosition(cc._p(60, 463));
             this._lbLife.setColor(cc.RED);
             this.addChild(this._lbLife, 1000);
 
@@ -58,12 +60,16 @@ var GameLayer = cc.Layer.extend({
             this._ship = new Ship();
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
 
-
-            // accept touch now!
-//            this.setTouchEnabled(true);
+            // accept touches now!
+            var devicetype = cc.config.deviceType;
+            if( devicetype == 'desktop' ) {
+                this.setMouseEnabled( true );
+//            this.setKeypadEnabled(true);
+            }
+            else if( devicetype == 'mobile' )
+                this.setTouchEnabled( true );
 
             //accept keypad
-//            this.setKeypadEnabled(true);
 
             // schedule
             
@@ -73,6 +79,14 @@ var GameLayer = cc.Layer.extend({
             if (global.sound) {
                 cc.AudioEngine.getInstance().playBackgroundMusic(s_bgMusic, true);
             }
+
+            // Reset state
+            this._state = global.STATE_PLAYING;
+            global.enemyContainer = [];
+            global.ebulletContainer = [];
+            global.sbulletContainer = [];
+            global.score = 0;
+            global.life = 4;
 
             bRet = true;
         }
@@ -88,33 +102,25 @@ var GameLayer = cc.Layer.extend({
         var curTime = minute + ":" + second;
         this._levelManager.loadLevelResource(this._time);
     },
-    onTouchesBegan:function (touches, event) {
-        if (!this.isMouseDown) {
-            var touch = touches[0];
-            this._beginPos = touch.getLocation(0);
-        }
-        this.isMouseDown = true;
-    },
-    onTouchesMoved:function (touches, event) {
-        if (this.isMouseDown) {
-            var curPos = this._ship.getPosition();
-            // XXX riq XXX
-            // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if(cc.rectIntersectsRect(this._ship.boundingBox(),this.screenRect)){
-                var touch = touches[0];
-                var location = touch.getLocation();
 
-                var move = cc.pSub(location,this._beginPos);
-                var nextPos = cc.pAdd(curPos,move);
-                this._ship.setPosition(nextPos);
-                this._beginPos = location;
-                curPos = nextPos;
-            }
+    onTouchesMoved:function (touches, event) {
+        if( this._ship ) {
+            var delta = touches[0].getDelta();
+            var curPos = this._ship.getPosition();
+            curPos= cc.pAdd( curPos, delta );
+            this._ship.setPosition( curPos );
         }
     },
-    onTouchesEnded:function () {
-        this.isMouseDown = false;
+
+    onMouseDragged:function( event ) {
+        if( this._ship ) {
+            var delta = event.getDelta();
+            var curPos = this._ship.getPosition();
+            curPos= cc.pAdd( curPos, delta );
+            this._ship.setPosition( curPos );
+        }
     },
+
     keyDown:function (e) {
         keys[e] = true;
     },
@@ -122,20 +128,14 @@ var GameLayer = cc.Layer.extend({
         keys[e] = false;
     },
     update:function (dt) {
-        this.checkIsCollide();
-        this.removeInactiveUnit(dt);
-        this.checkIsReborn();
-        this.updateUI();
+        if( this._state == global.STATE_PLAYING ) {
+            this.checkIsCollide();
+            this.removeInactiveUnit(dt);
+            this.checkIsReborn();
+            this.updateUI();
+        }
 //        cc.$("#cou").innerHTML = "Ship:" + 1 + ", Enemy: " + global.enemyContainer.length
 //            + ", Bullet:" + global.ebulletContainer.length + "," + global.sbulletContainer.length + " all:" + this.getChildren().length;
-    },
-
-    getBoundingBoxToWorld:function(node) {
-        var p = node.convertToWorldSpace( cc.POINT_ZERO );
-        var bb = node.getBoundingBox();
-        bb[0] += p[0];
-        bb[1] += p[1];
-        return bb;
     },
 
     checkIsCollide:function () {
@@ -151,7 +151,7 @@ var GameLayer = cc.Layer.extend({
                 }
                 // XXX riq XXX
                 // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-                if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( bulletChild ) ) ) {
+                if (!cc.rectIntersectsRect(this.screenRect, bulletChild.getBoundingBox() ) ) {
                         bulletChild.destroy();
                 }
             }
@@ -163,8 +163,8 @@ var GameLayer = cc.Layer.extend({
             }
             // XXX riq XXX
             // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld( selChild ) ) ) {
-                    selChild.destroy();
+            if (!cc.rectIntersectsRect(this.screenRect, selChild.getBoundingBox() ) ) {
+                selChild.destroy();
             }
         }
 
@@ -178,7 +178,7 @@ var GameLayer = cc.Layer.extend({
             }
             // XXX riq XXX
             // cc.Rect.CCRectIntersectsRect() -> cc.rectIntersectsRect()
-            if (!cc.rectIntersectsRect(this.screenRect, this.getBoundingBoxToWorld(selChild))) {
+            if (!cc.rectIntersectsRect(this.screenRect, selChild.getBoundingBox() )) {
                     selChild.destroy();
             }
         }
@@ -193,8 +193,9 @@ var GameLayer = cc.Layer.extend({
                 // Added 'type of ...'
                 if( typeof selChild.update == 'function' ) {
                     selChild.update(dt);
-                    if ((selChild.getTag() == global.Tag.Ship) || (selChild.getTag() == global.Tag.ShipBullet) ||
-                        (selChild.getTag() == global.Tag.Enemy) || (selChild.getTag() == global.Tag.EnemyBullet)) {
+                    var tag = selChild.getTag();
+                    if ((tag == global.Tag.Ship) || (tag == global.Tag.ShipBullet) ||
+                        (tag == global.Tag.Enemy) || (tag == global.Tag.EnemyBullet)) {
                         if (selChild && !selChild.active) {
                             selChild.destroy();
                         }
@@ -210,9 +211,10 @@ var GameLayer = cc.Layer.extend({
             this.addChild(this._ship, this._ship.zOrder, global.Tag.Ship);
         }
         else if (global.life <= 0 && !this._ship.active) {
+            this._state = global.STATE_GAME_OVER;
             this.runAction(cc.Sequence.create(
-                cc.DelayTime.create(3),
-                cc.CallFunc.create(this, this.onGameOver)))
+                cc.DelayTime.create(1),
+                cc.CallFunc.create(this, this.onGameOver)));
         }
     },
     updateUI:function () {
@@ -230,23 +232,21 @@ var GameLayer = cc.Layer.extend({
         if (cc.rectIntersectsRect(aRect, bRect)) {
             return true;
         }
+        return false;
     },
     initBackground:function () {
         // bg
         this._backSky = cc.Sprite.create(s_bg01);
         this._backSky.setAnchorPoint(cc.POINT_ZERO);
-        var _cs = this._backSky.getContentSize();
-        var cs =  cc._from_size(_cs);
+        var cs = this._backSky.getContentSize();
         this._backSkyHeight = cs.height;
         this.addChild(this._backSky, -10);
 
         //tilemap
         this._backTileMap = cc.TMXTiledMap.create(s_level01);
         this.addChild(this._backTileMap, -9);
-        var _mapSize = this._backTileMap.getMapSize();
-        var mapSize = cc._from_size( _mapSize );
-        var _tileSize = this._backTileMap.getTileSize();
-        var tileSize = cc._from_size( _tileSize );
+        var mapSize = this._backTileMap.getMapSize();
+        var tileSize = this._backTileMap.getTileSize();
         this._backTileMapHeight = mapSize.height * tileSize.height;
 
         this._backSkyHeight -= 48;
@@ -267,14 +267,13 @@ var GameLayer = cc.Layer.extend({
                 this._backSkyRe = cc.Sprite.create(s_bg01);
                 this._backSkyRe.setAnchorPoint(cc.POINT_ZERO);
                 this.addChild(this._backSkyRe, -10);
-                this._backSkyRe.setPosition(cc.p(0, winSize.height));
+                this._backSkyRe.setPosition(cc._p(0, winSize.height));
                 this._isBackSkyReload = true;
             }
             this._backSkyRe.runAction(cc.MoveBy.create(3, cc.p(0, -48)));
         }
         if (this._backSkyHeight <= 0) {
-            var _cs = this._backSky.getContentSize();
-            var cs = cc._from_size( _cs );
+            var cs = this._backSky.getContentSize();
             this._backSkyHeight = cs.height;
             this.removeChild(this._backSky,true);
             this._backSky = this._backSkyRe;
@@ -286,16 +285,14 @@ var GameLayer = cc.Layer.extend({
             if (!this._isBackTileReload) {
                 this._backTileMapRe = cc.TMXTiledMap.create(s_level01);
                 this.addChild(this._backTileMapRe, -9);
-                this._backTileMapRe.setPosition(cc.p(0, winSize.height));
+                this._backTileMapRe.setPosition(cc._p(0, winSize.height));
                 this._isBackTileReload = true;
             }
             this._backTileMapRe.runAction(cc.MoveBy.create(3, cc.p(0, -200)));
         }
         if (this._backTileMapHeight <= 0) {
-            var _mapSize = this._backTileMapRe.getMapSize();
-            var mapSize = cc._from_size( _mapSize );
-            var _tileSize = this._backTileMapRe.getTileSize();
-            var tileSize = cc._from_size( _tileSize );
+            var mapSize = this._backTileMapRe.getMapSize();
+            var tileSize = this._backTileMapRe.getTileSize();
             this._backTileMapHeight = mapSize.height * tileSize.height;
             this.removeChild(this._backTileMap,true);
             this._backTileMap = this._backTileMapRe;
@@ -307,7 +304,7 @@ var GameLayer = cc.Layer.extend({
         var scene = cc.Scene.create();
         scene.addChild(GameOver.create());
         cc.Director.getInstance().replaceScene(cc.TransitionFade.create(1.2, scene));
-        this.getParent().removeChild(this,true);
+//        this.getParent().removeChild(this,true);
     }
 });
 

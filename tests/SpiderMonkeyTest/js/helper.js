@@ -1,14 +1,8 @@
-// cocos2d Helper
-//function ccp(x, y)
-//{
-//	var floats = new Float32Array(2);
-//	floats[0] = x;
-//	floats[1] = y;
 //
-//	return floats;
-//}
-
-//var cc = cc || {};
+//
+// cocos2d Helper
+//
+//
 
 //
 // cocos2d constants
@@ -48,34 +42,85 @@ cc.PARTICLE_MODE_RADIUS = 1;
 cc.PARTICLE_START_SIZE_EQUAL_TO_END_SIZE = -1;
 cc.PARTICLE_START_RADIUS_EQUAL_TO_END_RADIUS = -1;
 
-cc.RED = cc.c3(255,0,0);
-cc.GREEN = cc.c3(0,255,0);
-cc.BLUE = cc.c3(0,0,255);
-cc.BLACK = cc.c3(0,0,0);
-cc.WHITE = cc.c3(255,255,255);
+cc.RED = {r:255, g:0, b:0};
+cc.GREEN = {r:0, g:255, b:0};
+cc.BLUE = {r:0, g:0, b:255};
+cc.BLACK = {r:0, g:0, b:0};
+cc.WHITE = {r:255, g:255, b:255};
 
-cc.POINT_ZERO = cc.p(0,0);
+cc.POINT_ZERO = {x:0, y:0};
 
-cc._reuse_p0 = cc.p(0,0);
-cc._reuse_p1 = cc.p(0,0);
+cc._reuse_p0 = {x:0, y:0};
+cc._reuse_p1 = {x:0, y:0};
 cc._reuse_p_index = 0;
-cc._reuse_color3b = cc.c3(255, 255, 255 );
-cc._reuse_color4b = cc.c4(255, 255, 255, 255 );
+cc._reuse_color3b = {r:255, g:255, b:255 };
+cc._reuse_color4b = {r:255, g:255, b:255, a:255 };
 cc._reuse_grid = cc.g(0,0);
+
+//
+// Color 3B
+//
+cc.c3b = function( r, g, b )
+{
+    return {r:r, g:g, b:b };
+}
+cc._c3b = function( r, g, b )
+{
+    cc._reuse_color3b.r = r;
+    cc._reuse_color3b.g = g;
+    cc._reuse_color3b.b = b;
+    return cc._reuse_color3b;
+}
+// compatibility
+cc.c3 = cc.c3b;
+cc._c3 = cc._c3b;
+
+//
+// Color 4B
+//
+cc.c4b = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
+}
+cc._c4b = function( r, g, b, a )
+{
+    cc._reuse_color4b.r = r;
+    cc._reuse_color4b.g = g;
+    cc._reuse_color4b.b = b;
+    cc._reuse_color4b.a = a;
+    return cc._reuse_color4b;
+}
+// compatibility
+cc.c4 = cc.c4b;
+cc._c4 = cc._c4b;
+
+
+
+//
+// Color 4F
+//
+cc.c4f = function( r, g, b, a )
+{
+    return {r:r, g:g, b:b, a:a };
+}
 
 //
 // Point
 //
+cc.p = function( x, y )
+{
+    return {x:x, y:y};
+}
 cc._p = function( x, y )
 {
     if( cc._reuse_p_index == 0 ) {
-        cc._reuse_p0[0] = x;
-        cc._reuse_p0[1] = y;
+        cc._reuse_p0.x = x;
+        cc._reuse_p0.y = y;
         cc._reuse_p_index = 1;
         return cc._reuse_p0;
     } else {
-        cc._reuse_p1[0] = x;
-        cc._reuse_p1[1] = y;
+        cc._reuse_p1.x = x;
+        cc._reuse_p1.y = y;
         cc._reuse_p_index = 0;
         return cc._reuse_p1;
     }
@@ -83,12 +128,12 @@ cc._p = function( x, y )
 
 cc._to_p = function( point )
 {
-    return cc.p( x.width, y.height );
+    return point;
 }
 
 cc._from_p = function( size )
 {
-    return { x:size[0], y:size[1] };
+    return size;
 }
 
 //
@@ -96,29 +141,9 @@ cc._from_p = function( size )
 //
 cc._g = function( x, y )
 {
-    cc._reuse_grid[0] = x;
-    cc._reuse_grid[1] = y;
+    cc._reuse_grid.x = x;
+    cc._reuse_grid.y = y;
     return cc._reuse_grid;
-}
-
-//
-// Color
-//
-cc._c3 = function( r, g, b )
-{
-    cc._reuse_color3b[0] = r;
-    cc._reuse_color3b[1] = g;
-    cc._reuse_color3b[2] = b;
-    return cc._reuse_color3b;
-}
-
-cc._c4 = function( r, g, b, a )
-{
-    cc._reuse_color4b[0] = r;
-    cc._reuse_color4b[1] = g;
-    cc._reuse_color4b[2] = b;
-    cc._reuse_color4b[3] = a;
-    return cc._reuse_color4b;
 }
 
 //
@@ -126,24 +151,17 @@ cc._c4 = function( r, g, b, a )
 //
 cc.size = function(w,h)
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var size = new Float64Array(2)
-    else
-        var size = new Float32Array(2)
-	size[0] = w;
-	size[1] = h;
-	return size;
+    return {width:w, height:h};
 }
 
 cc._to_size = function( size )
 {
-    return cc.size( size.width, size.height);
+    return size;
 }
 
 cc._from_size = function( size )
 {
-    return { width:size[0], height:size[1] };
+    return size;
 }
 
 //
@@ -151,36 +169,38 @@ cc._from_size = function( size )
 //
 cc.rect = function(x,y,w,h)
 {
-    var platform = __getPlatform();
-    if( platform.substring(0,7) == 'desktop' )
-        var rect = new Float64Array(4)
-    else
-        var rect = new Float32Array(4)
-
-	rect[0] = x;
-	rect[1] = y;
-	rect[2] = w;
-	rect[3] = h;
-	return rect;
+    return {x:x, y:y, width:w, height:h};
 }
 
 cc._to_rect = function( rect )
 {
-    return cc.rect( rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
+    return rect;
 }
 
 cc._from_rect = function( rect )
 {
-    return {origin:{x:rect[0], y:rect[1]}, size:{width:rect[2], height:rect[3]} };
+    return rect;
+}
+
+
+// dump config info, but only in debug mode
+cc.dumpConfig = function()
+{
+    if( cc.config.debug ) {
+        for( i in cc.config )
+            cc.log( i + " = " + cc.config[i] );
+    }
 }
 
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
-    return ! (  rectA[0] > rectB[0]+rectB[2] ||
-                rectA[0]+rectA[2] < rectB[0] ||
-                rectA[1] > rectB[1]+rectB[3] ||
-                rectA[1]+rectA[3] < rectB[1] );
+    var bool = ! (  rectA.x > rectB.x + rectB.width ||
+                    rectA.x + rectA.width < rectB.x ||
+                    rectA.y > rectB.y +rectB.height ||
+                    rectA.y + rectA.height < rectB.y );
+
+    return bool;
 }
 
 //
@@ -193,6 +213,7 @@ cc.ArrayRemoveObject = function (arr, delObj) {
         }
     }
 };
+
 
 //
 // Google "subclasses"
@@ -310,16 +331,20 @@ cc.Class.extend = function (prop) {
 cc.Layer.extend = cc.Class.extend;
 cc.LayerGradient.extend = cc.Class.extend;
 cc.Sprite.extend = cc.Class.extend;
+cc.MenuItemFont.extend = cc.Class.extend;
 
 //
 // Chipmunk helpers
 //
 //var cp = cp || {};
 
+cp.v = cc.p;
+cp._v = cc._p;
 cp.vzero  = cp.v(0,0);
-cp._v = cc._p
 
-
+//
+// OpenGL Helpers
+//
 var gl = gl || {};
 gl.NEAREST                      = 0x2600;
 gl.LINEAR                       = 0x2601;

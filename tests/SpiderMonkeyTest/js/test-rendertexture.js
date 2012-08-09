@@ -9,8 +9,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 spriteFrameCache = cc.SpriteFrameCache.getInstance();
 
@@ -41,8 +40,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -72,7 +70,7 @@ var BaseLayer = cc.LayerGradient.extend({
                                 
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
-        this.init(cc.c4(0, 0, 0, 255), cc.c4(0, 128, 255, 255));
+        this.init(cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255));
     },
 
     title:function () {
@@ -122,7 +120,7 @@ var BaseLayer = cc.LayerGradient.extend({
             this.addChild( label,10 );
 
             var labelbg = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
-            labelbg.setColor( cc.c3(10,10,255) );
+            labelbg.setColor( cc.c3b(10,10,255) );
             labelbg.setPosition( cc.p( winSize.width/2 +1, winSize.height-120 -1) );
             this.addChild( labelbg,9);
         }
@@ -215,15 +213,15 @@ var RenderTextureSave = BaseLayer.extend({
         if( distance > 1 ) {
             this._target.begin();
             for( var i=0; i < distance; i++ ) {
-                var diffX = this._lastLocation[0] - location[0];
-                var diffY = this._lastLocation[1] - location[1];
+                var diffX = this._lastLocation.x - location.x;
+                var diffY = this._lastLocation.y - location.y;
 
                 var delta = i / distance;
 
-                this._brush.setPosition( cc._p( location[0] + diffX * delta, location[1] + diffY * delta ) );
+                this._brush.setPosition( cc._p( location.x + diffX * delta, location.y + diffY * delta ) );
                 this._brush.setRotation( Math.random() * 360 );
                 this._brush.setScale( Math.random() * 2 );
-                this._brush.setColor( cc._c3( Math.random()*255, 255, 255) );
+                this._brush.setColor( cc._c3b( Math.random()*255, 255, 255) );
                 this._brush.visit();
             }
             this._target.end();

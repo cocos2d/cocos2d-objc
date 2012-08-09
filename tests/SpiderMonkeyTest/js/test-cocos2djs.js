@@ -7,8 +7,7 @@
 require("js/helper.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = []
@@ -37,8 +36,7 @@ var restartScene = function () {
 
 var loadScene = function (sceneIdx)
 {
-	_winSize = director.getWinSize();
-	winSize = {width:_winSize[0], height:_winSize[1]};
+	winSize = director.getWinSize();
 	centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 	var scene = new cc.Scene();
@@ -83,7 +81,7 @@ var BaseLayer = function() {
 	//
 	var parent = goog.base(this);
 	__associateObjWithNative( this, parent );
-	this.init( cc.c4(0,0,0,255), cc.c4(0,128,255,255));
+	this.init( cc.c4b(0,0,0,255), cc.c4b(0,128,255,255));
 
 	this.title =  "No title";
 	this.subtitle = "No Subtitle";

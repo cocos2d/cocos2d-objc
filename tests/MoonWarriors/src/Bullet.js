@@ -1,8 +1,8 @@
 //bullet
 var Bullet = cc.Sprite.extend({
     active:true,
-    xVolocity:0,
-    yVolocity:200,
+    xVelocity:0,
+    yVelocity:200,
     power:1,
     HP:1,
     moveType:null,
@@ -13,7 +13,7 @@ var Bullet = cc.Sprite.extend({
         var parent = new cc.Sprite();
         __associateObjWithNative(this, parent);
 
-        this.yVolocity = -bulletSpeed;
+        this.yVelocity = -bulletSpeed;
         this.attackMode = attackMode;
         cc.SpriteFrameCache.getInstance().addSpriteFrames(s_bullet_plist);
         this.initWithSpriteFrameName(weaponType);
@@ -33,11 +33,9 @@ var Bullet = cc.Sprite.extend({
     },
     update:function (dt) {
         var pos = this.getPosition();
-        var newX = pos[0];
-        var newY = pos[1]
-        newX -= this.xVolocity * dt;
-        newY -= this.yVolocity * dt;
-        this.setPosition(cc.p(newX, newY));
+        pos.x -= this.xVelocity * dt;
+        pos.y -= this.yVelocity * dt;
+        this.setPosition( pos );
         if (this.HP <= 0) {
             this.active = false;
         }
@@ -63,7 +61,7 @@ var Bullet = cc.Sprite.extend({
     },
     collideRect:function(){
         var pos = this.getPosition();
-        var r = new cc.rect( pos[0] - 3, pos[1] - 3,6,6);
+        var r = new cc.rect( pos.x - 3, pos.y - 3,6,6);
         return r;
     }
 });
