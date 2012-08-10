@@ -1886,7 +1886,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
     def generate_class_binding( self, class_name ):
 
         # Ignore NSObject. Already registerd
-        if not class_name or class_name in self.classes_to_ignore or class_name in self.parsed_classes:
+        if not class_name or class_name in self.classes_to_ignore or class_name in self.parsed_classes or class_name in self.class_manual:
             return
 
         parent = self.hierarchy[class_name]['subclass']
@@ -2089,7 +2089,8 @@ JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
             self.generate_class_mm_prefix()
 
             for klass in self.classes_to_bind:
-                self.generate_class_binding( klass )
+                if not klass in self.class_manual:
+                    self.generate_class_binding( klass )
 
             self.h_file.close()
             self.mm_file.close()
