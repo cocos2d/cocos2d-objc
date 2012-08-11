@@ -264,7 +264,7 @@
 	else if( [name isEqual:@"JS Tests"] )
 		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 
 }
 @end
