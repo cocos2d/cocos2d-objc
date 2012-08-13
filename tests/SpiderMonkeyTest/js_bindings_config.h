@@ -30,7 +30,7 @@
 /** @def JSB_ASSERT_ON_FAIL
  */
 #ifndef JSB_ASSERT_ON_FAIL
-#define JSB_ASSERT_ON_FAIL 0
+#define JSB_ASSERT_ON_FAIL 1
 #endif
 
 
@@ -62,14 +62,3 @@
 #ifndef JSB_USE_CHIPMUNK
 #define JSB_USE_CHIPMUNK 1
 #endif // JSB_USE_CHIPMUNK
-
-/** @def JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
- When enabled CGPoint, CGSize and CGRect are going to return a JS objects that is compatible with cocos2d-html5 API.
- If disabled, it will return a Typed Array.
- TypedArray are a bit faster, but are incompatible with cocos2d-html5.
- 
- Enabled by default
- */
-#ifndef JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-#define JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES 1
-#endif // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES

@@ -1311,8 +1311,7 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
                 if optional_args!=None and i >= optional_args:
                     self.mm_file.write('\t}\n' )
 
-        self.mm_file.write('\tif( ! ok ) return JS_FALSE;\n');
-
+        self.mm_file.write( '\tJSB_PRECONDITION(ok, "Error processing arguments");\n' )
 
     def generate_method_prefix( self, class_name, method, num_of_args, method_type ):
         # JSPROXY_CCNode, setPosition
@@ -1426,7 +1425,8 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
                     call_real = self.generate_method_call_to_real_object( properties['calls'][i], i, ret_js_type, args_declared_type, args_js_type, class_name, method_type )
                     self.mm_file.write( '\n\t%sif( argc == %d ) {\n\t%s\n\t}' % ( else_str, i, call_real) )
                     else_str = 'else '
-            self.mm_file.write( '\n\telse\n\t\treturn JS_FALSE;\n\n' )
+            self.mm_file.write( '\n\telse\n\t\tJSB_PRECONDITION(NO, "Error in number of arguments");\n\n')
+
         else:
             call_real = self.generate_method_call_to_real_object( s, num_of_args, ret_js_type, args_declared_type, args_js_type, class_name, method_type )
             self.mm_file.write( '\n%s\n' % call_real )
