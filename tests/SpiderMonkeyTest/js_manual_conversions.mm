@@ -68,12 +68,12 @@ JSBool jsval_to_nsstring( JSContext *cx, jsval vp, NSString **ret )
 	vp = STRING_TO_JSVAL(jsstr);
 
 	char *ptr = JS_EncodeString(cx, jsstr);
-	if( ! ptr )
-		return JS_FALSE;
+	
+	JSB_PRECONDITION(ptr, "Error encoding string");
 	
 	NSString *tmp = [NSString stringWithUTF8String: ptr];
-	if( ! tmp )
-		return JS_FALSE;
+	
+	JSB_PRECONDITION( tmp, "Error creating string from UTF8");
 	
 	*ret = tmp;
 	JS_free( cx, ptr );
@@ -84,15 +84,15 @@ JSBool jsval_to_nsstring( JSContext *cx, jsval vp, NSString **ret )
 JSBool jsval_to_nsobject( JSContext *cx, jsval vp, NSObject **ret )
 {
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	
 	// root it
 	vp = OBJECT_TO_JSVAL(jsobj);
 	
 	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
-	if( ! proxy )
-		return JS_FALSE;
+	
+	JSB_PRECONDITION( proxy, "Error obtaining proxy");
 
 	*ret = [proxy realObj];
 	
@@ -103,8 +103,8 @@ JSBool jsval_to_nsarray( JSContext *cx, jsval vp, NSArray**ret )
 {
 	// Parsing sequence
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	
 	JSB_PRECONDITION( jsobj && JS_IsArrayObject( cx, jsobj),  "Object must be an array");
 
@@ -118,8 +118,8 @@ JSBool jsval_to_nsarray( JSContext *cx, jsval vp, NSArray**ret )
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
 		id real_obj;
-		if( ! jsval_to_nsobject( cx, valarg, &real_obj ) )
-			return JS_FALSE;
+		ok = jsval_to_nsobject( cx, valarg, &real_obj );
+		JSB_PRECONDITION( ok, "Error converting value to nsobject");
 		
 		[array addObject:real_obj];
 	}
@@ -132,8 +132,8 @@ JSBool jsval_to_nsset( JSContext *cx, jsval vp, NSSet** ret)
 {
 	// Parsing sequence
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	
 	JSB_PRECONDITION( jsobj && JS_IsArrayObject( cx, jsobj), "Object must be an array");
 
@@ -146,8 +146,8 @@ JSBool jsval_to_nsset( JSContext *cx, jsval vp, NSSet** ret)
 		
 		// XXX: forcing them to be objects, but they could also be NSString, NSDictionary or NSArray
 		id real_obj;
-		if( ! jsval_to_nsobject( cx, valarg, &real_obj ) )
-			return JS_FALSE;
+		ok = jsval_to_nsobject( cx, valarg, &real_obj );
+		JSB_PRECONDITION( ok, "Error converting value to nsobject");
 		
 		[set addObject:real_obj];
 	}
@@ -181,8 +181,7 @@ JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray**
 		if( ! ok )
 			ok = jsval_to_nsstring(cx, *vp, (NSString**)&obj );
 		
-		if( ! ok )
-			return JS_FALSE;
+		JSB_PRECONDITION( ok, "Error converting variadic arguments");
 
 		// next
 		vp++;
@@ -195,8 +194,8 @@ JSBool jsvals_variadic_to_nsarray( JSContext *cx, jsval *vp, int argc, NSArray**
 
 JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *ret)
 {
-	if( ! JS_ValueToFunction(cx, vp ) )
-		return JS_FALSE;
+	JSFunction *func = JS_ValueToFunction(cx, vp );
+	JSB_PRECONDITION( func, "Error converting value to function");
 	
 	js_block block = ^(id sender) {
 
@@ -214,8 +213,8 @@ JSBool jsval_to_block_1( JSContext *cx, jsval vp, JSObject *jsthis, js_block *re
 
 JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, js_block *ret)
 {
-	if( ! JS_ValueToFunction(cx, vp ) )
-		return JS_FALSE;
+	JSFunction *func = JS_ValueToFunction(cx, vp );
+	JSB_PRECONDITION( func, "Error converting value to function");
 		
 	js_block block = ^(id sender) {
 		
@@ -238,158 +237,89 @@ JSBool jsval_to_block_2( JSContext *cx, jsval vp, JSObject *jsthis, jsval arg, j
 
 JSBool jsval_to_CGPoint( JSContext *cx, jsval vp, CGPoint *ret )
 {
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 
 	jsval valx, valy;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
 	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
-
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	double x, y;
 	ok &= JS_ValueToNumber(cx, valx, &x);
 	ok &= JS_ValueToNumber(cx, valy, &y);
-	
-	if( ! ok )
-		return JS_FALSE;
-	
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
+
 	ret->x = x;
 	ret->y = y;
 
 	return JS_TRUE;
-
-#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-	
-	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGPoint), "Invalid length");
-	
-	*ret = *(CGPoint*)JS_GetArrayBufferViewData( tmp_arg, cx );
-	
-	return JS_TRUE;
-#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 JSBool jsval_to_CGSize( JSContext *cx, jsval vp, CGSize *ret )
 {
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
 	jsval valw, valh;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "width", &valw);
-	ok &= JS_GetProperty(cx, jsobj, "height", &valh);
-	
-	if( ! ok )
-		return JS_FALSE;
+	ok &= JS_GetProperty(cx, jsobj, "height", &valh);	
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	double w, h;
 	ok &= JS_ValueToNumber(cx, valw, &w);
-	ok &= JS_ValueToNumber(cx, valh, &h);
-	
-	if( ! ok )
-		return JS_FALSE;
+	ok &= JS_ValueToNumber(cx, valh, &h);	
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->width = w;
 	ret->height = h;
 	
-	return JS_TRUE;
-	
-#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-
-	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGSize), "Invalid length" );
-	
-	*ret = *(CGSize*)JS_GetArrayBufferViewData( tmp_arg, cx );
-	return JS_TRUE;
-
-#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	return JS_TRUE;	
 }
 
 JSBool jsval_to_CGRect( JSContext *cx, jsval vp, CGRect *ret )
-{
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
+{	
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
 	jsval valx, valy, valw, valh;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "x", &valx);
 	ok &= JS_GetProperty(cx, jsobj, "y", &valy);
 	ok &= JS_GetProperty(cx, jsobj, "width", &valw);
 	ok &= JS_GetProperty(cx, jsobj, "height", &valh);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	double x, y, w, h;
 	ok &= JS_ValueToNumber(cx, valx, &x);
 	ok &= JS_ValueToNumber(cx, valy, &y);
 	ok &= JS_ValueToNumber(cx, valw, &w);
 	ok &= JS_ValueToNumber(cx, valh, &h);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->origin.x = x;
 	ret->origin.y = y;
 	ret->size.width = w;
 	ret->size.height = h;
 	
-	return JS_TRUE;
-	
-#else // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
-	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-
-	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
-	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(CGRect), "Invalid length");
-	
-	*ret = *(CGRect*)JS_GetArrayBufferViewData( tmp_arg, cx );
-
-	return JS_TRUE;
-
-#endif // #! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	return JS_TRUE;	
 }
 
 JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 {
 #ifdef __LP64__
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(void*), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetArrayBufferViewData( tmp_arg, cx );
@@ -400,8 +330,8 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 #else
 	NSCAssert( sizeof(int)==4, @"fatal!");
 	int32_t ret;
-	if( ! JS_ValueToInt32(cx, vp, &ret ) )
-	   return JS_FALSE;
+	JSBool ok = JS_ValueToInt32(cx, vp, &ret ) )
+	JSB_PRECONDITION(ok, "Error converting value to in32");
 #endif
 	*r = (void*)ret;
 	return JS_TRUE;
@@ -425,11 +355,9 @@ JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 	// compatibility check
 	NSCAssert( sizeof(long)==8, @"fatal! Compiler error ?");
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(long), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetArrayBufferViewData( tmp_arg, cx );
@@ -450,11 +378,9 @@ JSBool jsval_to_long( JSContext *cx, jsval vp, long *r )
 JSBool jsval_to_longlong( JSContext *cx, jsval vp, long long *r )
 {
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( tmp_arg && JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(long long), "Invalid Typed Array lenght");
 	
 	int32_t* arg_array = (int32_t*)JS_GetArrayBufferViewData( tmp_arg, cx );
@@ -497,9 +423,6 @@ jsval NSSet_to_jsval( JSContext *cx, NSSet *set)
 
 jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 {
-	
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
 	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
 	if (!object)
 		return JSVAL_VOID;
@@ -509,25 +432,10 @@ jsval CGPoint_to_jsval( JSContext *cx, CGPoint p)
 		return JSVAL_VOID;
 	
 	return OBJECT_TO_JSVAL(object);
-
-#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
-#ifdef __LP64__
-	JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
-#else
-	JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
-#endif
-
-	CGPoint *buffer = (CGPoint*)JS_GetArrayBufferViewData(typedArray, cx );
-	*buffer = p;
-	return OBJECT_TO_JSVAL(typedArray);
-#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
 }
 
 jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 {
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
 	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
 	if (!object)
 		return JSVAL_VOID;
@@ -536,26 +444,11 @@ jsval CGSize_to_jsval( JSContext *cx, CGSize s)
 		!JS_DefineProperty(cx, object, "height", DOUBLE_TO_JSVAL(s.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
 		return JSVAL_VOID;
 	
-	return OBJECT_TO_JSVAL(object);
-	
-#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
-#ifdef __LP64__
-	JSObject *typedArray = JS_NewFloat64Array( cx, 2 );
-#else
-	JSObject *typedArray = JS_NewFloat32Array( cx, 2 );
-#endif
-	CGSize *buffer = (CGSize*)JS_GetArrayBufferViewData(typedArray, cx);
-	*buffer = s;
-	return OBJECT_TO_JSVAL(typedArray);
-	
-#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	return OBJECT_TO_JSVAL(object);	
 }
 
 jsval CGRect_to_jsval( JSContext *cx, CGRect rect)
 {
-#if JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-	
 	JSObject *object = JS_NewObject(cx, NULL, NULL, NULL );
 	if (!object)
 		return JSVAL_VOID;
@@ -566,21 +459,7 @@ jsval CGRect_to_jsval( JSContext *cx, CGRect rect)
 		!JS_DefineProperty(cx, object, "height", DOUBLE_TO_JSVAL(rect.size.height), NULL, NULL, JSPROP_ENUMERATE | JSPROP_PERMANENT) )
 		return JSVAL_VOID;
 	
-	return OBJECT_TO_JSVAL(object);
-	
-#else // JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
-
-#ifdef __LP64__
-	JSObject *typedArray = JS_NewFloat64Array( cx, 4 );
-#else
-	JSObject *typedArray = JS_NewFloat32Array( cx, 4 );
-#endif
-
-	CGRect *buffer = (CGRect*)JS_GetArrayBufferViewData(typedArray, cx);
-	*buffer = rect;
-	return OBJECT_TO_JSVAL(typedArray);
-	
-#endif // ! JSB_COMPATIBLE_WITH_COCOS2D_HTML5_BASIC_TYPES
+	return OBJECT_TO_JSVAL(object);	
 }
 
 jsval opaque_to_jsval( JSContext *cx, void *opaque )
@@ -645,11 +524,9 @@ jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p)
 JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 {
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(int32_t)*2, "Invalid length");
 	
 #ifdef __LP64__
@@ -664,27 +541,22 @@ JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret )
 JSBool jsval_to_ccColor3B( JSContext *cx, jsval vp, ccColor3B *ret )
 {
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
 	jsval valr, valg, valb;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
 	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
 	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	uint16_t r,g,b;
 	ok &= JS_ValueToUint16(cx, valr, &r);
 	ok &= JS_ValueToUint16(cx, valg, &g);
 	ok &= JS_ValueToUint16(cx, valb, &b);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->r = r;
 	ret->g = g;
@@ -696,29 +568,24 @@ JSBool jsval_to_ccColor3B( JSContext *cx, jsval vp, ccColor3B *ret )
 JSBool jsval_to_ccColor4B( JSContext *cx, jsval vp, ccColor4B *ret )
 {
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
 	jsval valr, valg, valb, vala;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
 	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
 	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
 	ok &= JS_GetProperty(cx, jsobj, "a", &vala);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	uint16_t r,g,b,a;
 	ok &= JS_ValueToUint16(cx, valr, &r);
 	ok &= JS_ValueToUint16(cx, valg, &g);
 	ok &= JS_ValueToUint16(cx, valb, &b);
 	ok &= JS_ValueToUint16(cx, vala, &a);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->r = r;
 	ret->g = g;
@@ -731,29 +598,24 @@ JSBool jsval_to_ccColor4B( JSContext *cx, jsval vp, ccColor4B *ret )
 JSBool jsval_to_ccColor4F( JSContext *cx, jsval vp, ccColor4F *ret )
 {
 	JSObject *jsobj;
-	if( ! JS_ValueToObject( cx, vp, &jsobj ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &jsobj );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( jsobj, "Not a valid JS object");
 	
 	jsval valr, valg, valb, vala;
-	JSBool ok = JS_TRUE;
+	ok = JS_TRUE;
 	ok &= JS_GetProperty(cx, jsobj, "r", &valr);
 	ok &= JS_GetProperty(cx, jsobj, "g", &valg);
 	ok &= JS_GetProperty(cx, jsobj, "b", &valb);
-	ok &= JS_GetProperty(cx, jsobj, "a", &vala);
-	
-	if( ! ok )
-		return JS_FALSE;
+	ok &= JS_GetProperty(cx, jsobj, "a", &vala);	
+	JSB_PRECONDITION( ok, "Error obtaining point properties");
 	
 	double r,g,b,a;
 	ok &= JS_ValueToNumber(cx, valr, &r);
 	ok &= JS_ValueToNumber(cx, valg, &g);
 	ok &= JS_ValueToNumber(cx, valb, &b);
 	ok &= JS_ValueToNumber(cx, vala, &a);
-	
-	if( ! ok )
-		return JS_FALSE;
+	JSB_PRECONDITION( ok, "Error converting value to numbers");
 	
 	ret->r = r;
 	ret->g = g;
@@ -815,11 +677,9 @@ jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p )
 JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 {
 	JSObject *tmp_arg;
-	if( ! JS_ValueToObject( cx, vp, &tmp_arg ) )
-		return JS_FALSE;
-	
+	JSBool ok = JS_ValueToObject( cx, vp, &tmp_arg );
+	JSB_PRECONDITION( ok, "Error converting value to object");
 	JSB_PRECONDITION( JS_IsTypedArrayObject( tmp_arg, cx ), "Not a TypedArray object");
-	
 	JSB_PRECONDITION( JS_GetTypedArrayByteLength( tmp_arg, cx ) == sizeof(cpFloat)*4, "Invalid length");
 	
 	*ret = *(cpBB*)JS_GetArrayBufferViewData( tmp_arg, cx);
