@@ -35,7 +35,7 @@
 
 
 #if JSB_ASSERT_ON_FAIL
-#define JSB_PRECONDITION( condition, error_msg) do { NSCAssert( condition, error_msg ) } while(0)
+#define JSB_PRECONDITION( condition, error_msg) do { NSCAssert( condition, [NSString stringWithUTF8String:error_msg] ); } while(0)
 #else
 #define JSB_PRECONDITION( condition, error_msg) do {							\
 	if( ! (condition) ) {														\

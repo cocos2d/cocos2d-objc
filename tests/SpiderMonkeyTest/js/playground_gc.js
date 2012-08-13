@@ -6,14 +6,18 @@ __jsc__.dumpRoot();
 __jsc__.garbageCollect();
 
 scene = cc.Scene.create();
-layer = cc.LayerGradient.create( cc.c4b(0, 0, 0, 255), cc.c4b(0, 128, 255, 255) );
+layer = cc.Node.create();
+layer2 = cc.Node.create();
+
+__jsc__.dumpRoot();
+__jsc__.garbageCollect();
 
 layer.onEnter = function() {
     cc.log("On Enter!!");
 
     cc.log("**** 2 ****");
     __jsc__.dumpRoot();
- //   __jsc__.garbageCollect();
+   __jsc__.garbageCollect();
 };
 
 scene.addChild( layer );

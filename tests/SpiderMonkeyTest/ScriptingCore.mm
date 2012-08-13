@@ -332,7 +332,7 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineProperty(_cx, ccconfig, "os", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
 
 		// config.deviceType: Device Type
-		// 'mobile' for any kind of mobile devices, 'desktop' for PCs
+		// 'mobile' for any kind of mobile devices, 'desktop' for PCs, 'browser' for Web Browsers
 #ifdef __CC_PLATFORM_MAC
 		str = JS_InternString(_cx, "desktop");
 #elif defined(__CC_PLATFORM_IOS)
@@ -346,7 +346,7 @@ JSBool ScriptingCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 		JS_DefineProperty(_cx, ccconfig, "engine", STRING_TO_JSVAL(str), NULL, NULL, JSPROP_ENUMERATE | JSPROP_READONLY | JSPROP_PERMANENT);
 		
 		// config.arch: CPU Architecture
-		// i386, ARM, x86_64
+		// i386, ARM, x86_64, web
 #ifdef __LP64__
 		str = JS_InternString(_cx, "x86_64");
 #elif defined(__arm__) || defined(__ARM_NEON__)
