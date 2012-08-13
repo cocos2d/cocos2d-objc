@@ -369,9 +369,7 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert(runningScene_ == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
 	[self pushScene:scene];
-	
-	NSThread *thread = [self runningThread];
-	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+	[self startAnimation];
 }
 
 -(void) replaceScene: (CCScene*) scene

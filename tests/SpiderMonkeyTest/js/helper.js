@@ -192,6 +192,18 @@ cc.dumpConfig = function()
     }
 }
 
+/**
+ * Associates a base class with a native superclass
+ * @function
+ * @param {object} jsobj subclass
+ * @param {object} klass superclass
+ */
+cc.associateWithNative = function( jsobj, superclass ) {
+    var native = new superclass();
+    __associateObjWithNative( jsobj, native );
+};
+
+
 // XXX Should be done in native
 cc.rectIntersectsRect = function( rectA, rectB )
 {
