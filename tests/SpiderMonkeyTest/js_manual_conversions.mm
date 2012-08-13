@@ -330,7 +330,7 @@ JSBool jsval_to_opaque( JSContext *cx, jsval vp, void **r)
 #else
 	NSCAssert( sizeof(int)==4, @"fatal!");
 	int32_t ret;
-	JSBool ok = JS_ValueToInt32(cx, vp, &ret ) )
+	JSBool ok = JS_ValueToInt32(cx, vp, &ret );
 	JSB_PRECONDITION(ok, "Error converting value to in32");
 #endif
 	*r = (void*)ret;
