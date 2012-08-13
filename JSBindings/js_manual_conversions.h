@@ -25,7 +25,7 @@
 #import <Foundation/Foundation.h>
 #import "js_bindings_config.h"
 
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 #import "cocos2d.h"
 #endif
 
@@ -77,7 +77,7 @@ jsval NSArray_to_jsval( JSContext *cx, NSArray *array);
 jsval NSSet_to_jsval( JSContext *cx, NSSet *set);
 jsval opaque_to_jsval( JSContext *cx, void* opaque);
 
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 JSBool jsval_to_ccGridSize( JSContext *cx, jsval vp, ccGridSize *ret );
 jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p );
 JSBool jsval_to_ccColor3B( JSContext *cx, jsval vp, ccColor3B *ret );
@@ -86,12 +86,12 @@ JSBool jsval_to_ccColor4F( JSContext *cx, jsval vp, ccColor4F *ret );
 jsval ccColor3B_to_jsval( JSContext *cx, ccColor3B p );
 jsval ccColor4B_to_jsval( JSContext *cx, ccColor4B p );
 jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p );
-#endif // JSB_USE_COCOS2D
+#endif // JSB_INCLUDE_COCOS2D
 	
-#ifdef JSB_USE_CHIPMUNK
+#ifdef JSB_INCLUDE_CHIPMUNK
 JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret );
 jsval cpBB_to_jsval(JSContext *cx, cpBB bb );
-#endif // JSB_USE_CHIPMUNK
+#endif // JSB_INCLUDE_CHIPMUNK
 
 	
 #define cpVect_to_jsval CGPoint_to_jsval

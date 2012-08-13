@@ -291,7 +291,7 @@ JSBool JSPROXY_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	NSEvent* event = (NSEvent*) [proxy realObj];
 	
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 #else
 	CGPoint location = [event locationInWindow];
@@ -312,7 +312,7 @@ JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 	NSEvent* real = (NSEvent*) [proxy realObj];
 	CGFloat x = [real deltaX];
 	
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 	// Negate Y: Needed for OpenGL coordinates
 	CGFloat y = -[real deltaY];
 #else
@@ -416,7 +416,7 @@ JSBool JSPROXY_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	UITouch* real = (UITouch*) [proxy realObj];
 	
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 	CGPoint location = [[CCDirector sharedDirector] convertTouchToGL:real];
 #else
 	CGPoint location = [real locationInView: [real view]];
@@ -439,7 +439,7 @@ JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 	CGPoint now = [real locationInView: view];
 	CGPoint prev = [real previousLocationInView: view];
 	
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 	// Negate Y: Needed for OpenGL coordinates
 	CGPoint delta = CGPointMake(now.x-prev.x, prev.y-now.y);
 #else

@@ -511,7 +511,7 @@ jsval longlong_to_jsval( JSContext *cx, long long number )
 
 #pragma mark - cocos2d related stuff
 
-#ifdef JSB_USE_COCOS2D
+#ifdef JSB_INCLUDE_COCOS2D
 jsval ccGridSize_to_jsval( JSContext *cx, ccGridSize p)
 {
 	JSObject *typedArray = JS_NewInt32Array( cx, 2 );
@@ -669,10 +669,10 @@ jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p )
 	return OBJECT_TO_JSVAL(object);		
 }
 
-#endif // JSB_USE_COCOS2D
+#endif // JSB_INCLUDE_COCOS2D
 
 
-#ifdef JSB_USE_CHIPMUNK
+#ifdef JSB_INCLUDE_CHIPMUNK
 
 JSBool jsval_to_cpBB( JSContext *cx, jsval vp, cpBB *ret )
 {
@@ -700,4 +700,4 @@ jsval cpBB_to_jsval(JSContext *cx, cpBB bb )
 	return OBJECT_TO_JSVAL(typedArray);
 }
 
-#endif // JSB_USE_CHIPMUNK
+#endif // JSB_INCLUDE_CHIPMUNK

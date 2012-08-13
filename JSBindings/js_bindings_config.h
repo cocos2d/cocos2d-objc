@@ -50,17 +50,34 @@
 #endif // __JS_BINDINGS_CONFIG_H
 
 
-/** @def JSB_USE_COCOS2D
- Whether or not it should assume that cocos2d is being used.
- Useful, for example, to send the touches/events in cocos2d format
+/** @def JSB_INCLUDE_COCOS2D
+ Whether or not it should include JS bindings for cocos2d.
 */
-#ifndef JSB_USE_COCOS2D
-#define JSB_USE_COCOS2D 1
-#endif // JSB_USE_COCOS2D
+#ifndef JSB_INCLUDE_COCOS2D
+#define JSB_INCLUDE_COCOS2D 1
+#define JSB_INCLUDE_COCOS2D_IOS 1
+#define JSB_INCLUDE_COCOS2D_MAC 1
+#endif // JSB_INCLUDE_COCOS2D
 
-/** @def JSB_USE_CHIPMUNK
- Whether or not it should assume that Chipmunk is being used.
+
+/** @def JSB_INCLUDE_CHIPMUNK
+ Whether or not it should include JS bindings for Chipmunk
  */
-#ifndef JSB_USE_CHIPMUNK
-#define JSB_USE_CHIPMUNK 1
-#endif // JSB_USE_CHIPMUNK
+#ifndef JSB_INCLUDE_CHIPMUNK
+#define JSB_INCLUDE_CHIPMUNK 1
+#endif // JSB_INCLUDE_CHIPMUNK
+
+
+/** @def JSB_INCLUDE_COCOSBUILDERREADER
+ Whether or not it should include JS bindings for CocosBuilder Reader
+ */
+#ifndef JSB_INCLUDE_COCOSBUILDERREADER
+#define JSB_INCLUDE_COCOSBUILDERREADER 1
+#endif // JSB_INCLUDE_COCOSBUILDERREADER
+
+/** @def JSB_INCLUDE_COCOSDENSHION
+ Whether or not it should include bindings for CocosDenshion (sound engine)
+ */
+#ifndef JSB_INCLUDE_COCOSDENSHION
+#define JSB_INCLUDE_COCOSDENSHION 1
+#endif // JSB_INCLUDE_COCOSDENSHION
