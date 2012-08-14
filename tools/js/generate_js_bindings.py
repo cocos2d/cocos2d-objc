@@ -83,7 +83,7 @@ class SpiderMonkey(object):
                              'classes_to_ignore' : [],
                              'class_properties' : [],
                              'bridge_support_file' : [],
-                             'hierarchy_protocol_file' : [],
+                             'complement_file' : [],
                              'inherit_class_methods' : 'Auto',
                              'functions_to_parse' : [],
                              'functions_to_ignore' : [],
@@ -130,8 +130,8 @@ class SpiderMonkey(object):
 
     def __init__(self, config ):
 
-        self.hierarchy_files = config['hierarchy_protocol_file']
-        self.init_hierarchy_file()
+        self.complement_files = config['complement_file']
+        self.init_complement_file()
 
         self.bridgesupport_files = config['bridge_support_file']
         self.init_bridgesupport_file()
@@ -178,13 +178,13 @@ class SpiderMonkey(object):
         self.init_struct_properties( config['struct_properties'] )
 
 
-    def init_hierarchy_file( self ):
-        self.hierarchy = {}
-        for f in self.hierarchy_files:
+    def init_complement_file( self ):
+        self.complement = {}
+        for f in self.complement_files:
             # empty string ??
             if f:
                 fd = open( get_path_for( f ) )
-                self.hierarchy.update( ast.literal_eval( fd.read() ) )
+                self.complement.update( ast.literal_eval( fd.read() ) )
                 fd.close()
 
     def init_bridgesupport_file( self ):
@@ -482,10 +482,10 @@ class SpiderMonkey(object):
         return ancestors
 
     def ancestors( self, klass, list_of_ancestors ):
-        if klass not in self.hierarchy:
+        if klass not in self.complement:
             return list_of_ancestors
 
-        info = self.hierarchy[ klass ]
+        info = self.complement[ klass ]
         subclass =  info['subclass']
         if not subclass:
             return list_of_ancestors
@@ -537,7 +537,7 @@ class SpiderMonkey(object):
 
     def get_parent_class( self, class_name ):
         try:
-            parent = self.hierarchy[class_name]['subclass']
+            parent = self.complement[class_name]['subclass']
         except KeyError, e:
             return None
         return parent
@@ -710,8 +710,8 @@ class SpiderMonkey(object):
 
         # Not found... search in protocols
         list_of_protocols = self.bs['signatures']['informal_protocol']
-        if 'protocols' in self.hierarchy[ class_name ]:
-            protocols = self.hierarchy[ class_name ]['protocols']
+        if 'protocols' in self.complement[ class_name ]:
+            protocols = self.complement[ class_name ]['protocols']
             for protocol in protocols:
                 for ip in list_of_protocols:
                     # protocol match ?
@@ -753,7 +753,7 @@ class SpiderMonkey(object):
 
         # Is it a property ?
         try:
-            if selector in self.hierarchy[ class_name ][ 'properties' ]:
+            if selector in self.complement[ class_name ][ 'properties' ]:
                 ret = 'get%s%s' % (selector[0].capitalize(), selector[1:] )
                 return ret
         except KeyError, e:
@@ -1474,9 +1474,9 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         self.is_a_protocol = True
 
         # Parse methods defined in the Protocol
-        if class_name in self.hierarchy:
+        if class_name in self.complement:
             list_of_protocols = self.bs['signatures']['informal_protocol']
-            protocols = self.hierarchy[ class_name ]['protocols']
+            protocols = self.complement[ class_name ]['protocols']
             for protocol in protocols:
                 for p in list_of_protocols:
                     # XXX Super slow
@@ -1901,7 +1901,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         if not class_name or class_name in self.classes_to_ignore or class_name in self.parsed_classes or class_name in self.class_manual:
             return
 
-        parent = self.hierarchy[class_name]['subclass']
+        parent = self.complement[class_name]['subclass']
         self.generate_class_binding( parent )
 
         self.parsed_classes.append( class_name )
@@ -1910,7 +1910,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         classes = signatures['class']
         klass = None
 
-        parent_name = self.hierarchy[ class_name ]['subclass']
+        parent_name = self.complement[ class_name ]['subclass']
 
         # XXX: Super slow. Add them into a dictionary
         for c in classes:
@@ -1934,7 +1934,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
             return
 
         if not klass in self.classes_registered:
-            parent = self.hierarchy[klass]['subclass']
+            parent = self.complement[klass]['subclass']
             self.generate_class_registration( parent )
 
             class_name = self.convert_class_name_to_js( klass )
