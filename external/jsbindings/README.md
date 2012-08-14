@@ -1,8 +1,11 @@
-Javascript Bindings
-===================
+# Javascript Bindings for C and Objective-C
 
-How to update the current bindings
-----------------------------------
+
+## What's this ?
+Javascript Bindings (JSB) is a script that generates "glue" code between native (C or Objective-C) code and Javascript code.
+It automatically generates the code needed to call native code from Javascript and to call Javascript code from native.
+
+## How to update the current bindings
 
     $ cd cocos2d-iphone/JSBindings
     $ ../tools/js/generate_spidermonkey_bindings.py -c ../tools/js/cocos2d_spidermonkey.ini 
@@ -12,8 +15,7 @@ How to update the current bindings
 
 
 
-Understanding the bindings
---------------------------
+## Understanding the bindings
 
 The Javascript Bidnings (JSB) generates the code needed to execute "native code" from Javascript. And by "native code" it could be any Objective-C (or C) library.
 
