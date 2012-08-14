@@ -2318,7 +2318,7 @@ JSBool JSPROXY_CCParticleSystem_emitterMode(JSContext *cx, uint32_t argc, jsval 
 }
 
 // Arguments: 
-// Ret value: ccColor4F ({ccColor4F=ffff})
+// Ret value: ccColor4F ({_ccColor4F=ffff})
 JSBool JSPROXY_CCParticleSystem_endColor(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -2338,7 +2338,7 @@ JSBool JSPROXY_CCParticleSystem_endColor(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Arguments: 
-// Ret value: ccColor4F ({ccColor4F=ffff})
+// Ret value: ccColor4F ({_ccColor4F=ffff})
 JSBool JSPROXY_CCParticleSystem_endColorVar(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -3755,7 +3755,7 @@ JSBool JSPROXY_CCParticleSystem_speedVar(JSContext *cx, uint32_t argc, jsval *vp
 }
 
 // Arguments: 
-// Ret value: ccColor4F ({ccColor4F=ffff})
+// Ret value: ccColor4F ({_ccColor4F=ffff})
 JSBool JSPROXY_CCParticleSystem_startColor(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -3775,7 +3775,7 @@ JSBool JSPROXY_CCParticleSystem_startColor(JSContext *cx, uint32_t argc, jsval *
 }
 
 // Arguments: 
-// Ret value: ccColor4F ({ccColor4F=ffff})
+// Ret value: ccColor4F ({_ccColor4F=ffff})
 JSBool JSPROXY_CCParticleSystem_startColorVar(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -40668,7 +40668,7 @@ JSBool JSPROXY_CCGLProgram_link(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Arguments: 
-// Ret value: GLint (i)
+// Ret value: GLuint (u)
 JSBool JSPROXY_CCGLProgram_program(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
@@ -40676,7 +40676,7 @@ JSBool JSPROXY_CCGLProgram_program(JSContext *cx, uint32_t argc, jsval *vp) {
 
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
-	GLint ret_val;
+	GLuint ret_val;
 
 	CCGLProgram *real = (CCGLProgram*) [proxy realObj];
 	ret_val = [real program ];
