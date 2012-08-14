@@ -1538,11 +1538,12 @@
 		A031B80D15D9C42500E1986C /* pickup_star.wav in Resources */ = {isa = PBXBuildFile; fileRef = A031B7B515D9C42500E1986C /* pickup_star.wav */; };
 		A031B83115D9C42500E1986C /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = A031B7DA15D9C42500E1986C /* watermelon_with_me.js */; };
 		A031B85315D9C80C00E1986C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
-		A031B87115D9C84900E1986C /* js in Resources */ = {isa = PBXBuildFile; fileRef = A031B87015D9C84900E1986C /* js */; };
 		A031B87215D9C84900E1986C /* js in Resources */ = {isa = PBXBuildFile; fileRef = A031B87015D9C84900E1986C /* js */; };
-		A031B87315D9C84900E1986C /* js in Resources */ = {isa = PBXBuildFile; fileRef = A031B87015D9C84900E1986C /* js */; };
 		A031B87415D9C86B00E1986C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
 		A031B87515D9C86C00E1986C /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
+		A031B87715D9CDCA00E1986C /* jsb in Resources */ = {isa = PBXBuildFile; fileRef = A031B87615D9CDCA00E1986C /* jsb */; };
+		A031B87815D9CDCA00E1986C /* jsb in Resources */ = {isa = PBXBuildFile; fileRef = A031B87615D9CDCA00E1986C /* jsb */; };
+		A031B87915D9CDCA00E1986C /* jsb in Resources */ = {isa = PBXBuildFile; fileRef = A031B87615D9CDCA00E1986C /* jsb */; };
 		A034FF86149DC994009F11AA /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A034FF85149DC993009F11AA /* GameKit.framework */; };
 		A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A039EBFD155C686B0061EE37 /* CCNode+Debug.h */; };
 		A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A039EBFE155C686B0061EE37 /* CCNode+Debug.m */; };
@@ -4978,6 +4979,7 @@
 		A031B83315D9C80C00E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A031B83415D9C80C00E1986C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		A031B87015D9C84900E1986C /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		A031B87615D9CDCA00E1986C /* jsb */ = {isa = PBXFileReference; lastKnownFileType = folder; path = jsb; sourceTree = "<group>"; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		A039EBFD155C686B0061EE37 /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
 		A039EBFE155C686B0061EE37 /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
@@ -7854,6 +7856,7 @@
 		A031B6B415D9B6AE00E1986C /* JSBindings */ = {
 			isa = PBXGroup;
 			children = (
+				A031B87615D9CDCA00E1986C /* jsb */,
 				A031B77515D9BF7700E1986C /* manual_generated */,
 				A031B77415D9BF4300E1986C /* auto_generated */,
 				A031B77615D9BFEE00E1986C /* extensions */,
@@ -12275,7 +12278,7 @@
 				A08F3ED515D6E6F300B4C422 /* mainMainMusic.mp3 in Resources */,
 				A08F3ED615D6E6F300B4C422 /* shipDestroyEffect.mp3 in Resources */,
 				A08F3ED715D6E6F300B4C422 /* ship01.png in Resources */,
-				A031B87115D9C84900E1986C /* js in Resources */,
+				A031B87715D9CDCA00E1986C /* jsb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12530,6 +12533,7 @@
 				A0CFE6DF15BF7A4A00264229 /* jsproto.tbl in Resources */,
 				A0A1C26715CAEA0A0058D96F /* Default-Landscape.png in Resources */,
 				A031B87215D9C84900E1986C /* js in Resources */,
+				A031B87815D9CDCA00E1986C /* jsb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12598,7 +12602,7 @@
 				A031B80B15D9C42500E1986C /* Parallax.pvr.gz in Resources */,
 				A031B80C15D9C42500E1986C /* pickup_coin.wav in Resources */,
 				A031B80D15D9C42500E1986C /* pickup_star.wav in Resources */,
-				A031B87315D9C84900E1986C /* js in Resources */,
+				A031B87915D9CDCA00E1986C /* jsb in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

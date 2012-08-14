@@ -41,7 +41,7 @@
 // THE SOFTWARE.
 //
 
-require("js/helper.js");
+require("jsb/defines.js");
 
 // Z Orders (grouped by parent)
 
