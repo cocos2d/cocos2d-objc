@@ -19,7 +19,6 @@ import sys
 import os
 import re
 import getopt
-import glob
 import ast
 import xml.etree.ElementTree as ET
 import itertools
@@ -39,7 +38,6 @@ class ParseException(Exception):
 
 class ParseOKException(Exception):
     pass
-
 
 
 #
@@ -174,7 +172,6 @@ class JSBindings(object):
         #
         self.init_struct_properties(config['struct_properties'])
 
-
     def init_complement_file(self):
         self.complement = {}
         for f in self.complement_files:
@@ -189,9 +186,9 @@ class JSBindings(object):
         self.bs['signatures'] = {}
 
         for f in self.bridgesupport_files:
-            p = ET.parse( self.get_path_for( f ) )
+            p = ET.parse(self.get_path_for(f))
             root = p.getroot()
-            xml = xml2d( root )
+            xml = xml2d(root)
             for key in xml['signatures']:
                 # More than 1 file can be loaded
                 # So, older keys should not be overwritten
@@ -200,33 +197,33 @@ class JSBindings(object):
                 else:
                     l = self.bs['signatures'][key]
                     if type(l) == type([]):
-                        self.bs['signatures'][key].extend( xml['signatures'][key] )
+                        self.bs['signatures'][key].extend(xml['signatures'][key])
 
-    def init_callback_methods( self ):
+    def init_callback_methods(self):
         self.callback_methods = {}
 
         for class_name in self.method_properties:
-            methods = self.method_properties[ class_name ]
+            methods = self.method_properties[class_name]
             for method in methods:
-                if 'callback' in self.method_properties[ class_name ][ method ]:
-                    if not self.callback_methods.has_key( class_name ):
-                        self.callback_methods[ class_name ] = []
-                    self.callback_methods[ class_name ].append( method )
+                if 'callback' in self.method_properties[class_name][method]:
+                    if not class_name in self.callback_methods:
+                        self.callback_methods[class_name] = []
+                    self.callback_methods[class_name].append(method)
 
-    def process_method_properties( self, klass, method_name, props ):
+    def process_method_properties(self, klass, method_name, props):
 
         if not klass in self.method_properties:
             self.method_properties[klass] = {}
         if not method_name in self.method_properties[klass]:
             self.method_properties[klass][method_name] = {}
-        self.method_properties[klass][method_name] = copy.copy( props )
+        self.method_properties[klass][method_name] = copy.copy(props)
 
         # Process "merge"
         if 'merge' in props:
             lm = props['merge'].split('|')
 
             # append self
-            lm.append( method_name )
+            lm.append(method_name)
 
             methods = {}
             # needed to obtain the selector with greater number of args
@@ -237,7 +234,7 @@ class JSBindings(object):
             for m in lm:
                 m = m.strip()
                 args = m.count(':')
-                methods[ args ] = m
+                methods[args] = m
                 if args > max_args:
                     max_args = args
                 if args < min_args:
@@ -245,16 +242,16 @@ class JSBindings(object):
 
                 # Automatically add "ignore" in the method_properties, but not in "self"
                 if m != method_name:
-                    self.set_method_property( klass, m, 'ignore', True )
+                    self.set_method_property(klass, m, 'ignore', True)
 
             # Add max/min/calls rules
-            self.set_method_property( klass, method_name, 'calls', methods )
-            self.set_method_property( klass, method_name, 'min_args', min_args )
-            self.set_method_property( klass, method_name, 'max_args', max_args )
+            self.set_method_property(klass, method_name, 'calls', methods)
+            self.set_method_property(klass, method_name, 'min_args', min_args)
+            self.set_method_property(klass, method_name, 'max_args', max_args)
 
             # safety check
             if method_name.count(':') != max_args:
-                raise Exception("Merge methods should have less arguments that the main method. Check: %s # %s" % (klass, method_name ) )
+                raise Exception("Merge methods should have less arguments that the main method. Check: %s # %s" % (klass, method_name))
 
         if 'name' in props:
             # If this name was previously used, the delete it. Only the newer one will be used
@@ -262,30 +259,28 @@ class JSBindings(object):
             name = props['name']
             for m in self.method_properties[klass]:
                 d = self.method_properties[klass][m]
-                old_name = d.get('name', None )
+                old_name = d.get('name', None)
                 if m != method_name and old_name == name:
-                    del( d['name'] )
+                    del(d['name'])
                     print 'Deleted duplicated from %s (old:%s)  (new:%s)' % (klass, m, method_name)
-
 
         if 'manual' in props:
             if not klass in self.manual_methods:
-                self.manual_methods[ klass ] = []
-            self.manual_methods[ klass ].append( method_name )
+                self.manual_methods[klass] = []
+            self.manual_methods[klass].append(method_name)
 
-
-    def init_method_properties( self, properties ):
+    def init_method_properties(self, properties):
         self.method_properties = {}
         self.manual_methods = {}
         for prop in properties:
             # key value
             try:
-                if not prop or len(prop)==0:
+                if not prop or len(prop) == 0:
                     continue
-                key,value = prop.split('=')
+                key, value = prop.split('=')
 
                 # From Key get: Class # method
-                klass,method = key.split('#')
+                klass, method = key.split('#')
                 klass = klass.strip()
                 method = method.strip()
 
@@ -306,23 +301,23 @@ class JSBindings(object):
                     else:
                         o_key = o
                         o_val = True
-                    opts[ o_key ] = o_val
+                    opts[o_key] = o_val
 
-                expanded_klasses = self.expand_regexp_names( [klass], self.supported_classes )
+                expanded_klasses = self.expand_regexp_names([klass], self.supported_classes)
                 for k in expanded_klasses:
-                    self.process_method_properties( k, method, opts )
-            except ValueError, e:
-                sys.stderr.write("\nERROR parsing line: %s\n\n" % (prop) )
+                    self.process_method_properties(k, method, opts)
+            except ValueError:
+                sys.stderr.write("\nERROR parsing line: %s\n\n" % (prop))
                 raise
 
-    def init_function_properties( self, properties ):
+    def init_function_properties(self, properties):
         self.function_properties = {}
         self.struct_manual = []
         for prop in properties:
             # key value
-            if not prop or len(prop)==0:
+            if not prop or len(prop) == 0:
                 continue
-            key,value = prop.split('=')
+            key, value = prop.split('=')
 
             opts = {}
             # From value get options
@@ -367,58 +362,58 @@ class JSBindings(object):
                 # populate lists. easier to code
                 if o_key == 'opaque':
                     # '*' is needed for opaque structs
-                    self.struct_opaque.append( key + '*' )
+                    self.struct_opaque.append(key + '*')
                 elif o_key == 'manual':
-                    self.struct_manual.append( key )
+                    self.struct_manual.append(key)
             self.struct_properties[key] = opts
 
-    def init_functions_to_bind( self, functions ):
-        self._functions_to_bind = set( functions )
+    def init_functions_to_bind(self, functions):
+        self._functions_to_bind = set(functions)
         ref_list = []
 
         if 'function' in self.bs['signatures']:
             for k in self.bs['signatures']['function']:
-                ref_list.append( k['name'] )
-            self.functions_to_bind = self.expand_regexp_names( self._functions_to_bind, ref_list )
+                ref_list.append(k['name'])
+            self.functions_to_bind = self.expand_regexp_names(self._functions_to_bind, ref_list)
         else:
             self.functions_to_bind = []
         self.functions_bound = []
 
-    def init_functions_to_ignore( self, klasses ):
+    def init_functions_to_ignore(self, klasses):
         self._functions_to_ignore = klasses
-        self.functions_to_ignore = self.expand_regexp_names( self._functions_to_ignore, self.functions_to_bind )
+        self.functions_to_ignore = self.expand_regexp_names(self._functions_to_ignore, self.functions_to_bind)
 
-        copy_set = copy.copy( self.functions_to_bind )
+        copy_set = copy.copy(self.functions_to_bind)
         for i in self.functions_to_bind:
             if i in self.functions_to_ignore:
                 print 'Explicity removing %s from bindings...' % i
-                copy_set.remove( i )
+                copy_set.remove(i)
 
         self.functions_to_bind = copy_set
 
-    def get_function_property( self, func_name, property  ):
+    def get_function_property(self, func_name, property):
         try:
-            return self.function_properties[ func_name ][ property ]
-        except KeyError, e:
+            return self.function_properties[func_name][property]
+        except KeyError:
             return None
 
-    def init_class_properties( self, properties ):
+    def init_class_properties(self, properties):
         ref_list = []
         if 'class' in self.bs['signatures']:
             for k in self.bs['signatures']['class']:
-                ref_list.append( k['name'] )
+                ref_list.append(k['name'])
 
         self.supported_classes = set()
         self.class_manual = []
         self.class_properties = {}
         for prop in properties:
             # key value
-            if not prop or len(prop)==0:
+            if not prop or len(prop) == 0:
                 continue
-            klass_name,value = prop.split('=')
+            klass_name, value = prop.split('=')
 
             # expand regular expression of class name
-            keys = self.expand_regexp_names( [klass_name], ref_list )
+            keys = self.expand_regexp_names([klass_name], ref_list)
 
             # Hack to support "manual" classes here since they are not part of the classes to parse yet
             if keys == []:
@@ -436,13 +431,13 @@ class JSBindings(object):
                     else:
                         o_key = o
                         o_val = None
-                    opts[ o_key ] = o_val
+                    opts[o_key] = o_val
 
                     # populate lists. easier to code
                     if o_key == 'manual':
                         # '*' is needed for opaque structs
-                        self.supported_classes.add( key )
-                        self.class_manual.append( key )
+                        self.supported_classes.add(key)
+                        self.class_manual.append(key)
 
                 self.class_properties[key] = opts
 
@@ -518,7 +513,7 @@ class JSBindings(object):
     #
     # Helpers
     #
-    def get_callback_args_for_method( self, method ):
+    def get_callback_args_for_method(self, method):
         method_name = method['selector']
         method_args = method_name.split(':')
 
@@ -526,24 +521,24 @@ class JSBindings(object):
         args = []
 
         if 'arg' in method:
-            for i,arg in enumerate( method['arg'] ):
-                full_args.append( method_args[i] +':' )
-                full_args.append( '(' + arg['declared_type'] + ')' )
-                full_args.append( arg['name'] + ' ' )
+            for i, arg in enumerate(method['arg']):
+                full_args.append(method_args[i] + ':')
+                full_args.append('(' + arg['declared_type'] + ')')
+                full_args.append(arg['name'] + ' ')
 
-                args.append( method_args[i] +':' )
-                args.append( arg['name'] + ' ' )
-            return [''.join(full_args), ''.join(args) ]
+                args.append(method_args[i] + ':')
+                args.append(arg['name'] + ' ')
+            return [''.join(full_args), ''.join(args)]
         return method_name, method_name
 
-    def get_parent_class( self, class_name ):
+    def get_parent_class(self, class_name):
         try:
             parent = self.complement[class_name]['subclass']
-        except KeyError, e:
+        except KeyError:
             return None
         return parent
 
-    def get_class_method( self, class_name ):
+    def get_class_method(self, class_name):
         class_methods = []
 
         klass = None
@@ -553,58 +548,58 @@ class JSBindings(object):
                 klass = k
 
         if not klass:
-            raise Exception("Base class not found: %s" % class_name )
+            raise Exception("Base class not found: %s" % class_name)
 
         for m in klass['method']:
-            if self.is_class_method( m ):
-                class_methods.append( m )
+            if self.is_class_method(m):
+                class_methods.append(m)
         return class_methods
 
-    def get_struct_type_and_num_of_elements( self, struct ):
+    def get_struct_type_and_num_of_elements(self, struct):
         # PRECOND: Structure must be valid
 
         # BridgeSupport to TypedArray
-        bs_to_type_array =  { 'c' : 'JS_NewInt8Array',
-                              'C' : 'JS_NewUint8Array',
-                              's' : 'JS_NewInt16Array',
-                              'S' : 'JS_NewUint16Array',
-                              'i' : 'JS_NewInt32Array',
-                              'I' : 'JS_NewUint32Array',
-                              'f' : 'JS_NewFloat32Array',
-                              'd' : 'JS_NewFloat64Array',
+        bs_to_type_array = {'c': 'JS_NewInt8Array',
+                            'C': 'JS_NewUint8Array',
+                            's': 'JS_NewInt16Array',
+                            'S': 'JS_NewUint16Array',
+                            'i': 'JS_NewInt32Array',
+                            'I': 'JS_NewUint32Array',
+                            'f': 'JS_NewFloat32Array',
+                            'd': 'JS_NewFloat64Array',
                               }
 
         inner = struct.replace('{', '')
         inner = inner.replace('{', '')
-        inner = inner.replace('}','')
-        key,value = inner.split('=')
+        inner = inner.replace('}', '')
+        key, value = inner.split('=')
 
         k = value[0]
         if not k in bs_to_type_array:
             raise Exception('Structure cannot be converted')
 
         # returns type of structure and len
-        return (bs_to_type_array[k], len(value) )
+        return (bs_to_type_array[k], len(value))
 
-    def get_name_for_manual_struct( self, struct_name ):
-        value = self.get_struct_property( struct_name, 'manual' )
+    def get_name_for_manual_struct(self, struct_name):
+        value = self.get_struct_property(struct_name, 'manual')
         if not value:
             return struct_name
         return value
 
-    def get_struct_property( self, struct_name, property ):
+    def get_struct_property(self, struct_name, property):
         try:
-            return self.struct_properties[ struct_name ][ property ]
-        except KeyError, e:
+            return self.struct_properties[struct_name][property]
+        except KeyError:
             return None
 
-    def get_class_property( self, property, class_name ):
+    def get_class_property(self, property, class_name):
         try:
-            return self.class_properties[ class_name ][ property ]
-        except KeyError, e:
+            return self.class_properties[class_name][property]
+        except KeyError:
             return None
 
-    def is_valid_structure( self, struct ):
+    def is_valid_structure(self, struct):
         # Only support non-nested structures of only one type
         # valids:
         #   {xxx=CCC}
@@ -616,11 +611,11 @@ class JSBindings(object):
         if not struct:
             return False
 
-        if struct[0] == '{' and struct[-1] == '}' and len( struct.split('{') ) == 2:
+        if struct[0] == '{' and struct[-1] == '}' and len(struct.split('{')) == 2:
             inner = struct.replace('{', '')
             inner = inner.replace('{', '')
             inner = inner.replace('}', '')
-            key,value = inner.split('=')
+            key, value = inner.split('=')
             # values should be of the same type
             previous = None
             for c in value:
@@ -632,8 +627,8 @@ class JSBindings(object):
         return False
 
     # whether or not the method is a constructor
-    def is_class_constructor( self, method ):
-        if self.is_class_method( method ) and 'retval' in method:
+    def is_class_constructor(self, method):
+        if self.is_class_method(method) and 'retval' in method:
             retval = method['retval']
             dt = retval[0]['declared_type']
 
@@ -643,7 +638,7 @@ class JSBindings(object):
         return False
 
     # whether or not the method is an initializer
-    def is_method_initializer( self, method ):
+    def is_method_initializer(self, method):
         # Is this is a method ?
         if not 'selector' in method:
             return False
@@ -656,10 +651,10 @@ class JSBindings(object):
                 return True
         return False
 
-    def inherits_class_methods( self,class_name, methods_to_parse=[] ):
-        i = self.get_class_property( 'inherit_class_methods', class_name );
+    def inherits_class_methods(self, class_name, methods_to_parse=[]):
+        i = self.get_class_property('inherit_class_methods', class_name)
         if i != None:
-            return i;
+            return i
 
         inherit = self._inherit_class_methods.lower()
         if inherit == 'false':
@@ -668,41 +663,41 @@ class JSBindings(object):
             return True
         elif inherit == 'auto':
             for m in methods_to_parse:
-                if self.is_class_constructor( m ):
+                if self.is_class_constructor(m):
                     return False
         else:
             raise Exception("Unknonw value for inherit_class_methods: %s", self._inherit_class_methods)
 
         return True
 
-    def requires_swizzle( self, class_name ):
+    def requires_swizzle(self, class_name):
         if class_name in self.callback_methods:
-            for m in self.callback_methods[ class_name ]:
-                if not self.get_method_property( class_name, m, 'no_swizzle' ):
+            for m in self.callback_methods[class_name]:
+                if not self.get_method_property(class_name, m, 'no_swizzle'):
                     return True
         return False
 
-    def get_method_property( self, class_name, method_name, prop ):
+    def get_method_property(self, class_name, method_name, prop):
         try:
-            return self.method_properties[ class_name ][ method_name ][ prop ]
-        except KeyError, e:
+            return self.method_properties[class_name][method_name][prop]
+        except KeyError:
             return None
 
-    def set_method_property( self, class_name, method_name, prop, value=True ):
+    def set_method_property(self, class_name, method_name, prop, value=True):
 
         if not class_name in self.method_properties:
-            self.method_properties[ class_name ] = {}
+            self.method_properties[class_name] = {}
 
-        if not method_name in self.method_properties[ class_name ]:
-            self.method_properties[ class_name ][ method_name ] = {}
+        if not method_name in self.method_properties[class_name]:
+            self.method_properties[class_name][method_name] = {}
 
         k = self.method_properties[class_name][method_name]
-        k[ prop ] = value
+        k[prop] = value
 
-    def is_class_method( self, method ):
+    def is_class_method(self, method):
         return 'class_method' in method and method['class_method'] == 'true'
 
-    def get_method( self,class_name, method_name ):
+    def get_method(self, class_name, method_name):
         for klass in self.bs['signatures']['class']:
             if klass['name'] == class_name:
                 for m in klass['method']:
@@ -711,8 +706,8 @@ class JSBindings(object):
 
         # Not found... search in protocols
         list_of_protocols = self.bs['signatures']['informal_protocol']
-        if 'protocols' in self.complement[ class_name ]:
-            protocols = self.complement[ class_name ]['protocols']
+        if 'protocols' in self.complement[class_name]:
+            protocols = self.complement[class_name]['protocols']
             for protocol in protocols:
                 for ip in list_of_protocols:
                     # protocol match ?
@@ -722,12 +717,12 @@ class JSBindings(object):
                             if m['selector'] == method_name:
                                 return m
 
-        raise MethodNotFoundException("Method not found for %s # %s" % (class_name, method_name) )
+        raise MethodNotFoundException("Method not found for %s # %s" % (class_name, method_name))
 
-    def get_method_type( self, method ):
-        if self.is_class_constructor( method ):
+    def get_method_type(self, method):
+        if self.is_class_constructor(method):
             method_type = METHOD_CONSTRUCTOR
-        elif self.is_class_method( method ):
+        elif self.is_class_method(method):
             method_type = METHOD_CLASS
         elif self.is_method_initializer(method):
             method_type = METHOD_INIT
@@ -736,28 +731,28 @@ class JSBindings(object):
 
         return method_type
 
-    def get_number_of_arguments( self, function ):
+    def get_number_of_arguments(self, function):
         ret = 0
         if 'arg' in function:
-            return len( function['arg'] )
+            return len(function['arg'])
         return ret
 
-    def convert_selector_name_to_native( self, name ):
-        return name.replace(':','_')
+    def convert_selector_name_to_native(self, name):
+        return name.replace(':', '_')
 
-    def convert_selector_name_to_js( self, class_name, selector ):
+    def convert_selector_name_to_js(self, class_name, selector):
         # Does it have a rename rule ?
         try:
-            return self.method_properties[ class_name ][ selector ][ 'name' ]
-        except KeyError, e:
+            return self.method_properties[class_name][selector]['name']
+        except KeyError:
             pass
 
         # Is it a property ?
         try:
-            if selector in self.complement[ class_name ][ 'properties' ]:
-                ret = 'get%s%s' % (selector[0].capitalize(), selector[1:] )
+            if selector in self.complement[class_name]['properties']:
+                ret = 'get%s%s' % (selector[0].capitalize(), selector[1:])
                 return ret
-        except KeyError, e:
+        except KeyError:
             pass
 
         name = ''
@@ -990,8 +985,8 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
             None : 'JSVAL_VOID',
         }
         special_convert = {
-            'o' : self.generate_retval_object,
-            'S' : self.generate_retval_string,
+            'o': self.generate_retval_object,
+            'S': self.generate_retval_string,
             'array': self.generate_retval_array,
             'set': self.generate_retval_set,
         }
@@ -1001,43 +996,43 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
 
         ret = ''
         if declared_type in self.struct_opaque:
-            ret = self.generate_retval_opaque( declared_type, js_type )
+            ret = self.generate_retval_opaque(declared_type, js_type)
         elif declared_type in self.struct_manual:
-            ret =  self.generate_retval_struct_manual( declared_type, js_type )
-        elif self.is_valid_structure( js_type ):
-            ret = self.generate_retval_struct_automatic( declared_type, js_type )
+            ret = self.generate_retval_struct_manual(declared_type, js_type)
+        elif self.is_valid_structure(js_type):
+            ret = self.generate_retval_struct_automatic(declared_type, js_type)
         elif js_type in special_convert:
-            ret = special_convert[js_type]( declared_type, js_type )
+            ret = special_convert[js_type](declared_type, js_type)
         elif js_type in direct_convert:
-            s = direct_convert[ js_type ]
+            s = direct_convert[js_type]
             ret = '\tJS_SET_RVAL(cx, vp, %s);' % s
         else:
-            raise Exception("Invalid key: %s" % js_type )
+            raise Exception("Invalid key: %s" % js_type)
 
         return ret
 
-    def validate_retval( self, method, class_name = None ):
+    def validate_retval(self, method, class_name=None):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'NSString*' : 'S',
-            'NSArray*'  : 'array',
-            'NSMutableArray*' : 'array',
-            'CCArray*'  : 'array',
-            'NSSet*'    : 'set',
+            'NSString*': 'S',
+            'NSArray*': 'array',
+            'NSMutableArray*': 'array',
+            'CCArray*': 'array',
+            'NSSet*': 'set',
         }
 
         supported_types = {
-            'f' : 'd',  # float
-            'd' : 'd',  # double
-            'i' : 'i',  # integer
-            'I' : 'u',  # unsigned integer
-            'c' : 'c',  # char
-            'C' : 'c',  # unsigned char
-            'B' : 'b',  # BOOL
-            'v' :  None,  # void (for retval)
-            'L' : 'long',          # long (special conversion)
-            'Q' : 'longlong',      # long long (special conversion)
+            'f': 'd',  # float
+            'd': 'd',  # double
+            'i': 'i',  # integer
+            'I': 'u',  # unsigned integer
+            'c': 'c',  # char
+            'C': 'c',  # unsigned char
+            'B': 'b',  # BOOL
+            'v':  None,  # void (for retval)
+            'L': 'long',          # long (special conversion)
+            'Q': 'longlong',      # long long (special conversion)
         }
 
 #        s = method['selector']
@@ -1050,15 +1045,15 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
             retval = method['retval']
             t = retval[0]['type']
             dt = retval[0]['declared_type']
-            dt_class_name = dt.replace('*','')
+            dt_class_name = dt.replace('*', '')
 
             # Special case for initializer methods
-            if self.is_method_initializer(method ):
+            if self.is_method_initializer(method):
                 ret_js_type = None
                 ret_declared_type = None
 
             # Special case for class constructors
-            elif self.is_class_constructor( method ):
+            elif self.is_class_constructor(method):
                 ret_js_type = 'o'
                 ret_declared_type = class_name + '*'
 
@@ -1082,9 +1077,9 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
                 ret_declared_type = dt
 
             # valid automatic struct ?
-            elif self.is_valid_structure( t ):
+            elif self.is_valid_structure(t):
                 ret_js_type = t
-                ret_declared_type =  dt
+                ret_declared_type = dt
 
             # valid opaque struct ?
             elif dt in self.struct_opaque:
@@ -1099,32 +1094,32 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
             else:
                 raise ParseException('Unsupported return value %s' % dt)
 
-        return (ret_js_type, ret_declared_type )
+        return (ret_js_type, ret_declared_type)
 
-    def validate_arguments( self, method ):
+    def validate_arguments(self, method):
         # Left column: BridgeSupport types
         # Right column: JS types
         supported_declared_types = {
-            'NSString*' : 'S',
-            'NSArray*'  : 'array',
-            'CCArray*'  : 'array',
-            'NSMutableArray*' : 'array',
-            'NSSet*' : 'set',
-            'void (^)(id)' : 'f',
-            'void (^)(CCNode *)' : 'f',
+            'NSString*': 'S',
+            'NSArray*': 'array',
+            'CCArray*': 'array',
+            'NSMutableArray*': 'array',
+            'NSSet*': 'set',
+            'void (^)(id)': 'f',
+            'void (^)(CCNode *)': 'f',
         }
 
         supported_types = {
-            'f' : 'd',  # float
-            'd' : 'd',  # double
-            'i' : 'i',  # integer
-            'I' : 'u',  # unsigned integer
-            'c' : 'c',  # char
-            'C' : 'c',  # unsigned char
-            'B' : 'b',  # BOOL
-            's' : 'c',  # short
-            'L' : 'long',       # long (custom conversion)
-            'Q' : 'longlong',   # long long (custom conversion)
+            'f': 'd',  # float
+            'd': 'd',  # double
+            'i': 'i',  # integer
+            'I': 'u',  # unsigned integer
+            'c': 'c',  # char
+            'C': 'c',  # unsigned char
+            'B': 'b',  # BOOL
+            's': 'c',  # short
+            'L': 'long',       # long (custom conversion)
+            'Q': 'longlong',   # long long (custom conversion)
         }
 
         args_js_type = []
@@ -1138,10 +1133,10 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
                 dt = arg['declared_type']
 
                 # Treat 'id' as NSObject*
-                if dt=='id':
-                    dt='NSObject*'
+                if dt == 'id':
+                    dt = 'NSObject*'
 
-                dt_class_name = dt.replace('*','')
+                dt_class_name = dt.replace('*', '')
 
                 # IMPORTANT: 1st search on declared types.
                 # NSString should be treated as a special case, not as a generic object

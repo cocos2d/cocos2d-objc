@@ -4,10 +4,10 @@
 //
 // Watermelon with Me
 // A JS game using cocos2d and Chipmunk
-// 
+//
 //
 // Credits:
-//     Code: Ricardo Quesada 
+//     Code: Ricardo Quesada
 //     Physics code based on Space Patrol ( https://github.com/slembcke/SpacePatrol ) by Scott Lembcke
 //     Art: Mountains from Space Patrol
 //          Coins by ayt ( http://www.cocos2d-iphone.org/forum/topic/35355#post-169768 )
@@ -15,7 +15,7 @@
 //          Farmer's Market: ???
 //     Music: By Michael Wehr ( http://www.jamendo.com/en/track/126280/disneyland )
 //              License: Creative Commons 3.0: No-Commercial, Attribution
-//     
+//
 //
 // Most of the comments in the physics code were copied+pased from Space Patrol
 //
@@ -45,7 +45,7 @@ require("jsb_constants.js");
 
 // Z Orders (grouped by parent)
 
-// parent is scroll batch node 
+// parent is scroll batch node
 Z_WATERMELON = 5;
 Z_COIN = 8;
 Z_FINISH = 9;
