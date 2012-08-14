@@ -4,7 +4,7 @@
 // Javascript + cocos2d label tests
 //
 
-require("jsb/defines.js");
+require("jsb_constants.js");
 
 director = cc.Director.getInstance();
 winSize = director.getWinSize();

@@ -1,0 +1,5 @@
+{
+'CCDirector': {'protocols': [], 'subclass': 'NSObject'},
+'CCGLView': {'protocols': [], 'subclass': 'NSObject'},
+'CCLayer': {'protocols': ['UIAccelerometerDelegate', 'CCStandardTouchDelegate', 'CCTargetedTouchDelegate'], 'subclass': 'CCNode'}
+}

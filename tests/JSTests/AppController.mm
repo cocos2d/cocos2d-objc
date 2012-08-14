@@ -8,8 +8,8 @@
 
 // local import
 #import "AppController.h"
-#import "ScriptingCore.h"
-#import "js_manual_conversions.h"
+#import "js_bindings_core.h"
+#import "js_bindings_basic_conversions.h"
 
 // dlopen
 #include <dlfcn.h>
@@ -31,11 +31,11 @@
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
 	if( [name isEqual:@"JS Watermelon"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/game-main.js"];
+		[[JSBCore sharedInstance] runScript:@"js/game-main.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];	
+		[[JSBCore sharedInstance] runScript:@"js/main.js"];	
 	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors.js"];
+		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
 }
 @end
 
@@ -198,7 +198,7 @@
 	[cocos2dThread performBlock:^(void) { 
 		NSString * string = @"None\n";
 		jsval out;
-		BOOL success = [[ScriptingCore sharedInstance] evalString:script outVal:&out];
+		BOOL success = [[JSBCore sharedInstance] evalString:script outVal:&out];
 		
 		if(success)
 		{
@@ -216,7 +216,7 @@
 			}
 			else if(JSVAL_IS_STRING(out)) {
 				NSString *tmp;
-				jsval_to_nsstring( [[ScriptingCore sharedInstance] globalContext], out, &tmp );
+				jsval_to_nsstring( [[JSBCore sharedInstance] globalContext], out, &tmp );
 				string = [NSString stringWithFormat:@"Result(string): %@.\n", tmp];
 			}
 			else if (JSVAL_IS_VOID(out) )
@@ -260,11 +260,11 @@
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 	
 	if( [name isEqual:@"JS Watermelon"] )
-		[[ScriptingCore sharedInstance] runScript:@"watermelon_with_me.js"];
+		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[ScriptingCore sharedInstance] runScript:@"js/main.js"];
+		[[JSBCore sharedInstance] runScript:@"js/main.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[ScriptingCore sharedInstance] runScript:@"MoonWarriors-native.js"];
+		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 
 }
 @end
