@@ -1,3 +1,8 @@
+#!/bin/sh
+#
+# run this script from the cocos2d directory
+# eg: $ cd ~/src/cocos2d-iphone/cocos2d/
+#
 mv ccDeprecated.h ccDeprecated.xxx
 
 gen_bridge_metadata -F complete --no-64-bit -c '-ISupport -IPlatforms -I.' *.h Support/*.h Platforms/*.h -o ../tools/js/cocos2d.bridgesupport 

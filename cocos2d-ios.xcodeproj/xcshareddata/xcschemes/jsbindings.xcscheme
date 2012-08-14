@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "A031B71F15D9BD0800E1986C"
-               BuildableName = "liblibpng copy.a"
+               BuildableName = "libjsbindings.a"
                BlueprintName = "jsbindings"
                ReferencedContainer = "container:cocos2d-ios.xcodeproj">
             </BuildableReference>
