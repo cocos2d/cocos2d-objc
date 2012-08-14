@@ -6,7 +6,7 @@
 // Javascript + cocos2d actions tests
 //
 
-require("jsb/defines.js");
+require("jsb_constants.js");
 
 var TAG_TILE_MAP = 1;
 
