@@ -3,7 +3,7 @@
 //
 
 // DO NOT ALTER THE ORDER
-require('jsb/cocos2d_defines.js');
-require('jsb/chipmunk_defines.js');
-require('jsb/gl_defines.js');
+require('jsb_constants_cocos2d.js');
+require('jsb_constants_chipmunk.js');
+require('jsb_constants_gl.js');
 
