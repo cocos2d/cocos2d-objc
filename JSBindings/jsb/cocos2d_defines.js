@@ -1,10 +1,4 @@
 //
-//
-// cocos2d Helper
-//
-//
-
-//
 // cocos2d constants
 //
 cc.TEXTURE_PIXELFORMAT_RGBA8888 = 0;
