@@ -34,7 +34,7 @@
 
 // Globals
 // one shared key for associations
-extern char * JSPROXY_association_proxy_key;
+extern char * JSB_association_proxy_key;
 
 /**
  */
@@ -117,9 +117,9 @@ extern char * JSPROXY_association_proxy_key;
 #ifdef __cplusplus
 extern "C" {
 #endif
-	@class JSPROXY_NSObject;
-	JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *jsobj);
-	void set_proxy_for_jsobject(JSPROXY_NSObject* proxy, JSObject *jsobj);
+	@class JSB_NSObject;
+	JSB_NSObject* get_proxy_for_jsobject(JSObject *jsobj);
+	void set_proxy_for_jsobject(JSB_NSObject* proxy, JSObject *jsobj);
 	void del_proxy_for_jsobject(JSObject *jsobj);
 	
 	JSBool set_reserved_slot(JSObject *obj, uint32_t idx, jsval value);

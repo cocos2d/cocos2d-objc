@@ -34,33 +34,42 @@ To summarize, the structure of a JSB configuration file is:
 !["glue" code generation](docs/jsb_files.png)
 
 
-
 ## Internals of the JS bindings ("glue" code)
 
 The JS bindings code allows to call JS code from native and vice-versa. It fowards native callbacks to JS. It supports "subclassing" native objects in JS. Let's see them in detail.
 
-### Calling native code from JS
+### Calling native functions from JS
 
-The following code will execute 10 times the the native C function `ccpAdd()`:
+The following code will call the the native C function `ccpAdd()`:
 
-	var p = cc.p(0,0);
-	var q = cc.p(1,1);
-	for( var i=0; i < 10; i++)
-		p = cc.pAdd(p, q);   // cc.pAdd is a "wrapped" function, and it will call the cocos2d ccpAdd() C function
+	var p1 = cc.p(0,0);
+	var p2 = cc.p(1,1);
+	var ret = cc.pAdd(p1, p2);  // cc.pAdd is a "wrapped" function, and it will call the cocos2d ccpAdd() C function
 
 
 Let's take a look at the declaration of `ccpAdd`:
 
 	CGPoint ccpAdd(const CGPoint v1, const CGPoint v2);
 
-So when `cc.pAdd` is executed, it will call the "glue" code function code `JSPROXY_ccpAdd`. `JSPROXY_ccpAdd` is responsible for doing:
+So when `cc.pAdd` is executed, it will call the "glue" function code `JSB_ccpAdd`. And `JSB_ccpAdd` is responsible of doing:
 
-- convert the arguments from JS to native
-- call `ccpAdd()`
-- convert the return value from native to JS
-- and report in case there is a problem converting the arguments or return value.
+- converting the arguments from JS to native
+- calling the native `ccpAdd()` function
+- converting the return value from native to JS
+- and should fail if there are errors converting either the arguments or the return value.
 
-`cc.pAdd` receives to arguments: `p` and `q` which are JS objects. The proxy function `JSPROXY_ccpAdd` will be called. It will convert the 2 arguments into `CGPoint` structs, and call `ccpAdd`. The return value will be a `CGPoint`. `JSPROXY_ccpAdd` will convert the `CGPoint` into a valid JS Object, and return the newly created object into JS.
+![function call flow](docs/jsb_calls.png)
+
+### Calling native instance or class methods from JS
+
+It is also possible to call instace or class methods from JS. The internal logic is similar to calling native functions. Let's have look:
+
+	// Creates a sprite and sets its position to 200,200
+	var sprite = cc.Sprite.create('grossini.png');
+	sprite.setPosition( cc.p(200,200) );
+
+`cc.Sprite.create()` will create a native instance of `CCSprite`. The "glue" function responsible for that is `JSB_CCSprite_spriteWithFile_rect__static`. It will associate the JS object with the recently created native instance.
+`cc.setPosition()` will call `JSB_CCNode_setPosition_`. And the first thin
 
 
 ### Classes

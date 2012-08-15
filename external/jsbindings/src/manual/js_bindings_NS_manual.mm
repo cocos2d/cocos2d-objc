@@ -32,7 +32,7 @@
 #import "js_bindings_basic_conversions.h"
 
 
-#pragma mark - JSPROXY_NSObject
+#pragma mark - JSB_NSObject
 
 enum {
 	kJSPropertyNativeObject = 1,
@@ -40,15 +40,15 @@ enum {
 
 #pragma mark - NSObject
 
-JSClass* JSPROXY_NSObject_class = NULL;
-JSObject* JSPROXY_NSObject_object = NULL;
+JSClass* JSB_NSObject_class = NULL;
+JSObject* JSB_NSObject_object = NULL;
 
 // Constructor
-JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
+    JSObject *jsobj = JS_NewObject(cx, JSB_NSObject_class, JSB_NSObject_object, NULL);
 	
-    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
+    JSB_NSObject *proxy = [[JSB_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
 	
 	set_proxy_for_jsobject(proxy, jsobj);
 //    JS_SetPrivate(jsobj, proxy);
@@ -60,11 +60,11 @@ JSBool JSPROXY_NSObject_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Destructor
-void JSPROXY_NSObject_finalize(JSFreeOp *fop, JSObject *obj)
+void JSB_NSObject_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSObject)", obj);
 
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	if (proxy) {
 		del_proxy_for_jsobject( obj );
@@ -74,16 +74,16 @@ void JSPROXY_NSObject_finalize(JSFreeOp *fop, JSObject *obj)
 }
 
 // Methods
-JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && ![proxy realObj], @"Object already initialzied. error" );
 	
 	
 	NSObject* real = [[NSObject alloc] init];
 	[proxy setRealObj:real];
-	objc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+	objc_setAssociatedObject(real, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 	[proxy release];
 	[real autorelease];
 	
@@ -97,10 +97,10 @@ JSBool JSPROXY_NSObject_init(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Methods
-JSBool JSPROXY_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object no initialzied. error");
 	
 
@@ -121,10 +121,10 @@ JSBool JSPROXY_NSObject_copy(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_NSObject_retain(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSObject_retain(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object not initialzied. error");
 	
 	id real = (NSObject*) [proxy realObj];
@@ -134,10 +134,10 @@ JSBool JSPROXY_NSObject_retain(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_NSObject_release(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSObject_release(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object not initialzied. error");
 	
 	id real = (NSObject*) [proxy realObj];
@@ -148,31 +148,31 @@ JSBool JSPROXY_NSObject_release(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 
-void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
+void JSB_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
-	JSPROXY_NSObject_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_NSObject_class->name = name;
-	JSPROXY_NSObject_class->addProperty = JS_PropertyStub;
-	JSPROXY_NSObject_class->delProperty = JS_PropertyStub;
-	JSPROXY_NSObject_class->getProperty = JS_PropertyStub;
-	JSPROXY_NSObject_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_NSObject_class->enumerate = JS_EnumerateStub;
-	JSPROXY_NSObject_class->resolve = JS_ResolveStub;
-	JSPROXY_NSObject_class->convert = JS_ConvertStub;
-	JSPROXY_NSObject_class->finalize = JSPROXY_NSObject_finalize;
-	JSPROXY_NSObject_class->flags = 0;
+	JSB_NSObject_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_NSObject_class->name = name;
+	JSB_NSObject_class->addProperty = JS_PropertyStub;
+	JSB_NSObject_class->delProperty = JS_PropertyStub;
+	JSB_NSObject_class->getProperty = JS_PropertyStub;
+	JSB_NSObject_class->setProperty = JS_StrictPropertyStub;
+	JSB_NSObject_class->enumerate = JS_EnumerateStub;
+	JSB_NSObject_class->resolve = JS_ResolveStub;
+	JSB_NSObject_class->convert = JS_ConvertStub;
+	JSB_NSObject_class->finalize = JSB_NSObject_finalize;
+	JSB_NSObject_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
-//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSObject_getProperty, JSPROXY_NSObject_setProperty},
+//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSB_NSObject_getProperty, JSB_NSObject_setProperty},
 		{0, 0, 0, 0, 0}
 	};
 
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("init", JSPROXY_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("copy", JSPROXY_NSObject_copy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("retain", JSPROXY_NSObject_retain, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("release", JSPROXY_NSObject_release, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("init", JSB_NSObject_init, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("copy", JSB_NSObject_copy, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("retain", JSB_NSObject_retain, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("release", JSB_NSObject_release, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	
@@ -180,10 +180,10 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 		JS_FS_END
 	};
 	
-	JSPROXY_NSObject_object = JS_InitClass(cx, globalObj, NULL, JSPROXY_NSObject_class, JSPROXY_NSObject_constructor,0,properties,funcs,NULL,st_funcs);
+	JSB_NSObject_object = JS_InitClass(cx, globalObj, NULL, JSB_NSObject_class, JSB_NSObject_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_NSObject
+@implementation JSB_NSObject
 
 @synthesize jsObj = _jsObj;
 @synthesize realObj = _realObj;
@@ -191,13 +191,13 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSObject_class, JSPROXY_NSObject_object, NULL);
-    JSPROXY_NSObject *proxy = [[JSPROXY_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
+	JSObject *jsobj = JS_NewObject(cx, JSB_NSObject_class, JSB_NSObject_object, NULL);
+    JSB_NSObject *proxy = [[JSB_NSObject alloc] initWithJSObject:jsobj class:[NSObject class]];
 
 	
 	[proxy setRealObj:realObj];
 	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		objc_setAssociatedObject(realObj, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 		[proxy release];
 	}
 	
@@ -264,15 +264,15 @@ void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char
 
 #pragma mark - NSEvent
 
-JSClass* JSPROXY_NSEvent_class = NULL;
-JSObject* JSPROXY_NSEvent_object = NULL;
+JSClass* JSB_NSEvent_class = NULL;
+JSObject* JSB_NSEvent_object = NULL;
 
 // Constructor
-JSBool JSPROXY_NSEvent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_NSEvent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSEvent_class, JSPROXY_NSEvent_object, NULL);
+    JSObject *jsobj = JS_NewObject(cx, JSB_NSEvent_class, JSB_NSEvent_object, NULL);
 	
-    JSPROXY_NSEvent *proxy = [[JSPROXY_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
+    JSB_NSEvent *proxy = [[JSB_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
 	
 	set_proxy_for_jsobject(proxy, jsobj);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -283,10 +283,10 @@ JSBool JSPROXY_NSEvent_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Methods
-JSBool JSPROXY_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
@@ -303,10 +303,10 @@ JSBool JSPROXY_NSEvent_getLocation(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
@@ -327,34 +327,34 @@ JSBool JSPROXY_NSEvent_getDelta(JSContext *cx, uint32_t argc, jsval *vp) {
 
 
 // Destructor
-void JSPROXY_NSEvent_finalize(JSFreeOp *fop, JSObject *obj)
+void JSB_NSEvent_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (NSEvent)", obj);
 }
 
-void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char *name )
+void JSB_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
-	JSPROXY_NSEvent_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_NSEvent_class->name = name;
-	JSPROXY_NSEvent_class->addProperty = JS_PropertyStub;
-	JSPROXY_NSEvent_class->delProperty = JS_PropertyStub;
-	JSPROXY_NSEvent_class->getProperty = JS_PropertyStub;
-	JSPROXY_NSEvent_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_NSEvent_class->enumerate = JS_EnumerateStub;
-	JSPROXY_NSEvent_class->resolve = JS_ResolveStub;
-	JSPROXY_NSEvent_class->convert = JS_ConvertStub;
-	JSPROXY_NSEvent_class->finalize = JSPROXY_NSEvent_finalize;
-	JSPROXY_NSEvent_class->flags = 0;
+	JSB_NSEvent_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_NSEvent_class->name = name;
+	JSB_NSEvent_class->addProperty = JS_PropertyStub;
+	JSB_NSEvent_class->delProperty = JS_PropertyStub;
+	JSB_NSEvent_class->getProperty = JS_PropertyStub;
+	JSB_NSEvent_class->setProperty = JS_StrictPropertyStub;
+	JSB_NSEvent_class->enumerate = JS_EnumerateStub;
+	JSB_NSEvent_class->resolve = JS_ResolveStub;
+	JSB_NSEvent_class->convert = JS_ConvertStub;
+	JSB_NSEvent_class->finalize = JSB_NSEvent_finalize;
+	JSB_NSEvent_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
-//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_NSEvent_getProperty, JSPROXY_NSEvent_setProperty},
+//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSB_NSEvent_getProperty, JSB_NSEvent_setProperty},
 		{0, 0, 0, 0, 0}
 	};
 	
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getLocation", JSPROXY_NSEvent_getLocation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDelta", JSPROXY_NSEvent_getDelta, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLocation", JSB_NSEvent_getLocation, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDelta", JSB_NSEvent_getDelta, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	
@@ -362,20 +362,20 @@ void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char 
 		JS_FS_END
 	};
 	
-	JSPROXY_NSEvent_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_NSEvent_class, JSPROXY_NSEvent_constructor,0,properties,funcs,NULL,st_funcs);
+	JSB_NSEvent_object = JS_InitClass(cx, globalObj, JSB_NSObject_object, JSB_NSEvent_class, JSB_NSEvent_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_NSEvent
+@implementation JSB_NSEvent
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_NSEvent_class, JSPROXY_NSEvent_object, NULL);
-    JSPROXY_NSEvent *proxy = [[JSPROXY_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
+	JSObject *jsobj = JS_NewObject(cx, JSB_NSEvent_class, JSB_NSEvent_object, NULL);
+    JSB_NSEvent *proxy = [[JSB_NSEvent alloc] initWithJSObject:jsobj class:[NSEvent class]];
 	
 	
 	[proxy setRealObj:realObj];
 	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		objc_setAssociatedObject(realObj, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 		[proxy release];
 	}
 	
@@ -389,15 +389,15 @@ void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char 
 
 #pragma mark - UITouch
 
-JSClass* JSPROXY_UITouch_class = NULL;
-JSObject* JSPROXY_UITouch_object = NULL;
+JSClass* JSB_UITouch_class = NULL;
+JSObject* JSB_UITouch_object = NULL;
 
 // Constructor
-JSBool JSPROXY_UITouch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_UITouch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = JS_NewObject(cx, JSPROXY_UITouch_class, JSPROXY_UITouch_object, NULL);
+    JSObject *jsobj = JS_NewObject(cx, JSB_UITouch_class, JSB_UITouch_object, NULL);
 	
-    JSPROXY_UITouch *proxy = [[JSPROXY_UITouch alloc] initWithJSObject:jsobj class:[UITouch class]];
+    JSB_UITouch *proxy = [[JSB_UITouch alloc] initWithJSObject:jsobj class:[UITouch class]];
 	
 	set_proxy_for_jsobject(proxy, jsobj);
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
@@ -408,10 +408,10 @@ JSBool JSPROXY_UITouch_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 }
 
 // Methods
-JSBool JSPROXY_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
@@ -428,10 +428,10 @@ JSBool JSPROXY_UITouch_location(JSContext *cx, uint32_t argc, jsval *vp) {
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
@@ -453,34 +453,34 @@ JSBool JSPROXY_UITouch_delta(JSContext *cx, uint32_t argc, jsval *vp) {
 }
 
 // Destructor
-void JSPROXY_UITouch_finalize(JSFreeOp *fop, JSObject *obj)
+void JSB_UITouch_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (UITouch)", obj);
 }
 
-void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char *name )
+void JSB_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
-	JSPROXY_UITouch_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_UITouch_class->name = name;
-	JSPROXY_UITouch_class->addProperty = JS_PropertyStub;
-	JSPROXY_UITouch_class->delProperty = JS_PropertyStub;
-	JSPROXY_UITouch_class->getProperty = JS_PropertyStub;
-	JSPROXY_UITouch_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_UITouch_class->enumerate = JS_EnumerateStub;
-	JSPROXY_UITouch_class->resolve = JS_ResolveStub;
-	JSPROXY_UITouch_class->convert = JS_ConvertStub;
-	JSPROXY_UITouch_class->finalize = JSPROXY_UITouch_finalize;
-	JSPROXY_UITouch_class->flags = 0;
+	JSB_UITouch_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_UITouch_class->name = name;
+	JSB_UITouch_class->addProperty = JS_PropertyStub;
+	JSB_UITouch_class->delProperty = JS_PropertyStub;
+	JSB_UITouch_class->getProperty = JS_PropertyStub;
+	JSB_UITouch_class->setProperty = JS_StrictPropertyStub;
+	JSB_UITouch_class->enumerate = JS_EnumerateStub;
+	JSB_UITouch_class->resolve = JS_ResolveStub;
+	JSB_UITouch_class->convert = JS_ConvertStub;
+	JSB_UITouch_class->finalize = JSB_UITouch_finalize;
+	JSB_UITouch_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
-//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSPROXY_UITouch_getProperty, JSPROXY_UITouch_setProperty},
+//		{"__nativeObject", kJSPropertyNativeObject, JSPROP_PERMANENT | JSPROP_ENUMERATE | JSPROP_SHARED, JSB_UITouch_getProperty, JSB_UITouch_setProperty},
 		{0, 0, 0, 0, 0}
 	};
 	
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("getLocation", JSPROXY_UITouch_location, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getDelta", JSPROXY_UITouch_delta, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getLocation", JSB_UITouch_location, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getDelta", JSB_UITouch_delta, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	
@@ -488,20 +488,20 @@ void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char 
 		JS_FS_END
 	};
 	
-	JSPROXY_UITouch_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_UITouch_class, JSPROXY_UITouch_constructor,0,properties,funcs,NULL,st_funcs);
+	JSB_UITouch_object = JS_InitClass(cx, globalObj, JSB_NSObject_object, JSB_UITouch_class, JSB_UITouch_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_UITouch
+@implementation JSB_UITouch
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_UITouch_class, JSPROXY_UITouch_object, NULL);
-    JSPROXY_UITouch *proxy = [[JSPROXY_UITouch alloc] initWithJSObject:jsobj class:[UITouch class]];
+	JSObject *jsobj = JS_NewObject(cx, JSB_UITouch_class, JSB_UITouch_object, NULL);
+    JSB_UITouch *proxy = [[JSB_UITouch alloc] initWithJSObject:jsobj class:[UITouch class]];
 	
 	
 	[proxy setRealObj:realObj];
 	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		objc_setAssociatedObject(realObj, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 		[proxy release];
 	}
 	
@@ -565,27 +565,27 @@ void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char 
 
 #pragma mark - UIAccelerometer
 
-JSClass* JSPROXY_UIAccelerometer_class = NULL;
-JSObject* JSPROXY_UIAccelerometer_object = NULL;
+JSClass* JSB_UIAccelerometer_class = NULL;
+JSObject* JSB_UIAccelerometer_object = NULL;
 
 // Constructor
-JSBool JSPROXY_UIAccelerometer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_UIAccelerometer_constructor(JSContext *cx, uint32_t argc, jsval *vp)
 {
-    JSObject *jsobj = [JSPROXY_UIAccelerometer createJSObjectWithRealObject:nil context:cx];
+    JSObject *jsobj = [JSB_UIAccelerometer createJSObjectWithRealObject:nil context:cx];
     JS_SET_RVAL(cx, vp, OBJECT_TO_JSVAL(jsobj));
 	
     return JS_TRUE;
 }
 
 // Destructor
-void JSPROXY_UIAccelerometer_finalize(JSFreeOp *fop, JSObject *obj)
+void JSB_UIAccelerometer_finalize(JSFreeOp *fop, JSObject *obj)
 {
 	CCLOGINFO(@"spidermonkey: finalizing JS object %p (CCDirector)", obj);
 }
 
 // Arguments: 
 // Ret value: UIAccelerometer (o)
-JSBool JSPROXY_UIAccelerometer_sharedAccelerometer_static(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UIAccelerometer_sharedAccelerometer_static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
 	UIAccelerometer* ret_val;
 	
@@ -598,10 +598,10 @@ JSBool JSPROXY_UIAccelerometer_sharedAccelerometer_static(JSContext *cx, uint32_
 }
 
 // Methods
-JSBool JSPROXY_UIAccelerometer_getUpdateInterval(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UIAccelerometer_getUpdateInterval(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 0, "Invalid number of arguments" );
@@ -614,10 +614,10 @@ JSBool JSPROXY_UIAccelerometer_getUpdateInterval(JSContext *cx, uint32_t argc, j
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_UIAccelerometer_setUpdateInterval(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UIAccelerometer_setUpdateInterval(JSContext *cx, uint32_t argc, jsval *vp) {
 	
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 1, "Invalid number of arguments" );
@@ -635,9 +635,9 @@ JSBool JSPROXY_UIAccelerometer_setUpdateInterval(JSContext *cx, uint32_t argc, j
 }
 
 
-JSBool JSPROXY_UIAccelerometer_setDelegate(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_UIAccelerometer_setDelegate(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	NSCAssert( proxy && [proxy realObj], @"Object already initialzied. error");
 	
 	JSB_PRECONDITION( argc == 2, "Invalid number of arguments" );
@@ -670,19 +670,19 @@ JSBool JSPROXY_UIAccelerometer_setDelegate(JSContext *cx, uint32_t argc, jsval *
 
 // Destructor
 
-void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, const char *name )
+void JSB_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, const char *name )
 {
-	JSPROXY_UIAccelerometer_class = (JSClass *)calloc(1, sizeof(JSClass));
-	JSPROXY_UIAccelerometer_class->name = name;
-	JSPROXY_UIAccelerometer_class->addProperty = JS_PropertyStub;
-	JSPROXY_UIAccelerometer_class->delProperty = JS_PropertyStub;
-	JSPROXY_UIAccelerometer_class->getProperty = JS_PropertyStub;
-	JSPROXY_UIAccelerometer_class->setProperty = JS_StrictPropertyStub;
-	JSPROXY_UIAccelerometer_class->enumerate = JS_EnumerateStub;
-	JSPROXY_UIAccelerometer_class->resolve = JS_ResolveStub;
-	JSPROXY_UIAccelerometer_class->convert = JS_ConvertStub;
-	JSPROXY_UIAccelerometer_class->finalize = JSPROXY_UIAccelerometer_finalize;
-	JSPROXY_UIAccelerometer_class->flags = 0;
+	JSB_UIAccelerometer_class = (JSClass *)calloc(1, sizeof(JSClass));
+	JSB_UIAccelerometer_class->name = name;
+	JSB_UIAccelerometer_class->addProperty = JS_PropertyStub;
+	JSB_UIAccelerometer_class->delProperty = JS_PropertyStub;
+	JSB_UIAccelerometer_class->getProperty = JS_PropertyStub;
+	JSB_UIAccelerometer_class->setProperty = JS_StrictPropertyStub;
+	JSB_UIAccelerometer_class->enumerate = JS_EnumerateStub;
+	JSB_UIAccelerometer_class->resolve = JS_ResolveStub;
+	JSB_UIAccelerometer_class->convert = JS_ConvertStub;
+	JSB_UIAccelerometer_class->finalize = JSB_UIAccelerometer_finalize;
+	JSB_UIAccelerometer_class->flags = 0;
 	
 	static JSPropertySpec properties[] = {
 		{0, 0, 0, 0, 0}
@@ -690,31 +690,31 @@ void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, con
 	
 	
 	static JSFunctionSpec funcs[] = {
-		JS_FN("setCallback", JSPROXY_UIAccelerometer_setDelegate, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("setUpdateInterval", JSPROXY_UIAccelerometer_setUpdateInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
-		JS_FN("getUpdateInterval", JSPROXY_UIAccelerometer_getUpdateInterval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setCallback", JSB_UIAccelerometer_setDelegate, 2, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("setUpdateInterval", JSB_UIAccelerometer_setUpdateInterval, 1, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getUpdateInterval", JSB_UIAccelerometer_getUpdateInterval, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	
 	static JSFunctionSpec st_funcs[] = {
-		JS_FN("getInstance", JSPROXY_UIAccelerometer_sharedAccelerometer_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
+		JS_FN("getInstance", JSB_UIAccelerometer_sharedAccelerometer_static, 0, JSPROP_PERMANENT | JSPROP_SHARED | JSPROP_ENUMERATE),
 		JS_FS_END
 	};
 	
-	JSPROXY_UIAccelerometer_object = JS_InitClass(cx, globalObj, JSPROXY_NSObject_object, JSPROXY_UIAccelerometer_class, JSPROXY_UIAccelerometer_constructor,0,properties,funcs,NULL,st_funcs);
+	JSB_UIAccelerometer_object = JS_InitClass(cx, globalObj, JSB_NSObject_object, JSB_UIAccelerometer_class, JSB_UIAccelerometer_constructor,0,properties,funcs,NULL,st_funcs);
 }
 
-@implementation JSPROXY_UIAccelerometer
+@implementation JSB_UIAccelerometer
 
 +(JSObject*) createJSObjectWithRealObject:(id)realObj context:(JSContext*)cx
 {
-	JSObject *jsobj = JS_NewObject(cx, JSPROXY_UIAccelerometer_class, JSPROXY_UIAccelerometer_object, NULL);
-    JSPROXY_UIAccelerometer *proxy = [[JSPROXY_UIAccelerometer alloc] initWithJSObject:jsobj class:[UIAccelerometer class]];
+	JSObject *jsobj = JS_NewObject(cx, JSB_UIAccelerometer_class, JSB_UIAccelerometer_object, NULL);
+    JSB_UIAccelerometer *proxy = [[JSB_UIAccelerometer alloc] initWithJSObject:jsobj class:[UIAccelerometer class]];
 	
 	
 	[proxy setRealObj:realObj];
 	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		objc_setAssociatedObject(realObj, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 		[proxy release];
 	}
 	

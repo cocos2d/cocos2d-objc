@@ -156,7 +156,7 @@ static void myCollisionSeparate(cpArbiter *arb, cpSpace *space, void *data)
 	JS_CallFunctionValue( handler->cx, handler->jsthis, handler->separate, 2, args, &ignore);
 }
 
-JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==8, "Invalid number of arguments");
 
@@ -215,7 +215,7 @@ JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *v
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==3, "Invalid number of arguments");
 	
@@ -249,7 +249,7 @@ JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval
 
 #pragma mark - Arbiter
 
-JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==1, "Invalid number of arguments");
 	
@@ -275,7 +275,7 @@ JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp)
 	
 }
 
-JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==1, "Invalid number of arguments");
 	
@@ -300,7 +300,7 @@ JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==1, "Invalid number of arguments");
 
@@ -317,7 +317,7 @@ JSBool JSPROXY_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp)
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc==2, "Invalid number of arguments");
 

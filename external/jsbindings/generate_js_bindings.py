@@ -44,7 +44,7 @@ class ParseOKException(Exception):
 # Globals
 #
 BINDINGS_PREFIX = 'js_bindings_'
-PROXY_PREFIX = 'JSPROXY_'
+PROXY_PREFIX = 'JSB_'
 METHOD_CONSTRUCTOR, METHOD_CLASS, METHOD_INIT, METHOD_REGULAR = xrange(4)
 
 
@@ -821,15 +821,15 @@ class JSBindings(object):
     def generate_constructor(self, class_name):
 
         # Global Variables
-        # JSPROXY_CCNode
-        # JSPROXY_CCNode
+        # JSB_CCNode
+        # JSB_CCNode
         constructor_globals = '''
 JSClass* %s_class = NULL;
 JSObject* %s_object = NULL;
 '''
 
-        # 1: JSPROXY_CCNode,
-        # 2: JSPROXY_CCNode,
+        # 1: JSB_CCNode,
+        # 2: JSB_CCNode,
         # 8: possible callback code
         constructor_template = '''// Constructor
 JSBool %s_constructor(JSContext *cx, uint32_t argc, jsval *vp)
@@ -867,7 +867,7 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
         if method_type == METHOD_INIT:
             prefix = '\t%s *real = [(%s*)[proxy.klass alloc] ' % (class_name, class_name)
             suffix = '\n\t[proxy setRealObj: real];\n\t[real autorelease];\n'
-            suffix += '\n\tobjc_setAssociatedObject(real, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);'
+            suffix += '\n\tobjc_setAssociatedObject(real, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);'
             suffix += '\n\t[proxy release];'
         elif method_type == METHOD_REGULAR:
             prefix = '\t%s *real = (%s*) [proxy realObj];\n\t' % (class_name, class_name)
@@ -1327,7 +1327,7 @@ void %s_finalize(JSFreeOp *fop, JSObject *obj)
         self.mm_file.write( '\tJSB_PRECONDITION(ok, "Error processing arguments");\n' )
 
     def generate_method_prefix( self, class_name, method, num_of_args, method_type ):
-        # JSPROXY_CCNode, setPosition
+        # JSB_CCNode, setPosition
         # "!" or ""
         # proxy.initialized = YES (or nothing)
         template_methodname = '''
@@ -1335,7 +1335,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
         template_init = '''
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 
 	JSB_PRECONDITION( proxy && %s[proxy realObj], "Invalid Proxy object");
 '''
@@ -1549,7 +1549,7 @@ JSBool %s_%s%s(JSContext *cx, uint32_t argc, jsval *vp) {
         # JSPROXXY_CCNode
         # manual_methods
         # JSPROXXY_CCNode
-        # JSPROXY_CCNode, JSPROXY_NSObject
+        # JSB_CCNode, JSB_NSObject
         header_template = '''
 
 #ifdef __cplusplus
@@ -1721,7 +1721,7 @@ extern JSClass *%s_class;
 	[proxy setRealObj:realObj];
 
 	if( realObj ) {
-		objc_setAssociatedObject(realObj, &JSPROXY_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
+		objc_setAssociatedObject(realObj, &JSB_association_proxy_key, proxy, OBJC_ASSOCIATION_RETAIN);
 		[proxy release];
 	}
 
@@ -1751,7 +1751,7 @@ extern JSClass *%s_class;
         self.mm_file.write( '\n@end\n' )
 
     def generate_createClass_function( self, class_name, parent_name, ok_methods ):
-        # 1-12: JSPROXY_CCNode
+        # 1-12: JSB_CCNode
         implementation_template = '''
 void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 {
@@ -1780,9 +1780,9 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
         static_functions_template_start = '\tstatic JSFunctionSpec st_funcs[] = {\n'
         static_functions_template_end = '\t\tJS_FS_END\n\t};\n'
 
-        # 1: JSPROXY_CCNode
-        # 2: JSPROXY_NSObject
-        # 3-4: JSPROXY_CCNode
+        # 1: JSB_CCNode
+        # 2: JSB_NSObject
+        # 3-4: JSB_CCNode
         init_class_template = '''
 	%s_object = JS_InitClass(cx, globalObj, %s_object, %s_class, %s_constructor,0,properties,funcs,NULL,st_funcs);
 }
@@ -1848,7 +1848,7 @@ void %s_createClass(JSContext *cx, JSObject* globalObj, const char* name )
 -(%s) %s%s
 {
 %s
-	%s *proxy = objc_getAssociatedObject(self, &JSPROXY_association_proxy_key);
+	%s *proxy = objc_getAssociatedObject(self, &JSB_association_proxy_key);
 	if( proxy )
 		[proxy %s];
 }
@@ -1982,7 +1982,7 @@ extern "C" {
         self.generate_autogenerate_suffix(self.h_file)
 
     def generate_function_declaration(self, func_name):
-        # JSPROXY_ccDrawPoint
+        # JSB_ccDrawPoint
         template_funcname = 'JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp);\n'
         self.h_file.write( template_funcname % ( PROXY_PREFIX, func_name ) )
 
@@ -2006,7 +2006,7 @@ extern "C" {
         return '%s%s' % (prefix, call )
 
     def generate_function_prefix( self, func_name, num_of_args ):
-        # JSPROXY_ccDrawPoint
+        # JSB_ccDrawPoint
         template_funcname = '''
 JSBool %s%s(JSContext *cx, uint32_t argc, jsval *vp) {
 '''
