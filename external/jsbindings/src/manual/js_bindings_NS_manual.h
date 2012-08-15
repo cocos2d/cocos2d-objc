@@ -29,7 +29,7 @@
 #import "js_bindings_core.h"
 #import "js_bindings_basic_conversions.h"
 
-@interface JSPROXY_NSObject : NSObject
+@interface JSB_NSObject : NSObject
 {
 	JSObject	*_jsObj;
 	id			_realObj;  // weak ref
@@ -52,9 +52,9 @@
 extern "C" {
 #endif
 	
-void JSPROXY_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char * name );
-extern JSObject* JSPROXY_NSObject_object;
-extern JSClass* JSPROXY_NSObject_class;
+void JSB_NSObject_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+extern JSObject* JSB_NSObject_object;
+extern JSClass* JSB_NSObject_class;
 
 #ifdef __cplusplus
 }
@@ -64,7 +64,7 @@ extern JSClass* JSPROXY_NSObject_class;
 
 #ifdef __CC_PLATFORM_MAC
 
-@interface JSPROXY_NSEvent : JSPROXY_NSObject
+@interface JSB_NSEvent : JSB_NSObject
 {
 }
 @end
@@ -72,9 +72,9 @@ extern JSClass* JSPROXY_NSObject_class;
 #ifdef __cplusplus
 extern "C" {
 #endif
-	void JSPROXY_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char * name );
-	extern JSObject* JSPROXY_NSEvent_object;
-	extern JSClass* JSPROXY_NSEvent_class;
+	void JSB_NSEvent_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSB_NSEvent_object;
+	extern JSClass* JSB_NSEvent_class;
 	
 #ifdef __cplusplus
 }
@@ -82,7 +82,7 @@ extern "C" {
 
 #elif defined(__CC_PLATFORM_IOS)
 
-@interface JSPROXY_UITouch : JSPROXY_NSObject
+@interface JSB_UITouch : JSB_NSObject
 {
 }
 @end
@@ -90,16 +90,16 @@ extern "C" {
 #ifdef __cplusplus
 extern "C" {
 #endif
-	void JSPROXY_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char * name );
-	extern JSObject* JSPROXY_UITouch_object;
-	extern JSClass* JSPROXY_UITouch_class;
+	void JSB_UITouch_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSB_UITouch_object;
+	extern JSClass* JSB_UITouch_class;
 	
 #ifdef __cplusplus
 }
 #endif
 
 
-@interface JSPROXY_UIAccelerometer : JSPROXY_NSObject
+@interface JSB_UIAccelerometer : JSB_NSObject
 {
 }
 @end
@@ -107,9 +107,9 @@ extern "C" {
 #ifdef __cplusplus
 extern "C" {
 #endif
-	void JSPROXY_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, const char * name );
-	extern JSObject* JSPROXY_UIAccelerometer_object;
-	extern JSClass* JSPROXY_UIAccelerometer_class;
+	void JSB_UIAccelerometer_createClass(JSContext* cx, JSObject* globalObj, const char * name );
+	extern JSObject* JSB_UIAccelerometer_object;
+	extern JSClass* JSB_UIAccelerometer_class;
 	
 #ifdef __cplusplus
 }

@@ -34,7 +34,7 @@
 
 JSObject* create_jsobject_from_realobj( JSContext* context, Class klass, id realObj )
 {
-	NSString *proxied_class = [NSString stringWithFormat:@"JSPROXY_%@", klass];
+	NSString *proxied_class = [NSString stringWithFormat:@"JSB_%@", klass];
 	Class newKlass = NSClassFromString(proxied_class);
 	if( newKlass )
 		return [newKlass createJSObjectWithRealObject:realObj context:context];
@@ -48,7 +48,7 @@ JSObject * get_or_create_jsobject_from_realobj( JSContext *cx, id realObj )
 	if( ! realObj )
 		return NULL;
 		
-	JSPROXY_NSObject *proxy = objc_getAssociatedObject(realObj, &JSPROXY_association_proxy_key );
+	JSB_NSObject *proxy = objc_getAssociatedObject(realObj, &JSB_association_proxy_key );
 	if( proxy )
 		return [proxy jsObj];
 	
@@ -90,7 +90,7 @@ JSBool jsval_to_nsobject( JSContext *cx, jsval vp, NSObject **ret )
 	// root it
 	vp = OBJECT_TO_JSVAL(jsobj);
 	
-	JSPROXY_NSObject* proxy = get_proxy_for_jsobject(jsobj);
+	JSB_NSObject* proxy = get_proxy_for_jsobject(jsobj);
 	
 	JSB_PRECONDITION( proxy, "Error obtaining proxy");
 

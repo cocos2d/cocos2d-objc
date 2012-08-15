@@ -175,10 +175,10 @@ jsval ccColor4F_to_jsval( JSContext *cx, ccColor4F p )
 #pragma mark - MenuItem 
 
 // "setCallback" in JS
-JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
+JSBool JSB_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 	
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 2, "Invalid number of arguments. Expecting 2 args" );
@@ -208,7 +208,7 @@ JSBool JSPROXY_CCMenuItem_setBlock_( JSContext *cx, uint32_t argc, jsval *vp ) {
 #pragma mark - MenuItemFont
 
 // "create" in JS
-JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
@@ -245,9 +245,9 @@ JSBool JSPROXY_CCMenuItemFont_itemWithString_block__static(JSContext *cx, uint32
 }
 
 // "init" in JS
-JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && ![proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
@@ -290,7 +290,7 @@ JSBool JSPROXY_CCMenuItemFont_initWithString_block_(JSContext *cx, uint32_t argc
 #pragma mark - MenuItemLabel
 
 // "create" in JS
-JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
@@ -326,9 +326,9 @@ JSBool JSPROXY_CCMenuItemLabel_itemWithLabel_block__static(JSContext *cx, uint32
 }
 
 // "init" in JS
-JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc ==1 || argc == 3, "Invalid number of arguments. Expecting 1 or 3 args" );
@@ -368,7 +368,7 @@ JSBool JSPROXY_CCMenuItemLabel_initWithLabel_block_(JSContext *cx, uint32_t argc
 #pragma mark - MenuItemImage
 
 // "create" in JS
-JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >=2 && argc <= 5, "Invalid number of arguments. Expecting: 2 <= args <= 5" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
@@ -419,9 +419,9 @@ JSBool JSPROXY_CCMenuItemImage_itemWithNormalImage_selectedImage_disabledImage_b
 }
 
 // "init" in JS
-JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_block_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc >=2 && argc <= 5, "Invalid number of arguments. Expecting: 2 <= args <= 5" );
@@ -478,7 +478,7 @@ JSBool JSPROXY_CCMenuItemImage_initWithNormalImage_selectedImage_disabledImage_b
 #pragma mark - MenuItemSprite
 
 // "create" in JS
-JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSprite_block__static(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, "Invalid number of arguments. 2 <= args <= 5 but not 3" );
 	jsval *argvp = JS_ARGV(cx,vp);
 	JSBool ok = JS_TRUE;
@@ -527,9 +527,9 @@ JSBool JSPROXY_CCMenuItemSprite_itemWithNormalSprite_selectedSprite_disabledSpri
 }
 
 // "init" in JS
-JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSprite_block_(JSContext *cx, uint32_t argc, jsval *vp) {
+JSBool JSB_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSprite_block_(JSContext *cx, uint32_t argc, jsval *vp) {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc >=2 && argc <= 5 && argc != 3, "Invalid number of arguments. 2 <= args <= 5 but not 3" );
@@ -582,7 +582,7 @@ JSBool JSPROXY_CCMenuItemSprite_initWithNormalSprite_selectedSprite_disabledSpri
 
 #pragma mark - CallFunc
 
-JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSB_PRECONDITION( argc == 2 || argc == 3,  "Invalid number of arguments" );
 	jsval *argvp = JS_ARGV(cx,vp);
@@ -627,10 +627,10 @@ JSBool JSPROXY_CCCallBlockN_actionWithBlock__static(JSContext *cx, uint32_t argc
 
 #pragma mark - Texture2D
 
-JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 4, "Invalid number of arguments. Expecting 4 args" );
@@ -663,10 +663,10 @@ JSBool JSPROXY_CCTexture2D_setTexParameters_(JSContext *cx, uint32_t argc, jsval
 
 // Arguments: Array of points, fill color (ccc4f), width(float), border color (ccc4f)
 // Ret value: void
-JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderColor_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderColor_(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject* obj = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(obj);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(obj);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc == 4, "Invalid number of arguments" );
@@ -718,10 +718,10 @@ JSBool JSPROXY_CCDrawNode_drawPolyWithVerts_count_fillColor_borderWidth_borderCo
 #pragma mark - CCNode
 
 // this, func, [interval], [repeat], [delay]
-JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc >=1 && argc <=4, "Invalid number of arguments" );
@@ -804,10 +804,10 @@ JSBool JSPROXY_CCNode_schedule_interval_repeat_delay_(JSContext *cx, uint32_t ar
 
 #pragma mark - setBlendFunc friends
 // setBlendFunc
-JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
 	JSObject* jsthis = (JSObject *)JS_THIS_OBJECT(cx, vp);
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject(jsthis);
+	JSB_NSObject *proxy = get_proxy_for_jsobject(jsthis);
 	
 	JSB_PRECONDITION( proxy && [proxy realObj], "Invalid Proxy object");
 	JSB_PRECONDITION( argc==2, "Invalid number of arguments" );
@@ -830,34 +830,34 @@ JSBool JSPROXY_CCParticleSystem_setBlendFunc_(JSContext *cx, uint32_t argc, jsva
 	return JS_TRUE;
 }
 
-JSBool JSPROXY_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCSprite_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
-JSBool JSPROXY_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCSpriteBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
-JSBool JSPROXY_CCMotionStreak_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCMotionStreak_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
-JSBool JSPROXY_CCDrawNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCDrawNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
-JSBool JSPROXY_CCAtlasNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCAtlasNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
-JSBool JSPROXY_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
+JSBool JSB_CCParticleBatchNode_setBlendFunc_(JSContext *cx, uint32_t argc, jsval *vp)
 {
-	return JSPROXY_CCParticleSystem_setBlendFunc_(cx, argc, vp);
+	return JSB_CCParticleSystem_setBlendFunc_(cx, argc, vp);
 }
 
 #endif // JSB_INCLUDE_COCOS2D

@@ -51,7 +51,7 @@
 #import "js_bindings_CocosBuilderReader_classes.h"
 
 // Globals
-char * JSPROXY_association_proxy_key = NULL;
+char * JSB_association_proxy_key = NULL;
 
 static void
 its_finalize(JSFreeOp *fop, JSObject *obj)
@@ -123,7 +123,7 @@ JSBool JSBCore_associateObjectWithNative(JSContext *cx, uint32_t argc, jsval *vp
 
 	JSB_PRECONDITION(ok && pureJSObj && nativeJSObj, "Error parsing parameters");
 
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject( nativeJSObj );
+	JSB_NSObject *proxy = get_proxy_for_jsobject( nativeJSObj );
 	set_proxy_for_jsobject( proxy, pureJSObj );
 	[proxy setJsObj:pureJSObj];
 		
@@ -138,7 +138,7 @@ JSBool JSBCore_getAssociatedNative(JSContext *cx, uint32_t argc, jsval *vp)
 	JSObject *pureJSObj;
 	JS_ValueToObject( cx, *argvp++, &pureJSObj );
 	
-	JSPROXY_NSObject *proxy = get_proxy_for_jsobject( pureJSObj );
+	JSB_NSObject *proxy = get_proxy_for_jsobject( pureJSObj );
 	id native = [proxy realObj];
 	
 	JSObject * obj = get_or_create_jsobject_from_realobj(cx, native);
@@ -361,12 +361,12 @@ JSBool JSBCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 
 		JS_DefineFunction(_cx, cocos2d, "log", JSBCore_log, 0, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 
-		JSPROXY_NSObject_createClass(_cx, cocos2d, "Object");
+		JSB_NSObject_createClass(_cx, cocos2d, "Object");
 #ifdef __CC_PLATFORM_MAC
-		JSPROXY_NSEvent_createClass(_cx, cocos2d, "Event");
+		JSB_NSEvent_createClass(_cx, cocos2d, "Event");
 #elif defined(__CC_PLATFORM_IOS)
-		JSPROXY_UITouch_createClass(_cx, cocos2d, "Touch");
-		JSPROXY_UIAccelerometer_createClass(_cx, cocos2d, "Accelerometer");
+		JSB_UITouch_createClass(_cx, cocos2d, "Touch");
+		JSB_UIAccelerometer_createClass(_cx, cocos2d, "Accelerometer");
 #endif
 
 		// Register classes: base classes should be registered first
@@ -407,12 +407,12 @@ JSBool JSBCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 #import "js_bindings_chipmunk_functions_registration.h"
 		
 		// manual
-		JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSPROXY_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSPROXY_cpSpaceRemoveCollisionHandler, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, chipmunk, "arbiterGetBodies", JSPROXY_cpArbiterGetBodies, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, chipmunk, "arbiterGetShapes", JSPROXY_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, chipmunk, "bodyGetUserData", JSPROXY_cpBodyGetUserData, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
-		JS_DefineFunction(_cx, chipmunk, "bodySetUserData", JSPROXY_cpBodySetUserData, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "spaceAddCollisionHandler", JSB_cpSpaceAddCollisionHandler, 8, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "spaceRemoveCollisionHandler", JSB_cpSpaceRemoveCollisionHandler, 3, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "arbiterGetBodies", JSB_cpArbiterGetBodies, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "arbiterGetShapes", JSB_cpArbiterGetShapes, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "bodyGetUserData", JSB_cpBodyGetUserData, 1, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
+		JS_DefineFunction(_cx, chipmunk, "bodySetUserData", JSB_cpBodySetUserData, 2, JSPROP_READONLY | JSPROP_PERMANENT | JSPROP_ENUMERATE );
 	}
 	
 	return self;
@@ -537,13 +537,13 @@ JSBool JSBCore_forceGC(JSContext *cx, uint32_t argc, jsval *vp)
 typedef struct _hashJSObject
 {
 	JSObject			*jsObject;
-	JSPROXY_NSObject	*proxy;
+	JSB_NSObject	*proxy;
 	UT_hash_handle		hh;
 } tHashJSObject;
 
 static tHashJSObject *hash = NULL;
 
-JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *obj)
+JSB_NSObject* get_proxy_for_jsobject(JSObject *obj)
 {
 	tHashJSObject *element = NULL;
 	HASH_FIND_INT(hash, &obj, element);
@@ -553,7 +553,7 @@ JSPROXY_NSObject* get_proxy_for_jsobject(JSObject *obj)
 	return nil;
 }
 
-void set_proxy_for_jsobject(JSPROXY_NSObject *proxy, JSObject *obj)
+void set_proxy_for_jsobject(JSB_NSObject *proxy, JSObject *obj)
 {
 	NSCAssert( !get_proxy_for_jsobject(obj), @"Already added. abort");
 	

@@ -31,14 +31,14 @@
 #include "chipmunk.h"
 #include "jsapi.h"
 
-JSBool JSPROXY_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSPROXY_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpSpaceAddCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpSpaceRemoveCollisionHandler(JSContext *cx, uint32_t argc, jsval *vp);
 
-JSBool JSPROXY_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSPROXY_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpArbiterGetBodies(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpArbiterGetShapes(JSContext *cx, uint32_t argc, jsval *vp);
 
-JSBool JSPROXY_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp);
-JSBool JSPROXY_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpBodyGetUserData(JSContext *cx, uint32_t argc, jsval *vp);
+JSBool JSB_cpBodySetUserData(JSContext *cx, uint32_t argc, jsval *vp);
 
 
 // convertions
