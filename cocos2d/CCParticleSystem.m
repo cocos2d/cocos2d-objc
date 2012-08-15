@@ -172,6 +172,10 @@
 			// gravity
 			mode.A.gravity.x = [[dictionary valueForKey:@"gravityx"] floatValue];
 			mode.A.gravity.y = [[dictionary valueForKey:@"gravityy"] floatValue];
+			
+			// There're some differences between high and low resolutions
+			mode.A.gravity.x *= CC_CONTENT_SCALE_FACTOR;
+			mode.A.gravity.y *= CC_CONTENT_SCALE_FACTOR;
 
 			//
 			// speed
