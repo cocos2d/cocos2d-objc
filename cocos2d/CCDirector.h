@@ -27,10 +27,11 @@
 #import "ccConfig.h"
 #import "ccTypes.h"
 #import "ccMacros.h"
-
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "kazmath/mat4.h"
+
+#import "CCTransitionOrientationType.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -262,6 +263,22 @@ and when to execute the Scenes.
  */
 -(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t;
 
+/**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+ * The new scene will be executed and is going to be presented using a scene transition effect.
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation.
+ * ONLY call it if there is a running scene.
+ */
+-(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t
+                     withColor:(ccColor3B)color;
+
+/**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+ * The new scene will be executed and is going to be presented using a scene transition effect.
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation.
+ * ONLY call it if there is a running scene.
+ */
+-(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t
+               withOrientation:(tOrientation)orientation;
+
 /**Pops out a scene from the queue.
  * This scene will replace the running one.
  * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
@@ -275,6 +292,22 @@ and when to execute the Scenes.
  * ONLY call it if there is a running scene.
  */
 -(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t;
+
+/**Pops out a scene from the queue.
+ * This scene will replace the running one using a scene transition effect.
+ * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * ONLY call it if there is a running scene.
+ */
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t
+                     withColor:(ccColor3B)color;
+
+/**Pops out a scene from the queue.
+ * This scene will replace the running one using a scene transition effect.
+ * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * ONLY call it if there is a running scene.
+ */
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t
+                     withOrientation:(tOrientation)orientation;
 
 /**Pops out all scenes from the queue until the root scene in the queue.
  * This scene will replace the running one.

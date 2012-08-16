@@ -26,6 +26,8 @@
 
 
 #import "CCScene.h"
+#import "CCTransitionOrientationType.h"
+
 @class CCActionInterval;
 @class CCNode;
 
@@ -38,19 +40,6 @@
  */
 -(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action;
 @end
-
-/** Orientation Type used by some transitions
- */
-typedef enum {
-	/// An horizontal orientation where the Left is nearer
-	kOrientationLeftOver = 0,
-	/// An horizontal orientation where the Right is nearer
-	kOrientationRightOver = 1,
-	/// A vertical orientation where the Up is nearer
-	kOrientationUpOver = 0,
-	/// A vertical orientation where the Bottom is nearer
-	kOrientationDownOver = 1,
-} tOrientation;
 
 /** Base class for CCTransition scenes
  */
@@ -80,9 +69,9 @@ typedef enum {
 	tOrientation orientation;
 }
 /** creates a base transition with duration and incoming scene */
-+(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o;
++(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s withOrientation:(tOrientation)o;
 /** initializes a transition with duration and incoming scene */
--(id) initWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o;
+-(id) initWithDuration:(ccTime) t scene:(CCScene*)s withOrientation:(tOrientation)o;
 @end
 
 

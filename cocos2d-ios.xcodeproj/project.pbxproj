@@ -4768,6 +4768,7 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		E610367B15DD0C4F00819640 /* CCTransitionOrientationType.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCTransitionOrientationType.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6240,6 +6241,7 @@
 				E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */,
 				A0C3814F14BA0548001655CC /* CCTransitionProgress.h */,
 				A0C3815014BA0548001655CC /* CCTransitionProgress.m */,
+				E610367B15DD0C4F00819640 /* CCTransitionOrientationType.h */,
 			);
 			name = "Layers, Scenes, Transitions Nodes";
 			sourceTree = "<group>";
