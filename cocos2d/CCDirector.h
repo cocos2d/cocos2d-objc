@@ -255,12 +255,26 @@ and when to execute the Scenes.
  */
 - (void) pushScene:(CCScene*) scene;
 
+/**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+ * The new scene will be executed and is going to be presented using a scene transition effect.
+ * Try to avoid big stacks of pushed scenes to reduce memory allocation.
+ * ONLY call it if there is a running scene.
+ */
+-(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t;
+
 /**Pops out a scene from the queue.
  * This scene will replace the running one.
  * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
  * ONLY call it if there is a running scene.
  */
 - (void) popScene;
+
+/**Pops out a scene from the queue.
+ * This scene will replace the running one using a scene transition effect.
+ * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
+ * ONLY call it if there is a running scene.
+ */
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t;
 
 /**Pops out all scenes from the queue until the root scene in the queue.
  * This scene will replace the running one.

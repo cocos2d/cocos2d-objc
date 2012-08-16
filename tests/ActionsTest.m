@@ -157,14 +157,14 @@ Class restartAction()
 {
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] pushScene:s withTransition:@"CCTransitionMoveInR" duration:1.0f];
 }
 
 -(void) backCallback: (id) sender
 {
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[[CCDirector sharedDirector] replaceScene: s];
+	[[CCDirector sharedDirector] popSceneWithTransition:@"CCTransitionMoveInL" duration:1.0f];
 }
 
 
