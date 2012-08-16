@@ -198,12 +198,12 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // Oriented Transition
 //
 @implementation CCTransitionSceneOriented
-+(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
++(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s withOrientation:(tOrientation)o
 {
-	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
+	return [[[self alloc] initWithDuration:t scene:s withOrientation:o] autorelease];
 }
 
--(id) initWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
+-(id) initWithDuration:(ccTime) t scene:(CCScene*)s withOrientation:(tOrientation)o
 {
 	if( (self=[super initWithDuration:t scene:s]) )
 		orientation = o;
