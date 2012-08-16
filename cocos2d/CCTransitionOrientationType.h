@@ -1,5 +1,5 @@
 //
-//  ccTransitionOrientationType.h
+//  CCTransitionOrientationType.h
 //  cocos2d-ios
 //
 //  Created by Goffredo Marocchi on 8/16/12.
