@@ -16,19 +16,19 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Box2D/Dynamics/b2World.h>
-#include <Box2D/Dynamics/b2Body.h>
-#include <Box2D/Dynamics/b2Fixture.h>
-#include <Box2D/Dynamics/b2Island.h>
-#include <Box2D/Dynamics/Joints/b2PulleyJoint.h>
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
-#include <Box2D/Dynamics/Contacts/b2ContactSolver.h>
-#include <Box2D/Dynamics/Contacts/b2TOISolver.h>
-#include <Box2D/Collision/b2Collision.h>
-#include <Box2D/Collision/b2BroadPhase.h>
-#include <Box2D/Collision/Shapes/b2CircleShape.h>
-#include <Box2D/Collision/Shapes/b2PolygonShape.h>
-#include <Box2D/Collision/b2TimeOfImpact.h>
+#include "b2World.h"
+#include "b2Body.h"
+#include "b2Fixture.h"
+#include "b2Island.h"
+#include "Joints/b2PulleyJoint.h"
+#include "Contacts/b2Contact.h"
+#include "Contacts/b2ContactSolver.h"
+#include "Contacts/b2TOISolver.h"
+#include "../Collision/b2Collision.h"
+#include "../Collision/b2BroadPhase.h"
+#include "../Collision/Shapes/b2CircleShape.h"
+#include "../Collision/Shapes/b2PolygonShape.h"
+#include "../Collision/b2TimeOfImpact.h"
 #include <new>
 
 b2World::b2World(const b2Vec2& gravity, bool doSleep)

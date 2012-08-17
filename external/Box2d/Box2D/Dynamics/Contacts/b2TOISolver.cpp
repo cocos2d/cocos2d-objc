@@ -16,11 +16,11 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Box2D/Dynamics/Contacts/b2TOISolver.h>
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
-#include <Box2D/Dynamics/b2Body.h>
-#include <Box2D/Dynamics/b2Fixture.h>
-#include <Box2D/Common/b2StackAllocator.h>
+#include "../Contacts/b2TOISolver.h"
+#include "../Contacts/b2Contact.h"
+#include "../b2Body.h"
+#include "../b2Fixture.h"
+#include "../../Common/b2StackAllocator.h"
 
 struct b2TOIConstraint
 {

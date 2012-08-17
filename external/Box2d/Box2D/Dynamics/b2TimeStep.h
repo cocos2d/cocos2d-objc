@@ -19,7 +19,7 @@
 #ifndef B2_TIME_STEP_H
 #define B2_TIME_STEP_H
 
-#include <Box2D/Common/b2Settings.h>
+#include "../Common/b2Settings.h"
 
 /// This is an internal structure.
 struct b2TimeStep

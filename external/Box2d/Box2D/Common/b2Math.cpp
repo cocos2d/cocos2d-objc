@@ -16,7 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Box2D/Common/b2Math.h>
+#include "../Common/b2Math.h"
 
 const b2Vec2 b2Vec2_zero(0.0f, 0.0f);
 const b2Mat22 b2Mat22_identity(1.0f, 0.0f, 0.0f, 1.0f);

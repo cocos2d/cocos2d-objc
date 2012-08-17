@@ -16,7 +16,7 @@
 * 3. This notice may not be removed or altered from any source distribution.
 */
 
-#include <Box2D/Common/b2BlockAllocator.h>
+#include "../Common/b2BlockAllocator.h"
 #include <cstdlib>
 #include <climits>
 #include <cstring>

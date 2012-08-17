@@ -19,11 +19,11 @@
 #ifndef B2_WORLD_H
 #define B2_WORLD_H
 
-#include <Box2D/Common/b2Math.h>
-#include <Box2D/Common/b2BlockAllocator.h>
-#include <Box2D/Common/b2StackAllocator.h>
-#include <Box2D/Dynamics/b2ContactManager.h>
-#include <Box2D/Dynamics/b2WorldCallbacks.h>
+#include "../Common/b2Math.h"
+#include "../Common/b2BlockAllocator.h"
+#include "../Common/b2StackAllocator.h"
+#include "b2ContactManager.h"
+#include "b2WorldCallbacks.h"
 
 struct b2AABB;
 struct b2BodyDef;

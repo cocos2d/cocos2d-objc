@@ -19,7 +19,7 @@
 #ifndef B2_TOI_SOLVER_H
 #define B2_TOI_SOLVER_H
 
-#include <Box2D/Common/b2Math.h>
+#include "../../Common/b2Math.h"
 
 class b2Contact;
 class b2Body;

@@ -19,11 +19,11 @@
 #ifndef B2_CONTACT_H
 #define B2_CONTACT_H
 
-#include <Box2D/Common/b2Math.h>
-#include <Box2D/Collision/b2Collision.h>
-#include <Box2D/Collision/Shapes/b2Shape.h>
-#include <Box2D/Dynamics/Contacts/b2Contact.h>
-#include <Box2D/Dynamics/b2Fixture.h>
+#include "../../Common/b2Math.h"
+#include "../../Collision/b2Collision.h"
+#include "../../Collision/Shapes/b2Shape.h"
+#include "../Contacts/b2Contact.h"
+#include "../b2Fixture.h"
 
 class b2Body;
 class b2Contact;
