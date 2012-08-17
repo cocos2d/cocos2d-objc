@@ -85,10 +85,10 @@ levels = [];
 
 // Level 0
 levels.push( {'coins' : [ {x:300,y:50},{x:350,y:50},{x:400,y:50},{x:450,y:50},{x:500,y:50},{x:550,y:50},{x:600,y:50},
-                      {x:1300,y:50},{x:1350,y:50},{x:1400,y:50},{x:1450,y:50},{x:1500,y:50},{x:1550,y:50},{x:1600,y:50},
+                      {x:1300,y:50},{x:1350,y:50},{x:1400,y:50},{x:1450,y:50},{x:1500,y:50},{x:1550,y:50},{x:1600,y:50}
                     ],
 
-          'car' : {x:80, y:60}, 
+          'car' : {x:80, y:60},
           'finish' : {x:3000, y:20},
 
           // points relatives to the previous point
@@ -100,30 +100,30 @@ levels.push( {'coins' : [ {x:300,y:50},{x:350,y:50},{x:400,y:50},{x:450,y:50},{x
                       {x:20, y:5},{x:20,y:-5}, {x:20, y:10},{x:20,y:-10}, {x:20, y:5},{x:20,y:-5},
                       {x:500,y:0},
                       {x:20, y:5},{x:20,y:-5}, {x:20, y:10},{x:20,y:-10}, {x:20, y:5},{x:20,y:-5},
-                      {x:300,y:0},
-                    ],
+                      {x:300,y:0}
+                    ]
           }
           );
 
 // Level 1
 levels.push( {'coins' : [ {x:1120,y:150}, {x:1160,y:140}, {x:1200,y:130}, {x:1240,y:120}, {x:1280,y:110},
                       {x:2470,y:150}, {x:2510,y:140}, {x:2550,y:130}, {x:2590,y:120}, {x:2630,y:110},
-                      {x:2220,y:60}, {x:2260,y:70}, {x:2300,y:80}, {x:2340,y:90}, {x:2380,y:100},
+                      {x:2220,y:60}, {x:2260,y:70}, {x:2300,y:80}, {x:2340,y:90}, {x:2380,y:100}
                     ],
 
-          'car' : {x:80, y:60}, 
+          'car' : {x:80, y:60},
           'finish' : {x:3400, y:20},
 
           // points relatives to the previous point
-          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, {x:400,y:100}, {x:200,y:-100}, {x:400,y:0}, {x:20,y:15}, {x:20,y:-15}, {x:400,y:0}, ],
+          'lines' : [ {x:0,y:0}, {x:350,y:10}, {x:20, y:5}, {x:500, y:-20}, {x:200, y:80}, {x:100, y:-40}, {x:200,y:-10}, {x:400, y:-50}, {x:300,y:0}, {x:400,y:100}, {x:200,y:-100}, {x:400,y:0}, {x:20,y:15}, {x:20,y:-15}, {x:400,y:0} ]
           }
           );
 
 // Level 2
-levels.push( {'coins' : [ {x:1120,y:150}, {x:1160,y:140}, {x:1200,y:130}, {x:1240,y:120}, {x:1280,y:110},
+levels.push( {'coins' : [ {x:1120,y:150}, {x:1160,y:140}, {x:1200,y:130}, {x:1240,y:120}, {x:1280,y:110}
                     ],
 
-          'car' : {x:80, y:60}, 
+          'car' : {x:80, y:60},
           'finish' : {x:4100, y:-100},
 
           // points relatives to the previous point
@@ -133,8 +133,8 @@ levels.push( {'coins' : [ {x:1120,y:150}, {x:1160,y:140}, {x:1200,y:130}, {x:124
                       {x:300,y:0},
                       {x:300, y:100}, {x:100, y:50}, {x:50, y:12}, {x:25, y:0}, {x:50,y:-12}, {x:100, y:-25}, {x:400, y:-200}, {x:500, y:0},
                       {x:20, y:15},{x:20,y:-15}, {x:20, y:5},{x:20,y:-5},
-                      {x:300,y:0},
-                    ],
+                      {x:300,y:0}
+                    ]
           }
           );
 //
@@ -395,7 +395,7 @@ var GameLayer = cc.LayerGradient.extend({
         // XXX: hack to prevent double deletion... argh...
         // Since shapeCoin in 64bits is a typedArray and in 32-bits is an integer
         // a ad-hoc solution needs to be implemented
-        if( this._shapesToRemove.length == 0 ) {
+        if( this._shapesToRemove.length === 0 ) {
             // since Coin is a sensor, it can't be removed at PostStep.
             // PostStep is not called for Sensors
             this._shapesToRemove.push( shapeCoin );
@@ -480,11 +480,12 @@ var GameLayer = cc.LayerGradient.extend({
 
         var level = levels[ lvl ];
         
+        var i=0;
         // Coins
-        var coins = level['coins']; 
-        for( var i=0;i < coins.length; i++) {
+        var coins = level['coins'];
+        for( i=0;i < coins.length; i++) {
             var coin = coins[i];
-            this.createCoin( cc._p( coin.x, coin.y) ); 
+            this.createCoin( cc._p( coin.x, coin.y) );
         }
 
         // car
@@ -495,15 +496,15 @@ var GameLayer = cc.LayerGradient.extend({
         var finish = level['finish'];
         this.createFinish( cp._v(finish.x, finish.y) );
 
-        //lines  
+        // lines
         var poly = [];
         var p = {x:0, y:0};
-        var lines = level['lines']; 
+        var lines = level['lines'];
 
-        for( var i=0; i < lines.length; i++) {
+        for( i=0; i < lines.length; i++) {
             var line = lines[i];
             if( i > 0 ) {
-                this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  ); 
+                this.createSegment( cp._v(p.x, p.y), cp._v( p.x+line.x, p.y+line.y )  );
                 this._terrain.drawSegment( cc._p(p.x, p.y), cc._p(p.x+line.x, p.y+line.y), 5, cc.c4f(0.43,0.39,0.34,1) );
             }
 
@@ -527,7 +528,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
 
-        var rect = cc.rect(x,y,width,height); 
+        var rect = cc.rect(x,y,width,height);
         var a = cc.Follow.create( this._carSprite, rect );
         this._scrollNode.runAction( a );
 
@@ -544,10 +545,10 @@ var GameLayer = cc.LayerGradient.extend({
         var h = rect.height;
 
 		// Walls
-		var walls =[cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(w,y), 0 ),   // bottom
-			     	cp.segmentShapeNew( staticBody, cp._v(x,h), cp._v(w,h), 0),	    // top
+		var walls =[cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(w,y), 0 ),    // bottom
+                    cp.segmentShapeNew( staticBody, cp._v(x,h), cp._v(w,h), 0),     // top
                     cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(x,h), 0),     // left
-                    cp.segmentShapeNew( staticBody, cp._v(w,y), cp._v(w,h), 0)  	// right
+                    cp.segmentShapeNew( staticBody, cp._v(w,y), cp._v(w,h), 0)      // right
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
@@ -630,7 +631,7 @@ var GameLayer = cc.LayerGradient.extend({
         // A perfect fit for a pin joint conected between the chassis and the wheel's center.
         var rearJoint = cp.pinJointNew( chassis, rear, cp.vsub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
         
-    	// return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
+        // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
         var rearStrutRestAngle = cp.vtoangle( cp.vsub(
                                                 cp.bodyLocal2World( chassis, cp.pinJointGetAnchr1(rearJoint) ),
                                                 cp.bodyGetPos(rear) ) );
@@ -674,7 +675,7 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     createWheel : function( pos ) {
-        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Wheel.png");  
+        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Wheel.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
 
 		var body = cp.bodyNew(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
@@ -695,7 +696,7 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     createChassis : function(pos) {
-        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Chassis.png"); 
+        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("Chassis.png");
         var anchor = cp.vadd( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
         var cs = sprite.getContentSize();
         sprite.setAnchorPoint( cc.p(anchor.x / cs.width, anchor.y/cs.height) );
@@ -721,7 +722,7 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceAddShape( this._space, shape );
 
         // box for fruits (left)
-        var shape = cp.boxShapeNew2( body, cp.bBNew(-50,0, -46,30) );
+        shape = cp.boxShapeNew2( body, cp.bBNew(-50,0, -46,30) );
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
@@ -729,7 +730,7 @@ var GameLayer = cc.LayerGradient.extend({
         cp.spaceAddShape( this._space, shape );
 
         // box for fruits (right)
-        var shape = cp.boxShapeNew2( body, cp.bBNew(8,0, 12,30) );
+        shape = cp.boxShapeNew2( body, cp.bBNew(8,0, 12,30) );
 		cp.shapeSetFriction(shape, 0.3);
 		cp.shapeSetGroup( shape, GROUP_BUGGY );
 		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
@@ -742,7 +743,7 @@ var GameLayer = cc.LayerGradient.extend({
     createCarFruits : function(pos) {
         // create some fruits
         for(var i=0; i < 4;i++) {
-            var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("watermelon.png");  
+            var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("watermelon.png");
             var radius = 0.95 * sprite.getContentSize().width / 2;
 
             var body = cp.bodyNew(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
@@ -761,7 +762,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     createCoin: function( pos ) {
         // coins are static bodies and sensors
-        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("coin01.png");  
+        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
         
         var body = cp.bodyNew(1, 1);
@@ -779,7 +780,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._batch.addChild( sprite, Z_COIN);
 
         var animation = cc.AnimationCache.getInstance().getAnimation("coin");
-        var animate = cc.Animate.create(animation); 
+        var animate = cc.Animate.create(animation);
         var repeat = cc.RepeatForever.create( animate );
         sprite.runAction( repeat );
 
@@ -790,7 +791,7 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     createFinish:function( pos ) {
-        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("farmers-market.png"); 
+        var sprite = cc.ChipmunkSprite.createWithSpriteFrameName("farmers-market.png");
         var cs = sprite.getContentSize();
         var body = cp.bodyNew( 1, 1);
         cp.bodyInitStatic( body );
@@ -820,7 +821,7 @@ var GameLayer = cc.LayerGradient.extend({
     
     // call the 'deferred' option if you want to modify Chipmunk's state from a Chipmunk's callback
     setGameStateDeferred: function( state ) {
-        this._deferredState = state; 
+        this._deferredState = state;
     },
 
     setGameState: function( state ) {
@@ -840,24 +841,28 @@ var GameLayer = cc.LayerGradient.extend({
     displayLevelComplete:function() {
         
 
+        var legend = "";
+        var menu = null;
+        var item1 = null;
+
         if( this._level+1 < levels.length ) {
             cc.MenuItemFont.setFontSize(16 * sizeRatio );
-            var item1 = cc.MenuItemFont.create("Next Level", this, this.onNextLevel);
-            var menu = cc.Menu.create( item1 );
+            item1 = cc.MenuItemFont.create("Next Level", this, this.onNextLevel);
+            menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
             menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
 
-            var legend = "LEVEL COMPLETE";
+            legend = "LEVEL COMPLETE";
         } else {
             cc.MenuItemFont.setFontSize(16 * sizeRatio );
-            var item1 = cc.MenuItemFont.create("Main Menu", this, this.onMainMenu);
-            var menu = cc.Menu.create( item1 );
+            item1 = cc.MenuItemFont.create("Main Menu", this, this.onMainMenu);
+            menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
             menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
 
-            var legend = "GAME COMPLETE";
+            legend = "GAME COMPLETE";
         }
 
         var label = cc.LabelBMFont.create(legend, "Abadi40.fnt" );
@@ -929,8 +934,7 @@ var GameLayer = cc.LayerGradient.extend({
             cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
             cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FINISH, COLLISION_TYPE_CAR );
         }
-    },
-
+    }
 
 });
 
@@ -958,7 +962,7 @@ var BootLayer = cc.Layer.extend({
         var layer = new MenuLayer();
         scene.addChild( layer );
         director.replaceScene( scene );
-    },
+    }
 });
 
 //
@@ -1006,7 +1010,7 @@ var MenuLayer = cc.Layer.extend({
         var layer = new AboutLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
-    },
+    }
 });
 
 //
@@ -1020,7 +1024,7 @@ var AboutLayer = cc.Layer.extend({
         this.init();
 
         var about = cc.Reader.load("About.ccbi", this);
-        this.addChild( about )
+        this.addChild( about );
 
         var back = cc.MenuItemFont.create("Back", this, this.onBack );
         back.setColor( cc.BLACK );
@@ -1036,11 +1040,11 @@ var AboutLayer = cc.Layer.extend({
         var layer = new MenuLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFlipX.create(1, scene) );
-    },
+    }
 });
 
 //
-// Options 
+// Options
 //
 var OptionsLayer = cc.LayerGradient.extend({
 
@@ -1077,7 +1081,7 @@ var OptionsLayer = cc.LayerGradient.extend({
         } else {
             audioEngine.playBackgroundMusic("game-music.mp3");
         }
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -1098,7 +1102,7 @@ function run()
     scene.addChild( menu);
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );
