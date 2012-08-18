@@ -396,30 +396,37 @@ enum {
 		columns = va_arg(args, NSNumber*);
 	}
 
+	[self alignItemsInColumnsWithArray:rows];
+	
+	[rows release];
+}
+
+-(void) alignItemsInColumnsWithArray:(NSArray*) rows
+{	
 	int height = -5;
     NSUInteger row = 0, rowHeight = 0, columnsOccupied = 0, rowColumns;
 	CCMenuItem *item;
 	CCARRAY_FOREACH(children_, item){
 		NSAssert( row < [rows count], @"Too many menu items for the amount of rows/columns.");
-
+		
 		rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
 		NSAssert( rowColumns, @"Can't have zero columns on a row");
-
+		
 		rowHeight = fmaxf(rowHeight, item.contentSize.height);
 		++columnsOccupied;
-
+		
 		if(columnsOccupied >= rowColumns) {
 			height += rowHeight + 5;
-
+			
 			columnsOccupied = 0;
 			rowHeight = 0;
 			++row;
 		}
 	}
 	NSAssert( !columnsOccupied, @"Too many rows/columns for available menu items." );
-
+	
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
-
+	
 	row = 0; rowHeight = 0; rowColumns = 0;
 	float w, x, y = height / 2;
 	CCARRAY_FOREACH(children_, item) {
@@ -428,26 +435,24 @@ enum {
 			w = winSize.width / (1 + rowColumns);
 			x = w;
 		}
-
+		
 		CGSize itemSize = item.contentSize;
 		rowHeight = fmaxf(rowHeight, itemSize.height);
 		[item setPosition:ccp(x - winSize.width / 2,
 							  y - itemSize.height / 2)];
-
+		
 		x += w;
 		++columnsOccupied;
-
+		
 		if(columnsOccupied >= rowColumns) {
 			y -= rowHeight + 5;
-
+			
 			columnsOccupied = 0;
 			rowColumns = 0;
 			rowHeight = 0;
 			++row;
 		}
 	}
-
-	[rows release];
 }
 
 -(void) alignItemsInRows: (NSNumber *) rows, ...
@@ -469,28 +474,35 @@ enum {
 		rows = va_arg(args, NSNumber*);
 	}
 
+	[self alignItemsInRowsWithArray:columns];
+	
+	[columns release];
+}
+
+-(void) alignItemsInRowsWithArray:(NSArray*) columns
+{
 	NSMutableArray *columnWidths = [[NSMutableArray alloc] init];
 	NSMutableArray *columnHeights = [[NSMutableArray alloc] init];
-
+	
 	int width = -10, columnHeight = -5;
 	NSUInteger column = 0, columnWidth = 0, rowsOccupied = 0, columnRows;
 	CCMenuItem *item;
 	CCARRAY_FOREACH(children_, item){
 		NSAssert( column < [columns count], @"Too many menu items for the amount of rows/columns.");
-
+		
 		columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
 		NSAssert( columnRows, @"Can't have zero rows on a column");
-
+		
 		CGSize itemSize = item.contentSize;
 		columnWidth = fmaxf(columnWidth, itemSize.width);
 		columnHeight += itemSize.height + 5;
 		++rowsOccupied;
-
+		
 		if(rowsOccupied >= columnRows) {
 			[columnWidths addObject:[NSNumber numberWithUnsignedInteger:columnWidth]];
 			[columnHeights addObject:[NSNumber numberWithUnsignedInteger:columnHeight]];
 			width += columnWidth + 10;
-
+			
 			rowsOccupied = 0;
 			columnWidth = 0;
 			columnHeight = -5;
@@ -498,29 +510,29 @@ enum {
 		}
 	}
 	NSAssert( !rowsOccupied, @"Too many rows/columns for available menu items.");
-
+	
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
-
+	
 	column = 0; columnWidth = 0; columnRows = 0;
 	float x = -width / 2, y;
-
+	
 	CCARRAY_FOREACH(children_, item){
 		if(columnRows == 0) {
 			columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
 			y = ([(NSNumber *) [columnHeights objectAtIndex:column] intValue] + winSize.height) / 2;
 		}
-
+		
 		CGSize itemSize = item.contentSize;
 		columnWidth = fmaxf(columnWidth, itemSize.width);
 		[item setPosition:ccp(x + [(NSNumber *) [columnWidths objectAtIndex:column] unsignedIntegerValue] / 2,
 							  y - winSize.height / 2)];
-
+		
 		y -= itemSize.height + 10;
 		++rowsOccupied;
-
+		
 		if(rowsOccupied >= columnRows) {
 			x += columnWidth + 5;
-
+			
 			rowsOccupied = 0;
 			columnRows = 0;
 			columnWidth = 0;
@@ -528,7 +540,6 @@ enum {
 		}
 	}
 
-	[columns release];
 	[columnWidths release];
 	[columnHeights release];
 }

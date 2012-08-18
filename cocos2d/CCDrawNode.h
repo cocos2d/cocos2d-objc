@@ -34,9 +34,17 @@
  
  @since v2.1
  */
-
 @interface CCDrawNode : CCNode
 {
+	GLuint			_vao;
+	GLuint			_vbo;
+	
+	NSUInteger		_bufferCapacity;
+	GLsizei			_bufferCount;
+	ccV2F_C4B_T2F	*_buffer;
+
+	ccBlendFunc		_blendFunc;
+
 	BOOL _dirty;
 }
 

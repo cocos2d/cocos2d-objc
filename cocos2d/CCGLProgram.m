@@ -69,7 +69,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 @implementation CCGLProgram
 
-@synthesize program = _program;
+@synthesize program = program_;
 
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {

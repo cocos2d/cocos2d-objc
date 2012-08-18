@@ -102,13 +102,12 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 /** RGBA color composed of 4 floats
 @since v0.8
 */
-struct ccColor4F {
+typedef struct _ccColor4F {
 	GLfloat r;
 	GLfloat g;
 	GLfloat b;
 	GLfloat a;
-};
-typedef struct ccColor4F ccColor4F;
+} ccColor4F;
 
 //! helper that creates a ccColor4f type
 static inline ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
@@ -276,7 +275,19 @@ typedef struct _ccV3F_C4B_T2F
 	ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
 
-//! 4 ccVertex2FTex2FColor4B Quad
+	
+//! A Triangle of ccV2F_C4B_T2F 
+typedef struct _ccV2F_C4B_T2F_Triangle
+{
+	//! Point A
+	ccV2F_C4B_T2F a;
+	//! Point B
+	ccV2F_C4B_T2F b;
+	//! Point B
+	ccV2F_C4B_T2F c;
+} ccV2F_C4B_T2F_Triangle;
+	
+//! A Quad of ccV2F_C4B_T2F
 typedef struct _ccV2F_C4B_T2F_Quad
 {
 	//! bottom left
