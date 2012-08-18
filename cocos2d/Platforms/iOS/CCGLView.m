@@ -223,8 +223,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[director reshapeProjection:size_];
 
 	// Avoid flicker. Issue #350
-	NSThread *thread = [director runningThread];
-	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+	// Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
+//	if(director.runningScene){
+//		NSThread *thread = [director runningThread];
+//		[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+//	}
 }
 
 - (void) swapBuffers

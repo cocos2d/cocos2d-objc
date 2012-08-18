@@ -535,7 +535,7 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
-/** Retrusn the world affine transform matrix. The matrix is in Pixels.
+/** Returns the world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
