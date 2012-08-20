@@ -1176,6 +1176,8 @@
 		50FD7B3C0FFAA8AC004073B5 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		50FD7B3F0FFAA8BC004073B5 /* background.png in Resources */ = {isa = PBXBuildFile; fileRef = 50C1959C0EE4B90800829067 /* background.png */; };
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
+		6D0E1183C5BE3CB5DA10D03D /* CCRenderTargetNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 6D0E11D552E8A1F6205D918E /* CCRenderTargetNode.h */; };
+		6D0E1D88B980A0D8C05324E6 /* CCRenderTargetNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 6D0E193AA35301C580F6B274 /* CCRenderTargetNode.m */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		A00942C915180C730029A5C6 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -4299,6 +4301,8 @@
 		50F9EA8F0E1AE87E000E7616 /* fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fire.png; sourceTree = "<group>"; };
 		50FBB2D8117613F500150761 /* CCActionTween.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTween.h; sourceTree = "<group>"; };
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
+		6D0E11D552E8A1F6205D918E /* CCRenderTargetNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTargetNode.h; sourceTree = "<group>"; };
+		6D0E193AA35301C580F6B274 /* CCRenderTargetNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderTargetNode.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		A009431115180C730029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6770,6 +6774,7 @@
 				50150434113300F900A9CA65 /* CCProgressTimer.m */,
 				50316AA410291280003ACFE7 /* CCRenderTexture.h */,
 				50316AA510291280003ACFE7 /* CCRenderTexture.m */,
+				6D0E1133D830D8F22BF7452D /* RenderTargetNode */,
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
@@ -6797,6 +6802,15 @@
 			);
 			name = "cocos2d-artwork";
 			path = "Resources/cocos2d-artwork";
+			sourceTree = "<group>";
+		};
+		6D0E1133D830D8F22BF7452D /* RenderTargetNode */ = {
+			isa = PBXGroup;
+			children = (
+				6D0E11D552E8A1F6205D918E /* CCRenderTargetNode.h */,
+				6D0E193AA35301C580F6B274 /* CCRenderTargetNode.m */,
+			);
+			name = RenderTargetNode;
 			sourceTree = "<group>";
 		};
 		A015BFAB13B826D800C73E76 /* kazmath */ = {
@@ -7493,6 +7507,7 @@
 				A09CEEA3150EB30D001E49B8 /* ccShader_PositionTextureColorAlphaTest_frag.h in Headers */,
 				A0A7A53C1514F27D00C8BD16 /* CCActionCatmullRom.h in Headers */,
 				A039EBFF155C686B0061EE37 /* CCNode+Debug.h in Headers */,
+				6D0E1183C5BE3CB5DA10D03D /* CCRenderTargetNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11330,6 +11345,7 @@
 				A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */,
 				A04FA967156303C600EC18D4 /* ccCArray.m in Sources */,
+				6D0E1D88B980A0D8C05324E6 /* CCRenderTargetNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
