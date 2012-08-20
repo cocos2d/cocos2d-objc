@@ -12,6 +12,7 @@ version 2.1-alpha XX-Ago-2012
 			labelWithString:dimension:hAlign:font:size -> labelWithString:font:size:dimension:hAlign:
 			labelWithString:dimension:hAlign:vAlign:font:size -> labelWithString:font:size:dimension:hAlign:vAlign:
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
+. [NEW] Physics nodes: PhysicsSprite and PhysicsDebugNode are part of cocos2d
 . [NEW] Tests: Tests for RotationalSkew feature
 . [NEW] Texture: Supports PVR v3 file format
 . [FIX] Director: Fixed flicker again.

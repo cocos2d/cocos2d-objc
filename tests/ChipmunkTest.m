@@ -4,10 +4,14 @@
 // http://www.cocos2d-iphone.org
 //
 
-#import "ChipmunkAccelTouchTest.h"
+#import "ChipmunkTest.h"
 
 enum {
 	kTagParentNode = 1,
+};
+
+enum {
+	Z_PHYSICS_DEBUG = 100,
 };
 
 // callback to remove Shapes from the Space
@@ -15,62 +19,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 {
 	cpShapeFree( shape );
 }
-
-#pragma mark - PhysicsSprite
-@implementation PhysicsSprite
-
--(void) setPhysicsBody:(cpBody *)body
-{
-	body_ = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
--(BOOL) dirty
-{
-	return YES;
-}
-
-// returns the transform matrix according the Chipmunk Body values
--(CGAffineTransform) nodeToParentTransform
-{
-	cpVect pos = cpBodyGetPos( body_);
-	CGFloat x = pos.x;
-	CGFloat y = pos.y;
-
-	if ( ignoreAnchorPointForPosition_ ) {
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
-	}
-
-	// Make matrix
-	cpVect rot = cpBodyGetRot(body_);
-	CGFloat c = rot.x;
-	CGFloat s = rot.y;
-
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
-	}
-
-	// Translate, Rot, anchor Matrix
-	transform_ = CGAffineTransformMake( c,  s,
-									   -s,	c,
-									   x,	y );
-
-	return transform_;
-}
-
--(void) dealloc
-{
-	cpBodyEachShape(body_, removeShape, NULL);
-	cpBodyFree( body_ );
-
-	[super dealloc];
-}
-
-@end
 
 #pragma mark - MainLayer
 
@@ -112,7 +60,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 #if 1
 		// Use batch node. Faster
 		CCSpriteBatchNode *parent = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
-		spriteTexture_ = [parent texture];
+		_spriteTexture = [parent texture];
 #else
 		// doesn't use batch node. Slower
 		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
@@ -122,6 +70,16 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 		[self addNewSpriteAtPosition:ccp(200,200)];
 
+		
+		// menu for debug layer
+		[CCMenuItemFont setFontSize:18];
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toggle debug" block:^(id sender) {
+			[_debugLayer setVisible: ! _debugLayer.visible];
+		}];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		[menu setPosition:ccp(s.width-100, s.height-60)];
+		
 		[self scheduleUpdate];
 	}
 
@@ -133,41 +91,44 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// init chipmunk
-
-	space_ = cpSpaceNew();
-	cpSpaceSetGravity(space_, cpv(0, -100) );
+	_space = cpSpaceNew();
+	cpSpaceSetGravity(_space, cpv(0, -100) );
 
 	//
 	// rogue shapes
 	// We have to free them manually
 	//
 	// bottom
-	walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+	_walls[0] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 
 	// top
-	walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+	_walls[1] = cpSegmentShapeNew( _space->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 
 	// left
-	walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+	_walls[2] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 
 	// right
-	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+	_walls[3] = cpSegmentShapeNew( _space->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 
 	for( int i=0;i<4;i++) {
-		cpShapeSetElasticity(walls_[i], 1.0f );
-		cpShapeSetFriction(walls_[i], 1.0f );
-		cpSpaceAddStaticShape(space_, walls_[i] );
+		cpShapeSetElasticity(_walls[i], 1.0f );
+		cpShapeSetFriction(_walls[i], 1.0f );
+		cpSpaceAddStaticShape(_space, _walls[i] );
 	}
+	
+	// Physics debug layer
+	_debugLayer = [CCPhysicsDebugNode debugNodeForCPSpace:_space];
+	[self addChild:_debugLayer z:Z_PHYSICS_DEBUG];
 }
 
 - (void)dealloc
 {
 	// manually Free rogue shapes
 	for( int i=0;i<4;i++) {
-		cpShapeFree( walls_[i] );
+		cpShapeFree( _walls[i] );
 	}
 
-	cpSpaceFree( space_ );
+	cpSpaceFree( _space );
 
 	[super dealloc];
 
@@ -180,7 +141,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
 
 	for(int i=0; i<steps; i++){
-		cpSpaceStep(space_, dt);
+		cpSpaceStep(_space, dt);
 	}
 }
 
@@ -214,11 +175,6 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	posx = (posx % 4) * 85;
 	posy = (posy % 3) * 121;
 
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(posx, posy, 85, 121)];
-	[parent addChild: sprite];
-
-	sprite.position = pos;
-
 	int num = 4;
 	cpVect verts[] = {
 		cpv(-24,-54),
@@ -229,14 +185,18 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, cpvzero));
 	cpBodySetPos( body, cpv(pos.x, pos.y) );
-	cpSpaceAddBody(space_, body);
+	cpSpaceAddBody(_space, body);
 
 	cpShape* shape = cpPolyShapeNew(body, num, verts, cpvzero);
 	cpShapeSetElasticity( shape, 0.5f );
 	cpShapeSetFriction(shape, 0.5f );
-	cpSpaceAddShape(space_, shape);
+	cpSpaceAddShape(_space, shape);
 
-	[sprite setPhysicsBody:body];
+	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:_spriteTexture rect:CGRectMake(posx, posy, 85, 121)];
+	[parent addChild: sprite];
+
+	[sprite setBody:body];
+	[sprite setPosition: pos];
 }
 
 #pragma mark iOS Events
@@ -278,7 +238,7 @@ void removeShape( cpBody *body, cpShape *shape, void *data )
 	else
 		v = cpv( accelY, -accelX);
 	
-	cpSpaceSetGravity( space_, cpvmult(v, 200) );
+	cpSpaceSetGravity( _space, cpvmult(v, 200) );
 }
 
 #elif defined(__CC_PLATFORM_MAC)
