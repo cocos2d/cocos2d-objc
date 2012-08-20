@@ -46,4 +46,9 @@
 @interface RenderTextureTestDepthStencil : RenderTextureTest
 @end
 
+@interface RenderTextureTargetNode : RenderTextureTest {
+  CCSprite *sprite1, *sprite2;
+}
+@end
+
 

@@ -13,7 +13,8 @@ static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
 	@"RenderTextureZbuffer",
-  @"RenderTextureTestDepthStencil"
+  @"RenderTextureTestDepthStencil",
+  @"RenderTextureTargetNode"
 };
 
 Class nextAction(void);
@@ -689,6 +690,73 @@ Class restartAction()
   return @"Circle should be missing 1/4 of its region";
 }
 @end
+#pragma mark -
+#pragma mark RenderTextureTargetNode
+@implementation RenderTextureTargetNode
+
+-(id) init
+{
+	/*
+	 *     1    2
+	 * A: A1   A2
+	 *
+	 * B: B1   B2
+	 *
+	 *  A1: premulti sprite
+	 *  A2: premulti render
+	 *
+	 *  B1: non-premulti sprite
+	 *  B2: non-premulti render
+	 */
+	if( (self=[super init]) ) {
+    
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(40,40,40,255)];
+		[self addChild:background];
+    
+		// A1
+		sprite1 = [CCSprite spriteWithFile:@"fire.png"];
+    
+		// B1
+		sprite2 = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
+    
+		CGSize s = [CCDirector sharedDirector].winSize;
+		/* A2 & B2 setup */
+		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+    [rend setPosition:ccp(s.width/2, s.height/2)];
+
+    [rend.renderTargetNode addChild:sprite1];
+    [rend.renderTargetNode addChild:sprite2];
+    rend.renderTargetNode.clearColor = ccc4f(0, 0, 0, 0);
+    rend.renderTargetNode.clearFlags = CC_GL_CLEAR_COLOR;
+		    
+        
+		[self addChild:rend];
+    [self scheduleUpdate];
+	}
+  
+	return self;
+}
+
+- (void)update:(float)dt
+{
+  static float time = 0;
+  float r = 80;
+  sprite1.position = ccp(cosf(time * 2) * r, sinf(time * 2) * r);
+  sprite2.position = ccp(sinf(time * 2) * r, cosf(time * 2) * r);
+
+  time += dt;
+}
+
+-(NSString*) title
+{
+	return @"Testing Render Target Node";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprites should be equal and move with each frame";
+}
+@end
 
 #pragma mark -
 #pragma mark AppDelegate (iOS)
@@ -756,3 +824,6 @@ Class restartAction()
 }
 @end
 #endif
+
+
+

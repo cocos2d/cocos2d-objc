@@ -30,6 +30,7 @@
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
 #import "kazmath/mat4.h"
+#import "CCRenderTargetNode.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>
@@ -59,7 +60,7 @@ typedef enum
   GLint				oldFBO_;
 	CCTexture2D*		texture_;
 	CCSprite*			sprite_;
-
+  CCRenderTargetNode *renderTargetNode_;
 	GLenum				pixelFormat_;
 }
 
@@ -69,6 +70,11 @@ typedef enum
 	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 */
 @property (nonatomic,readwrite, assign) CCSprite* sprite;
+
+/*
+  lazy created render target node that allows you to simplify rendering into render texture. Any children added to it will be rendered into render texture.
+ */
+@property (nonatomic, readonly) CCRenderTargetNode *renderTargetNode;
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
