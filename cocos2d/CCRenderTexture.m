@@ -38,6 +38,7 @@
 
 // extern
 #import "kazmath/GL/matrix.h"
+#import "CCRenderTargetNode.h"
 
 @implementation CCRenderTexture
 
@@ -155,6 +156,16 @@
 		glDeleteRenderbuffers(1, &depthRenderBufffer_);
 
 	[super dealloc];
+}
+
+- (CCRenderTargetNode *)renderTargetNode
+{
+  if (!renderTargetNode_) {
+    renderTargetNode_ = [[CCRenderTargetNode alloc] initWithRenderTexture:self];
+    [self addChild:renderTargetNode_];
+    [renderTargetNode_ release];
+  }
+  return renderTargetNode_;
 }
 
 -(void)begin
