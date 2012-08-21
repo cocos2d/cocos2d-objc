@@ -402,12 +402,6 @@
 		A031C08D15DADE5F00E1986C /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF415DADE5F00E1986C /* jsb_constants_gl.js */; };
 		A031C08E15DADE5F00E1986C /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF415DADE5F00E1986C /* jsb_constants_gl.js */; };
 		A031C08F15DADE5F00E1986C /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF415DADE5F00E1986C /* jsb_constants_gl.js */; };
-		A031C09015DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF715DADE5F00E1986C /* ChipmunkDebugNode.m */; };
-		A031C09115DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF715DADE5F00E1986C /* ChipmunkDebugNode.m */; };
-		A031C09215DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF715DADE5F00E1986C /* ChipmunkDebugNode.m */; };
-		A031C09315DADE5F00E1986C /* ChipmunkSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF915DADE5F00E1986C /* ChipmunkSprite.m */; };
-		A031C09415DADE5F00E1986C /* ChipmunkSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF915DADE5F00E1986C /* ChipmunkSprite.m */; };
-		A031C09515DADE5F00E1986C /* ChipmunkSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = A031BFF915DADE5F00E1986C /* ChipmunkSprite.m */; };
 		A031C09615DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */; };
 		A031C09715DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */; };
 		A031C09815DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */; };
@@ -6634,8 +6628,6 @@
 		A031BFAD15DADE5F00E1986C /* chipmunk.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = chipmunk.bridgesupport; sourceTree = "<group>"; };
 		A031BFAE15DADE5F00E1986C /* chipmunk_jsb.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = chipmunk_jsb.ini; sourceTree = "<group>"; };
 		A031BFAF15DADE5F00E1986C /* gen_chipmunk_bridgesupport.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_chipmunk_bridgesupport.sh; sourceTree = "<group>"; };
-		A031BFB115DADE5F00E1986C /* ChipmunkSprite-complement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "ChipmunkSprite-complement.txt"; sourceTree = "<group>"; };
-		A031BFB215DADE5F00E1986C /* ChipmunkSprite.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ChipmunkSprite.bridgesupport; sourceTree = "<group>"; };
 		A031BFB315DADE5F00E1986C /* cocos2d-complement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cocos2d-complement.txt"; sourceTree = "<group>"; };
 		A031BFB415DADE5F00E1986C /* cocos2d-ios-complement-exceptions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cocos2d-ios-complement-exceptions.txt"; sourceTree = "<group>"; };
 		A031BFB515DADE5F00E1986C /* cocos2d-ios-complement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "cocos2d-ios-complement.txt"; sourceTree = "<group>"; };
@@ -6646,8 +6638,6 @@
 		A031BFBA15DADE5F00E1986C /* cocos2d-mac.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "cocos2d-mac.bridgesupport"; sourceTree = "<group>"; };
 		A031BFBB15DADE5F00E1986C /* cocos2d.bridgesupport */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = cocos2d.bridgesupport; sourceTree = "<group>"; };
 		A031BFBC15DADE5F00E1986C /* cocos2d_jsb.ini */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cocos2d_jsb.ini; sourceTree = "<group>"; };
-		A031BFBD15DADE5F00E1986C /* gen_ChipmunkSprite_bridgesupport.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_ChipmunkSprite_bridgesupport.sh; sourceTree = "<group>"; };
-		A031BFBE15DADE5F00E1986C /* gen_ChipmunkSprite_complement.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_ChipmunkSprite_complement.sh; sourceTree = "<group>"; };
 		A031BFBF15DADE5F00E1986C /* gen_cocos2d_bridgesupport.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_cocos2d_bridgesupport.sh; sourceTree = "<group>"; };
 		A031BFC015DADE5F00E1986C /* gen_cocos2d_complement.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = gen_cocos2d_complement.sh; sourceTree = "<group>"; };
 		A031BFC215DADE5F00E1986C /* CocosBuilderReader-complement.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "CocosBuilderReader-complement.txt"; sourceTree = "<group>"; };
@@ -6692,10 +6682,6 @@
 		A031BFF215DADE5F00E1986C /* jsb_constants_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_chipmunk.js; sourceTree = "<group>"; };
 		A031BFF315DADE5F00E1986C /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
 		A031BFF415DADE5F00E1986C /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
-		A031BFF615DADE5F00E1986C /* ChipmunkDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkDebugNode.h; sourceTree = "<group>"; };
-		A031BFF715DADE5F00E1986C /* ChipmunkDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChipmunkDebugNode.m; sourceTree = "<group>"; };
-		A031BFF815DADE5F00E1986C /* ChipmunkSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChipmunkSprite.h; sourceTree = "<group>"; };
-		A031BFF915DADE5F00E1986C /* ChipmunkSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChipmunkSprite.m; sourceTree = "<group>"; };
 		A031BFFA15DADE5F00E1986C /* js_bindings_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_basic_conversions.h; sourceTree = "<group>"; };
 		A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_basic_conversions.mm; sourceTree = "<group>"; };
 		A031BFFC15DADE5F00E1986C /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
@@ -8389,10 +8375,10 @@
 			isa = PBXGroup;
 			children = (
 				A031BFAB15DADE5F00E1986C /* configs */,
+				A031BFD015DADE5F00E1986C /* src */,
 				A031BFCD15DADE5F00E1986C /* generate_complement.py */,
 				A031BFCE15DADE5F00E1986C /* generate_js_bindings.py */,
 				A031BFCF15DADE5F00E1986C /* README.md */,
-				A031BFD015DADE5F00E1986C /* src */,
 			);
 			name = jsbindings;
 			path = external/jsbindings;
@@ -8422,8 +8408,6 @@
 		A031BFB015DADE5F00E1986C /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
-				A031BFB115DADE5F00E1986C /* ChipmunkSprite-complement.txt */,
-				A031BFB215DADE5F00E1986C /* ChipmunkSprite.bridgesupport */,
 				A031BFB315DADE5F00E1986C /* cocos2d-complement.txt */,
 				A031BFB415DADE5F00E1986C /* cocos2d-ios-complement-exceptions.txt */,
 				A031BFB515DADE5F00E1986C /* cocos2d-ios-complement.txt */,
@@ -8434,8 +8418,6 @@
 				A031BFBA15DADE5F00E1986C /* cocos2d-mac.bridgesupport */,
 				A031BFBB15DADE5F00E1986C /* cocos2d.bridgesupport */,
 				A031BFBC15DADE5F00E1986C /* cocos2d_jsb.ini */,
-				A031BFBD15DADE5F00E1986C /* gen_ChipmunkSprite_bridgesupport.sh */,
-				A031BFBE15DADE5F00E1986C /* gen_ChipmunkSprite_complement.sh */,
 				A031BFBF15DADE5F00E1986C /* gen_cocos2d_bridgesupport.sh */,
 				A031BFC015DADE5F00E1986C /* gen_cocos2d_complement.sh */,
 			);
@@ -8522,10 +8504,6 @@
 		A031BFF515DADE5F00E1986C /* manual */ = {
 			isa = PBXGroup;
 			children = (
-				A031BFF615DADE5F00E1986C /* ChipmunkDebugNode.h */,
-				A031BFF715DADE5F00E1986C /* ChipmunkDebugNode.m */,
-				A031BFF815DADE5F00E1986C /* ChipmunkSprite.h */,
-				A031BFF915DADE5F00E1986C /* ChipmunkSprite.m */,
 				A031BFFA15DADE5F00E1986C /* js_bindings_basic_conversions.h */,
 				A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */,
 				A031BFFC15DADE5F00E1986C /* js_bindings_chipmunk_manual.h */,
@@ -16234,8 +16212,6 @@
 				A031C07B15DADE5F00E1986C /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
 				A031C07E15DADE5F00E1986C /* js_bindings_CocosDenshion_classes.mm in Sources */,
 				A031C08115DADE5F00E1986C /* js_bindings_CocosDenshion_functions.mm in Sources */,
-				A031C09015DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */,
-				A031C09315DADE5F00E1986C /* ChipmunkSprite.m in Sources */,
 				A031C09615DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */,
 				A031C09915DADE5F00E1986C /* js_bindings_chipmunk_manual.mm in Sources */,
 				A031C09C15DADE5F00E1986C /* js_bindings_cocos2d_manual.mm in Sources */,
@@ -16361,8 +16337,6 @@
 				A031C07D15DADE5F00E1986C /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
 				A031C08015DADE5F00E1986C /* js_bindings_CocosDenshion_classes.mm in Sources */,
 				A031C08315DADE5F00E1986C /* js_bindings_CocosDenshion_functions.mm in Sources */,
-				A031C09215DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */,
-				A031C09515DADE5F00E1986C /* ChipmunkSprite.m in Sources */,
 				A031C09815DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */,
 				A031C09B15DADE5F00E1986C /* js_bindings_chipmunk_manual.mm in Sources */,
 				A031C09E15DADE5F00E1986C /* js_bindings_cocos2d_manual.mm in Sources */,
@@ -16478,8 +16452,6 @@
 				A031C07C15DADE5F00E1986C /* js_bindings_CocosBuilderReader_classes.mm in Sources */,
 				A031C07F15DADE5F00E1986C /* js_bindings_CocosDenshion_classes.mm in Sources */,
 				A031C08215DADE5F00E1986C /* js_bindings_CocosDenshion_functions.mm in Sources */,
-				A031C09115DADE5F00E1986C /* ChipmunkDebugNode.m in Sources */,
-				A031C09415DADE5F00E1986C /* ChipmunkSprite.m in Sources */,
 				A031C09715DADE5F00E1986C /* js_bindings_basic_conversions.mm in Sources */,
 				A031C09A15DADE5F00E1986C /* js_bindings_chipmunk_manual.mm in Sources */,
 				A031C09D15DADE5F00E1986C /* js_bindings_cocos2d_manual.mm in Sources */,
@@ -17778,6 +17750,7 @@
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"COCOS2D_DEBUG=2",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
@@ -17819,6 +17792,7 @@
 					NS_BLOCK_ASSERTIONS,
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
@@ -17894,6 +17868,7 @@
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"COCOS2D_DEBUG=2",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
@@ -17935,6 +17910,7 @@
 					NS_BLOCK_ASSERTIONS,
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
@@ -17978,6 +17954,7 @@
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"COCOS2D_DEBUG=2",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
@@ -18019,6 +17996,7 @@
 					NS_BLOCK_ASSERTIONS,
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,

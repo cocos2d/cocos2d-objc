@@ -26,9 +26,6 @@
 
 #import "CCPhysicsDebugNode.h"
 
-#define CP_ALLOW_PRIVATE_ACCESS 1
-#import "chipmunk.h"
-
 #import "ccTypes.h"
 
 #include <stdlib.h>
@@ -145,7 +142,8 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 @end
 
 
-@implementation CCPhysicsDebugNode {
+@implementation CCPhysicsDebugNode
+{
 	ChipmunkSpace *_spaceObj;
 	cpSpace *_spacePtr;
 }
