@@ -271,6 +271,8 @@ var GameLayer = cc.LayerGradient.extend({
         this._state = STATE_PAUSE;
         this._level = level;
 
+        __jsc__.dumpRoot();
+        __jsc__.garbageCollect();
     },
 
     // HUD stuff
@@ -955,6 +957,9 @@ var BootLayer = cc.Layer.extend({
 
 		var cache = cc.SpriteFrameCache.getInstance();
 		cache.addSpriteFrames( "coins.plist" );
+
+        __jsc__.dumpRoot();
+        __jsc__.garbageCollect();
     },
     
     onEnter:function() {
@@ -989,6 +994,8 @@ var MenuLayer = cc.Layer.extend({
         var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
         o.runAction( a_seq );
 
+        __jsc__.dumpRoot();
+        __jsc__.garbageCollect();
     },
 
     onPlay:function( sender) {
@@ -1033,6 +1040,8 @@ var AboutLayer = cc.Layer.extend({
         menu.alignItemsVertically();
         menu.setPosition( cc._p( winSize.width - 50, 50) );
 
+        __jsc__.dumpRoot();
+        __jsc__.garbageCollect();
     },
 
     onBack:function( sender) {
@@ -1065,6 +1074,9 @@ var OptionsLayer = cc.LayerGradient.extend({
         this.addChild( menu );
         menu.alignItemsVertically();
         menu.setPosition( centerPos );
+
+        __jsc__.dumpRoot();
+        __jsc__.garbageCollect();
     },
 
     onBack:function( sender) {

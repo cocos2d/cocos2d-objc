@@ -53,7 +53,7 @@ var loadScene = function (sceneIdx)
 
 	director.replaceScene( scene );
 //    __jsc__.garbageCollect();
-}
+};
 
 var s_pathSister1 = "grossinis_sister1.png";
 var s_pathSister2 = "grossinis_sister2.png";
@@ -107,15 +107,15 @@ var BaseLayer = cc.LayerGradient.extend({
         label.setPosition( cc.p(winSize.width / 2, winSize.height - 40));
 
         var strSubtitle = this.subtitle();
-        if (strSubtitle != "") {
+        if (strSubtitle !== "") {
             var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
             this.addChild(l, 10);
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 70));
         }
 
         var strCode = this.code();
-        if( strCode !="" ) {
-            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+        if( strCode !== "" ) {
+            label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
             label.setPosition( cc.p( winSize.width/2, winSize.height-120) );
             this.addChild( label,10 );
 
@@ -146,7 +146,7 @@ var BaseLayer = cc.LayerGradient.extend({
 
 //------------------------------------------------------------------
 //
-// Tests 
+// Tests
 //
 //------------------------------------------------------------------
 var RenderTextureSave = BaseLayer.extend({
@@ -272,7 +272,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );

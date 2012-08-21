@@ -543,7 +543,7 @@ ChipmunkPage.prototype.initPhysics = function() {
 
 	// Gravity
 	cp.spaceSetGravity( this.space, cp.v(0, -100) );
-}
+};
 
 ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 	var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
@@ -554,10 +554,10 @@ ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 	cp.shapeSetFriction( shape, 0.5 );
 	cp.spaceAddShape( this.space, shape );
 
-	var sprite = cc.ChipmunkSprite.create("grossini.png");
+	var sprite = cc.PhysicsSprite.create("grossini.png");
 	sprite.setBody( body );
 	return sprite;
-}
+};
 
 ChipmunkPage.prototype.onEnter = function () {
 
@@ -574,27 +574,27 @@ ChipmunkPage.prototype.onEnter = function () {
         this.setMouseEnabled( true );
     else if( platform.substring(0,6) == 'mobile' )
         this.setTouchEnabled( true );
-}
+};
 
 ChipmunkPage.prototype.onEnterTransitionDidFinish = function () {
 	this.scheduleUpdate();
-}
+};
 
 
 ChipmunkPage.prototype.update = function( delta ) {
 	cp.spaceStep( this.space, delta );
-}
+};
 
 ChipmunkPage.prototype.onMouseDown = function( event ) {
 	this.addSprite( event.getLocation() );
-}
+};
 
 ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
 		this.addSprite( touches[i].getLocation() );
 	}
-}
+};
 
 
 //------------------------------------------------------------------
@@ -610,7 +610,7 @@ var BehindTheScenesPage = function() {
 	this.subtitle = '';
 	this.isMainTitle = true;
 
-}
+};
 goog.inherits( BehindTheScenesPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -631,7 +631,7 @@ var ParserFeaturesPage = function() {
 				'No need to modify parsed library',
 				'Easy to maintain and extend',
 				'Powerful config file' );
-}
+};
 goog.inherits( ParserFeaturesPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -655,8 +655,8 @@ var InternalsPage = function() {
 		spr.setScale( 0.1 );
 		var scaleAction = cc.ScaleTo.create( 0.7, 1);
 		spr.runAction( scaleAction );
-	}
-}
+	};
+};
 goog.inherits( InternalsPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -671,7 +671,7 @@ var DemoPage = function() {
 	this.title = 'Demo';
 	this.subtitle = '';
 	this.isMainTitle = true;
-}
+};
 goog.inherits( DemoPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -686,7 +686,7 @@ var OneMoreThingPage = function() {
 	this.title = 'One More Thing';
 	this.subtitle = '';
 	this.isMainTitle = true;
-}
+};
 goog.inherits( OneMoreThingPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -701,7 +701,7 @@ var ThanksPage = function() {
 	this.title = 'Thanks';
 	this.subtitle = '';
 	this.isMainTitle = true;
-}
+};
 goog.inherits( ThanksPage, BaseLayer );
 
 
@@ -739,7 +739,7 @@ function run()
 	director.setDisplayStats( false );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );
