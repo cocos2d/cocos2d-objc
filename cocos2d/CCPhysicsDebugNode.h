@@ -23,10 +23,16 @@
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
+#ifdef CP_ALLOW_PRIVATE_ACCESS
+#undef CP_ALLOW_PRIVATE_ACCESS
+#endif
+
+#define CP_ALLOW_PRIVATE_ACCESS 1
+#import "chipmunk.h"
+
 #import "CCDrawNode.h"
 
 @class ChipmunkSpace;
-struct cpSpace;
 
 /**
  A Node that draws the components of a physics engine.
@@ -38,14 +44,16 @@ struct cpSpace;
  @since v2.1
  */
 @interface CCPhysicsDebugNode : CCDrawNode
+{
+}
 
 /** Create a debug node for an Objective-Chipmunk space.
  */
-+ debugNodeForChipmunkSpace:(ChipmunkSpace *)space;
++ (id) debugNodeForChipmunkSpace:(ChipmunkSpace *)space;
 
 /** Create a debug node for a regular Chipmunk space.
  */
-+ debugNodeForCPSpace:(struct cpSpace *)space;
++ (id) debugNodeForCPSpace:(cpSpace *)space;
 
 @end
 

@@ -38,6 +38,8 @@ class b2Body;
 	- Box2d
  */
 @interface CCPhysicsSprite : CCSprite
+{
+}
 
 /** Keep the sprite's rotation separate from the body. */
 @property(nonatomic, assign) BOOL ignoreBodyRotation;
