@@ -91,16 +91,6 @@
 			<key>Path</key>
 			<string>GLES-Render.mm</string>
 		</dict>
-		<key>PhysicsSprite.h</key>
-		<dict>
-			<key>Path</key>
-			<string>PhysicsSprite.h</string>
-		</dict>
-		<key>PhysicsSprite.mm</key>
-		<dict>
-			<key>Path</key>
-			<string>PhysicsSprite.mm</string>
-		</dict>
 		<key>Resources/blocks.png</key>
 		<dict>
 			<key>Group</key>
@@ -110,7 +100,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d v2.0 and Box2d for iOS. It also includes CocosDenshion.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.1 and Box2d for iOS. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dBox2dIOSTemplate</string>
 	<key>Kind</key>
@@ -127,8 +117,6 @@
 		<string>IntroLayer.mm</string>
 		<string>GLES-Render.h</string>
 		<string>GLES-Render.mm</string>
-		<string>PhysicsSprite.h</string>
-		<string>PhysicsSprite.mm</string>
 		<string>Resources/blocks.png</string>
 	</array>
 	<key>Targets</key>
@@ -141,6 +129,27 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>&quot;___PACKAGENAME___/libs&quot;</string>
 			</dict>
+            <key>Configurations</key>
+            <dict>
+                <key>Debug</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_BOX2D_INTEGRATION=1</string>
+                        <string>DEBUG</string>
+                        <string>COCOS2D_DEBUG=1</string>
+                    </array>
+                </dict>
+                <key>Release</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_BOX2D_INTEGRATION=1</string>
+                        <string>NDEBUG</string>
+                        <string>NS_BLOCK_ASSERTIONS=1</string>
+                    </array>
+                </dict>
+            </dict>
 		</dict>
 	</array>
 	<key>Options</key>

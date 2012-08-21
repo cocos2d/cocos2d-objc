@@ -6,7 +6,7 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-
+#import <GameKit/GameKit.h>
 
 // When you import this file, you import all the cocos2d classes
 #import "cocos2d.h"
@@ -16,20 +16,15 @@
 
 @interface HelloWorldLayer : CCLayer
 {
-	CCTexture2D *spriteTexture_; // weak ref
+	CCTexture2D *_spriteTexture; // weak ref
+	CCPhysicsDebugNode *_debugLayer; // weak ref
 	
-	cpSpace *space_; // strong ref
+	cpSpace *_space; // strong ref
 	
-	cpShape *walls_[4];
-}
-@end
-
-
-@interface PhysicsSprite : CCSprite
-{
-	cpBody *body_;	// strong ref
+	cpShape *_walls[4];
 }
 
--(void) setPhysicsBody:(cpBody*)body;
+// returns a CCScene that contains the HelloWorldLayer as the only child
++(CCScene *) scene;
 
 @end
