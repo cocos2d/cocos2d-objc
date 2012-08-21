@@ -10,7 +10,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextSpriteTestAction = function () {
@@ -46,7 +46,7 @@ var loadScene = function (sceneIdx)
 
 	director.replaceScene( scene );
 //    __jsc__.garbageCollect();
-}
+};
 
 //------------------------------------------------------------------
 //
@@ -66,14 +66,13 @@ var BaseLayer = function() {
 	this.init();
 
 	this.title = function () {
-	    return "No title";
-	}
+		return "No title";
+	};
 
 	this.subtitle = function () {
-	    return "No Subtitle";
-	}
-
-}
+		return "No Subtitle";
+	};
+};
 goog.inherits(BaseLayer, cc.Layer );
 
 //
@@ -86,10 +85,10 @@ BaseLayer.prototype.onEnter = function() {
 	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
 	var strSubtitle = this.subtitle();
-	if (strSubtitle != "") {
-	    var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
-	    this.addChild(l, 1);
-	    l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
+	if (strSubtitle !== "") {
+		var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
+		this.addChild(l, 1);
+		l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
 	}
 
     // Menu
@@ -108,22 +107,22 @@ BaseLayer.prototype.onEnter = function() {
     item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
 
 	this.addChild(menu, 1);
-}
+};
 
 BaseLayer.prototype.restartCallback = function (sender) {
     cc.log("restart called");
     restartSpriteTestAction();
-}
+};
 
 BaseLayer.prototype.nextCallback = function (sender) {
     cc.log("next called");
     nextSpriteTestAction();
-}
+};
 
 BaseLayer.prototype.backCallback = function (sender) {
     cc.log("back called");
     backSpriteTestAction();
-}
+};
 
 
 //------------------------------------------------------------------
@@ -138,18 +137,18 @@ var ChipmunkSpriteTest = function() {
 	this.addSprite = function( pos ) {
 		var sprite =  this.createPhysicsSprite( pos );
 		this.addChild( sprite );
-	}
+	};
 
 	this.title = function() {
 		return 'Chipmunk Sprite Test';
-	}
+	};
 
 	this.subtitle = function() {
 		return 'Chipmunk + cocos2d sprites tests. Tap screen.';
-	}
+	};
 
 	this.initPhysics();
-}
+};
 goog.inherits( ChipmunkSpriteTest, BaseLayer );
 
 //
@@ -177,7 +176,7 @@ ChipmunkSpriteTest.prototype.initPhysics = function() {
 
 	// Gravity
 	cp.spaceSetGravity( this.space, cp.v(0, -100) );
-}
+};
 
 ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
 	var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
@@ -188,10 +187,10 @@ ChipmunkSpriteTest.prototype.createPhysicsSprite = function( pos ) {
 	cp.shapeSetFriction( shape, 0.5 );
 	cp.spaceAddShape( this.space, shape );
 
-	var sprite = cc.ChipmunkSprite.create("grossini.png");
+	var sprite = cc.PhysicsSprite.create("grossini.png");
 	sprite.setBody( body );
 	return sprite;
-}
+};
 
 ChipmunkSpriteTest.prototype.onEnter = function () {
 
@@ -208,22 +207,22 @@ ChipmunkSpriteTest.prototype.onEnter = function () {
     } else if( platform.substring(0,6) == 'mobile' ) {
         this.setTouchEnabled( true );
     }
-}
+};
 
 ChipmunkSpriteTest.prototype.update = function( delta ) {
 	cp.spaceStep( this.space, delta );
-}
+};
 
 ChipmunkSpriteTest.prototype.onMouseDown = function( event ) {
 	this.addSprite( event.getLocation() );
-}
+};
 
 ChipmunkSpriteTest.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
 		this.addSprite( touches[i].getLocation() );
 	}
-}
+};
 
 //------------------------------------------------------------------
 //
@@ -241,16 +240,16 @@ var ChipmunkSpriteBatchTest = function() {
 	this.addSprite = function( pos ) {
 		var sprite =  this.createPhysicsSprite( pos );
 		this.batch.addChild( sprite );
-	}
+	};
 
 	this.title = function() {
 		return 'Chipmunk SpriteBatch Test';
-	}
+	};
 
 	this.subtitle = function() {
 		return 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-	}
-}
+	};
+};
 goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 
 //------------------------------------------------------------------
@@ -266,11 +265,11 @@ var ChipmunkCollisionTest = function() {
 
 	this.title = function() {
 		return 'Chipmunk Collision Test';
-	}
+	};
 
 	this.subtitle = function() {
 		return 'Testing collision callback';
-	}
+	};
 
 	// init physics
 	this.initPhysics = function() {
@@ -292,7 +291,7 @@ var ChipmunkCollisionTest = function() {
 
 		// Gravity
 		cp.spaceSetGravity( this.space, cp.v(0, -30) );
-	}
+	};
 
 	this.createPhysicsSprite = function( pos, file, collision_type ) {
 		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
@@ -304,10 +303,10 @@ var ChipmunkCollisionTest = function() {
 		cp.shapeSetCollisionType( shape, collision_type );
 		cp.spaceAddShape( this.space, shape );
 
-		var sprite = cc.ChipmunkSprite.create(file);
+		var sprite = cc.PhysicsSprite.create(file);
 		sprite.setBody( body );
 		return sprite;
-	}
+	};
 
 	this.onEnter = function () {
 		goog.base(this, 'onEnter');
@@ -322,16 +321,16 @@ var ChipmunkCollisionTest = function() {
 		this.addChild( sprite2 );
 
 		cp.spaceAddCollisionHandler( this.space, 1, 2, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
-	}
+	};
 
 	this.onExit = function() {
 		cp.spaceRemoveCollisionHandler( this.space, 1, 2 );
         cp.spaceFree( this.space );
-	}
+	};
 
 	this.update = function( delta ) {
 		cp.spaceStep( this.space, delta );
-	}
+	};
 
 	this.collisionBegin = function ( arbiter, space ) {
 
@@ -348,23 +347,23 @@ var ChipmunkCollisionTest = function() {
 		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
 		cc.log( 'Collision Type A:' + collTypeA );
 		cc.log( 'Collision Type B:' + collTypeB );
-		return true
-	}
+		return true;
+	};
 
 	this.collisionPre = function ( arbiter, space ) {
 		cc.log('collision pre');
 		return true;
-	}
+	};
 
 	this.collisionPost = function ( arbiter, space ) {
 		cc.log('collision post');
-	}
+	};
 
 	this.collisionSeparate = function ( arbiter, space ) {
 		cc.log('collision separate');
-	}
+	};
 
-}
+};
 goog.inherits( ChipmunkCollisionTest, BaseLayer );
 
 //------------------------------------------------------------------
@@ -378,27 +377,27 @@ var ChipmunkCollisionMemoryLeakTest = function() {
 
 	this.title = function() {
 		return 'Chipmunk Memory Leak Test';
-	}
+	};
 
 	this.subtitle = function() {
 		return 'Testing possible memory leak on the collision handler. No visual feedback';
-	}
+	};
 
 	this.collisionBegin = function ( arbiter, space ) {
-		return true
-	}
+		return true;
+	};
 
 	this.collisionPre = function ( arbiter, space ) {
 		return true;
-	}
+	};
 
 	this.collisionPost = function ( arbiter, space ) {
 		cc.log('collision post');
-	}
+	};
 
 	this.collisionSeparate = function ( arbiter, space ) {
 		cc.log('collision separate');
-	}
+	};
 
     this.onEnter = function() {
         goog.base(this, 'onEnter');
@@ -407,7 +406,7 @@ var ChipmunkCollisionMemoryLeakTest = function() {
         for( var i=1 ; i < 100 ; i++ )
             cp.spaceAddCollisionHandler( this.space, i, i+1, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
 
-    }
+    };
 
 	this.onExit = function() {
 
@@ -415,8 +414,8 @@ var ChipmunkCollisionMemoryLeakTest = function() {
             cp.spaceRemoveCollisionHandler( this.space, i, i+1 );
 
         cp.spaceFree( this.space );
-	}
-}
+	};
+};
 goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 //
 // Instance 'base' methods
@@ -446,7 +445,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );
