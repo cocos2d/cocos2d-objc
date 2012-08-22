@@ -12,7 +12,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextScene = function () {
@@ -192,9 +192,7 @@ var MenuItemFontTest = BaseLayer.extend({
     // callback
     item_cb:function(sender) {
         cc.log("Item " + sender + " pressed");
-    },
-
-
+    }
 });
 
 //------------------------------------------------------------------
@@ -249,9 +247,7 @@ var MenuItemImageTest = BaseLayer.extend({
             this._menu.alignItemsVertically();
 
         this._vertically = ! this._vertically;
-
-    },
-
+    }
 });
 
 //------------------------------------------------------------------
@@ -315,9 +311,7 @@ var MenuItemSpriteTest = BaseLayer.extend({
             this._menu.alignItemsVertically();
 
         this._vertically = ! this._vertically;
-
-    },
-
+    }
 });
 
 
@@ -375,9 +369,7 @@ var MenuItemLabelTest = BaseLayer.extend({
             this._menu.alignItemsVertically();
 
         this._vertically = ! this._vertically;
-
-    },
-
+    }
 });
 
 //------------------------------------------------------------------
@@ -428,7 +420,7 @@ var MenuItemToggleTest = BaseLayer.extend({
     // callback
     item_cb:function(sender) {
         cc.log("toggle pressed");
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -447,7 +439,7 @@ var MyMenuItemFont = cc.MenuItemFont.extend({
 
     callback:function(sender) {
         cc.log("Button clicked");
-    },
+    }
 });
 
 var MenuItemSubclass = BaseLayer.extend({
@@ -473,7 +465,7 @@ var MenuItemSubclass = BaseLayer.extend({
     },
     subtitle:function () {
         return "2 items should appear";
-    },
+    }
 });
 
 

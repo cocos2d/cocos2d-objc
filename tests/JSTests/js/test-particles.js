@@ -12,7 +12,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextScene = function () {
@@ -750,79 +750,79 @@ var DemoFileParticle = BaseLayer.extend({
 var DemoFileBoilingFoam = DemoFileParticle.extend({
     ctor:function () {
         this._super("BoilingFoam");
-    },
+    }
 });
 
 var DemoFileBurstPipe = DemoFileParticle.extend({
     ctor:function () {
         this._super("BurstPipe");
-    },
+    }
 });
 
 var DemoFileComet = DemoFileParticle.extend({
     ctor:function () {
         this._super("Comet");
-    },
+    }
 });
 
 var DemoFileDebian = DemoFileParticle.extend({
     ctor:function () {
         this._super("debian");
-    },
+    }
 });
 
 var DemoFileExplodingRing = DemoFileParticle.extend({
     ctor:function () {
         this._super("ExplodingRing");
-    },
+    }
 });
 
 var DemoFileLavaFlow = DemoFileParticle.extend({
     ctor:function () {
         this._super("LavaFlow");
-    },
+    }
 });
 
 var DemoFileSpinningPeas = DemoFileParticle.extend({
     ctor:function () {
         this._super("SpinningPeas");
-    },
+    }
 });
 
 var DemoFileSpookyPeas = DemoFileParticle.extend({
     ctor:function () {
         this._super("SpookyPeas");
-    },
+    }
 });
 
 var DemoFileUpsidedown= DemoFileParticle.extend({
     ctor:function () {
         this._super("Upsidedown");
-    },
+    }
 });
 
 var DemoFileUpsidedown= DemoFileParticle.extend({
     ctor:function () {
         this._super("Upsidedown");
-    },
+    }
 });
 
 var DemoFileFlower = DemoFileParticle.extend({
     ctor:function () {
         this._super("Flower");
-    },
+    }
 });
 
 var DemoFileSpiral= DemoFileParticle.extend({
     ctor:function () {
         this._super("Spiral");
-    },
+    }
 });
 
 var DemoFileGalaxy= DemoFileParticle.extend({
     ctor:function () {
         this._super("Galaxy");
-    },
+    }
 });
 
 var RadiusMode1 = BaseLayer.extend({

@@ -12,7 +12,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextScene = function () {
@@ -253,7 +253,7 @@ var SpriteEaseInOut = BaseLayer.extend({
 
     code:function () {
         return "var actionInOut = cc.EaseInOut.create( action, rate );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -292,7 +292,7 @@ var SpriteEaseExponential = BaseLayer.extend({
     code:function () {
         return "var actionIn = cc.EaseExponentialIn.create( action );\n" + 
                 "var actionOut = cc.EaseExponentialOut.create( action );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -324,7 +324,7 @@ var SpriteEaseExponentialInOut = BaseLayer.extend({
     },
     code:function () {
         return "var actionIn = cc.EaseExponentialInOut.create( action );";
-    },
+    }
 });
 
 //------------------------------------------------------------------

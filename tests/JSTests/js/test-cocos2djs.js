@@ -10,7 +10,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 var withTransition = false;
 
@@ -52,7 +52,7 @@ var loadScene = function (sceneIdx)
 				cc.TransitionFade, cc.TransitionCrossFade,
 				cc.TransitionFlipX, cc.TransitionFlipY,
 				cc.TransitionProgressRadialCCW, cc.TransitionProgressRadialCW, cc.TransitionProgressVertical, cc.TransitionProgressHorizontal,
-				cc.TransitionShrinkGrow,
+				cc.TransitionShrinkGrow
 				];
 	var idx = Math.floor(  Math.random() * transitions.length );
 	var transition = transitions[ idx ];
