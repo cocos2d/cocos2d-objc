@@ -57,14 +57,14 @@ var loadScene = function (sceneIdx)
 	var idx = Math.floor(  Math.random() * transitions.length );
 	var transition = transitions[ idx ];
 
-	if( withTransition == true )
+	if( withTransition === true )
 		director.replaceScene( transition.create( 0.9, scene ) );
 	else
 		director.replaceScene( scene );
 
 	withTransition = false;
 //    __jsc__.garbageCollect();
-}
+};
 
 //------------------------------------------------------------------
 //
@@ -87,7 +87,7 @@ var BaseLayer = function() {
 	this.subtitle = "No Subtitle";
 	this.isMainTitle = false;
 
-}
+};
 goog.inherits(BaseLayer, cc.LayerGradient );
 
 //
@@ -108,13 +108,13 @@ BaseLayer.prototype.onEnter = function() {
 
 	var isMain = this.isMainTitle;
 
-	if( isMain == true )
+	if( isMain === true )
 		this.label.setPosition( centerPos );
 	else
 		this.label.setPosition( cc.p(winSize.width / 2, winSize.height*11/12) );
 
 	var subStr = this.subtitle;
-	if (subStr != "") {
+	if (subStr !== "") {
 		tl = this.subtitle.length;
 		var subfontSize = (winSize.width / tl) * 1.3;
 		if( subfontSize > fontSize *0.6 ) {
@@ -151,13 +151,13 @@ BaseLayer.prototype.onEnter = function() {
     item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
 
 	this.addChild(menu, 80);
-}
+};
 
 BaseLayer.prototype.createBulletList = function () {
 	var str = "";
 	for(var i=0; i<arguments.length; i++)
 	{
-		if(i != 0)
+		if(i !== 0)
 			str += "\n";
 		str += '- ' + arguments[i];
 	}
@@ -208,7 +208,7 @@ var IntroPage = function() {
 	// Not working setZOrder() ??
 //	sprite.setZOrder( -200 );
 
-	this.title = 'cocos2d + JS'
+	this.title = 'cocos2d + JS';
 	this.subtitle = 'Javascript bindings for cocos2d';
 	this.isMainTitle = true;
 
@@ -226,8 +226,8 @@ var IntroPage = function() {
 
 		var seq2 = cc.Sequence.create( delay2, fade_in2, fade_out2 );
 		this.background2.runAction( cc.RepeatForever.create( seq2 ) );
-	}
-}
+	};
+};
 goog.inherits( IntroPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -248,7 +248,7 @@ var AboutPage = function() {
 				'Works on iOS and Mac',
 				'Faster development',
 				'Great prototyping tool');
-}
+};
 goog.inherits( AboutPage, BaseLayer );
 
 
@@ -262,7 +262,7 @@ var SpritesPage = function() {
 	goog.base(this);
 
 	this.title = 'Sprites';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.05;
 
@@ -282,7 +282,7 @@ var SpritesPage = function() {
 	this.addChild( sprite1 );
 	this.addChild( sprite2 );
 	this.addChild( sprite3 );
-}
+};
 goog.inherits( SpritesPage, BaseLayer );
 
 
@@ -298,7 +298,7 @@ var LabelsPage = function() {
 	goog.base(this);
 
 	this.title = 'Labels';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.03;
 
@@ -319,7 +319,7 @@ var LabelsPage = function() {
 //	labelAtlas.setPosition( cc.p( winSize.width*3/5, winSize.height/2) );
 //	this.addChild( labelAtlas );
 
-}
+};
 goog.inherits( LabelsPage, BaseLayer );
 
 
@@ -333,7 +333,7 @@ var ActionsPage = function() {
 	goog.base(this);
 
 	this.title = 'Actions';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.05;
 
@@ -348,8 +348,8 @@ var ActionsPage = function() {
 	this.onEnterTransitionDidFinish = function() {
 		var action = cc.RotateBy.create(8, 360);
 		this.sprite.runAction( action );
-	}
-}
+	};
+};
 goog.inherits( ActionsPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -362,7 +362,7 @@ var ActionsComplexPage = function() {
 	goog.base(this);
 
 	this.title = 'Complex Actions';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.05;
 
@@ -385,8 +385,8 @@ var ActionsComplexPage = function() {
 		var seq = cc.Sequence.create( rot, scale, rot_back, scale_back );
 
 		this.sprite.runAction( cc.RepeatForever.create( seq ) );
-	}
-}
+	};
+};
 goog.inherits( ActionsComplexPage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -399,7 +399,7 @@ var ActionsEasePage = function() {
 	goog.base(this);
 
 	this.title = 'Ease Actions';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.05;
 
@@ -438,8 +438,8 @@ var ActionsEasePage = function() {
 		this.sprite1.runAction( cc.RepeatForever.create( seq1 ) );
 		this.sprite2.runAction( cc.RepeatForever.create( seq2 ) );
 		this.sprite3.runAction( cc.RepeatForever.create( seq3 ) );
-	}
-}
+	};
+};
 goog.inherits( ActionsEasePage, BaseLayer );
 
 //------------------------------------------------------------------
@@ -452,7 +452,7 @@ var ParticlesPage = function() {
 	goog.base(this);
 
 	this.title = 'Particles';
-	this.subtitle = ''
+	this.subtitle = '';
 
 	var fontSize = winSize.height * 0.05;
 
@@ -472,24 +472,24 @@ var ParticlesPage = function() {
 
 	this.onMouseDown = function( event ) {
 		this.particle.setPosition( event.getLocation() );
-	}
+	};
 
 	this.onMouseDragged = function( event ) {
 		return this.onMouseDown( event );
-	}
+	};
 
 	this.onTouchesEnded = function( touches, event ) {
 		var l = touches.length;
 		for( var i=0; i < l; i++) {
 			this.particle.setPosition( touches[i].getLocation() );
 		}
-	}
+	};
 
 	this.onTouchesMoved = function( touches, event ) {
 		return this.onTouchesEnded( touches, event );
-	}
+	};
 
-}
+};
 goog.inherits( ParticlesPage, BaseLayer );
 
 
@@ -509,13 +509,13 @@ var ChipmunkPage = function() {
 	this.addSprite = function( pos ) {
 		var sprite =  this.createPhysicsSprite( pos );
 		this.batch.addChild( sprite );
-	}
+	};
 
 	this.title = 'Physics Integration';
 	this.subtitle = 'Integration with Chipmunk Physics Engine';
 
 	this.initPhysics();
-}
+};
 goog.inherits( ChipmunkPage, BaseLayer );
 
 //
