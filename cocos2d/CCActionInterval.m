@@ -249,6 +249,11 @@
 		}
 	}
 	
+	// Last action found and it is done.
+	if( found == last_ && [actions_[found] isDone] ) {
+		return;
+	}
+
 	// New action. Start it.
 	if( found != last_ )
 		[actions_[found] startWithTarget:target_];
