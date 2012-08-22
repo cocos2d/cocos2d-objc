@@ -12,7 +12,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextScene = function () {
@@ -254,7 +254,7 @@ var ActionMove = BaseLayer.extend({
     code:function () {
         return "a = cc.MoveBy.create( time, cc.p(x,y) );\n" +
                "a = cc.MoveTo.create( time, cc.p(x,y) );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -285,7 +285,7 @@ var ActionScale = BaseLayer.extend({
     code:function () {
         return "a = cc.ScaleBy.create( time, scale );\n" +
                "a = cc.ScaleTo.create( time, scaleX, scaleY );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -318,7 +318,7 @@ var ActionSkew = BaseLayer.extend({
     code:function () {
         return "a = cc.SkewBy.create( time, skew );\n" +
                "a = cc.SkewTo.create( time, skewX, skewY );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -368,7 +368,7 @@ var ActionSkewRotateScale = BaseLayer.extend({
     },
     title:function () {
         return "Skew + Rotate + Scale";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -398,7 +398,7 @@ var ActionRotate = BaseLayer.extend({
     code:function () {
         return "a = cc.RotateBy.create( time, degrees );\n" +
                 "a = cc.RotateTo.create( time, degrees );";
-    },
+    }
 });
 
 
@@ -428,7 +428,7 @@ var ActionJump = BaseLayer.extend({
     code:function () {
         return "a = cc.JumpBy.create( time, point, height, #_of_jumps );\n" +
                "a = cc.JumpTo.create( time, point, height, #_of_jumps );";
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -506,7 +506,7 @@ var ActionBlink = BaseLayer.extend({
     },
     code:function () {
         return "a = cc.Blink.create( time, #_of_blinks );\n";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -536,7 +536,7 @@ var ActionFade = BaseLayer.extend({
         return "" +
             "a = cc.FadeIn.create( time );\n" +
             "a = cc.FadeOut.create( time );\n"
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -563,7 +563,7 @@ var ActionTint = BaseLayer.extend({
         return "" +
             "a = cc.TintBy.create( time, red, green, blue );\n" +
             "a = cc.TintTo.create( time, red, green, blue );\n"
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -645,7 +645,7 @@ var ActionSequence = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.Sequence.create( a1, a2, a3,..., aN);\n";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -744,7 +744,7 @@ var ActionCallFunc = BaseLayer.extend({
         return "" +
             "a = cc.CallFunc.create( this, this.callback );\n" +
             "a = cc.CallFunc.create( this, this.callback, optional_arg );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -777,7 +777,7 @@ var ActionCallFuncND = BaseLayer.extend({
         return "" +
             "a = cc.CallFunc.create( this, this.callback );\n" +
             "a = cc.CallFunc.create( this, this.callback, optional_arg );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -802,7 +802,7 @@ var ActionSpawn = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.Spawn.create( a1, a2, ..., aN );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -831,7 +831,7 @@ var ActionRepeatForever = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.RepeatForever.create( action_to_repeat );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -859,7 +859,7 @@ var ActionRotateToRepeat = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.Repeat.create( action_to_repeat, #_of_times );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -905,7 +905,7 @@ var ActionReverse = BaseLayer.extend({
     code:function () {
         return "" +
             "a = action.reverse();";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -928,7 +928,7 @@ var ActionDelayTime = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.DelayTime.create( time );";
-    },
+    }
 });
 //------------------------------------------------------------------
 //
@@ -1142,8 +1142,7 @@ var ActionCardinalSpline = BaseLayer.extend({
         return "" +
             " a = cc.CadinalSplineBy.create( time, array_of_points, tension );\n" +
             " a = cc.CadinalSplineTo.create( time, array_of_points, tension );\n";
-    
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -1212,7 +1211,7 @@ var ActionCatmullRom = BaseLayer.extend({
         return "" +
             " a = cc.CatmullRomBy.create( time, array_of_points );\n" +
             " a = cc.CatmullRomTo.create( time, array_of_points );\n";
-    },
+    }
 });
 
 var ActionTargeted = BaseLayer.extend({
@@ -1241,7 +1240,7 @@ var ActionTargeted = BaseLayer.extend({
     },
     code:function () {
         return "a = cc.TargetedAction.create( target, action );";
-    },
+    }
 });
 
 var PauseResumeActions = BaseLayer.extend({

@@ -179,8 +179,7 @@ CocosDenshionTest = cc.LayerGradient.extend({
         var idx = sender.getZOrder() - 10000;
         // create the test scene and run it
         var scene = DenshionTests[idx].playFunc();
-    },
-
+    }
 });
 
 var soundId = null;

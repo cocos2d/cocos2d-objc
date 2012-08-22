@@ -12,7 +12,7 @@ director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-scenes = []
+scenes = [];
 currentScene = 0;
 
 nextScene = function () {
@@ -184,7 +184,7 @@ MainTest = BaseLayer.extend({
 
     title:function () {
         return "Javascript tests";
-    },
+    }
 
 });
 

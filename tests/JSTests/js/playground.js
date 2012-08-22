@@ -13,7 +13,7 @@ _winSize = director.getWinSize();
 winSize = {width:_winSize[0], height:_winSize[1]};
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
-var scenes = []
+var scenes = [];
 var currentScene = 0;
 
 var nextScene = function () {

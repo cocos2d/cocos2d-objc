@@ -173,7 +173,7 @@ var BaseLayer = cc.LayerGradient.extend({
     getEffect:function(duration) {
         // override me
         return cc.MoveBy.create(2, cc._p(10,10) );
-    },
+    }
 });
 
 //------------------------------------------------------------------
@@ -190,7 +190,7 @@ var Shaky3DTest = BaseLayer.extend({
     },
     getEffect:function(duration) {
         return cc.Shaky3D.create(5, false, cc.g(15,10), duration );
-    },
+    }
 });
 
 var Waves3DTest = BaseLayer.extend({
@@ -202,7 +202,7 @@ var Waves3DTest = BaseLayer.extend({
     },
     getEffect:function(duration) {
         return cc.Waves3D.create(5, 40, cc.g(15,10), duration );
-    },
+    }
 });
 
 var FlipXTest = BaseLayer.extend({
@@ -217,7 +217,7 @@ var FlipXTest = BaseLayer.extend({
         var delay = cc.DelayTime.create(2);
         var r = a.reverse();
         return cc.Sequence.create( a, delay, r );
-    },
+    }
 });
 
 var FlipYTest = BaseLayer.extend({
@@ -232,7 +232,7 @@ var FlipYTest = BaseLayer.extend({
         var delay = cc.DelayTime.create(2);
         var r = a.reverse();
         return cc.Sequence.create( a, delay, r );
-    },
+    }
 });
 
 //
