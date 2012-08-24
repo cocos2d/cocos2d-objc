@@ -2232,7 +2232,6 @@
 		A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
 		A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */; };
-		A0AA8551159D3AFF00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8550159D3AFF00E77CC9 /* Presentation */; };
 		A0AA8555159D789E00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5612DF8A8C002442F5 /* futura-48.fnt */; };
 		A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5712DF8A8C002442F5 /* futura-48.png */; };
 		A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7971225EDD000DE0DA2 /* Official-cocos2d-Icon-Angry.png */; };
@@ -2911,6 +2910,8 @@
 		A0F8420B151D662D00EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */; };
 		A0F8420C151D662D00EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F84208151D662D00EBBFCB /* font-issue1343.fnt */; };
 		A0F8420D151D662D00EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F84209151D662D00EBBFCB /* font-issue1343.png */; };
+		A0F8A4F415E52F5B00019707 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0F8A4F315E52F5B00019707 /* Presentation */; };
+		A0F8A4F615E52FD100019707 /* test-gdk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0F8A4F515E52FD100019707 /* test-gdk.js */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -6977,7 +6978,6 @@
 		A0A1C1DE15CAE2130058D96F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/WatermelonWithMe.xib"; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
-		A0AA8550159D3AFF00E77CC9 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = Resources/Presentation; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		A0ADF04414584BD3009A71F1 /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7117,6 +7117,8 @@
 		A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
 		A0F84208151D662D00EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
 		A0F84209151D662D00EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
+		A0F8A4F315E52F5B00019707 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = ../gdk_presentation/Presentation; sourceTree = "<group>"; };
+		A0F8A4F515E52FD100019707 /* test-gdk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "test-gdk.js"; path = "../gdk_presentation/test-gdk.js"; sourceTree = "<group>"; };
 		A0FBA8A614A51386002DF395 /* libchipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libchipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FBA8AF14A5138F002DF395 /* libbox2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libbox2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FF338215E2A4CB008707BD /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
@@ -8160,6 +8162,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0F8A4F715E52FD700019707 /* GDK Presentation */,
 				A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */,
 				A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
@@ -8174,7 +8177,6 @@
 				E076EADD1225EE2B00DE0DA2 /* Particles */,
 				E076EADE1225EE2B00DE0DA2 /* TileMaps */,
 				E076EADF1225EE2B00DE0DA2 /* zwoptex */,
-				A0AA8550159D3AFF00E77CC9 /* Presentation */,
 				E076E78E1225EDD000DE0DA2 /* cocos2d-artwork */,
 				E076E7A11225EDD000DE0DA2 /* Fonts */,
 				E076E7B71225EDD000DE0DA2 /* Images */,
@@ -9142,6 +9144,15 @@
 			);
 			name = Shaders;
 			path = Resources/Shaders;
+			sourceTree = "<group>";
+		};
+		A0F8A4F715E52FD700019707 /* GDK Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A0F8A4F315E52F5B00019707 /* Presentation */,
+				A0F8A4F515E52FD100019707 /* test-gdk.js */,
+			);
+			name = "GDK Presentation";
 			sourceTree = "<group>";
 		};
 		A0FF338A15E2A4D4008707BD /* Physics Nodes */ = {
@@ -12552,6 +12563,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F8A4F615E52FD100019707 /* test-gdk.js in Resources */,
 				A09C8CC31566FB4100ADFDA9 /* A Damn Mess.ttf in Resources */,
 				A09C8CC41566FB4100ADFDA9 /* Abberancy.ttf in Resources */,
 				A09C8CC51566FB4100ADFDA9 /* Abduction.ttf in Resources */,
@@ -12651,7 +12663,6 @@
 				A0BCCBAF157837EB00CCE291 /* konqa32.png in Resources */,
 				A0BCCBB0157837EF00CCE291 /* konqa32.fnt in Resources */,
 				4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */,
-				A0AA8551159D3AFF00E77CC9 /* Presentation in Resources */,
 				A0AA8555159D789E00E77CC9 /* futura-48.fnt in Resources */,
 				A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */,
 				A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
@@ -12682,6 +12693,7 @@
 				A031C08A15DADE5F00E1986C /* jsb_constants_cocos2d.js in Resources */,
 				A031C08D15DADE5F00E1986C /* jsb_constants_gl.js in Resources */,
 				A031B96B15D9CFF200E1986C /* js in Resources */,
+				A0F8A4F415E52F5B00019707 /* Presentation in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

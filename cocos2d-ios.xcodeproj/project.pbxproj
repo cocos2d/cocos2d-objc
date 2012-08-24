@@ -1850,7 +1850,6 @@
 		A0A1C28315CAEA1F0058D96F /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C25015CAE9C40058D96F /* Default-Landscape.png */; };
 		A0A7A53C1514F27D00C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */; };
 		A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */; };
-		A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0AA8552159D3F3A00E77CC9 /* Presentation */; };
 		A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E082C9121292DAD50056AC41 /* futura-48.fnt */; };
 		A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E082C9131292DAD50056AC41 /* futura-48.png */; };
 		A0AA855A159E1A9500E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F489C410458B6300755CFB /* Official-cocos2d-Icon-Angry.png */; };
@@ -2938,6 +2937,8 @@
 		A0F841F6151D5E4700EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */; };
 		A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */; };
 		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
+		A0F8A4F215E52F2A00019707 /* Presentation in Resources */ = {isa = PBXBuildFile; fileRef = A0F8A4F115E52F2A00019707 /* Presentation */; };
+		A0F8A4F915E5304000019707 /* test-gdk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0F8A4F815E5304000019707 /* test-gdk.js */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -5565,7 +5566,6 @@
 		A0A1C25015CAE9C40058D96F /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Resources/Default-Landscape.png"; sourceTree = "<group>"; };
 		A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
-		A0AA8552159D3F3A00E77CC9 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = Resources/Presentation; sourceTree = "<group>"; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
 		A0B0376E13EA1FDB0073E59A /* b2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b2-ipad.png"; sourceTree = "<group>"; };
@@ -5808,6 +5808,8 @@
 		A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
 		A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
 		A0F841F4151D5E4600EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
+		A0F8A4F115E52F2A00019707 /* Presentation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Presentation; path = ../gdk_presentation/Presentation; sourceTree = "<group>"; };
+		A0F8A4F815E5304000019707 /* test-gdk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "test-gdk.js"; path = "../gdk_presentation/test-gdk.js"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -6938,12 +6940,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				A0F8A4FA15E5304300019707 /* GDK Presentation */,
 				E0C5588E11FE4CF100B9E4CB /* zwoptex */,
 				50CBA4A711CBD7FB007B009D /* bugs */,
 				50B77511119AF58100F567F4 /* Particles */,
 				50CA8BF810B6AE340072E0D3 /* TileMaps */,
 				502C8C9810A701D300D137BA /* animations */,
-				A0AA8552159D3F3A00E77CC9 /* Presentation */,
 				A0EC4A081403236C00EC482A /* Shaders */,
 				50F489BB10458B6300755CFB /* cocos2d-artwork */,
 				505460E91061413300AB7C52 /* Fonts */,
@@ -9081,6 +9083,15 @@
 			);
 			name = Misc;
 			path = Resources/Misc;
+			sourceTree = "<group>";
+		};
+		A0F8A4FA15E5304300019707 /* GDK Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A0F8A4F115E52F2A00019707 /* Presentation */,
+				A0F8A4F815E5304000019707 /* test-gdk.js */,
+			);
+			name = "GDK Presentation";
 			sourceTree = "<group>";
 		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
@@ -12882,6 +12893,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0F8A4F915E5304000019707 /* test-gdk.js in Resources */,
 				A031C0E415DAE0B500E1986C /* jsb_constants.js in Resources */,
 				A031C0E515DAE0B500E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0E615DAE0B600E1986C /* jsb_constants_cocos2d.js in Resources */,
@@ -12951,7 +12963,6 @@
 				A00495E0159B8B2800B5D4DF /* bitmapFontTest5.fnt in Resources */,
 				A00495E1159B8B2800B5D4DF /* bitmapFontTest5.png in Resources */,
 				A021C074159BAC74008450B6 /* libjs_static.a.desc in Resources */,
-				A0AA8553159D3F3A00E77CC9 /* Presentation in Resources */,
 				A0AA8557159D78CD00E77CC9 /* futura-48.fnt in Resources */,
 				A0AA8558159D78CD00E77CC9 /* futura-48.png in Resources */,
 				A0AA855A159E1A9500E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
@@ -13005,6 +13016,7 @@
 				A0CFE6DF15BF7A4A00264229 /* jsproto.tbl in Resources */,
 				A0A1C26715CAEA0A0058D96F /* Default-Landscape.png in Resources */,
 				A031B87215D9C84900E1986C /* js in Resources */,
+				A0F8A4F215E52F2A00019707 /* Presentation in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

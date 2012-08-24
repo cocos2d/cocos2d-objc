@@ -152,20 +152,24 @@ MainTest = BaseLayer.extend({
         var item13 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("js/test-cocosdenshion.js"); } );
         var item14 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("js/test-cocos2djs.js"); } );
         var item15 = cc.MenuItemFont.create("Performance test", this, function() { require("js/test-performance.js"); } );
+		var item16 = cc.MenuItemFont.create("GDK talk", this, function() { require("test-gdk.js"); } );
 
 
-        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
 
         this.addChild( this._menu );
 
-        var platform = __getPlatform();
-        if( platform.substring(0,7) == 'desktop' )
+        var t = cc.config.deviceType;
+        if( t == 'browser' )  {
             this.setMouseEnabled( true );
-        else if( platform.substring(0,6) == 'mobile' )
-            this.setTouchEnabled( true );
+        } else if( t == 'desktop' ) {
+            this.setMouseEnabled(true);
+        } else if( t == 'mobile' ) {
+            this.setTouchEnabled(true);
+        }
     },
 
     onTouchesMoved:function (touches, event) {
