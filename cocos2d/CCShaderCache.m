@@ -199,6 +199,23 @@ static CCShaderCache *_sharedShaderCache;
 	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
+	
+	//
+	// Position, Legth(TexCoords, Color (used by Draw Node basically )
+	//
+	p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionColorLengthTexture_vert
+								   fragmentShaderByteArray:ccPositionColorLengthTexture_frag];	
+	
+	[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+	[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+	[p addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
+	
+	[p link];
+	[p updateUniforms];
+	
+	[programs_ setObject:p forKey:kCCShader_PositionLengthTexureColor];
+	[p release];
+	CHECK_GL_ERROR_DEBUG();
 }
 
 -(CCGLProgram *) programForKey:(NSString*)key

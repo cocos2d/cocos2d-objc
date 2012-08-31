@@ -24,6 +24,17 @@
  */
 
 
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT 
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
+
 #ifndef __CC_DRAWING_PRIMITIVES_H
 #define __CC_DRAWING_PRIMITIVES_H
 

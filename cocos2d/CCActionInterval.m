@@ -119,22 +119,32 @@
 @implementation CCSequence
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
-	va_list params;
-	va_start(params,action1);
-	
+	va_list args;
+	va_start(args, action1);
+
+	id ret = [self actions:action1 vaList:args];
+
+	va_end(args);
+
+	return  ret;
+}
+
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
+{
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(params,CCFiniteTimeAction*);
+		now = va_arg(args,CCFiniteTimeAction*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
-	va_end(params);
+
 	return prev;
 }
+
 
 +(id) actionWithArray: (NSArray*) actions
 {
@@ -371,22 +381,31 @@
 @implementation CCSpawn
 +(id) actions: (CCFiniteTimeAction*) action1, ...
 {
-	va_list params;
-	va_start(params,action1);
+	va_list args;
+	va_start(args, action1);
 
+	id ret = [self actions:action1 vaList:args];
+
+	va_end(args);
+	return ret;
+}
+
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
+{
 	CCFiniteTimeAction *now;
 	CCFiniteTimeAction *prev = action1;
-
+	
 	while( action1 ) {
-		now = va_arg(params,CCFiniteTimeAction*);
+		now = va_arg(args,CCFiniteTimeAction*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
 			break;
 	}
-	va_end(params);
+
 	return prev;
 }
+
 
 +(id) actionWithArray: (NSArray*) actions
 {
@@ -485,14 +504,28 @@
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
 	if( (self=[super initWithDuration: t]) )
-		dstAngle_ = a;
+		dstAngleX_ = dstAngleY_ = a;
 
+	return self;
+}
+
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+{
+	return [[[self alloc] initWithDuration:t angleX:aX angleY:aY ] autorelease];
+}
+
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+{
+	if( (self=[super initWithDuration: t]) ){
+		dstAngleX_ = aX;
+    dstAngleY_ = aY;
+  }
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angle:dstAngle_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] angleX:dstAngleX_ angleY:dstAngleY_];
 	return copy;
 }
 
@@ -500,21 +533,32 @@
 {
 	[super startWithTarget:aTarget];
 
-	startAngle_ = [target_ rotation];
-	if (startAngle_ > 0)
-		startAngle_ = fmodf(startAngle_, 360.0f);
-	else
-		startAngle_ = fmodf(startAngle_, -360.0f);
+  //Calculate X
+	startAngleX_ = [target_ rotationX];
 
-	diffAngle_ =dstAngle_ - startAngle_;
-	if (diffAngle_ > 180)
-		diffAngle_ -= 360;
-	if (diffAngle_ < -180)
-		diffAngle_ += 360;
+	diffAngleX_ = dstAngleX_ - startAngleX_;
+	if (diffAngleX_ > 180)
+		diffAngleX_ -= 360;
+	if (diffAngleX_ < -180)
+		diffAngleX_ += 360;
+  
+  //Calculate Y
+	startAngleY_ = [target_ rotationY];
+	if (startAngleY_ > 0)
+		startAngleY_ = fmodf(startAngleY_, 360.0f);
+	else
+		startAngleY_ = fmodf(startAngleY_, -360.0f);
+  
+	diffAngleY_ = dstAngleY_ - startAngleY_;
+	if (diffAngleY_ > 180)
+		diffAngleY_ -= 360;
+	if (diffAngleY_ < -180)
+		diffAngleY_ += 360;
 }
 -(void) update: (ccTime) t
 {
-	[target_ setRotation: startAngle_ + diffAngle_ * t];
+	[target_ setRotationX: startAngleX_ + diffAngleX_ * t];
+	[target_ setRotationY: startAngleY_ + diffAngleY_ * t];
 }
 @end
 
@@ -522,7 +566,7 @@
 //
 // RotateBy
 //
-#pragma mark - CCRotateBy
+#pragma mark - RotateBy
 
 @implementation CCRotateBy
 +(id) actionWithDuration: (ccTime) t angle:(float) a
@@ -533,32 +577,48 @@
 -(id) initWithDuration: (ccTime) t angle:(float) a
 {
 	if( (self=[super initWithDuration: t]) )
-		angle_ = a;
+		angleX_ = angleY_ = a;
 
+	return self;
+}
+
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+{
+	return [[[self alloc] initWithDuration:t angleX:aX angleY:aY ] autorelease];
+}
+
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+{
+	if( (self=[super initWithDuration: t]) ){
+		angleX_ = aX;
+    angleY_ = aY;
+  }
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] angle: angle_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] angleX: angleX_ angleY:angleY_];
 	return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	startAngle_ = [target_ rotation];
+	startAngleX_ = [target_ rotationX];
+	startAngleY_ = [target_ rotationY];
 }
 
 -(void) update: (ccTime) t
 {
 	// XXX: shall I add % 360
-	[target_ setRotation: (startAngle_ +angle_ * t )];
+	[target_ setRotationX: (startAngleX_ + angleX_ * t )];
+	[target_ setRotationY: (startAngleY_ + angleY_ * t )];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:duration_ angle:-angle_];
+	return [[self class] actionWithDuration:duration_ angleX:-angleX_ angleY:-angleY_];
 }
 
 @end

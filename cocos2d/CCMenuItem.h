@@ -335,6 +335,9 @@
 /** creates a menu item with a normal and selected image*/
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2;
 
+/** creates a menu item with a normal, selected and disabled image */
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3;
+
 /** creates a menu item with a normal and selected image with target/selector */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 
@@ -387,6 +390,7 @@
 	NSMutableArray* subItems_;
 	GLubyte		opacity_;
 	ccColor3B	color_;
+    CCMenuItem* currentItem_;
 }
 
 /** conforms with CCRGBAProtocol protocol */
@@ -403,14 +407,15 @@
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
++(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list)args;
+
+/** creates a menu item from a list of items. */
++(id) itemWithItems:(NSArray*)arrayOfItems;
 
 /** creates a menu item from a list of items and executes the given block when the item is selected.
  The block will be "copied".
  */
 +(id) itemWithItems:(NSArray*)arrayOfItems block:(void(^)(id sender))block;
-
-/** initializes a menu item from a list of items with a target selector */
--(id) initWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list) args;
 
 /** initializes a menu item from a list of items with a block.
  The block will be "copied".

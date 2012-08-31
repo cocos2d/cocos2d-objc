@@ -42,6 +42,14 @@
 {}
 @end
 
+@interface ActionRotationalSkew : ActionDemo
+{}
+@end
+
+@interface ActionRotationalSkewVSStandardSkew : ActionDemo
+{}
+@end
+
 @interface ActionSkewRotateScale : ActionDemo
 {}
 @end

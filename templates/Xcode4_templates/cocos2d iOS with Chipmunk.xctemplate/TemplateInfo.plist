@@ -67,16 +67,6 @@
 			<key>Path</key>
 			<string>AppDelegate.m</string>
 		</dict>
-		<key>PhysicsSprite.m</key>
-		<dict>
-			<key>Path</key>
-			<string>PhysicsSprite.m</string>
-		</dict>
-		<key>PhysicsSprite.h</key>
-		<dict>
-			<key>Path</key>
-			<string>PhysicsSprite.h</string>
-		</dict>
 		<key>Resources/grossini_dance_atlas.png</key>
 		<dict>
 			<key>Group</key>
@@ -86,7 +76,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d v2.0 and Chipmunk for iOS. It also includes CocosDenshion.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v2.1 and Chipmunk for iOS. It also includes CocosDenshion.</string>
 	<key>Identifier</key>
 	<string>com.cocos2d-v2.cocos2dChipmunkIOSTemplate</string>
 	<key>Kind</key>
@@ -101,8 +91,6 @@
 		<string>HelloWorldLayer.m</string>
 		<string>IntroLayer.h</string>
 		<string>IntroLayer.m</string>
-		<string>PhysicsSprite.h</string>
-		<string>PhysicsSprite.m</string>
 		<string>Resources/grossini_dance_atlas.png</string>
 	</array>
 	<key>Targets</key>
@@ -115,6 +103,27 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot;</string>
 			</dict>
+            <key>Configurations</key>
+            <dict>
+                <key>Debug</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
+                        <string>DEBUG</string>
+                        <string>COCOS2D_DEBUG=1</string>
+                    </array>
+                </dict>
+                <key>Release</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
+                        <string>NDEBUG</string>
+                        <string>NS_BLOCK_ASSERTIONS=1</string>
+                    </array>
+                </dict>
+            </dict>
 		</dict>
 	</array>
 	<key>Options</key>

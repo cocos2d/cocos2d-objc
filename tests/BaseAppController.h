@@ -5,7 +5,6 @@
 //  Created by Ricardo Quesada on 12/17/11.
 //  Copyright (c) 2011 Sapus Media. All rights reserved.
 //
-
 #import <Foundation/Foundation.h>
 
 #import "cocos2d.h"
@@ -31,6 +30,11 @@
 @end
 
 #elif defined(__CC_PLATFORM_MAC)
+
+#import <Cocoa/Cocoa.h>
+
+@class SMLTextView;
+@class MGSFragaria;
 
 @interface BaseAppController : NSObject <NSApplicationDelegate>
 {

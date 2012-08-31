@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:cocos2d-ios-jsconsole-client.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:cocos2d-mac.xcodeproj">
    </FileRef>
    <FileRef

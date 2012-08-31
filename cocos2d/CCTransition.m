@@ -216,6 +216,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // RotoZoom
 //
 @implementation CCTransitionRotoZoom
+-(id) init {
+	return [super init];
+}
+
 -(void) onEnter
 {
 	[super onEnter];
@@ -246,6 +250,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // JumpZoom
 //
 @implementation CCTransitionJumpZoom
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -465,6 +472,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ShrinkGrow Transition
 //
 @implementation CCTransitionShrinkGrow
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -495,6 +505,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipX Transition
 //
 @implementation CCTransitionFlipX
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -539,6 +552,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipY Transition
 //
 @implementation CCTransitionFlipY
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -582,6 +598,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipAngular Transition
 //
 @implementation CCTransitionFlipAngular
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -624,6 +643,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipX Transition
 //
 @implementation CCTransitionZoomFlipX
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -673,6 +695,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipY Transition
 //
 @implementation CCTransitionZoomFlipY
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -723,6 +748,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipAngular Transition
 //
 @implementation CCTransitionZoomFlipAngular
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -829,7 +857,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // Cross Fade Transition
 //
 @implementation CCTransitionCrossFade
-
+-(id) init {
+	return [super init];
+}
 -(void) draw
 {
 	// override draw since both scenes (textures) are rendered in 1 scene
@@ -913,7 +943,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // TurnOffTilesTransition
 //
 @implementation CCTransitionTurnOffTiles
-
+-(id) init {
+	return [super init];
+}
 // override addScenes, and change the order
 -(void) sceneOrder
 {

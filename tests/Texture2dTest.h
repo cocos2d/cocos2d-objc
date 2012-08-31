@@ -95,6 +95,58 @@
 {}
 @end
 
+@interface TexturePVR2BPPv3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRII2BPPv3 : TextureDemo
+{}
+@end
+
+@interface TexturePVR4BPPv3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRII4BPPv3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA8888v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRBGRA8888v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA4444v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGBA5551v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGB565v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRRGB888v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRA8v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRI8v3 : TextureDemo
+{}
+@end
+
+@interface TexturePVRAI88v3 : TextureDemo
+{}
+@end
+
 @interface TexturePVRBadEncoding : TextureDemo
 {}
 @end

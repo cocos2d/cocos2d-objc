@@ -76,6 +76,8 @@ Example:
 }
 /** helper contructor to create an array of sequenceable actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper contructor to create an array of sequenceable actions */
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list) args;
 /** helper contructor to create an array of sequenceable actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the action */
@@ -116,6 +118,8 @@ Example:
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
+/** helper constructor to create an array of spawned actions */
++(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args;
 /** helper contructor to create an array of spawned actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the Spawn action */
@@ -130,27 +134,41 @@ Example:
 */
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
-	float dstAngle_;
-	float startAngle_;
-	float diffAngle_;
+	float dstAngleX_;
+	float startAngleX_;
+	float diffAngleX_;
+  
+	float dstAngleY_;
+	float startAngleY_;
+	float diffAngleY_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
+
+/** creates the action with seperate rotation angles */
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /** Rotates a CCNode object clockwise a number of degrees by modiying its rotation attribute.
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
-	float angle_;
-	float startAngle_;
+	float angleX_;
+	float startAngleX_;
+	float angleY_;
+	float startAngleY_;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
+
+/** creates the action with seperate rotation angles */
++(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying its position attribute.
@@ -196,7 +214,7 @@ Example:
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
-/** initializes the action */
+/** initializes the action with duration, skew X and skew Y */
 -(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
@@ -206,11 +224,13 @@ Example:
 @interface CCSkewBy : CCSkewTo <NSCopying>
 {
 }
+/** initializes the action with duration, skew X and skew Y */
+-(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
 */
- @interface CCJumpBy : CCActionInterval <NSCopying>
+@interface CCJumpBy : CCActionInterval <NSCopying>
 {
 	CGPoint startPosition_;
 	CGPoint delta_;
@@ -225,9 +245,11 @@ Example:
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
 */
- @interface CCJumpTo : CCJumpBy <NSCopying>
+@interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** bezier configuration structure
@@ -262,6 +284,8 @@ typedef struct _ccBezierConfig {
 @interface CCBezierTo : CCBezierBy
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** Scales a CCNode object to a zoom factor by modifying its scale attribute.
@@ -293,6 +317,8 @@ typedef struct _ccBezierConfig {
 @interface CCScaleBy : CCScaleTo <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) startWithTarget:(CCNode *)aTarget;
 @end
 
 /** Blinks a CCNode object by modifying its visible attribute
@@ -313,6 +339,8 @@ typedef struct _ccBezierConfig {
 @interface CCFadeIn : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -321,6 +349,8 @@ typedef struct _ccBezierConfig {
 @interface CCFadeOut : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
@@ -371,6 +401,8 @@ typedef struct _ccBezierConfig {
 @interface CCDelayTime : CCActionInterval <NSCopying>
 {
 }
+// XXX: Added to prevent bug on BridgeSupport
+-(void) update:(ccTime)dt;
 @end
 
 /** Executes an action in reverse order, from time=duration to time=0

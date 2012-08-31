@@ -90,7 +90,7 @@ enum {
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
- -# The node will be rotated (rotation)
+ -# The node will be rotated (rotation, rotationX, rotationY)
  -# The node will be skewed (skewX, skewY)
  -# The node will be scaled (scale, scaleX, scaleY)
  -# The grid will capture the screen
@@ -103,7 +103,7 @@ enum {
 @interface CCNode : NSObject
 {
 	// rotation angle
-	float rotation_;
+	float rotationX_, rotationY_;
 
 	// scaling factors
 	float scaleX_, scaleY_;
@@ -207,6 +207,11 @@ enum {
 @property(nonatomic,readwrite,assign) float skewY;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationX;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationY;
+
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
@@ -454,7 +459,7 @@ enum {
 
 /** schedules the "update" method. It will use the order number 0. This method will be called every frame.
  Scheduled methods with a lower order value will be called before the ones that have a higher order value.
- Only one "udpate" method could be scheduled per node.
+ Only one "update" method could be scheduled per node.
 
  @since v0.99.3
  */
@@ -462,7 +467,7 @@ enum {
 
 /** schedules the "update" selector with a custom priority. This selector will be called every frame.
  Scheduled selectors with a lower priority will be called before the ones that have a higher value.
- Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
+ Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
 
  @since v0.99.3
  */
@@ -473,7 +478,6 @@ enum {
  @since v0.99.3
  */
 -(void) unscheduleUpdate;
-
 
 /** schedules a selector.
  The scheduled selector will be ticked every frame
@@ -515,6 +519,9 @@ enum {
  */
 -(void) pauseSchedulerAndActions;
 
+/* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+ */
+-(void) update:(ccTime)delta;
 
 // transformation methods
 
@@ -528,7 +535,7 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
-/** Retrusn the world affine transform matrix. The matrix is in Pixels.
+/** Returns the world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;

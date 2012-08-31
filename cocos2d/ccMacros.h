@@ -191,7 +191,7 @@ do {																							\
 	ccGLEnable( glServerState_ );																\
     NSAssert1(shaderProgram_, @"No shader program set for node: %@", self);						\
 	[shaderProgram_ use];																		\
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];									\
+	[shaderProgram_ setUniformsForBuiltins];									\
 } while(0)
 
 
