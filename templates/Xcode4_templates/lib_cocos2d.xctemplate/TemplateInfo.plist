@@ -915,6 +915,50 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCParticleSystemQuad.m</string>
 		</dict>
+		<key>libs/cocos2d/CCPhysicsDebugNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsDebugNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsSprite.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsSprite.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.mm</string>
+		</dict>
 		<key>libs/cocos2d/CCProgressTimer.h</key>
 		<dict>
 			<key>Group</key>
@@ -2336,6 +2380,10 @@
 		<string>libs/cocos2d/CCParticleSystem.m</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.h</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.m</string>
+		<string>libs/cocos2d/CCPhysicsDebugNode.h</string>
+		<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
+		<string>libs/cocos2d/CCPhysicsSprite.h</string>
+		<string>libs/cocos2d/CCPhysicsSprite.mm</string>
 		<string>libs/cocos2d/CCProgressTimer.h</string>
 		<string>libs/cocos2d/CCProgressTimer.m</string>
 		<string>libs/cocos2d/CCProtocols.h</string>

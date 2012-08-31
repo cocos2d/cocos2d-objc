@@ -30,6 +30,27 @@
 				<key>USER_HEADER_SEARCH_PATHS</key>
 				<string>&quot;___PACKAGENAME___/libs&quot;</string>
 			</dict>
+            <key>Configurations</key>
+            <dict>
+                <key>Debug</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_BOX2D_INTEGRATION=1</string>
+                        <string>DEBUG</string>
+                        <string>COCOS2D_DEBUG=1</string>
+                    </array>
+                </dict>
+                <key>Release</key>
+                <dict>
+                    <key>GCC_PREPROCESSOR_DEFINITIONS</key>
+                    <array>
+                        <string>CC_ENABLE_BOX2D_INTEGRATION=1</string>
+                        <string>NDEBUG</string>
+                        <string>NS_BLOCK_ASSERTIONS=1</string>
+                    </array>
+                </dict>
+            </dict>
 		</dict>
 	</array>
 	<key>Nodes</key>
