@@ -1,1 +1,0 @@
-{'ChipmunkSprite': {'protocols': [], 'subclass': 'CCSprite', 'properties': {'body': ['nonatomic, assign', 'cpBodyNoneNone*'], 'ignoreBodyRotation': ['nonatomic, assign', 'BOOLNoneNoneNone']}}, 'ChipmunkDebugNode': {'protocols': [], 'subclass': 'CCNode'}}

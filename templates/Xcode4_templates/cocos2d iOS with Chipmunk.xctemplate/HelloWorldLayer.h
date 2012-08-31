@@ -6,7 +6,6 @@
 //  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
-
 #import <GameKit/GameKit.h>
 
 // When you import this file, you import all the cocos2d classes
@@ -17,11 +16,12 @@
 
 @interface HelloWorldLayer : CCLayer <GKAchievementViewControllerDelegate, GKLeaderboardViewControllerDelegate>
 {
-	CCTexture2D *spriteTexture_; // weak ref
+	CCTexture2D *_spriteTexture; // weak ref
+	CCPhysicsDebugNode *_debugLayer; // weak ref
 	
-	cpSpace *space_; // strong ref
+	cpSpace *_space; // strong ref
 	
-	cpShape *walls_[4];
+	cpShape *_walls[4];
 }
 
 // returns a CCScene that contains the HelloWorldLayer as the only child
