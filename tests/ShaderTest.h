@@ -76,3 +76,9 @@
 }
 @end
 
+@interface ShaderFail : ShaderTest
+{
+}
+@end
+
+

@@ -206,36 +206,43 @@ typedef void (*GLLogFunction) (GLuint program,
 
 #pragma mark -
 
-- (BOOL)link
+-(BOOL) link
 {
+    NSAssert(program_ != 0, @"Cannot link invalid program");
+	
+    GLint status = GL_TRUE;
     glLinkProgram(program_);
+	
+    if (vertShader_)
+        glDeleteShader(vertShader_);
 
+    if (fragShader_)
+        glDeleteShader(fragShader_);
+
+    vertShader_ = fragShader_ = 0;
+	
 #if DEBUG
-	GLint status;
-	glValidateProgram(program_);
-
-	glGetProgramiv(program_, GL_LINK_STATUS, &status);
-	NSAssert(status == GL_TRUE, @"cocos2d: ERROR: Failed to link program: %i", program_);
+    glGetProgramiv(program_, GL_LINK_STATUS, &status);
+    NSString* log = self.programLog;
+	
+    if (status == GL_FALSE) {
+        NSLog(@"cocos2d: ERROR: Failed to link program: %i - %@", program_, log);
+        ccGLDeleteProgram( program_ );
+        program_ = 0;
+    }
 #endif
-
-	if (vertShader_)
-		glDeleteShader(vertShader_);
-	if (fragShader_)
-		glDeleteShader(fragShader_);
-
-	vertShader_ = fragShader_ = 0;
-
-	return YES;
+	
+    return (status == GL_TRUE);
 }
 
-- (void)use
+-(void) use
 {
 	ccGLUseProgram(program_);
 }
 
 #pragma mark -
 
-- (NSString *)logForOpenGLObject:(GLuint)object
+-(NSString *) logForOpenGLObject:(GLuint)object
 					infoCallback:(GLInfoFunction)infoFunc
 						 logFunc:(GLLogFunction)logFunc
 {
