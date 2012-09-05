@@ -15,13 +15,14 @@ version 2.1-alpha XX-Ago-2012
 . [NEW] Physics nodes: PhysicsSprite and PhysicsDebugNode are part of cocos2d
 . [NEW] Tests: Tests for RotationalSkew feature
 . [NEW] Texture: Supports PVR v3 file format
+. [FIX] Actions: Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 . [FIX] Director: Fixed flicker again.
 		Autorotation works on iOS6.
 	nExitTransitionDidFinish when the director is ended and other "corner" cases.
 . [FIX] MenuItemToggle: Don't remove tag of added item.
 . [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
-			Don't assert if character is not found. Just continue with logging the warning.
+			Don't assert if character is not found. Just continue with logging the warning (issue #1404)
 . [FIX] LabelTTF: loads custom fonts correctly on Mac
 . [FIX] ProgressTimer: reverseDirection properly releases vertex if needed.
 
