@@ -60,6 +60,7 @@ static NSString *transitions[] = {
 	@"Issue1288",
 	@"Issue1288_2",
 	@"Issue1327",
+	@"Issue1398",
 };
 
 Class nextAction()
@@ -1669,6 +1670,8 @@ return @"Skew Comparison";
 }
 @end
 
+#pragma mark - Issue1327
+
 @implementation Issue1327
 -(void) onEnter
 {
@@ -1701,6 +1704,62 @@ return @"Skew Comparison";
 -(NSString*) subtitle
 {
 	return @"See console: You should see: 0, 45, 90, 135, 180";
+}
+@end
+
+#pragma mark - Issue1398
+
+@implementation Issue1398
+
+-(void) incrementInteger {
+    testInteger++;
+    NSLog(@"incremented to %d", testInteger);
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+
+    testInteger = 0;
+    NSLog(@"testInt = %d", testInteger);
+    [self runAction:[CCSequence actions:
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"1");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"2");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"3");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"4");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"5");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"6");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"7");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"8");}],
+                     nil]];
+
+}
+-(NSString *) title
+{
+	return @"Issue 1398";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console: You should see an 8";
 }
 @end
 
