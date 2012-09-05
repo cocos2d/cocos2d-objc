@@ -18,7 +18,7 @@ version 2.1-alpha XX-Ago-2012
 . [FIX] Actions: Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 . [FIX] Director: Fixed flicker again.
 		Autorotation works on iOS6.
-	nExitTransitionDidFinish when the director is ended and other "corner" cases.
+		onExitTransitionDidFinish when the director is ended and other "corner" cases.
 . [FIX] MenuItemToggle: Don't remove tag of added item.
 . [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.

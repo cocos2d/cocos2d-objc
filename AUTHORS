@@ -24,6 +24,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
+	GLProgram: Better error reporting on link
+
+* Ian Oliver (http://www.trivialtechnology.com)
+	GLProgram: Better error reporting on link
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
