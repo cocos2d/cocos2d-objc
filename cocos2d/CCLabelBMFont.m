@@ -104,14 +104,14 @@ void FNTConfigRemoveCache( void )
 		kerningDictionary_ = NULL;
 		fontDefDictionary_ = NULL;
     
-    NSMutableString *validCharsString	= [self parseConfigFile:fntFile];
+		NSMutableString *validCharsString = [self parseConfigFile:fntFile];
 		  
 		if( ! validCharsString ) {
 			[self release];
 			return nil;
 		}
     
-		characterSet_				= [[NSCharacterSet characterSetWithCharactersInString:validCharsString] retain];
+		characterSet_ = [[NSCharacterSet characterSetWithCharactersInString:validCharsString] retain];
 	}
 	return self;
 }
@@ -119,7 +119,7 @@ void FNTConfigRemoveCache( void )
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-  [characterSet_ release];
+	[characterSet_ release];
 	[self purgeFontDefDictionary];
 	[self purgeKerningDictionary];
 	[atlasName_ release];
@@ -709,7 +709,7 @@ void FNTConfigRemoveCache( void )
     
 	NSUInteger quantityOfLines = 1;
   
-  NSCharacterSet *charSet	= configuration_.characterSet;
+	NSCharacterSet *charSet	= configuration_.characterSet;
     
 	NSUInteger stringLen = [string_ length];
 	if( ! stringLen )
@@ -735,13 +735,12 @@ void FNTConfigRemoveCache( void )
 			continue;
 		}
     
-    if(![charSet characterIsMember:c]){
+		if(![charSet characterIsMember:c]){
 			CCLOGWARN(@"CCLabelBMFont: Attempted to use character not defined in this bitmap: %C", c);
 			continue;
 		}
         
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
-        
 		
 		tCCFontDefHashElement *element = NULL;
 		

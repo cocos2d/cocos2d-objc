@@ -414,29 +414,29 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert(runningScene_ != nil, @"A running Scene is needed");
 	NSUInteger c = [scenesStack_ count];
 	
-    if (c == 1) {
-        [scenesStack_ removeLastObject];
-        [self end];
-    } else {
-        while (c > 1) {
-          CCScene *current = [scenesStack_ lastObject];
-          if( [current isRunning] ){
-            [current onExitTransitionDidStart];
-            [current onExit];
-          }
-          [current cleanup];
+	if (c == 1) {
+		[scenesStack_ removeLastObject];
+		[self end];
+	} else {
+		while (c > 1) {
+			CCScene *current = [scenesStack_ lastObject];
+			if( [current isRunning] ){
+				[current onExitTransitionDidStart];
+				[current onExit];
+			}
+			[current cleanup];
 
-          [scenesStack_ removeLastObject];
-          c--;
-        }
+			[scenesStack_ removeLastObject];
+			c--;
+		}
 		nextScene_ = [scenesStack_ lastObject];
 		sendCleanupToScene_ = NO;
-    }
+	}
 }
 
 -(void) end
 {
-  [runningScene_ onExitTransitionDidStart];
+	[runningScene_ onExitTransitionDidStart];
 	[runningScene_ onExit];
 	[runningScene_ cleanup];
 	[runningScene_ release];
@@ -491,7 +491,7 @@ static CCDirector *_sharedDirector = nil;
 
 	// If it is not a transition, call onExit/cleanup
 	if( ! newIsTransition ) {
-    [runningScene_ onExitTransitionDidStart];
+		[runningScene_ onExitTransitionDidStart];
 		[runningScene_ onExit];
 
 		// issue #709. the root node (scene) should receive the cleanup message too
