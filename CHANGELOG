@@ -17,6 +17,7 @@ version 2.1-alpha XX-Ago-2012
 . [NEW] Texture: Supports PVR v3 file format
 . [FIX] Director: Fixed flicker again.
 		Autorotation works on iOS6.
+	nExitTransitionDidFinish when the director is ended and other "corner" cases.
 . [FIX] MenuItemToggle: Don't remove tag of added item.
 . [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
 . [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
