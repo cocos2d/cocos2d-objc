@@ -6,8 +6,6 @@
 	<false/>
 	<key>currentResolution</key>
 	<integer>1</integer>
-	<key>currentSequenceId</key>
-	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -34,11 +32,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -159,12 +152,6 @@
 						<false/>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<integer>32</integer>
-							<integer>32</integer>
-							<integer>32</integer>
-						</array>
 						<key>name</key>
 						<string>color</string>
 						<key>type</key>
@@ -177,8 +164,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<integer>128</integer>
 						<key>name</key>
 						<string>opacity</string>
 						<key>type</key>
@@ -213,11 +198,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>11.458333015441895</real>
-							<real>37.5</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -360,11 +340,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>33.541667938232422</real>
-							<real>37.5</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -507,11 +482,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>74</real>
-							<real>37.760417938232422</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -547,11 +517,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -659,11 +624,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>84</real>
-							<real>37.760417938232422</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -802,11 +762,6 @@
 		<key>properties</key>
 		<array>
 			<dict>
-				<key>baseValue</key>
-				<array>
-					<real>0.0</real>
-					<real>84.375</real>
-				</array>
 				<key>name</key>
 				<string>position</string>
 				<key>type</key>
@@ -919,29 +874,6 @@
 			<real>2</real>
 			<key>width</key>
 			<integer>1024</integer>
-		</dict>
-	</array>
-	<key>sequences</key>
-	<array>
-		<dict>
-			<key>autoPlay</key>
-			<true/>
-			<key>chainedSequenceId</key>
-			<integer>-1</integer>
-			<key>length</key>
-			<real>10</real>
-			<key>name</key>
-			<string>Default Timeline</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>0.0</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>128</real>
-			<key>sequenceId</key>
-			<integer>0</integer>
 		</dict>
 	</array>
 </dict>

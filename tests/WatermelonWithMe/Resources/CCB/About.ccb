@@ -6,8 +6,6 @@
 	<false/>
 	<key>currentResolution</key>
 	<integer>1</integer>
-	<key>currentSequenceId</key>
-	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -238,11 +236,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>86.848960876464844</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -339,12 +332,6 @@
 						<integer>255</integer>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<integer>129</integer>
-							<integer>255</integer>
-							<integer>58</integer>
-						</array>
 						<key>name</key>
 						<string>color</string>
 						<key>type</key>
@@ -391,11 +378,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>77.604164123535156</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -431,11 +413,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>0.69999998807907104</real>
-							<real>0.69999998807907104</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -543,11 +520,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>60.546875</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -583,11 +555,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>0.60000002384185791</real>
-							<real>0.60000002384185791</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -649,12 +616,6 @@
 						<integer>255</integer>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<integer>255</integer>
-							<integer>159</integer>
-							<integer>69</integer>
-						</array>
 						<key>name</key>
 						<string>color</string>
 						<key>type</key>
@@ -701,11 +662,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>54.557292938232422</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -741,11 +697,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>0.60000002384185791</real>
-							<real>0.60000002384185791</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -807,12 +758,6 @@
 						<integer>255</integer>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<integer>142</integer>
-							<integer>255</integer>
-							<integer>172</integer>
-						</array>
 						<key>name</key>
 						<string>color</string>
 						<key>type</key>
@@ -859,11 +804,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50.48828125</real>
-							<real>48.307292938232422</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -899,11 +839,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>0.60000002384185791</real>
-							<real>0.60000002384185791</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -965,12 +900,6 @@
 						<integer>255</integer>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<integer>45</integer>
-							<integer>238</integer>
-							<integer>255</integer>
-						</array>
 						<key>name</key>
 						<string>color</string>
 						<key>type</key>
@@ -1165,29 +1094,6 @@
 			<real>2</real>
 			<key>width</key>
 			<integer>1024</integer>
-		</dict>
-	</array>
-	<key>sequences</key>
-	<array>
-		<dict>
-			<key>autoPlay</key>
-			<true/>
-			<key>chainedSequenceId</key>
-			<integer>-1</integer>
-			<key>length</key>
-			<real>10</real>
-			<key>name</key>
-			<string>Default Timeline</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>0.0</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>128</real>
-			<key>sequenceId</key>
-			<integer>0</integer>
 		</dict>
 	</array>
 </dict>
