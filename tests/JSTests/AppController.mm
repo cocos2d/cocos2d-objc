@@ -11,9 +11,6 @@
 #import "js_bindings_core.h"
 #import "js_bindings_basic_conversions.h"
 
-// dlopen
-#include <dlfcn.h>
-
 // SpiderMonkey
 #include "jsapi.h"  
 

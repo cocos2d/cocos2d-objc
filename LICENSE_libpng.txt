@@ -1,3 +1,5 @@
+http://www.libpng.org/pub/png/
+
 This copy of the libpng notices is provided for your convenience.  In case of
 any discrepancy between this copy and the notices in the file png.h that is
 included in the libpng distribution, the latter shall prevail.
