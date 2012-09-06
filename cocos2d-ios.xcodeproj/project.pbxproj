@@ -1426,18 +1426,8 @@
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
 		A021C073159BAC74008450B6 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A021C009159BAC73008450B6 /* libjs_static.a */; };
 		A021C074159BAC74008450B6 /* libjs_static.a.desc in Resources */ = {isa = PBXBuildFile; fileRef = A021C00A159BAC73008450B6 /* libjs_static.a.desc */; };
-		A02900FB15B5FB6900D64F82 /* CCBActionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900EF15B5FB6900D64F82 /* CCBActionManager.h */; };
-		A02900FC15B5FB6900D64F82 /* CCBActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900F015B5FB6900D64F82 /* CCBActionManager.m */; };
-		A02900FD15B5FB6900D64F82 /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900F115B5FB6900D64F82 /* CCBKeyframe.h */; };
-		A02900FE15B5FB6900D64F82 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900F215B5FB6900D64F82 /* CCBKeyframe.m */; };
 		A02900FF15B5FB6900D64F82 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900F315B5FB6900D64F82 /* CCBReader.h */; };
 		A029010015B5FB6900D64F82 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900F415B5FB6900D64F82 /* CCBReader.m */; };
-		A029010115B5FB6900D64F82 /* CCBSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900F515B5FB6900D64F82 /* CCBSequence.h */; };
-		A029010215B5FB6900D64F82 /* CCBSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900F615B5FB6900D64F82 /* CCBSequence.m */; };
-		A029010315B5FB6900D64F82 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900F715B5FB6900D64F82 /* CCBSequenceProperty.h */; };
-		A029010415B5FB6900D64F82 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900F815B5FB6900D64F82 /* CCBSequenceProperty.m */; };
-		A029010515B5FB6900D64F82 /* CCNode+CCBRelativePositioning.h in Headers */ = {isa = PBXBuildFile; fileRef = A02900F915B5FB6900D64F82 /* CCNode+CCBRelativePositioning.h */; };
-		A029010615B5FB6900D64F82 /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = A02900FA15B5FB6900D64F82 /* CCNode+CCBRelativePositioning.m */; };
 		A031B72115D9BD0800E1986C /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFC1153D9CF00D87F08 /* png.h */; };
 		A031B72215D9BD0800E1986C /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFF1153D9CF00D87F08 /* pngconf.h */; };
 		A031B76F15D9BD7E00E1986C /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
@@ -5224,18 +5214,8 @@
 		A021C009159BAC73008450B6 /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A021C00A159BAC73008450B6 /* libjs_static.a.desc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = libjs_static.a.desc; sourceTree = "<group>"; };
 		A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		A02900EF15B5FB6900D64F82 /* CCBActionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBActionManager.h; sourceTree = "<group>"; };
-		A02900F015B5FB6900D64F82 /* CCBActionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBActionManager.m; sourceTree = "<group>"; };
-		A02900F115B5FB6900D64F82 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
-		A02900F215B5FB6900D64F82 /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
 		A02900F315B5FB6900D64F82 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
 		A02900F415B5FB6900D64F82 /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
-		A02900F515B5FB6900D64F82 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
-		A02900F615B5FB6900D64F82 /* CCBSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequence.m; sourceTree = "<group>"; };
-		A02900F715B5FB6900D64F82 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		A02900F815B5FB6900D64F82 /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
-		A02900F915B5FB6900D64F82 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
-		A02900FA15B5FB6900D64F82 /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
 		A031B73915D9BD0800E1986C /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B78415D9C42500E1986C /* car_smoke.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = car_smoke.plist; sourceTree = "<group>"; };
 		A031B78615D9C42500E1986C /* Abadi40-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Abadi40-hd.fnt"; sourceTree = "<group>"; };
@@ -8213,18 +8193,8 @@
 		A02900EE15B5FB6900D64F82 /* CocosBuilderReader */ = {
 			isa = PBXGroup;
 			children = (
-				A02900EF15B5FB6900D64F82 /* CCBActionManager.h */,
-				A02900F015B5FB6900D64F82 /* CCBActionManager.m */,
-				A02900F115B5FB6900D64F82 /* CCBKeyframe.h */,
-				A02900F215B5FB6900D64F82 /* CCBKeyframe.m */,
 				A02900F315B5FB6900D64F82 /* CCBReader.h */,
 				A02900F415B5FB6900D64F82 /* CCBReader.m */,
-				A02900F515B5FB6900D64F82 /* CCBSequence.h */,
-				A02900F615B5FB6900D64F82 /* CCBSequence.m */,
-				A02900F715B5FB6900D64F82 /* CCBSequenceProperty.h */,
-				A02900F815B5FB6900D64F82 /* CCBSequenceProperty.m */,
-				A02900F915B5FB6900D64F82 /* CCNode+CCBRelativePositioning.h */,
-				A02900FA15B5FB6900D64F82 /* CCNode+CCBRelativePositioning.m */,
 			);
 			name = CocosBuilderReader;
 			path = external/CocosBuilderReader;
@@ -9469,12 +9439,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A02900FB15B5FB6900D64F82 /* CCBActionManager.h in Headers */,
-				A02900FD15B5FB6900D64F82 /* CCBKeyframe.h in Headers */,
 				A02900FF15B5FB6900D64F82 /* CCBReader.h in Headers */,
-				A029010115B5FB6900D64F82 /* CCBSequence.h in Headers */,
-				A029010315B5FB6900D64F82 /* CCBSequenceProperty.h in Headers */,
-				A029010515B5FB6900D64F82 /* CCNode+CCBRelativePositioning.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14444,12 +14409,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A02900FC15B5FB6900D64F82 /* CCBActionManager.m in Sources */,
-				A02900FE15B5FB6900D64F82 /* CCBKeyframe.m in Sources */,
 				A029010015B5FB6900D64F82 /* CCBReader.m in Sources */,
-				A029010215B5FB6900D64F82 /* CCBSequence.m in Sources */,
-				A029010415B5FB6900D64F82 /* CCBSequenceProperty.m in Sources */,
-				A029010615B5FB6900D64F82 /* CCNode+CCBRelativePositioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

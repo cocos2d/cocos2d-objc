@@ -6,8 +6,6 @@
 	<false/>
 	<key>currentResolution</key>
 	<integer>1</integer>
-	<key>currentSequenceId</key>
-	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
@@ -238,11 +236,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>-1</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -278,11 +271,6 @@
 						</array>
 					</dict>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>1</real>
-							<real>1</real>
-						</array>
 						<key>name</key>
 						<string>scale</string>
 						<key>type</key>
@@ -557,11 +545,6 @@
 				<key>properties</key>
 				<array>
 					<dict>
-						<key>baseValue</key>
-						<array>
-							<real>50</real>
-							<real>82</real>
-						</array>
 						<key>name</key>
 						<string>position</string>
 						<key>type</key>
@@ -709,11 +692,6 @@
 						<key>properties</key>
 						<array>
 							<dict>
-								<key>baseValue</key>
-								<array>
-									<real>0.0</real>
-									<real>-7.5520834922790527</real>
-								</array>
 								<key>name</key>
 								<string>position</string>
 								<key>type</key>
@@ -861,11 +839,6 @@
 						<key>properties</key>
 						<array>
 							<dict>
-								<key>baseValue</key>
-								<array>
-									<real>0.0</real>
-									<real>-15.494791984558105</real>
-								</array>
 								<key>name</key>
 								<string>position</string>
 								<key>type</key>
@@ -1013,11 +986,6 @@
 						<key>properties</key>
 						<array>
 							<dict>
-								<key>baseValue</key>
-								<array>
-									<real>0.0</real>
-									<real>0.2604166567325592</real>
-								</array>
 								<key>name</key>
 								<string>position</string>
 								<key>type</key>
@@ -1444,29 +1412,6 @@
 			<real>2</real>
 			<key>width</key>
 			<integer>1024</integer>
-		</dict>
-	</array>
-	<key>sequences</key>
-	<array>
-		<dict>
-			<key>autoPlay</key>
-			<true/>
-			<key>chainedSequenceId</key>
-			<integer>-1</integer>
-			<key>length</key>
-			<real>10</real>
-			<key>name</key>
-			<string>Default Timeline</string>
-			<key>offset</key>
-			<real>0.0</real>
-			<key>position</key>
-			<real>0.0</real>
-			<key>resolution</key>
-			<real>30</real>
-			<key>scale</key>
-			<real>128</real>
-			<key>sequenceId</key>
-			<integer>0</integer>
 		</dict>
 	</array>
 </dict>
