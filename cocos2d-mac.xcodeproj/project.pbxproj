@@ -6873,6 +6873,10 @@
 		A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0644A5815B60A59004AB807 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
 		A0644A5915B60A59004AB807 /* CCBReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBReader.m; sourceTree = "<group>"; };
+		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
+		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
+		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
+		A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_SpiderMonkey.txt; sourceTree = "<group>"; };
 		A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
 		A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba4444.pvr.gz; sourceTree = "<group>"; };
@@ -8120,6 +8124,10 @@
 				E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_CocosDenshion.txt */,
 				E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */,
 				A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */,
+				A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */,
+				A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */,
+				A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */,
+				A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */,
 				E076E6281225EC7400DE0DA2 /* cocos2d */,
 				4AD3B8A9159A54CD002E68D1 /* CocosDenshion */,
 				E076E4531225C53300DE0DA2 /* Tests */,
