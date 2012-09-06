@@ -1,43 +1,9 @@
 /* -*- Mode: C++; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=4 sw=4 et tw=99:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla SpiderMonkey JavaScript 1.9 code, released
- * May 28, 2008.
- *
- * The Initial Developer of the Original Code is
- *   Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2009
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Andreas Gal <gal@mozilla.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either of the GNU General Public License Version 2 or later (the "GPL"),
- * or the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #ifndef jsproxy_h___
 #define jsproxy_h___
@@ -48,11 +14,11 @@
 namespace js {
 
 /* Base class for all C++ proxy handlers. */
-class JS_FRIEND_API(ProxyHandler) {
+class JS_FRIEND_API(BaseProxyHandler) {
     void *mFamily;
   public:
-    explicit ProxyHandler(void *family);
-    virtual ~ProxyHandler();
+    explicit BaseProxyHandler(void *family);
+    virtual ~BaseProxyHandler();
 
     /* ES5 Harmony fundamental proxy traps. */
     virtual bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id, bool set,
@@ -64,7 +30,6 @@ class JS_FRIEND_API(ProxyHandler) {
     virtual bool getOwnPropertyNames(JSContext *cx, JSObject *proxy, AutoIdVector &props) = 0;
     virtual bool delete_(JSContext *cx, JSObject *proxy, jsid id, bool *bp) = 0;
     virtual bool enumerate(JSContext *cx, JSObject *proxy, AutoIdVector &props) = 0;
-    virtual bool fix(JSContext *cx, JSObject *proxy, Value *vp) = 0;
 
     /* ES5 Harmony derived proxy traps. */
     virtual bool has(JSContext *cx, JSObject *proxy, jsid id, bool *bp);
@@ -88,7 +53,6 @@ class JS_FRIEND_API(ProxyHandler) {
     virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint, Value *vp);
     virtual bool iteratorNext(JSContext *cx, JSObject *proxy, Value *vp);
     virtual void finalize(JSFreeOp *fop, JSObject *proxy);
-    virtual void trace(JSTracer *trc, JSObject *proxy);
     virtual bool getElementIfPresent(JSContext *cx, JSObject *obj, JSObject *receiver,
                                      uint32_t index, Value *vp, bool *present);
 
@@ -99,6 +63,70 @@ class JS_FRIEND_API(ProxyHandler) {
     inline void *family() {
         return mFamily;
     }
+};
+
+class JS_PUBLIC_API(IndirectProxyHandler) : public BaseProxyHandler {
+  public:
+    explicit IndirectProxyHandler(void *family);
+
+    /* ES5 Harmony fundamental proxy traps. */
+    virtual bool getPropertyDescriptor(JSContext *cx, JSObject *proxy, jsid id,
+                                       bool set,
+                                       PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyDescriptor(JSContext *cx, JSObject *proxy,
+                                          jsid id, bool set,
+                                          PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool defineProperty(JSContext *cx, JSObject *proxy, jsid id,
+                                PropertyDescriptor *desc) MOZ_OVERRIDE;
+    virtual bool getOwnPropertyNames(JSContext *cx, JSObject *proxy,
+                                     AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool delete_(JSContext *cx, JSObject *proxy, jsid id,
+                         bool *bp) MOZ_OVERRIDE;
+    virtual bool enumerate(JSContext *cx, JSObject *proxy,
+                           AutoIdVector &props) MOZ_OVERRIDE;
+
+    /* Derived traps are implemented in terms of fundamental traps */
+
+    /* Spidermonkey extensions. */
+    virtual bool call(JSContext *cx, JSObject *proxy, unsigned argc,
+                      Value *vp) MOZ_OVERRIDE;
+    virtual bool construct(JSContext *cx, JSObject *proxy, unsigned argc,
+                           Value *argv, Value *rval) MOZ_OVERRIDE;
+    virtual bool nativeCall(JSContext *cx, JSObject *proxy, Class *clasp,
+                            Native native, CallArgs args) MOZ_OVERRIDE;
+    virtual bool hasInstance(JSContext *cx, JSObject *proxy, const Value *vp,
+                             bool *bp) MOZ_OVERRIDE;
+    virtual JSType typeOf(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
+    virtual bool objectClassIs(JSObject *obj, ESClassValue classValue,
+                               JSContext *cx) MOZ_OVERRIDE;
+    virtual JSString *obj_toString(JSContext *cx, JSObject *proxy) MOZ_OVERRIDE;
+    virtual JSString *fun_toString(JSContext *cx, JSObject *proxy,
+                                   unsigned indent) MOZ_OVERRIDE;
+    virtual bool regexp_toShared(JSContext *cx, JSObject *proxy,
+                                 RegExpGuard *g) MOZ_OVERRIDE;
+    virtual bool defaultValue(JSContext *cx, JSObject *obj, JSType hint,
+                              Value *vp) MOZ_OVERRIDE;
+    virtual bool iteratorNext(JSContext *cx, JSObject *proxy,
+                              Value *vp) MOZ_OVERRIDE;
+};
+
+class JS_PUBLIC_API(DirectProxyHandler) : public IndirectProxyHandler {
+public:
+    explicit DirectProxyHandler(void *family);
+
+    /* ES5 Harmony derived proxy traps. */
+    virtual bool has(JSContext *cx, JSObject *proxy, jsid id,
+                     bool *bp) MOZ_OVERRIDE;
+    virtual bool hasOwn(JSContext *cx, JSObject *proxy, jsid id,
+                        bool *bp) MOZ_OVERRIDE;
+    virtual bool get(JSContext *cx, JSObject *proxy, JSObject *receiver,
+                     jsid id, Value *vp) MOZ_OVERRIDE;
+    virtual bool set(JSContext *cx, JSObject *proxy, JSObject *receiver,
+                     jsid id, bool strict, Value *vp) MOZ_OVERRIDE;
+    virtual bool keys(JSContext *cx, JSObject *proxy,
+                      AutoIdVector &props) MOZ_OVERRIDE;
+    virtual bool iterate(JSContext *cx, JSObject *proxy, unsigned flags,
+                         Value *vp) MOZ_OVERRIDE;
 };
 
 /* Dispatch point for handlers that executes the appropriate C++ or scripted traps. */
@@ -117,7 +145,6 @@ class Proxy {
     static bool getOwnPropertyNames(JSContext *cx, JSObject *proxy, AutoIdVector &props);
     static bool delete_(JSContext *cx, JSObject *proxy, jsid id, bool *bp);
     static bool enumerate(JSContext *cx, JSObject *proxy, AutoIdVector &props);
-    static bool fix(JSContext *cx, JSObject *proxy, Value *vp);
 
     /* ES5 Harmony derived proxy traps. */
     static bool has(JSContext *cx, JSObject *proxy, jsid id, bool *bp);
@@ -178,11 +205,11 @@ const uint32_t JSSLOT_PROXY_EXTRA   = 2;
 const uint32_t JSSLOT_PROXY_CALL = 4;
 const uint32_t JSSLOT_PROXY_CONSTRUCT = 5;
 
-inline ProxyHandler *
+inline BaseProxyHandler *
 GetProxyHandler(const JSObject *obj)
 {
     JS_ASSERT(IsProxy(obj));
-    return (ProxyHandler *) GetReservedSlot(obj, JSSLOT_PROXY_HANDLER).toPrivate();
+    return (BaseProxyHandler *) GetReservedSlot(obj, JSSLOT_PROXY_HANDLER).toPrivate();
 }
 
 inline const Value &
@@ -190,6 +217,20 @@ GetProxyPrivate(const JSObject *obj)
 {
     JS_ASSERT(IsProxy(obj));
     return GetReservedSlot(obj, JSSLOT_PROXY_PRIVATE);
+}
+
+inline JSObject *
+GetProxyTargetObject(const JSObject *obj)
+{
+    JS_ASSERT(IsProxy(obj));
+    return GetProxyPrivate(obj).toObjectOrNull();
+}
+
+inline const Value &
+GetProxyCall(const JSObject *obj)
+{
+    JS_ASSERT(IsFunctionProxy(obj));
+    return GetReservedSlot(obj, JSSLOT_PROXY_CALL);
 }
 
 inline const Value &
@@ -200,16 +241,7 @@ GetProxyExtra(const JSObject *obj, size_t n)
 }
 
 inline void
-SetProxyExtra(JSObject *obj, size_t n, const Value &extra)
-{
-    JS_ASSERT(IsProxy(obj));
-    JS_ASSERT(n <= 1);
-    SetReservedSlot(obj, JSSLOT_PROXY_EXTRA + n, extra);
-}
-
-
-inline void
-SetProxyHandler(JSObject *obj, ProxyHandler *handler)
+SetProxyHandler(JSObject *obj, BaseProxyHandler *handler)
 {
     JS_ASSERT(IsProxy(obj));
     SetReservedSlot(obj, JSSLOT_PROXY_HANDLER, PrivateValue(handler));
@@ -222,8 +254,16 @@ SetProxyPrivate(JSObject *obj, const Value &value)
     SetReservedSlot(obj, JSSLOT_PROXY_PRIVATE, value);
 }
 
+inline void
+SetProxyExtra(JSObject *obj, size_t n, const Value &extra)
+{
+    JS_ASSERT(IsProxy(obj));
+    JS_ASSERT(n <= 1);
+    SetReservedSlot(obj, JSSLOT_PROXY_EXTRA + n, extra);
+}
+
 JS_FRIEND_API(JSObject *)
-NewProxyObject(JSContext *cx, ProxyHandler *handler, const Value &priv,
+NewProxyObject(JSContext *cx, BaseProxyHandler *handler, const Value &priv,
                JSObject *proto, JSObject *parent,
                JSObject *call = NULL, JSObject *construct = NULL);
 
