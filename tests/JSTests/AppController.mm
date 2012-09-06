@@ -221,8 +221,8 @@
 			}
 			else if (JSVAL_IS_VOID(out) )
 				string = @"Result(void):\n";
-			else if (JSVAL_IS_OBJECT(out) )
-				string = @"Result(object):\n";
+			else
+				string = @"Result(object?):\n";
 		}
 		else
 		{

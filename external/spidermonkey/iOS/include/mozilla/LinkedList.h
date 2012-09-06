@@ -1,42 +1,9 @@
 /* -*- Mode: C++; tab-width: 8; indent-tabs-mode: nil; c-basic-offset: 4 -*-
  * vim: set ts=4 sw=4 tw=80 et cin:
  *
- * ***** BEGIN LICENSE BLOCK *****
- * Version: MPL 1.1/GPL 2.0/LGPL 2.1
- *
- * The contents of this file are subject to the Mozilla Public License Version
- * 1.1 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at:
- * http://www.mozilla.org/MPL/
- *
- * Software distributed under the License is distributed on an "AS IS" basis,
- * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
- * for the specific language governing rights and limitations under the
- * License.
- *
- * The Original Code is Mozilla Code.
- *
- * The Initial Developer of the Original Code is
- *   The Mozilla Foundation
- * Portions created by the Initial Developer are Copyright (C) 2012
- * the Initial Developer. All Rights Reserved.
- *
- * Contributor(s):
- *   Justin Lebar <justin.lebar@gmail.com>
- *
- * Alternatively, the contents of this file may be used under the terms of
- * either the GNU General Public License Version 2 or later (the "GPL"), or
- * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
- * in which case the provisions of the GPL or the LGPL are applicable instead
- * of those above. If you wish to allow use of your version of this file only
- * under the terms of either the GPL or the LGPL, and not to allow others to
- * use your version of this file under the terms of the MPL, indicate your
- * decision by deleting the provisions above and replace them with the notice
- * and other provisions required by the GPL or the LGPL. If you do not delete
- * the provisions above, a recipient may use your version of this file under
- * the terms of any one of the MPL, the GPL or the LGPL.
- *
- * ***** END LICENSE BLOCK ***** */
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 /* A type-safe doubly-linked list class. */
 
@@ -59,7 +26,7 @@
  *   class ObserverContainer
  *   {
  *   private:
- *     LinkedList<ElemType> list;
+ *     LinkedList<Observer> list;
  *
  *   public:
  *
@@ -158,12 +125,20 @@ public:
     {
         return next->asT();
     }
+    const T* getNext() const
+    {
+        return next->asT();
+    }
 
     /*
      * Get the previous element in the list, or NULL if this is the first element
      * in the list.
      */
     T* getPrevious()
+    {
+        return prev->asT();
+    }
+    const T* getPrevious() const
     {
         return prev->asT();
     }
@@ -206,7 +181,7 @@ public:
     /*
      * Return true if |this| part is of a linked list, and false otherwise.
      */
-    bool isInList()
+    bool isInList() const
     {
         MOZ_ASSERT((next == this) == (prev == this));
         return next != this;
@@ -240,6 +215,13 @@ private:
             return NULL;
 
         return static_cast<T*>(this);
+    }
+    const T* asT() const
+    {
+        if (isSentinel)
+            return NULL;
+
+        return static_cast<const T*>(this);
     }
 
     /*
@@ -312,11 +294,19 @@ public:
     {
         return sentinel.getNext();
     }
+    const T* getFirst() const
+    {
+        return sentinel.getNext();
+    }
 
     /*
      * Get the last element of the list, or NULL if the list is empty.
      */
     T* getLast()
+    {
+        return sentinel.getPrevious();
+    }
+    const T* getLast() const
     {
         return sentinel.getPrevious();
     }
@@ -350,7 +340,7 @@ public:
     /*
      * Return true if the list is empty, or false otherwise.
      */
-    bool isEmpty()
+    bool isEmpty() const
     {
         return !sentinel.isInList();
     }
@@ -371,16 +361,16 @@ public:
      * In a debug build, make sure that the list is sane (no cycles, consistent
      * next/prev pointers, only one sentinel).  Has no effect in release builds.
      */
-    void debugAssertIsSane()
+    void debugAssertIsSane() const
     {
 #ifdef DEBUG
         /*
          * Check for cycles in the forward singly-linked list using the
          * tortoise/hare algorithm.
          */
-        for (LinkedListElement<T>* slow = sentinel.next,
-                                 * fast1 = sentinel.next->next,
-                                 * fast2 = sentinel.next->next->next;
+        for (const LinkedListElement<T>* slow = sentinel.next,
+                                       * fast1 = sentinel.next->next,
+                                       * fast2 = sentinel.next->next->next;
              slow != sentinel && fast1 != sentinel && fast2 != sentinel;
              slow = slow->next,
              fast1 = fast2->next,
@@ -391,9 +381,9 @@ public:
         }
 
         /* Check for cycles in the backward singly-linked list. */
-        for (LinkedListElement<T>* slow = sentinel.prev,
-                                 * fast1 = sentinel.prev->prev,
-                                 * fast2 = sentinel.prev->prev->prev;
+        for (const LinkedListElement<T>* slow = sentinel.prev,
+                                       * fast1 = sentinel.prev->prev,
+                                       * fast2 = sentinel.prev->prev->prev;
              slow != sentinel && fast1 != sentinel && fast2 != sentinel;
              slow = slow->prev,
              fast1 = fast2->prev,
@@ -407,7 +397,7 @@ public:
          * Check that |sentinel| is the only node in the list with
          * isSentinel == true.
          */
-        for (LinkedListElement<T>* elem = sentinel.next;
+        for (const LinkedListElement<T>* elem = sentinel.next;
              elem != sentinel;
              elem = elem->next) {
 
@@ -415,8 +405,8 @@ public:
         }
 
         /* Check that the next/prev pointers match up. */
-        LinkedListElement<T>* prev = sentinel;
-        LinkedListElement<T>* cur = sentinel.next;
+        const LinkedListElement<T>* prev = sentinel;
+        const LinkedListElement<T>* cur = sentinel.next;
         do {
             MOZ_ASSERT(cur->prev == prev);
             MOZ_ASSERT(prev->next == cur);
