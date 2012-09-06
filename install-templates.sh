@@ -164,10 +164,6 @@ copy_xcode4_project_templates(){
 	mkdir -p "$LIBS_DIR"
 	copy_kazmath_files
 
-	LIBS_DIR="$DST_DIR""lib_ccbreader.xctemplate/libs/"
-	mkdir -p "$LIBS_DIR"
-	copy_ccbreader_files
-
 	echo ...copying template files
 	copy_files templates/Xcode4_templates/ "$DST_DIR"
 
@@ -198,6 +194,10 @@ copy_xcode4_project_templates(){
 	LIBS_DIR="$DST_DIR""lib_jrswizzle.xctemplate/libs/"
 	mkdir -p "$LIBS_DIR"
 	copy_jrswizzle_files
+
+	LIBS_DIR="$DST_DIR""lib_ccbreader.xctemplate/libs/"
+	mkdir -p "$LIBS_DIR"
+	copy_ccbreader_files
 
     echo done!
 
