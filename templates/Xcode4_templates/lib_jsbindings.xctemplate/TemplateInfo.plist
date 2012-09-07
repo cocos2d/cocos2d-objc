@@ -1063,13 +1063,6 @@
 		<string>libs/jsbindings/configs/CocosDenshion/CocosDenshion_jsb.ini</string>
 		<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_bridgesupport.sh</string>
 		<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_complement.sh</string>
-		<string>libs/jsbindings/docs/jsb.graffle</string>
-		<string>libs/jsbindings/docs/jsb_callbacks.png</string>
-		<string>libs/jsbindings/docs/jsb_calls.png</string>
-		<string>libs/jsbindings/docs/jsb_files.png</string>
-		<string>libs/jsbindings/docs/jsb_instance_call.png</string>
-		<string>libs/jsbindings/docs/jsb_intro.png</string>
-		<string>libs/jsbindings/docs/jsb_new_class.png</string>
 		<string>libs/jsbindings/generate_complement.py</string>
 		<string>libs/jsbindings/generate_js_bindings.py</string>
 		<string>libs/jsbindings/LICENSE.txt</string>

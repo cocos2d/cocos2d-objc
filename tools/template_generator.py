@@ -80,28 +80,28 @@ class Xcode4Template(object):
         self.ancestor = ancestor
 
     def scandirs(self, path):
-        for currentFile in glob.glob( os.path.join(path, self.wildcard) ):
+        for currentFile in glob.glob(os.path.join(path, self.wildcard)):
             if os.path.isdir(currentFile):
                 self.scandirs(currentFile)
             else:
-                self.files_to_include.append( currentFile )
+                self.files_to_include.append(currentFile)
 
     #
     # append the definitions
     #
     def append_definition(self, output_body, path, group, dont_index):
-        output_body.append("\t\t<key>%s</key>" % path )
+        output_body.append("\t\t<key>%s</key>" % path)
 
         output_body.append("\t\t<dict>")
         if group:
             output_body.append("\t\t\t<key>Group</key>")
             output_body.append("\t\t\t<array>")
             for g in group:
-                output_body.append("\t\t\t\t<string>%s</string>" % g )
+                output_body.append("\t\t\t\t<string>%s</string>" % g)
             output_body.append("\t\t\t</array>")
 
 
-        output_body.append("\t\t\t<key>Path</key>\n\t\t\t<string>%s</string>" % path )
+        output_body.append("\t\t\t<key>Path</key>\n\t\t\t<string>%s</string>" % path)
 
         if dont_index:
             output_body.append("\t\t\t<key>TargetIndices</key>\n\t\t\t<array/>")
@@ -111,7 +111,7 @@ class Xcode4Template(object):
     #
     # Generate the "Definitions" section
     #
-    def generate_definitions( self ):
+    def generate_definitions(self):
         output_header = "\t<key>Definitions</key>"
         output_dict_open = "\t<dict>"
         output_dict_close = "\t</dict>"
@@ -126,7 +126,7 @@ class Xcode4Template(object):
 
             lastdir = dirs.split(os.path.sep)[-1]
             if lastdir in self.ignore_directories:
-                sys.stderr.write('Ignoring file: "%s" because it is in directory: "%s"\n' % (os.path.basename(path), lastdir))
+                sys.stderr.write('Ignoring definition: "%s" because it is in directory: "%s"\n' % (os.path.basename(path), lastdir))
                 continue
 
             group = dirs.split('/')
@@ -156,7 +156,14 @@ class Xcode4Template(object):
         output_close = "\t</array>"
 
         output_body = []
+
         for path in self.files_to_include:
+
+            lastdir = os.path.dirname(path).split(os.path.sep)[-1]
+            if lastdir in self.ignore_directories:
+                sys.stderr.write('Ignoring node: "%s" because it is in directory: "%s"\n' % (os.path.basename(path), lastdir))
+                continue
+
             output_body.append("\t\t<string>%s</string>" % path)
 
         self.output.append(output_header)
@@ -175,28 +182,28 @@ class Xcode4Template(object):
     #
     # Generates the include directory
     #
-    def generate_header_path( self ):
+    def generate_header_path(self):
         if self.header_path:
-            self.output.append( _template_header_path % self.header_path )
+            self.output.append(_template_header_path % self.header_path)
 
         if self.user_header_path:
-            self.output.append( _template_user_header_path % self.user_header_path )
+            self.output.append(_template_user_header_path % self.user_header_path)
       
     #
     # Generates the plist. Send it to to stdout
     #
-    def generate_xml( self ):
-        self.output.append( _template_open_body % self.identifier )
+    def generate_xml(self):
+        self.output.append(_template_open_body % self.identifier)
         self.generate_ancestor()
         self.generate_definitions()
         self.generate_nodes()
         self.generate_header_path()
-        self.output.append( _template_close_body )
+        self.output.append(_template_close_body)
 
-        print "\n".join( self.output )
+        print "\n".join(self.output)
 
-    def generate( self ):
-        self.scandirs( self.directory )
+    def generate(self):
+        self.scandirs(self.directory)
         self.generate_xml()
 
 def help():
