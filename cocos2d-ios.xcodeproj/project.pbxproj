@@ -17047,8 +17047,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Moon Warriors";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -17076,8 +17074,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Moon Warriors";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -17291,8 +17287,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Tests";
 			};
@@ -17319,8 +17313,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Tests";
 				ZERO_LINK = NO;
@@ -17349,8 +17341,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Watermelon";
 			};
@@ -17377,8 +17367,6 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/external/spidermonkey/iOS/lib\"",
-					"\"$(SRCROOT)/external\"",
-					"\"$(SRCROOT)/external/spidermonkey/mac/lib\"",
 				);
 				PRODUCT_NAME = "JS Watermelon";
 				ZERO_LINK = NO;
