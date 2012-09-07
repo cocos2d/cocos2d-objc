@@ -113,14 +113,14 @@ copy_ccbreader_files(){
 copy_spidermonkey_files(){
 	echo ...copying SpiderMonkey files
 
-	LIBS_DIR="$DST_DIR""lib_spidermonkey_ios.xctemplate/libs/"
+	LIBS_DIR="$DST_DIR""lib_spidermonkey_ios.xctemplate/libs/SpiderMonkey/"
 	mkdir -p "$LIBS_DIR"
-	copy_files external/spidermonkey/ios "$LIBS_DIR"
+	copy_files external/SpiderMonkey/ios "$LIBS_DIR"
 	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
 
-	LIBS_DIR="$DST_DIR""lib_spidermonkey_osx.xctemplate/libs/"
+	LIBS_DIR="$DST_DIR""lib_spidermonkey_osx.xctemplate/libs/SpiderMonkey/"
 	mkdir -p "$LIBS_DIR"
-	copy_files external/spidermonkey/osx"$LIBS_DIR"
+	copy_files external/SpiderMonkey/osx "$LIBS_DIR"
 	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
 }
 
