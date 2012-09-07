@@ -66,11 +66,12 @@ import getopt
 import glob
 
 class Xcode4Template(object):
-    def __init__( self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None, ancestor=None ):
+    def __init__(self, directory, group=0, identifier="XXX", header_path=None, user_header_path=None, ancestor=None):
         self.directory = directory
         self.files_to_include = []
         self.wildcard = '*'
-        self.ignore_extensions = ['h','txt','html','patch','cmake', 'py', 'markdown', 'md', 'graffle', 'sh', 'ini', 'bridgesupport']
+        self.ignore_extensions = ['h','txt','html','patch','cmake', 'py', 'markdown', 'md', 'graffle', 'sh', 'ini', 'bridgesupport', 'tbl', 'msg']
+        self.ignore_directories = ['docs', 'html']
         self.group_start_index = group  # eg: if 1 then libs/cocos2d/support -> ["cocos2d", "support"] ignoring "libs"
         self.output = []
         self.identifier = identifier
@@ -88,7 +89,7 @@ class Xcode4Template(object):
     #
     # append the definitions
     #
-    def append_definition( self, output_body, path, group, dont_index ):
+    def append_definition(self, output_body, path, group, dont_index):
         output_body.append("\t\t<key>%s</key>" % path )
 
         output_body.append("\t\t<dict>")
@@ -122,6 +123,12 @@ class Xcode4Template(object):
             group = []
             # obtain group name from directory
             dirs = os.path.dirname(path)
+
+            lastdir = dirs.split(os.path.sep)[-1]
+            if lastdir in self.ignore_directories:
+                sys.stderr.write('Ignoring file: "%s" because it is in directory: "%s"\n' % (os.path.basename(path), lastdir))
+                continue
+
             group = dirs.split('/')
 
             group = group[self.group_start_index:]
@@ -133,37 +140,37 @@ class Xcode4Template(object):
             if len(name_extension) == 2:
                 extension = name_extension[1]
 
-            self.append_definition( output_body, path, group, extension in self.ignore_extensions )
+            self.append_definition(output_body, path, group, extension in self.ignore_extensions)
 
-        self.output.append( output_header )
-        self.output.append( output_dict_open )
-        self.output.append( "\n".join( output_body ) )
-        self.output.append( output_dict_close )
+        self.output.append(output_header)
+        self.output.append(output_dict_open)
+        self.output.append("\n".join(output_body))
+        self.output.append(output_dict_close)
 
     # 
     # Generates the "Nodes" section
     #
-    def generate_nodes( self ):
+    def generate_nodes(self):
         output_header = "\t<key>Nodes</key>"
         output_open = "\t<array>"
         output_close = "\t</array>"
 
         output_body = []
         for path in self.files_to_include:
-            output_body.append("\t\t<string>%s</string>" % path )
+            output_body.append("\t\t<string>%s</string>" % path)
 
-        self.output.append( output_header )
-        self.output.append( output_open )
-        self.output.append( "\n".join( output_body ) )
-        self.output.append( output_close )
+        self.output.append(output_header)
+        self.output.append(output_open)
+        self.output.append("\n".join(output_body))
+        self.output.append(output_close)
 
 
     #
     # Generate ancestors
     #
-    def generate_ancestor( self ):
+    def generate_ancestor(self):
         if self.ancestor:
-            self.output.append( _template_ancestor % self.ancestor )
+            self.output.append(_template_ancestor % self.ancestor)
 
     #
     # Generates the include directory
@@ -193,7 +200,7 @@ class Xcode4Template(object):
         self.generate_xml()
 
 def help():
-    print "%s v1.0 - An utility to generate Xcode 4 templates" % sys.argv[0]
+    print "%s v1.1 - An utility to generate Xcode 4 templates" % sys.argv[0]
     print "Usage:"
     print "-g --group\t\tdirectory_used_as_starting_group (if 1, then 'libs/cocos2d/Support/' -> ['cocos2d','Support'] ignoring 'libs')"
     print "-i --identifier\t\tidentifier (Xcode4 template identifier)"
@@ -207,7 +214,7 @@ def help():
     sys.exit(-1)
 
 if __name__ == "__main__":
-    if len( sys.argv ) == 1:
+    if len(sys.argv) == 1:
         help()
 
     directory = None
@@ -242,6 +249,6 @@ if __name__ == "__main__":
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path, user_header_path=user_header_path, ancestor=ancestor)
+    gen = Xcode4Template(directory=directory, group=int(group), identifier=identifier, header_path=header_path, user_header_path=user_header_path, ancestor=ancestor)
     gen.generate()
 
