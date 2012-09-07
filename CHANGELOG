@@ -1,4 +1,4 @@
-version 2.1-alpha XX-Sept-2012
+version 2.1-beta 7-Sept-2012
 . [NEW] DrawNode: Node that batches drawing primitives (replaces the drawing primitives free functions )
 . [NEW] FileUtils: Added support for mac and retinaDisplay Mac suffix.
 . [NEW] GL ES 2.0 code: General improvements in the shader and cache code. Better error reporting.
@@ -6,6 +6,7 @@ version 2.1-alpha XX-Sept-2012
 			Includes Javascript remote console
 			Removed old JSCocoa code and samples
 			Uses Spidermonkey JS VM from Firefox 15.0
+			Includes JavaScript Templates for iOS and OS X for cocos2d + chipmunk + CocosBuilder Reader
 . [NEW] LabelTTF API consistency changes:
        "font" and "size" are always the 2nd and 3rd params. eg:
 			labelWithString:font:size:  -> Not changed
