@@ -32,6 +32,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/chipmunk/chipmunk.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/chipmunk/chipmunk_jsb.ini</key>
 		<dict>
@@ -44,6 +46,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/chipmunk/chipmunk_jsb.ini</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/chipmunk/gen_chipmunk_bridgesupport.sh</key>
 		<dict>
@@ -56,6 +60,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/chipmunk/gen_chipmunk_bridgesupport.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/cocos2d-complement.txt</key>
 		<dict>
@@ -110,6 +116,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/cocos2d-ios-exceptions.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/cocos2d-ios.bridgesupport</key>
 		<dict>
@@ -122,6 +130,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/cocos2d-ios.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/cocos2d-mac-complement-exceptions.txt</key>
 		<dict>
@@ -162,6 +172,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/cocos2d-mac.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/cocos2d.bridgesupport</key>
 		<dict>
@@ -174,6 +186,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/cocos2d.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/cocos2d_jsb.ini</key>
 		<dict>
@@ -186,6 +200,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/cocos2d_jsb.ini</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/gen_cocos2d_bridgesupport.sh</key>
 		<dict>
@@ -198,6 +214,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/gen_cocos2d_bridgesupport.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/cocos2d/gen_cocos2d_complement.sh</key>
 		<dict>
@@ -210,6 +228,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/cocos2d/gen_cocos2d_complement.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosBuilderReader/CocosBuilderReader-complement.txt</key>
 		<dict>
@@ -236,6 +256,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosBuilderReader/CocosBuilderReader.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosBuilderReader/CocosBuilderReader_jsb.ini</key>
 		<dict>
@@ -248,6 +270,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosBuilderReader/CocosBuilderReader_jsb.ini</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosBuilderReader/gen_CocosBuilderReader_bridgesupport.sh</key>
 		<dict>
@@ -260,6 +284,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosBuilderReader/gen_CocosBuilderReader_bridgesupport.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosBuilderReader/gen_CocosBuilderReader_complement.sh</key>
 		<dict>
@@ -272,6 +298,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosBuilderReader/gen_CocosBuilderReader_complement.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosDenshion/CocosDenshion-complement.txt</key>
 		<dict>
@@ -298,6 +326,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosDenshion/CocosDenshion.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosDenshion/CocosDenshion_jsb.ini</key>
 		<dict>
@@ -310,6 +340,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosDenshion/CocosDenshion_jsb.ini</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_bridgesupport.sh</key>
 		<dict>
@@ -322,6 +354,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_bridgesupport.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_complement.sh</key>
 		<dict>
@@ -334,6 +368,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_complement.sh</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/docs/jsb.graffle</key>
 		<dict>
@@ -345,6 +381,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/docs/jsb.graffle</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/docs/jsb_callbacks.png</key>
 		<dict>
@@ -421,6 +459,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/generate_complement.py</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/generate_js_bindings.py</key>
 		<dict>
@@ -431,6 +471,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/generate_js_bindings.py</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/LICENSE.txt</key>
 		<dict>
@@ -453,6 +495,8 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/README.md</string>
+			<key>TargetIndices</key>
+			<array/>
 		</dict>
 		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.h</key>
 		<dict>

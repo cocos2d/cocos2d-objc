@@ -11,7 +11,7 @@
 		<string>com.cocos2d-v2.cocosdenshionlib</string>
 		<string>com.cocos2d-v2.cocosdenshionextraslib</string>
 		<string>com.cocos2d-v2.kazmathlib</string>
-		<string>com.cocos2d-v2.spidermonkeylib</string>
+		<string>com.cocos2d-v2.spidermonkeylib_osx</string>
 		<string>com.cocos2d-v2.jsbindingslib</string>
 		<string>com.cocos2d-v2.jrswizzlelib</string>
 		<string>com.cocos2d-v2.ccbreaderlib</string>
@@ -69,9 +69,9 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d v2.0 and Chipmunk for Mac OS X.</string>
+	<string>This template provides a starting point for an application that uses cocos2d, Chipmunk and CocosBuilder Reader with JavaScript bindings</string>
 	<key>Identifier</key>
-	<string>com.cocos2d-v2.cocos2dJSMacTemplate</string>
+	<string>com.cocos2d-v2.cocos2dJSOSXTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Nodes</key>
@@ -92,7 +92,7 @@
 				<key>ALWAYS_SEARCH_USER_PATHS</key>
 				<string>YES</string>
 				<key>USER_HEADER_SEARCH_PATHS</key>
-				<string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot;</string>
+                <string>&quot;___PACKAGENAME___/libs/Chipmunk/include/chipmunk&quot; &quot;___PACKAGENAME___/libs/SpiderMonkey/osx/include&quot; &quot;___PACKAGENAME___/libs/kazmath/include&quot;</string>
 			</dict>
             <key>Configurations</key>
             <dict>
@@ -103,6 +103,8 @@
                         <string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
                         <string>DEBUG</string>
                         <string>COCOS2D_DEBUG=1</string>
+                        <string>CC_DIRECTOR_MAC_THREAD=2</string>
+                        <string>CC_ENABLE_GL_STATE_CACHE=1</string>
                     </array>
                 </dict>
                 <key>Release</key>
@@ -112,6 +114,8 @@
                         <string>CC_ENABLE_CHIPMUNK_INTEGRATION=1</string>
                         <string>NDEBUG</string>
                         <string>NS_BLOCK_ASSERTIONS=1</string>
+                        <string>CC_DIRECTOR_MAC_THREAD=2</string>
+                        <string>CC_ENABLE_GL_STATE_CACHE=1</string>
                     </array>
                 </dict>
             </dict>

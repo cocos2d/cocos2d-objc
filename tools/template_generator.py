@@ -242,6 +242,6 @@ if __name__ == "__main__":
     if directory == None:
         help()
 
-    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path, ancestor=ancestor)
+    gen = Xcode4Template( directory=directory, group=int(group), identifier=identifier, header_path=header_path, user_header_path=user_header_path, ancestor=ancestor)
     gen.generate()
 
