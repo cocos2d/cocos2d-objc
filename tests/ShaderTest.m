@@ -734,6 +734,7 @@ void main(void)								\n\
 		
 		[p link];
 		[p updateUniforms];
+		[p release];
 	}
 	
 	return self;
