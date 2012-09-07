@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "HelloWorldLayer.h"
+#import "js_bindings_core.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
 @synthesize window=window_, glView=glView_;
@@ -32,11 +32,9 @@
 	
 	// Center main window
 	[window_ center];
-	
-	CCScene *scene = [CCScene node];
-	[scene addChild:[HelloWorldLayer node]];
-	
-	[director runWithScene:scene];
+
+	// Run the JS
+	[[JSBCore sharedInstance] runScript:@"main.js"];
 }
 
 - (BOOL) applicationShouldTerminateAfterLastWindowClosed: (NSApplication *) theApplication
