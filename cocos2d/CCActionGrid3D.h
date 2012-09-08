@@ -53,7 +53,7 @@
 
 /** creates the action with duration */
 +(id) actionWithDuration:(ccTime)d;
-/** initizlies the action with duration */
+/** initializes the action with duration */
 -(id) initWithDuration:(ccTime)d;
 
 @end

@@ -129,7 +129,7 @@
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
 @property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
 
-/** creates a CCMenuItemLabel with a Label. Block will benil */
+/** creates a CCMenuItemLabel with a Label. */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label;
 
 /** creates a CCMenuItemLabel with a Label, target and selector.
@@ -290,7 +290,7 @@
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
 
-/** creates a menu item with a normal,selected  and disabled image with target/selector.
+/** creates a menu item with a normal, selected and disabled image with target/selector.
  The "target" won't be retained.
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
@@ -300,7 +300,7 @@
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block;
 
-/** creates a menu item with a normal,selected  and disabled image with a block.
+/** creates a menu item with a normal, selected and disabled image with a block.
  The block will be "copied".
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
@@ -341,7 +341,7 @@
 /** creates a menu item with a normal and selected image with target/selector */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 
-/** creates a menu item with a normal,selected  and disabled image with target/selector.
+/** creates a menu item with a normal, selected and disabled image with target/selector.
  The "target" won't be retained.
  */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
@@ -351,7 +351,7 @@
  */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block;
 
-/** creates a menu item with a normal,selected  and disabled image with a block.
+/** creates a menu item with a normal, selected and disabled image with a block.
  The block will be "copied".
 */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;

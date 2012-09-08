@@ -74,11 +74,11 @@ Example:
 	ccTime split_;
 	int last_;
 }
-/** helper contructor to create an array of sequenceable actions */
+/** helper constructor to create an array of sequence-able actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
-/** helper contructor to create an array of sequenceable actions */
+/** helper constructor to create an array of sequence-able actions */
 +(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list) args;
-/** helper contructor to create an array of sequenceable actions given an array */
+/** helper constructor to create an array of sequence-able actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the action */
 +(id) actionOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
@@ -120,7 +120,7 @@ Example:
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args;
-/** helper contructor to create an array of spawned actions given an array */
+/** helper constructor to create an array of spawned actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the Spawn action */
 +(id) actionOne: (CCFiniteTimeAction*) one two:(CCFiniteTimeAction*) two;
@@ -147,12 +147,12 @@ Example:
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
 
-/** creates the action with seperate rotation angles */
+/** creates the action with separate rotation angles */
 +(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 -(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
-/** Rotates a CCNode object clockwise a number of degrees by modiying its rotation attribute.
+/** Rotates a CCNode object clockwise a number of degrees by modifying its rotation attribute.
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
@@ -166,7 +166,7 @@ Example:
 /** initializes the action */
 -(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
 
-/** creates the action with seperate rotation angles */
+/** creates the action with separate rotation angles */
 +(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 -(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
@@ -329,7 +329,7 @@ typedef struct _ccBezierConfig {
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
-/** initilizes the action */
+/** initializes the action */
 -(id) initWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 @end
 
@@ -361,7 +361,7 @@ typedef struct _ccBezierConfig {
 	GLubyte toOpacity_;
 	GLubyte fromOpacity_;
 }
-/** creates an action with duration and opactiy */
+/** creates an action with duration and opacity */
 +(id) actionWithDuration:(ccTime)duration opacity:(GLubyte)opactiy;
 /** initializes the action with duration and opacity */
 -(id) initWithDuration:(ccTime)duration opacity:(GLubyte)opacity;
@@ -408,7 +408,7 @@ typedef struct _ccBezierConfig {
 /** Executes an action in reverse order, from time=duration to time=0
 
  @warning Use this action carefully. This action is not
- sequenceable. Use it as the default "reversed" method
+ sequence-able. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
 */
@@ -434,12 +434,12 @@ typedef struct _ccBezierConfig {
 	id					origFrame_;
 	NSUInteger			executedLoops_;
 }
-/** animation used for the animage */
+/** animation used for the image */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
 
 /** creates the action with an Animation and will restore the original frame when the animation is over */
 +(id) actionWithAnimation:(CCAnimation*)animation;
-/** initializes the action with an Animation and will restore the original frame when the animtion is over */
+/** initializes the action with an Animation and will restore the original frame when the animation is over */
 -(id) initWithAnimation:(CCAnimation*)animation;
 @end
 

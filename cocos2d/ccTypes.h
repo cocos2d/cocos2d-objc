@@ -340,7 +340,7 @@ static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 //! ccResolutionType
 typedef enum
 {
-	//! Unknonw resolution type
+	//! Unknown resolution type
 	kCCResolutionUnknown,
 #ifdef __CC_PLATFORM_IOS
 	//! iPhone resolution type

@@ -66,7 +66,7 @@ typedef enum {
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
 
- The CCDirector is also resposible for:
+ The CCDirector is also responsible for:
   - initializing the OpenGL ES context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
@@ -193,7 +193,7 @@ and when to execute the Scenes.
  */
 @property (nonatomic, readwrite, retain) id	notificationNode;
 
-/** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
+/** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  @since v0.99.5
  */
 @property (nonatomic, readwrite, retain) id<CCDirectorDelegate> delegate;
@@ -227,7 +227,7 @@ and when to execute the Scenes.
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
 /** converts a UIKit coordinate to an OpenGL coordinate
- Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
+ Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
  */
 -(CGPoint) convertToGL: (CGPoint) p;
 /** converts an OpenGL coordinate to a UIKit coordinate
@@ -281,7 +281,7 @@ and when to execute the Scenes.
 
 /** Pauses the running scene.
  The running scene will be _drawed_ but all scheduled timers will be paused
- While paused, the draw rate will be 4 FPS to reduce CPU consuption
+ While paused, the draw rate will be 4 FPS to reduce CPU consumption
  */
 -(void) pause;
 
@@ -292,13 +292,13 @@ and when to execute the Scenes.
 -(void) resume;
 
 /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
- If you wan't to pause your animation call [pause] instead.
+ If you want to pause your animation call [pause] instead.
  */
 -(void) stopAnimation;
 
 /** The main loop is triggered again.
  Call this function only if [stopAnimation] was called earlier
- @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
+ @warning Don't call this function to start the main loop. To run the main loop call runWithScene
  */
 -(void) startAnimation;
 

@@ -140,7 +140,7 @@ enum {
 	// array of children
 	CCArray *children_;
 
-	// weakref to parent
+	// weak ref to parent
 	CCNode *parent_;
 
 	// a tag. any number you want to assign to the node
@@ -297,7 +297,7 @@ enum {
 -(id) init;
 
 
-// scene managment
+// scene management
 
 /** Event that is called every time the CCNode enters the 'stage'.
  If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
