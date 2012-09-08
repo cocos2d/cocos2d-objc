@@ -51,7 +51,7 @@
 #if CC_SPRITEBATCHNODE_RENDER_SUBPIXEL
 #define RENDER_IN_SUBPIXEL
 #else
-#define RENDER_IN_SUBPIXEL(__A__) ( (int)(__A__))
+#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
 
@@ -918,7 +918,7 @@
 	return [CCSpriteFrame frameWithTexture:texture_
 							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
-									offset:unflippedOffsetPositionFromCenter_
+									offset:CC_POINT_POINTS_TO_PIXELS(unflippedOffsetPositionFromCenter_)
 							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
 }
 

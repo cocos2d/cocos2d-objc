@@ -23,6 +23,17 @@
  * THE SOFTWARE.
  */
 
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT 
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
+
 #import <math.h>
 #import <stdlib.h>
 #import <string.h>

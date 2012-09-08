@@ -69,7 +69,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 @implementation CCGLProgram
 
-@synthesize program = _program;
+@synthesize program = program_;
 
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
 {
@@ -206,61 +206,67 @@ typedef void (*GLLogFunction) (GLuint program,
 
 #pragma mark -
 
-- (BOOL)link
+-(BOOL) link
 {
+    NSAssert(program_ != 0, @"Cannot link invalid program");
+	
+    GLint status = GL_TRUE;
     glLinkProgram(program_);
-
-#if DEBUG
-		GLint status;
-    glValidateProgram(program_);
-
-    glGetProgramiv(program_, GL_LINK_STATUS, &status);
-		NSAssert(status == GL_TRUE, @"cocos2d: ERROR: Failed to link program: %i", program_);
-#endif
-
+	
     if (vertShader_)
         glDeleteShader(vertShader_);
+
     if (fragShader_)
         glDeleteShader(fragShader_);
 
-	vertShader_ = fragShader_ = 0;
-
-    return YES;
+    vertShader_ = fragShader_ = 0;
+	
+#if DEBUG
+    glGetProgramiv(program_, GL_LINK_STATUS, &status);
+    NSString* log = self.programLog;
+	
+    if (status == GL_FALSE) {
+        NSLog(@"cocos2d: ERROR: Failed to link program: %i - %@", program_, log);
+        ccGLDeleteProgram( program_ );
+        program_ = 0;
+    }
+#endif
+	
+    return (status == GL_TRUE);
 }
 
-- (void)use
+-(void) use
 {
-    ccGLUseProgram(program_);
+	ccGLUseProgram(program_);
 }
 
 #pragma mark -
 
-- (NSString *)logForOpenGLObject:(GLuint)object
-                    infoCallback:(GLInfoFunction)infoFunc
-                         logFunc:(GLLogFunction)logFunc
+-(NSString *) logForOpenGLObject:(GLuint)object
+					infoCallback:(GLInfoFunction)infoFunc
+						 logFunc:(GLLogFunction)logFunc
 {
-    GLint logLength = 0, charsWritten = 0;
+	GLint logLength = 0, charsWritten = 0;
 
-    infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
-    if (logLength < 1)
-        return nil;
+	infoFunc(object, GL_INFO_LOG_LENGTH, &logLength);
+	if (logLength < 1)
+		return nil;
 
-    char *logBytes = malloc(logLength);
-    logFunc(object, logLength, &charsWritten, logBytes);
-    NSString *log = [[[NSString alloc] initWithBytes:logBytes
-                                              length:logLength
-                                            encoding:NSUTF8StringEncoding]
-                      autorelease];
-    free(logBytes);
-    return log;
+	char *logBytes = malloc(logLength);
+	logFunc(object, logLength, &charsWritten, logBytes);
+	NSString *log = [[[NSString alloc] initWithBytes:logBytes
+											  length:logLength
+											encoding:NSUTF8StringEncoding]
+					  autorelease];
+	free(logBytes);
+	return log;
 }
 
 - (NSString *)vertexShaderLog
 {
-    return [self logForOpenGLObject:vertShader_
-                       infoCallback:(GLInfoFunction)&glGetShaderiv
-                            logFunc:(GLLogFunction)&glGetShaderInfoLog];
-
+	return [self logForOpenGLObject:vertShader_
+					   infoCallback:(GLInfoFunction)&glGetShaderiv
+							logFunc:(GLLogFunction)&glGetShaderInfoLog];
 }
 
 - (NSString *)fragmentShaderLog
@@ -272,21 +278,22 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (NSString *)programLog
 {
-    return [self logForOpenGLObject:program_
-                       infoCallback:(GLInfoFunction)&glGetProgramiv
-                            logFunc:(GLLogFunction)&glGetProgramInfoLog];
+	return [self logForOpenGLObject:program_
+					   infoCallback:(GLInfoFunction)&glGetProgramiv
+							logFunc:(GLLogFunction)&glGetProgramInfoLog];
 }
 
 #pragma mark - Uniform cache
 
 -(BOOL) updateUniformLocation:(GLint)location withData:(GLvoid*)data sizeOfData:(NSUInteger)bytes
 {
-	if(location < 0) return FALSE;
-	
+	if(location < 0)
+		return FALSE;
+
 	BOOL updated = YES;
 	tHashUniformEntry *element = NULL;
 	HASH_FIND_INT(hashForUniforms_, &location, element);
-	
+
 	if( ! element ) {
 
 		element = malloc( sizeof(*element) );
@@ -307,7 +314,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		else
 			memcpy( element->value, data, bytes );
 	}
-	
+
 	return updated;
 }
 
@@ -435,11 +442,11 @@ typedef void (*GLLogFunction) (GLuint program,
 	NSAssert( vertShader_ == 0, @"Vertex Shaders should have been already deleted");
 	NSAssert( fragShader_ == 0, @"Fragment Shaders should have been already deleted");
 
-    if (program_)
-        ccGLDeleteProgram(program_);
-	
+	if (program_)
+		ccGLDeleteProgram(program_);
+
 	tHashUniformEntry *current_element, *tmp;
-	
+
 	// Purge uniform hash
 	HASH_ITER(hh, hashForUniforms_, current_element, tmp) {
 		HASH_DEL(hashForUniforms_, current_element);
@@ -447,6 +454,6 @@ typedef void (*GLLogFunction) (GLuint program,
 		free(current_element);
 	}
 
-    [super dealloc];
+	[super dealloc];
 }
 @end

@@ -55,7 +55,7 @@
  It will enable Retina Display on iPhone4 and iPod Touch 4.
  It will return YES, if it could enabled it, otherwise it will return NO.
 
- This is the recommened way to enable Retina Display.
+ This is the recommended way to enable Retina Display.
  @since v0.99.5
  */
 -(BOOL) enableRetinaDisplay:(BOOL)enableRetina;

@@ -10,7 +10,6 @@
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
-#import "PhysicsSprite.h"
 
 enum {
 	kTagParentNode = 1,
@@ -74,11 +73,11 @@ enum {
 #if 1
 		// Use batch node. Faster
 		CCSpriteBatchNode *parent = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
-		spriteTexture_ = [parent texture];
+		_spriteTexture = [parent texture];
 #else
 		// doesn't use batch node. Slower
-		spriteTexture_ = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
-		CCNode *parent = [CCNode node];		
+		_spriteTexture = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
+		CCNode *parent = [CCNode node];
 #endif
 		[self addChild:parent z:0 tag:kTagParentNode];
 		
@@ -94,41 +93,45 @@ enum {
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	space_ = cpSpaceNew();
+	_space = cpSpaceNew();
 	
-	cpSpaceSetGravity( space_, cpv(0, -100) );
+	cpSpaceSetGravity( _space, cpv(0, -100) );
 	
 	//
 	// rogue shapes
 	// We have to free them manually
 	//
 	// bottom
-	walls_[0] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+	_walls[0] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
 	
 	// top
-	walls_[1] = cpSegmentShapeNew( space_->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+	_walls[1] = cpSegmentShapeNew( _space->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
 	
 	// left
-	walls_[2] = cpSegmentShapeNew( space_->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+	_walls[2] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
 	
 	// right
-	walls_[3] = cpSegmentShapeNew( space_->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+	_walls[3] = cpSegmentShapeNew( _space->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
 	
 	for( int i=0;i<4;i++) {
-		cpShapeSetElasticity( walls_[i], 1.0f );
-		cpShapeSetFriction( walls_[i], 1.0f );
-		cpSpaceAddStaticShape(space_, walls_[i] );
-	}	
+		cpShapeSetElasticity( _walls[i], 1.0f );
+		cpShapeSetFriction( _walls[i], 1.0f );
+		cpSpaceAddStaticShape(_space, _walls[i] );
+	}
+	
+	_debugLayer = [CCPhysicsDebugNode debugNodeForCPSpace:_space];
+	_debugLayer.visible = NO;
+	[self addChild:_debugLayer z:100];
 }
 
 - (void)dealloc
 {
 	// manually Free rogue shapes
 	for( int i=0;i<4;i++) {
-		cpShapeFree( walls_[i] );
+		cpShapeFree( _walls[i] );
 	}
 	
-	cpSpaceFree( space_ );
+	cpSpaceFree( _space );
 	
 	[super dealloc];
 	
@@ -141,7 +144,7 @@ enum {
 	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
 	
 	for(int i=0; i<steps; i++){
-		cpSpaceStep(space_, dt);
+		cpSpaceStep(_space, dt);
 	}
 }
 
@@ -154,6 +157,12 @@ enum {
 	CCMenuItemLabel *reset = [CCMenuItemFont itemWithString:@"Reset" block:^(id sender){
 		[[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]];
 	}];
+	
+	// Debug Button
+	CCMenuItemLabel *debug = [CCMenuItemFont itemWithString:@"Toggle Debug" block:^(id sender){
+		[_debugLayer setVisible: !_debugLayer.visible];
+	}];
+	
 	
 	// Achievement Menu Item using blocks
 	CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
@@ -183,7 +192,7 @@ enum {
 		[leaderboardViewController release];
 	}];
 	
-	CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, reset, nil];
+	CCMenu *menu = [CCMenu menuWithItems:itemAchievement, itemLeaderboard, debug, reset, nil];
 	
 	[menu alignItemsVertically];
 	
@@ -191,26 +200,12 @@ enum {
 	[menu setPosition:ccp( size.width/2, size.height/2)];
 	
 	
-	[self addChild: menu z:-1];	
+	[self addChild: menu z:-1];
 }
 
 -(void) addNewSpriteAtPosition:(CGPoint)pos
 {
-	int posx, posy;
-	
-	CCNode *parent = [self getChildByTag:kTagParentNode];
-	
-	posx = CCRANDOM_0_1() * 200.0f;
-	posy = CCRANDOM_0_1() * 200.0f;
-	
-	posx = (posx % 4) * 85;
-	posy = (posy % 3) * 121;
-	
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(posx, posy, 85, 121)];
-	[parent addChild: sprite];
-	
-	sprite.position = pos;
-	
+	// physics body
 	int num = 4;
 	cpVect verts[] = {
 		cpv(-24,-54),
@@ -221,14 +216,24 @@ enum {
 	
 	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
 	cpBodySetPos( body, pos );
-	cpSpaceAddBody(space_, body);
+	cpSpaceAddBody(_space, body);
 	
 	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
 	cpShapeSetElasticity( shape, 0.5f );
 	cpShapeSetFriction( shape, 0.5f );
-	cpSpaceAddShape(space_, shape);
+	cpSpaceAddShape(_space, shape);
 	
-	[sprite setPhysicsBody:body];
+	// sprite
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	int posx = CCRANDOM_0_1() * 200.0f;
+	int posy = CCRANDOM_0_1() * 200.0f;
+	posx = (posx % 4) * 85;
+	posy = (posy % 3) * 121;
+	
+	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:_spriteTexture rect:CGRectMake(posx, posy, 85, 121)];
+	[parent addChild: sprite];
+	[sprite setBody:body];
+	[sprite setPosition: pos];
 }
 
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
@@ -243,7 +248,7 @@ enum {
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
+{
 	static float prevX=0, prevY=0;
 	
 #define kFilterFactor 0.05f
@@ -260,7 +265,7 @@ enum {
 	else
 		v = cpv( accelY, -accelX);
 	
-	cpSpaceSetGravity( space_, cpvmult(v, 200) );
+	cpSpaceSetGravity( _space, cpvmult(v, 200) );
 }
 
 
@@ -279,3 +284,4 @@ enum {
 }
 
 @end
+

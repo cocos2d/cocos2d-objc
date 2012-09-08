@@ -89,10 +89,12 @@ enum {
 /** align items in rows of columns */
 -(void) alignItemsInColumns: (NSNumber *) columns, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInColumns: (NSNumber *) columns vaList: (va_list) args;
+-(void) alignItemsInColumnsWithArray:(NSArray*) arrayOfNumbers;
 
 /** align items in columns of rows */
 -(void) alignItemsInRows: (NSNumber *) rows, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
+-(void) alignItemsInRowsWithArray: (NSArray*) arrayOfNumbers;
 
 /** set event handler priority. By default it is: kCCMenuTouchPriority */
 -(void) setHandlerPriority:(NSInteger)newPriority;

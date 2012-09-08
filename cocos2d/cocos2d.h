@@ -34,7 +34,7 @@
  *
  * <hr>
  *
- * @todo A native english speaker should check the grammar. We need your help!
+ * @todo A native English speaker should check the grammar. We need your help!
  *
  */
 
@@ -112,12 +112,20 @@
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
 #import "CCConfiguration.h"
+#import "CCDrawNode.h"
 
 // Shaders
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "ccShaders.h"
+
+// Physics integration
+// Box2d integration should include these 2 files manually
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
+#import "CCPhysicsSprite.h"
+#import "CCPhysicsDebugNode.h"
+#endif
 
 //
 // cocos2d macros
@@ -171,9 +179,18 @@
 
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 // free functions
 NSString * cocos2dVersion(void);
 
+#ifdef __cplusplus
+}
+#endif
+
+	
 #ifdef __CC_PLATFORM_IOS
 #ifndef __IPHONE_4_0
 #error "If you are targeting iPad, you should set BASE SDK = 4.0 (or 4.1, or 4.2), and set the 'iOS deploy target' = 3.2"

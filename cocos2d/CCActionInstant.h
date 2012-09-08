@@ -111,7 +111,7 @@
 +(id) actionWithTarget: (id) t selector:(SEL) s;
 /** initializes the action with the callback */
 -(id) initWithTarget: (id) t selector:(SEL) s;
-/** exeuctes the callback */
+/** executes the callback */
 -(void) execute;
 @end
 

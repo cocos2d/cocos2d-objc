@@ -63,3 +63,11 @@ const GLchar * ccPositionTexture_uColor_frag =
 #import "ccShader_PositionTexture_uColor_frag.h"
 const GLchar * ccPositionTexture_uColor_vert = 
 #import "ccShader_PositionTexture_uColor_vert.h"
+
+//
+const GLchar * ccPositionColorLengthTexture_frag =
+#import "ccShader_PositionColorLengthTexture_frag.h"
+
+const GLchar * ccPositionColorLengthTexture_vert =
+#import "ccShader_PositionColorLengthTexture_vert.h"
+
