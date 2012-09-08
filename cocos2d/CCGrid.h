@@ -53,7 +53,7 @@
 	ccDirectorProjection	directorProjection_;
 }
 
-/** wheter or not the grid is active */
+/** whether or not the grid is active */
 @property (nonatomic,readwrite) BOOL active;
 /** number of times that the grid will be reused */
 @property (nonatomic,readwrite) int reuseGrid;

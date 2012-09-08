@@ -127,7 +127,7 @@ typedef enum {
 	CCGLProgram					*shaderProgram_;
 
 }
-/** Intializes with a texture2d with data */
+/** Initializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
 /** These functions are needed to create mutable textures */

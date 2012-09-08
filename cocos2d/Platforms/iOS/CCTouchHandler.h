@@ -62,7 +62,7 @@
 @end
 
 /** CCStandardTouchHandler
- It forwardes each event to the delegate.
+ It forwards each event to the delegate.
  */
 @interface CCStandardTouchHandler : CCTouchHandler
 {
@@ -71,7 +71,7 @@
 
 /**
  CCTargetedTouchHandler
- Object than contains the claimed touches and if it swallos touches.
+ Object than contains the claimed touches and if it swallows touches.
  Used internally by TouchDispatcher
  */
 @interface CCTargetedTouchHandler : CCTouchHandler {

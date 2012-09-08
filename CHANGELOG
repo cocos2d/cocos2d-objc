@@ -16,6 +16,7 @@ version 2.1-beta 7-Sept-2012
 . [NEW] Physics nodes: PhysicsSprite and PhysicsDebugNode are part of cocos2d
 . [NEW] Tests: Tests for RotationalSkew feature
 . [NEW] Texture: Supports PVR v3 file format
+. [FIX] All: fixed many English grammar/syntax errors in the docstrings
 . [FIX] Actions: Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 . [FIX] Director: Fixed flicker again.
 		Autorotation works on iOS6.

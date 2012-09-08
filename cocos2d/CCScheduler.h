@@ -144,9 +144,9 @@ struct _hashUpdateEntry;
 }
 
 /** Modifies the time of all scheduled callbacks.
- You can use this property to create a 'slow motion' or 'fast fordward' effect.
+ You can use this property to create a 'slow motion' or 'fast forward' effect.
  Default is 1.0. To create a 'slow motion' effect, use values below 1.0.
- To create a 'fast fordward' effect, use values higher than 1.0.
+ To create a 'fast forward' effect, use values higher than 1.0.
  @since v0.8
  @warning It will affect EVERY scheduled selector / action.
  */
@@ -159,9 +159,9 @@ struct _hashUpdateEntry;
 
 /** The scheduled method will be called every 'interval' seconds.
  If paused is YES, then it won't be called until it is resumed.
- If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+ If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
  If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- repeat lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously
+ repeat lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously
  delay is the amount of time the action will wait before it'll start
 
  @since v0.99.3, repeat and delay added in v1.1
@@ -180,9 +180,9 @@ struct _hashUpdateEntry;
 
 /** The scheduled block will be called every 'interval' seconds.
  If paused is YES, then it won't be called until it is resumed.
- If 'interval' is 0, it will be called every frame, but if so, it recommened to use 'scheduleUpdateForTarget:' instead.
+ If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
  If the block is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- 'repeat' lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continiously.
+ 'repeat' lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously.
  'delay' is the amount of time the action will wait before it'll start.
  'target' is needed for all the method related to "target" like "pause" and "unschedule"
  'key' is a unique identifier of the block. Needed to unschedule the block or update its interval.

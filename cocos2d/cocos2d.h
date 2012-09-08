@@ -34,7 +34,7 @@
  *
  * <hr>
  *
- * @todo A native english speaker should check the grammar. We need your help!
+ * @todo A native English speaker should check the grammar. We need your help!
  *
  */
 

@@ -91,12 +91,12 @@ void ccDrawRect( CGPoint origin, CGPoint destination );
  */
 void ccDrawSolidRect( CGPoint origin, CGPoint destination, ccColor4F color );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+/** draws a polygon given a pointer to CGPoint coordinates and the number of vertices measured in points.
  The polygon can be closed or open
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
-/** draws a solid polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
+/** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
 void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
     

@@ -33,7 +33,7 @@
  CCTextureProtocol protocol
 
  It knows how to render a TextureAtlas object.
- If you are going to render a TextureAtlas consider subclassing CCAtlasNode (or a subclass of CCAtlasNode)
+ If you are going to render a TextureAtlas consider sub-classing CCAtlasNode (or a subclass of CCAtlasNode)
 
  All features from CCNode are valid, plus the following features:
  - opacity and RGB colors
@@ -90,7 +90,7 @@
 -(id) initWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 
 /** updates the Atlas (indexed vertex array).
- * Shall be overriden in subclasses
+ * Shall be overridden in subclasses
  */
 -(void) updateAtlasValues;
 @end

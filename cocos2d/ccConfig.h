@@ -54,14 +54,14 @@
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- In order to use them, you have to use the following functions, insead of the the GL ones:
+ In order to use them, you have to use the following functions, instead of the the GL ones:
 	- ccGLUseProgram() instead of glUseProgram()
 	- ccGLDeleteProgram() instead of glDeleteProgram()
 	- ccGLBlendFunc() instead of glBlendFunc()
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
- It is recommened to enable it whenever possible to improve speed.
+ It is recommended to enable it whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
 
  Default value: Disabled by default
@@ -74,7 +74,7 @@
 
 /** @def CC_ENABLE_DEPRECATED
  If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
- Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
+ Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocos2d version.
  
  Default value: Enabled by default
  
@@ -224,7 +224,7 @@
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box.
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  If the CCSprite is being drawn by a CCSpriteBatchNode, the bounding box might be a bit different.
  To enable set it to a value different than 0. Disabled by default:
@@ -239,7 +239,7 @@
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabelBMFont will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  To enable set it to a value different than 0. Disabled by default.
  */
@@ -249,7 +249,7 @@
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  To enable set it to a value different than 0. Disabled by default.
  */
