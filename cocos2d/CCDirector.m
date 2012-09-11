@@ -393,6 +393,57 @@ static CCDirector *_sharedDirector = nil;
 	nextScene_ = scene;	// nextScene_ is a weak ref
 }
 
+-(void) pushScene:(CCScene*) scene withTransition: (NSString*)transitionName duration:(ccTime)t {
+    
+    NSAssert( scene != nil, @"Argument must be non-nil");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	sendCleanupToScene_ = NO;
+    
+    CCScene* newScene = [transitionClass transitionWithDuration:t scene:scene];
+	[scenesStack_ addObject: newScene];
+	nextScene_ = newScene;	// nextScene_ is a weak ref
+}
+
+-(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t
+        withColor:(ccColor3B)color
+{
+    NSAssert( scene != nil, @"Argument must be non-nil");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:withColor:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	sendCleanupToScene_ = NO;
+    
+    CCScene* newScene = [transitionClass transitionWithDuration:t scene:scene withColor:color];
+	[scenesStack_ addObject: newScene];
+	nextScene_ = newScene;	// nextScene_ is a weak ref
+}
+
+-(void) pushScene:(CCScene*) scene withTransition:(NSString*)transitionName duration:(ccTime)t
+  withOrientation:(tOrientation)orientation
+{
+    NSAssert( scene != nil, @"Argument must be non-nil");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:withOrientation:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	sendCleanupToScene_ = NO;
+    
+    CCScene* newScene = [transitionClass transitionWithDuration:t scene:scene withOrientation:orientation];
+	[scenesStack_ addObject: newScene];
+	nextScene_ = newScene;	// nextScene_ is a weak ref
+    
+}
+
 -(void) popScene
 {
 	NSAssert( runningScene_ != nil, @"A running Scene is needed");
@@ -405,6 +456,68 @@ static CCDirector *_sharedDirector = nil;
 	else {
 		sendCleanupToScene_ = YES;
 		nextScene_ = [scenesStack_ objectAtIndex:c-1];
+	}
+}
+
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t
+{
+	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	[scenesStack_ removeLastObject];
+	NSUInteger c = [scenesStack_ count];
+	if( c == 0 ) {
+		[self end];
+	} else {
+		CCScene* scene = [transitionClass transitionWithDuration:t scene:[scenesStack_ objectAtIndex:c-1]];
+		[scenesStack_ replaceObjectAtIndex:c-1 withObject:scene];
+		nextScene_ = scene;
+	}
+}
+
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t
+                     withColor:(ccColor3B)color
+{
+    NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:withColor:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	[scenesStack_ removeLastObject];
+	NSUInteger c = [scenesStack_ count];
+	if( c == 0 ) {
+		[self end];
+	} else {
+		CCScene* scene = [transitionClass transitionWithDuration:t scene:[scenesStack_ objectAtIndex:c-1] withColor:color];
+		[scenesStack_ replaceObjectAtIndex:c-1 withObject:scene];
+		nextScene_ = scene;
+	}
+}
+
+-(void) popSceneWithTransition:(NSString*)transitionName duration:(ccTime)t
+               withOrientation:(tOrientation)orientation
+{
+    NSAssert( runningScene_ != nil, @"A running Scene is needed");
+    
+    Class transitionClass = NSClassFromString(transitionName);
+    BOOL classTest = [transitionClass respondsToSelector:@selector(transitionWithDuration:scene:withOrientation:)];
+    NSString * errorMsg = [NSString stringWithFormat:@"The transition \"%@\" is not a valid transition.", transitionName];
+    NSAssert (classTest, errorMsg);
+    
+	[scenesStack_ removeLastObject];
+	NSUInteger c = [scenesStack_ count];
+	if( c == 0 ) {
+		[self end];
+	} else {
+		CCScene* scene = [transitionClass transitionWithDuration:t scene:[scenesStack_ objectAtIndex:c-1] withOrientation:orientation];
+		[scenesStack_ replaceObjectAtIndex:c-1 withObject:scene];
+		nextScene_ = scene;
 	}
 }
 

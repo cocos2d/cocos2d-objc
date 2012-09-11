@@ -59,7 +59,7 @@
 
 @implementation FlipXLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationLeftOver];
 }
 @end
 @implementation FadeWhiteTransition
@@ -70,57 +70,57 @@
 
 @implementation FlipXRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationRightOver];
 }
 @end
 @implementation FlipYUpOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationUpOver];
 }
 @end
 @implementation FlipYDownOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationDownOver];
 }
 @end
 @implementation FlipAngularLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationLeftOver];
 }
 @end
 @implementation FlipAngularRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationRightOver];
 }
 @end
 @implementation ZoomFlipXLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationLeftOver];
 }
 @end
 @implementation ZoomFlipXRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationRightOver];
 }
 @end
 @implementation ZoomFlipYUpOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationUpOver];
 }
 @end
 @implementation ZoomFlipYDownOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationDownOver];
 }
 @end
 @implementation ZoomFlipAngularLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationLeftOver];
 }
 @end
 @implementation ZoomFlipAngularRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s withOrientation:kOrientationRightOver];
 }
 @end
 

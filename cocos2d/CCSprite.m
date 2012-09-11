@@ -71,6 +71,7 @@
 @synthesize blendFunc = blendFunc_;
 @synthesize textureAtlas = textureAtlas_;
 @synthesize offsetPosition = offsetPosition_;
+@synthesize forceDisableDebugDraw = forceDisableDebugDraw_;
 
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -479,14 +480,16 @@
 		[children_ makeObjectsPerformSelector:@selector(updateTransform)];
 
 #if CC_SPRITE_DEBUG_DRAW
-	// draw bounding box
-	CGPoint vertices[4] = {
-		ccp( quad_.bl.vertices.x, quad_.bl.vertices.y ),
-		ccp( quad_.br.vertices.x, quad_.br.vertices.y ),
-		ccp( quad_.tr.vertices.x, quad_.tr.vertices.y ),
-		ccp( quad_.tl.vertices.x, quad_.tl.vertices.y ),
-	};
-	ccDrawPoly(vertices, 4, YES);
+    if(!forceDisableDebugDraw_) {
+        // draw bounding box
+        CGPoint vertices[4] = {
+            ccp( quad_.bl.vertices.x, quad_.bl.vertices.y ),
+            ccp( quad_.br.vertices.x, quad_.br.vertices.y ),
+            ccp( quad_.tr.vertices.x, quad_.tr.vertices.y ),
+            ccp( quad_.tl.vertices.x, quad_.tl.vertices.y ),
+        };
+        ccDrawPoly(vertices, 4, YES);
+    }
 #endif // CC_SPRITE_DEBUG_DRAW
 
 }
@@ -533,23 +536,27 @@
 
 
 #if CC_SPRITE_DEBUG_DRAW == 1
-	// draw bounding box
-	CGPoint vertices[4]={
-		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
-		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
-		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
-		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
-	};
-	ccDrawPoly(vertices, 4, YES);
+    if(!forceDisableDebugDraw_) {
+        // draw bounding box
+        CGPoint vertices[4]={
+            ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
+            ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
+            ccp(quad_.br.vertices.x,quad_.br.vertices.y),
+            ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
+        };
+        ccDrawPoly(vertices, 4, YES);
+    }
 #elif CC_SPRITE_DEBUG_DRAW == 2
-	// draw texture box
-	CGSize s = self.textureRect.size;
-	CGPoint offsetPix = self.offsetPosition;
-	CGPoint vertices[4] = {
-		ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
-		ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
-	};
-	ccDrawPoly(vertices, 4, YES);
+    if(!forceDisableDebugDraw_) {
+        // draw texture box
+        CGSize s = self.textureRect.size;
+        CGPoint offsetPix = self.offsetPosition;
+        CGPoint vertices[4] = {
+            ccp(offsetPix.x,offsetPix.y), ccp(offsetPix.x+s.width,offsetPix.y),
+            ccp(offsetPix.x+s.width,offsetPix.y+s.height), ccp(offsetPix.x,offsetPix.y+s.height)
+        };
+        ccDrawPoly(vertices, 4, YES);
+    }
 #endif // CC_SPRITE_DEBUG_DRAW
 
 	CC_INCREMENT_GL_DRAWS(1);
@@ -906,7 +913,7 @@
 	return [CCSpriteFrame frameWithTexture:texture_
 							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
-									offset:unflippedOffsetPositionFromCenter_
+									offset:CC_POINT_POINTS_TO_PIXELS(unflippedOffsetPositionFromCenter_)
 							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
 }
 
