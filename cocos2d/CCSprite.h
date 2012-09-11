@@ -107,6 +107,8 @@
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
+    
+    BOOL    forceDisableDebugDraw_;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -149,6 +151,8 @@
 @property (nonatomic,readonly) CGPoint	offsetPosition;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
+
+@property (nonatomic, readwrite) BOOL forceDisableDebugDraw;
 
 #pragma mark CCSprite - Initializers
 
