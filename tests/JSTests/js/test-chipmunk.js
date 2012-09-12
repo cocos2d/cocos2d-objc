@@ -45,7 +45,8 @@ var loadScene = function (sceneIdx)
 //	scene.walkSceneGraph(0);
 
 	director.replaceScene( scene );
-//    __jsc__.garbageCollect();
+	__jsc__.dumpRoot();
+    __jsc__.garbageCollect();
 };
 
 //------------------------------------------------------------------
@@ -423,6 +424,158 @@ goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 //
 
 
+//------------------------------------------------------------------
+//
+// Chipmunk Space Test
+//
+//------------------------------------------------------------------
+
+cp.Space = function() {
+	this.object = new cp._Space();
+	this.handle = this.object.handle();
+};
+
+cp.Space.prototype.getStaticBody = function() {
+	return cp.spaceGetStaticBody( this.handle );
+};
+
+cp.Space.prototype.addStaticShape = function( shape ) {
+	return cp.spaceAddStaticShape( this.handle, shape );
+};
+
+cp.Space.prototype.addShape = function( shape ) {
+	return cp.spaceAddShape( this.handle, shape );
+};
+
+cp.Space.prototype.addBody = function( body ) {
+	return cp.spaceAddBody( this.handle, body );
+};
+
+cp.Space.prototype.addCollisionHandler = function( typeA, typeB, object, cbBegin, cbPre, cbPost, cbSep ) {
+	return cp.spaceAddCollisionHandler( this.handle, typeA, typeB, object, cbBegin, cbPre, cbPost, cbSep );
+};
+
+cp.Space.prototype.removeCollisionHandler = function( typeA, typeB ) {
+	return cp.spaceRemoveCollisionHandler( this.handle, typeA, typeB );
+};
+
+cp.Space.prototype.getGravity = function() {
+	return cp.spaceGetGravity( this.handle );
+};
+
+cp.Space.prototype.setGravity = function( gravity ) {
+	return cp.spaceSetGravity( this.handle, gravity );
+};
+
+cp.Space.prototype.step = function( dt ) {
+	return cp.spaceStep( this.handle, dt );
+};
+
+var ChipmunkSpaceTest = function() {
+
+	goog.base(this);
+
+	this.title = function() {
+		return 'Chipmunk Space Test';
+	};
+
+	this.subtitle = function() {
+		return 'Testing Space as object';
+	};
+
+	// init physics
+	this.initPhysics = function() {
+		this.space =  new cp.Space();
+		var staticBody = this.space.getStaticBody();
+
+		// Walls
+		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
+				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
+				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
+				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
+				];
+		for( var i=0; i < walls.length; i++ ) {
+			var wall = walls[i];
+			cp.shapeSetElasticity(wall, 1);
+			cp.shapeSetFriction(wall, 1);
+			this.space.addStaticShape( wall );
+		}
+
+		// Gravity
+		this.space.setGravity( cp.v(0, -30) );
+	};
+
+	this.createPhysicsSprite = function( pos, file, collision_type ) {
+		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
+		cp.bodySetPos( body, pos );
+		this.space.addBody( body );
+		var shape = cp.boxShapeNew( body, 48, 108);
+		cp.shapeSetElasticity( shape, 0.5 );
+		cp.shapeSetFriction( shape, 0.5 );
+		cp.shapeSetCollisionType( shape, collision_type );
+		this.space.addShape( shape );
+
+		var sprite = cc.PhysicsSprite.create(file);
+		sprite.setBody( body );
+		return sprite;
+	};
+
+	this.onEnter = function () {
+		goog.base(this, 'onEnter');
+
+        this.initPhysics();
+		this.scheduleUpdate();
+
+		var sprite1 = this.createPhysicsSprite( cc.p(winSize.width/2, winSize.height-20), "grossini.png", 1);
+		var sprite2 = this.createPhysicsSprite( cc.p(winSize.width/2, 50), "grossinis_sister1.png", 2);
+
+		this.addChild( sprite1 );
+		this.addChild( sprite2 );
+
+		this.space.addCollisionHandler( 1, 2, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+	};
+
+	this.onExit = function() {
+		this.space.removeCollisionHandler( 1, 2 );
+	};
+
+	this.update = function( delta ) {
+		this.space.step( delta );
+	};
+
+	this.collisionBegin = function ( arbiter, space ) {
+
+		if( ! this.messageDisplayed ) {
+			var label = cc.LabelBMFont.create("Collision Detected", "bitmapFontTest5.fnt");
+			this.addChild( label );
+			label.setPosition( centerPos );
+			this.messageDisplayed = true;
+		}
+		cc.log('collision begin');
+		var bodies = cp.arbiterGetBodies( arbiter );
+		var shapes = cp.arbiterGetShapes( arbiter );
+		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
+		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+		cc.log( 'Collision Type A:' + collTypeA );
+		cc.log( 'Collision Type B:' + collTypeB );
+		return true;
+	};
+
+	this.collisionPre = function ( arbiter, space ) {
+		cc.log('collision pre');
+		return true;
+	};
+
+	this.collisionPost = function ( arbiter, space ) {
+		cc.log('collision post');
+	};
+
+	this.collisionSeparate = function ( arbiter, space ) {
+		cc.log('collision separate');
+	};
+
+};
+goog.inherits( ChipmunkSpaceTest, BaseLayer );
 
 //
 // Order of tests
@@ -431,7 +584,7 @@ goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
 scenes.push( ChipmunkCollisionMemoryLeakTest );
-
+scenes.push( ChipmunkSpaceTest );
 
 //------------------------------------------------------------------
 //
