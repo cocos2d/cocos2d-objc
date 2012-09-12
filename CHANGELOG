@@ -4,6 +4,7 @@ version 1.1-rc0 ..-..-2012
 . [NEW] Macros: made CCLOG a bit more verbose
 . [NEW] CCSprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
 . [NEW] ActionsTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
+. [NEW] ParticleTest: added test case for issue #893, free non-moving particles in retina mode would still move
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
 . [FIX] CCDirector: exceptions raised in runloop didn't cause program to abort (issue #911)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
