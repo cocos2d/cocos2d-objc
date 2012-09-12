@@ -51,8 +51,12 @@
 
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
 
-#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 @synthesize body = _body;
+#endif
+#if CC_ENABLE_BOX2D_INTEGRATION
+@synthesize body = _body;
+@synthesize PTMRatio = _PTMRatio;
 #endif
 
 #pragma mark - Chipmunk support
