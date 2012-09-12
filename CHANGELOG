@@ -3,6 +3,7 @@ version 1.1-rc0 ..-..-2012
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
 . [NEW] Macros: made CCLOG a bit more verbose
 . [NEW] CCSprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
+. [NEW] ActionsTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystem: unschedule update method when deallocated

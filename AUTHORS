@@ -63,11 +63,14 @@ Contributors (alphabetically ordered):
 	Improved Debug Drawing for Sprite batched node	
 	EAGLView destroys and recreates all OpenGL buffers correctly
 	TileMap: flipped tiles can be changed during runtime
-
+    
 * Mark Haylock
     Fix for CCParticleSystem to unschedule update method when deallocated
 * Martin 
 	Co-author of animated particle system
+
+* Michal Szymerski
+    Test case for issue #1020, synchronizing of several animations, each within a CCRepeatForever
 
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added convenience function to create a ccColor4F from color components	

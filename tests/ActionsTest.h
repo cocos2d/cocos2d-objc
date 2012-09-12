@@ -151,6 +151,10 @@
 @interface ActionRotateJerk : ActionDemo
 {}
 @end
+@interface ActionDelayAnimation : ActionDemo
+{}
+@end
+
 @interface ActionFollow : ActionDemo
 {}
 @end

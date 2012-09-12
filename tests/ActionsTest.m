@@ -40,6 +40,7 @@ static NSString *transitions[] = {
 	@"ActionRepeatForever",
 	@"ActionRotateToRepeat",
 	@"ActionRotateJerk",
+    @"ActionDelayAnimation",
 	@"ActionCallFunc",
 	@"ActionCallFuncND",
 	@"ActionCallBlock",
@@ -764,6 +765,83 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Example SpriteTestDelayAnimation
+
+@implementation ActionDelayAnimation
+
+#define firstSpriteTag 666
+static int currSpriteTag = firstSpriteTag;
+
+-(void) startAnimation
+{
+	CCSprite * sprite = (CCSprite*)[self getChildByTag:currSpriteTag];
+	NSMutableArray *animFrames = [NSMutableArray array];
+	for(int i = 0; i < 14; i++) {
+        
+		CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:[NSString stringWithFormat:@"grossini_dance_%02d.png",(i+1)]];
+		[animFrames addObject:frame];
+	}
+    
+    CCAnimation* animation = [CCAnimation animationWithFrames:animFrames]; 
+    
+    
+	[sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithDuration:.5f animation:animation restoreOriginalFrame:NO] ]];			
+    
+	currSpriteTag++;
+}
+
+-(id) init
+{
+	if( (self=[super init]) )
+	{
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
+		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+        
+        [tamara setVisible:NO];
+        [kathia setVisible:NO];
+        [grossini setVisible:NO];
+        
+		int sprites = 6;
+		for(int i=0;i<=sprites;i++)
+		{
+			CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+			sprite.position = ccp( s.width/8*(i+1), s.height/2);
+            
+			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
+			point.scale = 0.25f;
+			point.position = sprite.position;
+			[self addChild:point z:1];
+            
+			[self addChild:sprite z:0 tag:firstSpriteTag + i];
+		}
+        
+		for(int i=0;i<=sprites;i++)
+		{
+			[self runAction:[CCSequence actions:[CCDelayTime actionWithDuration:CCRANDOM_0_1() * 0.5f],
+							 [CCCallFunc actionWithTarget:self selector:@selector(startAnimation)],nil]];
+            
+		}
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"CCRepeatForever animation test";
+}
+-(NSString *) subtitle
+{
+	return @"Animations should not synchronize, issue #1020";
+}
+@end
 
 @implementation ActionReverse
 -(void) onEnter
