@@ -49,6 +49,7 @@ static NSString *transitions[] = {
 	@"ParticleDesigner10",
 	@"ParticleDesigner11",
 	@"ParticleDesigner12",
+    @"StayPut",
 
 	@"RadiusMode1",
 	@"RadiusMode2",
@@ -1120,6 +1121,31 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"Testing radial and duration";
+}
+@end
+
+@implementation StayPut
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self setColor:ccBLACK];
+	[self removeChild:background cleanup:YES];
+	background = nil;
+	
+	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/StayPut.plist"];
+    self.emitter.posVar = ccp(0.f,0.f); 
+    self.emitter.totalParticles = 1; 
+	[self addChild:self.emitter];
+}
+
+-(NSString *) title
+{
+	return @"PD: StayPut?";
+}
+-(NSString*) subtitle
+{
+	return @"Testing position in retina (wait)";
 }
 @end
 

@@ -155,6 +155,10 @@
 {}
 @end
 
+@interface StayPut : ParticleDemoBatch
+{}
+@end
+
 @interface RadiusMode1 : ParticleDemoBatch
 {}
 @end
