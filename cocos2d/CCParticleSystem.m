@@ -745,7 +745,7 @@
 				particleCount--;
 								
 				if( particleCount == 0 && autoRemoveOnFinish_ ) {
-					[self unscheduleUpdate];
+
 					[parent_ removeChild:self cleanup:YES];
 					return;
 				}
