@@ -450,12 +450,19 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 	
 	// position
+    //divide by scale to get correct position, issue 1352
 	if( positionType_ == kCCPositionTypeFree ) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
+        particle->startPos.x /= scaleX_;
+        particle->startPos.y /= scaleY_;
 	}
 	else if( positionType_ == kCCPositionTypeRelative ) {
 		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
+        
+        particle->startPos.x /= scaleX_;
+        particle->startPos.y /= scaleY_;
+
 	}
 	
 	// direction
@@ -578,16 +585,18 @@
 	//else 
 	currentPosition = CGPointZero;
 	
+    //divide by scale to get correct position, issue 1352
+    
 	if( positionType_ == kCCPositionTypeFree ) {
 		currentPosition = [self convertToWorldSpace:CGPointZero];
-		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
-		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
+		currentPosition.x *= CC_CONTENT_SCALE_FACTOR() / scaleX_;
+		currentPosition.y *= CC_CONTENT_SCALE_FACTOR() / scaleY_;
 	}
 	else if( positionType_ == kCCPositionTypeRelative ) {
 	//currentPosition = [self convertToWorldSpace:CGPointZero];
 		currentPosition = position_;
-		currentPosition.x *= CC_CONTENT_SCALE_FACTOR();
-		currentPosition.y *= CC_CONTENT_SCALE_FACTOR();
+		currentPosition.x *= CC_CONTENT_SCALE_FACTOR() / scaleX_;
+		currentPosition.y *= CC_CONTENT_SCALE_FACTOR() / scaleY_;
 	}
 	
 	if (visible_) 

@@ -8,7 +8,7 @@ version 1.1-rc0 ..-..-2012
 . [FIX] CCDirector: exceptions raised in runloop didn't cause program to abort (issue #911)
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystem: unschedule update method when deallocated
-
+. [FIX] CCParticleSystem: incorrect position of free and relative particles when emitter is scaled (issue #1352)
 . [FIX] CCParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning
 . [FIX] CCRenderTexture: fixed new getUIImageFromBuffer implementation
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)

@@ -346,7 +346,7 @@ Class restartAction()
 	[batchNode_ removeAllChildrenWithCleanup:YES];
 	
 	self.emitter = [CCParticleSun node];
-	
+	self.emitter.scale = 1.5f;
 	
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: PARTICLE_FIRE_NAME];
 	

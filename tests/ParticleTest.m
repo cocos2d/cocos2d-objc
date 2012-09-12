@@ -362,6 +362,10 @@ Class restartAction()
 	[super onEnter];
 
 	self.emitter = [CCParticleFlower node];
+    
+    //testing correct position of free and relative particles when emitter is scaled. 
+    self.emitter.scale = 1.5;
+    
 	[background addChild:emitter_ z:10];
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	
