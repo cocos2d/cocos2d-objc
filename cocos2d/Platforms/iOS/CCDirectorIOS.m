@@ -727,7 +727,15 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void) mainLoop:(id)sender
 {
-	[self drawScene];	
+    @try
+    {
+        [self drawScene];
+    }
+    @catch (NSException* exception)
+    {
+     	[self stopAnimation];
+        [exception performSelector:@selector(raise) withObject:nil afterDelay:0];
+    }
 }
 
 - (void) stopAnimation

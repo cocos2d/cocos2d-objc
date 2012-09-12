@@ -124,6 +124,8 @@ Contributors (alphabetically ordered):
 * Steve Kanter
     new file extension for ipad retina
 
+* Zeraien 
+    Fix for raising exception in runloop of CADisplayLinkDirector, where exception isn't propagated properly 
 
 cocos2d for iPhone authors for v1.0
 -----------------------------------
