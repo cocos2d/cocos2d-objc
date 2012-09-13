@@ -403,6 +403,11 @@ enum {
  */
 - (CGRect) boundingBoxInPixels;
 
+/**
+ This methodes computes the new position needed to not move the node when the relative anchorpoint changes. It doesn't work for absolute anchor point. 
+ @since 1.1-RC0
+ */
+- (void) setAnchorPointWithoutPositionChange:(CGPoint) point;
 
 // actions
 

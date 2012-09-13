@@ -182,6 +182,22 @@ static NSUInteger globalOrderOfArrival = 0;
 	}
 }
 
+- (void) setAnchorPointWithoutPositionChange:(CGPoint) point
+{
+	if (isRelativeAnchorPoint_) 
+	{
+		if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+			
+			[self setPosition:ccpAdd(position_,ccp( (point.x - anchorPoint_.x) * contentSize_.width * scaleX_, (point.y - anchorPoint_.y) * contentSize_.height * scaleY_))];
+			[self setAnchorPoint:point];	
+		}
+	}
+    else 
+    {
+        [self setAnchorPoint:point];
+    }
+}
+
 -(void) setContentSize:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {

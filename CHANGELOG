@@ -2,6 +2,7 @@ version 1.1-rc0 ..-..-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
 . [NEW] Macros: made CCLOG a bit more verbose
+. [NEW] CCNode: added convenience method setAnchorPointWithoutPositionChange, to change a relative anchor point but not change the position of the node.
 . [NEW] CCSprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
 . [NEW] ActionsTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
 . [NEW] ParticleTest: added test case for issue #893, free non-moving particles in retina mode would still move
