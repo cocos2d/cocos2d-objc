@@ -59,51 +59,76 @@ extern "C" {
 /** draws a point given x and y coordinate measured in points. */
 void ccDrawPoint( CGPoint point );
 
+/** draws a point in pixels, so on retina it's only 1 x 1 pixel instead of 2 x 2 
+ 
+ @since 1.1-RC0
+ */ 
+void ccDrawPointInPixels( CGPoint point, BOOL inPixels);
+    
 /** draws an array of points.
  @since v0.7.2
  */
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 
+void ccDrawPointsInPixels( const CGPoint *points, NSUInteger numberOfPoints, BOOL inPixels);
+    
 /** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
+void ccDrawLineInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );    
 /** draws multiple lines in one draw call 
     @since 1.1
  */
 void ccDrawLines( CGPoint* points, NSUInteger numberOfPoints );	
 
+void ccDrawLinesInPixels( CGPoint* points, NSUInteger numberOfPoints, BOOL inPixels );	
+    
 /** draws a rectangle given the origin and destination point measured in points. */
 void ccDrawRect( CGPoint origin, CGPoint destination );
 
+void ccDrawRectInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );
+    
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
 void ccDrawSolidRect( CGPoint origin, CGPoint destination );
 
+void ccDrawSolidRectInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );    
+    
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
+void ccDrawPolyInPixels( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon, BOOL inPixels );
+    
 /** draws a solid poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
     @since 1.1
  */
 void ccDrawSolidPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
+void ccDrawSolidPolyInPixels( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon, BOOL inPixels );
+    
 /** draws a circle given the center, radius and number of segments measured in points 
  */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
+
+void ccDrawCircleInPixels( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter, BOOL inPixels);    
 
 /** draws a quad bezier path measured in points.
  @since v0.8
  */
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
+void ccDrawQuadBezierInPixels(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments, BOOL inPixels);  
+    
 /** draws a cubic bezier path measured in points.
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
+    
+void ccDrawCubicBezierInPixels(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments, BOOL inPixels);
 
 #ifdef __cplusplus
 }
