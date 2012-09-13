@@ -231,7 +231,7 @@ struct _listAddedEntry;
 
 /** Adds a mouse delegate to the dispatcher's list.
  Delegates with a lower priority value will be called before higher priority values.
- All the events will be propgated to all the delegates, unless the one delegate returns YES.
+ All the events will be propagated to all the delegates, unless the one delegate returns YES.
 
  IMPORTANT: The delegate will be retained.
  */
@@ -247,7 +247,7 @@ struct _listAddedEntry;
 
 /** Adds a Keyboard delegate to the dispatcher's list.
  Delegates with a lower priority value will be called before higher priority values.
- All the events will be propgated to all the delegates, unless the one delegate returns YES.
+ All the events will be propagated to all the delegates, unless the one delegate returns YES.
 
  IMPORTANT: The delegate will be retained.
  */
@@ -263,7 +263,7 @@ struct _listAddedEntry;
 
 /** Adds a Touch delegate to the dispatcher's list.
  Delegates with a lower priority value will be called before higher priority values.
- All the events will be propgated to all the delegates, unless the one delegate returns YES.
+ All the events will be propagated to all the delegates, unless the one delegate returns YES.
 
  IMPORTANT: The delegate will be retained.
  */

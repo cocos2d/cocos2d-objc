@@ -120,7 +120,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 /** @def CC_DIRECTOR_INIT
 	- Initializes an CCGLView with 0-bit depth format, and RGB565 render buffer.
 	- The CCGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
+	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this macro.
     - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
     - The director_ will be the root view controller of the navController.
 	- It will connect the CCGLView to the Director

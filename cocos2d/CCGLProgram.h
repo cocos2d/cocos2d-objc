@@ -99,7 +99,7 @@ struct _hashUniformEntry;
 	BOOL usesTime_;
 }
 
-@property(nonatomic, readonly) GLint program;
+@property(nonatomic, readonly) GLuint program;
 
 /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;

@@ -193,3 +193,9 @@
 @interface Issue1327 : ActionDemo
 {}
 @end
+
+@interface Issue1398 : ActionDemo
+{
+	int testInteger;
+}
+@end

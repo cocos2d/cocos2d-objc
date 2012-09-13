@@ -918,7 +918,7 @@
 	return [CCSpriteFrame frameWithTexture:texture_
 							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
-									offset:unflippedOffsetPositionFromCenter_
+									offset:CC_POINT_POINTS_TO_PIXELS(unflippedOffsetPositionFromCenter_)
 							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
 }
 

@@ -53,12 +53,12 @@
  */
 @property (nonatomic, readwrite, retain) NSBundle	*bundle;
 
-/** NSFileManager used by CCFileUtils. By default it uses its own intance.
+/** NSFileManager used by CCFileUtils. By default it uses its own instance.
  @since v2.0
  */
 @property (nonatomic, readwrite, retain) NSFileManager	*fileManager;
 
-/** Whether of not the fallback sufixes is enabled.
+/** Whether of not the fallback suffixes is enabled.
  When enabled it will try to search for the following suffixes in the following order until one is found:
  * On iPad HD  : iPad HD suffix, iPad suffix, iPhone HD suffix, Without suffix
  * On iPad     : iPad suffix, iPhone HD suffix, Without suffix

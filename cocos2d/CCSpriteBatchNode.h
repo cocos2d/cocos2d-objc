@@ -56,7 +56,7 @@
 	CCTextureAtlas	*textureAtlas_;
 	ccBlendFunc		blendFunc_;
 
-	// all descendants: chlidren, gran children, etc...
+	// all descendants: children, grandchildren, etc...
 	CCArray	*descendants_;
 }
 
@@ -66,7 +66,7 @@
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** descendants (children, gran children, etc) */
+/** descendants (children, grandchildren, etc) */
 @property (nonatomic,readonly) CCArray *descendants;
 
 /** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
@@ -127,7 +127,7 @@
 @interface CCSpriteBatchNode (QuadExtensions)
 /** Adds a quad into the texture atlas but it won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
- For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
+ For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
  */
 -(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
 

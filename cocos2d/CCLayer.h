@@ -98,19 +98,19 @@
 
 /** whether or not it will receive mouse events.
 
- Valind only Mac. Not valid on iOS
+ Valid only on OS X. Not valid on iOS
  */
 @property (nonatomic, readwrite) BOOL isMouseEnabled;
 
 /** whether or not it will receive keyboard events.
 
- Valind only Mac. Not valid on iOS
+ Valid only on OS X. Not valid on iOS
  */
 @property (nonatomic, readwrite) BOOL isKeyboardEnabled;
 
 /** whether or not it will receive touch events.
 
- Valid on iOS and Mac OS X v10.6 and later.
+ Valid on iOS and on Mac OS X v10.6 and later.
  */
 @property (nonatomic, readwrite) BOOL isTouchEnabled;
 
@@ -118,7 +118,7 @@
  Default 0.
  Override this method to set another priority.
 
- Valind only Mac. Not valid on iOS
+ Valid only on OS X. Not valid on iOS
  */
 -(NSInteger) mouseDelegatePriority;
 
@@ -126,7 +126,7 @@
  Default 0.
  Override this method to set another priority.
 
- Valind only Mac. Not valid on iOS
+ Valid only on OS X. Not valid on iOS
  */
 -(NSInteger) keyboardDelegatePriority;
 
@@ -134,7 +134,7 @@
  Default 0.
  Override this method to set another priority.
 
- Valind only Mac. Not valid on iOS
+ Valid only on OS X. Not valid on iOS
  */
 -(NSInteger) touchDelegatePriority;
 
