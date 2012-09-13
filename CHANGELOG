@@ -1,3 +1,6 @@
+version 2.1-beta2 XX-Sept-2012
+. [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
+
 version 2.1-beta 7-Sept-2012
 . [NEW] DrawNode: Node that batches drawing primitives (replaces the drawing primitives free functions )
 . [NEW] FileUtils: Added support for mac and retinaDisplay Mac suffix.
