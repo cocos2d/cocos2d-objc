@@ -34,7 +34,7 @@
 	
 	// Director
 	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];
-	[director_ setDisplayStats:NO];
+	[director_ setDisplayStats:YES];
 	[director_ setAnimationInterval:1.0/60];
 	
 	// GL View
