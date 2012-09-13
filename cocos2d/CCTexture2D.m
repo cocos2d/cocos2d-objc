@@ -543,49 +543,45 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	NSAssert(stringWithAttributes, @"Invalid stringWithAttributes");
 
-    // get nearest power of two
-    NSSize POTSize = NSMakeSize(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
-    
-	// Get actual rendered dimensions
-    NSRect boundingRect = [stringWithAttributes boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin];
-    
+	// get nearest power of two
+	NSSize POTSize = NSMakeSize(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+
+	// get string dimensions
+	NSSize realDimensions = [stringWithAttributes size];
+
 	// Mac crashes if the width or height is 0
-	if( boundingRect.size.width > 0 && boundingRect.size.height > 0 ) {
-        
-        CGSize offset = CGSizeMake(0, POTSize.height - dimensions.height);
-        
-        //Alignment
-		switch (hAlignment) {
-			case kCCTextAlignmentLeft: break;
-			case kCCTextAlignmentCenter: offset.width = (dimensions.width-boundingRect.size.width)/2.0f; break;
-			case kCCTextAlignmentRight: offset.width = dimensions.width-boundingRect.size.width; break;
-			default: break;
-		}
-		switch (vAlignment) {
-			case kCCVerticalTextAlignmentTop: offset.height += dimensions.height - boundingRect.size.height; break;
-			case kCCVerticalTextAlignmentCenter: offset.height += (dimensions.height - boundingRect.size.height) / 2; break;
-			case kCCVerticalTextAlignmentBottom: break;
-			default: break;
-		}
-        
-        CGRect drawArea = CGRectMake(offset.width, offset.height, boundingRect.size.width, boundingRect.size.height);
-		
-		//Disable antialias
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
-		
-		NSImage *image = [[NSImage alloc] initWithSize:POTSize];
-		[image lockFocus];	
-		
-        [stringWithAttributes drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
-		
-		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
-		[image unlockFocus];
+	if (realDimensions.width > 0 && realDimensions.height > 0)
+	{
+		unsigned char * data = (unsigned char *)malloc(POTSize.width * POTSize.height * 4);
+		memset(data, 0, POTSize.width * POTSize.height * 4);
+		CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, 4 * POTSize.width, CGColorSpaceCreateDeviceRGB(), kCGImageAlphaPremultipliedLast|kCGBitmapByteOrder32Big);
 
-		unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:[NSGraphicsContext graphicsContextWithGraphicsPort:context flipped:NO]];
 
-		NSUInteger textureSize = POTSize.width * POTSize.height;
+		// Create a path to render text in
+		CGMutablePathRef path = CGPathCreateMutable();
+		CGPathAddRect(path, NULL, NSMakeRect(0.0f, 0.0f, POTSize.width, POTSize.height));
+
+		// create the framesetter and render text
+		CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)stringWithAttributes);
+		CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, [stringWithAttributes length]), path, NULL);
+
+		CTFrameDraw(frame, context);
+
+		// Clean up
+		CFRelease(frame);
+		CFRelease(path);
+		CFRelease(framesetter);
+
+		[NSGraphicsContext restoreGraphicsState];
+
+		CGImageRef cgImage = CGBitmapContextCreateImage(context);
+
+		NSUInteger textureSize = (NSUInteger)POTSize.width * (NSUInteger)POTSize.height;
+
 #if CC_USE_LA88_LABELS
-		unsigned short *dst = (unsigned short*)data;
+		unsigned short *dst = (unsigned short*)data;//data;
 		for(int i = 0; i<textureSize; i++)
 			dst[i] = (data[i*4+3] << 8) | 0xff;		//Convert RGBA8888 to LA88
 #else
@@ -593,15 +589,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		for(int i = 0; i<textureSize; i++)
 			dst[i] = data[i*4+3];					//Convert RGBA8888 to A8
 #endif // ! CC_USE_LA88_LABELS
-
-		data = [self keepData:dst length:textureSize];
-
 		self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
-		[bitmap release];
-		[image release];
+		free(data);
+		CGContextRelease(context);
+		CGImageRelease(cgImage);
 	}
-    else
-    {
+	else
+	{
 		[self release];
 		return nil;
 	}
