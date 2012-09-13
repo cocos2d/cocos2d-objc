@@ -127,7 +127,7 @@ typedef enum {
 	CCGLProgram					*shaderProgram_;
 
 }
-/** Intializes with a texture2d with data */
+/** Initializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
 /** These functions are needed to create mutable textures */
@@ -204,9 +204,9 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 	- Mac: Only NSLineBreakByWordWrapping is supported.
  @since v1.0
  */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size;
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment;
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end

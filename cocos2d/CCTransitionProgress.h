@@ -39,7 +39,7 @@
 @end
 
 /** CCTransitionRadialCCW transition.
- A counter colock-wise radial transition to the next scene
+ A counter clock-wise radial transition to the next scene
  */
 @interface CCTransitionProgressRadialCCW : CCTransitionProgress
 {}
@@ -48,7 +48,7 @@
 @end
 
 /** CCTransitionRadialCW transition.
- A counter colock-wise radial transition to the next scene
+ A counter clock-wise radial transition to the next scene
 */
 @interface CCTransitionProgressRadialCW : CCTransitionProgress
 {}
@@ -57,7 +57,7 @@
 @end
 
 /** CCTransitionProgressHorizontal transition.
- A  colock-wise radial transition to the next scene
+ A  clock-wise radial transition to the next scene
  */
 @interface CCTransitionProgressHorizontal : CCTransitionProgress
 {}

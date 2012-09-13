@@ -24,6 +24,59 @@
 			<string>iPhone Developer</string>
 		</dict>
 	</dict>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Default</key>
+			<string>Universal</string>
+			<key>Description</key>
+			<string>What device family to create a project for.</string>
+			<key>Identifier</key>
+			<string>universalDeviceFamily</string>
+			<key>Name</key>
+			<string>Device Family</string>
+			<key>SortOrder</key>
+			<integer>1</integer>
+			<key>Type</key>
+			<string>popup</string>
+			<key>Units</key>
+			<dict>
+				<key>Universal</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>1,2</string>
+						</dict>
+					</dict>
+				</dict>
+				<key>iPad</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>2</string>
+						</dict>
+					</dict>
+				</dict>
+				<key>iPhone</key>
+				<dict>
+					<key>Project</key>
+					<dict>
+						<key>SharedSettings</key>
+						<dict>
+							<key>TARGETED_DEVICE_FAMILY</key>
+							<string>1</string>
+						</dict>
+					</dict>
+				</dict>
+			</dict>
+		</dict>
+	</array>
 	<key>Targets</key>
 	<array>
 		<dict>
@@ -65,6 +118,20 @@
 			<string>Resources</string>
 			<key>Path</key>
 			<string>Resources/Default.png</string>
+		</dict>
+		<key>Resources/Default@2x.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/Default@2x.png</string>
+		</dict>
+		<key>Resources/Default-568h@2x.png</key>
+		<dict>
+			<key>Group</key>
+			<string>Resources</string>
+			<key>Path</key>
+			<string>Resources/Default-568h@2x.png</string>
 		</dict>
 		<key>Resources/Default-Landscape~ipad.png</key>
 		<dict>
@@ -156,6 +223,8 @@
 	<key>Nodes</key>
 	<array>
 		<string>Resources/Default.png</string>
+		<string>Resources/Default@2x.png</string>
+		<string>Resources/Default-568h@2x.png</string>
 		<string>Resources/Default-Landscape~ipad.png</string>
 		<string>Resources/fps_images.png</string>
 		<string>Resources/fps_images-hd.png</string>

@@ -2,7 +2,7 @@
 
 echo 'cocos2d-iphone template installer'
 
-COCOS2D_VER='cocos2d 2.0-beta2'
+COCOS2D_VER='cocos2d 2.1-beta'
 SCRIPT_DIR=$(dirname $0)
 
 COCOS2D_DST_DIR='cocos2d v2.x'
@@ -92,6 +92,50 @@ copy_kazmath_files(){
 	copy_files LICENSE_Kazmath.txt "$LIBS_DIR"
 }
 
+copy_box2d_files(){
+	echo ...copying Box2d files
+	copy_files external/Box2d/Box2D "$LIBS_DIR"
+	copy_files LICENSE_Box2D.txt "$LIBS_DIR"
+}
+
+copy_chipmunk_files(){
+	echo ...copying Chipmunk files
+	copy_files external/Chipmunk "$LIBS_DIR"
+	copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
+}
+
+copy_ccbreader_files(){
+	echo ...copying CocosBuilderReader files
+	copy_files external/CocosBuilderReader "$LIBS_DIR"
+	copy_files LICENSE_CCBReader.txt "$LIBS_DIR"
+}
+
+copy_spidermonkey_files(){
+	echo ...copying SpiderMonkey files
+
+	LIBS_DIR="$DST_DIR""lib_spidermonkey_ios.xctemplate/libs/SpiderMonkey/"
+	mkdir -p "$LIBS_DIR"
+	copy_files external/SpiderMonkey/ios "$LIBS_DIR"
+	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
+
+	LIBS_DIR="$DST_DIR""lib_spidermonkey_osx.xctemplate/libs/SpiderMonkey/"
+	mkdir -p "$LIBS_DIR"
+	copy_files external/SpiderMonkey/osx "$LIBS_DIR"
+	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
+}
+
+copy_jsbindings_files(){
+	echo ...copying JSBindings files
+	copy_files external/jsbindings "$LIBS_DIR"
+	copy_files LICENSE_jsbindings.txt "$LIBS_DIR"
+}
+
+copy_jrswizzle_files(){
+	echo ...copying JR Swizzle files
+	copy_files external/JRSwizzle "$LIBS_DIR"
+	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
+}
+
 
 print_template_banner(){
 	echo ''
@@ -106,7 +150,7 @@ print_template_banner(){
 copy_xcode4_project_templates(){
 	TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 
-	print_template_banner "Installing Xcode 4 cocos2d iOS template"
+	print_template_banner "Installing cocos2d templates"
 
 	DST_DIR="$TEMPLATE_DIR"
     check_dst_dir
@@ -133,36 +177,42 @@ copy_xcode4_project_templates(){
 
 	echo done!
 
-	print_template_banner "Installing Xcode 4 Chipmunk iOS template"
 
+	print_template_banner "Installing Physics Engines templates"
+	LIBS_DIR="$DST_DIR""lib_box2d.xctemplate/libs/"
+	mkdir -p "$LIBS_DIR"
+	copy_box2d_files
 
 	LIBS_DIR="$DST_DIR""lib_chipmunk.xctemplate/libs/"
     mkdir -p "$LIBS_DIR"
-
-	echo ...copying Chipmunk files
-	copy_files external/Chipmunk "$LIBS_DIR"
-	copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
+	copy_chipmunk_files
 
 	echo done!
 
-	print_template_banner "Installing Xcode 4 Box2d iOS template"
 
-
-	LIBS_DIR="$DST_DIR""lib_box2d.xctemplate/libs/"
+	print_template_banner "Installing JS Bindings templates"
+	LIBS_DIR="$DST_DIR""lib_jsbindings.xctemplate/libs/"
 	mkdir -p "$LIBS_DIR"
+	copy_jsbindings_files
 
-	echo ...copying Box2d files
-	copy_files external/Box2d/Box2D "$LIBS_DIR"
-	copy_files LICENSE_Box2D.txt "$LIBS_DIR"
+	copy_spidermonkey_files
 
-	echo done!
+	LIBS_DIR="$DST_DIR""lib_jrswizzle.xctemplate/libs/"
+	mkdir -p "$LIBS_DIR"
+	copy_jrswizzle_files
+
+	LIBS_DIR="$DST_DIR""lib_ccbreader.xctemplate/libs/"
+	mkdir -p "$LIBS_DIR"
+	copy_ccbreader_files
+
+    echo done!
 
 
 	# Move File Templates to correct position
 	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
 	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 	
-	print_template_banner "Installing Xcode 4 CCNode file templates..."
+	print_template_banner "Installing CCNode file templates..."
 
 	check_dst_dir
 	

@@ -93,10 +93,13 @@ typedef struct _KerningHashElement
  */
 @interface CCBMFontConfiguration : NSObject
 {
+	// Character Set defines the letters that actually exist in the font
+	NSCharacterSet *characterSet_;
+  
 	// atlas name
 	NSString		*atlasName_;
     
-    // XXX: Creating a public interface so that the bitmapFontArray[] is accesible
+    // XXX: Creating a public interface so that the bitmapFontArray[] is accessible
 @public
     
 	// BMFont definitions
@@ -111,6 +114,9 @@ typedef struct _KerningHashElement
 	// values for kerning
 	tCCKerningHashElement	*kerningDictionary_;
 }
+
+// Character set
+@property (nonatomic, retain, readonly) NSCharacterSet *characterSet;
 
 // atlasName
 @property (nonatomic, readwrite, retain) NSString *atlasName;
@@ -199,7 +205,7 @@ typedef struct _KerningHashElement
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile;
 /** creates a BMFont label with an initial string, the FNT file, width, and alignment option */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment;
-/** creates a BMFont label with an initial string, the FNT file, width, alignment option and the offset of where the glpyhs start on the .PNG image */
+/** creates a BMFont label with an initial string, the FNT file, width, alignment option and the offset of where the glyphs start on the .PNG image */
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset;
 
 /** init a BMFont label with an initial string and the FNT file */

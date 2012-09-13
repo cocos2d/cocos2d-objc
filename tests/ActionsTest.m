@@ -60,6 +60,7 @@ static NSString *transitions[] = {
 	@"Issue1288",
 	@"Issue1288_2",
 	@"Issue1327",
+	@"Issue1398",
 };
 
 Class nextAction()
@@ -1669,6 +1670,8 @@ return @"Skew Comparison";
 }
 @end
 
+#pragma mark - Issue1327
+
 @implementation Issue1327
 -(void) onEnter
 {
@@ -1704,6 +1707,62 @@ return @"Skew Comparison";
 }
 @end
 
+#pragma mark - Issue1398
+
+@implementation Issue1398
+
+-(void) incrementInteger {
+    testInteger++;
+    NSLog(@"incremented to %d", testInteger);
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+
+    testInteger = 0;
+    NSLog(@"testInt = %d", testInteger);
+    [self runAction:[CCSequence actions:
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"1");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"2");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"3");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"4");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"5");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"6");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"7");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"8");}],
+                     nil]];
+
+}
+-(NSString *) title
+{
+	return @"Issue 1398";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console: You should see an 8";
+}
+@end
+
 
 #pragma mark - AppDelegate
 
@@ -1712,6 +1771,44 @@ return @"Skew Comparison";
 #ifdef __CC_PLATFORM_IOS
 
 #pragma mark AppController - iOS
+
+@interface BootLayer : CCLayer
+@end
+
+@implementation BootLayer
+
+// Don't create the background imate at "init" time.
+// Instead create it at "onEnter" time.
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		CCSprite *_background;
+		
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			_background = [CCSprite spriteWithFile:@"Default.png"];
+			_background.rotation = 90;
+		} else {
+			_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
+		}
+		_background.position = ccp(size.width/2, size.height/2);
+		
+		[self addChild:_background];
+	}
+	return self;
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	[[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:1 scene:scene]];
+}
+@end
 
 @implementation AppController
 
@@ -1741,13 +1838,20 @@ return @"Skew Comparison";
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
 
 	return YES;
 }
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [BootLayer node]];
+		[director runWithScene: scene];
+	}
+}
+
 
 //-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 //{

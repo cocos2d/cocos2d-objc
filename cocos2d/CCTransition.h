@@ -68,7 +68,7 @@ typedef enum {
 -(id) initWithDuration:(ccTime) t scene:(CCScene*)s;
 /** called after the transition finishes */
 -(void) finish;
-/** used by some transitions to hide the outter scene */
+/** used by some transitions to hide the outer scene */
 -(void) hideOutShowIn;
 @end
 
@@ -149,7 +149,7 @@ typedef enum {
 {}
 /** initializes the scenes */
 -(void) initScenes;
-/** returns the action that will be performed by the incomming and outgoing scene */
+/** returns the action that will be performed by the incoming and outgoing scene */
 -(CCActionInterval*) action;
 @end
 

@@ -30,7 +30,7 @@
 
 /** A class that implements a Texture Atlas.
  Supported features:
-   * The atlas file can be a PVRTC, PNG or any other fomrat supported by Texture2D
+   * The atlas file can be a PVRTC, PNG or any other format supported by Texture2D
    * Quads can be updated in runtime
    * Quads can be added in runtime
    * Quads can be removed in runtime

@@ -1,4 +1,0 @@
-{
-'CCDirector': {'protocols': [], 'subclass': 'NSObject'},
-'CCLayer': {'protocols': ['CKeyboardEventDelegate', 'CCMouseEventDelegate', 'CCTouchEventDelegate'], 'subclass': 'CCNode'}
-}

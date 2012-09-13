@@ -34,7 +34,7 @@
 	
 	// Director
 	director_ = (CCDirectorIOS*)[CCDirector sharedDirector];
-	[director_ setDisplayStats:NO];
+	[director_ setDisplayStats:YES];
 	[director_ setAnimationInterval:1.0/60];
 	
 	// GL View
@@ -58,9 +58,8 @@
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 
-	// AddSubView doesn't work on iOS6
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];
+	// set it as the root VC
+	[window_ setRootViewController:navController_];
 
 	[window_ makeKeyAndVisible];
 
