@@ -33,6 +33,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	New RotationalSkew action that matches flash functionality
 	Added Tests for RotationSkew feature
 
+* lbeck @ cocos2d community:
+	Fix for LabelTTF in MacBook Retina Display
+
 * michaelm (http://ironapegames.com/):
 	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
 	
