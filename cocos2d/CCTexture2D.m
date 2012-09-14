@@ -574,7 +574,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
 		
 		NSImage *image = [[NSImage alloc] initWithSize:POTSize];
-		[image lockFocus];	
+		[image lockFocus];
+		[[NSAffineTransform transform] set];
 		
         [stringWithAttributes drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
 		

@@ -35,6 +35,7 @@
 enum {
 	kCCiPhone,
 	kCCiPhoneRetinaDisplay,
+    kCCiPhoneFourInchDisplay,
 	kCCiPad,
 	kCCiPadRetinaDisplay,
 };
@@ -123,6 +124,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #ifdef __CC_PLATFORM_IOS
 @synthesize iPhoneRetinaDisplaySuffix = iPhoneRetinaDisplaySuffix_;
+@synthesize iPhoneHourInchDisplaySuffix = iPhoneFourInchDisplaySuffix_;
 @synthesize iPadSuffix = iPadSuffix_;
 @synthesize iPadRetinaDisplaySuffix = iPadRetinaDisplaySuffix_;
 #elif defined(__CC_PLATFORM_MAC)
@@ -154,6 +156,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #ifdef __CC_PLATFORM_IOS
 		iPhoneRetinaDisplaySuffix_ = @"-hd";
+        iPhoneFourInchDisplaySuffix_ = @"-528h";
 		iPadSuffix_ = @"-ipad";
 		iPadRetinaDisplaySuffix_ = @"-ipadhd";		
 #elif defined(__CC_PLATFORM_MAC)
@@ -281,6 +284,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		*resolutionType = kCCResolutioniPad;
 	}
 	
+    // iPhone Four Inch ?
+	if( device == kCCiPhoneFourInchDisplay || (enableFallbackSuffixes_ && !ret) ) {
+		ret = [self getPath:relPath forSuffix:iPhoneFourInchDisplaySuffix_];
+		*resolutionType = kCCiPhoneFourInchDisplay;
+	}
+    
 	// iPhone HD ?
 	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) ) {
 		ret = [self getPath:relPath forSuffix:iPhoneRetinaDisplaySuffix_];
@@ -454,6 +463,11 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 #ifdef __CC_PLATFORM_IOS
+
+-(BOOL) iPhoneFourInchDisplayFileExistsAtPath:(NSString*)path
+{
+    return [self fileExistsAtPath:path withSuffix:iPhoneFourInchDisplaySuffix_];
+}
 
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
 {

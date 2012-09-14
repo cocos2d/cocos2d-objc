@@ -1,5 +1,9 @@
-version 2.1-beta2 XX-Sept-2012
+version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
+. [FIX-MAC] LabelTTF works as expected on HiDPI / RetinaDisplay MacBooks
+. [FIX] Templates: Mac Chipmunk template compiles OK
+			Mac Templates don't include the 32-bit architecture
+			Mac Temapltes use "current version" as new deploy OS version
 
 version 2.1-beta 7-Sept-2012
 . [NEW] DrawNode: Node that batches drawing primitives (replaces the drawing primitives free functions )

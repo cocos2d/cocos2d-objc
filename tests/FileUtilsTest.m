@@ -200,6 +200,13 @@ Class restartAction()
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: OK");
 		else
 			NSLog(@"Test #4: retinaDisplayFileExistsAtPath: FAILED");
+        
+        ret = [sharedFileUtils iPhoneFourInchDisplayFileExistsAtPath:@"grossini.png"];
+		if( ret )
+			NSLog(@"Test #5: fourInchDisplayFileExistsAtPath: OK");
+		else
+			NSLog(@"Test #5: fourInchDisplayFileExistsAtPath: FAILED");
+        
 #endif // __CC_PLATFORM_IOS
 		
 	}

@@ -40,6 +40,7 @@
 	
 #ifdef __CC_PLATFORM_IOS	
 	NSString *iPhoneRetinaDisplaySuffix_;
+    NSString *iPhoneFourInchDisplaySuffix_;
 	NSString *iPadSuffix_;
 	NSString *iPadRetinaDisplaySuffix_;
 #elif defined(__CC_PLATFORM_MAC)
@@ -80,6 +81,14 @@
  */
 @property (nonatomic,readwrite, copy, setter = setiPhoneRetinaDisplaySuffix:) NSString *iPhoneRetinaDisplaySuffix;
 
+/** Sets the iPhone Four Inch Display suffixes to load resources.
+ By default it is "-528h", "-hd", "", in that order.
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v2.2
+ */
+@property (nonatomic,readwrite, copy, setter = setiPhoneFourInchDisplaySuffix:) NSString *iPhoneHourInchDisplaySuffix;
+
 /** The iPad suffixes to load resources.
  By default it is "-ipad", "-hd", "", in that order.
  Only valid on iOS. Not valid for OS X.
@@ -87,7 +96,6 @@
  @since v1.1
  */
 @property (nonatomic,readwrite, copy, setter = setiPadSuffix:) NSString *iPadSuffix;
-
 
 /** Sets the iPad Retina Display suffixes to load resources.
  By default it is "-ipadhd", "-ipad", "-hd", "", in that order.
@@ -177,6 +185,12 @@
  @since v1.1
  */
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename;
+
+/** Returns whether or not a given filename exists with the iPhone Four Inch suffix.
+ Only available on iOS. Not supported on OS X.
+ @since v2.2
+ */
+-(BOOL) iPhoneFourInchDisplayFileExistsAtPath:(NSString*)path;
 
 /** Returns whether or not a given filename exists with the iPad suffix.
  Only available on iOS. Not supported on OS X.

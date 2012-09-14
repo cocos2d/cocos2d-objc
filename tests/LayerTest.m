@@ -297,8 +297,8 @@ Class restartAction()
 		[self addChild:sister2];
 		[self addChild: layer1 z:100 tag:kTagLayer];
 
-		sister1.position = ccp( 160, s.height/2);
-		sister2.position = ccp( 320, s.height/2);
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
 
 		[self schedule:@selector(newBlend:) interval:1];
 	}

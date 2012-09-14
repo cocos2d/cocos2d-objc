@@ -3081,6 +3081,7 @@
 		A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */; };
 		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		D010FBC81602F3FD00876A95 /* grossini-528h.png in Resources */ = {isa = PBXBuildFile; fileRef = D010FBC61602F28200876A95 /* grossini-528h.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -5947,6 +5948,7 @@
 		A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
 		A0F841F4151D5E4600EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
+		D010FBC61602F28200876A95 /* grossini-528h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-528h.png"; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7781,6 +7783,7 @@
 		508A333A0FBADD6A00D574A2 /* grossini images */ = {
 			isa = PBXGroup;
 			children = (
+				D010FBC61602F28200876A95 /* grossini-528h.png */,
 				A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */,
 				E062F9BB124801A300DE3932 /* grossinis_sister1-hd.png */,
 				E062F9BC124801A300DE3932 /* grossinis_sister2-hd.png */,
@@ -13349,6 +13352,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D010FBC81602F3FD00876A95 /* grossini-528h.png in Resources */,
 				A0F84145151D3B3000EBBFCB /* b1.png in Resources */,
 				A0F84146151D3B3000EBBFCB /* b2.png in Resources */,
 				A0F84147151D3B3000EBBFCB /* f1.png in Resources */,
@@ -16812,6 +16816,12 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CD_DEBUG=1",
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				PRODUCT_NAME = "build all tests";
 			};
