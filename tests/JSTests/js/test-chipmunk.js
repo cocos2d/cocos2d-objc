@@ -432,7 +432,7 @@ goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 
 cp.Space = function() {
 	this.object = new cp._Space();
-	this.handle = this.object.handle();
+	this.handle = this.object.getHandle();
 };
 
 cp.Space.prototype.getStaticBody = function() {
