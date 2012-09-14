@@ -1368,9 +1368,9 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 				[[NSNotificationCenter defaultCenter] postNotificationName:CCAnimationFrameDisplayedNotification object:target_ userInfo:dict];
 			
 			nextFrame_ = i+1;
-			
-			break;
-		}
+		
+        }//could be more than one frame per tick, due to low frame rate or frame delta < 1/FPS
+        else break;
 	}	
 }
 

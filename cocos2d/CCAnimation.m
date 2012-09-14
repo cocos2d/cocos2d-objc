@@ -161,6 +161,7 @@
 	[frames_ addObject:animFrame];
 	[animFrame release];
 	
+    NSAssert(delayPerUnit_ != 0, @"set a delayPerUnit before adding frames"); 
 	// update duration
 	duration_ += delayPerUnit_;
 	totalDelayUnits_++;

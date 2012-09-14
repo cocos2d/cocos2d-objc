@@ -537,6 +537,7 @@ Class restartAction()
 	
 	// Left: using manual animation.
 	CCAnimation* animation = [CCAnimation animation];
+    [animation setDelayPerUnit:0.016666f];
 	for( int i=1;i<15;i++)
 		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
 	
@@ -550,7 +551,9 @@ Class restartAction()
 	CCAnimation *animation2 = [cache animationByName:@"dance_1"];
 	
 	id action2 = [CCAnimate actionWithAnimation:animation2];
-	[tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
+    [animation setDelayPerUnit:0.0166666f];
+	
+    [tamara runAction: [CCSequence actions: action2, [action2 reverse], nil]];
 	
 	observer_ = [[NSNotificationCenter defaultCenter] addObserverForName:CCAnimationFrameDisplayedNotification object:nil queue:nil usingBlock:^(NSNotification* notification) {
 		
