@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 	@"ShaderPlasma",
 	@"ShaderBlur",
 	@"ShaderRetroEffect",
+	@"ShaderFail",
 };
 
 Class nextAction()
@@ -465,7 +466,7 @@ enum {
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
 	[shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];
+	[shaderProgram_ setUniformsForBuiltins];
 	[shaderProgram_ setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
 	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
 
@@ -620,8 +621,7 @@ enum {
 }
 @end
 
-#pragma mark -
-#pragma mark ShaderRetroEffect
+#pragma mark - ShaderRetroEffect
 
 @implementation ShaderRetroEffect
 -(id) init
@@ -692,6 +692,65 @@ enum {
 }
 @end
 
+#pragma mark - ShaderFail
+
+const GLchar *shader_frag_fail = "\n\
+#ifdef GL_ES					\n\
+precision lowp float;			\n\
+#endif							\n\
+										\n\
+varying vec2 v_texCoord;				\n\
+uniform sampler2D CC_Texture0;			\n\
+										\n\
+vec4 colors[10];						\n\
+										\n\
+void main(void)								\n\
+{											\n\
+	colors[0] = vec4(1,0,0,1);				\n\
+	colors[1] = vec4(0,1,0,1);				\n\
+	colors[2] = vec4(0,0,1,1);				\n\
+	colors[3] = vec4(0,1,1,1);				\n\
+	colors[4] = vec4(1,0,1,1);				\n\
+	colors[5] = vec4(1,1,0,1);				\n\
+	colors[6] = vec4(1,1,1,1);				\n\
+	colors[7] = vec4(1,0.5,0,1);			\n\
+	colors[8] = vec4(1,0.5,0.5,1);			\n\
+	colors[9] = vec4(0.5,0.5,1,1);			\n\
+																			\n\
+	int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );						\n\
+	gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
+}																			\n\
+\n";
+
+@implementation ShaderFail
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		
+		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert fragmentShaderByteArray:shader_frag_fail];
+		
+		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+		
+		[p link];
+		[p updateUniforms];
+		[p release];
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Shader: Invalid shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"See console for output with useful error log";
+}
+@end
+
 
 // CLASS IMPLEMENTATIONS
 #ifdef __CC_PLATFORM_IOS
@@ -711,15 +770,22 @@ enum {
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
-
-	CCScene *scene = [CCScene node];
-	
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene:scene];
+	}
+}
+
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

@@ -1,3 +1,40 @@
+version 2.1-beta2 13-Sept-2012
+. [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
+. [FIX-MAC] LabelTTF works as expected on HiDPI / RetinaDisplay MacBooks
+. [FIX] Templates: Mac Chipmunk template compiles OK
+			Mac Templates don't include the 32-bit architecture
+			Mac Temapltes use "current version" as new deploy OS version
+
+version 2.1-beta 7-Sept-2012
+. [NEW] DrawNode: Node that batches drawing primitives (replaces the drawing primitives free functions )
+. [NEW] FileUtils: Added support for mac and retinaDisplay Mac suffix.
+. [NEW] GL ES 2.0 code: General improvements in the shader and cache code. Better error reporting.
+. [NEW] Javascript bindings for cocos2d, CocosDenshion, CocosBuilder Reader and Chipmunk.
+			Includes Javascript remote console
+			Removed old JSCocoa code and samples
+			Uses Spidermonkey JS VM from Firefox 15.0
+			Includes JavaScript Templates for iOS and OS X for cocos2d + chipmunk + CocosBuilder Reader
+. [NEW] LabelTTF API consistency changes:
+       "font" and "size" are always the 2nd and 3rd params. eg:
+			labelWithString:font:size:  -> Not changed
+			labelWithString:dimension:hAlign:font:size -> labelWithString:font:size:dimension:hAlign:
+			labelWithString:dimension:hAlign:vAlign:font:size -> labelWithString:font:size:dimension:hAlign:vAlign:
+. [NEW] Node: Added RotationalSkew featur (compatible with Flash)
+. [NEW] Physics nodes: PhysicsSprite and PhysicsDebugNode are part of cocos2d
+. [NEW] Tests: Tests for RotationalSkew feature
+. [NEW] Texture: Supports PVR v3 file format
+. [FIX] All: fixed many English grammar/syntax errors in the docstrings
+. [FIX] Actions: Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
+. [FIX] Director: Fixed flicker again.
+		Autorotation works on iOS6.
+		onExitTransitionDidFinish when the director is ended and other "corner" cases.
+. [FIX] MenuItemToggle: Don't remove tag of added item.
+. [FIX] Node & BatchNode: RENDER_IN_SUBPIXEL works as expected.
+. [FIX] LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
+			Don't assert if character is not found. Just continue with logging the warning (issue #1404)
+. [FIX] LabelTTF: loads custom fonts correctly on Mac
+. [FIX] ProgressTimer: reverseDirection properly releases vertex if needed.
+
 version 2.0.0 8-Jul-2012
 . [FIX] EventDispatcher: fixed ccMouseEnter/Exit
 . [FIX] LabelTTF: supports multiline even if no dimensions are provided
@@ -515,7 +552,7 @@ version 0.99.5 - 16-Dec-2010
 . [FIX] FileUtils: loads .gz / .ccz files correctly in RetinaDisplay mode (issue #1037)
 . [FIX] FileUtils: fixed big memory leaks on .ccz inflater
 . [FIX] FileUtils: removes -hd suffix if the filename already has it (issue #1040)
-. [FIX] Node: udpated doxygen strings regarding default anchorPoint (issue #1049)
+. [FIX] Node: updated doxygen strings regarding default anchorPoint (issue #1049)
 . [FIX] Sprite: updateTransform can be overriden (issue #824)
 . [FIX] Sprite: Assert if an sprite initialized with a batchnode and it is not using it (issue #1053)
 . [FIX] Sprite: correctly overrides setIsRelativeAnchorPoint (issue #1055)
@@ -859,7 +896,7 @@ version 0.99.1-rc - 12-Mar-2010
  . [FIX] TMX: TMXLayer raises exception if it receives the addChild message (issue #808)
  . [FIX] Texture2D: removed NSLog when image was NULL (issue #802)
  . [FIX] Xcode: hardware requirements in .plist: doesn't contain disabled features (issue #769)
- . [3RD] Box2d: udpated to r66 (issue #795)
+ . [3RD] Box2d: updated to r66 (issue #795)
  . [3RD] Chipmunk: updated to v5.2 (issue #784)
 
 version 0.99.0 - 18-Feb-2010

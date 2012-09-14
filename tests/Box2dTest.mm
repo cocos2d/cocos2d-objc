@@ -7,6 +7,7 @@
 //
 
 #import "Box2dTest.h"
+#import "CCPhysicsSprite.h"
 
 //Pixel to metres ratio. Box2D uses metres as the unit for measurement.
 //This ratio defines how many pixels correspond to 1 Box2D "metre"
@@ -17,62 +18,6 @@
 enum {
 	kTagParentNode = 1,
 };
-
-
-#pragma mark - PhysicsSprite
-@implementation PhysicsSprite
-
--(void) setPhysicsBody:(b2Body *)body
-{
-	body_ = body;
-}
-
-// this method will only get called if the sprite is batched.
-// return YES if the physics values (angles, position ) changed
-// If you return NO, then nodeToParentTransform won't be called.
--(BOOL) dirty
-{
-	return YES;
-}
-
-// returns the transform matrix according the Chipmunk Body values
--(CGAffineTransform) nodeToParentTransform
-{
-	b2Vec2 pos  = body_->GetPosition();
-
-	float x = pos.x * PTM_RATIO;
-	float y = pos.y * PTM_RATIO;
-
-	if ( ignoreAnchorPointForPosition_ ) {
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
-	}
-
-	// Make matrix
-	float radians = body_->GetAngle();
-	float c = cosf(radians);
-	float s = sinf(radians);
-
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
-	}
-
-	// Rot, Translate Matrix
-	transform_ = CGAffineTransformMake( c,  s,
-									   -s,	c,
-									   x,	y );
-
-	return transform_;
-}
-
--(void) dealloc
-{
-	//
-	[super dealloc];
-}
-
-@end
 
 #pragma mark - MainLayer
 
@@ -239,16 +184,6 @@ enum {
 -(void) addNewSpriteAtPosition:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCNode *parent = [self getChildByTag:kTagParentNode];
-
-	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-	//just randomly picking one of the images
-	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
-	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];
-	[parent addChild:sprite];
-
-	sprite.position = ccp( p.x, p.y);
 
 	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
@@ -268,10 +203,19 @@ enum {
 	fixtureDef.friction = 0.3f;
 	body->CreateFixture(&fixtureDef);
 
-	[sprite setPhysicsBody:body];
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	
+	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+	//just randomly picking one of the images
+	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[parent addChild:sprite];
+
+	[sprite setBody:body];
+	[sprite setPTMRatio:PTM_RATIO];
+	[sprite setPosition: ccp( p.x, p.y) ];
 }
-
-
 
 -(void) update: (ccTime) dt
 {
@@ -377,15 +321,20 @@ enum {
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	// add layer
-	CCScene *scene = [CCScene node];
-	id box2dLayer = [MainLayer node];
-	[scene addChild:box2dLayer z:0];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		id box2dLayer = [MainLayer node];
+		[scene addChild:box2dLayer z:0];
+		[director runWithScene: scene];
+	}
+}
+
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

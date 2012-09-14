@@ -9,30 +9,58 @@
 	<key>Options</key>
 	<array>
 		<dict>
-			<key>Description</key>
-			<string>Your new product&apos;s name.</string>
-			<key>EmptyReplacement</key>
-			<string>ProductName</string>
 			<key>Identifier</key>
 			<string>productName</string>
+			<key>Required</key>
+			<true/>
 			<key>Name</key>
 			<string>Product Name</string>
 			<key>NotPersisted</key>
 			<true/>
-			<key>Required</key>
-			<true/>
+			<key>Description</key>
+			<string>Your new product&apos;s name</string>
+			<key>EmptyReplacement</key>
+			<string>ProductName</string>
 			<key>Type</key>
 			<string>text</string>
 		</dict>
 		<dict>
-			<key>Default</key>
-			<string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
+			<key>Identifier</key>
+			<string>organizationName</string>
+			<key>Name</key>
+			<string>Organization Name</string>
 			<key>Description</key>
-			<string>Your new product&apos;s bundle identifier.</string>
+			<string>Your company&apos;s name</string>
+			<key>Type</key>
+			<string>text</string>
+           <key>Default</key>
+           <string>___FULLUSERNAME___</string>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>bundleIdentifierPrefix</string>
+			<key>Required</key>
+			<true/>
+			<key>Name</key>
+			<string>Company Identifier</string>
+			<key>Description</key>
+			<string>Your company&apos;s bundle identifier prefix</string>
+			<key>EmptyReplacement</key>
+			<string>com.yourcompany</string>
+			<key>Type</key>
+			<string>text</string>
+		</dict>
+		<dict>
 			<key>Identifier</key>
 			<string>bundleIdentifier</string>
 			<key>Name</key>
 			<string>Bundle Identifier</string>
+			<key>NotPersisted</key>
+			<true/>
+			<key>Description</key>
+			<string>Your new product&apos;s bundle identifier</string>
+			<key>Default</key>
+			<string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
 			<key>Type</key>
 			<string>static</string>
 		</dict>

@@ -31,7 +31,7 @@
  - comparisons are done using pointer equality instead of isEqual
 
  There are 2 kind of functions:
- - ccArray functions that manipulates objective-c objects (retain and release are performanced)
+ - ccArray functions that manipulates objective-c objects (retain and release are performed)
  - ccCArray functions that manipulates values like if they were standard C structures (no retain/release is performed)
  */
 
@@ -84,20 +84,20 @@ void ccArrayEnsureExtraCapacity(ccArray *arr, NSUInteger extra);
 /** shrinks the array so the memory footprint corresponds with the number of items */
 void ccArrayShrink(ccArray *arr);
 
-/** Returns index of first occurence of object, NSNotFound if object not found. */
+/** Returns index of first occurrence of object, NSNotFound if object not found. */
 NSUInteger ccArrayGetIndexOfObject(ccArray *arr, id object);
 
 /** Returns a Boolean value that indicates whether object is present in array. */
 BOOL ccArrayContainsObject(ccArray *arr, id object);
 
-/** Appends an object. Bahaviour undefined if array doesn't have enough capacity. */
+/** Appends an object. Behavior undefined if array doesn't have enough capacity. */
 void ccArrayAppendObject(ccArray *arr, id object);
 
 /** Appends an object. Capacity of arr is increased if needed. */
 void ccArrayAppendObjectWithResize(ccArray *arr, id object);
 
 /** Appends objects from plusArr to arr. 
- Behaviour undefined if arr doesn't have enough capacity. */
+ Behavior undefined if arr doesn't have enough capacity. */
 void ccArrayAppendArray(ccArray *arr, ccArray *plusArr);
 
 /** Appends objects from plusArr to arr. Capacity of arr is increased if needed. */
@@ -113,17 +113,17 @@ void ccArraySwapObjectsAtIndexes(ccArray *arr, NSUInteger index1, NSUInteger ind
 void ccArrayRemoveAllObjects(ccArray *arr);
 
 /** Removes object at specified index and pushes back all subsequent objects.
- Behaviour undefined if index outside [0, num-1]. */
+ Behavior undefined if index outside [0, num-1]. */
 void ccArrayRemoveObjectAtIndex(ccArray *arr, NSUInteger index);
 
 /** Removes object at specified index and fills the gap with the last object,
  thereby avoiding the need to push back subsequent objects.
- Behaviour undefined if index outside [0, num-1]. */
+ Behavior undefined if index outside [0, num-1]. */
 void ccArrayFastRemoveObjectAtIndex(ccArray *arr, NSUInteger index);
 
 void ccArrayFastRemoveObject(ccArray *arr, id object);
 
-/** Searches for the first occurance of object and removes it. If object is not
+/** Searches for the first occurrence of object and removes it. If object is not
  found the function has no effect. */
 void ccArrayRemoveObject(ccArray *arr, id object);
 
@@ -160,22 +160,22 @@ void ccCArrayDoubleCapacity(ccCArray *arr);
 /** Increases array capacity such that max >= num + extra. */
 void ccCArrayEnsureExtraCapacity(ccCArray *arr, NSUInteger extra);
 
-/** Returns index of first occurence of value, NSNotFound if value not found. */
+/** Returns index of first occurrence of value, NSNotFound if value not found. */
 NSUInteger ccCArrayGetIndexOfValue(ccCArray *arr, CCARRAY_ID value);
 
 /** Returns a Boolean value that indicates whether value is present in the C array. */
 BOOL ccCArrayContainsValue(ccCArray *arr, CCARRAY_ID value);
 
-/** Inserts a value at a certain position. Behaviour undefined if aray doesn't have enough capacity */
+/** Inserts a value at a certain position. Behavior undefined if array doesn't have enough capacity */
 void ccCArrayInsertValueAtIndex( ccCArray *arr, CCARRAY_ID value, NSUInteger index);
 
-/** Appends an value. Bahaviour undefined if array doesn't have enough capacity. */
+/** Appends an value. Behavior undefined if array doesn't have enough capacity. */
 void ccCArrayAppendValue(ccCArray *arr, CCARRAY_ID value);
 
 /** Appends an value. Capacity of arr is increased if needed. */
 void ccCArrayAppendValueWithResize(ccCArray *arr, CCARRAY_ID value);
 
-/** Appends values from plusArr to arr. Behaviour undefined if arr doesn't have
+/** Appends values from plusArr to arr. Behavior undefined if arr doesn't have
  enough capacity. */
 void ccCArrayAppendArray(ccCArray *arr, ccCArray *plusArr);
 
@@ -186,19 +186,19 @@ void ccCArrayAppendArrayWithResize(ccCArray *arr, ccCArray *plusArr);
 void ccCArrayRemoveAllValues(ccCArray *arr);
 
 /** Removes value at specified index and pushes back all subsequent values.
- Behaviour undefined if index outside [0, num-1].
+ Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
 void ccCArrayRemoveValueAtIndex(ccCArray *arr, NSUInteger index);
 
 /** Removes value at specified index and fills the gap with the last value,
  thereby avoiding the need to push back subsequent values.
- Behaviour undefined if index outside [0, num-1].
+ Behavior undefined if index outside [0, num-1].
  @since v0.99.4
  */
 void ccCArrayFastRemoveValueAtIndex(ccCArray *arr, NSUInteger index);
 
-/** Searches for the first occurance of value and removes it. If value is not found the function has no effect.
+/** Searches for the first occurrence of value and removes it. If value is not found the function has no effect.
  @since v0.99.4
  */
 void ccCArrayRemoveValue(ccCArray *arr, CCARRAY_ID value);
@@ -213,7 +213,7 @@ void ccCArrayRemoveArray(ccCArray *arr, ccCArray *minusArr);
  */
 void ccCArrayFullRemoveArray(ccCArray *arr, ccCArray *minusArr);
 
-// iterative mergesort arrd on
+// iterative mergesort
 //  http://www.inf.fh-flensburg.de/lang/algorithmen/sortieren/merge/mergiter.htm  
 int cc_mergesortL(ccCArray* array, size_t width, cc_comparator comparator);
 

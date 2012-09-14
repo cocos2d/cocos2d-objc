@@ -8,6 +8,55 @@ http://www.cocos2d-iphone.org/forum
 cocos2d logos by Michael Heald (http://www.fullyillustrated.com)
 
 
+cocos2d for iPhone 2.1 authors
+------------------------------
+
+Lead Developer:
+	Ricardo Quesada (http://zynga.com/)
+
+
+People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
+
+* CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
+	Director: Fixed the initial flicker + correct size at startup
+	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
+	LabelBMFont: If the character is not supported, logs a warning
+
+* Goffredo Marocchi (https://github.com/panajev):
+	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
+	GLProgram: Better error reporting on link
+
+* Ian Oliver (http://www.trivialtechnology.com)
+	GLProgram: Better error reporting on link
+
+* Lam Pham (http://www.fancyratstudios.com/)
+	New RotationalSkew action that matches flash functionality
+	Added Tests for RotationSkew feature
+
+* lbeck @ cocos2d community:
+	Fix for LabelTTF in MacBook Retina Display
+
+* michaelm (http://ironapegames.com/):
+	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
+	
+* Nicolas Gramlich (http://andengine.org):
+	Contributed the remote Javascript console
+
+* Robert J Payne (http://www.zwopple.com/)
+	Initial PVR v3 file format support
+
+* Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
+	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
+	Author of CCDrawNode: a node that batches drawing primitives
+	Author of CCPhysicsDebugNode and CCPhysicsSprite
+
+* Viktor Lidholt (http://www.cocosbuilder.com)
+	LabelTTF loads custom fonts correctly on Mac
+
+* yichao.zhang (https://github.com/zeaster)
+	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
+
+
 cocos2d for iPhone 2.0 authors
 ------------------------------
 
@@ -154,6 +203,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	
 * Vit Valentin:
 	Author of cocos2d-x's Catmull Rom actions. 
+	
+* Yannick Loriot (http://yannickloriot.com/):
+	MenuItemToggle does not remove the tag of the added Menu Items.
 	
 * zergyo:
 	Grid: Fixed memory leak when setIsTextureFlipped is used

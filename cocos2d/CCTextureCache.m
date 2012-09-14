@@ -288,13 +288,13 @@ static CCTextureCache *sharedTextureCache;
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
 
+
 		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
 			tex = [self addPVRImage:path];
 
 #ifdef __CC_PLATFORM_IOS
 
 		else {
-
 			ccResolutionType resolution;
 			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:path resolutionType:&resolution];
 
@@ -317,11 +317,12 @@ static CCTextureCache *sharedTextureCache;
 
 #elif defined(__CC_PLATFORM_MAC)
 		else {
-			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath: path ];
+			ccResolutionType resolution;
+			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:path resolutionType:&resolution];
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage]];
+			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
 
 			[data release];
 			[image release];
@@ -360,11 +361,7 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 
-#ifdef __CC_PLATFORM_IOS
 	tex = [[CCTexture2D alloc] initWithCGImage:imageref resolutionType:kCCResolutionUnknown];
-#elif __CC_PLATFORM_MAC
-	tex = [[CCTexture2D alloc] initWithCGImage:imageref];
-#endif
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{

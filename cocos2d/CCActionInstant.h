@@ -33,6 +33,8 @@
 @interface CCActionInstant : CCFiniteTimeAction <NSCopying>
 {
 }
+// XXX Needed for BridgeSupport
+-(id) init;
 @end
 
 /** Show the node
@@ -40,6 +42,8 @@
  @interface CCShow : CCActionInstant
 {
 }
+// XXX Needed for BridgeSupport
+-(void) update:(ccTime)time;
 @end
 
 /** Hide the node
@@ -47,6 +51,7 @@
 @interface CCHide : CCActionInstant
 {
 }
+-(void) update:(ccTime)time;
 @end
 
 /** Toggles the visibility of a node
@@ -54,6 +59,7 @@
 @interface CCToggleVisibility : CCActionInstant
 {
 }
+-(void) update:(ccTime)time;
 @end
 
 /** Flips the sprite horizontally
@@ -105,7 +111,7 @@
 +(id) actionWithTarget: (id) t selector:(SEL) s;
 /** initializes the action with the callback */
 -(id) initWithTarget: (id) t selector:(SEL) s;
-/** exeuctes the callback */
+/** executes the callback */
 -(void) execute;
 @end
 
@@ -115,6 +121,8 @@
 @interface CCCallFuncN : CCCallFunc
 {
 }
+// XXX: Needed for BridgeSupport
+-(void) execute;
 @end
 
 typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
