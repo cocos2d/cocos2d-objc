@@ -170,6 +170,7 @@ enum {
 #if	CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	BOOL isTransformGLDirty_:1;
 #endif
+    BOOL isTransitionFinished_:1; 
 }
 
 /** The z order of the node relative to it's "brothers": children of the same parent */

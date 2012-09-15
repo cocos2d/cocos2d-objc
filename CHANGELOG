@@ -10,6 +10,7 @@ version 1.1-rc0 ..-..-2012
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341), added assert to prevent 0 duration.
 . [FIX] CCAnimate: fixed low FPS bug, where multiple frames need to be set per 'tick'.
 . [FIX] CCDirector: exceptions raised in runloop didn't cause program to abort (issue #911)
+. [FIX] CCNode: onEnterTransitionDidFinish isn't called twice anymore, when node was added in onEnter
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
 . [FIX] CCParticleSystem: unschedule update method when deallocated
 . [FIX] CCParticleSystem: incorrect position of free and relative particles when emitter is scaled (issue #1352)

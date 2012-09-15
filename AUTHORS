@@ -75,6 +75,9 @@ Contributors (alphabetically ordered):
 * Nicky Weber (https://github.com/nickyEnjoysWoogoo):
 	Added convenience function to create a ccColor4F from color components	
     
+* Nico
+    Fix for onEnterTransitionDidFinish called twice, when node was added in onEnter
+    
 * Nicolas Barrios (http://wefiends.com)
     Fix for CCArray for ARC compatibility 
     

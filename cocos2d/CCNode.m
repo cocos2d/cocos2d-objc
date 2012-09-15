@@ -323,6 +323,8 @@ static NSUInteger globalOrderOfArrival = 0;
 		parent_ = nil;
 		
 		orderOfArrival_=0;
+        
+        isTransitionFinished_ = NO;
 	}
 	
 	return self;
@@ -423,7 +425,10 @@ static NSUInteger globalOrderOfArrival = 0;
 	
 	if( isRunning_ ) {
 		[child onEnter];
-		[child onEnterTransitionDidFinish];
+        //prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
+        if (isTransitionFinished_) 
+            [child onEnterTransitionDidFinish];
+
 	}
 }
 
@@ -717,6 +722,8 @@ static NSUInteger globalOrderOfArrival = 0;
 
 -(void) onEnter
 {
+    isTransitionFinished_ = NO; 
+    
 	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
 	[self resumeSchedulerAndActions];
 	
@@ -725,6 +732,7 @@ static NSUInteger globalOrderOfArrival = 0;
 
 -(void) onEnterTransitionDidFinish
 {
+    isTransitionFinished_ = YES; 
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
 }
 
