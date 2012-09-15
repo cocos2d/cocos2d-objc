@@ -2279,6 +2279,12 @@
 		A0B0389813EA1FE30073E59A /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377213EA1FDB0073E59A /* r2-ipad.png */; };
 		A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62D6140535B700DAA336 /* CCVertex.h */; };
 		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
+		A0C1EEE51604096600E090FF /* js_bindings_chipmunk_oo_classes_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C1EEE21604096600E090FF /* js_bindings_chipmunk_oo_classes_registration.h */; };
+		A0C1EEE61604096600E090FF /* js_bindings_chipmunk_oo_classes.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C1EEE31604096600E090FF /* js_bindings_chipmunk_oo_classes.h */; };
+		A0C1EEE71604096600E090FF /* js_bindings_chipmunk_oo_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EEE41604096600E090FF /* js_bindings_chipmunk_oo_classes.mm */; };
+		A0C1EEEA1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C1EEE91604097D00E090FF /* jsb_chipmunk_oo.js */; };
+		A0C1EEEB1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C1EEE91604097D00E090FF /* jsb_chipmunk_oo.js */; };
+		A0C1EEEC1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C1EEE91604097D00E090FF /* jsb_chipmunk_oo.js */; };
 		A0C20AC8144FDAF700D84B47 /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C20AC6144FDAF700D84B47 /* CCParticleBatchNode.h */; };
 		A0C20AC9144FDAF700D84B47 /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */; };
 		A0C3815114BA0548001655CC /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C3814F14BA0548001655CC /* CCTransitionProgress.h */; };
@@ -5766,6 +5772,10 @@
 		A0B0377213EA1FDB0073E59A /* r2-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "r2-ipad.png"; sourceTree = "<group>"; };
 		A0BE62D6140535B700DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62D7140535B700DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
+		A0C1EEE21604096600E090FF /* js_bindings_chipmunk_oo_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_oo_classes_registration.h; sourceTree = "<group>"; };
+		A0C1EEE31604096600E090FF /* js_bindings_chipmunk_oo_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_oo_classes.h; sourceTree = "<group>"; };
+		A0C1EEE41604096600E090FF /* js_bindings_chipmunk_oo_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_oo_classes.mm; sourceTree = "<group>"; };
+		A0C1EEE91604097D00E090FF /* jsb_chipmunk_oo.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk_oo.js; sourceTree = "<group>"; };
 		A0C20AC6144FDAF700D84B47 /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
 		A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		A0C3814F14BA0548001655CC /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
@@ -8537,6 +8547,7 @@
 		A031BF5315DAC68600E1986C /* js */ = {
 			isa = PBXGroup;
 			children = (
+				A0C1EEE91604097D00E090FF /* jsb_chipmunk_oo.js */,
 				A031BF5415DAC68600E1986C /* jsb_constants.js */,
 				A031BF5515DAC68600E1986C /* jsb_constants_chipmunk.js */,
 				A031BF5615DAC68600E1986C /* jsb_constants_cocos2d.js */,
@@ -8548,6 +8559,9 @@
 		A031BF5815DAC68600E1986C /* manual */ = {
 			isa = PBXGroup;
 			children = (
+				A0C1EEE21604096600E090FF /* js_bindings_chipmunk_oo_classes_registration.h */,
+				A0C1EEE31604096600E090FF /* js_bindings_chipmunk_oo_classes.h */,
+				A0C1EEE41604096600E090FF /* js_bindings_chipmunk_oo_classes.mm */,
 				A031BF5915DAC68600E1986C /* js_bindings_basic_conversions.h */,
 				A031BF5A15DAC68600E1986C /* js_bindings_basic_conversions.mm */,
 				A031BF5B15DAC68600E1986C /* js_bindings_chipmunk_manual.h */,
@@ -9684,6 +9698,8 @@
 				A03E21CD15F9626500E58C9D /* ThreadLocal.h in Headers */,
 				A03E21CE15F9626500E58C9D /* Types.h in Headers */,
 				A03E21CF15F9626500E58C9D /* Util.h in Headers */,
+				A0C1EEE51604096600E090FF /* js_bindings_chipmunk_oo_classes_registration.h in Headers */,
+				A0C1EEE61604096600E090FF /* js_bindings_chipmunk_oo_classes.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13009,6 +13025,7 @@
 				A08F3ED715D6E6F300B4C422 /* ship01.png in Resources */,
 				A0579B9C1601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BD116019C6000AF8A12 /* Default@2x.png in Resources */,
+				A0C1EEEA1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13268,6 +13285,7 @@
 				A031B87215D9C84900E1986C /* js in Resources */,
 				A0579B9D1601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BD216019C6000AF8A12 /* Default@2x.png in Resources */,
+				A0C1EEEB1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13275,6 +13293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C1EEEC1604097D00E090FF /* jsb_chipmunk_oo.js in Resources */,
 				A031C0E815DAE0B600E1986C /* jsb_constants.js in Resources */,
 				A031C0E915DAE0B600E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0EA15DAE0B600E1986C /* jsb_constants_cocos2d.js in Resources */,
@@ -14838,6 +14857,7 @@
 				A0C70B6015E3140800CD8896 /* CCNode.m in Sources */,
 				A0C70B6115E3140800CD8896 /* CCNode+Debug.m in Sources */,
 				A0C70B6215E3140800CD8896 /* CCAtlasNode.m in Sources */,
+				A0C1EEE71604096600E090FF /* js_bindings_chipmunk_oo_classes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

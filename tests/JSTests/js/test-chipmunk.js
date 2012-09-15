@@ -426,61 +426,20 @@ goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
 
 //------------------------------------------------------------------
 //
-// Chipmunk Space Test
+// Chipmunk Object Oriented Test
 //
 //------------------------------------------------------------------
 
-cp.Space = function() {
-	this.object = new cp._Space();
-	this.handle = this.object.getHandle();
-};
-
-cp.Space.prototype.getStaticBody = function() {
-	return cp.spaceGetStaticBody( this.handle );
-};
-
-cp.Space.prototype.addStaticShape = function( shape ) {
-	return cp.spaceAddStaticShape( this.handle, shape );
-};
-
-cp.Space.prototype.addShape = function( shape ) {
-	return cp.spaceAddShape( this.handle, shape );
-};
-
-cp.Space.prototype.addBody = function( body ) {
-	return cp.spaceAddBody( this.handle, body );
-};
-
-cp.Space.prototype.addCollisionHandler = function( typeA, typeB, object, cbBegin, cbPre, cbPost, cbSep ) {
-	return cp.spaceAddCollisionHandler( this.handle, typeA, typeB, object, cbBegin, cbPre, cbPost, cbSep );
-};
-
-cp.Space.prototype.removeCollisionHandler = function( typeA, typeB ) {
-	return cp.spaceRemoveCollisionHandler( this.handle, typeA, typeB );
-};
-
-cp.Space.prototype.getGravity = function() {
-	return cp.spaceGetGravity( this.handle );
-};
-
-cp.Space.prototype.setGravity = function( gravity ) {
-	return cp.spaceSetGravity( this.handle, gravity );
-};
-
-cp.Space.prototype.step = function( dt ) {
-	return cp.spaceStep( this.handle, dt );
-};
-
-var ChipmunkSpaceTest = function() {
+var ChipmunkOOTest = function() {
 
 	goog.base(this);
 
 	this.title = function() {
-		return 'Chipmunk Space Test';
+		return 'Chipmunk OO Test';
 	};
 
 	this.subtitle = function() {
-		return 'Testing Space as object';
+		return 'Testing Object Oriented Chipmunk';
 	};
 
 	// init physics
@@ -502,7 +461,7 @@ var ChipmunkSpaceTest = function() {
 		}
 
 		// Gravity
-		this.space.setGravity( cp.v(0, -30) );
+		this.space.gravity = cp.v(0, -30);
 	};
 
 	this.createPhysicsSprite = function( pos, file, collision_type ) {
@@ -575,7 +534,7 @@ var ChipmunkSpaceTest = function() {
 	};
 
 };
-goog.inherits( ChipmunkSpaceTest, BaseLayer );
+goog.inherits( ChipmunkOOTest, BaseLayer );
 
 //
 // Order of tests
@@ -584,7 +543,7 @@ goog.inherits( ChipmunkSpaceTest, BaseLayer );
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
 scenes.push( ChipmunkCollisionMemoryLeakTest );
-scenes.push( ChipmunkSpaceTest );
+scenes.push( ChipmunkOOTest );
 
 //------------------------------------------------------------------
 //
