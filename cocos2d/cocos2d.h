@@ -77,6 +77,7 @@
 #import "CCParticleSystem.h"
 #import "CCParticleSystemPoint.h"
 #import "CCParticleSystemQuad.h"
+#import "CCParticleSystemAnimation.h"
 #import "CCParticleExamples.h"
 #import "CCParticleBatchNode.h"
 
