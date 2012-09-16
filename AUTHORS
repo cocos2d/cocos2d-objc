@@ -27,6 +27,9 @@ Contributors (alphabetically ordered):
 * Alexander Carter
 	Sprite: fixed possible opacity bug in setColor
 
+* Cedric Boidin    
+    Provided missing copyWithZone for CCActionTween 
+    
 * Christoph Winkler (http://raketenbasis.de)
 	Word Wrap works on LabelTTF on Mac
 	bug fixes for failure to compile on 32-bit mac builds
