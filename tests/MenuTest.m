@@ -313,20 +313,8 @@ enum {
 		item2.position = ccp(s.width/2 - 200, s.height/2);
 		item3.position = ccp(s.width/2, s.height/2 - 100);
 		
-		id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
-		[item2 runAction: [CCRepeatForever actionWithAction:
-					 [CCSequence actions: jump, [jump reverse], nil]
-									   ]
-		 ];
-		id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
-		id spin2 = [[spin1 copy] autorelease];
-		id spin3 = [[spin1 copy] autorelease];
-		
-		[item1 runAction: [CCRepeatForever actionWithAction:spin1]];
-		[item2 runAction: [CCRepeatForever actionWithAction:spin2]];
-		[item3 runAction: [CCRepeatForever actionWithAction:spin3]];
-		
-		[self addChild: menu];
+			
+		[self addChild: menu z:0 tag:1];
 	}
 	
 	return self;
@@ -353,6 +341,32 @@ enum {
 	NSLog(@"MenuItemSprite clicked");
 }
 
+- (void) onEnter
+{
+    [super onEnter]; 
+    
+    CCMenu* menu = (CCMenu*) [self getChildByTag:1]; 
+    
+    id item1 = [[menu children] objectAtIndex:0];
+    id item2 = [[menu children] objectAtIndex:1];
+    id item3 = [[menu children] objectAtIndex:2];
+
+    id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
+    [item2 runAction: [CCRepeatForever actionWithAction:
+                       [CCSequence actions: jump, [jump reverse], nil]
+                       ]
+     ];
+    id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
+    id spin2 = [[spin1 copy] autorelease];
+    id spin3 = [[spin1 copy] autorelease];
+    
+    [item1 runAction: [CCRepeatForever actionWithAction:spin1]];
+    [item2 runAction: [CCRepeatForever actionWithAction:spin2]];
+    [item3 runAction: [CCRepeatForever actionWithAction:spin3]];
+
+    
+    
+}
 @end
 
 
