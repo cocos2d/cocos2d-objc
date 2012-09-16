@@ -41,7 +41,10 @@ Contributors (alphabetically ordered):
     
 * Fabian Rueger
     Provided Beacon.png for new spriteTest
-	
+    
+* Jason Schliman
+    Provided test case for CCRepeatForever bug and bugfix for CCActionManager not always calling stop method of removed action (issue #945)
+    
 * Jerrod Putman (http://www.tinytimgames.com)
 	Original author of ARC compatibility code
 	

@@ -9,8 +9,11 @@ version 1.1-rc0 ..-..-2012
 . [NEW] ActionsTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
 . [NEW] ParticleTest: added test case for issue #893, free non-moving particles in retina mode would still move
 . [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341), added assert to prevent 0 duration.
-. [FIX] CCAnimate: fixed low FPS bug, where multiple frames need to be set per 'tick'.
-. [FIX] CCActionTween: fixed missing copyWithZone
+. [FIX] Actions:
+        CCAnimate: fixed low FPS bug, where multiple frames need to be set per 'tick'.
+        CCActionTween: fixed missing copyWithZone
+        CCRepeatForever: has a stop method now (issue #945)
+. [FIX] ActionManager: always calls stop on a action that must be removed (issue #945)
 . [FIX] CCDirector: exceptions raised in runloop didn't cause program to abort (issue #911)
 . [FIX] CCNode: onEnterTransitionDidFinish isn't called twice anymore, when node was added in onEnter
 . [FIX] CCSprite: CCSprite bug in setDisplayFrameWithAnimationName
