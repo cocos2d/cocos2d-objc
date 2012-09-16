@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 	@"FullScreenScale",
 	@"FullScreenNoScale",
 	@"FullScreenIssue1071Test",
+    @"CustomProjectionTest"
 
 };
 
@@ -54,6 +55,7 @@ Class restartAction()
 @implementation FullScreenDemo
 -(id) init
 {
+   
 	if( (self = [super init]) ) {
 
 
@@ -131,10 +133,10 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_AutoScale];
-		
+
 		self.isMouseEnabled = YES;
 		
 		CGSize s = [director winSize];
@@ -392,6 +394,95 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark CustomProjection
+
+@implementation CustomProjectionTest
+
+-(id) init
+{
+    CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+
+    [director setResizeMode:kCCDirectorResize_NoScale];
+    [director setProjection:kCCDirectorProjectionCustom];
+    
+    CGSize s = [director winSize];
+    
+    glViewport(100, 100, s.width - 100, s.height - 100);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    ccglOrtho(0, s.width - 100, 0, s.height - 100, -1024, 1024);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    
+
+
+	if( (self=[super init]) ) {
+		
+        
+
+        
+   
+        
+		self.isMouseEnabled = YES;
+		
+		
+		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Test" target: self selector:@selector(testing)];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}	
+	return self;
+}
+
+- (void) testing
+{
+    
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		
+	
+	}
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+
+	
+	return YES;
+	
+}
+#endif
+
+-(NSString *) title
+{
+	return @"Custom projection w offset";
+}
+
+-(NSString *) subtitle
+{
+	return @"menu items should work as expected";
+}
+
+- (void) onExitTransitionDidStart
+{
+    [super onExitTransitionDidStart]; 
+    CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
+    
+    [director setProjection:kCCDirectorProjection3D];
+
+}
+@end
+
+#pragma mark -
 #pragma mark AppDelegate
 
 // CLASS IMPLEMENTATIONS
@@ -434,6 +525,7 @@ Class restartAction()
 
 	// 2D projection
 //	[director setProjection:kCCDirectorProjection2D];
+
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )

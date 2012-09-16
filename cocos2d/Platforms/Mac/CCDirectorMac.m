@@ -221,6 +221,7 @@
 		offset = winOffset_;
 
 	}
+    CCLOG(@"offset %f %f",offset.x,offset.y); 
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
@@ -294,6 +295,15 @@
 		ret = CGPointMake( (x_diff * coords.x) - adjust_x, ( y_diff * coords.y ) - adjust_y );		
 	}
 	
+    //compensate for possible viewport offset, issue 1104
+    if (projection_ == kCCDirectorProjectionCustom) 
+    {
+        GLfloat viewPortValues[4]; 
+        glGetFloatv(GL_VIEWPORT,viewPortValues); 
+        
+        ret.x -= viewPortValues[0]; 
+        ret.y -= viewPortValues[1]; 
+    }
 	return ret;
 }
 @end
