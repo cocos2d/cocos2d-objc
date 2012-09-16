@@ -492,15 +492,17 @@ Class restartAction()
 	
 	[self centerSprites:2];
 	
-	tamara.opacity = 0;
+    //since 1.1RC0 CCFadeIn and Out respect opacity of node
+	tamara.opacity = 128;
 	id action1 = [CCFadeIn actionWithDuration:1.0f];
 	id action1Back = [action1 reverse];
 	
 	id action2 = [CCFadeOut actionWithDuration:1.0f];
 	id action2Back = [action2 reverse];
-	
+		
 	[tamara runAction: [CCSequence actions: action1, action1Back, nil]];
 	[kathia runAction: [CCSequence actions: action2, action2Back, nil]];
+
 }
 -(NSString *) title
 {

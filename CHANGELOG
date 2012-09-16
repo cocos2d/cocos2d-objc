@@ -2,6 +2,7 @@ version 1.1-rc0 ..-..-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
 . [NEW] Macros: made CCLOG a bit more verbose
+. [NEW] CCActionInterval: CCFadeIn and CCFadeOut respect initial opacity of node, CCFadeTo can be reversed (issue 828) 
 . [NEW] CCNode: added convenience method setAnchorPointWithoutPositionChange, to change a relative anchor point but not change the position of the node.
 . [NEW] CCSprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
 . [NEW] DrawPrimitives: added inPixels versions of each function. 

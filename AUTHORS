@@ -35,6 +35,9 @@ Contributors (alphabetically ordered):
 	bug fixes for failure to compile on 32-bit mac builds
 	created new drawPrimitives functions, ccDrawRect, ccDrawSolidRect and ccDrawSolidPoly.
     bug fix for CCTMXXMLParser in release mode
+
+* CJ Hanson (myBuddyCJ, wiseganesha, CJeazy) (http://www.hansoninteractive.com/)
+    CCFadeIn and CCFadeOut respect opacity of node
     
 * Fabian Rueger
     Provided Beacon.png for new spriteTest

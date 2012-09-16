@@ -306,24 +306,8 @@ typedef struct _ccBezierConfig {
 -(id) initWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
 @end
 
-/** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
- The "reverse" of this action is FadeOut
- */
-@interface CCFadeIn : CCActionInterval <NSCopying>
-{
-}
-@end
-
-/** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
- The "reverse" of this action is FadeIn
-*/
-@interface CCFadeOut : CCActionInterval <NSCopying>
-{
-}
-@end
-
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
- @warning This action doesn't support "reverse"
+    @warning doesn't support reverse
  */
 @interface CCFadeTo : CCActionInterval <NSCopying>
 {
@@ -335,6 +319,24 @@ typedef struct _ccBezierConfig {
 /** initializes the action with duration and opacity */
 -(id) initWithDuration:(ccTime)duration opacity:(GLubyte)opacity;
 @end
+
+/** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
+ The "reverse" of this action is FadeOut
+ */
+@interface CCFadeIn : CCFadeTo <NSCopying>
+{
+}
+@end
+
+/** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
+ The "reverse" of this action is FadeIn
+*/
+@interface CCFadeOut : CCFadeTo <NSCopying>
+{
+}
+@end
+
+
 
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @warning This action doesn't support "reverse"

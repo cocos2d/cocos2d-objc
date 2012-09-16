@@ -1015,9 +1015,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark FadeIn
 @implementation CCFadeIn
--(void) update: (ccTime) t
+- (id) initWithDuration:(ccTime)d
 {
-	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *t];
+	return [super initWithDuration:d opacity:255];
+}
+
++ (id) actionWithDuration:(ccTime)d
+{
+	return [super actionWithDuration:d opacity:255];
 }
 
 -(CCActionInterval*) reverse
@@ -1032,9 +1037,14 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 #pragma mark -
 #pragma mark FadeOut
 @implementation CCFadeOut
--(void) update: (ccTime) t
+- (id) initWithDuration:(ccTime)d
 {
-	[(id<CCRGBAProtocol>) target_ setOpacity: 255 *(1-t)];
+	return [super initWithDuration:d opacity:0];
+}
+
++ (id) actionWithDuration:(ccTime)d
+{
+	return [super actionWithDuration:d opacity:0];
 }
 
 -(CCActionInterval*) reverse
