@@ -112,7 +112,10 @@ Contributors (alphabetically ordered):
 
 * Sergey Tikhonov (AKA haqu) (http://haqu.net)
 	Removed warning in CCMenuItem
-
+    
+* Sergi Vélez
+    Added reverse macro for CC_ARRAY_FOREACH and reverse order patch for touch detection in menu
+    
 * Shakthi:
 	Added CCNode#onExitTransitionDidStart method
 	Fixed fading background music issue

@@ -53,6 +53,7 @@ enum {
 	CCMenuItem	*selectedItem_;
 	GLubyte		opacity_;
 	ccColor3B	color_;
+    BOOL reverseOrder_;
 }
 
 /** creates a CCMenu with it's items */
@@ -89,5 +90,8 @@ enum {
 @property (nonatomic,readonly) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readonly) ccColor3B color;
-
+/** YES reverses the order in which touch is checked on children, default = NO 
+ @since 1.1RC0
+ */ 
+@property (nonatomic,readwrite) BOOL reverseOrder;
 @end

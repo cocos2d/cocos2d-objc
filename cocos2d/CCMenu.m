@@ -46,7 +46,7 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity = opacity_, color = color_;
+@synthesize opacity = opacity_, color = color_, reverseOrder = reverseOrder_;
 
 - (id) init
 {
@@ -110,6 +110,7 @@ enum {
 		
 		selectedItem_ = nil;
 		state_ = kCCMenuStateWaiting;
+        reverseOrder_ = NO; 
 	}
 	
 	return self;
@@ -154,18 +155,37 @@ enum {
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	CCMenuItem* item;
-	CCARRAY_FOREACH(children_, item){
-		// ignore invisible and disabled items: issue #779, #866
-		if ( [item visible] && [item isEnabled] ) {
-			
-			CGPoint local = [item convertToNodeSpace:touchLocation];
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
-			
-			if( CGRectContainsPoint( r, local ) )
-				return item;
-		}
-	}
+    if (!reverseOrder_) 
+    {    
+        CCARRAY_FOREACH(children_, item){
+            // ignore invisible and disabled items: issue #779, #866
+            if ( [item visible] && [item isEnabled] ) {
+                
+                CGPoint local = [item convertToNodeSpace:touchLocation];
+                CGRect r = [item rect];
+                r.origin = CGPointZero;
+                
+                if( CGRectContainsPoint( r, local ) )
+                    return item;
+            }
+        }
+    } 
+    else 
+    {
+        CCARRAY_REVERSE_FOREACH(children_, item){
+            // ignore invisible and disabled items: issue #779, #866
+            if ( [item visible] && [item isEnabled] ) {
+                
+                CGPoint local = [item convertToNodeSpace:touchLocation];
+                CGRect r = [item rect];
+                r.origin = CGPointZero;
+                
+                if( CGRectContainsPoint( r, local ) )
+                    return item;
+            }
+        }
+  
+    }
 	return nil;
 }
 
@@ -234,19 +254,39 @@ enum {
 	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
 	
 	CCMenuItem* item;
-	CCARRAY_FOREACH(children_, item){
-		// ignore invisible and disabled items: issue #779, #866
-		if ( [item visible] && [item isEnabled] ) {
-			
-			CGPoint local = [item convertToNodeSpace:location];
-			
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
-			
-			if( CGRectContainsPoint( r, local ) )
-				return item;
-		}
-	}
+    if (!reverseOrder_)
+    {
+        CCARRAY_FOREACH(children_, item){
+            // ignore invisible and disabled items: issue #779, #866
+            if ( [item visible] && [item isEnabled] ) {
+                
+                CGPoint local = [item convertToNodeSpace:location];
+                
+                CGRect r = [item rect];
+                r.origin = CGPointZero;
+                
+                if( CGRectContainsPoint( r, local ) )
+                    return item;
+            }
+        }
+    }
+    else 
+    {
+        CCARRAY_REVERSE_FOREACH(children_, item){
+            // ignore invisible and disabled items: issue #779, #866
+            if ( [item visible] && [item isEnabled] ) {
+                
+                CGPoint local = [item convertToNodeSpace:location];
+                
+                CGRect r = [item rect];
+                r.origin = CGPointZero;
+                
+                if( CGRectContainsPoint( r, local ) )
+                    return item;
+            }
+        }
+
+    }
 	return nil;
 }
 

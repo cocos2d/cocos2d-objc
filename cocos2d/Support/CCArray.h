@@ -43,6 +43,13 @@ for(const CC_ARC_UNSAFE_RETAINED id *__arr__ = __array__->data->arr, *end = __ar
 	__arr__ <= end && ((__object__ = *__arr__) != nil || true);										\
 	__arr__++)
 
+/** reverse macro, @since 1.1RC0 */ 
+#define CCARRAY_REVERSE_FOREACH(__array__, __object__)										\
+if (__array__ && __array__->data->num > 0)													\
+for(id *arr = __array__->data->arr + __array__->data->num-1, *end = __array__->data->arr;	\
+arr >= end && ((__object__ = *arr) != nil || true);										\
+arr--)
+
 @interface CCArray : NSObject <NSFastEnumeration, NSCoding, NSCopying>
 {
 	@public ccArray *data;

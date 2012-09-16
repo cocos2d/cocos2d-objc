@@ -449,6 +449,9 @@ enum {
 		 nil
 		]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
 		
+        //testing reverse order 
+        [menu setReverseOrder:YES]; 
+        
 		[self addChild: menu];
 	}
 	
