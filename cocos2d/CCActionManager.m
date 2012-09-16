@@ -112,9 +112,14 @@ static CCActionManager *sharedManager_ = nil;
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
 {	
 	id action = element->actions->arr[index];
+    
+    //issue #945 always call stop
+    [action stop]; 
 
 	if( action == element->currentAction && !element->currentActionSalvaged ) {
 		[element->currentAction retain];
+     
+        
 		element->currentActionSalvaged = YES;
 	}
 	
@@ -201,7 +206,16 @@ static CCActionManager *sharedManager_ = nil;
 	if( element ) {
 		if( ccArrayContainsObject(element->actions, element->currentAction) && !element->currentActionSalvaged ) {
 			[element->currentAction retain];
-			element->currentActionSalvaged = YES;
+            
+            //issue #945 call stop
+            id action; 
+            CCARRAYDATA_FOREACH(element->actions,action) 
+            {
+                [action stop]; 
+            }
+            
+			
+            element->currentActionSalvaged = YES;
 		}
 		ccArrayRemoveAllObjects(element->actions);
 		if( currentTarget == element )
@@ -318,7 +332,8 @@ static CCActionManager *sharedManager_ = nil;
 					[currentTarget->currentAction release];
 
 				} else if( [currentTarget->currentAction isDone] ) {
-					[currentTarget->currentAction stop];
+					//don't need to call stop here, it's called in removeAction
+
 					
 					CCAction *a = currentTarget->currentAction;
 					// Make currentAction nil to prevent removeAction from salvaging it.

@@ -49,7 +49,8 @@ static NSString *transitions[] = {
 	@"ActionOrbit",
 	@"ActionFollow",
 	@"ActionProperty",
-	@"ActionTargeted"
+	@"ActionTargeted",
+    @"StopRepeatForever"
 };
 
 Class nextAction()
@@ -1251,6 +1252,105 @@ static int currSpriteTag = firstSpriteTag;
 	return @"Action that runs on another target. Useful for sequences";
 }
 @end
+
+@implementation StopRepeatForever
+/**
+  Set a breakpoint in the stop method of CCRepeatForever, it should be hit. 
+*/
+-(void) onEnter
+{
+	[super onEnter];
+    
+	[self centerSprites:1];
+    
+	CCAnimation* animation = [CCAnimation animation];
+    [animation setDelayPerUnit:0.016]; 
+	for( int i=1;i<15;i++)
+		[animation addFrameWithFilename: [NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+    
+	id action = [CCAnimate actionWithDuration:3 animation:animation restoreOriginalFrame:NO];
+	id action_back = [action reverse];
+    
+    rotator = [CCRepeatForever 
+               actionWithAction:[CCRotateBy
+                                 actionWithDuration:5.0 angle:180]];
+    
+    animated = [CCRepeatForever
+                actionWithAction:
+                [CCSequence actions: action, action_back, nil]];
+    
+    stop_rotator = [CCSequence actions:
+                    [CCDelayTime actionWithDuration:2.0],
+                    [CCCallBlock actionWithBlock:^{
+        
+        
+        [grossini stopAction:rotator];
+        
+        [grossini runAction:[CCSequence actions:
+                             [CCDelayTime actionWithDuration:1.0],
+                             [CCCallBlock actionWithBlock:^{
+            
+            [grossini runAction:rotator];
+            [grossini runAction:stop_rotator];
+            
+        }],nil]];
+        
+    }], nil];
+    
+    stop_animation = [CCSequence actions:
+                      [CCDelayTime actionWithDuration:3.0],
+                      [CCCallBlock actionWithBlock:^{
+        
+        [grossini stopAction:animated];
+        
+        [grossini runAction:[CCSequence actions:
+                             [CCDelayTime actionWithDuration:1.0],
+                             [CCCallBlock actionWithBlock:^{
+            
+            [grossini runAction:animated];
+            [grossini runAction:stop_animation];
+            
+        }],nil]];
+        
+        
+    }], nil];
+    
+    
+    id pulsate = [CCRepeatForever actionWithAction:
+                  [CCSequence actions:
+                   [CCTintTo actionWithDuration:0.1 red:255 green:128 blue:128],
+                   [CCTintTo actionWithDuration:0.1 red:128 green:128 blue:255], nil]];
+    
+	[grossini runAction: animated];
+    [grossini runAction: rotator];
+    [grossini runAction: stop_rotator];
+    [grossini runAction: stop_animation];
+    [grossini runAction: pulsate];
+    
+    [animated retain];
+    [rotator retain];
+    [stop_rotator retain];
+    [stop_animation retain];
+    
+}
+-(NSString *) title
+{
+	return @"Sequence Test";
+}
+-(NSString*) subtitle
+{
+	return @"stop of repeat forever should be called";
+}
+
+-(void)onExit {
+    [animated release];
+    [rotator release];
+    [stop_rotator release];
+    [stop_animation release];
+    [super onExit];
+}
+@end
+
 
 // CLASS IMPLEMENTATIONS
 

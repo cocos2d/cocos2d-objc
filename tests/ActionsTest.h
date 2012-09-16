@@ -166,3 +166,12 @@
 @interface ActionTargeted : ActionDemo
 {}
 @end
+
+@interface StopRepeatForever : ActionDemo 
+{
+    id animated;
+    id rotator;    
+    id stop_rotator;
+    id stop_animation;
+}
+@end

@@ -167,6 +167,12 @@
 	}
 }
 
+//issue #945 CCRepeatForever should stop innerAction when removed
+- (void) stop
+{
+    [innerAction_ stop]; 
+    [super stop]; 
+}
 
 -(BOOL) isDone
 {
