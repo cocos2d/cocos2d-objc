@@ -32,6 +32,7 @@
  */
 
 #import "CCActionEase.h"
+#import "CCActionManager.h"
 
 #ifndef M_PI_X_2
 #define M_PI_X_2 (float)M_PI * 2.0f
@@ -79,7 +80,7 @@
 
 -(void) stop
 {
-	[other stop];
+    [[CCActionManager sharedManager] removeAction:other];
 	[super stop];
 }
 

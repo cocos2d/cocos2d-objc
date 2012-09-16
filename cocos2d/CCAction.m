@@ -32,7 +32,7 @@
 #import "CCAction.h"
 #import "CCActionInterval.h"
 #import "Support/CGPointExtension.h"
-
+#import "CCActionManager.h"
 //
 // Action Base Class
 //
@@ -167,7 +167,10 @@
 	}
 }
 
-
+-(void)stop {
+    [[CCActionManager sharedManager] removeAction:innerAction_];
+    [super stop];
+}
 -(BOOL) isDone
 {
 	return NO;
@@ -222,7 +225,7 @@
 
 -(void) stop
 {
-	[innerAction_ stop];
+    [[CCActionManager sharedManager] removeAction:innerAction_];
 	[super stop];
 }
 
@@ -344,7 +347,6 @@
 
 -(void) stop
 {
-	target_ = nil;
 	[super stop];
 }
 
