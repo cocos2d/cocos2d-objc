@@ -10,10 +10,14 @@
 // local import
 #import "DirectorTest.h"
 
+//located in tests/DirectorTest
+#import "ScrollViewController.h"
+
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
 	@"Director1",
+    @"ScrollViewTest",
 
 };
 
@@ -216,6 +220,110 @@ Class restartAction()
 }
 @end
 
+//this test is only meant for iphone, the problem doesn't occur on mac
+@implementation ScrollViewTest
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+        scrollView = nil; 
+        
+		self.isTouchEnabled = YES;
+		
+        CCDirector* director = [CCDirector sharedDirector]; 
+        
+        //setting this property to yes makes cocos more compatible with UIKit elements
+        [director setRunLoopCommon:YES]; 
+
+        
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+		CCMenuItem *item = [CCMenuItemFont itemFromString:@"Enable scrollView" target:self selector:@selector(viewScrollView)];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[menu setPosition:ccp( s.width/2, s.height/2) ];
+		[self addChild:menu];
+		
+        id seq = [CCSequence actions:
+				  [CCRotateTo actionWithDuration:0.5f angle:-90],
+				  [CCRotateTo actionWithDuration:0.5f angle:90],
+                  nil];
+        
+      
+        id rep2 = [CCRepeatForever actionWithAction: [[seq copy] autorelease] ];
+        
+        CCSprite *gros = [CCSprite spriteWithFile:@"grossini_dance_01.png"]; 
+        [gros setPosition:ccp(120.f,100.f)]; 
+        
+        [self addChild:gros]; 
+        [gros runAction:rep2]; 
+        
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif	
+		
+		
+	}	
+	return self;
+}
+
+- (void) viewScrollView
+{
+    if (scrollView == nil) 
+    {
+        scrollView = [[ScrollViewController alloc] init];
+        [[[CCDirector sharedDirector] openGLView] addSubview:scrollView.view]; 
+    }
+}
+
+- (void) onExit
+{
+    [scrollView.view removeFromSuperview]; 
+    [scrollView release]; 
+    scrollView = nil; 
+}
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint a = [touch locationInView: [touch view]];
+		
+		CCDirector *director = [CCDirector sharedDirector];
+		CGPoint b = [director convertToUI: [director convertToGL: a]];
+		
+		NSLog(@"(%d,%d) == (%d,%d)", (int) a.x, (int)a.y, (int)b.x, (int)b.y );
+		
+	}
+}
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	NSLog(@"NOT IMPLEMENTED");
+	return YES;
+}
+#endif
+
+-(NSString *) title
+{
+	return @"Testing scrollview";
+}
+
+-(NSString*) subtitle
+{
+	return @"";
+}
+
+- (void) deallloc
+{
+
+    [super dealloc];
+}
+@end
+
 
 #pragma mark -
 #pragma mark AppDelegate
@@ -232,19 +340,13 @@ Class restartAction()
 
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
-//	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-	
+
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
+    
+    //set the runLoop here, this run loop lets the director play a bit more nicely with UIKit elements 
+    //[director setRunLoopCommon:YES]; 
 	
-	// landscape orientation
-	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
-	// set FPS at 60
-	[director setAnimationInterval:1.0/60];
-	
-	// Display FPS: yes
-	[director setDisplayFPS:YES];
 	
 	// Enable Retina display
 	[director enableRetinaDisplay:YES];
@@ -258,21 +360,35 @@ Class restartAction()
 								 multiSampling:NO
 							   numberOfSamples:0];
 
+    
+    // Init the View Controller
+	viewController = [[masterViewController alloc] initWithNibName:nil bundle:nil];
+	viewController.wantsFullScreenLayout = YES;
+	
+	[glView setMultipleTouchEnabled:YES];
+    
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
-
-	// 2D projection
-//	[director setProjection:kCCDirectorProjection2D];
 	
-
-
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-	if( ! [director enableRetinaDisplay:YES] )
-		CCLOG(@"Retina Display Not supported");
+    //	[director setContentScaleFactor:2];
 	
-	// make the OpenGLView a child of the main window
-	[window addSubview:glView];
+	//
+	// VERY IMPORTANT:
+	// If the rotation is going to be controlled by a UIViewController
+	// then the device orientation should be "Portrait".
+	//
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
 	
+	[director setAnimationInterval:1.0/60];
+    
+	[director setDisplayFPS:YES];
+	
+	// make the OpenGLView a child of the view controller
+	[viewController setView:glView];
+    
+	// make the View Controller a child of the main window
+	[window addSubview: viewController.view];
+        
 	// make main window visible
 	[window makeKeyAndVisible];	
 	

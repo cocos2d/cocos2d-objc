@@ -29,6 +29,8 @@
 
 -(void)viewWillAppear:(BOOL)animated {
 	
+    //there are no subviews
+    /*
 	for (UIView *view in self.view.subviews) {
 		if ([view isKindOfClass:[EAGLView class]]) {
 			
@@ -37,6 +39,8 @@
 			break;
 		}
 	}
+    */
+    glView = self.view; 
 }
 
 

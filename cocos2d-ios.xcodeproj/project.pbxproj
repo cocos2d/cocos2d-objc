@@ -1538,6 +1538,22 @@
 		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963B14E9E7D000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963C14E9E7D300FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
+		65D4BFF7160775410052FCFD /* ScrollViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 65D4BFF5160775410052FCFD /* ScrollViewController.h */; };
+		65D4BFF8160775410052FCFD /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D4BFF6160775410052FCFD /* ScrollViewController.m */; };
+		65D4BFF9160775410052FCFD /* ScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D4BFF6160775410052FCFD /* ScrollViewController.m */; };
+		65D4BFFA160776C20052FCFD /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
+		65D4BFFB160776C20052FCFD /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
+		65D4BFFC160776C20052FCFD /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33200FBADD5F00D574A2 /* grossini_dance_03.png */; };
+		65D4BFFD160776C20052FCFD /* grossini_dance_04.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33210FBADD5F00D574A2 /* grossini_dance_04.png */; };
+		65D4BFFE160776C20052FCFD /* grossini_dance_05.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33220FBADD5F00D574A2 /* grossini_dance_05.png */; };
+		65D4BFFF160776C20052FCFD /* grossini_dance_06.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33230FBADD5F00D574A2 /* grossini_dance_06.png */; };
+		65D4C000160776C20052FCFD /* grossini_dance_07.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33240FBADD5F00D574A2 /* grossini_dance_07.png */; };
+		65D4C001160776C20052FCFD /* grossini_dance_08.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33250FBADD5F00D574A2 /* grossini_dance_08.png */; };
+		65D4C002160776C20052FCFD /* grossini_dance_09.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33260FBADD5F00D574A2 /* grossini_dance_09.png */; };
+		65D4C003160776C20052FCFD /* grossini_dance_10.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33270FBADD5F00D574A2 /* grossini_dance_10.png */; };
+		65D4C004160776C20052FCFD /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33280FBADD5F00D574A2 /* grossini_dance_11.png */; };
+		65D4C005160776C20052FCFD /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33290FBADD5F00D574A2 /* grossini_dance_12.png */; };
+		65D4C006160776C20052FCFD /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -4704,6 +4720,8 @@
 		657F114E150BA75D0047F93C /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		657F114F150BA75D0047F93C /* PerformanceDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceDispatcher.h; sourceTree = "<group>"; };
 		657F1150150BA75D0047F93C /* PerformanceDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceDispatcher.m; sourceTree = "<group>"; };
+		65D4BFF5160775410052FCFD /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewController.h; path = DirectorTest/ScrollViewController.h; sourceTree = "<group>"; };
+		65D4BFF6160775410052FCFD /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewController.m; path = DirectorTest/ScrollViewController.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -7107,6 +7125,7 @@
 		50B130FC0DFE0923003BAB56 /* tests */ = {
 			isa = PBXGroup;
 			children = (
+				65D4BFF0160774900052FCFD /* DirectorTest */,
 				657F114C150BA75D0047F93C /* PerformanceDispatcherTest */,
 				504828C70F45B15700A30CEF /* attachDemo */,
 				05CA7B0910ED679000F12774 /* blocks */,
@@ -7548,6 +7567,15 @@
 			path = tests/PerformanceTests/PerformanceDispatcherTest;
 			sourceTree = "<group>";
 		};
+		65D4BFF0160774900052FCFD /* DirectorTest */ = {
+			isa = PBXGroup;
+			children = (
+				65D4BFF5160775410052FCFD /* ScrollViewController.h */,
+				65D4BFF6160775410052FCFD /* ScrollViewController.m */,
+			);
+			name = DirectorTest;
+			sourceTree = "<group>";
+		};
 		8EDF3E8D0F6BD8CD00F54643 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
@@ -7891,6 +7919,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65D4BFF7160775410052FCFD /* ScrollViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11646,6 +11675,19 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65D4BFFA160776C20052FCFD /* grossini_dance_01.png in Resources */,
+				65D4BFFB160776C20052FCFD /* grossini_dance_02.png in Resources */,
+				65D4BFFC160776C20052FCFD /* grossini_dance_03.png in Resources */,
+				65D4BFFD160776C20052FCFD /* grossini_dance_04.png in Resources */,
+				65D4BFFE160776C20052FCFD /* grossini_dance_05.png in Resources */,
+				65D4BFFF160776C20052FCFD /* grossini_dance_06.png in Resources */,
+				65D4C000160776C20052FCFD /* grossini_dance_07.png in Resources */,
+				65D4C001160776C20052FCFD /* grossini_dance_08.png in Resources */,
+				65D4C002160776C20052FCFD /* grossini_dance_09.png in Resources */,
+				65D4C003160776C20052FCFD /* grossini_dance_10.png in Resources */,
+				65D4C004160776C20052FCFD /* grossini_dance_11.png in Resources */,
+				65D4C005160776C20052FCFD /* grossini_dance_12.png in Resources */,
+				65D4C006160776C20052FCFD /* grossini_dance_13.png in Resources */,
 				E0A8C29F133C335500297B76 /* b1.png in Resources */,
 				E0A8C2A0133C335500297B76 /* b2.png in Resources */,
 				E0A8C2A1133C335500297B76 /* f1.png in Resources */,
@@ -12249,6 +12291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65D4BFF8160775410052FCFD /* ScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12580,6 +12623,7 @@
 			files = (
 				E0A8C2BA133C335500297B76 /* main.m in Sources */,
 				E0A8C2CB133C33C900297B76 /* DirectorTest.m in Sources */,
+				65D4BFF9160775410052FCFD /* ScrollViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
