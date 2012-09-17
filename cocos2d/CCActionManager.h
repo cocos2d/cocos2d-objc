@@ -102,6 +102,14 @@ typedef struct _hashElement
  */
 -(NSUInteger) numberOfRunningActionsInTarget:(id)target;
 
+/** Pauses all running actions, returning a list of targets whose actions were paused.
+ */
+-(NSSet *) pauseAllRunningActions;
+
+/** Resume a set of targets (convenience function to reverse a pauseAllRunningActions call)
+ */
+-(void) resumeTargets:(NSSet *)targetsToResume;
+
 /** Pauses the target: all running actions and newly added actions will be paused.
  */
 -(void) pauseTarget:(id)target;
