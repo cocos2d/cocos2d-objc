@@ -7,7 +7,7 @@ version 1.1-rc0 ..-..-2012
 . [NEW] Node: added convenience method setAnchorPointWithoutPositionChange, to change a relative anchor point but not change the position of the node.
 . [NEW] Sprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
 . [NEW] DrawPrimitives: added inPixels versions of each function. 
-. [NEW] Director: added runLoopCommon property to select the runloop of the display link director. Setting it to YES lets the director play more nicely with UIKit elements, like a scroll view. 
+. [NEW] Director: added runLoopCommon property to select the runloop of the display link director. Setting it to YES lets the director play more nicely with UIKit elements, like a scroll view (issue #266, #894). 
 . [NEW] Menu: 
         added reverseOrder, to reverse order of touch detection (issue #1125) 
         color, opacity changed to readwrite    
@@ -16,12 +16,13 @@ version 1.1-rc0 ..-..-2012
         ActionTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
         DirectorTest: test case for demonstrating runLoopCommon with a scroll view
         ParticleTest: added test case for issue #893, free non-moving particles in retina mode would still move 
-. [FIX] CCAnimation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341), added assert to prevent 0 duration.
+. [FIX] Animation: bug in addFrames that resulted in incorrect delayPerUnit (issue #1341), added assert to prevent 0 duration.
 . [FIX] Actions:
         CCAnimate: fixed low FPS bug, where multiple frames need to be set per 'tick'.
         CCActionTween: fixed missing copyWithZone
         CCRepeatForever: has a stop method now (issue #945)
 . [FIX] ActionManager: always calls stop on a action that must be removed (issue #945)
+. [FIX] ColorLayer: color and opacity are readwrite (issue #1246)
 . [FIX] Director: exceptions raised in runloop didn't cause program to abort (issue #911)
 . [FIX] Node: 
         onEnterTransitionDidFinish isn't called twice anymore, when node was added in onEnter
