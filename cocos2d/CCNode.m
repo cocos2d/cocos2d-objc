@@ -976,19 +976,19 @@ static NSUInteger globalOrderOfArrival = 0;
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    //not [touch view], now touches still work when UIKit elements lay on top of cocos view
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }
 
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    //not [touch view], now touches still work when UIKit elements lay on top of cocos view
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
-
-
 @end

@@ -99,6 +99,10 @@ Contributors (alphabetically ordered):
 * Ricardo Ruiz:
 	Added support for RGB888 textures
     
+* Ricardo Sánchez-Sáez    
+    Menu: make color and opacity readwrite
+    Touch detection change, to let touch detection work if UIKit elements lay on top of view
+
 * Rick Smorawski
     Added full unicode support to CCLabelBMFont
 

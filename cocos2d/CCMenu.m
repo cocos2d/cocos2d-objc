@@ -151,7 +151,8 @@ enum {
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
 {
-	CGPoint touchLocation = [touch locationInView: [touch view]];
+    //not [touch view], but OpenGL view, so cocos can work with overlaying UIKit elements
+	CGPoint touchLocation = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	CCMenuItem* item;
