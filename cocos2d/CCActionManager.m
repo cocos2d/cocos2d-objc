@@ -182,6 +182,11 @@ static CCActionManager *sharedManager_ = nil;
 	NSAssert( !ccArrayContainsObject(element->actions, action), @"runAction: Action already running");	
 	ccArrayAppendObject(element->actions, action);
 	
+    if([action respondsToSelector:@selector(updateDuration:)])
+	{
+		[(id)action updateDuration:target];
+	}
+
 	[action startWithTarget:target];
 }
 
