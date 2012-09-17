@@ -138,6 +138,7 @@ and when to execute the Scenes.
 	/* the cocos2d running thread */
 	NSThread	*runningThread_;
 	
+    BOOL runLoopCommon_; 
 	// profiler
 #if CC_ENABLE_PROFILERS
 	ccTime accumDtForProfiler_;
@@ -305,5 +306,11 @@ and when to execute the Scenes.
 
 // Profiler
 -(void) showProfilers;
+
+/** Sets the run loop to RunLoopCommon, this lets the director play more nicely with UIKit elemnts, like a scrollview 
+    It only works for the displaylink director, other directors ignore this setting
+    @since 1.1RC0 
+*/
+- (void) setRunLoopCommon:(BOOL) common; 
 
 @end

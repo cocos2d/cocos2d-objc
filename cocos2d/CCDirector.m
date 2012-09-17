@@ -148,6 +148,8 @@ static CCDirector *_sharedDirector = nil;
 		runningThread_ = nil;
 		
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
+        
+        runLoopCommon_ = NO;
 	}
 
 	return self;
@@ -492,6 +494,11 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: Director#setAnimationInterval. Override me");
 }
 
+- (void) setRunLoopCommon:(BOOL) common
+{
+    CCLOG(@"cocos2d: Director:#setRunLoopCommon. Override me"); 
+  
+}
 #if CC_DIRECTOR_FAST_FPS
 
 // display the FPS using a LabelAtlas
@@ -561,6 +568,5 @@ static CCDirector *_sharedDirector = nil;
 	}
 #endif // CC_ENABLE_PROFILERS
 }
-
 @end
 

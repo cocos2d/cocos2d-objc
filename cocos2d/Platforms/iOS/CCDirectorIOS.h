@@ -163,6 +163,8 @@ typedef enum {
  @since v0.8.2
  */
 +(BOOL) setDirectorType:(ccDirectorType) directorType;
+
+
 @end
 
 #pragma mark -

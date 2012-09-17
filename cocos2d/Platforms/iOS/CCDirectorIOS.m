@@ -69,12 +69,13 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @implementation CCDirector (iOSExtensionClassMethods)
 
+
 +(Class) defaultDirector
 {
 	return [CCDirectorTimer class];
 }
 
-+ (BOOL) setDirectorType:(ccDirectorType)type
++ (BOOL) setDirectorType:(ccDirectorType)type  
 {
 	if( type == CCDirectorTypeDisplayLink ) {
 		NSString *reqSysVer = @"3.1";
@@ -722,7 +723,10 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	displayLink = [NSClassFromString(@"CADisplayLink") displayLinkWithTarget:self selector:@selector(mainLoop:)];
 	[displayLink setFrameInterval:frameInterval];
-	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    if (runLoopCommon_) 
+            	[displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
+    else 
+        [displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 }
 
 -(void) mainLoop:(id)sender
@@ -748,6 +752,11 @@ CGFloat	__ccContentScaleFactor = 1;
 {
 	[displayLink release];
 	[super dealloc];
+}
+
+- (void) setRunLoopCommon:(BOOL) common
+{
+    runLoopCommon_ = common; 
 }
 @end
 
