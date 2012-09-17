@@ -13,6 +13,7 @@ static NSString *transitions[] = {
 				@"SpriteProgressToRadial",
 				@"SpriteProgressToHorizontal",
 				@"SpriteProgressToVertical",
+  				@"TestFadeInOut",
 
 };
 
@@ -210,6 +211,37 @@ Class restartAction()
 	return @"ProgressTo Vertical";
 }
 @end
+
+@implementation TestFadeInOut
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCProgressTo *to1 = [CCProgressTo actionWithDuration:4 percent:100];
+	
+	
+	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
+    left.opacity = 0; 
+    //for blending, else opacity change doesn't work
+    left.color = (ccColor3B) {255,255,255}; 
+    
+	left.type = kCCProgressTimerTypeVerticalBarBT;
+	[self addChild:left];
+	[left setPosition:ccp(100, s.height/2)];
+	[left runAction: [CCRepeatForever actionWithAction:to1]];
+	
+    [left runAction:[CCSequence actions:[CCFadeIn actionWithDuration:2.f],[CCFadeOut actionWithDuration:2.f],nil]]; 
+}
+
+-(NSString *) title
+{
+	return @"Test FadeInOut";
+}
+@end
+
+
 
 
 #pragma mark -

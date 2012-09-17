@@ -49,8 +49,10 @@ typedef enum {
  It renders the inner sprite according to the percentage.
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
+
+ Conforms to CCRGBAProtocol since 1.1RC0
  */
-@interface CCProgressTimer : CCNode
+@interface CCProgressTimer : CCNode<CCRGBAProtocol>
 {
 	CCProgressTimerType	type_;
 	float				percentage_;

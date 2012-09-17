@@ -29,6 +29,10 @@
 
 @interface SpriteProgressToVertical : SpriteDemo
 {}
+
 @end
 
+@interface TestFadeInOut : SpriteDemo
+{}
+@end
 

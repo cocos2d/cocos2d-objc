@@ -18,6 +18,9 @@ Former Lead Developer:
 
 Contributors (alphabetically ordered):
 
+* Alexei Sholik 
+    CCProgressTimer conforms to CCRGBAProtocol
+    
 * Andreas Herbig (http://www.3spin.de/)
 	fix for incorrect CCRepeat behavior
 	
