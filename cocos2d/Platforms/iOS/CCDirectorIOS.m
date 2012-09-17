@@ -756,7 +756,17 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) setRunLoopCommon:(BOOL) common
 {
+    BOOL running = NO; 
+    if (displayLink)
+    {    
+        running = YES; 
+        [self stopAnimation];
+    }
     runLoopCommon_ = common; 
+    
+    if (running) 
+        [self startAnimation]; 
+    
 }
 @end
 
