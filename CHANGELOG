@@ -1,3 +1,6 @@
+version 2.1-beta  xx-Oct-2012
+. [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches
+
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
 . [FIX-MAC] LabelTTF works as expected on HiDPI / RetinaDisplay MacBooks
