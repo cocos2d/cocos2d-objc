@@ -26,6 +26,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
 
+* Greg Harding (http://www.flightless.co.nz/):
+	Toggle fullscreen honors the support for touches on Mac
+
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
 
