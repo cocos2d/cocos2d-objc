@@ -183,9 +183,9 @@
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
+@property (nonatomic,readwrite) GLubyte opacity;
 /** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
+@property (nonatomic,readwrite) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end
