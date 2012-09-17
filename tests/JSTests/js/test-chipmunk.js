@@ -447,16 +447,19 @@ var ChipmunkOOTest = function() {
 		this.space =  new cp.Space();
 		var staticBody = this.space.getStaticBody();
 
+		cc.log("papa mio");
+		cc.log( staticBody );
+
 		// Walls
-		var walls = [cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
-				cp.segmentShapeNew( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
-				cp.segmentShapeNew( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
-				cp.segmentShapeNew( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
+		var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
+				new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
+				new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(0,winSize.height), 0),				// left
+				new cp.SegmentShape( staticBody, cp.v(winSize.width,0), cp.v(winSize.width,winSize.height), 0)	// right
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
-			cp.shapeSetElasticity(wall, 1);
-			cp.shapeSetFriction(wall, 1);
+			wall.setElasticity(1);
+			wall.setFriction(1);
 			this.space.addStaticShape( wall );
 		}
 
@@ -465,17 +468,17 @@ var ChipmunkOOTest = function() {
 	};
 
 	this.createPhysicsSprite = function( pos, file, collision_type ) {
-		var body = cp.bodyNew(1, cp.momentForBox(1, 48, 108) );
-		cp.bodySetPos( body, pos );
-		this.space.addBody( body );
-		var shape = cp.boxShapeNew( body, 48, 108);
-		cp.shapeSetElasticity( shape, 0.5 );
-		cp.shapeSetFriction( shape, 0.5 );
-		cp.shapeSetCollisionType( shape, collision_type );
+		var body = new cp.Body(1, cp.momentForBox(1, 48, 108) );
+		body.setPos(pos);
+		this.space.addBody(body);
+		var shape = new cp.BoxShape( body, 48, 108);
+		shape.setElasticity( 0.5 );
+		shape.setFriction( 0.5 );
+		shape.setCollisionType( collision_type );
 		this.space.addShape( shape );
 
 		var sprite = cc.PhysicsSprite.create(file);
-		sprite.setBody( body );
+		sprite.setBody( body.handle );
 		return sprite;
 	};
 
@@ -539,6 +542,8 @@ goog.inherits( ChipmunkOOTest, BaseLayer );
 //
 // Order of tests
 //
+
+scenes.push( ChipmunkOOTest );
 
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
