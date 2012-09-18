@@ -447,9 +447,6 @@ var ChipmunkOOTest = function() {
 		this.space =  new cp.Space();
 		var staticBody = this.space.getStaticBody();
 
-		cc.log("papa mio");
-		cc.log( staticBody );
-
 		// Walls
 		var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
 				new cp.SegmentShape( staticBody, cp.v(0,winSize.height), cp.v(winSize.width,winSize.height), 0),	// top
@@ -514,10 +511,10 @@ var ChipmunkOOTest = function() {
 			this.messageDisplayed = true;
 		}
 		cc.log('collision begin');
-		var bodies = cp.arbiterGetBodies( arbiter );
-		var shapes = cp.arbiterGetShapes( arbiter );
-		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
-		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+		var bodies = arbiter.getBodies();
+		var shapes = arbiter.getShapes();
+		var collTypeA = shapes[0].getCollisionType();
+		var collTypeB = shapes[1].getCollisionType();
 		cc.log( 'Collision Type A:' + collTypeA );
 		cc.log( 'Collision Type B:' + collTypeB );
 		return true;
