@@ -540,8 +540,6 @@ goog.inherits( ChipmunkOOTest, BaseLayer );
 // Order of tests
 //
 
-scenes.push( ChipmunkOOTest );
-
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
 scenes.push( ChipmunkCollisionMemoryLeakTest );
