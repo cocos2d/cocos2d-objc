@@ -138,6 +138,11 @@
 	return self;
 }
 
+- (void)setDelayPerUnit:(float)delayPerUnit {
+    delayPerUnit_ = delayPerUnit;
+    duration_ = totalDelayUnits_ * delayPerUnit_;
+}
+
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%d, delayPerUnit=%f>", [self class], self,

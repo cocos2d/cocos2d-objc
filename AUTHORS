@@ -48,6 +48,9 @@ Contributors (alphabetically ordered):
 * Fabian Rueger
     Provided Beacon.png for new spriteTest
 
+* Hamed Saadat
+    Animation, changing delayPerUnit also updates duration
+
 * Jacob Eiting    
     fix for ColorLayer
     
