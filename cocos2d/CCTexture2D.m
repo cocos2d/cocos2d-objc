@@ -263,6 +263,21 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
 	}
     
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+    
+	// iOS BUG:
+	// If Texture is both 16-bit and NPOT on iOS5, then convert it to POT in order to save memory
+	// http://www.cocos2d-iphone.org/forum/topic/31092
+	if( ([conf OSVersion] >= kCCiOSVersion_5_0_0) &&
+	   (pixelFormat == kCCTexture2DPixelFormat_RGB565 || pixelFormat == kCCTexture2DPixelFormat_RGBA4444 || pixelFormat == kCCTexture2DPixelFormat_RGB5A1) &&
+	   ( (POTHigh != ccNextPOT(POTHigh)) || POTWide != ccNextPOT(POTWide) ) )
+	{
+		CCLOG(@"cocos2d: converting NPOT (%d,%d) to POT (%lu,%lu) due to iOS 5.x memory BUG", POTWide, POTHigh, ccNextPOT(POTWide), ccNextPOT(POTHigh) );
+		POTWide = ccNextPOT(POTWide);
+		POTHigh = ccNextPOT(POTHigh);
+	}   
+#endif // IOS
+    
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
 		CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
@@ -727,7 +742,6 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			
 			[pvr release];
 			
-			[self setAntiAliasTexParameters];
 		} else {
 			
 			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
