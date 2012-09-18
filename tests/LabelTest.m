@@ -964,13 +964,16 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		
 		// CCLabelBMFont
-		CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentLeft fontName:@"Marker Felt" fontSize:32];
-		CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentCenter fontName:@"Marker Felt" fontSize:32];
-		CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:CGSizeMake(s.width,50) alignment:CCTextAlignmentRight fontName:@"Marker Felt" fontSize:32];
-
-		left.position = ccp(s.width/2,200);
+        CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:CGSizeMake(s.width,150) alignment:CCTextAlignmentLeft vertAlignment:CCVerticalAlignmentTop lineBreakMode:CCLineBreakModeWordWrap fontName:@"Marker Felt" fontSize:32];
+        	
+        CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:CGSizeMake(s.width,150) alignment:CCTextAlignmentCenter vertAlignment:CCVerticalAlignmentCenter lineBreakMode:CCLineBreakModeWordWrap fontName:@"Marker Felt" fontSize:32];
+        	
+        CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:CGSizeMake(s.width,150) alignment:CCTextAlignmentRight vertAlignment:CCVerticalAlignmentBottom lineBreakMode:CCLineBreakModeWordWrap fontName:@"Marker Felt" fontSize:32];
+     
+        
+		left.position = ccp(s.width/2,150);
 		center.position = ccp(s.width/2,150);
-		right.position = ccp(s.width/2,100);
+		right.position = ccp(s.width/2,150);
 		
 		[self addChild:left];
 		[self addChild:right];
@@ -987,7 +990,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"You should see 3 labels aligned left, center and right";
+	return @"You should see 3 labels aligned top-left, center and bottom-right";
 }
 
 @end
@@ -1046,6 +1049,7 @@ Class restartAction()
 		CCLabelTTF *wordwrap = [CCLabelTTF labelWithString:@"Testing line wordwrap mode mode mode mode"
 												dimensions:CGSizeMake(s.width/4,40)
 												 alignment:CCTextAlignmentCenter
+                                                vertAlignment:CCVerticalAlignmentTop
 											 lineBreakMode:CCLineBreakModeWordWrap
 												  fontName:@"Marker Felt"
 												  fontSize:16];
@@ -1053,7 +1057,7 @@ Class restartAction()
 		
 		[self addChild:wordwrap];
 		
-		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Impact" fontSize: 14];
+		CCLabelTTF *label = [CCLabelTTF labelWithString: @"A really long line of text that is longer than the width of the label" dimensions:CGSizeMake(280, 60) alignment:CCTextAlignmentCenter fontName: @"Marker Felt" fontSize: 14];
 		label.position = ccp(s.width/2,90);
 		[self addChild:label];
 
@@ -1062,6 +1066,7 @@ Class restartAction()
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
 											  dimensions:CGSizeMake(s.width/4,40)
 											   alignment:CCTextAlignmentCenter
+                                             vertAlignment:CCVerticalAlignmentTop
 										   lineBreakMode:CCLineBreakModeCharacterWrap
 												fontName:@"Marker Felt"
 												fontSize:16];
@@ -1073,6 +1078,7 @@ Class restartAction()
 		CCLabelTTF *clip = [CCLabelTTF labelWithString:@"Testing line clip clip clip mode mode mode mode"
 												dimensions:CGSizeMake(s.width/4,40)
 												 alignment:CCTextAlignmentCenter
+                                                vertAlignment:CCVerticalAlignmentTop
 											 lineBreakMode:CCLineBreakModeClip
 												  fontName:@"Marker Felt"
 												  fontSize:16];

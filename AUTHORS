@@ -63,6 +63,7 @@ Contributors (alphabetically ordered):
 * Karl Stenerud (http://www.mindsnacks.com/):
 	Author of ActionTargeted
     Added functionality of pausing and resuming all running actions
+    Label vertical alignment support
 
 * Marco Tillemans (AKA araker: http://www.welcometothefabrik.com/)
 	Texture2D: drawInRect / drawAtPoint disables color state
