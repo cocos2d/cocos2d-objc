@@ -123,6 +123,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
     
 	if( [__localFileManager fileExistsAtPath:newName] )
 		return newName;
+    else 
+    {//try it with full bundle path
+        newName = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] bundlePath], newName];
+        if( [__localFileManager fileExistsAtPath:newName] )
+            return newName;
+    }
     
 	CCLOG(@"cocos2d: CCFileUtils: Warning file not found: %@", [newName lastPathComponent] );
     

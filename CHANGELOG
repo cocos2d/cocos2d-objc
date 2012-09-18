@@ -32,6 +32,7 @@ version 1.1-rc0 ..-..-2012
 . [FIX] Director: 
         exceptions raised in runloop didn't cause program to abort (issue #911)
         Only enable depth test when a depth buffer is present
+. [FIX] FileUtils: also search full bundle path          
 . [FIX] Node: 
         onEnterTransitionDidFinish isn't called twice anymore, when node was added in onEnter
         touches still work when UIKit elements lay on top of cocos view 
