@@ -139,6 +139,27 @@ static CCActionManager *sharedManager_ = nil;
 
 #pragma mark ActionManager - Pause / Resume
 
+-(NSSet *) pauseAllRunningActions
+{
+    NSMutableSet* idsWithActions = [NSMutableSet setWithCapacity:50];
+    
+    for(tHashElement *element=targets; element != NULL; element=element->hh.next) {
+    
+        if( !element->paused ) {
+            element->paused = YES;
+            [idsWithActions addObject:element->target];
+        }
+    }
+    return idsWithActions;
+}
+
+-(void) resumeTargets:(NSSet *)targetsToResume
+{
+    for(id target in targetsToResume) {
+        [self resumeTarget:target];     
+    }
+}
+
 -(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
