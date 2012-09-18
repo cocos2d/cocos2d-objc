@@ -127,7 +127,7 @@ typedef struct _KerningHashElement
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Kernings:%d | Image = %@>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | Kernings:%d | Image = %@>", [self class], self,
 			HASH_COUNT(kerningDictionary_),
 			atlasName_];
 }

@@ -112,7 +112,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | totalQuads =  %i>", [self class], self, totalQuads_];
+	return [NSString stringWithFormat:@"<%@ = %p | totalQuads =  %i>", [self class], self, totalQuads_];
 }
 
 -(void) dealloc

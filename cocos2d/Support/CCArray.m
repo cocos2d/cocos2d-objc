@@ -417,7 +417,7 @@ static inline NSInteger selectorCompare(id object1,id object2,void *userData){
 
 - (NSString*) description
 {
-	NSMutableString *ret = [NSMutableString stringWithFormat:@"<%@ = %08X> = ( ", [self class], self];
+	NSMutableString *ret = [NSMutableString stringWithFormat:@"<%@ = %p> = ( ", [self class], self];
 
 	for( id obj in self)
 		[ret appendFormat:@"%@, ",obj];
