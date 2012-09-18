@@ -1438,29 +1438,27 @@ Class restartAction()
 	//blue diamond 
 	CGPoint tileCoord = ccp(1,10);
 	
-	uint32_t GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
-	GID = GID | kFlippedVerticallyFlag;
-	
+	uint32_t GID = [layer tileGIDAt:tileCoord]; 
+		
 	//only the vertical flag is now set
-	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+	[layer setTileGID:GID  at:tileCoord withFlags:kCCTMXTileVerticalFlag]; 
 	
 	tileCoord = ccp(2,10);
 	
 	//tile has horizontal flag
-	GID = [layer tileGIDAt:tileCoord withFlags:YES]; 
-	GID = GID | kFlippedVerticallyFlag;
+    
+	GID = [layer tileGIDAt:tileCoord ];
 	
 	//tile has horizontal + vertical flag
-	[layer setTileGID:GID at:tileCoord withFlags:YES]; 
+	[layer setTileGID:GID at:tileCoord withFlags:kCCTMXTileHorizontalFlag]; 
 	
 	//the bug
 	tileCoord = ccp(2,8);
 	
 	//want to reset flip of tile, get original tile gid
-	GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
+    GID = [layer tileGIDAt:tileCoord];
 	
-	//overwrite the flags by setting withFlags to YES
-	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+	[layer setTileGID:GID  at:tileCoord withFlags:kCCTMXTileDiagonalFlag]; 
 }
 @end
 

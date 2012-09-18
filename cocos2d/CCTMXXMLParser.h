@@ -56,10 +56,17 @@ enum {
 	TMXPropertyTile
 };
 
+
+typedef enum ccTMXTileFlags_ {
+	kCCTMXTileHorizontalFlag		= 0x80000000,
+	kCCTMXTileVerticalFlag			= 0x40000000,
+	kCCTMXTileDiagonalFlag			= 0x20000000,
+    
+	kCCFlipedAll					= (kCCTMXTileHorizontalFlag|kCCTMXTileVerticalFlag|kCCTMXTileDiagonalFlag),
+	kCCFlippedMask					= ~(kCCFlipedAll),
+} ccTMXTileFlags;
+
 // Bits on the far end of the 32-bit global tile ID (GID's) are used for tile flags
-#define kFlippedHorizontallyFlag	0x80000000
-#define kFlippedVerticallyFlag		0x40000000
-#define kFlippedMask				~(kFlippedHorizontallyFlag|kFlippedVerticallyFlag)
 
 /* CCTMXLayerInfo contains the information about the layers like:
  - Layer name

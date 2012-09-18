@@ -31,7 +31,7 @@
 
 #import "CCAtlasNode.h"
 #import "CCSpriteBatchNode.h"
-
+#import "CCTMXXMLParser.h"
 
 @class CCTMXMapInfo;
 @class CCTMXLayerInfo;
@@ -62,7 +62,7 @@
  
  @since v0.8.1
  
- Tiles can have tile flags for additional properties. At the moment only flip horizontal and flip vertical are used. These bit flags are defined in CCTMXXMLParser.h.
+ Tiles can have tile flags for additional properties. Rotation is now supported. These flags are defined in CCTMXXMLParser.h.
  
  @since 1.1
  */
@@ -135,7 +135,7 @@
  if it returns 0, it means that the tile is empty.
  This method requires the the tile map has not been previously released (eg. don't call [layer releaseMap])
  */
--(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(BOOL) flags;
+-(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(ccTMXTileFlags*)flags;
 
 /** sets the tile gid (gid = tile global id) at a given tile coordinate.
  The Tile GID can be obtained by using the method "tileGIDAt" or by using the TMX editor -> Tileset Mgr +1.
@@ -150,7 +150,7 @@
  Use withFlags if the tile flags need to be changed as well
  */
 
--(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(BOOL) flags;
+-(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags;
 
 /** removes a tile at given tile coordinate */
 -(void) removeTileAt:(CGPoint)tileCoordinate;

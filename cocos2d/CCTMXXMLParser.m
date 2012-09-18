@@ -94,18 +94,18 @@
 
 -(CGRect) rectForGID:(unsigned int)gid
 {
-	CGRect rect;
+    CGRect rect;
 	rect.size = tileSize_;
-	
-	gid &= kFlippedMask;
+    
+	gid &= kCCFlippedMask;
 	gid = gid - firstGid_;
-	
+    
 	int max_x = (imageSize_.width - margin_*2 + spacing_) / (tileSize_.width + spacing_);
 	//	int max_y = (imageSize.height - margin*2 + spacing) / (tileSize.height + spacing);
-	
+    
 	rect.origin.x = (gid % max_x) * (tileSize_.width + spacing_) + margin_;
 	rect.origin.y = (gid / max_x) * (tileSize_.height + spacing_) + margin_;
-	
+    
 	return rect;
 }
 @end

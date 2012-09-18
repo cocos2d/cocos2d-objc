@@ -268,8 +268,6 @@ int compareInts (const void * a, const void * b);
 				// Optimization: update min and max GID rendered by the layer
 				minGID_ = MIN(gid, minGID_);
 				maxGID_ = MAX(gid, maxGID_);
-//				minGID_ = MIN((gid & kFlippedMask), minGID_);
-//				maxGID_ = MAX((gid & kFlippedMask), maxGID_);
 			}
 		}
 	}
@@ -338,7 +336,7 @@ int compareInts (const void * a, const void * b);
 	return [self tileGIDAt:pos withFlags:NO];
 }
 
--(uint32_t) tileGIDAt:(CGPoint)pos withFlags:(BOOL) flags
+-(uint32_t) tileGIDAt:(CGPoint)pos  withFlags:(ccTMXTileFlags*)flags
 {
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
@@ -347,10 +345,13 @@ int compareInts (const void * a, const void * b);
 	
 	// Bits on the far end of the 32-bit global tile ID are used for tile flags
 	// issue1264, flipped tiles can be changed dynamically
-	if (flags) 
-		return (tiles_[ idx ]);
-	else 
-		return (tiles_[ idx ] & kFlippedMask);
+    
+    uint32_t tile = tiles_[idx];
+    
+	if (flags)
+		*flags = tile & kCCFlipedAll;
+    
+	return ( tile & kCCFlippedMask);
 }
 
 #pragma mark CCTMXLayer - adding helper methods
@@ -363,15 +364,51 @@ int compareInts (const void * a, const void * b);
 	[sprite setOpacity:opacity_];
 	
 	//issue 1264, flip can be undone as well
-	if (gid & kFlippedHorizontallyFlag)
-		sprite.flipX = YES;
-	else 
-		sprite.flipX = NO;
-	
-	if (gid & kFlippedVerticallyFlag)
-		sprite.flipY = YES;
+    //issue 1264, flip can be undone as well
+	sprite.flipX = NO;
+	sprite.flipY = NO;
+	sprite.rotation = 0;
+	sprite.anchorPoint = ccp(0,0);
+    
+	// Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
+	if (gid & kCCTMXTileDiagonalFlag)
+	{
+		// put the anchor in the middle for ease of rotation.
+		sprite.anchorPoint = ccp(0.5f,0.5f);
+		[sprite setPosition: ccp([self positionAt:pos].x + sprite.contentSize.height/2,
+								 [self positionAt:pos].y + sprite.contentSize.width/2 )
+		 ];
+        
+		uint32_t flag = gid & (kCCTMXTileHorizontalFlag | kCCTMXTileVerticalFlag );
+        
+		// handle the 4 diagonally flipped states.
+		if (flag == kCCTMXTileHorizontalFlag)
+		{
+			sprite.rotation = 90;
+		}
+		else if (flag == kCCTMXTileVerticalFlag)
+		{
+			sprite.rotation = 270;
+		}
+		else if (flag == (kCCTMXTileVerticalFlag | kCCTMXTileHorizontalFlag) )
+		{
+			sprite.rotation = 90;
+			sprite.flipX = YES;
+		}
+		else
+		{
+			sprite.rotation = 270;
+			sprite.flipX = YES;
+		}
+	}
 	else
-		sprite.flipY = NO;
+	{
+		if (gid & kCCTMXTileHorizontalFlag)
+			sprite.flipX = YES;
+        
+		if (gid & kCCTMXTileVerticalFlag)
+			sprite.flipY = YES;
+	}
 }
 
 -(CCSprite*) insertTileForGID:(uint32_t)gid at:(CGPoint)pos
@@ -501,16 +538,18 @@ int compareInts (const void * a, const void * b)
 	[self setTileGID:gid at:pos withFlags:NO];	
 }
 
--(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(BOOL) flags
+-(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
 {
 	NSAssert( pos.x < layerSize_.width && pos.y < layerSize_.height && pos.x >=0 && pos.y >=0, @"TMXLayer: invalid position");
 	NSAssert( tiles_ && atlasIndexArray_, @"TMXLayer: the tiles map has been released");
 	NSAssert( gid == 0 || gid >= tileset_.firstGid, @"TMXLayer: invalid gid" );
 
-	uint32_t currentGID = [self tileGIDAt:pos withFlags:flags];
+    ccTMXTileFlags currentFlags;
+	uint32_t currentGID = [self tileGIDAt:pos withFlags:&currentFlags];
 	
-	if (currentGID != gid) 
+	if (currentGID != gid || currentFlags != flags) 
 	{
+        uint32_t gidAndFlags = gid | flags;
 		// setting gid=0 is equal to remove the tile
 		if( gid == 0 )
 			[self removeTileAt:pos];
@@ -529,11 +568,11 @@ int compareInts (const void * a, const void * b)
 				[sprite setTextureRectInPixels:rect rotated:NO untrimmedSize:rect.size];
 				
 				if (flags) 
-					[self setupTileSprite:sprite position:[sprite position] withGID:gid];
+					[self setupTileSprite:sprite position:[sprite position] withGID:gidAndFlags];
 				
-				tiles_[z] = gid;
+				tiles_[z] = gidAndFlags;
 			} else
-				[self updateTileForGID:gid at:pos];
+				[self updateTileForGID:gidAndFlags at:pos];
 		}
 	}
 }
