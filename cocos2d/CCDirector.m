@@ -33,6 +33,7 @@
 // cocos2d imports
 #import "CCDirector.h"
 #import "CCScheduler.h"
+#import "CCTouchDispatcher.h"
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
@@ -417,8 +418,13 @@ static CCDirector *_sharedDirector = nil;
 	// Purge all managers
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
-	[CCScheduler purgeSharedScheduler];
-	[CCActionManager purgeSharedManager];
+	//don't change these lines, order is important
+    [CCActionManager purgeSharedManager];
+    [CCScheduler purgeSharedScheduler];
+
+    //also remove touch dispatcher
+    [[CCTouchDispatcher sharedDispatcher] release];
+
 	[CCTextureCache purgeSharedTextureCache];
 	
 	

@@ -157,7 +157,9 @@ Contributors (alphabetically ordered):
 
 * Steve Kanter
     new file extension for ipad retina
-
+* Yannick Loriot
+    fix for CCMenuItemToggle modifying tag of sprite
+    
 * Zeraien 
     Fix for raising exception in runloop of CADisplayLinkDirector, where exception isn't propagated properly 
 

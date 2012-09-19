@@ -116,9 +116,14 @@ static CCTouchDispatcher *sharedDispatcher = nil;
 
 -(void) dealloc
 {
+   	CCLOGINFO( @"cocos2d: deallocing %@", self);
+    
 	[targetedHandlers release];
 	[standardHandlers release];
 	[handlersToDo release];
+    
+    sharedDispatcher = nil;
+    
 	[super dealloc];
 }
 
