@@ -339,6 +339,7 @@
 	NSMutableArray* subItems_;
 	GLubyte		opacity_;
 	ccColor3B	color_;
+    CCMenuItem *displayedItem_;
 }
 
 /** conforms with CCRGBAProtocol protocol */

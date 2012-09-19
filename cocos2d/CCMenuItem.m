@@ -679,6 +679,8 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	
 		self.subItems = [NSMutableArray arrayWithCapacity:2];
 		
+        displayedItem_ = nil;
+        
 		int z = 0;
 		CCMenuItem *i = item;
 		while(i) {
@@ -689,6 +691,8 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 		selectedIndex_ = NSUIntegerMax;
 		[self setSelectedIndex:0];
+        
+        
 	}
 	
 	return self;
@@ -723,13 +727,15 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( index != selectedIndex_ ) {
 		selectedIndex_=index;
-		CCMenuItem *currentItem = (CCMenuItem*)[self getChildByTag:kCurrentItem];
-		if( currentItem ) {
-			[currentItem removeFromParentAndCleanup:NO];
-		}
-		
+        
+        if (displayedItem_) 
+            [displayedItem_ removeFromParentAndCleanup:NO];
+        
 		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
-		[self addChild:item z:0 tag:kCurrentItem];
+		
+        //prevent menu from altering tag of item
+        [self addChild:item z:0];
+        displayedItem_ = item; 
 		
 		CGSize s = [item contentSize];
 		[self setContentSize: s];
