@@ -657,8 +657,15 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 //
 // MenuItemToggle
 //
+@interface CCMenuItemToggle ()
+/** Reference to the current display item. */
+@property (nonatomic, assign) CCMenuItem *displayedItem;
+
+@end
+
 @implementation CCMenuItemToggle
 
+@synthesize displayedItem = displayedItem_;
 @synthesize subItems = subItems_;
 @synthesize opacity = opacity_, color = color_;
 
@@ -678,7 +685,8 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 	if( (self=[super initWithTarget:t selector:sel]) ) {
 	
 		self.subItems = [NSMutableArray arrayWithCapacity:2];
-		
+		self.displayedItem = nil;
+        
 		int z = 0;
 		CCMenuItem *i = item;
 		while(i) {
@@ -723,13 +731,13 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 {
 	if( index != selectedIndex_ ) {
 		selectedIndex_=index;
-		CCMenuItem *currentItem = (CCMenuItem*)[self getChildByTag:kCurrentItem];
-		if( currentItem ) {
-			[currentItem removeFromParentAndCleanup:NO];
-		}
+		
+        if(displayedItem_)
+            [displayedItem_ removeFromParentAndCleanup:NO];
 		
 		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
-		[self addChild:item z:0 tag:kCurrentItem];
+		[self addChild:item z:0];
+        self.displayedItem = item;
 		
 		CGSize s = [item contentSize];
 		[self setContentSize: s];
