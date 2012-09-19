@@ -1184,6 +1184,12 @@ static int currSpriteTag = firstSpriteTag;
 
 @end
 
+@implementation NumberSprite 
+
+@synthesize aNumber;
+
+@end
+
 @implementation ActionProperty
 -(void) onEnter
 {
@@ -1206,6 +1212,26 @@ static int currSpriteTag = firstSpriteTag;
 	[grossini runAction:rot_seq];
 	[tamara runAction:scale_seq];
 	[kathia runAction:opacity_seq];
+   
+    //testing capabilities of keyPath, for instance saving values in a dictionary
+    numberSprite_ = [[NumberSprite alloc] initWithFile:@"grossini.png"]; 
+
+    
+    CCActionTween *tween = [CCActionTween actionWithDuration:2 key:@"aNumber" from:5 to:100];
+    
+    //since dicSprite is not added to the scene, onEnter needs to be called to let the action run. 
+    //see console for output
+    [numberSprite_ onEnter]; 
+    [numberSprite_ runAction:tween];
+    
+    [self scheduleUpdate];
+    
+}
+
+- (void) update:(ccTime) time
+{
+
+    CCLOG(@"%f", numberSprite_.aNumber); 
 }
 
 -(NSString *) title
@@ -1218,6 +1244,11 @@ static int currSpriteTag = firstSpriteTag;
 	return @"Simulates Rotation, Scale and Opacity using a generic action";
 }
 
+- (void) dealloc
+{
+    [numberSprite_ release]; 
+    [super dealloc]; 
+}
 @end
 
 @implementation ActionTargeted

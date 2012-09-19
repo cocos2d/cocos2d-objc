@@ -48,6 +48,9 @@ Contributors (alphabetically ordered):
 * Colin McCune 
     Ported fix from 2.0 to 1.1. fixes compile errors compatible with xCode 4.4 and higher due to incorrect format in reporting strings
     
+* Dave Tatch 
+    CCActionTween uses keyPath instead of key for more possible use cases
+    
 * Fabian Rueger
     Provided Beacon.png for new spriteTest
 

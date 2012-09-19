@@ -60,7 +60,8 @@
 
 - (void) update:(ccTime) dt
 {    
-	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
+    //issue #1081 using keyPath instead of key for greater flexibility
+	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKeyPath:key_];
 }
 
 - (CCActionInterval *) reverse

@@ -159,8 +159,17 @@
 {}
 @end
 
+@interface NumberSprite: CCSprite 
+{
+    
+}
+    @property(nonatomic, assign) float aNumber;
+@end
+
 @interface ActionProperty : ActionDemo
-{}
+{
+    NumberSprite *numberSprite_; 
+}
 @end
 
 @interface ActionTargeted : ActionDemo
