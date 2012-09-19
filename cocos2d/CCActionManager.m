@@ -71,7 +71,7 @@ static CCActionManager *sharedManager_ = nil;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:0 paused:NO];
+		[[CCScheduler sharedScheduler] scheduleUpdateForTarget:self priority:kCCPrioritySystem paused:NO];
 		targets = NULL;
 	}
 	

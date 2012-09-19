@@ -28,6 +28,10 @@
 #import "Support/uthash.h"
 #import "ccTypes.h"
 
+#define kCCPrioritySystem LONG_MIN
+#define kCCPriorityNonSystemMin (kCCPrioritySystem+1)
+
+
 typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 //
@@ -181,10 +185,15 @@ struct _hashUpdateEntry;
 
 /** Unschedules all selectors from all targets.
  You should NEVER call this method, unless you know what you are doing.
-
  @since v0.99.3
  */
 -(void) unscheduleAllSelectors;
+
+/** Unschedules all selectors from all targets with a minimum priority.
+ You should always call this with kCCPriorityNonSystemMin or higher.
+ @since fork
+ */
+-(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority;
 
 /** Pauses the target.
  All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
@@ -204,5 +213,22 @@ struct _hashUpdateEntry;
  @since v1.0.0
  */
 -(BOOL) isTargetPaused:(id)target;
+
+/** Pause all selectors from all targets.
+ You should NEVER call this method, unless you know what you are doing.
+ @since fork
+ */
+-(NSSet*) pauseAllSelectors;
+
+/** Pause all selectors from all targets with a minimum priority.
+ You should always call this with kCCPriorityNonSystemMin or higher.
+ @since fork
+ */
+-(NSSet*) pauseAllSelectorsWithMinPriority:(NSInteger)minPriority;
+
+/** Resume selectors on a set of targets.  This can be useful for undoing a call to pauseAllSelectors.
+ @since fork
+ */
+-(void) resumeTargets:(NSSet *)targetsToResume;
 
 @end
