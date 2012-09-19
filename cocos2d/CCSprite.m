@@ -996,8 +996,10 @@ static SEL selSortMethod = NULL;
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame 
 {
 	CGRect r = [frame rect];
+    CGPoint p = [frame offsetInPixels];
+    //issue #707, need to compare offsets as well 
 	return ( CGRectEqualToRect(r, rect_) &&
-			frame.texture.name == self.texture.name );
+			frame.texture.name == self.texture.name && CGPointEqualToPoint(p, offsetPositionInPixels_) );
 }
 
 -(CCSpriteFrame*) displayedFrame
