@@ -171,7 +171,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			ret = [self getPath:fullpath forSuffix:__suffixiPadRetinaDisplay];
 			*resolutionType = kCCResolutioniPadRetinaDisplay;
 		}
-		else
+		
+        //iPad falls back to iPad extension
+        if (!ret)
 		{
 			ret = [self getPath:fullpath forSuffix:__suffixiPad];
 			*resolutionType = kCCResolutioniPad;
@@ -181,15 +183,16 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// iPhone ?
 	else
 	{
-        //four inch support here 
-        /*if (something) 
+        //four inch support here, UIScreen size always in portrait and in points
+        if ([[UIScreen mainScreen] bounds].size.height == 1136/2) 
         {
          ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
          *resolutionType = kCCResolutioniPhoneFourInchDisplay;
         }
-        */
+        
+        
 		// Retina Display ?
-		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+		if(!ret && CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
 			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 		}

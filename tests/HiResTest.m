@@ -14,6 +14,7 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {	
 			@"Test1",
 			@"Test2",
+            @"iPhone4Inch",
 };
 
 enum {
@@ -212,7 +213,38 @@ Class restartAction()
 {
 	return @"Screen size should 480x320";
 }
+@end
 
+@implementation iPhone4Inch
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		hiRes_ = YES;
+        
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
+		NSLog(@"screen size: %f x %f", sp.width, sp.height);
+		
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[self addChild:sprite];
+		
+		[sprite setPosition:ccp(size.width/2, size.height/2)];
+	}	
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"@Scene is HD 4 inch";
+}
+
+-(NSString *) subtitle
+{
+	return @"Screen size should be 1136x640";
+}
 
 @end
 

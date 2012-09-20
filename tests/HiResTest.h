@@ -24,4 +24,7 @@
 {}
 @end
 
+@interface iPhone4Inch : HiResDemo
+{}
+@end
 
