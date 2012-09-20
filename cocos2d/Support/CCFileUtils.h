@@ -76,7 +76,12 @@
  */
 +(NSString *)removeSuffixFromFile:(NSString*) path;
 
-
+/** Sets the iPhone RetinaDisplay suffix to load resources.
+ By default it is "-528h".
+ Only valid on iOS. Not valid for OS X.
+ 
+ @since v1.1RC0
+ */
 +(void) setIphoneFourInchDisplaySuffix:(NSString*) suffix;
 
 /** Sets the iPhone RetinaDisplay suffix to load resources.
@@ -86,18 +91,6 @@
  @since v1.1
  */
 +(void) setiPhoneRetinaDisplaySuffix:(NSString*)suffix;
-
-/** Sets the iPhone RetinaDisplay suffix to load resources.
- By default it is "-528h".
- Only valid on iOS. Not valid for OS X.
- 
- @since v1.1RC0
- */
--(BOOL) iPhoneFourInchDisplayFileExistsAtPath:(NSString*)path
-{
-    
-}
-
 
 /** Sets the iPad suffix to load resources.
  By default it is "".
@@ -132,6 +125,8 @@
  @since v1.1
  */
 +(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename;
+
++(BOOL) iPhoneFourInchDisplayFileExistsAtPath:(NSString*) filename;
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
