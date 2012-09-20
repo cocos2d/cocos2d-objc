@@ -1108,6 +1108,9 @@
 		A05B641C156F552500ADAB65 /* cpSweep1D.c in Sources */ = {isa = PBXBuildFile; fileRef = A05B63E5156F552500ADAB65 /* cpSweep1D.c */; };
 		A05B641D156F552500ADAB65 /* cpVect.c in Sources */ = {isa = PBXBuildFile; fileRef = A05B63E6156F552500ADAB65 /* cpVect.c */; };
 		A05B641E156F552500ADAB65 /* prime.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63E7156F552500ADAB65 /* prime.h */; };
+		A062C9ED1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A062C9EC1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm */; };
+		A062C9EE1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A062C9EC1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm */; };
+		A062C9EF1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */ = {isa = PBXBuildFile; fileRef = A062C9EC1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm */; };
 		A064312713C1418200CC5554 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A0644A6415B60A59004AB807 /* CCBReader.h in Headers */ = {isa = PBXBuildFile; fileRef = A0644A5815B60A59004AB807 /* CCBReader.h */; };
 		A0644A6515B60A59004AB807 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A0644A5915B60A59004AB807 /* CCBReader.m */; };
@@ -6939,6 +6942,9 @@
 		A05B63E5156F552500ADAB65 /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		A05B63E6156F552500ADAB65 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A05B63E7156F552500ADAB65 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
+		A062C9EC1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_auto_classes.mm; sourceTree = "<group>"; };
+		A062C9F0160A95AF00D1E3BC /* js_bindings_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
+		A062C9F1160A95AF00D1E3BC /* js_bindings_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_auto_classes.h; sourceTree = "<group>"; };
 		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0644A5815B60A59004AB807 /* CCBReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBReader.h; sourceTree = "<group>"; };
@@ -8461,6 +8467,9 @@
 		A031BFD115DADE5F00E1986C /* auto */ = {
 			isa = PBXGroup;
 			children = (
+				A062C9EC1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm */,
+				A062C9F1160A95AF00D1E3BC /* js_bindings_chipmunk_auto_classes.h */,
+				A062C9F0160A95AF00D1E3BC /* js_bindings_chipmunk_auto_classes_registration.h */,
 				A031BFD215DADE5F00E1986C /* js_bindings_chipmunk_functions.h */,
 				A031BFD315DADE5F00E1986C /* js_bindings_chipmunk_functions.mm */,
 				A031BFD415DADE5F00E1986C /* js_bindings_chipmunk_functions_registration.h */,
@@ -16212,6 +16221,7 @@
 				A0D7D68915E2D294000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68A15E2D294000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0C1EEA81604012700E090FF /* js_bindings_chipmunk_oo_classes.mm in Sources */,
+				A062C9ED1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16338,6 +16348,7 @@
 				A0D7D68515E2D293000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68615E2D293000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0C1EEAA1604012700E090FF /* js_bindings_chipmunk_oo_classes.mm in Sources */,
+				A062C9EF1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16454,6 +16465,7 @@
 				A0D7D68715E2D294000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68815E2D294000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0C1EEA91604012700E090FF /* js_bindings_chipmunk_oo_classes.mm in Sources */,
+				A062C9EE1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
