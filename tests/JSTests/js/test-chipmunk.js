@@ -477,7 +477,7 @@ var ChipmunkOOTest = function() {
 		this.space.addShape( shape );
 
 		var sprite = cc.PhysicsSprite.create(file);
-		sprite.setBody( body.getHandle() );
+		sprite.setBody( body.handle );
 		return sprite;
 	};
 
