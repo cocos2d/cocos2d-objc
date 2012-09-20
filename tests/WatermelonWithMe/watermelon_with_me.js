@@ -565,12 +565,12 @@ var GameLayer = cc.LayerGradient.extend({
 		this._space =  new cp.Space();
 
 		// Gravity
-		this._space.setGravity( cp._v(0, -GRAVITY) );
+		this._space.gravity = cp._v(0, -GRAVITY);
 
         this.enableCollisionEvents( true );
 
         // debug only
-        this._debugNode = cc.PhysicsDebugNode.create( this._space.getHandle() );
+        this._debugNode = cc.PhysicsDebugNode.create( this._space.handle );
         this._debugNode.setVisible( false );
         // Parallax ratio and offset
         this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS, cc._p(1,1), cc.POINT_ZERO );
@@ -679,7 +679,7 @@ var GameLayer = cc.LayerGradient.extend({
 
 		var body = new cp.Body(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
 		body.setPos( pos );
-        sprite.setBody( body.getHandle() );
+        sprite.setBody( body.handle );
 
         var shape = new cp.CircleShape( body, radius, cp.vzero );
         shape.setFriction( 1 );
@@ -705,7 +705,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         var body = new cp.Body( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs.width, cs.height ) );
         body.setPos( pos );
-        sprite.setBody( body.getHandle() );
+        sprite.setBody( body.handle );
 
         this._space.addBody( body );
         this._batch.addChild( sprite, Z_CHASSIS );
@@ -747,7 +747,7 @@ var GameLayer = cc.LayerGradient.extend({
 
             var body = new cp.Body(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
             body.setPos( pos );
-            sprite.setBody( body.getHandle() );
+            sprite.setBody( body.handle );
 
             var shape = new cp.CircleShape( body, radius, cp.vzero );
             shape.setFriction( 1 );
@@ -767,7 +767,7 @@ var GameLayer = cc.LayerGradient.extend({
         var body = new cp.Body(1, 1);
         body.initStatic();
 		body.setPos( pos );
-        sprite.setBody( body.getHandle() );
+        sprite.setBody( body.handle );
 
         var shape = new cp.CircleShape( body, radius, cp.vzero );
         shape.setFriction( 1 );
@@ -794,7 +794,7 @@ var GameLayer = cc.LayerGradient.extend({
         var cs = sprite.getContentSize();
         var body = new cp.Body( 1, 1);
         body.initStatic();
-        sprite.setBody( body.getHandle() );
+        sprite.setBody( body.handle );
         body.setPos( pos );
 
         var shape = new cp.BoxShape( body, cs.width, cs.height );
