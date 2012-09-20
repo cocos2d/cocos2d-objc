@@ -2,11 +2,13 @@ version 1.1-rc0 ..-..-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
             warning for IOS5 bug for NPOT 16-bit textures
+. [NEW] CCFileUtils: iPhone5 support with new suffix
 . [NEW] ProgressTimer: conforms to CCRGBAProtocol, action like FadeIn/Out can now run on the timer
 . [NEW] Macros: made CCLOG a bit more verbose
 . [NEW] Actions 
         ActionInterval: CCFadeIn and CCFadeOut respect initial opacity of node(issue #828) 
         ActionManager: pausing and resuming all running actions 
+        
 . [NEW] Label: added vertical alignment support
 . [NEW] Node: added convenience method setAnchorPointWithoutPositionChange, to change a relative anchor point but not change the position of the node.
 . [NEW] Sprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.
@@ -49,12 +51,14 @@ version 1.1-rc0 ..-..-2012
         gravity now behaves the same on retina/non retina (issue #1238) 
         ParticleSystemQuad: Changed animation property to particleAnimation, for compiler warning
 . [FIX] RenderTexture: fixed new getUIImageFromBuffer implementation
+. [FIX] Scheduler: fix for issue #1362, improved precision for log messages
 . [FIX] TouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
 . [FIX] Grabber: added log message to warn that grabber doesn't support transparent parts with a color buffer of RGB565
 . [FIX] Compiler 
         fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0. 
         changed %08X to %p in reporting strings for resolving compile errors in xCode 4.4/LLVM 4 
 . [FIX] TMXParser: parses external tilesets correctly (issue #1203)
+. [FIX] Templates/Project new files for iPhone5 support 
 . [FIX] Tests: MenuTest moved actions from init to onEnter (issue #884)
 . [FIX-MAC] CCDirectorMac: convertToLogicalCoordinates compensates for viewport offset when a custom projection is set 
 
