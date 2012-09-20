@@ -445,7 +445,7 @@ var ChipmunkOOTest = function() {
 	// init physics
 	this.initPhysics = function() {
 		this.space =  new cp.Space();
-		var staticBody = this.space.getStaticBody();
+		var staticBody = this.space.staticBody;
 
 		// Walls
 		var walls = [ new cp.SegmentShape( staticBody, cp.v(0,0), cp.v(winSize.width,0), 0 ),				// bottom
@@ -460,8 +460,10 @@ var ChipmunkOOTest = function() {
 			this.space.addStaticShape( wall );
 		}
 
-		// Gravity
-		this.space.setGravity( cp.v(0, -30) );
+		// Gravity:
+		// testing properties
+		this.space.gravity = cp.v(0,-100);
+		this.space.iterations = 15;
 	};
 
 	this.createPhysicsSprite = function( pos, file, collision_type ) {
