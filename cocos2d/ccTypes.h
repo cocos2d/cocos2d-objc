@@ -296,6 +296,8 @@ typedef enum
     kCCResolutioniPhone,
     //! RetinaDisplay resolution type
     kCCResolutioniPhoneRetinaDisplay,
+    //iPhone4inch resolution type
+    kCCResolutioniPhoneFourInchDisplay,
     //! iPad resolution type
     kCCResolutioniPad,
     //! iPad Retina Display resolution type

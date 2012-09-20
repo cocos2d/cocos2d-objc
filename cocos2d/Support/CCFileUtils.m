@@ -38,6 +38,7 @@ static NSFileManager *__localFileManager=nil;
 static NSString *__suffixiPhoneRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
 static NSString *__suffixiPadRetinaDisplay =@"-ipadhd";
+static NSString *__suffixiPhoneFourInchDisplay =@"-528h";
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -180,6 +181,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// iPhone ?
 	else
 	{
+        //four inch support here 
+        /*if (something) 
+        {
+         ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
+         *resolutionType = kCCResolutioniPhoneFourInchDisplay;
+        }
+        */
 		// Retina Display ?
 		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
@@ -268,6 +276,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	__suffixiPhoneRetinaDisplay = [suffix copy];
 }
 
++(void) setIphoneFourInchDisplaySuffix:(NSString*) suffix
+{
+    [__suffixiPhoneFourInchDisplay release]; 
+    __suffixiPhoneFourInchDisplay = [suffix copy]; 
+}
+
 +(void) setiPadSuffix:(NSString*)suffix
 {
 	[__suffixiPad release];
@@ -307,6 +321,11 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 +(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
 {
 	return [self fileExistsAtPath:path withSuffix:__suffixiPhoneRetinaDisplay];
+}
+
++(BOOL) iPhoneFourInchDisplayFileExistsAtPath:(NSString*)path
+{
+    return [self fileExistsAtPath:path withSuffix:__suffixiPhoneFourInchDisplay];
 }
 
 +(BOOL) iPadFileExistsAtPath:(NSString*)path
