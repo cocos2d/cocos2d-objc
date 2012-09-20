@@ -303,7 +303,7 @@ static CCScheduler *sharedScheduler;
 		for( unsigned int i=0; i< element->timers->num; i++ ) {
 			CCTimer *timer = element->timers->arr[i];
 			if( selector == timer->selector ) {
-				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.2f to %.2f", timer->interval, interval);
+				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", timer->interval, interval);
 				timer->interval = interval;
 				return;
 			}

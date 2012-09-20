@@ -578,7 +578,7 @@ Class restartTest()
 {
 	ticks++;
 
-	NSLog(@"schedUpdate: %.2f", dt);
+	NSLog(@"schedUpdate: %.4f", dt);
 	if( ticks > 3 ) {
 		[self schedule:_cmd interval:++interval];
 		ticks = 0;
