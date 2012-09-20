@@ -570,7 +570,7 @@ var GameLayer = cc.LayerGradient.extend({
         this.enableCollisionEvents( true );
 
         // debug only
-        this._debugNode = cc.PhysicsDebugNode.create( this._space );
+        this._debugNode = cc.PhysicsDebugNode.create( this._space.getHandle() );
         this._debugNode.setVisible( false );
         // Parallax ratio and offset
         this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS, cc._p(1,1), cc.POINT_ZERO );
@@ -623,7 +623,7 @@ var GameLayer = cc.LayerGradient.extend({
         var frontJoint = new cp.GrooveJoint( chassis, front, grv_a, grv_b, cp.vzero );
 
         // Create the front zero-length spring.
-        var front_anchor =  chassis.world2Local( front.GetPos() );
+        var front_anchor =  chassis.world2Local( front.getPos() );
         var frontSpring = new cp.DampedSpring( chassis, front, front_anchor, cp.vzero, 0, FRONT_SPRING, FRONT_DAMPING );
 
         // The rear strut is a swinging arm that holds the wheel a at a certain distance from a pivot on the chassis.
@@ -632,8 +632,8 @@ var GameLayer = cc.LayerGradient.extend({
         
         // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
         var rearStrutRestAngle = cp.vtoangle( cp.vsub(
-                                                cp.bodyLocal2World( chassis, cp.pinJointGetAnchr1(rearJoint) ),
-                                                cp.bodyGetPos(rear) ) );
+                                                chassis.local2World( rearJoint.getAnchr1() ),
+                                                rear.getPos() ) );
 
         // Create the rear zero-length spring.
         var rear_anchor = chassis.world2Local( rear.getPos() );
@@ -657,16 +657,16 @@ var GameLayer = cc.LayerGradient.extend({
         // Even then, the motor constraints would be the least of your performance worries.
         var frontBrake = new cp.SimpleMotor( chassis, front, 0 );
         frontBrake.setMaxForce( ROLLING_FRICTION );
-        var rearBrake = new cp.simpleMotor( chassis, rear, 0 );
+        var rearBrake = new cp.SimpleMotor( chassis, rear, 0 );
         rearBrake.setMaxForce( ROLLING_FRICTION );
 
-        this._space.addConstraint(tfrontJoint );
-        this._space.addConstraint(rearJoint );
-        this._space.addConstraint(rearSpring );
-        this._space.addConstraint(motor );
-        this._space.addConstraint(differential );
-        this._space.addConstraint(frontBrake );
-        this._space.addConstraint(rearBrake );
+        this._space.addConstraint( frontJoint );
+        this._space.addConstraint( rearJoint );
+        this._space.addConstraint( rearSpring );
+        this._space.addConstraint( motor );
+        this._space.addConstraint( differential );
+        this._space.addConstraint( frontBrake );
+        this._space.addConstraint( rearBrake );
 
         this._motor = motor;
         this._frontBrake = frontBrake;
@@ -679,7 +679,7 @@ var GameLayer = cc.LayerGradient.extend({
 
 		var body = new cp.Body(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
 		body.setPos( pos );
-        sprite.setBody( body.handle );
+        sprite.setBody( body.getHandle() );
 
         var shape = new cp.CircleShape( body, radius, cp.vzero );
         shape.setFriction( 1 );
@@ -705,14 +705,14 @@ var GameLayer = cc.LayerGradient.extend({
 
         var body = new cp.Body( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs.width, cs.height ) );
         body.setPos( pos );
-        sprite.setBody( body );
+        sprite.setBody( body.getHandle() );
 
         this._space.addBody( body );
         this._batch.addChild( sprite, Z_CHASSIS );
         this._carSprite = sprite;
 
         // bottom of chassis
-        var shape = new cp.BoxShape( cs.width, 15 );
+        var shape = new cp.BoxShape( body, cs.width, 15 );
 		shape.setFriction(0.3);
 		shape.setGroup( GROUP_BUGGY );
 		shape.setLayers( COLLISION_LAYERS_BUGGY );
@@ -722,18 +722,18 @@ var GameLayer = cc.LayerGradient.extend({
 
         // box for fruits (left)
         shape = new cp.BoxShape2( body, {l:-50, b:0, r:-46, t:30} );
-		shape.setFriction(shape, 0.3);
-		shape.setGroup( shape, GROUP_BUGGY );
-		shape.setLayers( shape, COLLISION_LAYERS_BUGGY );
-        shape.setCollisionType( shape, COLLISION_TYPE_CAR );
+		shape.setFriction(0.3);
+		shape.setGroup( GROUP_BUGGY );
+		shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
         this._space.addShape( shape );
 
         // box for fruits (right)
         shape = new cp.BoxShape2( body, {l:8, b:0, r:12, t:30} );
-		shape.setFriction(shape, 0.3);
-		shape.setGroup( shape, GROUP_BUGGY );
-		shape.setLayers( shape, COLLISION_LAYERS_BUGGY );
-        shape.setCollisionType( shape, COLLISION_TYPE_CAR );
+		shape.setFriction(0.3);
+		shape.setGroup( GROUP_BUGGY );
+		shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
         this._space.addShape( shape );
 
         return body;
@@ -747,7 +747,7 @@ var GameLayer = cc.LayerGradient.extend({
 
             var body = new cp.Body(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
             body.setPos( pos );
-            sprite.setBody( body.handle );
+            sprite.setBody( body.getHandle() );
 
             var shape = new cp.CircleShape( body, radius, cp.vzero );
             shape.setFriction( 1 );
@@ -767,7 +767,7 @@ var GameLayer = cc.LayerGradient.extend({
         var body = new cp.Body(1, 1);
         body.initStatic();
 		body.setPos( pos );
-        sprite.setBody( body.handle );
+        sprite.setBody( body.getHandle() );
 
         var shape = new cp.CircleShape( body, radius, cp.vzero );
         shape.setFriction( 1 );
@@ -794,7 +794,7 @@ var GameLayer = cc.LayerGradient.extend({
         var cs = sprite.getContentSize();
         var body = new cp.Body( 1, 1);
         body.initStatic();
-        sprite.setBody( body.handle );
+        sprite.setBody( body.getHandle() );
         body.setPos( pos );
 
         var shape = new cp.BoxShape( body, cs.width, cs.height );
