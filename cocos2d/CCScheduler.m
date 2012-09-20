@@ -357,10 +357,6 @@ static CCScheduler *sharedScheduler;
 			}
 		}
 	}
-	
-	// Not Found
-//	NSLog(@"CCScheduler#unscheduleSelector:forTarget: selector not found: %@", selString);
-
 }
 
 #pragma mark CCScheduler - Update Specific

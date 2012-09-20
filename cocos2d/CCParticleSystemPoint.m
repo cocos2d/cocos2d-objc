@@ -49,7 +49,7 @@
 		vertices = malloc( sizeof(ccPointSprite) * totalParticles );
 
 		if( ! vertices ) {
-			NSLog(@"cocos2d: Particle system: not enough memory");
+			CCLOG(@"cocos2d: Particle system: not enough memory");
 			[self release];
 			return nil;
 		}

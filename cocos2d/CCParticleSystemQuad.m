@@ -105,7 +105,7 @@
 		indices_ = calloc( sizeof(indices_[0]) * totalParticles * 6, 1 );
 		
 		if( !quads_ || !indices_) {
-			NSLog(@"cocos2d: Particle system: not enough memory");
+			CCLOG(@"cocos2d: Particle system: not enough memory");
 			if( quads_ )
 				free( quads_ );
 			if(indices_)

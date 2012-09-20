@@ -294,7 +294,7 @@
 		particles = calloc( totalParticles, sizeof(tCCParticle) );
         
 		if( ! particles ) {
-			NSLog(@"Particle system: not enough memory");
+			CCLOG(@"Particle system: not enough memory");
 			[self release];
 			return nil;
 		}
