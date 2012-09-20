@@ -512,11 +512,11 @@ var ChipmunkOOTest = function() {
 		}
 		cc.log('collision begin');
 		// var bodies = arbiter.getBodies();
-		// var shapes = arbiter.getShapes();
-		// var collTypeA = shapes[0].getCollisionType();
-		// var collTypeB = shapes[1].getCollisionType();
-		// cc.log( 'Collision Type A:' + collTypeA );
-		// cc.log( 'Collision Type B:' + collTypeB );
+		var shapes = arbiter.getShapes();
+		var collTypeA = shapes[0].getCollisionType();
+		var collTypeB = shapes[1].getCollisionType();
+		cc.log( 'Collision Type A:' + collTypeA );
+		cc.log( 'Collision Type B:' + collTypeB );
 		return true;
 	};
 
