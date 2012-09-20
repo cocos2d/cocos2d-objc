@@ -9,21 +9,8 @@
 	<string>com.cocos2d.chipmunklib</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-
 	<key>Definitions</key>
 	<dict>
-		<key>libs/Chipmunk/chipmunk-docs.html</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/chipmunk-docs.html</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/Chipmunk/include/chipmunk/chipmunk.h</key>
 		<dict>
 			<key>Group</key>
@@ -288,20 +275,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/Chipmunk/include/chipmunk/cpArray.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/include/chipmunk/cpArray.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
 		<key>libs/Chipmunk/include/chipmunk/cpBB.h</key>
 		<dict>
 			<key>Group</key>
@@ -327,34 +300,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/Chipmunk/include/chipmunk/cpBody.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/Chipmunk/include/chipmunk/cpCollision.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/include/chipmunk/cpCollision.h</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/Chipmunk/include/chipmunk/cpHashSet.h</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-				<string>include</string>
-				<string>chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/include/chipmunk/cpHashSet.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -400,7 +345,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/Chipmunk/include/chipmunk/cpSpaceHash.h</key>
+		<key>libs/Chipmunk/include/chipmunk/cpSpatialIndex.h</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -410,7 +355,7 @@
 				<string>chipmunk</string>
 			</array>
 			<key>Path</key>
-			<string>libs/Chipmunk/include/chipmunk/cpSpaceHash.h</string>
+			<string>libs/Chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -440,7 +385,7 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/Chipmunk/README.txt</key>
+		<key>libs/Chipmunk/README.textile</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -448,9 +393,7 @@
 				<string>Chipmunk</string>
 			</array>
 			<key>Path</key>
-			<string>libs/Chipmunk/README.txt</string>
-			<key>TargetIndices</key>
-			<array/>
+			<string>libs/Chipmunk/README.textile</string>
 		</dict>
 		<key>libs/Chipmunk/src/chipmunk.c</key>
 		<dict>
@@ -641,6 +584,17 @@
 			<key>Path</key>
 			<string>libs/Chipmunk/src/cpBB.c</string>
 		</dict>
+		<key>libs/Chipmunk/src/cpBBTree.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>Chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/Chipmunk/src/cpBBTree.c</string>
+		</dict>
 		<key>libs/Chipmunk/src/cpBody.c</key>
 		<dict>
 			<key>Group</key>
@@ -751,6 +705,28 @@
 			<key>Path</key>
 			<string>libs/Chipmunk/src/cpSpaceStep.c</string>
 		</dict>
+		<key>libs/Chipmunk/src/cpSpatialIndex.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>Chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/Chipmunk/src/cpSpatialIndex.c</string>
+		</dict>
+		<key>libs/Chipmunk/src/cpSweep1D.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>Chipmunk</string>
+				<string>src</string>
+			</array>
+			<key>Path</key>
+			<string>libs/Chipmunk/src/cpSweep1D.c</string>
+		</dict>
 		<key>libs/Chipmunk/src/cpVect.c</key>
 		<dict>
 			<key>Group</key>
@@ -789,7 +765,6 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
-		<string>libs/Chipmunk/chipmunk-docs.html</string>
 		<string>libs/Chipmunk/include/chipmunk/chipmunk.h</string>
 		<string>libs/Chipmunk/include/chipmunk/chipmunk_ffi.h</string>
 		<string>libs/Chipmunk/include/chipmunk/chipmunk_private.h</string>
@@ -808,18 +783,15 @@
 		<string>libs/Chipmunk/include/chipmunk/constraints/cpSlideJoint.h</string>
 		<string>libs/Chipmunk/include/chipmunk/constraints/util.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpArbiter.h</string>
-		<string>libs/Chipmunk/include/chipmunk/cpArray.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpBB.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpBody.h</string>
-		<string>libs/Chipmunk/include/chipmunk/cpCollision.h</string>
-		<string>libs/Chipmunk/include/chipmunk/cpHashSet.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpPolyShape.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpShape.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpSpace.h</string>
-		<string>libs/Chipmunk/include/chipmunk/cpSpaceHash.h</string>
+		<string>libs/Chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpVect.h</string>
 		<string>libs/Chipmunk/LICENSE.txt</string>
-		<string>libs/Chipmunk/README.txt</string>
+		<string>libs/Chipmunk/README.textile</string>
 		<string>libs/Chipmunk/src/chipmunk.c</string>
 		<string>libs/Chipmunk/src/CMakeLists.txt</string>
 		<string>libs/Chipmunk/src/constraints/cpConstraint.c</string>
@@ -836,6 +808,7 @@
 		<string>libs/Chipmunk/src/cpArbiter.c</string>
 		<string>libs/Chipmunk/src/cpArray.c</string>
 		<string>libs/Chipmunk/src/cpBB.c</string>
+		<string>libs/Chipmunk/src/cpBBTree.c</string>
 		<string>libs/Chipmunk/src/cpBody.c</string>
 		<string>libs/Chipmunk/src/cpCollision.c</string>
 		<string>libs/Chipmunk/src/cpHashSet.c</string>
@@ -846,6 +819,8 @@
 		<string>libs/Chipmunk/src/cpSpaceHash.c</string>
 		<string>libs/Chipmunk/src/cpSpaceQuery.c</string>
 		<string>libs/Chipmunk/src/cpSpaceStep.c</string>
+		<string>libs/Chipmunk/src/cpSpatialIndex.c</string>
+		<string>libs/Chipmunk/src/cpSweep1D.c</string>
 		<string>libs/Chipmunk/src/cpVect.c</string>
 		<string>libs/Chipmunk/src/prime.h</string>
 		<string>libs/LICENSE_Chipmunk.txt</string>
