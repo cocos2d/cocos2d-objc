@@ -40,7 +40,7 @@
 		}
 	}
     */
-    glView = self.view; 
+    glView = (EAGLView*) self.view; 
 }
 
 

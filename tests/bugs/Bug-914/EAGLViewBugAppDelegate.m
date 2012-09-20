@@ -19,6 +19,7 @@
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
+    
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 		
 	// Try to use CADisplayLink director
@@ -43,7 +44,8 @@
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
-//	[director setContentScaleFactor:2];
+    [director enableRetinaDisplay:YES];
+	//[director setContentScaleFactor:2];
 	
 	//
 	// VERY IMPORTANT:
