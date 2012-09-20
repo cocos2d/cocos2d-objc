@@ -45,6 +45,7 @@ static NSString *transitions[] = {
 
 	@"TileMapTest",
 	@"TileMapEditTest",
+    @"TileMapExternalTileSet",
 };
 
 enum {
@@ -1539,6 +1540,32 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark TileMapExternalTileSet
+
+@implementation TileMapExternalTileSet
+-(id) init
+{
+	if( (self=[super init]) ) {		
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ExternalTileSetMap.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+		
+		map.scale = 0.5f;
+	}	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"External tileset";
+}
+-(NSString *) subtitle
+{
+	return @"map should look the same as in tiled";
+}
+
+@end
+
+#pragma mark -
 #pragma mark TMXBug787
 
 @implementation TMXBug787
@@ -1563,7 +1590,6 @@ Class restartAction()
 }
 
 @end
-
 // CLASS IMPLEMENTATIONS
 
 #pragma mark -

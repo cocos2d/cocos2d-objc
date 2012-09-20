@@ -217,6 +217,8 @@
 // the XML parser calls here with all the elements
 -(void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
 {	
+    static uint firstGid; 
+    
 	if([elementName isEqualToString:@"map"]) {
 		NSString *version = [attributeDict valueForKey:@"version"];
 		if( ! [version isEqualToString:@"1.0"] )
@@ -249,12 +251,21 @@
 					dir = resources_;
 				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
 				
+            //firstgid is part of the tilemap and not the tileset, so in case of a external tileset, it needs to be saved here, before 2nd pass (tileset parsing) makes it 0, issue  1203
+            firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
 				[self parseXMLFile:externalTilesetFilename];
+            
+                //issue 
 		} else {
 				
 			CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
 			tileset.name = [attributeDict valueForKey:@"name"];
-			tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
+            if ([attributeDict valueForKey:@"firstgid"]) 
+            {     
+                tileset.firstGid = [[attributeDict valueForKey:@"firstgid"] intValue];
+            }
+            else 
+                tileset.firstGid = firstGid; 
 			tileset.spacing = [[attributeDict valueForKey:@"spacing"] intValue];
 			tileset.margin = [[attributeDict valueForKey:@"margin"] intValue];
 			CGSize s;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="20" height="10" tilewidth="32" tileheight="32">
+ <tileset firstgid="1" source="DesertTiles.tsx"/>
+ <layer name="Background" width="20" height="10">
+  <data encoding="base64" compression="gzip">
+   H4sIAAAAAAAAA2NkGAUgsJBM+TggjqcSTgDiOUA8l0p4HrGeHwU4AQAwasANIAMAAA==
+  </data>
+ </layer>
+ <objectgroup name="Objects" width="20" height="10">
+  <object name="SpawnPoint" x="39" y="73" width="23" height="25"/>
+ </objectgroup>
+</map>

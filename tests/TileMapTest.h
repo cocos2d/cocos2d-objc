@@ -159,3 +159,7 @@
 {}
 @end
 
+@interface TileMapExternalTileSet : TileDemo
+{}
+@end
+
