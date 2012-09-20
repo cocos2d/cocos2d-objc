@@ -461,7 +461,7 @@ var ChipmunkOOTest = function() {
 		}
 
 		// Gravity
-		this.space.gravity = cp.v(0, -30);
+		this.space.setGravity( cp.v(0, -30) );
 	};
 
 	this.createPhysicsSprite = function( pos, file, collision_type ) {
@@ -475,7 +475,7 @@ var ChipmunkOOTest = function() {
 		this.space.addShape( shape );
 
 		var sprite = cc.PhysicsSprite.create(file);
-		sprite.setBody( body.handle );
+		sprite.setBody( body.getHandle() );
 		return sprite;
 	};
 
@@ -511,12 +511,12 @@ var ChipmunkOOTest = function() {
 			this.messageDisplayed = true;
 		}
 		cc.log('collision begin');
-		var bodies = arbiter.getBodies();
-		var shapes = arbiter.getShapes();
-		var collTypeA = shapes[0].getCollisionType();
-		var collTypeB = shapes[1].getCollisionType();
-		cc.log( 'Collision Type A:' + collTypeA );
-		cc.log( 'Collision Type B:' + collTypeB );
+		// var bodies = arbiter.getBodies();
+		// var shapes = arbiter.getShapes();
+		// var collTypeA = shapes[0].getCollisionType();
+		// var collTypeB = shapes[1].getCollisionType();
+		// cc.log( 'Collision Type A:' + collTypeA );
+		// cc.log( 'Collision Type B:' + collTypeB );
 		return true;
 	};
 
@@ -539,6 +539,7 @@ goog.inherits( ChipmunkOOTest, BaseLayer );
 //
 // Order of tests
 //
+scenes.push( ChipmunkOOTest );
 
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest );
