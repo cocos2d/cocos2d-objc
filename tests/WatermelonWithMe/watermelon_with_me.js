@@ -307,6 +307,7 @@ var GameLayer = cc.LayerGradient.extend({
         var layer = new GameLayer(this._level);
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFade.create(1, scene) );
+        this._state = STATE_PAUSE;
     },
 
     onPause:function(sender) {
@@ -321,6 +322,7 @@ var GameLayer = cc.LayerGradient.extend({
         var layer = new GameLayer(this._level+1);
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFade.create(1, scene) );
+        this._state = STATE_PAUSE;
     },
 
     onMainMenu:function(sender) {
@@ -328,6 +330,7 @@ var GameLayer = cc.LayerGradient.extend({
         var layer = new MenuLayer();
         scene.addChild( layer );
         director.replaceScene( cc.TransitionProgressRadialCCW.create(1, scene) );
+        this._state = STATE_PAUSE;
     },
 
     onToggleDebug:function(sender) {
