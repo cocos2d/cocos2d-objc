@@ -27,6 +27,7 @@
 
 // 3rd party imports
 #import "CJSONDeserializer.h"
+#import "OpenUDID.h"
 
 // local imports
 #import "CLScoreServerPost.h"
@@ -78,7 +79,7 @@
 	
 	NSString *device = @"";
 	if( flags & kQueryFlagByDevice )
-		device = [[UIDevice currentDevice] uniqueIdentifier];
+		device = [OpenUDID value];
 	
 	// arguments:
 	//  query: type of query

@@ -1595,6 +1595,8 @@
 		65D4C006160776C20052FCFD /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		823F770C1595ECA40025B0DA /* OpenUDID.h in Headers */ = {isa = PBXBuildFile; fileRef = 823F770A1595ECA40025B0DA /* OpenUDID.h */; };
+		823F770D1595ECA40025B0DA /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 823F770B1595ECA40025B0DA /* OpenUDID.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
 		8E3FC8950F7B8C0600B3E5DE /* ATTRIBUTION in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */; };
 		8E60F0DB0F766499005FCEAC /* waterfall.caf in Resources */ = {isa = PBXBuildFile; fileRef = 8E60F0DA0F766499005FCEAC /* waterfall.caf */; };
@@ -4766,6 +4768,9 @@
 		65D4BFF6160775410052FCFD /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewController.m; path = DirectorTest/ScrollViewController.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
+		823F770A1595ECA40025B0DA /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		823F770B1595ECA40025B0DA /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
+		823F770F1595EEF10025B0DA /* LICENSE_OpenUDID.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_OpenUDID.txt; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
 		8E3FC8940F7B8C0600B3E5DE /* ATTRIBUTION */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ATTRIBUTION; sourceTree = "<group>"; };
 		8E60F0DA0F766499005FCEAC /* waterfall.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = waterfall.caf; sourceTree = "<group>"; };
@@ -5998,6 +6003,7 @@
 				E06F4ADB133BAA00006739B6 /* LICENSE_FontLabel.txt */,
 				E06F4ADC133BAA00006739B6 /* LICENSE_libpng.txt */,
 				E06F4ADD133BAA00006739B6 /* LICENSE_TouchJSON.txt */,
+				823F770F1595EEF10025B0DA /* LICENSE_OpenUDID.txt */,
 				5018F2510DFDEAFF00C013A5 /* cocos2d */,
 				5052213411B3D38A0061670F /* CocosDenshion */,
 				509B3A100F31027600F2FB95 /* cocoslive */,
@@ -7040,6 +7046,8 @@
 				509B3A140F31027600F2FB95 /* CLScoreServerPost.m */,
 				509B3A150F31027600F2FB95 /* CLScoreServerRequest.h */,
 				509B3A160F31027600F2FB95 /* CLScoreServerRequest.m */,
+				823F770A1595ECA40025B0DA /* OpenUDID.h */,
+				823F770B1595ECA40025B0DA /* OpenUDID.m */,
 			);
 			path = cocoslive;
 			sourceTree = "<group>";
@@ -7994,6 +8002,7 @@
 				8EDF3EA10F6BD8E600F54643 /* PASoundMgr.h in Headers */,
 				8EDF3EA30F6BD8E600F54643 /* PASoundSource.h in Headers */,
 				8EDF3EA70F6BD90B00F54643 /* SoundEngineTest.h in Headers */,
+				823F770C1595ECA40025B0DA /* OpenUDID.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12403,6 +12412,7 @@
 				8EDF3EA20F6BD8E600F54643 /* PASoundMgr.m in Sources */,
 				8EDF3EA40F6BD8E600F54643 /* PASoundSource.m in Sources */,
 				8EDF3EA80F6BD90B00F54643 /* SoundEngineTest.m in Sources */,
+				823F770D1595ECA40025B0DA /* OpenUDID.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
