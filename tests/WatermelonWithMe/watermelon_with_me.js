@@ -197,6 +197,7 @@ var GameLayer = cc.LayerGradient.extend({
     _chassis:null,
     _batch:null,
     _shapesToRemove:[],
+    _rogueBodies:[],
     _score:0,
     _scoreLabel:null,
     _time:0,
@@ -263,6 +264,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._carSmoke.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
 
         this._shapesToRemove = [];
+        this._rogueBodies = [];
 
         this.initHUD();
 
@@ -767,8 +769,7 @@ var GameLayer = cc.LayerGradient.extend({
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
         
-        var body = new cp.Body(1, 1);
-        body.initStatic();
+        var body = new cp.BodyStatic();
 		body.setPos( pos );
         sprite.setBody( body.handle );
 
@@ -778,6 +779,8 @@ var GameLayer = cc.LayerGradient.extend({
         shape.setCollisionType( COLLISION_TYPE_COIN );
         shape.setSensor( true );
 
+        // rogue ("orphan") bodies, needs to be added to a container, otherwise they could be GC'd
+        this._rogueBodies.push( body );
         this._space.addStaticShape( shape );
         this._batch.addChild( sprite, Z_COIN);
 
@@ -795,15 +798,17 @@ var GameLayer = cc.LayerGradient.extend({
     createFinish:function( pos ) {
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("farmers-market.png");
         var cs = sprite.getContentSize();
-        var body = new cp.Body( 1, 1);
-        body.initStatic();
+        var body = new cp.BodyStatic();
         sprite.setBody( body.handle );
         body.setPos( pos );
+
 
         var shape = new cp.BoxShape( body, cs.width, cs.height );
         shape.setCollisionType( COLLISION_TYPE_FINISH );
         shape.setSensor( true );
 
+        // rogue ("orphan") bodies, needs to be added to a container, otherwise they could be GC'd
+        this._rogueBodies.push( body );
         this._space.addStaticShape( shape );
         this._batch.addChild( sprite, Z_FINISH);
     },
