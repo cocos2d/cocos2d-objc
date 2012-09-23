@@ -1,5 +1,8 @@
-version 2.1-beta  xx-Oct-2012
+
+version 2.1-beta3  xx-Oct-2012
+. [NEW] JS bindings: Added Object Oriented API for Chipmunk Bindings compatible with Chipmunk-JS project
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
+. [FIX] Xcode: Fixed compiler warnigns
 
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
