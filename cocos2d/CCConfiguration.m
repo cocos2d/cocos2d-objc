@@ -77,7 +77,8 @@ static char * glExtensions;
 	Gestalt(gestaltSystemVersionMinor, &versionMinor);
 	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
 
-    return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+    //ignore warning Sint32 is signed long
+    return [NSString stringWithFormat:@"%ld.%ld.%ld", versionMajor, versionMinor, versionBugFix];
 
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
