@@ -161,7 +161,7 @@
 
 @interface NumberSprite: CCSprite 
 {
-    
+    float aNumber_; 
 }
     @property(nonatomic, assign) float aNumber;
 @end

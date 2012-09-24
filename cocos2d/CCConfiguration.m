@@ -76,8 +76,9 @@ static char * glExtensions;
 	Gestalt(gestaltSystemVersionMajor, &versionMajor);
 	Gestalt(gestaltSystemVersionMinor, &versionMinor);
 	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-	
-	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+
+    return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 

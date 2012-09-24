@@ -1186,7 +1186,7 @@ static int currSpriteTag = firstSpriteTag;
 
 @implementation NumberSprite 
 
-@synthesize aNumber;
+@synthesize aNumber = aNumber_;
 
 @end
 
