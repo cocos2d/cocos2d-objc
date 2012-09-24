@@ -112,7 +112,11 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | totalQuads =  %i>", [self class], self, totalQuads_];
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | totalQuads =  %lu>", [self class], self, totalQuads_];
+#else
+	return [NSString stringWithFormat:@"<%@ = %p | totalQuads =  %u>", [self class], self, totalQuads_];    
+#endif
 }
 
 -(void) dealloc

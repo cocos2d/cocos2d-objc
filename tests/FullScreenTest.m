@@ -454,7 +454,7 @@ Class restartAction()
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 -(BOOL) ccMouseUp:(NSEvent *)event
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	//location = [[CCDirector sharedDirector] convertEventToGL:event];
 
 	
 	return YES;

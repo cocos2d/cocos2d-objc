@@ -472,6 +472,9 @@ CGFloat	__ccContentScaleFactor = 1;
 	// don't release the event handlers
 	// They are needed in case the director is run again
 	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
+    
+    //also remove touch dispatcher
+    [[CCTouchDispatcher sharedDispatcher] release];
 	
 	[super end];
 }

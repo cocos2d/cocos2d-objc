@@ -33,7 +33,14 @@
 // cocos2d imports
 #import "CCDirector.h"
 #import "CCScheduler.h"
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #import "CCTouchDispatcher.h"
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#import "CCEventDispatcher.h"
+#endif
+
+
 #import "CCActionManager.h"
 #import "CCTextureCache.h"
 #import "CCAnimationCache.h"
@@ -182,11 +189,13 @@ static CCDirector *_sharedDirector = nil;
 	[self setAlphaBlending: YES];
     
     //only set depth test if there is a depth buffer
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED 
     if (openGLView_ && [openGLView_ depthFormat] != 0) 
     {    
         [self setDepthTest: YES];
     }
     else [self setDepthTest:NO]; 
+#endif 
     
 	[self setProjection: projection_];
 	
@@ -421,9 +430,6 @@ static CCDirector *_sharedDirector = nil;
 	//don't change these lines, order is important
     [CCActionManager purgeSharedManager];
     [CCScheduler purgeSharedScheduler];
-
-    //also remove touch dispatcher
-    [[CCTouchDispatcher sharedDispatcher] release];
 
 	[CCTextureCache purgeSharedTextureCache];
 	

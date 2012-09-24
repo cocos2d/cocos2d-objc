@@ -106,8 +106,11 @@
 
 - (id) objectAtIndex:(NSUInteger)index
 {
-	NSAssert2( index < data->num, @"index out of range in objectAtIndex(%d), index %i", data->num, index );
-	
+#ifdef __LP64__
+    NSAssert2( index < data->num, @"index out of range in objectAtIndex(%lu), index %lu", data->num, index );
+#else 
+	NSAssert2( index < data->num, @"index out of range in objectAtIndex(%u), index %u", data->num, index );
+#endif
 	return data->arr[index];
 }
 

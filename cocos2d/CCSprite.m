@@ -281,11 +281,20 @@ static SEL selSortMethod = NULL;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %i | atlasIndex = %i>", [self class], self,
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %ld | atlasIndex = %ld>", [self class], self,
 			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
 			tag_,
 			atlasIndex_
 	];
+#else 
+	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %d | atlasIndex = %d>", [self class], self,
+			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
+			tag_,
+			atlasIndex_
+            ];
+#endif
+
 }
 
 - (void) dealloc

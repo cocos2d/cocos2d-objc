@@ -72,7 +72,7 @@
 //issue 1160 no copy method for tween
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionTween *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ key:[key_ copy] from:from_ to:to_];
+	CCActionTween *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ key:[[key_ copy] autorelease] from:from_ to:to_];
     
 	return copy;
 }

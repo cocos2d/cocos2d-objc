@@ -125,7 +125,12 @@
 }
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %ix%i>", [self class], self, gridSize_.x, gridSize_.y];
+#ifdef __LP64__
+    return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %ld%ld>", [self class], self, gridSize_.x, gridSize_.y];
+#else
+    return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %d%d>", [self class], self, gridSize_.x, gridSize_.y];
+#endif
+	
 }
 
 - (void) dealloc

@@ -72,7 +72,11 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | num of animations =  %i>", [self class], self, [animations_ count]];
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | num of animations =  %li>", [self class], self, [animations_ count]];
+#else
+	return [NSString stringWithFormat:@"<%@ = %p | num of animations =  %i>", [self class], self, [animations_ count]];    
+#endif
 }
 
 -(void) dealloc

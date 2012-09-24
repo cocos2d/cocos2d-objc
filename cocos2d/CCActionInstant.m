@@ -255,13 +255,23 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %i | target = %@ | selector = %@>",
+#ifdef  __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | target = %@ | selector = %@>",
 			[self class],
 			self,
 			tag_,
 			[targetCallback_ class],
 			NSStringFromSelector(selector_)
 			];
+#else 
+ 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %d | target = %@ | selector = %@>",
+			[self class],
+			self,
+			tag_,
+			[targetCallback_ class],
+			NSStringFromSelector(selector_)
+			];
+#endif
 }
 
 -(void) dealloc

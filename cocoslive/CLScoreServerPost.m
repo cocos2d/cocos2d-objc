@@ -199,9 +199,8 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 -(NSString*) getHashForData
 {
-	NSString *ret;
 	unsigned char  pTempKey[16];
-	
+	NSString* ret=@"";
 	// update the hash with the secret key
 	const char *data = [gameKey UTF8String];
 	CC_MD5_Update(&md5Ctx, data, strlen(data));
@@ -210,7 +209,6 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	CC_MD5_Final( pTempKey, &md5Ctx);
 
 //	NSData *nsdata = [NSData dataWithBytes:pTempKey length:16];
-
 	for( int i=0;i<16;i++) {
 		ret = [NSString stringWithFormat:@"%@%02x", ret, pTempKey[i] ];
 	}

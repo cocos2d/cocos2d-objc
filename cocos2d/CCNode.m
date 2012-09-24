@@ -342,7 +342,11 @@ static NSUInteger globalOrderOfArrival = 0;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %i>", [self class], self, tag_];
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, tag_];
+#else
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %d>", [self class], self, tag_];    
+#endif
 }
 
 - (void) dealloc

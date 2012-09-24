@@ -111,7 +111,7 @@ static CCActionManager *sharedManager_ = nil;
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
 {	
-	id action = element->actions->arr[index];
+	CCAction* action = element->actions->arr[index];
     
     //issue #945 always call stop
     [action stop]; 
@@ -229,7 +229,7 @@ static CCActionManager *sharedManager_ = nil;
 			[element->currentAction retain];
             
             //issue #945 call stop
-            id action; 
+            CCAction* action;
             CCARRAYDATA_FOREACH(element->actions,action) 
             {
                 [action stop]; 

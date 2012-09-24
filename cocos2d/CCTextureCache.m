@@ -111,13 +111,21 @@ static CCTextureCache *sharedTextureCache;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | num of textures =  %i | keys: %@>",
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | num of textures =  %li | keys: %@>",
 			[self class],
 			self,
 			[textures_ count],
 			[textures_ allKeys]
 			];
-			
+#else 
+   	return [NSString stringWithFormat:@"<%@ = %p | num of textures =  %i | keys: %@>",
+			[self class],
+			self,
+			[textures_ count],
+			[textures_ allKeys]
+			];
+#endif
 }
 
 -(void) dealloc

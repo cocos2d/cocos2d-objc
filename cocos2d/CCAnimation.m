@@ -145,11 +145,19 @@
 
 - (NSString*) description
 {
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%ld, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
+			[frames_ count],
+			totalDelayUnits_,
+			delayPerUnit_
+			];
+#else 
 	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
 			[frames_ count],
 			totalDelayUnits_,
 			delayPerUnit_
 			];
+#endif
 }
 
 -(void) dealloc

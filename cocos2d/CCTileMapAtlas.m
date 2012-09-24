@@ -138,7 +138,11 @@
 		
 		// XXX: this method consumes a lot of memory
 		// XXX: a tree of something like that shall be impolemented
+#ifdef __LP64__
+		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%ld,%ld", pos.x, pos.y]];
+#else 
 		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%d,%d", pos.x, pos.y]];
+#endif
 		[self updateAtlasValueAt:pos withValue:tile withIndex: [num integerValue]];
 	}	
 }

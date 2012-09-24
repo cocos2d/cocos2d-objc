@@ -311,7 +311,12 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | end = %i, begin = %i>", [self class], self, end, begin];
+#ifdef __LP64__
+    return [NSString stringWithFormat:@"<%@ = %p | end = %lu, begin = %lu>", [self class], self, end, begin];
+#else
+    return [NSString stringWithFormat:@"<%@ = %p | end = %u, begin = %u>", [self class], self, end, begin];
+#endif
+	
 }
 
 - (void) dealloc

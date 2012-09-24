@@ -105,6 +105,8 @@
 										 fontName:fontName_
 										 fontSize:fontSize_];
 	else
+    {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		tex = [[CCTexture2D alloc] initWithString:str
 									   dimensions:dimensions_
 										alignment:alignment_
@@ -112,7 +114,27 @@
                                         lineBreakMode:lineBreakMode_
 										 fontName:fontName_
 										 fontSize:fontSize_];
+#else
+        NSFont *font = [[NSFontManager sharedFontManager]
+                        fontWithFamily:fontName_
+                        traits:NSUnboldFontMask | NSUnitalicFontMask
+                        weight:0
+                        size:fontSize_];
+        
+		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+        
+		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:dict] autorelease];
 
+        tex = [[CCTexture2D alloc] initWithString:str
+									   dimensions:dimensions_
+										alignment:alignment_
+                                    vertAlignment:vertAlignment_
+                                  attributedString:stringWithAttributes
+										 ];
+
+#endif
+    }
+    
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
         if( CC_CONTENT_SCALE_FACTOR() == 2 )
