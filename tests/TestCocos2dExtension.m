@@ -132,7 +132,9 @@ Class restartAction(void)
 @end
 
 @implementation CCNode (Extension)
--(void)testExtensionMethod
+
+//it's ambiguous to let categories have the same methods as already defined in the class, renaming this method
+-(void)testNewExtensionMethod
 {
 //	newIvar++;
     NSLog(@"got, not called %@! Selectors are essentially messages, not methods; thus they can be sent/received, never called!", NSStringFromSelector(_cmd));
@@ -152,7 +154,7 @@ Class restartAction(void)
 		
 		[self addChild:sprite];
 		
-		[sprite testExtensionMethod];
+		[sprite testNewExtensionMethod];
 //		[sprite setExtIvar:10];
 //		
 //		NSLog(@"Sprite newIvar: %d", [sprite extIvar]);

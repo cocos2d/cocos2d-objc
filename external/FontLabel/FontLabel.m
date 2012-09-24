@@ -127,6 +127,14 @@
 				case UITextAlignmentRight:
 					point.x += origSize.width - size.width;
 					break;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED   >  __IPHONE_5_1
+                case NSTextAlignmentJustified:
+                    NSLog(@"not supported alignment");
+                    break;
+                case NSTextAlignmentNatural:
+                    NSLog(@"not supported alignment");
+                    break;
+#endif
 			}
 			[self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
 		} else {

@@ -646,6 +646,14 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 						case UITextAlignmentRight:
 							drawPoint.x = constrainedSize.width - lineSize.width;
 							break;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED   >  __IPHONE_5_1
+                        case NSTextAlignmentJustified:
+                            NSLog(@"not supported alignment");
+                            break;
+                        case NSTextAlignmentNatural:
+                            NSLog(@"not supported alignment");
+                            break;
+#endif
 					}
 					NSUInteger stopGlyphIdx = glyphIdx;
 					NSUInteger lastRunIdx = currentRunIdx;

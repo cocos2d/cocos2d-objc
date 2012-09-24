@@ -210,7 +210,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	CC_MD5_Final( pTempKey, &md5Ctx);
 
 //	NSData *nsdata = [NSData dataWithBytes:pTempKey length:16];
-	ret = [NSString stringWithString:@""];
+
 	for( int i=0;i<16;i++) {
 		ret = [NSString stringWithFormat:@"%@%02x", ret, pTempKey[i] ];
 	}

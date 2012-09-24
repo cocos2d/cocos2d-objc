@@ -145,7 +145,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%d, delayPerUnit=%f>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
 			[frames_ count],
 			totalDelayUnits_,
 			delayPerUnit_

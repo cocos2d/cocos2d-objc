@@ -99,7 +99,7 @@ static char * glExtensions;
 			OSVersion_ += value * idx;
 			idx = idx >> 8;
 		}
-		CCLOG(@"cocos2d: OS version: %@ (0x%p)", OSVer, OSVersion_);
+		CCLOG(@"cocos2d: OS version: %@ (0x%p)", OSVer, (int*) OSVersion_);
 		
 		CCLOG(@"cocos2d: GL_VENDOR:   %s", glGetString(GL_VENDOR) );
 		CCLOG(@"cocos2d: GL_RENDERER: %s", glGetString ( GL_RENDERER   ) );
