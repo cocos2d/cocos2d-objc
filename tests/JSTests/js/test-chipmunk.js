@@ -321,7 +321,11 @@ var ChipmunkCollisionTest = function() {
 		this.addChild( sprite1 );
 		this.addChild( sprite2 );
 
-		cp.spaceAddCollisionHandler( this.space, 1, 2, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+		cp.spaceAddCollisionHandler( this.space, 1, 2,
+			this.collisionBegin.bind(this),
+			this.collisionPre.bind(this),
+			this.collisionPost.bind(this),
+			this.collisionSeparate.bind(this) );
 	};
 
 	this.onExit = function() {
@@ -405,7 +409,12 @@ var ChipmunkCollisionMemoryLeakTest = function() {
 		this.space =  cp.spaceNew();
 
         for( var i=1 ; i < 100 ; i++ )
-            cp.spaceAddCollisionHandler( this.space, i, i+1, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+            cp.spaceAddCollisionHandler( this.space, i, i+1,
+				this.collisionBegin.bind(this),
+				this.collisionPre.bind(this),
+				this.collisionPost.bind(this),
+				this.collisionSeparate.bind(this)
+				);
 
     };
 
@@ -493,7 +502,12 @@ var ChipmunkOOTest = function() {
 		this.addChild( sprite1 );
 		this.addChild( sprite2 );
 
-		this.space.addCollisionHandler( 1, 2, this, this.collisionBegin, this.collisionPre, this.collisionPost, this.collisionSeparate );
+		this.space.addCollisionHandler( 1, 2,
+			this.collisionBegin.bind(this),
+			this.collisionPre.bind(this),
+			this.collisionPost.bind(this),
+			this.collisionSeparate.bind(this)
+			);
 	};
 
 	this.onExit = function() {
