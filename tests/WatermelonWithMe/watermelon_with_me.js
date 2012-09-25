@@ -920,11 +920,14 @@ var GameLayer = cc.LayerGradient.extend({
     // Helpers
     //
     enableEvents:function(enabled) {
-        var platform = __getPlatform();
-        if( platform.substring(0,7) == 'desktop' ) {
-            this.setMouseEnabled( enabled );
-        } else if( platform.substring(0,6) == 'mobile' ) {
-            this.setTouchEnabled( enabled );
+        var t = cc.config.deviceType;
+        if( t == 'browser' )  {
+            // this.setTouchEnabled(true);
+            // this.setKeyboardEnabled(true);
+        } else if( t == 'desktop' ) {
+            this.setMouseEnabled(true);
+        } else if( t == 'mobile' ) {
+            this.setTouchEnabled(true);
         }
     },
 
