@@ -37,8 +37,9 @@
 #import <OpenGL/gl.h>
 
 #import "CCDirectorMac.h"
+#import "CCEventDispatcher.h"
 #import "../../ccConfig.h"
-
+#import "../../ccMacros.h"
 
 @implementation MacGLView
 
@@ -116,16 +117,15 @@
 	[super dealloc];
 }
 
-#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
-#define DISPATCH_EVENT(__event__, __selector__) [eventDelegate_ queueEvent:__event__ selector:__selector__];
-#else
 #define DISPATCH_EVENT(__event__, __selector__)												\
-	id obj = eventDelegate_;																\
-	[obj performSelector:__selector__														\
-			onThread:[(CCDirectorMac*)[CCDirector sharedDirector] runningThread]			\
-		  withObject:__event__																\
-	   waitUntilDone:NO];
-#endif
+    id obj = eventDelegate_;																\
+    CCEventObject *event = [[CCEventObject alloc] init];									\
+    event->event = [__event__ retain];														\
+    event->selector = __selector__;															\
+    [obj performSelector:@selector(dispatchEvent:)											\
+    onThread:[[CCDirector sharedDirector] runningThread]							\
+    withObject:event																	\
+    waitUntilDone:NO];
 
 #pragma mark MacGLView - Mouse events
 - (void)mouseDown:(NSEvent *)theEvent

@@ -63,10 +63,6 @@
 - (void)touchesEndedWithEvent:(NSEvent *)event;
 - (void)touchesCancelledWithEvent:(NSEvent *)event;
 
-#if CC_DIRECTOR_MAC_USE_DISPLAY_LINK_THREAD
-- (void)queueEvent:(NSEvent*)event selector:(SEL)selector;
-#endif
-
 @end
 
 /** MacGLView

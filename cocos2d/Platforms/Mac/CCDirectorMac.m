@@ -324,7 +324,6 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 
 	[self drawScene];
-	[[CCEventDispatcher sharedDispatcher] dispatchQueuedEvents];
 	
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 	

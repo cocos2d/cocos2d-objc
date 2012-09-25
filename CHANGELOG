@@ -62,6 +62,9 @@ version 1.1-rc0 ..-..-2012
 . [FIX] Templates/Project new files for iPhone5 support 
 . [FIX] Tests: MenuTest moved actions from init to onEnter (issue #884)
 . [FIX-MAC] CCDirectorMac: convertToLogicalCoordinates compensates for viewport offset when a custom projection is set 
+. [FIX-MAC] Events: 
+            Events are removed/added from outside an event
+            Fixed memory leak when removing delegate
 . [3RD] Chipmunk, updated to v6.1.1
 . [3RD] Box2D, updated to v2.2.1
 

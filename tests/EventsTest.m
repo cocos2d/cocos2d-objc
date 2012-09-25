@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 	@"KeyboardTest",
 	@"MouseTest",
 	@"TouchTest",
+    @"DispatcherTest",
 
 };
 
@@ -442,6 +443,63 @@ Class restartAction()
 
 @end
 
+@implementation DispatcherTest
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		self.isMouseEnabled = YES;
+        
+        CCMenuItemLabel *test = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Test" fontName:@"Arial" fontSize:32] target:self selector:@selector(test)];
+        CCMenu *testMenu = [CCMenu menuWithItems:test, nil];
+        testMenu.position = ccp(testMenu.contentSize.width/2, testMenu.contentSize.height/2);
+        [self addChild:testMenu z:1 tag:10];
+	}
+	return self;
+}
+
+-(void) test
+{
+    CCLOG(@"Test");
+    [self removeChildByTag:10 cleanup:YES];
+    CCMenuItemLabel *test = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:@"Test" fontName:@"Arial" fontSize:32] target:self selector:@selector(test)];
+    CCMenu *testMenu = [CCMenu menuWithItems:test, nil];
+    testMenu.position = ccp(testMenu.contentSize.width/2, testMenu.contentSize.height/2);
+    [self addChild:testMenu z:1 tag:10];
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	cocos2dmacAppDelegate *delegate = [NSApp delegate];
+	[[delegate window] setAcceptsMouseMovedEvents:YES];
+}
+
+-(void) onExit
+{
+	cocos2dmacAppDelegate *delegate = [NSApp delegate];
+	[[delegate window] setAcceptsMouseMovedEvents:NO];
+    
+	[super onExit];
+}
+
+-(void) dealloc
+{
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Dispatcher Test";
+}
+
+-(NSString *) subtitle
+{
+	return @"Click quickly on the label, should not crash";
+}
+
+@end
 
 #pragma mark -
 #pragma mark Application Delegate - iPhone
