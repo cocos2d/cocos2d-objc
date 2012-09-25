@@ -161,11 +161,6 @@ const NSUInteger kNumImages		= 9;
     return self; 
 }
 
-- (void) layoutSubviews
-{
-    CCLOG(@"subview scroll");
-}
-
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
     [[CCDirector sharedDirector] setAnimationInterval:1/30.0]; 
@@ -193,10 +188,6 @@ const NSUInteger kNumImages		= 9;
  }
  */
 
--(void)viewWillAppear:(BOOL)animated {
-	
-    glView = (EAGLView*) self.view; 
-}
 
 
 // Override to allow orientations other than the default portrait orientation.
@@ -205,34 +196,33 @@ const NSUInteger kNumImages		= 9;
     // Return YES for supported orientations
 	
 	// eg: Only support landscape orientations ?
-    //	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-    //			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
+    	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
+    			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
 	
 	// eg: Support 4 orientations
-	return YES;
+	//return YES;
 }
-
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	CGRect rect = CGRectMake(0,0,0,0);
-	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 768, 1024);
-		else
-			rect = CGRectMake(0, 0, 320, 480 );
-        
-	} else if( UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 1024, 768);
-		else
-			rect = CGRectMake(0, 0, 480, 320 );
-	} else
-		NSAssert(NO, @"Invalid orientation");
-    
-	glView.frame = rect;
-    
+	
 }
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED 
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+
+-(NSUInteger)supportedInterfaceOrientations{
+    //Modify for supported orientations, put your masks here
+    return UIInterfaceOrientationMaskLandscape;
+}
+
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+#endif
+#endif
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -244,11 +234,7 @@ const NSUInteger kNumImages		= 9;
 - (void)viewDidUnload {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
     [super viewDidUnload];
-	
-	// invalidate weak reference
-	glView = nil;
 }
 
 

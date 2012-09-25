@@ -63,9 +63,6 @@
 @end
 
 @interface masterViewController : UIViewController {
-    
-	// weak reference
-	EAGLView *glView;	
 }
 
 @end

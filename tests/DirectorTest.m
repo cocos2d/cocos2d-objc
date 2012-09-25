@@ -345,7 +345,7 @@ Class restartAction()
 	CCDirector *director = [CCDirector sharedDirector];
     
     //set the runLoop here, this run loop lets the director play a bit more nicely with UIKit elements 
-    //[director setRunLoopCommon:YES]; 
+    [director setRunLoopCommon:YES];
 	
 	
 	// Enable Retina display
@@ -360,7 +360,7 @@ Class restartAction()
 								 multiSampling:NO
 							   numberOfSamples:0];
 
-    
+
     // Init the View Controller
 	viewController = [[masterViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.wantsFullScreenLayout = YES;
@@ -370,14 +370,12 @@ Class restartAction()
 	// attach the openglView to the director
 	[director setOpenGLView:glView];
 	
-    //	[director setContentScaleFactor:2];
-	
 	//
 	// VERY IMPORTANT:
 	// If the rotation is going to be controlled by a UIViewController
 	// then the device orientation should be "Portrait".
 	//
-	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+	//[director setDeviceOrientation:kCCDeviceOrientationPortrait];
 	
 	[director setAnimationInterval:1.0/60];
     
@@ -386,9 +384,9 @@ Class restartAction()
 	// make the OpenGLView a child of the view controller
 	[viewController setView:glView];
     
+    [window addSubview:viewController.view];
 	// make the View Controller a child of the main window
-	[window addSubview: viewController.view];
-        
+    [window setRootViewController:viewController];
 	// make main window visible
 	[window makeKeyAndVisible];	
 	
