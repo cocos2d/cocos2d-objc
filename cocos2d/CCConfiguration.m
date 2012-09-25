@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -86,7 +86,7 @@ static char * glExtensions;
 -(id) init
 {
 	if( (self=[super init])) {
-		
+
 		// Obtain iOS version
 		OSVersion_ = 0;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -94,7 +94,7 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		NSString *OSVer = [self getMacVersion];
 #endif
-		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
+		NSArray *arr = [OSVer componentsSeparatedByString:@"."];
 		int idx=0x01000000;
 		for( NSString *str in arr ) {
 			int value = [str intValue];
@@ -102,13 +102,13 @@ static char * glExtensions;
 			idx = idx >> 8;
 		}
 		CCLOG(@"cocos2d: OS version: %@ (0x%p)", OSVer, (int*) OSVersion_);
-		
+
 		CCLOG(@"cocos2d: GL_VENDOR:   %s", glGetString(GL_VENDOR) );
 		CCLOG(@"cocos2d: GL_RENDERER: %s", glGetString ( GL_RENDERER   ) );
 		CCLOG(@"cocos2d: GL_VERSION:  %s", glGetString ( GL_VERSION    ) );
-		
+
 		glExtensions = (char*) glGetString(GL_EXTENSIONS);
-		
+
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -119,7 +119,7 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
 #endif
-		
+
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
@@ -128,7 +128,7 @@ static char * glExtensions;
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
-		
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
@@ -136,7 +136,7 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-		
+
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
 		CCLOG(@"cocos2d: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
@@ -168,7 +168,7 @@ static char * glExtensions;
 			  "NO"
 #endif
 			  );
-		
+
 		CCLOG(@"cocos2d: compiled with Profiling Support: %s",
 #if CC_ENABLE_PROFILERS
 
@@ -177,10 +177,10 @@ static char * glExtensions;
 			  "NO"
 #endif
 			  );
-		
+
 		CHECK_GL_ERROR();
 	}
-	
+
 	return self;
 }
 

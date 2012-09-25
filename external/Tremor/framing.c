@@ -135,7 +135,7 @@ static ogg_reference *ogg_buffer_alloc(ogg_buffer_state *bs,long bytes){
 /* enlarge the data buffer in the current link */
 static void ogg_buffer_realloc(ogg_reference *or,long bytes){
   ogg_buffer    *ob=or->buffer;
-  
+
   /* if the unused buffer is too small, grow it */
   if(ob->size<bytes){
     ob->data=_ogg_realloc(ob->data,bytes);
@@ -177,12 +177,12 @@ static ogg_reference *ogg_buffer_sub(ogg_reference *or,long begin,long length){
     else
       ret=temp;
     head=temp;
-    head->buffer=or->buffer;    
+    head->buffer=or->buffer;
     head->begin=or->begin+begin;
     head->length=length;
     if(head->length>or->length-begin)
       head->length=or->length-begin;
-    
+
     begin=0;
     length-=head->length;
     or=or->next;
@@ -202,7 +202,7 @@ ogg_reference *ogg_buffer_dup(ogg_reference *or){
     else
       ret=temp;
     head=temp;
-    head->buffer=or->buffer;    
+    head->buffer=or->buffer;
     head->begin=or->begin;
     head->length=or->length;
     or=or->next;
@@ -233,44 +233,44 @@ static ogg_reference *ogg_buffer_split(ogg_reference **tail,
   if(!or || pos==0){
 
     return 0;
-    
+
   }else{
-    
+
     if(pos>=or->length){
       /* exact split, or off the end? */
       if(or->next){
-        
+
         /* a split */
         *tail=or->next;
         or->next=0;
-        
+
       }else{
-        
+
         /* off or at the end */
         *tail=*head=0;
-        
+
       }
     }else{
-      
+
       /* split within a fragment */
       long lengthA=pos;
       long beginB=or->begin+pos;
       long lengthB=or->length-pos;
-      
+
       /* make a new reference to tail the second piece */
       *tail=_fetch_ref(or->buffer->ptr.owner);
-      
+
       (*tail)->buffer=or->buffer;
       (*tail)->begin=beginB;
       (*tail)->length=lengthB;
       (*tail)->next=or->next;
       _ogg_buffer_mark_one(*tail);
-      if(head && or==*head)*head=*tail;    
-      
+      if(head && or==*head)*head=*tail;
+
       /* update the first piece */
       or->next=0;
       or->length=lengthA;
-      
+
     }
   }
   return ret;
@@ -286,7 +286,7 @@ static void ogg_buffer_release_one(ogg_reference *or){
     ob->ptr.next=bs->unused_buffers;
     bs->unused_buffers=ob;
   }
-  
+
   bs->outstanding--; /* for the returned reference */
   or->next=bs->unused_references;
   bs->unused_references=or;
@@ -367,7 +367,7 @@ static int oggbyte_init(oggbyte_buffer *b,ogg_reference *or){
     b->ref=b->baseref=or;
     b->pos=0;
     b->end=b->ref->length;
-    b->ptr=b->ref->buffer->data+b->ref->begin;  
+    b->ptr=b->ref->buffer->data+b->ref->begin;
     return 0;
   }else
     return -1;
@@ -383,7 +383,7 @@ static void oggbyte_set4(oggbyte_buffer *b,ogg_uint32_t val,int pos){
     ++pos;
   }
 }
- 
+
 static unsigned char oggbyte_read1(oggbyte_buffer *b,int pos){
   _positionB(b,pos);
   _positionF(b,pos);
@@ -460,7 +460,7 @@ ogg_uint32_t ogg_page_serialno(ogg_page *og){
   oggbyte_init(&ob,og->header);
   return oggbyte_read4(&ob,14);
 }
- 
+
 ogg_uint32_t ogg_page_pageno(ogg_page *og){
   oggbyte_buffer ob;
   oggbyte_init(&ob,og->header);
@@ -474,13 +474,13 @@ ogg_uint32_t ogg_page_pageno(ogg_page *og){
 /* NOTE:
 If a page consists of a packet begun on a previous page, and a new
 packet begun (but not completed) on this page, the return will be:
-  ogg_page_packets(page)   ==1, 
+  ogg_page_packets(page)   ==1,
   ogg_page_continued(page) !=0
 
 If a page happens to be a single packet that was begun on a
 previous page, and spans to the next page (in the case of a three or
-more page packet), the return will be: 
-  ogg_page_packets(page)   ==0, 
+more page packet), the return will be:
+  ogg_page_packets(page)   ==0,
   ogg_page_continued(page) !=0
 */
 
@@ -604,7 +604,7 @@ unsigned char *ogg_sync_bufferin(ogg_sync_state *oy, long bytes){
     oy->fifo_head=oy->fifo_tail=ogg_buffer_alloc(oy->bufferpool,bytes);
     return oy->fifo_head->buffer->data;
   }
-  
+
   /* space left in current fragment case */
   if(oy->fifo_head->buffer->size-
      oy->fifo_head->length-
@@ -617,7 +617,7 @@ unsigned char *ogg_sync_bufferin(ogg_sync_state *oy, long bytes){
     ogg_buffer_realloc(oy->fifo_head,bytes);
     return oy->fifo_head->buffer->data+oy->fifo_head->begin;
   }
-  
+
   /* current fragment used/full; get new fragment */
   {
     ogg_reference *new=ogg_buffer_alloc(oy->bufferpool,bytes);
@@ -627,9 +627,9 @@ unsigned char *ogg_sync_bufferin(ogg_sync_state *oy, long bytes){
   return oy->fifo_head->buffer->data;
 }
 
-int ogg_sync_wrote(ogg_sync_state *oy, long bytes){ 
+int ogg_sync_wrote(ogg_sync_state *oy, long bytes){
   if(!oy->fifo_head)return OGG_EINVAL;
-  if(oy->fifo_head->buffer->size-oy->fifo_head->length-oy->fifo_head->begin < 
+  if(oy->fifo_head->buffer->size-oy->fifo_head->length-oy->fifo_head->begin <
      bytes)return OGG_EINVAL;
   oy->fifo_head->length+=bytes;
   oy->fifo_fill+=bytes;
@@ -660,7 +660,7 @@ static ogg_uint32_t _checksum(ogg_reference *or, int bytes){
   -n) skipped n bytes
    0) page not ready; more data (no bytes skipped)
    n) page synced at current location; page length n bytes
-   
+
 */
 
 long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
@@ -674,7 +674,7 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
 
   if(oy->headerbytes==0){
     if(bytes<27)goto sync_out; /* not enough for even a minimal header */
-    
+
     /* verify capture pattern */
     if(oggbyte_read1(&page,0)!=(int)'O' ||
        oggbyte_read1(&page,1)!=(int)'g' ||
@@ -691,7 +691,7 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
     for(i=0;i<oy->headerbytes-27;i++)
       oy->bodybytes+=oggbyte_read1(&page,27+i);
   }
-  
+
   if(oy->bodybytes+oy->headerbytes>bytes)goto sync_out;
 
   /* we have what appears to be a complete page; last test: verify
@@ -702,11 +702,11 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
 
     /* Compare checksums; memory continues to be common access */
     if(chksum!=_checksum(oy->fifo_tail,oy->bodybytes+oy->headerbytes)){
-      
+
       /* D'oh.  Mismatch! Corrupt page (or miscapture and not a page
          at all). replace the computed checksum with the one actually
          read in; remember all the memory is common access */
-      
+
       oggbyte_set4(&page,chksum,22);
       goto sync_fail;
     }
@@ -726,7 +726,7 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
       ogg_buffer_pretruncate(oy->fifo_tail,oy->headerbytes+oy->bodybytes);
     if(!oy->fifo_tail)oy->fifo_head=0;
   }
-  
+
   ret=oy->headerbytes+oy->bodybytes;
   oy->unsynced=0;
   oy->headerbytes=0;
@@ -734,20 +734,20 @@ long ogg_sync_pageseek(ogg_sync_state *oy,ogg_page *og){
   oy->fifo_fill-=ret;
 
   return ret;
-  
+
  sync_fail:
 
   oy->headerbytes=0;
   oy->bodybytes=0;
   oy->fifo_tail=ogg_buffer_pretruncate(oy->fifo_tail,1);
   ret--;
-  
+
   /* search forward through fragments for possible capture */
   while(oy->fifo_tail){
     /* invariant: fifo_cursor points to a position in fifo_tail */
     unsigned char *now=oy->fifo_tail->buffer->data+oy->fifo_tail->begin;
     unsigned char *next=memchr(now, 'O', oy->fifo_tail->length);
-      
+
     if(next){
       /* possible capture in this segment */
       long bytes=next-now;
@@ -795,7 +795,7 @@ int ogg_sync_pageout(ogg_sync_state *oy, ogg_page *og){
       /* need more data */
       return 0;
     }
-    
+
     /* head did not start a synced page... skipped some bytes */
     if(!oy->unsynced){
       oy->unsynced=1;
@@ -826,17 +826,17 @@ ogg_stream_state *ogg_stream_create(int serialno){
   os->serialno=serialno;
   os->pageno=-1;
   return os;
-} 
+}
 
 int ogg_stream_destroy(ogg_stream_state *os){
   if(os){
     ogg_buffer_release(os->header_tail);
     ogg_buffer_release(os->body_tail);
-    memset(os,0,sizeof(*os));    
+    memset(os,0,sizeof(*os));
     _ogg_free(os);
   }
   return OGG_SUCCESS;
-} 
+}
 
 
 #define FINFLAG 0x80000000UL
@@ -856,9 +856,9 @@ static void _next_lace(oggbyte_buffer *ob,ogg_stream_state *os){
   }
 }
 
-static void _span_queued_page(ogg_stream_state *os){ 
+static void _span_queued_page(ogg_stream_state *os){
   while( !(os->body_fill&FINFLAG) ){
-    
+
     if(!os->header_tail)break;
 
     /* first flush out preceeding page header (if any).  Body is
@@ -875,7 +875,7 @@ static void _span_queued_page(ogg_stream_state *os){
       os->header_head=0;
       break;
     }else{
-      
+
       /* process/prepare next page, if any */
 
       long pageno;
@@ -886,7 +886,7 @@ static void _span_queued_page(ogg_stream_state *os){
 
       oggbyte_init(&ob,os->header_tail);
       os->lacing_fill=oggbyte_read1(&ob,26);
-      
+
       /* are we in sequence? */
       if(pageno!=os->pageno){
         if(os->pageno==-1) /* indicates seek or reset */
@@ -900,12 +900,12 @@ static void _span_queued_page(ogg_stream_state *os){
         os->body_fill=0;
 
       }
-    
+
       if(ogg_page_continued(&og)){
         if(os->body_fill==0){
           /* continued packet, but no preceeding data to continue */
           /* dump the first partial packet on the page */
-          _next_lace(&ob,os);   
+          _next_lace(&ob,os);
           os->body_tail=
             ogg_buffer_pretruncate(os->body_tail,os->body_fill_next&FINMASK);
           if(os->body_tail==0)os->body_head=0;
@@ -937,11 +937,11 @@ static void _span_queued_page(ogg_stream_state *os){
         _next_lace(&ob,os);
 
       }
-      
+
       os->pageno=pageno+1;
       os->e_o_s=ogg_page_eos(&og);
       os->b_o_s=ogg_page_bos(&og);
-    
+
     }
   }
 }
@@ -1083,7 +1083,7 @@ static int _packetout(ogg_stream_state *os,ogg_packet *op,int adv){
       op->bytes=os->body_fill&FINMASK;
     }
   }
-  
+
   if(adv){
     os->packetno++;
     os->b_o_s=0;

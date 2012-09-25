@@ -279,11 +279,11 @@ inline static unichar CharacterAtPointer(void *start, void *end)
                     }
                 return(YES);
                 }
-            
+
             }
         return(NO);
         }
-            
+
 - (BOOL)scanDecimalNumber:(NSDecimalNumber **)outValue;
         {
         NSString *theString = NULL;
@@ -304,7 +304,7 @@ inline static unichar CharacterAtPointer(void *start, void *end)
             {
             return(NO);
             }
-        
+
         if (outData)
             {
             *outData = [NSData dataWithBytes:current length:inLength];

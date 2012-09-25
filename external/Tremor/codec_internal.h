@@ -52,7 +52,7 @@ typedef struct private_state {
 /* codec_setup_info contains all the setup information specific to the
    specific compression/decompression mode in progress (eg,
    psychoacoustic settings, channel setup, options, codebook
-   etc).  
+   etc).
 *********************************************************************/
 
 typedef struct codec_setup_info {

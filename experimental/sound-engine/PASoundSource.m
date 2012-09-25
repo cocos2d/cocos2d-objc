@@ -31,50 +31,50 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 
 void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *outDataFormat, ALsizei *outSampleRate)
 {
-	OSStatus						err = noErr;	
+	OSStatus						err = noErr;
 	UInt64							fileDataSize = 0;
 	AudioStreamBasicDescription		theFileFormat;
 	UInt32							thePropertySize = sizeof(theFileFormat);
 	AudioFileID						afid = 0;
 	void*							theData = NULL;
-	
+
 	// Open a file with ExtAudioFileOpen()
 	err = AudioFileOpenURL(inFileURL, kAudioFileReadPermission, 0, &afid);
 	if(err) {
 		NSLog(@"MyGetOpenALAudioData: AudioFileOpenURL FAILED, Error = %ld", err);
 		goto Exit;
 	}
-	
+
 	// Get the audio data format
 	err = AudioFileGetProperty(afid, kAudioFilePropertyDataFormat, &thePropertySize, &theFileFormat);
 	if(err) {
 		NSLog(@"PASoundEngine#MyGetOpenALAudioData: AudioFileGetProperty(kAudioFileProperty_DataFormat) FAILED, Error = %ld", err);
 		goto Exit;
 	}
-	
-	if (theFileFormat.mChannelsPerFrame > 2)  { 
+
+	if (theFileFormat.mChannelsPerFrame > 2)  {
 		NSLog(@"PASoundEngine#MyGetOpenALAudioData - Unsupported Format, channel count is greater than stereo");
 		goto Exit;
 	}
-	
-	if ((theFileFormat.mFormatID != kAudioFormatLinearPCM) || (!TestAudioFormatNativeEndian(theFileFormat))) { 
+
+	if ((theFileFormat.mFormatID != kAudioFormatLinearPCM) || (!TestAudioFormatNativeEndian(theFileFormat))) {
 		NSLog(@"PASoundEngine#MyGetOpenALAudioData - Unsupported Format, must be little-endian PCM");
 		goto Exit;
 	}
-	
-	if ((theFileFormat.mBitsPerChannel != 8) && (theFileFormat.mBitsPerChannel != 16)) { 
+
+	if ((theFileFormat.mBitsPerChannel != 8) && (theFileFormat.mBitsPerChannel != 16)) {
 		NSLog(@"MyGetOpenALAudioData - Unsupported Format, must be 8 or 16 bit PCM\n");
 		goto Exit;
 	}
-	
-	
+
+
 	thePropertySize = sizeof(fileDataSize);
 	err = AudioFileGetProperty(afid, kAudioFilePropertyAudioDataByteCount, &thePropertySize, &fileDataSize);
 	if(err) {
 		NSLog(@"PASoundEngine#MyGetOpenALAudioData: AudioFileGetProperty(kAudioFilePropertyAudioDataByteCount) FAILED, Error = %ld", err);
 		goto Exit;
 	}
-	
+
 	// Read all the data into memory
 	UInt32		dataSize = (UInt32) fileDataSize;
 	theData = malloc(dataSize);
@@ -88,16 +88,16 @@ void* MyGetOpenALAudioData(CFURLRef inFileURL, ALsizei *outDataSize, ALenum *out
 			*outDataFormat = (theFileFormat.mChannelsPerFrame > 1) ? AL_FORMAT_STEREO16 : AL_FORMAT_MONO16;
 			*outSampleRate = (ALsizei)theFileFormat.mSampleRate;
 		}
-		else 
-		{ 
+		else
+		{
 			// failure
 			free (theData);
 			theData = NULL; // make sure to return NULL
 			NSLog(@"PASoundEngine#MyGetOpenALAudioData: ExtAudioFileRead FAILED, Error = %ld", err);
 			goto Exit;
-		}	
+		}
 	}
-	
+
 Exit:
 	// Dispose the ExtAudioFileRef, it is no longer needed
 	if (afid) AudioFileClose(afid);
@@ -151,25 +151,25 @@ Exit:
 	ALvoid* data = NULL;
 	ALsizei size = 0;
 	ALsizei freq = 0;
-	
+
 	NSBundle*				bundle = [NSBundle mainBundle];
-	
+
 	// get some audio data from a wave file
 	CFURLRef fileURL = (CFURLRef)[[NSURL fileURLWithPath:[bundle pathForResource:self.file ofType:self.extension]] retain];
-	
+
 	if (fileURL) {
-        
+
         // load buffer data based on the file format guessed from the extension
         if ([self.extension isEqualToString:@"wav"]) {
             // WAV
             data = MyGetOpenALAudioData(fileURL, &size, &format, &freq);
-			
+
         } else if ([self.extension isEqualToString:@"ogg"]) {
 			// XXX
 			// XXX Big files will have a lot of performance problems
 			// XXX
 			// XXX is ov_open_callbacks more efficient ?
-			// XXX			
+			// XXX
             // OGG
             NSString *fsPath = [(NSURL *)fileURL path];
             FILE *fh;
@@ -178,23 +178,23 @@ Exit:
                 OggVorbis_File vf;
                 int eof = 0;
                 int current_section;
-                
+
                 if(ov_open(fh, &vf, NULL, 0) < 0) {
 					NSLog(@"PASoundEngine: Input does not appear to be an Ogg bitstream");
 					[NSException raise:@"PASoundEngine:InvalidOggFormat" format:@"InvalidOggFormat"];
                 }
-                
+
                 // get meta info (sample rate & mono/stereo format)
                 vorbis_info *vi = ov_info(&vf,-1);
                 freq = (ALsizei)vi->rate;
                 format = (vi->channels == 1) ? AL_FORMAT_MONO16 : AL_FORMAT_STEREO16;
-                
+
                 // decode data
-                size = 0;				
+                size = 0;
 				char tmpBuff[kBuffSize];
 				char *newData;
                 while(!eof) {
-					
+
                     int ret = ov_read(&vf, &tmpBuff[0], kBuffSize, &current_section);
                     if (ret == 0) {
                         eof = 1;
@@ -202,10 +202,10 @@ Exit:
 						/* error in the stream.  Not a problem, just reporting it in
 						 case we (the app) cares.  In this case, we don't. */
 						NSLog(@"PASoundEngine:Error reading buffer");
-						[NSException raise:@"PASoundEngine:Error reading file" format:@"Error reading file"];						
+						[NSException raise:@"PASoundEngine:Error reading file" format:@"Error reading file"];
                     } else {
 						size += ret;
-												
+
 						// 1st malloc
 						if( !data )
 							newData = malloc(ret);
@@ -230,22 +230,22 @@ Exit:
             }
             fclose(fh);
         }
-		
+
         CFRelease(fileURL);
-        
+
         if((error = alGetError()) != AL_NO_ERROR) {
 			NSLog(@"PASoundEngine: Error loading sound: %x", error);
 			[NSException raise:@"PASoundEngine:ErrorLoadingSound" format:@"ErrorLoadingSound"];
 
 		}
-        
+
 		alGenBuffers(1, &buffer);
 		alBufferData(buffer, format, data, size, freq);
 		free(data);
-        
+
 		if((error = alGetError()) != AL_NO_ERROR) {
 			NSLog(@"PASoundEngine: Error attaching audio to buffer: %x", error);
-		}		
+		}
 	}
 	else {
 		NSLog(@"Could not find file");
@@ -256,25 +256,25 @@ Exit:
 - (void)initSource {
     ALenum error = AL_NO_ERROR;
 	alGetError(); // Clear the error
-    
+
     alGenSources(1, &source);
-    
+
 	// Turn Looping ON?
     if (self.looped) {
-        alSourcei(source, AL_LOOPING, AL_TRUE);        
+        alSourcei(source, AL_LOOPING, AL_TRUE);
     }
-	
+
 	// Set Source Reference Distance
 	alSourcef(source, AL_REFERENCE_DISTANCE, kSoundReferenceDistance);
-    
+
 	// attach OpenAL Buffer to OpenAL Source
 	alSourcei(source, AL_BUFFER, buffer);
-	
+
 	if((error = alGetError()) != AL_NO_ERROR) {
 		NSLog(@"PASoundEngine: Error attaching buffer to source: %x", error);
 		[NSException raise:@"PASoundEngine:AttachingToBuffer" format:@"AttachingToBuffer"];
 
-	}    
+	}
 }
 
 - (void)setGain:(float)g {
@@ -312,8 +312,8 @@ Exit:
         } else {
             // Mark our state as playing (the view looks at this)
             self.isPlaying = YES;
-        }        
-    }    
+        }
+    }
 }
 - (void)playAtPosition:(CGPoint)p {
     return [self playAtPosition:p restart:NO];
@@ -322,7 +322,7 @@ Exit:
     return [self playAtPosition:self.position restart:r];
 }
 - (void)play {
-    return [self playAtPosition:self.position restart:NO];    
+    return [self playAtPosition:self.position restart:NO];
 }
 - (void)playAtListenerPositionWithRestart:(BOOL)r {
     return [self playAtPosition:[[[PASoundMgr sharedSoundManager] listener] position] restart:r];
@@ -340,7 +340,7 @@ Exit:
 	} else {
 		// Mark our state as not playing (the view looks at this)
 		self.isPlaying = NO;
-	}    
+	}
 }
 
 - (CGPoint)position {
@@ -383,7 +383,7 @@ Exit:
 
 - (void)dealloc {
     [self stop];
-    
+
     alGetError();
     ALenum error;
     alSourcei(source, AL_BUFFER, 0); // dissasociate buffer
@@ -392,7 +392,7 @@ Exit:
 		printf("error deleting buffer: %x\n", error);
     }
     alDeleteSources(1, &source);
-    
+
     [super dealloc];
 }
 

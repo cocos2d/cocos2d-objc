@@ -67,7 +67,7 @@ public:
 			vertices[0] = b2Mul(xf1, b2Vec2(-1.0f, 0.0f));
 			vertices[1] = b2Mul(xf1, b2Vec2(1.0f, 0.0f));
 			vertices[2] = b2Mul(xf1, b2Vec2(0.0f, 0.5f));
-			
+
 			b2PolygonShape poly1;
 			poly1.Set(vertices, 3);
 
@@ -82,7 +82,7 @@ public:
 			vertices[0] = b2Mul(xf2, b2Vec2(-1.0f, 0.0f));
 			vertices[1] = b2Mul(xf2, b2Vec2(1.0f, 0.0f));
 			vertices[2] = b2Mul(xf2, b2Vec2(0.0f, 0.5f));
-			
+
 			b2PolygonShape poly2;
 			poly2.Set(vertices, 3);
 

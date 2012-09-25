@@ -84,7 +84,7 @@ public:
 
 		b2Transform transformB;
 		sweepB.GetTransform(&transformB, 0.0f);
-		
+
 		b2Vec2 localPoint(2.0f, -0.1f);
 		b2Vec2 rB = b2Mul(transformB, localPoint) - sweepB.c0;
 		float32 wB = sweepB.a - sweepB.a0;

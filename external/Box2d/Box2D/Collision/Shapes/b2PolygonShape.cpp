@@ -167,7 +167,7 @@ void b2PolygonShape::Set(const b2Vec2* vertices, int32 count)
 			{
 				continue;
 			}
-			
+
 			b2Vec2 r = m_vertices[j] - m_vertices[i1];
 
 			// Your polygon is non-convex (it has an indentation) or
@@ -221,7 +221,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 		{
 			return false;
 		}
-	
+
 		float32 t = numerator / denominator;
 		if (t < 0.0f || 1.0f < t)
 		{
@@ -271,7 +271,7 @@ bool b2PolygonShape::RayCast(b2RayCastOutput* output, const b2RayCastInput& inpu
 			float32 denominator = b2Dot(m_normals[i], d);
 
 			if (denominator == 0.0f)
-			{	
+			{
 				if (numerator < 0.0f)
 				{
 					return false;

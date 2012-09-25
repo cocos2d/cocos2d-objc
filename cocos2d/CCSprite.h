@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -82,7 +82,7 @@ typedef enum {
  */
 @interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
 {
-	
+
 	//
 	// Data used when the sprite is rendered using a CCSpriteBatchNode
 	//
@@ -93,7 +93,7 @@ typedef enum {
 	BOOL					dirty_;					// Sprite needs to be updated
 	BOOL					recursiveDirty_;		// Subchildren needs to be updated
 	BOOL					hasChildren_;			// optimization to check if it contain children
-	
+
 	//
 	// Data used when the sprite is self-rendered
 	//
@@ -111,31 +111,31 @@ typedef enum {
 	CGRect	rect_;
 	CGRect	rectInPixels_;
 	BOOL	rectRotated_;
-	
+
 	// Offset Position (used by Zwoptex)
 	CGPoint	offsetPositionInPixels_;
 	CGPoint unflippedOffsetPositionFromCenter_;
 
 	// vertex coords, texture coords and color info
 	ccV3F_C4B_T2F_Quad quad_;
-	
+
 	// opacity and RGB protocol
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
 	BOOL		opacityModifyRGB_;
-	
+
 	// image is flipped
 	BOOL	flipX_;
 	BOOL	flipY_;
-    
-    BOOL useTrimmedFrameForAnchorPoint_; 
-		
+
+    BOOL useTrimmedFrameForAnchorPoint_;
+
 @public
 	// used internally
 	void (*updateMethod)(id, SEL);
 	void (*sortMethod)(id, SEL);
-	
+
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -148,11 +148,11 @@ typedef enum {
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
-/** whether or not the sprite is flipped horizontally. 
+/** whether or not the sprite is flipped horizontally.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
- 
+
 	sprite.scaleX *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipX;
@@ -160,7 +160,7 @@ typedef enum {
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
  If you want to flip the anchorPoint too, and/or to flip the children too use:
- 
+
 	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
@@ -184,12 +184,12 @@ typedef enum {
  @since v0.99.0
  */
 @property (nonatomic,readonly) CGPoint	offsetPositionInPixels;
-/** normally the original frame size is used to determine the anchorPoint, but when using different offsets and same original frame sizes the ap will be off. 
-    Same for frames with different sizes and different offsets. 
+/** normally the original frame size is used to determine the anchorPoint, but when using different offsets and same original frame sizes the ap will be off.
+    Same for frames with different sizes and different offsets.
     @since 1.1
  *
  */
-@property (nonatomic,readwrite) BOOL useTrimmedFrameForAnchorPoint;      
+@property (nonatomic,readwrite) BOOL useTrimmedFrameForAnchorPoint;
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
@@ -231,7 +231,7 @@ typedef enum {
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
- If key is nil, then a new texture will be created each time by the CCTextureCache. 
+ If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */
 +(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
@@ -278,7 +278,7 @@ typedef enum {
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
  For example, a valid key is: @"sprite_frame_01".
- If key is nil, then a new texture will be created each time by the CCTextureCache. 
+ If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;

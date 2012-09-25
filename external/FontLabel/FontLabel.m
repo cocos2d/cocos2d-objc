@@ -80,7 +80,7 @@
 		[super drawTextInRect:rect];
 		return;
 	}
-	
+
 	if (self.zAttributedText == nil) {
 		// this method is documented as setting the text color for us, but that doesn't appear to be the case
 		if (self.highlighted) {
@@ -88,7 +88,7 @@
 		} else {
 			[(self.textColor ?: [UIColor blackColor]) setFill];
 		}
-		
+
 		ZFont *actualFont = self.zFont;
 		CGSize origSize = rect.size;
 		if (self.numberOfLines == 1) {
@@ -173,7 +173,7 @@
 	if (self.zFont == NULL && self.zAttributedText == nil) {
 		return [super textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
 	}
-	
+
 	if (numberOfLines == 1) {
 		// if numberOfLines == 1 we need to use the version that converts spaces
 		CGSize size;

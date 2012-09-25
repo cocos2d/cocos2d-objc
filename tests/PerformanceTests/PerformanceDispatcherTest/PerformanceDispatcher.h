@@ -24,7 +24,7 @@ enum {
 	int			lastRenderedCount;
 	int			quantityOfNodes;
 	int			currentQuantityOfNodes;
-	
+
 }
 
 +(id) testWithQuantityOfNodes:(unsigned int)nodes;
@@ -40,8 +40,8 @@ enum {
 
 @end
 
-@interface SGSprite : CCSprite <CCTargetedTouchDelegate,CCStandardTouchDelegate> 
-{	
+@interface SGSprite : CCSprite <CCTargetedTouchDelegate,CCStandardTouchDelegate>
+{
 }
 -(id) init;
 @end
@@ -162,7 +162,7 @@ Test setup: 200 delegates (100 Standard delegates and 100 targeted delegates)
 2-Removing delegates (0x00222750) : avg time, 19.787355ms
 2-Removing delegates (0x00222750) : avg time, 19.466457ms
 2-Removing delegates (0x00222750) : avg time, 19.690112ms
-// speed gain        62% 
+// speed gain        62%
 3- Add delegates with RANDOM priority (0x00237720) : avg time, 40.726427ms
 3- Add delegates with RANDOM priority (0x00237720) : avg time, 41.668953ms
 3- Add delegates with RANDOM priority (0x00237720) : avg time, 40.969164ms
@@ -170,7 +170,7 @@ Test setup: 200 delegates (100 Standard delegates and 100 targeted delegates)
 4 - Delete delegates with RANDOM priority (0x00222340) : avg time, 21.059382ms
 4 - Delete delegates with RANDOM priority (0x00222340) : avg time, 20.993250ms
 4 - Delete delegates with RANDOM priority (0x00222340) : avg time, 20.890169ms
-// speed gain         49.6% 
+// speed gain         49.6%
 5 - Reorder delegates NSMutableASort/InsertSort (0x00237720) : avg time, 59.239157ms
 5 - Reorder delegates NSMutableASort/InsertSort (0x00237720) : avg time, 59.061102ms
 5 - Reorder delegates NSMutableASort/InsertSort (0x00237720) : avg time, 59.396493ms
@@ -185,7 +185,7 @@ Test setup: 200 delegates (100 Standard delegates and 100 targeted delegates)
 2a FAST REMOVAL (0x002564c0) : avg time, 1.504204ms
 2a FAST REMOVAL (0x002564c0) : avg time, 1.578540ms
 2a FAST REMOVAL (0x002564c0) : avg time, 1.489650ms
-// SPEED GAIN	 > 1500% 
+// SPEED GAIN	 > 1500%
 2b Fast Compound removal (0x0024c260) : avg time, 1.958303ms
 2b Fast Compound removal (0x0024c260) : avg time, 2.066753ms
 2b Fast Compound removal (0x0024c260) : avg time, 2.045931ms
@@ -201,5 +201,5 @@ Test setup: 200 delegates (100 Standard delegates and 100 targeted delegates)
 5c UltraFast(delayed)Reordering (0x002222c0) : avg time, 24.026498ms
 5c UltraFast(delayed)Reordering (0x002222c0) : avg time, 23.920655ms
 5c UltraFast(delayed)Reordering (0x002222c0) : avg time, 24.230325ms
-// SPEED GAIN	> 820% 
+// SPEED GAIN	> 820%
 #endif

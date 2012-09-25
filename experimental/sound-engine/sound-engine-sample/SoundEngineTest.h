@@ -29,7 +29,7 @@
     CCSprite *listenerSprite;
     CCSprite *source1Sprite;
     CCSprite *source2Sprite;
-    
+
     PASoundSource *source1;
     PASoundSource *source2;
     PASoundSource *bgTrack;

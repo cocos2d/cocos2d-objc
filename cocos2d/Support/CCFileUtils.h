@@ -34,15 +34,15 @@
 }
 
 /** Returns the fullpath of an filename.
- 
+
  If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
  If in iPad mode, and an iPad file is found, it will return that path.
- 
+
  Examples:
- 
+
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
  * In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
- 
+
  */
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
@@ -50,18 +50,18 @@
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 /** Returns the fullpath of an filename including the resolution of the image.
- 
+
  If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
  If in iPad mode, and an iPad file is found, it will return that path.
- 
+
  Examples:
- 
+
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
  * In RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
- 
+
  If an iPad file is found, it will set resolution type to kCCResolutioniPad
  If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
- 
+
  */
 +(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
 
@@ -71,7 +71,7 @@
  * On iPad it will remove the -ipad suffix
  * On iPhone it will remove the (empty) suffix
  Only valid on iOS. Not valid for OS X.
- 
+
  @since v0.99.5
  */
 +(NSString *)removeSuffixFromFile:(NSString*) path;
@@ -79,7 +79,7 @@
 /** Sets the iPhone RetinaDisplay suffix to load resources.
  By default it is "-528h".
  Only valid on iOS. Not valid for OS X.
- 
+
  @since v1.1RC0
  */
 +(void) setIphoneFourInchDisplaySuffix:(NSString*) suffix;
@@ -87,7 +87,7 @@
 /** Sets the iPhone RetinaDisplay suffix to load resources.
  By default it is "-hd".
  Only valid on iOS. Not valid for OS X.
- 
+
  @since v1.1
  */
 +(void) setiPhoneRetinaDisplaySuffix:(NSString*)suffix;
@@ -95,7 +95,7 @@
 /** Sets the iPad suffix to load resources.
  By default it is "".
  Only valid on iOS. Not valid for OS X.
- 
+
 
  */
 +(void) setiPadSuffix:(NSString*)suffix;
@@ -103,7 +103,7 @@
 /** Sets the iPad Retina Display suffix to load resources.
  By default it is "-ipadhd".
  Only valid on iOS. Not valid for OS X.
- 
+
  @since v1.1
  */
 +(void) setiPadRetinaDisplaySuffix:(NSString*)suffix;
@@ -116,7 +116,7 @@
 
 /** Returns whether or not a given filename exists with the iPad RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
- 
+
  */
 +(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
@@ -134,7 +134,7 @@
 
 /** loads a file into memory.
  the caller should release the allocated buffer.
- 
+
  @returns the size of the allocated buffer
  @since v0.99.5
  */

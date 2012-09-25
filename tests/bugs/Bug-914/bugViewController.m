@@ -22,25 +22,25 @@
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
 - (void)viewDidLoad {
-		
+
     [super viewDidLoad];
 }
 */
 
 -(void)viewWillAppear:(BOOL)animated {
-	
+
     //there are no subviews
     /*
 	for (UIView *view in self.view.subviews) {
 		if ([view isKindOfClass:[EAGLView class]]) {
-			
+
 			// weak reference
 			glView = (EAGLView *) view;
 			break;
 		}
 	}
     */
-    glView = (EAGLView*) self.view; 
+    glView = (EAGLView*) self.view;
 }
 
 
@@ -48,11 +48,11 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
     // Return YES for supported orientations
-	
+
 	// eg: Only support landscape orientations ?
 //	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
 //			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
-	
+
 	// eg: Support 4 orientations
 	return YES;
 }
@@ -82,7 +82,7 @@
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
-    
+
     // Release any cached data, images, etc that aren't in use.
 }
 
@@ -91,7 +91,7 @@
     // e.g. self.myOutlet = nil;
 
     [super viewDidUnload];
-	
+
 	// invalidate weak reference
 	glView = nil;
 }

@@ -27,7 +27,7 @@ enum {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		
+
 		// isTouchEnabled is an property of Layer (the super class).
 		// When it is YES, then the touches will be enabled
 		self.isTouchEnabled = YES;
@@ -39,31 +39,31 @@ enum {
 		//
 		// CCLabel
 		//
-		
+
 		// create and initialize a CCLabelTTF
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello Events" fontName:@"Marker Felt" fontSize:64];
 
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-	
+
 		// position the label on the center of the screen
 		// "ccp" is a helper macro that creates a point. It means: "CoCos Point"
 		label.position =  ccp( size.width /2 , size.height/2 );
-		
+
 		// add the label as a child to this Layer
 		[self addChild: label];
 
 		//
 		// Sprite
 		//
-		
+
 		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.position = ccp( 50, 50);
-		
+
 		// z is the z-order. Greater values means on top of lower values.
 		// Default z value is 0. So the sprite will be on top of the label.
 		// Add the sprite with a tag, so we can later 'get' the sprite by this tag
-		[self addChild:sprite z:1 tag:kTagSprite];		
+		[self addChild:sprite z:1 tag:kTagSprite];
 	}
 	return self;
 }
@@ -74,7 +74,7 @@ enum {
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (CCLabel)
-	
+
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }
@@ -89,38 +89,38 @@ enum {
 - (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
-	
+
 	if( touch ) {
 		CGPoint location = [touch locationInView: [touch view]];
-		
+
 		// IMPORTANT:
 		// The touches are always in "portrait" coordinates. You need to convert them to your current orientation
 		CGPoint convertedPoint = [[CCDirector sharedDirector] convertToGL:location];
-		
+
 		CCNode *sprite = [self getChildByTag:kTagSprite];
-		
+
 		// we stop the all running actions
 		[sprite stopAllActions];
-		
+
 		// and we run a new action
 		[sprite runAction: [CCMoveTo actionWithDuration:1 position:convertedPoint]];
-		
-	}	
+
+	}
 }
 
 // This callback will be called because 'isAccelerometerEnabled' is YES.
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
-{	
+{
 	CCNode *sprite = [self getChildByTag:kTagSprite];
 
 	// Convert the coordinates to 'landscape' coords
 	// since they are always in 'portrait' coordinates
-	CGPoint converted = ccp( (float)-acceleration.y, (float)acceleration.x);	
-	
+	CGPoint converted = ccp( (float)-acceleration.y, (float)acceleration.x);
+
 	// update the rotation based on the z-rotation
 	// the sprite will always be 'standing up'
 	sprite.rotation = (float) CC_RADIANS_TO_DEGREES( atan2f( converted.x, converted.y) + M_PI );
-	
+
 	// update the scale based on the length of the acceleration
 	// the higher the acceleration, the higher the scale factor
 	sprite.scale = 0.5f + sqrtf( (converted.x * converted.x) + (converted.y * converted.y) );
@@ -154,24 +154,24 @@ enum {
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Set multiple touches on
 	EAGLView *glView = [director openGLView];
-	[glView setMultipleTouchEnabled:YES];	
-	
+	[glView setMultipleTouchEnabled:YES];
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Create and initialize parent and empty Scene
 	CCScene *scene = [CCScene node];
 
@@ -213,7 +213,7 @@ enum {
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

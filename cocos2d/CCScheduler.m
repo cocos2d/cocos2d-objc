@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,7 +44,7 @@ typedef struct _listEntry
 	TICK_IMP	impMethod;
 	id			target;				// not retained (retained by hashUpdateEntry)
 	NSInteger	priority;
-	BOOL		paused;	
+	BOOL		paused;
     BOOL    markedForDeletion;		// selector will no longer be called and entry will be removed at end of the next tick
 } tListEntry;
 
@@ -102,14 +102,14 @@ typedef struct _hashSelectorEntry
 	return [self initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay: 0];
 }
 
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d 
+-(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d
 {
 	if( (self=[super init]) ) {
 #if COCOS2D_DEBUG
 		NSMethodSignature *sig = [t methodSignatureForSelector:s];
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void) name: (ccTime) dt");
 #endif
-		
+
 		// target is not retained. It is retained in the hash structure
 		target = t;
 		selector = s;
@@ -120,7 +120,7 @@ typedef struct _hashSelectorEntry
 		delay = d;
 		useDelay = (delay > 0) ? YES : NO;
 		repeat = r;
-		runForever = (repeat == kCCRepeatForever) ? YES : NO; 
+		runForever = (repeat == kCCRepeatForever) ? YES : NO;
 	}
 	return self;
 }
@@ -140,25 +140,25 @@ typedef struct _hashSelectorEntry
 -(void) update: (ccTime) dt
 {
 	if( elapsed == - 1)
-	{	
+	{
 		elapsed = 0;
 		nTimesExecuted = 0;
 	}
 	else
-	{	
+	{
 		if (runForever && !useDelay)
 		{//standard timer usage
 			elapsed += dt;
 			if( elapsed >= interval ) {
 				impMethod(target, selector, elapsed);
 				elapsed = 0;
-				
+
 			}
 		}
-		else 
-		{//advanced usage 
+		else
+		{//advanced usage
 			elapsed += dt;
-			if (useDelay) 
+			if (useDelay)
 			{
 				if( elapsed >= delay )
 				{
@@ -168,18 +168,18 @@ typedef struct _hashSelectorEntry
 					useDelay = NO;
 				}
 			}
-			else 
+			else
 			{
-				if (elapsed >= interval) 
+				if (elapsed >= interval)
 				{
 					impMethod(target, selector, elapsed);
 					elapsed = 0;
-					nTimesExecuted += 1; 
-					
+					nTimesExecuted += 1;
+
 				}
 			}
-			
-			if (nTimesExecuted > repeat) 
+
+			if (nTimesExecuted > repeat)
 			{//unschedule timer
 				[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:target];
 			}
@@ -226,7 +226,7 @@ static CCScheduler *sharedScheduler;
 
 - (id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		timeScale_ = 1.0f;
 
 		// used to trigger CCTimer#update
@@ -238,7 +238,7 @@ static CCScheduler *sharedScheduler;
 		updatesNeg = NULL;
 		updatesPos = NULL;
 		hashForUpdates = NULL;
-		
+
 		// selectors with interval
 		currentTarget = nil;
 		currentTargetSalvaged = NO;
@@ -279,23 +279,23 @@ static CCScheduler *sharedScheduler;
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
-	NSAssert( target != nil, @"Argument target must be non-nil");	
-	
+	NSAssert( target != nil, @"Argument target must be non-nil");
+
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
-	
+
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
 		element->target = [target retain];
 		HASH_ADD_INT( hashForSelectors, target, element );
-		
+
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
 		element->paused = paused;
-		
+
 	} else
 		NSAssert( element->paused == paused, @"CCScheduler. Trying to schedule a selector with a pause value different than the target");
-	
-	
+
+
 	if( element->timers == nil )
 		element->timers = ccArrayNew(10);
 	else
@@ -310,7 +310,7 @@ static CCScheduler *sharedScheduler;
 		}
 		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
-	
+
 	CCTimer *timer = [[CCTimer alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
 	ccArrayAppendObject(element->timers, timer);
 	[timer release];
@@ -321,28 +321,28 @@ static CCScheduler *sharedScheduler;
 	// explicity handle nil arguments when removing an object
 	if( target==nil && selector==NULL)
 		return;
-	
+
 	NSAssert( target != nil, @"Target MUST not be nil");
 	NSAssert( selector != NULL, @"Selector MUST not be NULL");
-	
+
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
-	
+
 	if( element ) {
-		
+
 		for( unsigned int i=0; i< element->timers->num; i++ ) {
 			CCTimer *timer = element->timers->arr[i];
-			
-			
+
+
 			if( selector == timer->selector ) {
-				
+
 				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
 					[element->currentTimer retain];
 					element->currentTimerSalvaged = YES;
 				}
 
 				ccArrayRemoveObjectAtIndex(element->timers, i );
-				
+
 				// update timerIndex in case we are in tick:, looping over the actions
 				if( element->timerIndex >= i )
 					element->timerIndex--;
@@ -371,17 +371,17 @@ static CCScheduler *sharedScheduler;
 	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
 	listElement->next = listElement->prev = NULL;
     listElement->markedForDeletion = NO;
-	
+
 	// empty list ?
 	if( ! *list ) {
 		DL_APPEND( *list, listElement );
-	
+
 	} else {
-		BOOL added = NO;		
-	
+		BOOL added = NO;
+
 		for( tListEntry *elem = *list; elem ; elem = elem->next ) {
 			if( priority < elem->priority ) {
-				
+
 				if( elem == *list )
 					DL_PREPEND(*list, listElement);
 				else {
@@ -391,17 +391,17 @@ static CCScheduler *sharedScheduler;
 					elem->prev->next = listElement;
 					elem->prev = listElement;
 				}
-				
+
 				added = YES;
 				break;
 			}
 		}
-		
+
 		// Not added? priority has the higher value. Append it.
 		if( !added )
 			DL_APPEND(*list, listElement);
 	}
-	
+
 	// update hash entry for quicker access
 	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
 	hashElement->target = [target retain];
@@ -413,21 +413,21 @@ static CCScheduler *sharedScheduler;
 -(void) appendIn:(tListEntry**)list target:(id)target paused:(BOOL)paused
 {
 	tListEntry *listElement = malloc( sizeof( * listElement ) );
-	
+
 	listElement->target = target;
 	listElement->paused = paused;
     listElement->markedForDeletion = NO;
 	listElement->impMethod = (TICK_IMP) [target methodForSelector:updateSelector];
-	
+
 	DL_APPEND(*list, listElement);
 
-	
+
 	// update hash entry for quicker access
 	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
 	hashElement->target = [target retain];
 	hashElement->list = list;
 	hashElement->entry = listElement;
-	HASH_ADD_INT(hashForUpdates, target, hashElement );	
+	HASH_ADD_INT(hashForUpdates, target, hashElement );
 }
 
 -(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused
@@ -436,15 +436,15 @@ static CCScheduler *sharedScheduler;
 	HASH_FIND_INT(hashForUpdates, &target, hashElement);
     if(hashElement)
     {
-#if COCOS2D_DEBUG >= 1        
+#if COCOS2D_DEBUG >= 1
         NSAssert( hashElement->entry->markedForDeletion, @"CCScheduler: You can't re-schedule an 'update' selector'. Unschedule it first");
-#endif	
+#endif
         // TODO : check if priority has changed!
-        
+
         hashElement->entry->markedForDeletion = NO;
         return;
     }
-		
+
 	// most of the updates are going to be 0, that's way there
 	// is an special list for updates with priority 0
 	if( priority == 0 )
@@ -460,13 +460,13 @@ static CCScheduler *sharedScheduler;
 - (void) removeUpdateFromHash:(tListEntry*)entry
 {
     tHashUpdateEntry * element = NULL;
-    
+
     HASH_FIND_INT(hashForUpdates, &entry->target, element);
     if( element ) {
         // list entry
         DL_DELETE( *element->list, element->entry );
         free( element->entry );
-        
+
         // hash entry
         [element->target release];
         HASH_DEL( hashForUpdates, element);
@@ -478,19 +478,19 @@ static CCScheduler *sharedScheduler;
 {
 	if( target == nil )
 		return;
-	
+
 	tHashUpdateEntry * element = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, element);
-	if( element ) {    
+	if( element ) {
         if(updateHashLocked)
             element->entry->markedForDeletion = YES;
         else
             [self removeUpdateFromHash:element->entry];
-        
+
 //		// list entry
 //		DL_DELETE( *element->list, element->entry );
 //		free( element->entry );
-//	
+//
 //		// hash entry
 //		[element->target release];
 //		HASH_DEL( hashForUpdates, element);
@@ -503,7 +503,7 @@ static CCScheduler *sharedScheduler;
 -(void) unscheduleAllSelectors
 {
 	// Custom Selectors
-	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; ) {	
+	for(tHashSelectorEntry *element=hashForSelectors; element != NULL; ) {
 		id target = element->target;
 		element=element->hh.next;
 		[self unscheduleAllSelectorsForTarget:target];
@@ -520,7 +520,7 @@ static CCScheduler *sharedScheduler;
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
 		[self unscheduleUpdateForTarget:entry->target];
 	}
-	
+
 }
 
 -(void) unscheduleAllSelectorsForTarget:(id)target
@@ -528,11 +528,11 @@ static CCScheduler *sharedScheduler;
 	// explicit nil handling
 	if( target == nil )
 		return;
-	
+
 	// Custom Selectors
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
-	
+
 	if( element ) {
 		if( ccArrayContainsObject(element->timers, element->currentTimer) && !element->currentTimerSalvaged ) {
 			[element->currentTimer retain];
@@ -544,7 +544,7 @@ static CCScheduler *sharedScheduler;
 		else
 			[self removeHashElement:element];
 	}
-	
+
 	// Update Selector
 	[self unscheduleUpdateForTarget:target];
 }
@@ -552,32 +552,32 @@ static CCScheduler *sharedScheduler;
 -(void) resumeTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
-	
+
 	// Custom Selectors
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
 	if( element )
 		element->paused = NO;
-	
+
 	// Update selector
 	tHashUpdateEntry * elementUpdate = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
 	if( elementUpdate ) {
 		NSAssert( elementUpdate->entry != NULL, @"resumeTarget: unknown error");
 		elementUpdate->entry->paused = NO;
-	}	
+	}
 }
 
 -(void) pauseTarget:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
-	
+
 	// Custom selectors
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
 	if( element )
 		element->paused = YES;
-	
+
 	// Update selector
 	tHashUpdateEntry * elementUpdate = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
@@ -585,13 +585,13 @@ static CCScheduler *sharedScheduler;
 		NSAssert( elementUpdate->entry != NULL, @"pauseTarget: unknown error");
 		elementUpdate->entry->paused = YES;
 	}
-	
+
 }
 
 -(BOOL) isTargetPaused:(id)target
 {
 	NSAssert( target != nil, @"target must be non nil" );
-	
+
 	// Custom selectors
 	tHashSelectorEntry *element = NULL;
 	HASH_FIND_INT(hashForSelectors, &target, element);
@@ -600,7 +600,7 @@ static CCScheduler *sharedScheduler;
 		return element->paused;
     }
     return NO;  // should never get here
-	
+
 }
 
 #pragma mark CCScheduler - Main Loop
@@ -608,10 +608,10 @@ static CCScheduler *sharedScheduler;
 -(void) tick: (ccTime) dt
 {
     updateHashLocked = YES;
-    
+
 	if( timeScale_ != 1.0f )
 		dt *= timeScale_;
-	
+
 	// Iterate all over the Updates selectors
 	tListEntry *entry, *tmp;
 
@@ -628,48 +628,48 @@ static CCScheduler *sharedScheduler;
 			entry->impMethod( entry->target, updateSelector, dt );
         }
 	}
-	
+
 	// updates with priority > 0
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
 		if( ! entry->paused  && !entry->markedForDeletion )
 			entry->impMethod( entry->target, updateSelector, dt );
 	}
-	
+
 	// Iterate all over the  custome selectors
-	for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {	
-		
+	for(tHashSelectorEntry *elt=hashForSelectors; elt != NULL; ) {
+
 		currentTarget = elt;
 		currentTargetSalvaged = NO;
 
 		if( ! currentTarget->paused ) {
-			
+
 			// The 'timers' ccArray may change while inside this loop.
 			for( elt->timerIndex = 0; elt->timerIndex < elt->timers->num; elt->timerIndex++) {
 				elt->currentTimer = elt->timers->arr[elt->timerIndex];
 				elt->currentTimerSalvaged = NO;
 
 				impMethod( elt->currentTimer, updateSelector, dt);
-				
+
 				if( elt->currentTimerSalvaged ) {
 					// The currentTimer told the remove itself. To prevent the timer from
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
 					[elt->currentTimer release];
 				}
-				
+
 				elt->currentTimer = nil;
-			}			
+			}
 		}
-		
+
 		// elt, at this moment, is still valid
 		// so it is safe to ask this here (issue #490)
 		elt = elt->hh.next;
-		
+
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
 		if( currentTargetSalvaged && currentTarget->timers->num == 0 )
-			[self removeHashElement:currentTarget];		
+			[self removeHashElement:currentTarget];
 	}
-	
+
     // delete all updates that are morked for deletion
     // updates with priority < 0
 	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
@@ -678,7 +678,7 @@ static CCScheduler *sharedScheduler;
             [self removeUpdateFromHash:entry];
         }
 	}
-    
+
 	// updates with priority == 0
 	DL_FOREACH_SAFE( updates0, entry, tmp ) {
 		if(entry->markedForDeletion )
@@ -686,7 +686,7 @@ static CCScheduler *sharedScheduler;
             [self removeUpdateFromHash:entry];
         }
 	}
-	
+
 	// updates with priority > 0
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
 		if(entry->markedForDeletion )

@@ -38,7 +38,7 @@
  - sprite frame name
  - # of delay units.
  - offset
- 
+
  @since v1.1
  */
 @interface CCAnimationFrame : NSObject <NSCopying>
@@ -61,12 +61,12 @@
 @end
 
 /** A CCAnimation object is used to perform animations on the CCSprite objects.
- 
+
  The CCAnimation object contains CCAnimationFrame objects, and a possible delay between the frames.
  You can animate a CCAnimation object by using the CCAnimate action. Example:
- 
+
  [sprite runAction:[CCAnimate actionWithAnimation:animation]];
- 
+
  */
 @interface CCAnimation : NSObject
 {

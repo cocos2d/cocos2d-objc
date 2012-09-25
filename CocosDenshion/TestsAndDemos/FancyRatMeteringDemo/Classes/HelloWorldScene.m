@@ -22,13 +22,13 @@ enum {
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
-	
+
 	// 'layer' is an autorelease object.
 	HelloWorld *layer = [HelloWorld node];
-	
+
 	// add layer as a child to scene
 	[scene addChild: layer];
-	
+
 	// return the scene
 	return scene;
 }
@@ -39,11 +39,11 @@ enum {
 	// always call "super" init
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
-		
+
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
-		
-		
+
+
 		// add the label as a child to this Layer
 		[[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"Cyber Advance!.mp3" loop:YES];
 		CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
@@ -51,16 +51,16 @@ enum {
 		sprite.position =  ccp( size.width /2 , size.height/2 );
 		sprite.tag = kTagBg;
 		[self addChild: sprite];
-		
+
 		sprite = [CCSprite spriteWithFile:@"head.png"];
 		// position the label on the center of the screen
 		sprite.position =  ccp( size.width /2 , 192.f );
 		sprite.anchorPoint = ccp(.5f,0.f);
 		sprite.tag = kTagHead;
 		[self addChild: sprite];
-		
+
 		[self addChild:[DebugAudioVis node]];
-		
+
 		//	Now let's setup audio visualization
 		//	We should always call AudioVisualization AFTER we load the background music
 		//	We add a delegate callback for each audio channel, there's 2
@@ -85,7 +85,7 @@ enum {
 	// in case you have something to dealloc, do it in this method
 	// in this particular example nothing needs to be released.
 	// cocos2d will automatically release all the children (Label)
-	
+
 	// don't forget to call "super dealloc"
 	[super dealloc];
 }

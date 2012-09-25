@@ -93,7 +93,7 @@ b2Joint* b2Joint::Create(const b2JointDef* def, b2BlockAllocator* allocator)
 			joint = new (mem) b2WeldJoint((b2WeldJointDef*)def);
 		}
 		break;
-        
+
 	case e_frictionJoint:
 		{
 			void* mem = allocator->Allocate(sizeof(b2FrictionJoint));
@@ -141,7 +141,7 @@ void b2Joint::Destroy(b2Joint* joint, b2BlockAllocator* allocator)
 	case e_lineJoint:
 		allocator->Free(joint, sizeof(b2LineJoint));
 		break;
-    
+
 	case e_weldJoint:
 		allocator->Free(joint, sizeof(b2WeldJoint));
 		break;

@@ -18,4 +18,4 @@
 }
 -(void) addNewSpriteX:(float)x y:(float)y;
 @end
-	
+

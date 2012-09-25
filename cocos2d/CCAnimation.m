@@ -42,17 +42,17 @@
 		self.delayUnits = delayUnits;
 		self.userInfo = userInfo;
 	}
-	
+
 	return self;
 }
 
 -(void) dealloc
-{    
+{
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
+
 	[spriteFrame_ release];
 	[userInfo_ release];
-	
+
     [super dealloc];
 }
 
@@ -107,18 +107,18 @@
 -(id) initWithFrames:(NSArray*)array delay:(float)delay
 {
 	if( (self=[super init]) ) {
-		
+
 		self.frames = [NSMutableArray arrayWithCapacity:[array count]];
 		duration_ = [array count] * delay;
-		
+
 		for( CCSpriteFrame *frame in array ) {
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
-			
+
 			[self.frames addObject:animFrame];
 			[animFrame release];
 			totalDelayUnits_++;
 		}
-		
+
 		delayPerUnit_ = delay;
 	}
 	return self;
@@ -133,7 +133,7 @@
 		for( CCAnimationFrame *animFrame in frames_ ) {
 			duration_ += animFrame.delayUnits * delayPerUnit;
 			totalDelayUnits_ += animFrame.delayUnits;
-		}		
+		}
 	}
 	return self;
 }
@@ -151,7 +151,7 @@
 			totalDelayUnits_,
 			delayPerUnit_
 			];
-#else 
+#else
 	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
 			[frames_ count],
 			totalDelayUnits_,
@@ -163,7 +163,7 @@
 -(void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
-	
+
 	[frames_ release];
 	[super dealloc];
 }
@@ -173,8 +173,8 @@
 	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 	[frames_ addObject:animFrame];
 	[animFrame release];
-	
-    NSAssert(delayPerUnit_ != 0, @"set a delayPerUnit before adding frames"); 
+
+    NSAssert(delayPerUnit_ != 0, @"set a delayPerUnit before adding frames");
 	// update duration
 	duration_ += delayPerUnit_;
 	totalDelayUnits_++;
@@ -185,13 +185,13 @@
 	if ([frames_ count] == 0 && delayPerUnit_ == 0)
 	{
         NSAssert(delay >= 0, @"delay can't be 0 or be negative");
-		delayPerUnit_ = delay; 	
+		delayPerUnit_ = delay;
 	}
-	
+
 	float delayUnits = delay / delayPerUnit_;
-	totalDelayUnits_+= delayUnits;  
-	duration_ += delay; 
-	
+	totalDelayUnits_+= delayUnits;
+	duration_ += delay;
+
 	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:delayUnits userInfo:nil];
 	[frames_ addObject:animFrame];
 	[animFrame release];
@@ -203,7 +203,7 @@
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
-	
+
 	[self addFrame:spriteFrame];
 }
 

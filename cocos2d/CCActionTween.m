@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -34,15 +34,15 @@
 }
 
 - (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
-    
+
 	if ((self = [super initWithDuration:aDuration])) {
-    
+
 		key_	= [key copy];
 		to_		= to;
 		from_	= from;
 
 	}
-    
+
 	return self;
 }
 
@@ -59,7 +59,7 @@
 }
 
 - (void) update:(ccTime) dt
-{    
+{
     //issue #1081 using keyPath instead of key for greater flexibility
 	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKeyPath:key_];
 }
@@ -73,7 +73,7 @@
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCActionTween *copy = [[[self class] allocWithZone: zone] initWithDuration:duration_ key:[[key_ copy] autorelease] from:from_ to:to_];
-    
+
 	return copy;
 }
 

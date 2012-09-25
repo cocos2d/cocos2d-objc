@@ -101,13 +101,13 @@ enum
 	kPVRTexturePixelTypeI_8,
 	kPVRTexturePixelTypeAI_88,
 	kPVRTexturePixelTypePVRTC_2,
-	kPVRTexturePixelTypePVRTC_4,	
+	kPVRTexturePixelTypePVRTC_4,
 	kPVRTexturePixelTypeBGRA_8888,
 	kPVRTexturePixelTypeA_8,
 };
 
 static const uint32_t tableFormats[][7] = {
-	
+
 	// - PVR texture format
 	// - OpenGL internal format
 	// - OpenGL format
@@ -181,9 +181,9 @@ typedef struct _PVRTexHeader
 	uint32_t width = 0, height = 0, bpp = 4;
 	uint8_t *bytes = NULL;
 	uint32_t formatFlags;
-	
+
 	header = (PVRTexHeader *)data;
-	
+
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
 
 	if ((uint32_t)gPVRTexIdentifier[0] != ((pvrTag >>  0) & 0xff) ||
@@ -193,7 +193,7 @@ typedef struct _PVRTexHeader
 	{
 		return FALSE;
 	}
-	
+
 	CCConfiguration *configuration = [CCConfiguration sharedConfiguration];
 
 	flags = CFSwapInt32LittleToHost(header->flags);
@@ -201,31 +201,31 @@ typedef struct _PVRTexHeader
 	BOOL flipped = flags & kPVRTextureFlagVerticalFlip;
 	if( flipped )
 		CCLOG(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
-	
+
 	if( ! [configuration supportsNPOT] &&
 	   ( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height ) ) ) {
 		CCLOG(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
 		return FALSE;
 	}
-	
+
 	for( tableFormatIndex_=0; tableFormatIndex_ < (unsigned int)MAX_TABLE_ELEMENTS ; tableFormatIndex_++) {
 		if( tableFormats[tableFormatIndex_][kCCInternalPVRTextureFormat] == formatFlags ) {
-			
+
 			numberOfMipmaps_ = 0;
-					
+
 			width_ = width = CFSwapInt32LittleToHost(header->width);
 			height_ = height = CFSwapInt32LittleToHost(header->height);
-			
+
 			if (CFSwapInt32LittleToHost(header->bitmaskAlpha))
 				hasAlpha_ = TRUE;
 			else
 				hasAlpha_ = FALSE;
-			
+
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
 			bytes = ((uint8_t *)data) + sizeof(PVRTexHeader);
 			format_ = tableFormats[tableFormatIndex_][kCCInternalCCTexture2DPixelFormat];
 			bpp = tableFormats[tableFormatIndex_][kCCInternalBPP];
-			
+
 			// Calculate the data size for each texture level and respect the minimum number of blocks
 			while (dataOffset < dataLength)
 			{
@@ -251,7 +251,7 @@ typedef struct _PVRTexHeader
 						heightBlocks = height;
 						break;
 				}
-				
+
 				// Clamp to minimum number of blocks
 				if (widthBlocks < 2)
 					widthBlocks = 2;
@@ -261,27 +261,27 @@ typedef struct _PVRTexHeader
 				dataSize = widthBlocks * heightBlocks * ((blockSize  * bpp) / 8);
 				float packetLength = (dataLength-dataOffset);
 				packetLength = packetLength > dataSize ? dataSize : packetLength;
-				
+
 				mipmaps_[numberOfMipmaps_].address = bytes+dataOffset;
 				mipmaps_[numberOfMipmaps_].len = packetLength;
 				numberOfMipmaps_++;
-				
+
 				NSAssert( numberOfMipmaps_ < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
-				
+
 				dataOffset += packetLength;
-				
+
 				width = MAX(width >> 1, 1);
 				height = MAX(height >> 1, 1);
 			}
-					  
+
 			success = TRUE;
 			break;
 		}
 	}
-	
+
 	if( ! success )
 		CCLOG(@"cocos2d: WARNING: Unsupported PVR Pixel Format: 0x%2x. Re-encode it with a OpenGL pixel format variant", formatFlags);
-	
+
 	return success;
 }
 
@@ -291,16 +291,16 @@ typedef struct _PVRTexHeader
 	GLsizei width = width_;
 	GLsizei height = height_;
 	GLenum err;
-	
+
 	if (numberOfMipmaps_ > 0)
 	{
 		if (name_ != 0)
 			glDeleteTextures(1, &name_);
-		
+
 		glPixelStorei(GL_UNPACK_ALIGNMENT,1);
 		glGenTextures(1, &name_);
 		glBindTexture(GL_TEXTURE_2D, name_);
-        
+
         //set texture params here, it's faster
         // Default: Anti alias.
 		if( numberOfMipmaps_ == 1 )
@@ -308,7 +308,7 @@ typedef struct _PVRTexHeader
 		else
 			glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
-        
+
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
 	}
@@ -319,92 +319,92 @@ typedef struct _PVRTexHeader
     GLenum format = tableFormats[tableFormatIndex_][kCCInternalOpenGLFormat];
     GLenum type = tableFormats[tableFormatIndex_][kCCInternalOpenGLType];
     BOOL compressed = tableFormats[tableFormatIndex_][kCCInternalCompressedImage];
-    
+
 	// Generate textures with mipmaps
 	for (GLint i=0; i < numberOfMipmaps_; i++)
 	{
-		
-		
+
+
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 			CCLOG(@"cocos2d: WARNING: PVRTC images are not supported");
 			return FALSE;
-		}			
-		
+		}
+
 		unsigned char *data = mipmaps_[i].address;
 		unsigned int datalen = mipmaps_[i].len;
-		
+
 		if( compressed)
 			glCompressedTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, datalen, data);
-		else 
+		else
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
 
 		if( i > 0 && (width != height || ccNextPOT(width) != width ) )
 			CCLOG(@"cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
-		
+
 		err = glGetError();
 		if (err != GL_NO_ERROR)
 		{
 			CCLOG(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
 			return FALSE;
 		}
-		
+
 		width = MAX(width >> 1, 1);
 		height = MAX(height >> 1, 1);
 	}
-		
+
 	return TRUE;
 }
 
 
 - (id)initWithContentsOfFile:(NSString *)path
 {
-	if((self = [super init]))  
-	{ 
+	if((self = [super init]))
+	{
 		unsigned char *pvrdata = NULL;
 		NSInteger pvrlen = 0;
-		NSString *lowerCase = [path lowercaseString];       
-		
-        if ( [lowerCase hasSuffix:@".ccz"]) 
+		NSString *lowerCase = [path lowercaseString];
+
+        if ( [lowerCase hasSuffix:@".ccz"])
 			pvrlen = ccInflateCCZFile( [path UTF8String], &pvrdata );
-			
+
 		else if( [lowerCase hasSuffix:@".gz"] )
 			pvrlen = ccInflateGZipFile( [path UTF8String], &pvrdata );
-		
+
 		else
 			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
-		
+
 		if( pvrlen < 0 ) {
 			[self release];
 			return nil;
-		}	
-		
+		}
+
         numberOfMipmaps_ = 0;
-        
+
 		name_ = 0;
 		width_ = height_ = 0;
 		tableFormatIndex_ = -1;
 		hasAlpha_ = FALSE;
-        
+
 		retainName_ = NO; // cocos2d integration
-		
+
 		if( ! [self unpackPVRData:pvrdata PVRLen:pvrlen] || ![self createGLTexture]  ) {
 			free(pvrdata);
 			[self release];
 			return nil;
 		}
-        
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-        
+
 		GLenum pixelFormat = tableFormats[tableFormatIndex_][kCCInternalCCTexture2DPixelFormat];
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
-        
+
 		if( [conf OSVersion] >= kCCiOSVersion_5_0_0 )
 		{
-            
+
 			// iOS BUG:
 			// RGB888 textures allocate much more memory than needed on iOS 5
 			// http://www.cocos2d-iphone.org/forum/topic/31092
-            
+
 			if( pixelFormat == kCCTexture2DPixelFormat_RGB888 ) {
 				printf("\n");
 				NSLog(@"cocos2d: WARNING. Using RGB888 texture. Convert it to RGB565 or RGBA8888 in order to reduce memory");
@@ -412,11 +412,11 @@ typedef struct _PVRTexHeader
 				NSLog(@"cocos2d: WARNING: For furhter info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
 				printf("\n");
 			}
-            
+
 			// iOS BUG:
 			// If Texture is both 16-bit and NPOT on iOS5, then warn the user
 			// http://www.cocos2d-iphone.org/forum/topic/31092
-            
+
 			else if( (pixelFormat == kCCTexture2DPixelFormat_RGB565 || pixelFormat == kCCTexture2DPixelFormat_RGBA4444 || pixelFormat == kCCTexture2DPixelFormat_RGB5A1) &&
                     ( (width_ != ccNextPOT(width_)) || height_ != ccNextPOT(height_) ) )
 			{
@@ -431,7 +431,7 @@ typedef struct _PVRTexHeader
 
 
 
-		
+
 		free(pvrdata);
 	}
 
@@ -446,7 +446,7 @@ typedef struct _PVRTexHeader
 		[self release];
 		return nil;
 	}
-	
+
 	return [self initWithContentsOfFile:[url path]];
 }
 
@@ -461,7 +461,7 @@ typedef struct _PVRTexHeader
 {
 	if (![url isFileURL])
 		return nil;
-	
+
 	return [CCTexturePVR pvrTextureWithContentsOfFile:[url path]];
 }
 
@@ -469,10 +469,10 @@ typedef struct _PVRTexHeader
 - (void)dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
+
 	if (name_ != 0 && ! retainName_ )
 		glDeleteTextures(1, &name_);
-	
+
 	[super dealloc];
 }
 

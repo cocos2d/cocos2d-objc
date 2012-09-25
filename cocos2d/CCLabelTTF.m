@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -84,11 +84,11 @@
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
-		
+
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
 		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
-		
+
 		[self setString:str];
 	}
 	return self;
@@ -120,9 +120,9 @@
                         traits:NSUnboldFontMask | NSUnitalicFontMask
                         weight:0
                         size:fontSize_];
-        
+
 		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
-        
+
 		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:dict] autorelease];
 
         tex = [[CCTexture2D alloc] initWithString:str
@@ -134,7 +134,7 @@
 
 #endif
     }
-    
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
         if( CC_CONTENT_SCALE_FACTOR() == 2 )

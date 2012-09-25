@@ -37,7 +37,7 @@ int main(){
   int current_section;
 
 #ifdef _WIN32 /* We need to set stdin/stdout to binary mode. Damn windows. */
-  /* Beware the evil ifdef. We avoid these where we can, but this one we 
+  /* Beware the evil ifdef. We avoid these where we can, but this one we
      cannot. Don't add any more, you'll probably go to hell if you do. */
   _setmode( _fileno( stdin ), _O_BINARY );
   _setmode( _fileno( stdout ), _O_BINARY );
@@ -62,7 +62,7 @@ int main(){
 	    (long)ov_pcm_total(&vf,-1));
     fprintf(stderr,"Encoded by: %s\n\n",ov_comment(&vf,-1)->vendor);
   }
-  
+
   while(!eof){
     long ret=ov_read(&vf,pcmout,sizeof(pcmout),&current_section);
     if (ret == 0) {
@@ -80,7 +80,7 @@ int main(){
 
   /* cleanup */
   ov_clear(&vf);
-    
+
   fprintf(stderr,"Done.\n");
   return(0);
 }

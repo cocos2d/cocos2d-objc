@@ -13,40 +13,40 @@
 @interface FadeWhiteTransition : CCTransitionFade
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipXLeftOver : CCTransitionFlipX 
+@interface FlipXLeftOver : CCTransitionFlipX
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipXRightOver : CCTransitionFlipX 
+@interface FlipXRightOver : CCTransitionFlipX
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipYUpOver : CCTransitionFlipY 
+@interface FlipYUpOver : CCTransitionFlipY
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipYDownOver : CCTransitionFlipY 
+@interface FlipYDownOver : CCTransitionFlipY
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipAngularLeftOver : CCTransitionFlipAngular 
+@interface FlipAngularLeftOver : CCTransitionFlipAngular
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface FlipAngularRightOver : CCTransitionFlipAngular 
+@interface FlipAngularRightOver : CCTransitionFlipAngular
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipXLeftOver : CCTransitionZoomFlipX 
+@interface ZoomFlipXLeftOver : CCTransitionZoomFlipX
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipXRightOver : CCTransitionZoomFlipX 
+@interface ZoomFlipXRightOver : CCTransitionZoomFlipX
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipYUpOver : CCTransitionZoomFlipY 
+@interface ZoomFlipYUpOver : CCTransitionZoomFlipY
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipYDownOver : CCTransitionZoomFlipY 
+@interface ZoomFlipYDownOver : CCTransitionZoomFlipY
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipAngularLeftOver : CCTransitionZoomFlipAngular 
+@interface ZoomFlipAngularLeftOver : CCTransitionZoomFlipAngular
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
-@interface ZoomFlipAngularRightOver : CCTransitionZoomFlipAngular 
+@interface ZoomFlipAngularRightOver : CCTransitionZoomFlipAngular
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
 @end
 @interface TransitionPageForward : CCTransitionPageTurn
@@ -185,10 +185,10 @@ Class backTransition(void);
 Class restartTransition(void);
 
 Class nextTransition()
-{	
+{
 	// HACK: else NSClassFromString will fail
 	[CCTransitionRadialCCW node];
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -226,13 +226,13 @@ Class restartTransition()
 	if( (self=[super init]) ) {
 
 		float x,y;
-		
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
 
 		CCSprite *bg1 = [CCSprite spriteWithFile:@"background1.jpg"];
-		
+
 		bg1.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg1 z:-1];
 
@@ -243,9 +243,9 @@ Class restartTransition()
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"SCENE 1" fontName:@"Marker Felt" fontSize:64];
 		[label setColor:ccc3(16,16,255)];
-		[label setPosition: ccp(x/2,y/2)];	
+		[label setPosition: ccp(x/2,y/2)];
 		[self addChild: label];
-		
+
 		// menu
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -256,10 +256,10 @@ Class restartTransition()
 		item2.position = ccp( size.width/2, 30);
 		item3.position = ccp( size.width/2 + 100,30);
 		[self addChild: menu z:1];
-		
+
 		[self schedule:@selector(step:) interval:1.0f];
 	}
-	
+
 	return self;
 }
 
@@ -281,7 +281,7 @@ Class restartTransition()
 	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 
-}	
+}
 
 -(void) backCallback:(id) sender
 {
@@ -290,7 +290,7 @@ Class restartTransition()
 //	[s2 addChild: [TextLayer2 node]];
 	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
-}	
+}
 
 -(void) restartCallback:(id) sender
 {
@@ -299,7 +299,7 @@ Class restartTransition()
 //	[s2 addChild: [TextLayer2 node]];
 	CCScene *s2 = [TextLayer2 node];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
-}	
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -329,28 +329,28 @@ Class restartTransition()
 -(id) init
 {
 	if( (self=[super init]) ) {
-			
+
 		float x,y;
-		
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
-		
+
 		CCSprite *bg2 = [CCSprite spriteWithFile:@"background2.jpg"];
 
 		bg2.position = ccp(size.width/2, size.height/2);
 		[self addChild:bg2 z:-1];
-		
+
 		CCLabelTTF *title = [CCLabelTTF labelWithString:transitions[sceneIdx] fontName:@"Thonburi" fontSize:40];
 		[self addChild:title];
 		[title setColor:ccc3(255,32,32)];
-		[title setPosition: ccp(x/2, y-100)];		
-		
+		[title setPosition: ccp(x/2, y-100)];
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"SCENE 2" fontName:@"Marker Felt" fontSize:64];
 		[label setColor:ccc3(16,16,255)];
 		[label setPosition: ccp(x/2,y/2)];
 		[self addChild: label];
-		
+
 		// menu
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -361,10 +361,10 @@ Class restartTransition()
 		item2.position = ccp( size.width/2, 30);
 		item3.position = ccp( size.width/2 + 100,30);
 		[self addChild: menu z:1];
-		
+
 		[self schedule:@selector(step:) interval:1.0f];
 	}
-	
+
 	return self;
 }
 
@@ -381,7 +381,7 @@ Class restartTransition()
 	CCScene *s2 = [CCScene node];
 	[s2 addChild: [TextLayer node]];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
-}	
+}
 
 -(void) backCallback:(id) sender
 {
@@ -389,7 +389,7 @@ Class restartTransition()
 	CCScene *s2 = [CCScene node];
 	[s2 addChild: [TextLayer node]];
 	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
-}	
+}
 
 -(void) restartCallback:(id) sender
 {
@@ -404,7 +404,7 @@ Class restartTransition()
 }
 
 
-/// callbacks 
+/// callbacks
 -(void) onEnter
 {
 	[super onEnter];
@@ -445,23 +445,23 @@ Class restartTransition()
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
+
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
-	
+
 	// frames per second
 	[director setAnimationInterval:1.0/60];
-	
+
 	// create an OpenGL view
 	// PageTurnTransition needs a depth buffer of 16 or 24 bits
 	// These means that openGL z-order will be taken into account
@@ -471,14 +471,14 @@ Class restartTransition()
 								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
 						];
 	[glView setMultipleTouchEnabled:YES];
-	
+
 	// connect it to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
     // When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
@@ -487,11 +487,11 @@ Class restartTransition()
 
 	// glview is a child of the main window
 	[window addSubview:glView];
-	
+
 	// Make the window visible
 	[window makeKeyAndVisible];
-	
-		
+
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
@@ -499,7 +499,7 @@ Class restartTransition()
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
-	
+
 	[director runWithScene: scene];
 }
 
@@ -526,7 +526,7 @@ Class restartTransition()
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director openGLView] removeFromSuperview];
 	[director end];
@@ -564,7 +564,7 @@ Class restartTransition()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CGSize winSize = CGSizeMake(480,320);
-	
+
 	//
 	// CC_DIRECTOR_INIT:
 	// 1. It will create an NSWindow with a given size
@@ -573,20 +573,20 @@ Class restartTransition()
 	//
 	// If you want to create a fullscreen window, you should do it AFTER calling this macro
 	//
-	
+
 	CC_DIRECTOR_INIT(winSize);
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node]];
-	
+
 	[director runWithScene:scene];
 }
 

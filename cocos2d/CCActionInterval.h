@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,7 +44,7 @@ For example, you can simulate a Ping Pong effect running the action normally and
 then running it again in Reverse mode.
 
 Example:
- 
+
 	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
 */
 @interface CCActionInterval: CCFiniteTimeAction <NSCopying>
@@ -92,7 +92,7 @@ Example:
 {
 	NSUInteger times_;
 	NSUInteger total_;
-	ccTime nextDt_; 
+	ccTime nextDt_;
 	BOOL isActionInstant_;
 	CCFiniteTimeAction *innerAction_;
 }
@@ -126,7 +126,7 @@ Example:
 /**  Rotates a CCNode object to a certain angle by modifying it's
  rotation attribute.
  The direction will be decided by the shortest angle.
-*/ 
+*/
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
 	float dstAngle_;
@@ -169,7 +169,7 @@ Example:
 /**  Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
  Duration is is seconds.
-*/ 
+*/
 @interface CCMoveBy : CCMoveTo <NSCopying>
 {
 }
@@ -223,7 +223,7 @@ Example:
 @end
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying it's position attribute.
-*/ 
+*/
  @interface CCJumpTo : CCJumpBy <NSCopying>
 {
 }
@@ -375,7 +375,7 @@ typedef struct _ccBezierConfig {
 @end
 
 /** Executes an action in reverse order, from time=duration to time=0
- 
+
  @warning Use this action carefully. This action is not
  sequenceable. Use it as the default "reversed" method
  of your own actions, but using it outside the "reversed"

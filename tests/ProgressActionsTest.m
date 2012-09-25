@@ -41,7 +41,7 @@ Class backAction()
 {
 	sceneIdx--;
 	if( sceneIdx < 0 )
-		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;	
+		sceneIdx = sizeof(transitions) / sizeof(transitions[0]) -1;
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -62,7 +62,7 @@ Class restartAction()
 	if( (self=[super init])) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-				
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
@@ -70,7 +70,7 @@ Class restartAction()
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
@@ -123,7 +123,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
@@ -134,7 +134,7 @@ Class restartAction()
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
-	
+
 	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"blocks.png"];
 	right.type = kCCProgressTimerTypeRadialCCW;
 	[self addChild:right];
@@ -155,18 +155,18 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
-	
+
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
 	left.type = kCCProgressTimerTypeHorizontalBarLR;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
-	
+
 	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
 	right.type = kCCProgressTimerTypeHorizontalBarRL;
 	[self addChild:right];
@@ -187,18 +187,18 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:2 percent:100];
 	CCProgressTo *to2 = [CCProgressTo actionWithDuration:2 percent:100];
-	
+
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
 	left.type = kCCProgressTimerTypeVerticalBarBT;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
-	
+
 	CCProgressTimer *right = [CCProgressTimer progressWithFile:@"grossinis_sister2.png"];
 	right.type = kCCProgressTimerTypeVerticalBarTB;
 	[self addChild:right];
@@ -216,23 +216,23 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCProgressTo *to1 = [CCProgressTo actionWithDuration:4 percent:100];
-	
-	
+
+
 	CCProgressTimer *left = [CCProgressTimer progressWithFile:@"grossinis_sister1.png"];
-    left.opacity = 0; 
+    left.opacity = 0;
     //for blending, else opacity change doesn't work
-    left.color = (ccColor3B) {255,255,255}; 
-    
+    left.color = (ccColor3B) {255,255,255};
+
 	left.type = kCCProgressTimerTypeVerticalBarBT;
 	[self addChild:left];
 	[left setPosition:ccp(100, s.height/2)];
 	[left runAction: [CCRepeatForever actionWithAction:to1]];
-	
-    [left runAction:[CCSequence actions:[CCFadeIn actionWithDuration:2.f],[CCFadeOut actionWithDuration:2.f],nil]]; 
+
+    [left runAction:[CCSequence actions:[CCFadeIn actionWithDuration:2.f],[CCFadeOut actionWithDuration:2.f],nil]];
 }
 
 -(NSString *) title
@@ -266,34 +266,34 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-	
+
 	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];	
-	
+	[scene addChild: [nextAction() node]];
+
 	[director runWithScene: scene];
 }
 
@@ -321,7 +321,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

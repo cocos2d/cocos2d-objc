@@ -2,17 +2,17 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008, 2009 Jason Booth
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -62,7 +62,7 @@
 	self = [super init];
 	if (self)
 	{
-		
+
 		segments_ = [[NSMutableArray alloc] init];
 		deletedSegments_ = [[NSMutableArray alloc] init];
 
@@ -70,18 +70,18 @@
 		CCRibbonSegment* seg = [[CCRibbonSegment alloc] init];
 		[segments_ addObject:seg];
 		[seg release];
-		
+
 		textureLength_ = l;
-		
+
 		color_ = color;
 		fadeTime_ = fade;
 		lastLocation_ = CGPointZero;
 		lastWidth_ = w/2;
 		texVPos_ = 0.0f;
-		
+
 		curTime_ = 0;
 		pastFirstPoint_ = NO;
-		
+
 		/* XXX:
 		 Ribbon, by default uses this blend function, which might not be correct
 		 if you are using premultiplied alpha images,
@@ -89,7 +89,7 @@
 		 */
 		blendFunc_.src = GL_SRC_ALPHA;
 		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
-		
+
 		self.texture = [[CCTextureCache sharedTextureCache] addImage:path];
 
 		/* default texture parameter */
@@ -184,27 +184,27 @@
 		{
 			newSeg = [[CCRibbonSegment alloc] init]; // will be released later
 		}
-		
+
 		newSeg->creationTime[0] = seg->creationTime[seg->end - 1];
 		NSUInteger v = (seg->end-1)*6;
-		NSUInteger c = (seg->end-1)*4;	
+		NSUInteger c = (seg->end-1)*4;
 		newSeg->verts[0] = seg->verts[v];
 		newSeg->verts[1] = seg->verts[v+1];
 		newSeg->verts[2] = seg->verts[v+2];
 		newSeg->verts[3] = seg->verts[v+3];
 		newSeg->verts[4] = seg->verts[v+4];
 		newSeg->verts[5] = seg->verts[v+5];
-		
+
 		newSeg->coords[0] = seg->coords[c];
 		newSeg->coords[1] = seg->coords[c+1];
 		newSeg->coords[2] = seg->coords[c+2];
-		newSeg->coords[3] = seg->coords[c+3];	  
+		newSeg->coords[3] = seg->coords[c+3];
 		newSeg->end++;
 		seg = newSeg;
 		[segments_ addObject:seg];
 		[newSeg release];	 // it was retained before
-		
-	}  
+
+	}
 	if (seg->end == 0)
 	{
 		// first edge has to get rotation from the first real polygon
@@ -259,7 +259,7 @@
 		// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 		// Unneeded states: GL_COLOR_ARRAY
 		glDisableClientState(GL_COLOR_ARRAY);
-		
+
 		glBindTexture(GL_TEXTURE_2D, [texture_ name]);
 
 		BOOL newBlend = blendFunc_.src != CC_BLEND_SRC || blendFunc_.dst != CC_BLEND_DST;
@@ -271,7 +271,7 @@
 
 		if( newBlend )
 			glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
+
 		// restore default GL state
 		glEnableClientState( GL_COLOR_ARRAY );
 	}
@@ -316,7 +316,7 @@
 #else
     return [NSString stringWithFormat:@"<%@ = %p | end = %u, begin = %u>", [self class], self, end, begin];
 #endif
-	
+
 }
 
 - (void) dealloc

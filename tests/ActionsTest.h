@@ -159,16 +159,16 @@
 {}
 @end
 
-@interface NumberSprite: CCSprite 
+@interface NumberSprite: CCSprite
 {
-    float aNumber_; 
+    float aNumber_;
 }
     @property(nonatomic, assign) float aNumber;
 @end
 
 @interface ActionProperty : ActionDemo
 {
-    NumberSprite *numberSprite_; 
+    NumberSprite *numberSprite_;
 }
 @end
 
@@ -176,10 +176,10 @@
 {}
 @end
 
-@interface StopRepeatForever : ActionDemo 
+@interface StopRepeatForever : ActionDemo
 {
     id animated;
-    id rotator;    
+    id rotator;
     id stop_rotator;
     id stop_animation;
 }

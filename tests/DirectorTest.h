@@ -43,7 +43,7 @@
 
 @interface ScrollViewTest : DirectorTest
 {
-    ScrollViewController *scrollView; 
+    ScrollViewController *scrollView;
 }
 @end
 

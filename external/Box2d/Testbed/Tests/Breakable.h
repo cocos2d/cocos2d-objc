@@ -105,7 +105,7 @@ public:
 		// cached velocity.
 		b2Vec2 center1 = body1->GetWorldCenter();
 		b2Vec2 center2 = body2->GetWorldCenter();
-		
+
 		b2Vec2 velocity1 = m_velocity + b2Cross(m_angularVelocity, center1 - center);
 		b2Vec2 velocity2 = m_velocity + b2Cross(m_angularVelocity, center2 - center);
 

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -106,13 +106,13 @@ static CCDirector *_sharedDirector = nil;
 
 		//
 		// Default Director is TimerDirector
-		// 
+		//
 		if( [ [CCDirector class] isEqual:[self class]] )
 			_sharedDirector = [[CC_DIRECTOR_DEFAULT alloc] init];
 		else
 			_sharedDirector = [[self alloc] init];
 	}
-		
+
 	return _sharedDirector;
 }
 
@@ -123,22 +123,22 @@ static CCDirector *_sharedDirector = nil;
 }
 
 - (id) init
-{  
+{
 	CCLOG(@"cocos2d: %@", cocos2dVersion() );
 
 	if( (self=[super init]) ) {
 
 		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
-		
+
 		// scenes
 		runningScene_ = nil;
 		nextScene_ = nil;
-		
+
 		notificationNode_ = nil;
-		
+
 		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
 		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
-		
+
 		// Set default projection (3D)
 		projection_ = kCCDirectorProjectionDefault;
 
@@ -148,15 +148,15 @@ static CCDirector *_sharedDirector = nil;
 		// FPS
 		displayFPS_ = NO;
 		totalFrames_ = frames_ = 0;
-		
+
 		// paused ?
 		isPaused_ = NO;
-		
+
 		// running thread
 		runningThread_ = nil;
-		
+
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
-        
+
         runLoopCommon_ = NO;
 	}
 
@@ -173,11 +173,11 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
-	
+
 	[projectionDelegate_ release];
-	
+
 	_sharedDirector = nil;
-	
+
 	[super dealloc];
 }
 
@@ -187,27 +187,27 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( openGLView_, @"openGLView_ must be initialized");
 
 	[self setAlphaBlending: YES];
-    
+
     //only set depth test if there is a depth buffer
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED 
-    if (openGLView_ && [openGLView_ depthFormat] != 0) 
-    {    
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+    if (openGLView_ && [openGLView_ depthFormat] != 0)
+    {
         [self setDepthTest: YES];
     }
-    else [self setDepthTest:NO]; 
-#endif 
-    
+    else [self setDepthTest:NO];
+#endif
+
 	[self setProjection: projection_];
-	
+
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	
+
 #if CC_DIRECTOR_FAST_FPS
     if (!FPSLabel_) {
 		CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 		FPSLabel_ = [[CCLabelAtlas labelWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:16 itemHeight:24 startCharMap:'.'] retain];
-		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];		
+		[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
 	}
 #endif	// CC_DIRECTOR_FAST_FPS
 }
@@ -216,20 +216,20 @@ static CCDirector *_sharedDirector = nil;
 // Draw the Scene
 //
 - (void) drawScene
-{ 
+{
 	// Override me
 }
 
 -(void) calculateDeltaTime
 {
 	struct timeval now;
-	
+
 	if( gettimeofday( &now, NULL) != 0 ) {
 		CCLOG(@"cocos2d: error in gettimeofday");
 		dt = 0;
 		return;
 	}
-	
+
 	// new delta time
 	if( nextDeltaTimeZero_ ) {
 		dt = 0;
@@ -244,16 +244,16 @@ static CCDirector *_sharedDirector = nil;
 	if( dt > 0.2f )
 		dt = 1/60.0f;
 #endif
-	
-	lastUpdate_ = now;	
+
+	lastUpdate_ = now;
 }
 
 #pragma mark Director - Memory Helper
 
 -(void) purgeCachedData
 {
-	[CCLabelBMFont purgeCachedData];	
-	[[CCTextureCache sharedTextureCache] removeUnusedTextures];	
+	[CCLabelBMFont purgeCachedData];
+	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 }
 
 #pragma mark Director - Scene OpenGL Helper
@@ -278,7 +278,7 @@ static CCDirector *_sharedDirector = nil;
 	if (on) {
 		glEnable(GL_BLEND);
 		glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-		
+
 	} else
 		glDisable(GL_BLEND);
 }
@@ -308,7 +308,7 @@ static CCDirector *_sharedDirector = nil;
 	if( view != openGLView_ ) {
 		[openGLView_ release];
 		openGLView_ = [view retain];
-		
+
 		// set size
 		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view bounds].size );
 
@@ -357,9 +357,9 @@ static CCDirector *_sharedDirector = nil;
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 	NSAssert( runningScene_ == nil, @"You can't run an scene if another Scene is running. Use replaceScene or pushScene instead");
-	
+
 	[self pushScene:scene];
-	[self startAnimation];	
+	[self startAnimation];
 }
 
 -(void) replaceScene: (CCScene*) scene
@@ -367,7 +367,7 @@ static CCDirector *_sharedDirector = nil;
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
 	NSUInteger index = [scenesStack_ count];
-	
+
 	sendCleanupToScene_ = YES;
 	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
 	nextScene_ = scene;	// nextScene_ is a weak ref
@@ -384,12 +384,12 @@ static CCDirector *_sharedDirector = nil;
 }
 
 -(void) popScene
-{	
+{
 	NSAssert( runningScene_ != nil, @"A running Scene is needed");
 
 	[scenesStack_ removeLastObject];
 	NSUInteger c = [scenesStack_ count];
-	
+
 	if( c == 0 )
 		[self end];
 	else {
@@ -406,21 +406,21 @@ static CCDirector *_sharedDirector = nil;
 
 	runningScene_ = nil;
 	nextScene_ = nil;
-	
+
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
 	[scenesStack_ removeAllObjects];
-	
+
 	[self stopAnimation];
-	
+
 #if CC_DIRECTOR_FAST_FPS
 	[FPSLabel_ release];
 	FPSLabel_ = nil;
-#endif	
+#endif
 
 	[projectionDelegate_ release];
 	projectionDelegate_ = nil;
-	
+
 	// Purge bitmap cache
 	[CCLabelBMFont purgeCachedData];
 
@@ -432,16 +432,16 @@ static CCDirector *_sharedDirector = nil;
     [CCScheduler purgeSharedScheduler];
 
 	[CCTextureCache purgeSharedTextureCache];
-	
-	
+
+
 	// OpenGL view
-	
+
 	// Since the director doesn't attach the openglview to the window
 	// it shouldn't remove it from the window too.
 //	[openGLView_ removeFromSuperview];
 
 	[openGLView_ release];
-	openGLView_ = nil;	
+	openGLView_ = nil;
 }
 
 -(void) setNextScene
@@ -461,7 +461,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 
 	[runningScene_ release];
-	
+
 	runningScene_ = [nextScene_ retain];
 	nextScene_ = nil;
 
@@ -477,7 +477,7 @@ static CCDirector *_sharedDirector = nil;
 		return;
 
 	oldAnimationInterval_ = animationInterval_;
-	
+
 	// when paused, don't consume CPU
 	[self setAnimationInterval:1/4.0];
 	isPaused_ = YES;
@@ -487,13 +487,13 @@ static CCDirector *_sharedDirector = nil;
 {
 	if( ! isPaused_ )
 		return;
-	
+
 	[self setAnimationInterval: oldAnimationInterval_];
 
 	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
-	
+
 	isPaused_ = NO;
 	dt = 0;
 }
@@ -515,8 +515,8 @@ static CCDirector *_sharedDirector = nil;
 
 - (void) setRunLoopCommon:(BOOL) common
 {
-    CCLOG(@"cocos2d: Director:#setRunLoopCommon. Override me"); 
-  
+    CCLOG(@"cocos2d: Director:#setRunLoopCommon. Override me");
+
 }
 #if CC_DIRECTOR_FAST_FPS
 
@@ -526,7 +526,7 @@ static CCDirector *_sharedDirector = nil;
 {
 	frames_++;
 	accumDt_ += dt;
-	
+
 	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
 		frameRate_ = frames_/accumDt_;
 		frames_ = 0;
@@ -549,13 +549,13 @@ static CCDirector *_sharedDirector = nil;
 {
 	frames_++;
 	accumDt_ += dt;
-	
+
 	if ( accumDt_ > CC_DIRECTOR_FPS_INTERVAL)  {
 		frameRate_ = frames_/accumDt_;
 		frames_ = 0;
 		accumDt_ = 0;
 	}
-	
+
 	NSString *str = [NSString stringWithFormat:@"%.2f",frameRate_];
 	CCTexture2D *texture = [[CCTexture2D alloc] initWithString:str dimensions:CGSizeMake(100,30) alignment:CCTextAlignmentLeft fontName:@"Arial" fontSize:24];
 
@@ -563,15 +563,15 @@ static CCDirector *_sharedDirector = nil;
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Unneeded states: GL_COLOR_ARRAY
 	glDisableClientState(GL_COLOR_ARRAY);
-	
+
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	
+
 	glColor4ub(224,224,244,200);
 	[texture drawAtPoint: ccp(5,2)];
 	[texture release];
-	
+
 	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	
+
 	// restore default GL state
 	glEnableClientState(GL_COLOR_ARRAY);
 }

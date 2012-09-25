@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -40,9 +40,9 @@
 
 -(id) init
 {
-	if( (self=[super init]) )	
+	if( (self=[super init]) )
 		duration_ = 0;
-	
+
 	return self;
 }
 
@@ -137,7 +137,7 @@
 {
 	if(( self=[super init]))
 		flipX = x;
-	
+
 	return self;
 }
 
@@ -174,7 +174,7 @@
 {
 	if(( self=[super init]))
 		flipY = y;
-	
+
 	return self;
 }
 
@@ -212,7 +212,7 @@
 {
 	if( (self=[super init]) )
 		position = pos;
-	
+
 	return self;
 }
 
@@ -263,7 +263,7 @@
 			[targetCallback_ class],
 			NSStringFromSelector(selector_)
 			];
-#else 
+#else
  	return [NSString stringWithFormat:@"<%@ = %p | Tag = %d | target = %@ | selector = %@>",
 			[self class],
 			self,
@@ -369,7 +369,7 @@
 {
 	if( (self=[super initWithTarget:t selector:s] ) )
 		self.object = object;
-	
+
 	return self;
 }
 
@@ -412,7 +412,7 @@
 {
 	if ((self = [super init]))
 		block_ = [block copy];
-	
+
 	return self;
 }
 
@@ -454,7 +454,7 @@
 {
 	if ((self = [super init]))
 		block_ = [block copy];
-	
+
 	return self;
 }
 

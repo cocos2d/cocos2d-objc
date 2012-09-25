@@ -21,7 +21,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -34,8 +34,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -57,22 +57,22 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:-1];	
+		[self addChild: menu z:-1];
 	}
 
 	return self;
@@ -93,7 +93,7 @@ Class restartAction()
 			break;
 		case CCDeviceOrientationPortrait:
 			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
+			break;
 		case CCDeviceOrientationLandscapeRight:
 			orientation = CCDeviceOrientationPortraitUpsideDown;
 			break;
@@ -108,7 +108,7 @@ Class restartAction()
 {
 	[self newOrientation];
 	CCScene *s = [CCScene node];
-	[s addChild: [restartAction() node]];	
+	[s addChild: [restartAction() node]];
 
 	[[CCDirector sharedDirector] replaceScene: s];
 }
@@ -163,8 +163,8 @@ Class restartAction()
 -(void) draw
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
-	
+
+
 	// draw a simple line
 	// The default state is:
 	// Line Width: 1
@@ -172,7 +172,7 @@ Class restartAction()
 	// Anti-Aliased
 	glEnable(GL_LINE_SMOOTH);
 	ccDrawLine( ccp(0, 0), ccp(s.width, s.height) );
-	
+
 	// line: color, width, aliased
 	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
 	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
@@ -186,18 +186,18 @@ Class restartAction()
 	// need to call it before every draw
 	//
 	// Remember: OpenGL is a state-machine.
-	
+
 	// draw big point in the center
 	glPointSize(64);
 	glColor4ub(0,0,255,128);
 	ccDrawPoint( ccp(s.width / 2, s.height / 2) );
-	
+
 	// draw 4 small points
 	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
 	glPointSize(4);
 	glColor4ub(0,255,255,255);
 	ccDrawPoints( points, 4);
-	
+
 	// draw a green circle with 10 segments
 	glLineWidth(16);
 	glColor4ub(0, 255, 0, 255);
@@ -206,31 +206,31 @@ Class restartAction()
 	// draw a green circle with 50 segments with line to center
 	glLineWidth(2);
 	glColor4ub(0, 255, 255, 255);
-	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);	
-	
+	ccDrawCircle( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES);
+
 	// open yellow poly
 	glColor4ub(255, 255, 0, 255);
 	glLineWidth(10);
 	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
 	ccDrawPoly( vertices, 5, NO);
-	
+
 	// closed purble poly
 	glColor4ub(255, 0, 255, 255);
 	glLineWidth(2);
 	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
 	ccDrawPoly( vertices2, 3, YES);
-	
+
 	// draw quad bezier path
 	ccDrawQuadBezier(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50);
 
 	// draw cubic bezier path
 	ccDrawCubicBezier(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100);
-    
+
     CGPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
-    
+
     //draw a solid polygon
     ccDrawSolidPoly( vertices3, 4, YES );
-        
+
 	// restore original values
 	glLineWidth(1);
 	glColor4ub(255,255,255,255);
@@ -266,34 +266,34 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-			 
+
 	[director runWithScene: scene];
 }
 
@@ -321,7 +321,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 
@@ -354,25 +354,25 @@ Class restartAction()
 @synthesize window=window_, glView=glView_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{		
+{
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[director setDisplayFPS:YES];
-	
+
 	[director setOpenGLView:glView_];
-	
+
 	//	[director setProjection:kCCDirectorProjection2D];
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director runWithScene:scene];
 }
 

@@ -30,7 +30,7 @@ public:
 	ElasticBody()
 	{
 		/// Bottom static body
-		{ 
+		{
 			b2PolygonDef sd;
 			sd.SetAsBox(50.0f, 2.0f);
 			sd.friction = 0.1f;
@@ -45,7 +45,7 @@ public:
             b2PolygonDef sd;
 			sd.SetAsBox(20.0f, 0.50f,b2Vec2(0.f,0.f),0.047f*b2_pi);
 			sd.friction    = 0.01f;
-			sd.restitution = 0.001f;  
+			sd.restitution = 0.001f;
 			b2BodyDef bd;
 			bd.position.Set(-20.f, 93.0f);
 			b2Body* g = m_world->CreateBody(&bd);
@@ -61,7 +61,7 @@ public:
             b2PolygonDef sd;
 			sd.SetAsBox(0.7f, 55.0f);
 			sd.friction    = 0.1f;
-			sd.restitution = 0.1f;  
+			sd.restitution = 0.1f;
 			b2BodyDef bd;
 			bd.position.Set(-49.3f, 50.0f);
 			b2Body* g = m_world->CreateBody(&bd);
@@ -72,18 +72,18 @@ public:
             b2PolygonDef sd;
 			sd.SetAsBox(0.7f, 55.0f);
 			sd.friction    = 0.1f;
-			sd.restitution = 0.1f;  
+			sd.restitution = 0.1f;
 			b2BodyDef bd;
 			bd.position.Set(45.f, 50.0f);
 			b2Body* g = m_world->CreateBody(&bd);
 			g->CreateFixture(&sd);
         }
-		/// Left channel right upper wall  
+		/// Left channel right upper wall
 		{
             b2PolygonDef sd;
 			sd.SetAsBox(0.5f, 20.0f);
 			sd.friction    = 0.05f;
-			sd.restitution = 0.01f;  
+			sd.restitution = 0.01f;
 			b2BodyDef bd;
 			bd.position.Set(-42.0f, 70.0f);
 		    bd.angle = -0.03f*b2_pi;
@@ -95,7 +95,7 @@ public:
             b2PolygonDef sd;
 			sd.SetAsBox(0.50f, 23.0f);
 			sd.friction    = 0.05f;
-			sd.restitution = 0.01f;  
+			sd.restitution = 0.01f;
 			b2BodyDef bd;
 			bd.position.Set(-44.0f, 27.0f);
 			b2Body* g = m_world->CreateBody(&bd);
@@ -106,15 +106,15 @@ public:
 			cd.density  = 15.0f;
 			cd.friction = 1.f;
 			cd.restitution = 0.2f;
-        /// 1. 
+        /// 1.
 			bd.position.Set(-40.0f,2.5f);
 			b2Body* body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
             b2RevoluteJointDef jr;
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
             jr.maxMotorTorque = 30000.f;
-            jr.enableMotor    = true; 
+            jr.enableMotor    = true;
             jr.motorSpeed     = 20.f;
 			m_world->CreateJoint(&jr);
         /// 1. left down
@@ -124,7 +124,7 @@ public:
 			body->CreateFixture(&cd);
             sd.SetAsBox(2.0f, 0.50f);
             body->CreateFixture(&sd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter());
 			m_world->CreateJoint(&jr);
         /// 2.
@@ -132,7 +132,7 @@ public:
 			bd.position.Set(-32.0f,2.5f);
 			body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 3.
@@ -140,28 +140,28 @@ public:
 			bd.position.Set(-24.0f,1.5f);
 			body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 4.
 			bd.position.Set(-16.0f,0.8f);
 			body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 5.
 			bd.position.Set(-8.0f,0.5f);
 			body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 6.
 			bd.position.Set(0.0f,0.1f);
 			body = m_world->CreateBody(&bd);
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 7.
@@ -170,7 +170,7 @@ public:
 			body->CreateFixture(&cd);
 			sd.SetAsBox(3.7f, 0.5f);
 			body->CreateFixture(&sd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter()+b2Vec2(0.f,1.f));
 			m_world->CreateJoint(&jr);
         /// 8. right rotator
@@ -185,7 +185,7 @@ public:
 			rightmotor->CreateFixture(&sd);
 			cd.radius = 4.2f;
 			rightmotor->CreateFixture(&cd);
-            rightmotor->SetMassFromShapes(); 
+            rightmotor->SetMassFromShapes();
 			jr.Initialize (g,rightmotor,rightmotor->GetWorldCenter());
             jr.maxMotorTorque = 70000.f;
             jr.motorSpeed     = -4.f;
@@ -201,10 +201,10 @@ public:
 			cd.radius = 7.f;
 			cd.friction = 0.9f;
 			body->CreateFixture(&cd);
-            body->SetMassFromShapes(); 
+            body->SetMassFromShapes();
 			jr.Initialize (g,body,body->GetWorldCenter());
             jr.maxMotorTorque = 100000.f;
-            jr.motorSpeed     = -5.f;            
+            jr.motorSpeed     = -5.f;
             m_world->CreateJoint(&jr);
         /// big compressor
             sd.SetAsBox(3.0f,4.f);
@@ -241,16 +241,16 @@ public:
 			b2CircleDef  cd;
 			sd.SetAsBox(9.0f, 0.5f);
 			sd.friction    = 0.05f;
-			sd.restitution = 0.01f;  
+			sd.restitution = 0.01f;
 			b2BodyDef bd;
 			bd.position.Set(-15.5f, 12.f);
             bd.angle = 0.0;
 			b2Body* g = m_world->CreateBody(&bd);
 			g->CreateFixture(&sd);
-		    
+
 			sd.SetAsBox(8.f, 0.5f, b2Vec2(23.f,0.f),0.f);
 			g->CreateFixture(&sd);
-            /// compressor statics  
+            /// compressor statics
 			sd.SetAsBox(7.0f, 0.5f, b2Vec2(-2.f,9.f),0.f);
 			g->CreateFixture(&sd);
 			sd.SetAsBox(9.0f, 0.5f, b2Vec2(22.f,9.f),0.f);
@@ -265,14 +265,14 @@ public:
 			g->CreateFixture(&sd);
 			cd.radius   = 1.0f;	cd.friction = 1.0;
 			cd.localPosition = b2Vec2(29.f,-6.f);
-            g->CreateFixture(&cd); 
+            g->CreateFixture(&cd);
             cd.radius   = 0.7f;
 			cd.localPosition = b2Vec2(-2.f,-4.5f);
             g->CreateFixture(&cd);
         }
         /// Elevator
         {
-            b2BodyDef  bd;	
+            b2BodyDef  bd;
             b2CircleDef cd;
             b2PolygonDef sd;
 
@@ -287,18 +287,18 @@ public:
 			m_elev->CreateFixture(&sd);
 			sd.SetAsBox(0.5f, 2.5f, b2Vec2(-11.f,-3.5f), 0.f);
 			m_elev->CreateFixture(&sd);
-            m_elev->SetMassFromShapes();           
-		    
+            m_elev->SetMassFromShapes();
+
 			b2PrismaticJointDef jp;
 			jp.Initialize(m_ground,m_elev, bd.position, b2Vec2(0.0f, 1.0f));
 			jp.lowerTranslation =  0.0f;
 			jp.upperTranslation = 100.0f;
-			jp.enableLimit = true;		
+			jp.enableLimit = true;
 			jp.enableMotor = true;
 			jp.maxMotorForce = 10000.f;
-			jp.motorSpeed    = 0.f; 
-			m_joint_elev = (b2PrismaticJoint*)m_world->CreateJoint(&jp);			  
-            
+			jp.motorSpeed    = 0.f;
+			m_joint_elev = (b2PrismaticJoint*)m_world->CreateJoint(&jp);
+
 			/// Korb
             sd.SetAsBox(2.3f, 0.5f,b2Vec2(1.f,0.0f), 0.0f);
             sd.density = 0.5f;
@@ -311,14 +311,14 @@ public:
             body->CreateFixture(&sd);
             sd.SetAsBox(0.5f, 4.5f,b2Vec2(12.f,0.0f), 0.f);
             body->CreateFixture(&sd);
-            
+
 			sd.SetAsBox(0.5f, 0.5f,b2Vec2(13.f,4.0f), 0.f);
             body->CreateFixture(&sd);
 
             cd.radius   = 0.7f; cd.density  = 1.f; cd.friction = 0.01f;
             cd.localPosition = b2Vec2(0.f,0.f);
             body->CreateFixture(&cd);
-            body->SetMassFromShapes();  
+            body->SetMassFromShapes();
 
             b2RevoluteJointDef jr;
             jr.Initialize(m_elev,body, bd.position);
@@ -334,7 +334,7 @@ public:
             body->CreateFixture(&sd);
 		}
 		/// "Elastic body" 64 bodies - something like a lin. elastic compound
-		/// connected via dynamic forces (springs) 
+		/// connected via dynamic forces (springs)
 		{
 			b2PolygonDef sd;
 			sd.SetAsBox(0.55f, 0.55f);
@@ -344,10 +344,10 @@ public:
 			b2Vec2       startpoint(30.f,20.f);
 			b2BodyDef    bd;
 			bd.isBullet   = false;
-  	 	    bd.allowSleep = false;	
-			for (int i = 0; i < 8; ++i) 
+  	 	    bd.allowSleep = false;
+			for (int i = 0; i < 8; ++i)
             {
-				for (int j = 0; j < 8; ++j) 
+				for (int j = 0; j < 8; ++j)
                 {
 					bd.position.Set(j*1.02f, 2.51f + 1.02f * i);
 					bd.position  += startpoint;
@@ -415,23 +415,23 @@ public:
 		}
 		/// Check if bodies are near elevator
 		///  Look if the body to lift is near the elevator
-		b2Vec2 p1 = bodies[0]->GetWorldCenter(); 
-        b2Vec2 p2 = bodies[63]->GetWorldCenter(); 
+		b2Vec2 p1 = bodies[0]->GetWorldCenter();
+        b2Vec2 p2 = bodies[63]->GetWorldCenter();
 		///    m_elev:   elevator prism. joint
-		b2Vec2 e = m_elev->GetWorldCenter() + b2Vec2(0.f,7.f);  
+		b2Vec2 e = m_elev->GetWorldCenter() + b2Vec2(0.f,7.f);
 		// maybe not the best way to do it...
-		// Bodies reached the elevator side 
+		// Bodies reached the elevator side
 		if ( p1.x>e.x || p2.x>e.x )	{
   		    // go up
 			if ( ( p1.y<e.y || p2.y<e.y ) &&
-				 ( m_joint_elev->GetJointTranslation()<=m_joint_elev->GetLowerLimit()+1.f ) ) 
+				 ( m_joint_elev->GetJointTranslation()<=m_joint_elev->GetLowerLimit()+1.f ) )
 			{
 				m_joint_elev->SetMotorSpeed(20.f);
                 //printf("lift goes up trans: %G\n",m_joint_elev->GetJointTranslation());
 			}
 		}
 		// go down
-		if ( (m_joint_elev->GetJointTranslation()>=m_joint_elev->GetUpperLimit()-2.f) ) 
+		if ( (m_joint_elev->GetJointTranslation()>=m_joint_elev->GetUpperLimit()-2.f) )
 		{
                m_joint_elev->SetMotorSpeed(-15.f);
                //printf("lift goes down: %G\n",m_joint_elev->GetJointTranslation());

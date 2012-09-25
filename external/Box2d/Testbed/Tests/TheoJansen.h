@@ -195,7 +195,7 @@ public:
 		}
 
 		b2Vec2 wheelAnchor;
-		
+
 		wheelAnchor = pivot + b2Vec2(0.0f, -0.8f);
 
 		CreateLeg(-1.0f, wheelAnchor);

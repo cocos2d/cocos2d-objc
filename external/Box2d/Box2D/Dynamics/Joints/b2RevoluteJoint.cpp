@@ -376,7 +376,7 @@ bool b2RevoluteJoint::SolvePositionConstraints(float32 baumgarte)
 		b1->SynchronizeTransform();
 		b2->SynchronizeTransform();
 	}
-	
+
 	return positionError <= b2_linearSlop && angularError <= b2_angularSlop;
 }
 

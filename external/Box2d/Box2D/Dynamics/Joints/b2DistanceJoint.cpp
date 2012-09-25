@@ -26,7 +26,7 @@
 // x2 = x1 + h * v2
 
 // 1-D mass-damper-spring system
-// m (v2 - v1) + h * d * v2 + h * k * 
+// m (v2 - v1) + h * d * v2 + h * k *
 
 // C = norm(p2 - p1) - L
 // u = (p2 - p1) / norm(p2 - p1)

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -38,7 +38,7 @@
    * The TextureAtlas capacity can be increased or decreased in runtime
    * OpenGL component: V3F, C4B, T2F.
  The quads are rendered using an OpenGL ES VBO.
- To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file 
+ To render the quads using an interleaved vertex array list, you should modify the ccConfig.h file
  */
 @interface CCTextureAtlas : NSObject
 {
@@ -75,13 +75,13 @@
 -(id) initWithFile: (NSString*) file capacity:(NSUInteger)capacity;
 
 /** creates a TextureAtlas with a previously initialized Texture2D object, and
- * with an initial capacity for n Quads. 
+ * with an initial capacity for n Quads.
  * The TextureAtlas capacity can be increased in runtime.
  */
 +(id) textureAtlasWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
 
 /** initializes a TextureAtlas with a previously initialized Texture2D object, and
- * with an initial capacity for Quads. 
+ * with an initial capacity for Quads.
  * The TextureAtlas capacity can be increased in runtime.
  *
  * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
@@ -113,7 +113,7 @@
 */
 -(void) insertQuadFromIndex:(NSUInteger)fromIndex atIndex:(NSUInteger)newIndex;
 
-/** Inserts a amount of quads from oldIndex at newIndex, while moving quads at newIndex - oldIndex back accordingly 
+/** Inserts a amount of quads from oldIndex at newIndex, while moving quads at newIndex - oldIndex back accordingly
  @since v1.1
  */
 -(void) insertQuadsFromIndex:(NSUInteger)oldIndex amount:(NSUInteger) amount atIndex:(NSUInteger)newIndex;
@@ -124,7 +124,7 @@
  */
 -(void) removeQuadAtIndex:(NSUInteger) index;
 
-/** removes a amount of quads starting from index 
+/** removes a amount of quads starting from index
 	@since 1.1
  */
 - (void) removeQuadsAtIndex:(NSUInteger) index amount:(NSUInteger) amount;
@@ -143,14 +143,14 @@
  */
 -(BOOL) resizeCapacity: (NSUInteger) n;
 
-/** 
+/**
  Used internally by CCParticleBatchNode
  don't use this unless you know what you're doing
  @since 1.1
 */
 - (void) increaseTotalQuadsWith:(NSUInteger) amount;
 
-/** 
+/**
  Moves quads from index till totalQuads to the newIndex
  Used internally by CCParticleBatchNode
  This method doesn't enlarge the array if newIndex + quads to be moved > capacity
@@ -158,7 +158,7 @@
 */
 - (void) moveQuadsFromIndex:(NSUInteger) index to:(NSUInteger) newIndex;
 
-/** 
+/**
  Ensures that after a realloc quads are still empty
  Used internally by CCParticleBatchNode
  @since 1.1
@@ -173,7 +173,7 @@
 
 /** draws n quads from an index (offset).
  n + start can't be greater than the capacity of the atlas
- 
+
  @since v1.0
  */
 -(void) drawNumberOfQuads: (NSUInteger) n fromIndex: (NSUInteger) start;

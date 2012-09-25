@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,56 +44,56 @@ typedef struct cpBody{
 
 	// Function that is called to integrate the body's velocity. (Defaults to cpBodyUpdateVelocity)
 	cpBodyVelocityFunc velocity_func;
-	
+
 	// Function that is called to integrate the body's position. (Defaults to cpBodyUpdatePosition)
 	cpBodyPositionFunc position_func;
-	
+
 	// *** Mass Properties
-	
+
 	// Mass and it's inverse.
 	// Always use cpBodySetMass() whenever changing the mass as these values must agree.
 	cpFloat m, m_inv;
-	
+
 	// Moment of inertia and it's inverse.
 	// Always use cpBodySetMoment() whenever changing the moment as these values must agree.
 	cpFloat i, i_inv;
-	
+
 	// *** Positional Properties
-	
+
 	// Linear components of motion (position, velocity, and force)
 	cpVect p, v, f;
-	
+
 	// Angular components of motion (angle, angular velocity, and torque)
 	// Always use cpBodySetAngle() to set the angle of the body as a and rot must agree.
 	cpFloat a, w, t;
-	
+
 	// Cached unit length vector representing the angle of the body.
 	// Used for fast vector rotation using cpvrotate().
 	cpVect rot;
-	
+
 	// *** User Definable Fields
-	
+
 	// User defined data pointer.
 	cpDataPointer data;
-	
+
 	// *** Other Fields
-	
+
 	// Maximum velocities this body can move at after integrating velocity
 	cpFloat v_limit, w_limit;
-	
+
 	// *** Internally Used Fields
-	
+
 	// Velocity bias values used when solving penetrations and correcting constraints.
 	CP_PRIVATE(cpVect v_bias);
 	CP_PRIVATE(cpFloat w_bias);
-	
+
 	// Space this body has been added to
 	CP_PRIVATE(struct cpSpace *space);
-	
+
 	// Pointer to the shape list.
 	// Shapes form a linked list using cpShape.next when added to a space.
 	CP_PRIVATE(struct cpShape *shapesList);
-	
+
 	// Used by cpSpaceStep() to store contact graph information.
 	CP_PRIVATE(cpComponentNode node);
 } cpBody;

@@ -11,8 +11,8 @@
 #import "FullScreenTest.h"
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {	
-	
+static NSString *transitions[] = {
+
 	@"FullScreenScale",
 	@"FullScreenNoScale",
 	@"FullScreenIssue1071Test",
@@ -22,7 +22,7 @@ static NSString *transitions[] = {
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -35,8 +35,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -55,12 +55,12 @@ Class restartAction()
 @implementation FullScreenDemo
 -(id) init
 {
-   
+
 	if( (self = [super init]) ) {
 
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
@@ -71,18 +71,18 @@ Class restartAction()
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 	return self;
 }
@@ -138,41 +138,41 @@ Class restartAction()
 		[director setResizeMode:kCCDirectorResize_AutoScale];
 
 		self.isMouseEnabled = YES;
-		
+
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
-		
+
 		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];
 		[self addChild:menu];
-		
+
 		[menu setPosition:ccp(s.width/2, s.height/2)];
-	}	
+	}
 	return self;
 }
 
 -(void) toggleFullScreen:(id)sender
 {
 	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[mac setFullScreen: ! [mac isFullScreen]];
 }
-								
+
 -(void) addNewSpriteWithCoords:(CGPoint)p
 {
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
-	
-	
+
+
 	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
 	[self addChild:sprite];
-	
+
 	sprite.position = ccp( p.x, p.y);
-	
+
 	id action;
 	float rand = CCRANDOM_0_1();
-	
+
 	if( rand < 0.20 )
 		action = [CCScaleBy actionWithDuration:3 scale:2];
 	else if(rand < 0.40)
@@ -181,11 +181,11 @@ Class restartAction()
 		action = [CCBlink actionWithDuration:1 blinks:3];
 	else if( rand < 0.8 )
 		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
-	else 
+	else
 		action = [CCFadeOut actionWithDuration:2];
 	id action_back = [action reverse];
 	id seq = [CCSequence actions:action, action_back, nil];
-	
+
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
@@ -194,9 +194,9 @@ Class restartAction()
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
-		
+
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		
+
 		[self addNewSpriteWithCoords: location];
 	}
 }
@@ -205,7 +205,7 @@ Class restartAction()
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 	[self addNewSpriteWithCoords: location];
-	
+
 	return YES;
 }
 #endif
@@ -231,28 +231,28 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
 
 		self.isMouseEnabled = YES;
-		
+
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
-		
+
 		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];
 		[self addChild:menu];
-		
+
 		[menu setPosition:ccp(s.width/2, s.height/2)];
-	}	
+	}
 	return self;
 }
 
 -(void) toggleFullScreen:(id)sender
 {
 	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[mac setFullScreen: ! [mac isFullScreen]];
 }
 
@@ -261,16 +261,16 @@ Class restartAction()
 	int idx = CCRANDOM_0_1() * 1400 / 100;
 	int x = (idx%5) * 85;
 	int y = (idx/5) * 121;
-	
-	
+
+
 	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
 	[self addChild:sprite];
-	
+
 	sprite.position = ccp( p.x, p.y);
-	
+
 	id action;
 	float rand = CCRANDOM_0_1();
-	
+
 	if( rand < 0.20 )
 		action = [CCScaleBy actionWithDuration:3 scale:2];
 	else if(rand < 0.40)
@@ -279,11 +279,11 @@ Class restartAction()
 		action = [CCBlink actionWithDuration:1 blinks:3];
 	else if( rand < 0.8 )
 		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
-	else 
+	else
 		action = [CCFadeOut actionWithDuration:2];
 	id action_back = [action reverse];
 	id seq = [CCSequence actions:action, action_back, nil];
-	
+
 	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
 }
 
@@ -292,9 +292,9 @@ Class restartAction()
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
-		
+
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		
+
 		[self addNewSpriteWithCoords: location];
 	}
 }
@@ -303,9 +303,9 @@ Class restartAction()
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 	[self addNewSpriteWithCoords: location];
-	
+
 	return YES;
-	
+
 }
 #endif
 
@@ -329,34 +329,34 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
-		
+
 		self.isMouseEnabled = YES;
-		
+
 		CGSize s = [director winSize];
-		
+
 		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Toggle Fullscreen" target: self selector:@selector(toggleFullScreen:)];
 		issueTestItem_ = [CCMenuItemFont itemFromString:@"Load something async in Fullscreen" target: self selector:@selector(loadSomethingAsyncInFullscreen:)];
 		[issueTestItem_ setIsEnabled:[director isFullScreen]];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item, issueTestItem_, nil];
 		[menu alignItemsVertically];
 		[self addChild:menu];
-		
+
 		[menu setPosition:ccp(s.width/2, s.height/2)];
-	}	
+	}
 	return self;
 }
 
 -(void) toggleFullScreen:(id)sender
 {
 	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[mac setFullScreen: ! [mac isFullScreen]];
-	
-	
+
+
 	[issueTestItem_ setIsEnabled:[mac isFullScreen]];
 };
 
@@ -365,16 +365,16 @@ Class restartAction()
 	CCDirectorMac *mac = (CCDirectorMac*) [CCDirector sharedDirector];
 	if ([mac isFullScreen])
 	{
-		[[CCTextureCache sharedTextureCache] addImageAsync:@"blocks.png" 
-													target:self 
+		[[CCTextureCache sharedTextureCache] addImageAsync:@"blocks.png"
+													target:self
 												  selector:@selector(loadedNewTexture:)];
-	}	
+	}
 }
 
 - (void) loadedNewTexture: (CCTexture2D *) aTex
 {
 	CCSprite *sprite = [CCSprite spriteWithTexture: aTex];
-	
+
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	[sprite setPosition:ccp(s.width/2, 3.0f * s.height / 4.0f)];
 	[self addChild:sprite];
@@ -404,40 +404,40 @@ Class restartAction()
 
     [director setResizeMode:kCCDirectorResize_NoScale];
     [director setProjection:kCCDirectorProjectionCustom];
-    
+
     CGSize s = [director winSize];
-    
+
     glViewport(100, 100, s.width - 100, s.height - 100);
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
     ccglOrtho(0, s.width - 100, 0, s.height - 100, -1024, 1024);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    
+
 
 
 	if( (self=[super init]) ) {
-		
-        
 
-        
-   
-        
+
+
+
+
+
 		self.isMouseEnabled = YES;
-		
-		
+
+
 		CCMenuItemFont *item = [CCMenuItemFont itemFromString:@"Test" target: self selector:@selector(testing)];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];
 		[self addChild:menu];
-		
+
 		[menu setPosition:ccp(s.width/2, s.height/2)];
-	}	
+	}
 	return self;
 }
 
 - (void) testing
 {
-    
+
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -445,10 +445,10 @@ Class restartAction()
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
-		
+
 		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-	
+
+
 	}
 }
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -456,9 +456,9 @@ Class restartAction()
 {
 	//location = [[CCDirector sharedDirector] convertEventToGL:event];
 
-	
+
 	return YES;
-	
+
 }
 #endif
 
@@ -474,9 +474,9 @@ Class restartAction()
 
 - (void) onExitTransitionDidStart
 {
-    [super onExitTransitionDidStart]; 
+    [super onExitTransitionDidStart];
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-    
+
     [director setProjection:kCCDirectorProjection3D];
 
 }
@@ -498,16 +498,16 @@ Class restartAction()
 	// must be called before any othe call to the director
 	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
 //	[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
-	
+
 	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// landscape orientation
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// set FPS at 60
 	[director setAnimationInterval:1.0/60];
-	
+
 	// Display FPS: yes
 	[director setDisplayFPS:YES];
 
@@ -530,26 +530,26 @@ Class restartAction()
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// make the OpenGLView a child of the main window
 	[window addSubview:glView];
-	
+
 	// make main window visible
-	[window makeKeyAndVisible];	
-	
+	[window makeKeyAndVisible];
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];	
-	
+	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+
 	// create the main scene
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
-	
+
+
 	// and run it!
 	[director runWithScene: scene];
-	
+
 	return YES;
 }
 
@@ -576,7 +576,7 @@ Class restartAction()
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director openGLView] removeFromSuperview];
 	[director end];
@@ -613,28 +613,28 @@ Class restartAction()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[director setDisplayFPS:YES];
-	
+
 	[director setOpenGLView:glView_];
-	
+
 	[self toggleFullScreen:self];
 
-	
+
 	//	[director setProjection:kCCDirectorProjection2D];
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 //	[director setProjection:kCCDirectorProjection2D];
-	
+
 	[director runWithScene:scene];
 }
 

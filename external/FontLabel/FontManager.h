@@ -30,7 +30,7 @@
 }
 + (FontManager *)sharedManager;
 /*!
-    @method     
+    @method
     @abstract   Loads a TTF font from the main bundle
 	@param filename The name of the font file to load (with or without extension).
 	@return YES if the font was loaded, NO if an error occurred
@@ -48,7 +48,7 @@
 */
 - (BOOL)loadFontURL:(NSURL *)url;
 /*!
-    @method     
+    @method
     @abstract   Returns the loaded font with the given filename
 	@param filename The name of the font file that was given to -loadFont:
 	@return A CGFontRef, or NULL if the specified font cannot be found
