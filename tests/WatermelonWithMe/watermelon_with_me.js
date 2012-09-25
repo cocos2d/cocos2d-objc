@@ -726,7 +726,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._space.addShape( shape );
 
         // box for fruits (left)
-        shape = new cp.BoxShape2( body, {l:-50, b:0, r:-46, t:30} );
+        shape = new cp.BoxShape2( body, cp.bb(-50, 0, -46, 30) );
 		shape.setFriction(0.3);
 		shape.setGroup( GROUP_BUGGY );
 		shape.setLayers( COLLISION_LAYERS_BUGGY );
@@ -734,7 +734,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._space.addShape( shape );
 
         // box for fruits (right)
-        shape = new cp.BoxShape2( body, {l:8, b:0, r:12, t:30} );
+        shape = new cp.BoxShape2( body, cp.bb(8, 0, 12, 30) );
 		shape.setFriction(0.3);
 		shape.setGroup( GROUP_BUGGY );
 		shape.setLayers( COLLISION_LAYERS_BUGGY );
