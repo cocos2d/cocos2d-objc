@@ -362,7 +362,7 @@ Class restartAction()
 
 
     // Init the View Controller
-	viewController = [[masterViewController alloc] initWithNibName:nil bundle:nil];
+	viewController = [[MasterViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.wantsFullScreenLayout = YES;
 
 	[glView setMultipleTouchEnabled:YES];
@@ -385,7 +385,8 @@ Class restartAction()
 	[viewController setView:glView];
 
     [window addSubview:viewController.view];
-	// make the View Controller a child of the main window
+    
+    //needed for iOS6, recommend in 4 and 5
     [window setRootViewController:viewController];
 	// make main window visible
 	[window makeKeyAndVisible];

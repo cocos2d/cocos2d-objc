@@ -172,7 +172,7 @@ const NSUInteger kNumImages		= 9;
 }
 @end
 
-@implementation masterViewController
+@implementation MasterViewController
 
 /*
  // The designated initializer.  Override if you create the controller programmatically and want to perform customization that is not appropriate for viewDidLoad.

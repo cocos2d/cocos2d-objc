@@ -8,7 +8,6 @@ version 1.1-rc0 ..-..-2012
 . [NEW] Actions
         ActionInterval: CCFadeIn and CCFadeOut respect initial opacity of node(issue #828)
         ActionManager: pausing and resuming all running actions
-
 . [NEW] Label: added vertical alignment support
 . [NEW] Node: added convenience method setAnchorPointWithoutPositionChange, to change a relative anchor point but not change the position of the node.
 . [NEW] Sprite: added useTrimmedFrameForAnchorPoint property. This makes the trimmed frame frame of reference for the anchorpoint and contentSize.

@@ -62,7 +62,7 @@
 
 @end
 
-@interface masterViewController : UIViewController {
+@interface MasterViewController : UIViewController {
 }
 
 @end

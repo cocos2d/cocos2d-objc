@@ -64,6 +64,9 @@
 
 	// make the View Controller a child of the main window
 	[window addSubview: viewController.view];
+    
+    //needed for iOS6, recommend in 4 and 5
+    [window addRootViewController:viewController];
 
 	[window makeKeyAndVisible];
 
