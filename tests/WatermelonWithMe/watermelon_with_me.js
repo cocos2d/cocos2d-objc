@@ -931,9 +931,9 @@ var GameLayer = cc.LayerGradient.extend({
     enableCollisionEvents:function(enabled) {
         if( enabled ) {
             // collision handler
-            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBeginCoin, null, null, null );
-            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_FINISH, this, this.onCollisionBeginFinish, null, null, null );
-            this._space.addCollisionHandler( COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this, this.onCollisionBeginWatermelon, null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this.onCollisionBeginCoin.bind(this), null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_FINISH, this.onCollisionBeginFinish.bind(this), null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this.onCollisionBeginWatermelon.bind(this), null, null, null );
         } else {
             this._space.removeCollisionHandler( COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
             this._space.removeCollisionHandler( COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
