@@ -213,7 +213,7 @@
 			}
 			else if(JSVAL_IS_STRING(out)) {
 				NSString *tmp;
-				jsval_to_nsstring( [[JSBCore sharedInstance] globalContext], out, &tmp );
+				jsval_to_NSString( [[JSBCore sharedInstance] globalContext], out, &tmp );
 				string = [NSString stringWithFormat:@"Result(string): %@.\n", tmp];
 			}
 			else if (JSVAL_IS_VOID(out) )
