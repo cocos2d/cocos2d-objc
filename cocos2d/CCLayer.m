@@ -319,7 +319,7 @@
 	if( (self=[super init]) ) {
 
 		// default blend function
-		blendFunc_ = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
+		blendFunc_ = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
 		color_.r = color.r;
 		color_.g = color.g;
