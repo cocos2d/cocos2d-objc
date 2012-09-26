@@ -537,7 +537,7 @@ var ChipmunkCollisionMemoryLeakTest = function() {
         goog.base(this, 'onEnter');
 
         for( var i=1 ; i < 100 ; i++ )
-            space.addCollisionHandler( i, i+1,
+            this.space.addCollisionHandler( i, i+1,
 				this.collisionBegin.bind(this),
 				this.collisionPre.bind(this),
 				this.collisionPost.bind(this),
