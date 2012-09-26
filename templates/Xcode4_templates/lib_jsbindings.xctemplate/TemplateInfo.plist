@@ -419,6 +419,46 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</string>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.h</key>
 		<dict>
 			<key>Group</key>
@@ -1067,6 +1107,9 @@
 		<string>libs/jsbindings/generate_js_bindings.py</string>
 		<string>libs/jsbindings/LICENSE.txt</string>
 		<string>libs/jsbindings/README.md</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.mm</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions_registration.h</string>
