@@ -610,9 +610,9 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     createCar : function(pos) {
-        var front = this.createWheel( cp.vadd(pos, cp._v(47,-25) ) );
-        this._chassis = this.createChassis( cp.vadd( pos, COG_ADJUSTMENT ) );
-        this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-35, -25) ) );
+        var front = this.createWheel( cp.v.add(pos, cp._v(47,-25) ) );
+        this._chassis = this.createChassis( cp.v.add( pos, COG_ADJUSTMENT ) );
+        this._rearWheel = this.createWheel( cp.v.add( pos, cp._v(-35, -25) ) );
         this.createCarJoints( this._chassis, front, this._rearWheel );
         this.createCarFruits( pos );
 
@@ -624,7 +624,7 @@ var GameLayer = cc.LayerGradient.extend({
         // The front wheel strut telescopes, so we'll attach the center of the wheel to a groov joint on the chassis.
         // I created the graphics specifically to have a 45 degree angle. So it's easy to just fudge the numbers.
         var grv_a = chassis.world2Local( front.getPos() );
-        var grv_b = cp.vadd( grv_a, cp.vmult( cp._v(-1, 1), 7 ) );
+        var grv_b = cp.v.add( grv_a, cp.v.mult( cp._v(-1, 1), 7 ) );
         var frontJoint = new cp.GrooveJoint( chassis, front, grv_a, grv_b, cp.vzero );
 
         // Create the front zero-length spring.
@@ -633,10 +633,10 @@ var GameLayer = cc.LayerGradient.extend({
 
         // The rear strut is a swinging arm that holds the wheel a at a certain distance from a pivot on the chassis.
         // A perfect fit for a pin joint conected between the chassis and the wheel's center.
-        var rearJoint = new cp.PinJoint( chassis, rear, cp.vsub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
+        var rearJoint = new cp.PinJoint( chassis, rear, cp.v.sub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
         
         // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
-        var rearStrutRestAngle = cp.vtoangle( cp.vsub(
+        var rearStrutRestAngle = cp.v.toangle( cp.v.sub(
                                                 chassis.local2World( rearJoint.getAnchr1() ),
                                                 rear.getPos() ) );
 
@@ -701,7 +701,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     createChassis : function(pos) {
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("Chassis.png");
-        var anchor = cp.vadd( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
+        var anchor = cp.v.add( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
         var cs = sprite.getContentSize();
         sprite.setAnchorPoint( cc.p(anchor.x / cs.width, anchor.y/cs.height) );
 
