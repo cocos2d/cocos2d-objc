@@ -1,6 +1,7 @@
 
 version 2.1-beta3  xx-Oct-2012
 . [NEW] JS bindings: Added Object Oriented API for Chipmunk Bindings compatible with Chipmunk-JS project
+. [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
 
