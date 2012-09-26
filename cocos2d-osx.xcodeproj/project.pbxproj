@@ -8462,6 +8462,7 @@
 				A062C9F0160A95AF00D1E3BC /* js_bindings_chipmunk_auto_classes_registration.h */,
 				A031BFD215DADE5F00E1986C /* js_bindings_chipmunk_functions.h */,
 				A031BFD315DADE5F00E1986C /* js_bindings_chipmunk_functions.mm */,
+				A031BFD415DADE5F00E1986C /* js_bindings_chipmunk_functions_registration.h */,
 				A031BFD515DADE5F00E1986C /* js_bindings_cocos2d_classes.h */,
 				A031BFD615DADE5F00E1986C /* js_bindings_cocos2d_classes.mm */,
 				A031BFD715DADE5F00E1986C /* js_bindings_cocos2d_classes_registration.h */,
@@ -8484,7 +8485,6 @@
 				A031BFED15DADE5F00E1986C /* js_bindings_CocosDenshion_functions.h */,
 				A031BFEE15DADE5F00E1986C /* js_bindings_CocosDenshion_functions.mm */,
 				A031BFEF15DADE5F00E1986C /* js_bindings_CocosDenshion_functions_registration.h */,
-				A031BFD415DADE5F00E1986C /* js_bindings_chipmunk_functions_registration.h */,
 			);
 			path = auto;
 			sourceTree = "<group>";
