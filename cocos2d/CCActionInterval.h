@@ -428,7 +428,7 @@ typedef struct _ccBezierConfig {
 /** Animates a sprite given the name of an Animation */
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
-	NSMutableArray		*splitTimes_;
+	NSData				*splitTimes_;
 	NSInteger			nextFrame_;
 	CCAnimation			*animation_;
 	id					origFrame_;

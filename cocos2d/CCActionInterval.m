@@ -1338,18 +1338,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		origFrame_ = nil;
 		executedLoops_ = 0;
 		
-		splitTimes_ = [[NSMutableArray alloc] initWithCapacity:anim.frames.count];
-		
 		float accumUnitsOfTime = 0;
 		float newUnitOfTimeValue = singleDuration / anim.totalDelayUnits;
 		
+		float *splitTimes = malloc(sizeof(float) * anim.frames.count);
+		int i = 0;
+		
 		for( CCAnimationFrame *frame in anim.frames ) {
 
-			NSNumber *value = [NSNumber numberWithFloat: (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration];
+			splitTimes[i++] = (accumUnitsOfTime * newUnitOfTimeValue) / singleDuration;
 			accumUnitsOfTime += frame.delayUnits;
 
-			[splitTimes_ addObject:value];
 		}		
+
+		splitTimes_ = [[NSData alloc] initWithBytesNoCopy:splitTimes length:sizeof(float) * anim.frames.count freeWhenDone:YES];
 	}
 	return self;
 }
@@ -1414,10 +1416,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	NSUInteger numberOfFrames = [frames count];
 	CCSpriteFrame *frameToDisplay = nil;
 
+	const float *splitTimes = [splitTimes_ bytes];
 	for( NSUInteger i=nextFrame_; i < numberOfFrames; i++ ) {
-		NSNumber *splitTime = [splitTimes_ objectAtIndex:i];
-
-		if( [splitTime floatValue] <= t ) {
+		if( splitTimes[i] <= t ) {
 			CCAnimationFrame *frame = [frames objectAtIndex:i];
 			frameToDisplay = [frame spriteFrame];
 			[(CCSprite*)target_ setDisplayFrame: frameToDisplay];
