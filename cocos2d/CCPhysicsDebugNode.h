@@ -45,14 +45,17 @@
  */
 @interface CCPhysicsDebugNode : CCDrawNode
 {
+	ChipmunkSpace *_spaceObj;
+	cpSpace *_spacePtr;
 }
 
-/** Create a debug node for an Objective-Chipmunk space.
- */
+// property for the cpSpace
+@property (nonatomic, readwrite, assign) cpSpace *space;
+
+/** Create a debug node for an Objective-Chipmunk space. */
 + (id) debugNodeForChipmunkSpace:(ChipmunkSpace *)space;
 
-/** Create a debug node for a regular Chipmunk space.
- */
+/** Create a debug node for a regular Chipmunk space. */
 + (id) debugNodeForCPSpace:(cpSpace *)space;
 
 @end

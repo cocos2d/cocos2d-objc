@@ -66,28 +66,47 @@ var BaseLayer = function() {
 	__associateObjWithNative( this, parent );
 	this.init();
 
-	this.title = function () {
-		return "No title";
-	};
+	this.title =  "No title";
+	this.subtitle = "No Subtitle";
 
-	this.subtitle = function () {
-		return "No Subtitle";
-	};
+	// Menu to toggle debug physics on / off
+    var item = cc.MenuItemFont.create("Physics On/Off", this, this.onToggleDebug);
+    var menu = cc.Menu.create( item );
+    this.addChild( menu );
+    menu.setPosition( cc._p( winSize.width-100, winSize.height-80 )  );
+
+    // Create the initial space
+	this.space = new cp.Space();
+
+	this.setupDebugNode();
 };
+
 goog.inherits(BaseLayer, cc.Layer );
+
+BaseLayer.prototype.setupDebugNode = function()
+{
+    // debug only
+	this._debugNode = cc.PhysicsDebugNode.create( this.space.handle );
+	this._debugNode.setVisible( false );
+	this.addChild( this._debugNode );
+};
+
+BaseLayer.prototype.onToggleDebug = function(sender) {
+    var state = this._debugNode.getVisible();
+    this._debugNode.setVisible( !state );
+};
 
 //
 // Instance 'base' methods
 // XXX: Should be defined after "goog.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
-	var label = cc.LabelTTF.create(this.title(), "Arial", 28);
+	var label = cc.LabelTTF.create(this.title, "Arial", 28);
 	this.addChild(label, 1);
 	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
-	var strSubtitle = this.subtitle();
-	if (strSubtitle !== "") {
-		var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
+	if (this.subtitle !== "") {
+		var l = cc.LabelTTF.create(this.subtitle, "Thonburi", 16);
 		this.addChild(l, 1);
 		l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
 	}
@@ -140,13 +159,8 @@ var ChipmunkSpriteTest = function() {
 		this.addChild( sprite );
 	};
 
-	this.title = function() {
-		return 'Chipmunk Sprite Test';
-	};
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprites tests. Tap screen.';
-	};
+	this.title = 'Chipmunk Sprite Test';
+	this.subtitle = 'Chipmunk + cocos2d sprites tests. Tap screen.';
 
 	this.initPhysics();
 };
@@ -159,7 +173,7 @@ goog.inherits( ChipmunkSpriteTest, BaseLayer );
 
 // init physics
 ChipmunkSpriteTest.prototype.initPhysics = function() {
-	var space = this.space =  new cp.Space();
+	var space = this.space ;
 	var staticBody = space.getStaticBody();
 
 	// Walls
@@ -246,13 +260,8 @@ var ChipmunkSpriteBatchTest = function() {
 		this.batch.addChild( sprite );
 	};
 
-	this.title = function() {
-		return 'Chipmunk SpriteBatch Test';
-	};
-
-	this.subtitle = function() {
-		return 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
-	};
+	this.title = 'Chipmunk SpriteBatch Test';
+	this.subtitle = 'Chipmunk + cocos2d sprite batch tests. Tap screen.';
 };
 goog.inherits( ChipmunkSpriteBatchTest, ChipmunkSpriteTest );
 
@@ -268,17 +277,11 @@ var ChipmunkCollisionTest = function() {
 
 	goog.base(this);
 
-	this.title = function() {
-		return 'Chipmunk Collision test';
-	};
-
-	this.subtitle = function() {
-		return 'Using Object Oriented API. ** Use this API **';
-	};
+	this.title = 'Chipmunk Collision test';
+	this.subtitle = 'Using Object Oriented API. ** Use this API **';
 
 	// init physics
 	this.initPhysics = function() {
-		this.space =  new cp.Space();
 		var staticBody = this.space.staticBody;
 
 		// Walls
@@ -392,17 +395,16 @@ var ChipmunkCollisionTestB = function() {
 
 	this.messageDisplayed = false;
 
-	this.title = function() {
-		return 'Chipmunk Collision Test';
-	};
-
-	this.subtitle = function() {
-		return 'using "C"-like API. ** DO NOT USE THIS API **';
-	};
+	this.title = 'Chipmunk Collision Test';
+	this.subtitle = 'using "C"-like API. ** DO NOT USE THIS API **';
 
 	// init physics
 	this.initPhysics = function() {
 		this.space =  cp.spaceNew();
+
+		// update Physics Debug Node with new space
+		this._debugNode.setSpace(this.space);
+
 		var staticBody = cp.spaceGetStaticBody( this.space );
 
 		// Walls using "C" API. DO NO USE THIS API
@@ -512,13 +514,8 @@ var ChipmunkCollisionMemoryLeakTest = function() {
 
 	goog.base(this);
 
-	this.title = function() {
-		return 'Chipmunk Memory Leak Test';
-	};
-
-	this.subtitle = function() {
-		return 'Testing possible memory leak on the collision handler. No visual feedback';
-	};
+	this.title = 'Chipmunk Memory Leak Test';
+	this.subtitle = 'Testing possible memory leak on the collision handler. No visual feedback';
 
 	this.collisionBegin = function ( arbiter, space ) {
 		return true;
@@ -538,7 +535,6 @@ var ChipmunkCollisionMemoryLeakTest = function() {
 
     this.onEnter = function() {
         goog.base(this, 'onEnter');
-		this.space =  new cp.Space();
 
         for( var i=1 ; i < 100 ; i++ )
             space.addCollisionHandler( i, i+1,
@@ -557,16 +553,486 @@ var ChipmunkCollisionMemoryLeakTest = function() {
 	};
 };
 goog.inherits( ChipmunkCollisionMemoryLeakTest, BaseLayer );
+
+
 //
-// Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// Base class for Chipmunk Demo
 //
+// Chipmunk Demos from Chipmunk-JS project
+// https://github.com/josephg/chipmunk-js
+//
+
+var v = cp.v;
+var ctx;
+var GRABABLE_MASK_BIT = 1<<31;
+var NOT_GRABABLE_MASK = ~GRABABLE_MASK_BIT;
+
+var ChipmunkDemo = function() {
+
+	goog.base(this);
+
+	this.remainder = 0;
+
+	// debug only
+	this._debugNode.setVisible( true );
+
+	this.scheduleUpdate();
+};
+goog.inherits( ChipmunkDemo, BaseLayer );
+
+ChipmunkDemo.prototype.update = function(dt) {
+	this.space.step(dt);
+};
+
+ChipmunkDemo.prototype.addFloor = function() {
+	var space = this.space;
+	var floor = space.addShape(new cp.SegmentShape(space.staticBody, v(0, 0), v(640, 0), 0));
+	floor.setElasticity(1);
+	floor.setFriction(1);
+	floor.setLayers(NOT_GRABABLE_MASK);
+};
+
+ChipmunkDemo.prototype.addWalls = function() {
+	var space = this.space;
+	var wall1 = space.addShape(new cp.SegmentShape(space.staticBody, v(0, 0), v(0, 480), 0));
+	wall1.setElasticity(1);
+	wall1.setFriction(1);
+	wall1.setLayers(NOT_GRABABLE_MASK);
+
+	var wall2 = space.addShape(new cp.SegmentShape(space.staticBody, v(640, 0), v(640, 480), 0));
+	wall2.setElasticity(1);
+	wall2.setFriction(1);
+	wall2.setLayers(NOT_GRABABLE_MASK);
+};
+
+//------------------------------------------------------------------
+//
+// Chipmunk Demo: Pyramid Stack
+//
+//------------------------------------------------------------------
+var PyramidStack = function() {
+
+	goog.base(this);
+	this.title = 'Chipmunk Demo';
+	this.subtitle = 'Pyramid Stack';
+
+	var space = this.space;
+	//space.iterations = 30;
+	space.gravity = v(0, -100);
+	space.sleepTimeThreshold = 0.5;
+	space.collisionSlop = 0.5;
+
+	var body, staticBody = space.staticBody;
+	var shape;
+	
+	this.addFloor();
+	this.addWalls();
+	
+	// Add lots of boxes.
+	for(var i=0; i<14; i++){
+		for(var j=0; j<=i; j++){
+			body = space.addBody(new cp.Body(1, cp.momentForBox(1, 30, 30)));
+			body.setPos(v(j*32 - i*16 + 320, 540 - i*32));
+			
+			shape = space.addShape(new cp.BoxShape(body, 30, 30));
+			shape.setElasticity(0);
+			shape.setFriction(0.8);
+		}
+	}
+	
+	// Add a ball to make things more interesting
+	var radius = 15;
+	body = space.addBody(new cp.Body(10, cp.momentForCircle(10, 0, radius, v(0,0))));
+	body.setPos(v(320, radius+5));
+
+	shape = space.addShape(new cp.CircleShape(body, radius, v(0,0)));
+	shape.setElasticity(0);
+	shape.setFriction(0.9);
+};
+goog.inherits( PyramidStack, ChipmunkDemo );
+
+
+//------------------------------------------------------------------
+//
+// Chipmunk Demo: Pyramid Topple
+//
+//------------------------------------------------------------------
+var PyramidTopple = function() {
+
+	goog.base(this);
+	this.title = 'Chipmunk Demo';
+	this.subtitle = 'Pyramid Topple';
+
+	var WIDTH = 4;
+	var HEIGHT = 30;
+
+	var space = this.space;
+	
+	var add_domino = function(pos, flipped)
+	{
+		var mass = 1;
+		var moment = cp.momentForBox(mass, WIDTH, HEIGHT);
+		
+		var body = space.addBody(new cp.Body(mass, moment));
+		body.setPos(pos);
+
+		var shape = (flipped ? new cp.BoxShape(body, HEIGHT, WIDTH) : new cp.BoxShape(body, WIDTH, HEIGHT));
+		space.addShape(shape);
+		shape.setElasticity(0);
+		shape.setFriction(0.6);
+	};
+
+	space.iterations = 30;
+	space.gravity = v(0, -300);
+	space.sleepTimeThreshold = 0.5;
+	space.collisionSlop = 0.5;
+	
+	this.addFloor();
+	
+	// Add the dominoes.
+	var n = 12;
+	for(var i=0; i<n; i++){
+		for(var j=0; j<(n - i); j++){
+			var offset = v(320 + (j - (n - 1 - i)*0.5)*1.5*HEIGHT, (i + 0.5)*(HEIGHT + 2*WIDTH) - WIDTH);
+			add_domino(offset, false);
+			add_domino(cp.v.add(offset, v(0, (HEIGHT + WIDTH)/2)), true);
+			
+			if(j === 0){
+				add_domino(cp.v.add(offset, v(0.5*(WIDTH - HEIGHT), HEIGHT + WIDTH)), false);
+			}
+			
+			if(j != n - i - 1){
+				add_domino(cp.v.add(offset, v(HEIGHT*0.75, (HEIGHT + 3*WIDTH)/2)), true);
+			} else {
+				add_domino(cp.v.add(offset, v(0.5*(HEIGHT - WIDTH), HEIGHT + WIDTH)), false);
+			}
+		}
+	}
+};
+
+goog.inherits( PyramidTopple, ChipmunkDemo );
+
+PyramidTopple.prototype.update = function(dt)
+{
+	var steps = 3;
+	dt /= steps;
+	for (var i = 0; i < 3; i++){
+		this.space.step(dt);
+	}
+};
+
+//------------------------------------------------------------------
+//
+// Chipmunk Demo: Joints
+//
+//------------------------------------------------------------------
+var Joints = function() {
+	goog.base(this);
+	this.title = 'Chipmunk Demo';
+	this.subtitle = 'Joints';
+
+	var space = this.space;
+	var boxOffset;
+
+	var addBall = function(pos)
+	{
+		var radius = 15;
+		var mass = 1;
+		var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, radius, v(0,0))));
+		body.setPos(v.add(pos, boxOffset));
+		
+		var shape = space.addShape(new cp.CircleShape(body, radius, v(0,0)));
+		shape.setElasticity(0);
+		shape.setFriction(0.7);
+		
+		return body;
+	};
+
+	var addLever = function(pos)
+	{
+		var mass = 1;
+		var a = v(0,  15);
+		var b = v(0, -15);
+		
+		var body = space.addBody(new cp.Body(mass, cp.momentForSegment(mass, a, b)));
+		body.setPos(v.add(pos, v.add(boxOffset, v(0, -15))));
+		
+		var shape = space.addShape(new cp.SegmentShape(body, a, b, 5));
+		shape.setElasticity(0);
+		shape.setFriction(0.7);
+		
+		return body;
+	};
+
+	var addBar = function(pos)
+	{
+		var mass = 2;
+		var a = v(0,  30);
+		var b = v(0, -30);
+		
+		var body = space.addBody(new cp.Body(mass, cp.momentForSegment(mass, a, b)));
+		body.setPos(v.add(pos, boxOffset));
+		
+		var shape = space.addShape(new cp.SegmentShape(body, a, b, 5));
+		shape.setElasticity(0);
+		shape.setFriction(0.7);
+		
+		return body;
+	};
+
+	var addWheel = function(pos)
+	{
+		var radius = 15;
+		var mass = 1;
+		var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, radius, v(0,0))));
+		body.setPos(v.add(pos, boxOffset));
+		
+		var shape = space.addShape(new cp.CircleShape(body, radius, v(0,0)));
+		shape.setElasticity(0);
+		shape.setFriction(0.7);
+		shape.group = 1; // use a group to keep the car parts from colliding
+		
+		return body;
+	};
+
+	var addChassis = function(pos)
+	{
+		var mass = 5;
+		var width = 80;
+		var height = 30;
+		
+		var body = space.addBody(new cp.Body(mass, cp.momentForBox(mass, width, height)));
+		body.setPos(v.add(pos, boxOffset));
+		
+		var shape = space.addShape(new cp.BoxShape(body, width, height));
+		shape.setElasticity(0);
+		shape.setFriction(0.7);
+		shape.group = 1; // use a group to keep the car parts from colliding
+		
+		return body;
+	};
+
+	space.iterations = 10;
+	space.gravity = v(0, -100);
+	space.sleepTimeThreshold = 0.5;
+	
+	var staticBody = space.staticBody;
+	var shape;
+	
+	for(var y = 480; y >= 0; y -= 120) {
+		shape = space.addShape(new cp.SegmentShape(staticBody, v(0,y), v(640,y), 0));
+		shape.setElasticity(1);
+		shape.setFriction(1);
+		shape.layers = NOT_GRABABLE_MASK;
+	}
+
+	for(var x = 0; x <= 640; x += 160) {
+		shape = space.addShape(new cp.SegmentShape(staticBody, v(x,0), v(x,480), 0));
+		shape.setElasticity(1);
+		shape.setFriction(1);
+		shape.layers = NOT_GRABABLE_MASK;
+	}
+	
+	var body1, body2;
+	
+	var posA = v( 50, 60);
+	var posB = v(110, 60);
+	
+	var POS_A = function() { return v.add(boxOffset, posA); };
+	var POS_B = function() { return v.add(boxOffset, posB); };
+	//#define POS_A vadd(boxOffset, posA)
+	//#define POS_B vadd(boxOffset, posB)
+	
+	this.labels = labels = [];
+	var label = function(text) {
+		labels.push({text:text, pos:boxOffset});
+	};
+
+	// Pin Joints - Link shapes with a solid bar or pin.
+	// Keeps the anchor points the same distance apart from when the joint was created.
+	boxOffset = v(0, 0);
+	label('Pin Joint');
+	body1 = addBall(posA);
+	body2 = addBall(posB);
+	body2.setAngle(Math.PI);
+	space.addConstraint(new cp.PinJoint(body1, body2, v(15,0), v(15,0)));
+	
+	// Slide Joints - Like pin joints but with a min/max distance.
+	// Can be used for a cheap approximation of a rope.
+	boxOffset = v(160, 0);
+	label('Slide Joint');
+	body1 = addBall(posA);
+	body2 = addBall(posB);
+	body2.setAngle(Math.PI);
+	space.addConstraint(new cp.SlideJoint(body1, body2, v(15,0), v(15,0), 20, 40));
+	
+	// Pivot Joints - Holds the two anchor points together. Like a swivel.
+	boxOffset = v(320, 0);
+	label('Pivot Joint');
+	body1 = addBall(posA);
+	body2 = addBall(posB);
+	body2.setAngle(Math.PI);
+	// cp.PivotJoint(a, b, v) takes it's anchor parameter in world coordinates. The anchors are calculated from that
+	// Alternately, specify two anchor points using cp.PivotJoint(a, b, anch1, anch2)
+	space.addConstraint(new cp.PivotJoint(body1, body2, v.add(boxOffset, v(80,60))));
+	
+	// Groove Joints - Like a pivot joint, but one of the anchors is a line segment that the pivot can slide in
+	boxOffset = v(480, 0);
+	label('Groove Joint');
+	body1 = addBall(posA);
+	body2 = addBall(posB);
+	space.addConstraint(new cp.GrooveJoint(body1, body2, v(30,30), v(30,-30), v(-30,0)));
+	
+	// Damped Springs
+	boxOffset = v(0, 120);
+	label('Damped Spring');
+	body1 = addBall(posA);
+	body2 = addBall(posB);
+	body2.setAngle(Math.PI);
+	space.addConstraint(new cp.DampedSpring(body1, body2, v(15,0), v(15,0), 20, 5, 0.3));
+	
+	// Damped Rotary Springs
+	boxOffset = v(160, 120);
+	label('Damped Rotary Spring');
+	body1 = addBar(posA);
+	body2 = addBar(posB);
+	// Add some pin joints to hold the circles in place.
+	space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
+	space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
+	space.addConstraint(new cp.DampedRotarySpring(body1, body2, 0, 3000, 60));
+	
+	// Rotary Limit Joint
+	boxOffset = v(320, 120);
+	label('Rotary Limit Joint');
+	body1 = addLever(posA);
+	body2 = addLever(posB);
+	// Add some pin joints to hold the circles in place.
+	space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
+	space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
+	// Hold their rotation within 90 degrees of each other.
+	space.addConstraint(new cp.RotaryLimitJoint(body1, body2, -Math.PI/2, Math.PI/2));
+	
+	// Ratchet Joint - A rotary ratchet, like a socket wrench
+	boxOffset = v(480, 120);
+	label('Ratchet Joint');
+	body1 = addLever(posA);
+	body2 = addLever(posB);
+	// Add some pin joints to hold the circles in place.
+	space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
+	space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
+	// Ratchet every 90 degrees
+	space.addConstraint(new cp.RatchetJoint(body1, body2, 0, Math.PI/2));
+	
+	// Gear Joint - Maintain a specific angular velocity ratio
+	boxOffset = v(0, 240);
+	label('Gear Joint');
+	body1 = addBar(posA);
+	body2 = addBar(posB);
+	// Add some pin joints to hold the circles in place.
+	space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
+	space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
+	// Force one to sping 2x as fast as the other
+	space.addConstraint(new cp.GearJoint(body1, body2, 0, 2));
+	
+	// Simple Motor - Maintain a specific angular relative velocity
+	boxOffset = v(160, 240);
+	label('Simple Motor');
+	body1 = addBar(posA);
+	body2 = addBar(posB);
+	// Add some pin joints to hold the circles in place.
+	space.addConstraint(new cp.PivotJoint(body1, staticBody, POS_A()));
+	space.addConstraint(new cp.PivotJoint(body2, staticBody, POS_B()));
+	// Make them spin at 1/2 revolution per second in relation to each other.
+	space.addConstraint(new cp.SimpleMotor(body1, body2, Math.PI));
+	
+	// Make a car with some nice soft suspension
+	boxOffset = v(320, 240);
+	var wheel1 = addWheel(posA);
+	var wheel2 = addWheel(posB);
+	var chassis = addChassis(v(80, 100));
+	
+	space.addConstraint(new cp.GrooveJoint(chassis, wheel1, v(-30, -10), v(-30, -40), v(0,0)));
+	space.addConstraint(new cp.GrooveJoint(chassis, wheel2, v( 30, -10), v( 30, -40), v(0,0)));
+	
+	space.addConstraint(new cp.DampedSpring(chassis, wheel1, v(-30, 0), v(0,0), 50, 20, 10));
+	space.addConstraint(new cp.DampedSpring(chassis, wheel2, v( 30, 0), v(0,0), 50, 20, 10));
+};
+
+goog.inherits( Joints, ChipmunkDemo );
+
+
+//------------------------------------------------------------------
+//
+// Chipmunk Demo: Balls
+//
+//------------------------------------------------------------------
+var Balls = function() {
+	goog.base(this);
+	this.title = 'Chipmunk Demo';
+	this.subtitle = 'Balls';
+
+	var space = this.space;
+	space.iterations = 60;
+	space.gravity = v(0, -500);
+	space.sleepTimeThreshold = 0.5;
+	space.collisionSlop = 0.5;
+	space.sleepTimeThreshold = 0.5;
+
+	this.addFloor();
+	this.addWalls();
+
+	var width = 50;
+	var height = 60;
+	var mass = width * height * 1/1000;
+	var rock = space.addBody(new cp.Body(mass, cp.momentForBox(mass, width, height)));
+	rock.setPos(v(500, 100));
+	rock.setAngle(1);
+	shape = space.addShape(new cp.BoxShape(rock, width, height));
+	shape.setFriction(0.3);
+	shape.setElasticity(0.3);
+
+	for (var i = 1; i <= 10; i++) {
+		var radius = 20;
+		mass = 3;
+		var body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, radius, v(0, 0))));
+		body.setPos(v(200 + i, (2 * radius + 5) * i));
+		var circle = space.addShape(new cp.CircleShape(body, radius, v(0, 0)));
+		circle.setElasticity(0.8);
+		circle.setFriction(1);
+	}
+/*
+ * atom.canvas.onmousedown = function(e) {
+      radius = 10;
+      mass = 3;
+      body = space.addBody(new cp.Body(mass, cp.momentForCircle(mass, 0, radius, v(0, 0))));
+      body.setPos(v(e.clientX, e.clientY));
+      circle = space.addShape(new cp.CircleShape(body, radius, v(0, 0)));
+      circle.setElasticity(0.5);
+      return circle.setFriction(1);
+    };
+*/
+
+	// this.ctx.strokeStyle = "black";
+
+	var ramp = space.addShape(new cp.SegmentShape(space.staticBody, v(100, 100), v(300, 200), 10));
+	ramp.setElasticity(1);
+	ramp.setFriction(1);
+	ramp.setLayers(NOT_GRABABLE_MASK);
+};
+goog.inherits( Balls, ChipmunkDemo );
 
 
 //
 // Order of tests
 //
 
+// Chipmunk Demos
+scenes.push( PyramidStack );
+scenes.push( PyramidTopple );
+scenes.push( Joints );
+scenes.push( Balls );
+
+// Tests
 scenes.push( ChipmunkSpriteTest ); scenes.push( ChipmunkSpriteBatchTest );
 scenes.push( ChipmunkCollisionTest ); scenes.push( ChipmunkCollisionTestB );
 scenes.push( ChipmunkCollisionMemoryLeakTest );
