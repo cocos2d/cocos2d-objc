@@ -214,7 +214,7 @@ struct _listAddedEntry;
 @interface CCEventDispatcher : NSObject <CCEventDelegate> {
 
 	BOOL					dispatchEvents_;
-	BOOL					dispatchingInProgress_;
+	BOOL					locked_;
 
 	struct	_listEntry		*keyboardDelegates_;
 	struct	_listEntry		*mouseDelegates_;
