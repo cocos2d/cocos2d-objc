@@ -95,7 +95,10 @@
 	// make the OpenGLView a child of the view controller
 	[viewController setView:glView];
 	
-	// make the View Controller a child of the main window
+    //Required in iOS6, recommended in 4 and 5
+    [window setRootViewController:viewController];
+    
+	// make the View Controller a child of the main window, needed for iOS 4 and 5
 	[window addSubview: viewController.view];
 	
 	[window makeKeyAndVisible];
