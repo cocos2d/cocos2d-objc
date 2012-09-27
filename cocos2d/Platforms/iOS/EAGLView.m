@@ -202,16 +202,35 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+    //checking whether size has changed, because changes in uikit elements also trigger layoutSubviews
+    CAEAGLLayer* layer= (CAEAGLLayer*) self.layer;
+    
+    //frame is always in portrait
+    CGSize layerSize = self.layer.frame.size;
+    CGFloat zRotation = ([[layer valueForKeyPath:@"transform.rotation.z"] floatValue] * 180.f) / M_PI;
+    
+    //landscape switch width and height
+    if (zRotation == 90.f || zRotation == -90.f)
+    {
+        CGFloat temp;
+        temp = layerSize.height;
+        layerSize.height = layerSize.width;
+        layerSize.width = temp; 
+    }
+        
+    if (layerSize.width != size_.width || layerSize.height != size_.height)
+    {
+        [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 
-	size_ = [renderer_ backingSize];
+        size_ = [renderer_ backingSize];
 
-	// Issue #914 #924
-	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:size_];
+        // Issue #914 #924
+        CCDirector *director = [CCDirector sharedDirector];
+        [director reshapeProjection:size_];
 
-	// Avoid flicker. Issue #350
-	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+        // Avoid flicker. Issue #350
+        [director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+    }
 }
 
 - (void) swapBuffers
