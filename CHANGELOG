@@ -36,6 +36,7 @@ version 1.1-rc0 ..-..-2012
         exceptions raised in runloop didn't cause program to abort (issue #911)
         Only enable depth test when a depth buffer is present
         fixed end method, complete shutdown of director and resources (issue #686)
+. [FIX] EAGLView: resizing only occurs when necessary (refix of issue #1153)        
 . [FIX] FileUtils: also search full bundle path
         iPad falls back to iPad suffix if iPad-hd isn't found, instead of iPhone
 . [FIX] Menu: CCMenuItemToggle, tags of children were modified by the component

@@ -66,7 +66,7 @@
 	[window addSubview: viewController.view];
     
     //needed for iOS6, recommend in 4 and 5
-    [window addRootViewController:viewController];
+    [window setRootViewController:viewController];
 
 	[window makeKeyAndVisible];
 
