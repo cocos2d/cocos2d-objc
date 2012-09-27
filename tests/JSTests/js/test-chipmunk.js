@@ -1161,13 +1161,8 @@ Buoyancy.prototype.update = function(dt)
 
 Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	var shapes = arb.getShapes();
-	cc.log(shapes);
 	var water = shapes[0];
 	var poly = shapes[1];
-
-	cc.log( water.getCollisionType() );
-	cc.log( poly.getCollisionType() );
-	cc.log( poly.getFriction() );
 
 	var body = poly.getBody();
 
@@ -1221,7 +1216,7 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	
 	// Apply angular damping for the fluid drag.
 	var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(body.p));
-	body.w *= Math.exp(-w_damping*dt*body.i_inv);
+	// body.w *= Math.exp(-w_damping*dt*body.i_inv);
 	
 	return true;
 };
