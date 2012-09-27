@@ -1177,7 +1177,6 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	// Clip the polygon against the water level
 	var count = poly.getNumVerts();
 
-	var clippedCount = 0;
 	var clipped = [];
 
 	var j=count-1;
@@ -1187,7 +1186,6 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 		
 		if(a.y < level){
 			clipped.push( a );
-			clippedCount++;
 		}
 		
 		var a_level = a.y - level;
@@ -1197,34 +1195,32 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 			var t = Math.abs(a_level)/(Math.abs(a_level) + Math.abs(b_level));
 			
 			clipped.push( cp.v.lerp(a, b, t) );
-			clippedCount++;
 		}
-
 		j=i;
 	}
 	
 	// Calculate buoyancy from the clipped polygon area
-	var clippedArea = cp.areaForPoly(clippedCount, clipped);
+	var clippedArea = cp.areaForPoly(clipped);
 	var displacedMass = clippedArea*FLUID_DENSITY;
-	var centroid = cp.centroidForPoly(clippedCount, clipped);
+	var centroid = cp.centroidForPoly(clipped);
 	var r = cp.v.sub(centroid, body.getPos());
 		
 	var dt = this.space.getCurrentTimeStep();
 	var g = this.space.gravity;
 	
 	// Apply the buoyancy force as an impulse.
-	body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
+	// body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
 	
 	// Apply linear damping for the fluid drag.
 	var v_centroid = cp.v.add(body.v, cp.v.mult(cp.v.perp(r), body.w));
-	var k = k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
+	var k = 1; //k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
 	var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
 	var v_coef = Math.exp(-damping*dt*k); // linear drag
 //	cpFloat v_coef = 1.0/(1.0 + damping*dt*cpvlength(v_centroid)*k); // quadratic drag
-	body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
+	// body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
 	
 	// Apply angular damping for the fluid drag.
-	var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clippedCount, clipped, cp.v.neg(body.p));
+	var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(body.p));
 	body.w *= Math.exp(-w_damping*dt*body.i_inv);
 	
 	return true;
