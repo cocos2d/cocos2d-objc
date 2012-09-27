@@ -1069,29 +1069,29 @@ var Buoyancy = function() {
 	var staticBody = space.staticBody;
 	
 	// Create segments around the edge of the screen.
-	var shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(-320,-240), cp.v(-320,240), 0.0));
+	var shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(0,0), cp.v(0,480), 0.0));
 	shape.setElasticity(1.0);
 	shape.setFriction(1.0);
 	shape.setLayers(NOT_GRABABLE_MASK);
 
-	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(320,-240), cp.v(320,240), 0.0));
+	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(640,0), cp.v(640,480), 0.0));
 	shape.setElasticity(1.0);
 	shape.setFriction(1.0);
 	shape.setLayers(NOT_GRABABLE_MASK);
 
-	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(-320,-240), cp.v(320,-240), 0.0));
+	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(0,0), cp.v(640,0), 0.0));
 	shape.setElasticity(1.0);
 	shape.setFriction(1.0);
 	shape.setLayers(NOT_GRABABLE_MASK);
 	
-	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(-320,240), cp.v(320,240), 0.0));
+	shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(0,480), cp.v(640,480), 0.0));
 	shape.setElasticity(1.0);
 	shape.setFriction(1.0);
 	shape.setLayers(NOT_GRABABLE_MASK);
 	
 	// {
 		// Add the edges of the bucket
-		var bb = new cp.BB(-300, -200, 100, 0);
+		var bb = new cp.BB(20, 40, 420, 240);
 		var radius = 5.0;
 		
 		shape = space.addShape( new cp.SegmentShape(staticBody, cp.v(bb.l, bb.b), cp.v(bb.l, bb.t), radius));
@@ -1123,7 +1123,7 @@ var Buoyancy = function() {
 		var moment = cp.momentForBox(mass, width, height);
 		
 		body = space.addBody( new cp.Body(mass, moment));
-		body.setPos( cp.v(-50, -100));
+		body.setPos( cp.v(270, 140));
 		body.setVel( cp.v(0, -100));
 		body.setAngVel( 1 );
 		
@@ -1138,7 +1138,7 @@ var Buoyancy = function() {
 		moment = cp.momentForBox(mass, width, height);
 		
 		body = space.addBody( new cp.Body(mass, moment));
-		body.setPos(cp.v(-200, -50));
+		body.setPos(cp.v(120, 190));
 		body.setVel(cp.v(0, -100));
 		body.setAngVel(1);
 		
@@ -1160,6 +1160,7 @@ Buoyancy.prototype.update = function(dt)
 };
 
 Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
+	
 	var shapes = arb.getShapes();
 	var water = shapes[0];
 	var poly = shapes[1];
@@ -1178,9 +1179,10 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	for(var i=0; i<count; i++) {
 		var a = body.local2World( poly.getVert(j));
 		var b = body.local2World( poly.getVert(i));
-		
+
 		if(a.y < level){
-			clipped.push( a );
+			clipped.push( a.x );
+			clipped.push( a.y );
 		}
 		
 		var a_level = a.y - level;
@@ -1189,22 +1191,25 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 		if(a_level*b_level < 0.0){
 			var t = Math.abs(a_level)/(Math.abs(a_level) + Math.abs(b_level));
 			
-			clipped.push( cp.v.lerp(a, b, t) );
+			var v = cp.v.lerp(a, b, t);
+			clipped.push(v.x);
+			clipped.push(v.y);
 		}
 		j=i;
 	}
-	
+
 	// Calculate buoyancy from the clipped polygon area
 	var clippedArea = cp.areaForPoly(clipped);
+
 	var displacedMass = clippedArea*FLUID_DENSITY;
 	var centroid = cp.centroidForPoly(clipped);
 	var r = cp.v.sub(centroid, body.getPos());
-		
+
 	var dt = this.space.getCurrentTimeStep();
 	var g = this.space.gravity;
 	
 	// Apply the buoyancy force as an impulse.
-	// body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
+	body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
 	
 	// Apply linear damping for the fluid drag.
 	var v_centroid = cp.v.add(body.v, cp.v.mult(cp.v.perp(r), body.w));
@@ -1212,11 +1217,11 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
 	var v_coef = Math.exp(-damping*dt*k); // linear drag
 //	cpFloat v_coef = 1.0/(1.0 + damping*dt*cpvlength(v_centroid)*k); // quadratic drag
-	// body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
+	body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
 	
 	// Apply angular damping for the fluid drag.
 	var w_damping = cp.momentForPoly(FLUID_DRAG*FLUID_DENSITY*clippedArea, clipped, cp.v.neg(body.p));
-	// body.w *= Math.exp(-w_damping*dt*body.i_inv);
+	body.w *= Math.exp(-w_damping*dt* (1/body.i));
 	
 	return true;
 };

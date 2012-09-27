@@ -1,12 +1,14 @@
 
 version 2.1-beta3  xx-Oct-2012
-. [NEW] JS bindings: Added Object Oriented API for Chipmunk Bindings compatible with Chipmunk-JS project
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)
 . [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
+. [FIX] Tests: Watermelon With Me uses new Chipmunk API
+		Add new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
+. [3RD] JS Bindings: Updated to v0.3 (Chipmunk API is compatible with Chipmunk-JS)
 
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
