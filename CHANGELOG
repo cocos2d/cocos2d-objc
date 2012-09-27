@@ -6,6 +6,7 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
 		Add new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
+. [FIX] Texture: Improved assert when updating filter on NPOT textures
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
 . [3RD] JS Bindings: Updated to v0.3 (Chipmunk API is compatible with Chipmunk-JS)
