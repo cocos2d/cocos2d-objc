@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -17,11 +17,8 @@
 */
 
 #include "Test.h"
-#include "Render.h"
-
-#include "freeglut/GL/glut.h"
-
 #include <cstdio>
+using namespace std;
 
 void DestructionListener::SayGoodbye(b2Joint* joint)
 {
@@ -39,8 +36,7 @@ Test::Test()
 {
 	b2Vec2 gravity;
 	gravity.Set(0.0f, -10.0f);
-	bool doSleep = true;
-	m_world = new b2World(gravity, doSleep);
+	m_world = new b2World(gravity);
 	m_bomb = NULL;
 	m_textLine = 30;
 	m_mouseJoint = NULL;
@@ -57,6 +53,9 @@ Test::Test()
 
 	b2BodyDef bodyDef;
 	m_groundBody = m_world->CreateBody(&bodyDef);
+
+	memset(&m_maxProfile, 0, sizeof(b2Profile));
+	memset(&m_totalProfile, 0, sizeof(b2Profile));
 }
 
 Test::~Test()
@@ -70,7 +69,7 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
 	const b2Manifold* manifold = contact->GetManifold();
 
-	if (manifold->m_pointCount == 0)
+	if (manifold->pointCount == 0)
 	{
 		return;
 	}
@@ -84,13 +83,13 @@ void Test::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 	b2WorldManifold worldManifold;
 	contact->GetWorldManifold(&worldManifold);
 
-	for (int32 i = 0; i < manifold->m_pointCount && m_pointCount < k_maxContactPoints; ++i)
+	for (int32 i = 0; i < manifold->pointCount && m_pointCount < k_maxContactPoints; ++i)
 	{
 		ContactPoint* cp = m_points + m_pointCount;
 		cp->fixtureA = fixtureA;
 		cp->fixtureB = fixtureB;
-		cp->position = worldManifold.m_points[i];
-		cp->normal = worldManifold.m_normal;
+		cp->position = worldManifold.points[i];
+		cp->normal = worldManifold.normal;
 		cp->state = state2[i];
 		++m_pointCount;
 	}
@@ -160,12 +159,7 @@ void Test::MouseDown(const b2Vec2& p)
 		md.bodyA = m_groundBody;
 		md.bodyB = body;
 		md.target = p;
-#ifdef TARGET_FLOAT32_IS_FIXED
-		md.maxForce = (body->GetMass() < 16.0)? 
-			(1000.0f * body->GetMass()) : float32(16000.0);
-#else
 		md.maxForce = 1000.0f * body->GetMass();
-#endif
 		m_mouseJoint = (b2MouseJoint*)m_world->CreateJoint(&md);
 		body->SetAwake(true);
 	}
@@ -255,7 +249,7 @@ void Test::LaunchBomb(const b2Vec2& position, const b2Vec2& velocity)
 	b2FixtureDef fd;
 	fd.shape = &circle;
 	fd.density = 20.0f;
-	fd.restitution = 0.1f;
+	fd.restitution = 0.0f;
 	
 	b2Vec2 minV = position - b2Vec2(0.3f,0.3f);
 	b2Vec2 maxV = position + b2Vec2(0.3f,0.3f);
@@ -287,19 +281,20 @@ void Test::Step(Settings* settings)
 	}
 
 	uint32 flags = 0;
-	flags += settings->drawShapes			* b2DebugDraw::e_shapeBit;
-	flags += settings->drawJoints			* b2DebugDraw::e_jointBit;
-	flags += settings->drawAABBs			* b2DebugDraw::e_aabbBit;
-	flags += settings->drawPairs			* b2DebugDraw::e_pairBit;
-	flags += settings->drawCOMs				* b2DebugDraw::e_centerOfMassBit;
+	flags += settings->drawShapes			* b2Draw::e_shapeBit;
+	flags += settings->drawJoints			* b2Draw::e_jointBit;
+	flags += settings->drawAABBs			* b2Draw::e_aabbBit;
+	flags += settings->drawPairs			* b2Draw::e_pairBit;
+	flags += settings->drawCOMs				* b2Draw::e_centerOfMassBit;
 	m_debugDraw.SetFlags(flags);
 
 	m_world->SetWarmStarting(settings->enableWarmStarting > 0);
 	m_world->SetContinuousPhysics(settings->enableContinuous > 0);
+	m_world->SetSubStepping(settings->enableSubStepping > 0);
 
 	m_pointCount = 0;
 
-	m_world->Step(timeStep, settings->velocityIterations, settings->positionIterations, true);
+	m_world->Step(timeStep, settings->velocityIterations, settings->positionIterations);
 
 	m_world->DrawDebugData();
 
@@ -310,49 +305,96 @@ void Test::Step(Settings* settings)
 
 	if (settings->drawStats)
 	{
-		m_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints/proxies = %d/%d/%d",
-			m_world->GetBodyCount(), m_world->GetContactCount(), m_world->GetJointCount(), m_world->GetProxyCount());
+		int32 bodyCount = m_world->GetBodyCount();
+		int32 contactCount = m_world->GetContactCount();
+		int32 jointCount = m_world->GetJointCount();
+		m_debugDraw.DrawString(5, m_textLine, "bodies/contacts/joints = %d/%d/%d", bodyCount, contactCount, jointCount);
 		m_textLine += 15;
 
-		m_debugDraw.DrawString(5, m_textLine, "heap bytes = %d", b2_byteCount);
+		int32 proxyCount = m_world->GetProxyCount();
+		int32 height = m_world->GetTreeHeight();
+		int32 balance = m_world->GetTreeBalance();
+		float32 quality = m_world->GetTreeQuality();
+		m_debugDraw.DrawString(5, m_textLine, "proxies/height/balance/quality = %d/%d/%d/%g", proxyCount, height, balance, quality);
+		m_textLine += 15;
+	}
+
+	// Track maximum profile times
+	{
+		const b2Profile& p = m_world->GetProfile();
+		m_maxProfile.step = b2Max(m_maxProfile.step, p.step);
+		m_maxProfile.collide = b2Max(m_maxProfile.collide, p.collide);
+		m_maxProfile.solve = b2Max(m_maxProfile.solve, p.solve);
+		m_maxProfile.solveInit = b2Max(m_maxProfile.solveInit, p.solveInit);
+		m_maxProfile.solveVelocity = b2Max(m_maxProfile.solveVelocity, p.solveVelocity);
+		m_maxProfile.solvePosition = b2Max(m_maxProfile.solvePosition, p.solvePosition);
+		m_maxProfile.solveTOI = b2Max(m_maxProfile.solveTOI, p.solveTOI);
+
+		m_totalProfile.step += p.step;
+		m_totalProfile.collide += p.collide;
+		m_totalProfile.solve += p.solve;
+		m_totalProfile.solveInit += p.solveInit;
+		m_totalProfile.solveVelocity += p.solveVelocity;
+		m_totalProfile.solvePosition += p.solvePosition;
+		m_totalProfile.solveTOI += p.solveTOI;
+	}
+
+	if (settings->drawProfile)
+	{
+		const b2Profile& p = m_world->GetProfile();
+
+		b2Profile aveProfile;
+		memset(&aveProfile, 0, sizeof(b2Profile));
+		if (m_stepCount > 0)
+		{
+			float32 scale = 1.0f / m_stepCount;
+			aveProfile.step = scale * m_totalProfile.step;
+			aveProfile.collide = scale * m_totalProfile.collide;
+			aveProfile.solve = scale * m_totalProfile.solve;
+			aveProfile.solveInit = scale * m_totalProfile.solveInit;
+			aveProfile.solveVelocity = scale * m_totalProfile.solveVelocity;
+			aveProfile.solvePosition = scale * m_totalProfile.solvePosition;
+			aveProfile.solveTOI = scale * m_totalProfile.solveTOI;
+		}
+
+		m_debugDraw.DrawString(5, m_textLine, "step [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.step, aveProfile.step, m_maxProfile.step);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "collide [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.collide, aveProfile.collide, m_maxProfile.collide);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "solve [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.solve, aveProfile.solve, m_maxProfile.solve);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "solve init [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.solveInit, aveProfile.solveInit, m_maxProfile.solveInit);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "solve velocity [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.solveVelocity, aveProfile.solveVelocity, m_maxProfile.solveVelocity);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "solve position [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.solvePosition, aveProfile.solvePosition, m_maxProfile.solvePosition);
+		m_textLine += 15;
+		m_debugDraw.DrawString(5, m_textLine, "solveTOI [ave] (max) = %5.2f [%6.2f] (%6.2f)", p.solveTOI, aveProfile.solveTOI, m_maxProfile.solveTOI);
 		m_textLine += 15;
 	}
 
 	if (m_mouseJoint)
 	{
-		b2Body* body = m_mouseJoint->GetBodyB();
-		b2Vec2 p1 = body->GetWorldPoint(m_mouseJoint->m_localAnchor);
-		b2Vec2 p2 = m_mouseJoint->m_target;
+		b2Vec2 p1 = m_mouseJoint->GetAnchorB();
+		b2Vec2 p2 = m_mouseJoint->GetTarget();
 
-		glPointSize(4.0f);
-		glColor3f(0.0f, 1.0f, 0.0f);
-		glBegin(GL_POINTS);
-		glVertex2f(p1.x, p1.y);
-		glVertex2f(p2.x, p2.y);
-		glEnd();
-		glPointSize(1.0f);
+		b2Color c;
+		c.Set(0.0f, 1.0f, 0.0f);
+		m_debugDraw.DrawPoint(p1, 4.0f, c);
+		m_debugDraw.DrawPoint(p2, 4.0f, c);
 
-		glColor3f(0.8f, 0.8f, 0.8f);
-		glBegin(GL_LINES);
-		glVertex2f(p1.x, p1.y);
-		glVertex2f(p2.x, p2.y);
-		glEnd();
+		c.Set(0.8f, 0.8f, 0.8f);
+		m_debugDraw.DrawSegment(p1, p2, c);
 	}
 	
 	if (m_bombSpawning)
 	{
-		glPointSize(4.0f);
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glBegin(GL_POINTS);
-		glColor3f(0.0f, 0.0f, 1.0f);
-		glVertex2f(m_bombSpawnPoint.x, m_bombSpawnPoint.y);
-		glEnd();
-		
-		glColor3f(0.8f, 0.8f, 0.8f);
-		glBegin(GL_LINES);
-		glVertex2f(m_mouseWorld.x, m_mouseWorld.y);
-		glVertex2f(m_bombSpawnPoint.x, m_bombSpawnPoint.y);
-		glEnd();
+		b2Color c;
+		c.Set(0.0f, 0.0f, 1.0f);
+		m_debugDraw.DrawPoint(m_bombSpawnPoint, 4.0f, c);
+
+		c.Set(0.8f, 0.8f, 0.8f);
+		m_debugDraw.DrawSegment(m_mouseWorld, m_bombSpawnPoint, c);
 	}
 
 	if (settings->drawContactPoints)
@@ -379,7 +421,7 @@ void Test::Step(Settings* settings)
 			{
 				b2Vec2 p1 = point->position;
 				b2Vec2 p2 = p1 + k_axisScale * point->normal;
-				m_debugDraw.DrawSegment(p1, p2, b2Color(0.4f, 0.9f, 0.4f));
+				m_debugDraw.DrawSegment(p1, p2, b2Color(0.9f, 0.9f, 0.9f));
 			}
 			else if (settings->drawContactForces == 1)
 			{

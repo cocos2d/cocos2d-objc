@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -34,7 +34,7 @@ typedef Test* TestCreateFcn();
 /// Random number in range [-1,1]
 inline float32 RandomFloat()
 {
-	float32 r = (float32)(rand() & (RAND_LIMIT));
+	float32 r = (float32)(std::rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = 2.0f * r - 1.0f;
 	return r;
@@ -43,7 +43,7 @@ inline float32 RandomFloat()
 /// Random floating point number in range [lo, hi]
 inline float32 RandomFloat(float32 lo, float32 hi)
 {
-	float32 r = (float32)(rand() & (RAND_LIMIT));
+	float32 r = (float32)(std::rand() & (RAND_LIMIT));
 	r /= RAND_LIMIT;
 	r = (hi - lo) * r + lo;
 	return r;
@@ -53,10 +53,10 @@ inline float32 RandomFloat(float32 lo, float32 hi)
 struct Settings
 {
 	Settings() :
+		viewCenter(0.0f, 20.0f),
 		hz(60.0f),
 		velocityIterations(8),
 		positionIterations(3),
-		drawStats(0),
 		drawShapes(1),
 		drawJoints(1),
 		drawAABBs(0),
@@ -66,12 +66,16 @@ struct Settings
 		drawContactForces(0),
 		drawFrictionForces(0),
 		drawCOMs(0),
+		drawStats(0),
+		drawProfile(0),
 		enableWarmStarting(1),
 		enableContinuous(1),
+		enableSubStepping(0),
 		pause(0),
 		singleStep(0)
 		{}
 
+	b2Vec2 viewCenter;
 	float32 hz;
 	int32 velocityIterations;
 	int32 positionIterations;
@@ -85,8 +89,10 @@ struct Settings
 	int32 drawFrictionForces;
 	int32 drawCOMs;
 	int32 drawStats;
+	int32 drawProfile;
 	int32 enableWarmStarting;
 	int32 enableContinuous;
+	int32 enableSubStepping;
 	int32 pause;
 	int32 singleStep;
 };
@@ -132,6 +138,7 @@ public:
     void DrawTitle(int x, int y, const char *string);
 	virtual void Step(Settings* settings);
 	virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
+	virtual void KeyboardUp(unsigned char key) { B2_NOT_USED(key); }
 	void ShiftMouseDown(const b2Vec2& p);
 	virtual void MouseDown(const b2Vec2& p);
 	virtual void MouseUp(const b2Vec2& p);
@@ -174,6 +181,9 @@ protected:
 	bool m_bombSpawning;
 	b2Vec2 m_mouseWorld;
 	int32 m_stepCount;
+
+	b2Profile m_maxProfile;
+	b2Profile m_totalProfile;
 };
 
 #endif

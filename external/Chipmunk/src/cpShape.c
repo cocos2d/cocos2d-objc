@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- *
+ * 
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+ * 
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- *
+ * 
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,25 +18,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-
+ 
 #include "chipmunk_private.h"
 #include "chipmunk_unsafe.h"
 
 #define CP_DefineShapeGetter(struct, type, member, name) \
 CP_DeclareShapeGetter(struct, type, name){ \
-	cpAssert(shape->klass == &struct##Class, "shape is not a "#struct); \
+	cpAssertHard(shape->klass == &struct##Class, "shape is not a "#struct); \
 	return ((struct *)shape)->member; \
 }
-cpHashValue SHAPE_ID_COUNTER = 0;
+
+static cpHashValue cpShapeIDCounter = 0;
 
 void
 cpResetShapeIdCounter(void)
 {
-	SHAPE_ID_COUNTER = 0;
+	cpShapeIDCounter = 0;
 }
 
 
@@ -44,26 +41,28 @@ cpShape*
 cpShapeInit(cpShape *shape, const cpShapeClass *klass, cpBody *body)
 {
 	shape->klass = klass;
-
-	shape->hashid = SHAPE_ID_COUNTER;
-	SHAPE_ID_COUNTER++;
-
+	
+	shape->hashid = cpShapeIDCounter;
+	cpShapeIDCounter++;
+	
 	shape->body = body;
 	shape->sensor = 0;
-
+	
 	shape->e = 0.0f;
 	shape->u = 0.0f;
 	shape->surface_v = cpvzero;
-
+	
 	shape->collision_type = 0;
 	shape->group = CP_NO_GROUP;
 	shape->layers = CP_ALL_LAYERS;
-
+	
 	shape->data = NULL;
+	
+	shape->space = NULL;
+	
 	shape->next = NULL;
-
-//	cpShapeCacheBB(shape);
-
+	shape->prev = NULL;
+	
 	return shape;
 }
 
@@ -82,42 +81,61 @@ cpShapeFree(cpShape *shape)
 	}
 }
 
-// TODO this function should really take a position and rotation explicitly and be renamed
+void
+cpShapeSetBody(cpShape *shape, cpBody *body)
+{
+	cpAssertHard(!cpShapeActive(shape), "You cannot change the body on an active shape. You must remove the shape from the space before changing the body.");
+	shape->body = body;
+}
+
 cpBB
 cpShapeCacheBB(cpShape *shape)
 {
 	cpBody *body = shape->body;
+	return cpShapeUpdate(shape, body->p, body->rot);
+}
 
-	shape->bb = shape->klass->cacheData(shape, body->p, body->rot);
-	return shape->bb;
+cpBB
+cpShapeUpdate(cpShape *shape, cpVect pos, cpVect rot)
+{
+	return (shape->bb = shape->klass->cacheData(shape, pos, rot));
 }
 
 cpBool
 cpShapePointQuery(cpShape *shape, cpVect p){
-	return shape->klass->pointQuery(shape, p);
+	cpNearestPointQueryInfo info = {};
+	cpShapeNearestPointQuery(shape, p, &info);
+	
+	return (info.d < 0.0f);
 }
+
+cpFloat
+cpShapeNearestPointQuery(cpShape *shape, cpVect p, cpNearestPointQueryInfo *info)
+{
+	cpNearestPointQueryInfo blank = {NULL, cpvzero, INFINITY};
+	if(info){
+		(*info) = blank;
+	} else {
+		info = &blank;
+	}
+	
+	shape->klass->nearestPointQuery(shape, p, info);
+	return info->d;
+}
+
 
 cpBool
 cpShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info){
 	cpSegmentQueryInfo blank = {NULL, 0.0f, cpvzero};
-	(*info) = blank;
-
+	if(info){
+		(*info) = blank;
+	} else {
+		info = &blank;
+	}
+	
 	shape->klass->segmentQuery(shape, a, b, info);
 	return (info->shape != NULL);
 }
-
-void
-cpSegmentQueryInfoPrint(cpSegmentQueryInfo *info)
-{
-	printf("Segment Query:\n");
-	printf("\tt: %f\n", info->t);
-//	printf("\tdist: %f\n", info->dist);
-//	printf("\tpoint: %s\n", cpvstr(info->point));
-	printf("\tn: %s\n", cpvstr(info->n));
-}
-
-
-
 
 cpCircleShape *
 cpCircleShapeAlloc(void)
@@ -125,25 +143,23 @@ cpCircleShapeAlloc(void)
 	return (cpCircleShape *)cpcalloc(1, sizeof(cpCircleShape));
 }
 
-static inline cpBB
-bbFromCircle(const cpVect c, const cpFloat r)
-{
-	return cpBBNew(c.x-r, c.y-r, c.x+r, c.y+r);
-}
-
 static cpBB
-cpCircleShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
+cpCircleShapeCacheData(cpCircleShape *circle, cpVect p, cpVect rot)
 {
-	cpCircleShape *circle = (cpCircleShape *)shape;
-
-	circle->tc = cpvadd(p, cpvrotate(circle->c, rot));
-	return bbFromCircle(circle->tc, circle->r);
+	cpVect c = circle->tc = cpvadd(p, cpvrotate(circle->c, rot));
+	return cpBBNewForCircle(c, circle->r);
 }
 
-static cpBool
-cpCircleShapePointQuery(cpShape *shape, cpVect p){
-	cpCircleShape *circle = (cpCircleShape *)shape;
-	return cpvnear(circle->tc, p, circle->r);
+static void
+cpCicleShapeNearestPointQuery(cpCircleShape *circle, cpVect p, cpNearestPointQueryInfo *info)
+{
+	cpVect delta = cpvsub(p, circle->tc);
+	cpFloat d = cpvlength(delta);
+	cpFloat r = circle->r;
+	
+	info->shape = (cpShape *)circle;
+	info->p = cpvadd(circle->tc, cpvmult(delta, r/d)); // TODO div/0
+	info->d = d - r;
 }
 
 static void
@@ -152,13 +168,13 @@ circleSegmentQuery(cpShape *shape, cpVect center, cpFloat r, cpVect a, cpVect b,
 	// offset the line to be relative to the circle
 	a = cpvsub(a, center);
 	b = cpvsub(b, center);
-
+	
 	cpFloat qa = cpvdot(a, a) - 2.0f*cpvdot(a, b) + cpvdot(b, b);
 	cpFloat qb = -2.0f*cpvdot(a, a) + 2.0f*cpvdot(a, b);
 	cpFloat qc = cpvdot(a, a) - r*r;
-
+	
 	cpFloat det = qb*qb - 4.0f*qa*qc;
-
+	
 	if(det >= 0.0f){
 		cpFloat t = (-qb - cpfsqrt(det))/(2.0f*qa);
 		if(0.0f<= t && t <= 1.0f){
@@ -170,18 +186,17 @@ circleSegmentQuery(cpShape *shape, cpVect center, cpFloat r, cpVect a, cpVect b,
 }
 
 static void
-cpCircleShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info)
+cpCircleShapeSegmentQuery(cpCircleShape *circle, cpVect a, cpVect b, cpSegmentQueryInfo *info)
 {
-	cpCircleShape *circle = (cpCircleShape *)shape;
-	circleSegmentQuery(shape, circle->tc, circle->r, a, b, info);
+	circleSegmentQuery((cpShape *)circle, circle->tc, circle->r, a, b, info);
 }
 
 static const cpShapeClass cpCircleShapeClass = {
 	CP_CIRCLE_SHAPE,
-	cpCircleShapeCacheData,
+	(cpShapeCacheDataImpl)cpCircleShapeCacheData,
 	NULL,
-	cpCircleShapePointQuery,
-	cpCircleShapeSegmentQuery,
+	(cpShapeNearestPointQueryImpl)cpCicleShapeNearestPointQuery,
+	(cpShapeSegmentQueryImpl)cpCircleShapeSegmentQuery,
 };
 
 cpCircleShape *
@@ -189,9 +204,9 @@ cpCircleShapeInit(cpCircleShape *circle, cpBody *body, cpFloat radius, cpVect of
 {
 	circle->c = offset;
 	circle->r = radius;
-
+	
 	cpShapeInit((cpShape *)circle, &cpCircleShapeClass, body);
-
+	
 	return circle;
 }
 
@@ -211,16 +226,14 @@ cpSegmentShapeAlloc(void)
 }
 
 static cpBB
-cpSegmentShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
+cpSegmentShapeCacheData(cpSegmentShape *seg, cpVect p, cpVect rot)
 {
-	cpSegmentShape *seg = (cpSegmentShape *)shape;
-
 	seg->ta = cpvadd(p, cpvrotate(seg->a, rot));
 	seg->tb = cpvadd(p, cpvrotate(seg->b, rot));
 	seg->tn = cpvrotate(seg->n, rot);
-
-	cpFloat l,r,s,t;
-
+	
+	cpFloat l,r,b,t;
+	
 	if(seg->ta.x < seg->tb.x){
 		l = seg->ta.x;
 		r = seg->tb.x;
@@ -228,99 +241,64 @@ cpSegmentShapeCacheData(cpShape *shape, cpVect p, cpVect rot)
 		l = seg->tb.x;
 		r = seg->ta.x;
 	}
-
+	
 	if(seg->ta.y < seg->tb.y){
-		s = seg->ta.y;
+		b = seg->ta.y;
 		t = seg->tb.y;
 	} else {
-		s = seg->tb.y;
+		b = seg->tb.y;
 		t = seg->ta.y;
 	}
-
+	
 	cpFloat rad = seg->r;
-	return cpBBNew(l - rad, s - rad, r + rad, t + rad);
+	return cpBBNew(l - rad, b - rad, r + rad, t + rad);
 }
-
-static cpBool
-cpSegmentShapePointQuery(cpShape *shape, cpVect p){
-	if(!cpBBcontainsVect(shape->bb, p)) return cpFalse;
-
-	cpSegmentShape *seg = (cpSegmentShape *)shape;
-
-	// Calculate normal distance from segment.
-	cpFloat dn = cpvdot(seg->tn, p) - cpvdot(seg->ta, seg->tn);
-	cpFloat dist = cpfabs(dn) - seg->r;
-	if(dist > 0.0f) return cpFalse;
-
-	// Calculate tangential distance along segment.
-	cpFloat dt = -cpvcross(seg->tn, p);
-	cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
-	cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
-
-	// Decision tree to decide which feature of the segment to collide with.
-	if(dt <= dtMin){
-		if(dt < (dtMin - seg->r)){
-			return cpFalse;
-		} else {
-			return cpvlengthsq(cpvsub(seg->ta, p)) < (seg->r*seg->r);
-		}
-	} else {
-		if(dt < dtMax){
-			return cpTrue;
-		} else {
-			if(dt < (dtMax + seg->r)) {
-				return cpvlengthsq(cpvsub(seg->tb, p)) < (seg->r*seg->r);
-			} else {
-				return cpFalse;
-			}
-		}
-	}
-
-	return cpTrue;
-}
-
-static inline cpBool inUnitRange(cpFloat t){return (0.0f < t && t < 1.0f);}
 
 static void
-cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInfo *info)
+cpSegmentShapeNearestPointQuery(cpSegmentShape *seg, cpVect p, cpNearestPointQueryInfo *info)
 {
-	// TODO this function could be optimized better.
+	cpVect closest = cpClosetPointOnSegment(p, seg->ta, seg->tb);
+	
+	cpVect delta = cpvsub(p, closest);
+	cpFloat d = cpvlength(delta);
+	cpFloat r = seg->r;
+	
+	info->shape = (cpShape *)seg;
+	info->p = (d ? cpvadd(closest, cpvmult(delta, r/d)) : closest);
+	info->d = d - r;
+}
 
-	cpSegmentShape *seg = (cpSegmentShape *)shape;
+static void
+cpSegmentShapeSegmentQuery(cpSegmentShape *seg, cpVect a, cpVect b, cpSegmentQueryInfo *info)
+{
 	cpVect n = seg->tn;
-	// flip n if a is behind the axis
-	if(cpvdot(a, n) < cpvdot(seg->ta, n))
-		n = cpvneg(n);
-
-	cpFloat an = cpvdot(a, n);
-	cpFloat bn = cpvdot(b, n);
-
-	if(an != bn){
-		cpFloat d = cpvdot(seg->ta, n) + seg->r;
-		cpFloat t = (d - an)/(bn - an);
-
-		if(0.0f < t && t < 1.0f){
-			cpVect point = cpvlerp(a, b, t);
-			cpFloat dt = -cpvcross(seg->tn, point);
-			cpFloat dtMin = -cpvcross(seg->tn, seg->ta);
-			cpFloat dtMax = -cpvcross(seg->tn, seg->tb);
-
-			if(dtMin < dt && dt < dtMax){
-				info->shape = shape;
-				info->t = t;
-				info->n = n;
-
-				return; // don't continue on and check endcaps
-			}
+	cpFloat d = cpvdot(cpvsub(seg->ta, a), n);
+	cpFloat r = seg->r;
+	
+	cpVect flipped_n = (d > 0.0f ? cpvneg(n) : n);
+	cpVect seg_offset = cpvsub(cpvmult(flipped_n, r), a);
+	
+	// Make the endpoints relative to 'a' and move them by the thickness of the segment.
+	cpVect seg_a = cpvadd(seg->ta, seg_offset);
+	cpVect seg_b = cpvadd(seg->tb, seg_offset);
+	cpVect delta = cpvsub(b, a);
+	
+	if(cpvcross(delta, seg_a)*cpvcross(delta, seg_b) <= 0.0f){
+		cpFloat d_offset = d + (d > 0.0f ? -r : r);
+		cpFloat ad = -d_offset;
+		cpFloat bd = cpvdot(delta, n) - d_offset;
+		
+		if(ad*bd < 0.0f){
+			info->shape = (cpShape *)seg;
+			info->t = ad/(ad - bd);
+			info->n = flipped_n;
 		}
-	}
-
-	if(seg->r) {
+	} else if(r != 0.0f){
 		cpSegmentQueryInfo info1 = {NULL, 1.0f, cpvzero};
 		cpSegmentQueryInfo info2 = {NULL, 1.0f, cpvzero};
-		circleSegmentQuery(shape, seg->ta, seg->r, a, b, &info1);
-		circleSegmentQuery(shape, seg->tb, seg->r, a, b, &info2);
-
+		circleSegmentQuery((cpShape *)seg, seg->ta, seg->r, a, b, &info1);
+		circleSegmentQuery((cpShape *)seg, seg->tb, seg->r, a, b, &info2);
+		
 		if(info1.t < info2.t){
 			(*info) = info1;
 		} else {
@@ -331,10 +309,10 @@ cpSegmentShapeSegmentQuery(cpShape *shape, cpVect a, cpVect b, cpSegmentQueryInf
 
 static const cpShapeClass cpSegmentShapeClass = {
 	CP_SEGMENT_SHAPE,
-	cpSegmentShapeCacheData,
+	(cpShapeCacheDataImpl)cpSegmentShapeCacheData,
 	NULL,
-	cpSegmentShapePointQuery,
-	cpSegmentShapeSegmentQuery,
+	(cpShapeNearestPointQueryImpl)cpSegmentShapeNearestPointQuery,
+	(cpShapeSegmentQueryImpl)cpSegmentShapeSegmentQuery,
 };
 
 cpSegmentShape *
@@ -343,11 +321,14 @@ cpSegmentShapeInit(cpSegmentShape *seg, cpBody *body, cpVect a, cpVect b, cpFloa
 	seg->a = a;
 	seg->b = b;
 	seg->n = cpvperp(cpvnormalize(cpvsub(b, a)));
-
+	
 	seg->r = r;
-
+	
+	seg->a_tangent = cpvzero;
+	seg->b_tangent = cpvzero;
+	
 	cpShapeInit((cpShape *)seg, &cpSegmentShapeClass, body);
-
+	
 	return seg;
 }
 
@@ -362,32 +343,42 @@ CP_DefineShapeGetter(cpSegmentShape, cpVect, b, B)
 CP_DefineShapeGetter(cpSegmentShape, cpVect, n, Normal)
 CP_DefineShapeGetter(cpSegmentShape, cpFloat, r, Radius)
 
+void
+cpSegmentShapeSetNeighbors(cpShape *shape, cpVect prev, cpVect next)
+{
+	cpAssertHard(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
+	cpSegmentShape *seg = (cpSegmentShape *)shape;
+	
+	seg->a_tangent = cpvsub(prev, seg->a);
+	seg->b_tangent = cpvsub(next, seg->b);
+}
+
 // Unsafe API (chipmunk_unsafe.h)
 
 void
 cpCircleShapeSetRadius(cpShape *shape, cpFloat radius)
 {
-	cpAssert(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
+	cpAssertHard(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
 	cpCircleShape *circle = (cpCircleShape *)shape;
-
+	
 	circle->r = radius;
 }
 
 void
 cpCircleShapeSetOffset(cpShape *shape, cpVect offset)
 {
-	cpAssert(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
+	cpAssertHard(shape->klass == &cpCircleShapeClass, "Shape is not a circle shape.");
 	cpCircleShape *circle = (cpCircleShape *)shape;
-
+	
 	circle->c = offset;
 }
 
 void
 cpSegmentShapeSetEndpoints(cpShape *shape, cpVect a, cpVect b)
 {
-	cpAssert(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
+	cpAssertHard(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
-
+	
 	seg->a = a;
 	seg->b = b;
 	seg->n = cpvperp(cpvnormalize(cpvsub(b, a)));
@@ -396,8 +387,8 @@ cpSegmentShapeSetEndpoints(cpShape *shape, cpVect a, cpVect b)
 void
 cpSegmentShapeSetRadius(cpShape *shape, cpFloat radius)
 {
-	cpAssert(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
+	cpAssertHard(shape->klass == &cpSegmentShapeClass, "Shape is not a segment shape.");
 	cpSegmentShape *seg = (cpSegmentShape *)shape;
-
+	
 	seg->r = radius;
 }

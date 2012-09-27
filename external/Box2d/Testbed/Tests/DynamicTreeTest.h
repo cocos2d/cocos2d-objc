@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -25,7 +25,7 @@ public:
 
 	enum
 	{
-		e_actorCount = 128,
+		e_actorCount = 128
 	};
 
 	DynamicTreeTest()
@@ -124,6 +124,12 @@ public:
 			b2Color cr(0.2f, 0.2f, 0.9f);
 			b2Vec2 p = m_rayCastInput.p1 + m_rayActor->fraction * (m_rayCastInput.p2 - m_rayCastInput.p1);
 			m_debugDraw.DrawPoint(p, 6.0f, cr);
+		}
+
+		{
+			int32 height = m_tree.GetHeight();
+			m_debugDraw.DrawString(5, m_textLine, "dynamic tree height = %d", height);
+			m_textLine += 15;
 		}
 
 		++m_stepCount;

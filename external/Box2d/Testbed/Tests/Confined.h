@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -35,22 +35,22 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
+			b2EdgeShape shape;
 
 			// Floor
-			shape.SetAsEdge(b2Vec2(-10.0f, 0.0f), b2Vec2(10.0f, 0.0f));
+			shape.Set(b2Vec2(-10.0f, 0.0f), b2Vec2(10.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Left wall
-			shape.SetAsEdge(b2Vec2(-10.0f, 0.0f), b2Vec2(-10.0f, 20.0f));
+			shape.Set(b2Vec2(-10.0f, 0.0f), b2Vec2(-10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Right wall
-			shape.SetAsEdge(b2Vec2(10.0f, 0.0f), b2Vec2(10.0f, 20.0f));
+			shape.Set(b2Vec2(10.0f, 0.0f), b2Vec2(10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 
 			// Roof
-			shape.SetAsEdge(b2Vec2(-10.0f, 20.0f), b2Vec2(10.0f, 20.0f));
+			shape.Set(b2Vec2(-10.0f, 20.0f), b2Vec2(10.0f, 20.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 

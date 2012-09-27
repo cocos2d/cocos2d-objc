@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -55,8 +55,8 @@ public:
 		//sweepB.a -= 300.0f * b2_pi;
 
 		b2TOIInput input;
-		input.proxyA.Set(&m_shapeA);
-		input.proxyB.Set(&m_shapeB);
+		input.proxyA.Set(&m_shapeA, 0);
+		input.proxyB.Set(&m_shapeB, 0);
 		input.sweepA = sweepA;
 		input.sweepB = sweepB;
 		input.tMax = 1.0f;

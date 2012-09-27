@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2010 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2010 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -48,7 +48,7 @@ public:
 
 	enum
 	{
-		e_maxBodies = 256,
+		e_maxBodies = 256
 	};
 
 	EdgeShapes()
@@ -65,8 +65,8 @@ public:
 				float32 x2 = x1 + 0.5f;
 				float32 y2 = 2.0f * cosf(x2 / 10.0f * b2_pi);
 
-				b2PolygonShape shape;
-				shape.SetAsEdge(b2Vec2(x1, y1), b2Vec2(x2, y2));
+				b2EdgeShape shape;
+				shape.Set(b2Vec2(x1, y1), b2Vec2(x2, y2));
 				ground->CreateFixture(&shape, 0.0f);
 
 				x1 = x2;
@@ -92,8 +92,8 @@ public:
 
 		{
 			float32 w = 1.0f;
-			float32 b = w / (2.0f + sqrtf(2.0f));
-			float32 s = sqrtf(2.0f) * b;
+			float32 b = w / (2.0f + b2Sqrt(2.0f));
+			float32 s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
