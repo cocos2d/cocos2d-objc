@@ -2,6 +2,7 @@ version 1.1-rc0 ..-..-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
             warning for IOS5 bug for NPOT 16-bit textures
+            CCPhysicisSprite, CCDrawNode, CCPhysicsDebugNode
 . [NEW] CCFileUtils: iPhone5 support with new suffix
 . [NEW] ProgressTimer: conforms to CCRGBAProtocol, action like FadeIn/Out can now run on the timer
 . [NEW] Macros: made CCLOG a bit more verbose

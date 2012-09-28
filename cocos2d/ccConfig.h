@@ -277,6 +277,25 @@
 #define CC_LABELATLAS_DEBUG_DRAW 0
 #endif
 
+/** enable this flag to use CCPhysicisSprite with chipmunk 
+ If this is enabled in a project without chipmunk, then there will be build errors 
+ */
+/*
+#ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
+#define CC_ENABLE_CHIPMUNK_INTEGRATION 1
+#endif
+*/
+
+/** enable this flag to use CCPhysicisSprite with box2D, comment out the chipmunk flag 
+  If this is enabled in a project without box2D, then there will be build errors
+ */
+/*
+ #ifndef CC_ENABLE_BOX2D_INTEGRATION
+ #define CC_ENABLE_BOX2D_INTEGRATION 1
+ #endif
+ */
+
+
 /** @def CC_ENABLE_PROFILERS
  If enabled, will activate various profilers withing cocos2d. This statistical data will be output to the console
  once per second showing average time (in milliseconds) required to execute the specific routine(s).

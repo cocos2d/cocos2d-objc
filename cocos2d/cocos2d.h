@@ -120,6 +120,12 @@
 #import "ccTypes.h"
 #import "ccMacros.h"
 
+//
+// physics support
+//
+#import "CCDrawNode.h"
+#import "CCPhysicsDebugNode.h"
+#import "CCPhysicsSprite.h"
 
 // Platform common
 #import "Platforms/CCGL.h"

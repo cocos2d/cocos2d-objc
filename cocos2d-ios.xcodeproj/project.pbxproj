@@ -1650,6 +1650,12 @@
 		65D4C004160776C20052FCFD /* grossini_dance_11.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33280FBADD5F00D574A2 /* grossini_dance_11.png */; };
 		65D4C005160776C20052FCFD /* grossini_dance_12.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33290FBADD5F00D574A2 /* grossini_dance_12.png */; };
 		65D4C006160776C20052FCFD /* grossini_dance_13.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */; };
+		65F8F3F31615E85100F6DBFF /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F8F3ED1615E85100F6DBFF /* CCDrawNode.h */; };
+		65F8F3F41615E85100F6DBFF /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F8F3EE1615E85100F6DBFF /* CCDrawNode.m */; };
+		65F8F3F51615E85100F6DBFF /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F8F3EF1615E85100F6DBFF /* CCPhysicsDebugNode.h */; };
+		65F8F3F61615E85100F6DBFF /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */; };
+		65F8F3F71615E85100F6DBFF /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */; };
+		65F8F3F81615E85100F6DBFF /* CCPhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -4821,6 +4827,12 @@
 		657F1150150BA75D0047F93C /* PerformanceDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceDispatcher.m; sourceTree = "<group>"; };
 		65D4BFF5160775410052FCFD /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewController.h; path = DirectorTest/ScrollViewController.h; sourceTree = "<group>"; };
 		65D4BFF6160775410052FCFD /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewController.m; path = DirectorTest/ScrollViewController.m; sourceTree = "<group>"; };
+		65F8F3ED1615E85100F6DBFF /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
+		65F8F3EE1615E85100F6DBFF /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
+		65F8F3EF1615E85100F6DBFF /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
+		65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
+		65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
+		65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -6264,6 +6276,7 @@
 		5018F2510DFDEAFF00C013A5 /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
+				65F8F3EB1615E83200F6DBFF /* Physics Nodes */,
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
@@ -7678,6 +7691,19 @@
 			name = DirectorTest;
 			sourceTree = "<group>";
 		};
+		65F8F3EB1615E83200F6DBFF /* Physics Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				65F8F3ED1615E85100F6DBFF /* CCDrawNode.h */,
+				65F8F3EE1615E85100F6DBFF /* CCDrawNode.m */,
+				65F8F3EF1615E85100F6DBFF /* CCPhysicsDebugNode.h */,
+				65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */,
+				65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */,
+				65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */,
+			);
+			name = "Physics Nodes";
+			sourceTree = "<group>";
+		};
 		8EDF3E8D0F6BD8CD00F54643 /* sfx */ = {
 			isa = PBXGroup;
 			children = (
@@ -7941,6 +7967,9 @@
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				A0EF0A111443725B006A4302 /* CCParticleBatchNode.h in Headers */,
+				65F8F3F31615E85100F6DBFF /* CCDrawNode.h in Headers */,
+				65F8F3F51615E85100F6DBFF /* CCPhysicsDebugNode.h in Headers */,
+				65F8F3F71615E85100F6DBFF /* CCPhysicsSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -12155,6 +12184,9 @@
 				E02BB6D7126CA93A006E46A2 /* CCAnimationCache.m in Sources */,
 				E02BB705126CADEA006E46A2 /* CCAnimation.m in Sources */,
 				A0EF0A121443725B006A4302 /* CCParticleBatchNode.m in Sources */,
+				65F8F3F41615E85100F6DBFF /* CCDrawNode.m in Sources */,
+				65F8F3F61615E85100F6DBFF /* CCPhysicsDebugNode.m in Sources */,
+				65F8F3F81615E85100F6DBFF /* CCPhysicsSprite.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

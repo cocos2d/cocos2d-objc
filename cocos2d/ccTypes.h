@@ -134,6 +134,14 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
+/** returns 4B color
+ @since 1.1.RC0
+ */
+static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+{
+	return (ccColor4B){c.r*255.f, c.g*255.f, c.b*255.f, c.a*255.f};
+}
+
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8
  */
@@ -238,6 +246,15 @@ typedef struct _ccV3F_C4B_T2F
 	// tex coords (2F)
 	ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
+
+//! ccVertex2FTex2FColor4B triangle
+typedef struct __ccV2F_C4B_T2F_Triangle
+{
+    ccV2F_C4B_T2F a;
+    ccV2F_C4B_T2F b;
+    ccV2F_C4B_T2F c;
+    
+} ccV2F_C4B_T2F_Triangle;
 
 //! 4 ccVertex2FTex2FColor4B Quad
 typedef struct _ccV2F_C4B_T2F_Quad
