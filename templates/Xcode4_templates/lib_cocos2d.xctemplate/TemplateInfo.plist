@@ -1313,6 +1313,75 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+				<key>libs/cocos2d/CCDrawNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+					<key>libs/cocos2d/CCDrawNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.m</string>
+			<array/>
+		</dict>
+				<key>libs/cocos2d/CCPhysicsSprite.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+				<key>libs/cocos2d/CCPhysicsSprite.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.mm</string>
+			<array/>
+		</dict>
+				<key>libs/cocos2d/CCPhysicsDebugNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+				<key>libs/cocos2d/CCPhysicsDebugNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
+			<array/>
+		</dict>
 		<key>libs/cocos2d/cocos2d.h</key>
 		<dict>
 			<key>Group</key>
@@ -2049,6 +2118,12 @@
 		<string>libs/cocos2d/CCTransitionRadial.h</string>
 		<string>libs/cocos2d/CCTransitionRadial.m</string>
 		<string>libs/cocos2d/ccTypes.h</string>
+		<string>libs/cocos2d/CCDrawNode.h</string>
+		<string>libs/cocos2d/CCDrawNode.m</string>		
+		<string>libs/cocos2d/CCPhysicsSprite.h</string>
+		<string>libs/cocos2d/CCPhysicsSprite.mm</string>		
+		<string>libs/cocos2d/CCPhysicsDebugNode.h</string>		
+		<string>libs/cocos2d/CCPhysicsDebugNode.m</string>				
 		<string>libs/cocos2d/cocos2d.h</string>
 		<string>libs/cocos2d/cocos2d.m</string>
 		<string>libs/cocos2d/Platforms/CCGL.h</string>

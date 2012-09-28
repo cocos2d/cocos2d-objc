@@ -64,8 +64,9 @@ enum {
 		bool doSleep = true;
 		
 		// Construct a world object, which will hold and simulate the rigid bodies.
-		world = new b2World(gravity, doSleep);
+		world = new b2World(gravity);
 		
+		world->SetAllowSleeping = doSleep; 
 		world->SetContinuousPhysics(true);
 		
 		// Debug Draw functions
@@ -73,11 +74,11 @@ enum {
 		world->SetDebugDraw(m_debugDraw);
 		
 		uint32 flags = 0;
-		flags += b2DebugDraw::e_shapeBit;
-//		flags += b2DebugDraw::e_jointBit;
-//		flags += b2DebugDraw::e_aabbBit;
-//		flags += b2DebugDraw::e_pairBit;
-//		flags += b2DebugDraw::e_centerOfMassBit;
+		flags += b2Draw::e_shapeBit;
+//		flags += b2Draw::e_jointBit;
+//		flags += b2Draw::e_aabbBit;
+//		flags += b2Draw::e_pairBit;
+//		flags += b2Draw::e_centerOfMassBit;
 		m_debugDraw->SetFlags(flags);		
 		
 		

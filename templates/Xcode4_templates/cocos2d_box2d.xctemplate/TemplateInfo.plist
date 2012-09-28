@@ -8,7 +8,6 @@
 		<string>com.cocos2d.iosbase</string>
 		<string>com.cocos2d.cocos2dlib</string>
 		<string>com.cocos2d.cocosdenshionlib</string>
-		<string>com.cocos2d.cocoslivelib</string>
 		<string>com.cocos2d.fontlabellib</string>
 		<string>com.cocos2d.box2dlib</string>
 	</array>

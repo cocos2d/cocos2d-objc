@@ -143,10 +143,6 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 
 
 @implementation CCPhysicsDebugNode
-{
-	ChipmunkSpace *_spaceObj;
-	cpSpace *_spacePtr;
-}
 
 -(void) draw;
 {

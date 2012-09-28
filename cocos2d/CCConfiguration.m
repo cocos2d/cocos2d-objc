@@ -72,14 +72,48 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (NSString*)getMacVersion
 {
+    //not going to fix these deprecated warnings, will wait till apple really confirms new method
+    //http://stackoverflow.com/questions/11072804/mac-os-x-10-8-replacement-for-gestalt-for-testing-os-version-at-runtime
     SInt32 versionMajor, versionMinor, versionBugFix;
 	Gestalt(gestaltSystemVersionMajor, &versionMajor);
 	Gestalt(gestaltSystemVersionMinor, &versionMinor);
 	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-
+    
+    //new code for plist reading
+    /*
+     // sensible default
+     static int mMajor = 10;
+     static int mMinor = 8;
+     static int mBugfix = 0;
+     
+     static dispatch_once_t onceToken;
+     dispatch_once(&onceToken, ^{
+     NSString* versionString = [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"];
+     NSArray* versions = [versionString componentsSeparatedByString:@"."];
+     check( versions.count >= 2 );
+     if ( versions.count >= 1 ) {
+     mMajor = [versions[0] integerValue];
+     }
+     if ( versions.count >= 2 ) {
+     mMinor = [versions[1] integerValue];
+     }
+     if ( versions.count >= 3 ) {
+     mBugfix = [versions[2] integerValue];
+     }
+     });
+     
+     versionMajor = mMajor;
+     versionMinor = mMinor;
+     versionBugFix = mBugfix;
+     */
+    
     //ignore warning Sint32 is signed long
+#ifdef __LP64__
+    return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+#else
     return [NSString stringWithFormat:@"%ld.%ld.%ld", versionMajor, versionMinor, versionBugFix];
-
+#endif
+    
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
