@@ -1334,7 +1334,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCDrawNode.m</string>
-			<array/>
 		</dict>
 				<key>libs/cocos2d/CCPhysicsSprite.h</key>
 		<dict>
@@ -1357,7 +1356,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCPhysicsSprite.mm</string>
-			<array/>
 		</dict>
 				<key>libs/cocos2d/CCPhysicsDebugNode.h</key>
 		<dict>
@@ -1380,7 +1378,6 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
-			<array/>
 		</dict>
 		<key>libs/cocos2d/cocos2d.h</key>
 		<dict>
