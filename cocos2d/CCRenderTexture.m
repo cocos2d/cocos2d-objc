@@ -161,7 +161,12 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	
-	// Save the current matrix
+    // Save the current Projection matrix
+    kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPushMatrix();
+    
+    // Save the current ModelView matrix
+    kmGLMatrixMode(KM_GL_MODELVIEW);
 	kmGLPushMatrix();
 
 	CGSize texSize = [texture_ contentSizeInPixels];
@@ -245,21 +250,22 @@
 -(void)end
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
-
-	kmGLPopMatrix();
-
 	CGSize size = [director winSizeInPixels];
 
 	// restore viewport
 	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
 
 	// special viewport for 3d projection + retina display
-	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 )
+	if ( director.projection == kCCDirectorProjection3D && CC_CONTENT_SCALE_FACTOR() != 1 ) {
 		glViewport(-size.width/2, -size.height/2, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-	
-	[director setProjection:director.projection];	
+    }
+    
+    kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPopMatrix();
+    
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLPopMatrix();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a

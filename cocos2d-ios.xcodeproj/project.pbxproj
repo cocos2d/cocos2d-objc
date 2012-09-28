@@ -3931,6 +3931,9 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		E6FF7D9A1615977400356538 /* SimpleSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = E6FF7D981615977400356538 /* SimpleSprite.h */; };
+		E6FF7D9B1615977400356538 /* SimpleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7D991615977400356538 /* SimpleSprite.m */; };
+		E6FF7D9D161598E500356538 /* SimpleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7D991615977400356538 /* SimpleSprite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -6070,6 +6073,8 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		E6FF7D981615977400356538 /* SimpleSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleSprite.h; sourceTree = "<group>"; };
+		E6FF7D991615977400356538 /* SimpleSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleSprite.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -7966,6 +7971,8 @@
 				A0980F3514B92C5E004812AD /* ActionsEaseTest.h */,
 				A0980F3614B92C5E004812AD /* ActionsEaseTest.m */,
 				A0980F3714B92C5E004812AD /* ActionsProgressTest.h */,
+				E6FF7D981615977400356538 /* SimpleSprite.h */,
+				E6FF7D991615977400356538 /* SimpleSprite.m */,
 				A0980F3814B92C5E004812AD /* ActionsProgressTest.m */,
 				50C93AC30E0BF8FC00517B01 /* ActionsTest.h */,
 				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
@@ -9559,6 +9566,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9A1615977400356538 /* SimpleSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14052,6 +14060,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9D161598E500356538 /* SimpleSprite.m in Sources */,
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
 				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
 				A0D3A91C149D2FAE0077CD93 /* BaseAppController.m in Sources */,
@@ -14477,6 +14486,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9B1615977400356538 /* SimpleSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
