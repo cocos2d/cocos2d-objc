@@ -1223,7 +1223,7 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	var k = 1; //k_scalar_body(body, r, cp.v.normalize_safe(v_centroid));
 	var damping = clippedArea*FLUID_DRAG*FLUID_DENSITY;
 	var v_coef = Math.exp(-damping*dt*k); // linear drag
-//	cpFloat v_coef = 1.0/(1.0 + damping*dt*cpvlength(v_centroid)*k); // quadratic drag
+//	var v_coef = 1.0/(1.0 + damping*dt*cp.v.len(v_centroid)*k); // quadratic drag
 	body.applyImpulse( cp.v.mult(cp.v.sub(cp.v.mult(v_centroid, v_coef), v_centroid), 1.0/k), r);
 	
 	// Apply angular damping for the fluid drag.
@@ -1233,12 +1233,117 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	return true;
 };
 
+//------------------------------------------------------------------
+//
+// Planet
+//
+//------------------------------------------------------------------
+
+var Planet = function() {
+	goog.base(this);
+	this.title = 'Chipmunk Demo';
+	this.subtitle = 'Planet';
+
+	var space = this.space;
+
+	// global
+	this.gravityStrength = 5.0e6;
+
+	// Create a rouge body to control the planet manually.
+	var planetBody = this.planetBody = new cp.BodyStatic();
+	planetBody.setAngVel(0.2);
+	planetBody.setPos( centerPos );
+	
+	space.iterations = 20;
+	
+	for(var i=0; i<30; i++)
+		this.add_box();
+	
+	var shape = space.addShape(new cp.CircleShape(planetBody, 70.0, cp.vzero));
+	shape.setElasticity(1.0);
+	shape.setFriction(1.0);
+	shape.setLayers(NOT_GRABABLE_MASK);
+};
+goog.inherits( Planet, ChipmunkDemo );
+
+Planet.prototype.update = function(dt)
+{
+	var steps = 1;
+	dt /= steps;
+	for (var i = 0; i < 3; i++){
+		this.space.step(dt);
+
+		// Update the static body spin so that it looks like it's rotating.
+		this.planetBody.updatePosition(dt);
+	}
+};
+
+Planet.prototype.planetGravityVelocityFunc = function(body, gravity, damping, dt)
+{
+	// Gravitational acceleration is proportional to the inverse square of
+	// distance, and directed toward the origin. The central planet is assumed
+	// to be massive enough that it affects the satellites but not vice versa.
+	var p = body.getPos();
+	var sqdist = cp.v.lengthsq(p);
+	var g = cp.v.mult(p, -this.gravityStrength / (sqdist * Math.sqrt(sqdist)));
+	
+	body.updateVelocity(g, damping, dt);
+};
+
+
+Planet.prototype.rand_pos = function(radius)
+{
+	var v;
+	do {
+		v = cp.v(Math.random()*(640 - 2*radius) - (320 - radius), Math.random()*(480 - 2*radius) - (240 - radius));
+	} while(cp.v.len(v) < 85.0);
+	
+	return v;
+};
+
+
+Planet.prototype.add_box = function()
+{
+	var size = 10.0;
+	var mass = 1.0;
+	
+	var verts = [
+		-size,-size,
+		-size, size,
+		size, size,
+		size,-size
+	];
+	
+	var radius = cp.v.len(cp.v(size, size));
+	var pos = this.rand_pos(radius);
+	
+	var body = this.space.addBody( new cp.Body(mass, cp.momentForPoly(mass, verts, cp.vzero)));
+	body.velocity_func = this.planetGravityVelocityFunc;
+	body.setPos( cp.v.add(pos, centerPos));
+
+	// Set the box's velocity to put it into a circular orbit from its
+	// starting position.
+	var r = cp.v.len(pos);
+	var v = Math.sqrt(this.gravityStrength / r) / r;
+	body.setVel( cp.v.mult(cp.v.perp(pos), v));
+
+	// Set the box's angular velocity to match its orbital period and
+	// align its initial angle with its position.
+	body.setAngVel(v);
+	body.setAngle( Math.atan2(pos.y, pos.x));
+
+	var shape = this.space.addShape( new cp.PolyShape(body, verts, cp.vzero));
+	shape.setElasticity(0.0);
+	shape.setFriction(0.7);
+};
+
 
 //
 // Order of tests
 //
 
 // Chipmunk Demos
+scenes.push( Planet );
 scenes.push( Buoyancy );
 scenes.push( PyramidStack );
 scenes.push( PyramidTopple );
