@@ -138,9 +138,9 @@ BaseLayer.prototype.onEnter = function() {
 	}
 
     // Menu
-    var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.backCallback);
-    var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.restartCallback);
-    var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.nextCallback);
+    var item1 = cc.MenuItemImage.create("b1.png", "b2.png", this, this.onBackCallback);
+    var item2 = cc.MenuItemImage.create("r1.png", "r2.png", this, this.onRestartCallback);
+    var item3 = cc.MenuItemImage.create("f1.png", "f2.png", this, this.onNextCallback);
     var item4 = cc.MenuItemFont.create("back", this, function() { require("js/main.js"); } );
     item4.setFontSize( 22 );
 
@@ -155,18 +155,25 @@ BaseLayer.prototype.onEnter = function() {
 	this.addChild(menu, 1);
 };
 
-BaseLayer.prototype.restartCallback = function (sender) {
+BaseLayer.prototype.onCleanup = function() {
+	// Not compulsory, but recommended: cleanup the scene
+	this.unscheduleUpdate();
+};
+
+BaseLayer.prototype.onRestartCallback = function (sender) {
+	this.onCleanup();
     restartSpriteTestAction();
 };
 
-BaseLayer.prototype.nextCallback = function (sender) {
+BaseLayer.prototype.onNextCallback = function (sender) {
+	this.onCleanup();
     nextSpriteTestAction();
 };
 
-BaseLayer.prototype.backCallback = function (sender) {
+BaseLayer.prototype.onBackCallback = function (sender) {
+	this.onCleanup();
     backSpriteTestAction();
 };
-
 
 //------------------------------------------------------------------
 //
@@ -1146,7 +1153,7 @@ var Buoyancy = function() {
 		shape.setFriction(0.8);
 	// }
 	
-	space.addCollisionHandler( 1, 0, null, this.waterPreSolve.bind(this), null, null);
+	space.addCollisionHandler( 1, 0, null, this.waterPreSolve, null, null);
 };
 goog.inherits( Buoyancy, ChipmunkDemo );
 
@@ -1205,8 +1212,8 @@ Buoyancy.prototype.waterPreSolve = function(arb, space, ptr) {
 	var centroid = cp.centroidForPoly(clipped);
 	var r = cp.v.sub(centroid, body.getPos());
 
-	var dt = this.space.getCurrentTimeStep();
-	var g = this.space.gravity;
+	var dt = space.getCurrentTimeStep();
+	var g = space.gravity;
 	
 	// Apply the buoyancy force as an impulse.
 	body.applyImpulse( cp.v.mult(g, -displacedMass*dt), r);
