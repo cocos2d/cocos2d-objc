@@ -251,7 +251,7 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
-	CGSize size = [director winSizeInPixels];
+	CGSize size = [director winSize];
 
 	// restore viewport
 	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );

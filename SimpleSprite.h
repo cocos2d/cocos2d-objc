@@ -14,6 +14,6 @@
     CCRenderTexture * rt;
 }
 
-@property (nonatomic, readwrite) BOOL disableFix;
+@property (nonatomic, readwrite) BOOL enableFix;
 
 @end
