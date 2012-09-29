@@ -45,7 +45,7 @@
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
 
 	// Turn on display FPS
-	[director setDisplayFPS:YES];
+	[director setDisplayFPS:NO];
 
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if ([UIScreen instancesRespondToSelector:@selector(scale)])
