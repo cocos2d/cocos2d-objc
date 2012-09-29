@@ -27,23 +27,6 @@
 }
 */
 
--(void)viewWillAppear:(BOOL)animated {
-
-    //there are no subviews
-    /*
-	for (UIView *view in self.view.subviews) {
-		if ([view isKindOfClass:[EAGLView class]]) {
-
-			// weak reference
-			glView = (EAGLView *) view;
-			break;
-		}
-	}
-    */
-    glView = (EAGLView*) self.view;
-}
-
-
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
@@ -57,27 +40,22 @@
 	return YES;
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	CGRect rect = CGRectMake(0,0,0,0);
-	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 768, 1024);
-		else
-			rect = CGRectMake(0, 0, 320, 480 );
-
-	} else if( UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 1024, 768);
-		else
-			rect = CGRectMake(0, 0, 480, 320 );
-	} else
-		NSAssert(NO, @"Invalid orientation");
-
-	glView.frame = rect;
-
+-(NSUInteger)supportedInterfaceOrientations{
+    //Modify for supported orientations, put your masks here
+    return UIInterfaceOrientationMaskLandscape;
 }
+
+
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+
+#endif
+#endif
+
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -91,9 +69,6 @@
     // e.g. self.myOutlet = nil;
 
     [super viewDidUnload];
-
-	// invalidate weak reference
-	glView = nil;
 }
 
 
