@@ -13,9 +13,7 @@
 
 -(void) draw
 {
-    // temp var to store transformation matrix
-    //kmMat4 currMtx;
-    if(!self.disableFix) {
+    if(self.enableFix) {
         kmGLPushMatrix(); //Save the current matrix.
     }
     
@@ -26,7 +24,7 @@
     [rt beginWithClear:0.0f g:0.0f b:0.0f a:1.0f];
     [rt end];
     
-    if(!self.disableFix) {
+    if(self.enableFix) {
         kmGLPopMatrix(); //Restore the current matrix.
     }
     

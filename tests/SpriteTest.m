@@ -221,21 +221,21 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
         
-        
         [CCMenuItemFont setFontName: @"Marker Felt"];
-		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Disable fix" block:^(id sender) {
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Enable fix" block:^(id sender) {
             
             NSArray* sprArr = [self.children getNSArray];
             for(id s in sprArr) {
-                if( [s respondsToSelector:@selector(setDisableFix:)] ) {
+                if( [s respondsToSelector:@selector(setEnableFix:)] ) {
                     SimpleSprite * sp = s;
-                    sp.disableFix = !sp.disableFix;
+                    sp.enableFix = !sp.enableFix;
                 }
             }
 		}];
+        item.fontSize = 16;
         
         CCMenu * menu = [CCMenu menuWithItems:item, nil];
-        menu.position = ccp(s.width/2, s.height * 0.8f);
+        menu.position = ccp(s.width/2, s.height * 0.75f);
         
         [self addChild:menu];
 	}
@@ -252,7 +252,9 @@ Class restartAction()
 	SimpleSprite *sprite = [SimpleSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
 	[self addChild:sprite];
     
-    sprite.disableFix = FALSE;
+    if( [sprite respondsToSelector:@selector(setEnableFix:)] ) {
+        sprite.enableFix = FALSE;
+    }
 	sprite.position = p;
     
 	id action;
