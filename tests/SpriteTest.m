@@ -222,9 +222,9 @@ Class restartAction()
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
         
         [CCMenuItemFont setFontName: @"Marker Felt"];
+        NSArray* sprArr = [self.children getNSArray];
+        
 		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Enable fix" block:^(id sender) {
-            
-            NSArray* sprArr = [self.children getNSArray];
             for(id s in sprArr) {
                 if( [s respondsToSelector:@selector(setEnableFix:)] ) {
                     SimpleSprite * sp = s;
