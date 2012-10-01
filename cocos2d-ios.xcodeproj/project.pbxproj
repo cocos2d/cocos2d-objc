@@ -15794,6 +15794,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
+				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
