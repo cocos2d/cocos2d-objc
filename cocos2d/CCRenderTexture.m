@@ -168,6 +168,8 @@
     // Save the current ModelView matrix
     kmGLMatrixMode(KM_GL_MODELVIEW);
 	kmGLPushMatrix();
+    kmGLLoadIdentity();
+    
 
 	CGSize texSize = [texture_ contentSizeInPixels];
 
