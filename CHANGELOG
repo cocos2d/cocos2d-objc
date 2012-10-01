@@ -4,6 +4,7 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)
 . [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
+		Fixed some grammar errors
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
 		Add new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
