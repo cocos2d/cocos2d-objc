@@ -134,7 +134,7 @@ var LongLongTest = function() {
     if( t == 'desktop' ) {
 		var str = '3';
 		var ret = '0';
-		for( var i=0; i < 4; i++) {
+		for( var i=0; i < 10; i++) {
 			ret = cc.nextPOT(str);
 			cc.log("POT number: " + str + " -> " + ret);
 
