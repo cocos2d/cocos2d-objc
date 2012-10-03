@@ -8,6 +8,8 @@
 
 require("jsb_constants.js");
 
+require("SpriteTest.js");
+
 director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
@@ -147,7 +149,9 @@ MainTest = BaseLayer.extend({
         var item8 = cc.MenuItemFont.create("Parallax Tests", this, function() { require("js/test-parallax.js"); } );
         var item9 = cc.MenuItemFont.create("Particle Tests", this, function() { require("js/test-particles.js"); } );
         var item10 = cc.MenuItemFont.create("RenderTexture Tests", this, function() { require("js/test-rendertexture.js"); } );
-        var item11 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("js/test-sprite.js"); } );
+        var item11 = cc.MenuItemFont.create("Sprite Tests", this, function() {
+            SpriteTestScene.runThisTest();
+        } );
         var item12 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("js/test-tilemap.js"); } );
         var item13 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("js/test-cocosdenshion.js"); } );
         var item14 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("js/test-cocos2djs.js"); } );
