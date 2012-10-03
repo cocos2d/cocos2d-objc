@@ -250,10 +250,9 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
-	CGSize size = [director winSizeInPixels];
 
 	// restore viewport
-	glViewport(0, 0, size.width, size.height );
+	[director setViewport];
     
     kmGLMatrixMode(KM_GL_PROJECTION);
     kmGLPopMatrix();
