@@ -179,6 +179,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			*resolutionType = kCCResolutioniPad;
 
 		}
+        
+        if (!ret)
+            CCLOG(@"could not find image with iPad suffix for %@, switching to iPhone version",relPath); 
 	}
 	// iPhone ?
 	else
@@ -189,7 +192,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
          ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
          *resolutionType = kCCResolutioniPhoneFourInchDisplay;
         }
-
 
 		// Retina Display ?
 		if(!ret && CC_CONTENT_SCALE_FACTOR() == 2 ) {
