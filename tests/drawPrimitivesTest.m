@@ -13,6 +13,7 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 			@"Test1",
+            @"Test2",
 };
 
 Class nextAction(void);
@@ -115,7 +116,7 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
-	[self newOrientation];
+	//[self newOrientation];
 
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
@@ -124,7 +125,7 @@ Class restartAction()
 
 -(void) backCallback: (id) sender
 {
-	[self newOrientation];
+	//[self newOrientation];
 
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
@@ -242,6 +243,116 @@ Class restartAction()
 }
 @end
 
+#pragma mark -
+#pragma mark Drawing Primitives Test 1
+
+@implementation Test2
+//
+// TIP:
+// Every CocosNode has a "draw" method.
+// In the "draw" method you put all the code that actually draws your node.
+// And Test1 is a subclass of TestDemo, which is a subclass of Layer, which is a subclass of CocosNode.
+//
+// As you can see the drawing primitives aren't CocosNode objects. They are just helper
+// functions that let's you draw basic things like: points, line, polygons and circles.
+//
+//
+// TIP:
+// Don't draw your stuff outide the "draw" method. Otherwise it wont get transformed.
+//
+//
+// TIP:
+// If you want to rotate/translate/scale a circle or any other "primtive", you can do it by rotating
+// the node. eg:
+//    self.rotation = 90;
+//
+-(void) draw
+{
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    
+    
+	// draw a simple line
+	// The default state is:
+	// Line Width: 1
+	// color: 255,255,255,255 (white, non-transparent)
+	// Anti-Aliased
+	glEnable(GL_LINE_SMOOTH);
+	ccDrawLineInPixels( ccp(0, 0), ccp(s.width, s.height), YES);
+    
+	// line: color, width, aliased
+	// glLineWidth > 1 and GL_LINE_SMOOTH are not compatible
+	// GL_SMOOTH_LINE_WIDTH_RANGE = (1,1) on iPhone
+	glDisable(GL_LINE_SMOOTH);
+	glLineWidth( 5.0f );
+	glColor4ub(255,0,0,255);
+	ccDrawLineInPixels( ccp(0, s.height), ccp(s.width, 0), YES );
+    
+	// TIP:
+	// If you are going to use always the same color or width, you don't
+	// need to call it before every draw
+	//
+	// Remember: OpenGL is a state-machine.
+    
+	// draw big point in the center
+	glPointSize(64);
+	glColor4ub(0,0,255,128);
+	ccDrawPointInPixels( ccp(s.width / 2, s.height / 2), YES );
+    
+	// draw 4 small points
+	CGPoint points[] = { ccp(60,60), ccp(70,70), ccp(60,70), ccp(70,60) };
+	glPointSize(4);
+	glColor4ub(0,255,255,255);
+	ccDrawPointsInPixels( points, 4, YES);
+    
+	// draw a green circle with 10 segments
+	glLineWidth(16);
+	glColor4ub(0, 255, 0, 255);
+	ccDrawCircleInPixels( ccp(s.width/2,  s.height/2), 100, 0, 10, NO,YES);
+    
+	// draw a green circle with 50 segments with line to center
+	glLineWidth(2);
+	glColor4ub(0, 255, 255, 255);
+	ccDrawCircleInPixels( ccp(s.width/2, s.height/2), 50, CC_DEGREES_TO_RADIANS(90), 50, YES, YES);
+    
+	// open yellow poly
+	glColor4ub(255, 255, 0, 255);
+	glLineWidth(10);
+	CGPoint vertices[] = { ccp(0,0), ccp(50,50), ccp(100,50), ccp(100,100), ccp(50,100) };
+	ccDrawPolyInPixels( vertices, 5, NO, YES);
+    
+	// closed purble poly
+	glColor4ub(255, 0, 255, 255);
+	glLineWidth(2);
+	CGPoint vertices2[] = { ccp(30,130), ccp(30,230), ccp(50,200) };
+	ccDrawPolyInPixels( vertices2, 3, YES,YES);
+    
+	// draw quad bezier path
+	ccDrawQuadBezierInPixels(ccp(0,s.height), ccp(s.width/2,s.height/2), ccp(s.width,s.height), 50,YES);
+    
+	// draw cubic bezier path
+	ccDrawCubicBezierInPixels(ccp(s.width/2, s.height/2), ccp(s.width/2+30,s.height/2+50), ccp(s.width/2+60,s.height/2-50),ccp(s.width, s.height/2),100, YES);
+    
+    CGPoint vertices3[] = {ccp(60,160), ccp(70,190), ccp(100,190), ccp(90,160)};
+    
+    //draw a solid polygon
+    ccDrawSolidPolyInPixels( vertices3, 4, YES, YES );
+    
+	// restore original values
+	glLineWidth(1);
+	glColor4ub(255,255,255,255);
+	glPointSize(1);
+}
+-(NSString *) title
+{
+	return @"draw primitives in pixels";
+}
+
+-(NSString *) subtitle
+{
+	return @"looks smaller on retina";
+}
+@end
+
 // CLASS IMPLEMENTATIONS
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -288,6 +399,7 @@ Class restartAction()
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPhoneFourInchDisplaySuffix:@"-528h"];	// Default on iPhone RetinaFourInchDisplay is "-528h"    
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
