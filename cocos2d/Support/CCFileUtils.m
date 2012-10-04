@@ -281,7 +281,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	__suffixiPhoneRetinaDisplay = [suffix copy];
 }
 
-+(void) setIphoneFourInchDisplaySuffix:(NSString*) suffix
++(void) setiPhoneFourInchDisplaySuffix:(NSString*) suffix
 {
     [__suffixiPhoneFourInchDisplay release];
     __suffixiPhoneFourInchDisplay = [suffix copy];

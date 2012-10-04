@@ -82,7 +82,7 @@
 
  @since v1.1RC0
  */
-+(void) setIphoneFourInchDisplaySuffix:(NSString*) suffix;
++(void) setiPhoneFourInchDisplaySuffix:(NSString*) suffix;
 
 /** Sets the iPhone RetinaDisplay suffix to load resources.
  By default it is "-hd".
