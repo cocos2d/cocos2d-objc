@@ -181,7 +181,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		}
         
         if (!ret)
-            CCLOG(@"could not find image with iPad suffix for %@, switching to iPhone version",relPath); 
+            CCLOG(@"could not find image with iPad suffix for %@, switching to iPhone version (no suffix)",relPath); 
 	}
 	// iPhone ?
 	else
@@ -189,8 +189,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
         //four inch support here, UIScreen size always in portrait and in points
         if ([[UIScreen mainScreen] bounds].size.height == 1136/2)
         {
-         ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
-         *resolutionType = kCCResolutioniPhoneFourInchDisplay;
+            ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
+            *resolutionType = kCCResolutioniPhoneFourInchDisplay;
         }
 
 		// Retina Display ?
