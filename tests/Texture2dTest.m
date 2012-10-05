@@ -1815,7 +1815,8 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Texture should load and replace existing sprite texture";
+//	return @"Texture should load and replace existing sprite texture.";
+	return @"This bug cannot be reproduce in this context.";
 }
 @end
 
