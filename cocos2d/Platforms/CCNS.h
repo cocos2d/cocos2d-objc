@@ -39,19 +39,38 @@
 #define CCNSSizeToCGSize
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
-#define CCTextAlignment				UITextAlignment
-#define CCTextAlignmentCenter		UITextAlignmentCenter
-#define CCTextAlignmentLeft			UITextAlignmentLeft
-#define CCTextAlignmentRight		UITextAlignmentRight
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+
+#define CCLineBreakMode				NSLineBreakMode
+#define CCLineBreakModeWordWrap		NSLineBreakByWordWrapping
+#define CCLineBreakModeCharacterWrap	NSLineBreakByCharWrapping
+#define CCLineBreakModeClip             NSLineBreakByClipping
+#define CCLineBreakModeHeadTruncation	NSLineBreakByTruncatingHead
+#define CCLineBreakModeTailTruncation	NSLineBreakByTruncatingTail
+#define CCLineBreakModeMiddleTruncation	NSLineBreakByTruncatingMiddle
+
+#define CCTextAlignment				NSTextAlignment
+#define CCTextAlignmentCenter		NSTextAlignmentCenter
+#define CCTextAlignmentLeft			NSTextAlignmentLeft
+#define CCTextAlignmentRight		NSTextAlignmentRight
+
+#else
+
 #define CCLineBreakMode				UILineBreakMode
 #define CCLineBreakModeWordWrap		UILineBreakModeWordWrap
 #define CCLineBreakModeCharacterWrap	UILineBreakModeCharacterWrap
-#define CCLineBreakModeClip			UILineBreakModeClip
+#define CCLineBreakModeClip             UILineBreakModeClip
 #define CCLineBreakModeHeadTruncation	UILineBreakModeHeadTruncation
 #define CCLineBreakModeTailTruncation	UILineBreakModeTailTruncation
 #define CCLineBreakModeMiddleTruncation	UILineBreakModeMiddleTruncation
 
+#define CCTextAlignment				UITextAlignment
+#define CCTextAlignmentCenter		UITextAlignmentCenter
+#define CCTextAlignmentLeft			UITextAlignmentLeft
+#define CCTextAlignmentRight		UITextAlignmentRight
 
+#endif
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
