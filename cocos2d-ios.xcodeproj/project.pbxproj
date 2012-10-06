@@ -3977,19 +3977,19 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
-		E380BFE0161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E380BFDF161E3229003BB377 /* jsb_constants_cocosbuilder.js */; };
-		E380BFE1161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E380BFDF161E3229003BB377 /* jsb_constants_cocosbuilder.js */; };
-		E380BFE2161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E380BFDF161E3229003BB377 /* jsb_constants_cocosbuilder.js */; };
-		E3C9CD3F161E0914008A3784 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9CD35161E0913008A3784 /* CCBAnimationManager.h */; };
-		E3C9CD40161E0914008A3784 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9CD36161E0913008A3784 /* CCBAnimationManager.m */; };
-		E3C9CD41161E0914008A3784 /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9CD37161E0914008A3784 /* CCBKeyframe.h */; };
-		E3C9CD42161E0914008A3784 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9CD38161E0914008A3784 /* CCBKeyframe.m */; };
-		E3C9CD43161E0914008A3784 /* CCBSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9CD39161E0914008A3784 /* CCBSequence.h */; };
-		E3C9CD44161E0914008A3784 /* CCBSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9CD3A161E0914008A3784 /* CCBSequence.m */; };
-		E3C9CD45161E0914008A3784 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9CD3B161E0914008A3784 /* CCBSequenceProperty.h */; };
-		E3C9CD46161E0914008A3784 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9CD3C161E0914008A3784 /* CCBSequenceProperty.m */; };
-		E3C9CD47161E0914008A3784 /* CCNode+CCBRelativePositioning.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9CD3D161E0914008A3784 /* CCNode+CCBRelativePositioning.h */; };
-		E3C9CD48161E0914008A3784 /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9CD3E161E0914008A3784 /* CCNode+CCBRelativePositioning.m */; };
+		E3C9E78A161FB9EC0031D2E6 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */; };
+		E3C9E78B161FB9EC0031D2E6 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */; };
+		E3C9E78C161FB9EC0031D2E6 /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */; };
+		E3C9E78D161FB9EC0031D2E6 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E783161FB9EC0031D2E6 /* CCBKeyframe.m */; };
+		E3C9E78E161FB9EC0031D2E6 /* CCBSequence.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E784161FB9EC0031D2E6 /* CCBSequence.h */; };
+		E3C9E78F161FB9EC0031D2E6 /* CCBSequence.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E785161FB9EC0031D2E6 /* CCBSequence.m */; };
+		E3C9E790161FB9EC0031D2E6 /* CCBSequenceProperty.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E786161FB9EC0031D2E6 /* CCBSequenceProperty.h */; };
+		E3C9E791161FB9EC0031D2E6 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E787161FB9EC0031D2E6 /* CCBSequenceProperty.m */; };
+		E3C9E792161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E788161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.h */; };
+		E3C9E793161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E789161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.m */; };
+		E3C9E796161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
+		E3C9E797161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
+		E3C9E798161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -6000,7 +6000,6 @@
 		A0DC2B51161BE16A00DDB2BD /* TransitionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TransitionsTest.js; sourceTree = "<group>"; };
 		A0DC2B52161BE16A00DDB2BD /* tests-boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests-boot-jsb.js"; sourceTree = "<group>"; };
 		A0DC2B53161BE16A00DDB2BD /* tests-main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests-main.js"; sourceTree = "<group>"; };
-		A0DC2B54161BE16A00DDB2BD /* tests-resource-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests-resource-html5.js"; sourceTree = "<group>"; };
 		A0DC2B55161BE16A00DDB2BD /* tests_resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "tests_resources-jsb.js"; sourceTree = "<group>"; };
 		A0DC2D10161BE17F00DDB2BD /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
@@ -6181,17 +6180,17 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
-		E380BFDF161E3229003BB377 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
-		E3C9CD35161E0913008A3784 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
-		E3C9CD36161E0913008A3784 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
-		E3C9CD37161E0914008A3784 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
-		E3C9CD38161E0914008A3784 /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
-		E3C9CD39161E0914008A3784 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
-		E3C9CD3A161E0914008A3784 /* CCBSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequence.m; sourceTree = "<group>"; };
-		E3C9CD3B161E0914008A3784 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
-		E3C9CD3C161E0914008A3784 /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
-		E3C9CD3D161E0914008A3784 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
-		E3C9CD3E161E0914008A3784 /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
+		E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
+		E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
+		E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
+		E3C9E783161FB9EC0031D2E6 /* CCBKeyframe.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBKeyframe.m; sourceTree = "<group>"; };
+		E3C9E784161FB9EC0031D2E6 /* CCBSequence.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequence.h; sourceTree = "<group>"; };
+		E3C9E785161FB9EC0031D2E6 /* CCBSequence.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequence.m; sourceTree = "<group>"; };
+		E3C9E786161FB9EC0031D2E6 /* CCBSequenceProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBSequenceProperty.h; sourceTree = "<group>"; };
+		E3C9E787161FB9EC0031D2E6 /* CCBSequenceProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBSequenceProperty.m; sourceTree = "<group>"; };
+		E3C9E788161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
+		E3C9E789161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
+		E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8461,16 +8460,16 @@
 			children = (
 				A02900F315B5FB6900D64F82 /* CCBReader.h */,
 				A02900F415B5FB6900D64F82 /* CCBReader.m */,
-				E3C9CD35161E0913008A3784 /* CCBAnimationManager.h */,
-				E3C9CD36161E0913008A3784 /* CCBAnimationManager.m */,
-				E3C9CD37161E0914008A3784 /* CCBKeyframe.h */,
-				E3C9CD38161E0914008A3784 /* CCBKeyframe.m */,
-				E3C9CD39161E0914008A3784 /* CCBSequence.h */,
-				E3C9CD3A161E0914008A3784 /* CCBSequence.m */,
-				E3C9CD3B161E0914008A3784 /* CCBSequenceProperty.h */,
-				E3C9CD3C161E0914008A3784 /* CCBSequenceProperty.m */,
-				E3C9CD3D161E0914008A3784 /* CCNode+CCBRelativePositioning.h */,
-				E3C9CD3E161E0914008A3784 /* CCNode+CCBRelativePositioning.m */,
+				E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */,
+				E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */,
+				E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */,
+				E3C9E783161FB9EC0031D2E6 /* CCBKeyframe.m */,
+				E3C9E784161FB9EC0031D2E6 /* CCBSequence.h */,
+				E3C9E785161FB9EC0031D2E6 /* CCBSequence.m */,
+				E3C9E786161FB9EC0031D2E6 /* CCBSequenceProperty.h */,
+				E3C9E787161FB9EC0031D2E6 /* CCBSequenceProperty.m */,
+				E3C9E788161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.h */,
+				E3C9E789161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.m */,
 			);
 			name = CocosBuilderReader;
 			path = external/CocosBuilderReader;
@@ -8683,7 +8682,7 @@
 				A031BF5515DAC68600E1986C /* jsb_constants_chipmunk.js */,
 				A031BF5615DAC68600E1986C /* jsb_constants_cocos2d.js */,
 				A031BF5715DAC68600E1986C /* jsb_constants_gl.js */,
-				E380BFDF161E3229003BB377 /* jsb_constants_cocosbuilder.js */,
+				E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -9276,7 +9275,6 @@
 				A0DC2B03161BE16A00DDB2BD /* tests */,
 				A0DC2B52161BE16A00DDB2BD /* tests-boot-jsb.js */,
 				A0DC2B53161BE16A00DDB2BD /* tests-main.js */,
-				A0DC2B54161BE16A00DDB2BD /* tests-resource-html5.js */,
 				A0DC2B55161BE16A00DDB2BD /* tests_resources-jsb.js */,
 			);
 			path = src;
@@ -10102,11 +10100,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A02900FF15B5FB6900D64F82 /* CCBReader.h in Headers */,
-				E3C9CD3F161E0914008A3784 /* CCBAnimationManager.h in Headers */,
-				E3C9CD41161E0914008A3784 /* CCBKeyframe.h in Headers */,
-				E3C9CD43161E0914008A3784 /* CCBSequence.h in Headers */,
-				E3C9CD45161E0914008A3784 /* CCBSequenceProperty.h in Headers */,
-				E3C9CD47161E0914008A3784 /* CCNode+CCBRelativePositioning.h in Headers */,
+				E3C9E78A161FB9EC0031D2E6 /* CCBAnimationManager.h in Headers */,
+				E3C9E78C161FB9EC0031D2E6 /* CCBKeyframe.h in Headers */,
+				E3C9E78E161FB9EC0031D2E6 /* CCBSequence.h in Headers */,
+				E3C9E790161FB9EC0031D2E6 /* CCBSequenceProperty.h in Headers */,
+				E3C9E792161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13452,7 +13450,7 @@
 				A031C0E015DAE0B500E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0E115DAE0B500E1986C /* jsb_constants_cocos2d.js in Resources */,
 				A031C0E215DAE0B500E1986C /* jsb_constants_gl.js in Resources */,
-				E380BFE0161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */,
+				E3C9E796161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */,
 				A08F3EB915D6E6F300B4C422 /* MoonWarriors-native.js in Resources */,
 				A08F3ED815D6E6F300B4C422 /* AboutLayer.js in Resources */,
 				A08F3ED915D6E6F300B4C422 /* Bullet.js in Resources */,
@@ -13705,7 +13703,7 @@
 				A031C0E515DAE0B500E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0E615DAE0B600E1986C /* jsb_constants_cocos2d.js in Resources */,
 				A031C0E715DAE0B600E1986C /* jsb_constants_gl.js in Resources */,
-				E380BFE1161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */,
+				E3C9E797161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */,
 				A0D6BFEF159B6A25008EED97 /* b1.png in Resources */,
 				A0D6BFF0159B6A25008EED97 /* b2.png in Resources */,
 				A0D6BFF1159B6A25008EED97 /* f1.png in Resources */,
@@ -13834,7 +13832,7 @@
 				A031C0E915DAE0B600E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0EA15DAE0B600E1986C /* jsb_constants_cocos2d.js in Resources */,
 				A031C0EB15DAE0B600E1986C /* jsb_constants_gl.js in Resources */,
-				E380BFE2161E3229003BB377 /* jsb_constants_cocosbuilder.js in Resources */,
+				E3C9E798161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */,
 				A031B83115D9C42500E1986C /* watermelon_with_me.js in Resources */,
 				A0E5F7E815C1AE5F00D44C32 /* Default.png in Resources */,
 				A0E5F7E915C1AE5F00D44C32 /* Icon.png in Resources */,
@@ -15288,11 +15286,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A029010015B5FB6900D64F82 /* CCBReader.m in Sources */,
-				E3C9CD40161E0914008A3784 /* CCBAnimationManager.m in Sources */,
-				E3C9CD42161E0914008A3784 /* CCBKeyframe.m in Sources */,
-				E3C9CD44161E0914008A3784 /* CCBSequence.m in Sources */,
-				E3C9CD46161E0914008A3784 /* CCBSequenceProperty.m in Sources */,
-				E3C9CD48161E0914008A3784 /* CCNode+CCBRelativePositioning.m in Sources */,
+				E3C9E78B161FB9EC0031D2E6 /* CCBAnimationManager.m in Sources */,
+				E3C9E78D161FB9EC0031D2E6 /* CCBKeyframe.m in Sources */,
+				E3C9E78F161FB9EC0031D2E6 /* CCBSequence.m in Sources */,
+				E3C9E791161FB9EC0031D2E6 /* CCBSequenceProperty.m in Sources */,
+				E3C9E793161FB9EC0031D2E6 /* CCNode+CCBRelativePositioning.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

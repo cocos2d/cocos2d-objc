@@ -1,7 +1,9 @@
 
 version 2.1-beta3  xx-Oct-2012
+. [FIX] Actions: TargetedAction can be copied. Calls super correctly
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)
+. [FIX] GL Cache: when texture is deleted, it is removed form teh GL cache (issue #1429)
 . [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
 		Fixed some grammar errors
