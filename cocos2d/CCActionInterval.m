@@ -1471,7 +1471,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:target_ action:[[action_ copy] autorelease]];
+	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:forcedTarget_ action:[[action_ copy] autorelease]];
 	return copy;
 }
 
@@ -1490,7 +1490,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 - (void) startWithTarget:(id)aTarget
 {
-	[super startWithTarget:forcedTarget_];
+	[super startWithTarget:target_];
 	[action_ startWithTarget:forcedTarget_];
 }
 
