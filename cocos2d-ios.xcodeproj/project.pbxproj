@@ -3977,6 +3977,7 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		E39CB11916237E86004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39CB11716237E86004528CC /* js_bindings_CocosBuilderReader_manual.mm */; };
 		E3C9E78A161FB9EC0031D2E6 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */; };
 		E3C9E78B161FB9EC0031D2E6 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */; };
 		E3C9E78C161FB9EC0031D2E6 /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */; };
@@ -6180,6 +6181,7 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		E39CB11716237E86004528CC /* js_bindings_CocosBuilderReader_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosBuilderReader_manual.mm; sourceTree = "<group>"; };
 		E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
 		E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
@@ -8701,6 +8703,7 @@
 				A031BF6215DAC68600E1986C /* js_bindings_core.mm */,
 				A031BF6315DAC68600E1986C /* js_bindings_NS_manual.h */,
 				A031BF6415DAC68600E1986C /* js_bindings_NS_manual.mm */,
+				E39CB11716237E86004528CC /* js_bindings_CocosBuilderReader_manual.mm */,
 			);
 			path = manual;
 			sourceTree = "<group>";
@@ -15397,6 +15400,7 @@
 				A0C70B6115E3140800CD8896 /* CCNode+Debug.m in Sources */,
 				A0C70B6215E3140800CD8896 /* CCAtlasNode.m in Sources */,
 				A062CA89160D453200D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
+				E39CB11916237E86004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

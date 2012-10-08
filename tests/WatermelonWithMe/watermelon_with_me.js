@@ -987,7 +987,31 @@ MenuLayerController.prototype.onDidLoadFromCCB = function()
     var a_rep = cc.Repeat.create( a_rotate, 1000 );
     var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
     o.runAction( a_seq );
+    
+    cc.log("Setting animation callback!");
+    
+    this.animationCompleteCount = 0;
+    
+    // Get the animation manager for the root node
+    var animationManager = this.rootNode.animationManager;
+    
+    // Set a callback when a loop of the animation has been completed
+    animationManager.setCompletedAnimationCallback(this, this.onAnimComplete);
 };
+
+MenuLayerController.prototype.onAnimComplete = function(animManager)
+{
+    this.animationCompleteCount++;
+    
+    if (this.animationCompleteCount % 2 == 0)
+    {
+        this.sprtStar.setColor(cc.WHITE);
+    }
+    else
+    {
+        this.sprtStar.setColor(cc.GREEN);
+    }
+}
 
 MenuLayerController.prototype.onPlay = function()
 {
