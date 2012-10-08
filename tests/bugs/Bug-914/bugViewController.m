@@ -45,7 +45,7 @@
 
 -(NSUInteger)supportedInterfaceOrientations{
     //Modify for supported orientations, put your masks here
-    return UIInterfaceOrientationMaskLandscape;
+    return UIInterfaceOrientationMaskAll;
 }
 
 
