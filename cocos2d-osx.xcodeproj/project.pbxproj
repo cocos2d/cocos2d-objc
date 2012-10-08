@@ -1121,6 +1121,12 @@
 		A064EC0C162289E300020E06 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A064EC0B162289E300020E06 /* jsb_constants_cocosbuilder.js */; };
 		A064EC0D162289E300020E06 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A064EC0B162289E300020E06 /* jsb_constants_cocosbuilder.js */; };
 		A064EC0E162289E300020E06 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A064EC0B162289E300020E06 /* jsb_constants_cocosbuilder.js */; };
+		A064EC6416235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */; };
+		A064EC6516235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */; };
+		A064EC6616235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */; };
+		A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
+		A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
+		A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
 		A06EA26B161E55A200B025FE /* ActionManagerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C7161B563200FE54C8 /* ActionManagerTest.js */; };
 		A06EA26C161E55A200B025FE /* ActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C9161B563200FE54C8 /* ActionsTest.js */; };
 		A06EA26D161E55A200B025FE /* Box2dTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85CB161B563200FE54C8 /* Box2dTest.js */; };
@@ -7039,6 +7045,10 @@
 		A064EBFF1622899100020E06 /* CCNode+CCBRelativePositioning.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+CCBRelativePositioning.h"; sourceTree = "<group>"; };
 		A064EC001622899100020E06 /* CCNode+CCBRelativePositioning.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+CCBRelativePositioning.m"; sourceTree = "<group>"; };
 		A064EC0B162289E300020E06 /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
+		A064EC6016235F7C00020E06 /* js_bindings_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_registration.h; sourceTree = "<group>"; };
+		A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_registration.mm; sourceTree = "<group>"; };
+		A064EC6216235F7C00020E06 /* js_bindings_cocos2d_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_registration.h; sourceTree = "<group>"; };
+		A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_registration.mm; sourceTree = "<group>"; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
@@ -8604,8 +8614,12 @@
 				A031BFFB15DADE5F00E1986C /* js_bindings_basic_conversions.mm */,
 				A031BFFC15DADE5F00E1986C /* js_bindings_chipmunk_manual.h */,
 				A031BFFD15DADE5F00E1986C /* js_bindings_chipmunk_manual.mm */,
+				A064EC6016235F7C00020E06 /* js_bindings_chipmunk_registration.h */,
+				A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */,
 				A031BFFE15DADE5F00E1986C /* js_bindings_cocos2d_manual.h */,
 				A031BFFF15DADE5F00E1986C /* js_bindings_cocos2d_manual.mm */,
+				A064EC6216235F7C00020E06 /* js_bindings_cocos2d_registration.h */,
+				A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */,
 				A031C00115DADE5F00E1986C /* js_bindings_config.h */,
 				A031C00215DADE5F00E1986C /* js_bindings_core.h */,
 				A031C00315DADE5F00E1986C /* js_bindings_core.mm */,
@@ -16703,6 +16717,8 @@
 				A0D7D68915E2D294000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68A15E2D294000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A062C9ED1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
+				A064EC6416235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
+				A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16828,6 +16844,8 @@
 				A0D7D68515E2D293000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68615E2D293000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A062C9EF1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
+				A064EC6616235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
+				A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16943,6 +16961,8 @@
 				A0D7D68715E2D294000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68815E2D294000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A062C9EE1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
+				A064EC6516235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
+				A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
