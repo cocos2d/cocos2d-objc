@@ -77,7 +77,7 @@
 +(NSString *)removeSuffixFromFile:(NSString*) path;
 
 /** Sets the iPhone RetinaDisplay suffix to load resources.
- By default it is "-528h".
+ By default it is "-568h".
  Only valid on iOS. Not valid for OS X.
 
  @since v1.1RC0

@@ -38,7 +38,7 @@ static NSFileManager *__localFileManager=nil;
 static NSString *__suffixiPhoneRetinaDisplay =@"-hd";
 static NSString *__suffixiPad =@"-ipad";
 static NSString *__suffixiPadRetinaDisplay =@"-ipadhd";
-static NSString *__suffixiPhoneFourInchDisplay =@"-528h";
+static NSString *__suffixiPhoneFourInchDisplay =@"-568h";
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -187,7 +187,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	else
 	{
         //four inch support here, UIScreen size always in portrait and in points
-        if ([[UIScreen mainScreen] bounds].size.height == 1136/2)
+        if ([[UIScreen mainScreen] bounds].size.height == 568)
         {
             ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
             *resolutionType = kCCResolutioniPhoneFourInchDisplay;
