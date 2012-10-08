@@ -124,8 +124,26 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) activate
 {
-	if(isEnabled_)
-        [invocation_ invoke];
+    
+    if(isEnabled_)
+    {
+#if NS_BLOCKS_AVAILABLE        
+        //changed behavior in iOS6, sender of block is nil, so invocation fails, executing block does work
+        if(block_)
+        {
+            block_(self);
+        }
+        else if(invocation_)
+        {
+            [invocation_ invoke];
+        }
+#else 
+        if(invocation_)
+        {
+            [invocation_ invoke];
+        }
+#endif
+    }
 }
 
 -(void) setIsEnabled: (BOOL)enabled
