@@ -328,11 +328,8 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onMainMenu:function(sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionProgressRadialCCW.create(1, scene) );
-        this._state = STATE_PAUSE;
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onToggleDebug:function(sender) {
@@ -969,9 +966,7 @@ var BootLayer = cc.Layer.extend({
     },
     
     onEnter:function() {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
         director.replaceScene( scene );
     }
 });
@@ -979,84 +974,67 @@ var BootLayer = cc.Layer.extend({
 //
 // Main Menu
 //
-var MenuLayer = cc.Layer.extend({
+var MenuLayerController = function() {};
 
-    ctor:function () {
-                                
-        var parent = new cc.Layer();
-        __associateObjWithNative(this, parent);
-        this.init();
+MenuLayerController.prototype.onDidLoadFromCCB = function()
+{
+    // Spin the 'o' in the title
+    var o = this.titleLabel.getChildByTag( 8 );
+    
+    var a_delay = cc.DelayTime.create(6);
+    var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
+    var a_rotate = cc.RotateBy.create( 4, 360 );
+    var a_rep = cc.Repeat.create( a_rotate, 1000 );
+    var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
+    o.runAction( a_seq );
+};
 
-        // background
-        var node = cc.Reader.load("MainMenu.ccbi", this, winSize);
-        this.addChild( node );
-        var label = node.getChildByTag( TITLE_TAG );
-        var o = label.getChildByTag( 8 );
+MenuLayerController.prototype.onPlay = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new GameLayer(0);
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFade.create(1, scene) );
+};
 
-        var a_delay = cc.DelayTime.create(6);
-        var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
-        var a_rotate = cc.RotateBy.create( 4, 360 );
-        var a_rep = cc.Repeat.create( a_rotate, 1000 );
-        var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
-        o.runAction( a_seq );
+MenuLayerController.prototype.onOptions = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new OptionsLayer();
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFlipY.create(1, scene) );
+};
 
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
-
-    onPlay:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new GameLayer(0);
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFade.create(1, scene) );
-    },
-
-    onOptions:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new OptionsLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipY.create(1, scene) );
-    },
-
-    onAbout:function( sender ) {
-        var scene = cc.Scene.create();
-        var layer = new AboutLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
-    }
-});
+MenuLayerController.prototype.onAbout = function()
+{
+    /*var scene = cc.Scene.create();
+    var layer = new AboutLayer();
+    scene.addChild( layer );*/
+    var scene = cc.Reader.loadAsScene("About.ccbi");
+    director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
+};
 
 //
 // About
 //
-var AboutLayer = cc.Layer.extend({
+var AboutLayerController = function() {};
 
-    ctor:function () {
-        var parent = new cc.LayerGradient();
-        __associateObjWithNative(this, parent);
-        this.init();
+AboutLayerController.prototype.onDidLoadFromCCB = function()
+{
+    var back = cc.MenuItemFont.create("Back", this, this.onBack );
+    back.setColor( cc.BLACK );
+    var menu = cc.Menu.create( back );
+    this.rootNode.addChild( menu );
+    menu.zOrder = 100;
+    menu.alignItemsVertically();
+    menu.setPosition( cc._p( winSize.width - 50, 50) );
+};
 
-        var about = cc.Reader.load("About.ccbi", this);
-        this.addChild( about );
-
-        var back = cc.MenuItemFont.create("Back", this, this.onBack );
-        back.setColor( cc.BLACK );
-        var menu = cc.Menu.create( back );
-        this.addChild( menu );
-        menu.alignItemsVertically();
-        menu.setPosition( cc._p( winSize.width - 50, 50) );
-
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
-
-    onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
-    }
-});
+AboutLayerController.prototype.onBack = function()
+{
+    var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+    director.replaceScene( scene );
+};
 
 //
 // Options
@@ -1086,10 +1064,8 @@ var OptionsLayer = cc.LayerGradient.extend({
     },
 
     onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onMusicToggle:function( sender ) {
