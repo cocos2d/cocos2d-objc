@@ -974,8 +974,11 @@ var BootLayer = cc.Layer.extend({
 //
 // Main Menu
 //
+
+// 'MenuLayerController' class is instantiated by CocosBuilder Reader
 var MenuLayerController = function() {};
 
+// callback triggered by CCB Reader once the instance is created
 MenuLayerController.prototype.onDidLoadFromCCB = function()
 {
     // Spin the 'o' in the title
@@ -987,32 +990,9 @@ MenuLayerController.prototype.onDidLoadFromCCB = function()
     var a_rep = cc.Repeat.create( a_rotate, 1000 );
     var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
     o.runAction( a_seq );
-    
-    cc.log("Setting animation callback!");
-    
-    this.animationCompleteCount = 0;
-    
-    // Get the animation manager for the root node
-    var animationManager = this.rootNode.animationManager;
-    
-    // Set a callback when a loop of the animation has been completed
-    animationManager.setCompletedAnimationCallback(this, this.onAnimComplete);
 };
 
-MenuLayerController.prototype.onAnimComplete = function(animManager)
-{
-    this.animationCompleteCount++;
-    
-    if (this.animationCompleteCount % 2 == 0)
-    {
-        this.sprtStar.setColor(cc.WHITE);
-    }
-    else
-    {
-        this.sprtStar.setColor(cc.GREEN);
-    }
-}
-
+// callbacks for the menu, defined in the editor
 MenuLayerController.prototype.onPlay = function()
 {
     var scene = cc.Scene.create();

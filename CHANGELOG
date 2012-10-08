@@ -12,7 +12,11 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
-. [3RD] JS Bindings: Updated to v0.3 (Chipmunk API is compatible with Chipmunk-JS)
+. [3RD] JS Bindings: Updated to v0.3
+		Chipmunk API is compatible with Chipmunk-JS
+		CocosBuilder Reader supports "outlets", and improved JSB API
+		Better registration code
+. [3RD] CocosBuilder Reader: Updated to v2.1
 
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
