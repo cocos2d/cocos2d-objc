@@ -974,8 +974,11 @@ var BootLayer = cc.Layer.extend({
 //
 // Main Menu
 //
+
+// 'MenuLayerController' class is instantiated by CocosBuilder Reader
 var MenuLayerController = function() {};
 
+// callback triggered by CCB Reader once the instance is created
 MenuLayerController.prototype.onDidLoadFromCCB = function()
 {
     // Spin the 'o' in the title
@@ -989,6 +992,7 @@ MenuLayerController.prototype.onDidLoadFromCCB = function()
     o.runAction( a_seq );
 };
 
+// callbacks for the menu, defined in the editor
 MenuLayerController.prototype.onPlay = function()
 {
     var scene = cc.Scene.create();
