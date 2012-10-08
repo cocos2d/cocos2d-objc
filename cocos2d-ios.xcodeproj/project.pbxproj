@@ -475,7 +475,6 @@
 		504E18DD11C4C85A00E19835 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		504E18DE11C4C85A00E19835 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		504E18EB11C4C91200E19835 /* EAGLViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 504E18E811C4C91200E19835 /* EAGLViewTest.m */; };
-		504E18EC11C4C91200E19835 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 504E18E911C4C91200E19835 /* MainWindow.xib */; };
 		504E190211C4CB7D00E19835 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 504E190111C4CB7D00E19835 /* main.m */; };
 		504E190611C4CBCA00E19835 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		504E192411C4CE5B00E19835 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
@@ -692,7 +691,6 @@
 		505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		505B639F0F2F4210001B4104 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		505B63A80F2F4295001B4104 /* EaseActionsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 505B63A70F2F4295001B4104 /* EaseActionsTest.m */; };
-		505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */; };
 		505DEF8A11C58AD10045B393 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
 		506046A20E75CEFB0044A29B /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		506046A30E75CEFB0044A29B /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
@@ -1434,6 +1432,8 @@
 		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963B14E9E7D000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963C14E9E7D300FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
+		657ADCDB1623240F00E4636C /* MainWindowTest-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */; };
+		657ADCDE16233DD300E4636C /* MainWindowTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657ADCDD16233DD300E4636C /* MainWindowTest.xib */; };
 		6593D0E41610D31F003D4935 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */; };
 		6593D0E61610D320003D4935 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */; };
 		6593D0E71610D321003D4935 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */; };
@@ -4158,7 +4158,6 @@
 		504E18E611C4C91200E19835 /* EAGLViewTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EAGLViewTest-Info.plist"; sourceTree = "<group>"; };
 		504E18E711C4C91200E19835 /* EAGLViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLViewTest.h; sourceTree = "<group>"; };
 		504E18E811C4C91200E19835 /* EAGLViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLViewTest.m; sourceTree = "<group>"; };
-		504E18E911C4C91200E19835 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		504E190111C4CB7D00E19835 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5050C7560F927156004BE2D8 /* InfoWithStatusBar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = InfoWithStatusBar.plist; path = Resources/InfoWithStatusBar.plist; sourceTree = "<group>"; };
 		5052215B11B3D38A0061670F /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
@@ -4301,7 +4300,6 @@
 		505B63A30F2F4210001B4104 /* EaseActionsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EaseActionsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		505B63A60F2F4295001B4104 /* EaseActionsTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EaseActionsTest.h; path = tests/EaseActionsTest.h; sourceTree = "<group>"; };
 		505B63A70F2F4295001B4104 /* EaseActionsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EaseActionsTest.m; path = tests/EaseActionsTest.m; sourceTree = "<group>"; };
-		505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow-ipad.xib"; sourceTree = "<group>"; };
 		506144080E589A2E003CCDB7 /* cocosnodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = cocosnodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5061440B0E589A7B003CCDB7 /* cocosnodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cocosnodeTest.h; path = tests/cocosnodeTest.h; sourceTree = "<group>"; };
 		5061440C0E589A7B003CCDB7 /* cocosnodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = cocosnodeTest.m; path = tests/cocosnodeTest.m; sourceTree = "<group>"; };
@@ -4675,10 +4673,13 @@
 		65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		65171AEA160AB7F6003CBC09 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		65171AEC160ABCF7003CBC09 /* grossini-528h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-528h.png"; sourceTree = "<group>"; };
+		657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindowTest-ipad.xib"; sourceTree = "<group>"; };
+		657ADCDD16233DD300E4636C /* MainWindowTest.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowTest.xib; sourceTree = "<group>"; };
 		657F114D150BA75D0047F93C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		657F114E150BA75D0047F93C /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		657F114F150BA75D0047F93C /* PerformanceDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceDispatcher.h; sourceTree = "<group>"; };
 		657F1150150BA75D0047F93C /* PerformanceDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceDispatcher.m; sourceTree = "<group>"; };
+		65D319FE162319A8000825C6 /* MainWindowTest-ipadiOS6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainWindowTest-ipadiOS6.xib"; path = "../../MainWindowTest-ipadiOS6.xib"; sourceTree = "<group>"; };
 		65D4BFF5160775410052FCFD /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewController.h; path = DirectorTest/ScrollViewController.h; sourceTree = "<group>"; };
 		65D4BFF6160775410052FCFD /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewController.m; path = DirectorTest/ScrollViewController.m; sourceTree = "<group>"; };
 		65F80A70161666C300F6DBFF /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
@@ -4887,6 +4888,7 @@
 		65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
 		65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
+		65FA2CFE161D3D6C008B11F2 /* MainWindowTestiOS6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowTestiOS6.xib; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -6416,12 +6418,14 @@
 		504E18E511C4C91200E19835 /* EAGLViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				65D319FE162319A8000825C6 /* MainWindowTest-ipadiOS6.xib */,
+				657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */,
+				657ADCDD16233DD300E4636C /* MainWindowTest.xib */,
 				504E190111C4CB7D00E19835 /* main.m */,
 				504E18E611C4C91200E19835 /* EAGLViewTest-Info.plist */,
 				504E18E711C4C91200E19835 /* EAGLViewTest.h */,
 				504E18E811C4C91200E19835 /* EAGLViewTest.m */,
-				504E18E911C4C91200E19835 /* MainWindow.xib */,
-				505DEE5211C4DCFC0045B393 /* MainWindow-ipad.xib */,
+				65FA2CFE161D3D6C008B11F2 /* MainWindowTestiOS6.xib */,
 			);
 			name = EAGLViewTest;
 			path = tests/EAGLViewTest;
@@ -10186,9 +10190,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				504E18EC11C4C91200E19835 /* MainWindow.xib in Resources */,
 				504E192411C4CE5B00E19835 /* fps_images.png in Resources */,
-				505DEE5311C4DCFC0045B393 /* MainWindow-ipad.xib in Resources */,
 				E04C63B812382F6100A4B3E6 /* f1-hd.png in Resources */,
 				E04C63B912382F6100A4B3E6 /* f2-hd.png in Resources */,
 				E04C63BA12382F6100A4B3E6 /* r1-hd.png in Resources */,
@@ -10209,6 +10211,8 @@
 				A0B0372213EA10210073E59A /* r2-ipad.png in Resources */,
 				65171AF2160ABCF8003CBC09 /* grossini-528h.png in Resources */,
 				6593D0F61610D32E003D4935 /* Default-568h@2x.png in Resources */,
+				657ADCDB1623240F00E4636C /* MainWindowTest-ipad.xib in Resources */,
+				657ADCDE16233DD300E4636C /* MainWindowTest.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

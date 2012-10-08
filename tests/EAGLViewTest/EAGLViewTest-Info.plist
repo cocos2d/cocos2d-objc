@@ -17,9 +17,9 @@
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>NSMainNibFile</key>
-	<string>MainWindow</string>
+	<string>MainWindowTest</string>
 	<key>NSMainNibFile~ipad</key>
-	<string>MainWindow-ipad</string>
+	<string>MainWindowTest-ipad</string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 	<key>CFBundleIconFiles</key>

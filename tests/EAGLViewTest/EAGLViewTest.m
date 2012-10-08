@@ -5,6 +5,10 @@
 // http://www.cocos2d-iphone.org
 //
 
+
+//WARNING if you build this for iOS5 or lower, change the names of the xibs in the plist to the ones without a iOS6 ending
+//on iOS6, the iPad xib doesn't work anymore
+
 #import <UIKit/UIKit.h>
 
 // cocos2d import

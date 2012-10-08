@@ -19,7 +19,6 @@ version 1.1-rc0 ..-..-2012
 . [NEW] Menu:
         added reverseOrder, to reverse order of touch detection (issue #1125)
         color, opacity changed to readwrite
-
 . [NEW] TileMap: rotated tiles are supported
 . [NEW] Tests:
         ActionTest: added test case for issue #1020, synchronizing of several animations each within a CCRepeatForever
@@ -44,7 +43,9 @@ version 1.1-rc0 ..-..-2012
 . [FIX] EAGLView: resizing only occurs when necessary (refix of issue #1153)        
 . [FIX] FileUtils: also search full bundle path
         iPad falls back to iPad suffix if iPad-hd isn't found, instead of iPhone
-. [FIX] Menu: CCMenuItemToggle, tags of children were modified by the component
+. [FIX] Menu: 
+        CCMenuItemToggle, tags of children were modified by the component
+        Blocks invocation of menu items failed on iOS6, added workaround
 . [FIX] Node:
         onEnterTransitionDidFinish isn't called twice anymore, when node was added in onEnter
         touches still work when UIKit elements lay on top of cocos view
