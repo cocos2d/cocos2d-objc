@@ -84,12 +84,9 @@ eachShape(void *ptr, void* unused)
 
 		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
 		space = cpSpaceNew();
-		cpSpaceResizeStaticHash(space, 400.0f, 40);
-		cpSpaceResizeActiveHash(space, 100, 600);
-
+		
 		space->gravity = ccp(0, 0);
-		space->elasticIterations = space->iterations;
-
+		
 		cpShape *shape;
 
 		// bottom
@@ -138,8 +135,6 @@ eachShape(void *ptr, void* unused)
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
-	cpSpaceHashEach(space->activeShapes, &eachShape, nil);
-	cpSpaceHashEach(space->staticShapes, &eachShape, nil);
 }
 
 
@@ -215,8 +210,10 @@ eachShape(void *ptr, void* unused)
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+	[CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"    
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+    
 
 	// add layer
 	CCScene *scene = [CCScene node];
