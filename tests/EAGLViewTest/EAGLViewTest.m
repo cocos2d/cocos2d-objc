@@ -6,8 +6,8 @@
 //
 
 
-//WARNING if you build this for iOS5 or lower, change the names of the xibs in the plist to the ones without a iOS6 ending
-//on iOS6, the iPad xib doesn't work anymore
+//WARNING if you build this for iOS6 or higher, change the names of the xibs in the plist to the ones ending with iOS6, also include the iOS6 xibs to the EAGLViewTest target (in build phases -> compile bundle resources)
+//the iPad xib is broken at the moment
 
 #import <UIKit/UIKit.h>
 

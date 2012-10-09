@@ -11,7 +11,7 @@ enum {
 };
 
 static void
-eachShape(void *ptr, void* unused)
+eachShape(cpShape *ptr, void* unused)
 {
 	cpShape *shape = (cpShape*) ptr;
 	CCSprite *sprite = shape->data;
@@ -76,8 +76,6 @@ eachShape(void *ptr, void* unused)
 {
 	if( (self=[super init])) {
 
-		self.isTouchEnabled = YES;
-		self.isAccelerometerEnabled = YES;
 
 		CGSize wins = [[CCDirector sharedDirector] winSize];
 		cpInitChipmunk();
@@ -123,6 +121,10 @@ eachShape(void *ptr, void* unused)
 -(void) onEnter
 {
 	[super onEnter];
+    
+    self.isTouchEnabled = YES;
+    self.isAccelerometerEnabled = YES;
+
 
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:(1.0 / 60)];
 }
@@ -135,6 +137,7 @@ eachShape(void *ptr, void* unused)
 	for(int i=0; i<steps; i++){
 		cpSpaceStep(space, dt);
 	}
+    cpSpaceEachShape(space, &eachShape,nil);
 }
 
 
