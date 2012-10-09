@@ -1,5 +1,6 @@
 
 version 2.1-beta3  xx-Oct-2012
+. [NEW] RenderTexture: Supports "auto rendering" its children to the texture. No need to call being/end
 . [FIX] Actions: TargetedAction can be copied. Calls super correctly
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)

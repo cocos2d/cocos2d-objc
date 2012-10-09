@@ -33,6 +33,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
 
+* Krzysztof Zablocki (http://merowing.info):
+	Author of CCRenderTargetNode, which later was merged into RenderTexture as the "auto render" feature.
+
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
 	Added Tests for RotationSkew feature
