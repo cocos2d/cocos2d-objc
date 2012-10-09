@@ -15,7 +15,7 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] Xcode: Fixed compiler warnigns
 . [3RD] JS Bindings: Updated to v0.3
 		Chipmunk API is compatible with Chipmunk-JS
-		CocosBuilder Reader supports "outlets", and improved JSB API
+		CocosBuilder Reader supports "outlets", Animation callbacks, and improved JSB API
 		Better registration code
 . [3RD] CocosBuilder Reader: Updated to v2.1
 

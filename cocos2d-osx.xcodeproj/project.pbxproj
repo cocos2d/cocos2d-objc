@@ -1046,6 +1046,9 @@
 		A04B0F6414A29CDE005EB429 /* ActionsEaseTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0B9300F1226C184003FF67E /* ActionsEaseTest.m */; };
 		A04E862A159B6E4C00F4BE65 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04E8629159B6E4C00F4BE65 /* OpenAL.framework */; };
 		A04E862C159B6E5800F4BE65 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A04E862B159B6E5800F4BE65 /* AudioToolbox.framework */; };
+		A05941DD1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05941DC1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm */; };
+		A05941DE1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05941DC1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm */; };
+		A05941DF1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A05941DC1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm */; };
 		A05B63E8156F552500ADAB65 /* chipmunk.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63AB156F552500ADAB65 /* chipmunk.h */; };
 		A05B63E9156F552500ADAB65 /* chipmunk_ffi.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63AC156F552500ADAB65 /* chipmunk_ffi.h */; };
 		A05B63EA156F552500ADAB65 /* chipmunk_private.h in Headers */ = {isa = PBXBuildFile; fileRef = A05B63AD156F552500ADAB65 /* chipmunk_private.h */; };
@@ -6969,6 +6972,7 @@
 		A04B0F6214A29BEB005EB429 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
 		A04E8629159B6E4C00F4BE65 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		A04E862B159B6E5800F4BE65 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		A05941DC1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosBuilderReader_manual.mm; sourceTree = "<group>"; };
 		A05B63AB156F552500ADAB65 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
 		A05B63AC156F552500ADAB65 /* chipmunk_ffi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_ffi.h; sourceTree = "<group>"; };
 		A05B63AD156F552500ADAB65 /* chipmunk_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk_private.h; sourceTree = "<group>"; };
@@ -8620,6 +8624,7 @@
 				A031BFFF15DADE5F00E1986C /* js_bindings_cocos2d_manual.mm */,
 				A064EC6216235F7C00020E06 /* js_bindings_cocos2d_registration.h */,
 				A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */,
+				A05941DC1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm */,
 				A031C00115DADE5F00E1986C /* js_bindings_config.h */,
 				A031C00215DADE5F00E1986C /* js_bindings_core.h */,
 				A031C00315DADE5F00E1986C /* js_bindings_core.mm */,
@@ -16719,6 +16724,7 @@
 				A062C9ED1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 				A064EC6416235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
+				A05941DD1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16846,6 +16852,7 @@
 				A062C9EF1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 				A064EC6616235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
+				A05941DF1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16963,6 +16970,7 @@
 				A062C9EE1609844F00D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 				A064EC6516235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
+				A05941DE1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
