@@ -56,6 +56,9 @@
     NSMutableArray* documentCallbackNames;
     NSMutableArray* documentCallbackNodes;
     NSString* documentControllerName;
+    NSString* lastCompletedSequenceName;
+    
+    void (^block)(id sender);
 }
 @property (nonatomic,readonly) NSMutableArray* sequences;
 @property (nonatomic,assign) int autoPlaySequenceId;
@@ -68,6 +71,7 @@
 @property (nonatomic,readonly) NSMutableArray* documentCallbackNames;
 @property (nonatomic,readonly) NSMutableArray* documentCallbackNodes;
 @property (nonatomic,copy) NSString* documentControllerName;
+@property (nonatomic,readonly) NSString* lastCompletedSequenceName;
 
 - (CGSize) containerSize:(CCNode*)node;
 
@@ -79,6 +83,8 @@
 - (void) runAnimationsForSequenceNamed:(NSString*)name tweenDuration:(float)tweenDuration;
 - (void) runAnimationsForSequenceNamed:(NSString*)name;
 - (void) runAnimationsForSequenceId:(int)seqId tweenDuration:(float) tweenDuration;
+
+-(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b;
 
 - (void) debug;
 
@@ -104,4 +110,11 @@
 }
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;
 -(id) initWithDuration:(ccTime)duration angle:(float)angle;
+@end
+
+//
+// EeseInstant
+//
+@interface CCEaseInstant : CCActionEase <NSCopying>
+{}
 @end

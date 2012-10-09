@@ -41,6 +41,7 @@
 @synthesize documentCallbackNames;
 @synthesize documentCallbackNodes;
 @synthesize documentControllerName;
+@synthesize lastCompletedSequenceName;
 
 - (id) init
 {
@@ -291,10 +292,13 @@
 
 - (CCActionInterval*) easeAction:(CCActionInterval*) action easingType:(int)easingType easingOpt:(float) easingOpt
 {
-    if (easingType == kCCBKeyframeEasingLinear
-        || easingType == kCCBKeyframeEasingInstant)
+    if (easingType == kCCBKeyframeEasingLinear)
     {
         return action;
+    }
+    else if (easingType == kCCBKeyframeEasingInstant)
+    {
+        return [CCEaseInstant actionWithAction:action];
     }
     else if (easingType == kCCBKeyframeEasingCubicIn)
     {
@@ -453,7 +457,18 @@
 
 - (void) sequenceCompleted
 {
+    // Save last completed sequence
+    if (lastCompletedSequenceName != runningSequence.name)
+    {
+        [lastCompletedSequenceName release];
+        lastCompletedSequenceName = [runningSequence.name copy];
+    }
+    
+    // Callbacks
     [delegate completedAnimationSequenceNamed:runningSequence.name];
+    if (block) block(self);
+    
+    // Play next sequence
     int nextSeqId = runningSequence.chainedSequenceId;
     runningSequence = NULL;
     
@@ -467,6 +482,12 @@
 - (NSString*) runningSequenceName
 {
     return runningSequence.name;
+}
+
+-(void) setCompletedAnimationCallbackBlock:(void(^)(id sender))b
+{
+    [block release];
+    block = [b copy];
 }
 
 - (void) dealloc
@@ -494,6 +515,10 @@
     [documentOutletNodes release];
     [documentCallbackNames release];
     [documentCallbackNodes release];
+    
+    [lastCompletedSequenceName release];
+    
+    [block release];
     
     [super dealloc];
 }
@@ -578,3 +603,19 @@
 }
 
 @end
+
+
+@implementation CCEaseInstant
+-(void) update: (ccTime) t
+{
+    if (t < 0)
+    {
+        [other update:0];
+    }
+    else
+    {
+        [other update:1];
+    }
+}
+@end
+

@@ -3981,6 +3981,7 @@
 		E0FDACE7123DAC8300F25BB4 /* larabie-16-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */; };
 		E0FDACE8123DAC8300F25BB4 /* larabie-16.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACE6123DAC8300F25BB4 /* larabie-16.png */; };
 		E0FDACEE123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */; };
+		E39CB1C216239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = E39CB1C116239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm */; };
 		E3C9E78A161FB9EC0031D2E6 /* CCBAnimationManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */; };
 		E3C9E78B161FB9EC0031D2E6 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */; };
 		E3C9E78C161FB9EC0031D2E6 /* CCBKeyframe.h in Headers */ = {isa = PBXBuildFile; fileRef = E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */; };
@@ -6188,6 +6189,7 @@
 		E0FDACE5123DAC8300F25BB4 /* larabie-16-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16-hd.png"; sourceTree = "<group>"; };
 		E0FDACE6123DAC8300F25BB4 /* larabie-16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "larabie-16.png"; sourceTree = "<group>"; };
 		E0FDACED123DAD0000F25BB4 /* tuffy_bold_italic-charmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tuffy_bold_italic-charmap-hd.png"; sourceTree = "<group>"; };
+		E39CB1C116239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosBuilderReader_manual.mm; sourceTree = "<group>"; };
 		E3C9E780161FB9EC0031D2E6 /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		E3C9E781161FB9EC0031D2E6 /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
 		E3C9E782161FB9EC0031D2E6 /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
@@ -8700,6 +8702,7 @@
 			children = (
 				A031BF5915DAC68600E1986C /* js_bindings_basic_conversions.h */,
 				A031BF5A15DAC68600E1986C /* js_bindings_basic_conversions.mm */,
+				E39CB1C116239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm */,
 				A031BF5B15DAC68600E1986C /* js_bindings_chipmunk_manual.h */,
 				A031BF5C15DAC68600E1986C /* js_bindings_chipmunk_manual.mm */,
 				A064EC46162359D000020E06 /* js_bindings_chipmunk_registration.h */,
@@ -15413,6 +15416,7 @@
 				A062CA89160D453200D1E3BC /* js_bindings_chipmunk_auto_classes.mm in Sources */,
 				A064ECA216235FE700020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064ECA416235FE700020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
+				E39CB1C216239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
