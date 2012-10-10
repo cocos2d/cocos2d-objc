@@ -619,7 +619,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	UIFont *font = [UIFont fontWithName:name size:size];
 
 	if( ! font ) {
-		CCLOG(@"cocos2d: Unable to load font %@", name);
+		CCLOGWARN(@"cocos2d: WARNING: Unable to load font %@", name);
 		[self release];
 		return nil;
 	}
@@ -636,7 +636,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 	{
         NSFont* font = [NSFont fontWithName:name size:size];
         if( ! font ) {
-            CCLOG(@"cocos2d: Unable to load font %@", name);
+			CCLOGWARN(@"cocos2d: WARNING: Unable to load font %@", name);
             [self release];
             return nil;
         }

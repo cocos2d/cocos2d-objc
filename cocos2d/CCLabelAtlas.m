@@ -59,7 +59,10 @@
 	
 	NSAssert( [[dict objectForKey:@"version"] intValue] == 1, @"Unsupported version. Upgrade cocos2d version");
 
-	NSString *textureFilename = [dict objectForKey:@"textureFilename"];
+	// obtain the path, and prepend it
+	NSString *path = [fntFile stringByDeletingLastPathComponent];
+	NSString *textureFilename = [path stringByAppendingPathComponent:[dict objectForKey:@"textureFilename"]];
+	
 	NSUInteger width = [[dict objectForKey:@"itemWidth"] unsignedIntValue]  / CC_CONTENT_SCALE_FACTOR();
 	NSUInteger height = [[dict objectForKey:@"itemHeight"] unsignedIntValue] / CC_CONTENT_SCALE_FACTOR();
 	NSUInteger startChar = [[dict objectForKey:@"firstChar"] unsignedIntValue];
