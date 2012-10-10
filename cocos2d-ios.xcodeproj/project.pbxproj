@@ -1432,7 +1432,6 @@
 		654094D314E9856000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963B14E9E7D000FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		6540963C14E9E7D300FC93EA /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
-		657ADCDB1623240F00E4636C /* MainWindowTest-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */; };
 		657ADCDE16233DD300E4636C /* MainWindowTest.xib in Resources */ = {isa = PBXBuildFile; fileRef = 657ADCDD16233DD300E4636C /* MainWindowTest.xib */; };
 		6593D0E41610D31F003D4935 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */; };
 		6593D0E61610D320003D4935 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */; };
@@ -1659,6 +1658,7 @@
 		65F8F3F61615E85100F6DBFF /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */; };
 		65F8F3F71615E85100F6DBFF /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */; };
 		65F8F3F81615E85100F6DBFF /* CCPhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = 65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */; };
+		65FA9DFC1623B058004CF0A1 /* MainWindowTest-ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 65FA9DFB1623B058004CF0A1 /* MainWindowTest-ipad.xib */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
 		8E3FC8920F7B8BE900B3E5DE /* trance-loop.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */; };
@@ -4673,7 +4673,6 @@
 		65171AE9160AB7F5003CBC09 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		65171AEA160AB7F6003CBC09 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		65171AEC160ABCF7003CBC09 /* grossini-528h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini-528h.png"; sourceTree = "<group>"; };
-		657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindowTest-ipad.xib"; sourceTree = "<group>"; };
 		657ADCDD16233DD300E4636C /* MainWindowTest.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowTest.xib; sourceTree = "<group>"; };
 		657F114D150BA75D0047F93C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		657F114E150BA75D0047F93C /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
@@ -4889,6 +4888,7 @@
 		65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
 		65FA2CFE161D3D6C008B11F2 /* MainWindowTestiOS6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowTestiOS6.xib; sourceTree = "<group>"; };
+		65FA9DFB1623B058004CF0A1 /* MainWindowTest-ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindowTest-ipad.xib"; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
 		8E3FC8910F7B8BE900B3E5DE /* trance-loop.ogg */ = {isa = PBXFileReference; lastKnownFileType = text; path = "trance-loop.ogg"; sourceTree = "<group>"; };
@@ -6418,8 +6418,8 @@
 		504E18E511C4C91200E19835 /* EAGLViewTest */ = {
 			isa = PBXGroup;
 			children = (
+				65FA9DFB1623B058004CF0A1 /* MainWindowTest-ipad.xib */,
 				65D319FE162319A8000825C6 /* MainWindowTest-ipadiOS6.xib */,
-				657ADCDA1623240F00E4636C /* MainWindowTest-ipad.xib */,
 				657ADCDD16233DD300E4636C /* MainWindowTest.xib */,
 				504E190111C4CB7D00E19835 /* main.m */,
 				504E18E611C4C91200E19835 /* EAGLViewTest-Info.plist */,
@@ -10211,8 +10211,8 @@
 				A0B0372213EA10210073E59A /* r2-ipad.png in Resources */,
 				65171AF2160ABCF8003CBC09 /* grossini-528h.png in Resources */,
 				6593D0F61610D32E003D4935 /* Default-568h@2x.png in Resources */,
-				657ADCDB1623240F00E4636C /* MainWindowTest-ipad.xib in Resources */,
 				657ADCDE16233DD300E4636C /* MainWindowTest.xib in Resources */,
+				65FA9DFC1623B058004CF0A1 /* MainWindowTest-ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
