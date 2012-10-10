@@ -21,22 +21,34 @@
 
 /*
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+
 - (void)viewDidLoad {
 
     [super viewDidLoad];
 }
 */
 
+- (void) viewDidAppear:(BOOL)animated
+{
+    firstTime_ = NO;
+    [super viewDidAppear:animated];
+}
+
+- (void) viewWillAppear:(BOOL)animated
+{
+    firstTime_ = YES;
+    [super viewWillAppear:animated];
+}
+
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
-    // Return YES for supported orientations
-
-	// eg: Only support landscape orientations ?
-//	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-//			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
-
-	// eg: Support 4 orientations
+    //this contruction is workaround for issue #1433, when supporting all orientations and holding the device in landscape when starting up results in portrait view size in iOS4 and iOS5
+    if (firstTime_ && interfaceOrientation == UIInterfaceOrientationPortrait)
+    {
+        return NO;
+    }
+    
 	return YES;
 }
 
@@ -48,14 +60,12 @@
     return UIInterfaceOrientationMaskAll;
 }
 
-
 - (BOOL)shouldAutorotate {
     return YES;
 }
 
 #endif
 #endif
-
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.

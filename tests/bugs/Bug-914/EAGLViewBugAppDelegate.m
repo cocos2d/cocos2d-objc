@@ -16,36 +16,32 @@
 @synthesize window;
 @synthesize viewController=bugViewController;
 
-- (void) applicationDidFinishLaunching:(UIApplication*)application
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
 	// Init the window
-
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-	// Try to use CADisplayLink director
-	// if it fails (SDK < 3.1) use the default director
-	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
-		[CCDirector setDirectorType:kCCDirectorTypeDefault];
-
-
+    
+	// must be called before any othe call to the director
+	[CCDirector setDirectorType:kCCDirectorTypeDisplayLink];
+    
+	// before creating any layer, set the landscape mode
 	CCDirector *director = [CCDirector sharedDirector];
-
-	// Init the View Controller
+    
+   	// Enable Retina display
+	[director enableRetinaDisplay:YES];
+    
+    // Init the View Controller
 	viewController = [[bugViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.wantsFullScreenLayout = YES;
-
-	// Create the EAGLView manually
-	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
+    
+    EAGLView *glView = [EAGLView viewWithFrame:[[UIScreen mainScreen] bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES];
-
-	[glView setMultipleTouchEnabled:YES];
-
-	// attach the openglView to the director
-	[director setOpenGLView:glView];
-
-    [director enableRetinaDisplay:YES];
-	//[director setContentScaleFactor:2];
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
+   
 
 	//
 	// VERY IMPORTANT:
@@ -53,33 +49,45 @@
 	// then the device orientation should be "Portrait".
 	//
 	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
-
+    
 	[director setAnimationInterval:1.0/60];
+    
 	[director setDisplayFPS:YES];
-
-
-
+    
 	// make the OpenGLView a child of the view controller
-	[viewController setView:glView];
-
-	// make the View Controller a child of the main window
-	[window addSubview: viewController.view];
+    [viewController setView:glView];
+    
+    // attach the openglView to the director
+	[director setOpenGLView:(EAGLView*)viewController.view];
+    
+    [window addSubview:viewController.view];
     
     //needed for iOS6, recommend in 4 and 5
     [window setRootViewController:viewController];
-
+	
+    // make main window visible
 	[window makeKeyAndVisible];
-
+    
+ 
+    
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-
-	// Turn on display FPS
-	[director setDisplayFPS:YES];
-
+    
+	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
+	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
+	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+    [CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"
+	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
+	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+	// Assume that PVR images have premultiplied alpha
+	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+    
 	// Run the intro Scene
 	[[CCDirector sharedDirector] runWithScene: [HelloWorld scene]];
+    
+    return YES;
 }
 
 
