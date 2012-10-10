@@ -292,6 +292,8 @@
 
 - (CCActionInterval*) easeAction:(CCActionInterval*) action easingType:(int)easingType easingOpt:(float) easingOpt
 {
+    if ([action isKindOfClass:[CCSequence class]]) return action;
+    
     if (easingType == kCCBKeyframeEasingLinear)
     {
         return action;
@@ -358,7 +360,7 @@
 - (void) runActionsForNode:(CCNode*)node sequenceProperty:(CCBSequenceProperty*)seqProp tweenDuration:(float)tweenDuration
 {
     NSArray* keyframes = [seqProp keyframes];
-    int numKeyframes = keyframes.count;
+    int numKeyframes = (int)keyframes.count;
     
     if (numKeyframes > 1)
     {
