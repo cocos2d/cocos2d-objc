@@ -65,6 +65,7 @@ version 1.1-rc0 ..-..-2012
 . [FIX] Compiler
         fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0.
         changed %08X to %p in reporting strings for resolving compile errors in xCode 4.4/LLVM 4
+        removed armv6 from architectures (still appears under valid architectures in older Xcode versions)
 . [FIX] TMXParser: parses external tilesets correctly (issue #1203)
 . [FIX] Templates/Project new files for iPhone5 support
 . [FIX] Tests: MenuTest moved actions from init to onEnter (issue #884)
