@@ -492,7 +492,11 @@ void FNTConfigRemoveCache( void )
     
 	if( fntFile ) {
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
-		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+		if(!newConf) {
+			CCLOGWARN(@"cocos2d: WARNING. CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
+			[self release];
+			return nil;
+		}
         
 		configuration_ = [newConf retain];
 		fntFile_ = [fntFile copy];
