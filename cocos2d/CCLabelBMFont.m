@@ -162,7 +162,7 @@ void FNTConfigRemoveCache( void )
 	NSError *error;
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
   
-  NSMutableString *validCharsString	= [[NSMutableString alloc] initWithCapacity:512];
+	NSMutableString *validCharsString = [[NSMutableString alloc] initWithCapacity:512];
     
 	if( ! contents ) {
 		NSLog(@"cocos2d: Error parsing FNTfile %@: %@", fntFile, error);
@@ -184,7 +184,7 @@ void FNTConfigRemoveCache( void )
 		if([line hasPrefix:@"info face"]) {
 			// XXX: info parsing is incomplete
 			// Not needed for the Hiero editors, but needed for the AngelCode editor
-            //			[self parseInfoArguments:line];
+//			[self parseInfoArguments:line];
 		}
 		// Check to see if the start of the line is something we are interested in
 		else if([line hasPrefix:@"common lineHeight"]) {
@@ -205,11 +205,11 @@ void FNTConfigRemoveCache( void )
 			element->key = element->fontDef.charID;
 			HASH_ADD_INT(fontDefDictionary_, key, element);
       
-      [validCharsString appendString:[NSString stringWithFormat:@"%C", element->fontDef.charID]];
+			[validCharsString appendString:[NSString stringWithFormat:@"%C", element->fontDef.charID]];
 		}
-        //		else if([line hasPrefix:@"kernings count"]) {
-        //			[self parseKerningCapacity:line];
-        //		}
+//		else if([line hasPrefix:@"kernings count"]) {
+//			[self parseKerningCapacity:line];
+//		}
 		else if([line hasPrefix:@"kerning first"]) {
 			[self parseKerningEntry:line];
 		}
@@ -495,8 +495,7 @@ void FNTConfigRemoveCache( void )
 		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
         
 		configuration_ = [newConf retain];
-        
-		fntFile_ = [fntFile retain];
+		fntFile_ = [fntFile copy];
         
 		texture = [[CCTextureCache sharedTextureCache] addImage:configuration_.atlasName];
         
