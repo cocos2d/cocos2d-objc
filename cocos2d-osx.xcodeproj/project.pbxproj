@@ -5897,6 +5897,7 @@
 		E0DA433D12A03A3C00210ACE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		E0DA433E12A03A3C00210ACE /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		E0DA434912A03AE200210ACE /* FullScreenTest.m in Sources */ = {isa = PBXBuildFile; fileRef = E0DA434812A03AE100210ACE /* FullScreenTest.m */; };
+		E6C215A31625CEC9003E3F79 /* SimpleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E6C215A21625CEC9003E3F79 /* SimpleSprite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -7568,6 +7569,7 @@
 		E0DA434812A03AE100210ACE /* FullScreenTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FullScreenTest.m; path = tests/FullScreenTest.m; sourceTree = "<group>"; };
 		E0DA434A12A03B0C00210ACE /* FullScreenTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FullScreenTest.h; path = tests/FullScreenTest.h; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E6C215A21625CEC9003E3F79 /* SimpleSprite.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = SimpleSprite.m; path = tests/SimpleSprite.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -8127,6 +8129,7 @@
 		29B97314FDCFA39411CA2CEA /* cocos2d-mac */ = {
 			isa = PBXGroup;
 			children = (
+				E6C215A21625CEC9003E3F79 /* SimpleSprite.m */,
 				A0E55417141EAEEE003F1E5A /* README.md */,
 				E076E61C1225EC1E00DE0DA2 /* AUTHORS */,
 				E076EB3E1225F05200DE0DA2 /* RELEASE_NOTES */,
@@ -16718,6 +16721,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6C215A31625CEC9003E3F79 /* SimpleSprite.m in Sources */,
 				E076F20D12268A9800DE0DA2 /* main.m in Sources */,
 				E076F21F12268AF100DE0DA2 /* SpriteTest.m in Sources */,
 				A04443F214A91DB600E62742 /* BaseAppController.m in Sources */,
