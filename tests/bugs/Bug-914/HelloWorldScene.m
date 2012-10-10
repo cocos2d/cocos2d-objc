@@ -34,7 +34,9 @@
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init] )) {
 
-
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"sceneStarted" object:nil];
+        
+        
 		self.isTouchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -48,6 +50,7 @@
 			[layer setAnchorPoint:ccp(0.5f, 0.5f)];
 			[layer setIsRelativeAnchorPoint:YES];
 			[self addChild:layer z:-1-i];
+            
 		}
 
 
@@ -55,20 +58,41 @@
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 
 		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"restart" target:self selector:@selector(restart:)];
+        
+        CCMenuItem *item2 = [CCMenuItemFont itemFromString:@"re position" target:self selector:@selector(rePositionItems)];
 
-		CCMenu *menu = [CCMenu menuWithItems:item1, nil];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2,nil];
 		[menu alignItemsVertically];
 		[menu setPosition:ccp(size.width/2, 100)];
 
-		[self addChild:menu];
-
+		[self addChild:menu z:2];
+        
 		// position the label on the center of the screen
 		label.position =  ccp( size.width /2 , size.height/2 );
 
 		// add the label as a child to this Layer
-		[self addChild: label];
+		[self addChild: label z:2];
+        
 	}
 	return self;
+}
+
+- (void) rePositionItems
+{
+    CGSize newSize = [[CCDirector sharedDirector] winSize];
+    CGSize oldSize;
+    oldSize.height = newSize.width;
+    oldSize.width = newSize.height;
+
+    CCNode* child;
+    CGPoint p;
+    for(child in children_)
+    {
+        p = child.position;
+        p.x = (child.position.x / oldSize.width) * newSize.width;
+        p.y = (child.position.y / oldSize.height) * newSize.height;
+        child.position = p;
+    }
 }
 
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -84,6 +108,12 @@
 -(void) restart:(id)sender
 {
 	[[CCDirector sharedDirector] replaceScene:[HelloWorld scene]];
+}
+
+-(void) winSize
+{
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    CCLOG(@"width %f height %f",size.width,size.height);
 }
 
 // on "dealloc" you need to release all your retained objects

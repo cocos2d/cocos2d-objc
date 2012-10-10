@@ -34,20 +34,13 @@
 	viewController = [[bugViewController alloc] initWithNibName:nil bundle:nil];
 	viewController.wantsFullScreenLayout = YES;
     
-    EAGLView *glView = [EAGLView viewWithFrame:[[UIScreen mainScreen] bounds]
-								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:GL_DEPTH_COMPONENT24_OES
-							preserveBackbuffer:NO
-									sharegroup:nil
-								 multiSampling:NO
-							   numberOfSamples:0];
-   
 
-	//
+    //
 	// VERY IMPORTANT:
 	// If the rotation is going to be controlled by a UIViewController
 	// then the device orientation should be "Portrait".
 	//
+    
 	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
     
 	[director setAnimationInterval:1.0/60];
@@ -55,7 +48,7 @@
 	[director setDisplayFPS:YES];
     
 	// make the OpenGLView a child of the view controller
-    [viewController setView:glView];
+    //[viewController setView:glView];
     
     // attach the openglView to the director
 	[director setOpenGLView:(EAGLView*)viewController.view];
