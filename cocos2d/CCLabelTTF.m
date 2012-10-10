@@ -44,7 +44,7 @@
 #endif
 
 @interface CCLabelTTF ()
--(void) updateTexture;
+- (BOOL) updateTexture;
 - (NSString*) getFontName:(NSString*)fontName;
 @end
 
@@ -266,7 +266,7 @@
 }
 
 // Helper
-- (void) updateTexture
+- (BOOL) updateTexture
 {				
 	CCTexture2D *tex;
 	if( dimensions_.width == 0 || dimensions_.height == 0 )
@@ -282,7 +282,10 @@
 									   vAlignment:vAlignment_
 									lineBreakMode:lineBreakMode_
 			   ];
-		
+
+	if( !tex )
+		return NO;
+
 #ifdef __CC_PLATFORM_IOS
 	// iPad ?
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
@@ -307,5 +310,7 @@
 	CGRect rect = CGRectZero;
 	rect.size = [texture_ contentSize];
 	[self setTextureRect: rect];
+	
+	return YES;
 }
 @end
