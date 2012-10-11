@@ -2283,7 +2283,6 @@
 		A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5712DF8A8C002442F5 /* futura-48.png */; };
 		A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7971225EDD000DE0DA2 /* Official-cocos2d-Icon-Angry.png */; };
 		A0AA855C159E1AA700E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7981225EDD000DE0DA2 /* Official-cocos2d-Icon-Happy.png */; };
-		A0AA855D159E286200E77CC9 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		A0AAB80B1451BD3600850F2C /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */; };
 		A0AAB80C1451BD3600850F2C /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0AAB80A1451BD3600850F2C /* CCParticleBatchNode.m */; };
 		A0ADEF7314584BD3009A71F1 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
@@ -2901,7 +2900,6 @@
 		A0E5F8DE15C1B21700D44C32 /* btn-play-normal.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C51225EDD000DE0DA2 /* btn-play-normal.png */; };
 		A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C61225EDD000DE0DA2 /* btn-play-selected.png */; };
 		A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
-		A0E5F92615C1B21700D44C32 /* Particles in Resources */ = {isa = PBXBuildFile; fileRef = E076EADD1225EE2B00DE0DA2 /* Particles */; };
 		A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0137F5F15AE39A9000AA1C2 /* fps_images.plist */; };
 		A0E5F95D15C1B21700D44C32 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		A0E5F95E15C1B21700D44C32 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
@@ -13128,7 +13126,6 @@
 				A0AA8556159D789E00E77CC9 /* futura-48.png in Resources */,
 				A0AA8559159E157000E77CC9 /* Official-cocos2d-Icon-Angry.png in Resources */,
 				A0AA855C159E1AA700E77CC9 /* Official-cocos2d-Icon-Happy.png in Resources */,
-				A0AA855D159E286200E77CC9 /* Particles in Resources */,
 				A0137E9915ACE678000AA1C2 /* 808_120bpm.wav in Resources */,
 				A0137E9A15ACE678000AA1C2 /* ballbounce.wav in Resources */,
 				A0137E9B15ACE678000AA1C2 /* cowbell.wav in Resources */,
@@ -13367,7 +13364,6 @@
 				A0E5F8DE15C1B21700D44C32 /* btn-play-normal.png in Resources */,
 				A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */,
 				A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */,
-				A0E5F92615C1B21700D44C32 /* Particles in Resources */,
 				A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */,
 				A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */,
 				A031B8E615D9CF8E00E1986C /* car_smoke.plist in Resources */,
