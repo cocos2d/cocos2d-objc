@@ -9,11 +9,13 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] LabelBMFont: Does not crash if it can't parse the FNT. Instead it logs an error and return nil
 . [FIX] LabelTTF: It is possible to set an empty string
 . [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
+. [FIX] Particle: Honors the directory of the .plist file when loading the .png file
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
 		Fixed some grammar errors
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
 		Add new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
+. [FIX] TextureCache: filenames are standarized before adding them into the cache
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
 . [3RD] JS Bindings: Updated to v0.3
