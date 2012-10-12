@@ -113,6 +113,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @interface CCDirectorIOS ()
 -(void) updateContentScaleFactor;
+-(void) releaseTouchDispatcher;
 
 @end
 
@@ -467,14 +468,20 @@ CGFloat	__ccContentScaleFactor = 1;
 	}
 }
 
+- (void) releaseTouchDispatcher
+{
+    [[CCTouchDispatcher sharedDispatcher] release]; 
+}
+
 -(void) end
 {
 	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
 
-    //since 1.1 RC0 also remove touch dispatcher, touch dispatcher can be reinitialised
-    [[CCTouchDispatcher sharedDispatcher] release];
+    //can't release the touch dispatcher if the call to end is made inside a touch handler, can schedule a selector outside the touch
+     [self performSelector:@selector(releaseTouchDispatcher) withObject: nil afterDelay:0.015f];
 
 	[super end];
+   
 }
 
 @end
