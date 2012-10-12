@@ -86,8 +86,8 @@
 
 -(void) onQuit: (id) sender
 {
-	[[CCDirector sharedDirector] popScene];
-
+	//[[CCDirector sharedDirector] popScene];
+    CC_DIRECTOR_END();
 	// HA HA... no more terminate on sdk v3.0
 	// http://developer.apple.com/iphone/library/qa/qa2008/qa1561.html
 	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
