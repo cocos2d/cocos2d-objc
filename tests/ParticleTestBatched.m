@@ -840,7 +840,7 @@ Class restartAction()
 	return @"Varying size";
 }
 
--(NSString *) subTitle
+-(NSString *) subtitle
 {
 	return @"doesn't work, is a point particle system";
 }
