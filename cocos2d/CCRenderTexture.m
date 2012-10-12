@@ -164,7 +164,7 @@
 	if (depthRenderBufffer_)
 		glDeleteRenderbuffers(1, &depthRenderBufffer_);
 
-	[sprite_ dealloc];
+	[sprite_ release];
 	[super dealloc];
 }
 
