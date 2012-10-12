@@ -113,8 +113,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 @interface CCDirectorIOS ()
 -(void) updateContentScaleFactor;
--(void) releaseTouchDispatcher;
-
+- (void) releaseTouchDispatcher;
 @end
 
 @implementation CCDirectorIOS
@@ -470,15 +469,18 @@ CGFloat	__ccContentScaleFactor = 1;
 
 - (void) releaseTouchDispatcher
 {
-    [[CCTouchDispatcher sharedDispatcher] release]; 
+    [[CCTouchDispatcher sharedDispatcher] release];
 }
 
 -(void) end
 {
 	[[CCTouchDispatcher sharedDispatcher] removeAllDelegates];
 
-    //can't release the touch dispatcher if the call to end is made inside a touch handler, can schedule a selector outside the touch
-     [self performSelector:@selector(releaseTouchDispatcher) withObject: nil afterDelay:0.015f];
+    //can't release the touch dispatcher if the call to end is made inside a touch handler, have to schedule it for next loop
+    //for the rare case when the EAGLView isn't deallocated when the director is ended, the next touch in the view would cause a crash
+    //disable the following line if the EAGLView is shared between cocos and another OpenGL program outside of cocos
+    
+    [self performSelectorOnMainThread:@selector(releaseTouchDispatcher) withObject:nil waitUntilDone:NO];
 
 	[super end];
    
