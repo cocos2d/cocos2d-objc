@@ -1049,6 +1049,18 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.mm</string>
 		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_CocosBuilderReader_manual.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_CocosBuilderReader_manual.mm</string>
+		</dict>
 		<key>libs/jsbindings/src/manual/js_bindings_config.h</key>
 		<dict>
 			<key>Group</key>
@@ -1207,6 +1219,7 @@
 		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_manual.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.mm</string>
+		<string>libs/jsbindings/src/manual/js_bindings_CocosBuilderReader_manual.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_config.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_core.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_core.mm</string>
