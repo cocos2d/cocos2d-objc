@@ -22,6 +22,7 @@
 #import "FontLabelStringDrawing.h"
 #import "ZFont.h"
 #import "ZAttributedStringPrivate.h"
+#import "CCNS.h"
 
 @interface ZFont (ZFontPrivate)
 @property (nonatomic, readonly) CGFloat ratio;
@@ -557,8 +558,8 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 						lastLine = YES;
 					}
 					// walk backwards if wrapping is necessary
-					if (lastWrapCache.index > indexCache.index && lineBreakMode != UILineBreakModeCharacterWrap &&
-						(!lastLine || lineBreakMode != UILineBreakModeClip)) {
+					if (lastWrapCache.index > indexCache.index && lineBreakMode != CCLineBreakModeCharacterWrap &&
+						(!lastLine || lineBreakMode != CCLineBreakModeClip)) {
 						// we're doing some sort of word wrapping
 						idx = lastWrapCache.index;
 						lineSize = lastWrapCache.lineSize;
@@ -583,7 +584,7 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 			}
 			if (finishLine) {
 				// TODO: support head/middle truncation
-				if (lastLine && idx < len && lineBreakMode == UILineBreakModeTailTruncation) {
+				if (lastLine && idx < len && lineBreakMode == CCLineBreakModeTailTruncation) {
 					// truncate
 					unichar ellipsis = 0x2026; // ellipsis (…)
 					CGGlyph ellipsisGlyph;
@@ -637,13 +638,13 @@ static CGSize drawOrSizeTextConstrainedToSize(BOOL performDraw, NSString *string
 				// draw
 				if (performDraw) {
 					switch (alignment) {
-						case UITextAlignmentLeft:
+						case CCTextAlignmentLeft:
 							drawPoint.x = 0;
 							break;
-						case UITextAlignmentCenter:
+						case CCTextAlignmentCenter:
 							drawPoint.x = (constrainedSize.width - lineSize.width) / 2.0f;
 							break;
-						case UITextAlignmentRight:
+						case CCTextAlignmentRight:
 							drawPoint.x = constrainedSize.width - lineSize.width;
 							break;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED   >  __IPHONE_5_1
@@ -794,12 +795,12 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 // ZFont-based methods
 - (CGSize)sizeWithZFont:(ZFont *)font {
 	CGSize size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
-												  UILineBreakModeClip, UITextAlignmentLeft, YES);
+												  CCLineBreakModeClip, CCTextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)sizeWithZFont:(ZFont *)font constrainedToSize:(CGSize)size {
-	return [self sizeWithZFont:font constrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+	return [self sizeWithZFont:font constrainedToSize:size lineBreakMode:CCLineBreakModeWordWrap];
 }
 
 /*
@@ -814,30 +815,30 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
  be present in the output size.
  */
 - (CGSize)sizeWithZFont:(ZFont *)font constrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode {
-	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, 0, lineBreakMode, UITextAlignmentLeft, YES);
+	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, 0, lineBreakMode, CCTextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)sizeWithZFont:(ZFont *)font constrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode
 		  numberOfLines:(NSUInteger)numberOfLines {
-	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, numberOfLines, lineBreakMode, UITextAlignmentLeft, YES);
+	size = drawOrSizeTextConstrainedToSize(NO, self, attributeRunForFont(font), size, numberOfLines, lineBreakMode, CCTextAlignmentLeft, YES);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point withZFont:(ZFont *)font {
-	return [self drawAtPoint:point forWidth:CGFLOAT_MAX withZFont:font lineBreakMode:UILineBreakModeClip];
+	return [self drawAtPoint:point forWidth:CGFLOAT_MAX withZFont:font lineBreakMode:CCLineBreakModeClip];
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode {
-	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self, attributeRunForFont(font), lineBreakMode, UITextAlignmentLeft, 1, YES);
+	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self, attributeRunForFont(font), lineBreakMode, CCTextAlignmentLeft, 1, YES);
 }
 
 - (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font {
-	return [self drawInRect:rect withZFont:font lineBreakMode:UILineBreakModeWordWrap];
+	return [self drawInRect:rect withZFont:font lineBreakMode:CCLineBreakModeWordWrap];
 }
 
 - (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode {
-	return [self drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:UITextAlignmentLeft];
+	return [self drawInRect:rect withZFont:font lineBreakMode:lineBreakMode alignment:CCTextAlignmentLeft];
 }
 
 - (CGSize)drawInRect:(CGRect)rect withZFont:(ZFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode
@@ -854,39 +855,39 @@ static CGSize drawTextInRect(CGRect rect, NSString *text, NSArray *attributes, U
 @implementation ZAttributedString (ZAttributedStringDrawing)
 - (CGSize)size {
 	CGSize size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX), 1,
-												  UILineBreakModeClip, UITextAlignmentLeft, NO);
+												  CCLineBreakModeClip, CCTextAlignmentLeft, NO);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)sizeConstrainedToSize:(CGSize)size {
-	return [self sizeConstrainedToSize:size lineBreakMode:UILineBreakModeWordWrap];
+	return [self sizeConstrainedToSize:size lineBreakMode:CCLineBreakModeWordWrap];
 }
 
 - (CGSize)sizeConstrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode {
-	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, 0, lineBreakMode, UITextAlignmentLeft, NO);
+	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, 0, lineBreakMode, CCTextAlignmentLeft, NO);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)sizeConstrainedToSize:(CGSize)size lineBreakMode:(UILineBreakMode)lineBreakMode
 				  numberOfLines:(NSUInteger)numberOfLines {
-	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, numberOfLines, lineBreakMode, UITextAlignmentLeft, NO);
+	size = drawOrSizeTextConstrainedToSize(NO, self.string, self.attributes, size, numberOfLines, lineBreakMode, CCTextAlignmentLeft, NO);
 	return CGSizeMake(ceilf(size.width), ceilf(size.height));
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point {
-	return [self drawAtPoint:point forWidth:CGFLOAT_MAX lineBreakMode:UILineBreakModeClip];
+	return [self drawAtPoint:point forWidth:CGFLOAT_MAX lineBreakMode:CCLineBreakModeClip];
 }
 
 - (CGSize)drawAtPoint:(CGPoint)point forWidth:(CGFloat)width lineBreakMode:(UILineBreakMode)lineBreakMode {
-	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self.string, self.attributes, lineBreakMode, UITextAlignmentLeft, 1, NO);
+	return drawTextInRect((CGRect){ point, { width, CGFLOAT_MAX } }, self.string, self.attributes, lineBreakMode, CCTextAlignmentLeft, 1, NO);
 }
 
 - (CGSize)drawInRect:(CGRect)rect {
-	return [self drawInRect:rect withLineBreakMode:UILineBreakModeWordWrap];
+	return [self drawInRect:rect withLineBreakMode:CCLineBreakModeWordWrap];
 }
 
 - (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode {
-	return [self drawInRect:rect withLineBreakMode:lineBreakMode alignment:UITextAlignmentLeft];
+	return [self drawInRect:rect withLineBreakMode:lineBreakMode alignment:CCTextAlignmentLeft];
 }
 
 - (CGSize)drawInRect:(CGRect)rect withLineBreakMode:(UILineBreakMode)lineBreakMode alignment:(UITextAlignment)alignment {

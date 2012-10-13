@@ -22,6 +22,7 @@
 #import "FontLabel.h"
 #import "FontManager.h"
 #import "FontLabelStringDrawing.h"
+#import "CCNS.h"
 #import "ZFont.h"
 
 @interface ZFont (ZFontPrivate)
@@ -119,12 +120,12 @@
 			size.width = MIN(size.width, origSize.width);
 			// adjust the point for alignment
 			switch (self.textAlignment) {
-				case UITextAlignmentLeft:
+				case CCTextAlignmentLeft:
 					break;
-				case UITextAlignmentCenter:
+				case CCTextAlignmentCenter:
 					point.x += (origSize.width - size.width) / 2.0f;
 					break;
-				case UITextAlignmentRight:
+				case CCTextAlignmentRight:
 					point.x += origSize.width - size.width;
 					break;
 #if __IPHONE_OS_VERSION_MAX_ALLOWED   >  __IPHONE_5_1
