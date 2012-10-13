@@ -35,6 +35,7 @@
 enum {
 	kCCiPhone,
 	kCCiPhoneRetinaDisplay,
+	kCCiPhoneWidescreenDisplay,
 	kCCiPad,
 	kCCiPadRetinaDisplay,
 };
@@ -123,6 +124,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #ifdef __CC_PLATFORM_IOS
 @synthesize iPhoneRetinaDisplaySuffix = iPhoneRetinaDisplaySuffix_;
+@synthesize iPhoneWidescreenDisplaySuffix = iPhoneWidescreenDisplaySuffix_;
+@synthesize iPhoneWidescreenRetinaDisplaySuffix = iPhoneWidescreenRetinaDisplaySuffix_;
 @synthesize iPadSuffix = iPadSuffix_;
 @synthesize iPadRetinaDisplaySuffix = iPadRetinaDisplaySuffix_;
 #elif defined(__CC_PLATFORM_MAC)
@@ -154,8 +157,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #ifdef __CC_PLATFORM_IOS
 		iPhoneRetinaDisplaySuffix_ = @"-hd";
+		iPhoneWidescreenDisplaySuffix_ = @"-wide";
+		iPhoneWidescreenRetinaDisplaySuffix_ = @"-widehd";
 		iPadSuffix_ = @"-ipad";
-		iPadRetinaDisplaySuffix_ = @"-ipadhd";		
+		iPadRetinaDisplaySuffix_ = @"-ipadhd";
 #elif defined(__CC_PLATFORM_MAC)
 		macRetinaDisplaySuffix_ = @"-machd";
 		macSuffix_ = @"-mac";
@@ -181,6 +186,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 #ifdef __CC_PLATFORM_IOS	
 	[iPhoneRetinaDisplaySuffix_ release];
+	[iPhoneWidescreenDisplaySuffix_ release];
+	[iPhoneWidescreenRetinaDisplaySuffix_ release];
 	[iPadSuffix_ release];
 	[iPadRetinaDisplaySuffix_ release];
 	
@@ -280,9 +287,24 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		ret = [self getPath:relPath forSuffix:iPadSuffix_];
 		*resolutionType = kCCResolutioniPad;
 	}
+
+	// iPhone 5 (4") ?
+	if (device == kCCiPhoneWidescreenDisplay || (enableFallbackSuffixes_ && !ret) ) {
+		ret = [self getPath:relPath forSuffix:iPhoneWidescreenRetinaDisplaySuffix_];
+
+		if (ret) {
+			// Found Widescreen Retina image
+			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
+		}
+		else {
+			// Search for Widescreen non-Retina image
+			ret = [self getPath:relPath forSuffix:iPhoneWidescreenDisplaySuffix_];
+			*resolutionType = kCCResolutioniPhone;
+		}
+	}
 	
 	// iPhone HD ?
-	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) ) {
+	if( device == kCCiPhoneRetinaDisplay || (device == kCCiPhoneWidescreenDisplay && !ret) || (enableFallbackSuffixes_ && !ret) ) {
 		ret = [self getPath:relPath forSuffix:iPhoneRetinaDisplaySuffix_];
 		*resolutionType = kCCResolutioniPhoneRetinaDisplay;
 	}
@@ -352,7 +374,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = kCCiPhoneRetinaDisplay;
+		{
+			// XXX: Find a more elegant way of detecting a widescreen device
+			if ([[UIScreen mainScreen] bounds].size.height == 568.0f)
+				ret = kCCiPhoneWidescreenDisplay;
+			else
+				ret = kCCiPhoneRetinaDisplay;
+		}
 		else
 			ret = kCCiPhone;
 	}
@@ -407,10 +435,20 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	if( device == kCCiPad || (enableFallbackSuffixes_ && !ret) )
 		ret = [self removeSuffix:iPadSuffix_ fromPath:path];
+
+	if ( device == kCCiPhoneWidescreenDisplay || (enableFallbackSuffixes_ && !ret) ) {
+		// Try Widescreen Retina first
+		ret = [self removeSuffix:iPhoneWidescreenRetinaDisplaySuffix_ fromPath:path];
+
+		if (!ret) {
+			// Fallback to Widescreen non-Retina
+			ret = [self removeSuffix:iPhoneWidescreenDisplaySuffix_ fromPath:path];
+		}
+	}
 	
-	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) )
+	if( device == kCCiPhoneRetinaDisplay || (device == kCCiPhoneWidescreenDisplay && !ret) || (enableFallbackSuffixes_ && !ret) )
 		ret = [self removeSuffix:iPhoneRetinaDisplaySuffix_ fromPath:path];
-	
+
 	if( device == kCCiPhone || !ret )
 		ret = path;	
 
@@ -458,6 +496,16 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
 {
 	return [self fileExistsAtPath:path withSuffix:iPhoneRetinaDisplaySuffix_];
+}
+
+-(BOOL) iPhoneWidescreenDisplayFileExistsAtPath:(NSString*)path
+{
+	return [self fileExistsAtPath:path withSuffix:iPhoneWidescreenDisplaySuffix_];
+}
+
+-(BOOL) iPhoneWidescreenRetinaDisplayFileExistsAtPath:(NSString*)path
+{
+	return [self fileExistsAtPath:path withSuffix:iPhoneWidescreenRetinaDisplaySuffix_];
 }
 
 -(BOOL) iPadFileExistsAtPath:(NSString*)path

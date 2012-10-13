@@ -40,6 +40,8 @@
 	
 #ifdef __CC_PLATFORM_IOS	
 	NSString *iPhoneRetinaDisplaySuffix_;
+	NSString *iPhoneWidescreenDisplaySuffix_;
+	NSString *iPhoneWidescreenRetinaDisplaySuffix_;
 	NSString *iPadSuffix_;
 	NSString *iPadRetinaDisplaySuffix_;
 #elif defined(__CC_PLATFORM_MAC)
@@ -79,6 +81,13 @@
  @since v1.1
  */
 @property (nonatomic,readwrite, copy, setter = setiPhoneRetinaDisplaySuffix:) NSString *iPhoneRetinaDisplaySuffix;
+
+/** The iPhone 5 / iPod touch 5g (4") Widescreen suffixes to load resources.
+ By default it is "-widehd", "-wide" "-hd" and "", in that order.
+ Only valid on iOS. Not valid for OS X.
+ */
+@property (nonatomic,readwrite, copy, setter = setiPhoneWidescreenDisplaySuffix:) NSString *iPhoneWidescreenDisplaySuffix;
+@property (nonatomic,readwrite, copy, setter = setiPhoneWidescreenRetinaDisplaySuffix:) NSString *iPhoneWidescreenRetinaDisplaySuffix;
 
 /** The iPad suffixes to load resources.
  By default it is "-ipad", "-hd", "", in that order.
@@ -177,6 +186,12 @@
  @since v1.1
  */
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)filename;
+
+/** Returns whether or not a given path exists with the iPhone 5 (4") Widescreen suffix.
+ Only available on iOS. Not supported on OS X.
+ */
+-(BOOL) iPhoneWidescreenDisplayFileExistsAtPath:(NSString*)filename;
+-(BOOL) iPhoneWidescreenRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
 /** Returns whether or not a given filename exists with the iPad suffix.
  Only available on iOS. Not supported on OS X.
