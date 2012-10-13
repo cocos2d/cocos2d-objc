@@ -51,7 +51,7 @@
 
 @implementation ScrollViewController
 
-@synthesize scrollView1;
+@synthesize scrollView1 = scrollView1_;
 
 const CGFloat kScrollObjHeight	= 121.0;
 const CGFloat kScrollObjWidth	= 85.0;
@@ -61,7 +61,7 @@ const NSUInteger kNumImages		= 9;
 - (void)layoutScrollImages
 {
 	UIImageView *view = nil;
-	NSArray *subviews = [scrollView1 subviews];
+	NSArray *subviews = [scrollView1_ subviews];
 
 	// reposition all image subviews in a horizontal serial fashion
 	CGFloat curXLoc = 0;
@@ -78,7 +78,7 @@ const NSUInteger kNumImages		= 9;
 	}
 
 	// set the content size so it can be scrollable
-	[scrollView1 setContentSize:CGSizeMake((kNumImages * kScrollObjWidth), kScrollObjHeight)];
+	[scrollView1_ setContentSize:CGSizeMake((kNumImages * kScrollObjWidth), kScrollObjHeight)];
 }
 
 - (void)viewDidLoad
@@ -88,19 +88,21 @@ const NSUInteger kNumImages		= 9;
 	// 1. setup the scrollview for multiple images and add it to the view controller
 	//
 	// note: the following can be done in Interface Builder, but we show this in code for clarity
-    scrollView1 = [[customScrollView alloc] initWithFrame:CGRectMake(0.f,100.f,320.f,120.f)];
-	[scrollView1 setBackgroundColor:[UIColor blackColor]];
+    customScrollView* scrollView = [[customScrollView alloc] initWithFrame:CGRectMake(0.f,100.f,320.f,120.f)];
+    self.scrollView1 = scrollView;
+    
+    [scrollView release];
+    
+	[scrollView1_ setBackgroundColor:[UIColor blackColor]];
 
-
-
-    [scrollView1 setCanCancelContentTouches:NO];
-	scrollView1.indicatorStyle = UIScrollViewIndicatorStyleWhite;
-	scrollView1.clipsToBounds = YES;		// default is NO, we want to restrict drawing within our scrollview
-	scrollView1.scrollEnabled = YES;
+    [scrollView1_ setCanCancelContentTouches:NO];
+	scrollView1_.indicatorStyle = UIScrollViewIndicatorStyleWhite;
+	scrollView1_.clipsToBounds = YES;		// default is NO, we want to restrict drawing within our scrollview
+	scrollView1_.scrollEnabled = YES;
 
 	// pagingEnabled property default is NO, if set the scroller will stop or snap at each photo
 	// if you want free-flowing scroll, don't set this property.
-	scrollView1.pagingEnabled = NO;
+	scrollView1_.pagingEnabled = NO;
 
 	// load all the images from our bundle and add them to the scroll view
 	NSUInteger i;
@@ -119,7 +121,7 @@ const NSUInteger kNumImages		= 9;
             rect.size.width = kScrollObjWidth;
             imageView.frame = rect;
             imageView.tag = i;	// tag our images for later use when we place them in serial fashion
-            [scrollView1 addSubview:imageView];
+            [scrollView1_ addSubview:imageView];
 
         }
         else NSLog(@"image not found");
@@ -128,13 +130,15 @@ const NSUInteger kNumImages		= 9;
 
 	[self layoutScrollImages];	// now place the photos in serial layout within the scrollview
 
-   	[self setView:scrollView1];
+   	[self setView:scrollView1_];
+
 
 }
 
 - (void)dealloc
 {
-	[scrollView1 release];
+    CCLOG(@"cocos2d: deallocing scrollViewController: %@\n", self);
+	[scrollView1_ release];
 
 	[super dealloc];
 }
@@ -169,6 +173,13 @@ const NSUInteger kNumImages		= 9;
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
     [[CCDirector sharedDirector] setAnimationInterval:1/60.0];
+}
+
+- (void) dealloc
+{
+    CCLOG(@"cocos2d: deallocing customScrollView: %@\n", self);
+    self.delegate = nil;
+    [super dealloc];
 }
 @end
 
@@ -239,7 +250,7 @@ const NSUInteger kNumImages		= 9;
 
 
 - (void)dealloc {
-	CCLOG(@"deallocing masterViewController: %@", self);
+	CCLOG(@"cocos2d: deallocing masterViewController: %@\n", self);
     [super dealloc];
 }
 

@@ -55,7 +55,7 @@
 
 @interface ScrollViewController : UIViewController
 {
-	customScrollView *scrollView1;	// holds five small images to scroll horizontally
+	customScrollView *scrollView1_;	// holds five small images to scroll horizontally
 }
 
 @property (nonatomic, retain) customScrollView *scrollView1;

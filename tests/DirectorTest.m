@@ -375,7 +375,7 @@ Class restartAction()
 	// If the rotation is going to be controlled by a UIViewController
 	// then the device orientation should be "Portrait".
 	//
-	//[director setDeviceOrientation:kCCDeviceOrientationPortrait];
+	[director setDeviceOrientation:kCCDeviceOrientationPortrait];
 
 	[director setAnimationInterval:1.0/60];
 
