@@ -568,7 +568,6 @@ Class restartAction()
 -(void) onExit
 {
 	[super onExit];
-
 	[[NSNotificationCenter defaultCenter] removeObserver:observer_];
 }
 
@@ -580,6 +579,13 @@ Class restartAction()
 -(NSString*) subtitle
 {
 	return @"Manual animation, and animation by parsing .plist";
+}
+
+-(void) dealloc
+{
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+    [super dealloc];
 }
 @end
 
@@ -835,7 +841,9 @@ static int currSpriteTag = firstSpriteTag;
 
 - (void) dealloc
 {
-	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+
 	[super dealloc];
 }
 
@@ -1378,6 +1386,10 @@ static int currSpriteTag = firstSpriteTag;
     [rotator release];
     [stop_rotator release];
     [stop_animation release];
+    
+    [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+
     [super onExit];
 }
 @end
