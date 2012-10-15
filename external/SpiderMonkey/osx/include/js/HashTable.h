@@ -62,7 +62,7 @@ class HashTableEntry {
         JS_ASSERT(isLive()); keyHash |= collisionBit;
     }
     void unsetCollision()         { keyHash &= ~sCollisionBit; }
-    bool hasCollision() const     { JS_ASSERT(isLive()); return keyHash & sCollisionBit; }
+    bool hasCollision() const     { return keyHash & sCollisionBit; }
     bool matchHash(HashNumber hn) { return (keyHash & ~sCollisionBit) == hn; }
     HashNumber getKeyHash() const { JS_ASSERT(!hasCollision()); return keyHash; }
 };
@@ -185,7 +185,7 @@ class HashTable : private AllocPolicy
         friend class HashTable;
 
         HashTable &table;
-        bool added;
+        bool rekeyed;
         bool removed;
 
         /* Not copyable. */
@@ -194,7 +194,7 @@ class HashTable : private AllocPolicy
 
       public:
         template<class Map> explicit
-        Enum(Map &map) : Range(map.all()), table(map.impl), added(false), removed(false) {}
+        Enum(Map &map) : Range(map.all()), table(map.impl), rekeyed(false), removed(false) {}
 
         /*
          * Removes the |front()| element from the table, leaving |front()|
@@ -220,11 +220,11 @@ class HashTable : private AllocPolicy
             JS_ASSERT(&k != &HashPolicy::getKey(this->cur->t));
             if (match(*this->cur, l))
                 return;
-            Entry e = *this->cur;
-            HashPolicy::setKey(e.t, const_cast<Key &>(k));
+            typename HashTableEntry<T>::NonConstT t = this->cur->t;
+            HashPolicy::setKey(t, const_cast<Key &>(k));
             table.remove(*this->cur);
-            table.add(l, e);
-            added = true;
+            table.putNewInfallible(l, t);
+            rekeyed = true;
             this->validEntry = false;
         }
 
@@ -234,22 +234,10 @@ class HashTable : private AllocPolicy
 
         /* Potentially rehashes the table. */
         ~Enum() {
-            if (added)
-                table.checkOverloaded();
+            if (rekeyed)
+                table.checkOverRemoved();
             if (removed)
                 table.checkUnderloaded();
-        }
-
-        /* Can be used to end the enumeration before the destructor. */
-        void endEnumeration() {
-            if (added) {
-                table.checkOverloaded();
-                added = false;
-            }
-            if (removed) {
-                table.checkUnderloaded();
-                removed = false;
-            }
         }
     };
 
@@ -276,6 +264,7 @@ class HashTable : private AllocPolicy
         uint32_t        grows;          /* table expansions */
         uint32_t        shrinks;        /* table contractions */
         uint32_t        compresses;     /* table compressions */
+        uint32_t        rehashes;       /* tombstone decontaminations */
     } stats;
 #   define METER(x) x
 #else
@@ -508,8 +497,9 @@ class HashTable : private AllocPolicy
      */
     Entry &findFreeEntry(HashNumber keyHash)
     {
-        METER(stats.searches++);
         JS_ASSERT(!(keyHash & sCollisionBit));
+        JS_ASSERT(table);
+        METER(stats.searches++);
 
         /* N.B. the |keyHash| has already been distributed. */
 
@@ -518,7 +508,7 @@ class HashTable : private AllocPolicy
         Entry *entry = &table[h1];
 
         /* Miss: return space for a new entry. */
-        if (entry->isFree()) {
+        if (!entry->isLive()) {
             METER(stats.misses++);
             return *entry;
         }
@@ -534,14 +524,16 @@ class HashTable : private AllocPolicy
             h1 = applyDoubleHash(h1, dh);
 
             entry = &table[h1];
-            if (entry->isFree()) {
+            if (!entry->isLive()) {
                 METER(stats.misses++);
                 return *entry;
             }
         }
     }
 
-    bool changeTableSize(int deltaLog2)
+    enum RebuildStatus { NotOverloaded, Rehashed, RehashFailed };
+
+    RebuildStatus changeTableSize(int deltaLog2)
     {
         /* Look, but don't touch, until we succeed in getting new entry store. */
         Entry *oldTable = table;
@@ -550,12 +542,12 @@ class HashTable : private AllocPolicy
         uint32_t newCapacity = JS_BIT(newLog2);
         if (newCapacity > sMaxCapacity) {
             this->reportAllocOverflow();
-            return false;
+            return RehashFailed;
         }
 
         Entry *newTable = createTable(*this, newCapacity);
         if (!newTable)
-            return false;
+            return RehashFailed;
 
         /* We can't fail from here on, so update table parameters. */
         setTableSizeLog2(newLog2);
@@ -572,30 +564,13 @@ class HashTable : private AllocPolicy
         }
 
         destroyTable(*this, oldTable, oldCap);
-        return true;
+        return Rehashed;
     }
 
-    void add(const Lookup &l, const Entry &e)
-    {
-        HashNumber keyHash = prepareHash(l);
-        Entry &entry = lookup(l, keyHash, sCollisionBit);
-
-        if (entry.isRemoved()) {
-            METER(stats.addOverRemoved++);
-            removedCount--;
-            keyHash |= sCollisionBit;
-        }
-
-        entry.t = e.t;
-        entry.setLive(keyHash);
-        entryCount++;
-        mutationCount++;
-    }
-
-    bool checkOverloaded()
+    RebuildStatus checkOverloaded()
     {
         if (!overloaded())
-            return false;
+            return NotOverloaded;
 
         /* Compress if a quarter or more of all entries are removed. */
         int deltaLog2;
@@ -610,9 +585,21 @@ class HashTable : private AllocPolicy
         return changeTableSize(deltaLog2);
     }
 
+    /* Infallibly rehash the table if we are overloaded with removals. */
+    void checkOverRemoved()
+    {
+        if (overloaded()) {
+            METER(stats.rehashes++);
+            rehashTable();
+            JS_ASSERT(!overloaded());
+        }
+    }
+
     void remove(Entry &e)
     {
+        JS_ASSERT(table);
         METER(stats.removes++);
+
         if (e.hasCollision()) {
             e.setRemoved();
             removedCount++;
@@ -630,6 +617,52 @@ class HashTable : private AllocPolicy
             METER(stats.shrinks++);
             (void) changeTableSize(-1);
         }
+    }
+
+    /*
+     * This is identical to changeTableSize(currentSize), but without requiring
+     * a second table.  We do this by recycling the collision bits to tell us if
+     * the element is already inserted or still waiting to be inserted.  Since
+     * already-inserted elements win any conflicts, we get the same table as we
+     * would have gotten through random insertion order.
+     */
+    void rehashTable()
+    {
+        removedCount = 0;
+        for (size_t i = 0; i < capacity(); ++i)
+            table[i].unsetCollision();
+
+        for (size_t i = 0; i < capacity();) {
+            Entry *src = &table[i];
+
+            if (!src->isLive() || src->hasCollision()) {
+                ++i;
+                continue;
+            }
+
+            HashNumber keyHash = src->getKeyHash();
+            HashNumber h1 = hash1(keyHash, hashShift);
+            DoubleHash dh = hash2(keyHash, hashShift);
+            Entry *tgt = &table[h1];
+            while (true) {
+                if (!tgt->hasCollision()) {
+                    Swap(*src, *tgt);
+                    tgt->setCollision();
+                    break;
+                }
+
+                h1 = applyDoubleHash(h1, dh);
+                tgt = &table[h1];
+            }
+        }
+
+        /*
+         * TODO: this algorithm leaves collision bits on *all* elements, even if
+         * they are on no collision path. We have the option of setting the
+         * collision bits correctly on a subsequent pass or skipping the rehash
+         * unless we are totally filled with tombstones: benchmark to find out
+         * which approach is best.
+         */
     }
 
   public:
@@ -663,22 +696,27 @@ class HashTable : private AllocPolicy
     }
 
     Range all() const {
+        JS_ASSERT(table);
         return Range(table, table + capacity());
     }
 
     bool empty() const {
+        JS_ASSERT(table);
         return !entryCount;
     }
 
     uint32_t count() const {
+        JS_ASSERT(table);
         return entryCount;
     }
 
     uint32_t capacity() const {
+        JS_ASSERT(table);
         return JS_BIT(sHashBits - hashShift);
     }
 
     uint32_t generation() const {
+        JS_ASSERT(table);
         return gen;
     }
 
@@ -722,8 +760,11 @@ class HashTable : private AllocPolicy
             removedCount--;
             p.keyHash |= sCollisionBit;
         } else {
-            if (checkOverloaded())
-                /* Preserve the validity of |p.entry|. */
+            /* Preserve the validity of |p.entry|. */
+            RebuildStatus status = checkOverloaded();
+            if (status == RehashFailed)
+                return false;
+            if (status == Rehashed)
                 p.entry = &findFreeEntry(p.keyHash);
         }
 
@@ -754,6 +795,34 @@ class HashTable : private AllocPolicy
         return true;
     }
 
+    void putNewInfallible(const Lookup &l, const T &t)
+    {
+        JS_ASSERT(table);
+
+        HashNumber keyHash = prepareHash(l);
+        Entry *entry = &findFreeEntry(keyHash);
+
+        if (entry->isRemoved()) {
+            METER(stats.addOverRemoved++);
+            removedCount--;
+            keyHash |= sCollisionBit;
+        }
+
+        entry->t = t;
+        entry->setLive(keyHash);
+        entryCount++;
+        mutationCount++;
+    }
+
+    bool putNew(const Lookup &l, const T &t)
+    {
+        if (checkOverloaded() == RehashFailed)
+            return false;
+
+        putNewInfallible(l, t);
+        return true;
+    }
+
     bool relookupOrAdd(AddPtr& p, const Lookup &l, const T& t)
     {
         p.mutationCount = mutationCount;
@@ -766,6 +835,7 @@ class HashTable : private AllocPolicy
 
     void remove(Ptr p)
     {
+        JS_ASSERT(table);
         ReentrancyGuard g(*this);
         JS_ASSERT(p.found());
         remove(*p.entry);
@@ -1138,9 +1208,7 @@ class HashMap
 
     /* Like put, but assert that the given key is not already present. */
     bool putNew(const Key &k, const Value &v) {
-        AddPtr p = lookupForAdd(k);
-        JS_ASSERT(!p);
-        return add(p, k, v);
+        return impl.putNew(k, Entry(k, v));
     }
 
     /* Add (k,defaultValue) if k no found. Return false-y Ptr on oom. */
@@ -1346,15 +1414,11 @@ class HashSet
 
     /* Like put, but assert that the given key is not already present. */
     bool putNew(const T &t) {
-        AddPtr p = lookupForAdd(t);
-        JS_ASSERT(!p);
-        return add(p, t);
+        return impl.putNew(t, t);
     }
 
     bool putNew(const Lookup &l, const T &t) {
-        AddPtr p = lookupForAdd(l);
-        JS_ASSERT(!p);
-        return add(p, t);
+        return impl.putNew(l, t);
     }
 
     void remove(const Lookup &l) {
