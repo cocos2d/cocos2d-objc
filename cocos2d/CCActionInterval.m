@@ -1063,6 +1063,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	return copy;
 }
 
+-(void) startWithTarget:(id)target
+{
+	[super startWithTarget:target];
+	originalState_ = [target visible];
+}
+
 -(void) update: (ccTime) t
 {
 	if( ! [self isDone] ) {
@@ -1070,6 +1076,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		ccTime m = fmodf(t, slice);
 		[target_ setVisible: (m > slice/2) ? YES : NO];
 	}
+}
+
+-(void) stop
+{
+	[target_ setVisible:originalState_];
+	[super stop];
 }
 
 -(CCActionInterval*) reverse
