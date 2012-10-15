@@ -457,10 +457,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
         CGSize drawSize;
 #if CC_FONT_LABEL_SUPPORT
         if( ![uifont isKindOfClass:[UIFont class]] )
-            drawSize = [string sizeWithZFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+            drawSize = [string sizeWithZFont:uifont constrainedToSize:dimensions lineBreakMode:CCLineBreakModeWordWrap];
         else
 #endif // CC_FONT_LABEL_SUPPORT
-            drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:UILineBreakModeWordWrap];
+            drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:CCLineBreakModeWordWrap];
 
         if(CCVerticalAlignmentBottom == vertAlignment)
             drawArea = CGRectMake(0, dimensions.height - drawSize.height, dimensions.width, drawSize.height);
@@ -602,7 +602,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		return nil;
 	}
 
-	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter vertAlignment:CCVerticalAlignmentTop lineBreakMode:UILineBreakModeWordWrap font:font];
+	return [self initWithString:string dimensions:dim alignment:CCTextAlignmentCenter vertAlignment:CCVerticalAlignmentTop lineBreakMode:CCLineBreakModeWordWrap font:font];
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	{
