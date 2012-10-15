@@ -1,4 +1,4 @@
-version 1.1-rc0 ..-..-2012
+version 1.1-RC0 ..-..-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
             warning for IOS5 bug for NPOT 16-bit textures
@@ -32,6 +32,7 @@ version 1.1-rc0 ..-..-2012
         changing delayPerUnit also updates duration
 . [FIX] Actions:
         CCAnimate: fixed low FPS bug, where multiple frames need to be set per 'tick'.
+                   made nextFrame property public
         CCActionTween:
             fixed missing copyWithZone
              uses keyPath instead of key internally for greater flexibility (issue #1082)

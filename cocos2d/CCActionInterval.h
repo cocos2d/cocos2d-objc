@@ -405,6 +405,7 @@ typedef struct _ccBezierConfig {
 }
 /** animation used for the animage */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
+@property (readonly,nonatomic) NSInteger nextFrame;
 
 /** creates the action with an Animation and will restore the original frame when the animation is over */
 +(id) actionWithAnimation:(CCAnimation*)animation;
