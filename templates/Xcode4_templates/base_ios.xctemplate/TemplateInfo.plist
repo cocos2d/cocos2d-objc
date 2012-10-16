@@ -18,8 +18,6 @@
 		<dict>
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_BIT)</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvmgcc42</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 			<string>latest_iphoneos</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
