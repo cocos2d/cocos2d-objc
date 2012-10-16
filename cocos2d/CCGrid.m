@@ -211,12 +211,15 @@
 {
 	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
 
-	glLoadIdentity();
+	
+
 	glViewport(0, 0, winSize.width, winSize.height);
+
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	ccglOrtho(0, winSize.width, 0, winSize.height, -1024, 1024);
 	glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
 }
 
 // This routine can be merged with Director
@@ -241,15 +244,16 @@
 
 -(void)beforeDraw
 {
-	[self set2DProjection];
+    [self set2DProjection];
 	[grabber_ beforeRender:texture_];
 }
 
 -(void)afterDraw:(CCNode *)target
 {
 	[grabber_ afterRender:texture_];
-
-	[self set3DProjection];
+    
+    //mac sets a different projection than iphone, so don't call [self set3Dprojection]
+    [[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	[self applyLandscape];
 #endif
