@@ -1333,7 +1333,10 @@ Class restartAction()
 	background = nil;
 
 	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:100];
+
 	[self addChild:emitter_ z:10];
+    
+    emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
 	emitter_.duration = kCCParticleDurationInfinity;
 
 	// radius mode

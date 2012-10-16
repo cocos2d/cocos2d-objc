@@ -19,11 +19,13 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+    @"TextureAlias",
+	@"TextureMipMap",
+    //mac doesn't support pvr yet
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 	@"TexturePVRRGB565",
 	@"TexturePVRRGB888",
-
-	@"TextureAlias",
-	@"TextureMipMap",
 	@"TexturePVRMipMap",
 	@"TexturePVRMipMap2",
 	@"TexturePVRNonSquare",
@@ -45,6 +47,7 @@ static NSString *transitions[] = {
 	@"TexturePVRI8",
 	@"TexturePVRAI88",
 	@"TexturePVRBadEncoding",
+#endif
 	@"TexturePNG",
 	@"TextureBMP",
 	@"TextureJPEG",
