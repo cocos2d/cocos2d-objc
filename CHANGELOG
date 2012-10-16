@@ -75,6 +75,7 @@ version 1.1-RC0 ..-..-2012
 . [FIX-MAC] Events:
             Events are removed/added from outside an event (v2.x fix)
             Fixed memory leak when removing delegate (v2.x fix)
+. [FIX-MAC] LabelTTF: works on mac-retina (v2.x fix)
 . [3RD] Chipmunk, updated to v6.1.1
 . [3RD] Box2D, updated to v2.2.1
 
