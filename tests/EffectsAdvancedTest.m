@@ -271,7 +271,7 @@ Class restartAction()
 
 		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[bg addChild:grossini z:1 tag:kTagSprite1];
-		grossini.position = ccp(x/3.0f,200);
+		grossini.position = ccp(bg.contentSize.width/3.f,bg.contentSize.height/2.f);
 		id sc = [CCScaleBy actionWithDuration:2 scale:5];
 		id sc_back = [sc reverse];
 
@@ -279,7 +279,7 @@ Class restartAction()
 
 		CCSprite *tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[bg addChild:tamara z:1 tag:kTagSprite2];
-		tamara.position = ccp(2*x/3.0f,200);
+		tamara.position = ccp(2*(bg.contentSize.width/3.0f),bg.contentSize.height/2.f);
 		id sc2 = [CCScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
 		[tamara runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc2, sc2_back, nil]]];
@@ -485,13 +485,16 @@ Class restartAction()
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 
-	// EXPERIMENTAL stuff.
-	// 'Effects' don't work correctly when autoscale is turned on.
+    //fixed effects in full screen mode
 	[director setResizeMode:kCCDirectorResize_AutoScale];
+    
+    //for full screen only, set it before initializing the scene and set resize mode to none
+    //[self toggleFullScreen:self];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
+    
 	[director runWithScene:scene];
 }
 
