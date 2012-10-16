@@ -167,7 +167,7 @@ static inline ccTex2F __t(ccVertex2F v )
     
     NSUInteger offset = (NSUInteger)triangles_;
     
-    size_t triangleSize = sizeof(triangles_[0].a);
+    int triangleSize = sizeof(triangles_[0].a);
 	// vertex
 	NSUInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
 	glVertexPointer(3, GL_FLOAT, triangleSize, (GLvoid*) (offset + diff) );

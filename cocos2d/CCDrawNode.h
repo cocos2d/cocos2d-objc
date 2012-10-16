@@ -38,7 +38,7 @@
 @interface CCDrawNode : CCNode
 {
     ccV2F_C4B_T2F_Triangle *triangles_;
-    NSUInteger total_;
+    int total_;
     NSUInteger capacity_;
 }
 
