@@ -82,11 +82,11 @@
 	//
 	// EAGLView will be rotated by the UIViewController
 	//
-	// Sample: Autorotate only in landscpe mode
+	// Sample: Autorotate only in portrait mode
 	//
 	// return YES for the supported orientations
 	
-	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+	return ( UIInterfaceOrientationIsPortrait( interfaceOrientation ) );
 	
 #else
 #error Unknown value in GAME_AUTOROTATION
@@ -98,39 +98,51 @@
 	return NO;
 }
 
-//
-// This callback only will be called when GAME_AUTOROTATION == kGameAutorotationUIViewController
 // these methods are needed for iOS 6
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
-
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
 
 -(NSUInteger)supportedInterfaceOrientations{
-    //Modify for supported orientations, put your masks here
-    return UIInterfaceOrientationMaskLandscape;
+    //Modify for supported orientations, put your masks here, trying to mimic behavior of shouldAutorotate..
+    #if GAME_AUTOROTATION==kGameAutorotationNone
+	    return UIInterfaceOrientationMaskPortrait;
+    #elif GAME_AUTOROTATION==kGameAutorotationCCDirector
+    	NSAssert(NO, @"RootviewController: kGameAutorotation isn't supported on iOS6");
+	    return UIInterfaceOrientationMaskLandscape;
+    #elif GAME_AUTOROTATION == kGameAutorotationUIViewController
+    	return UIInterfaceOrientationMaskLandscape;
+    #else 
+    #error Unknown value in GAME_AUTOROTATION
+	
+	#endif // GAME_AUTOROTATION
 }
 
+#if GAME_AUTOROTATION==kGameAutorotationUIViewController
 - (BOOL)shouldAutorotate {
     return YES;
 }
-
+#else 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
 #endif
-#endif
 
-#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController
+//__IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+#else //deprecated in iOS6, so call only < 6. 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+#endif //__IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+#endif 
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
     [super didReceiveMemoryWarning];
     
     // Release any cached data, images, etc that aren't in use.
-}
-
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
 }
 
 - (void)dealloc {

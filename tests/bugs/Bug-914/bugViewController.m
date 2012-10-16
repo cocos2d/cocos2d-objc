@@ -75,6 +75,13 @@
     return YES;
 }
 
+#else 
+- (void)viewDidUnload {
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+    
+    [super viewDidUnload];
+}
 #endif
 #endif
 
@@ -84,14 +91,6 @@
 
     // Release any cached data, images, etc that aren't in use.
 }
-
-- (void)viewDidUnload {
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-
-    [super viewDidUnload];
-}
-
 
 - (void)dealloc {
 	CCLOG(@"deallocing bugViewController: %@", self);
