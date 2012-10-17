@@ -111,7 +111,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 #if __CC_PLATFORM_IOS
 -(void) setIsTouchEnabled:(BOOL)enabled
 {
-	[self setTouchEnabled:enabled priority:0 mode:kCCTouchesAllAtOnce];
+	[self setTouchEnabled:enabled];
 }
 -(void) setIsAccelerometerEnabled:(BOOL)enabled
 {

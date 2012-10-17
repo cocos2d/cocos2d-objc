@@ -119,7 +119,7 @@
 	[array insertObject:handler atIndex:i];
 }
 
--(void) addStandardDelegate:(id<CCStandardTouchDelegate>) delegate priority:(int)priority
+-(void) addStandardDelegate:(id<CCTouchAllAtOnceDelegate>) delegate priority:(int)priority
 {
 	CCTouchHandler *handler = [CCStandardTouchHandler handlerWithDelegate:delegate priority:priority];
 	if( ! locked ) {
@@ -132,7 +132,7 @@
 	}
 }
 
--(void) addTargetedDelegate:(id<CCTargetedTouchDelegate>) delegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
+-(void) addTargetedDelegate:(id<CCTouchOneByOneDelegate>) delegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
 {
 	CCTouchHandler *handler = [CCTargetedTouchHandler handlerWithDelegate:delegate priority:priority swallowsTouches:swallowsTouches];
 	if( ! locked ) {

@@ -21,7 +21,9 @@ enum {
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-		[self setTouchEnabled:YES priority:kCCMenuHandlerPriority+1 mode:kCCTouchesOneByOne];
+		[self setTouchEnabled:YES];
+		[self setTouchPriority:kCCMenuHandlerPriority+1];
+		[self setTouchMode:kCCTouchesOneByOne];
 #endif
 		// Font Item
 

@@ -48,11 +48,13 @@ typedef enum {
 /** CCLayer is a subclass of CCNode that implements the CCTouchEventsDelegate protocol.
 
  All features from CCNode are valid, plus the following new features:
- - It can receive iPhone Touches
- - It can receive Accelerometer input
+ - It can receive Touches both on iOS and Mac
+ - It can receive Accelerometer input on iOS
+ - It can receive Keyboard events on Mac
+ - It can receive Mouse events on Mac
 */
 #ifdef __CC_PLATFORM_IOS
-@interface CCLayer : CCNode <UIAccelerometerDelegate, CCStandardTouchDelegate, CCTargetedTouchDelegate>
+@interface CCLayer : CCNode <UIAccelerometerDelegate, CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
 {
 	BOOL touchEnabled_;
 	BOOL touchPriority_;
@@ -60,20 +62,6 @@ typedef enum {
 	
 	BOOL accelerometerEnabled_;
 }
-/** If isTouchEnabled, this method is called onEnter. Override it to change the
- way CCLayer receives touch events.
- ( Default: [touchDispatcher addStandardDelegate:self priority:0] )
- Example:
-     -(void) registerWithTouchDispatcher
-     {
-        [touchDispatcher addTargetedDelegate:self priority:INT_MIN+1 swallowsTouches:YES];
-     }
-
- Valid only on iOS. Not valid on Mac.
-
- @since v0.8.0
- */
--(void) registerWithTouchDispatcher;
 
 /** whether or not it will receive Accelerometer events
  You can enable / disable accelerometer events with this property.
@@ -82,16 +70,20 @@ typedef enum {
 
  @since v0.8.1
  */
-@property(nonatomic, assign, getter = isAcceleroterEnabled) BOOL accelerometerEnabled;
+@property(nonatomic, assign, getter = isAccelerometerEnabled) BOOL accelerometerEnabled;
 
-/** whether or not the touches are enabled */
--(BOOL) isTouchEnabled;
-/** enables/disables the touches */
--(void) setTouchEnabled:(BOOL)enabled;
-/* enables touch events with priority */
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority;
-/* enables touch events with priority and mode */
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority mode:(ccTouchesMode)mode;
+/** whether or not it will receive Touch events
+ @since v0.8.1
+ */
+@property(nonatomic, assign, getter = isTouchEnabled) BOOL touchEnabled;
+/** priority of the touch events. Default is 0 */
+@property(nonatomic, assign) NSInteger touchPriority;
+/** Touch modes.
+	- kCCTouchesAllAtOnce: Receives all the available touches at once.
+	- kCCTouchesOneByOne: Receives one touch at the time.
+ */
+@property(nonatomic, assign) ccTouchesMode touchMode;
+
 
 #elif defined(__CC_PLATFORM_MAC)
 
@@ -111,26 +103,26 @@ typedef enum {
 
 /** whether or not it will receive touche events. */
 @property (nonatomic, readwrite, getter=isTouchEnabled) BOOL touchEnabled;
+/** priority of the touch events. Default is 0 */
+@property(nonatomic, assign) NSInteger touchPriority;
 
 /** whether or not it will receive mouse events.
 
  Valid only on OS X. Not valid on iOS
  */
 @property (nonatomic, readwrite, getter=isMouseEnabled) BOOL mouseEnabled;
+/** priority of the mouse events. Default is 0 */
+@property (nonatomic, assign) NSInteger mousePriority;
 
 /** whether or not it will receive keyboard events.
 
  Valid only on OS X. Not valid on iOS
  */
 @property (nonatomic, readwrite, getter = isKeyboardEnabled) BOOL keyboardEnabled;
+/** Priority of keyboard events. Default is 0 */
+@property (nonatomic, assign) NSInteger keyboardPriority;
 
 
-/* enables mouse events with a priority */
--(void) setMouseEnabled:(BOOL)mouseEnabled priority:(NSInteger)priority;
-/* enables keyboard events with a priority */
--(void) setKeyboardEnabled:(BOOL)mouseEnabled priority:(NSInteger)priority;
-/* enables touch events with priority */
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority;
 
 
 #endif // mac
