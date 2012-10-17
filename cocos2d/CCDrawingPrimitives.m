@@ -225,10 +225,10 @@ void ccDrawSolidRect( CGPoint origin, CGPoint destination)
 void ccDrawSolidRectInPixels( CGPoint origin, CGPoint destination, BOOL inPixels)
 {
 	CGPoint vertices[] = {
-		origin.x, origin.y,
-		destination.x, origin.y,
-		destination.x, destination.y,
-		origin.x, destination.y
+		{origin.x, origin.y},
+		{destination.x, origin.y},
+		{destination.x, destination.y},
+		{origin.x, destination.y}
 	};
 
 	ccDrawSolidPolyInPixels(vertices, 4, YES, inPixels);
