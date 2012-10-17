@@ -52,6 +52,12 @@
 #pragma mark -
 #pragma mark Layer
 
+#if __CC_PLATFORM_IOS
+@interface CCLayer ()
+-(void) registerWithTouchDispatcher;
+@end
+#endif // __CC_PLATFORM_IOS
+
 @implementation CCLayer
 
 #pragma mark Layer - Init
@@ -116,20 +122,7 @@
 }
 
 -(void) setTouchEnabled:(BOOL)enabled
-{
-	[self setTouchEnabled:enabled priority:0 mode:kCCTouchesAllAtOnce];
-}
-
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority
-{
-	[self setTouchEnabled:enabled priority:priority mode:kCCTouchesAllAtOnce];
-}
-
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority mode:(ccTouchesMode)mode
-{
-	touchMode_ = mode;
-	touchPriority_ = priority;
-	
+{	
 	if( touchEnabled_ != enabled ) {
 		touchEnabled_ = enabled;
 		if( isRunning_) {
@@ -139,6 +132,37 @@
 				CCDirector *director = [CCDirector sharedDirector];
 				[[director touchDispatcher] removeDelegate:self];
 			}
+		}
+	}
+}
+
+-(NSInteger) touchPriority
+{
+	return touchPriority_;
+}
+-(void) setTouchPriority:(NSInteger)touchPriority
+{
+	if( touchPriority_ != touchPriority ) {
+		touchPriority_ = touchPriority;
+		
+		if( touchEnabled_) {
+			[self setTouchEnabled:NO];
+			[self setTouchEnabled:YES];
+		}
+	}
+}
+
+-(ccTouchesMode) touchMode
+{
+	return touchMode_;
+}
+-(void) setTouchMode:(ccTouchesMode)touchMode
+{
+	if( touchMode_ != touchMode ) {
+		touchMode_ = touchMode;
+		if( touchEnabled_) {
+			[self setTouchEnabled:NO];
+			[self setTouchEnabled:YES];
 		}
 	}
 }
@@ -155,12 +179,6 @@
 
 -(void) setMouseEnabled:(BOOL)enabled
 {
-	[self setMouseEnabled:enabled priority:0];
-}
-
--(void) setMouseEnabled:(BOOL)enabled priority:(NSInteger)priority
-{
-	mousePriority_ = priority;
 	if( mouseEnabled_ != enabled ) {
 		mouseEnabled_ = enabled;
 		
@@ -174,6 +192,22 @@
 	}	
 }
 
+-(NSInteger) mousePriority
+{
+	return mousePriority_;
+}
+
+-(void) setMousePriority:(NSInteger)mousePriority
+{
+	if( mousePriority_ != mousePriority ) {
+		mousePriority_ = mousePriority;
+		if( mouseEnabled_ ) {
+			[self setMouseEnabled:NO];
+			[self setMouseEnabled:YES];
+		}
+	}
+}
+
 -(BOOL) isKeyboardEnabled
 {
 	return keyboardEnabled_;
@@ -181,12 +215,6 @@
 
 -(void) setKeyboardEnabled:(BOOL)enabled
 {
-	[self setKeyboardEnabled:enabled priority:0];
-}
-
--(void) setKeyboardEnabled:(BOOL)enabled priority:(NSInteger)priority
-{
-	keyboardPriority_ = priority;
 	if( keyboardEnabled_ != enabled ) {
 		keyboardEnabled_ = enabled;
 
@@ -200,6 +228,22 @@
 	}
 }
 
+-(NSInteger) keyboardPriority
+{
+	return keyboardPriority_;
+}
+
+-(void) setKeyboardPriority:(NSInteger)keyboardPriority
+{
+	if( keyboardPriority_ != keyboardPriority ) {
+		keyboardPriority_ = keyboardPriority;
+		if( keyboardEnabled_ ) {
+			[self setKeyboardEnabled:NO];
+			[self setKeyboardEnabled:YES];
+		}
+	}
+}
+
 -(BOOL) isTouchEnabled
 {
 	return touchEnabled_;
@@ -207,12 +251,6 @@
 
 -(void) setTouchEnabled:(BOOL)enabled
 {
-	[self setTouchEnabled:enabled priority:0];
-}
-
--(void) setTouchEnabled:(BOOL)enabled priority:(NSInteger)priority
-{
-	touchPriority_ = priority;
 	if( touchEnabled_ != enabled ) {
 		touchEnabled_ = enabled;
 		if( isRunning_ ) {
@@ -225,6 +263,21 @@
 	}
 }
 
+-(NSInteger) touchPriority
+{
+	return touchPriority_;
+}
+-(void) setTouchPriority:(NSInteger)touchPriority
+{
+	if( touchPriority_ != touchPriority ) {
+		touchPriority_ = touchPriority;
+		
+		if( touchEnabled_) {
+			[self setTouchEnabled:NO];
+			[self setTouchEnabled:YES];
+		}
+	}
+}
 
 #endif // Mac
 
