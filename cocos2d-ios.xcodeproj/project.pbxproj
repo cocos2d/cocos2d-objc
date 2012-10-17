@@ -16275,7 +16275,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/TouchesTestInfo.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = TouchesTest;
 			};
@@ -16291,7 +16291,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
-				INFOPLIST_FILE = Resources/Info.plist;
+				INFOPLIST_FILE = Resources/TouchesTestInfo.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = TouchesTest;
 				ZERO_LINK = NO;

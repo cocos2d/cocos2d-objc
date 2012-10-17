@@ -140,9 +140,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #if defined(__CC_PLATFORM_IOS)
-		self.isTouchEnabled = YES;
+		[self setTouchEnabled:YES];
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		[self setMouseEnabled: YES];
 #endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -172,45 +172,28 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void) registerWithTouchDispatcher
+-(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority+1 swallowsTouches:YES];
+	[self ccTouchesMoved:touches withEvent:event];
 }
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
 {
+	[self ccTouchesMoved:touches withEvent:event];
+}
+
+-(void) ccTouchesCancelled:(NSSet*)touches withEvent:(UIEvent *)event
+{
+	[self ccTouchesMoved:touches withEvent:event];
+}
+
+-(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	[self updateSize:touchLocation];
-
-	return YES;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -334,9 +317,9 @@ Class restartAction()
 		[self addChild:layer1 z:0 tag:kTagLayer];
 
 #if defined(__CC_PLATFORM_IOS)
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];

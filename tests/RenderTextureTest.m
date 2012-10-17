@@ -164,9 +164,9 @@ Class restartAction()
 		[brush setColor:ccRED];
 		[brush setOpacity:20];
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 		lastLocation = CGPointMake( s.width/2, s.height/2);
 #endif
 
@@ -453,9 +453,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 		
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
