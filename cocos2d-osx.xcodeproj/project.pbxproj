@@ -1130,6 +1130,7 @@
 		A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
 		A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
 		A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
+		A066C183162F7AC300E3C740 /* EventTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A066C182162F7AC300E3C740 /* EventTest.js */; };
 		A06EA26B161E55A200B025FE /* ActionManagerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C7161B563200FE54C8 /* ActionManagerTest.js */; };
 		A06EA26C161E55A200B025FE /* ActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C9161B563200FE54C8 /* ActionsTest.js */; };
 		A06EA26D161E55A200B025FE /* Box2dTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85CB161B563200FE54C8 /* Box2dTest.js */; };
@@ -7005,6 +7006,7 @@
 		A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_registration.mm; sourceTree = "<group>"; };
 		A064EC6216235F7C00020E06 /* js_bindings_cocos2d_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_registration.h; sourceTree = "<group>"; };
 		A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_registration.mm; sourceTree = "<group>"; };
+		A066C182162F7AC300E3C740 /* EventTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EventTest.js; sourceTree = "<group>"; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
@@ -8663,12 +8665,12 @@
 			isa = PBXGroup;
 			children = (
 				A03F861B161B6FD800FE54C8 /* res */,
+				A03F85C2161B563200FE54C8 /* src */,
 				A03F841C161B563000FE54C8 /* build.xml */,
 				A03F841D161B563000FE54C8 /* cocos2d.js */,
 				A03F841E161B563000FE54C8 /* index.html */,
 				A03F841F161B563000FE54C8 /* main.js */,
 				A03F8420161B563000FE54C8 /* README.md */,
-				A03F85C2161B563200FE54C8 /* src */,
 			);
 			name = "cocos2d-html5-tests";
 			path = "tests/cocos2d-html5-tests";
@@ -8697,6 +8699,7 @@
 				A03F85D2161B563200FE54C8 /* CurrentLanguageTest */,
 				A03F85D4161B563200FE54C8 /* DrawPrimitivesTest */,
 				A03F85D6161B563200FE54C8 /* EaseActionsTest */,
+				A066C181162F7AC300E3C740 /* EventTest */,
 				A03F85D8161B563200FE54C8 /* ExtensionsTest */,
 				A03F85E7161B563300FE54C8 /* FontTest */,
 				A03F85E9161B563300FE54C8 /* IntervelTest */,
@@ -9305,6 +9308,14 @@
 			);
 			name = CocosBuilderReader;
 			path = external/CocosBuilderReader;
+			sourceTree = "<group>";
+		};
+		A066C181162F7AC300E3C740 /* EventTest */ = {
+			isa = PBXGroup;
+			children = (
+				A066C182162F7AC300E3C740 /* EventTest.js */,
+			);
+			path = EventTest;
 			sourceTree = "<group>";
 		};
 		A07082BC15F96057001C1263 /* SpiderMonkey */ = {
@@ -13175,6 +13186,7 @@
 				A06EA272161E55A200B025FE /* DrawPrimitivesTest.js in Resources */,
 				A06EA273161E55A200B025FE /* EaseActionsTest.js in Resources */,
 				A06EA274161E55A200B025FE /* FontTest.js in Resources */,
+				A066C183162F7AC300E3C740 /* EventTest.js in Resources */,
 				A06EA275161E55A200B025FE /* IntervelTest.js in Resources */,
 				A06EA276161E55A200B025FE /* LabelTest.js in Resources */,
 				A06EA277161E55A200B025FE /* LayerTest.js in Resources */,
