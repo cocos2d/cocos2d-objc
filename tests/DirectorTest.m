@@ -385,7 +385,7 @@ Class restartAction()
 	[viewController setView:glView];
 
     [window addSubview:viewController.view];
-    
+
     //needed for iOS6, recommend in 4 and 5
     [window setRootViewController:viewController];
 	// make main window visible

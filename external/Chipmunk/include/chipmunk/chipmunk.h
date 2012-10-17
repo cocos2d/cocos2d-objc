@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -57,7 +57,7 @@ void cpMessage(const char *condition, const char *file, int line, int isError, i
 
 
 #include "chipmunk_types.h"
-	
+
 /// @defgroup misc Misc
 /// @{
 
@@ -101,7 +101,7 @@ typedef struct cpSpace cpSpace;
 #include "cpShape.h"
 #include "cpPolyShape.h"
 
-#include "cpArbiter.h"	
+#include "cpArbiter.h"
 #include "constraints/cpConstraint.h"
 
 #include "cpSpace.h"
@@ -173,7 +173,7 @@ int __count_var__ = cpConvexHull(__count__, __verts__, __verts_var__, NULL, 0.0)
 #if __has_extension(blocks)
 // Define alternate block based alternatives for a few of the callback heavy functions.
 // Collision handlers are post-step callbacks are not included to avoid memory management issues.
-// If you want to use blocks for those and are aware of how to correctly manage the memory, the implementation is trivial. 
+// If you want to use blocks for those and are aware of how to correctly manage the memory, the implementation is trivial.
 
 void cpSpaceEachBody_b(cpSpace *space, void (^block)(cpBody *body));
 void cpSpaceEachShape_b(cpSpace *space, void (^block)(cpShape *shape));

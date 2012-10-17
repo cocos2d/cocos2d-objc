@@ -78,14 +78,14 @@ static char * glExtensions;
 	Gestalt(gestaltSystemVersionMajor, &versionMajor);
 	Gestalt(gestaltSystemVersionMinor, &versionMinor);
 	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-    
+
     //new code for plist reading
     /*
      // sensible default
      static int mMajor = 10;
      static int mMinor = 8;
      static int mBugfix = 0;
-     
+
      static dispatch_once_t onceToken;
      dispatch_once(&onceToken, ^{
      NSString* versionString = [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"];
@@ -101,19 +101,19 @@ static char * glExtensions;
      mBugfix = [versions[2] integerValue];
      }
      });
-     
+
      versionMajor = mMajor;
      versionMinor = mMinor;
      versionBugFix = mBugfix;
      */
-    
+
     //ignore warning Sint32 is signed long
 #ifdef __LP64__
     return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
 #else
     return [NSString stringWithFormat:@"%ld.%ld.%ld", versionMajor, versionMinor, versionBugFix];
 #endif
-    
+
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 

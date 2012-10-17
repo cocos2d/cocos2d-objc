@@ -277,8 +277,8 @@
 #define CC_LABELATLAS_DEBUG_DRAW 0
 #endif
 
-/** enable this flag to use CCPhysicisSprite with chipmunk 
- If this is enabled in a project without chipmunk, then there will be build errors 
+/** enable this flag to use CCPhysicisSprite with chipmunk
+ If this is enabled in a project without chipmunk, then there will be build errors
  */
 /*
 #ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
@@ -286,7 +286,7 @@
 #endif
 */
 
-/** enable this flag to use CCPhysicisSprite with box2D, comment out the chipmunk flag 
+/** enable this flag to use CCPhysicisSprite with box2D, comment out the chipmunk flag
   If this is enabled in a project without box2D, then there will be build errors
  */
 /*

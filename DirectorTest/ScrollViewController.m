@@ -90,9 +90,9 @@ const NSUInteger kNumImages		= 9;
 	// note: the following can be done in Interface Builder, but we show this in code for clarity
     customScrollView* scrollView = [[customScrollView alloc] initWithFrame:CGRectMake(0.f,100.f,320.f,120.f)];
     self.scrollView1 = scrollView;
-    
+
     [scrollView release];
-    
+
 	[scrollView1_ setBackgroundColor:[UIColor blackColor]];
 
     [scrollView1_ setCanCancelContentTouches:NO];

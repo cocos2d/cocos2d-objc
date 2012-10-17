@@ -3,8 +3,8 @@ version 1.1-RC0 ..-..-2012
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
             warning for IOS5 bug for NPOT 16-bit textures
             CCPhysicisSprite, CCDrawNode, CCPhysicsDebugNode
-. [NEW] iOS 6 and iPhone5 support             
-. [NEW] CocosLive: is no longer part of the templates and won't be updated anymore. 
+. [NEW] iOS 6 and iPhone5 support
+. [NEW] CocosLive: is no longer part of the templates and won't be updated anymore.
 . [NEW] CCFileUtils: iPhone5 support with new suffix
 . [NEW] ProgressTimer: conforms to CCRGBAProtocol, action like FadeIn/Out can now run on the timer
 . [NEW] Macros: made CCLOG a bit more verbose
@@ -42,10 +42,10 @@ version 1.1-RC0 ..-..-2012
         exceptions raised in runloop didn't cause program to abort (issue #911)
         Only enable depth test when a depth buffer is present
         fixed end method, complete shutdown of director and resources (issue #686)
-. [FIX] EAGLView: resizing only occurs when necessary (refix of issue #1153)        
+. [FIX] EAGLView: resizing only occurs when necessary (refix of issue #1153)
 . [FIX] FileUtils: also search full bundle path
         iPad falls back to iPad suffix if iPad-hd isn't found, instead of iPhone
-. [FIX] Menu: 
+. [FIX] Menu:
         CCMenuItemToggle, tags of children were modified by the component
         Blocks invocation of menu items failed on iOS6, added workaround
 . [FIX] Node:

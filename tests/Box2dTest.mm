@@ -41,7 +41,7 @@ enum {
 
 		// Construct a world object, which will hold and simulate the rigid bodies.
 		world = new b2World(gravity);
-        
+
         world->SetAllowSleeping(doSleep);
 
 		world->SetContinuousPhysics(true);

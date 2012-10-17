@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -18,7 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
- 
+
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -29,16 +29,16 @@ void
 cpMessage(const char *condition, const char *file, int line, cpBool isError, cpBool isHardError, const char *message, ...)
 {
 	fprintf(stderr, (isError ? "Aborting due to Chipmunk error: " : "Chipmunk warning: "));
-	
+
 	va_list vargs;
 	va_start(vargs, message); {
 		vfprintf(stderr, message, vargs);
 		fprintf(stderr, "\n");
 	} va_end(vargs);
-	
+
 	fprintf(stderr, "\tFailed condition: %s\n", condition);
 	fprintf(stderr, "\tSource:%s:%d\n", file, line);
-	
+
 	if(isError) abort();
 }
 
@@ -88,14 +88,14 @@ cpMomentForPoly(cpFloat m, const int numVerts, const cpVect *verts, cpVect offse
 	for(int i=0; i<numVerts; i++){
 		cpVect v1 = cpvadd(verts[i], offset);
 		cpVect v2 = cpvadd(verts[(i+1)%numVerts], offset);
-		
+
 		cpFloat a = cpvcross(v2, v1);
 		cpFloat b = cpvdot(v1, v1) + cpvdot(v1, v2) + cpvdot(v2, v2);
-		
+
 		sum1 += a*b;
 		sum2 += a;
 	}
-	
+
 	return (m*sum1)/(6.0f*sum2);
 }
 
@@ -106,7 +106,7 @@ cpAreaForPoly(const int numVerts, const cpVect *verts)
 	for(int i=0; i<numVerts; i++){
 		area += cpvcross(verts[i], verts[(i+1)%numVerts]);
 	}
-	
+
 	return -area/2.0f;
 }
 
@@ -115,23 +115,23 @@ cpCentroidForPoly(const int numVerts, const cpVect *verts)
 {
 	cpFloat sum = 0.0f;
 	cpVect vsum = cpvzero;
-	
+
 	for(int i=0; i<numVerts; i++){
 		cpVect v1 = verts[i];
 		cpVect v2 = verts[(i+1)%numVerts];
 		cpFloat cross = cpvcross(v1, v2);
-		
+
 		sum += cross;
 		vsum = cpvadd(vsum, cpvmult(cpvadd(v1, v2), cross));
 	}
-	
+
 	return cpvmult(vsum, 1.0f/(3.0f*sum));
 }
 
 void
 cpRecenterPoly(const int numVerts, cpVect *verts){
 	cpVect centroid = cpCentroidForPoly(numVerts, verts);
-	
+
 	for(int i=0; i<numVerts; i++){
 		verts[i] = cpvsub(verts[i], centroid);
 	}
@@ -149,7 +149,7 @@ cpMomentForBox2(cpFloat m, cpBB box)
 	cpFloat width = box.r - box.l;
 	cpFloat height = box.t - box.b;
 	cpVect offset = cpvmult(cpv(box.l + box.r, box.b + box.t), 0.5f);
-	
+
 	// TODO NaN when offset is 0 and m is INFINITY
 	return cpMomentForBox(m, width, height) + m*cpvlengthsq(offset);
 }
@@ -162,10 +162,10 @@ cpLoopIndexes(cpVect *verts, int count, int *start, int *end)
 	(*start) = (*end) = 0;
 	cpVect min = verts[0];
 	cpVect max = min;
-	
+
   for(int i=1; i<count; i++){
     cpVect v = verts[i];
-		
+
     if(v.x < min.x || (v.x == min.x && v.y < min.y)){
       min = v;
       (*start) = i;
@@ -182,13 +182,13 @@ static int
 QHullPartition(cpVect *verts, int count, cpVect a, cpVect b, cpFloat tol)
 {
 	if(count == 0) return 0;
-	
+
 	cpFloat max = 0;
 	int pivot = 0;
-	
+
 	cpVect delta = cpvsub(b, a);
 	cpFloat valueTol = tol*cpvlength(delta);
-	
+
 	int head = 0;
 	for(int tail = count-1; head <= tail;){
 		cpFloat value = cpvcross(delta, cpvsub(verts[head], a));
@@ -197,14 +197,14 @@ QHullPartition(cpVect *verts, int count, cpVect a, cpVect b, cpFloat tol)
 				max = value;
 				pivot = head;
 			}
-			
+
 			head++;
 		} else {
 			SWAP(verts[head], verts[tail]);
 			tail--;
 		}
 	}
-	
+
 	// move the new pivot to the front if it's not already there.
 	if(pivot != 0) SWAP(verts[0], verts[pivot]);
 	return head;
@@ -221,9 +221,9 @@ QHullReduce(cpFloat tol, cpVect *verts, int count, cpVect a, cpVect pivot, cpVec
 	} else {
 		int left_count = QHullPartition(verts, count, a, pivot, tol);
 		int index = QHullReduce(tol, verts + 1, left_count - 1, a, verts[0], pivot, result);
-		
+
 		result[index++] = pivot;
-		
+
 		int right_count = QHullPartition(verts + left_count, count - left_count, pivot, b, tol);
 		return index + QHullReduce(tol, verts + left_count + 1, right_count - 1, pivot, verts[left_count], b, result + index);
 	}
@@ -241,7 +241,7 @@ cpConvexHull(int count, cpVect *verts, cpVect *result, int *first, cpFloat tol)
 		// If a result array was not specified, reduce the input instead.
 		result = verts;
 	}
-	
+
 	// Degenerate case, all poins are the same.
 	int start, end;
 	cpLoopIndexes(verts, count, &start, &end);
@@ -249,13 +249,13 @@ cpConvexHull(int count, cpVect *verts, cpVect *result, int *first, cpFloat tol)
 		if(first) (*first) = 0;
 		return 1;
 	}
-	
+
 	SWAP(result[0], result[start]);
 	SWAP(result[1], result[end == 0 ? start : end]);
-	
+
 	cpVect a = result[0];
 	cpVect b = result[1];
-	
+
 	if(first) (*first) = start;
 	int resultCount = QHullReduce(tol, result + 2, count - 2, a, b, a, result + 1) + 1;
 	cpAssertSoft(cpPolyValidate(result, resultCount),

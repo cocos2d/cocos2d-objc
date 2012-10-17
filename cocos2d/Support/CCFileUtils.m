@@ -179,9 +179,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			*resolutionType = kCCResolutioniPad;
 
 		}
-        
+
         if (!ret)
-            CCLOG(@"could not find image with iPad suffix for %@, switching to iPhone version (no suffix)",relPath); 
+            CCLOG(@"could not find image with iPad suffix for %@, switching to iPhone version (no suffix)",relPath);
 	}
 	// iPhone ?
 	else

@@ -253,7 +253,7 @@ typedef struct __ccV2F_C4B_T2F_Triangle
     ccV2F_C4B_T2F a;
     ccV2F_C4B_T2F b;
     ccV2F_C4B_T2F c;
-    
+
 } ccV2F_C4B_T2F_Triangle;
 
 //! 4 ccVertex2FTex2FColor4B Quad

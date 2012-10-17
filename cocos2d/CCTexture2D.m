@@ -552,10 +552,10 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
 
 		[image lockFocus];
-        
+
         //patch for mac retina display and labelTTF
         [[NSAffineTransform transform] set];
-        
+
 		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, POTHigh-dimensions.height+yPadding)]; // draw at offset position
 
 		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];

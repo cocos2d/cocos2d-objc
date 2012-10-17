@@ -42,7 +42,7 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 	// | m[1] m[5] m[9]  m[13] |     | m12 m22 m32 m42 |     | b d 0 ty |
 	// | m[2] m[6] m[10] m[14] | <=> | m13 m23 m33 m43 | <=> | 0 0 1  0 |
 	// | m[3] m[7] m[11] m[15] |     | m14 m24 m34 m44 |     | 0 0 0  1 |
-    
+
 	m[2] = m[3] = m[6] = m[7] = m[8] = m[9] = m[11] = m[14] = 0.0f;
 	m[10] = m[15] = 1.0f;
 	m[0] = t->a; m[4] = t->c; m[12] = t->tx;
@@ -118,9 +118,9 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 
 - (void) transform
 {
-    
+
     // transformations
-    
+
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
     // BEGIN alternative -- using cached transform
     //
@@ -138,44 +138,44 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
     //glMultMatrixf(transformGL_);
     if( vertexZ_ )
         glTranslatef(0, 0, vertexZ_);
-    
+
     // XXX: Expensive calls. Camera should be integrated into the cached affine matrix
     if ( camera_ && !(grid_ && grid_.active) )
     {
         BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
-        
+
         if( translate )
             ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
-        
+
         [camera_ locate];
-        
+
         if( translate )
             ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
     }
-    
-    
+
+
     // END alternative
-    
+
 #else
     // BEGIN original implementation
     //
     // translate
     if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
         glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-    
+
     if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
         glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y + anchorPointInPixels_.y), vertexZ_);
     else if ( positionInPixels_.x !=0 || positionInPixels_.y !=0 || vertexZ_ != 0)
         glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y), vertexZ_ );
-    
+
     // rotate
     if (rotation_ != 0.0f )
         glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
-    
+
     // scale
     if (scaleX_ != 1.0f || scaleY_ != 1.0f)
         glScalef( scaleX_, scaleY_, 1.0f );
-    
+
     // skew
     if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
         CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
@@ -183,14 +183,14 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
         CGAffineToGL(&skewMatrix, glMatrix);
         glMultMatrixf(glMatrix);
     }
-    
+
     if ( camera_ && !(grid_ && grid_.active) )
         [camera_ locate];
-    
+
     // restore and re-position point
     if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
         glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-    
+
     //
     // END original implementation
 #endif
@@ -199,9 +199,9 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 -(void)updateTransform
 {
 	NSAssert( usesBatchNode_, @"updateTransform is only valid when CCSprite is being renderd using an CCSpriteBatchNode");
-    
+
 	CGAffineTransform matrix;
-    
+
 	// Optimization: if it is not visible, then do nothing
 	if( ! visible_ ) {
 		quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
@@ -209,18 +209,18 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 		dirty_ = recursiveDirty_ = NO;
 		return ;
 	}
-    
+
 	// Optimization: If parent is batchnode, or parent is nil
 	// build Affine transform manually
 	if( ! parent_ || parent_ == (CCNode*) batchNode_ ) {
-        
+
 #if CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION
         matrix = [self nodeToParentTransform];
 #else
         float radians = -CC_DEGREES_TO_RADIANS(rotation_);
 		float c = cosf(radians);
 		float s = sinf(radians);
-        
+
 		matrix = CGAffineTransformMake( c * scaleX_,  s * scaleX_,
 									   -s * scaleY_, c * scaleY_,
 									   positionInPixels_.x, positionInPixels_.y);
@@ -231,8 +231,8 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 																 0.0f, 0.0f);
 			matrix = CGAffineTransformConcat(skewMatrix, matrix);
 		}
-        
-        
+
+
 #if ! CC_ENABLE_CHIPMUNK_INTEGRATION && ! CC_ENABLE_BOX2D_INTEGRATION
 		matrix = CGAffineTransformTranslate(matrix, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
 #endif
@@ -241,42 +241,42 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
     {
         CCLOG(@"PhysicsSprite: parent should be a batchNode");
     }
-    
+
 	//
 	// calculate the Quad based on the Affine Matrix
 	//
-    
+
 	CGSize size = rectInPixels_.size;
-    
+
 	float x1 = offsetPositionInPixels_.x;
 	float y1 = offsetPositionInPixels_.y;
-    
+
 	float x2 = x1 + size.width;
 	float y2 = y1 + size.height;
 	float x = matrix.tx;
 	float y = matrix.ty;
-    
+
 	float cr = matrix.a;
 	float sr = matrix.b;
 	float cr2 = matrix.d;
 	float sr2 = -matrix.c;
 	float ax = x1 * cr - y1 * sr2 + x;
 	float ay = x1 * sr + y1 * cr2 + y;
-    
+
 	float bx = x2 * cr - y1 * sr2 + x;
 	float by = x2 * sr + y1 * cr2 + y;
-    
+
 	float cx = x2 * cr - y2 * sr2 + x;
 	float cy = x2 * sr + y2 * cr2 + y;
-    
+
 	float dx = x1 * cr - y2 * sr2 + x;
 	float dy = x1 * sr + y2 * cr2 + y;
-    
+
 	quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
 	quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
 	quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
 	quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
-    
+
 	[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
 	dirty_ = recursiveDirty_ = NO;
 }
@@ -291,8 +291,8 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
     ap.y /= CC_CONTENT_SCALE_FACTOR();
 	CGFloat x = _body->p.x + rot.x*-ap.x - rot.y*-ap.y;
 	CGFloat y = _body->p.y + rot.y*-ap.x + rot.x*-ap.y;
-	
-    
+
+
 	return (transform_ = CGAffineTransformMake(rot.x, rot.y, -rot.y,	rot.x, x,	y));
 }
 
@@ -304,7 +304,7 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 -(CGPoint)position
 {
 	b2Vec2 pos  = _body->GetPosition();
-	
+
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
 	return ccp(x,y);
@@ -338,30 +338,30 @@ void CGAffineToGL(const CGAffineTransform *t, GLfloat *m)
 -(CGAffineTransform) nodeToParentTransform
 {
 	b2Vec2 pos  = _body->GetPosition();
-	
+
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
-	
-	
+
+
 	// Make matrix
 	float radians = _body->GetAngle();
 	float c = cosf(radians);
 	float s = sinf(radians);
-	
+
 	if( ! CGPointEqualToPoint(anchorPoint_, CGPointZero) ){
         CGPoint ap = anchorPointInPixels_;
         ap.x /= CC_CONTENT_SCALE_FACTOR();
         ap.y /= CC_CONTENT_SCALE_FACTOR();
-        
+
 		x += c*-ap.x + -s*-ap.y;
 		y += s*-ap.x + c*-ap.y;
 	}
-	
+
 	// Rot, Translate Matrix
 	transform_ = CGAffineTransformMake( c,  s,
 									   -s,	c,
 									   x,	y );
-	
+
 	return transform_;
 }
 #endif // CC_ENABLE_BOX2D_INTEGRATION

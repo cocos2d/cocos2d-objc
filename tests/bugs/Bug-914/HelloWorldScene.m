@@ -35,8 +35,8 @@
 	if( (self=[super init] )) {
 
         [[NSNotificationCenter defaultCenter] postNotificationName:@"sceneStarted" object:nil];
-        
-        
+
+
 		self.isTouchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -50,14 +50,14 @@
 			[layer setAnchorPoint:ccp(0.5f, 0.5f)];
 			[layer setIsRelativeAnchorPoint:YES];
 			[self addChild:layer z:-1-i];
-            
+
 		}
 
 		// create and initialize a Label
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 
 		CCMenuItem *item1 = [CCMenuItemFont itemFromString:@"restart" target:self selector:@selector(restart:)];
-        
+
         CCMenuItem *item2 = [CCMenuItemFont itemFromString:@"re position" target:self selector:@selector(rePositionItems)];
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2,nil];
@@ -65,13 +65,13 @@
 		[menu setPosition:ccp(size.width/2, 100)];
 
 		[self addChild:menu z:2];
-        
+
 		// position the label on the center of the screen
 		label.position =  ccp( size.width /2 , size.height/2 );
 
 		// add the label as a child to this Layer
 		[self addChild: label z:2];
-        
+
 	}
 	return self;
 }
@@ -113,7 +113,7 @@
 {
     CGSize size = [[CCDirector sharedDirector] winSize];
     CCLOG(@"width %f height %f",size.width,size.height);
-    //to prevent release build error 
+    //to prevent release build error
     size = size;
 }
 

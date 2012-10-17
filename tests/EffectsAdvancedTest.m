@@ -487,14 +487,14 @@ Class restartAction()
 
     //fixed effects in full screen mode
 	[director setResizeMode:kCCDirectorResize_AutoScale];
-    
+
     //for full screen only, set it before initializing the scene and set resize mode to none
     //[self toggleFullScreen:self];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
 
-    
+
 	[director runWithScene:scene];
 }
 

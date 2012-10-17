@@ -1,15 +1,15 @@
 /* Copyright (c) 2007 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -99,20 +99,20 @@ static inline cpFloat cpBBSegmentQuery(cpBB bb, cpVect a, cpVect b)
 	cpFloat tx2 = (bb.r == a.x ?  INFINITY : (bb.r - a.x)*idx);
 	cpFloat txmin = cpfmin(tx1, tx2);
 	cpFloat txmax = cpfmax(tx1, tx2);
-	
+
 	cpFloat idy = 1.0f/(b.y - a.y);
 	cpFloat ty1 = (bb.b == a.y ? -INFINITY : (bb.b - a.y)*idy);
 	cpFloat ty2 = (bb.t == a.y ?  INFINITY : (bb.t - a.y)*idy);
 	cpFloat tymin = cpfmin(ty1, ty2);
 	cpFloat tymax = cpfmax(ty1, ty2);
-	
+
 	if(tymin <= txmax && txmin <= tymax){
 		cpFloat min = cpfmax(txmin, tymin);
 		cpFloat max = cpfmin(txmax, tymax);
-		
+
 		if(0.0 <= max && min <= 1.0) return cpfmax(min, 0.0);
 	}
-	
+
 	return INFINITY;
 }
 

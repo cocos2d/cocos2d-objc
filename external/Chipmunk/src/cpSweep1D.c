@@ -1,15 +1,15 @@
 /* Copyright (c) 2010 Scott Lembcke
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,7 +37,7 @@ typedef struct TableCell {
 struct cpSweep1D
 {
 	cpSpatialIndex spatialIndex;
-	
+
 	int num;
 	int max;
 	TableCell *table;
@@ -82,10 +82,10 @@ cpSpatialIndex *
 cpSweep1DInit(cpSweep1D *sweep, cpSpatialIndexBBFunc bbfunc, cpSpatialIndex *staticIndex)
 {
 	cpSpatialIndexInit((cpSpatialIndex *)sweep, Klass(), bbfunc, staticIndex);
-	
+
 	sweep->num = 0;
 	ResizeTable(sweep, 32);
-	
+
 	return (cpSpatialIndex *)sweep;
 }
 
@@ -124,7 +124,7 @@ cpSweep1DContains(cpSweep1D *sweep, void *obj, cpHashValue hashid)
 	for(int i=0, count=sweep->num; i<count; i++){
 		if(table[i].obj == obj) return cpTrue;
 	}
-	
+
 	return cpFalse;
 }
 
@@ -134,7 +134,7 @@ static void
 cpSweep1DInsert(cpSweep1D *sweep, void *obj, cpHashValue hashid)
 {
 	if(sweep->num == sweep->max) ResizeTable(sweep, sweep->max*2);
-	
+
 	sweep->table[sweep->num] = MakeTableCell(sweep, obj);
 	sweep->num++;
 }
@@ -146,10 +146,10 @@ cpSweep1DRemove(cpSweep1D *sweep, void *obj, cpHashValue hashid)
 	for(int i=0, count=sweep->num; i<count; i++){
 		if(table[i].obj == obj){
 			int num = --sweep->num;
-			
+
 			table[i] = table[num];
 			table[num].obj = NULL;
-			
+
 			return;
 		}
 	}
@@ -177,9 +177,9 @@ cpSweep1DQuery(cpSweep1D *sweep, void *obj, cpBB bb, cpSpatialIndexQueryFunc fun
 {
 	// Implementing binary search here would allow you to find an upper limit
 	// but not a lower limit. Probably not worth the hassle.
-	
+
 	Bounds bounds = BBToBounds(sweep, bb);
-	
+
 	TableCell *table = sweep->table;
 	for(int i=0, count=sweep->num; i<count; i++){
 		TableCell cell = table[i];
@@ -192,7 +192,7 @@ cpSweep1DSegmentQuery(cpSweep1D *sweep, void *obj, cpVect a, cpVect b, cpFloat t
 {
 	cpBB bb = cpBBExpand(cpBBNew(a.x, a.y, a.x, a.y), b);
 	Bounds bounds = BBToBounds(sweep, bb);
-	
+
 	TableCell *table = sweep->table;
 	for(int i=0, count=sweep->num; i<count; i++){
 		TableCell cell = table[i];
@@ -213,20 +213,20 @@ cpSweep1DReindexQuery(cpSweep1D *sweep, cpSpatialIndexQueryFunc func, void *data
 {
 	TableCell *table = sweep->table;
 	int count = sweep->num;
-	
+
 	// Update bounds and sort
 	for(int i=0; i<count; i++) table[i] = MakeTableCell(sweep, table[i].obj);
 	qsort(table, count, sizeof(TableCell), (int (*)(const void *, const void *))TableSort); // TODO use insertion sort instead
-	
+
 	for(int i=0; i<count; i++){
 		TableCell cell = table[i];
 		cpFloat max = cell.bounds.max;
-		
+
 		for(int j=i+1; table[j].bounds.min < max && j<count; j++){
 			func(cell.obj, table[j].obj, data);
 		}
 	}
-	
+
 	// Reindex query is also responsible for colliding against the static index.
 	// Fortunately there is a helper function for that.
 	cpSpatialIndexCollideStatic((cpSpatialIndex *)sweep, sweep->spatialIndex.staticIndex, func, data);
@@ -234,18 +234,18 @@ cpSweep1DReindexQuery(cpSweep1D *sweep, cpSpatialIndexQueryFunc func, void *data
 
 static cpSpatialIndexClass klass = {
 	(cpSpatialIndexDestroyImpl)cpSweep1DDestroy,
-	
+
 	(cpSpatialIndexCountImpl)cpSweep1DCount,
 	(cpSpatialIndexEachImpl)cpSweep1DEach,
 	(cpSpatialIndexContainsImpl)cpSweep1DContains,
-	
+
 	(cpSpatialIndexInsertImpl)cpSweep1DInsert,
 	(cpSpatialIndexRemoveImpl)cpSweep1DRemove,
-	
+
 	(cpSpatialIndexReindexImpl)cpSweep1DReindex,
 	(cpSpatialIndexReindexObjectImpl)cpSweep1DReindexObject,
 	(cpSpatialIndexReindexQueryImpl)cpSweep1DReindexQuery,
-	
+
 	(cpSpatialIndexQueryImpl)cpSweep1DQuery,
 	(cpSpatialIndexSegmentQueryImpl)cpSweep1DSegmentQuery,
 };

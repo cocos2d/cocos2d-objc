@@ -1265,7 +1265,7 @@ static inline float bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCAnimate
 
 @synthesize animation = animation_;
-@synthesize nextFrame = nextFrame_; 
+@synthesize nextFrame = nextFrame_;
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {

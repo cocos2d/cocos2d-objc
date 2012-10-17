@@ -124,10 +124,10 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
 
 -(void) activate
 {
-    
+
     if(isEnabled_)
     {
-#if NS_BLOCKS_AVAILABLE        
+#if NS_BLOCKS_AVAILABLE
         //changed behavior in iOS6, sender of block is nil, so invocation fails, executing block does work
         if(block_)
         {
@@ -137,7 +137,7 @@ const uint32_t	kZoomActionTag = 0xc0c05002;
         {
             [invocation_ invoke];
         }
-#else 
+#else
         if(invocation_)
         {
             [invocation_ invoke];

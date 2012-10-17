@@ -204,20 +204,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
     //checking whether size has changed, because changes in uikit elements also trigger layoutSubviews
     CAEAGLLayer* layer= (CAEAGLLayer*) self.layer;
-    
+
     //frame is always in portrait
     CGSize layerSize = self.layer.frame.size;
     CGFloat zRotation = ([[layer valueForKeyPath:@"transform.rotation.z"] floatValue] * 180.f) / M_PI;
-    
+
     //landscape switch width and height
     if (zRotation == 90.f || zRotation == -90.f)
     {
         CGFloat temp;
         temp = layerSize.height;
         layerSize.height = layerSize.width;
-        layerSize.width = temp; 
+        layerSize.width = temp;
     }
-        
+
     if (layerSize.width != size_.width || layerSize.height != size_.height)
     {
         [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];

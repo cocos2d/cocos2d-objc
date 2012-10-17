@@ -167,7 +167,7 @@ Contributors (alphabetically ordered):
 * Yannick Loriot
     fix for CCMenuItemToggle modifying tag of sprite
 
-* Yang3Wei 
+* Yang3Wei
     fix for CCParticleSystem, difference in gravity between retina and non-retina
 
 * Zeraien

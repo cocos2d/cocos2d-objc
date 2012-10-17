@@ -1,15 +1,15 @@
 /* Copyright (c) 2012 Scott Lembcke and Howling Moon Software
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,7 +37,7 @@
 
 /*
 	IMPORTANT - READ ME!
-	
+
 	This file sets pokes around in the private API a lot to provide efficient
 	debug rendering given nothing more than reference to a Chipmunk space.
 	It is not recommended to write rendering code like this in your own games
@@ -77,7 +77,7 @@ DrawShape(cpShape *shape, CCDrawNode *renderer)
 				cpPolyShape *poly = (cpPolyShape *)shape;
 				ccColor4F line = color;
 				line.a = cpflerp(color.a, 1.0, 0.5);
-				
+
 				[renderer drawPolyWithVerts:poly->tVerts count:poly->numVerts fillColor:color borderWidth:1.0 borderColor:line];
 			}break;
 		default:
@@ -96,10 +96,10 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	const cpConstraintClass *klass = constraint->klass;
 	if(klass == cpPinJointGetClass()){
 		cpPinJoint *joint = (cpPinJoint *)constraint;
-		
+
 		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
 		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
-		
+
 		[renderer drawDot:a radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawDot:b radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawSegmentFrom:a to:b radius:1.0 color:CONSTRAINT_COLOR];
@@ -148,7 +148,7 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 {
 	cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, self);
 	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, self);
-	
+
 	[super draw];
 	[super clear];
 }

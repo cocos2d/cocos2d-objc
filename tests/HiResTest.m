@@ -232,12 +232,12 @@ Class restartAction()
 		[self addChild:sprite z:3];
 
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
-        
+
         CCSprite *background = [CCSprite spriteWithFile:@"background1.jpg"];
         [background setPosition:ccp(size.width/2,size.height/2)];
-        
+
         [self addChild:background];
-        
+
 	}
 	return self;
 }

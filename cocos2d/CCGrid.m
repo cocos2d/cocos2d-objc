@@ -211,7 +211,7 @@
 {
 	CGSize	winSize = [[CCDirector sharedDirector] winSizeInPixels];
 
-	
+
 
 	glViewport(0, 0, winSize.width, winSize.height);
 
@@ -251,7 +251,7 @@
 -(void)afterDraw:(CCNode *)target
 {
 	[grabber_ afterRender:texture_];
-    
+
     //mac sets a different projection than iphone, so don't call [self set3Dprojection]
     [[CCDirector sharedDirector] setProjection:CCDirectorProjection3D];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

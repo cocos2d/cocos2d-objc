@@ -163,7 +163,7 @@ void Keyboard(unsigned char key, int x, int y)
 			test->LaunchBomb();
 		}
 		break;
- 
+
 	case 'p':
 		settings.pause = !settings.pause;
 		break;
@@ -187,7 +187,7 @@ void Keyboard(unsigned char key, int x, int y)
 		}
 		glui->sync_live();
 		break;
-		
+
 	default:
 		if (test)
 		{
@@ -267,7 +267,7 @@ void Mouse(int32 button, int32 state, int32 x, int32 y)
 				test->MouseDown(p);
 			}
 		}
-		
+
 		if (state == GLUT_UP)
 		{
 			test->MouseUp(p);
@@ -276,7 +276,7 @@ void Mouse(int32 button, int32 state, int32 x, int32 y)
 	else if (button == GLUT_RIGHT_BUTTON)
 	{
 		if (state == GLUT_DOWN)
-		{	
+		{
 			lastp = ConvertScreenToWorld(x, y);
 			rMouseDown = true;
 		}
@@ -292,7 +292,7 @@ void MouseMotion(int32 x, int32 y)
 {
 	b2Vec2 p = ConvertScreenToWorld(x, y);
 	test->MouseMove(p);
-	
+
 	if (rMouseDown)
 	{
 		b2Vec2 diff = p - lastp;
@@ -370,7 +370,7 @@ int main(int argc, char** argv)
 	//glutSetOption (GLUT_ACTION_ON_WINDOW_CLOSE, GLUT_ACTION_GLUTMAINLOOP_RETURNS);
 
 	glutDisplayFunc(SimulationLoop);
-	GLUI_Master.set_glutReshapeFunc(Resize);  
+	GLUI_Master.set_glutReshapeFunc(Resize);
 	GLUI_Master.set_glutKeyboardFunc(Keyboard);
 	GLUI_Master.set_glutSpecialFunc(KeyboardSpecial);
 	GLUI_Master.set_glutMouseFunc(Mouse);
@@ -381,7 +381,7 @@ int main(int argc, char** argv)
 
 	glutKeyboardUpFunc(KeyboardUp);
 
-	glui = GLUI_Master.create_glui_subwindow( mainWindow, 
+	glui = GLUI_Master.create_glui_subwindow( mainWindow,
 		GLUI_SUBWINDOW_RIGHT );
 
 	glui->add_statictext("Tests");

@@ -12,7 +12,7 @@
 
 //to support both landscape and portrait, apple recommends using two viewcontrollers
 //http://developer.apple.com/library/ios/#featuredarticles/ViewControllerPGforiPhoneOS/RespondingtoDeviceOrientationChanges/RespondingtoDeviceOrientationChanges.html#//apple_ref/doc/uid/TP40007457-CH7-SW1
-//this example shows how to start-up the app succesfully in landscape modes, while still supporting portrait. 
+//this example shows how to start-up the app succesfully in landscape modes, while still supporting portrait.
 
 @implementation bugViewController
 
@@ -59,7 +59,7 @@
     {
         return NO;
     }
-    
+
 	return YES;
 }
 
@@ -75,11 +75,11 @@
     return YES;
 }
 
-#else 
+#else
 - (void)viewDidUnload {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
-    
+
     [super viewDidUnload];
 }
 #endif
