@@ -43,7 +43,7 @@
 
 
 // Override to allow orientations other than the default portrait orientation
-//valid for iOS 4 and 5
+//valid for iOS 4 and 5, IMPORTANT, for iOS6 also modify supportedInterfaceOrientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	
 	//
@@ -93,7 +93,6 @@
 	
 #endif // GAME_AUTOROTATION
 	
-	
 	// Shold not happen
 	return NO;
 }
@@ -110,7 +109,8 @@
     	NSAssert(NO, @"RootviewController: kGameAutorotation isn't supported on iOS6");
 	    return UIInterfaceOrientationMaskLandscape;
     #elif GAME_AUTOROTATION == kGameAutorotationUIViewController
-    	return UIInterfaceOrientationMaskLandscape;
+    	return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    	//for both landscape orientations return UIInterfaceOrientationLandscape
     #else 
     #error Unknown value in GAME_AUTOROTATION
 	
