@@ -877,9 +877,9 @@ static float menuItemPaddingCenter = 50;
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-        self.isTouchEnabled = YES;
+        self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		// ask director the the window size

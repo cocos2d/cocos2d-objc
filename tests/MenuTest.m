@@ -21,7 +21,7 @@ enum {
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-        self.isTouchEnabled = YES;
+		[self setTouchEnabled:YES priority:kCCMenuHandlerPriority+1 mode:kCCTouchesOneByOne];
 #endif
 		// Font Item
 
@@ -139,11 +139,6 @@ enum {
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority+1 swallowsTouches:YES];
-}
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -580,11 +575,11 @@ enum {
 		CCMenuItemFont *issue1410 = [CCMenuItemFont itemWithString:@"Issue 1410" block:^(id sender){
 			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 #if __CC_PLATFORM_IOS
-			menu.isTouchEnabled=NO;
-			menu.isTouchEnabled=YES;
+			menu.touchEnabled=NO;
+			menu.touchEnabled=YES;
 #elif __CC_PLATFORM_MAC
-			menu.isMouseEnabled=NO;
-			menu.isMouseEnabled=YES;
+			menu.mouseEnabled=NO;
+			menu.mouseEnabled=YES;
 #endif
 			NSLog(@"NO CRASHES");
 		}];
@@ -592,11 +587,11 @@ enum {
 		CCMenuItemFont *issue1410_2 = [CCMenuItemFont itemWithString:@"Issue 1410 #2" block:^(id sender){
 			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 #if __CC_PLATFORM_IOS
-			menu.isTouchEnabled=YES;
-			menu.isTouchEnabled=NO;
+			menu.touchEnabled=YES;
+			menu.touchEnabled=NO;
 #elif __CC_PLATFORM_MAC
-			menu.isMouseEnabled=YES;
-			menu.isMouseEnabled=NO;
+			menu.mouseEnabled=YES;
+			menu.mouseEnabled=NO;
 #endif
 			NSLog(@"NO CRASHES. AND MENU SHOULD STOP WORKING");
 		}];
