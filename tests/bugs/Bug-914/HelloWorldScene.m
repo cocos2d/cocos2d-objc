@@ -53,7 +53,6 @@
             
 		}
 
-
 		// create and initialize a Label
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Hello World" fontName:@"Marker Felt" fontSize:64];
 
@@ -114,6 +113,8 @@
 {
     CGSize size = [[CCDirector sharedDirector] winSize];
     CCLOG(@"width %f height %f",size.width,size.height);
+    //to prevent release build error 
+    size = size;
 }
 
 // on "dealloc" you need to release all your retained objects

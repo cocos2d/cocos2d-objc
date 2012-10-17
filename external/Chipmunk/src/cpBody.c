@@ -109,6 +109,8 @@ static void cpv_assert_sane(cpVect v, char *message){cpv_assert_nan(v, message);
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+void cpBodySanityCheck(cpBody *body);
 
 void
 cpBodySanityCheck(cpBody *body)
