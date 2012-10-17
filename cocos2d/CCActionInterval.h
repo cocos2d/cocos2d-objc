@@ -433,14 +433,44 @@ typedef struct _ccBezierConfig {
 	CCAnimation			*animation_;
 	id					origFrame_;
 	NSUInteger			executedLoops_;
+    NSInteger           startIndex_;
 }
 /** animation used for the image */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
 
-/** creates the action with an Animation and will restore the original frame when the animation is over */
+/** Creates the action with an Animation and will restore the original frame when the animation is over/ */
 +(id) actionWithAnimation:(CCAnimation*)animation;
-/** initializes the action with an Animation and will restore the original frame when the animation is over */
+/** Initializes the action with an Animation and will restore the original frame when the animation is over. */
 -(id) initWithAnimation:(CCAnimation*)animation;
+/** Creates the action with an Animation that randomly starts at the specified frame, and cicles the animation until the chosen frame minus one.
+
+    Example: Given an 'animation' with 5 frames, running
+      [CCAnimate actionWithAnimation:aniation startFrameIndex:3]
+    will show frames in this order: 3, 4, 0, 1, 2
+    */
++(id) actionWithAnimation:(CCAnimation*)action startFrameIndex:(NSInteger)start;
+-(id) initWithAnimation:(CCAnimation*)action startFrameIndex:(NSInteger)start;
+/** Creates the action with an Animation that randomly starts at a randomly chosen frame, and cicles the animation until the chosen frame minus one.
+ 
+    This is useful for starting several sprite's idle animations at the same time,
+    but givin a more organic feeling to the scene.
+*/
++(id) actionWithRandomStartAnimation:(CCAnimation*)action;
+/** Creates the action with an Animation that randomly starts at a randomly chosen frame, with the randomness determined by a factor, and cicles the animation until the chosen frame minus one.
+ 
+    Examples: Given an 'animation' with 10 frames, running
+      [CCAnimate actionWithRandomStartAnimation:animation factor:0.2]
+    will chose a random startFrameIndex within the range [0, 1].
+
+    Given an 'animation' with 10 frames, running
+      [CCAnimate actionWithRandomStartAnimation:animation factor:0.4]
+    will chose a random startFrameIndex within the range [0, 1, 3, 4]
+ 
+    This is useful for starting several sprite's idle animations at the same time,
+    but givin a more organic feeling to the scene.
+*/
++(id) actionWithRandomStartAnimation:(CCAnimation*)action factor:(float)factor;
+-(id) initWithRandomStartAnimation:(CCAnimation*)action factor:(float)factor;
 @end
 
 /** Overrides the target of an action so that it always runs on the target
