@@ -212,7 +212,7 @@ var GameLayer = cc.LayerGradient.extend({
     _carSmoke:null,
 
     ctor:function (level) {
-                                
+
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
         this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
@@ -232,7 +232,7 @@ var GameLayer = cc.LayerGradient.extend({
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
         menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
-    
+
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimations("coins_animation.plist");
 
@@ -372,11 +372,11 @@ var GameLayer = cc.LayerGradient.extend({
         var selfremove = cc.CallFunc.create(this, this.onRemoveMe );
         var seq = cc.Sequence.create(d, s, selfremove );
         label.runAction( seq );
-        
+
     },
 
     onRemoveMe:function( sender ) {
-        sender.removeFromParentAndCleanup( true );
+        sender.removeFromParent();
     },
 
     onExit:function() {
@@ -459,7 +459,7 @@ var GameLayer = cc.LayerGradient.extend({
 
             var body = shape.getBody();
             var sprite = body.getUserData();
-            sprite.removeFromParentAndCleanup(true);
+            sprite.removeFromParent();
 
             // body.free();
 
@@ -480,7 +480,7 @@ var GameLayer = cc.LayerGradient.extend({
         var height = winSize.height;
 
         var level = levels[ lvl ];
-        
+
         var i=0;
         // Coins
         var coins = level['coins'];
@@ -631,7 +631,7 @@ var GameLayer = cc.LayerGradient.extend({
         // The rear strut is a swinging arm that holds the wheel a at a certain distance from a pivot on the chassis.
         // A perfect fit for a pin joint conected between the chassis and the wheel's center.
         var rearJoint = new cp.PinJoint( chassis, rear, cp.v.sub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
-        
+
         // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
         var rearStrutRestAngle = cp.v.toangle( cp.v.sub(
                                                 chassis.local2World( rearJoint.getAnchr1() ),
@@ -643,16 +643,16 @@ var GameLayer = cc.LayerGradient.extend({
 
         // Attach a slide joint to the wheel to limit it's range of motion.
         var rearStrutLimit = new cp.SlideJoint( chassis, rear, rear_anchor, cp.vzero, 0, 20 );
-			
+
         // The main motor that drives the buggy.
         var motor = new cp.SimpleMotor( chassis, rear, ENGINE_MAX_W );
         motor.setMaxForce(  0.0 );
-			
+
         // I don't know if "differential" is the correct word, but it transfers a fraction of the rear torque to the front wheels.
         // In case the rear wheels are slipping. This makes the buggy less frustrating when climbing steep hills.
         var differential = new cp.SimpleMotor( rear, front, 0 );
         differential.setMaxForce( ENGINE_MAX_TORQUE*DIFFERENTIAL_TORQUE );
-			
+
         // Wheel brakes.
         // While you could reuse the main motor for the brakes, it's easier not to.
         // It won't cause a performance issue to have too many extra motors unless you have hundreds of buggies in the game.
@@ -765,7 +765,7 @@ var GameLayer = cc.LayerGradient.extend({
         // coins are static bodies and sensors
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
-        
+
         var body = new cp.BodyStatic();
 		body.setPos( pos );
         sprite.setBody( body.handle );
@@ -822,7 +822,7 @@ var GameLayer = cc.LayerGradient.extend({
     //
     // Game State
     //
-    
+
     // call the 'deferred' option if you want to modify Chipmunk's state from a Chipmunk's callback
     setGameStateDeferred: function( state ) {
         this._deferredState = state;
@@ -949,7 +949,7 @@ var GameLayer = cc.LayerGradient.extend({
 var BootLayer = cc.Layer.extend({
 
     ctor:function () {
-                                
+
         var parent = new cc.Layer();
         __associateObjWithNative(this, parent);
         this.init();
@@ -964,7 +964,7 @@ var BootLayer = cc.Layer.extend({
         __jsc__.dumpRoot();
         __jsc__.garbageCollect();
     },
-    
+
     onEnter:function() {
         var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
         director.replaceScene( scene );
@@ -983,7 +983,7 @@ MenuLayerController.prototype.onDidLoadFromCCB = function()
 {
     // Spin the 'o' in the title
     var o = this.titleLabel.getChildByTag( 8 );
-    
+
     var a_delay = cc.DelayTime.create(6);
     var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
     var a_rotate = cc.RotateBy.create( 4, 360 );

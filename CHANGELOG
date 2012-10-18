@@ -1,5 +1,10 @@
 
 version 2.1-beta3  xx-Oct-2012
+. [NEW] Node API additions:
+		Added: removeChild. Calls removeChild:cleanup: with cleanup=YES
+		Added: removeChildByTag. Calls removeChildByTag:cleanup: with cleanup=YES
+		Added: removeFromParent. Calls removeFromParentAndCleanup: with cleanup=YES
+		Added: removeAllChildren. Calls removeAllChildrenWithCleanup: with cleanup=YES
 . [NEW] RenderTexture: Supports "auto rendering" its children to the texture. No need to call being/end
 . [FIX] Actions: TargetedAction can be copied. Calls super correctly
 		Blink: "stop" restores original "visibility" state
