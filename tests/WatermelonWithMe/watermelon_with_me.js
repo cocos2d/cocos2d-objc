@@ -338,20 +338,22 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onMouseDown:function(event) {
-        this.setThrottle(1);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
         return true;
     },
     onMouseUp:function(event) {
-        this.setThrottle(0);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
         return true;
     },
     onTouchesBegan:function( touches, event) {
-        this.setThrottle(1);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
     },
     onTouchesEnded:function( touches, event) {
-        this.setThrottle(0);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
     },
 
     onEnterTransitionDidFinish:function() {
