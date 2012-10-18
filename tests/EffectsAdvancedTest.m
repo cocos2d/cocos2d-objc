@@ -485,7 +485,7 @@ Class restartAction()
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
 
-    //fixed effects in full screen mode
+    //fixed effects in full screen mode, CCOrbitCamera still doesn't work correctly when screen is in full screen mode (resize_noscale)
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 
     //for full screen only, set it before initializing the scene and set resize mode to none

@@ -783,7 +783,7 @@ Class restartAction()
 @implementation ActionDelayAnimation
 
 #define firstSpriteTag 666
-static int currSpriteTag = firstSpriteTag;
+
 
 -(void) startAnimation
 {
@@ -807,9 +807,11 @@ static int currSpriteTag = firstSpriteTag;
 {
 	if( (self=[super init]) )
 	{
+        currSpriteTag = firstSpriteTag;
+        
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini.plist"];
-		[[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"animations/grossini_gray.plist"];
+		
 
         [tamara setVisible:NO];
         [kathia setVisible:NO];
@@ -841,8 +843,8 @@ static int currSpriteTag = firstSpriteTag;
 
 - (void) dealloc
 {
-    [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
-    [[CCTextureCache sharedTextureCache] removeUnusedTextures];
+   // [[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+   // [[CCTextureCache sharedTextureCache] removeUnusedTextures];
 
 	[super dealloc];
 }

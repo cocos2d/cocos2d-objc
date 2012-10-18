@@ -152,7 +152,9 @@
 {}
 @end
 @interface ActionDelayAnimation : ActionDemo
-{}
+{
+    int currSpriteTag;
+}
 @end
 
 @interface ActionFollow : ActionDemo

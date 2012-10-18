@@ -655,7 +655,7 @@ Class restartAction()
 		[sliderCtl setContinuous: YES];
 	}
 
-	return sliderCtl;
+	return sliderCtl ;
 }
 #endif // Mac
 
@@ -730,10 +730,14 @@ Class restartAction()
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+    [sliderCtl release];
+    
 	MacGLView *view = [[CCDirector sharedDirector] openGLView];
 	[[view window] removeChildWindow:overlayWindow];
 	[overlayWindow release];
+
 	overlayWindow = nil;
+    sliderCtl = nil;
 #endif
 	[super onExit];
 }

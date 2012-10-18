@@ -472,14 +472,14 @@ Class restartAction()
 	return @"menu items should work as expected";
 }
 
-- (void) onExitTransitionDidStart
+- (void) onExit
 {
-    [super onExitTransitionDidStart];
+    [super onExit];
     CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-
+    
     [director setProjection:kCCDirectorProjection3D];
-
 }
+
 @end
 
 #pragma mark -

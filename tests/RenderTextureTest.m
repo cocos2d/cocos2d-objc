@@ -377,7 +377,11 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		self.isTouchEnabled = YES;
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+		self.isMouseEnabled = YES;
+#endif
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
 		label.position =  ccp( size.width /2 , size.height*0.25f );
@@ -484,14 +488,55 @@ Class restartAction()
 {
 	[self renderScreenShot];
 }
-#endif // __IPHONE_OS_VERSION_MAX_ALLOWED
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+-(BOOL) ccMouseDown:(NSEvent *)event
+{
+    CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+    
+    sp1.position = location;
+    sp2.position = location;
+    sp3.position = location;
+    sp4.position = location;
+    sp5.position = location;
+    sp6.position = location;
+    sp7.position = location;
+    sp8.position = location;
+    sp9.position = location;
+    
+	return YES;
+}
+
+-(BOOL) ccMouseDragged:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+    
+    sp1.position = location;
+    sp2.position = location;
+    sp3.position = location;
+    sp4.position = location;
+    sp5.position = location;
+    sp6.position = location;
+    sp7.position = location;
+    sp8.position = location;
+    sp9.position = location;
+
+	return YES;
+}
+
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+    [self renderScreenShot];
+    return YES;
+}
+#endif // __MAC_OS_X_VERSION_MAX_ALLOWED
+
 
 -(void)renderScreenShot
 {
 	//NSLog(@"RENDER ");
 
 	CCRenderTexture *texture = [CCRenderTexture renderTextureWithWidth:512 height:512];
-	texture.anchorPoint = ccp(0,0);
+	//texture.anchorPoint = ccp(0,0);
 	[texture begin];
 
 	[self visit];
