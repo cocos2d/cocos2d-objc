@@ -1,11 +1,15 @@
-version 1.1-RC0 ..-..-2012
+version 1.1-RC0 19-10-2012
 . [NEW] v2.0 forward ported changes:
             CCParticleSystem: fix for correctly fading out particles with premultiplied and non premultiplied textures and avoiding black halo's
             warning for IOS5 bug for NPOT 16-bit textures
             CCPhysicisSprite, CCDrawNode, CCPhysicsDebugNode
-. [NEW] iOS 6 and iPhone5 support
+. [NEW] iOS6 and iPhone5 support
+. [NEW] Templates: 
+        chipmunk template updated to demonstrate working of CCPhysicsSprite and CCPhysicsDebugNode
+        support for new iPhone 5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
+        improved view controller code to handle both iOS4/5 and iOS6
 . [NEW] CocosLive: is no longer part of the templates and won't be updated anymore.
-. [NEW] CCFileUtils: iPhone5 support with new suffix
+. [NEW] CCFileUtils: iPhone 5 support with new suffix
 . [NEW] ProgressTimer: conforms to CCRGBAProtocol, action like FadeIn/Out can now run on the timer
 . [NEW] Macros: made CCLOG a bit more verbose
 . [NEW] Actions
@@ -25,7 +29,6 @@ version 1.1-RC0 ..-..-2012
         DirectorTest: test case for demonstrating runLoopCommon with a scroll view
         ParticleTest: added test case for issue #893, free non-moving particles in retina mode would still move
         Bug914: contains workaround for supporting all orientations on iOS4 and 5 (issue #1433)
-. [NEW] Templates: chipmunk template updated to demonstrate working of CCPhysicsSprite and CCPhysicsDebugNode
 . [NEW] Touches: touches still work when UIKit elements lay on top of cocos view
 . [FIX] Animation:
         bug in addFrames that resulted in incorrect delayPerUnit (issue #1341), added assert to prevent 0 duration.
