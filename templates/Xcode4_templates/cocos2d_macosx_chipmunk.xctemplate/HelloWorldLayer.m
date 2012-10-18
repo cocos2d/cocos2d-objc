@@ -50,12 +50,7 @@ enum {
 	if( (self=[super init])) {
 		
 		// enable events
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.isTouchEnabled = YES;
-		self.isAccelerometerEnabled = YES;
-#elif defined(__MAC_OS_VERSION_MAX_ALLOWED)
 		self.isMouseEnabled = YES;
-#endif
         
 		CGSize s = [[CCDirector sharedDirector] winSize];
         
