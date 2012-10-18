@@ -128,7 +128,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 -(void) setIsMouseEnabled:(BOOL)enabled
 {
-	[self setIsMouseEnabled:enabled];
+	[self setMouseEnabled:enabled];
 }
 -(NSInteger) mouseDelegatePriority
 {
