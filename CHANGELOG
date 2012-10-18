@@ -71,13 +71,14 @@ version 1.1-RC0 ..-..-2012
 . [FIX] Templates/Project new files for iPhone5 support
 . [FIX] Tests: MenuTest moved actions from init to onEnter (issue #884)
 . [FIX] Whitespace fix (issue #1268)
-. [FIX-MAC] CCDirectorMac: convertToLogicalCoordinates compensates for viewport offset when a custom projection is set
+. [FIX-MAC] DirectorMac: convertToLogicalCoordinates compensates for viewport offset when a custom projection is set
 . [FIX-MAC] Events:
             Events are removed/added from outside an event (v2.x fix)
             Fixed memory leak when removing delegate (v2.x fix)
-. [FIX-MAC] LabelTTF: works on mac-retina (v2.x fix)
 . [FIX-MAC] Grid: grid effects work correctly full-screen and in auto scale resize mode
-. [FIX-MAC] MacView: fixed memory leak in event dispatcher, every touch leaked
+. [FIX-MAC] LabelTTF: works on mac-retina (v2.x fix)
+. [FIX-MAC] MacGLView: fixed memory leak in event dispatcher, every event (touch/mouse/keyboard) leaked
+. [FIX-MAC] Tests: don't have leaks anymore
 . [3RD] Chipmunk, updated to v6.1.1
 . [3RD] Box2D, updated to v2.2.1
 
