@@ -125,7 +125,8 @@
     [obj performSelector:@selector(dispatchEvent:)											\
     onThread:[[CCDirector sharedDirector] runningThread]							\
     withObject:event																	\
-    waitUntilDone:NO];
+    waitUntilDone:NO];                                                              \
+    [event release]; 
 
 #pragma mark MacGLView - Mouse events
 - (void)mouseDown:(NSEvent *)theEvent

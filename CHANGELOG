@@ -77,6 +77,7 @@ version 1.1-RC0 ..-..-2012
             Fixed memory leak when removing delegate (v2.x fix)
 . [FIX-MAC] LabelTTF: works on mac-retina (v2.x fix)
 . [FIX-MAC] Grid: grid effects work correctly full-screen and in auto scale resize mode
+. [FIX-MAC] MacView: fixed memory leak in event dispatcher, every touch leaked
 . [3RD] Chipmunk, updated to v6.1.1
 . [3RD] Box2D, updated to v2.2.1
 
