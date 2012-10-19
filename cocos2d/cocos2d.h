@@ -120,12 +120,16 @@
 #import "ccTypes.h"
 #import "ccMacros.h"
 
-//
-// physics support
-//
 #import "CCDrawNode.h"
+
+//
+// Physics integration
+//
+// Box2d integration should include these 2 files manually
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 #import "CCPhysicsDebugNode.h"
 #import "CCPhysicsSprite.h"
+#endif 
 
 // Platform common
 #import "Platforms/CCGL.h"
