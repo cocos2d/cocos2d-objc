@@ -109,7 +109,7 @@
 		accelerometerEnabled_ = enabled;
 		if( isRunning_ ) {
 			if( enabled )
-				[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+				[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
 			else
 				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 		}
@@ -321,7 +321,7 @@
 {
 #ifdef __CC_PLATFORM_IOS
 	if( accelerometerEnabled_ )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:self];
+		[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
 #endif
 
 	[super onEnterTransitionDidFinish];
