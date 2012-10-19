@@ -116,6 +116,11 @@
 	}
 }
 
+-(void) setAccelerometerInterval:(float)interval
+{
+	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
+}
+
 -(BOOL) isTouchEnabled
 {
 	return touchEnabled_;
