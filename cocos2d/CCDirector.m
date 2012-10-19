@@ -191,7 +191,6 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ release];
 	[scheduler_ release];
 	[actionManager_ release];
-	[delegate_ release];
 
 	_sharedDirector = nil;
 
@@ -455,7 +454,6 @@ static CCDirector *_sharedDirector = nil;
 	[drawsLabel_ release];
 	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil;
 
-	[delegate_ release];
 	delegate_ = nil;
 
 	[self setView:nil];
