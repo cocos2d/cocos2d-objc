@@ -552,12 +552,12 @@ Class restartAction()
         
         CCLayerGradient* layer2 = [CCLayerGradient layerWithColor:ccc4(0, 0, 0, 127) fadingTo:ccc4(255, 255, 255, 127)];
         layer2.contentSize = CGSizeMake(80, 80);
-        layer2.position = ccp(100,50);
+        layer2.position = ccp(100,90);
         [self addChild:layer2];
         
         CCLayerGradient* layer3 = [[[CCLayerGradient alloc] init] autorelease];
         layer3.contentSize = CGSizeMake(80, 80);
-        layer3.position = ccp(150,50);
+        layer3.position = ccp(150,140);
         layer3.startColor = ccc3(255, 0, 0);
         layer3.endColor = ccc3(255, 0, 255);
         layer3.startOpacity = 255;
@@ -578,7 +578,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Only two of the layers are visible";
+	return @"You should see 3 layers";
 }
 @end
 
