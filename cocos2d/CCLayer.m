@@ -518,6 +518,11 @@
     return [[[self alloc] initWithColor:start fadingTo:end alongVector:v] autorelease];
 }
 
+- (id) init
+{
+	return [self initWithColor:ccc4(0, 0, 0, 255) fadingTo:ccc4(0, 0, 0, 255)];
+}
+
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
     return [self initWithColor:start fadingTo:end alongVector:ccp(0, -1)];
