@@ -84,6 +84,11 @@ typedef enum {
  */
 @property(nonatomic, assign) ccTouchesMode touchMode;
 
+/** sets the accelerometer's update frequency. A value of 1/2 means that the callback is going to be called twice per second.
+ @since v2.1
+ */
+-(void) setAccelerometerInterval:(float)interval;
+
 
 #elif defined(__CC_PLATFORM_MAC)
 
