@@ -135,6 +135,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		multiSampling_ = sampling;
 		requestedSamples_ = nSamples;
 		preserveBackbuffer_ = retained;
+        first_ = NO;
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
@@ -156,6 +157,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		multiSampling_= NO;
 		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
+        
+        first_ =YES; 
 
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
@@ -217,9 +220,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
         layerSize.height = layerSize.width;
         layerSize.width = temp;
     }
-
-    if (layerSize.width != size_.width || layerSize.height != size_.height)
+    
+    //when loading from nib size is already layerSize, projection needs to be set once
+    if ((layerSize.width != size_.width || layerSize.height != size_.height) || first_)
     {
+        first_ = NO; 
         [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 
         size_ = [renderer_ backingSize];

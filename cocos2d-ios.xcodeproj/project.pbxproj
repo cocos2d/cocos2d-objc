@@ -4640,7 +4640,6 @@
 		657F114E150BA75D0047F93C /* AppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppController.m; sourceTree = "<group>"; };
 		657F114F150BA75D0047F93C /* PerformanceDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PerformanceDispatcher.h; sourceTree = "<group>"; };
 		657F1150150BA75D0047F93C /* PerformanceDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PerformanceDispatcher.m; sourceTree = "<group>"; };
-		65D319FE162319A8000825C6 /* MainWindowTest-ipadiOS6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = "MainWindowTest-ipadiOS6.xib"; path = "../../MainWindowTest-ipadiOS6.xib"; sourceTree = "<group>"; };
 		65D4BFF5160775410052FCFD /* ScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScrollViewController.h; path = DirectorTest/ScrollViewController.h; sourceTree = "<group>"; };
 		65D4BFF6160775410052FCFD /* ScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ScrollViewController.m; path = DirectorTest/ScrollViewController.m; sourceTree = "<group>"; };
 		65E15F161625D0CF00EBF439 /* background1-568h.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "background1-568h.jpg"; sourceTree = "<group>"; };
@@ -4851,7 +4850,6 @@
 		65F8F3F01615E85100F6DBFF /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
 		65F8F3F11615E85100F6DBFF /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
 		65F8F3F21615E85100F6DBFF /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
-		65FA2CFE161D3D6C008B11F2 /* MainWindowTestiOS6.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWindowTestiOS6.xib; sourceTree = "<group>"; };
 		65FA9DFB1623B058004CF0A1 /* MainWindowTest-ipad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "MainWindowTest-ipad.xib"; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
@@ -6383,13 +6381,11 @@
 			isa = PBXGroup;
 			children = (
 				65FA9DFB1623B058004CF0A1 /* MainWindowTest-ipad.xib */,
-				65D319FE162319A8000825C6 /* MainWindowTest-ipadiOS6.xib */,
 				657ADCDD16233DD300E4636C /* MainWindowTest.xib */,
 				504E190111C4CB7D00E19835 /* main.m */,
 				504E18E611C4C91200E19835 /* EAGLViewTest-Info.plist */,
 				504E18E711C4C91200E19835 /* EAGLViewTest.h */,
 				504E18E811C4C91200E19835 /* EAGLViewTest.m */,
-				65FA2CFE161D3D6C008B11F2 /* MainWindowTestiOS6.xib */,
 			);
 			name = EAGLViewTest;
 			path = tests/EAGLViewTest;
