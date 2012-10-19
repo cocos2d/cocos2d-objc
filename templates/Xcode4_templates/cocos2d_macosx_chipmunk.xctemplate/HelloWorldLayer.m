@@ -6,169 +6,215 @@
 //  Copyright __MyCompanyName__ 2011. All rights reserved.
 //
 
+#import "AppDelegate.h"
 
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
 enum {
-	kTagBatchNode = 1,
+	kTagParentNode = 1,
 };
 
-static void
-eachShape(void *ptr, void* unused)
-{
-	cpShape *shape = (cpShape*) ptr;
-	CCSprite *sprite = shape->data;
-	if( sprite ) {
-		cpBody *body = shape->body;
-		
-		// TIP: cocos2d and chipmunk uses the same struct to store it's position
-		// chipmunk uses: cpVect, and cocos2d uses CGPoint but in reality the are the same
-		// since v0.7.1 you can mix them if you want.		
-		[sprite setPosition: body->p];
-		
-		[sprite setRotation: (float) CC_RADIANS_TO_DEGREES( -body->a )];
-	}
-}
+//set to 0 to test self rendered physicsSprites
+#define useBatchNode 1
 
-// HelloWorldLayer implementation
+#pragma mark - HelloWorldLayer
+
+@interface HelloWorldLayer ()
+-(void) addNewSpriteAtPosition:(CGPoint)pos;
+-(void) createMenu;
+-(void) initPhysics;
+@end
+
+
 @implementation HelloWorldLayer
 
+// Helper class method that creates a Scene with the HelloWorldLayer as the only child.
 +(CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
-	
+    
 	// 'layer' is an autorelease object.
 	HelloWorldLayer *layer = [HelloWorldLayer node];
-	
+    
 	// add layer as a child to scene
 	[scene addChild: layer];
-	
+    
 	// return the scene
 	return scene;
 }
 
--(void) addNewSpriteX: (float)x y:(float)y
-{
-	int posx, posy;
-	
-	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagBatchNode];
-	
-	posx = (CCRANDOM_0_1() * 200);
-	posy = (CCRANDOM_0_1() * 200);
-	
-	posx = (posx % 4) * 85;
-	posy = (posy % 3) * 121;
-	
-	CCSprite *sprite = [CCSprite spriteWithBatchNode:batch rect:CGRectMake(posx, posy, 85, 121)];
-	[batch addChild: sprite];
-	
-	sprite.position = ccp(x,y);
-	
-	int num = 4;
-	CGPoint verts[] = {
-		ccp(-24,-54),
-		ccp(-24, 54),
-		ccp( 24, 54),
-		ccp( 24,-54),
-	};
-	
-	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
-	
-	// TIP:
-	// since v0.7.1 you can assign CGPoint to chipmunk instead of cpVect.
-	// cpVect == CGPoint
-	body->p = ccp(x, y);
-	cpSpaceAddBody(space, body);
-	
-	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
-	shape->e = 0.5f; shape->u = 0.5f;
-	shape->data = sprite;
-	cpSpaceAddShape(space, shape);
-	
-}
-
-// on "init" you need to initialize your instance
 -(id) init
 {
-	// always call "super" init
-	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 		
+		// enable events
 		self.isMouseEnabled = YES;
-		
-		CGSize wins = [[CCDirector sharedDirector] winSize];
-		cpInitChipmunk();
-		
-		cpBody *staticBody = cpBodyNew(INFINITY, INFINITY);
-		space = cpSpaceNew();
-		cpSpaceResizeStaticHash(space, 400.0f, 40);
-		cpSpaceResizeActiveHash(space, 100, 600);
-		
-		space->gravity = ccp(0, -100);
-		space->elasticIterations = space->iterations;
-		
-		cpShape *shape;
-		
-		// bottom
-		shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(wins.width,0), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
-		
-		// top
-		shape = cpSegmentShapeNew(staticBody, ccp(0,wins.height), ccp(wins.width,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
-		
-		// left
-		shape = cpSegmentShapeNew(staticBody, ccp(0,0), ccp(0,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
-		
-		// right
-		shape = cpSegmentShapeNew(staticBody, ccp(wins.width,0), ccp(wins.width,wins.height), 0.0f);
-		shape->e = 1.0f; shape->u = 1.0f;
-		cpSpaceAddStaticShape(space, shape);
-		
-		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
-		[self addChild:batch z:0 tag:kTagBatchNode];
-		
-		[self addNewSpriteX: 200 y:200];
-		
-		[self schedule: @selector(step:)];
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+		// title
+		CCLabelTTF *label = [CCLabelTTF labelWithString:@"Multi touch the screen" fontName:@"Marker Felt" fontSize:36];
+		label.position = ccp( s.width / 2, s.height - 30);
+		[self addChild:label z:-1];
+        
+		// reset button
+		[self createMenu];
+        
+        
+		// init physics
+		[self initPhysics];
+
+		// doesn't use batch node. Slower
+		_spriteTexture = [[CCTextureCache sharedTextureCache] addImage:@"grossini_dance_atlas.png"];
+#if useBatchNode
+		CCSpriteBatchNode *parent = [CCSpriteBatchNode batchNodeWithTexture:_spriteTexture];
+#else
+        CCNode *parent = [CCNode node];
+#endif
+		[self addChild:parent z:0 tag:kTagParentNode];
+        
+		[self addNewSpriteAtPosition:ccp(200,200)];
+        
+		[self scheduleUpdate];
 	}
+    
 	return self;
 }
 
-// on "dealloc" you need to release all your retained objects
-- (void) dealloc
+-(void) initPhysics
 {
-	// in case you have something to dealloc, do it in this method
-	cpSpaceFree(space);
-	space = NULL;
-	
-	// don't forget to call "super dealloc"
-	[super dealloc];
-}
-
--(void) step: (ccTime) delta
-{
-	int steps = 2;
-	CGFloat dt = delta/(CGFloat)steps;
-	
-	for(int i=0; i<steps; i++){
-		cpSpaceStep(space, dt);
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    
+	_space = cpSpaceNew();
+    
+	cpSpaceSetGravity( _space, cpv(0, -100) );
+    
+	//
+	// rogue shapes
+	// We have to free them manually
+	//
+	// bottom
+	_walls[0] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(s.width,0), 0.0f);
+    
+	// top
+	_walls[1] = cpSegmentShapeNew( _space->staticBody, cpv(0,s.height), cpv(s.width,s.height), 0.0f);
+    
+	// left
+	_walls[2] = cpSegmentShapeNew( _space->staticBody, cpv(0,0), cpv(0,s.height), 0.0f);
+    
+	// right
+	_walls[3] = cpSegmentShapeNew( _space->staticBody, cpv(s.width,0), cpv(s.width,s.height), 0.0f);
+    
+	for( int i=0;i<4;i++) {
+		cpShapeSetElasticity( _walls[i], 1.0f );
+		cpShapeSetFriction( _walls[i], 1.0f );
+		cpSpaceAddStaticShape(_space, _walls[i] );
 	}
-	cpSpaceHashEach(space->activeShapes, &eachShape, nil);
-	cpSpaceHashEach(space->staticShapes, &eachShape, nil);
+    
+	_debugLayer = [CCPhysicsDebugNode debugNodeForCPSpace:_space];
+	_debugLayer.visible = NO;
+	[self addChild:_debugLayer z:100];
 }
 
+- (void)dealloc
+{
+	// manually Free rogue shapes
+	for( int i=0;i<4;i++) {
+		cpShapeFree( _walls[i] );
+	}
+    
+	cpSpaceFree( _space );
+    
+	[super dealloc];
+    
+}
+
+-(void) update:(ccTime) delta
+{
+	// Should use a fixed size step based on the animation interval.
+	int steps = 2;
+	CGFloat dt = [[CCDirector sharedDirector] animationInterval]/(CGFloat)steps;
+    
+	for(int i=0; i<steps; i++){
+		cpSpaceStep(_space, dt);
+	}
+}
+
+-(void) createMenu
+{
+	// Default font size will be 22 points.
+	[CCMenuItemFont setFontSize:22];
+    
+	// Reset Button
+    
+    CCMenuItemLabel *reset = [CCMenuItemFont itemFromString:@"reset" target:self selector:@selector(reset)];
+
+    CCMenuItemLabel *debug = [CCMenuItemFont itemFromString:@"debug" target:self selector:@selector(debug)];
+
+	CCMenu *menu = [CCMenu menuWithItems: debug, reset, nil];
+    
+	[menu alignItemsVertically];
+    
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	[menu setPosition:ccp( size.width/2, size.height/2)];
+    
+    
+	[self addChild: menu z:-1];
+}
+
+- (void) reset
+{
+    [[CCDirector sharedDirector] replaceScene: [HelloWorldLayer scene]]; 
+}
+
+- (void) debug
+{
+    [_debugLayer setVisible: !_debugLayer.visible];
+}
+
+-(void) addNewSpriteAtPosition:(CGPoint)pos
+{
+	// physics body
+	int num = 4;
+	cpVect verts[] = {
+		cpv(-24,-54),
+		cpv(-24, 54),
+		cpv( 24, 54),
+		cpv( 24,-54),
+	};
+    
+	cpBody *body = cpBodyNew(1.0f, cpMomentForPoly(1.0f, num, verts, CGPointZero));
+	cpBodySetPos( body, pos );
+	cpSpaceAddBody(_space, body);
+    
+	cpShape* shape = cpPolyShapeNew(body, num, verts, CGPointZero);
+	cpShapeSetElasticity( shape, 0.5f );
+	cpShapeSetFriction( shape, 0.5f );
+	cpSpaceAddShape(_space, shape);
+    
+	// sprite
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	int posx = CCRANDOM_0_1() * 200.0f;
+	int posy = CCRANDOM_0_1() * 200.0f;
+	posx = (posx % 4) * 85;
+	posy = (posy % 3) * 121;
+    
+#if useBatchNode 
+    CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithBatchNode:(CCSpriteBatchNode*)parent rect:CGRectMake(posx, posy, 85, 121)];
+#else
+	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:_spriteTexture rect:CGRectMake(posx, posy, 85, 121)];
+#endif
+	[parent addChild: sprite];
+	[sprite setBody:body];
+	[sprite setPosition: pos];
+}
 
 -(BOOL) ccMouseDown:(NSEvent *)event
 {
 	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteX: location.x y:location.y];
+	[self addNewSpriteAtPosition:location];
 	
 	return YES;
 }

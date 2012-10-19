@@ -32,3 +32,7 @@
 @interface Test1 : TestDemo
 {}
 @end
+
+@interface Test2 : TestDemo
+{}
+@end

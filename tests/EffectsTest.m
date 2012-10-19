@@ -21,10 +21,10 @@ enum {
 
 #pragma mark - Classes
 
-@interface Shaky3DDemo : CCShaky3D 
+@interface Shaky3DDemo : CCShaky3D
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface Waves3DDemo : CCWaves3D 
+@interface Waves3DDemo : CCWaves3D
 +(id) actionWithDuration:(ccTime)t;
 @end
 @interface FlipX3DDemo : CCFlipX3D
@@ -39,43 +39,43 @@ enum {
 @interface Ripple3DDemo : CCRipple3D
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface LiquidDemo : CCLiquid 
+@interface LiquidDemo : CCLiquid
 +(id) actionWithDuration:(ccTime)t;
 @end
 @interface WavesDemo : CCWaves
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface TwirlDemo : CCTwirl 
+@interface TwirlDemo : CCTwirl
 +(id) actionWithDuration:(ccTime)t;
 @end
 @interface ShakyTiles3DDemo : CCShakyTiles3D
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface ShatteredTiles3DDemo : CCShatteredTiles3D 
+@interface ShatteredTiles3DDemo : CCShatteredTiles3D
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface ShuffleTilesDemo : CCShuffleTiles 
+@interface ShuffleTilesDemo : CCShuffleTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface FadeOutTRTilesDemo : CCFadeOutTRTiles 
+@interface FadeOutTRTilesDemo : CCFadeOutTRTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface FadeOutBLTilesDemo : CCFadeOutBLTiles 
+@interface FadeOutBLTilesDemo : CCFadeOutBLTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface FadeOutUpTilesDemo : CCFadeOutUpTiles 
+@interface FadeOutUpTilesDemo : CCFadeOutUpTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface FadeOutDownTilesDemo : CCFadeOutDownTiles 
+@interface FadeOutDownTilesDemo : CCFadeOutDownTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface TurnOffTilesDemo : CCTurnOffTiles 
+@interface TurnOffTilesDemo : CCTurnOffTiles
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface WavesTiles3DDemo : CCWavesTiles3D 
+@interface WavesTiles3DDemo : CCWavesTiles3D
 +(id) actionWithDuration:(ccTime)t;
 @end
-@interface JumpTiles3DDemo : CCJumpTiles3D 
+@interface JumpTiles3DDemo : CCJumpTiles3D
 +(id) actionWithDuration:(ccTime)t;
 @end
 @interface SplitRowsDemo : CCSplitRows
@@ -108,8 +108,8 @@ enum {
 	id flipx  = [CCFlipX3D actionWithDuration:t];
 	id flipx_back = [flipx reverse];
 	id delay = [CCDelayTime actionWithDuration:2];
-	
-	return [CCSequence actions: flipx, delay, flipx_back, nil];	
+
+	return [CCSequence actions: flipx, delay, flipx_back, nil];
 }
 @end
 @implementation FlipY3DDemo
@@ -118,7 +118,7 @@ enum {
 	id flipy = [CCFlipY3D actionWithDuration:t];
 	id flipy_back = [flipy reverse];
 	id delay = [CCDelayTime actionWithDuration:2];
-	
+
 	return [CCSequence actions: flipy, delay, flipy_back, nil];
 }
 @end
@@ -193,7 +193,7 @@ enum {
 	id fadeout = [CCFadeOutBLTiles actionWithSize:ccg(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
-	
+
 	return [CCSequence actions: fadeout, delay, back, nil];
 }
 @end
@@ -203,7 +203,7 @@ enum {
 	id fadeout = [CCFadeOutUpTiles actionWithSize:ccg(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
-	
+
 	return [CCSequence actions: fadeout, delay, back, nil];
 }
 @end
@@ -213,7 +213,7 @@ enum {
 	id fadeout = [CCFadeOutDownTiles actionWithSize:ccg(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
-	
+
 	return [CCSequence actions: fadeout, delay, back, nil];
 }
 @end
@@ -223,7 +223,7 @@ enum {
 	id action = [CCTurnOffTiles actionWithSeed:25 grid:ccg(48,32) duration:t];
 	id back = [action reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
-	
+
 	return [CCSequence actions: action, delay, back, nil];
 }
 @end
@@ -320,7 +320,7 @@ Class backAction(void);
 Class restartAction(void);
 
 Class nextAction()
-{	
+{
 	actionIdx++;
 	actionIdx = actionIdx % ( sizeof(actionList) / sizeof(actionList[0]) );
 	NSString *r = actionList[actionIdx];
@@ -350,23 +350,23 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super initWithColor: ccc4(32,32,32,255)] )) {
-	
+
 		float x,y;
-		
+
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		x = size.width;
 		y = size.height;
-		
+
 		CCNode *node = [CCNode node];
 		Class effectClass = restartAction();
 		[node runAction:[effectClass actionWithDuration:3]];
 		[self addChild: node z:0 tag:kTagBackground];
-		
+
 		CCSprite *bg = [CCSprite spriteWithFile:@"background3.png"];
 		[node addChild: bg z:0];
 //		bg.anchorPoint = CGPointZero;
 		bg.position = ccp(size.width/2, size.height/2);
-		
+
 		CCSprite *grossini = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		[node addChild:grossini z:1];
 		grossini.position = ccp(x/3,y/2);
@@ -380,14 +380,14 @@ Class restartAction()
 		id sc2 = [CCScaleBy actionWithDuration:2 scale:5];
 		id sc2_back = [sc2 reverse];
 		[tamara runAction: [CCRepeatForever actionWithAction: [CCSequence actions:sc2, sc2_back, nil]]];
-		
-		
+
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:effectsList[actionIdx] fontName:@"Marker Felt" fontSize:32];
-		
+
 		[label setPosition: ccp(x/2,y-80)];
 		[self addChild: label];
 		label.tag = kTagLabel;
-		
+
 		// menu
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -398,10 +398,10 @@ Class restartAction()
 		item2.position = ccp(size.width/2, 30);
 		item3.position = ccp(size.width/2+100,30);
 		[self addChild: menu z:1];
-		
+
 		[self schedule:@selector(checkAnim:)];
 	}
-	
+
 	return self;
 }
 
@@ -421,7 +421,7 @@ Class restartAction()
 			break;
 		case CCDeviceOrientationPortrait:
 			orientation = CCDeviceOrientationLandscapeRight;
-			break;						
+			break;
 		case CCDeviceOrientationLandscapeRight:
 			orientation = CCDeviceOrientationPortraitUpsideDown;
 			break;
@@ -444,20 +444,20 @@ Class restartAction()
 //	[self newOrientation];
 	nextAction();
 	[self newScene];
-}	
+}
 
 -(void) backCallback:(id) sender
 {
 //	[self newOrientation];
 	backAction();
 	[self newScene];
-}	
+}
 
 -(void) restartCallback:(id) sender
 {
 	[self newOrientation];
 	[self newScene];
-}	
+}
 @end
 
 // CLASS IMPLEMENTATIONS
@@ -467,57 +467,58 @@ Class restartAction()
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
+
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
-	
+
 	// frames per second
 	[director setAnimationInterval:1.0/60];
-	
+
 	// create an OpenGL view
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:0];
 	[glView setMultipleTouchEnabled:YES];
-	
+
 	// connect it to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// glview is a child of the main window
 	[window addSubview:glView];
-	
+
 	// Make the window visible
 	[window makeKeyAndVisible];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+    [CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
-	
-	[director runWithScene: scene];	
+
+	[director runWithScene: scene];
 }
 
 - (void) dealloc
@@ -551,7 +552,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

@@ -34,34 +34,34 @@ enum {
 - (id) initWithEntryID:(int)entryId
 {
 	if ((self = [super init])) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		entryID = entryId;
-		
+
 		self.isTouchEnabled = YES;
-		
+
 		Box2DView *view = [Box2DView viewWithEntryID:entryId];
 		[self addChild:view z:0 tag:kTagBox2DNode];
 		[view setScale:15];
 		[view setAnchorPoint:ccp(0,0)];
 		[view setPosition:ccp(s.width/2, s.height/3)];
-		
+
 		CCLabelTTF* label = [CCLabelTTF labelWithString:[view title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];		
+		[self addChild: menu z:1];
 
 	}
 	return self;
@@ -93,7 +93,7 @@ enum {
 	if( next < 0 ) {
 		next = g_totalEntries - 1;
 	}
-	
+
 	id box = [MenuLayer menuWithEntryID:next];
 	[s addChild:box];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -119,14 +119,14 @@ enum {
 
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	CGPoint touchLocation = [touch locationInView: [touch view]];	
-	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
-	
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
+
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
-	
+
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
-	
+
 	CCNode *node = [self getChildByTag:kTagBox2DNode];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
@@ -143,9 +143,9 @@ enum {
 }
 
 - (id) initWithEntryID:(int)entryId
-{    
+{
     if ((self = [super init])) {
-		
+
 		self.isAccelerometerEnabled = YES;
 		self.isTouchEnabled = YES;
 
@@ -153,15 +153,15 @@ enum {
 
 		entry = g_testEntries + entryId;
 		test = entry->createFcn();
-		
+
 		// init settings
 //		settings.drawAABBs = 1;
 //		settings.drawPairs = 1;
 //		settings.drawContactPoints = 1;
 //		settings.drawCOMs = 1;
-		
+
     }
-		
+
     return self;
 }
 
@@ -180,20 +180,20 @@ enum {
 	[super draw];
 
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
-	// Needed states:  GL_VERTEX_ARRAY, 
+	// Needed states:  GL_VERTEX_ARRAY,
 	// Unneeded states: GL_TEXTURE_2D, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	glDisable(GL_TEXTURE_2D);
 	glDisableClientState(GL_COLOR_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+
 	glPushMatrix();
 	float scale = CC_CONTENT_SCALE_FACTOR();
 	glScalef( scale, scale, 1 );
-	
+
 	test->m_world->DrawDebugData();
-	
+
 	glPopMatrix();
-	
+
 	// restore default GL states
 	glEnable(GL_TEXTURE_2D);
 	glEnableClientState(GL_COLOR_ARRAY);
@@ -214,13 +214,13 @@ enum {
 
 - (BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
 {
-	
+
 	CGPoint touchLocation=[touch locationInView:[touch view]];
 	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
 //	NSLog(@"pos: %f,%f -> %f,%f", touchLocation.x, touchLocation.y, nodePosition.x, nodePosition.y);
 
-	return test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));	
+	return test->MouseDown(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
 - (void) ccTouchMoved:(UITouch*)touch withEvent:(UIEvent*)event
@@ -228,8 +228,8 @@ enum {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
 	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
-	
-	test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));		
+
+	test->MouseMove(b2Vec2(nodePosition.x,nodePosition.y));
 }
 
 - (void) ccTouchEnded:(UITouch*)touch withEvent:(UIEvent*)event
@@ -237,7 +237,7 @@ enum {
 	CGPoint touchLocation=[touch locationInView:[touch view]];
 	touchLocation=[[CCDirector sharedDirector] convertToGL:touchLocation];
 	CGPoint nodePosition = [self convertToNodeSpace: touchLocation];
-	
+
 	test->MouseUp(b2Vec2(nodePosition.x,nodePosition.y));
 }
 

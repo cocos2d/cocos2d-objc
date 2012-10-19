@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -71,10 +71,10 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		bodyValues = [[NSMutableArray arrayWithCapacity:5] retain];
 		delegate = [aDelegate retain];
 		receivedData = [[NSMutableData data] retain];
-		
+
 		ranking_ = kServerPostInvalidRanking;
 	}
-	
+
 	return self;
 }
 
@@ -92,31 +92,31 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 
 #pragma mark ScoreServer send scores
--(BOOL) sendScore: (NSDictionary*) dict 
+-(BOOL) sendScore: (NSDictionary*) dict
 {
     return [self submitScore:dict forUpdate:NO];
 }
 
 -(BOOL) updateScore: (NSDictionary*) dict
-{	
+{
     if (![dict objectForKey:@"cc_playername"]) {
 		// fail. cc_playername + cc_device_id are needed to update an score
-		[NSException raise:@"cocosLive:updateScore" format:@"cc_playername not found"]; 
+		[NSException raise:@"cocosLive:updateScore" format:@"cc_playername not found"];
 	}
     return [self submitScore:dict forUpdate:YES];
 }
 
 -(BOOL) submitScore: (NSDictionary*)dict forUpdate:(BOOL)isUpdate
-{	
+{
     [receivedData setLength:0];
 	[bodyValues removeAllObjects];
-	
+
 	// reset status
 	postStatus_ = kPostStatusOK;
-		
+
 	// create the request
 	NSMutableURLRequest *post = [self scoreServerRequestWithURLString:(isUpdate ? SCORE_SERVER_UPDATE_URL : SCORE_SERVER_SEND_URL)];
-	
+
 	CC_MD5_Init( &md5Ctx);
 
     // hash SHALL be calculated in certain order
@@ -124,25 +124,25 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 	int reverseSort = NO;
 	NSArray *sortedKeys = [keys sortedArrayUsingFunction:alphabeticSort context:&reverseSort];
 	for( id key in sortedKeys )
-		[self calculateHashAndAddValue:[dict objectForKey:key] key:key];    
+		[self calculateHashAndAddValue:[dict objectForKey:key] key:key];
 
     // device id is hashed to prevent spoofing this same score from different devices
 	// one way to prevent a replay attack is to send cc_id & cc_time and use it as primary keys
-    
+
 	[self addValue:[[UIDevice currentDevice] uniqueIdentifier] key:@"cc_device_id"];
 	[self addValue:gameName key:@"cc_gamename"];
 	[self addValue:[self getHashForData] key:@"cc_hash"];
 	[self addValue:SCORE_SERVER_PROTOCOL_VERSION key:@"cc_prot_ver"];
-    
+
 	[post setHTTPBody: [self getBodyValues] ];
-	
+
 	// create the connection with the request
 	// and start loading the data
 	self.connection=[NSURLConnection connectionWithRequest:post delegate:self];
-	
+
 	if ( ! connection_)
 		return NO;
-	
+
 	return YES;
 }
 
@@ -150,7 +150,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     NSMutableURLRequest *request=[NSMutableURLRequest requestWithURL:[NSURL URLWithString: url]
                                                       cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                   timeoutInterval:10.0];
-	
+
 	[request setHTTPMethod: @"POST"];
 	[request setValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     return request;
@@ -168,7 +168,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 		[NSException raise:@"Invalid format for value" format:@"Invalid format for value. addValue"];
 
 	[self addValue:val key:key];
-	
+
 	const char * data = [val UTF8String];
 	CC_MD5_Update( &md5Ctx, data, strlen(data) );
 }
@@ -178,39 +178,37 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
 	NSString *encodedValue = [self encodeData:value];
 	NSString *encodedKey = [self encodeData:key];
-		
+
 	[bodyValues addObject: [NSString stringWithFormat:@"%@=%@", encodedKey, encodedValue] ];
 }
 
 -(NSData*) getBodyValues {
 	NSMutableData *data = [[NSMutableData alloc] init];
-	
+
 	BOOL first=YES;
 	for( NSString *s in bodyValues ) {
 		if( !first)
 			[data appendBytes:"&" length:1];
-		
+
 		[data appendBytes:[s UTF8String] length:[s length]];
 		first = NO;
 	}
-	
+
 	return [data autorelease];
 }
 
 -(NSString*) getHashForData
 {
-	NSString *ret;
 	unsigned char  pTempKey[16];
-	
+	NSString* ret=@"";
 	// update the hash with the secret key
 	const char *data = [gameKey UTF8String];
 	CC_MD5_Update(&md5Ctx, data, strlen(data));
-	
+
 	// then get the hash
 	CC_MD5_Final( pTempKey, &md5Ctx);
 
 //	NSData *nsdata = [NSData dataWithBytes:pTempKey length:16];
-	ret = [NSString stringWithString:@""];
 	for( int i=0;i<16;i++) {
 		ret = [NSString stringWithFormat:@"%@%02x", ret, pTempKey[i] ];
 	}
@@ -221,7 +219,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 -(NSString*) encodeData:(NSString*) data
 {
 	NSString *newData;
-	
+
 	newData = [data stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
 
 	// '&' and '=' should be encoded manually
@@ -237,7 +235,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 {
     // this method is called when the server has determined that it
     // has enough information to create the NSURLResponse
-	
+
     // it can be called multiple times, for example in the case of a
     // redirect, so each time we reset the data.
     // receivedData is declared as a method instance elsewhere
@@ -249,7 +247,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     // append the new data to the receivedData
     // receivedData is declared as a method instance elsewhere
 	[receivedData appendData:data];
-	
+
 //	NSString *dataString = [NSString stringWithCString:[data bytes] length: [data length]];
 //	CCLOG( @"data: %@", dataString);
 }
@@ -263,28 +261,28 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 
     // release the connection
 	self.connection = nil;
-	
+
 	if( [delegate respondsToSelector:@selector(scorePostFail:) ] )
 		[delegate scorePostFail:self];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
-{	
+{
 	// release the connection
 	self.connection = nil;
-	
+
 //	NSString *dataString = [NSString stringWithCString:[receivedData bytes] length: [receivedData length]];
 	NSString *dataString = [NSString stringWithCString:[receivedData bytes] encoding: NSASCIIStringEncoding];
-	
+
 	if( [dataString hasPrefix:@"OK:"] ) {
 		// parse ranking and other possible answers
 		NSArray *values = [dataString componentsSeparatedByString:@":"];
 		NSArray *answer = [ [values objectAtIndex:1] componentsSeparatedByString:@","];
 		NSEnumerator *nse = [answer objectEnumerator];
-		
+
 		// Create a holder for each line we are going to work with
 		NSString *line;
-		
+
 		// Loop through all the lines in the lines array processing each one
 		while( (line = [nse nextObject]) ) {
 			NSArray *keyvalue = [line componentsSeparatedByString:@"="];
@@ -294,22 +292,22 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
 			} else if( [[keyvalue objectAtIndex:0] isEqual:@"score_updated"] ) {
 				scoreDidUpdate_ = [[keyvalue objectAtIndex:1] boolValue];
 			}
-			
+
 		}
 		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
 			[delegate scorePostOk:self];
-	
+
 	} else if( [dataString hasPrefix: @"OK"] ) {
-			
+
 		// Ok
 		postStatus_ = kPostStatusOK;
-		
+
 		if( [delegate respondsToSelector:@selector(scorePostOk:) ] )
 			[delegate scorePostOk:self];
-			
-		
+
+
 	} else {
-		
+
 		NSLog(@"cocoslive: Post Score failed. Reason: %@", dataString);
 
 		// Error parsing answer
@@ -328,7 +326,7 @@ NSInteger alphabeticSort(id string1, id string2, void *reverse)
     if (redirectResponse) {
         newRequest=nil;
     }
-	
+
     return newRequest;
 }
 

@@ -25,20 +25,19 @@
 	// Uncomment the following code if you Application only supports landscape mode
 	//
 #if GAME_AUTOROTATION == kGameAutorotationUIViewController
-	
-	//	CC_ENABLE_DEFAULT_GL_STATES();
-	//	CCDirector *director = [CCDirector sharedDirector];
-	//	CGSize size = [director winSize];
-	//	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
-	//	sprite.position = ccp(size.width/2, size.height/2);
-	//	sprite.rotation = -90;
-	//	[sprite visit];
-	//	[[director openGLView] swapBuffers];
-	//	CC_ENABLE_DEFAULT_GL_STATES();
+
+//	CC_ENABLE_DEFAULT_GL_STATES();
+//	CCDirector *director = [CCDirector sharedDirector];
+//	CGSize size = [director winSize];
+//	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
+//	sprite.position = ccp(size.width/2, size.height/2);
+//	sprite.rotation = -90;
+//	[sprite visit];
+//	[[director openGLView] swapBuffers];
+//	CC_ENABLE_DEFAULT_GL_STATES();
 	
 #endif // GAME_AUTOROTATION == kGameAutorotationUIViewController	
 }
-
 - (void) applicationDidFinishLaunching:(UIApplication*)application
 {
 	// Init the window
@@ -96,7 +95,10 @@
 	// make the OpenGLView a child of the view controller
 	[viewController setView:glView];
 	
-	// make the View Controller a child of the main window
+    //Required in iOS6, recommended in 4 and 5
+    [window setRootViewController:viewController];
+    
+	// make the View Controller a child of the main window, needed for iOS 4 and 5
 	[window addSubview: viewController.view];
 	
 	[window makeKeyAndVisible];

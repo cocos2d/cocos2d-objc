@@ -51,8 +51,8 @@
    we only want coarse navigation through the stream. */
 
 /*************************************************************************
- * Many, many internal helpers.  The intention is not to be confusing; 
- * rampant duplication and monolithic function implementation would be 
+ * Many, many internal helpers.  The intention is not to be confusing;
+ * rampant duplication and monolithic function implementation would be
  * harder to understand anyway.  The high level functions are last.  Begin
  * grokking near the end of the file */
 
@@ -72,7 +72,7 @@ static long _get_data(OggVorbis_File *vf){
 
 /* save a tiny smidge of verbosity to make the code more readable */
 static void _seek_helper(OggVorbis_File *vf,ogg_int64_t offset){
-  if(vf->datasource){ 
+  if(vf->datasource){
     (vf->callbacks.seek_func)(vf->datasource, offset, SEEK_SET);
     vf->offset=offset;
     ogg_sync_reset(vf->oy);
@@ -93,7 +93,7 @@ static void _seek_helper(OggVorbis_File *vf,ogg_int64_t offset){
 	      n) search for a new page beginning for n bytes
 
    return:   <0) did not find a page (OV_FALSE, OV_EOF, OV_EREAD)
-              n) found a page at absolute offset n 
+              n) found a page at absolute offset n
 
               produces a refcounted page */
 
@@ -105,7 +105,7 @@ static ogg_int64_t _get_next_page(OggVorbis_File *vf,ogg_page *og,
 
     if(boundary>0 && vf->offset>=boundary)return(OV_FALSE);
     more=ogg_sync_pageseek(vf->oy,og);
-    
+
     if(more<0){
       /* skipped n bytes */
       vf->offset-=more;
@@ -124,7 +124,7 @@ static ogg_int64_t _get_next_page(OggVorbis_File *vf,ogg_page *og,
 	ogg_int64_t ret=vf->offset;
 	vf->offset+=more;
 	return(ret);
-	
+
       }
     }
   }
@@ -182,18 +182,18 @@ static int _bisect_forward_serialno(OggVorbis_File *vf,
   ogg_int64_t next=end;
   ogg_page og={0,0,0,0};
   ogg_int64_t ret;
-  
+
   /* the below guards against garbage seperating the last and
      first pages of two links. */
   while(searched<endsearched){
     ogg_int64_t bisect;
-    
+
     if(endsearched-searched<CHUNKSIZE){
       bisect=searched;
     }else{
       bisect=(searched+endsearched)/2;
     }
-    
+
     _seek_helper(vf,bisect);
     ret=_get_next_page(vf,&og,-1);
     if(ret==OV_EREAD)return(OV_EREAD);
@@ -209,7 +209,7 @@ static int _bisect_forward_serialno(OggVorbis_File *vf,
   _seek_helper(vf,next);
   ret=_get_next_page(vf,&og,-1);
   if(ret==OV_EREAD)return(OV_EREAD);
-  
+
   if(searched>=end || ret<0){
     ogg_page_release(&og);
     vf->links=m+1;
@@ -222,7 +222,7 @@ static int _bisect_forward_serialno(OggVorbis_File *vf,
     ogg_page_release(&og);
     if(ret==OV_EREAD)return(OV_EREAD);
   }
-  
+
   vf->offsets[m]=begin;
   vf->serialnos[m]=currentno;
   return(0);
@@ -240,7 +240,7 @@ static int _fetch_headers(OggVorbis_File *vf,
   ogg_page og={0,0,0,0};
   ogg_packet op={0,0,0,0,0,0};
   int i,ret;
-  
+
   if(!og_ptr){
     ogg_int64_t llret=_get_next_page(vf,&og,CHUNKSIZE);
     if(llret==OV_EREAD)return(OV_EREAD);
@@ -251,13 +251,13 @@ static int _fetch_headers(OggVorbis_File *vf,
   ogg_stream_reset_serialno(vf->os,ogg_page_serialno(og_ptr));
   if(serialno)*serialno=vf->os->serialno;
   vf->ready_state=STREAMSET;
-  
+
   /* extract the initial header from the first page and verify that the
      Ogg bitstream is in fact Vorbis data */
-  
+
   vorbis_info_init(vi);
   vorbis_comment_init(vc);
-  
+
   i=0;
   while(i<3){
     ogg_stream_pagein(vf->os,og_ptr);
@@ -282,7 +282,7 @@ static int _fetch_headers(OggVorbis_File *vf,
 
   ogg_packet_release(&op);
   ogg_page_release(&og);
-  return 0; 
+  return 0;
 
  bail_header:
   ogg_packet_release(&op);
@@ -307,12 +307,12 @@ static void _prefetch_all_headers(OggVorbis_File *vf, ogg_int64_t dataoffset){
   ogg_page og={0,0,0,0};
   int i;
   ogg_int64_t ret;
-  
+
   vf->vi=_ogg_realloc(vf->vi,vf->links*sizeof(*vf->vi));
   vf->vc=_ogg_realloc(vf->vc,vf->links*sizeof(*vf->vc));
   vf->dataoffsets=_ogg_malloc(vf->links*sizeof(*vf->dataoffsets));
   vf->pcmlengths=_ogg_malloc(vf->links*2*sizeof(*vf->pcmlengths));
-  
+
   for(i=0;i<vf->links;i++){
     if(i==0){
       /* we already grabbed the initial header earlier.  Just set the offset */
@@ -348,10 +348,10 @@ static void _prefetch_all_headers(OggVorbis_File *vf, ogg_int64_t dataoffset){
 	  /* this should not be possible unless the file is
              truncated/mangled */
 	  break;
-       
+
 	if(ogg_page_serialno(&og)!=vf->serialnos[i])
 	  break;
-	
+
 	pos=ogg_page_granulepos(&og);
 
 	/* count blocksizes of all frames in the page */
@@ -411,7 +411,7 @@ static void _make_decode_ready(OggVorbis_File *vf){
     vorbis_synthesis_init(&vf->vd,vf->vi+vf->current_link);
   }else{
     vorbis_synthesis_init(&vf->vd,vf->vi);
-  }    
+  }
   vorbis_block_init(&vf->vd,&vf->vb);
   vf->ready_state=INITSET;
   vf->bittrack=0;
@@ -430,7 +430,7 @@ static int _open_seekable2(OggVorbis_File *vf){
   /* we can seek, so set out learning all about this file */
   (vf->callbacks.seek_func)(vf->datasource,0,SEEK_END);
   vf->offset=vf->end=(vf->callbacks.tell_func)(vf->datasource);
-  
+
   /* We get the offset for the last page of the physical bitstream.
      Most OggVorbis files will contain a single logical bitstream */
   end=_get_prev_page(vf,&og);
@@ -458,7 +458,7 @@ static int _open_seekable2(OggVorbis_File *vf){
   return(ov_raw_seek(vf,0));
 }
 
-/* clear out the current logical bitstream decoder */ 
+/* clear out the current logical bitstream decoder */
 static void _decode_clear(OggVorbis_File *vf){
   vorbis_dsp_clear(&vf->vd);
   vorbis_block_clear(&vf->vb);
@@ -469,11 +469,11 @@ static void _decode_clear(OggVorbis_File *vf){
    bitstream boundary and dumps the decoding machine.  If the decoding
    machine is unloaded, it loads it.  It also keeps pcm_offset up to
    date (seek and read both use this.  seek uses a special hack with
-   readp). 
+   readp).
 
    return: <0) error, OV_HOLE (lost packet) or OV_EOF
             0) need more data (only if readp==0)
-	    1) got a packet 
+	    1) got a packet
 */
 
 static int _fetch_and_process_packet(OggVorbis_File *vf,
@@ -486,7 +486,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
   /* handle one packet.  Try to fetch it from current stream state */
   /* extract packets from page */
   while(1){
-    
+
     /* process a packet if we can.  If the machine isn't loaded,
        neither is a page */
     if(vf->ready_state==INITSET){
@@ -523,12 +523,12 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 	      vf->samptrack+=vorbis_synthesis_pcmout(&vf->vd,NULL)-oldsamples;
 	      vf->bittrack+=op.bytes*8;
 	    }
-	  
+
 	    /* update the pcm offset. */
 	    if(granulepos!=-1 && !op.e_o_s){
 	      int link=(vf->seekable?vf->current_link:0);
 	      int i,samples;
-	    
+
 	      /* this packet has a pcm_offset on it (the last packet
 	         completed on a page carries the offset) After processing
 	         (above), we know the pcm position of the *last* sample
@@ -550,7 +550,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 					       is very broken */
 
 	      samples=vorbis_synthesis_pcmout(&vf->vd,NULL);
-	    
+
 	      granulepos-=samples;
 	      for(i=0;i<link;i++)
 	        granulepos+=vf->pcmlengths[i*2+1];
@@ -560,7 +560,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 	    goto cleanup;
 	  }
 	}
-	else 
+	else
 	  break;
       }
     }
@@ -579,7 +579,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 	/* bitrate tracking; add the header's bytes here, the body bytes
 	   are done by packet above */
       vf->bittrack+=og.header_len*8;
-      
+
       /* has our decoding just traversed a bitstream boundary? */
       if(vf->ready_state==INITSET){
 	if(vf->current_serialno!=ogg_page_serialno(&og)){
@@ -589,7 +589,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 	  }
 
 	  _decode_clear(vf);
-	  
+
 	  if(!vf->seekable){
 	    vorbis_info_clear(vf->vi);
 	    vorbis_comment_clear(vf->vc);
@@ -599,7 +599,7 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
     }
 
     /* Do we need to load a new machine before submitting the page? */
-    /* This is different in the seekable and non-seekable cases.  
+    /* This is different in the seekable and non-seekable cases.
 
        In the seekable case, we already have all the header
        information loaded and cached; we just initialize the machine
@@ -610,13 +610,13 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
        we're now nominally at the header of the next bitstream
     */
 
-    if(vf->ready_state!=INITSET){ 
+    if(vf->ready_state!=INITSET){
       int link;
 
       if(vf->ready_state<STREAMSET){
 	if(vf->seekable){
 	  vf->current_serialno=ogg_page_serialno(&og);
-	  
+
 	  /* match the serialno to bitstream section.  We use this rather than
 	     offset positions to avoid problems near logical bitstream
 	     boundaries */
@@ -627,23 +627,23 @@ static int _fetch_and_process_packet(OggVorbis_File *vf,
 				leave machine uninitialized */
 	    goto cleanup;
 	  }
-	  
+
 	  vf->current_link=link;
-	  
+
 	  ogg_stream_reset_serialno(vf->os,vf->current_serialno);
 	  vf->ready_state=STREAMSET;
-	  
+
 	}else{
 	  /* we're streaming */
 	  /* fetch the three header packets, build the info struct */
-	  
+
 	  int ret=_fetch_headers(vf,vf->vi,vf->vc,&vf->current_serialno,&og);
 	  if(ret) goto cleanup;
 	  vf->current_link++;
 	  link=0;
 	}
       }
-      
+
       _make_decode_ready(vf);
     }
     ogg_stream_pagein(vf->os,&og);
@@ -723,7 +723,7 @@ int ov_clear(OggVorbis_File *vf){
     vorbis_block_clear(&vf->vb);
     vorbis_dsp_clear(&vf->vd);
     ogg_stream_destroy(vf->os);
-    
+
     if(vf->vi && vf->links){
       int i;
       for(i=0;i<vf->links;i++){
@@ -750,7 +750,7 @@ int ov_clear(OggVorbis_File *vf){
 
 /* inspects the OggVorbis file and finds/documents all the logical
    bitstreams contained in it.  Tries to be tolerant of logical
-   bitstream sections that are truncated/woogie. 
+   bitstream sections that are truncated/woogie.
 
    return: -1) error
             0) OK
@@ -773,7 +773,7 @@ int ov_open(FILE *f,OggVorbis_File *vf,char *initial,long ibytes){
 
   return ov_open_callbacks((void *)f, vf, initial, ibytes, callbacks);
 }
-  
+
 /* Only partially open the vorbis file; test for Vorbisness, and load
    the headers for the first chain.  Do not seek (although test for
    seekability).  Use ov_test_open to finish opening the file, else
@@ -795,7 +795,7 @@ int ov_test(FILE *f,OggVorbis_File *vf,char *initial,long ibytes){
 
   return ov_test_callbacks((void *)f, vf, initial, ibytes, callbacks);
 }
-  
+
 int ov_test_open(OggVorbis_File *vf){
   if(vf->ready_state!=PARTOPEN)return(OV_EINVAL);
   return _ov_open2(vf);
@@ -858,7 +858,7 @@ long ov_bitrate(OggVorbis_File *vf,int i){
 
 /* returns the actual bitrate since last call.  returns -1 if no
    additional data to offer since last call (or at beginning of stream),
-   EINVAL if stream is only partially open 
+   EINVAL if stream is only partially open
 */
 long ov_bitrate_instant(OggVorbis_File *vf){
   int link=(vf->seekable?vf->current_link:0);
@@ -904,7 +904,7 @@ ogg_int64_t ov_raw_total(OggVorbis_File *vf,int i){
 /* returns: total PCM length (samples) of content if i==-1 PCM length
 	    (samples) of that logical bitstream for i==0 to n
 	    OV_EINVAL if the stream is not seekable (we can't know the
-	    length) or only partially open 
+	    length) or only partially open
 */
 ogg_int64_t ov_pcm_total(OggVorbis_File *vf,int i){
   if(vf->ready_state<OPENED)return(OV_EINVAL);
@@ -923,7 +923,7 @@ ogg_int64_t ov_pcm_total(OggVorbis_File *vf,int i){
 /* returns: total milliseconds of content if i==-1
             milliseconds in that logical bitstream for i==0 to n
 	    OV_EINVAL if the stream is not seekable (we can't know the
-	    length) or only partially open 
+	    length) or only partially open
 */
 ogg_int64_t ov_time_total(OggVorbis_File *vf,int i){
   if(vf->ready_state<OPENED)return(OV_EINVAL);
@@ -950,7 +950,7 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
   ogg_stream_state *work_os=NULL;
   ogg_page og={0,0,0,0};
   ogg_packet op={0,0,0,0,0,0};
-  
+
   if(vf->ready_state<OPENED)return(OV_EINVAL);
   if(!vf->seekable)
     return(OV_ENOSEEK); /* don't dump machine if we can't seek */
@@ -965,7 +965,7 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
   ogg_stream_reset_serialno(vf->os,
 			    vf->current_serialno); /* must set serialno */
   vorbis_synthesis_restart(&vf->vd);
-    
+
   _seek_helper(vf,pos);
 
   /* we need to make sure the pcm_offset is set, but we don't want to
@@ -975,12 +975,12 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
 
      So, a hack.  We use two stream states; a local scratch state and
      the shared vf->os stream state.  We use the local state to
-     scan, and the shared state as a buffer for later decode. 
+     scan, and the shared state as a buffer for later decode.
 
      Unfortuantely, on the last page we still advance to last packet
      because the granulepos on the last page is not necessarily on a
      packet boundary, and we need to make sure the granpos is
-     correct. 
+     correct.
   */
 
   {
@@ -994,7 +994,7 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
       if(vf->ready_state>=STREAMSET){
 	/* snarf/scan a packet if we can */
 	int result=ogg_stream_packetout(work_os,&op);
-      
+
 	if(result>0){
 
 	  if(vf->vi[vf->current_link].codec_setup){
@@ -1003,18 +1003,18 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	      ogg_stream_packetout(vf->os,NULL);
 	      thisblock=0;
 	    }else{
-	      
+
 	      if(eosflag)
 		ogg_stream_packetout(vf->os,NULL);
 	      else
 		if(lastblock)accblock+=(lastblock+thisblock)>>2;
-	    }	    
+	    }
 
 	    if(op.granulepos!=-1){
 	      int i,link=vf->current_link;
 	      ogg_int64_t granulepos=op.granulepos-vf->pcmlengths[link*2];
 	      if(granulepos<0)granulepos=0;
-	      
+
 	      for(i=0;i<link;i++)
 		granulepos+=vf->pcmlengths[i*2+1];
 	      vf->pcm_offset=granulepos-accblock;
@@ -1026,7 +1026,7 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	    ogg_stream_packetout(vf->os,NULL);
 	}
       }
-      
+
       if(!lastblock){
 	if(_get_next_page(vf,&og,-1)<0){
 	  vf->pcm_offset=ov_pcm_total(vf,-1);
@@ -1037,7 +1037,7 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	vf->pcm_offset=-1;
 	break;
       }
-      
+
       /* has our decoding just traversed a bitstream boundary? */
       if(vf->ready_state>=STREAMSET)
 	if(vf->current_serialno!=ogg_page_serialno(&og)){
@@ -1047,22 +1047,22 @@ int ov_raw_seek(OggVorbis_File *vf,ogg_int64_t pos){
 
       if(vf->ready_state<STREAMSET){
 	int link;
-	
+
 	vf->current_serialno=ogg_page_serialno(&og);
 	for(link=0;link<vf->links;link++)
 	  if(vf->serialnos[link]==vf->current_serialno)break;
 	if(link==vf->links)
 	  goto seek_error; /* sign of a bogus stream.  error out,
 			      leave machine uninitialized */
- 
+
 	vf->current_link=link;
-	
+
 	ogg_stream_reset_serialno(vf->os,vf->current_serialno);
-	ogg_stream_reset_serialno(work_os,vf->current_serialno); 
+	ogg_stream_reset_serialno(work_os,vf->current_serialno);
 	vf->ready_state=STREAMSET;
-	
+
       }
-    
+
       {
 	ogg_page dup;
 	ogg_page_dup(&dup,&og);
@@ -1107,7 +1107,7 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
   if(vf->ready_state<OPENED)return(OV_EINVAL);
   if(!vf->seekable)return(OV_ENOSEEK);
   if(pos<0 || pos>total)return(OV_EINVAL);
- 
+
   /* which bitstream section does this pcm offset occur in? */
   for(link=vf->links-1;link>=0;link--){
     total-=vf->pcmlengths[link*2+1];
@@ -1128,22 +1128,22 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
     ogg_int64_t endtime = vf->pcmlengths[link*2+1]+begintime;
     ogg_int64_t target=pos-total+begintime;
     ogg_int64_t best=begin;
-    
+
     while(begin<end){
       ogg_int64_t bisect;
-      
+
       if(end-begin<CHUNKSIZE){
 	bisect=begin;
       }else{
 	/* take a (pretty decent) guess. */
-	bisect=begin + 
+	bisect=begin +
 	  (target-begintime)*(end-begin)/(endtime-begintime) - CHUNKSIZE;
 	if(bisect<=begin)
 	  bisect=begin+1;
       }
-      
+
       _seek_helper(vf,bisect);
-    
+
       while(begin<end){
 	result=_get_next_page(vf,&og,end-vf->offset);
 	if(result==OV_EREAD) goto seek_error;
@@ -1160,10 +1160,10 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
 	  ogg_int64_t granulepos=ogg_page_granulepos(&og);
 	  if(granulepos==-1)continue;
 	  if(granulepos<target){
-	    best=result;  /* raw offset of packet with granulepos */ 
+	    best=result;  /* raw offset of packet with granulepos */
 	    begin=vf->offset; /* raw offset of next page */
 	    begintime=granulepos;
-	    
+
 	    if(target-begintime>44100)break;
 	    bisect=begin; /* *not* begin + 1 */
 	  }else{
@@ -1189,11 +1189,11 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
     /* found our page. seek to it, update pcm offset. Easier case than
        raw_seek, don't keep packets preceeding granulepos. */
     {
-      
+
       /* seek */
       _seek_helper(vf,best);
       vf->pcm_offset=-1;
-      
+
       if(_get_next_page(vf,&og,-1)<0){
 	ogg_page_release(&og);
 	return(OV_EOF); /* shouldn't happen */
@@ -1201,12 +1201,12 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
 
       if(link!=vf->current_link){
 	/* Different link; dump entire decode machine */
-	_decode_clear(vf);  
-	
+	_decode_clear(vf);
+
 	vf->current_link=link;
 	vf->current_serialno=ogg_page_serialno(&og);
 	vf->ready_state=STREAMSET;
-	
+
       }else{
 	vorbis_synthesis_restart(&vf->vd);
       }
@@ -1222,9 +1222,9 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
              preceeding page. Keep fetching previous pages until we
              get one with a granulepos or without the 'continued' flag
              set.  Then just use raw_seek for simplicity. */
-	  
+
 	  _seek_helper(vf,best);
-	  
+
 	  while(1){
 	    result=_get_prev_page(vf,&og);
 	    if(result<0) goto seek_error;
@@ -1236,7 +1236,7 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
 	  }
 	}
 	if(result<0){
-	  result = OV_EBADPACKET; 
+	  result = OV_EBADPACKET;
 	  goto seek_error;
 	}
 	if(op.granulepos!=-1){
@@ -1249,7 +1249,7 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
       }
     }
   }
-  
+
   /* verify result */
   if(vf->pcm_offset>pos || pos>ov_pcm_total(vf,-1)){
     result=OV_EFAULT;
@@ -1261,7 +1261,7 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
   ogg_page_release(&og);
   ogg_packet_release(&op);
   return(0);
-  
+
  seek_error:
 
   ogg_page_release(&og);
@@ -1273,7 +1273,7 @@ int ov_pcm_seek_page(OggVorbis_File *vf,ogg_int64_t pos){
   return (int)result;
 }
 
-/* seek to a sample offset relative to the decompressed pcm stream 
+/* seek to a sample offset relative to the decompressed pcm stream
    returns zero on success, nonzero on failure */
 
 int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
@@ -1297,20 +1297,20 @@ int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	continue; /* non audio packet */
       }
       if(lastblock)vf->pcm_offset+=(lastblock+thisblock)>>2;
-      
+
       if(vf->pcm_offset+((thisblock+
 			  vorbis_info_blocksize(vf->vi,1))>>2)>=pos)break;
-      
+
       /* remove the packet from packet queue and track its granulepos */
       ogg_stream_packetout(vf->os,NULL);
       vorbis_synthesis(&vf->vb,&op,0);  /* set up a vb with
 					   only tracking, no
 					   pcm_decode */
-      vorbis_synthesis_blockin(&vf->vd,&vf->vb); 
-      
+      vorbis_synthesis_blockin(&vf->vd,&vf->vb);
+
       /* end of logical stream case is hard, especially with exact
 	 length positioning. */
-      
+
       if(op.granulepos>-1){
 	int i;
 	/* always believe the stream markers */
@@ -1319,19 +1319,19 @@ int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	for(i=0;i<vf->current_link;i++)
 	  vf->pcm_offset+=vf->pcmlengths[i*2+1];
       }
-	
+
       lastblock=thisblock;
-      
+
     }else{
       if(ret<0 && ret!=OV_HOLE)break;
-      
+
       /* suck in a new page */
       if(_get_next_page(vf,&og,-1)<0)break;
       if(vf->current_serialno!=ogg_page_serialno(&og))_decode_clear(vf);
-      
+
       if(vf->ready_state<STREAMSET){
 	int link;
-	
+
 	vf->current_serialno=ogg_page_serialno(&og);
 	for(link=0;link<vf->links;link++)
 	  if(vf->serialnos[link]==vf->current_serialno)break;
@@ -1341,9 +1341,9 @@ int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
 	  return(OV_EBADLINK);
 	}
 	vf->current_link=link;
-	
-	ogg_stream_reset_serialno(vf->os,vf->current_serialno); 
-	vf->ready_state=STREAMSET;      
+
+	ogg_stream_reset_serialno(vf->os,vf->current_serialno);
+	vf->ready_state=STREAMSET;
 	_make_decode_ready(vf);
 	lastblock=0;
       }
@@ -1363,7 +1363,7 @@ int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
     if(samples>target)samples=target;
     vorbis_synthesis_read(&vf->vd,samples);
     vf->pcm_offset+=samples;
-    
+
     if(samples<target)
       if(_fetch_and_process_packet(vf,1,1)<=0)
 	vf->pcm_offset=ov_pcm_total(vf,-1); /* eof */
@@ -1374,7 +1374,7 @@ int ov_pcm_seek(OggVorbis_File *vf,ogg_int64_t pos){
   return 0;
 }
 
-/* seek to a playback time relative to the decompressed pcm stream 
+/* seek to a playback time relative to the decompressed pcm stream
    returns zero on success, nonzero on failure */
 int ov_time_seek(OggVorbis_File *vf,ogg_int64_t milliseconds){
   /* translate time to PCM position and call ov_pcm_seek */
@@ -1386,7 +1386,7 @@ int ov_time_seek(OggVorbis_File *vf,ogg_int64_t milliseconds){
   if(vf->ready_state<OPENED)return(OV_EINVAL);
   if(!vf->seekable)return(OV_ENOSEEK);
   if(milliseconds<0 || milliseconds>time_total)return(OV_EINVAL);
-  
+
   /* which bitstream section does this time offset occur in? */
   for(link=vf->links-1;link>=0;link--){
     pcm_total-=vf->pcmlengths[link*2+1];
@@ -1401,7 +1401,7 @@ int ov_time_seek(OggVorbis_File *vf,ogg_int64_t milliseconds){
   }
 }
 
-/* page-granularity version of ov_time_seek 
+/* page-granularity version of ov_time_seek
    returns zero on success, nonzero on failure */
 int ov_time_seek_page(OggVorbis_File *vf,ogg_int64_t milliseconds){
   /* translate time to PCM position and call ov_pcm_seek */
@@ -1413,7 +1413,7 @@ int ov_time_seek_page(OggVorbis_File *vf,ogg_int64_t milliseconds){
   if(vf->ready_state<OPENED)return(OV_EINVAL);
   if(!vf->seekable)return(OV_ENOSEEK);
   if(milliseconds<0 || milliseconds>time_total)return(OV_EINVAL);
-  
+
   /* which bitstream section does this time offset occur in? */
   for(link=vf->links-1;link>=0;link--){
     pcm_total-=vf->pcmlengths[link*2+1];
@@ -1446,12 +1446,12 @@ ogg_int64_t ov_time_tell(OggVorbis_File *vf){
   int link=0;
   ogg_int64_t pcm_total=0;
   ogg_int64_t time_total=0;
-  
+
   if(vf->ready_state<OPENED)return(OV_EINVAL);
   if(vf->seekable){
     pcm_total=ov_pcm_total(vf,-1);
     time_total=ov_time_total(vf,-1);
-  
+
     /* which bitstream section does this time offset occur in? */
     for(link=vf->links-1;link>=0;link--){
       pcm_total-=vf->pcmlengths[link*2+1];
@@ -1466,7 +1466,7 @@ ogg_int64_t ov_time_tell(OggVorbis_File *vf){
 /*  link:   -1) return the vorbis_info struct for the bitstream section
                 currently being decoded
            0-n) to request information for a specific bitstream section
-    
+
     In the case of a non-seekable bitstream, any call returns the
     current bitstream.  NULL in the case that the machine is not
     initialized */
@@ -1559,14 +1559,14 @@ long ov_read(OggVorbis_File *vf,char *buffer,int bytes_req,int *bitstream){
   }
 
   if(samples>0){
-  
+
     /* yay! proceed to pack data into the byte buffer */
-    
+
     long channels=ov_info(vf,-1)->channels;
 
     if(samples>(bytes_req/(2*channels)))
-      samples=bytes_req/(2*channels);      
-    
+      samples=bytes_req/(2*channels);
+
     for(i=0;i<channels;i++) { /* It's faster in this order */
       ogg_int32_t *src=pcm[i];
       short *dest=((short *)buffer)+i;
@@ -1575,7 +1575,7 @@ long ov_read(OggVorbis_File *vf,char *buffer,int bytes_req,int *bitstream){
         dest+=channels;
       }
     }
-    
+
     vorbis_synthesis_read(&vf->vd,samples);
     vf->pcm_offset+=samples;
     if(bitstream)*bitstream=vf->current_link;

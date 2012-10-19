@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,14 +49,14 @@
 		vertices = malloc( sizeof(ccPointSprite) * totalParticles );
 
 		if( ! vertices ) {
-			NSLog(@"cocos2d: Particle system: not enough memory");
+			CCLOG(@"cocos2d: Particle system: not enough memory");
 			[self release];
 			return nil;
 		}
 
 #if CC_USES_VBO
 		glGenBuffers(1, &verticesID);
-		
+
 		// initial binding
 		glBindBuffer(GL_ARRAY_BUFFER, verticesID);
 		glBufferData(GL_ARRAY_BUFFER, sizeof(ccPointSprite)*totalParticles, vertices, GL_DYNAMIC_DRAW);
@@ -73,12 +73,12 @@
 #if CC_USES_VBO
 	glDeleteBuffers(1, &verticesID);
 #endif
-	
+
 	[super dealloc];
 }
 
 -(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
-{	
+{
 	// place vertices and colos in array
 	vertices[particleIdx].pos = (ccVertex2F) {newPos.x, newPos.y};
 	vertices[particleIdx].size = p->size;
@@ -101,17 +101,17 @@
 
     if (particleIdx==0)
         return;
-	
+
 	// Default GL states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY, GL_TEXTURE_COORD_ARRAY
 	// Needed states: GL_TEXTURE_2D, GL_VERTEX_ARRAY, GL_COLOR_ARRAY
 	// Unneeded states: GL_TEXTURE_COORD_ARRAY
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-	
+
 	glBindTexture(GL_TEXTURE_2D, texture_.name);
-	
+
 	glEnable(GL_POINT_SPRITE_OES);
 	glTexEnvi( GL_POINT_SPRITE_OES, GL_COORD_REPLACE_OES, GL_TRUE );
-	
+
 #define kPointSize sizeof(vertices[0])
 
 #if CC_USES_VBO
@@ -126,10 +126,10 @@
 #else // Uses Vertex Array List
 	int offset = (int)vertices;
 	glVertexPointer(2,GL_FLOAT, kPointSize, (GLvoid*) offset);
-	
+
 	int diff = offsetof(ccPointSprite, color);
 	glColorPointer(4, GL_UNSIGNED_BYTE, kPointSize, (GLvoid*) (offset+diff));
-	
+
 	glEnableClientState(GL_POINT_SIZE_ARRAY_OES);
 	diff = offsetof(ccPointSprite, size);
 	glPointSizePointerOES(GL_FLOAT, kPointSize, (GLvoid*) (offset+diff));
@@ -141,17 +141,17 @@
 
 
 	glDrawArrays(GL_POINTS, 0, particleIdx);
-	
+
 	// restore blend state
 	if( newBlend )
 		glBlendFunc( CC_BLEND_SRC, CC_BLEND_DST);
 
-	
+
 #if CC_USES_VBO
 	// unbind VBO buffer
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
-	
+
 	glDisableClientState(GL_POINT_SIZE_ARRAY_OES);
 	glDisable(GL_POINT_SPRITE_OES);
 

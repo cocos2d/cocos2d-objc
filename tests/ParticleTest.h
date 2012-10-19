@@ -153,6 +153,10 @@
 {}
 @end
 
+@interface StayPut : ParticleDemo
+{}
+@end
+
 @interface RadiusMode1 : ParticleDemo
 {}
 @end
@@ -179,4 +183,6 @@
 {}
 @end
 
-
+@interface PremultipliedAlphaTest : ParticleDemo
+{}
+@end

@@ -34,7 +34,7 @@ typedef struct ogg_buffer {
   unsigned char      *data;
   long                size;
   int                 refcount;
-  
+
   union {
     ogg_buffer_state  *owner;
     struct ogg_buffer *next;
@@ -115,7 +115,7 @@ typedef struct ogg_stream_state {
   int            clearflag;
   int            laceptr;
   ogg_uint32_t   body_fill_next;
-  
+
 } ogg_stream_state;
 
 typedef struct {

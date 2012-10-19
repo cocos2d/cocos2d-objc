@@ -64,7 +64,9 @@ enum {
 		bool doSleep = true;
 		
 		// Construct a world object, which will hold and simulate the rigid bodies.
-		world = new b2World(gravity, doSleep);
+		world = new b2World(gravity);
+		
+        world->SetAllowSleeping(doSleep);
 		
 		world->SetContinuousPhysics(true);
 		
@@ -73,13 +75,12 @@ enum {
 		world->SetDebugDraw(m_debugDraw);
 		
 		uint32 flags = 0;
-		flags += b2DebugDraw::e_shapeBit;
-//		flags += b2DebugDraw::e_jointBit;
-//		flags += b2DebugDraw::e_aabbBit;
-//		flags += b2DebugDraw::e_pairBit;
-//		flags += b2DebugDraw::e_centerOfMassBit;
-		m_debugDraw->SetFlags(flags);		
-		
+		flags += b2Draw::e_shapeBit;
+        //		flags += b2Draw::e_jointBit;
+        //		flags += b2Draw::e_aabbBit;
+        //		flags += b2Draw::e_pairBit;
+        //		flags += b2Draw::e_centerOfMassBit;
+		m_debugDraw->SetFlags(flags);
 		
 		// Define the ground body.
 		b2BodyDef groundBodyDef;
@@ -91,24 +92,11 @@ enum {
 		b2Body* groundBody = world->CreateBody(&groundBodyDef);
 		
 		// Define the ground box shape.
-		b2PolygonShape groundBox;		
+		b2PolygonShape groundBox;
+        
+        groundBox.SetAsBox(0.5*(screenSize.width/PTM_RATIO), 0.5*(screenSize.height/PTM_RATIO));
 		
-		// bottom
-		groundBox.SetAsEdge(b2Vec2(0,0), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// top
-		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// left
-		groundBox.SetAsEdge(b2Vec2(0,screenSize.height/PTM_RATIO), b2Vec2(0,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
-		// right
-		groundBox.SetAsEdge(b2Vec2(screenSize.width/PTM_RATIO,screenSize.height/PTM_RATIO), b2Vec2(screenSize.width/PTM_RATIO,0));
-		groundBody->CreateFixture(&groundBox,0);
-		
+        groundBody->CreateFixture(&groundBox,0);
 		
 		//Set up sprite
 		

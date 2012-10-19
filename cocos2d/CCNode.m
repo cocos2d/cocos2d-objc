@@ -5,17 +5,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -120,7 +120,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 -(void) setScaleY: (float)newScaleY
@@ -129,7 +129,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -139,11 +139,11 @@ static NSUInteger globalOrderOfArrival = 0;
 		positionInPixels_ = position_;
 	else
 		positionInPixels_ = ccpMult( newPosition,  CC_CONTENT_SCALE_FACTOR() );
-	
+
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 -(void) setPositionInPixels:(CGPoint)newPosition
@@ -154,11 +154,11 @@ static NSUInteger globalOrderOfArrival = 0;
 		position_ = positionInPixels_;
 	else
 		position_ = ccpMult( newPosition, 1/CC_CONTENT_SCALE_FACTOR() );
-	
+
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 -(void) setIsRelativeAnchorPoint: (BOOL)newValue
@@ -167,7 +167,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -178,25 +178,41 @@ static NSUInteger globalOrderOfArrival = 0;
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
-#endif		
+#endif
 	}
+}
+
+- (void) setAnchorPointWithoutPositionChange:(CGPoint) point
+{
+	if (isRelativeAnchorPoint_)
+	{
+		if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+
+			[self setPosition:ccpAdd(position_,ccp( (point.x - anchorPoint_.x) * contentSize_.width * scaleX_, (point.y - anchorPoint_.y) * contentSize_.height * scaleY_))];
+			[self setAnchorPoint:point];
+		}
+	}
+    else
+    {
+        [self setAnchorPoint:point];
+    }
 }
 
 -(void) setContentSize:(CGSize)size
 {
 	if( ! CGSizeEqualToSize(size, contentSize_) ) {
 		contentSize_ = size;
-		
+
 		if( CC_CONTENT_SCALE_FACTOR() == 1 )
 			contentSizeInPixels_ = contentSize_;
 		else
 			contentSizeInPixels_ = CGSizeMake( size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
-		
+
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
-#endif		
+#endif
 	}
 }
 
@@ -209,12 +225,12 @@ static NSUInteger globalOrderOfArrival = 0;
 			contentSize_ = contentSizeInPixels_;
 		else
 			contentSize_ = CGSizeMake( size.width / CC_CONTENT_SCALE_FACTOR(), size.height / CC_CONTENT_SCALE_FACTOR() );
-		
+
 		anchorPointInPixels_ = ccp( contentSizeInPixels_.width * anchorPoint_.x, contentSizeInPixels_.height * anchorPoint_.y );
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
-#endif		
+#endif
 	}
 }
 
@@ -252,7 +268,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	isTransformGLDirty_ = YES;
-#endif	
+#endif
 }
 
 #pragma mark CCNode - Init & cleanup
@@ -265,50 +281,52 @@ static NSUInteger globalOrderOfArrival = 0;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		
+
 		isRunning_ = NO;
-		
+
 		skewX_ = skewY_ = 0.0f;
 		rotation_ = 0.0f;
 		scaleX_ = scaleY_ = 1.0f;
 		positionInPixels_ = position_ = CGPointZero;
 		anchorPointInPixels_ = anchorPoint_ = CGPointZero;
 		contentSizeInPixels_ = contentSize_ = CGSizeZero;
-		
-		
+
+
 		// "whole screen" objects. like Scenes and Layers, should set isRelativeAnchorPoint to NO
-		isRelativeAnchorPoint_ = YES; 
-		
+		isRelativeAnchorPoint_ = YES;
+
 		isTransformDirty_ = isInverseDirty_ = YES;
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 		isTransformGLDirty_ = YES;
 #endif
-		isReorderChildDirty_ = NO;	
+		isReorderChildDirty_ = NO;
 		vertexZ_ = 0;
-		
+
 		grid_ = nil;
-		
+
 		visible_ = YES;
-		
+
 		tag_ = kCCNodeTagInvalid;
-		
+
 		zOrder_ = 0;
-		
+
 		// lazy alloc
 		camera_ = nil;
-		
+
 		// children (lazy allocs)
 		children_ = nil;
-		
+
 		// userData is always inited as nil
 		userData_ = nil;
 
 		//initialize parent to nil
 		parent_ = nil;
-		
+
 		orderOfArrival_=0;
+
+        isTransitionFinished_ = NO;
 	}
-	
+
 	return self;
 }
 
@@ -317,32 +335,36 @@ static NSUInteger globalOrderOfArrival = 0;
 	// actions
 	[self stopAllActions];
 	[self unscheduleAllSelectors];
-	
+
 	// timers
 	[children_ makeObjectsPerformSelector:@selector(cleanup)];
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, tag_];
+#else
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %d>", [self class], self, tag_];
+#endif
 }
 
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
+
 	// attributes
 	[camera_ release];
-	
+
 	[grid_ release];
-	
+
 	// children
 	CCNode *child;
 	CCARRAY_FOREACH(children_, child)
 		child.parent = nil;
-	
+
 	[children_ release];
-	
+
 	[super dealloc];
 }
 
@@ -358,23 +380,23 @@ static NSUInteger globalOrderOfArrival = 0;
 {
 	if( ! camera_ ) {
 		camera_ = [[CCCamera alloc] init];
-		
+
 		// by default, center camera at the Sprite's anchor point
 		//		[camera_ setCenterX:anchorPointInPixels_.x centerY:anchorPointInPixels_.y centerZ:0];
 		//		[camera_ setEyeX:anchorPointInPixels_.x eyeY:anchorPointInPixels_.y eyeZ:1];
-		
+
 		//		[camera_ setCenterX:0 centerY:0 centerZ:0];
 		//		[camera_ setEyeX:0 eyeY:0 eyeZ:1];
-		
+
 	}
-	
+
 	return camera_;
 }
 
 -(CCNode*) getChildByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
-	
+
 	CCNode *node;
 	CCARRAY_FOREACH(children_, node){
 		if( node.tag == aTag )
@@ -389,25 +411,28 @@ static NSUInteger globalOrderOfArrival = 0;
  * to override this method
  */
 -(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
-{	
+{
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
-	
+
 	if( ! children_ )
 		[self childrenAlloc];
-	
+
 	[self insertChild:child z:z];
-	
+
 	child.tag = aTag;
-	
+
 	[child setParent: self];
-	
+
 	//CCDirector.sharedDirector->getorderOfArrival
 	[child setOrderOfArrival: globalOrderOfArrival++];
-	
+
 	if( isRunning_ ) {
 		[child onEnter];
-		[child onEnterTransitionDidFinish];
+        //prevent onEnterTransitionDidFinish to be called twice when a node is added in onEnter
+        if (isTransitionFinished_)
+            [child onEnterTransitionDidFinish];
+
 	}
 }
 
@@ -437,7 +462,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	// explicit nil handling
 	if (child == nil)
 		return;
-	
+
 	if ( [children_ containsObject:child] )
 		[self detachChild:child cleanup:cleanup];
 }
@@ -445,9 +470,9 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) removeChildByTag:(NSInteger)aTag cleanup:(BOOL)cleanup
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
-	
+
 	CCNode *child = [self getChildByTag:aTag];
-	
+
 	if (child == nil)
 		CCLOG(@"cocos2d: removeChildByTag: child not found!");
 	else
@@ -468,14 +493,14 @@ static NSUInteger globalOrderOfArrival = 0;
 			[c onExitTransitionDidStart];
 			[c onExit];
 		}
-		
+
 		if (cleanup)
 			[c cleanup];
-		
+
 		// set parent nil at the end (issue #476)
 		[c setParent:nil];
 	}
-	
+
 	[children_ removeAllObjects];
 }
 
@@ -489,15 +514,15 @@ static NSUInteger globalOrderOfArrival = 0;
 		[child onExitTransitionDidStart];
 		[child onExit];
 	}
-	
+
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
 		[child cleanup];
-	
+
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
-	
+
 	[children_ removeObject:child];
 }
 
@@ -510,8 +535,8 @@ static NSUInteger globalOrderOfArrival = 0;
 // helper used by reorderChild & add
 -(void) insertChild:(CCNode*)child z:(NSInteger)z
 {
-	isReorderChildDirty_=YES;	
-	
+	isReorderChildDirty_=YES;
+
 	ccArrayAppendObjectWithResize(children_->data, child);
 	[child _setZOrder:z];
 }
@@ -519,7 +544,7 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) reorderChild:(CCNode*) child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
-	
+
 	isReorderChildDirty_=YES;
 	[child setOrderOfArrival: globalOrderOfArrival++];
 	[child _setZOrder:z];
@@ -527,18 +552,18 @@ static NSUInteger globalOrderOfArrival = 0;
 
 - (void) sortAllChildren
 {
-	if (isReorderChildDirty_) 
-	{	
+	if (isReorderChildDirty_)
+	{
 		NSInteger i,j,length=children_->data->num;
 		CCNode ** x=children_->data->arr;
 		CCNode *tempItem;
-		
+
 		//insertion sort
 		for(i=1; i<length; i++)
 		{
 			tempItem = x[i];
 			j = i-1;
-			
+
 			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
 			while(j>=0 && ( tempItem.zOrder< x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
 			{
@@ -547,9 +572,9 @@ static NSUInteger globalOrderOfArrival = 0;
 			}
 			x[j+1] = tempItem;
 		}
-		
+
 		//don't need to check children recursively, that's done in visit of each child
-		
+
 		isReorderChildDirty_=NO;
 	}
 }
@@ -568,21 +593,21 @@ static NSUInteger globalOrderOfArrival = 0;
 	// quick return if not visible
 	if (!visible_)
 		return;
-	
+
 	glPushMatrix();
-	
+
 	if ( grid_ && grid_.active) {
 		[grid_ beforeDraw];
 		[self transformAncestors];
 	}
 
 	[self transform];
-	
+
 	if(children_) {
 		[self sortAllChildren];
 		ccArray *arrayData = children_->data;
 		NSUInteger i = 0;
-		
+
 		// draw children zOrder < 0
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child = arrayData->arr[i];
@@ -591,10 +616,10 @@ static NSUInteger globalOrderOfArrival = 0;
 			else
 				break;
 		}
-		
+
 		// self draw
 		[self draw];
-		
+
 		// draw children zOrder >= 0
 		for( ; i < arrayData->num; i++ ) {
 			CCNode *child =  arrayData->arr[i];
@@ -603,12 +628,12 @@ static NSUInteger globalOrderOfArrival = 0;
 
 	} else
 		[self draw];
-	
+
 	orderOfArrival_=0;
-	
+
 	if ( grid_ && grid_.active)
 		[grid_ afterDraw:self];
-	
+
 	glPopMatrix();
 }
 
@@ -623,9 +648,9 @@ static NSUInteger globalOrderOfArrival = 0;
 }
 
 -(void) transform
-{	
+{
 	// transformations
-	
+
 #if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
 	// BEGIN alternative -- using cached transform
 	//
@@ -634,44 +659,44 @@ static NSUInteger globalOrderOfArrival = 0;
 		CGAffineToGL(&t, transformGL_);
 		isTransformGLDirty_ = NO;
 	}
-	
+
 	glMultMatrixf(transformGL_);
 	if( vertexZ_ )
 		glTranslatef(0, 0, vertexZ_);
-	
+
 	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
 	if ( camera_ && !(grid_ && grid_.active) )
 	{
 		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
-		
+
 		if( translate )
 			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
-		
+
 		[camera_ locate];
-		
+
 		if( translate )
 			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
 	}
-	
-	
+
+
 	// END alternative
-	
+
 #else
 	// BEGIN original implementation
-	// 
+	//
 	// translate
 	if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
 		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-	
+
 	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y + anchorPointInPixels_.y), vertexZ_);
 	else if ( positionInPixels_.x !=0 || positionInPixels_.y !=0 || vertexZ_ != 0)
 		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y), vertexZ_ );
-	
+
 	// rotate
 	if (rotation_ != 0.0f )
 		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
-	
+
 	// scale
 	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
 		glScalef( scaleX_, scaleY_, 1.0f );
@@ -680,35 +705,38 @@ static NSUInteger globalOrderOfArrival = 0;
 	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
 		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
 		GLfloat	glMatrix[16];
-		CGAffineToGL(&skewMatrix, glMatrix);															 
+		CGAffineToGL(&skewMatrix, glMatrix);
 		glMultMatrixf(glMatrix);
 	}
-	
+
 	if ( camera_ && !(grid_ && grid_.active) )
 		[camera_ locate];
-	
+
 	// restore and re-position point
 	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
 		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
-	
+
 	//
 	// END original implementation
 #endif
-	
+
 }
 
 #pragma mark CCNode SceneManagement
 
 -(void) onEnter
 {
-	[children_ makeObjectsPerformSelector:@selector(onEnter)];	
+    isTransitionFinished_ = NO;
+
+	[children_ makeObjectsPerformSelector:@selector(onEnter)];
 	[self resumeSchedulerAndActions];
-	
+
 	isRunning_ = YES;
 }
 
 -(void) onEnterTransitionDidFinish
 {
+    isTransitionFinished_ = YES;
 	[children_ makeObjectsPerformSelector:@selector(onEnterTransitionDidFinish)];
 }
 
@@ -720,8 +748,8 @@ static NSUInteger globalOrderOfArrival = 0;
 -(void) onExit
 {
 	[self pauseSchedulerAndActions];
-	isRunning_ = NO;	
-	
+	isRunning_ = NO;
+
 	[children_ makeObjectsPerformSelector:@selector(onExit)];
 }
 
@@ -730,7 +758,7 @@ static NSUInteger globalOrderOfArrival = 0;
 -(CCAction*) runAction:(CCAction*) action
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
-	
+
 	[[CCActionManager sharedManager] addAction:action target:self paused:!isRunning_];
 	return action;
 }
@@ -793,13 +821,13 @@ static NSUInteger globalOrderOfArrival = 0;
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
-	
+
 	[[CCScheduler sharedScheduler] scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
 {
-	[self schedule:selector interval:0.f repeat:0 delay:delay];	
+	[self schedule:selector interval:0.f repeat:0 delay:delay];
 }
 
 -(void) unschedule:(SEL)selector
@@ -807,7 +835,7 @@ static NSUInteger globalOrderOfArrival = 0;
 	// explicit nil handling
 	if (selector == nil)
 		return;
-	
+
 	[[CCScheduler sharedScheduler] unscheduleSelector:selector forTarget:self];
 }
 
@@ -832,19 +860,19 @@ static NSUInteger globalOrderOfArrival = 0;
 - (CGAffineTransform)nodeToParentTransform
 {
 	if ( isTransformDirty_ ) {
-		
+
 		transform_ = CGAffineTransformIdentity;
-		
+
 		if ( !isRelativeAnchorPoint_ && !CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, anchorPointInPixels_.x, anchorPointInPixels_.y);
 
 		if( ! CGPointEqualToPoint(positionInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, positionInPixels_.x, positionInPixels_.y);
-		
+
 		if( rotation_ != 0 )
 			transform_ = CGAffineTransformRotate(transform_, -CC_DEGREES_TO_RADIANS(rotation_));
-		
-		if( ! (scaleX_ == 1 && scaleY_ == 1) ) 
+
+		if( ! (scaleX_ == 1 && scaleY_ == 1) )
 			transform_ = CGAffineTransformScale(transform_, scaleX_, scaleY_);
 
 		if( skewX_ != 0 || skewY_ != 0 ) {
@@ -853,13 +881,13 @@ static NSUInteger globalOrderOfArrival = 0;
 			// apply the skew to the transform
 			transform_ = CGAffineTransformConcat(skew, transform_);
 		}
-		
+
 		if( ! CGPointEqualToPoint(anchorPointInPixels_, CGPointZero) )
 			transform_ = CGAffineTransformTranslate(transform_, -anchorPointInPixels_.x, -anchorPointInPixels_.y);
-				
+
 		isTransformDirty_ = NO;
 	}
-	
+
 	return transform_;
 }
 
@@ -869,17 +897,17 @@ static NSUInteger globalOrderOfArrival = 0;
 		inverse_ = CGAffineTransformInvert([self nodeToParentTransform]);
 		isInverseDirty_ = NO;
 	}
-	
+
 	return inverse_;
 }
 
 - (CGAffineTransform)nodeToWorldTransform
 {
 	CGAffineTransform t = [self nodeToParentTransform];
-	
+
 	for (CCNode *p = parent_; p != nil; p = p.parent)
 		t = CGAffineTransformConcat(t, [p nodeToParentTransform]);
-	
+
 	return t;
 }
 
@@ -898,7 +926,7 @@ static NSUInteger globalOrderOfArrival = 0;
 		ret = CGPointApplyAffineTransform(ret, [self worldToNodeTransform]);
 		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 	}
-	
+
 	return ret;
 }
 
@@ -912,7 +940,7 @@ static NSUInteger globalOrderOfArrival = 0;
 		ret = CGPointApplyAffineTransform(ret, [self nodeToWorldTransform]);
 		ret = ccpMult( ret, 1/CC_CONTENT_SCALE_FACTOR() );
 	}
-	
+
 	return ret;
 }
 
@@ -924,7 +952,7 @@ static NSUInteger globalOrderOfArrival = 0;
 		anchorInPoints = anchorPointInPixels_;
 	else
 		anchorInPoints = ccpMult( anchorPointInPixels_, 1/CC_CONTENT_SCALE_FACTOR() );
-	   
+
 	return ccpSub(nodePoint, anchorInPoints);
 }
 
@@ -935,7 +963,7 @@ static NSUInteger globalOrderOfArrival = 0;
 		anchorInPoints = anchorPointInPixels_;
 	else
 		anchorInPoints = ccpMult( anchorPointInPixels_, 1/CC_CONTENT_SCALE_FACTOR() );
-	
+
 	nodePoint = ccpAdd(nodePoint, anchorInPoints);
 	return [self convertToWorldSpace:nodePoint];
 }
@@ -952,19 +980,19 @@ static NSUInteger globalOrderOfArrival = 0;
 
 - (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    //not [touch view], now touches still work when UIKit elements lay on top of cocos view
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpace:point];
 }
 
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
 {
-	CGPoint point = [touch locationInView: [touch view]];
+    //not [touch view], now touches still work when UIKit elements lay on top of cocos view
+	CGPoint point = [touch locationInView: [[CCDirector sharedDirector] openGLView]];
 	point = [[CCDirector sharedDirector] convertToGL: point];
 	return [self convertToNodeSpaceAR:point];
 }
 
 #endif // __IPHONE_OS_VERSION_MAX_ALLOWED
-
-
 @end

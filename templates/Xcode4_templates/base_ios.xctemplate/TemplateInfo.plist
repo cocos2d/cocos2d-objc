@@ -18,8 +18,6 @@
 		<dict>
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_32_BIT)</string>
-			<key>GCC_VERSION</key>
-			<string>com.apple.compilers.llvmgcc42</string>
 			<key>IPHONEOS_DEPLOYMENT_TARGET</key>
 			<string>latest_iphoneos</string>
 			<key>CODE_SIGN_IDENTITY[sdk=iphoneos*]</key>
@@ -73,6 +71,20 @@
     <string>Resources</string>
     <key>Path</key>
     <string>Resources/Default.png</string>
+  </dict>
+  <key>Resources/Default@2x.png</key>
+  <dict>
+    <key>Group</key>
+    <string>Resources</string>
+    <key>Path</key>
+    <string>Resources/Default@2x.png</string>
+  </dict>
+  <key>Resources/Default-568h@2x.png</key>
+  <dict>
+    <key>Group</key>
+    <string>Resources</string>
+    <key>Path</key>
+    <string>Resources/Default-568h@2x.png</string>
   </dict>
   <key>Resources/fps_images.png</key>
   <dict>
@@ -143,6 +155,8 @@
 <key>Nodes</key>
 <array>
   <string>Resources/Default.png</string>
+  <string>Resources/Default@2x.png</string>
+  <string>Resources/Default-568h@2x.png</string>
   <string>Resources/fps_images.png</string>
   <string>Resources/Icon-72.png</string>
   <string>Resources/Icon-Small-50.png</string>

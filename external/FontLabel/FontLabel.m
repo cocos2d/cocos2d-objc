@@ -22,6 +22,7 @@
 #import "FontLabel.h"
 #import "FontManager.h"
 #import "FontLabelStringDrawing.h"
+#import "CCNS.h"
 #import "ZFont.h"
 
 @interface ZFont (ZFontPrivate)
@@ -80,7 +81,7 @@
 		[super drawTextInRect:rect];
 		return;
 	}
-	
+
 	if (self.zAttributedText == nil) {
 		// this method is documented as setting the text color for us, but that doesn't appear to be the case
 		if (self.highlighted) {
@@ -88,7 +89,7 @@
 		} else {
 			[(self.textColor ?: [UIColor blackColor]) setFill];
 		}
-		
+
 		ZFont *actualFont = self.zFont;
 		CGSize origSize = rect.size;
 		if (self.numberOfLines == 1) {
@@ -119,14 +120,22 @@
 			size.width = MIN(size.width, origSize.width);
 			// adjust the point for alignment
 			switch (self.textAlignment) {
-				case UITextAlignmentLeft:
+				case CCTextAlignmentLeft:
 					break;
-				case UITextAlignmentCenter:
+				case CCTextAlignmentCenter:
 					point.x += (origSize.width - size.width) / 2.0f;
 					break;
-				case UITextAlignmentRight:
+				case CCTextAlignmentRight:
 					point.x += origSize.width - size.width;
 					break;
+#if __IPHONE_OS_VERSION_MAX_ALLOWED   >  __IPHONE_5_1
+                case NSTextAlignmentJustified:
+                    NSLog(@"not supported alignment");
+                    break;
+                case NSTextAlignmentNatural:
+                    NSLog(@"not supported alignment");
+                    break;
+#endif
 			}
 			[self.text drawAtPoint:point forWidth:size.width withZFont:actualFont lineBreakMode:self.lineBreakMode];
 		} else {
@@ -165,7 +174,7 @@
 	if (self.zFont == NULL && self.zAttributedText == nil) {
 		return [super textRectForBounds:bounds limitedToNumberOfLines:numberOfLines];
 	}
-	
+
 	if (numberOfLines == 1) {
 		// if numberOfLines == 1 we need to use the version that converts spaces
 		CGSize size;

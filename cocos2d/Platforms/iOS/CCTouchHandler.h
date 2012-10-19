@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -46,8 +46,8 @@
 @interface CCTouchHandler : NSObject {
 	id				delegate;
 	int				priority;
-	int 			tag;	// similar to CCNode tag	
-	int			disable;	// allows fast disabling: default NO, enabled 
+	int 			tag;	// similar to CCNode tag
+	int			disable;	// allows fast disabling: default NO, enabled
 	BOOL         remove;    // if (!=0) object marked for removal (allows fast removal)
 	ccTouchSelectorFlag		enabledSelectors_;
 }
@@ -99,19 +99,19 @@
 /** MutableSet that contains the claimed touches */
 @property(nonatomic, readonly) NSMutableSet *claimedTouches;
 
-/** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
+/** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not
  tag = 0; disabled = NO
  */
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
-/** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
- allows to set tag and disabled flag	
+/** allocates a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not
+ allows to set tag and disabled flag
  */
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches
                       tag:(int)aTag disable:(int)yesOrNo;
 /** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not */
 - (id)initWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches;
 
-/** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not 
+/** initializes a TargetedTouchHandler with a delegate, a priority and whether or not it swallows touches or not
  allows to set tag and disabled flag
  */
 - (id)initWithDelegate:(id) aDelegate priority:(int)priority swallowsTouches:(BOOL)swallowsTouches

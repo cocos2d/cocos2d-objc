@@ -12,7 +12,7 @@ Class nextAction();
 	int			numberOfTouchesM;
 	int			numberOfTouchesE;
 	int			numberOfTouchesC;
-	ccTime		elapsedTime;	
+	ccTime		elapsedTime;
 }
 
 -(NSString*) title;

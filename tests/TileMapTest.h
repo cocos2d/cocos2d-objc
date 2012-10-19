@@ -147,7 +147,7 @@
 {}
 @end
 
-@interface TMXOrthoFromXMLTest : TileDemo 
+@interface TMXOrthoFromXMLTest : TileDemo
 {}
 @end
 
@@ -156,6 +156,10 @@
 @end
 
 @interface TMXBug787 : TileDemo
+{}
+@end
+
+@interface TileMapExternalTileSet : TileDemo
 {}
 @end
 

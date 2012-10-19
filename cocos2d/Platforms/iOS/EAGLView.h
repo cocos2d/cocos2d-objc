@@ -97,7 +97,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface EAGLView : UIView
 {
-    id<ESRenderer>			renderer_;	
+    id<ESRenderer>			renderer_;
 	EAGLContext				*context_; // weak ref
 
 	NSString				*pixelformat_;
@@ -111,6 +111,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//fsaa addition
 	BOOL					multisampling_;
 	unsigned int			requestedSamples_;
+    
+    BOOL                    first_; 
 }
 
 /** creates an initializes an EAGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */

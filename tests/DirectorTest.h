@@ -1,10 +1,12 @@
 #import "cocos2d.h"
 
+@class ScrollViewController;
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface AppController : NSObject <UIApplicationDelegate>
 {
 	UIWindow *window;
+    UIViewController *viewController;
 }
 @end
 
@@ -37,6 +39,12 @@
 
 @interface Director1 : DirectorTest
 {}
+@end
+
+@interface ScrollViewTest : DirectorTest
+{
+    ScrollViewController *scrollView;
+}
 @end
 
 

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -39,19 +39,38 @@
 #define CCNSSizeToCGSize
 #define CCNSRectToCGRect
 #define CCNSPointToCGPoint
-#define CCTextAlignment				UITextAlignment
-#define CCTextAlignmentCenter		UITextAlignmentCenter
-#define CCTextAlignmentLeft			UITextAlignmentLeft
-#define CCTextAlignmentRight		UITextAlignmentRight
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+
+#define CCLineBreakMode				NSLineBreakMode
+#define CCLineBreakModeWordWrap		NSLineBreakByWordWrapping
+#define CCLineBreakModeCharacterWrap	NSLineBreakByCharWrapping
+#define CCLineBreakModeClip             NSLineBreakByClipping
+#define CCLineBreakModeHeadTruncation	NSLineBreakByTruncatingHead
+#define CCLineBreakModeTailTruncation	NSLineBreakByTruncatingTail
+#define CCLineBreakModeMiddleTruncation	NSLineBreakByTruncatingMiddle
+
+#define CCTextAlignment				NSTextAlignment
+#define CCTextAlignmentCenter		NSTextAlignmentCenter
+#define CCTextAlignmentLeft			NSTextAlignmentLeft
+#define CCTextAlignmentRight		NSTextAlignmentRight
+
+#else
+
 #define CCLineBreakMode				UILineBreakMode
-#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap	
+#define CCLineBreakModeWordWrap		UILineBreakModeWordWrap
 #define CCLineBreakModeCharacterWrap	UILineBreakModeCharacterWrap
-#define CCLineBreakModeClip			UILineBreakModeClip
+#define CCLineBreakModeClip             UILineBreakModeClip
 #define CCLineBreakModeHeadTruncation	UILineBreakModeHeadTruncation
 #define CCLineBreakModeTailTruncation	UILineBreakModeTailTruncation
 #define CCLineBreakModeMiddleTruncation	UILineBreakModeMiddleTruncation
 
+#define CCTextAlignment				UITextAlignment
+#define CCTextAlignmentCenter		UITextAlignmentCenter
+#define CCTextAlignmentLeft			UITextAlignmentLeft
+#define CCTextAlignmentRight		UITextAlignmentRight
 
+#endif
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 

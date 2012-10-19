@@ -9,10 +9,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -30,7 +30,7 @@
  @since v0.99.1
  */
 typedef enum {
-	/// Radial Counter-Clockwise 
+	/// Radial Counter-Clockwise
 	kCCProgressTimerTypeRadialCCW,
 	/// Radial ClockWise
 	kCCProgressTimerTypeRadialCW,
@@ -49,13 +49,15 @@ typedef enum {
  It renders the inner sprite according to the percentage.
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
+
+ Conforms to CCRGBAProtocol since 1.1RC0
  */
-@interface CCProgressTimer : CCNode
+@interface CCProgressTimer : CCNode<CCRGBAProtocol>
 {
 	CCProgressTimerType	type_;
 	float				percentage_;
 	CCSprite			*sprite_;
-	
+
 	int					vertexDataCount_;
 	ccV2F_C4B_T2F		*vertexData_;
 }

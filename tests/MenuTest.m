@@ -20,20 +20,20 @@ enum {
 -(id) init
 {
 	if( (self=[super init])) {
-	
+
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
-        
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
         self.isTouchEnabled = YES;
 #endif
 		// Font Item
-		
+
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
 		CCMenuItemSprite *item1 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback:)];
-		
+
 		// Image Item
 		CCMenuItem *item2 = [CCMenuItemImage itemFromNormalImage:@"SendScoreButton.png" selectedImage:@"SendScoreButtonPressed.png" target:self selector:@selector(menuCallback2:)];
 
@@ -42,24 +42,24 @@ enum {
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas target:self selector:@selector(menuCallbackDisabled:)];
 		item3.disabledColor = ccc3(32,32,64);
 		item3.color = ccc3(200,200,255);
-		
+
 
 		// Font Item
 		CCMenuItemFont *item4 = [CCMenuItemFont itemFromString: @"I toggle enable items" target: self selector:@selector(menuCallbackEnable:)];
-		
+
 		[item4 setFontSize:20];
 		[item4 setFontName:@"Marker Felt"];
-		
+
 		// Label Item (CCLabelBMFont)
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"configuration" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item5 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallbackConfig:)];
-		
+
 		// Testing issue #500
 		item5.scale = 0.8f;
-		
+
 		// Font Item
 		CCMenuItemFont *item6 = [CCMenuItemFont itemFromString: @"Quit" target:self selector:@selector(onQuit:)];
-		
+
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
 		id seq = [CCSequence actions:color_action, color_back, nil];
@@ -67,8 +67,8 @@ enum {
 
 		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, nil];
 		[menu alignItemsVertically];
-		
-		
+
+
 		// elastic effect
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		int i=0;
@@ -78,7 +78,7 @@ enum {
 			if( i % 2 == 0)
 				offset = -offset;
 			child.position = ccp( dstPoint.x + offset, dstPoint.y);
-			[child runAction: 
+			[child runAction:
 			 [CCEaseElasticOut actionWithAction:
 			  [CCMoveBy actionWithDuration:2 position:ccp(dstPoint.x - offset,0)]
 										 period: 0.35f]
@@ -165,7 +165,7 @@ enum {
 
 -(void) onQuit: (id) sender
 {
-	CC_DIRECTOR_END();	
+	CC_DIRECTOR_END();
 }
 @end
 
@@ -181,16 +181,16 @@ enum {
 		menu.position = centeredMenu;
 		if(i==0) {
 			// TIP: if no padding, padding = 5
-			[menu alignItemsHorizontally];			
+			[menu alignItemsHorizontally];
 			CGPoint p = menu.position;
 			menu.position = ccpAdd(p, ccp(0,30));
-			
+
 		} else {
 			// TIP: but padding is configurable
 			[menu alignItemsHorizontallyWithPadding:40];
 			CGPoint p = menu.position;
 			menu.position = ccpSub(p, ccp(0,30));
-		}		
+		}
 	}
 }
 
@@ -201,22 +201,22 @@ enum {
 		menu.position = centeredMenu;
 		if(i==0) {
 			// TIP: if no padding, padding = 5
-			[menu alignItemsVertically];			
+			[menu alignItemsVertically];
 			CGPoint p = menu.position;
-			menu.position = ccpAdd(p, ccp(100,0));			
+			menu.position = ccpAdd(p, ccp(100,0));
 		} else {
 			// TIP: but padding is configurable
-			[menu alignItemsVerticallyWithPadding:40];	
+			[menu alignItemsVerticallyWithPadding:40];
 			CGPoint p = menu.position;
 			menu.position = ccpSub(p, ccp(100,0));
-		}		
+		}
 	}
 }
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-			
+
 	}
 
 	return self;
@@ -224,29 +224,29 @@ enum {
 
 // Testing issue #1018 and #1021
 -(void) onEnter
-{	
+{
 	[super onEnter];
 
 	// remove previously added children
 	[self removeAllChildrenWithCleanup:YES];
-	
+
 	for( int i=0;i < 2;i++ ) {
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png" target:self selector:@selector(menuCallbackBack:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"btn-highscores-normal.png" selectedImage:@"btn-highscores-selected.png" target:self selector:@selector(menuCallbackOpacity:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"btn-about-normal.png" selectedImage:@"btn-about-selected.png" target:self selector:@selector(menuCallbackAlign:)];
-		
+
 		item1.scaleX = 1.5f;
 		item2.scaleY = 0.5f;
 		item3.scaleX = 0.5f;
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.tag = kTagMenu;
-		
+
 		[self addChild:menu z:0 tag:100+i];
 		centeredMenu = menu.position;
 	}
-	
+
 	alignedH = YES;
 	[self alignMenusH];
 }
@@ -268,12 +268,12 @@ enum {
 	if( opacity == 128 )
 		[menu setOpacity: 255];
 	else
-		[menu setOpacity: 128];	
+		[menu setOpacity: 128];
 }
 -(void) menuCallbackAlign: (id) sender
 {
 	alignedH = ! alignedH;
-	
+
 	if( alignedH )
 		[self alignMenusH];
 	else
@@ -295,40 +295,28 @@ enum {
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Enable AtlasItem" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *item1 = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(menuCallback2:)];
 		CCMenuItemFont *item2 = [CCMenuItemFont itemFromString: @"--- Go Back ---" target:self selector:@selector(menuCallback:)];
-		
+
 		CCSprite *spriteNormal = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*2,115,23)];
 		CCSprite *spriteSelected = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*1,115,23)];
 		CCSprite *spriteDisabled = [CCSprite spriteWithFile:@"menuitemsprite.png" rect:CGRectMake(0,23*0,115,23)];
-		
+
 		CCMenuItemSprite *item3 = [CCMenuItemSprite itemFromNormalSprite:spriteNormal selectedSprite:spriteSelected disabledSprite:spriteDisabled target:self selector:@selector(menuCallback3:)];
 		disabledItem = item3;
 		disabledItem.isEnabled = NO;
-		
-		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];	
+
+		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, nil];
 		menu.position = ccp(0,0);
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		item1.position = ccp(s.width/2 - 150, s.height/2);
 		item2.position = ccp(s.width/2 - 200, s.height/2);
 		item3.position = ccp(s.width/2, s.height/2 - 100);
-		
-		id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
-		[item2 runAction: [CCRepeatForever actionWithAction:
-					 [CCSequence actions: jump, [jump reverse], nil]
-									   ]
-		 ];
-		id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
-		id spin2 = [[spin1 copy] autorelease];
-		id spin3 = [[spin1 copy] autorelease];
-		
-		[item1 runAction: [CCRepeatForever actionWithAction:spin1]];
-		[item2 runAction: [CCRepeatForever actionWithAction:spin2]];
-		[item3 runAction: [CCRepeatForever actionWithAction:spin3]];
-		
-		[self addChild: menu];
+
+
+		[self addChild: menu z:0 tag:1];
 	}
-	
+
 	return self;
 }
 
@@ -353,6 +341,32 @@ enum {
 	NSLog(@"MenuItemSprite clicked");
 }
 
+- (void) onEnter
+{
+    [super onEnter];
+
+    CCMenu* menu = (CCMenu*) [self getChildByTag:1];
+
+    id item1 = [[menu children] objectAtIndex:0];
+    id item2 = [[menu children] objectAtIndex:1];
+    id item3 = [[menu children] objectAtIndex:2];
+
+    id jump = [CCJumpBy actionWithDuration:3 position:ccp(400,0) height:50 jumps:4];
+    [item2 runAction: [CCRepeatForever actionWithAction:
+                       [CCSequence actions: jump, [jump reverse], nil]
+                       ]
+     ];
+    id spin1 = [CCRotateBy actionWithDuration:3 angle:360];
+    id spin2 = [[spin1 copy] autorelease];
+    id spin3 = [[spin1 copy] autorelease];
+
+    [item1 runAction: [CCRepeatForever actionWithAction:spin1]];
+    [item2 runAction: [CCRepeatForever actionWithAction:spin2]];
+    [item3 runAction: [CCRepeatForever actionWithAction:spin3]];
+
+
+
+}
 @end
 
 
@@ -371,7 +385,7 @@ enum {
 								 [CCMenuItemFont itemFromString: @"On"],
 								 [CCMenuItemFont itemFromString: @"Off"],
 								 nil];
-		
+
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
 		CCMenuItemFont *title2 = [CCMenuItemFont itemFromString: @"Music"];
@@ -382,7 +396,7 @@ enum {
 								 [CCMenuItemFont itemFromString: @"On"],
 								 [CCMenuItemFont itemFromString: @"Off"],
 								 nil];
-		
+
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
 		CCMenuItemFont *title3 = [CCMenuItemFont itemFromString: @"Quality"];
@@ -393,7 +407,7 @@ enum {
 								 [CCMenuItemFont itemFromString: @"High"],
 								 [CCMenuItemFont itemFromString: @"Low"],
 								 nil];
-		
+
 		[CCMenuItemFont setFontName: @"American Typewriter"];
 		[CCMenuItemFont setFontSize:18];
 		CCMenuItemFont *title4 = [CCMenuItemFont itemFromString: @"Orientation"];
@@ -402,7 +416,7 @@ enum {
 		[CCMenuItemFont setFontSize:34];
 		CCMenuItemToggle *item4 = [CCMenuItemToggle itemWithTarget:self selector:@selector(menuCallback:) items:
 								 [CCMenuItemFont itemFromString: @"Off"], nil];
-		
+
 		NSArray *more_items = [NSArray arrayWithObjects:
 								 [CCMenuItemFont itemFromString: @"33%"],
 								 [CCMenuItemFont itemFromString: @"66%"],
@@ -410,16 +424,16 @@ enum {
 								 nil];
 		// TIP: you can manipulate the items like any other NSMutableArray
 		[item4.subItems addObjectsFromArray: more_items];
-		
+
 		// you can change the one of the items by doing this
 		item4.selectedIndex = 2;
-		
+
 		[CCMenuItemFont setFontName: @"Marker Felt"];
 		[CCMenuItemFont setFontSize:34];
-		
+
 		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"go back" fntFile:@"bitmapFontTest3.fnt"];
 		CCMenuItemLabel *back = [CCMenuItemLabel itemWithLabel:label target:self selector:@selector(backCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:
 					  title1, title2,
 					  item1, item2,
@@ -434,10 +448,13 @@ enum {
 		 [NSNumber numberWithUnsignedInt:1],
 		 nil
 		]; // 2 + 2 + 2 + 2 + 1 = total count of 9.
-		
+
+        //testing reverse order
+        [menu setReverseOrder:YES];
+
 		[self addChild: menu];
 	}
-	
+
 	return self;
 }
 
@@ -487,25 +504,26 @@ enum {
 
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-		
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+    [CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
@@ -541,7 +559,7 @@ enum {
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 
@@ -577,25 +595,25 @@ enum {
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	
+
 	[director setDisplayFPS:YES];
-	
+
 	[director setOpenGLView:glView_];
-	
+
 	//	[director setProjection:kCCDirectorProjection2D];
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
-	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
+
 	CCScene *scene = [CCScene node];
-	
+
 	CCLayerMultiplex *layer = [CCLayerMultiplex layerWithLayers: [Layer1 node], [Layer2 node], [Layer3 node], [Layer4 node], nil];
 	[scene addChild: layer z:0];
-	
+
 	[director runWithScene:scene];
 }
 

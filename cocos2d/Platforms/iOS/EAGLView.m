@@ -121,7 +121,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format 
+- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
 	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
@@ -135,7 +135,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		multiSampling_ = sampling;
 		requestedSamples_ = nSamples;
 		preserveBackbuffer_ = retained;
-		
+        first_ = NO;
+
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
 			return nil;
@@ -148,34 +149,36 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 -(id) initWithCoder:(NSCoder *)aDecoder
 {
 	if( (self = [super initWithCoder:aDecoder]) ) {
-		
+
 		CAEAGLLayer*			eaglLayer = (CAEAGLLayer*)[self layer];
-		
+
 		pixelformat_ = kEAGLColorFormatRGB565;
 		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
 		multiSampling_= NO;
 		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
+        
+        first_ =YES; 
 
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
 			return nil;
 		}
     }
-	
+
     return self;
 }
 
 -(BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup
 {
 	CAEAGLLayer *eaglLayer = (CAEAGLLayer *)self.layer;
-	
+
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
 									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
 									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
-	
-	
+
+
 	renderer_ = [[ES1Renderer alloc] initWithDepthFormat:depthFormat_
 										 withPixelFormat:[self convertPixelFormat:pixelformat_]
 										  withSharegroup:sharegroup
@@ -183,11 +186,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 									 withNumberOfSamples:requestedSamples_];
 	if (!renderer_)
 		return NO;
-	
+
 	context_ = [renderer_ context];
 
 	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
-	
+
 	return YES;
 }
 
@@ -202,17 +205,38 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void) layoutSubviews
 {
-	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
-	
-	size_ = [renderer_ backingSize];
+    //checking whether size has changed, because changes in uikit elements also trigger layoutSubviews
+    CAEAGLLayer* layer= (CAEAGLLayer*) self.layer;
 
-	// Issue #914 #924
-	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:size_];
-	
-	// Avoid flicker. Issue #350
-	[director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
-}	
+    //frame is always in portrait
+    CGSize layerSize = self.layer.frame.size;
+    CGFloat zRotation = ([[layer valueForKeyPath:@"transform.rotation.z"] floatValue] * 180.f) / M_PI;
+
+    //landscape switch width and height
+    if (zRotation == 90.f || zRotation == -90.f)
+    {
+        CGFloat temp;
+        temp = layerSize.height;
+        layerSize.height = layerSize.width;
+        layerSize.width = temp;
+    }
+    
+    //when loading from nib size is already layerSize, projection needs to be set once
+    if ((layerSize.width != size_.width || layerSize.height != size_.height) || first_)
+    {
+        first_ = NO; 
+        [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+
+        size_ = [renderer_ backingSize];
+
+        // Issue #914 #924
+        CCDirector *director = [CCDirector sharedDirector];
+        [director reshapeProjection:size_];
+
+        // Avoid flicker. Issue #350
+        [director performSelectorOnMainThread:@selector(drawScene) withObject:nil waitUntilDone:YES];
+    }
+}
 
 - (void) swapBuffers
 {
@@ -222,18 +246,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
 #ifdef __IPHONE_4_0
-	
+
 	if (multiSampling_)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
-		//glDisable(GL_SCISSOR_TEST);     
+		//glDisable(GL_SCISSOR_TEST);
 		glBindFramebufferOES(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
 		glBindFramebufferOES(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
-	
+
 	if( discardFramebufferSupported_)
-	{	
+	{
 		if (multiSampling_)
 		{
 			if (depthFormat_)
@@ -246,18 +270,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0_OES};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
-			
+
 			glBindRenderbufferOES(GL_RENDERBUFFER_OES, [renderer_ colorRenderBuffer]);
-	
-		}	
-		
+
+		}
+
 		// not MSAA
 		else if (depthFormat_ ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT_OES};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER_OES, 1, attachments);
 		}
 	}
-	
+
 #endif // __IPHONE_4_0
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER_OES])
 	CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
@@ -265,7 +289,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #if COCOS2D_DEBUG
 	CHECK_GL_ERROR();
 #endif
-	
+
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
@@ -276,13 +300,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	// define the pixel format
 	GLenum pFormat;
-	
-	
-	if([pixelFormat isEqualToString:@"EAGLColorFormat565"]) 
+
+
+	if([pixelFormat isEqualToString:@"EAGLColorFormat565"])
 		pFormat = GL_RGB565_OES;
-	else 
+	else
 		pFormat = GL_RGBA8_OES;
-	
+
 	return pFormat;
 }
 
@@ -291,14 +315,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (CGPoint) convertPointFromViewToSurface:(CGPoint)point
 {
 	CGRect bounds = [self bounds];
-	
+
 	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * size_.width, (point.y - bounds.origin.y) / bounds.size.height * size_.height);
 }
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
 	CGRect bounds = [self bounds];
-	
+
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
 

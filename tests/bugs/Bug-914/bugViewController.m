@@ -10,6 +10,9 @@
 #import "cocos2d.h"
 #import "HelloWorldScene.h"
 
+//to support both landscape and portrait, apple recommends using two viewcontrollers
+//http://developer.apple.com/library/ios/#featuredarticles/ViewControllerPGforiPhoneOS/RespondingtoDeviceOrientationChanges/RespondingtoDeviceOrientationChanges.html#//apple_ref/doc/uid/TP40007457-CH7-SW1
+//this example shows how to start-up the app succesfully in landscape modes, while still supporting portrait.
 
 @implementation bugViewController
 
@@ -19,79 +22,75 @@
 }
 */
 
-/*
+
 // Implement viewDidLoad to do additional setup after loading the view, typically from a nib.
+/*
 - (void)viewDidLoad {
-		
+
     [super viewDidLoad];
 }
 */
 
--(void)viewWillAppear:(BOOL)animated {
-	
-	for (UIView *view in self.view.subviews) {
-		if ([view isKindOfClass:[EAGLView class]]) {
-			
-			// weak reference
-			glView = (EAGLView *) view;
-			break;
-		}
-	}
+- (void) loadView
+{
+    EAGLView *glView = [EAGLView viewWithFrame:[[UIScreen mainScreen] bounds]
+								   pixelFormat:kEAGLColorFormatRGBA8
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
+							preserveBackbuffer:NO
+									sharegroup:nil
+								 multiSampling:NO
+							   numberOfSamples:0];
+    self.view = glView;
+    firstTime_ = YES;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disableFirstTime) name:@"sceneStarted" object:nil];
 }
 
+- (void) disableFirstTime
+{
+    firstTime_ = NO;
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:@"sceneStarted" object:nil];
+}
 
 // Override to allow orientations other than the default portrait orientation.
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 
-    // Return YES for supported orientations
-	
-	// eg: Only support landscape orientations ?
-//	return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft ||
-//			interfaceOrientation == UIInterfaceOrientationLandscapeRight );
-	
-	// eg: Support 4 orientations
+    //this contruction is workaround for issue #1433, when supporting all orientations and holding the device in landscape when starting up results in portrait view size in iOS4 and iOS5.
+    if (firstTime_ && interfaceOrientation == UIInterfaceOrientationPortrait)
+    {
+        return NO;
+    }
+
 	return YES;
 }
 
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	CGRect rect = CGRectMake(0,0,0,0);
-	if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 768, 1024);
-		else
-			rect = CGRectMake(0, 0, 320, 480 );
-
-	} else if( UIInterfaceOrientationIsLandscape(toInterfaceOrientation) ) {
-		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-			rect = CGRectMake(0, 0, 1024, 768);
-		else
-			rect = CGRectMake(0, 0, 480, 320 );
-	} else
-		NSAssert(NO, @"Invalid orientation");
-
-	glView.frame = rect;
-
+-(NSUInteger)supportedInterfaceOrientations{
+    //Modify for supported orientations, put your masks here
+    return UIInterfaceOrientationMaskAll;
 }
 
-- (void)didReceiveMemoryWarning {
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
+- (BOOL)shouldAutorotate {
+    return YES;
 }
 
+#else
 - (void)viewDidUnload {
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 
     [super viewDidUnload];
-	
-	// invalidate weak reference
-	glView = nil;
 }
+#endif
+#endif
 
+- (void)didReceiveMemoryWarning {
+    // Releases the view if it doesn't have a superview.
+    [super didReceiveMemoryWarning];
+
+    // Release any cached data, images, etc that aren't in use.
+}
 
 - (void)dealloc {
 	CCLOG(@"deallocing bugViewController: %@", self);

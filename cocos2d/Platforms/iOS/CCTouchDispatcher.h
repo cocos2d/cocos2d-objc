@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -52,7 +52,7 @@ enum {
 	kCCTouchMoved,
 	kCCTouchEnded,
 	kCCTouchCancelled,
-	
+
 	kCCTouchMax,
 };
 
@@ -75,7 +75,7 @@ typedef struct{
 	int	targetedRemoval;
 	int	standardRemoval;
 	//
-	BOOL processStandardHandlersFirstFlag; 
+	BOOL processStandardHandlersFirstFlag;
 	BOOL processStandardHandlersFirstArg;	// order of processing
 	//
 	BOOL sortingAlgorithmFlag;
@@ -85,8 +85,8 @@ typedef struct{
 	BOOL reversePriorityArg;				// reverse priority
 	//
 	BOOL usersComparatorFlag;
-	int(*usersComparatorArg)(const void *, const void *); // new user comparator function 
-	//	
+	int(*usersComparatorArg)(const void *, const void *); // new user comparator function
+	//
 	int	targetedPriority;
 	int	standardPriority;
 	//
@@ -106,8 +106,8 @@ typedef enum {
 /** typedef enum ccHandlerFieldName @since v1.1.0 */
 typedef enum {
 	kCCDelegate = 0,	// use with care
-	// real fields - their values can be accessed using 'retrieveField' function 
-	kCCPriority,		// use to change priorities 
+	// real fields - their values can be accessed using 'retrieveField' function
+	kCCPriority,		// use to change priorities
 	kCCTag,				// use to change tag(s)
 	kCCDisable,			// use to disable delegate(s)
 	kCCRemove,			// use to remove delegate(s)
@@ -119,9 +119,9 @@ typedef enum {
     // useful for compound removals
     // kCC*ToDo fields are designed to work with 'setField' and 'setDelegatesField' functions
     //
-	kCCNotRemoved,		// do an action only for the delegates which are not marked for removal						
+	kCCNotRemoved,		// do an action only for the delegates which are not marked for removal
 	kCCNone,			// no field is searched for evaluation
-	kCCDebug,			// prints debug info to console 
+	kCCDebug,			// prints debug info to console
 }ccHandlerFieldName;
 
 /** typedef enum ccOperators @since v1.1.0 */
@@ -144,22 +144,22 @@ typedef enum{
 	kCCLEAndGT, // one inverted endpoints range (arg1 > arg2)
 	kCCLTAndGE, // one inverted endpoints range (arg1 > arg2)
 	kCCLTAndGT, // one inverted endpoints range (arg1 > arg2+1)
-	// Or	
-	kCCGEOrLE, // inverted endpoints values (arg1 > arg2) 
-	kCCGEOrLT, // inverted endpoints values (arg1 > arg2) 
-	kCCGTOrLE, // inverted endpoints values (arg1 > arg2) 
-	kCCGTOrLT, // inverted endpoints values (arg1 > arg2) 
-	kCCLEOrGE, // whole domain if arg1==arg2 (== kTRUE);  two ranges (v <= arg1) && (v>= arg2); (arg1 < arg2) 
+	// Or
+	kCCGEOrLE, // inverted endpoints values (arg1 > arg2)
+	kCCGEOrLT, // inverted endpoints values (arg1 > arg2)
+	kCCGTOrLE, // inverted endpoints values (arg1 > arg2)
+	kCCGTOrLT, // inverted endpoints values (arg1 > arg2)
+	kCCLEOrGE, // whole domain if arg1==arg2 (== kTRUE);  two ranges (v <= arg1) && (v>= arg2); (arg1 < arg2)
 	kCCLEOrGT, // two ranges
 	kCCLTOrGE, // two ranges
-	kCCLTOrGT, // two ranges 
+	kCCLTOrGT, // two ranges
 }ccOperators;
 
-typedef enum 
+typedef enum
 {
 	kCCAddTargetedHandler,
 	kCCAddStandardHandler,
-}ccHandlersToDoType; 
+}ccHandlersToDoType;
 
 /** CCTouchDispatcher.
  Singleton that handles all the touch events.
@@ -167,16 +167,16 @@ typedef enum
  There are 2 different type of touch handlers:
  - Standard Touch Handlers
  - Targeted Touch Handlers
- 
+
  The Standard Touch Handlers work like the CocoaTouch touch handler: a set of touches is passed to the delegate.
  On the other hand, the Targeted Touch Handlers only receive 1 touch at the time, and they can "swallow" touches (avoid the propagation of the event).
- 
+
  Firstly, the dispatcher sends the received touches to the targeted touches.
  These touches can be swallowed by the Targeted Touch Handlers. If there are still remaining touches, then the remaining touches will be sent
  to the Standard Touch Handlers.
  @since v0.8.0
- 
- The above processing order can be reversed by setting 'processStandardHandlersFirst' to YES.  
+
+ The above processing order can be reversed by setting 'processStandardHandlersFirst' to YES.
  @since v1.1.0
  */
 @interface CCTouchDispatcher : NSObject <EAGLTouchDelegate>
@@ -184,24 +184,18 @@ typedef enum
 	CCArray	*targetedHandlers;
 	CCArray	*standardHandlers;
 	CCArray *handlersToDo;
-    
+
 	BOOL	dispatchEvents;						// default is YES;
 	BOOL	processStandardHandlersFirst;		// default is NO;
 	BOOL	locked;								// do not disturb, executing touch callbacks
-	
-	ccActionToDo actionToDo;					// outstanding processing to do 
-	
+
+	ccActionToDo actionToDo;					// outstanding processing to do
+
 	ccSortingAlgorithm sortingAlgorithm;		// default kAlgInsertionSort
 	int(* usersComparator)(const void *, const void *); // user's comparator for sorting default NULL
-	
+
 	// 4, 1 for each type of event
 	struct ccTouchHandlerHelperData handlerHelperData[kCCTouchMax];
-@private
-	unsigned int targetedHandlersCount;
-	unsigned int standardHandlersCount;	
-	BOOL needsMutableSet;	
-	id mutableTouches;	
-	struct ccTouchHandlerHelperData helper;
 }
 
 /** singleton of the CCTouchDispatcher */
@@ -227,9 +221,9 @@ typedef enum
 -(void) removeAllDelegates;
 /** Changes the priority of a previously added delegate. The lower the number,
  the higher the priority
- @since v1.0 
- depreciated in v1.1 use:  
- - (int) setPriority:(int)newValue delegate:(id)delegate delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)type; 
+ @since v1.0
+ depreciated in v1.1 use:
+ - (int) setPriority:(int)newValue delegate:(id)delegate delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)type;
  */
 -(void) setPriority:(int) priority forDelegate:(id) delegate;
 
@@ -243,13 +237,13 @@ typedef enum
 
 /** Adds a standard touch delegate to the dispatcher's list.
  in addition to priority, tag and disabled flag can be specified.
- 'doNotSort' prevents sorting delegates after the addition of a new one. 
- Events will be distributed to the delegates in the same order as delegates were added. 
+ 'doNotSort' prevents sorting delegates after the addition of a new one.
+ Events will be distributed to the delegates in the same order as delegates were added.
  See StandardTouchDelegate description.
  IMPORTANT: The delegate will be retained.
  @since v1.1.0
  */
-- (void) addStandardDelegate:(id<CCStandardTouchDelegate>) delegate priority:(int)priority 
+- (void) addStandardDelegate:(id<CCStandardTouchDelegate>) delegate priority:(int)priority
                          tag:(int)aTag disable:(int)yesOrNo doNotSort:(int)YN;
 /** Adds a targeted touch delegate to the dispatcher's list.
  in addition to swallowsTouches or priority, tag and disable flag can be specified.
@@ -266,38 +260,38 @@ typedef enum
 // safe touch call-back getters and setters for internal control fields
 //---------------------------------------------------------------------
 
-/** As per default targeted handlers are executed first 
+/** As per default targeted handlers are executed first
  If needed this order can be reversed:
  @since v1.1.0
  */
 -(void) setProcessStandardHandlersFirst:(BOOL)yesOrNo;
 
-/** gets - current/requested - order of processing 
+/** gets - current/requested - order of processing
  @return whether or not standard handlers are processed first in the event loop
  @since v1.1.0
  */
 -(BOOL) processStandardHandlersFirst;
 
-/** get locked state of the dispatcher. It returns YES when called from touch callback function. 
+/** get locked state of the dispatcher. It returns YES when called from touch callback function.
  @since v1.1.0
  */
 -(BOOL) locked;
 
-/** set sorting algorithm 
+/** set sorting algorithm
  @since v1.1.0
  */
 - (void) setSortingAlgorithm:(ccSortingAlgorithm)alg;
 
 /** get - current/requested - sortingAlgorithm
- 
+
  @since v1.1.0
  */
 - (ccSortingAlgorithm) sortingAlgorithm;
 
-/** set reverse/normal order of priorities 
+/** set reverse/normal order of priorities
  This operation will NOT force resorting
- Call sorting yourself via: sortDelegates:(ccDispatcherDelegateType)type; 
- */ 
+ Call sorting yourself via: sortDelegates:(ccDispatcherDelegateType)type;
+ */
 - (void) setReversePriority:(BOOL)yesNo;
 /** get - current/requested 'reversePriority'
  @since v1.1.0
@@ -309,10 +303,10 @@ typedef enum
  This operation will NOT force resorting. To do sorting use: sortDelegates:(ccDispatcherDelegateType)type;
  'reversePriority' parameter has NO bearing when user supplies his own comparator
  @since v1.1.0
- */ 
+ */
 - (void) setUsersComparator:(int(*)(const void *, const void *))comparator;
 
-/** get - current/requested - usersComparator 
+/** get - current/requested - usersComparator
  @since v1.1.0
  */
 - (int(*)(const void *, const void *)) usersComparator;
@@ -321,7 +315,7 @@ typedef enum
 //		debug
 //--------------------------------------------
 
-/** prints debug info about handlers. If format = 1, info about delegate is added. 
+/** prints debug info about handlers. If format = 1, info about delegate is added.
  If 'after' = YES, the debug log is printed after all callback requests to the touch dispatcher
  have been processed. In this case the return value is equal to -1.
  If requested outside a touch callback it returns the number of the handlers' objects of the given type.
@@ -337,12 +331,12 @@ typedef enum
 /** sorts delegates of the given type according to the following factors:
  - sortingAlgorithm
  - reversePriority
- - comparator 
- 
+ - comparator
+
  This function is also useful when priority is changed without sorting by the following functions used with kCCPriorityToDo field:
  setField:kCCPriorityToDo ... or/and setDelegatesField:kCCPriorityToDo ...
- Regardless, delegates will be sorted at the end of the callback event processing loop if required. 
- 
+ Regardless, delegates will be sorted at the end of the callback event processing loop if required.
+
  @since v1.1.0
  */
 - (void) sortDelegates:(ccDispatcherDelegateType)type;
@@ -353,39 +347,39 @@ typedef enum
 //---------------------------------
 
 /** returns number of delegates of the given type
- User's callback safe: delegates in the process of being removed are not counted. 
- @since v1.1.0
- */						
-- (int) countDelegatesUsage:(ccDispatcherDelegateType)type; 
-
-/** checks if the touch delegate is already added to the dispatcher's list of the given type 
- It may be important since any attempt to add two identical delegates triggers the 'NSAssert'. 
- User's callback safe: 
- It returns 0 if delegate does not exist or is marked for removal or >0 if delegate is added. 
- If delegate is marked for removal adding the same delegate is safe.  
+ User's callback safe: delegates in the process of being removed are not counted.
  @since v1.1.0
  */
-- (int) countDelegateUsage:(id) delegate type:(ccDispatcherDelegateType)type;	
+- (int) countDelegatesUsage:(ccDispatcherDelegateType)type;
+
+/** checks if the touch delegate is already added to the dispatcher's list of the given type
+ It may be important since any attempt to add two identical delegates triggers the 'NSAssert'.
+ User's callback safe:
+ It returns 0 if delegate does not exist or is marked for removal or >0 if delegate is added.
+ If delegate is marked for removal adding the same delegate is safe.
+ @since v1.1.0
+ */
+- (int) countDelegateUsage:(id) delegate type:(ccDispatcherDelegateType)type;
 
 /** returns number of delegates with the specified tag
- User's callback safe: delegates in the process of being removed are not counted. 
+ User's callback safe: delegates in the process of being removed are not counted.
  */
-- (int) countTagUsage:(int)tagValue type:(ccDispatcherDelegateType)type; 
+- (int) countTagUsage:(int)tagValue type:(ccDispatcherDelegateType)type;
 
 /** returns number of delegates with the specified priority
- User's callback safe: delegates in the process of being removed are not counted. 
+ User's callback safe: delegates in the process of being removed are not counted.
  @since v1.1.0
  */
 - (int) countPriorityUsage:(int)priorityValue type:(ccDispatcherDelegateType)type;
 
 /** returns number of delegates with the specified disable value ((Use: YES or NO)
- User's callback safe: delegates in the process of being removed are not counted. 
+ User's callback safe: delegates in the process of being removed are not counted.
  @since v1.1.0
  */
 - (int) countDisableUsage:(int)disableValue type:(ccDispatcherDelegateType)type;
 
-/** returns number of delegates with the specified value for given field 
- User's callback safe: delegates in the process of being removed are not counted. 
+/** returns number of delegates with the specified value for given field
+ User's callback safe: delegates in the process of being removed are not counted.
  Notice: It is generic functions covering all sugar 'countThisFieldUsage()' functions
  @since v1.1.0
  */
@@ -395,22 +389,22 @@ typedef enum
 // retrieval of the field value
 // ---------------------------------
 
-/** returns priority of the delegate or if the delegate does not exist, returns NSNotFound 
+/** returns priority of the delegate or if the delegate does not exist, returns NSNotFound
  @since v1.1.0
  */
 - (int) retrievePriorityField:(id) delegate type:(ccDispatcherDelegateType)type;
 
-/** returns tag of the delegate or if the delegate does not exist, returns NSNotFound 
+/** returns tag of the delegate or if the delegate does not exist, returns NSNotFound
  @since v1.1.0
  */
 - (int) retrieveTagField:(id) delegate type:(ccDispatcherDelegateType)type;
 
-/** returns value of the disable field or if the delegate does not exist, returns NSNotFound 
+/** returns value of the disable field or if the delegate does not exist, returns NSNotFound
  @since v1.1.0
  */
 -(int) retrieveDisableField:(id) delegate type:(ccDispatcherDelegateType)type;
 
-/** returns value of the field or if the delegate does not exist, returns NSNotFound 
+/** returns value of the field or if the delegate does not exist, returns NSNotFound
  Notice: It is generic functions covering all sugar 'retrieve*Field(.)' functions
  @since v1.1.0
  */
@@ -420,18 +414,18 @@ typedef enum
 // disabling of the delegate(s)
 //--------------------------------
 
-/** disables/enables already added touch delegate 
+/** disables/enables already added touch delegate
  @since v1.1.0
- */			
+ */
 - (int) disableDelegate:(id) delegate disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
 
-/**  disables/enables all delegates of the given type 
+/**  disables/enables all delegates of the given type
  returns number of disabled delegates
  @since v1.1.0
  */
 - (int) disableAllDelegates:(int)yesOrNo type:(ccDispatcherDelegateType)type;
 /** disables/enables already added touch delegates of the given type
- with specified tag. (That allows for fast and selective disabling/enabling of delegates. 
+ with specified tag. (That allows for fast and selective disabling/enabling of delegates.
  Otherwise, delegates would have to be removed and added again to the list)
  returns number of disabled delegates
  @since v1.1.0
@@ -439,7 +433,7 @@ typedef enum
 - (int) disableDelegatesWithTag:(int)aTag disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
 /** disables/enables already added targeted touch delegates of the given type
  with specified priority (including those marked for removal).
- returns number of disabled delegates 
+ returns number of disabled delegates
  @since v1.1.0
  */
 - (int) disableDelegatesWithPriority:(int)aPriority disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
@@ -450,10 +444,10 @@ typedef enum
  during event loop.
  returns number of disabled delegates (including those marked for removal)
  @since v1.1.0
- */ 
+ */
 - (int) disableRemovedDelegates:(int)yesOrNo type:(ccDispatcherDelegateType)type;
 
-/** generic function to disable/enable delegates when a specific field contains a certain value.  
+/** generic function to disable/enable delegates when a specific field contains a certain value.
  The content of the field is evaluated against arg1 and arg2 using (ccOperators)op.
  @since v1.1.0
  */
@@ -472,18 +466,18 @@ disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
  */
 - (int) removeDelegate:(id) delegate delay:(BOOL)yesOrNO type:(ccDispatcherDelegateType)type;
 
-/** removes all delegates of the given type 
+/** removes all delegates of the given type
  returns number of delegates removed
  @since v1.1.0
- */ 
+ */
 - (int) removeAllDelegates:(ccDispatcherDelegateType)type;
 
-/** removes all delegates of the given type with specified tag 
- returns number of delegates removed 
+/** removes all delegates of the given type with specified tag
+ returns number of delegates removed
  If delay: is set to YES the removal is delayed until removeToDoDelegates:type is called or current/first
  event loop ends.
  @since v1.1.0
- */ 
+ */
 - (int) removeDelegatesWithTag:(int)tag delay:(BOOL)yesOrNO type:(ccDispatcherDelegateType)type;
 
 /** removes all delegates of the given type with specified priority
@@ -491,24 +485,24 @@ disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
  If delay: is set to YES the removal is delayed until removeToDoDelegates:type is called or current/first
  event loop ends.
  @since v1.1.0
- */ 
+ */
 - (int) removeDelegatesWithPriority:(int)priority delay:(BOOL)yesOrNO type:(ccDispatcherDelegateType)type;
 
 /** removes all delegates of the given type marked for removal by the following functions used with kCCRemoveToDo field:
  setField:kCCRemoveToDo ... or/and setDelegatesField:kCCRemoveToDo ... or remove* functions with delay:YES
- If 'removeToDoDelegates' is not used all marked delegates will be removed at the end of the first event processing loop. 
+ If 'removeToDoDelegates' is not used all marked delegates will be removed at the end of the first event processing loop.
  returns number of delegates removed.
  If function is called in the touch callback it returns -1. (Delegates will be removed at the end of the event loop)
  @since v1.1.0
- */ 
-- (int) removeToDoDelegates:(ccDispatcherDelegateType)type; 
+ */
+- (int) removeToDoDelegates:(ccDispatcherDelegateType)type;
 
-/** power function: covers all 'removeDelegates*' functions. Removes delegates of the given type 
+/** power function: covers all 'removeDelegates*' functions. Removes delegates of the given type
  for which a given field contains desired value.
  The value of the field is evaluated against arg1 and arg2 using (ccOperators)op.
  @since v1.1.0
  */
-- (int) removeDelegatesWithField:(ccHandlerFieldName)fieldName 
+- (int) removeDelegatesWithField:(ccHandlerFieldName)fieldName
                             arg1:(int)leftEndPoint arg2:(int)rightEndPoint operator:(ccOperators)op delay:(BOOL)yesOrNO type:(ccDispatcherDelegateType)type;
 
 //-------------------------------------------------------------------------
@@ -529,19 +523,19 @@ disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
  event loop ends.
  @since v1.1.0
  */
-- (int) setRemove:(id)delegate delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)type;						
+- (int) setRemove:(id)delegate delay:(BOOL)yesOrNo type:(ccDispatcherDelegateType)type;
 
 /** set a new tag for delegate
  @since v1.1.0
  */
-- (int) setTag:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type; 
+- (int) setTag:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type;
 /** setDisable == disableDelegate  - disable/enable delegate
  @since v1.1.0
  */
 - (int) setDisable:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type;
 
 /** generic power function: sets value of the specific field to a new value.
- @return number of affected delegates. It returns 0 if delegate is not found. It returns less than 0 for an error.  
+ @return number of affected delegates. It returns 0 if delegate is not found. It returns less than 0 for an error.
  @since v1.1.0
  */
 - (int) setField:(ccHandlerFieldName)field newValue:(int)newValue delegate:(id)delegate type:(ccDispatcherDelegateType)type;
@@ -555,7 +549,7 @@ disable:(int)yesOrNo type:(ccDispatcherDelegateType)type;
  @since v1.1.0
  */
 - (int)	setPriorityForTag:(int)tag newPriority:(int)value delay:(BOOL)yesOrNO type:(ccDispatcherDelegateType)type;
-/** sets new tag for all delegates with the given priority 
+/** sets new tag for all delegates with the given priority
  @since v1.1.0
  */
 - (int)	setTagForPriority:(int)priority newTag:(int)value type:(ccDispatcherDelegateType)type;

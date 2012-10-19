@@ -36,7 +36,7 @@ static NSString *transitions[] = {
 	@"NodeToWorld",
 	@"SchedulerTest1",
 	@"CameraOrbitTest",
-	@"CameraZoomTest",	
+	@"CameraZoomTest",
 	@"CameraCenterTest",
 	@"ConvertToNode",
 	@"CCArrayTest",
@@ -44,7 +44,7 @@ static NSString *transitions[] = {
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -57,8 +57,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -81,29 +81,29 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
-		}		
-		
+		}
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:-1];	
+		[self addChild: menu z:-1];
 	}
 
 	return self;
@@ -155,37 +155,37 @@ Class restartAction()
 	[super onEnter];
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
-	
+
 	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 	CCSprite *sp3 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *sp4 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	
+
 	sp1.position = ccp(100, s.height /2 );
 	sp2.position = ccp(380, s.height /2 );
 	[self addChild: sp1];
 	[self addChild: sp2];
-	
+
 	sp3.scale = 0.25f;
 	sp4.scale = 0.25f;
-	
+
 	[sp1 addChild:sp3];
 	[sp2 addChild:sp4];
-	
+
 	id a1 = [CCRotateBy actionWithDuration:2 angle:360];
 	id a2 = [CCScaleBy actionWithDuration:2 scale:2];
-	
+
 	id action1 = [CCRepeatForever actionWithAction:
 				  [CCSequence actions: a1, a2, [a2 reverse], nil]
 									];
 	id action2 = [CCRepeatForever actionWithAction:
 				  [CCSequence actions: [[a1 copy] autorelease], [[a2 copy] autorelease], [a2 reverse], nil]
 									];
-	
+
 	sp2.anchorPoint = ccp(0,0);
-	
+
 	[sp1 runAction:action1];
-	[sp2 runAction:action2];	
+	[sp2 runAction:action2];
 }
 -(NSString *) title
 {
@@ -201,19 +201,19 @@ Class restartAction()
 {
 	if( !( self=[super init]) )
 		return nil;
-		
+
 	CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 	CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-	
+
 	sp1.position = ccp(100,160);
 	sp2.position = ccp(380,160);
-	
+
 	[self addChild:sp1 z:0 tag:2];
 	[self addChild:sp2 z:0 tag:3];
-	
+
 	[self schedule:@selector(delay2:) interval:2.0f];
 	[self schedule:@selector(delay4:) interval:4.0f];
-	
+
 	return self;
 }
 
@@ -247,7 +247,7 @@ Class restartAction()
 
 		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-		
+
 		sp1.position = ccp(100,160);
 		sp2.position = ccp(380,160);
 
@@ -258,16 +258,16 @@ Class restartAction()
 		id forever2 = [[forever copy] autorelease];
 		[forever setTag:101];
 		[forever2 setTag:102];
-													  
+
 		[self addChild:sp1 z:0 tag:kTagSprite1];
 		[self addChild:sp2 z:0 tag:kTagSprite2];
-				
+
 		[sp1 runAction:forever];
 		[sp2 runAction:forever2];
-		
+
 		[self schedule:@selector(addAndRemove:) interval:2.0f];
 	}
-	
+
 	return self;
 }
 
@@ -278,13 +278,13 @@ Class restartAction()
 
 	[sp1 retain];
 	[sp2 retain];
-	
+
 	[self removeChild:sp1 cleanup:NO];
 	[self removeChild:sp2 cleanup:YES];
-	
+
 	[self addChild:sp1 z:0 tag:kTagSprite1];
 	[self addChild:sp2 z:0 tag:kTagSprite2];
-	
+
 	[sp1 release];
 	[sp2 release];
 
@@ -304,17 +304,17 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-		
+
 		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sp11 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 
 		CCSprite *sp2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
 		CCSprite *sp21 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-		
+
 		sp1.position = ccp(100,160);
 		sp2.position = ccp(380,160);
-		
-		
+
+
 		id rot = [CCRotateBy actionWithDuration:2 angle:360];
 		id rot_back = [rot reverse];
 		id forever1 = [CCRepeatForever actionWithAction:
@@ -323,20 +323,20 @@ Class restartAction()
 
 		id forever2 = [[forever1 copy] autorelease];
 		id forever21 = [[forever1 copy] autorelease];
-		
+
 		[self addChild:sp1 z:0 tag:kTagSprite1];
 		[sp1 addChild:sp11];
 		[self addChild:sp2 z:0 tag:kTagSprite2];
 		[sp2 addChild:sp21];
-		
+
 		[sp1 runAction:forever1];
 		[sp11 runAction:forever11];
 		[sp2 runAction:forever2];
 		[sp21 runAction:forever21];
-		
+
 		[self schedule:@selector(addAndRemove:) interval:2.0f];
 	}
-	
+
 	return self;
 }
 
@@ -344,16 +344,16 @@ Class restartAction()
 {
 	CCNode *sp1 = [self getChildByTag:kTagSprite1];
 	CCNode *sp2 = [self getChildByTag:kTagSprite2];
-	
+
 	[sp1 retain];
 	[sp2 retain];
-	
+
 	[self removeChild:sp1 cleanup:NO];
 	[self removeChild:sp2 cleanup:YES];
-	
+
 	[self addChild:sp1 z:0 tag:kTagSprite1];
 	[self addChild:sp2 z:0 tag:kTagSprite2];
-	
+
 	[sp1 release];
 	[sp2 release];
 }
@@ -377,40 +377,40 @@ Class restartAction()
 
 		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[self addChild:sp1 z:0 tag:kTagSprite1];
-		
-		sp1.position = ccp(s.width/2, s.height/2);		
+
+		sp1.position = ccp(s.width/2, s.height/2);
 
 		[self schedule:@selector(shouldNotCrash:) interval:1.0f];
 	}
-	
+
 	return self;
 }
 
 - (void) shouldNotCrash:(ccTime) delta
-{	
+{
 	[self unschedule:_cmd];
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// if the node has timers, it crashes
 	CCNode *explosion = [CCParticleSun node];
-	
+
 	// if it doesn't, it works Ok.
 //	CocosNode *explosion = [Sprite spriteWithFile:@"grossinis_sister2.png"];
 
 	explosion.position = ccp(s.width/2, s.height/2);
-	
+
 	[self runAction:[CCSequence actions:
 						[CCRotateBy actionWithDuration:2 angle:360],
 						[CCCallFuncN actionWithTarget:self selector:@selector(removeMe:)],
 						nil]];
-	
+
 	[self addChild:explosion];
 }
 
 // remove
 - (void) removeMe: (id)node
-{	
+{
 	[parent_ removeChild:node cleanup:YES];
 	[self nextCallback:self];
 }
@@ -428,43 +428,43 @@ Class restartAction()
 @implementation StressTest2
 -(id) init
 {
-	// 
+	//
 	// Purpose of this test:
 	// Objects should be released when a layer is removed
 	//
-	
+
 	if( ( self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		CCLayer *sublayer = [CCLayer node];
-		
+
 		CCSprite *sp1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		sp1.position = ccp(80, s.height/2);
-		
+
 		id move = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
 		id move_ease_inout3 = [CCEaseInOut actionWithAction:[[move copy] autorelease] rate:2.0f];
 		id move_ease_inout_back3 = [move_ease_inout3 reverse];
 		id seq3 = [CCSequence actions: move_ease_inout3, move_ease_inout_back3, nil];
 		[sp1 runAction: [CCRepeatForever actionWithAction:seq3]];
 		[sublayer addChild:sp1 z:1];
-		
+
 		CCParticleFire *fire = [CCParticleFire node];
 		fire.position = ccp(80, s.height/2-50);
 		id copy_seq3 = [[seq3 copy] autorelease];
 		[fire runAction:[CCRepeatForever actionWithAction:copy_seq3]];
 		[sublayer addChild:fire z:2];
-				
+
 		[self schedule:@selector(shouldNotLeak:) interval:6.0f];
-		
+
 		[self addChild:sublayer z:0 tag:kTagSprite1];
 	}
-	
+
 	return self;
 }
 
 - (void) shouldNotLeak:(ccTime)dt
-{	
+{
 	[self unschedule:_cmd];
 	id sublayer = [self getChildByTag:kTagSprite1];
 	[sublayer removeAllChildrenWithCleanup:YES];
@@ -494,25 +494,25 @@ Class restartAction()
 @implementation SchedulerTest1
 -(id) init
 {
-	// 
+	//
 	// Purpose of this test:
 	// Scheduler should be released
 	//
-	
+
 	if( ( self=[super init]) ) {
 		CCLayer *layer = [CustomNode node];
 		NSLog(@"retain count after init is %d", [layer retainCount]);                // 1
-		
+
 		[self addChild:layer z:0];
 		NSLog(@"retain count after addChild is %d", [layer retainCount]);      // 2
-		
+
 		[layer schedule:@selector(doSomething:)];
 		NSLog(@"retain count after schedule is %d", [layer retainCount]);      // 3
-		
+
 		[layer unschedule:@selector(doSomething:)];
 		NSLog(@"retain count after unschedule is %d", [layer retainCount]);		// STILL 3!
 	}
-	
+
 	return self;
 }
 
@@ -540,24 +540,24 @@ Class restartAction()
 		[self addChild:back z:-10];
 		[back setAnchorPoint:ccp(0,0)];
 		CGSize backSize = [back contentSize];
-		
+
 		CCMenuItem *item = [CCMenuItemImage itemFromNormalImage:@"btn-play-normal.png" selectedImage:@"btn-play-selected.png"];
 		CCMenu *menu = [CCMenu menuWithItems:item, nil];
 		[menu alignItemsVertically];
 		[menu setPosition:ccp(backSize.width/2, backSize.height/2)];
 		[back addChild:menu];
-		
+
 		id rot = [CCRotateBy actionWithDuration:5 angle:360];
 		id fe = [CCRepeatForever actionWithAction:rot];
 		[item runAction: fe];
-		
+
 		id move = [CCMoveBy actionWithDuration:3 position:ccp(200,0)];
 		id move_back = [move reverse];
 		id seq = [CCSequence actions:move, move_back, nil];
 		id fe2 = [CCRepeatForever actionWithAction:seq];
 		[back runAction:fe2];
 	}
-	
+
 	return self;
 }
 
@@ -587,14 +587,14 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCSprite *p = [CCSprite spriteWithFile:@"background3.png"];
 		[self addChild:p z:0];
 		p.position = ccp(s.width/2, s.height/2);
 		p.opacity = 128;
-		
+
 		CCSprite *sprite;
 		CCOrbitCamera *orbit;
 
@@ -602,37 +602,37 @@ Class restartAction()
 		// LEFT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.scale = 0.5f;
-		[p addChild:sprite z:0];		
+		[p addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
 		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
-		
+
 		// CENTER
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.scale = 1.0f;
-		[p addChild:sprite z:0];		
+		[p addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
 		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:45 deltaAngleX:0];
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
-		
-		
+
+
 		// RIGHT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		sprite.scale = 2.0f;
-		[p addChild:sprite z:0];		
+		[p addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/4*3, s.height/2)];
 		orbit = [CCOrbitCamera actionWithDuration:2 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:90 deltaAngleX:-45],
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
-				
-		
+
+
 		// PARENT
 		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:90];
 		[p runAction: [CCRepeatForever actionWithAction:orbit]];
 
-		
+
 		self.scale = 1;
 	}
-	
+
 	return self;
 }
 
@@ -661,27 +661,27 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
-		
+
+
 		CCSprite *sprite;
 		CCCamera *cam;
-		
+
 		// LEFT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
-		[self addChild:sprite z:0];		
+		[self addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/4*1, s.height/2)];
 		cam = [sprite camera];
 		[cam setEyeX:0 eyeY:0 eyeZ:415];
-		
+
 		// CENTER
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite z:0 tag:40];
 		[sprite setPosition:ccp(s.width/4*2, s.height/2)];
 //		cam = [sprite camera];
 //		[cam setEyeX:0 eyeY:0 eyeZ:415/2];
-		
+
 		// RIGHT
 		sprite = [CCSprite spriteWithFile:@"grossini.png"];
 		[self addChild:sprite z:0 tag:20];
@@ -689,11 +689,11 @@ Class restartAction()
 //		cam = [sprite camera];
 //		[cam setEyeX:0 eyeY:0 eyeZ:-485];
 //		[cam setCenterX:0 centerY:0 centerZ:0];
-	
+
 
 		[self scheduleUpdate];
 	}
-	
+
 	return self;
 }
 
@@ -703,16 +703,16 @@ Class restartAction()
 
 	CCNode *sprite;
 	CCCamera *cam;
-	
+
 	z += dt * 100;
-	
+
 	sprite = [self getChildByTag:20];
 	cam = [sprite camera];
 	[cam setEyeX:0 eyeY:0 eyeZ:z];
-	
+
 	sprite = [self getChildByTag:40];
 	cam = [sprite camera];
-	[cam setEyeX:0 eyeY:0 eyeZ:z];	
+	[cam setEyeX:0 eyeY:0 eyeZ:z];
 }
 
 -(NSString *) title
@@ -740,15 +740,15 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
-				
+
 		CCSprite *sprite;
 		CCOrbitCamera *orbit;
-		
+
 		// LEFT-TOP
 		sprite = [CCSprite node];
-		[self addChild:sprite z:0];	
+		[self addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/5*1, s.height/5*1)];
 		[sprite setColor:ccRED];
 		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
@@ -756,8 +756,8 @@ Class restartAction()
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 //		[sprite setAnchorPoint: ccp(0,1)];
 
-		
-		
+
+
 		// LEFT-BOTTOM
 		sprite = [CCSprite node];
 		[self addChild:sprite z:0 tag:40];
@@ -771,7 +771,7 @@ Class restartAction()
 
 		// RIGHT-TOP
 		sprite = [CCSprite node];
-		[self addChild:sprite z:0];	
+		[self addChild:sprite z:0];
 		[sprite setPosition:ccp(s.width/5*4, s.height/5*1)];
 		[sprite setColor:ccYELLOW];
 		[sprite setTextureRect:CGRectMake(0, 0, 120, 50)];
@@ -779,7 +779,7 @@ Class restartAction()
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 //		[sprite setAnchorPoint: ccp(1,1)];
 
-		
+
 		// RIGHT-BOTTOM
 		sprite = [CCSprite node];
 		[self addChild:sprite z:0 tag:40];
@@ -799,9 +799,9 @@ Class restartAction()
 		orbit = [CCOrbitCamera actionWithDuration:10 radius:1 deltaRadius:0 angleZ:0 deltaAngleZ:360 angleX:0 deltaAngleX:0];
 		[sprite runAction: [CCRepeatForever actionWithAction:orbit]];
 //		[sprite setAnchorPoint: ccp(0.5f, 0.5f)];
-		
+
 	}
-	
+
 	return self;
 }
 
@@ -825,22 +825,22 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-		
+
 		self.isTouchEnabled = YES;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		
+
 		id rotate = [CCRotateBy actionWithDuration:10 angle:360];
 		id action = [CCRepeatForever actionWithAction:rotate];
 		for(int i=0;i<3;i++) {
 			CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
 			sprite.position = ccp( s.width/4*(i+1), s.height/2);
-			
+
 			CCSprite *point = [CCSprite spriteWithFile:@"r1.png"];
 			point.scale = 0.25f;
 			point.position = sprite.position;
 			[self addChild:point z:10 tag:100+i];
-			
+
 			switch(i) {
 				case 0:
 					sprite.anchorPoint = CGPointZero;
@@ -852,15 +852,15 @@ Class restartAction()
 					sprite.anchorPoint = ccp(1,1);
 					break;
 			}
-			
+
 			point.position = sprite.position;
-			
+
 			id copy = [[action copy] autorelease];
 			[sprite runAction:copy];
 			[self addChild:sprite z:i];
-		}		
+		}
 	}
-	
+
 	return self;
 }
 
@@ -868,20 +868,20 @@ Class restartAction()
 {
 	for( UITouch *touch in touches ) {
 		CGPoint location = [touch locationInView: [touch view]];
-		
+
 		location = [[CCDirector sharedDirector] convertToGL: location];
 
 		for( int i=0; i<3; i++) {
 			CCNode *node = [self getChildByTag:100+i];
-			
+
 			CGPoint p1, p2;
-			
+
 			p1 = [node convertToNodeSpaceAR:location];
 			p2 = [node convertToNodeSpace:location];
 
 			NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
 		}
-	}	
+	}
 }
 
 -(NSString *) title
@@ -905,33 +905,33 @@ Class restartAction()
 	if( ( self=[super init]) ) {
 
 		NSLog(@"\nTest 1\n");
-		
+
 		NSArray *nsarray = [NSArray arrayWithObjects:@"one", @"two", @"three", nil];
 		CCArray *ccarray = [CCArray arrayWithNSArray:nsarray];
-		
+
 		NSLog(@"%@ == %@", nsarray, ccarray);
-		
-		
+
+
 		NSLog(@"\nTest 2\n");
-		
+
 		CCArray *copy_ccaray = [ccarray copy];
 		NSLog(@"copy: %@", copy_ccaray);
 
 		NSLog(@"\nTest 3\n");
 
-		[copy_ccaray addObjectsFromNSArray:nsarray];		
+		[copy_ccaray addObjectsFromNSArray:nsarray];
 		NSLog(@"copy 2: %@", copy_ccaray);
-		
+
 
 		NSLog(@"\nTest 4\n");
-		
+
 		for( int i=0; i<6;i++)
 			NSLog(@"random object: %@", [copy_ccaray randomObject] );
 
-		
+
 		[copy_ccaray release];
 
-		
+
 	}
 	return self;
 }
@@ -970,38 +970,39 @@ Class restartAction()
 	// 9. Connects the director to the EAGLView
 	//
 	CC_DIRECTOR_INIT();
-	
+
 	// Obtain the shared director in order to...
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// Sets landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// Turn on display FPS
 	[director setDisplayFPS:YES];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// Set multiple touches on
 	EAGLView *glView = [director openGLView];
 	[glView setMultipleTouchEnabled:YES];
-	
+
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+    [CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-			 
+
 	[director runWithScene: scene];
 }
 
@@ -1029,7 +1030,7 @@ Class restartAction()
 
 // application will be killed
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CC_DIRECTOR_END();
 }
 

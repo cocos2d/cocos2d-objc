@@ -74,7 +74,7 @@ TTF fonts:
     From:
         http://www.webpagepublicity.com/free-fonts.html
     LICENSE: For personal Use.
-        
+
 
 SpriteSheet fonts:
     Resources/Images/tuffy_bold_italic-charmap.png

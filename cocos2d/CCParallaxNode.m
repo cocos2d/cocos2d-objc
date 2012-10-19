@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2009-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -66,7 +66,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-		parallaxArray_ = ccArrayNew(5);		
+		parallaxArray_ = ccArrayNew(5);
 		lastPosition = CGPointMake(-100,-100);
 	}
 	return self;
@@ -92,12 +92,12 @@
 	CGPointObject *obj = [CGPointObject pointWithCGPoint:ratio offset:offset];
 	obj.child = child;
 	ccArrayAppendObjectWithResize(parallaxArray_, obj);
-	
+
 	CGPoint pos = self.position;
 	pos.x = pos.x * ratio.x + offset.x;
 	pos.y = pos.y * ratio.y + offset.y;
 	child.position = pos;
-	
+
 	[super addChild: child z:z tag:child.tag];
 }
 
@@ -122,14 +122,14 @@
 -(CGPoint) absolutePosition_
 {
 	CGPoint ret = position_;
-	
+
 	CCNode *cn = self;
-	
+
 	while (cn.parent != nil) {
 		cn = cn.parent;
 		ret = ccpAdd( ret,  cn.position );
 	}
-	
+
 	return ret;
 }
 
@@ -144,18 +144,18 @@
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
 	CGPoint pos = [self absolutePosition_];
 	if( ! CGPointEqualToPoint(pos, lastPosition) ) {
-		
+
 		for(unsigned int i=0; i < parallaxArray_->num; i++ ) {
 
 			CGPointObject *point = parallaxArray_->arr[i];
 			float x = -pos.x + pos.x * point.ratio.x + point.offset.x;
-			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;			
+			float y = -pos.y + pos.y * point.ratio.y + point.offset.y;
 			point.child.position = ccp(x,y);
 		}
-		
+
 		lastPosition = pos;
 	}
-	
+
 	[super visit];
 }
 @end

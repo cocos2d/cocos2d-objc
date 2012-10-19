@@ -42,7 +42,8 @@
  */
 
 
-// Override to allow orientations other than the default portrait orientation.
+// Override to allow orientations other than the default portrait orientation
+//valid for iOS 4 and 5, IMPORTANT, for iOS6 also modify supportedInterfaceOrientations
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
 	
 	//
@@ -81,54 +82,61 @@
 	//
 	// EAGLView will be rotated by the UIViewController
 	//
-	// Sample: Autorotate only in landscpe mode
+	// Sample: Autorotate only in portrait mode
 	//
 	// return YES for the supported orientations
 	
-	return ( UIInterfaceOrientationIsLandscape( interfaceOrientation ) );
+	return ( UIInterfaceOrientationIsPortrait( interfaceOrientation ) );
 	
 #else
 #error Unknown value in GAME_AUTOROTATION
 	
 #endif // GAME_AUTOROTATION
 	
-	
 	// Shold not happen
 	return NO;
 }
 
-//
-// This callback only will be called when GAME_AUTOROTATION == kGameAutorotationUIViewController
-//
-#if GAME_AUTOROTATION == kGameAutorotationUIViewController
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	//
-	// Assuming that the main window has the size of the screen
-	// BUG: This won't work if the EAGLView is not fullscreen
-	///
-	CGRect screenRect = [[UIScreen mainScreen] bounds];
-	CGRect rect = CGRectZero;
+// these methods are needed for iOS 6
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
 
+-(NSUInteger)supportedInterfaceOrientations{
+    //Modify for supported orientations, put your masks here, trying to mimic behavior of shouldAutorotate..
+    #if GAME_AUTOROTATION==kGameAutorotationNone
+	    return UIInterfaceOrientationMaskPortrait;
+    #elif GAME_AUTOROTATION==kGameAutorotationCCDirector
+    	NSAssert(NO, @"RootviewController: kGameAutorotation isn't supported on iOS6");
+	    return UIInterfaceOrientationMaskLandscape;
+    #elif GAME_AUTOROTATION == kGameAutorotationUIViewController
+    	return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
+    	//for both landscape orientations return UIInterfaceOrientationLandscape
+    #else 
+    #error Unknown value in GAME_AUTOROTATION
 	
-	if(toInterfaceOrientation == UIInterfaceOrientationPortrait || toInterfaceOrientation == UIInterfaceOrientationPortraitUpsideDown)		
-		rect = screenRect;
-	
-	else if(toInterfaceOrientation == UIInterfaceOrientationLandscapeLeft || toInterfaceOrientation == UIInterfaceOrientationLandscapeRight)
-		rect.size = CGSizeMake( screenRect.size.height, screenRect.size.width );
-	
-	CCDirector *director = [CCDirector sharedDirector];
-	EAGLView *glView = [director openGLView];
-	float contentScaleFactor = [director contentScaleFactor];
-	
-	if( contentScaleFactor != 1 ) {
-		rect.size.width *= contentScaleFactor;
-		rect.size.height *= contentScaleFactor;
-	}
-	glView.frame = rect;
+	#endif // GAME_AUTOROTATION
 }
-#endif // GAME_AUTOROTATION == kGameAutorotationUIViewController
 
+#if GAME_AUTOROTATION==kGameAutorotationUIViewController
+- (BOOL)shouldAutorotate {
+    return YES;
+}
+#else 
+- (BOOL)shouldAutorotate {
+    return NO;
+}
+#endif
+
+//__IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+#else //deprecated in iOS6, so call only < 6. 
+- (void)viewDidUnload {
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+#endif //__IPHONE_OS_VERSION_MAX_ALLOWED >= 60000
+#endif 
 
 - (void)didReceiveMemoryWarning {
     // Releases the view if it doesn't have a superview.
@@ -137,17 +145,8 @@
     // Release any cached data, images, etc that aren't in use.
 }
 
-- (void)viewDidUnload {
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-
 - (void)dealloc {
     [super dealloc];
 }
 
-
 @end
-

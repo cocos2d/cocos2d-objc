@@ -1,22 +1,22 @@
 /*
-* Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
-*
-* iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
-*
-* This software is provided 'as-is', without any express or implied
-* warranty.  In no event will the authors be held liable for any damages
-* arising from the use of this software.
-* Permission is granted to anyone to use this software for any purpose,
-* including commercial applications, and to alter it and redistribute it
-* freely, subject to the following restrictions:
-* 1. The origin of this software must not be misrepresented; you must not
-* claim that you wrote the original software. If you use this software
-* in a product, an acknowledgment in the product documentation would be
-* appreciated but is not required.
-* 2. Altered source versions must be plainly marked as such, and must not be
-* misrepresented as being the original software.
-* 3. This notice may not be removed or altered from any source distribution.
-*/
+ * Copyright (c) 2006-2007 Erin Catto http://www.gphysics.com
+ *
+ * iPhone port by Simon Oliver - http://www.simonoliver.com - http://www.handcircus.com
+ *
+ * This software is provided 'as-is', without any express or implied
+ * warranty.  In no event will the authors be held liable for any damages
+ * arising from the use of this software.
+ * Permission is granted to anyone to use this software for any purpose,
+ * including commercial applications, and to alter it and redistribute it
+ * freely, subject to the following restrictions:
+ * 1. The origin of this software must not be misrepresented; you must not
+ * claim that you wrote the original software. If you use this software
+ * in a product, an acknowledgment in the product documentation would be
+ * appreciated but is not required.
+ * 2. Altered source versions must be plainly marked as such, and must not be
+ * misrepresented as being the original software.
+ * 3. This notice may not be removed or altered from any source distribution.
+ */
 
 //
 // File modified for cocos2d integration
@@ -59,13 +59,14 @@ inline float32 RandomFloat(float32 lo, float32 hi)
 }
 
 /// Test settings. Some can be controlled in the GUI.
+/// Test settings. Some can be controlled in the GUI.
 struct Settings
 {
 	Settings() :
+	viewCenter(0.0f, 20.0f),
 	hz(60.0f),
 	velocityIterations(8),
 	positionIterations(3),
-	drawStats(0),
 	drawShapes(1),
 	drawJoints(1),
 	drawAABBs(0),
@@ -75,12 +76,16 @@ struct Settings
 	drawContactForces(0),
 	drawFrictionForces(0),
 	drawCOMs(0),
+	drawStats(0),
+	drawProfile(0),
 	enableWarmStarting(1),
 	enableContinuous(1),
+	enableSubStepping(0),
 	pause(0),
 	singleStep(0)
 	{}
-	
+
+	b2Vec2 viewCenter;
 	float32 hz;
 	int32 velocityIterations;
 	int32 positionIterations;
@@ -94,8 +99,10 @@ struct Settings
 	int32 drawFrictionForces;
 	int32 drawCOMs;
 	int32 drawStats;
+	int32 drawProfile;
 	int32 enableWarmStarting;
 	int32 enableContinuous;
+	int32 enableSubStepping;
 	int32 pause;
 	int32 singleStep;
 };
@@ -111,13 +118,13 @@ extern TestEntry g_testEntries[];
 // because an attached body is destroyed. This gives us a chance to
 // nullify the mouse joint.
 class DestructionListener : public b2DestructionListener
-	{
-	public:
-		void SayGoodbye(b2Fixture* fixture) { B2_NOT_USED(fixture); }
-		void SayGoodbye(b2Joint* joint);
-		
-		Test* test;
-	};
+{
+public:
+    void SayGoodbye(b2Fixture* fixture) { B2_NOT_USED(fixture); }
+    void SayGoodbye(b2Joint* joint);
+
+    Test* test;
+};
 
 const int32 k_maxContactPoints = 2048;
 
@@ -131,61 +138,61 @@ struct ContactPoint
 };
 
 class Test : public b2ContactListener
-	{
-	public:
-		
-		Test();
-		virtual ~Test();
-		
-		void SetGravity(float x,float y);	// iPhone specific
+{
+public:
 
-		void SetTextLine(int32 line) { m_textLine = line; }
-		void DrawTitle(int x, int y, const char *string);
-		virtual void Step(Settings* settings);
-		virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
-		void ShiftMouseDown(const b2Vec2& p);
-		virtual bool MouseDown(const b2Vec2& p); // cocos2d modifications
-		virtual void MouseUp(const b2Vec2& p);
-		void MouseMove(const b2Vec2& p);
-		void LaunchBomb();
-		void LaunchBomb(const b2Vec2& position, const b2Vec2& velocity);
-		
-		void SpawnBomb(const b2Vec2& worldPt);
-		void CompleteBombSpawn(const b2Vec2& p);
-		
-		// Let derived tests know that a joint was destroyed.
-		virtual void JointDestroyed(b2Joint* joint) { B2_NOT_USED(joint); }
-		
-		// Callbacks for derived classes.
-		virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
-		virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
-		virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
-		virtual void PostSolve(const b2Contact* contact, const b2ContactImpulse* impulse)
-		{
-			B2_NOT_USED(contact);
-			B2_NOT_USED(impulse);
-		}
+    Test();
+    virtual ~Test();
 
-		b2World* m_world;	// cocos2d specific
+    void SetGravity(float x,float y);	// iPhone specific
 
-	protected:
-		friend class DestructionListener;
-		friend class BoundaryListener;
-		friend class ContactListener;
-		
-		b2Body* m_groundBody;
-		b2AABB m_worldAABB;
-		ContactPoint m_points[k_maxContactPoints];
-		int32 m_pointCount;
-		DestructionListener m_destructionListener;
-		GLESDebugDraw m_debugDraw;
-		int32 m_textLine;
-		b2Body* m_bomb;
-		b2MouseJoint* m_mouseJoint;
-		b2Vec2 m_bombSpawnPoint;
-		bool m_bombSpawning;
-		b2Vec2 m_mouseWorld;
-		int32 m_stepCount;
-	};
+    void SetTextLine(int32 line) { m_textLine = line; }
+    void DrawTitle(int x, int y, const char *string);
+    virtual void Step(Settings* settings);
+    virtual void Keyboard(unsigned char key) { B2_NOT_USED(key); }
+    void ShiftMouseDown(const b2Vec2& p);
+    virtual bool MouseDown(const b2Vec2& p); // cocos2d modifications
+    virtual void MouseUp(const b2Vec2& p);
+    void MouseMove(const b2Vec2& p);
+    void LaunchBomb();
+    void LaunchBomb(const b2Vec2& position, const b2Vec2& velocity);
+
+    void SpawnBomb(const b2Vec2& worldPt);
+    void CompleteBombSpawn(const b2Vec2& p);
+
+    // Let derived tests know that a joint was destroyed.
+    virtual void JointDestroyed(b2Joint* joint) { B2_NOT_USED(joint); }
+
+    // Callbacks for derived classes.
+    virtual void BeginContact(b2Contact* contact) { B2_NOT_USED(contact); }
+    virtual void EndContact(b2Contact* contact) { B2_NOT_USED(contact); }
+    virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold);
+    virtual void PostSolve(const b2Contact* contact, const b2ContactImpulse* impulse)
+    {
+        B2_NOT_USED(contact);
+        B2_NOT_USED(impulse);
+    }
+
+    b2World* m_world;	// cocos2d specific
+
+protected:
+    friend class DestructionListener;
+    friend class BoundaryListener;
+    friend class ContactListener;
+
+    b2Body* m_groundBody;
+    b2AABB m_worldAABB;
+    ContactPoint m_points[k_maxContactPoints];
+    int32 m_pointCount;
+    DestructionListener m_destructionListener;
+    GLESDebugDraw m_debugDraw;
+    int32 m_textLine;
+    b2Body* m_bomb;
+    b2MouseJoint* m_mouseJoint;
+    b2Vec2 m_bombSpawnPoint;
+    bool m_bombSpawning;
+    b2Vec2 m_mouseWorld;
+    int32 m_stepCount;
+};
 
 #endif

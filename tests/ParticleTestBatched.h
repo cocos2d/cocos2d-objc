@@ -2,7 +2,7 @@
 #import "cocos2d.h"
 
 @class CCSprite;
-@class CCParticleBatchNode; 
+@class CCParticleBatchNode;
 
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -155,6 +155,10 @@
 {}
 @end
 
+@interface StayPut : ParticleDemoBatch
+{}
+@end
+
 @interface RadiusMode1 : ParticleDemoBatch
 {}
 @end
@@ -197,6 +201,9 @@
 @end
 
 @interface AnimatedParticles : ParticleDemoBatch
+{}
+@end
+@interface LotsOfAnimatedParticles : ParticleDemoBatch
 {}
 @end
 

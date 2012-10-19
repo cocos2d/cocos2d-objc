@@ -42,17 +42,17 @@
 		self.delayUnits = delayUnits;
 		self.userInfo = userInfo;
 	}
-	
+
 	return self;
 }
 
 -(void) dealloc
-{    
+{
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	
+
 	[spriteFrame_ release];
 	[userInfo_ release];
-	
+
     [super dealloc];
 }
 
@@ -64,7 +64,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | SpriteFrame = %08X, delayUnits = %0.2f >", [self class], self, spriteFrame_, delayUnits_ ];
+	return [NSString stringWithFormat:@"<%@ = %p | SpriteFrame = %p, delayUnits = %0.2f >", [self class], self, spriteFrame_, delayUnits_ ];
 }
 @end
 
@@ -107,18 +107,18 @@
 -(id) initWithFrames:(NSArray*)array delay:(float)delay
 {
 	if( (self=[super init]) ) {
-		
+
 		self.frames = [NSMutableArray arrayWithCapacity:[array count]];
 		duration_ = [array count] * delay;
-		
+
 		for( CCSpriteFrame *frame in array ) {
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
-			
+
 			[self.frames addObject:animFrame];
 			[animFrame release];
 			totalDelayUnits_++;
 		}
-		
+
 		delayPerUnit_ = delay;
 	}
 	return self;
@@ -133,24 +133,37 @@
 		for( CCAnimationFrame *animFrame in frames_ ) {
 			duration_ += animFrame.delayUnits * delayPerUnit;
 			totalDelayUnits_ += animFrame.delayUnits;
-		}		
+		}
 	}
 	return self;
 }
 
+- (void)setDelayPerUnit:(float)delayPerUnit {
+    delayPerUnit_ = delayPerUnit;
+    duration_ = totalDelayUnits_ * delayPerUnit_;
+}
+
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | frames=%d, totalDelayUnits=%d, delayPerUnit=%f>", [self class], self,
+#ifdef __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%ld, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
 			[frames_ count],
 			totalDelayUnits_,
 			delayPerUnit_
 			];
+#else
+	return [NSString stringWithFormat:@"<%@ = %p | frames=%d, totalDelayUnits=%f, delayPerUnit=%f>", [self class], self,
+			[frames_ count],
+			totalDelayUnits_,
+			delayPerUnit_
+			];
+#endif
 }
 
 -(void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
-	
+
 	[frames_ release];
 	[super dealloc];
 }
@@ -160,7 +173,8 @@
 	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 	[frames_ addObject:animFrame];
 	[animFrame release];
-	
+
+    NSAssert(delayPerUnit_ != 0, @"set a delayPerUnit before adding frames");
 	// update duration
 	duration_ += delayPerUnit_;
 	totalDelayUnits_++;
@@ -168,15 +182,16 @@
 
 -(void) addFrame:(CCSpriteFrame*)frame delay:(float) delay
 {
-	if ([frames_ count] == 0)
+	if ([frames_ count] == 0 && delayPerUnit_ == 0)
 	{
-		delayPerUnit_ = delay; 	
+        NSAssert(delay >= 0, @"delay can't be 0 or be negative");
+		delayPerUnit_ = delay;
 	}
-	
+
 	float delayUnits = delay / delayPerUnit_;
-	totalDelayUnits_+= delayUnits;  
-	duration_ += delay; 
-	
+	totalDelayUnits_+= delayUnits;
+	duration_ += delay;
+
 	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:delayUnits userInfo:nil];
 	[frames_ addObject:animFrame];
 	[animFrame release];
@@ -188,7 +203,7 @@
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
-	
+
 	[self addFrame:spriteFrame];
 }
 

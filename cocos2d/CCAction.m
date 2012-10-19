@@ -10,10 +10,10 @@
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -49,7 +49,7 @@
 
 -(id) init
 {
-	if( (self=[super init]) ) {	
+	if( (self=[super init]) ) {
 		originalTarget_ = target_ = nil;
 		tag_ = kCCActionTagInvalid;
 	}
@@ -64,7 +64,11 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Tag = %i>", [self class], self, tag_];
+#ifdef  __LP64__
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, tag_];
+#else
+    return [NSString stringWithFormat:@"<%@ = %p | Tag = %d>", [self class], self, tag_];
+#endif
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -130,7 +134,7 @@
 
 -(id) initWithAction: (CCActionInterval*) action
 {
-	if( (self=[super init]) )	
+	if( (self=[super init]) )
 		self.innerAction = action;
 
 	return self;
@@ -160,13 +164,19 @@
 	if( [innerAction_ isDone] ) {
 		ccTime diff = innerAction_.elapsed - innerAction_.duration;
 		[innerAction_ startWithTarget:target_];
-		
+
 		// to prevent jerk. issue #390, 1247
 		[innerAction_ step: 0.0f];
 		[innerAction_ step: diff];
 	}
 }
 
+//issue #945 CCRepeatForever should stop innerAction when removed
+- (void) stop
+{
+    [innerAction_ stop];
+    [super stop];
+}
 
 -(BOOL) isDone
 {
@@ -264,36 +274,36 @@
 -(id) initWithTarget:(CCNode *)fNode
 {
 	if( (self=[super init]) ) {
-	
+
 		followedNode_ = [fNode retain];
 		boundarySet = FALSE;
 		boundaryFullyCovered = FALSE;
-		
+
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		fullScreenSize = CGPointMake(s.width, s.height);
 		halfScreenSize = ccpMult(fullScreenSize, .5f);
 	}
-	
+
 	return self;
 }
 
 -(id) initWithTarget:(CCNode *)fNode worldBoundary:(CGRect)rect
 {
 	if( (self=[super init]) ) {
-	
+
 		followedNode_ = [fNode retain];
 		boundarySet = TRUE;
 		boundaryFullyCovered = FALSE;
-		
+
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		fullScreenSize = CGPointMake(winSize.width, winSize.height);
 		halfScreenSize = ccpMult(fullScreenSize, .5f);
-		
+
 		leftBoundary = -((rect.origin.x+rect.size.width) - fullScreenSize.x);
 		rightBoundary = -rect.origin.x ;
 		topBoundary = -rect.origin.y;
 		bottomBoundary = -((rect.origin.y+rect.size.height) - fullScreenSize.y);
-		
+
 		if(rightBoundary < leftBoundary)
 		{
 			// screen width is larger than world's boundary width
@@ -306,11 +316,11 @@
 			//set both in the middle of the world
 			topBoundary = bottomBoundary = (topBoundary + bottomBoundary) / 2;
 		}
-		
+
 		if( (topBoundary == bottomBoundary) && (leftBoundary == rightBoundary) )
 			boundaryFullyCovered = TRUE;
 	}
-	
+
 	return self;
 }
 
@@ -328,12 +338,12 @@
 		// whole map fits inside a single screen, no need to modify the position - unless map boundaries are increased
 		if(boundaryFullyCovered)
 			return;
-		
+
 		CGPoint tempPos = ccpSub( halfScreenSize, followedNode_.position);
 		[target_ setPosition:ccp(clampf(tempPos.x,leftBoundary,rightBoundary), clampf(tempPos.y,bottomBoundary,topBoundary))];
 	}
 	else
-		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];	
+		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];
 }
 
 

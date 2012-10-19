@@ -5,6 +5,10 @@
 // http://www.cocos2d-iphone.org
 //
 
+
+//WARNING if you build this for iOS6 or higher, change the names of the xibs in the plist to the ones ending with iOS6, also include the iOS6 xibs to the EAGLViewTest target (in build phases -> compile bundle resources)
+//the iPad xib is broken at the moment
+
 #import <UIKit/UIKit.h>
 
 // cocos2d import
@@ -24,7 +28,7 @@
 	{
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label;
-		
+
 #ifdef __IPHONE_3_2
 		if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 			label = [CCLabelTTF labelWithString:@"Hello iPad" fontName:@"Marker Felt" fontSize:40];
@@ -35,7 +39,7 @@
 
 		label.position = ccp(s.width/2, s.height/2);
 		[self addChild:label];
-		
+
 	}
 	return self;
 }
@@ -58,7 +62,7 @@
 #pragma mark Application Delegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{	
+{
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeThreadMainLoop];
 
@@ -71,15 +75,15 @@
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// turn on multiple touches
 	[glView_ setMultipleTouchEnabled:YES];
 
 	CCScene *scene = [CCScene node];
 	[scene addChild: [LayerExample node]];
-	
+
 	[director runWithScene:scene];
-	
+
 	return YES;
 }
 
@@ -100,11 +104,11 @@
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director openGLView] removeFromSuperview];
 	[director end];
-	
+
 	// release glView here, else it won't be dealloced
 	[glView_ release];
 	glView_ = nil;

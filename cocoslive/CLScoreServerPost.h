@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -70,38 +70,38 @@ enum {
 	/// game key. secret shared with the server.
 	/// used to sign the values to prevent spoofing.
 	NSString	*gameKey;
-	
+
 	/// game name, used as a login name.
 	NSString	*gameName;
 
 	/// delegate instance of fetch score
 	id			delegate;
-	
+
 	/// ranking
 	NSUInteger	ranking_;
-	
+
 	/// score was updated
 	BOOL		scoreDidUpdate_;
 
 	/// data received
 	NSMutableData *receivedData;
-	
+
 	/// values to send in the POST
 	NSMutableArray *bodyValues;
-	
+
 	/// status of the request
 	tPostStatus		postStatus_;
-	
+
 	/// mdt context
 	CC_MD5_CTX		md5Ctx;
-	
+
 	/// the connection
 	NSURLConnection	*connection_;
 }
 
-/** status from the score post */ 
+/** status from the score post */
 @property (nonatomic,readonly) tPostStatus postStatus;
- 
+
 /** connection to the server */
 @property (nonatomic, retain) NSURLConnection *connection;
 
@@ -124,7 +124,7 @@ enum {
 /** send the scores to the server. A new entre will be created on the server */
 -(BOOL) sendScore: (NSDictionary*) dict;
 
-/** 
+/**
  * Sends a score dictionary to the server for updating an existing entry by playername and device id, or creating a new one.
  * The passed dictionary must contain a cc_playername key, otherwise it will raise and exception.
  * @since v0.7.1

@@ -10,9 +10,8 @@
 #import "cocos2d.h"
 
 @interface bugViewController : UIViewController {
+    BOOL firstTime_;
 
-	// weak reference
-	EAGLView *glView;	
 }
 
 @end

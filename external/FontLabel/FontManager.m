@@ -48,7 +48,7 @@ static FontManager *sharedFontManager = nil;
 		fontPath = [[NSBundle mainBundle] pathForResource:filename ofType:nil];
 	}
 	if (fontPath == nil) return NO;
-	
+
 	NSURL *url = [NSURL fileURLWithPath:fontPath];
 	if ([self loadFontURL:url]) {
 		[urls setObject:url forKey:filename];
@@ -60,10 +60,10 @@ static FontManager *sharedFontManager = nil;
 - (BOOL)loadFontURL:(NSURL *)url {
 	CGDataProviderRef fontDataProvider = CGDataProviderCreateWithURL((CFURLRef)url);
 	if (fontDataProvider == NULL) return NO;
-	CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider); 
-	CGDataProviderRelease(fontDataProvider); 
+	CGFontRef newFont = CGFontCreateWithDataProvider(fontDataProvider);
+	CGDataProviderRelease(fontDataProvider);
 	if (newFont == NULL) return NO;
-	
+
 	CFDictionarySetValue(fonts, url, newFont);
 	CGFontRelease(newFont);
 	return YES;

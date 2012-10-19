@@ -48,3 +48,7 @@
 	NSUInteger capacity;
 }
 @end
+
+@interface DispatcherTest : EventTest
+{}
+@end

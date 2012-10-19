@@ -51,19 +51,19 @@
 	unsigned int i;
 	i = t.tv_sec;
 	i += t.tv_usec;
-	srandom(i);	
+	srandom(i);
 }
 
--(int) getRandomWithMax:(int)max 
+-(int) getRandomWithMax:(int)max
 {
 	return CCRANDOM_0_1() * max;
 }
 
 -(void) requestRank
 {
-	
+
 	CLScoreServerRequest *request = [[CLScoreServerRequest alloc] initWithGameName:@"DemoGame 3" delegate:self];
-	
+
 	NSString *cat = @"easy2";
 
 	int score = CCRANDOM_0_1() * 20000;
@@ -79,14 +79,14 @@
 			cat = @"hard";
 			break;
 	}
-	
+
 	NSLog(@"Requesting Rank for Score %d in category %@", score, cat);
 
 	// Request Ranking for a given score and category
 	[request requestRankForScore:score andCategory:cat];
-	
+
 	// Release. It won't be freed from memory until the connection fails or suceeds
-	[request release];	
+	[request release];
 }
 
 -(void) requestScore
@@ -94,9 +94,9 @@
 	NSLog(@"Requesting scores...");
 
 	CLScoreServerRequest *request = [[CLScoreServerRequest alloc] initWithGameName:@"DemoGame 3" delegate:self];
-	
+
 	NSString *cat = @"easy2";
-	
+
 	switch( category ) {
 		case kCategoryEasy:
 			cat = @"easy2";
@@ -119,7 +119,7 @@
 	// request All time Scores: the only supported version as of v0.2
 	// request best 15 scores (limit:15, offset:0)
 	[request requestScores:kQueryAllTime limit:15 offset:0 flags:flags category:cat];
-	
+
 	// Release. It won't be freed from memory until the connection fails or suceeds
 	[request release];
 }
@@ -168,27 +168,27 @@
 			cat = @"hard";
 			break;
 	}
-	
+
 	[dict setObject:cat forKey:@"cc_category"];
-	
+
 	NSLog(@"Sending data: %@", dict);
 
 	// You can add a new score to the database
 //	[server sendScore:dict];
-	
+
 	// Or you can "update" your score instead of adding a new one.
 	// The score will be udpated only if it is better than the previous one
-	// 
+	//
 	// "update score" is the recommend way since it can be treated like a profile
 	// and it has some benefits like: "tell me if my score was beaten", etc.
 	// It also supports "world ranking". eg: "What's my ranking ?"
 	[server updateScore:dict];
-	
+
 	// Release. It won't be freed from memory until the connection fails or suceeds
 	[server release];
-	
-	
-	// Test for 
+
+
+	// Test for
 }
 
 #pragma mark -
@@ -199,11 +199,11 @@
 	NSLog(@"score post OK");
 	if( [sender ranking] != kServerPostInvalidRanking && [sender scoreDidUpdate]) {
 		NSString *message = [NSString stringWithFormat:@"World ranking: %d", [sender ranking]];
-		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post Ok." message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+		UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Post Ok." message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 		alert.tag = 2;
 		[alert show];
-		[alert release];		
-		
+		[alert release];
+
 	}
 }
 
@@ -215,13 +215,13 @@
 		message = @"Cannot post the score to the server. Retry";
 	else if( status == kPostStatusConnectionFailed )
 		message = @"Internet connection not available. Enable wi-fi / 3g to post your scores to the server";
-	
+
 	NSLog(@"%@", message);
 
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Post Failed" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Post Failed" message:message delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	alert.tag = 0;
 	[alert show];
-	[alert release];		
+	[alert release];
 }
 
 #pragma mark -
@@ -229,22 +229,22 @@
 
 -(void) scoreRequestRankOk: (id) sender
 {
-	NSLog(@"score request Rank OK");	
+	NSLog(@"score request Rank OK");
 	int rank = [sender parseRank];
 	NSLog(@"Ranking: %d", rank);
 }
 
 -(void) scoreRequestOk: (id) sender
 {
-	NSLog(@"score request OK");	
-	NSArray *scores = [sender parseScores];	
+	NSLog(@"score request OK");
+	NSArray *scores = [sender parseScores];
 	NSMutableArray *mutable = [NSMutableArray arrayWithArray:scores];
-	
+
 	// use the property (retain is needed)
 	self.globalScores = mutable;
-		
+
 	[myTableView reloadData];
-	
+
 	// Test Rank
 	[self requestRank];
 }
@@ -253,10 +253,10 @@
 {
 	NSLog(@"score request fail");
 
-	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Request Failed" message:@"Internet connection not available, cannot view world scores" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];	
+	UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Score Request Failed" message:@"Internet connection not available, cannot view world scores" delegate:nil cancelButtonTitle:nil otherButtonTitles:@"OK", nil];
 	alert.tag = 0;
 	[alert show];
-	[alert release];	
+	[alert release];
 }
 
 
@@ -268,15 +268,15 @@
 												   delegate:self cancelButtonTitle:nil otherButtonTitles:@"easy", @"medium", @"hard", nil];
 	alert.tag = 1;
 	[alert show];
-	[alert release];	
+	[alert release];
 }
 
 #pragma mark -
 #pragma mark Segment Delegate
 - (void)segmentAction:(id)sender
-{	
+{
 	int idx = [sender selectedSegmentIndex];
-	// category 
+	// category
 	if( [sender tag] == 0 ) {
 		// 0: easy
 		// 1: med
@@ -316,11 +316,11 @@
 	globalScores = [[NSMutableArray alloc] initWithCapacity:50];
 	category = kCategoryEasy;
 	world = kAll;
-	
+
 	[self initRandom];
 
 	[window makeKeyAndVisible];
-	
+
 	[self requestScore];
 }
 

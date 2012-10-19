@@ -151,14 +151,38 @@
 @interface ActionRotateJerk : ActionDemo
 {}
 @end
+@interface ActionDelayAnimation : ActionDemo
+{
+    int currSpriteTag;
+}
+@end
+
 @interface ActionFollow : ActionDemo
 {}
 @end
 
+@interface NumberSprite: CCSprite
+{
+    float aNumber_;
+}
+    @property(nonatomic, assign) float aNumber;
+@end
+
 @interface ActionProperty : ActionDemo
-{}
+{
+    NumberSprite *numberSprite_;
+}
 @end
 
 @interface ActionTargeted : ActionDemo
 {}
+@end
+
+@interface StopRepeatForever : ActionDemo
+{
+    id animated;
+    id rotator;
+    id stop_rotator;
+    id stop_animation;
+}
 @end

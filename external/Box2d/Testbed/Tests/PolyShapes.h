@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -30,7 +30,7 @@ const int32 k_maxBodies = 256;
 class PolyShapesCallback : public b2QueryCallback
 {
 public:
-	
+
 	enum
 	{
 		e_maxCount = 4
@@ -74,6 +74,9 @@ public:
 				m_debugDraw->DrawPolygon(vertices, vertexCount, color);
 			}
 			break;
+
+		default:
+			break;
 		}
 	}
 
@@ -89,7 +92,7 @@ public:
 		b2Body* body = fixture->GetBody();
 		b2Shape* shape = fixture->GetShape();
 
-		bool overlap = b2TestOverlap(shape, &m_circle, body->GetTransform(), m_transform);
+		bool overlap = b2TestOverlap(shape, 0, &m_circle, 0, body->GetTransform(), m_transform);
 
 		if (overlap)
 		{
@@ -102,7 +105,7 @@ public:
 
 	b2CircleShape m_circle;
 	b2Transform m_transform;
-	b2DebugDraw* m_debugDraw;
+	b2Draw* m_debugDraw;
 	int32 m_count;
 };
 
@@ -116,8 +119,8 @@ public:
 			b2BodyDef bd;
 			b2Body* ground = m_world->CreateBody(&bd);
 
-			b2PolygonShape shape;
-			shape.SetAsEdge(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
+			b2EdgeShape shape;
+			shape.Set(b2Vec2(-40.0f, 0.0f), b2Vec2(40.0f, 0.0f));
 			ground->CreateFixture(&shape, 0.0f);
 		}
 
@@ -128,7 +131,7 @@ public:
 			vertices[2].Set(0.0f, 1.5f);
 			m_polygons[0].Set(vertices, 3);
 		}
-		
+
 		{
 			b2Vec2 vertices[3];
 			vertices[0].Set(-0.1f, 0.0f);
@@ -139,8 +142,8 @@ public:
 
 		{
 			float32 w = 1.0f;
-			float32 b = w / (2.0f + sqrtf(2.0f));
-			float32 s = sqrtf(2.0f) * b;
+			float32 b = w / (2.0f + b2Sqrt(2.0f));
+			float32 s = b2Sqrt(2.0f) * b;
 
 			b2Vec2 vertices[8];
 			vertices[0].Set(0.5f * s, 0.0f);
@@ -258,12 +261,12 @@ public:
 
 		PolyShapesCallback callback;
 		callback.m_circle.m_radius = 2.0f;
-		callback.m_circle.m_p.Set(0.0f, 2.1f);
+		callback.m_circle.m_p.Set(0.0f, 1.1f);
 		callback.m_transform.SetIdentity();
 		callback.m_debugDraw = &m_debugDraw;
 
 		b2AABB aabb;
-		callback.m_circle.ComputeAABB(&aabb, callback.m_transform);
+		callback.m_circle.ComputeAABB(&aabb, callback.m_transform, 0);
 
 		m_world->QueryAABB(&callback, aabb);
 

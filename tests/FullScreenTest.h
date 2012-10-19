@@ -1,5 +1,9 @@
 #import "cocos2d.h"
 
+/*
+Known bug, when switching to full screen scale test again, navigation is gone
+*/
+
 //CLASS INTERFACE
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 @interface AppController : NSObject <UIApplicationDelegate>
@@ -48,6 +52,12 @@
 {
 	//weak ref
 	CCMenuItemFont *issueTestItem_;
+}
+@end
+
+@interface CustomProjectionTest : FullScreenDemo
+{
+
 }
 
 @end

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -72,19 +72,55 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (NSString*)getMacVersion
 {
+    //not going to fix these deprecated warnings, will wait till apple really confirms new method
+    //http://stackoverflow.com/questions/11072804/mac-os-x-10-8-replacement-for-gestalt-for-testing-os-version-at-runtime
     SInt32 versionMajor, versionMinor, versionBugFix;
 	Gestalt(gestaltSystemVersionMajor, &versionMajor);
 	Gestalt(gestaltSystemVersionMinor, &versionMinor);
 	Gestalt(gestaltSystemVersionBugFix, &versionBugFix);
-	
-	return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+
+    //new code for plist reading
+    /*
+     // sensible default
+     static int mMajor = 10;
+     static int mMinor = 8;
+     static int mBugfix = 0;
+
+     static dispatch_once_t onceToken;
+     dispatch_once(&onceToken, ^{
+     NSString* versionString = [[NSDictionary dictionaryWithContentsOfFile:@"/System/Library/CoreServices/SystemVersion.plist"] objectForKey:@"ProductVersion"];
+     NSArray* versions = [versionString componentsSeparatedByString:@"."];
+     check( versions.count >= 2 );
+     if ( versions.count >= 1 ) {
+     mMajor = [versions[0] integerValue];
+     }
+     if ( versions.count >= 2 ) {
+     mMinor = [versions[1] integerValue];
+     }
+     if ( versions.count >= 3 ) {
+     mBugfix = [versions[2] integerValue];
+     }
+     });
+
+     versionMajor = mMajor;
+     versionMinor = mMinor;
+     versionBugFix = mBugfix;
+     */
+
+    //ignore warning Sint32 is signed long
+#ifdef __LP64__
+    return [NSString stringWithFormat:@"%d.%d.%d", versionMajor, versionMinor, versionBugFix];
+#else
+    return [NSString stringWithFormat:@"%ld.%ld.%ld", versionMajor, versionMinor, versionBugFix];
+#endif
+
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
 -(id) init
 {
 	if( (self=[super init])) {
-		
+
 		// Obtain iOS version
 		OSVersion_ = 0;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -92,21 +128,21 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		NSString *OSVer = [self getMacVersion];
 #endif
-		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
+		NSArray *arr = [OSVer componentsSeparatedByString:@"."];
 		int idx=0x01000000;
 		for( NSString *str in arr ) {
 			int value = [str intValue];
 			OSVersion_ += value * idx;
 			idx = idx >> 8;
 		}
-		CCLOG(@"cocos2d: OS version: %@ (0x%08x)", OSVer, OSVersion_);
-		
+		CCLOG(@"cocos2d: OS version: %@ (0x%p)", OSVer, (int*) OSVersion_);
+
 		CCLOG(@"cocos2d: GL_VENDOR:   %s", glGetString(GL_VENDOR) );
 		CCLOG(@"cocos2d: GL_RENDERER: %s", glGetString ( GL_RENDERER   ) );
 		CCLOG(@"cocos2d: GL_VERSION:  %s", glGetString ( GL_VERSION    ) );
-		
+
 		glExtensions = (char*) glGetString(GL_EXTENSIONS);
-		
+
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 		glGetIntegerv(GL_MAX_MODELVIEW_STACK_DEPTH, &maxModelviewStackDepth_);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
@@ -117,7 +153,7 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
 #endif
-		
+
 		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		supportsNPOT_ = [self checkForGLExtension:@"GL_APPLE_texture_2D_limited_npot"];
@@ -126,7 +162,7 @@ static char * glExtensions;
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
-		
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
@@ -134,7 +170,7 @@ static char * glExtensions;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
-		
+
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
 
 		CCLOG(@"cocos2d: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
@@ -166,7 +202,7 @@ static char * glExtensions;
 			  "NO"
 #endif
 			  );
-		
+
 		CCLOG(@"cocos2d: compiled with Profiling Support: %s",
 #if CC_ENABLE_PROFILERS
 
@@ -175,10 +211,10 @@ static char * glExtensions;
 			  "NO"
 #endif
 			  );
-		
+
 		CHECK_GL_ERROR();
 	}
-	
+
 	return self;
 }
 

@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,8 +37,8 @@
 
 #ifdef __cplusplus
 extern "C" {
-#endif	
-	
+#endif
+
 /**
  @file
  Drawing OpenGL ES primitives.
@@ -51,39 +51,56 @@ extern "C" {
 
  You can change the color, width and other property by calling the
    glColor4ub(), glLineWidth(), glPointSize().
- 
+
  @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
  */
-	
+
 
 /** draws a point given x and y coordinate measured in points. */
 void ccDrawPoint( CGPoint point );
+
+/** draws a point in pixels, so on retina it's only 1 x 1 pixel instead of 2 x 2
+
+ @since 1.1-RC0
+ */
+void ccDrawPointInPixels( CGPoint point, BOOL inPixels);
 
 /** draws an array of points.
  @since v0.7.2
  */
 void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints );
 
+void ccDrawPointsInPixels( const CGPoint *points, NSUInteger numberOfPoints, BOOL inPixels);
+
 /** draws a line given the origin and destination point measured in points. */
 void ccDrawLine( CGPoint origin, CGPoint destination );
 
-/** draws multiple lines in one draw call 
+void ccDrawLineInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );
+/** draws multiple lines in one draw call
     @since 1.1
  */
-void ccDrawLines( CGPoint* points, NSUInteger numberOfPoints );	
+void ccDrawLines( CGPoint* points, NSUInteger numberOfPoints );
+
+void ccDrawLinesInPixels( CGPoint* points, NSUInteger numberOfPoints, BOOL inPixels );
 
 /** draws a rectangle given the origin and destination point measured in points. */
 void ccDrawRect( CGPoint origin, CGPoint destination );
+
+void ccDrawRectInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );
 
 /** draws a solid rectangle given the origin and destination point measured in points.
     @since 1.1
  */
 void ccDrawSolidRect( CGPoint origin, CGPoint destination );
 
+void ccDrawSolidRectInPixels( CGPoint origin, CGPoint destination, BOOL inPixels );
+
 /** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
+
+void ccDrawPolyInPixels( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon, BOOL inPixels );
 
 /** draws a solid poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
  The polygon can be closed or open
@@ -91,19 +108,27 @@ void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePo
  */
 void ccDrawSolidPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
-/** draws a circle given the center, radius and number of segments measured in points 
+void ccDrawSolidPolyInPixels( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon, BOOL inPixels );
+
+/** draws a circle given the center, radius and number of segments measured in points
  */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
+
+void ccDrawCircleInPixels( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter, BOOL inPixels);
 
 /** draws a quad bezier path measured in points.
  @since v0.8
  */
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments);
 
+void ccDrawQuadBezierInPixels(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments, BOOL inPixels);
+
 /** draws a cubic bezier path measured in points.
  @since v0.8
  */
 void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments);
+
+void ccDrawCubicBezierInPixels(CGPoint origin, CGPoint control1, CGPoint control2, CGPoint destination, NSUInteger segments, BOOL inPixels);
 
 #ifdef __cplusplus
 }

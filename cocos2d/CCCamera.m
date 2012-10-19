@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -37,13 +37,13 @@
 {
 	if( (self=[super init]) )
 		[self restore];
-	
+
 	return self;
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX_, centerY_, centerZ_];
+	return [NSString stringWithFormat:@"<%@ = %p | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX_, centerY_, centerZ_];
 }
 
 
@@ -57,13 +57,13 @@
 {
 	eyeX_ = eyeY_ = 0;
 	eyeZ_ = [CCCamera getZEye];
-	
+
 	centerX_ = centerY_ = centerZ_ = 0;
-	
+
 	upX_ = 0.0f;
 	upY_ = 1.0f;
 	upZ_ = 0.0f;
-	
+
 	dirty_ = NO;
 }
 
@@ -88,7 +88,7 @@
 	eyeX_ = x * CC_CONTENT_SCALE_FACTOR();
 	eyeY_ = y * CC_CONTENT_SCALE_FACTOR();
 	eyeZ_ = z * CC_CONTENT_SCALE_FACTOR();
-	dirty_ = YES;	
+	dirty_ = YES;
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z

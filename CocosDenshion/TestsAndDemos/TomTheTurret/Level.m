@@ -18,7 +18,7 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.storyStrings = [[[NSMutableArray alloc] init] autorelease];        
+        self.storyStrings = [[[NSMutableArray alloc] init] autorelease];
     }
     return self;
 }
@@ -39,14 +39,14 @@
 
 - (id)init {
     if ((self = [super init])) {
-        self.spawnIds = [[[NSMutableArray alloc] init] autorelease];        
+        self.spawnIds = [[[NSMutableArray alloc] init] autorelease];
     }
     return self;
 }
 
 - (void) dealloc
 {
-    self.spawnIds = nil;    
+    self.spawnIds = nil;
     [super dealloc];
 }
 

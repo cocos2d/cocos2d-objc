@@ -11,14 +11,14 @@
 #import "TileMapTest.h"
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {	
+static NSString *transitions[] = {
 
     @"TMXGIDObjectsTest",
-    
+
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
-	@"TMXOrthoVertexZ",	
+	@"TMXOrthoVertexZ",
 	@"TMXOrthoTest",
 	@"TMXOrthoTest2",
 	@"TMXOrthoTest3",
@@ -45,6 +45,7 @@ static NSString *transitions[] = {
 
 	@"TileMapTest",
 	@"TileMapEditTest",
+    @"TileMapExternalTileSet",
 };
 
 enum {
@@ -58,7 +59,7 @@ Class restartAction(void);
 
 Class nextAction()
 {
-	
+
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
@@ -71,8 +72,8 @@ Class backAction()
 	sceneIdx--;
 	int total = ( sizeof(transitions) / sizeof(transitions[0]) );
 	if( sceneIdx < 0 )
-		sceneIdx += total;	
-	
+		sceneIdx += total;
+
 	NSString *r = transitions[sceneIdx];
 	Class c = NSClassFromString(r);
 	return c;
@@ -100,29 +101,29 @@ Class restartAction()
 #endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-			
+
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
-		
+
 		NSString *subtitle = [self subtitle];
 		if( subtitle ) {
 			CCLabelTTF *l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
 			[self addChild:l z:1];
 			[l setPosition:ccp(s.width/2, s.height-80)];
 		}
-		
+
 		CCMenuItemImage *item1 = [CCMenuItemImage itemFromNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemFromNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
 		CCMenuItemImage *item3 = [CCMenuItemImage itemFromNormalImage:@"f1.png" selectedImage:@"f2.png" target:self selector:@selector(nextCallback:)];
-		
+
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, nil];
-		
+
 		menu.position = CGPointZero;
 		item1.position = ccp( s.width/2 - 100,30);
 		item2.position = ccp( s.width/2, 30);
 		item3.position = ccp( s.width/2 + 100,30);
-		[self addChild: menu z:1];	
+		[self addChild: menu z:1];
 	}
 
 	return self;
@@ -154,14 +155,14 @@ Class restartAction()
 
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	CGPoint touchLocation = [touch locationInView: [touch view]];	
-	CGPoint prevLocation = [touch previousLocationInView: [touch view]];	
-	
+	CGPoint touchLocation = [touch locationInView: [touch view]];
+	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
+
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	prevLocation = [[CCDirector sharedDirector] convertToGL: prevLocation];
-	
+
 	CGPoint diff = ccpSub(touchLocation,prevLocation);
-	
+
 	CCNode *node = [self getChildByTag:kTagTileMap];
 	CGPoint currentPos = [node position];
 	[node setPosition: ccpAdd(currentPos, diff)];
@@ -217,33 +218,33 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-	
-		
+
+
 		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 		// Convert it to "anti alias" (GL_LINEAR filtering)
 		[map.texture setAntiAliasTexParameters];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
 		// If you are not going to use the Map, you can free it now
 		// NEW since v0.7
 		[map releaseMap];
-		
+
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		map.anchorPoint = ccp(0, 0.5f);
-		
+
 		CCScaleBy *scale = [CCScaleBy actionWithDuration:4 scale:0.8f];
 		CCActionInterval *scaleBack = [scale reverse];
-		
+
 		id seq = [CCSequence actions: scale,
 								scaleBack,
 								nil];
-		
+
 		[map runAction:[CCRepeatForever actionWithAction:seq]];
 	}
-	
+
 	return self;
 }
 
@@ -261,26 +262,26 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
-		
+
+
 		CCTileMapAtlas *map = [CCTileMapAtlas tileMapAtlasWithTileFile:@"TileMaps/tiles.png" mapFile:@"TileMaps/levelmap.tga" tileWidth:16 tileHeight:16];
 
 		// Create an Aliased Atlas
 		[map.texture setAliasTexParameters];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		// If you are not going to use the Map, you can free it now
 		// [tilemap releaseMap];
 		// And if you are going to use, it you can access the data with:
 		[self schedule:@selector(updateMap:) interval:0.2f];
-		
+
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		map.anchorPoint = ccp(0, 0);
 		map.position = ccp(-20,-200);
-	}	
+	}
 	return self;
 }
 
@@ -291,7 +292,7 @@ Class restartAction()
 	//   The value 0 not rendered so don't assign or change a tile with value 0
 
 	CCTileMapAtlas *tilemap = (CCTileMapAtlas*) [self getChildByTag:kTagTileMap];
-	
+
 	//
 	// For example you can iterate over all the tiles
 	// using this code, but try to avoid the iteration
@@ -304,17 +305,17 @@ Class restartAction()
 	//			}
 	//		}
 	//	}
-	
+
 	// NEW since v0.7
-	ccColor3B c =[tilemap tileAt:ccg(13,21)];		
+	ccColor3B c =[tilemap tileAt:ccg(13,21)];
 	c.r++;
 	c.r %= 50;
 	if( c.r==0)
 		c.r=1;
-	
+
 	// NEW since v0.7
-	[tilemap setTile:c at:ccg(13,21)];			
-	
+	[tilemap setTile:c at:ccg(13,21)];
+
 }
 
 -(NSString *) title
@@ -331,7 +332,7 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		//
 		// Test orthogonal with 3d camera and anti-alias textures
 		//
@@ -340,18 +341,18 @@ Class restartAction()
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		float x, y, z;
 		[[map camera] eyeX:&x eyeY:&y eyeZ:&z];
-		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];		
-	}	
+		[[map camera] setEyeX:x-200 eyeY:y eyeZ:z+300];
+	}
 	return self;
 }
 
@@ -380,7 +381,7 @@ Class restartAction()
 @implementation TMXOrthoTest2
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test1.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 
@@ -392,8 +393,8 @@ Class restartAction()
 		}
 
 		[map runAction:[CCScaleBy actionWithDuration:2 scale:0.5f]];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -409,20 +410,20 @@ Class restartAction()
 @implementation TMXOrthoTest3
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test3.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		[map setScale:0.2f];
 		[map setAnchorPoint:ccp(0.5f, 0.5f)];
-	}	
+	}
 	return self;
 }
 
@@ -438,22 +439,22 @@ Class restartAction()
 @implementation TMXOrthoTest4
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test4.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s1 = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		[map setAnchorPoint:ccp(0, 0)];
 
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		CGSize s = [layer layerSize];
-	
+
 		CCSprite *sprite;
 		sprite = [layer tileAt:ccp(0,0)];
 		[sprite setScale:2];
@@ -463,9 +464,9 @@ Class restartAction()
 		[sprite setScale:2];
 		sprite = [layer tileAt:ccp(s.width-1,s.height-1)];
 		[sprite setScale:2];
-		
+
 		[self schedule:@selector(removeSprite:) interval:2];
-	}	
+	}
 	return self;
 }
 
@@ -498,16 +499,16 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test.tmx"];
-		[self addChild:map z:0 tag:kTagTileMap];		
-		
+		[self addChild:map z:0 tag:kTagTileMap];
+
 		// move map to the center of the screen
 		CGSize ms = [map mapSize];
 		CGSize ts = [map tileSize];
 		[map runAction:[CCMoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -526,15 +527,15 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test1.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		[map setAnchorPoint:ccp(0.5f, 0.5f)];
-	}	
+	}
 	return self;
 }
 
@@ -553,19 +554,19 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2.tmx"];
-		[self addChild:map z:0 tag:kTagTileMap];	
-		
+		[self addChild:map z:0 tag:kTagTileMap];
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		// move map to the center of the screen
 		CGSize ms = [map mapSize];
 		CGSize ts = [map tileSize];
 		[map runAction:[CCMoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -581,23 +582,23 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test2-uncompressed.tmx"];
-		[self addChild:map z:0 tag:kTagTileMap];	
-		
+		[self addChild:map z:0 tag:kTagTileMap];
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		// move map to the center of the screen
 		CGSize ms = [map mapSize];
 		CGSize ts = [map tileSize];
 		[map runAction:[CCMoveTo actionWithDuration:1.0f position:ccp( -ms.width * ts.width/2, -ms.height * ts.height/2 ) ]];
-		
+
 		// testing release map
 		for( CCTMXLayer *layer in [map children])
 			[layer releaseMap];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -617,13 +618,13 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		CCLayerColor *color = [CCLayerColor layerWithColor:ccc4(64,64,64,255)];
 		[self addChild:color z:-1];
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/hexa-test.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-	}	
+	}
 	return self;
 }
 
@@ -642,17 +643,17 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 		gid = 0;
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test2.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
-		
+
 		CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
-		
+
 		map.scale = 1;
 
 		CCSprite *tile0 = [layer tileAt:ccp(1,63)];
@@ -675,27 +676,27 @@ Class restartAction()
 		id seq1 = [[seq0 copy] autorelease];
 		id seq2 = [[seq0 copy] autorelease];
 		id seq3 = [[seq0 copy] autorelease];
-		
+
 		[tile0 runAction:seq0];
 		[tile1 runAction:seq1];
 		[tile2 runAction:seq2];
 		[tile3 runAction:seq3];
-		
-		
+
+
 		gid = [layer tileGIDAt:ccp(0,63)];
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
 		[self schedule:@selector(updateCol:) interval:2.0f];
 		[self schedule:@selector(repaintWithGID:) interval:2];
 		[self schedule:@selector(removeTiles:) interval:1];
-		
-		
+
+
 		NSLog(@"++++atlas quantity: %u", (unsigned int) [[layer textureAtlas] totalQuads]);
 		NSLog(@"++++children: %u", (unsigned int) [[layer children] count]);
-		
+
 		gid2 = 0;
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -708,10 +709,10 @@ Class restartAction()
 }
 
 -(void) updateCol:(ccTime)dt
-{	
+{
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
-		
+
 	NSLog(@"++++atlas quantity: %u", (unsigned int) [[layer textureAtlas] totalQuads]);
 	NSLog(@"++++children: %u", (unsigned int) [[layer children] count]);
 
@@ -725,10 +726,10 @@ Class restartAction()
 -(void) repaintWithGID:(ccTime)dt
 {
 //	[self unschedule:_cmd];
-	
+
 	id map = [self getChildByTag:kTagTileMap];
 	CCTMXLayer *layer = (CCTMXLayer*) [map getChildByTag:0];
-	
+
 	CGSize s = [layer layerSize];
 	for( int x=0; x<s.width;x++) {
 		int y = s.height-1;
@@ -747,7 +748,7 @@ Class restartAction()
 	for( int y=0; y< s.height; y++ ) {
 		[layer removeTileAt:ccp(5,y)];
 	}
-		
+
 }
 
 -(NSString *) title
@@ -763,24 +764,24 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-				
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test5.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		CCTMXLayer *layer;
 		layer = [map layerNamed:@"Layer 0"];
 		[layer.texture setAntiAliasTexParameters];
-		
+
 		layer = [map layerNamed:@"Layer 1"];
 		[layer.texture setAntiAliasTexParameters];
 
 		layer = [map layerNamed:@"Layer 2"];
 		[layer.texture setAntiAliasTexParameters];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -797,23 +798,23 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-objects.tmx"];
 		[self addChild:map z:-1 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		NSLog(@"----> Iterating over all the group objets");
 		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
 		for( NSDictionary *dict in group.objects) {
 			NSLog(@"object: %@", dict);
 		}
-		
+
 		NSLog(@"----> Fetching 1 object by name");
 		NSDictionary *platform = [group objectNamed:@"platform"];
 		NSLog(@"platform: %@", platform);
-	}	
+	}
 	return self;
 }
 
@@ -826,15 +827,15 @@ Class restartAction()
 		int y = [[dict objectForKey:@"y"] intValue];
 		int width = [[dict objectForKey:@"width"] intValue];
 		int height = [[dict objectForKey:@"height"] intValue];
-		
+
 		glLineWidth(3);
-		
+
 		ccDrawLine( ccp(x,y), ccp(x+width,y) );
 		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
 		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
 		ccDrawLine( ccp(x,y+height), ccp(x,y) );
 
-		
+
 		glLineWidth(1);
 	}
 }
@@ -857,18 +858,18 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-objectgroup.tmx"];
 		[self addChild:map z:-1 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
 		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
 		for( NSDictionary *dict in group.objects) {
 			NSLog(@"object: %@", dict);
-		}		
-	}	
+		}
+	}
 	return self;
 }
 
@@ -881,15 +882,15 @@ Class restartAction()
 		int y = [[dict objectForKey:@"y"] intValue];
 		int width = [[dict objectForKey:@"width"] intValue];
 		int height = [[dict objectForKey:@"height"] intValue];
-		
+
 		glLineWidth(3);
-		
+
 		ccDrawLine( ccp(x,y), ccp(x+width,y) );
 		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
 		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
 		ccDrawLine( ccp(x,y+height), ccp(x,y) );
-		
-		
+
+
 		glLineWidth(1);
 	}
 }
@@ -912,19 +913,19 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/test-object-layer.tmx"];
 		[self addChild:map z:-1 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		NSLog(@"----> Iterating over all the group objets");
 		CCTMXObjectGroup *group = [map objectGroupNamed:@"Object Group 1"];
 		for( NSDictionary *dict in group.objects) {
 			NSLog(@"object: %@", dict);
 		}
-	}	
+	}
 	return self;
 }
 
@@ -937,15 +938,15 @@ Class restartAction()
 		int y = [[dict objectForKey:@"y"] intValue];
 		int width = [[dict objectForKey:@"width"] intValue];
 		int height = [[dict objectForKey:@"height"] intValue];
-		
+
 		glLineWidth(3);
-		
+
 		ccDrawLine( ccp(x,y), ccp(x+width,y) );
 		ccDrawLine( ccp(x+width,y), ccp(x+width,y+height) );
 		ccDrawLine( ccp(x+width,y+height), ccp(x,y+height) );
 		ccDrawLine( ccp(x,y+height), ccp(x,y) );
-        
-		
+
+
 		glLineWidth(1);
 	}
 }
@@ -971,7 +972,7 @@ Class restartAction()
 	if( (self = [super init]) ){
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-tile-property.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		for(int i=1;i<=20;i++){
 			NSLog(@"GID:%i, Properties:%@", i, [map propertiesForGID:i]);
 		}
@@ -996,10 +997,10 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test5.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
@@ -1011,8 +1012,8 @@ Class restartAction()
 			for (NSUInteger x = 0; x < ls.width; x++) {
 				[layer setTileGID:1  at:ccp( x, y )];
 			}
-		}		
-	}	
+		}
+	}
 	return self;
 }
 
@@ -1034,15 +1035,15 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-zorder.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		[map setPosition:ccp(-s.width/2,0)];
-		
+
 		tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[map addChild:tamara z: [[map children] count]];
 		[tamara retain];
@@ -1050,15 +1051,15 @@ Class restartAction()
 		[tamara setPositionInPixels:ccp( mapWidth/2,0)];
 		[tamara setAnchorPoint:ccp(0.5f,0)];
 
-		
+
 		id move = [CCMoveBy actionWithDuration:10 position:ccpMult(ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() )];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(repositionSprite:)];
-				
-	}	
+
+	}
 	return self;
 }
 
@@ -1072,16 +1073,16 @@ Class restartAction()
 {
 	CGPoint p = [tamara positionInPixels];
 	CCNode *map = [self getChildByTag:kTagTileMap];
-	
+
 	// there are only 4 layers. (grass and 3 trees layers)
 	// if tamara < 48, z=4
 	// if tamara < 96, z=3
 	// if tamara < 144,z=2
-	
+
 	int newZ = 4 - (p.y / 48);
 	newZ = MAX(newZ,0);
-	
-	[map reorderChild:tamara z:newZ];	
+
+	[map reorderChild:tamara z:newZ];
 }
 
 -(NSString *) title
@@ -1102,27 +1103,27 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-zorder.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		tamara = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		[map addChild:tamara z: [[map children] count]];
 		[tamara retain];
 		[tamara setAnchorPoint:ccp(0.5f,0)];
 
-		
+
 		id move = [CCMoveBy actionWithDuration:10 position:ccpMult(ccp(400,450), 1/CC_CONTENT_SCALE_FACTOR() )];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(repositionSprite:)];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -1136,7 +1137,7 @@ Class restartAction()
 {
 	CGPoint p = [tamara positionInPixels];
 	CCNode *map = [self getChildByTag:kTagTileMap];
-	
+
 	// there are only 4 layers. (grass and 3 trees layers)
 	// if tamara < 81, z=4
 	// if tamara < 162, z=3
@@ -1167,10 +1168,10 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-vertexz.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
@@ -1181,15 +1182,15 @@ Class restartAction()
 		CCTMXLayer *layer = [map layerNamed:@"Trees"];
 		tamara = [layer tileAt:ccp(29,29)];
 		[tamara retain];
-		
+
 		id move = [CCMoveBy actionWithDuration:10 position:ccpMult( ccp(300,250), 1/CC_CONTENT_SCALE_FACTOR() ) ];
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(repositionSprite:)];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -1210,14 +1211,14 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	// TIP: 2d projection should be used
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 }
 
 -(void) onExit
 {
-	// At exit use any other projection. 
+	// At exit use any other projection.
 	//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 	[super onExit];
 }
@@ -1240,17 +1241,17 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-vertexz.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		// because I'm lazy, I'm reusing a tile as an sprite, but since this method uses vertexZ, you
 		// can use any CCSprite and it will work OK.
 		CCTMXLayer *layer = [map layerNamed:@"trees"];
-		
+
 		tamara = [layer tileAt:ccp(0,11)];
 		NSLog(@"%@ vertexZ: %f", tamara, tamara.vertexZ);
 		[tamara retain];
@@ -1259,10 +1260,10 @@ Class restartAction()
 		id back = [move reverse];
 		id seq = [CCSequence actions:move, back, nil];
 		[tamara runAction: [CCRepeatForever actionWithAction:seq]];
-		
+
 		[self schedule:@selector(repositionSprite:)];
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -1283,14 +1284,14 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	
+
 	// TIP: 2d projection should be used
 	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection2D];
 }
 
 -(void) onExit
 {
-	// At exit use any other projection. 
+	// At exit use any other projection.
 	//	[[CCDirector sharedDirector] setProjection:kCCDirectorProjection3D];
 	[super onExit];
 }
@@ -1313,16 +1314,16 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-movelayer.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		[map setPosition:ccp(-700,-50)];
 
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
 
-	}	
+	}
 	return self;
 }
 
@@ -1344,14 +1345,14 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-		
+
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test-movelayer.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
 
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
-	}	
+
+	}
 	return self;
 }
 
@@ -1372,20 +1373,20 @@ Class restartAction()
 @implementation TMXOrthoFlipTest
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
 		[map runAction:action];
-	}	
+	}
 	return self;
 }
 
@@ -1401,22 +1402,22 @@ Class restartAction()
 @implementation TMXOrthoFlipRunTimeTest
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ortho-rotation-test.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
 		[map runAction:action];
-		
-		[self schedule:@selector(flipIt) interval:0.f repeat:0.f delay:2.f]; 
-	}	
+
+		[self schedule:@selector(flipIt) interval:0.f repeat:0.f delay:2.f];
+	}
 	return self;
 }
 
@@ -1430,37 +1431,35 @@ Class restartAction()
 	return @"in 2 sec bottom left tiles will flip";
 }
 
-- (void) flipIt 
+- (void) flipIt
 {
-	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap]; 
-	CCTMXLayer *layer = [map layerNamed:@"Layer 0"]; 
-	
-	//blue diamond 
+	CCTMXTiledMap *map = (CCTMXTiledMap*) [self getChildByTag:kTagTileMap];
+	CCTMXLayer *layer = [map layerNamed:@"Layer 0"];
+
+	//blue diamond
 	CGPoint tileCoord = ccp(1,10);
-	
-	uint32_t GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
-	GID = GID | kFlippedVerticallyFlag;
-	
+
+	uint32_t GID = [layer tileGIDAt:tileCoord];
+
 	//only the vertical flag is now set
-	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
-	
+	[layer setTileGID:GID  at:tileCoord withFlags:kCCTMXTileVerticalFlag];
+
 	tileCoord = ccp(2,10);
-	
+
 	//tile has horizontal flag
-	GID = [layer tileGIDAt:tileCoord withFlags:YES]; 
-	GID = GID | kFlippedVerticallyFlag;
-	
+
+	GID = [layer tileGIDAt:tileCoord ];
+
 	//tile has horizontal + vertical flag
-	[layer setTileGID:GID at:tileCoord withFlags:YES]; 
-	
+	[layer setTileGID:GID at:tileCoord withFlags:kCCTMXTileHorizontalFlag];
+
 	//the bug
 	tileCoord = ccp(2,8);
-	
+
 	//want to reset flip of tile, get original tile gid
-	GID = [layer tileGIDAt:tileCoord withFlags:NO]; 
-	
-	//overwrite the flags by setting withFlags to YES
-	[layer setTileGID:GID  at:tileCoord withFlags:YES]; 
+    GID = [layer tileGIDAt:tileCoord];
+
+	[layer setTileGID:GID  at:tileCoord withFlags:kCCTMXTileDiagonalFlag];
 }
 @end
 
@@ -1477,22 +1476,26 @@ Class restartAction()
 		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
 		NSError* error = nil;
 		NSString* str = [NSString stringWithContentsOfFile:[CCFileUtils fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
+#ifdef __LP64__
+		NSAssert3(!error, @"Unable to open file %@, %@ (%ld)", file, [error localizedDescription], [error code]);
+#else
 		NSAssert3(!error, @"Unable to open file %@, %@ (%d)", file, [error localizedDescription], [error code]);
+#endif
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s.width,s.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		id action = [CCScaleBy actionWithDuration:2 scale:0.5f];
 		[map runAction:action];
-	
-	}	
+
+	}
 	return self;
 }
 
@@ -1509,23 +1512,23 @@ Class restartAction()
 @implementation TMXBug987
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/orthogonal-test6.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		CGSize s1 = map.contentSize;
 		NSLog(@"ContentSize: %f, %f", s1.width,s1.height);
-		
+
 		for( CCSpriteBatchNode* child in [map children] ) {
 			[[child texture] setAntiAliasTexParameters];
 		}
-		
+
 		[map setAnchorPoint:ccp(0, 0)];
-		
+
 		CCTMXLayer *layer = [map layerNamed:@"Tile Layer 1"];
 
 		[layer setTileGID:3 at:ccp(2,2)];
-	}	
+	}
 	return self;
 }
 
@@ -1541,17 +1544,43 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark TileMapExternalTileSet
+
+@implementation TileMapExternalTileSet
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/ExternalTileSetMap.tmx"];
+		[self addChild:map z:0 tag:kTagTileMap];
+
+		map.scale = 0.5f;
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"External tileset";
+}
+-(NSString *) subtitle
+{
+	return @"map should look the same as in tiled";
+}
+
+@end
+
+#pragma mark -
 #pragma mark TMXBug787
 
 @implementation TMXBug787
 -(id) init
 {
-	if( (self=[super init]) ) {		
+	if( (self=[super init]) ) {
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithTMXFile:@"TileMaps/iso-test-bug787.tmx"];
 		[self addChild:map z:0 tag:kTagTileMap];
-		
+
 		map.scale = 0.25f;
-	}	
+	}
 	return self;
 }
 
@@ -1565,7 +1594,6 @@ Class restartAction()
 }
 
 @end
-
 // CLASS IMPLEMENTATIONS
 
 #pragma mark -
@@ -1579,58 +1607,59 @@ Class restartAction()
 {
 	// Init the window
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-	
+
 	// must be called before any othe call to the director
 	if( ! [CCDirector setDirectorType:kCCDirectorTypeDisplayLink] )
 		[CCDirector setDirectorType:kCCDirectorTypeMainLoop];
-	
+
 	// get instance of the shared director
 	CCDirector *director = [CCDirector sharedDirector];
-	
+
 	// before creating any layer, set the landscape mode
 	[director setDeviceOrientation:kCCDeviceOrientationLandscapeLeft];
-	
+
 	// display FPS (useful when debugging)
 	[director setDisplayFPS:YES];
-	
+
 	// frames per second
 	[director setAnimationInterval:1.0/60];
-	
+
 	// create an OpenGL view a depth buffer of 16-bits (needed for z ordering)
 	//   and an RGB8 color buffer
 	EAGLView *glView = [EAGLView viewWithFrame:[window bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:GL_DEPTH_COMPONENT16_OES];
 	[glView setMultipleTouchEnabled:YES];
-	
+
 	// connect it to the director
 	[director setOpenGLView:glView];
-	
+
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
 	if( ! [director enableRetinaDisplay:YES] )
 		CCLOG(@"Retina Display Not supported");
-	
+
 	// When in iPhone RetinaDisplay, iPad, iPad RetinaDisplay mode, CCFileUtils will append the "-hd", "-ipad", "-ipadhd" to all loaded files
 	// If the -hd, -ipad, -ipadhd files are not found, it will load the non-suffixed version
 	[CCFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
+    [CCFileUtils setiPhoneFourInchDisplaySuffix:@"-568h"];	// Default on iPhone RetinaFourInchDisplay is "-568h"
 	[CCFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "" (empty string)
 	[CCFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-	
+
 	// glview is a child of the main window
 	[window addSubview:glView];
-	
+
 	// Make the window visible
 	[window makeKeyAndVisible];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	//
 	// Run all the test with 2d projection
 	//
 	[director setProjection:kCCDirectorProjection2D];
 
-	
+
 	//
 	// Finally, run the scene
 	//
@@ -1660,7 +1689,7 @@ Class restartAction()
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
-{	
+{
 	CCDirector *director = [CCDirector sharedDirector];
 	[[director openGLView] removeFromSuperview];
 	[director end];
@@ -1697,7 +1726,7 @@ Class restartAction()
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	CGSize winSize = CGSizeMake(640,480);
-	
+
 	//
 	// CC_DIRECTOR_INIT:
 	// 1. It will create an NSWindow with a given size
@@ -1705,27 +1734,27 @@ Class restartAction()
 	// 3. It will register the MacGLView to the CCDirector
 	//
 	// If you want to create a fullscreen window, you should do it AFTER calling this macro
-	//	
+	//
 	CC_DIRECTOR_INIT(winSize);
-	
+
 	// Enable "moving" mouse event. Default no.
 	[window_ setAcceptsMouseMovedEvents:NO];
-	
+
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
 	CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
-	[director setResizeMode:kCCDirectorResize_AutoScale];	
+	[director setResizeMode:kCCDirectorResize_AutoScale];
 
 	//
 	// Run all the test with 2d projection
 	//
 	[director setProjection:kCCDirectorProjection2D];
-    
+
     [director setDisplayFPS:YES];
-	
+
 	CCScene *scene = [CCScene node];
 	[scene addChild: [nextAction() node]];
-	
+
 	[director runWithScene:scene];
 }
 

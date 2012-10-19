@@ -28,7 +28,7 @@ enum {
 	int			category;
 	// scores world
 	int			world;
-	
+
 	NSMutableArray *globalScores;
 }
 

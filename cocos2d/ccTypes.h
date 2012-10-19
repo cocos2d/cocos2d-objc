@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -104,7 +104,7 @@ typedef struct _ccColor4F {
 	GLfloat a;
 } ccColor4F;
 //! helper that creates a ccColor4f type
-static inline ccColor4F 
+static inline ccColor4F
 ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
 {
 	return (ccColor4F){r, g, b, a};
@@ -134,6 +134,14 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
 
+/** returns 4B color
+ @since 1.1.RC0
+ */
+static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+{
+	return (ccColor4B){c.r*255.f, c.g*255.f, c.b*255.f, c.a*255.f};
+}
+
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8
  */
@@ -152,7 +160,7 @@ typedef struct _ccVertex3F
 	GLfloat y;
 	GLfloat z;
 } ccVertex3F;
-		
+
 /** A texcoord composed of 2 floats: u, y
  @since v0.8
  */
@@ -161,7 +169,7 @@ typedef struct _ccTex2F {
 	 GLfloat v;
 } ccTex2F;
 
- 
+
 //! Point Sprite component
 typedef struct _ccPointSprite
 {
@@ -239,6 +247,15 @@ typedef struct _ccV3F_C4B_T2F
 	ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
 
+//! ccVertex2FTex2FColor4B triangle
+typedef struct __ccV2F_C4B_T2F_Triangle
+{
+    ccV2F_C4B_T2F a;
+    ccV2F_C4B_T2F b;
+    ccV2F_C4B_T2F c;
+
+} ccV2F_C4B_T2F_Triangle;
+
 //! 4 ccVertex2FTex2FColor4B Quad
 typedef struct _ccV2F_C4B_T2F_Quad
 {
@@ -296,11 +313,13 @@ typedef enum
     kCCResolutioniPhone,
     //! RetinaDisplay resolution type
     kCCResolutioniPhoneRetinaDisplay,
+    //iPhone4inch resolution type
+    kCCResolutioniPhoneFourInchDisplay,
     //! iPad resolution type
     kCCResolutioniPad,
     //! iPad Retina Display resolution type
     kCCResolutioniPadRetinaDisplay,
-    
+
 } ccResolutionType;
 
 //! delta time type
@@ -328,5 +347,5 @@ typedef struct
 {
 	ccT2F_Quad texCoords;
 	ccTime delay;
-	CGSize size; 
+	CGSize size;
 } ccAnimationFrameData;

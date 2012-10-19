@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -44,9 +44,9 @@
 	return nil;
 }
 
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(CCVerticalAlignment)vertAlignment  lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size;
 {
-	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
+	return [[[self alloc] initWithString: string dimensions:dimensions alignment:alignment vertAlignment:vertAlignment lineBreakMode:lineBreakMode fontName:name fontSize:size]autorelease];
 }
 
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
@@ -60,16 +60,17 @@
 }
 
 
-- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
+- (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment vertAlignment:(CCVerticalAlignment)vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
 
 		dimensions_ = CGSizeMake( dimensions.width * CC_CONTENT_SCALE_FACTOR(), dimensions.height * CC_CONTENT_SCALE_FACTOR() );
 		alignment_ = alignment;
+		vertAlignment_ = vertAlignment;
 		fontName_ = [name retain];
 		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
 		lineBreakMode_ = lineBreakMode;
-		
+
 		[self setString:str];
 	}
 	return self;
@@ -77,17 +78,17 @@
 
 - (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [self initWithString:str dimensions:dimensions alignment:alignment lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
+	return [self initWithString:str dimensions:dimensions alignment:alignment vertAlignment:CCVerticalAlignmentTop lineBreakMode:CCLineBreakModeWordWrap fontName:name fontSize:size];
 }
 
 - (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size
 {
 	if( (self=[super init]) ) {
-		
+
 		dimensions_ = CGSizeZero;
 		fontName_ = [name retain];
 		fontSize_ = size * CC_CONTENT_SCALE_FACTOR();
-		
+
 		[self setString:str];
 	}
 	return self;
@@ -104,12 +105,35 @@
 										 fontName:fontName_
 										 fontSize:fontSize_];
 	else
+    {
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		tex = [[CCTexture2D alloc] initWithString:str
 									   dimensions:dimensions_
 										alignment:alignment_
-									lineBreakMode:lineBreakMode_
+                                        vertAlignment:vertAlignment_
+                                        lineBreakMode:lineBreakMode_
 										 fontName:fontName_
 										 fontSize:fontSize_];
+#else
+        NSFont *font = [[NSFontManager sharedFontManager]
+                        fontWithFamily:fontName_
+                        traits:NSUnboldFontMask | NSUnitalicFontMask
+                        weight:0
+                        size:fontSize_];
+
+		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+
+		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:str attributes:dict] autorelease];
+
+        tex = [[CCTexture2D alloc] initWithString:str
+									   dimensions:dimensions_
+										alignment:alignment_
+                                    vertAlignment:vertAlignment_
+                                  attributedString:stringWithAttributes
+										 ];
+
+#endif
+    }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
@@ -153,6 +177,6 @@
 {
 	// XXX: string_, fontName_ can't be displayed here, since they might be already released
 
-	return [NSString stringWithFormat:@"<%@ = %08X | FontSize = %.1f>", [self class], self, fontSize_];
+	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, fontSize_];
 }
 @end

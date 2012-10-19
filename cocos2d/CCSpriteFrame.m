@@ -3,17 +3,17 @@
  *
  * Copyright (c) 2008-2011 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
- * 
+ *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- * 
+ *
  * The above copyright notice and this permission notice shall be included in
  * all copies or substantial portions of the Software.
- * 
+ *
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -59,18 +59,22 @@
 		offsetInPixels_ = offset;
 		originalSizeInPixels_ = originalSize;
 	}
-	return self;	
+	return self;
 }
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | TextureName=%d, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | TextureName=%d, Rect = (%.2f,%.2f,%.2f,%.2f)> rotated:%d, offset = (%.2f,%.2f), originalSize w %.2f h %.2f)", [self class], self,
 			texture_.name,
 			rect_.origin.x,
 			rect_.origin.y,
 			rect_.size.width,
 			rect_.size.height,
-			rotated_
+			rotated_,
+            offsetInPixels_.x,
+            offsetInPixels_.y,
+            originalSizeInPixels_.width,
+            originalSizeInPixels_.height
 			];
 }
 

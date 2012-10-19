@@ -1,5 +1,5 @@
 /*
-* Copyright (c) 2006-2009 Erin Catto http://www.gphysics.com
+* Copyright (c) 2006-2009 Erin Catto http://www.box2d.org
 *
 * This software is provided 'as-is', without any express or implied
 * warranty.  In no event will the authors be held liable for any damages
@@ -26,7 +26,7 @@ public:
 	{
 		{
 			m_transformA.SetIdentity();
-			m_transformA.position.Set(0.0f, -0.2f);
+			m_transformA.p.Set(0.0f, -0.2f);
 			m_polygonA.SetAsBox(10.0f, 0.2f);
 		}
 
@@ -49,8 +49,8 @@ public:
 		Test::Step(settings);
 
 		b2DistanceInput input;
-		input.proxyA.Set(&m_polygonA);
-		input.proxyB.Set(&m_polygonB);
+		input.proxyA.Set(&m_polygonA, 0);
+		input.proxyB.Set(&m_polygonB, 0);
 		input.transformA = m_transformA;
 		input.transformB = m_transformB;
 		input.useRadii = true;
