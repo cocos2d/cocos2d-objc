@@ -83,7 +83,7 @@ static CCProfiler* g_sharedProfiler;
 - (id)initWithName:(NSString*)timerName andInstance:(id)instance {
 	if (!(self = [super init])) return nil;
 
-	name = [[NSString stringWithFormat:@"%@ (0x%.8x)", timerName, instance] retain];
+	name = [[NSString stringWithFormat:@"%@ (0x%p)", timerName, instance] retain];
 
 	return self;
 }
