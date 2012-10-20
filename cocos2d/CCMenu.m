@@ -91,10 +91,14 @@ enum {
 {
 	if( (self=[super init]) ) {
 #ifdef __CC_PLATFORM_IOS
-		[self setTouchEnabled:YES priority:kCCMenuHandlerPriority mode:kCCTouchesOneByOne];
+		[self setTouchPriority:kCCMenuHandlerPriority];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchEnabled:YES];
 
 #elif defined(__CC_PLATFORM_MAC)
-		[self setMouseEnabled:YES priority:kCCMenuHandlerPriority+1];
+		[self setMousePriority:kCCMenuHandlerPriority+1];
+		[self setMouseEnabled:YES];
+		
 #endif
 		enabled_ = YES;
 		

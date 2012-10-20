@@ -610,12 +610,12 @@ const NSUInteger defaultCapacity = 29;
 
 @implementation CCSpriteBatchNode (QuadExtension)
 
--(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
+-(void) insertQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
 {
 	NSAssert( sprite != nil, @"Argument must be non-nil");
 	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	
-	
+	// make needed room
 	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
 		[self increaseAtlasCapacity];
 	
@@ -629,11 +629,33 @@ const NSUInteger defaultCapacity = 29;
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
 	[textureAtlas_ insertQuad:&quad atIndex:index];
 	
-	// XXX: updateTransform will update the textureAtlas too using updateQuad.
+	// XXX: updateTransform will update the textureAtlas too, using updateQuad.
 	// XXX: so, it should be AFTER the insertQuad
 	[sprite setDirty:YES];
 	[sprite updateTransform];
 }
+
+-(void) updateQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index
+{
+	NSAssert( sprite != nil, @"Argument must be non-nil");
+	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
+
+	// make needed room
+	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
+		[self increaseAtlasCapacity];
+
+	//
+	// update the quad directly. Don't add the sprite to the scene graph
+	//	
+	[sprite setBatchNode:self];
+	[sprite setAtlasIndex:index];
+
+	[sprite setDirty:YES];
+	
+	// UpdateTransform updates the textureAtlas quad
+	[sprite updateTransform];
+}
+
 
 -(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag
 {

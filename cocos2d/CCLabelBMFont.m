@@ -522,6 +522,9 @@ void FNTConfigRemoveCache( void )
         
 		imageOffset_ = offset;
         
+		reusedChar_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
+		[reusedChar_ setBatchNode:self];
+
 		[self setString:theString updateLabel:YES];
 	}
     
@@ -534,6 +537,7 @@ void FNTConfigRemoveCache( void )
     [initialString_ release];
 	[configuration_ release];
     [fntFile_ release];
+	[reusedChar_ release];
     
 	[super dealloc];
 }
@@ -559,7 +563,8 @@ void FNTConfigRemoveCache( void )
             while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip]))
                 skip++;
 			
-            if (!characterSprite.visible) continue;
+            if (!characterSprite.visible)
+				continue;
 			
             if (i >= stringLength || i < 0)
                 break;
@@ -764,21 +769,31 @@ void FNTConfigRemoveCache( void )
 		rect.origin.y += imageOffset_.y;
         
 		CCSprite *fontChar;
-        
+
+		BOOL hasSprite = YES;
 		fontChar = (CCSprite*) [self getChildByTag:i];
 		if( ! fontChar ) {
-			fontChar = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
-			[self addChild:fontChar z:0 tag:i];
-			[fontChar release];
+			if( 0 ) {
+				/* WIP: Doesn't support many features yet.
+				 But this code is super fast. It doesn't create any sprite.
+				 Ideal for big labels.
+				 */
+				fontChar = reusedChar_;
+				fontChar.batchNode = nil;
+				hasSprite = NO;
+			} else {
+				fontChar = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
+				[self addChild:fontChar z:i tag:i];
+				[fontChar release];
+			}
 		}
-		else {
-			// reusing fonts
-			[fontChar setTextureRect:rect rotated:NO untrimmedSize:rect.size];
-            
-			// restore to default in case they were modified
-			fontChar.visible = YES;
-			fontChar.opacity = 255;
-		}
+
+		// updating previous sprite
+		[fontChar setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+		
+		// restore to default in case they were modified
+		fontChar.visible = YES;
+		fontChar.opacity = 255;
         
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = configuration_->commonHeight_ - fontDef.yOffset;
@@ -802,6 +817,9 @@ void FNTConfigRemoveCache( void )
         
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
+		
+		if( ! hasSprite )
+			[self updateQuadFromSprite:fontChar quadIndex:i];
 	}
     
 	tmpSize.width = longestLine;
@@ -838,7 +856,7 @@ void FNTConfigRemoveCache( void )
 	
     CCSprite *child;
     CCARRAY_FOREACH(children_, child)
-	child.visible = NO;
+		child.visible = NO;
 	
 	[self createFontChars];
 	
@@ -854,7 +872,7 @@ void FNTConfigRemoveCache( void )
     
 	CCSprite *child;
 	CCARRAY_FOREACH(children_, child)
-    [child setColor:color_];
+		[child setColor:color_];
 }
 
 -(void) setOpacity:(GLubyte)opacity
@@ -863,7 +881,7 @@ void FNTConfigRemoveCache( void )
     
 	id<CCRGBAProtocol> child;
 	CCARRAY_FOREACH(children_, child)
-    [child setOpacity:opacity_];
+		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
@@ -871,7 +889,7 @@ void FNTConfigRemoveCache( void )
     
 	id<CCRGBAProtocol> child;
 	CCARRAY_FOREACH(children_, child)
-    [child setOpacityModifyRGB:modify];
+		[child setOpacityModifyRGB:modify];
 }
 
 -(BOOL) doesOpacityModifyRGB

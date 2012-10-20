@@ -1130,6 +1130,7 @@
 		A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
 		A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
 		A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */; };
+		A066C183162F7AC300E3C740 /* EventTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A066C182162F7AC300E3C740 /* EventTest.js */; };
 		A06EA26B161E55A200B025FE /* ActionManagerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C7161B563200FE54C8 /* ActionManagerTest.js */; };
 		A06EA26C161E55A200B025FE /* ActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85C9161B563200FE54C8 /* ActionsTest.js */; };
 		A06EA26D161E55A200B025FE /* Box2dTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85CB161B563200FE54C8 /* Box2dTest.js */; };
@@ -2890,6 +2891,7 @@
 		A0D7D74915E2D99F000CA0C4 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A0D7D74C15E2DE0E000CA0C4 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A0D7DAF415E2F25A000CA0C4 /* ChipmunkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */; };
+		A0D82F8B16321F8300A59FC2 /* ChipmunkTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */; };
 		A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */; };
 		A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */; };
 		A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
@@ -7005,6 +7007,7 @@
 		A064EC6116235F7C00020E06 /* js_bindings_chipmunk_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_chipmunk_registration.mm; sourceTree = "<group>"; };
 		A064EC6216235F7C00020E06 /* js_bindings_cocos2d_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_cocos2d_registration.h; sourceTree = "<group>"; };
 		A064EC6316235F7C00020E06 /* js_bindings_cocos2d_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_cocos2d_registration.mm; sourceTree = "<group>"; };
+		A066C182162F7AC300E3C740 /* EventTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EventTest.js; sourceTree = "<group>"; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
@@ -7191,6 +7194,7 @@
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
+		A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ChipmunkTest.js; sourceTree = "<group>"; };
 		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
@@ -8663,12 +8667,12 @@
 			isa = PBXGroup;
 			children = (
 				A03F861B161B6FD800FE54C8 /* res */,
+				A03F85C2161B563200FE54C8 /* src */,
 				A03F841C161B563000FE54C8 /* build.xml */,
 				A03F841D161B563000FE54C8 /* cocos2d.js */,
 				A03F841E161B563000FE54C8 /* index.html */,
 				A03F841F161B563000FE54C8 /* main.js */,
 				A03F8420161B563000FE54C8 /* README.md */,
-				A03F85C2161B563200FE54C8 /* src */,
 			);
 			name = "cocos2d-html5-tests";
 			path = "tests/cocos2d-html5-tests";
@@ -8677,10 +8681,10 @@
 		A03F85C2161B563200FE54C8 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A03F85C5161B563200FE54C8 /* tests */,
 				A03F8619161B662400FE54C8 /* tests-boot-jsb.js */,
 				A03F8615161B5F8600FE54C8 /* tests-main.js */,
 				A03F8616161B5F8700FE54C8 /* tests_resources-jsb.js */,
-				A03F85C5161B563200FE54C8 /* tests */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -8692,11 +8696,13 @@
 				A03F85C8161B563200FE54C8 /* ActionsTest */,
 				A03F85CA161B563200FE54C8 /* Box2dTest */,
 				A03F85CC161B563200FE54C8 /* ClickAndMoveTest */,
+				A0D82F8916321F8300A59FC2 /* ChipmunkTest */,
 				A03F85CE161B563200FE54C8 /* CocosDenshionTest */,
 				A03F85D0161B563200FE54C8 /* CocosNodeTest */,
 				A03F85D2161B563200FE54C8 /* CurrentLanguageTest */,
 				A03F85D4161B563200FE54C8 /* DrawPrimitivesTest */,
 				A03F85D6161B563200FE54C8 /* EaseActionsTest */,
+				A066C181162F7AC300E3C740 /* EventTest */,
 				A03F85D8161B563200FE54C8 /* ExtensionsTest */,
 				A03F85E7161B563300FE54C8 /* FontTest */,
 				A03F85E9161B563300FE54C8 /* IntervelTest */,
@@ -9307,6 +9313,14 @@
 			path = external/CocosBuilderReader;
 			sourceTree = "<group>";
 		};
+		A066C181162F7AC300E3C740 /* EventTest */ = {
+			isa = PBXGroup;
+			children = (
+				A066C182162F7AC300E3C740 /* EventTest.js */,
+			);
+			path = EventTest;
+			sourceTree = "<group>";
+		};
 		A07082BC15F96057001C1263 /* SpiderMonkey */ = {
 			isa = PBXGroup;
 			children = (
@@ -9588,6 +9602,14 @@
 			);
 			name = JRSwizzle;
 			path = external/JRSwizzle;
+			sourceTree = "<group>";
+		};
+		A0D82F8916321F8300A59FC2 /* ChipmunkTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */,
+			);
+			path = ChipmunkTest;
 			sourceTree = "<group>";
 		};
 		A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */ = {
@@ -13168,6 +13190,7 @@
 				A06EA26B161E55A200B025FE /* ActionManagerTest.js in Resources */,
 				A06EA26C161E55A200B025FE /* ActionsTest.js in Resources */,
 				A06EA26D161E55A200B025FE /* Box2dTest.js in Resources */,
+				A0D82F8B16321F8300A59FC2 /* ChipmunkTest.js in Resources */,
 				A06EA26E161E55A200B025FE /* ClickAndMoveTest.js in Resources */,
 				A06EA26F161E55A200B025FE /* CocosDenshionTest.js in Resources */,
 				A06EA270161E55A200B025FE /* CocosNodeTest.js in Resources */,
@@ -13175,6 +13198,7 @@
 				A06EA272161E55A200B025FE /* DrawPrimitivesTest.js in Resources */,
 				A06EA273161E55A200B025FE /* EaseActionsTest.js in Resources */,
 				A06EA274161E55A200B025FE /* FontTest.js in Resources */,
+				A066C183162F7AC300E3C740 /* EventTest.js in Resources */,
 				A06EA275161E55A200B025FE /* IntervelTest.js in Resources */,
 				A06EA276161E55A200B025FE /* LabelTest.js in Resources */,
 				A06EA277161E55A200B025FE /* LayerTest.js in Resources */,
