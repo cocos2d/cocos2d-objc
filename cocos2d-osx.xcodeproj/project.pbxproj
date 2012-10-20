@@ -2891,6 +2891,7 @@
 		A0D7D74915E2D99F000CA0C4 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A0D7D74C15E2DE0E000CA0C4 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
 		A0D7DAF415E2F25A000CA0C4 /* ChipmunkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */; };
+		A0D82F8B16321F8300A59FC2 /* ChipmunkTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */; };
 		A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */; };
 		A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */; };
 		A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
@@ -7193,6 +7194,7 @@
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
+		A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ChipmunkTest.js; sourceTree = "<group>"; };
 		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
@@ -8679,10 +8681,10 @@
 		A03F85C2161B563200FE54C8 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A03F85C5161B563200FE54C8 /* tests */,
 				A03F8619161B662400FE54C8 /* tests-boot-jsb.js */,
 				A03F8615161B5F8600FE54C8 /* tests-main.js */,
 				A03F8616161B5F8700FE54C8 /* tests_resources-jsb.js */,
-				A03F85C5161B563200FE54C8 /* tests */,
 			);
 			path = src;
 			sourceTree = "<group>";
@@ -8694,6 +8696,7 @@
 				A03F85C8161B563200FE54C8 /* ActionsTest */,
 				A03F85CA161B563200FE54C8 /* Box2dTest */,
 				A03F85CC161B563200FE54C8 /* ClickAndMoveTest */,
+				A0D82F8916321F8300A59FC2 /* ChipmunkTest */,
 				A03F85CE161B563200FE54C8 /* CocosDenshionTest */,
 				A03F85D0161B563200FE54C8 /* CocosNodeTest */,
 				A03F85D2161B563200FE54C8 /* CurrentLanguageTest */,
@@ -9599,6 +9602,14 @@
 			);
 			name = JRSwizzle;
 			path = external/JRSwizzle;
+			sourceTree = "<group>";
+		};
+		A0D82F8916321F8300A59FC2 /* ChipmunkTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D82F8A16321F8300A59FC2 /* ChipmunkTest.js */,
+			);
+			path = ChipmunkTest;
 			sourceTree = "<group>";
 		};
 		A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */ = {
@@ -13179,6 +13190,7 @@
 				A06EA26B161E55A200B025FE /* ActionManagerTest.js in Resources */,
 				A06EA26C161E55A200B025FE /* ActionsTest.js in Resources */,
 				A06EA26D161E55A200B025FE /* Box2dTest.js in Resources */,
+				A0D82F8B16321F8300A59FC2 /* ChipmunkTest.js in Resources */,
 				A06EA26E161E55A200B025FE /* ClickAndMoveTest.js in Resources */,
 				A06EA26F161E55A200B025FE /* CocosDenshionTest.js in Resources */,
 				A06EA270161E55A200B025FE /* CocosNodeTest.js in Resources */,
