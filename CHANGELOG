@@ -20,6 +20,7 @@ version 2.1-beta3  xx-Oct-2012
 		setIsMouseEnabled -> setMouseEnabled
 		setIsTouchEnabled -> setTouchEnabled
 		setIsAccelerometerEnabled -> setAccelerometerEnabled
+		Old methods can be called, but are deprecated.
 		New way to enable "targeted" touches: [self setTouchMode:kCCTouchOneByOne];
 . [FIX] LayerColor: uses correct default blending function (issues #1422 #1423)
 . [FIX] Particle: Honors the directory of the .plist file when loading the .png file
