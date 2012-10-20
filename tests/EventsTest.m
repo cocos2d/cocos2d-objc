@@ -129,7 +129,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.isKeyboardEnabled = YES;
+		self.keyboardEnabled = YES;
 	}
 
 	return self;
@@ -178,7 +178,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 	}
 
 	return self;
@@ -298,7 +298,7 @@ Class restartAction()
 			[batch_ addChild:sprites_[i]];
 		}
 
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 	}
 
 	return self;

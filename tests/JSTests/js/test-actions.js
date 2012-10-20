@@ -53,7 +53,7 @@ var loadScene = function (sceneIdx)
 	director.replaceScene( scene );
     __jsc__.dumpRoot();
     __jsc__.garbageCollect();
-}
+};
 
 
 //
@@ -71,7 +71,7 @@ var BaseLayer = cc.LayerGradient.extend({
 
     centerSprites : function (numberOfSprites) {
 
-        if (numberOfSprites == 0) {
+        if (numberOfSprites === 0) {
             this._tamara.setVisible(false);
             this._kathia.setVisible(false);
             this._grossini.setVisible(false);
@@ -145,15 +145,15 @@ var BaseLayer = cc.LayerGradient.extend({
         label.setPosition( cc.p(winSize.width / 2, winSize.height - 40));
 
         var strSubtitle = this.subtitle();
-        if (strSubtitle != "") {
+        if (strSubtitle !== "") {
             var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 70));
         }
 
         var strCode = this.code();
-        if( strCode !="" ) {
-            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+        if( strCode !=="" ) {
+            label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
             label.setPosition( cc.p( winSize.width/2, winSize.height-120) );
             this.addChild( label,10 );
 
@@ -354,7 +354,7 @@ var ActionSkewRotateScale = BaseLayer.extend({
 
 
         this.addChild(box);
-        var actionTo = cc.SkewTo.create(2, 0., 2.);
+        var actionTo = cc.SkewTo.create(2, 0, 2);
         var rotateTo = cc.RotateTo.create(2, 61.0);
         var actionScaleTo = cc.ScaleTo.create(2, -0.44, 0.47);
 
@@ -535,7 +535,7 @@ var ActionFade = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.FadeIn.create( time );\n" +
-            "a = cc.FadeOut.create( time );\n"
+            "a = cc.FadeOut.create( time );\n";
     }
 });
 //------------------------------------------------------------------
@@ -562,7 +562,7 @@ var ActionTint = BaseLayer.extend({
     code:function () {
         return "" +
             "a = cc.TintBy.create( time, red, green, blue );\n" +
-            "a = cc.TintTo.create( time, red, green, blue );\n"
+            "a = cc.TintTo.create( time, red, green, blue );\n";
     }
 });
 
@@ -823,7 +823,7 @@ var ActionRepeatForever = BaseLayer.extend({
     },
     repeatForever:function (sender) {
         var repeat = cc.RepeatForever.create(cc.RotateBy.create(1.0, 360));
-        sender.runAction(repeat)
+        sender.runAction(repeat);
     },
     title:function () {
         return "CallFunc + RepeatForever";
@@ -985,7 +985,7 @@ var ActionReverseSequence2 = BaseLayer.extend({
 
         var move_tamara = cc.MoveBy.create(1, cc.p(100, 0));
         var move_tamara2 = cc.MoveBy.create(1, cc.p(50, 0));
-        var hide = cc.Hide.create()
+        var hide = cc.Hide.create();
         var seq_tamara = cc.Sequence.create(move_tamara, hide, move_tamara2 );
         var seq_back = seq_tamara.reverse();
         this._tamara.runAction(cc.Sequence.create(seq_tamara, seq_back ));
@@ -1502,7 +1502,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );

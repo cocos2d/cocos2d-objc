@@ -23,6 +23,7 @@ static NSString *transitions[] = {
 	@"LayerIgnoreAnchorPointPos",
 	@"LayerIgnoreAnchorPointRot",
 	@"LayerIgnoreAnchorPointScale",
+    @"LayerExtendedBlendOpacityTest",
 
 };
 
@@ -140,9 +141,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #if defined(__CC_PLATFORM_IOS)
-		self.isTouchEnabled = YES;
+		[self setTouchEnabled:YES];
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		[self setMouseEnabled: YES];
 #endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -172,45 +173,28 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void) registerWithTouchDispatcher
+-(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority+1 swallowsTouches:YES];
+	[self ccTouchesMoved:touches withEvent:event];
 }
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
 {
+	[self ccTouchesMoved:touches withEvent:event];
+}
+
+-(void) ccTouchesCancelled:(NSSet*)touches withEvent:(UIEvent *)event
+{
+	[self ccTouchesMoved:touches withEvent:event];
+}
+
+-(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
 	[self updateSize:touchLocation];
-
-	return YES;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-	
-	[self updateSize:touchLocation];
-
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -297,8 +281,8 @@ Class restartAction()
 		[self addChild:sister2];
 		[self addChild: layer1 z:100 tag:kTagLayer];
 
-		sister1.position = ccp( 160, s.height/2);
-		sister2.position = ccp( 320, s.height/2);
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
 
 		[self schedule:@selector(newBlend:) interval:1];
 	}
@@ -334,9 +318,9 @@ Class restartAction()
 		[self addChild:layer1 z:0 tag:kTagLayer];
 
 #if defined(__CC_PLATFORM_IOS)
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];
@@ -550,6 +534,51 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Ignoring Anchor Point for scale";
+}
+@end
+
+#pragma mark -
+#pragma mark Extended Blend/Opacity tests
+
+@implementation LayerExtendedBlendOpacityTest
+-(id) init
+{
+	if( (self=[super init] )) {
+        
+		CCLayerGradient* layer1 = [CCLayerGradient layerWithColor:ccc4(255, 0, 0, 255) fadingTo:ccc4(255, 0, 255, 255)];
+        layer1.contentSize = CGSizeMake(80, 80);
+        layer1.position = ccp(50,50);
+        [self addChild:layer1];
+        
+        CCLayerGradient* layer2 = [CCLayerGradient layerWithColor:ccc4(0, 0, 0, 127) fadingTo:ccc4(255, 255, 255, 127)];
+        layer2.contentSize = CGSizeMake(80, 80);
+        layer2.position = ccp(100,90);
+        [self addChild:layer2];
+        
+        CCLayerGradient* layer3 = [[[CCLayerGradient alloc] init] autorelease];
+        layer3.contentSize = CGSizeMake(80, 80);
+        layer3.position = ccp(150,140);
+        layer3.startColor = ccc3(255, 0, 0);
+        layer3.endColor = ccc3(255, 0, 255);
+        layer3.startOpacity = 255;
+        layer3.endOpacity = 255;
+        ccBlendFunc blend;
+        blend.src = GL_SRC_ALPHA;
+        blend.dst = GL_ONE_MINUS_SRC_ALPHA;
+        layer3.blendFunc = blend;
+        [self addChild:layer3];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Extended Blend & Opacity";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see 3 layers";
 }
 @end
 

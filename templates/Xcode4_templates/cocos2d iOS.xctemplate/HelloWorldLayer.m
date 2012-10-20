@@ -66,14 +66,14 @@
 		CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
 			
 			
-			GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-			achivementViewController.achievementDelegate = self;
+			GKAchievementViewController *achievementViewController = [[GKAchievementViewController alloc] init];
+			achievementViewController.achievementDelegate = self;
 			
 			AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 			
-			[[app navController] presentModalViewController:achivementViewController animated:YES];
+			[[app navController] presentModalViewController:achievementViewController animated:YES];
 			
-			[achivementViewController release];
+			[achievementViewController release];
 		}
 									   ];
 

@@ -8,6 +8,8 @@
 
 require("jsb_constants.js");
 
+require("SpriteTest.js");
+
 director = cc.Director.getInstance();
 winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
@@ -52,7 +54,7 @@ loadScene = function (sceneIdx)
 
 	director.replaceScene( scene );
 //    __jsc__.garbageCollect();
-}
+};
 
 
 
@@ -103,15 +105,15 @@ BaseLayer = cc.LayerGradient.extend({
         label.setPosition( cc.p(winSize.width / 2, winSize.height - 40));
 
         var strSubtitle = this.subtitle();
-        if (strSubtitle != "") {
+        if (strSubtitle !== "") {
             var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 70));
         }
 
         var strCode = this.code();
-        if( strCode !="" ) {
-            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+        if( strCode !=="" ) {
+            label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
             label.setPosition( cc.p( winSize.width/2, winSize.height-120) );
             this.addChild( label,10 );
 
@@ -147,15 +149,18 @@ MainTest = BaseLayer.extend({
         var item8 = cc.MenuItemFont.create("Parallax Tests", this, function() { require("js/test-parallax.js"); } );
         var item9 = cc.MenuItemFont.create("Particle Tests", this, function() { require("js/test-particles.js"); } );
         var item10 = cc.MenuItemFont.create("RenderTexture Tests", this, function() { require("js/test-rendertexture.js"); } );
-        var item11 = cc.MenuItemFont.create("Sprite Tests", this, function() { require("js/test-sprite.js"); } );
+        var item11 = cc.MenuItemFont.create("Sprite Tests", this, function() {
+            SpriteTestScene.runThisTest();
+        } );
         var item12 = cc.MenuItemFont.create("Tilemap Tests", this, function() { require("js/test-tilemap.js"); } );
         var item13 = cc.MenuItemFont.create("CocosDenshion Tests", this, function() { require("js/test-cocosdenshion.js"); } );
         var item14 = cc.MenuItemFont.create("cocos2d presentation", this, function() { require("js/test-cocos2djs.js"); } );
         var item15 = cc.MenuItemFont.create("Performance test", this, function() { require("js/test-performance.js"); } );
+        var item16 = cc.MenuItemFont.create("Bugs", this, function() { require("js/test-bugs.js"); } );
 //		var item16 = cc.MenuItemFont.create("GDK talk", this, function() { require("test-gdk.js"); } );
 
 
-        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15 );
+        this._menu = cc.Menu.create( item1, item2, item3, item4, item5, item6, item7, item8, item9, item10, item11, item12, item13, item14, item15, item16 );
         this._menu.alignItemsVertically();
 
         this._menu.setPosition( cc.p( winSize.width/2, winSize.height/2) );
@@ -211,7 +216,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionSplitCols.create(1, scene ) );

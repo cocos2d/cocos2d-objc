@@ -90,7 +90,6 @@ typedef struct _hashSelectorEntry
 {
 	_elapsed = -1;
 	_interval = seconds;
-	_repeat = r;
 	_delay = d;
 	_useDelay = (_delay > 0) ? YES : NO;
 	_repeat = r;
@@ -165,6 +164,8 @@ typedef struct _hashSelectorEntry
 }
 @end
 
+#pragma mark CCTimerTargetSelector
+
 @implementation CCTimerTargetSelector
 
 @synthesize selector=_selector;
@@ -219,20 +220,24 @@ typedef struct _hashSelectorEntry
 
 @end
 
+#pragma mark CCTimerBlock
+
 @implementation CCTimerBlock
 
 @synthesize key=_key;
+@synthesize target=_target;
 
-+(id) timerWithInterval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block
++(id) timerWithTarget:(id)owner interval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block
 {
-	return [[[self alloc] initWithInterval:seconds repeat:kCCRepeatForever delay:0 key:key block:block] autorelease];
+	return [[[self alloc] initWithTarget:(id)owner interval:seconds repeat:kCCRepeatForever delay:0 key:key block:block] autorelease];
 }
 
--(id) initWithInterval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block
+-(id) initWithTarget:(id)owner interval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block
 {
 	if( (self=[super init]) ) {
 		_block = [block copy];
 		_key = [key copy];
+		_target = owner;
 		
 		[self setupTimerWithInterval:seconds repeat:r delay:d];
 	}
@@ -260,7 +265,7 @@ typedef struct _hashSelectorEntry
 
 -(void) cancel
 {
-//	[[[CCDirector sharedDirector] scheduler] unscheduleSelector:_selector forTarget:_target];
+	[[[CCDirector sharedDirector] scheduler] unscheduleBlockForKey:_key target:_target];
 }
 
 @end
@@ -270,7 +275,6 @@ typedef struct _hashSelectorEntry
 //
 // CCScheduler
 //
-#pragma mark -
 #pragma mark - CCScheduler
 
 @interface CCScheduler (Private)
@@ -411,7 +415,7 @@ typedef struct _hashSelectorEntry
 		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
-	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithInterval:interval repeat:repeat delay:delay key:key block:block];
+	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithTarget:owner interval:interval repeat:repeat delay:delay key:key block:block];
 	ccArrayAppendObject(element->timers, timer);
 	[timer release];
 }

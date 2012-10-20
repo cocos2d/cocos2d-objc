@@ -199,15 +199,12 @@ GetRuntime(const JSContext *cx)
 typedef bool
 (* PreserveWrapperCallback)(JSContext *cx, JSObject *obj);
 
-#ifdef DEBUG
  /*
-  * DEBUG-only method to dump the complete object graph of heap-allocated things.
+  * Dump the complete object graph of heap-allocated things.
   * fp is the file for the dump output.
   */
 extern JS_FRIEND_API(void)
 DumpHeapComplete(JSRuntime *rt, FILE *fp);
-
-#endif
 
 class JS_FRIEND_API(AutoSwitchCompartment) {
   private:
@@ -267,6 +264,15 @@ TraceWeakMaps(WeakMapTracer *trc);
 
 extern JS_FRIEND_API(bool)
 GCThingIsMarkedGray(void *thing);
+
+extern JS_FRIEND_API(JSCompartment*)
+GetGCThingCompartment(void *thing);
+
+typedef void
+(GCThingCallback)(void *closure, void *gcthing);
+
+extern JS_FRIEND_API(void)
+VisitGrayWrapperTargets(JSCompartment *comp, GCThingCallback *callback, void *closure);
 
 /*
  * Shadow declarations of JS internal structures, for access by inline access
@@ -530,6 +536,34 @@ GetPCCountScriptSummary(JSContext *cx, size_t script);
 JS_FRIEND_API(JSString *)
 GetPCCountScriptContents(JSContext *cx, size_t script);
 
+/*
+ * A call stack can be specified to the JS engine such that all JS entry/exits
+ * to functions push/pop an entry to/from the specified stack.
+ *
+ * For more detailed information, see vm/SPSProfiler.h
+ */
+struct ProfileEntry {
+    /*
+     * These two fields are marked as 'volatile' so that the compiler doesn't
+     * re-order instructions which modify them. The operation in question is:
+     *
+     *    stack[i].string = str;
+     *    (*size)++;
+     *
+     * If the size increment were re-ordered before the store of the string,
+     * then if sampling occurred there would be a bogus entry on the stack.
+     */
+    const char * volatile string;
+    void * volatile sp;
+};
+
+JS_FRIEND_API(void)
+SetRuntimeProfilingStack(JSRuntime *rt, ProfileEntry *stack, uint32_t *size,
+                         uint32_t max);
+
+JS_FRIEND_API(void)
+EnableRuntimeProfilingStack(JSRuntime *rt, bool enabled);
+
 #ifdef JS_THREADSAFE
 JS_FRIEND_API(void *)
 GetOwnerThread(const JSContext *cx);
@@ -589,7 +623,7 @@ SizeOfJSContext();
     D(ALLOC_TRIGGER)                            \
     D(DEBUG_GC)                                 \
     D(DEBUG_MODE_GC)                            \
-    D(UNUSED3) /* was REFILL */                 \
+    D(TRANSPLANT)                               \
                                                 \
     /* Reasons from Firefox */                  \
     D(DOM_WINDOW_UTILS)                         \
@@ -608,7 +642,8 @@ SizeOfJSContext();
     D(DOM_WORKER)                               \
     D(INTER_SLICE_GC)                           \
     D(REFRESH_FRAME)                            \
-    D(FULL_GC_TIMER)
+    D(FULL_GC_TIMER)                            \
+    D(SHUTDOWN_CC)
 
 namespace gcreason {
 
@@ -618,7 +653,15 @@ enum Reason {
     GCREASONS(MAKE_REASON)
 #undef MAKE_REASON
     NO_REASON,
-    NUM_REASONS
+    NUM_REASONS,
+
+    /*
+     * For telemetry, we want to keep a fixed max bucket size over time so we
+     * don't have to switch histograms. 100 is conservative; as of this writing
+     * there are 26. But the cost of extra buckets seems to be low while the
+     * cost of switching histograms is high.
+     */
+    NUM_TELEMETRY_REASONS = 100
 };
 
 } /* namespace gcreason */
@@ -628,6 +671,9 @@ PrepareCompartmentForGC(JSCompartment *comp);
 
 extern JS_FRIEND_API(void)
 PrepareForFullGC(JSRuntime *rt);
+
+extern JS_FRIEND_API(void)
+PrepareForIncrementalGC(JSRuntime *rt);
 
 extern JS_FRIEND_API(bool)
 IsGCScheduled(JSRuntime *rt);
@@ -652,7 +698,7 @@ extern JS_FRIEND_API(void)
 IncrementalGC(JSRuntime *rt, gcreason::Reason reason);
 
 extern JS_FRIEND_API(void)
-SetGCSliceTimeBudget(JSContext *cx, int64_t millis);
+FinishIncrementalGC(JSRuntime *rt, gcreason::Reason reason);
 
 enum GCProgress {
     /*

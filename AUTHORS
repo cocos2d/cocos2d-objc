@@ -26,18 +26,31 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
 
+* Greg Harding (http://www.flightless.co.nz/):
+	Toggle fullscreen honors the support for touches on Mac
+	Fixed some grammar errors in the Templates
+
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
+
+* Krzysztof Zablocki (http://merowing.info):
+	Author of CCRenderTargetNode, which later was merged into RenderTexture as the "auto render" feature.
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
 	Added Tests for RotationSkew feature
+
+* lbeck @ cocos2d community:
+	Fix for LabelTTF in MacBook Retina Display
 
 * michaelm (http://ironapegames.com/):
 	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
 	
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
+
+* Peter Johnston (https://github.com/ptrrj)
+	Fixed possible retain cycle with Director's delegate
 
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
@@ -46,9 +59,11 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
 	Author of CCDrawNode: a node that batches drawing primitives
 	Author of CCPhysicsDebugNode and CCPhysicsSprite
+	Fix assert on Texture when updating filter on NPOT textures
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
+	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)

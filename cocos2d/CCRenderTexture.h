@@ -55,12 +55,18 @@ typedef enum
 @interface CCRenderTexture : CCNode
 {
 	GLuint				fbo_;
-  GLuint depthRenderBufffer_;
-  GLint				oldFBO_;
+	GLuint depthRenderBufffer_;
+	GLint				oldFBO_;
 	CCTexture2D*		texture_;
 	CCSprite*			sprite_;
-
 	GLenum				pixelFormat_;
+
+	// code for "auto" update
+	GLbitfield			clearFlags_;
+	ccColor4F			clearColor_;
+	GLclampf			clearDepth_;
+	GLint				clearStencil_;
+	BOOL				autoDraw_;
 }
 
 /** The CCSprite being used.
@@ -68,7 +74,21 @@ typedef enum
  The blending function can be changed in runtime by calling:
 	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 */
-@property (nonatomic,readwrite, assign) CCSprite* sprite;
+@property (nonatomic,readwrite, retain) CCSprite* sprite;
+
+/** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
+@property (nonatomic, readwrite) GLbitfield clearFlags;
+/** Clear color value. Valid only when "autoDraw" is YES. */
+@property (nonatomic, readwrite) ccColor4F clearColor;
+/** Value for clearDepth. Valid only when autoDraw is YES. */
+@property (nonatomic, readwrite) GLclampf clearDepth;
+/** Value for clear Stencil. Valid only when autoDraw is YES */
+@property (nonatomic, readwrite) GLint clearStencil;
+/** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
+ Will be enabled in the future.
+ */
+@property (nonatomic, readwrite) BOOL autoDraw;
+
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;

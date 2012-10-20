@@ -197,6 +197,7 @@ var GameLayer = cc.LayerGradient.extend({
     _chassis:null,
     _batch:null,
     _shapesToRemove:[],
+    _rogueBodies:[],
     _score:0,
     _scoreLabel:null,
     _time:0,
@@ -211,7 +212,7 @@ var GameLayer = cc.LayerGradient.extend({
     _carSmoke:null,
 
     ctor:function (level) {
-                                
+
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
         this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
@@ -231,7 +232,7 @@ var GameLayer = cc.LayerGradient.extend({
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
         menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
-    
+
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimations("coins_animation.plist");
 
@@ -263,6 +264,7 @@ var GameLayer = cc.LayerGradient.extend({
         this._carSmoke.setPositionType( cc.PARTICLE_TYPE_RELATIVE );
 
         this._shapesToRemove = [];
+        this._rogueBodies = [];
 
         this.initHUD();
 
@@ -307,6 +309,7 @@ var GameLayer = cc.LayerGradient.extend({
         var layer = new GameLayer(this._level);
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFade.create(1, scene) );
+        this._state = STATE_PAUSE;
     },
 
     onPause:function(sender) {
@@ -321,13 +324,12 @@ var GameLayer = cc.LayerGradient.extend({
         var layer = new GameLayer(this._level+1);
         scene.addChild( layer );
         director.replaceScene( cc.TransitionFade.create(1, scene) );
+        this._state = STATE_PAUSE;
     },
 
     onMainMenu:function(sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionProgressRadialCCW.create(1, scene) );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onToggleDebug:function(sender) {
@@ -336,20 +338,22 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onMouseDown:function(event) {
-        this.setThrottle(1);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
         return true;
     },
     onMouseUp:function(event) {
-        this.setThrottle(0);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
         return true;
     },
     onTouchesBegan:function( touches, event) {
-        this.setThrottle(1);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
     },
     onTouchesEnded:function( touches, event) {
-        this.setThrottle(0);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
     },
 
     onEnterTransitionDidFinish:function() {
@@ -370,27 +374,25 @@ var GameLayer = cc.LayerGradient.extend({
         var selfremove = cc.CallFunc.create(this, this.onRemoveMe );
         var seq = cc.Sequence.create(d, s, selfremove );
         label.runAction( seq );
-        
+
     },
 
     onRemoveMe:function( sender ) {
-        sender.removeFromParentAndCleanup( true );
+        sender.removeFromParent();
     },
 
     onExit:function() {
 
         this.enableCollisionEvents( false );
-        // XXX: Leak... all Shapes and Bodies should be freed
-        cp.spaceFree( this._space );
     },
 
     // Coin and Car
 	onCollisionBeginCoin : function ( arbiter, space ) {
 
-		var bodies = cp.arbiterGetBodies( arbiter );
-		var shapes = cp.arbiterGetShapes( arbiter );
-		var collTypeA = cp.shapeGetCollisionType( shapes[0] );
-		var collTypeB = cp.shapeGetCollisionType( shapes[1] );
+		var bodies = arbiter.getBodies();
+		var shapes = arbiter.getShapes();
+		var collTypeA = shapes[0].getCollisionType();
+		var collTypeB = shapes[1].getCollisionType();
 
         var shapeCoin =  (collTypeA == COLLISION_TYPE_COIN) ? shapes[0] : shapes[1];
 
@@ -438,7 +440,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         // Don't update physics on game over
         if( this._state != STATE_PAUSE )
-            cp.spaceStep( this._space, dt);
+            this._space.step(dt);
 
         // sync smoke with car
         if( this._carSprite ) {
@@ -454,15 +456,14 @@ var GameLayer = cc.LayerGradient.extend({
 //            cc.log("removing shape: " + shape[0] + " : " + shape[1] );
             cc.log("removing shape: " + shape );
 
-            cp.spaceRemoveStaticShape( this._space, shape );
-            cp.shapeFree( shape );
+            this._space.removeStaticShape( shape );
+            // shape.free();
 
-            var body = cp.shapeGetBody( shape );
+            var body = shape.getBody();
+            var sprite = body.getUserData();
+            sprite.removeFromParent();
 
-            var sprite = cp.bodyGetUserData( body );
-            sprite.removeFromParentAndCleanup(true);
-
-            cp.bodyFree( body );
+            // body.free();
 
         }
 
@@ -481,7 +482,7 @@ var GameLayer = cc.LayerGradient.extend({
         var height = winSize.height;
 
         var level = levels[ lvl ];
-        
+
         var i=0;
         // Coins
         var coins = level['coins'];
@@ -539,7 +540,7 @@ var GameLayer = cc.LayerGradient.extend({
 
     createWorldBoundary:function( rect ) {
 
-		var staticBody = cp.spaceGetStaticBody( this._space );
+		var staticBody = this._space.getStaticBody();
 
         var x = rect.x;
         var y = rect.y;
@@ -547,17 +548,17 @@ var GameLayer = cc.LayerGradient.extend({
         var h = rect.height;
 
 		// Walls
-		var walls =[cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(w,y), 0 ),    // bottom
-                    cp.segmentShapeNew( staticBody, cp._v(x,h), cp._v(w,h), 0),     // top
-                    cp.segmentShapeNew( staticBody, cp._v(x,y), cp._v(x,h), 0),     // left
-                    cp.segmentShapeNew( staticBody, cp._v(w,y), cp._v(w,h), 0)      // right
+		var walls =[new cp.SegmentShape( staticBody, cp._v(x,y), cp._v(w,y), 0 ),    // bottom
+                    new cp.SegmentShape( staticBody, cp._v(x,h), cp._v(w,h), 0),     // top
+                    new cp.SegmentShape( staticBody, cp._v(x,y), cp._v(x,h), 0),     // left
+                    new cp.SegmentShape( staticBody, cp._v(w,y), cp._v(w,h), 0)      // right
 				];
 		for( var i=0; i < walls.length; i++ ) {
 			var wall = walls[i];
-			cp.shapeSetElasticity(wall, 0);
-			cp.shapeSetFriction(wall, 0);
-            cp.shapeSetCollisionType(wall, COLLISION_TYPE_FLOOR);
-			cp.spaceAddStaticShape( this._space, wall );
+			wall.setElasticity(0);
+			wall.setFriction(0);
+            wall.setCollisionType(COLLISION_TYPE_FLOOR);
+			this._space.addStaticShape( wall );
 		}
     },
 
@@ -565,15 +566,15 @@ var GameLayer = cc.LayerGradient.extend({
     // Physics
     //
 	initPhysics :  function() {
-		this._space =  cp.spaceNew();
+		this._space =  new cp.Space();
 
 		// Gravity
-		cp.spaceSetGravity( this._space, cp._v(0, -GRAVITY) );
+		this._space.gravity = cp._v(0, -GRAVITY);
 
         this.enableCollisionEvents( true );
 
         // debug only
-        this._debugNode = cc.PhysicsDebugNode.create( this._space );
+        this._debugNode = cc.PhysicsDebugNode.create( this._space.handle );
         this._debugNode.setVisible( false );
         // Parallax ratio and offset
         this._scrollNode.addChild( this._debugNode, Z_DEBUG_PHYSICS, cc._p(1,1), cc.POINT_ZERO );
@@ -585,32 +586,32 @@ var GameLayer = cc.LayerGradient.extend({
             // It's simple to code up and feels nice.
 
             // _motor.maxForce = cpfclamp01(1.0 - (_chassis.body.angVel - _rearWheel.body.angVel)/ENGINE_MAX_W)*ENGINE_MAX_TORQUE;
-            var maxForce = cp.fclamp01(1.0 - ( (cp.bodyGetAngVel(this._chassis) - cp.bodyGetAngVel(this._rearWheel)) / ENGINE_MAX_W)) * ENGINE_MAX_TORQUE;
-            cp.constraintSetMaxForce( this._motor, maxForce );
+            var maxForce = cp.fclamp01(1.0 - ( (this._chassis.getAngVel() - this._rearWheel.getAngVel()) / ENGINE_MAX_W)) * ENGINE_MAX_TORQUE;
+            this._motor.setMaxForce( maxForce );
 
             // Set the brakes to apply the baseline rolling friction torque.
-            cp.constraintSetMaxForce( this._frontBrake, ROLLING_FRICTION );
-            cp.constraintSetMaxForce( this._rearBrake, ROLLING_FRICTION );
+            this._frontBrake.setMaxForce( ROLLING_FRICTION );
+            this._rearBrake.setMaxForce( ROLLING_FRICTION );
         } else if(throttle < 0){
             // Disable the motor.
             cp.constraintSetMaxForce( this._motor, 0 );
             // It would be a pretty good idea to give the front and rear brakes different torques.
             // The buggy as is now has a tendency to tip forward when braking hard.
-            cp.constraintSetMaxForce( this._frontBrake, BRAKING_TORQUE);
-            cp.constraintSetMaxForce( this._rearBrake, BRAKING_TORQUE);
+            this._frontBrake.setMaxForce( BRAKING_TORQUE);
+            this._rearBrake.setMaxForce( BRAKING_TORQUE);
         } else {
             // Disable the motor.
-            cp.constraintSetMaxForce( this._motor, 0 );
+            this._motor.setMaxForce( 0 );
             // Set the brakes to apply the baseline rolling friction torque.
-            cp.constraintSetMaxForce( this._frontBrake, ROLLING_FRICTION );
-            cp.constraintSetMaxForce( this._rearBrake, ROLLING_FRICTION );
+            this._frontBrake.setMaxForce( ROLLING_FRICTION );
+            this._rearBrake.setMaxForce( ROLLING_FRICTION );
         }
     },
 
     createCar : function(pos) {
-        var front = this.createWheel( cp.vadd(pos, cp._v(47,-25) ) );
-        this._chassis = this.createChassis( cp.vadd( pos, COG_ADJUSTMENT ) );
-        this._rearWheel = this.createWheel( cp.vadd( pos, cp._v(-35, -25) ) );
+        var front = this.createWheel( cp.v.add(pos, cp._v(47,-25) ) );
+        this._chassis = this.createChassis( cp.v.add( pos, COG_ADJUSTMENT ) );
+        this._rearWheel = this.createWheel( cp.v.add( pos, cp._v(-35, -25) ) );
         this.createCarJoints( this._chassis, front, this._rearWheel );
         this.createCarFruits( pos );
 
@@ -621,55 +622,55 @@ var GameLayer = cc.LayerGradient.extend({
 
         // The front wheel strut telescopes, so we'll attach the center of the wheel to a groov joint on the chassis.
         // I created the graphics specifically to have a 45 degree angle. So it's easy to just fudge the numbers.
-        var grv_a = cp.bodyWorld2Local( chassis, cp.bodyGetPos(front) );
-        var grv_b = cp.vadd( grv_a, cp.vmult( cp._v(-1, 1), 7 ) );
-        var frontJoint = cp.grooveJointNew( chassis, front, grv_a, grv_b, cp.vzero );
+        var grv_a = chassis.world2Local( front.getPos() );
+        var grv_b = cp.v.add( grv_a, cp.v.mult( cp._v(-1, 1), 7 ) );
+        var frontJoint = new cp.GrooveJoint( chassis, front, grv_a, grv_b, cp.vzero );
 
         // Create the front zero-length spring.
-        var front_anchor =  cp.bodyWorld2Local( chassis, cp.bodyGetPos(front) );
-        var frontSpring = cp.dampedSpringNew( chassis, front, front_anchor, cp.vzero, 0, FRONT_SPRING, FRONT_DAMPING );
+        var front_anchor =  chassis.world2Local( front.getPos() );
+        var frontSpring = new cp.DampedSpring( chassis, front, front_anchor, cp.vzero, 0, FRONT_SPRING, FRONT_DAMPING );
 
         // The rear strut is a swinging arm that holds the wheel a at a certain distance from a pivot on the chassis.
         // A perfect fit for a pin joint conected between the chassis and the wheel's center.
-        var rearJoint = cp.pinJointNew( chassis, rear, cp.vsub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
-        
+        var rearJoint = new cp.PinJoint( chassis, rear, cp.v.sub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
+
         // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
-        var rearStrutRestAngle = cp.vtoangle( cp.vsub(
-                                                cp.bodyLocal2World( chassis, cp.pinJointGetAnchr1(rearJoint) ),
-                                                cp.bodyGetPos(rear) ) );
+        var rearStrutRestAngle = cp.v.toangle( cp.v.sub(
+                                                chassis.local2World( rearJoint.getAnchr1() ),
+                                                rear.getPos() ) );
 
         // Create the rear zero-length spring.
-        var rear_anchor = cp.bodyWorld2Local( chassis, cp.bodyGetPos( rear ) );
-        var rearSpring = cp.dampedSpringNew( chassis, rear, rear_anchor, cp.vzero, 0, REAR_SPRING, REAR_DAMPING );
+        var rear_anchor = chassis.world2Local( rear.getPos() );
+        var rearSpring = new cp.DampedSpring( chassis, rear, rear_anchor, cp.vzero, 0, REAR_SPRING, REAR_DAMPING );
 
         // Attach a slide joint to the wheel to limit it's range of motion.
-        var rearStrutLimit = cp.slideJointNew( chassis, rear, rear_anchor, cp.vzero, 0, 20 );
-			
+        var rearStrutLimit = new cp.SlideJoint( chassis, rear, rear_anchor, cp.vzero, 0, 20 );
+
         // The main motor that drives the buggy.
-        var motor = cp.simpleMotorNew( chassis, rear, ENGINE_MAX_W );
-        cp.constraintSetMaxForce( motor, 0.0 );
-			
+        var motor = new cp.SimpleMotor( chassis, rear, ENGINE_MAX_W );
+        motor.setMaxForce(  0.0 );
+
         // I don't know if "differential" is the correct word, but it transfers a fraction of the rear torque to the front wheels.
         // In case the rear wheels are slipping. This makes the buggy less frustrating when climbing steep hills.
-        var differential = cp.simpleMotorNew( rear, front, 0 );
-        cp.constraintSetMaxForce( differential, ENGINE_MAX_TORQUE*DIFFERENTIAL_TORQUE );
-			
+        var differential = new cp.SimpleMotor( rear, front, 0 );
+        differential.setMaxForce( ENGINE_MAX_TORQUE*DIFFERENTIAL_TORQUE );
+
         // Wheel brakes.
         // While you could reuse the main motor for the brakes, it's easier not to.
         // It won't cause a performance issue to have too many extra motors unless you have hundreds of buggies in the game.
         // Even then, the motor constraints would be the least of your performance worries.
-        var frontBrake = cp.simpleMotorNew( chassis, front, 0 );
-        cp.constraintSetMaxForce( frontBrake, ROLLING_FRICTION );
-        var rearBrake = cp.simpleMotorNew( chassis, rear, 0 );
-        cp.constraintSetMaxForce( rearBrake, ROLLING_FRICTION );
+        var frontBrake = new cp.SimpleMotor( chassis, front, 0 );
+        frontBrake.setMaxForce( ROLLING_FRICTION );
+        var rearBrake = new cp.SimpleMotor( chassis, rear, 0 );
+        rearBrake.setMaxForce( ROLLING_FRICTION );
 
-        cp.spaceAddConstraint(this._space, frontJoint );
-        cp.spaceAddConstraint(this._space, rearJoint );
-        cp.spaceAddConstraint(this._space, rearSpring );
-        cp.spaceAddConstraint(this._space, motor );
-        cp.spaceAddConstraint(this._space, differential );
-        cp.spaceAddConstraint(this._space, frontBrake );
-        cp.spaceAddConstraint(this._space, rearBrake );
+        this._space.addConstraint( frontJoint );
+        this._space.addConstraint( rearJoint );
+        this._space.addConstraint( rearSpring );
+        this._space.addConstraint( motor );
+        this._space.addConstraint( differential );
+        this._space.addConstraint( frontBrake );
+        this._space.addConstraint( rearBrake );
 
         this._motor = motor;
         this._frontBrake = frontBrake;
@@ -680,18 +681,18 @@ var GameLayer = cc.LayerGradient.extend({
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("Wheel.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
 
-		var body = cp.bodyNew(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
-		cp.bodySetPos( body, pos );
-        sprite.setBody( body );
+		var body = new cp.Body(WHEEL_MASS, cp.momentForCircle(WHEEL_MASS, 0, radius, cp.vzero ) );
+		body.setPos( pos );
+        sprite.setBody( body.handle );
 
-        var shape = cp.circleShapeNew( body, radius, cp.vzero );
-        cp.shapeSetFriction( shape, 1 );
-        cp.shapeSetGroup( shape, GROUP_BUGGY );
-        cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
+        var shape = new cp.CircleShape( body, radius, cp.vzero );
+        shape.setFriction( 1 );
+        shape.setGroup( GROUP_BUGGY );
+        shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
 
-        cp.spaceAddBody( this._space, body );
-        cp.spaceAddShape( this._space, shape );
+        this._space.addBody( body );
+        this._space.addShape( shape );
         this._batch.addChild( sprite, Z_WHEEL);
 
         return body;
@@ -699,45 +700,45 @@ var GameLayer = cc.LayerGradient.extend({
 
     createChassis : function(pos) {
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("Chassis.png");
-        var anchor = cp.vadd( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
+        var anchor = cp.v.add( sprite.getAnchorPointInPoints(), COG_ADJUSTMENT );
         var cs = sprite.getContentSize();
         sprite.setAnchorPoint( cc.p(anchor.x / cs.width, anchor.y/cs.height) );
 
         // XXX: Space Patrol uses a nice poly for the chassis.
         // XXX: Add something similar here, instead of a boxed chassis
 
-        var body = cp.bodyNew( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs.width, cs.height ) );
-        cp.bodySetPos( body, pos );
-        sprite.setBody( body );
+        var body = new cp.Body( CHASSIS_MASS, cp.momentForBox(CHASSIS_MASS, cs.width, cs.height ) );
+        body.setPos( pos );
+        sprite.setBody( body.handle );
 
-        cp.spaceAddBody( this._space, body );
+        this._space.addBody( body );
         this._batch.addChild( sprite, Z_CHASSIS );
         this._carSprite = sprite;
 
         // bottom of chassis
-        var shape = cp.boxShapeNew( body, cs.width, 15 );
-		cp.shapeSetFriction(shape, 0.3);
-		cp.shapeSetGroup( shape, GROUP_BUGGY );
-		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
+        var shape = new cp.BoxShape( body, cs.width, 15 );
+		shape.setFriction(0.3);
+		shape.setGroup( GROUP_BUGGY );
+		shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
 
-        cp.spaceAddShape( this._space, shape );
+        this._space.addShape( shape );
 
         // box for fruits (left)
-        shape = cp.boxShapeNew2( body, cp.bBNew(-50,0, -46,30) );
-		cp.shapeSetFriction(shape, 0.3);
-		cp.shapeSetGroup( shape, GROUP_BUGGY );
-		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
-        cp.spaceAddShape( this._space, shape );
+        shape = new cp.BoxShape2( body, cp.bb(-50, 0, -46, 30) );
+		shape.setFriction(0.3);
+		shape.setGroup( GROUP_BUGGY );
+		shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
+        this._space.addShape( shape );
 
         // box for fruits (right)
-        shape = cp.boxShapeNew2( body, cp.bBNew(8,0, 12,30) );
-		cp.shapeSetFriction(shape, 0.3);
-		cp.shapeSetGroup( shape, GROUP_BUGGY );
-		cp.shapeSetLayers( shape, COLLISION_LAYERS_BUGGY );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_CAR );
-        cp.spaceAddShape( this._space, shape );
+        shape = new cp.BoxShape2( body, cp.bb(8, 0, 12, 30) );
+		shape.setFriction(0.3);
+		shape.setGroup( GROUP_BUGGY );
+		shape.setLayers( COLLISION_LAYERS_BUGGY );
+        shape.setCollisionType( COLLISION_TYPE_CAR );
+        this._space.addShape( shape );
 
         return body;
     },
@@ -748,16 +749,16 @@ var GameLayer = cc.LayerGradient.extend({
             var sprite = cc.PhysicsSprite.createWithSpriteFrameName("watermelon.png");
             var radius = 0.95 * sprite.getContentSize().width / 2;
 
-            var body = cp.bodyNew(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
-            cp.bodySetPos( body, pos );
-            sprite.setBody( body );
+            var body = new cp.Body(WATERMELON_MASS, cp.momentForCircle(WATERMELON_MASS, 0, radius, cp.vzero) );
+            body.setPos( pos );
+            sprite.setBody( body.handle );
 
-            var shape = cp.circleShapeNew( body, radius, cp.vzero );
-            cp.shapeSetFriction( shape, 1 );
-            cp.shapeSetCollisionType( shape, COLLISION_TYPE_WATERMELON);
+            var shape = new cp.CircleShape( body, radius, cp.vzero );
+            shape.setFriction( 1 );
+            shape.setCollisionType( COLLISION_TYPE_WATERMELON);
 
-            cp.spaceAddShape( this._space, shape );
-            cp.spaceAddBody( this._space, body );
+            this._space.addShape( shape );
+            this._space.addBody( body );
             this._batch.addChild( sprite, Z_WATERMELON );
         }
     },
@@ -766,19 +767,20 @@ var GameLayer = cc.LayerGradient.extend({
         // coins are static bodies and sensors
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
-        
-        var body = cp.bodyNew(1, 1);
-        cp.bodyInitStatic(body);
-		cp.bodySetPos( body, pos );
-        sprite.setBody( body );
 
-        var shape = cp.circleShapeNew( body, radius, cp.vzero );
-        cp.shapeSetFriction( shape, 1 );
-        cp.shapeSetGroup( shape, GROUP_COIN );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_COIN );
-        cp.shapeSetSensor( shape, true );
+        var body = new cp.BodyStatic();
+		body.setPos( pos );
+        sprite.setBody( body.handle );
 
-        cp.spaceAddStaticShape( this._space, shape );
+        var shape = new cp.CircleShape( body, radius, cp.vzero );
+        shape.setFriction( 1 );
+        shape.setGroup( GROUP_COIN );
+        shape.setCollisionType( COLLISION_TYPE_COIN );
+        shape.setSensor( true );
+
+        // rogue ("orphan") bodies, needs to be added to a container, otherwise they could be GC'd
+        this._rogueBodies.push( body );
+        this._space.addStaticShape( shape );
         this._batch.addChild( sprite, Z_COIN);
 
         var animation = cc.AnimationCache.getInstance().getAnimation("coin");
@@ -787,7 +789,7 @@ var GameLayer = cc.LayerGradient.extend({
         sprite.runAction( repeat );
 
         // Needed for deletion
-        cp.bodySetUserData( body, sprite );
+        body.setUserData( sprite );
 
         return body;
     },
@@ -795,32 +797,34 @@ var GameLayer = cc.LayerGradient.extend({
     createFinish:function( pos ) {
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("farmers-market.png");
         var cs = sprite.getContentSize();
-        var body = cp.bodyNew( 1, 1);
-        cp.bodyInitStatic( body );
-        sprite.setBody( body );
-        cp.bodySetPos( body, pos );
+        var body = new cp.BodyStatic();
+        sprite.setBody( body.handle );
+        body.setPos( pos );
 
-        var shape = cp.boxShapeNew( body, cs.width, cs.height );
-        cp.shapeSetCollisionType( shape, COLLISION_TYPE_FINISH );
-        cp.shapeSetSensor( shape, true );
 
-        cp.spaceAddStaticShape( this._space, shape );
+        var shape = new cp.BoxShape( body, cs.width, cs.height );
+        shape.setCollisionType( COLLISION_TYPE_FINISH );
+        shape.setSensor( true );
+
+        // rogue ("orphan") bodies, needs to be added to a container, otherwise they could be GC'd
+        this._rogueBodies.push( body );
+        this._space.addStaticShape( shape );
         this._batch.addChild( sprite, Z_FINISH);
     },
 
     createSegment: function( src, dst) {
-		var staticBody = cp.spaceGetStaticBody( this._space );
-		var segment = cp.segmentShapeNew( staticBody, src, dst, 5 );
-        cp.shapeSetElasticity(segment, 1);
-        cp.shapeSetFriction(segment, 1);
-        cp.shapeSetCollisionType(segment, COLLISION_TYPE_FLOOR);
-        cp.spaceAddStaticShape( this._space, segment );
+		var staticBody = this._space.getStaticBody();
+		var segment = new cp.SegmentShape( staticBody, src, dst, 5 );
+        segment.setElasticity(1);
+        segment.setFriction(1);
+        segment.setCollisionType(COLLISION_TYPE_FLOOR);
+        this._space.addStaticShape( segment );
     },
 
     //
     // Game State
     //
-    
+
     // call the 'deferred' option if you want to modify Chipmunk's state from a Chipmunk's callback
     setGameStateDeferred: function( state ) {
         this._deferredState = state;
@@ -841,8 +845,6 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     displayLevelComplete:function() {
-        
-
         var legend = "";
         var menu = null;
         var item1 = null;
@@ -917,24 +919,27 @@ var GameLayer = cc.LayerGradient.extend({
     // Helpers
     //
     enableEvents:function(enabled) {
-        var platform = __getPlatform();
-        if( platform.substring(0,7) == 'desktop' ) {
-            this.setMouseEnabled( enabled );
-        } else if( platform.substring(0,6) == 'mobile' ) {
-            this.setTouchEnabled( enabled );
+        var t = cc.config.deviceType;
+        if( t == 'browser' )  {
+            // this.setTouchEnabled(true);
+            // this.setKeyboardEnabled(true);
+        } else if( t == 'desktop' ) {
+            this.setMouseEnabled(true);
+        } else if( t == 'mobile' ) {
+            this.setTouchEnabled(true);
         }
     },
 
     enableCollisionEvents:function(enabled) {
         if( enabled ) {
             // collision handler
-            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this, this.onCollisionBeginCoin, null, null, null );
-            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_CAR, COLLISION_TYPE_FINISH, this, this.onCollisionBeginFinish, null, null, null );
-            cp.spaceAddCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this, this.onCollisionBeginWatermelon, null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_COIN, this.onCollisionBeginCoin.bind(this), null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_CAR, COLLISION_TYPE_FINISH, this.onCollisionBeginFinish.bind(this), null, null, null );
+            this._space.addCollisionHandler( COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON, this.onCollisionBeginWatermelon.bind(this), null, null, null );
         } else {
-            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
-            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
-            cp.spaceRemoveCollisionHandler( this._space, COLLISION_TYPE_FINISH, COLLISION_TYPE_CAR );
+            this._space.removeCollisionHandler( COLLISION_TYPE_FLOOR, COLLISION_TYPE_WATERMELON );
+            this._space.removeCollisionHandler( COLLISION_TYPE_COIN, COLLISION_TYPE_CAR );
+            this._space.removeCollisionHandler( COLLISION_TYPE_FINISH, COLLISION_TYPE_CAR );
         }
     }
 
@@ -946,7 +951,7 @@ var GameLayer = cc.LayerGradient.extend({
 var BootLayer = cc.Layer.extend({
 
     ctor:function () {
-                                
+
         var parent = new cc.Layer();
         __associateObjWithNative(this, parent);
         this.init();
@@ -961,11 +966,9 @@ var BootLayer = cc.Layer.extend({
         __jsc__.dumpRoot();
         __jsc__.garbageCollect();
     },
-    
+
     onEnter:function() {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
         director.replaceScene( scene );
     }
 });
@@ -973,84 +976,71 @@ var BootLayer = cc.Layer.extend({
 //
 // Main Menu
 //
-var MenuLayer = cc.Layer.extend({
 
-    ctor:function () {
-                                
-        var parent = new cc.Layer();
-        __associateObjWithNative(this, parent);
-        this.init();
+// 'MenuLayerController' class is instantiated by CocosBuilder Reader
+var MenuLayerController = function() {};
 
-        // background
-        var node = cc.Reader.load("MainMenu.ccbi", this, winSize);
-        this.addChild( node );
-        var label = node.getChildByTag( TITLE_TAG );
-        var o = label.getChildByTag( 8 );
+// callback triggered by CCB Reader once the instance is created
+MenuLayerController.prototype.onDidLoadFromCCB = function()
+{
+    // Spin the 'o' in the title
+    var o = this.titleLabel.getChildByTag( 8 );
 
-        var a_delay = cc.DelayTime.create(6);
-        var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
-        var a_rotate = cc.RotateBy.create( 4, 360 );
-        var a_rep = cc.Repeat.create( a_rotate, 1000 );
-        var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
-        o.runAction( a_seq );
+    var a_delay = cc.DelayTime.create(6);
+    var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
+    var a_rotate = cc.RotateBy.create( 4, 360 );
+    var a_rep = cc.Repeat.create( a_rotate, 1000 );
+    var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
+    o.runAction( a_seq );
+};
 
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
+// callbacks for the menu, defined in the editor
+MenuLayerController.prototype.onPlay = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new GameLayer(0);
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFade.create(1, scene) );
+};
 
-    onPlay:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new GameLayer(0);
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFade.create(1, scene) );
-    },
+MenuLayerController.prototype.onOptions = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new OptionsLayer();
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFlipY.create(1, scene) );
+};
 
-    onOptions:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new OptionsLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipY.create(1, scene) );
-    },
-
-    onAbout:function( sender ) {
-        var scene = cc.Scene.create();
-        var layer = new AboutLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
-    }
-});
+MenuLayerController.prototype.onAbout = function()
+{
+    /*var scene = cc.Scene.create();
+    var layer = new AboutLayer();
+    scene.addChild( layer );*/
+    var scene = cc.Reader.loadAsScene("About.ccbi");
+    director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
+};
 
 //
 // About
 //
-var AboutLayer = cc.Layer.extend({
+var AboutLayerController = function() {};
 
-    ctor:function () {
-        var parent = new cc.LayerGradient();
-        __associateObjWithNative(this, parent);
-        this.init();
+AboutLayerController.prototype.onDidLoadFromCCB = function()
+{
+    var back = cc.MenuItemFont.create("Back", this, this.onBack );
+    back.setColor( cc.BLACK );
+    var menu = cc.Menu.create( back );
+    this.rootNode.addChild( menu );
+    menu.zOrder = 100;
+    menu.alignItemsVertically();
+    menu.setPosition( cc._p( winSize.width - 50, 50) );
+};
 
-        var about = cc.Reader.load("About.ccbi", this);
-        this.addChild( about );
-
-        var back = cc.MenuItemFont.create("Back", this, this.onBack );
-        back.setColor( cc.BLACK );
-        var menu = cc.Menu.create( back );
-        this.addChild( menu );
-        menu.alignItemsVertically();
-        menu.setPosition( cc._p( winSize.width - 50, 50) );
-
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
-
-    onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
-    }
-});
+AboutLayerController.prototype.onBack = function()
+{
+    var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+    director.replaceScene( scene );
+};
 
 //
 // Options
@@ -1080,10 +1070,8 @@ var OptionsLayer = cc.LayerGradient.extend({
     },
 
     onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onMusicToggle:function( sender ) {

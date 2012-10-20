@@ -381,13 +381,23 @@ static NSUInteger globalOrderOfArrival = 1;
 	[self addChild:child z:child.zOrder tag:child.tag];
 }
 
+-(void) removeFromParent
+{
+	[self removeFromParentAndCleanup:YES];
+}
+
 -(void) removeFromParentAndCleanup:(BOOL)cleanup
 {
 	[parent_ removeChild:self cleanup:cleanup];
 }
 
+-(void) removeChild: (CCNode*)child
+{
+	[self removeChild:child cleanup:YES];
+}
+
 /* "remove" logic MUST only be on this method
- * If a class want's to extend the 'removeChild' behavior it only needs
+ * If a class wants to extend the 'removeChild' behavior it only needs
  * to override this method
  */
 -(void) removeChild: (CCNode*)child cleanup:(BOOL)cleanup
@@ -400,6 +410,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		[self detachChild:child cleanup:cleanup];
 }
 
+-(void) removeChildByTag:(NSInteger)aTag
+{
+	[self removeChildByTag:aTag cleanup:YES];
+}
+
 -(void) removeChildByTag:(NSInteger)aTag cleanup:(BOOL)cleanup
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
@@ -410,6 +425,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCLOG(@"cocos2d: removeChildByTag: child not found!");
 	else
 		[self removeChild:child cleanup:cleanup];
+}
+
+-(void) removeAllChildren
+{
+	[self removeAllChildrenWithCleanup:YES];
 }
 
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup

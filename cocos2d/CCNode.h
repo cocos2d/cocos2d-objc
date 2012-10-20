@@ -347,21 +347,42 @@ enum {
 
 // composition: REMOVE
 
+/** Remove itself from its parent node forcing a cleanup.
+ If the node orphan, then nothing happens.
+ @since v2.1
+ */
+-(void) removeFromParent;
+
 /** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
  If the node orphan, then nothing happens.
  @since v0.99.3
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
+/** Removes a child from the container forcing a cleanup
+ @since v2.1
+ */
+-(void) removeChild:(CCNode*)child;
+
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
  */
 -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
 
+/** Removes a child from the container by tag value forcing a cleanup.
+ @since v2.1
+ */
+-(void) removeChildByTag:(NSInteger) tag;
+
 /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
  @since v0.7.1
  */
 -(void) removeChildByTag:(NSInteger) tag cleanup:(BOOL)cleanup;
+
+/** Removes all children from the container forcing a cleanup.
+ @since v2.1
+ */
+-(void) removeAllChildren;
 
 /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1

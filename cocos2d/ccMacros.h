@@ -47,12 +47,12 @@
  *
  * if COCOS2D_DEBUG==1 then:
  *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
+ *		CCLOGWARN() will be enabled
  *		CCLOGINFO()	will be disabled
  *
  * if COCOS2D_DEBUG==2 or higher then:
  *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
+ *		CCLOGWARN() will be enabled
  *		CCLOGINFO()	will be enabled
  */
 

@@ -199,9 +199,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		// Top Layer, a simple image
@@ -253,27 +253,10 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-}
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	return YES;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
+	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
 

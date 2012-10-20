@@ -183,6 +183,9 @@ typedef struct _KerningHashElement
 	
 	// offset of the texture atlas
 	CGPoint			imageOffset_;
+	
+	// reused char
+	CCSprite		*reusedChar_;
 }
 
 /** Purges the cached data.

@@ -9,8 +9,7 @@
 require("jsb_constants.js");
 
 director = cc.Director.getInstance();
-_winSize = director.getWinSize();
-winSize = {width:_winSize[0], height:_winSize[1]};
+winSize = director.getWinSize();
 centerPos = cc.p( winSize.width/2, winSize.height/2 );
 
 var scenes = [];
@@ -55,7 +54,7 @@ var loadScene = function (sceneIdx)
 	director.replaceScene( scene );
     __jsc__.dumpRoot();
     __jsc__.garbageCollect();
-}
+};
 
 
 //
@@ -72,7 +71,7 @@ var MyMenuItemFont = cc.MenuItemFont.extend({
 
     callback:function(sender) {
         cc.log("Button clicked");
-    },
+    }
 });
 
 var BaseLayer = cc.LayerGradient.extend({
@@ -127,15 +126,15 @@ var BaseLayer = cc.LayerGradient.extend({
         label.setPosition( cc.p(winSize.width / 2, winSize.height - 40));
 
         var strSubtitle = this.subtitle();
-        if (strSubtitle != "") {
+        if (strSubtitle !== "") {
             var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
             this.addChild(l, 1);
             l.setPosition( cc.p(winSize.width / 2, winSize.height - 70));
         }
 
         var strCode = this.code();
-        if( strCode !="" ) {
-            var label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
+        if( strCode !== "" ) {
+            label = cc.LabelTTF.create(strCode, 'CourierNewPSMT', 16);
             label.setPosition( cc.p( winSize.width/2, winSize.height-120) );
             this.addChild( label,10 );
 
@@ -170,7 +169,7 @@ var BaseLayer = cc.LayerGradient.extend({
 
 //------------------------------------------------------------------
 //
-// Playground 
+// Playground
 //
 //------------------------------------------------------------------
 var Playground = BaseLayer.extend({
@@ -221,7 +220,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );

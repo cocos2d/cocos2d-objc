@@ -30,7 +30,8 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
 }
@@ -213,7 +214,7 @@
 			}
 			else if(JSVAL_IS_STRING(out)) {
 				NSString *tmp;
-				jsval_to_nsstring( [[JSBCore sharedInstance] globalContext], out, &tmp );
+				jsval_to_NSString( [[JSBCore sharedInstance] globalContext], out, &tmp );
 				string = [NSString stringWithFormat:@"Result(string): %@.\n", tmp];
 			}
 			else if (JSVAL_IS_VOID(out) )
@@ -259,7 +260,8 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 

@@ -13,7 +13,8 @@ static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
 	@"RenderTextureZbuffer",
-  @"RenderTextureTestDepthStencil"
+	@"RenderTextureTestDepthStencil",
+	@"RenderTextureTargetNode"
 };
 
 Class nextAction(void);
@@ -163,9 +164,9 @@ Class restartAction()
 		[brush setColor:ccRED];
 		[brush setOpacity:20];
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 		lastLocation = CGPointMake( s.width/2, s.height/2);
 #endif
 
@@ -452,9 +453,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 		
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -627,7 +628,8 @@ Class restartAction()
 	[self addChild:sprite z:999999];
 	sprite.color = ccGREEN;
 
-	[sprite runAction:[CCSequence actions:[CCFadeTo actionWithDuration:2 opacity:0],
+	[sprite runAction:[CCSequence actions:
+					   [CCFadeTo actionWithDuration:2 opacity:0],
 					   [CCHide action],
 					   nil
 					   ]
@@ -687,6 +689,94 @@ Class restartAction()
 -(NSString*) subtitle
 {
   return @"Circle should be missing 1/4 of its region";
+}
+@end
+#pragma mark -
+#pragma mark RenderTextureTargetNode
+@implementation RenderTextureTargetNode
+
+-(id) init
+{
+	/*
+	 *     1    2
+	 * A: A1   A2
+	 *
+	 * B: B1   B2
+	 *
+	 *  A1: premulti sprite
+	 *  A2: premulti render
+	 *
+	 *  B1: non-premulti sprite
+	 *  B2: non-premulti render
+	 */
+	if( (self=[super init]) ) {
+    
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(40,40,40,255)];
+		[self addChild:background];
+    
+		// sprite 1
+		_sprite1 = [CCSprite spriteWithFile:@"fire.png"];
+    
+		// sprite 2
+		_sprite2 = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
+    
+		CGSize s = [CCDirector sharedDirector].winSize;
+
+		/* Create the render texture */
+		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+		_renderTexture = renderTexture;
+
+		[renderTexture setPosition:ccp(s.width/2, s.height/2)];
+//		[renderTexture setPosition:ccp(s.width, s.height)];
+//		renderTexture.scale = 2;
+
+		/* add the sprites to the render texture */
+		[renderTexture addChild:_sprite1];
+		[renderTexture addChild:_sprite2];
+		renderTexture.clearColor = ccc4f(0, 0, 0, 0);
+		renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+
+		/* add the render texture to the scene */
+		[self addChild:renderTexture];
+		
+		renderTexture.autoDraw = YES;
+
+		[self scheduleUpdate];
+		
+		// Toggle clear on / off
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Clear On/Off" block:^(id sender) {
+			if( _renderTexture.clearFlags == 0 )
+				_renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+			else
+				_renderTexture.clearFlags = 0;
+			_renderTexture.clearColor = ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1);
+		}];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+  
+	return self;
+}
+
+- (void)update:(float)dt
+{
+	  static float time = 0;
+	  float r = 80;
+	  _sprite1.position = ccp(cosf(time * 2) * r, sinf(time * 2) * r);
+	  _sprite2.position = ccp(sinf(time * 2) * r, cosf(time * 2) * r);
+
+	  time += dt;
+}
+
+-(NSString*) title
+{
+	return @"Testing Render Target Node";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprites should be equal and move with each frame";
 }
 @end
 
@@ -764,3 +854,6 @@ Class restartAction()
 }
 @end
 #endif
+
+
+

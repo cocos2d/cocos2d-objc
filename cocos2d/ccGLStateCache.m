@@ -52,12 +52,12 @@ static GLuint _ccVAO = 0;
 void ccGLInvalidateStateCache( void )
 {
 	kmGLFreeAll();
-
+	
 	_ccCurrentProjectionMatrix = -1;
 	_vertexAttribPosition = NO;
 	_vertexAttribColor = NO;
 	_vertexAttribTexCoords = NO;
-
+	
 #if CC_ENABLE_GL_STATE_CACHE
 	_ccCurrentShaderProgram = -1;
 	for( NSInteger i=0; i < kCCMaxActiveTexture; i++ )
@@ -74,7 +74,7 @@ void ccGLDeleteProgram( GLuint program )
 	if( program == _ccCurrentShaderProgram )
 		_ccCurrentShaderProgram = -1;
 #endif // CC_ENABLE_GL_STATE_CACHE
-
+	
 	glDeleteProgram( program );
 }
 
@@ -127,8 +127,6 @@ void ccGLBindTexture2D( GLuint textureId )
 {
 	ccGLBindTexture2DN(0, textureId);
 }
-	
-
 
 void ccGLBindTexture2DN( GLuint textureUnit, GLuint textureId )
 {
@@ -149,6 +147,16 @@ void ccGLBindTexture2DN( GLuint textureUnit, GLuint textureId )
 
 void ccGLDeleteTexture( GLuint textureId )
 {
+	ccGLDeleteTextureN( 0, textureId );
+}
+
+void ccGLDeleteTextureN( GLuint textureUnit, GLuint textureId )
+{
+#if CC_ENABLE_GL_STATE_CACHE
+	if( _ccCurrentBoundTexture[ textureUnit ] == textureId )
+		_ccCurrentBoundTexture[ textureUnit ] = -1;
+#endif // CC_ENABLE_GL_STATE_CACHE
+
 	glDeleteTextures(1, &textureId );
 }
 
@@ -168,7 +176,7 @@ void ccGLBindVAO(GLuint vaoId)
 void ccGLEnable( ccGLServerState flags )
 {
 #if CC_ENABLE_GL_STATE_CACHE
-
+	
 //	BOOL enabled = NO;
 //
 //	/* GL_BLEND */
@@ -181,7 +189,7 @@ void ccGLEnable( ccGLServerState flags )
 //			_ccGLServerState &=  ~CC_GL_BLEND;
 //		}
 //	}
-
+	
 #else
 //	if( flags & CC_GL_BLEND )
 //		glEnable( GL_BLEND );
@@ -198,7 +206,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 	
 	/* Position */
 	BOOL enablePosition = flags & kCCVertexAttribFlag_Position;
-
+	
 	if( enablePosition != _vertexAttribPosition ) {
 		if( enablePosition )
 			glEnableVertexAttribArray( kCCVertexAttrib_Position );
@@ -210,7 +218,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 	/* Color */
 	BOOL enableColor = flags & kCCVertexAttribFlag_Color;
-
+	
 	if( enableColor != _vertexAttribColor ) {
 		if( enableColor )
 			glEnableVertexAttribArray( kCCVertexAttrib_Color );
@@ -222,7 +230,7 @@ void ccGLEnableVertexAttribs( unsigned int flags )
 
 	/* Tex Coords */
 	BOOL enableTexCoords = flags & kCCVertexAttribFlag_TexCoords;
-
+	
 	if( enableTexCoords != _vertexAttribTexCoords ) {
 		if( enableTexCoords )
 			glEnableVertexAttribArray( kCCVertexAttrib_TexCoords );

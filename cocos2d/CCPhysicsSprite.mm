@@ -35,24 +35,15 @@
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 
 @implementation CCPhysicsSprite
-{
-	BOOL	_ignoreBodyRotation;
-	
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-	cpBody	*_body;
-	
-#elif CC_ENABLE_BOX2D_INTEGRATION
-	b2Body	*_body;
-	
-	// Pixels to Meters ratio
-	float	_PTMRatio;
-#endif // CC_ENABLE_BOX2D_INTEGRATION
-}
 
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
 
-#if (CC_ENABLE_CHIPMUNK_INTEGRATION || CC_ENABLE_BOX2D_INTEGRATION)
+#if CC_ENABLE_CHIPMUNK_INTEGRATION
 @synthesize body = _body;
+#endif
+#if CC_ENABLE_BOX2D_INTEGRATION
+@synthesize body = _body;
+@synthesize PTMRatio = _PTMRatio;
 #endif
 
 #pragma mark - Chipmunk support

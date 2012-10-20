@@ -49,7 +49,7 @@
         self.scenesLoaded = NO;
 
         // Set touch enabled
-        self.isTouchEnabled = YES;
+        self.touchEnabled = YES;
 
         // Continue to show Default.png until we're fully loaded...
         CGSize winSize = [CCDirector sharedDirector].winSize;
