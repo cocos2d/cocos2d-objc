@@ -169,13 +169,16 @@ int compareInts (const void * a, const void * b);
 	}
 	else
 	{
+		// This code should be enough to re-init the sprite
+		[reusedTile_ setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+
 		// XXX: should not be re-init. Potential memeory leak. Not following best practices
 		// XXX: it shall call directory  [setRect:rect]
-		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
+//		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
 		
 		// Since initWithTexture resets the batchNode, we need to re add it.
 		// but should be removed once initWithTexture is not called again
-		[reusedTile_ setBatchNode:self];
+//		[reusedTile_ setBatchNode:self];
 	}
 
 	return reusedTile_;
@@ -386,7 +389,7 @@ int compareInts (const void * a, const void * b);
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
 
 	// Optimization: add the quad without adding a child
-	[self addQuadFromSprite:tile quadIndex:indexForZ];
+	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 	// insert it into the local atlasindex array
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
@@ -447,7 +450,7 @@ int compareInts (const void * a, const void * b);
 
 
 	// don't add it using the "standard" way.
-	[self addQuadFromSprite:tile quadIndex:indexForZ];
+	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 
 	// append should be after addQuadFromSprite since it modifies the quantity values

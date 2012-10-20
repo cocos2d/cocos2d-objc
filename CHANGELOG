@@ -30,6 +30,7 @@ version 2.1-beta3  xx-Oct-2012
 		Added new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
 . [FIX] TextureCache: filenames are standarized before adding them into the cache
+. [FIX] TMX Tiled Maps: Resused code is re-initialized in a faster
 . [FIX] Touch Delegate:
 		CCTargetedTouchDelegate -> CCTouchOneByOneDelegate
 		CCStandardTouchDelegate -> CCTouchAllAtOnceDelegate
