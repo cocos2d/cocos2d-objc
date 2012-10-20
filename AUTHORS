@@ -49,6 +49,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
 
+* Peter Johnston (https://github.com/ptrrj)
+	Fixed possible retain cycle with Director's delegate
+
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
 

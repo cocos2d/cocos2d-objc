@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
@@ -668,7 +668,7 @@ Class restartAction()
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
 		[self schedule:@selector(updateCol:) interval:2.0f];
-		[self schedule:@selector(repaintWithGID:) interval:2];
+		[self schedule:@selector(repaintWithGID:) interval:2.05f];
 		[self schedule:@selector(removeTiles:) interval:1];
 
 

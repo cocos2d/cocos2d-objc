@@ -31,7 +31,7 @@
 #import <UIKit/UIKit.h>
 
 /**
- CCTargetedTouchDelegate.
+ CCTouchOneByOneDelegate.
 
  Using this type of delegate results in two benefits:
  1. You don't need to deal with NSSets, the dispatcher does the job of splitting
@@ -45,7 +45,7 @@
  handler, without bothering the other handlers.)
  @since v0.8
  */
-@protocol CCTargetedTouchDelegate <NSObject>
+@protocol CCTouchOneByOneDelegate <NSObject>
 
 /** Return YES to claim the touch.
  @since v0.8
@@ -59,12 +59,12 @@
 @end
 
 /**
- CCStandardTouchDelegate.
+ CCTouchAllAtOnceDelegate.
 
  This type of delegate is the same one used by CocoaTouch. You will receive all the events (Began,Moved,Ended,Cancelled).
  @since v0.8
 */
-@protocol CCStandardTouchDelegate <NSObject>
+@protocol CCTouchAllAtOnceDelegate <NSObject>
 @optional
 - (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
 - (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;

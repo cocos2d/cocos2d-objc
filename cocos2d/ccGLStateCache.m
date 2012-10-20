@@ -152,9 +152,11 @@ void ccGLDeleteTexture( GLuint textureId )
 
 void ccGLDeleteTextureN( GLuint textureUnit, GLuint textureId )
 {
+#if CC_ENABLE_GL_STATE_CACHE
 	if( _ccCurrentBoundTexture[ textureUnit ] == textureId )
 		_ccCurrentBoundTexture[ textureUnit ] = -1;
-	
+#endif // CC_ENABLE_GL_STATE_CACHE
+
 	glDeleteTextures(1, &textureId );
 }
 
