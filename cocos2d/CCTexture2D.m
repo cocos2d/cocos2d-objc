@@ -989,8 +989,7 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 			return  @"PVRTC2";
             
 		default:
-			NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)format_);
-			CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)format_);
+			CCLOG(@"stringForFormat: %ld, unrecognised pixel format", (long)format_);
 			break;
 	}
 	
