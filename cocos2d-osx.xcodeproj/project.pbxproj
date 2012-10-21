@@ -52,6 +52,27 @@
 /* Begin PBXBuildFile section */
 		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
 		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
+		2B44E50116338743000492D8 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
+		2B44E50716338743000492D8 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B91225EDD000DE0DA2 /* b1.png */; };
+		2B44E50816338743000492D8 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BA1225EDD000DE0DA2 /* b2.png */; };
+		2B44E50A16338743000492D8 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7CE1225EDD000DE0DA2 /* f1.png */; };
+		2B44E50B16338743000492D8 /* f2.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7CF1225EDD000DE0DA2 /* f2.png */; };
+		2B44E51116338743000492D8 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7D51225EDD000DE0DA2 /* grossini.png */; };
+		2B44E53216338743000492D8 /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7F61225EDD000DE0DA2 /* r1.png */; };
+		2B44E53316338743000492D8 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7F71225EDD000DE0DA2 /* r2.png */; };
+		2B44E54516338743000492D8 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
+		2B44E54616338743000492D8 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C01225EDD000DE0DA2 /* blocks.png */; };
+		2B44E54916338743000492D8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
+		2B44E54A16338743000492D8 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		2B44E54D16338743000492D8 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
+		2B44E54E16338743000492D8 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		2B44E54F16338743000492D8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
+		2B44E55016338743000492D8 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E663D121CA00A001A484F /* libcocos2d.a */; };
+		2B44E55116338743000492D8 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
+		2B44E55216338743000492D8 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
+		2B44E55A163387B4000492D8 /* ClippingNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1928631633796D0049A044 /* ClippingNodeTest.m */; };
+		2B44E55B1633882C000492D8 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BF1225EDD000DE0DA2 /* background3.png */; };
+		2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
 		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
@@ -5954,6 +5975,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2B44E4FA16338743000492D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E01E663C121CA00A001A484F;
+			remoteInfo = cocos2d;
+		};
 		4AD3B958159A54ED002E68D1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -6553,6 +6581,7 @@
 		2B19285E163379400049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
 		2B1928621633796D0049A044 /* ClippingNodeTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ClippingNodeTest.h; path = tests/ClippingNodeTest.h; sourceTree = "<group>"; };
 		2B1928631633796D0049A044 /* ClippingNodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ClippingNodeTest.m; path = tests/ClippingNodeTest.m; sourceTree = "<group>"; };
+		2B44E55616338743000492D8 /* ClippingNodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClippingNodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
 		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
@@ -7699,6 +7728,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2B44E54C16338743000492D8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B44E54D16338743000492D8 /* Cocoa.framework in Frameworks */,
+				2B44E54E16338743000492D8 /* OpenGL.framework in Frameworks */,
+				2B44E54F16338743000492D8 /* QuartzCore.framework in Frameworks */,
+				2B44E55016338743000492D8 /* libcocos2d.a in Frameworks */,
+				2B44E55116338743000492D8 /* ApplicationServices.framework in Frameworks */,
+				2B44E55216338743000492D8 /* libz.dylib in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AD3B89F159A5415002E68D1 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8248,6 +8290,7 @@
 				A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */,
 				A0E5F98515C1B21800D44C32 /* JS Watermelon.app */,
 				A0D4685415C339E100588ADE /* JS Moon Warriors.app */,
+				2B44E55616338743000492D8 /* ClippingNodeTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -10665,6 +10708,25 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2B44E4F816338743000492D8 /* ClippingNodeTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2B44E55316338743000492D8 /* Build configuration list for PBXNativeTarget "ClippingNodeTest" */;
+			buildPhases = (
+				2B44E4FB16338743000492D8 /* Resources */,
+				2B44E54816338743000492D8 /* Sources */,
+				2B44E54C16338743000492D8 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2B44E4F916338743000492D8 /* PBXTargetDependency */,
+			);
+			name = ClippingNodeTest;
+			productInstallPath = "$(HOME)/Applications";
+			productName = "cocos2d-mac";
+			productReference = 2B44E55616338743000492D8 /* ClippingNodeTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		4AD3B7DD159A5415002E68D1 /* CocosDenshion */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4AD3B8A4159A5415002E68D1 /* Build configuration list for PBXNativeTarget "CocosDenshion" */;
@@ -11413,6 +11475,7 @@
 				A0980E9414B92A7A004812AD /* ActionProgressTest */,
 				A044430514A5167E00E62742 /* Box2dTest */,
 				A044422314A515EE00E62742 /* ChipmunkTest */,
+				2B44E4F816338743000492D8 /* ClippingNodeTest */,
 				E0AC06B7122803BC00EFA814 /* DrawingPrimitivesTest */,
 				A0443DA814A42E4500E62742 /* Effects */,
 				E0B92E111226A621003FF67E /* EffectsAdvancedTest */,
@@ -11443,6 +11506,25 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2B44E4FB16338743000492D8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */,
+				2B44E55B1633882C000492D8 /* background3.png in Resources */,
+				2B44E50116338743000492D8 /* fps_images.png in Resources */,
+				2B44E50716338743000492D8 /* b1.png in Resources */,
+				2B44E50816338743000492D8 /* b2.png in Resources */,
+				2B44E50A16338743000492D8 /* f1.png in Resources */,
+				2B44E50B16338743000492D8 /* f2.png in Resources */,
+				2B44E51116338743000492D8 /* grossini.png in Resources */,
+				2B44E53216338743000492D8 /* r1.png in Resources */,
+				2B44E53316338743000492D8 /* r2.png in Resources */,
+				2B44E54516338743000492D8 /* icon.icns in Resources */,
+				2B44E54616338743000492D8 /* blocks.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A009433415181C8D0029A5C6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -16333,6 +16415,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2B44E54816338743000492D8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2B44E55A163387B4000492D8 /* ClippingNodeTest.m in Sources */,
+				2B44E54916338743000492D8 /* main.m in Sources */,
+				2B44E54A16338743000492D8 /* BaseAppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		4AD3B84B159A5415002E68D1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -17384,6 +17476,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2B44E4F916338743000492D8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E01E663C121CA00A001A484F /* cocos2d */;
+			targetProxy = 2B44E4FA16338743000492D8 /* PBXContainerItemProxy */;
+		};
 		4AD3B959159A54ED002E68D1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 4AD3B7DD159A5415002E68D1 /* CocosDenshion */;
@@ -17842,6 +17939,38 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		2B44E55416338743000492D8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = ClippingNodeTest;
+			};
+			name = Debug;
+		};
+		2B44E55516338743000492D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
+				INFOPLIST_FILE = "Resources-Mac/cocos2d_mac-no-window-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = ClippingNodeTest;
+			};
+			name = Release;
+		};
 		4AD3B8A5159A5415002E68D1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -19243,6 +19372,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2B44E55316338743000492D8 /* Build configuration list for PBXNativeTarget "ClippingNodeTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2B44E55416338743000492D8 /* Debug */,
+				2B44E55516338743000492D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4AD3B8A4159A5415002E68D1 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
