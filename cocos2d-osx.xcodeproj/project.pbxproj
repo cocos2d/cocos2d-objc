@@ -74,6 +74,8 @@
 		2B44E55B1633882C000492D8 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BF1225EDD000DE0DA2 /* background3.png */; };
 		2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
 		2B44E5F21633942D000492D8 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BD1225EDD000DE0DA2 /* background2.jpg */; };
+		2B44E5FA1633AE12000492D8 /* hole_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F81633ADF4000492D8 /* hole_effect.png */; };
+		2B44E5FB1633AE12000492D8 /* hole_stencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F91633ADF4000492D8 /* hole_stencil.png */; };
 		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
@@ -6583,6 +6585,8 @@
 		2B1928621633796D0049A044 /* ClippingNodeTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ClippingNodeTest.h; path = tests/ClippingNodeTest.h; sourceTree = "<group>"; };
 		2B1928631633796D0049A044 /* ClippingNodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ClippingNodeTest.m; path = tests/ClippingNodeTest.m; sourceTree = "<group>"; };
 		2B44E55616338743000492D8 /* ClippingNodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClippingNodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B44E5F81633ADF4000492D8 /* hole_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_effect.png; sourceTree = "<group>"; };
+		2B44E5F91633ADF4000492D8 /* hole_stencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_stencil.png; sourceTree = "<group>"; };
 		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
 		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
@@ -10197,6 +10201,8 @@
 				A0C491E8146F8CA500C4C037 /* arrows.png */,
 				A0C491E9146F8CA500C4C037 /* arrowsBar-hd.png */,
 				A0C491EA146F8CA500C4C037 /* arrowsBar.png */,
+				2B44E5F81633ADF4000492D8 /* hole_effect.png */,
+				2B44E5F91633ADF4000492D8 /* hole_stencil.png */,
 				E0D44F381291BFFB0094708A /* test_image_rgba4444.pvr.ccz */,
 				E0D44F391291BFFB0094708A /* test_image_rgba4444.pvr.gz */,
 				E0D2D55F128CB06A00F78C63 /* piece.png */,
@@ -11511,6 +11517,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B44E5FA1633AE12000492D8 /* hole_effect.png in Resources */,
+				2B44E5FB1633AE12000492D8 /* hole_stencil.png in Resources */,
 				2B44E5F21633942D000492D8 /* background2.jpg in Resources */,
 				2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */,
 				2B44E55B1633882C000492D8 /* background3.png in Resources */,

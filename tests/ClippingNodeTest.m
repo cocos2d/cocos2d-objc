@@ -21,6 +21,7 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {
     @"ScrollViewDemo",
+    @"HoleDemo",
 	@"ShapeTest",
 	@"ShapeInvertedTest",
 	@"SpriteTest",
@@ -404,6 +405,126 @@ Class restartAction()
     }
 
 }
+
+@end
+
+#pragma mark - HoleDemo
+
+@interface HoleDemo ()
+{
+    /*
+    BOOL scrolling_;
+    CGPoint lastPoint_;
+    */
+    CCNode *holes_;
+    CCNode *holesStencil_;
+}
+@end
+
+@implementation HoleDemo
+
+- (void) dealloc
+{
+    [holes_ release];
+    [holesStencil_ release];
+    [super dealloc];
+}
+
+-(NSString*) title
+{
+	return @"Hole Demo";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch/click to poke holes";
+}
+
+- (void)setup
+{
+    CCClippingNode *outerClipper = [CCClippingNode clippingNode];
+    outerClipper.anchorPoint = ccp(0.5, 0.5);
+    outerClipper.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
+    [outerClipper runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
+    
+    CCSprite *target = [CCSprite spriteWithFile:@"blocks.png"];
+    target.anchorPoint = ccp(0.5, 0.5);
+    target.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    target.scale = 3;
+    
+    outerClipper.stencil = target;
+    
+    CCClippingNode *holesClipper = [CCClippingNode clippingNode];
+    holesClipper.anchorPoint = ccp(0.5, 0.5);
+    holesClipper.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    holesClipper.inverted = YES;
+    //holesClipper.alphaThreshold = 0;
+    
+    [holesClipper addChild:target];
+    
+    [outerClipper addChild:holesClipper];
+    
+    holes_ = [[CCNode node] retain];
+    holes_.anchorPoint = ccp(0.5, 0.5);
+    holes_.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    holes_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
+    
+    [outerClipper addChild:holes_];
+    
+    holesStencil_ = [[CCNode node] retain];
+    holesStencil_.anchorPoint = ccp(0.5, 0.5);
+    holesStencil_.position = ccp(holesClipper.contentSize.width / 2, holesClipper.contentSize.height / 2);
+    holesStencil_.contentSize = holes_.contentSize;
+    
+    holesClipper.stencil = holesStencil_;
+    
+    [self addChild:outerClipper];
+        
+#ifdef __CC_PLATFORM_IOS
+    self.touchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+    self.mouseEnabled = YES;
+#endif
+}
+
+- (void)pokeHoleAtPoint:(CGPoint)point
+{
+    float rotation = CCRANDOM_0_1() * 360;
+    
+    CCSprite *hole = [CCSprite spriteWithFile:@"hole_effect.png"];
+    hole.anchorPoint = ccp(0.5, 0.5);
+    hole.position = point;
+    hole.rotation = rotation;
+    [holes_ addChild:hole];
+    
+    CCSprite *holeStencil = [CCSprite spriteWithFile:@"hole_stencil.png"];
+    holeStencil.anchorPoint = ccp(0.5, 0.5);
+    holeStencil.position = point;
+    holeStencil.rotation = rotation;
+    [holesStencil_ addChild:holeStencil];
+}
+
+#ifdef __CC_PLATFORM_IOS
+
+-(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+	CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return;
+    [self pokeHoleAtPoint:point];
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (BOOL)ccMouseDown:(NSEvent*)event
+{
+    CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return NO;
+    [self pokeHoleAtPoint:point];
+    return YES;
+}
+
+#endif
 
 @end
 

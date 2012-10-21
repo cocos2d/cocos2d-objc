@@ -77,6 +77,8 @@
 		2B44E4D5163385D3000492D8 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
 		2B44E5CD16338E16000492D8 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
 		2B44E5CE16338E16000492D8 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
+		2B44E5F61633A21D000492D8 /* hole_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F41633A1ED000492D8 /* hole_effect.png */; };
+		2B44E5F71633A21D000492D8 /* hole_stencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F51633A1ED000492D8 /* hole_stencil.png */; };
 		3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -4876,6 +4878,8 @@
 		2B1928381633778D0049A044 /* ClippingNodeTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ClippingNodeTest.h; path = tests/ClippingNodeTest.h; sourceTree = "<group>"; };
 		2B1928391633778D0049A044 /* ClippingNodeTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClippingNodeTest.m; path = tests/ClippingNodeTest.m; sourceTree = "<group>"; };
 		2B44E494163383A0000492D8 /* ClippingNodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClippingNodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B44E5F41633A1ED000492D8 /* hole_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_effect.png; sourceTree = "<group>"; };
+		2B44E5F51633A1ED000492D8 /* hole_stencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_stencil.png; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		495E73F7104B74E20012BB52 /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -8266,6 +8270,8 @@
 				A0D77A17146E3268000960C7 /* arrows.png */,
 				A0D77A18146E3268000960C7 /* arrowsBar-hd.png */,
 				A0D77A19146E3268000960C7 /* arrowsBar.png */,
+				2B44E5F41633A1ED000492D8 /* hole_effect.png */,
+				2B44E5F51633A1ED000492D8 /* hole_stencil.png */,
 				E0B0E70C11F8CF9F00414246 /* texture512x512.png */,
 				E0B0E70D11F8CF9F00414246 /* texture1024x1024.png */,
 				E0B0E70E11F8CF9F00414246 /* texture2048x2048.png */,
@@ -11664,6 +11670,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B44E5F61633A21D000492D8 /* hole_effect.png in Resources */,
+				2B44E5F71633A21D000492D8 /* hole_stencil.png in Resources */,
 				2B44E5CD16338E16000492D8 /* background2-hd.jpg in Resources */,
 				2B44E5CE16338E16000492D8 /* background2.jpg in Resources */,
 				2B44E4D2163385D3000492D8 /* blocks.png in Resources */,
