@@ -195,9 +195,9 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 - (NSString*) description
 {
 #ifdef __LP64__
-    return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lu%lu | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
+    return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %lu%lu | Pixel format = %@ | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, [self stringForFormat], maxS_, maxT_];
 #else
-	return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %u%u | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
+return [NSString stringWithFormat:@"<%@ = %p | Name = %i | Dimensions = %ix%i | Pixel format = %@ | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, [self stringForFormat], maxS_, maxT_];
 #endif
 }
 
@@ -266,23 +266,8 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		POTWide = ccNextPOT(CGImageGetWidth(CGImage));
 		POTHigh = ccNextPOT(CGImageGetHeight(CGImage));
 	}
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-	// iOS BUG:
-	// If Texture is both 16-bit and NPOT on iOS5, then convert it to POT in order to save memory
-	// http://www.cocos2d-iphone.org/forum/topic/31092
-	if( ([conf OSVersion] >= kCCiOSVersion_5_0_0) &&
-	   (pixelFormat == kCCTexture2DPixelFormat_RGB565 || pixelFormat == kCCTexture2DPixelFormat_RGBA4444 || pixelFormat == kCCTexture2DPixelFormat_RGB5A1) &&
-	   ( (POTHigh != ccNextPOT(POTHigh)) || POTWide != ccNextPOT(POTWide) ) )
-	{
-		CCLOG(@"cocos2d: converting NPOT (%d,%d) to POT (%lu,%lu) due to iOS 5.x memory BUG", POTWide, POTHigh, ccNextPOT(POTWide), ccNextPOT(POTHigh) );
-		POTWide = ccNextPOT(POTWide);
-		POTHigh = ccNextPOT(POTHigh);
-	}
-#endif // IOS
-
-	NSUInteger maxTextureSize = [conf maxTextureSize];
+    
+    NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
 		CCLOG(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			  (long)POTWide, (long)POTHigh,
@@ -290,13 +275,13 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		[self release];
 		return nil;
 	}
-
+    
 	info = CGImageGetAlphaInfo(CGImage);
 	hasAlpha = ((info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
-
+    
 	size_t bpp = CGImageGetBitsPerComponent(CGImage);
 	colorSpace = CGImageGetColorSpace(CGImage);
-
+    
 	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixelFormat_;
@@ -309,8 +294,33 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
 		pixelFormat = kCCTexture2DPixelFormat_A8;
 	}
-
+    
 	imageSize = CGSizeMake(CGImageGetWidth(CGImage), CGImageGetHeight(CGImage));
+
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
+	// iOS 5 BUG:
+	// If width is not word aligned, convert it to word aligned.
+	// http://www.cocos2d-iphone.org/forum/topic/31092
+	if( [conf OSVersion] >= kCCiOSVersion_5_0_0 )
+	{
+		
+		NSUInteger bpp = [[self class] bitsPerPixelForFormat:pixelFormat];
+		NSUInteger bytes = POTWide * bpp / 8;
+		
+		// XXX: Should it be 4 or sizeof(int) ??
+		NSUInteger mod = bytes % 4;
+		
+		// Not word aligned ?
+		if( mod != 0 ) {
+			
+			NSUInteger neededBytes = (4 - mod ) / (bpp/8);
+            
+			CCLOG(@"cocos2d: WARNING converting size=(%d,%d) to size=(%d,%d) due to iOS 5.x memory BUG. See: http://www.cocos2d-iphone.org/forum/topic/31092", POTWide, POTHigh, POTWide + neededBytes, POTHigh );
+			POTWide += neededBytes;
+		}
+	}
+#endif // IOS
 
 	// Create the bitmap graphics context
 
@@ -894,22 +904,20 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 	return defaultAlphaPixelFormat_;
 }
 
--(NSUInteger) bitsPerPixelForFormat
++(NSUInteger) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format
 {
 	NSUInteger ret=0;
-
-	switch (format_) {
+	
+	switch (format) {
 		case kCCTexture2DPixelFormat_RGBA8888:
+			ret = 32;
+			break;
+		case kCCTexture2DPixelFormat_RGB888:
+			// It is 32 and not 24, since its internal representation uses 32 bits.
 			ret = 32;
 			break;
 		case kCCTexture2DPixelFormat_RGB565:
 			ret = 16;
-			break;
-		case kCCTexture2DPixelFormat_RGB888:
-			ret = 24;
-			break;
-		case kCCTexture2DPixelFormat_A8:
-			ret = 8;
 			break;
 		case kCCTexture2DPixelFormat_RGBA4444:
 			ret = 16;
@@ -917,25 +925,77 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		case kCCTexture2DPixelFormat_RGB5A1:
 			ret = 16;
 			break;
+		case kCCTexture2DPixelFormat_AI88:
+			ret = 16;
+			break;
+		case kCCTexture2DPixelFormat_A8:
+			ret = 8;
+			break;
+		case kCCTexture2DPixelFormat_I8:
+			ret = 8;
+			break;
 		case kCCTexture2DPixelFormat_PVRTC4:
 			ret = 4;
 			break;
 		case kCCTexture2DPixelFormat_PVRTC2:
 			ret = 2;
 			break;
-		case kCCTexture2DPixelFormat_I8:
-			ret = 8;
-			break;
-		case kCCTexture2DPixelFormat_AI88:
-			ret = 16;
-			break;
 		default:
 			ret = -1;
-			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format_);
-			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format_);
+			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
+			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
 			break;
 	}
 	return ret;
 }
+
+-(NSUInteger) bitsPerPixelForFormat
+{
+	return [[self class] bitsPerPixelForFormat:format_];
+}
+
+-(NSString*) stringForFormat
+{
+	
+	switch (format_) {
+		case kCCTexture2DPixelFormat_RGBA8888:
+			return  @"RGBA8888";
+            
+		case kCCTexture2DPixelFormat_RGB888:
+			return  @"RGB888";
+            
+		case kCCTexture2DPixelFormat_RGB565:
+			return  @"RGB565";
+            
+		case kCCTexture2DPixelFormat_RGBA4444:
+			return  @"RGBA4444";
+            
+		case kCCTexture2DPixelFormat_RGB5A1:
+			return  @"RGB5A1";
+            
+		case kCCTexture2DPixelFormat_AI88:
+			return  @"AI88";
+            
+		case kCCTexture2DPixelFormat_A8:
+			return  @"A8";
+            
+		case kCCTexture2DPixelFormat_I8:
+			return  @"I8";
+			
+		case kCCTexture2DPixelFormat_PVRTC4:
+			return  @"PVRTC4";
+			
+		case kCCTexture2DPixelFormat_PVRTC2:
+			return  @"PVRTC2";
+            
+		default:
+			NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)format_);
+			CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)format_);
+			break;
+	}
+	
+	return  nil;
+}
+
 @end
 

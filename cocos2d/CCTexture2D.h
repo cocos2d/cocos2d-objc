@@ -353,6 +353,17 @@ typedef struct _ccTexParams {
  @since v1.0
  */
 -(NSUInteger) bitsPerPixelForFormat;
+
+/** returns the pixel format in a NSString.
+ @since v1.1 RC0
+ */
+-(NSString*) stringForFormat;
+
+
+/** Helper functions that returns bits per pixels for a given format.
+ @since v1.1 RC0
+ */
++(NSUInteger) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format;
 @end
 
 
