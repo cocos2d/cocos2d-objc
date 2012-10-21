@@ -15,10 +15,12 @@ enum {
 	kTagSubtitleLabel = 2,
 	kTagStencilNode = 100,
 	kTagClipperNode = 101,
+	kTagContentNode = 102,
 };
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+    @"ScrollViewDemo",
 	@"ShapeTest",
 	@"ShapeInvertedTest",
 	@"SpriteTest",
@@ -402,6 +404,120 @@ Class restartAction()
     }
 
 }
+
+@end
+
+#pragma mark - ScrollViewDemo
+
+@interface ScrollViewDemo ()
+{
+    BOOL scrolling_;
+    CGPoint lastPoint_;
+}
+@end
+
+@implementation ScrollViewDemo
+
+-(NSString*) title
+{
+	return @"Scroll View Demo";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch/click move/drag to scroll the content";
+}
+
+- (void)setup
+{
+    CCClippingNode *clipper = [CCClippingNode clippingNode];
+    clipper.tag = kTagClipperNode;
+    clipper.contentSize = CGSizeMake(200, 200);
+    clipper.anchorPoint = ccp(0.5, 0.5);
+    clipper.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
+    [clipper runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
+    [self addChild:clipper];
+
+    CCDrawNode *stencil = [CCDrawNode node];
+    CGPoint rectangle[] = {{0, 0}, {clipper.contentSize.width, 0}, {clipper.contentSize.width, clipper.contentSize.height}, {0, clipper.contentSize.height}};
+    ccColor4F white = {1, 1, 1, 1};
+    [stencil drawPolyWithVerts:rectangle count:4 fillColor:white borderWidth:1 borderColor:white];
+    clipper.stencil = stencil;
+
+    CCSprite *content = [CCSprite spriteWithFile:@"background2.jpg"];
+    content.tag = kTagContentNode;
+    content.anchorPoint = ccp(0.5, 0.5);
+    content.position = ccp(clipper.contentSize.width / 2, clipper.contentSize.height / 2);
+    [clipper addChild:content];
+    
+    scrolling_ = NO;
+#ifdef __CC_PLATFORM_IOS
+    self.touchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+    self.mouseEnabled = YES;
+#endif
+}
+
+#ifdef __CC_PLATFORM_IOS
+
+-(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	UITouch *touch = [touches anyObject];
+    CCNode *clipper = [self getChildByTag:kTagClipperNode];
+	CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
+    scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
+    lastPoint_ = point;
+}
+
+-(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+{
+    if (!scrolling_) return;
+	UITouch *touch = [touches anyObject];
+    CCNode *clipper = [self getChildByTag:kTagClipperNode];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
+	CGPoint diff = ccpSub(point, lastPoint_);
+    CCNode *content = [clipper getChildByTag:kTagContentNode];
+    content.position = ccpAdd(content.position, diff);
+    lastPoint_ = point;
+}
+
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    if (!scrolling_) return;
+    scrolling_ = NO;
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (BOOL)ccMouseDown:(NSEvent*)event
+{
+    CCNode *clipper = [self getChildByTag:kTagClipperNode];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
+    lastPoint_ = point;
+    return scrolling_;
+}
+
+- (BOOL)ccMouseDragged:(NSEvent *)event
+{
+    if (!scrolling_) return NO;
+    CCNode *clipper = [self getChildByTag:kTagClipperNode];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+	CGPoint diff = ccpSub(point, lastPoint_);
+    CCNode *content = [clipper getChildByTag:kTagContentNode];
+    content.position = ccpAdd(content.position, diff);
+    lastPoint_ = point;
+	return YES;
+}
+
+- (BOOL)ccMouseUp:(NSEvent*)event
+{
+    if (!scrolling_) return NO;
+    scrolling_ = NO;
+    return YES;
+}
+
+#endif
 
 @end
 

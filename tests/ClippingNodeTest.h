@@ -57,3 +57,6 @@
 
 @interface NestedTest : BaseClippingNodeTest
 @end
+
+@interface ScrollViewDemo : BaseClippingNodeTest
+@end
