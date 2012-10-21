@@ -58,5 +58,8 @@
 @interface NestedTest : BaseClippingNodeTest
 @end
 
+@interface HoleDemo : BaseClippingNodeTest
+@end
+
 @interface ScrollViewDemo : BaseClippingNodeTest
 @end
