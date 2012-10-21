@@ -377,7 +377,8 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	// do something ?
+	if( [delegate_ respondsToSelector:_cmd] )
+		[delegate_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 
