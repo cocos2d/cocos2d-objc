@@ -73,6 +73,7 @@
 		2B44E55A163387B4000492D8 /* ClippingNodeTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B1928631633796D0049A044 /* ClippingNodeTest.m */; };
 		2B44E55B1633882C000492D8 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BF1225EDD000DE0DA2 /* background3.png */; };
 		2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E08AA22A12C27DEA000341BD /* MainMenu-NoWindow.xib */; };
+		2B44E5F21633942D000492D8 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BD1225EDD000DE0DA2 /* background2.jpg */; };
 		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
@@ -11510,6 +11511,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B44E5F21633942D000492D8 /* background2.jpg in Resources */,
 				2B44E55C1633883E000492D8 /* MainMenu-NoWindow.xib in Resources */,
 				2B44E55B1633882C000492D8 /* background3.png in Resources */,
 				2B44E50116338743000492D8 /* fps_images.png in Resources */,

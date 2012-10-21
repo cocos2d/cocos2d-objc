@@ -75,6 +75,8 @@
 		2B44E4D3163385D3000492D8 /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
 		2B44E4D4163385D3000492D8 /* background3-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C631512382E6B00A4B3E6 /* background3-hd.png */; };
 		2B44E4D5163385D3000492D8 /* background3.png in Resources */ = {isa = PBXBuildFile; fileRef = 50479AFF100F80B000D1C71A /* background3.png */; };
+		2B44E5CD16338E16000492D8 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
+		2B44E5CE16338E16000492D8 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
 		3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -11662,6 +11664,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B44E5CD16338E16000492D8 /* background2-hd.jpg in Resources */,
+				2B44E5CE16338E16000492D8 /* background2.jpg in Resources */,
 				2B44E4D2163385D3000492D8 /* blocks.png in Resources */,
 				2B44E4D3163385D3000492D8 /* blocks-hd.png in Resources */,
 				2B44E4D4163385D3000492D8 /* background3-hd.png in Resources */,
