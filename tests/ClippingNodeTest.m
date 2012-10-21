@@ -372,7 +372,7 @@ Class restartAction()
 - (void)setup
 {
  
-    static int depth = 4;
+    static int depth = 9;
     
     CCNode *parent = self;
     
