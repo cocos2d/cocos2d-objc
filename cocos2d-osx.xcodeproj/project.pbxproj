@@ -50,6 +50,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
+		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
 		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
@@ -6547,6 +6549,10 @@
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		2B19285D163379400049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
+		2B19285E163379400049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
+		2B1928621633796D0049A044 /* ClippingNodeTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ClippingNodeTest.h; path = tests/ClippingNodeTest.h; sourceTree = "<group>"; };
+		2B1928631633796D0049A044 /* ClippingNodeTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ClippingNodeTest.m; path = tests/ClippingNodeTest.m; sourceTree = "<group>"; };
 		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
 		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
@@ -9708,6 +9714,8 @@
 				A044439014A6023800E62742 /* Box2dTest.mm */,
 				A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */,
 				A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */,
+				2B1928621633796D0049A044 /* ClippingNodeTest.h */,
+				2B1928631633796D0049A044 /* ClippingNodeTest.m */,
 				E0AC079E1228041700EFA814 /* drawPrimitivesTest.h */,
 				E0AC079F1228041700EFA814 /* drawPrimitivesTest.m */,
 				A0443E8814A42EBB00E62742 /* EffectsTest.h */,
@@ -10000,6 +10008,8 @@
 		E076E7791225ECF700DE0DA2 /* Misc Nodes */ = {
 			isa = PBXGroup;
 			children = (
+				2B19285D163379400049A044 /* CCClippingNode.h */,
+				2B19285E163379400049A044 /* CCClippingNode.m */,
 				E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */,
 				E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */,
 				E076E66F1225EC7400DE0DA2 /* CCProgressTimer.h */,
@@ -10639,6 +10649,7 @@
 				A0D7D69615E2D2CC000CA0C4 /* CCDirector.h in Headers */,
 				A0D7D69815E2D2CC000CA0C4 /* CCProtocols.h in Headers */,
 				A0D7D69915E2D2CC000CA0C4 /* CCScheduler.h in Headers */,
+				2B19285F163379400049A044 /* CCClippingNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17192,6 +17203,7 @@
 				A0D7D69515E2D2CC000CA0C4 /* CCConfiguration.m in Sources */,
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
+				2B192860163379400049A044 /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
