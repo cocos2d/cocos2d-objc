@@ -25,6 +25,7 @@
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 #import "CCPhysicsDebugNode.h"
+#import "chipmunk_private.h"
 
 #import "ccTypes.h"
 
