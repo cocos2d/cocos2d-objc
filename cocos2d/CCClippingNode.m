@@ -34,6 +34,14 @@
 
 static GLint _stencilBits = -1;
 
+static void setProgram(CCNode *n, CCGLProgram *p) {
+    n.shaderProgram = p;
+    if (!n.children) return;
+    CCNode *c;
+    CCARRAY_FOREACH(n.children, c) setProgram(c, p);
+    
+}
+
 @implementation CCClippingNode
 
 @synthesize stencil = stencil_;
@@ -65,7 +73,7 @@ static GLint _stencilBits = -1;
 {
     if (self = [super init]) {
         self.stencil = stencil;
-        self.alphaThreshold = 0.05;
+        self.alphaThreshold = 1;
         self.inverted = NO;
         // get (only once) the number of bits of the stencil buffer
         static dispatch_once_t once;
@@ -149,9 +157,9 @@ static GLint _stencilBits = -1;
     // INIT
 
     // all 0 mask
-    static GLuint mask_zeros = 0;
+    static const GLuint mask_zeros = 0;
     // all 1 mask
-    static GLuint mask_ones = ~0;
+    static const GLuint mask_ones = ~0;
     
     // increment the current layer
     layer++;
@@ -214,27 +222,22 @@ static GLint _stencilBits = -1;
     //         keep the current layer value in the stencil buffer
     glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_l);
     glStencilOp(GL_KEEP, GL_KEEP, !inverted_ ? GL_REPLACE : GL_ZERO);
-    
-    // setup the alpha test if needed
-#if defined(__CC_PLATFORM_IOS)
-    CCGLProgram *currentProgram = nil;
-#endif
-    
+        
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
     if (alphaThreshold_ < 1) {
 #if defined(__CC_PLATFORM_IOS)
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
-        // save the stencil node current shader
-        currentProgram = stencil_.shaderProgram;
-        // assign the alpha test shader to the stencil
-        stencil_.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-        GLint alphaValueLocation = glGetUniformLocation(stencil_.shaderProgram->program_, kCCUniformAlphaTestValue);
+        CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+        GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
         // set our alphaThreshold
-        [stencil_.shaderProgram setUniformLocation:alphaValueLocation withF1:alphaThreshold_];
+        [program setUniformLocation:alphaValueLocation withF1:alphaThreshold_];
+        // we need to recursively apply this shader to all the nodes in the stencil node
+        // XXX: we should have a way to apply shader to all nodes without having to do this
+        setProgram(stencil_, program);
 #elif defined(__CC_PLATFORM_MAC)
-        // save the color buffer state
+        // save the color buffer state (include alpha test)
         glPushAttrib(GL_COLOR_BUFFER_BIT);
         // enable alpha testing
         glEnable(GL_ALPHA_TEST);
@@ -264,10 +267,9 @@ static GLint _stencilBits = -1;
     // restore alpha test state
     if (alphaThreshold_ < 1) {
 #if defined(__CC_PLATFORM_IOS)
-        // restore the stencil node current shader if any
-        stencil_.shaderProgram = currentProgram;
+        // XXX: we need to find a way to restore the shaders of the stencil node and its childs
 #elif defined(__CC_PLATFORM_MAC)
-        // restore the color buffer state
+        // restore the color buffer state (include alpha test)
         glPopAttrib();
 #endif
     }
