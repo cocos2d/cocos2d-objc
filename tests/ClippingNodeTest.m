@@ -205,11 +205,11 @@ Class restartAction()
     return shape;
 }
 
-- (CCSprite *)gossini
+- (CCSprite *)grossini
 {
-    CCSprite *gossini = [CCSprite spriteWithFile:@"grossini.png"];
-    gossini.scale = 1.5;
-    return gossini;
+    CCSprite *grossini = [CCSprite spriteWithFile:@"grossini.png"];
+    grossini.scale = 1.5;
+    return grossini;
 }
 
 - (CCNode *)stencil
@@ -252,7 +252,7 @@ Class restartAction()
 
 - (CCNode *)content
 {
-    CCNode *node = [self gossini];
+    CCNode *node = [self grossini];
     [node runAction:[self actionScale]];
     return node;
 }
@@ -298,9 +298,16 @@ Class restartAction()
 
 - (CCNode *)stencil
 {
-    CCNode *node = [self gossini];
+    CCNode *node = [self grossini];
     [node runAction:[self actionRotate]];
     return node;
+}
+
+- (CCClippingNode *)clipper
+{
+    CCClippingNode *clipper = [super clipper];
+    clipper.alphaThreshold = 0.05;
+    return clipper;
 }
 
 - (CCNode *)content
@@ -352,6 +359,7 @@ Class restartAction()
 - (CCClippingNode *)clipper
 {
     CCClippingNode *clipper = [super clipper];
+    clipper.alphaThreshold = 0.05;
     clipper.inverted = YES;
     return clipper;
 }
@@ -387,6 +395,7 @@ Class restartAction()
         clipper.contentSize = CGSizeMake(size, size);
         clipper.anchorPoint = ccp(0.5, 0.5);
         clipper.position = ccp(parent.contentSize.width / 2, parent.contentSize.height / 2);
+        clipper.alphaThreshold = 0.05;
         [clipper runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:i % 3 ? 1.33 : 1.66 angle:i % 2 ? 90 : -90]]];
         [parent addChild:clipper];
         
@@ -416,6 +425,7 @@ Class restartAction()
     BOOL scrolling_;
     CGPoint lastPoint_;
     */
+    CCClippingNode *outerClipper_;
     CCNode *holes_;
     CCNode *holesStencil_;
 }
@@ -425,6 +435,7 @@ Class restartAction()
 
 - (void) dealloc
 {
+    [outerClipper_ release];
     [holes_ release];
     [holesStencil_ release];
     [super dealloc];
@@ -442,34 +453,35 @@ Class restartAction()
 
 - (void)setup
 {
-    CCClippingNode *outerClipper = [CCClippingNode clippingNode];
-    outerClipper.anchorPoint = ccp(0.5, 0.5);
-    outerClipper.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
-    [outerClipper runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
+    outerClipper_ = [[CCClippingNode clippingNode] retain];
+    outerClipper_.anchorPoint = ccp(0.5, 0.5);
+    outerClipper_.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
+    [outerClipper_ runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
     
     CCSprite *target = [CCSprite spriteWithFile:@"blocks.png"];
     target.anchorPoint = ccp(0.5, 0.5);
-    target.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    target.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
     target.scale = 3;
     
-    outerClipper.stencil = target;
+    outerClipper_.stencil = target;
     
     CCClippingNode *holesClipper = [CCClippingNode clippingNode];
     holesClipper.anchorPoint = ccp(0.5, 0.5);
-    holesClipper.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    holesClipper.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
     holesClipper.inverted = YES;
+    holesClipper.alphaThreshold = 0.05;
     //holesClipper.alphaThreshold = 0;
     
     [holesClipper addChild:target];
     
-    [outerClipper addChild:holesClipper];
+    [outerClipper_ addChild:holesClipper];
     
     holes_ = [[CCNode node] retain];
     holes_.anchorPoint = ccp(0.5, 0.5);
-    holes_.position = ccp(outerClipper.contentSize.width / 2, outerClipper.contentSize.height / 2);
+    holes_.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
     holes_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
     
-    [outerClipper addChild:holes_];
+    [holesClipper addChild:holes_];
     
     holesStencil_ = [[CCNode node] retain];
     holesStencil_.anchorPoint = ccp(0.5, 0.5);
@@ -478,7 +490,7 @@ Class restartAction()
     
     holesClipper.stencil = holesStencil_;
     
-    [self addChild:outerClipper];
+    [self addChild:outerClipper_];
         
 #ifdef __CC_PLATFORM_IOS
     self.touchEnabled = YES;
@@ -489,19 +501,25 @@ Class restartAction()
 
 - (void)pokeHoleAtPoint:(CGPoint)point
 {
+    float scale = CCRANDOM_0_1() * 0.2 + 0.9;
     float rotation = CCRANDOM_0_1() * 360;
     
     CCSprite *hole = [CCSprite spriteWithFile:@"hole_effect.png"];
     hole.anchorPoint = ccp(0.5, 0.5);
     hole.position = point;
     hole.rotation = rotation;
+    hole.scale = scale;
     [holes_ addChild:hole];
     
     CCSprite *holeStencil = [CCSprite spriteWithFile:@"hole_stencil.png"];
     holeStencil.anchorPoint = ccp(0.5, 0.5);
     holeStencil.position = point;
     holeStencil.rotation = rotation;
+    holeStencil.scale = scale;
     [holesStencil_ addChild:holeStencil];
+
+    [outerClipper_ runAction:[CCSequence actionOne:[CCScaleBy actionWithDuration:0.05 scale:0.95]
+                                               two:[CCScaleTo actionWithDuration:0.125 scale:1]]];
 }
 
 #ifdef __CC_PLATFORM_IOS
@@ -546,7 +564,7 @@ Class restartAction()
 
 -(NSString*) subtitle
 {
-	return @"Touch/click move/drag to scroll the content";
+	return @"Move/drag to scroll the content";
 }
 
 - (void)setup

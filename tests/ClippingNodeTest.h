@@ -32,7 +32,7 @@
 - (CCAction *)actionScale;
 
 - (CCDrawNode *)shape;
-- (CCSprite *)gossini;
+- (CCSprite *)grossini;
 
 - (CCNode *)stencil;
 - (CCClippingNode *)clipper;
