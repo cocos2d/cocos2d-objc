@@ -486,7 +486,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectors];
+	[[director scheduler] unscheduleAll];
     actionManagerActive = NO;
 }
 @end
@@ -548,7 +548,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectorsWithMinPriority:kCCPriorityNonSystemMin];
+	[[director scheduler] unscheduleAllWithMinPriority:kCCPriorityNonSystemMin];
 }
 @end
 
@@ -1202,8 +1202,8 @@ Class restartTest()
 -(void) dealloc
 {
 	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
+	[defaultScheduler unscheduleAllForTarget:sched1];
+	[defaultScheduler unscheduleAllForTarget:sched2];
 
 	[sliderCtl1 release];
 	[sliderCtl2 release];

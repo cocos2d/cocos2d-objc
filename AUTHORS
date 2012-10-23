@@ -52,7 +52,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Peter Johnston (https://github.com/ptrrj)
 	Fixed possible retain cycle with Director's delegate
 
-* Pierre David Belanger (https://github.com/pierredavidbelanger):
+* Pierre-David Bélanger (https://github.com/pierredavidbelanger):
 	Author of Clipping Node
 	Author of 9 tests for Clipping Node
 	Added support for Stencil Buffer in the GLView

@@ -385,6 +385,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCCamera.m</string>
 		</dict>
+		<key>libs/cocos2d/CCClippingNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCClippingNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCClippingNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCClippingNode.m</string>
+		</dict>
 		<key>libs/cocos2d/ccConfig.h</key>
 		<dict>
 			<key>Group</key>
@@ -2332,6 +2354,8 @@
 		<string>libs/cocos2d/CCAtlasNode.m</string>
 		<string>libs/cocos2d/CCCamera.h</string>
 		<string>libs/cocos2d/CCCamera.m</string>
+		<string>libs/cocos2d/CCClippingNode.h</string>
+		<string>libs/cocos2d/CCClippingNode.m</string>
 		<string>libs/cocos2d/ccConfig.h</string>
 		<string>libs/cocos2d/CCConfiguration.h</string>
 		<string>libs/cocos2d/CCConfiguration.m</string>

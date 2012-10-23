@@ -2697,6 +2697,9 @@
 		A0C491EE146F8CA500C4C037 /* arrowsBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491EA146F8CA500C4C037 /* arrowsBar.png */; };
 		A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */; };
 		A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
+		A0D2DE29163619C2008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
+		A0D2DE2A163619C3008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
+		A0D2DE2B163619C3008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
@@ -16878,6 +16881,7 @@
 				A064EC6416235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DD1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A0D2DE29163619C2008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17006,6 +17010,7 @@
 				A064EC6616235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DF1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A0D2DE2B163619C3008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17124,6 +17129,7 @@
 				A064EC6516235F7C00020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DE1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A0D2DE2A163619C3008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
