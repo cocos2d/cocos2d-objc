@@ -337,10 +337,10 @@ typedef struct _hashSelectorEntry
 
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
 {
-	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:kCCRepeatForever delay:0.0f];
+	[self scheduleSelector:selector forTarget:target interval:interval repeat:kCCRepeatForever delay:0.0f paused:paused];
 }
 
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused 
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");
@@ -380,7 +380,7 @@ typedef struct _hashSelectorEntry
 	[timer release];
 }
 
--(void) scheduleBlockForKey:(NSString*)key target:(id)owner interval:(ccTime)interval paused:(BOOL)paused repeat:(uint)repeat delay:(ccTime)delay block:(void(^)(ccTime dt))block
+-(void) scheduleBlockForKey:(NSString*)key target:(id)owner interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused block:(void(^)(ccTime dt))block
 {
 	NSAssert( block != nil, @"Argument block must be non-nil");
 	NSAssert( owner != nil, @"Argument owner must be non-nil");

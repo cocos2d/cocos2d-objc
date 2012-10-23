@@ -755,7 +755,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 
-	[scheduler_ scheduleSelector:selector forTarget:self interval:interval paused:!isRunning_ repeat:repeat delay:delay];
+	[scheduler_ scheduleSelector:selector forTarget:self interval:interval repeat:repeat delay:delay paused:!isRunning_];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
