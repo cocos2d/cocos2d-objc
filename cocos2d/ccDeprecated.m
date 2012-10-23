@@ -41,6 +41,18 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
 	return [[CCDirector sharedDirector] scheduler];
 }
+-(void) unscheduleAllSelectorsForTarget:(id)target
+{
+	[self unscheduleAllForTarget:target];
+}
+-(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority
+{
+	[self unscheduleAllWithMinPriority:minPriority];
+}
+-(void) unscheduleAllSelectors
+{
+	[self unscheduleAll];
+}
 @end
 
 #pragma mark - ActionManager

@@ -774,7 +774,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) unscheduleAllSelectors
 {
-	[scheduler_ unscheduleAllSelectorsForTarget:self];
+	[scheduler_ unscheduleAllForTarget:self];
 }
 - (void) resumeSchedulerAndActions
 {

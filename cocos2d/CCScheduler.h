@@ -211,24 +211,24 @@ struct _hashUpdateEntry;
  */
 -(void) unscheduleUpdateForTarget:(id)target;
 
-/** Unschedules all selectors for a given target.
+/** Unschedules all selectors and blocks for a given target.
  This also includes the "update" selector.
  @since v0.99.3
  */
--(void) unscheduleAllSelectorsForTarget:(id)target;
+-(void) unscheduleAllForTarget:(id)target;
 
-/** Unschedules all selectors from all targets.
+/** Unschedules all selectors and blocks from all targets.
  You should NEVER call this method, unless you know what you are doing.
 
  @since v0.99.3
  */
--(void) unscheduleAllSelectors;
+-(void) unscheduleAll;
 
-/** Unschedules all selectors from all targets with a minimum priority.
+/** Unschedules all selectors and blocks from all targets with a minimum priority.
   You should only call this with kCCPriorityNonSystemMin or higher.
   @since v2.0.0
   */
--(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority;
+-(void) unscheduleAllWithMinPriority:(NSInteger)minPriority;
 
 /** Pauses the target.
  All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
@@ -249,13 +249,13 @@ struct _hashUpdateEntry;
  */
 -(BOOL) isTargetPaused:(id)target;
 
-/** Pause all selectors from all targets.
+/** Pause all selectors and blocks from all targets.
   You should NEVER call this method, unless you know what you are doing.
  @since v2.0.0
   */
 -(NSSet*) pauseAllTargets;
 
-/** Pause all selectors from all targets with a minimum priority.
+/** Pause all selectors and blocks from all targets with a minimum priority.
   You should only call this with kCCPriorityNonSystemMin or higher.
   @since v2.0.0
   */
