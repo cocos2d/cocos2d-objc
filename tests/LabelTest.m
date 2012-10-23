@@ -12,8 +12,6 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"LabelGlyphDesigner",
-	@"LabelBMFontBounds",
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -27,6 +25,8 @@ static NSString *transitions[] = {
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
+	@"LabelGlyphDesigner",
+	@"LabelBMFontBounds",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
 	@"LabelTTFMultiline2",
