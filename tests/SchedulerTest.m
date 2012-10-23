@@ -486,7 +486,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectors];
+	[[director scheduler] unscheduleAll];
     actionManagerActive = NO;
 }
 @end
@@ -548,7 +548,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectorsWithMinPriority:kCCPriorityNonSystemMin];
+	[[director scheduler] unscheduleAllWithMinPriority:kCCPriorityNonSystemMin];
 }
 @end
 
@@ -1202,8 +1202,8 @@ Class restartTest()
 -(void) dealloc
 {
 	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
+	[defaultScheduler unscheduleAllForTarget:sched1];
+	[defaultScheduler unscheduleAllForTarget:sched2];
 
 	[sliderCtl1 release];
 	[sliderCtl2 release];
@@ -1260,12 +1260,20 @@ Class restartTest()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextTest() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextTest() node]];		
+		[director runWithScene:scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

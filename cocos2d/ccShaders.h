@@ -24,6 +24,10 @@
 
 #import "Platforms/CCGL.h"
 
+#ifdef __cplusplus__
+extern "C" {
+#endif // __cplusplus__
+
 extern const GLchar * ccPosition_uColor_frag;
 extern const GLchar * ccPosition_uColor_vert;
 
@@ -43,3 +47,10 @@ extern const GLchar * ccPositionTextureColorAlphaTest_frag;
 
 extern const GLchar * ccPositionTexture_uColor_frag;
 extern const GLchar * ccPositionTexture_uColor_vert;
+
+extern const GLchar * ccPositionColorLengthTexture_frag;
+extern const GLchar * ccPositionColorLengthTexture_vert;
+
+#ifdef __cplusplus__
+}
+#endif // __cplusplus__

@@ -94,6 +94,14 @@ Forum
   * [cocos2d for iphone forum][4]
 
 
+Download from github
+--------------------
+
+    $ git clone git://github.com/cocos2d/cocos2d-iphone.git
+    $ cd cocos2d-iphone
+    $ git checkout develop-v2
+    $ git submodule update --init
+
 
 [1]: http://www.cocos2d-iphone.org "cocos2d for iPhone"
 [2]: http://www.cocos2d.org "cocos2d"

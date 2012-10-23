@@ -16,27 +16,21 @@
 {
 	if( (self=[super init]) ) {
 	
+		CGSize size = [[CCDirector sharedDirector] winSize];
+
+		CCSprite *_background;
+
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			_background = [CCSprite spriteWithFile:@"Default.png"];
+			_background.rotation = 90;
+		} else {
+			_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
+		}
+		_background.position = ccp(size.width/2, size.height/2);
+
+		[self addChild:_background];
 	}
-	
 	return self;
-}
-
--(void) onEnter
-{
-	[super onEnter];
-	CGSize size = [[CCDirector sharedDirector] winSize];
-
-	CCSprite *_background;
-
-	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
-		_background = [CCSprite spriteWithFile:@"Default.png"];
-		_background.rotation = 90;
-	} else {
-		_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
-	}
-	_background.position = ccp(size.width/2, size.height/2);
-
-	[self addChild:_background];
 }
 @end
 
@@ -88,11 +82,6 @@
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 	
-	// create the main scene
-	CCScene *scene = [CCScene node];
-	[scene addChild: [Layer1 node]];
-	[director_ pushScene: scene];
-
 	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
 	
@@ -100,12 +89,24 @@
 //	[window_ addSubview:navController_.view];
 	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
-	
 	// make main window visible
-	[window_ makeKeyAndVisible];	
+	[window_ makeKeyAndVisible];
 
+//	CCScene *scene = [CCScene node];
+//	[scene addChild: [Layer1 node]];
+//	[director_ runWithScene: scene];
 
 	return YES;
+}
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [Layer1 node]];
+		[director runWithScene: scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

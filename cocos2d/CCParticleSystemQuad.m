@@ -172,7 +172,7 @@
 	
 	void (^createVAO)(void) = ^ {
 		glGenVertexArrays(1, &VAOname_);
-		glBindVertexArray(VAOname_);
+		ccGLBindVAO(VAOname_);
 
 	#define kQuadSize sizeof(quads_[0].bl)
 
@@ -196,7 +196,8 @@
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * totalParticles * 6, indices_, GL_STATIC_DRAW);
 
-		glBindVertexArray(0);
+		// Must unbind the VAO before changing the element buffer.
+		ccGLBindVAO(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -423,11 +424,8 @@
 
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 
-	glBindVertexArray( VAOname_ );
-
+	ccGLBindVAO( VAOname_ );
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
-	glBindVertexArray( 0 );
 
 	CC_INCREMENT_GL_DRAWS(1);
 

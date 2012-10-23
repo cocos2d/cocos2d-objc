@@ -4,12 +4,17 @@
 @interface AppController : BaseAppController
 @end
 
-@interface TestDemo : CCLayer
+@interface BaseLayer : CCLayer
 {
 }
 -(NSString*) title;
+-(NSString*) subtitle;
 @end
 
-@interface Test1 : TestDemo
+@interface TestDrawingPrimitives : BaseLayer
+{}
+@end
+
+@interface TestDrawNode : BaseLayer
 {}
 @end

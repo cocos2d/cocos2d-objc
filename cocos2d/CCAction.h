@@ -91,7 +91,7 @@ enum {
  Possible actions:
    - An action with a duration of 0 seconds
    - An action with a duration of 35.5 seconds
- Infitite time actions are valid
+ Infinite time actions are valid
  */
 @interface CCFiniteTimeAction : CCAction <NSCopying>
 {
@@ -109,7 +109,7 @@ enum {
 @class CCActionInterval;
 /** Repeats an action for ever.
  To repeat the an action for a limited number of times use the Repeat action.
- @warning This action can't be Sequenceable because it is not an IntervalAction
+ @warning This action can't be Sequence-able because it is not an IntervalAction
  */
 @interface CCRepeatForever : CCAction <NSCopying>
 {
@@ -127,7 +127,7 @@ enum {
 /** Changes the speed of an action, making it take longer (speed<1)
  or less (speed>1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an CCIntervalAction
+ @warning This action can't be Sequence-able because it is not an CCIntervalAction
  */
 @interface CCSpeed : CCAction <NSCopying>
 {
@@ -162,7 +162,7 @@ enum {
 	/* whether camera should be limited to certain area */
 	BOOL boundarySet;
 
-	/* if screensize is bigger than the boundary - update not needed */
+	/* if screen-size is bigger than the boundary - update not needed */
 	BOOL boundaryFullyCovered;
 
 	/* fast access to the screen dimensions */

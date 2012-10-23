@@ -12,7 +12,8 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-			@"Test1",
+	@"TestDrawNode",
+	@"TestDrawingPrimitives",
 };
 
 Class nextAction(void);
@@ -51,7 +52,7 @@ Class restartAction()
 #pragma mark -
 #pragma mark Base Class
 
-@implementation TestDemo
+@implementation BaseLayer
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -61,6 +62,13 @@ Class restartAction()
  		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild: label];
 		[label setPosition: ccp(s.width/2, s.height-50)];
+		
+		NSString *subtitle = [self subtitle];
+		if( subtitle ) {
+			CCLabelTTF* l = [CCLabelTTF labelWithString:subtitle fontName:@"Thonburi" fontSize:16];
+			[self addChild:l z:1];
+			[l setPosition:ccp(s.width/2, s.height-80)];
+		}
 
 		CCMenuItemImage *item1 = [CCMenuItemImage itemWithNormalImage:@"b1.png" selectedImage:@"b2.png" target:self selector:@selector(backCallback:)];
 		CCMenuItemImage *item2 = [CCMenuItemImage itemWithNormalImage:@"r1.png" selectedImage:@"r2.png" target:self selector:@selector(restartCallback:)];
@@ -72,7 +80,7 @@ Class restartAction()
 		item1.position = ccp( s.width/2 - item2.contentSize.width*2, item2.contentSize.height/2);
 		item2.position = ccp( s.width/2, item2.contentSize.height/2);
 		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
-		[self addChild: menu z:-1];
+		[self addChild: menu z:100];
 	}
 
 	return self;
@@ -109,12 +117,17 @@ Class restartAction()
 {
 	return @"No title";
 }
+
+-(NSString*) subtitle
+{
+	return nil;
+}
 @end
 
 #pragma mark -
 #pragma mark Drawing Primitives Test 1
 
-@implementation Test1
+@implementation TestDrawingPrimitives
 //
 // TIP:
 // Every CCNode has a "draw" method.
@@ -242,6 +255,88 @@ Class restartAction()
 {
 	return @"draw primitives";
 }
+
+-(NSString*) subtitle
+{
+	return @"Drawing Primitives. Use CCDrawNode instead";
+}
+
+@end
+
+@implementation TestDrawNode
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCDrawNode *draw = [[CCDrawNode alloc] init];
+		[self addChild:draw z:10];
+		[draw release];
+
+		// Draw 10 circles
+		for( int i=0; i < 10; i++) {
+			[draw drawDot:ccp(s.width/2, s.height/2) radius:10*(10-i) color:ccc4f(CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1)];
+		}
+
+		// Draw polygons
+		CGPoint points[] = { {s.height/4,0}, {s.width,s.height/5}, {s.width/3*2,s.height} };
+		[draw drawPolyWithVerts:points count:sizeof(points)/sizeof(points[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:4 borderColor:ccc4f(0,0,1,1)];
+		
+		// star poly (triggers buggs)
+		{
+			const float o=80;
+			const float w=20;
+			const float h=50;
+			CGPoint star[] = {
+				{o+w,o-h}, {o+w*2, o},						// lower spike
+				{o + w*2 + h, o+w }, {o + w*2, o+w*2},		// right spike
+//				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
+//				{o -h, o+w}, {o,o},							// left spike
+			};
+
+			[draw drawPolyWithVerts:star count:sizeof(star)/sizeof(star[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:1 borderColor:ccc4f(0,0,1,1)];
+		}
+
+		// star poly (doesn't trigger bug... order is important un tesselation is supported.
+		{
+			const float o=180;
+			const float w=20;
+			const float h=50;
+			CGPoint star[] = {
+				{o,o}, {o+w,o-h}, {o+w*2, o},				// lower spike
+				{o + w*2 + h, o+w }, {o + w*2, o+w*2},		// right spike
+				{o +w, o+w*2+h}, {o,o+w*2},					// top spike
+				{o -h, o+w},								// left spike
+			};
+			
+			[draw drawPolyWithVerts:star count:sizeof(star)/sizeof(star[0]) fillColor:ccc4f(1,0,0,0.5) borderWidth:1 borderColor:ccc4f(0,0,1,1)];
+		}
+
+		
+		// Draw segment
+		[draw drawSegmentFrom:ccp(20,s.height) to:ccp(20,s.height/2) radius:10 color:ccc4f(0, 1, 0, 1)];
+
+		[draw drawSegmentFrom:ccp(10,s.height/2) to:ccp(s.width/2, s.height/2) radius:40 color:ccc4f(1, 0, 1, 0.5)];
+
+
+		
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Test CCDrawNode";
+}
+
+-(NSString*) subtitle
+{
+	return @"Testing DrawNode - batched draws. Concave polygons are BROKEN";
+}
+
 @end
 
 // CLASS IMPLEMENTATIONS
@@ -278,13 +373,22 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene: scene];
+	}
+}
+
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

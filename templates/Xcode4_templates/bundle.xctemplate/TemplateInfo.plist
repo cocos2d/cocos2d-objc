@@ -10,35 +10,6 @@
 	<string>com.cocos2d-v2.bundlebase</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
-	<key>Options</key>
-	<array>
-		<dict>
-			<key>Description</key>
-			<string>Your company&apos;s bundle identifier prefix.</string>
-			<key>EmptyReplacement</key>
-			<string>com.yourcompany</string>
-			<key>Identifier</key>
-			<string>bundleIdentifierPrefix</string>
-			<key>Name</key>
-			<string>Company Identifier</string>
-			<key>Required</key>
-			<true/>
-			<key>Type</key>
-			<string>text</string>
-		</dict>
-		<dict>
-			<key>Default</key>
-			<string>___VARIABLE_bundleIdentifierPrefix:bundleIdentifier___.___VARIABLE_productName:RFC1034Identifier___</string>
-			<key>Description</key>
-			<string>Your new product&apos;s bundle identifier.</string>
-			<key>Identifier</key>
-			<string>bundleIdentifier</string>
-			<key>Name</key>
-			<string>Bundle Identifier</string>
-			<key>Type</key>
-			<string>static</string>
-		</dict>
-	</array>
 	<key>Targets</key>
 	<array>
 		<dict>

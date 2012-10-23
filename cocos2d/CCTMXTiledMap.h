@@ -71,7 +71,7 @@ enum
 
  Limitations:
  - It only supports one tileset per layer.
- - Embeded images are not supported
+ - Embedded images are not supported
  - It only supports the XML format (the JSON format is not supported)
 
  Technical description:
@@ -133,7 +133,7 @@ enum
 /** return the TMXLayer for the specific layer */
 -(CCTMXLayer*) layerNamed:(NSString *)layerName;
 
-/** return the TMXObjectGroup for the secific group */
+/** return the TMXObjectGroup for the specific group */
 -(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName;
 
 /** return the value for the specific property name */

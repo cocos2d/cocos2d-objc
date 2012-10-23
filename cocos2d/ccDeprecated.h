@@ -110,6 +110,19 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @interface CCScheduler (Deprecated)
 // new: [director scheduler]
 +(CCScheduler*) sharedScheduler DEPRECATED_ATTRIBUTE;
+// new: unscheduleAllForTarget
+-(void) unscheduleAllSelectorsForTarget:(id)target DEPRECATED_ATTRIBUTE;
+// new: unscheduleAll
+-(void) unscheduleAllSelectors DEPRECATED_ATTRIBUTE;
+// new: unscheduleAllWithMinPriority:
+-(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority DEPRECATED_ATTRIBUTE;
+
+/** Unschedules all selectors and blocks from all targets with a minimum priority.
+ You should only call this with kCCPriorityNonSystemMin or higher.
+ @since v2.0.0
+ */
+-(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority;
+
 @end
 
 @interface CCActionManager (Deprecated)
@@ -142,6 +155,26 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(void) setIsRelativeAnchorPoint:(BOOL)value DEPRECATED_ATTRIBUTE;
 -(BOOL) isRelativeAnchorPoint DEPRECATED_ATTRIBUTE;
 @end
+
+@interface CCLayer (Deprecated)
+#if __CC_PLATFORM_IOS
+// new: setTouchEnabled:
+-(void) setIsTouchEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
+// new: setAccelerometerEnabled:
+-(void) setIsAccelerometerEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
+#elif __CC_PLATFORM_MAC
+-(void) setIsTouchEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
+-(void) setIsKeyboardEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
+-(void) setIsMouseEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
+// new: setMouseEnabled:priority:
+-(NSInteger) mouseDelegatePriority DEPRECATED_ATTRIBUTE;
+// new: setKeyboardEnabled:priority:
+-(NSInteger) keyboardDelegatePriority DEPRECATED_ATTRIBUTE;
+// new: setTouchEnabled:priority:
+-(NSInteger) touchDelegatePriority DEPRECATED_ATTRIBUTE;
+#endif // __CC_PLATFORM_MAC
+@end
+
 
 @interface CCSprite (Deprecated)
 // new: spriteWithTexture:rect:
@@ -285,6 +318,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 // new: + (id) labelWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
++ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+
 // new: + (id) initWithString:(NSString*)string dimensions:hAlignment:fontName:fontSize:
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 // new: + (id) initWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:

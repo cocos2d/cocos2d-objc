@@ -51,7 +51,7 @@ SimpleAudioEngine *soundEngine;
 
     if ((self = [super init])) {
 
-        self.isTouchEnabled = YES;
+        self.touchEnabled = YES;
         self.monsters = [[[NSMutableArray alloc] init] autorelease];
         self.projectiles = [[[NSMutableArray alloc] init] autorelease];
 

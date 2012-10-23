@@ -9,10 +9,12 @@
 // Import the interfaces
 #import "HelloWorldLayer.h"
 
+// Not included in "cocos2d.h"
+#import "CCPhysicsSprite.h"
+
 // Needed to obtain the Navigation Controller
 #import "AppDelegate.h"
 
-#import "PhysicsSprite.h"
 
 enum {
 	kTagParentNode = 1,
@@ -224,17 +226,6 @@ enum {
 -(void) addNewSpriteAtPosition:(CGPoint)p
 {
 	CCLOG(@"Add sprite %0.2f x %02.f",p.x,p.y);
-	CCNode *parent = [self getChildByTag:kTagParentNode];
-	
-	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
-	//just randomly picking one of the images
-	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
-	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
-	PhysicsSprite *sprite = [PhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];						
-	[parent addChild:sprite];
-	
-	sprite.position = ccp( p.x, p.y);
-	
 	// Define the dynamic body.
 	//Set up a 1m squared box in the physics world
 	b2BodyDef bodyDef;
@@ -253,7 +244,20 @@ enum {
 	fixtureDef.friction = 0.3f;
 	body->CreateFixture(&fixtureDef);
 	
-	[sprite setPhysicsBody:body];
+
+	CCNode *parent = [self getChildByTag:kTagParentNode];
+	
+	//We have a 64x64 sprite sheet with 4 different 32x32 images.  The following code is
+	//just randomly picking one of the images
+	int idx = (CCRANDOM_0_1() > .5 ? 0:1);
+	int idy = (CCRANDOM_0_1() > .5 ? 0:1);
+	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];
+	[parent addChild:sprite];
+	
+	[sprite setPTMRatio:PTM_RATIO];
+	[sprite setBody:body];
+	[sprite setPosition: ccp( p.x, p.y)];
+
 }
 
 -(void) update: (ccTime) dt
