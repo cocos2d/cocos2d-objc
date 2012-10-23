@@ -26,6 +26,7 @@
 #import "CCClippingNode.h"
 
 #import "CCGL.h"
+#import "OpenGL_Internal.h"
 
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
@@ -171,8 +172,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     // mask of all layers less than or equal to the current (ie: for layer 3: 00000111)
     GLint mask_layer_le = mask_layer | mask_layer_l;
     
-#if defined(__CC_PLATFORM_IOS)
-    // manually save the stencil state
+    // manually save the stencil state (if someone was using it)
     GLboolean currentStencilEnabled = GL_FALSE;
     GLuint currentStencilWriteMask = mask_ones;
     GLenum currentStencilFunc = GL_ALWAYS;
@@ -182,22 +182,20 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     GLenum currentStencilPassDepthFail = GL_KEEP;
     GLenum currentStencilPassDepthPass = GL_KEEP;
     currentStencilEnabled = glIsEnabled(GL_STENCIL_TEST);
-    glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
-    glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
-    glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
-    glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&currentStencilValueMask);
-    glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&currentStencilFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&currentStencilPassDepthFail);
-    glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&currentStencilPassDepthPass);
-#elif defined(__CC_PLATFORM_MAC)
-    // save the enable state
-    glPushAttrib(GL_ENABLE_BIT);
-    // save the stencil state
-    glPushAttrib(GL_STENCIL_BUFFER_BIT);
-#endif
+    if (currentStencilEnabled) {
+        glGetIntegerv(GL_STENCIL_WRITEMASK, (GLint *)&currentStencilWriteMask);
+        glGetIntegerv(GL_STENCIL_FUNC, (GLint *)&currentStencilFunc);
+        glGetIntegerv(GL_STENCIL_REF, &currentStencilRef);
+        glGetIntegerv(GL_STENCIL_VALUE_MASK, (GLint *)&currentStencilValueMask);
+        glGetIntegerv(GL_STENCIL_FAIL, (GLint *)&currentStencilFail);
+        glGetIntegerv(GL_STENCIL_PASS_DEPTH_FAIL, (GLint *)&currentStencilPassDepthFail);
+        glGetIntegerv(GL_STENCIL_PASS_DEPTH_PASS, (GLint *)&currentStencilPassDepthPass);
+    }
     
     // enable stencil use
     glEnable(GL_STENCIL_TEST);
+    // check for OpenGL error while enabling stencil test
+    CHECK_GL_ERROR_DEBUG();
     
     // all bits on the stencil buffer are readonly, except the current layer bit,
     // this means that operation like glClear or glStencilOp will be masked with this value
@@ -225,6 +223,11 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
+#if defined(__CC_PLATFORM_MAC)
+    GLboolean currentAlphaTestEnabled = GL_FALSE;
+    GLenum currentAlphaTestFunc = GL_ALWAYS;
+    GLclampf currentAlphaTestRef = 1;
+#endif
     if (alphaThreshold_ < 1) {
 #if defined(__CC_PLATFORM_IOS)
         // since glAlphaTest do not exists in OES, use a shader that writes
@@ -237,10 +240,16 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         // XXX: we should have a way to apply shader to all nodes without having to do this
         setProgram(stencil_, program);
 #elif defined(__CC_PLATFORM_MAC)
-        // save the color buffer state (include alpha test)
-        glPushAttrib(GL_COLOR_BUFFER_BIT);
+        // manually save the alpha test state (if someone was using it)
+        currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
+        if (currentAlphaTestEnabled) {
+            glGetIntegerv(GL_ALPHA_TEST_FUNC, (GLint *)&currentAlphaTestFunc);
+            glGetFloatv(GL_ALPHA_TEST_REF, &currentAlphaTestRef);
+        }
         // enable alpha testing
         glEnable(GL_ALPHA_TEST);
+        // check for OpenGL error while enabling alpha test
+        CHECK_GL_ERROR_DEBUG();
         // pixel will be drawn only if greater than an alpha threshold
         glAlphaFunc(GL_GREATER, alphaThreshold_);
 #endif
@@ -253,15 +262,14 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
-	kmGLPushMatrix();
-	[self transform];
+    kmGLPushMatrix();
+    [self transform];
     [stencil_ visit];
     kmGLPopMatrix();
     
     // restore drawing colors
     // XXX: may be this was not the right state before we disabled them,
-    // on OSX there is no problem since we will do a glPopAttrib() for the GL_COLOR_BUFFER_BIT,
-    // but on iOS it can be problematic, we probably should manually saving/restoring those values
+    // we probably should manually saving/restoring those values
     glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     
     // restore alpha test state
@@ -269,8 +277,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 #if defined(__CC_PLATFORM_IOS)
         // XXX: we need to find a way to restore the shaders of the stencil node and its childs
 #elif defined(__CC_PLATFORM_MAC)
-        // restore the color buffer state (include alpha test)
-        glPopAttrib();
+        // manually restore the alpha test state (if someone was using it)
+        if (currentAlphaTestEnabled) {
+            glAlphaFunc(currentAlphaTestFunc, currentAlphaTestRef);
+        } else {
+            glDisable(GL_ALPHA_TEST);
+        }
 #endif
     }
     
@@ -292,20 +304,14 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     ///////////////////////////////////
     // CLEANUP
     
-#if defined(__CC_PLATFORM_IOS)
-    // manually restore the stencil state
-    glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
-    glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
-    glStencilMask(currentStencilWriteMask);
-    if (!currentStencilEnabled) {
+    // manually restore the stencil state (if someone was using it)
+    if (currentStencilEnabled) {
+        glStencilFunc(currentStencilFunc, currentStencilRef, currentStencilValueMask);
+        glStencilOp(currentStencilFail, currentStencilPassDepthFail, currentStencilPassDepthPass);
+        glStencilMask(currentStencilWriteMask);
+    } else {
         glDisable(GL_STENCIL_TEST);
     }
-#elif defined(__CC_PLATFORM_MAC)
-    // restore the stencil state
-    glPopAttrib();
-    // restore the enable state
-    glPopAttrib();
-#endif
     
     // we are done using this layer, decrement
     layer--;
