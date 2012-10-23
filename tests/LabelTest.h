@@ -99,6 +99,12 @@
 }
 @end
 
+@interface LabelBMFontBounds : AtlasDemo
+{
+    CCLabelBMFont *label1;
+}
+@end
+
 @interface LabelGlyphDesigner : AtlasDemo
 {
 }
