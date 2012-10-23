@@ -213,14 +213,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
     // setup the stencil test func like this:
     // for each pixel in the stencil node
-    //     if all layer values less than the current are set to 1 in the stencil buffer
-    //         if not in inverted mode: set the current layer value to 1 in the stencil buffer
-    //         if in inverted mode: set the current layer value to 0 in the stencil buffer
-    //     else
-    //         keep the current layer value in the stencil buffer
-    glStencilFunc(GL_EQUAL, mask_layer_le, mask_layer_l);
-    glStencilOp(GL_KEEP, GL_KEEP, !inverted_ ? GL_REPLACE : GL_ZERO);
-        
+    //     never draw it into the frame buffer
+    //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
+    //     if in inverted mode: set the current layer value to 0 in the stencil buffer
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(!inverted_ ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
+    
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
 #if defined(__CC_PLATFORM_MAC)
@@ -255,22 +253,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 #endif
     }
 
-    // disable drawing colors, only draw the alpha part of the stencil node,
-    // we are only interested in the stencil buffer being populated,
-    // not the stencil node being visible
-    glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_TRUE);
-    
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     [self transform];
     [stencil_ visit];
     kmGLPopMatrix();
-    
-    // restore drawing colors
-    // XXX: may be this was not the right state before we disabled them,
-    // we probably should manually saving/restoring those values
-    glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
     
     // restore alpha test state
     if (alphaThreshold_ < 1) {
