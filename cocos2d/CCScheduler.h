@@ -170,7 +170,7 @@ struct _hashUpdateEntry;
 
  @since v0.99.3, repeat and delay added in v1.1
  */
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat: (uint) repeat delay: (ccTime) delay;
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused;
 
 /** calls scheduleSelector with kCCRepeatForever and a 0 delay */
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused;
@@ -183,16 +183,16 @@ struct _hashUpdateEntry;
 -(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused;
 
 /** The scheduled block will be called every 'interval' seconds.
- If paused is YES, then it won't be called until it is resumed.
+ 'key' is a unique identifier of the block. Needed to unschedule the block or update its interval.
+ 'target' is needed for all the method related to "target" like "pause" and "unschedule"
  If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
- If the block is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
  'repeat' lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously.
  'delay' is the amount of time the action will wait before it'll start.
- 'target' is needed for all the method related to "target" like "pause" and "unschedule"
- 'key' is a unique identifier of the block. Needed to unschedule the block or update its interval.
+  If paused is YES, then it won't be called until it is resumed.
+ If the block is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
  @since v2.1
  */
--(void) scheduleBlockForKey:(NSString*)key target:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint)repeat delay:(ccTime)delay block:(void(^)(ccTime dt))block;
+-(void) scheduleBlockForKey:(NSString*)key target:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused block:(void(^)(ccTime dt))block;
 
 /** Unshedules a selector for a given target.
  If you want to unschedule the "update", use unscheudleUpdateForTarget.
