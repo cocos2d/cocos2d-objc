@@ -226,6 +226,9 @@ and when to execute the Scenes.
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
+/** Sets the glViewport*/
+-(void) setViewport;
+
 /** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
  */

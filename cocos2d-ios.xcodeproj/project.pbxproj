@@ -4062,6 +4062,9 @@
 		E3C9E796161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
 		E3C9E797161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
 		E3C9E798161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = E3C9E795161FBA6E0031D2E6 /* jsb_constants_cocosbuilder.js */; };
+		E6FF7D9A1615977400356538 /* SimpleSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = E6FF7D981615977400356538 /* SimpleSprite.h */; };
+		E6FF7D9B1615977400356538 /* SimpleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7D991615977400356538 /* SimpleSprite.m */; };
+		E6FF7D9D161598E500356538 /* SimpleSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = E6FF7D991615977400356538 /* SimpleSprite.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -7286,6 +7289,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				E676680416174FB600BEE582 /* MessageUI.framework */,
 				A07EC9B2141A8D32008C1F12 /* README.md */,
 				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
 				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
@@ -8204,6 +8208,8 @@
 				A0980F3514B92C5E004812AD /* ActionsEaseTest.h */,
 				A0980F3614B92C5E004812AD /* ActionsEaseTest.m */,
 				A0980F3714B92C5E004812AD /* ActionsProgressTest.h */,
+				E6FF7D981615977400356538 /* SimpleSprite.h */,
+				E6FF7D991615977400356538 /* SimpleSprite.m */,
 				A0980F3814B92C5E004812AD /* ActionsProgressTest.m */,
 				50C93AC30E0BF8FC00517B01 /* ActionsTest.h */,
 				50C93AC40E0BF8FC00517B01 /* ActionsTest.m */,
@@ -10213,6 +10219,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9A1615977400356538 /* SimpleSprite.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14850,6 +14857,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9D161598E500356538 /* SimpleSprite.m in Sources */,
 				501C7C860F91EFFF0024A296 /* main.m in Sources */,
 				501C7CA80F91F1B20024A296 /* SpriteTest.m in Sources */,
 				A0D3A91C149D2FAE0077CD93 /* BaseAppController.m in Sources */,
@@ -15276,6 +15284,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6FF7D9B1615977400356538 /* SimpleSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16731,6 +16740,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7]" = YES;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7s]" = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = SpriteTest;
@@ -16746,6 +16757,8 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
 				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7]" = YES;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7s]" = YES;
 				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				PRODUCT_NAME = SpriteTest;
@@ -18528,6 +18541,8 @@
 					"COCOS2D_DEBUG=2",
 				);
 				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7]" = YES;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7s]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -18567,6 +18582,8 @@
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_THUMB_SUPPORT = NO;
+				"GCC_THUMB_SUPPORT[arch=armv7]" = YES;
+				"GCC_THUMB_SUPPORT[sdk=iphoneos*][arch=armv7s]" = YES;
 				GCC_TREAT_IMPLICIT_FUNCTION_DECLARATIONS_AS_ERRORS = YES;
 				GCC_TREAT_WARNINGS_AS_ERRORS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
