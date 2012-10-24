@@ -712,8 +712,11 @@ typedef struct _KerningHashElement
 
 	totalHeight = configuration_->commonHeight_ * quantityOfLines;
 	nextFontPositionY = -(configuration_->commonHeight_ - configuration_->commonHeight_*quantityOfLines);
-
-	for(NSUInteger i = 0; i<stringLen; i++) {
+    
+    ccBMFontDef *fontDef = NULL;
+	CGRect rect;
+    
+    for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
 
 		if (c == '\n') {
@@ -724,12 +727,12 @@ typedef struct _KerningHashElement
 
 		kerningAmount = [self kerningAmountForFirst:prev second:c];
 
-        ccBMFontDef *fontDef = NULL;
+        
         unsigned int charKey = c;
         HASH_FIND_INT(configuration_->BMFontHash_,&charKey,fontDef);
 
         if(fontDef) {
-            CGRect rect = fontDef->rect;
+            rect = fontDef->rect;
 
             CCSprite *fontChar;
 
@@ -768,7 +771,14 @@ typedef struct _KerningHashElement
             if (longestLine < nextFontPositionX)
                 longestLine = nextFontPositionX;
 
-            tmpSize.width = longestLine;
+            // If the last character processed has an xAdvance which is less than the width of the characters image, then we need
+            // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
+            // box
+            if (fontDef->xAdvance < fontDef->rect.size.width) {
+                tmpSize.width = longestLine + fontDef->rect.size.width - fontDef->xAdvance;
+            } else {
+                tmpSize.width = longestLine;
+            }
             tmpSize.height = totalHeight;
 
             [self setContentSizeInPixels:tmpSize];

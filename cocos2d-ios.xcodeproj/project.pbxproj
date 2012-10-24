@@ -1662,6 +1662,8 @@
 		8EDF3FC10F6BE18B00F54643 /* r2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659A0E72DB0E0085673F /* r2.png */; };
 		8EDF3FDD0F6BE3FC00F54643 /* listener-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FD90F6BE3F400F54643 /* listener-marker.png */; };
 		8EDF3FDE0F6BE3FC00F54643 /* source-marker.png in Resources */ = {isa = PBXBuildFile; fileRef = 8EDF3FDA0F6BE3F400F54643 /* source-marker.png */; };
+		8F2B79E31638486900510E69 /* bauhaus93.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79E11638486900510E69 /* bauhaus93.png */; };
+		8F2B79E41638486900510E69 /* bauhaus93.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79E21638486900510E69 /* bauhaus93.fnt */; };
 		A0064C2C13B432B100C1C744 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0064C2A13B432B100C1C744 /* grossini_pvr_rgba8888.pvr */; };
 		A01B9B9513E99B88004E5AE2 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
 		A0240EFA139E3AE50075D13F /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
@@ -4873,6 +4875,8 @@
 		8EDF3ED80F6BDA0000F54643 /* SoundEngineTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundEngineTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8EDF3FD90F6BE3F400F54643 /* listener-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "listener-marker.png"; path = "experimental/sound-engine/sound-engine-sample/listener-marker.png"; sourceTree = SOURCE_ROOT; };
 		8EDF3FDA0F6BE3F400F54643 /* source-marker.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "source-marker.png"; path = "experimental/sound-engine/sound-engine-sample/source-marker.png"; sourceTree = SOURCE_ROOT; };
+		8F2B79E11638486900510E69 /* bauhaus93.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bauhaus93.png; sourceTree = "<group>"; };
+		8F2B79E21638486900510E69 /* bauhaus93.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bauhaus93.fnt; sourceTree = "<group>"; };
 		A0064C2A13B432B100C1C744 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
 		A0240F18139E3AE50075D13F /* TestCocos2dExtension.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TestCocos2dExtension.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0240F1A139E3B5E0075D13F /* TestCocos2dExtension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestCocos2dExtension.h; path = tests/TestCocos2dExtension.h; sourceTree = SOURCE_ROOT; };
@@ -6682,6 +6686,8 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8F2B79E11638486900510E69 /* bauhaus93.png */,
+				8F2B79E21638486900510E69 /* bauhaus93.fnt */,
 				E082C9121292DAD50056AC41 /* futura-48.fnt */,
 				E082C9131292DAD50056AC41 /* futura-48.png */,
 				E080DE8B1239689400A647EC /* konqa32-hd.fnt */,
@@ -10633,6 +10639,8 @@
 				A0B036F413EA10200073E59A /* r1-ipad.png in Resources */,
 				A0B0372913EA10210073E59A /* r2-ipad.png in Resources */,
 				6593D0FD1610D332003D4935 /* Default-568h@2x.png in Resources */,
+				8F2B79E31638486900510E69 /* bauhaus93.png in Resources */,
+				8F2B79E41638486900510E69 /* bauhaus93.fnt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

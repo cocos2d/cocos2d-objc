@@ -12,6 +12,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+    @"LabelBMFontBounds",
+	@"LabelGlyphDesigner",
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -24,7 +26,6 @@ static NSString *transitions[] = {
 	@"LabelsEmpty",
 	@"LabelBMFontHD",
 	@"LabelAtlasHD",
-	@"LabelGlyphDesigner",
 	@"LabelTTFTest",
 	@"LabelTTFMultiline",
 	@"LabelTTFLineBreak",
@@ -919,6 +920,60 @@ Class restartAction()
 @end
 
 #pragma mark -
+#pragma mark LabelBMFontBounds
+
+@implementation LabelBMFontBounds
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+		CGSize s = [[CCDirector sharedDirector] winSize];
+        
+		CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(128,128,128,255)];
+		[self addChild:layer z:-10];
+        
+		// CCLabelBMFont
+		label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"bauhaus93.fnt"];
+        
+		[self addChild:label1];
+		[label1 setPosition: ccp(s.width/2, s.height/2)];
+        
+	}
+    
+	return self;
+}
+
+- (void)draw
+{
+    CGSize labelSize = [label1 contentSize];
+    CGSize origin = [[CCDirector sharedDirector] winSize];
+    
+    origin.width = origin.width / 2 - (labelSize.width / 2);
+    origin.height = origin.height / 2 - (labelSize.height / 2);
+    
+    CGPoint vertices[4]={
+        ccp(origin.width, origin.height),
+        ccp(labelSize.width + origin.width, origin.height),
+        ccp(labelSize.width + origin.width, labelSize.height + origin.height),
+        ccp(origin.width, labelSize.height + origin.height)
+    };
+    ccDrawPoly(vertices, 4, YES);
+    
+}
+
+-(NSString*) title
+{
+	return @"Testing LabelBMFont Bounds";
+}
+
+-(NSString *) subtitle
+{
+	return @"You should see string enclosed by a box";
+}
+
+@end
+
+#pragma mark -
 #pragma mark LabelGlyphDesigner
 
 @implementation LabelGlyphDesigner
@@ -932,7 +987,7 @@ Class restartAction()
 		[self addChild:layer z:-10];
 
 		// CCLabelBMFont
-		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"futura-48.fnt"];
+		CCLabelBMFont *label1 = [CCLabelBMFont labelWithString:@"Testing Glyph Designer" fntFile:@"bauhaus93.fnt"];
 		[self addChild:label1];
 		[label1 setPosition: ccp(s.width/2, s.height/2)];
 
