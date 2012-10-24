@@ -733,7 +733,9 @@ void FNTConfigRemoveCache( void )
     
 	totalHeight = configuration_->commonHeight_ * quantityOfLines;
 	nextFontPositionY = -(configuration_->commonHeight_ - configuration_->commonHeight_*quantityOfLines);
-    
+    CGRect rect;
+    ccBMFontDef fontDef;
+
 	for(NSUInteger i = 0; i<stringLen; i++) {
 		unichar c = [string_ characterAtIndex:i];
         
@@ -760,9 +762,9 @@ void FNTConfigRemoveCache( void )
 			continue;
 		}
         
-		ccBMFontDef fontDef = element->fontDef;
+        fontDef = element->fontDef;
         
-		CGRect rect = fontDef.rect;
+        rect = fontDef.rect;
 		rect = CC_RECT_PIXELS_TO_POINTS(rect);
 		
 		rect.origin.x += imageOffset_.x;
@@ -822,8 +824,15 @@ void FNTConfigRemoveCache( void )
 			[self updateQuadFromSprite:fontChar quadIndex:i];
 	}
     
-	tmpSize.width = longestLine;
-	tmpSize.height = totalHeight;
+    // If the last character processed has an xAdvance which is less that the width of the characters image, then we need
+    // to adjust the width of the string to take this into account, or the character will overlap the end of the bounding
+    // box
+    if (fontDef.xAdvance < fontDef.rect.size.width) {
+        tmpSize.width = longestLine + fontDef.rect.size.width - fontDef.xAdvance;
+    } else {
+        tmpSize.width = longestLine;
+    }
+    tmpSize.height = totalHeight;
     
 	[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(tmpSize)];
 }

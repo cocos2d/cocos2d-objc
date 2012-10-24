@@ -35,7 +35,7 @@ static AudioVisualization *sharedAV = nil;
 		avPeakPowerLevelSel_ = @selector(avPeakPowerLevelDidChange:channel:);
 
 		CCDirector *director = [CCDirector sharedDirector];
-		[[director scheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 paused:NO repeat:kCCRepeatForever delay:0.0f];
+		[[director scheduler] scheduleSelector:@selector(tick:) forTarget:self interval:0 repeat:kCCRepeatForever delay:0.0f paused:NO];
 
 		[SimpleAudioEngine sharedEngine];
 		if([[SimpleAudioEngine sharedEngine] isBackgroundMusicPlaying]){
@@ -65,7 +65,7 @@ static AudioVisualization *sharedAV = nil;
 	CCDirector *director = [CCDirector sharedDirector];
 	CCScheduler *scheduler = [director scheduler];
 	[scheduler unscheduleSelector:@selector(tick:) forTarget:self];
-	[scheduler scheduleSelector:@selector(tick:) forTarget:self interval:seconds paused:NO repeat:kCCRepeatForever delay:0.0f];
+	[scheduler scheduleSelector:@selector(tick:) forTarget:self interval:seconds repeat:kCCRepeatForever delay:0.0f paused:NO];
 }
 
 -(void)tick:(ccTime) dt

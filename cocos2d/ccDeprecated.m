@@ -41,6 +41,10 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
 	return [[CCDirector sharedDirector] scheduler];
 }
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint)repeat delay:(ccTime)delay
+{
+	[self scheduleSelector:selector forTarget:target interval:interval repeat:repeat delay:delay paused:paused];
+}
 -(void) unscheduleAllSelectorsForTarget:(id)target
 {
 	[self unscheduleAllForTarget:target];
