@@ -28,9 +28,16 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Greg Harding (http://www.flightless.co.nz/):
 	Toggle fullscreen honors the support for touches on Mac
+	Fixed some grammar errors in the Templates
 
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
+
+* kamorris:
+	Patch that prevent crash on director when purgeCacheData is called before the creation of the view
+
+* Krzysztof Zablocki (http://merowing.info):
+	Author of CCRenderTargetNode, which later was merged into RenderTexture as the "auto render" feature.
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
@@ -41,9 +48,20 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * michaelm (http://ironapegames.com/):
 	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
-	
+
+* Mike Daley (http://www.71squared.com/)
+	LabelBMFont: contextSize honors shadows and strokes patch.
+
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
+
+* Peter Johnston (https://github.com/ptrrj)
+	Fixed possible retain cycle with Director's delegate
+
+* Pierre-David Bélanger (https://github.com/pierredavidbelanger):
+	Author of Clipping Node
+	Author of 9 tests for Clipping Node
+	Added support for Stencil Buffer in the GLView
 
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
@@ -56,6 +74,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
+	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)

@@ -46,3 +46,8 @@
 {
 }
 @end
+
+@interface LayerExtendedBlendOpacityTest : LayerTest
+{
+}
+@end

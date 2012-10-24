@@ -113,6 +113,7 @@
 #import "CCMotionStreak.h"
 #import "CCConfiguration.h"
 #import "CCDrawNode.h"
+#import "CCClippingNode.h"
 
 // Shaders
 #import "CCGLProgram.h"

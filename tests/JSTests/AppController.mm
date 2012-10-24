@@ -30,7 +30,8 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
 }
@@ -259,7 +260,8 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
+		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 

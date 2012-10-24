@@ -142,18 +142,18 @@ typedef struct _listAddedEntry
 
 -(void) addLaterDelegate:(id)delegate priority:(NSInteger)priority flags:(NSUInteger)flags list:(tListEntry**)list
 {
-	// Only add it if it was not already added for deletion
-	if( ! [self removeDelegate:delegate fromList:(tListEntry**)&delegatesToBeRemoved_] ) {
-		tListAddedEntry *listElement = malloc( sizeof(*listElement) );
-		
-		listElement->delegate = [delegate retain];
-		listElement->priority = priority;
-		listElement->flags = flags;
-		listElement->listToBeAdded = list;
-		listElement->next = listElement->prev = NULL;
-		
-		DL_APPEND( delegatesToBeAdded_, listElement );
-	}
+	// XXX: Since, "remove" is "executed" after "add", it is not needed to check if the delegate was already added for removal.
+	// In fact, if you remove it now, it could be a bug, since EventDispatcher doesn't support updated priority.
+	// And the only way to update the priority is by deleting, re-adding the delegate with a new priority
+	tListAddedEntry *listElement = malloc( sizeof(*listElement) );
+	
+	listElement->delegate = [delegate retain];
+	listElement->priority = priority;
+	listElement->flags = flags;
+	listElement->listToBeAdded = list;
+	listElement->next = listElement->prev = NULL;
+	
+	DL_APPEND( delegatesToBeAdded_, listElement );
 }
 
 -(void) addDelegate:(id)delegate priority:(NSInteger)priority flags:(NSUInteger)flags list:(tListEntry**)list
@@ -686,7 +686,7 @@ typedef struct _listAddedEntry
 		
 		[event release];
 		
-		// Remove possible delegates
+		// FIRST: Remove possible delegates
 		tListDeletedEntry *dEntry, *tTmp;
 		DL_FOREACH_SAFE( delegatesToBeRemoved_ , dEntry, tTmp ) {
 			
@@ -697,7 +697,7 @@ typedef struct _listAddedEntry
 			free(dEntry);
 		}
 		
-		// Add possible delegates
+		// LATER: Add possible delegates
 		tListAddedEntry *entry, *tmp;
 		
 		DL_FOREACH_SAFE( delegatesToBeAdded_, entry, tmp ) {

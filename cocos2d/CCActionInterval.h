@@ -326,6 +326,7 @@ typedef struct _ccBezierConfig {
 @interface CCBlink : CCActionInterval <NSCopying>
 {
 	NSUInteger times_;
+	BOOL originalState_;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;

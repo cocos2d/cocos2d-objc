@@ -80,9 +80,6 @@ class ChunkPool {
 
     /* Must be called with the GC lock taken. */
     void expireAndFree(JSRuntime *rt, bool releaseAll);
-
-    /* Must be called either during the GC or with the GC lock taken. */
-    JS_FRIEND_API(int64_t) countCleanDecommittedArenas(JSRuntime *rt);
 };
 
 static inline JSGCTraceKind
@@ -159,7 +156,6 @@ struct ArenaLists {
 
     ArenaList      arenaLists[FINALIZE_LIMIT];
 
-#ifdef JS_THREADSAFE
     /*
      * The background finalization adds the finalized arenas to the list at
      * the *cursor position. backgroundFinalizeState controls the interaction
@@ -183,27 +179,22 @@ struct ArenaLists {
     };
 
     volatile uintptr_t backgroundFinalizeState[FINALIZE_LIMIT];
-#endif
 
   public:
     ArenaLists() {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i)
             freeLists[i].initAsEmpty();
-#ifdef JS_THREADSAFE
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i)
             backgroundFinalizeState[i] = BFS_DONE;
-#endif
     }
 
     ~ArenaLists() {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i) {
-#ifdef JS_THREADSAFE
             /*
              * We can only call this during the shutdown after the last GC when
              * the background finalization is disabled.
              */
             JS_ASSERT(backgroundFinalizeState[i] == BFS_DONE);
-#endif
             ArenaHeader **headp = &arenaLists[i].head;
             while (ArenaHeader *aheader = *headp) {
                 *headp = aheader->next;
@@ -222,42 +213,33 @@ struct ArenaLists {
 
     bool arenaListsAreEmpty() const {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i) {
-#ifdef JS_THREADSAFE
             /*
              * The arena cannot be empty if the background finalization is not yet
              * done.
              */
             if (backgroundFinalizeState[i] != BFS_DONE)
                 return false;
-#endif
             if (arenaLists[i].head)
                 return false;
         }
         return true;
     }
 
-#ifdef DEBUG
-    bool checkArenaListAllUnmarked() const {
+    void unmarkAll() {
         for (size_t i = 0; i != FINALIZE_LIMIT; ++i) {
-# ifdef JS_THREADSAFE
             /* The background finalization must have stopped at this point. */
             JS_ASSERT(backgroundFinalizeState[i] == BFS_DONE ||
                       backgroundFinalizeState[i] == BFS_JUST_FINISHED);
-# endif
             for (ArenaHeader *aheader = arenaLists[i].head; aheader; aheader = aheader->next) {
-                if (!aheader->chunk()->bitmap.noBitsSet(aheader))
-                    return false;
+                uintptr_t *word = aheader->chunk()->bitmap.arenaBits(aheader);
+                memset(word, 0, ArenaBitmapWords * sizeof(uintptr_t));
             }
         }
-        return true;
     }
-#endif
 
-#ifdef JS_THREADSAFE
     bool doneBackgroundFinalize(AllocKind kind) const {
         return backgroundFinalizeState[kind] == BFS_DONE;
     }
-#endif
 
     /*
      * Return the free list back to the arena so the GC finalization will not
@@ -356,9 +338,7 @@ struct ArenaLists {
     void finalizeShapes(FreeOp *fop);
     void finalizeScripts(FreeOp *fop);
 
-#ifdef JS_THREADSAFE
     static void backgroundFinalize(FreeOp *fop, ArenaHeader *listHead);
-#endif
 
   private:
     inline void finalizeNow(FreeOp *fop, AllocKind thingKind);
@@ -477,6 +457,9 @@ MaybeGC(JSContext *cx);
 extern void
 ShrinkGCBuffers(JSRuntime *rt);
 
+extern void
+ReleaseAllJITCode(FreeOp *op);
+
 extern JS_FRIEND_API(void)
 PrepareForFullGC(JSRuntime *rt);
 
@@ -498,6 +481,9 @@ extern void
 GCSlice(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason);
 
 extern void
+GCFinalSlice(JSRuntime *rt, JSGCInvocationKind gckind, js::gcreason::Reason reason);
+
+extern void
 GCDebugSlice(JSRuntime *rt, bool limit, int64_t objCount);
 
 extern void
@@ -510,8 +496,14 @@ namespace js {
 void
 InitTracer(JSTracer *trc, JSRuntime *rt, JSTraceCallback callback);
 
-#ifdef JS_THREADSAFE
-
+/*
+ * Helper that implements sweeping and allocation for kinds that can be swept
+ * and allocated off the main thread.
+ *
+ * In non-threadsafe builds, all actual sweeping and allocation is performed
+ * on the main thread, but GCHelperThread encapsulates this from clients as
+ * much as possible.
+ */
 class GCHelperThread {
     enum State {
         IDLE,
@@ -638,7 +630,6 @@ class GCHelperThread {
     bool prepareForBackgroundSweep();
 };
 
-#endif /* JS_THREADSAFE */
 
 struct GCChunkHasher {
     typedef gc::Chunk *Lookup;
@@ -1050,6 +1041,12 @@ extern JS_FRIEND_API(void)
 IterateCells(JSRuntime *rt, JSCompartment *compartment, gc::AllocKind thingKind,
              void *data, IterateCellCallback cellCallback);
 
+/*
+ * Invoke cellCallback on every gray JS_OBJECT in the given compartment.
+ */
+extern JS_FRIEND_API(void)
+IterateGrayObjects(JSCompartment *compartment, GCThingCallback *cellCallback, void *data);
+
 } /* namespace js */
 
 extern void
@@ -1079,6 +1076,11 @@ const int ZealAllocValue = 2;
 const int ZealFrameGCValue = 3;
 const int ZealVerifierValue = 4;
 const int ZealFrameVerifierValue = 5;
+const int ZealStackRootingSafeValue = 6;
+const int ZealStackRootingValue = 7;
+const int ZealIncrementalRootsThenFinish = 8;
+const int ZealIncrementalMarkAllThenFinish = 9;
+const int ZealIncrementalMultipleSlices = 10;
 
 #ifdef JS_GC_ZEAL
 

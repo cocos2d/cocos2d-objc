@@ -45,8 +45,9 @@ var loadScene = function (sceneIdx)
 //	scene.walkSceneGraph(0);
 
 	director.replaceScene( scene );
-//    __jsc__.garbageCollect();
-}
+	__jsc__.dumpRoot();
+    __jsc__.garbageCollect();
+};
 
 //------------------------------------------------------------------
 //
@@ -66,14 +67,13 @@ var BaseLayer = function() {
 	this.init();
 
 	this.title = function () {
-	    return "No title";
-	}
+		return "No title";
+	};
 
 	this.subtitle = function () {
-	    return "No Subtitle";
-	}
-
-}
+		return "No Subtitle";
+	};
+};
 goog.inherits(BaseLayer, cc.Layer );
 
 //
@@ -86,10 +86,10 @@ BaseLayer.prototype.onEnter = function() {
 	label.setPosition( cc.p(winSize.width / 2, winSize.height - 50));
 
 	var strSubtitle = this.subtitle();
-	if (strSubtitle != "") {
-	    var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
-	    this.addChild(l, 1);
-	    l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
+	if (strSubtitle !== "") {
+		var l = cc.LabelTTF.create(strSubtitle, "Thonburi", 16);
+		this.addChild(l, 1);
+		l.setPosition( cc.p(winSize.width / 2, winSize.height - 80));
 	}
 
     // Menu
@@ -108,22 +108,22 @@ BaseLayer.prototype.onEnter = function() {
     item4.setPosition( cc.p(winSize.width - 60, winSize.height - 30 ) );
 
 	this.addChild(menu, 1);
-}
+};
 
 BaseLayer.prototype.restartCallback = function (sender) {
     cc.log("restart called");
     restartSpriteTestAction();
-}
+};
 
 BaseLayer.prototype.nextCallback = function (sender) {
     cc.log("next called");
     nextSpriteTestAction();
-}
+};
 
 BaseLayer.prototype.backCallback = function (sender) {
     cc.log("back called");
     backSpriteTestAction();
-}
+};
 
 //------------------------------------------------------------------
 //
@@ -135,41 +135,45 @@ var SpriteTouchTest = function() {
 	goog.base(this);
 
 	this.initialize = function() {
-		var platform = __getPlatform();
-		if( platform.substring(0,7) == 'desktop' )
-			this.setMouseEnabled( true );
-		else if( platform.substring(0,6) == 'mobile' )
-			this.setTouchEnabled( true );
+		var t = cc.config.deviceType;
+		if( t == 'browser' )  {
+			// this.setTouchEnabled(true);
+			// this.setKeyboardEnabled(true);
+		} else if( t == 'desktop' ) {
+			this.setMouseEnabled(true);
+		} else if( t == 'mobile' ) {
+			this.setTouchEnabled(true);
+		}
 		this.addSprite( centerPos );
-	}
+	};
 
 	this.addSprite = function(pos) {
 		var sprite = this.createSprite( pos );
 		this.addChild( sprite );
-	}
+	};
 
 	this.title = function () {
 		return "Sprite: Simple action test";
-	}
+	};
 
 	this.subtitle = function () {
 		return "Tap screen to add more sprites";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits(SpriteTouchTest, BaseLayer );
 
 SpriteTouchTest.prototype.onMouseDown = function( event ) {
 	this.addSprite( event.getLocation() );
-}
+};
 
 SpriteTouchTest.prototype.onTouchesEnded = function( touches, event ) {
 	var l = touches.length;
 	for( var i=0; i < l; i++) {
 		this.addSprite( touches[i].getLocation() );
 	}
-}
+};
 
 
 SpriteTouchTest.prototype.createSprite = function( pos ) {
@@ -200,7 +204,7 @@ SpriteTouchTest.prototype.createSprite = function( pos ) {
 	sprite.runAction( cc.RepeatForever.create( seq ) );
 
 	return sprite;
-}
+};
 
 
 //------------------------------------------------------------------
@@ -222,23 +226,23 @@ var SpriteBatchTouchTest = function() {
 		} else if( platform == 'iOS' ) {
 			this.setIsTouchEnabled( true );
 		}
-	}
+	};
 
 	this.addSprite = function(pos) {
 		var sprite = this.createSprite( pos );
 		this.batch.addChild( sprite );
-	}
+	};
 
 	this.title = function () {
 		return "SpriteBatch: Simple action test";
-	}
+	};
 
 	this.subtitle = function () {
 		return "Tap screen to add more sprites";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
 
 //------------------------------------------------------------------
@@ -277,7 +281,7 @@ var SpriteFrameTest = function() {
 		spritebatch.addChild(sprite1);
 		this.addChild( spritebatch );
 
-		var frames = []
+		var frames = [];
 		for( var i = 1; i < 15; i++) {
 
 			if( i < 10 ) {
@@ -303,7 +307,7 @@ var SpriteFrameTest = function() {
 		sprite2.setPosition( cc.p( winSize.width/2 + 80, winSize.height/2) );
 		this.addChild( sprite2 );
 
-		var moreFrames = []
+		var moreFrames = [];
 		for(var i = 1; i < 15; i++) {
 			if( i < 10 ) {
 				var name = "grossini_dance_gray_0" + i + ".png";
@@ -329,18 +333,18 @@ var SpriteFrameTest = function() {
 		// to test issue #732, uncomment the following line
 		sprite2.setFlipX( false );
 		sprite2.setFlipY( false );
-	}
+	};
 
 	this.title = function () {
 		return "Sprite vs. SpriteBatchNode animation";
-	}
+	};
 
 	this.subtitle = function () {
 		return "Testing issue #792";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteFrameTest, BaseLayer );
 
 //------------------------------------------------------------------
@@ -362,7 +366,7 @@ var SpriteAnchorPoint = function() {
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
-			if( i == 0 ) {
+			if( i === 0 ) {
 				sprite.setAnchorPoint( cc.p( 0, 0) );
 			} else if( i == 1 ) {
 				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
@@ -378,18 +382,18 @@ var SpriteAnchorPoint = function() {
 			sprite.runAction( action );
 			this.addChild( sprite, i );
 		}
-	}
+	};
 
 	this.title = function () {
 		return "Sprite: anchor point";
-	}
+	};
 
 	this.subtitle = function () {
 		return "Testing 3 different anchor points";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
@@ -412,7 +416,7 @@ var SpriteBatchAnchorPoint = function() {
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
-			if( i == 0 ) {
+			if( i === 0 ) {
 				sprite.setAnchorPoint( cc.p( 0, 0) );
 			} else if( i == 1 ) {
 				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
@@ -429,18 +433,18 @@ var SpriteBatchAnchorPoint = function() {
 			batch.addChild( sprite, i );
 		}
 		this.addChild( batch );
-	}
+	};
 
 	this.title = function () {
 		return "Sprite Batch: anchor point";
-	}
+	};
 
 	this.subtitle = function () {
 		return "Testing 3 different anchor points";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteBatchAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
@@ -466,7 +470,7 @@ var SpriteOffsetAnchorFlip = function() {
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
-			if( i == 0 ) {
+			if( i === 0 ) {
 				sprite.setAnchorPoint( cc.p( 0, 0) );
 			} else if( i == 1 ) {
 				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
@@ -476,7 +480,7 @@ var SpriteOffsetAnchorFlip = function() {
 
 			point.setPosition( sprite.getPosition() );
 
-			var frames = []
+			var frames = [];
 			for( var j = 1; j < 15; j++) {
 
 				if( j < 10 ) {
@@ -501,18 +505,18 @@ var SpriteOffsetAnchorFlip = function() {
 
 			this.addChild( sprite );
 		}
-	}
+	};
 
 	this.title = function () {
 		return "Sprite offset + anchor + flip";
-	}
+	};
 
 	this.subtitle = function () {
 		return "issue #1078";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteOffsetAnchorFlip, BaseLayer );
 
 //------------------------------------------------------------------
@@ -540,7 +544,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 			point.setPosition( sprite.getPosition() );
 			this.addChild( point, 10 );
 
-			if( i == 0 ) {
+			if( i === 0 ) {
 				sprite.setAnchorPoint( cc.p( 0, 0) );
 			} else if( i == 1 ) {
 				sprite.setAnchorPoint( cc.p(0.5, 0.5) );
@@ -550,7 +554,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 
 			point.setPosition( sprite.getPosition() );
 
-			var frames = []
+			var frames = [];
 			for( var j = 1; j < 15; j++) {
 
 				if( j < 10 ) {
@@ -576,18 +580,18 @@ var SpriteBatchOffsetAnchorFlip = function() {
 			batch.addChild( sprite );
 		}
 		this.addChild(batch);
-	}
+	};
 
 	this.title = function () {
 		return "SpriteBatch offset + anchor + flip";
-	}
+	};
 
 	this.subtitle = function () {
 		return "issue #1078";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits( SpriteBatchOffsetAnchorFlip, BaseLayer );
 
 
@@ -650,21 +654,21 @@ var SpriteColorOpacity = function() {
 		this.addChild(sprite6);
 		this.addChild(sprite7);
 		this.addChild(sprite8);
-	}
+	};
 
 	//
 	// Instance methods
 	//
 	this.title = function () {
 		return "Sprite: Color & Opacity";
-	}
+	};
 
 	this.subtitle = function () {
 		return "testing opacity and color";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits(SpriteColorOpacity, BaseLayer );
 
 //------------------------------------------------------------------
@@ -728,21 +732,21 @@ var SpriteBatchColorOpacity = function() {
 		batch.addChild(sprite6);
 		batch.addChild(sprite7);
 		batch.addChild(sprite8);
-	}
+	};
 
 	//
 	// Instance methods
 	//
 	this.title = function () {
 		return "Sprite Batch: Color & Opacity";
-	}
+	};
 
 	this.subtitle = function () {
 		return "testing opacity and color with batches";
-	}
+	};
 
 	this.initialize();
-}
+};
 goog.inherits(SpriteBatchColorOpacity, BaseLayer );
 
 //
@@ -771,7 +775,7 @@ function run()
     scene.addChild( layer );
 
     var runningScene = director.getRunningScene();
-    if( runningScene == null )
+    if( runningScene === null )
         director.runWithScene( scene );
     else
         director.replaceScene( cc.TransitionFade.create(0.5, scene ) );

@@ -22,6 +22,7 @@ namespace js {
 
 class PropertyName;
 class SpecialId;
+class PropertyId;
 
 static JS_ALWAYS_INLINE jsid
 SPECIALID_TO_JSID(const SpecialId &sid);
@@ -37,12 +38,13 @@ SPECIALID_TO_JSID(const SpecialId &sid);
  * does not occur in JS scripts but may be used to indicate the absence of a
  * valid identifier; or JS_DEFAULT_XML_NAMESPACE_ID, if E4X is enabled.
  */
-
-class SpecialId {
+class SpecialId
+{
     uintptr_t bits;
 
     /* Needs access to raw bits. */
     friend JS_ALWAYS_INLINE jsid SPECIALID_TO_JSID(const SpecialId &sid);
+    friend class PropertyId;
 
     static const uintptr_t TYPE_VOID = JSID_TYPE_VOID;
     static const uintptr_t TYPE_OBJECT = JSID_TYPE_OBJECT;
@@ -147,17 +149,17 @@ typedef JS::Handle<SpecialId> HandleSpecialId;
 /* js::Class operation signatures. */
 
 typedef JSBool
-(* LookupGenericOp)(JSContext *cx, HandleObject obj, HandleId id, JSObject **objp,
-                    JSProperty **propp);
+(* LookupGenericOp)(JSContext *cx, HandleObject obj, HandleId id,
+                    MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
-(* LookupPropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name, JSObject **objp,
-                 JSProperty **propp);
+(* LookupPropOp)(JSContext *cx, HandleObject obj, HandlePropertyName name,
+                 MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
-(* LookupElementOp)(JSContext *cx, HandleObject obj, uint32_t index, JSObject **objp,
-                    JSProperty **propp);
+(* LookupElementOp)(JSContext *cx, HandleObject obj, uint32_t index,
+                    MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
-(* LookupSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid, JSObject **objp,
-                    JSProperty **propp);
+(* LookupSpecialOp)(JSContext *cx, HandleObject obj, HandleSpecialId sid,
+                    MutableHandleObject objp, MutableHandleShape propp);
 typedef JSBool
 (* DefineGenericOp)(JSContext *cx, HandleObject obj, HandleId id, const Value *value,
                     PropertyOp getter, StrictPropertyOp setter, unsigned attrs);

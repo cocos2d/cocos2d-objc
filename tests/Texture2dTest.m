@@ -69,6 +69,7 @@ static NSString *transitions[] = {
 	@"TextureBlend",
 	@"TextureAsync",
 	@"TextureAsyncBlock",
+    @"TextureAsyncBlock2",
 	@"TextureLibPNGTest1",
 	@"TextureLibPNGTest2",
 	@"TextureLibPNGTest3",
@@ -1729,6 +1730,95 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark -
+#pragma mark TextureAsyncBlock 2
+
+/*
+ This test fails if there is only a single sprite on screen and CC_ENABLE_GL_STATE_CACHE=1
+ */
+@implementation TextureAsyncBlock2
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize size = [[CCDirector sharedDirector] winSize];
+        
+        // add sprite1 grossini
+        sprite1_ = [CCSprite spriteWithFile:@"grossini.png"];
+        sprite1_.position = ccp(size.width/2 - sprite1_.contentSize.width, size.height/2);
+        [self addChild:sprite1_];
+        
+        // delay, then async load
+        //[self scheduleOnce:@selector(loadImage) delay:1.0f];
+        [self performSelector:@selector(loadImage) withObject:nil afterDelay:1.0f];
+	}
+	return self;
+}
+
+-(void) dealloc
+{
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[super dealloc];
+}
+
+-(void) loadImage
+{
+    [[CCTextureCache sharedTextureCache] addImageAsync:@"grossinis_sister1.png" withBlock:^(CCTexture2D *tex) {
+        [self replaceImage:tex];
+    }];
+}
+
+-(void) loadImageX
+{
+    void(^block)(CCTexture2D *block) = ^(CCTexture2D* tex){
+        
+		CCDirector *director = [CCDirector sharedDirector];
+        
+		NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+        
+        // add sprite2 grossini's sister
+        CGSize size = [[CCDirector sharedDirector] winSize];
+        CCSprite* sprite2_ = [CCSprite spriteWithTexture:tex];
+        sprite2_.position = ccp(size.width/2 + sprite2_.contentSize.width, size.height/2);
+        [self addChild:sprite2_];
+        
+        // replace sprite1 with grossini's sister
+		sprite1_.texture = tex;
+        
+		NSLog(@"Image loaded: %@", tex);
+	};
+    
+    [[CCTextureCache sharedTextureCache] addImageAsync:@"grossinis_sister1.png" withBlock:block];
+}
+
+-(void) replaceImage:(CCTexture2D*) tex {
+    CCDirector *director = [CCDirector sharedDirector];
+    
+    NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+    
+    // add sprite2 grossini's sister
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    CCSprite* sprite2_ = [CCSprite spriteWithTexture:tex];
+    sprite2_.position = ccp(size.width/2 + sprite2_.contentSize.width, size.height/2);
+    [self addChild:sprite2_];
+    
+    // replace sprite1 with grossini's sister
+    sprite1_.texture = tex;
+    
+    NSLog(@"Image loaded: %@", tex);
+}
+
+-(NSString *) title
+{
+	return @"Texture Async Load with Blocks 2";
+}
+
+-(NSString *) subtitle
+{
+//	return @"Texture should load and replace existing sprite texture.";
+	return @"This bug cannot be reproduce in this context.";
+}
+@end
 
 
 #pragma mark -

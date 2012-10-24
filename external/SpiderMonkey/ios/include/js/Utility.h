@@ -9,6 +9,7 @@
 #define js_utility_h__
 
 #include "mozilla/Assertions.h"
+#include "mozilla/Attributes.h"
 
 #include <stdlib.h>
 #include <string.h>
@@ -21,6 +22,7 @@
 #include "jstypes.h"
 
 #ifdef __cplusplus
+# include "mozilla/Scoped.h"
 
 /* The public JS engine namespace. */
 namespace JS {}
@@ -64,6 +66,9 @@ JS_BEGIN_EXTERN_C
 
 #define JS_STATIC_ASSERT(cond)           MOZ_STATIC_ASSERT(cond, "JS_STATIC_ASSERT")
 #define JS_STATIC_ASSERT_IF(cond, expr)  MOZ_STATIC_ASSERT_IF(cond, expr, "JS_STATIC_ASSERT_IF")
+
+extern MOZ_NORETURN JS_PUBLIC_API(void)
+JS_Assert(const char *s, const char *file, int ln);
 
 /*
  * Abort the process in a non-graceful manner. This will cause a core file,
@@ -593,6 +598,15 @@ public:
 
 class UnwantedForeground : public Foreground {
 };
+
+template <typename T>
+struct ScopedDeletePtrTraits
+{
+    typedef T *type;
+    static T *empty() { return NULL; }
+    static void release(T *ptr) { Foreground::delete_(ptr); }
+};
+SCOPED_TEMPLATE(ScopedDeletePtr, ScopedDeletePtrTraits)
 
 } /* namespace js */
 

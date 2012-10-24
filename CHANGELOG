@@ -1,15 +1,56 @@
 
 version 2.1-beta3  xx-Oct-2012
+. [NEW] Clipping Node: New node that let's you clip objects inside it. Check the demos!
+. [NEW] Node API additions:
+		Added: removeChild. Calls removeChild:cleanup: with cleanup=YES
+		Added: removeChildByTag. Calls removeChildByTag:cleanup: with cleanup=YES
+		Added: removeFromParent. Calls removeFromParentAndCleanup: with cleanup=YES
+		Added: removeAllChildren. Calls removeAllChildrenWithCleanup: with cleanup=YES
+. [NEW] RenderTexture: Supports "auto rendering" its children to the texture. No need to call being/end
+. [NEW] Scheduler: It is possible to schedule blocks too.
+. [FIX] Actions: TargetedAction can be copied. Calls super correctly
+		Blink: "stop" restores original "visibility" state
+. [FIX] Director: Fixed possible retain cycle with the delegate
+		Fixed possible crash when purgeCacheData is called before the view is initialized (issue #1440)
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)
-. [FIX] Layer: LayerColor uses correct default blending function (issues #1422 #1423)
+. [FIX] GL Cache: when texture is deleted, it is removed form teh GL cache (issue #1429)
+. [FIX] LabelAtlas: Honors the directory of the .plist file when loading the .png file
+. [FIX] LabelBMFont: Does not crash if it can't parse the FNT. Instead it logs an error and return nil
+		contextSize honors shadows and strokes
+. [FIX] LabelTTF: It is possible to set an empty string
+. [FIX] Layer: API improvements
+		setIsKeyboardEnabled -> setKeyboardEnabled
+		setIsMouseEnabled -> setMouseEnabled
+		setIsTouchEnabled -> setTouchEnabled
+		setIsAccelerometerEnabled -> setAccelerometerEnabled
+		Old methods can be called, but are deprecated.
+		New way to enable "targeted" touches: [self setTouchMode:kCCTouchOneByOne];
+. [FIX] LayerColor: uses correct default blending function (issues #1422 #1423)
+. [FIX] Particle: Honors the directory of the .plist file when loading the .png file
+. [FIX] Scheduler: API improvements:
+		unscheduleAllSelectors -> unscheduleAll (since it also unschedules blocks)
+		unscheduleAllSelectorsForTarget -> unscheduleAllForTarget (since it also unschedules blocks)
+		Old methods can be called, but are deprecated.
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
+		Fixed some grammar errors
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
-		Add new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
+		Added new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
+. [FIX] TextureCache: filenames are standarized before adding them into the cache
+. [FIX] TMX Tiled Maps: Resused code is re-initialized in a faster
+. [FIX] Touch Delegate:
+		CCTargetedTouchDelegate -> CCTouchOneByOneDelegate
+		CCStandardTouchDelegate -> CCTouchAllAtOnceDelegate
 . [FIX] Windows: Toggle fullscreen does not reset whether or not to support touches (issue #1420)
 . [FIX] Xcode: Fixed compiler warnigns
-. [3RD] JS Bindings: Updated to v0.3 (Chipmunk API is compatible with Chipmunk-JS)
+. [3RD] JS Bindings: Updated to v0.3
+		Chipmunk API is compatible with Chipmunk-JS
+		CocosBuilder Reader supports "outlets", Animation callbacks, and improved JSB API
+		Better registration code
+. [3RD] CocosBuilder Reader: Updated to v2.1
+. [3RD] SpiderMonkey: Updated to v16.0.1
+		Added armv7s support
 
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj

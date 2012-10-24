@@ -38,7 +38,7 @@
 
     if ((self = [super init])) {
 
-        self.isTouchEnabled = YES;
+        self.touchEnabled = YES;
 
         // Add a sprite sheet based on the loaded texture and add it to the scene
         self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];

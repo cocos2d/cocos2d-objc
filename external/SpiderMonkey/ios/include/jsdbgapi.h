@@ -221,6 +221,9 @@ JS_GetFrameAnnotation(JSContext *cx, JSStackFrame *fp);
 extern JS_PUBLIC_API(void)
 JS_SetFrameAnnotation(JSContext *cx, JSStackFrame *fp, void *annotation);
 
+extern JS_PUBLIC_API(JSPrincipals*)
+JS_GetPrincipalIfDummyFrame(JSContext *cx, JSStackFrame *fpArg);
+
 extern JS_PUBLIC_API(JSBool)
 JS_IsScriptFrame(JSContext *cx, JSStackFrame *fp);
 
@@ -336,7 +339,6 @@ typedef struct JSPropertyDesc {
     jsval           value;      /* property value */
     uint8_t         flags;      /* flags, see below */
     uint8_t         spare;      /* unused */
-    uint16_t        slot;       /* argument/variable slot */
     jsval           alias;      /* alias id if JSPD_ALIAS flag */
 } JSPropertyDesc;
 
@@ -344,8 +346,6 @@ typedef struct JSPropertyDesc {
 #define JSPD_READONLY   0x02    /* assignment is error */
 #define JSPD_PERMANENT  0x04    /* property cannot be deleted */
 #define JSPD_ALIAS      0x08    /* property has an alias id */
-#define JSPD_ARGUMENT   0x10    /* argument to function */
-#define JSPD_VARIABLE   0x20    /* local variable in function */
 #define JSPD_EXCEPTION  0x40    /* exception occurred fetching the property, */
                                 /* value is exception */
 #define JSPD_ERROR      0x80    /* native getter returned JS_FALSE without */
@@ -394,23 +394,6 @@ JS_GetFunctionTotalSize(JSContext *cx, JSFunction *fun);
 
 extern JS_PUBLIC_API(size_t)
 JS_GetScriptTotalSize(JSContext *cx, JSScript *script);
-
-/*
- * Return true if obj is a "system" object, that is, one created by
- * JS_NewSystemObject with the system flag set and not JS_NewObject.
- *
- * What "system" means is up to the API client.
- */
-extern JS_PUBLIC_API(JSBool)
-JS_IsSystemObject(JSContext *cx, JSObject *obj);
-
-/*
- * Mark an object as being a system object. This should be called immediately
- * after allocating the object. A system object is an object for which
- * JS_IsSystemObject returns true.
- */
-extern JS_PUBLIC_API(JSBool)
-JS_MakeSystemObject(JSContext *cx, JSObject *obj);
 
 /************************************************************************/
 
