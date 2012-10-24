@@ -2700,6 +2700,10 @@
 		A0D2DE29163619C2008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		A0D2DE2A163619C3008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		A0D2DE2B163619C3008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
+		A0D2DE6616375D9C008DB73C /* boundsTestFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6416375D9C008DB73C /* boundsTestFont.fnt */; };
+		A0D2DE6716375D9C008DB73C /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6516375D9C008DB73C /* boundsTestFont.png */; };
+		A0D2DE73163770AA008DB73C /* EffectsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE70163770AA008DB73C /* EffectsTest.js */; };
+		A0D2DE74163770AA008DB73C /* RenderTextureTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE72163770AA008DB73C /* RenderTextureTest.js */; };
 		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
@@ -7234,6 +7238,10 @@
 		A0CBEC1E156ABF3B009D35B4 /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
 		A0CBEC20156ABF3B009D35B4 /* README.markdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.markdown; sourceTree = "<group>"; };
+		A0D2DE6416375D9C008DB73C /* boundsTestFont.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boundsTestFont.fnt; sourceTree = "<group>"; };
+		A0D2DE6516375D9C008DB73C /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
+		A0D2DE70163770AA008DB73C /* EffectsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EffectsTest.js; sourceTree = "<group>"; };
+		A0D2DE72163770AA008DB73C /* RenderTextureTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = RenderTextureTest.js; sourceTree = "<group>"; };
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
@@ -8759,6 +8767,7 @@
 				A03F85D2161B563200FE54C8 /* CurrentLanguageTest */,
 				A03F85D4161B563200FE54C8 /* DrawPrimitivesTest */,
 				A03F85D6161B563200FE54C8 /* EaseActionsTest */,
+				A0D2DE6F163770AA008DB73C /* EffectsTest */,
 				A066C181162F7AC300E3C740 /* EventTest */,
 				A03F85D8161B563200FE54C8 /* ExtensionsTest */,
 				A03F85E7161B563300FE54C8 /* FontTest */,
@@ -8771,6 +8780,7 @@
 				A03F85F5161B563300FE54C8 /* ParticleTest */,
 				A03F85F7161B563300FE54C8 /* PerformanceTest */,
 				A03F85FE161B563300FE54C8 /* ProgressActionsTest */,
+				A0D2DE71163770AA008DB73C /* RenderTextureTest */,
 				A03F8600161B563300FE54C8 /* RotateWorldTest */,
 				A03F8602161B563300FE54C8 /* SceneTest */,
 				A03F8604161B563300FE54C8 /* SchedulerTest */,
@@ -9661,6 +9671,22 @@
 			path = external/JRSwizzle;
 			sourceTree = "<group>";
 		};
+		A0D2DE6F163770AA008DB73C /* EffectsTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D2DE70163770AA008DB73C /* EffectsTest.js */,
+			);
+			path = EffectsTest;
+			sourceTree = "<group>";
+		};
+		A0D2DE71163770AA008DB73C /* RenderTextureTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D2DE72163770AA008DB73C /* RenderTextureTest.js */,
+			);
+			path = RenderTextureTest;
+			sourceTree = "<group>";
+		};
 		A0D82F8916321F8300A59FC2 /* ChipmunkTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -10123,6 +10149,8 @@
 		E076E7A11225EDD000DE0DA2 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				A0D2DE6416375D9C008DB73C /* boundsTestFont.fnt */,
+				A0D2DE6516375D9C008DB73C /* boundsTestFont.png */,
 				A0F84206151D662D00EBBFCB /* font-issue1343-hd.fnt */,
 				A0F84207151D662D00EBBFCB /* font-issue1343-hd.png */,
 				A0F84208151D662D00EBBFCB /* font-issue1343.fnt */,
@@ -13162,6 +13190,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0D2DE73163770AA008DB73C /* EffectsTest.js in Resources */,
+				A0D2DE74163770AA008DB73C /* RenderTextureTest.js in Resources */,
 				A09C8CC31566FB4100ADFDA9 /* A Damn Mess.ttf in Resources */,
 				A09C8CC41566FB4100ADFDA9 /* Abberancy.ttf in Resources */,
 				A09C8CC51566FB4100ADFDA9 /* Abduction.ttf in Resources */,
@@ -15558,6 +15588,8 @@
 				A0F8420B151D662D00EBBFCB /* font-issue1343-hd.png in Resources */,
 				A0F8420C151D662D00EBBFCB /* font-issue1343.fnt in Resources */,
 				A0F8420D151D662D00EBBFCB /* font-issue1343.png in Resources */,
+				A0D2DE6616375D9C008DB73C /* boundsTestFont.fnt in Resources */,
+				A0D2DE6716375D9C008DB73C /* boundsTestFont.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18454,9 +18486,9 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
 					"CC_ENABLE_GL_STATE_CACHE=1",
-					"COCOS2D_DEBUG=2",
+					DEBUG,
+					"COCOS2D_DEBUG=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);
@@ -18495,9 +18527,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Resources-Mac/cocos2d_mac_Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					NDEBUG,
-					NS_BLOCK_ASSERTIONS,
-					"CC_ENABLE_GL_STATE_CACHE=1",
+					"$(inherited)",
 					"CC_DIRECTOR_MAC_THREAD=2",
 					"CC_ENABLE_CHIPMUNK_INTEGRATION=1",
 				);

@@ -17,6 +17,7 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] GL Cache: when texture is deleted, it is removed form teh GL cache (issue #1429)
 . [FIX] LabelAtlas: Honors the directory of the .plist file when loading the .png file
 . [FIX] LabelBMFont: Does not crash if it can't parse the FNT. Instead it logs an error and return nil
+		contextSize honors shadows and strokes
 . [FIX] LabelTTF: It is possible to set an empty string
 . [FIX] Layer: API improvements
 		setIsKeyboardEnabled -> setKeyboardEnabled

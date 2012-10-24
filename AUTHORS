@@ -48,7 +48,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * michaelm (http://ironapegames.com/):
 	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
-	
+
+* Mike Daley (http://www.71squared.com/)
+	LabelBMFont: contextSize honors shadows and strokes patch.
+
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
 

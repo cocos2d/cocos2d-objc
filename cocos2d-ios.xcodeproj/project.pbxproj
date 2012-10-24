@@ -1233,6 +1233,8 @@
 		50FD7B450FFAA8C6004073B5 /* atlastest.png in Resources */ = {isa = PBXBuildFile; fileRef = 506882680E957C4A00F943E5 /* atlastest.png */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		8F2B79981637472500510E69 /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79961637458E00510E69 /* boundsTestFont.png */; };
+		8F2B79991637472500510E69 /* boundsTestFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 8F2B79971637458E00510E69 /* boundsTestFont.fnt */; };
 		A001940B15C379F400F3D80E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		A001940C15C379F400F3D80E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		A001940D15C379F400F3D80E /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
@@ -2446,6 +2448,12 @@
 		A0CFE64F15BE3D5300264229 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
 		A0CFE65015BE3D5400264229 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
 		A0CFE65115BE3D5600264229 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
+		A0D2DE6C16376C25008DB73C /* EffectsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6916376C25008DB73C /* EffectsTest.js */; };
+		A0D2DE6D16376C25008DB73C /* RenderTextureTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6B16376C25008DB73C /* RenderTextureTest.js */; };
+		A0D2DE7516377422008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
+		A0D2DE7616377423008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
+		A0D2DE7716377424008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
+		A0D2DE7816377425008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
 		A0D3A8FF149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A900149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A901149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
@@ -5464,6 +5472,8 @@
 		50FBB2D9117613F500150761 /* CCActionTween.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTween.m; sourceTree = "<group>"; };
 		6F305B5D0FB9D2790052E700 /* TransformUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TransformUtils.h; sourceTree = "<group>"; };
 		6F305B5E0FB9D2790052E700 /* TransformUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TransformUtils.m; sourceTree = "<group>"; };
+		8F2B79961637458E00510E69 /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
+		8F2B79971637458E00510E69 /* boundsTestFont.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boundsTestFont.fnt; sourceTree = "<group>"; };
 		A001946A15C379F400F3D80E /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009431115180C730029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009431515180E1F0029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
@@ -5925,6 +5935,8 @@
 		A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A0D2DE6916376C25008DB73C /* EffectsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EffectsTest.js; sourceTree = "<group>"; };
+		A0D2DE6B16376C25008DB73C /* RenderTextureTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = RenderTextureTest.js; sourceTree = "<group>"; };
 		A0D3A8FD149D2F9D0077CD93 /* BaseAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseAppController.h; path = tests/BaseAppController.h; sourceTree = "<group>"; };
 		A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseAppController.m; path = tests/BaseAppController.m; sourceTree = "<group>"; };
 		A0D6C037159B6A25008EED97 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7844,6 +7856,8 @@
 		505463B81062868100AB7C52 /* BMFont fonts */ = {
 			isa = PBXGroup;
 			children = (
+				8F2B79961637458E00510E69 /* boundsTestFont.png */,
+				8F2B79971637458E00510E69 /* boundsTestFont.fnt */,
 				A0F841F1151D5E4600EBBFCB /* font-issue1343-hd.fnt */,
 				A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */,
 				A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */,
@@ -9206,6 +9220,22 @@
 			path = mozilla;
 			sourceTree = "<group>";
 		};
+		A0D2DE6816376C25008DB73C /* EffectsTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D2DE6916376C25008DB73C /* EffectsTest.js */,
+			);
+			path = EffectsTest;
+			sourceTree = "<group>";
+		};
+		A0D2DE6A16376C25008DB73C /* RenderTextureTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0D2DE6B16376C25008DB73C /* RenderTextureTest.js */,
+			);
+			path = RenderTextureTest;
+			sourceTree = "<group>";
+		};
 		A0D7D9D415E2E737000CA0C4 /* Physics Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -9429,6 +9459,7 @@
 				A0DC2B10161BE16A00DDB2BD /* CurrentLanguageTest */,
 				A0DC2B12161BE16A00DDB2BD /* DrawPrimitivesTest */,
 				A0DC2B14161BE16A00DDB2BD /* EaseActionsTest */,
+				A0D2DE6816376C25008DB73C /* EffectsTest */,
 				A066C17E162F6EB200E3C740 /* EventTest */,
 				A0DC2B16161BE16A00DDB2BD /* ExtensionsTest */,
 				A0DC2B25161BE16A00DDB2BD /* FontTest */,
@@ -9441,6 +9472,7 @@
 				A0DC2B33161BE16A00DDB2BD /* ParticleTest */,
 				A0DC2B35161BE16A00DDB2BD /* PerformanceTest */,
 				A0DC2B3C161BE16A00DDB2BD /* ProgressActionsTest */,
+				A0D2DE6A16376C25008DB73C /* RenderTextureTest */,
 				A0DC2B3E161BE16A00DDB2BD /* RotateWorldTest */,
 				A0DC2B40161BE16A00DDB2BD /* SceneTest */,
 				A0DC2B42161BE16A00DDB2BD /* SchedulerTest */,
@@ -12789,6 +12821,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8F2B79981637472500510E69 /* boundsTestFont.png in Resources */,
+				8F2B79991637472500510E69 /* boundsTestFont.fnt in Resources */,
 				506881F80E95761200F943E5 /* b1.png in Resources */,
 				506881F90E95761200F943E5 /* b2.png in Resources */,
 				506881FA0E95761200F943E5 /* f1.png in Resources */,
@@ -13884,6 +13918,7 @@
 				A0DC2CEF161BE16B00DDB2BD /* CCControlSceneManager.js in Resources */,
 				A0DC2CF0161BE16B00DDB2BD /* ExtensionsTest.js in Resources */,
 				A0DC2CF1161BE16B00DDB2BD /* TableViewTestScene.js in Resources */,
+				A0D2DE6C16376C25008DB73C /* EffectsTest.js in Resources */,
 				A066C180162F6EB200E3C740 /* EventTest.js in Resources */,
 				A0DC2CF2161BE16B00DDB2BD /* FontTest.js in Resources */,
 				A0DC2CF3161BE16B00DDB2BD /* IntervelTest.js in Resources */,
@@ -13900,6 +13935,7 @@
 				A0DC2CFE161BE16B00DDB2BD /* PerformanceTextureTest.js in Resources */,
 				A0DC2CFF161BE16B00DDB2BD /* PerformanceTouchesTest.js in Resources */,
 				A0DC2D00161BE16B00DDB2BD /* ProgressActionsTest.js in Resources */,
+				A0D2DE6D16376C25008DB73C /* RenderTextureTest.js in Resources */,
 				A0DC2D01161BE16B00DDB2BD /* RotateWorldTest.js in Resources */,
 				A0DC2D02161BE16B00DDB2BD /* SceneTest.js in Resources */,
 				A0DC2D03161BE16B00DDB2BD /* SchedulerTest.js in Resources */,
@@ -14687,6 +14723,7 @@
 				A0D7DAEE15E2EEE8000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7DAEF15E2EEE8000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5415E312EC000CA0C4 /* CCProfiling.m in Sources */,
+				A0D2DE7616377423008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15035,6 +15072,7 @@
 				A0D7DAEC15E2EEE7000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7DAED15E2EEE7000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5315E312EC000CA0C4 /* CCProfiling.m in Sources */,
+				A0D2DE7716377424008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15398,6 +15436,7 @@
 				A0D7DAF015E2EEE8000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7DAF115E2EEE8000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5515E312ED000CA0C4 /* CCProfiling.m in Sources */,
+				A0D2DE7516377422008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15626,6 +15665,7 @@
 				A064ECA216235FE700020E06 /* js_bindings_chipmunk_registration.mm in Sources */,
 				A064ECA416235FE700020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				E39CB1C216239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
+				A0D2DE7816377425008DB73C /* CCClippingNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18339,6 +18379,12 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CD_DEBUG=1",
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				HEADER_SEARCH_PATHS = (
