@@ -91,9 +91,14 @@ enum {
 {
 	if( (self=[super init]) ) {
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		[self setTouchPriority:kCCMenuHandlerPriority];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchEnabled:YES];
+
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		[self setMousePriority:kCCMenuHandlerPriority+1];
+		[self setMouseEnabled:YES];
+		
 #endif
 		enabled_ = YES;
 		
@@ -171,11 +176,6 @@ enum {
 #pragma mark Menu - Events Touches
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority swallowsTouches:YES];
-}
 
 -(CCMenuItem *) itemForTouch: (UITouch *) touch
 {
@@ -252,11 +252,6 @@ enum {
 #pragma mark Menu - Events Mouse
 
 #elif defined(__CC_PLATFORM_MAC)
-
--(NSInteger) mouseDelegatePriority
-{
-	return kCCMenuHandlerPriority+1;
-}
 
 -(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
 {

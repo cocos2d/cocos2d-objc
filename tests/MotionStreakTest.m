@@ -222,9 +222,9 @@ Class restartAction()
 	[super onEnter];
 
 #ifdef __CC_PLATFORM_IOS
-	self.isTouchEnabled = YES;
+	self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-	self.isMouseEnabled = YES;
+	self.mouseEnabled = YES;
 #endif
 
 	CGSize s = [[CCDirector sharedDirector] winSize];

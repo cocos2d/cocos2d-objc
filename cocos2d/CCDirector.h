@@ -196,7 +196,7 @@ and when to execute the Scenes.
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  @since v0.99.5
  */
-@property (nonatomic, readwrite, retain) id<CCDirectorDelegate> delegate;
+@property (nonatomic, readwrite, assign) id<CCDirectorDelegate> delegate;
 
 /** CCScheduler associated with this director
  @since v2.0

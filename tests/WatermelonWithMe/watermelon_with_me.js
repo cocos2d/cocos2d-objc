@@ -212,7 +212,7 @@ var GameLayer = cc.LayerGradient.extend({
     _carSmoke:null,
 
     ctor:function (level) {
-                                
+
         var parent = new cc.LayerGradient();
         __associateObjWithNative(this, parent);
         this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
@@ -232,7 +232,7 @@ var GameLayer = cc.LayerGradient.extend({
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
         menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
-    
+
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimations("coins_animation.plist");
 
@@ -328,11 +328,8 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onMainMenu:function(sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionProgressRadialCCW.create(1, scene) );
-        this._state = STATE_PAUSE;
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onToggleDebug:function(sender) {
@@ -341,20 +338,22 @@ var GameLayer = cc.LayerGradient.extend({
     },
 
     onMouseDown:function(event) {
-        this.setThrottle(1);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
         return true;
     },
     onMouseUp:function(event) {
-        this.setThrottle(0);
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
         return true;
     },
     onTouchesBegan:function( touches, event) {
-        this.setThrottle(1);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(1);
     },
     onTouchesEnded:function( touches, event) {
-        this.setThrottle(0);
-        return true;
+        if(this._state == STATE_PLAYING)
+            this.setThrottle(0);
     },
 
     onEnterTransitionDidFinish:function() {
@@ -375,11 +374,11 @@ var GameLayer = cc.LayerGradient.extend({
         var selfremove = cc.CallFunc.create(this, this.onRemoveMe );
         var seq = cc.Sequence.create(d, s, selfremove );
         label.runAction( seq );
-        
+
     },
 
     onRemoveMe:function( sender ) {
-        sender.removeFromParentAndCleanup( true );
+        sender.removeFromParent();
     },
 
     onExit:function() {
@@ -462,7 +461,7 @@ var GameLayer = cc.LayerGradient.extend({
 
             var body = shape.getBody();
             var sprite = body.getUserData();
-            sprite.removeFromParentAndCleanup(true);
+            sprite.removeFromParent();
 
             // body.free();
 
@@ -483,7 +482,7 @@ var GameLayer = cc.LayerGradient.extend({
         var height = winSize.height;
 
         var level = levels[ lvl ];
-        
+
         var i=0;
         // Coins
         var coins = level['coins'];
@@ -634,7 +633,7 @@ var GameLayer = cc.LayerGradient.extend({
         // The rear strut is a swinging arm that holds the wheel a at a certain distance from a pivot on the chassis.
         // A perfect fit for a pin joint conected between the chassis and the wheel's center.
         var rearJoint = new cp.PinJoint( chassis, rear, cp.v.sub( cp._v(-14,-8), COG_ADJUSTMENT), cp.vzero );
-        
+
         // return cpvtoangle(cpvsub([_chassis.body local2world:_rearJoint.anchr1], _rearWheel.body.pos));
         var rearStrutRestAngle = cp.v.toangle( cp.v.sub(
                                                 chassis.local2World( rearJoint.getAnchr1() ),
@@ -646,16 +645,16 @@ var GameLayer = cc.LayerGradient.extend({
 
         // Attach a slide joint to the wheel to limit it's range of motion.
         var rearStrutLimit = new cp.SlideJoint( chassis, rear, rear_anchor, cp.vzero, 0, 20 );
-			
+
         // The main motor that drives the buggy.
         var motor = new cp.SimpleMotor( chassis, rear, ENGINE_MAX_W );
         motor.setMaxForce(  0.0 );
-			
+
         // I don't know if "differential" is the correct word, but it transfers a fraction of the rear torque to the front wheels.
         // In case the rear wheels are slipping. This makes the buggy less frustrating when climbing steep hills.
         var differential = new cp.SimpleMotor( rear, front, 0 );
         differential.setMaxForce( ENGINE_MAX_TORQUE*DIFFERENTIAL_TORQUE );
-			
+
         // Wheel brakes.
         // While you could reuse the main motor for the brakes, it's easier not to.
         // It won't cause a performance issue to have too many extra motors unless you have hundreds of buggies in the game.
@@ -768,7 +767,7 @@ var GameLayer = cc.LayerGradient.extend({
         // coins are static bodies and sensors
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
-        
+
         var body = new cp.BodyStatic();
 		body.setPos( pos );
         sprite.setBody( body.handle );
@@ -825,7 +824,7 @@ var GameLayer = cc.LayerGradient.extend({
     //
     // Game State
     //
-    
+
     // call the 'deferred' option if you want to modify Chipmunk's state from a Chipmunk's callback
     setGameStateDeferred: function( state ) {
         this._deferredState = state;
@@ -952,7 +951,7 @@ var GameLayer = cc.LayerGradient.extend({
 var BootLayer = cc.Layer.extend({
 
     ctor:function () {
-                                
+
         var parent = new cc.Layer();
         __associateObjWithNative(this, parent);
         this.init();
@@ -967,11 +966,9 @@ var BootLayer = cc.Layer.extend({
         __jsc__.dumpRoot();
         __jsc__.garbageCollect();
     },
-    
+
     onEnter:function() {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
         director.replaceScene( scene );
     }
 });
@@ -979,84 +976,71 @@ var BootLayer = cc.Layer.extend({
 //
 // Main Menu
 //
-var MenuLayer = cc.Layer.extend({
 
-    ctor:function () {
-                                
-        var parent = new cc.Layer();
-        __associateObjWithNative(this, parent);
-        this.init();
+// 'MenuLayerController' class is instantiated by CocosBuilder Reader
+var MenuLayerController = function() {};
 
-        // background
-        var node = cc.Reader.load("MainMenu.ccbi", this, winSize);
-        this.addChild( node );
-        var label = node.getChildByTag( TITLE_TAG );
-        var o = label.getChildByTag( 8 );
+// callback triggered by CCB Reader once the instance is created
+MenuLayerController.prototype.onDidLoadFromCCB = function()
+{
+    // Spin the 'o' in the title
+    var o = this.titleLabel.getChildByTag( 8 );
 
-        var a_delay = cc.DelayTime.create(6);
-        var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
-        var a_rotate = cc.RotateBy.create( 4, 360 );
-        var a_rep = cc.Repeat.create( a_rotate, 1000 );
-        var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
-        o.runAction( a_seq );
+    var a_delay = cc.DelayTime.create(6);
+    var a_tint = cc.TintTo.create( 0.5, 0, 255, 0 );
+    var a_rotate = cc.RotateBy.create( 4, 360 );
+    var a_rep = cc.Repeat.create( a_rotate, 1000 );
+    var a_seq = cc.Sequence.create( a_delay, a_tint, a_delay.copy(), a_rep );
+    o.runAction( a_seq );
+};
 
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
+// callbacks for the menu, defined in the editor
+MenuLayerController.prototype.onPlay = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new GameLayer(0);
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFade.create(1, scene) );
+};
 
-    onPlay:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new GameLayer(0);
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFade.create(1, scene) );
-    },
+MenuLayerController.prototype.onOptions = function()
+{
+    var scene = cc.Scene.create();
+    var layer = new OptionsLayer();
+    scene.addChild( layer );
+    director.replaceScene( cc.TransitionFlipY.create(1, scene) );
+};
 
-    onOptions:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new OptionsLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipY.create(1, scene) );
-    },
-
-    onAbout:function( sender ) {
-        var scene = cc.Scene.create();
-        var layer = new AboutLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
-    }
-});
+MenuLayerController.prototype.onAbout = function()
+{
+    /*var scene = cc.Scene.create();
+    var layer = new AboutLayer();
+    scene.addChild( layer );*/
+    var scene = cc.Reader.loadAsScene("About.ccbi");
+    director.replaceScene( cc.TransitionZoomFlipY.create(1, scene) );
+};
 
 //
 // About
 //
-var AboutLayer = cc.Layer.extend({
+var AboutLayerController = function() {};
 
-    ctor:function () {
-        var parent = new cc.LayerGradient();
-        __associateObjWithNative(this, parent);
-        this.init();
+AboutLayerController.prototype.onDidLoadFromCCB = function()
+{
+    var back = cc.MenuItemFont.create("Back", this, this.onBack );
+    back.setColor( cc.BLACK );
+    var menu = cc.Menu.create( back );
+    this.rootNode.addChild( menu );
+    menu.zOrder = 100;
+    menu.alignItemsVertically();
+    menu.setPosition( cc._p( winSize.width - 50, 50) );
+};
 
-        var about = cc.Reader.load("About.ccbi", this);
-        this.addChild( about );
-
-        var back = cc.MenuItemFont.create("Back", this, this.onBack );
-        back.setColor( cc.BLACK );
-        var menu = cc.Menu.create( back );
-        this.addChild( menu );
-        menu.alignItemsVertically();
-        menu.setPosition( cc._p( winSize.width - 50, 50) );
-
-        __jsc__.dumpRoot();
-        __jsc__.garbageCollect();
-    },
-
-    onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
-    }
-});
+AboutLayerController.prototype.onBack = function()
+{
+    var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+    director.replaceScene( scene );
+};
 
 //
 // Options
@@ -1086,10 +1070,8 @@ var OptionsLayer = cc.LayerGradient.extend({
     },
 
     onBack:function( sender) {
-        var scene = cc.Scene.create();
-        var layer = new MenuLayer();
-        scene.addChild( layer );
-        director.replaceScene( cc.TransitionFlipX.create(1, scene) );
+        var scene = cc.Reader.loadAsScene("MainMenu.ccbi");
+        director.replaceScene( scene );
     },
 
     onMusicToggle:function( sender ) {

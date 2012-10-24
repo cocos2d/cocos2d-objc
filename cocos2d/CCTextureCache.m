@@ -147,8 +147,9 @@ static CCTextureCache *sharedTextureCache;
 	NSAssert(target != nil, @"TextureCache: target can't be nil");
 	NSAssert(selector != NULL, @"TextureCache: selector can't be NULL");
 
-	// optimization
+	path = [path stringByStandardizingPath];
 
+	// optimization
 	__block CCTexture2D * tex;
 
 #ifdef __CC_PLATFORM_IOS
@@ -208,8 +209,9 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
-	// optimization
+	path = [path stringByStandardizingPath];
 
+	// optimization
 	__block CCTexture2D * tex;
 
 #ifdef __CC_PLATFORM_IOS
@@ -271,6 +273,8 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
+	path = [path stringByStandardizingPath];
+	
 	__block CCTexture2D * tex = nil;
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)

@@ -199,6 +199,12 @@
 }
 @end
 
+@interface TextureAsyncBlock2 : TextureDemo
+{
+	CCSprite* sprite1_;
+}
+@end
+
 @interface TextureLibPNG : TextureDemo
 {}
 -(void) transformSprite:(CCSprite*)sprite;
