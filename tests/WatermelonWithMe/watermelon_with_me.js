@@ -212,9 +212,7 @@ var GameLayer = cc.LayerGradient.extend({
     _carSmoke:null,
 
     ctor:function (level) {
-
-        var parent = new cc.LayerGradient();
-        __associateObjWithNative(this, parent);
+        cc.associateWithNative(this, cc.LayerGradient);
         this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         this.scheduleUpdate();
@@ -951,9 +949,7 @@ var GameLayer = cc.LayerGradient.extend({
 var BootLayer = cc.Layer.extend({
 
     ctor:function () {
-
-        var parent = new cc.Layer();
-        __associateObjWithNative(this, parent);
+        cc.associateWithNative(this, cc.Layer);
         this.init();
 
         // music
@@ -1048,8 +1044,7 @@ AboutLayerController.prototype.onBack = function()
 var OptionsLayer = cc.LayerGradient.extend({
 
     ctor:function () {
-        var parent = new cc.LayerGradient();
-        __associateObjWithNative(this, parent);
+        cc.associateWithNative(this, cc.LayerGradient);
         this.init(cc.c4b(0, 0, 0, 255), cc.c4b(255, 255, 255, 255));
 
         var label1 = cc.LabelBMFont.create("MUSIC ON", "konqa32.fnt" );

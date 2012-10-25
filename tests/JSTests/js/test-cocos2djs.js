@@ -79,7 +79,7 @@ var BaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = goog.base(this);
+	var parent = cc.base(this);
 	__associateObjWithNative( this, parent );
 	this.init( cc.c4b(0,0,0,255), cc.c4b(0,128,255,255));
 
@@ -88,11 +88,11 @@ var BaseLayer = function() {
 	this.isMainTitle = false;
 
 };
-goog.inherits(BaseLayer, cc.LayerGradient );
+cc.inherits(BaseLayer, cc.LayerGradient );
 
 //
 // Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// XXX: Should be defined after "cc.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
 
@@ -198,7 +198,7 @@ BaseLayer.prototype.backCallback = function (sender) {
 //------------------------------------------------------------------
 var IntroPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.background1 = this.createImage( 'Official-cocos2d-Icon-Angry.png');
 	this.background2 = this.createImage( 'Official-cocos2d-Icon-Happy.png');
@@ -228,7 +228,7 @@ var IntroPage = function() {
 		this.background2.runAction( cc.RepeatForever.create( seq2 ) );
 	};
 };
-goog.inherits( IntroPage, BaseLayer );
+cc.inherits( IntroPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -237,7 +237,7 @@ goog.inherits( IntroPage, BaseLayer );
 //------------------------------------------------------------------
 var AboutPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'About';
 	this.subtitle = 'What is cocos2d + JS ?';
@@ -249,7 +249,7 @@ var AboutPage = function() {
 				'Faster development',
 				'Great prototyping tool');
 };
-goog.inherits( AboutPage, BaseLayer );
+cc.inherits( AboutPage, BaseLayer );
 
 
 //------------------------------------------------------------------
@@ -259,7 +259,7 @@ goog.inherits( AboutPage, BaseLayer );
 //------------------------------------------------------------------
 var SpritesPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Sprites';
 	this.subtitle = '';
@@ -283,7 +283,7 @@ var SpritesPage = function() {
 	this.addChild( sprite2 );
 	this.addChild( sprite3 );
 };
-goog.inherits( SpritesPage, BaseLayer );
+cc.inherits( SpritesPage, BaseLayer );
 
 
 
@@ -295,7 +295,7 @@ goog.inherits( SpritesPage, BaseLayer );
 //------------------------------------------------------------------
 var LabelsPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Labels';
 	this.subtitle = '';
@@ -320,7 +320,7 @@ var LabelsPage = function() {
 //	this.addChild( labelAtlas );
 
 };
-goog.inherits( LabelsPage, BaseLayer );
+cc.inherits( LabelsPage, BaseLayer );
 
 
 //------------------------------------------------------------------
@@ -330,7 +330,7 @@ goog.inherits( LabelsPage, BaseLayer );
 //------------------------------------------------------------------
 var ActionsPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Actions';
 	this.subtitle = '';
@@ -350,7 +350,7 @@ var ActionsPage = function() {
 		this.sprite.runAction( action );
 	};
 };
-goog.inherits( ActionsPage, BaseLayer );
+cc.inherits( ActionsPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -359,7 +359,7 @@ goog.inherits( ActionsPage, BaseLayer );
 //------------------------------------------------------------------
 var ActionsComplexPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Complex Actions';
 	this.subtitle = '';
@@ -387,7 +387,7 @@ var ActionsComplexPage = function() {
 		this.sprite.runAction( cc.RepeatForever.create( seq ) );
 	};
 };
-goog.inherits( ActionsComplexPage, BaseLayer );
+cc.inherits( ActionsComplexPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -396,7 +396,7 @@ goog.inherits( ActionsComplexPage, BaseLayer );
 //------------------------------------------------------------------
 var ActionsEasePage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Ease Actions';
 	this.subtitle = '';
@@ -440,7 +440,7 @@ var ActionsEasePage = function() {
 		this.sprite3.runAction( cc.RepeatForever.create( seq3 ) );
 	};
 };
-goog.inherits( ActionsEasePage, BaseLayer );
+cc.inherits( ActionsEasePage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -449,7 +449,7 @@ goog.inherits( ActionsEasePage, BaseLayer );
 //------------------------------------------------------------------
 var ParticlesPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Particles';
 	this.subtitle = '';
@@ -490,7 +490,7 @@ var ParticlesPage = function() {
 	};
 
 };
-goog.inherits( ParticlesPage, BaseLayer );
+cc.inherits( ParticlesPage, BaseLayer );
 
 
 //------------------------------------------------------------------
@@ -500,7 +500,7 @@ goog.inherits( ParticlesPage, BaseLayer );
 //------------------------------------------------------------------
 var ChipmunkPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	// batch node
 	this.batch = cc.SpriteBatchNode.create('grossini.png', 50 );
@@ -516,11 +516,11 @@ var ChipmunkPage = function() {
 
 	this.initPhysics();
 };
-goog.inherits( ChipmunkPage, BaseLayer );
+cc.inherits( ChipmunkPage, BaseLayer );
 
 //
 // Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// XXX: Should be defined after "cc.inherits"
 //
 
 // init physics
@@ -561,7 +561,7 @@ ChipmunkPage.prototype.createPhysicsSprite = function( pos ) {
 
 ChipmunkPage.prototype.onEnter = function () {
 
-	goog.base(this, 'onEnter');
+	cc.base(this, 'onEnter');
 
 	for(var i=0; i<20; i++) {
 		var x = 40 + Math.random() * (winSize.width-80);
@@ -604,14 +604,14 @@ ChipmunkPage.prototype.onTouchesEnded = function( touches, event ) {
 //------------------------------------------------------------------
 var BehindTheScenesPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Behind The Scenes';
 	this.subtitle = '';
 	this.isMainTitle = true;
 
 };
-goog.inherits( BehindTheScenesPage, BaseLayer );
+cc.inherits( BehindTheScenesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -620,7 +620,7 @@ goog.inherits( BehindTheScenesPage, BaseLayer );
 //------------------------------------------------------------------
 var ParserFeaturesPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Parser Features';
 	this.subtitle = '';
@@ -632,7 +632,7 @@ var ParserFeaturesPage = function() {
 				'Easy to maintain and extend',
 				'Powerful config file' );
 };
-goog.inherits( ParserFeaturesPage, BaseLayer );
+cc.inherits( ParserFeaturesPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -641,7 +641,7 @@ goog.inherits( ParserFeaturesPage, BaseLayer );
 //------------------------------------------------------------------
 var InternalsPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Internals';
 	this.subtitle = 'Solid internal design';
@@ -649,7 +649,7 @@ var InternalsPage = function() {
 
 	this.onEnterTransitionDidFinish = function() {
 		// super onEnter
-//		goog.base( this, 'onEnterTransitionDidFinish' );
+//		cc.base( this, 'onEnterTransitionDidFinish' );
 
 		var spr = this.createImage( 'Presentation/proxy_model.png' );
 		spr.setScale( 0.1 );
@@ -657,7 +657,7 @@ var InternalsPage = function() {
 		spr.runAction( scaleAction );
 	};
 };
-goog.inherits( InternalsPage, BaseLayer );
+cc.inherits( InternalsPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -666,13 +666,13 @@ goog.inherits( InternalsPage, BaseLayer );
 //------------------------------------------------------------------
 var DemoPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Demo';
 	this.subtitle = '';
 	this.isMainTitle = true;
 };
-goog.inherits( DemoPage, BaseLayer );
+cc.inherits( DemoPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -681,13 +681,13 @@ goog.inherits( DemoPage, BaseLayer );
 //------------------------------------------------------------------
 var OneMoreThingPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'One More Thing';
 	this.subtitle = '';
 	this.isMainTitle = true;
 };
-goog.inherits( OneMoreThingPage, BaseLayer );
+cc.inherits( OneMoreThingPage, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -696,13 +696,13 @@ goog.inherits( OneMoreThingPage, BaseLayer );
 //------------------------------------------------------------------
 var ThanksPage = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'Thanks';
 	this.subtitle = '';
 	this.isMainTitle = true;
 };
-goog.inherits( ThanksPage, BaseLayer );
+cc.inherits( ThanksPage, BaseLayer );
 
 
 //

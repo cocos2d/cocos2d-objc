@@ -62,7 +62,7 @@ var BaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = goog.base(this);
+	var parent = cc.base(this);
 	__associateObjWithNative( this, parent );
 	this.init( cc.c4b(0,0,0,255), cc.c4b(0,128,255,255) );
 
@@ -70,11 +70,11 @@ var BaseLayer = function() {
 	this.subtitle = "No Subtitle";
 };
 
-goog.inherits(BaseLayer, cc.LayerGradient );
+cc.inherits(BaseLayer, cc.LayerGradient );
 
 //
 // Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// XXX: Should be defined after "cc.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
 	var label = cc.LabelTTF.create(this.title, "Arial", 28);
@@ -125,7 +125,7 @@ BaseLayer.prototype.onBackCallback = function (sender) {
 //------------------------------------------------------------------
 var LongLongTest = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.title = 'LongLong test';
 	this.subtitle = 'See output in console. This test only runs on OS X';
@@ -143,7 +143,7 @@ var LongLongTest = function() {
 		}
     }
 };
-goog.inherits( LongLongTest, BaseLayer );
+cc.inherits( LongLongTest, BaseLayer );
 
 
 //
