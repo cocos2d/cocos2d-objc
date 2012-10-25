@@ -2704,6 +2704,7 @@
 		A0D2DE6716375D9C008DB73C /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6516375D9C008DB73C /* boundsTestFont.png */; };
 		A0D2DE73163770AA008DB73C /* EffectsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE70163770AA008DB73C /* EffectsTest.js */; };
 		A0D2DE74163770AA008DB73C /* RenderTextureTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE72163770AA008DB73C /* RenderTextureTest.js */; };
+		A0D2DF001638B14A008DB73C /* Presentation.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DEFF1638B14A008DB73C /* Presentation.js */; };
 		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
 		A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
@@ -7242,6 +7243,7 @@
 		A0D2DE6516375D9C008DB73C /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
 		A0D2DE70163770AA008DB73C /* EffectsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EffectsTest.js; sourceTree = "<group>"; };
 		A0D2DE72163770AA008DB73C /* RenderTextureTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = RenderTextureTest.js; sourceTree = "<group>"; };
+		A0D2DEFF1638B14A008DB73C /* Presentation.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Presentation.js; sourceTree = "<group>"; };
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
@@ -8779,6 +8781,7 @@
 				A03F85F3161B563300FE54C8 /* ParallaxTest */,
 				A03F85F5161B563300FE54C8 /* ParticleTest */,
 				A03F85F7161B563300FE54C8 /* PerformanceTest */,
+				A0D2DEFE1638B14A008DB73C /* Presentation */,
 				A03F85FE161B563300FE54C8 /* ProgressActionsTest */,
 				A0D2DE71163770AA008DB73C /* RenderTextureTest */,
 				A03F8600161B563300FE54C8 /* RotateWorldTest */,
@@ -9685,6 +9688,14 @@
 				A0D2DE72163770AA008DB73C /* RenderTextureTest.js */,
 			);
 			path = RenderTextureTest;
+			sourceTree = "<group>";
+		};
+		A0D2DEFE1638B14A008DB73C /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				A0D2DEFF1638B14A008DB73C /* Presentation.js */,
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		A0D82F8916321F8300A59FC2 /* ChipmunkTest */ = {
@@ -13190,6 +13201,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0D2DF001638B14A008DB73C /* Presentation.js in Resources */,
 				A0D2DE73163770AA008DB73C /* EffectsTest.js in Resources */,
 				A0D2DE74163770AA008DB73C /* RenderTextureTest.js in Resources */,
 				A09C8CC31566FB4100ADFDA9 /* A Damn Mess.ttf in Resources */,
