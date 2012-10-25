@@ -453,42 +453,33 @@ Class restartAction()
 
 - (void)setup
 {
-    outerClipper_ = [[CCClippingNode clippingNode] retain];
-    outerClipper_.anchorPoint = ccp(0.5, 0.5);
-    outerClipper_.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
-    [outerClipper_ runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
-    
     CCSprite *target = [CCSprite spriteWithFile:@"blocks.png"];
-    target.anchorPoint = ccp(0.5, 0.5);
-    target.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
+    target.anchorPoint = CGPointZero;
     target.scale = 3;
+    
+    outerClipper_ = [[CCClippingNode clippingNode] retain];
+    outerClipper_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
+    outerClipper_.anchorPoint = ccp(0.5, 0.5);
+    outerClipper_.position = ccpMult(ccpFromSize(self.contentSize), 0.5);
+    [outerClipper_ runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
     
     outerClipper_.stencil = target;
     
     CCClippingNode *holesClipper = [CCClippingNode clippingNode];
-    holesClipper.anchorPoint = ccp(0.5, 0.5);
-    holesClipper.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
     holesClipper.inverted = YES;
     holesClipper.alphaThreshold = 0.05;
-    //holesClipper.alphaThreshold = 0;
     
     [holesClipper addChild:target];
     
-    [outerClipper_ addChild:holesClipper];
-    
     holes_ = [[CCNode node] retain];
-    holes_.anchorPoint = ccp(0.5, 0.5);
-    holes_.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
-    holes_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
     
     [holesClipper addChild:holes_];
     
     holesStencil_ = [[CCNode node] retain];
-    holesStencil_.anchorPoint = ccp(0.5, 0.5);
-    holesStencil_.position = ccp(holesClipper.contentSize.width / 2, holesClipper.contentSize.height / 2);
-    holesStencil_.contentSize = holes_.contentSize;
     
     holesClipper.stencil = holesStencil_;
+    
+    [outerClipper_ addChild:holesClipper];
     
     [self addChild:outerClipper_];
         
@@ -505,17 +496,17 @@ Class restartAction()
     float rotation = CCRANDOM_0_1() * 360;
     
     CCSprite *hole = [CCSprite spriteWithFile:@"hole_effect.png"];
-    hole.anchorPoint = ccp(0.5, 0.5);
     hole.position = point;
     hole.rotation = rotation;
     hole.scale = scale;
+    
     [holes_ addChild:hole];
     
     CCSprite *holeStencil = [CCSprite spriteWithFile:@"hole_stencil.png"];
-    holeStencil.anchorPoint = ccp(0.5, 0.5);
     holeStencil.position = point;
     holeStencil.rotation = rotation;
     holeStencil.scale = scale;
+    
     [holesStencil_ addChild:holeStencil];
 
     [outerClipper_ runAction:[CCSequence actionOne:[CCScaleBy actionWithDuration:0.05 scale:0.95]
@@ -527,8 +518,8 @@ Class restartAction()
 -(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
-	CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return;
+	CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
 }
 
@@ -536,8 +527,8 @@ Class restartAction()
 
 - (BOOL)ccMouseDown:(NSEvent*)event
 {
-    CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return NO;
+    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return NO;
     [self pokeHoleAtPoint:point];
     return YES;
 }
