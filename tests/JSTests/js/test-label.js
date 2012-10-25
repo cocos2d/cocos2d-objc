@@ -61,7 +61,7 @@ var BaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = goog.base(this);
+	var parent = cc.base(this);
 	__associateObjWithNative( this, parent );
 	this.init();
 
@@ -74,11 +74,11 @@ var BaseLayer = function() {
 	}
 
 }
-goog.inherits(BaseLayer, cc.Layer );
+cc.inherits(BaseLayer, cc.Layer );
 
 //
 // Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// XXX: Should be defined after "cc.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
 	var label = cc.LabelTTF.create(this.title(), "Arial", 28);
@@ -132,7 +132,7 @@ BaseLayer.prototype.backCallback = function (sender) {
 //------------------------------------------------------------------
 var LabelAtlasTest = function(file) {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 
@@ -172,7 +172,7 @@ var LabelAtlasTest = function(file) {
 
 	this.initialize();
 }
-goog.inherits(LabelAtlasTest, BaseLayer );
+cc.inherits(LabelAtlasTest, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -181,7 +181,7 @@ goog.inherits(LabelAtlasTest, BaseLayer );
 //------------------------------------------------------------------
 var BMFontColorTest = function(file) {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 
@@ -214,7 +214,7 @@ var BMFontColorTest = function(file) {
 
 	this.initialize();
 }
-goog.inherits(BMFontColorTest, BaseLayer );
+cc.inherits(BMFontColorTest, BaseLayer );
 
 
 //

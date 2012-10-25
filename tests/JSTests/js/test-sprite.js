@@ -62,7 +62,7 @@ var BaseLayer = function() {
 	// Only subclasses of a native classes MUST call __associateObjectWithNative
 	// Failure to do so, it will crash.
 	//
-	var parent = goog.base(this);
+	var parent = cc.base(this);
 	__associateObjWithNative( this, parent );
 	this.init();
 
@@ -74,11 +74,11 @@ var BaseLayer = function() {
 		return "No Subtitle";
 	};
 };
-goog.inherits(BaseLayer, cc.Layer );
+cc.inherits(BaseLayer, cc.Layer );
 
 //
 // Instance 'base' methods
-// XXX: Should be defined after "goog.inherits"
+// XXX: Should be defined after "cc.inherits"
 //
 BaseLayer.prototype.onEnter = function() {
 	var label = cc.LabelTTF.create(this.title(), "Arial", 28);
@@ -132,7 +132,7 @@ BaseLayer.prototype.backCallback = function (sender) {
 //------------------------------------------------------------------
 var SpriteTouchTest = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var t = cc.config.deviceType;
@@ -162,7 +162,7 @@ var SpriteTouchTest = function() {
 
 	this.initialize();
 };
-goog.inherits(SpriteTouchTest, BaseLayer );
+cc.inherits(SpriteTouchTest, BaseLayer );
 
 SpriteTouchTest.prototype.onMouseDown = function( event ) {
 	this.addSprite( event.getLocation() );
@@ -214,7 +214,7 @@ SpriteTouchTest.prototype.createSprite = function( pos ) {
 //------------------------------------------------------------------
 var SpriteBatchTouchTest = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		this.batch = cc.SpriteBatchNode.create("grossini_dance_atlas.png", 50 );
@@ -243,7 +243,7 @@ var SpriteBatchTouchTest = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
+cc.inherits( SpriteBatchTouchTest, SpriteTouchTest );
 
 //------------------------------------------------------------------
 //
@@ -252,7 +252,7 @@ goog.inherits( SpriteBatchTouchTest, SpriteTouchTest );
 //------------------------------------------------------------------
 var SpriteFrameTest = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var cache = cc.SpriteFrameCache.getInstance();
@@ -345,7 +345,7 @@ var SpriteFrameTest = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteFrameTest, BaseLayer );
+cc.inherits( SpriteFrameTest, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -354,7 +354,7 @@ goog.inherits( SpriteFrameTest, BaseLayer );
 //------------------------------------------------------------------
 var SpriteAnchorPoint = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		for(var i=0;i<3;i++) {
@@ -394,7 +394,7 @@ var SpriteAnchorPoint = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteAnchorPoint, BaseLayer );
+cc.inherits( SpriteAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -403,7 +403,7 @@ goog.inherits( SpriteAnchorPoint, BaseLayer );
 //------------------------------------------------------------------
 var SpriteBatchAnchorPoint = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var batch = cc.SpriteBatchNode.create( "grossini_dance_atlas.png" );
@@ -445,7 +445,7 @@ var SpriteBatchAnchorPoint = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteBatchAnchorPoint, BaseLayer );
+cc.inherits( SpriteBatchAnchorPoint, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -454,7 +454,7 @@ goog.inherits( SpriteBatchAnchorPoint, BaseLayer );
 //------------------------------------------------------------------
 var SpriteOffsetAnchorFlip = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var cache = cc.SpriteFrameCache.getInstance();
@@ -517,7 +517,7 @@ var SpriteOffsetAnchorFlip = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteOffsetAnchorFlip, BaseLayer );
+cc.inherits( SpriteOffsetAnchorFlip, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -526,7 +526,7 @@ goog.inherits( SpriteOffsetAnchorFlip, BaseLayer );
 //------------------------------------------------------------------
 var SpriteBatchOffsetAnchorFlip = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var cache = cc.SpriteFrameCache.getInstance();
@@ -592,7 +592,7 @@ var SpriteBatchOffsetAnchorFlip = function() {
 
 	this.initialize();
 };
-goog.inherits( SpriteBatchOffsetAnchorFlip, BaseLayer );
+cc.inherits( SpriteBatchOffsetAnchorFlip, BaseLayer );
 
 
 //------------------------------------------------------------------
@@ -602,7 +602,7 @@ goog.inherits( SpriteBatchOffsetAnchorFlip, BaseLayer );
 //------------------------------------------------------------------
 var SpriteColorOpacity = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var sprite1 = cc.Sprite.create('grossini_dance_atlas.png', cc.rect(85 * 0, 121 * 1, 85, 121));
@@ -669,7 +669,7 @@ var SpriteColorOpacity = function() {
 
 	this.initialize();
 };
-goog.inherits(SpriteColorOpacity, BaseLayer );
+cc.inherits(SpriteColorOpacity, BaseLayer );
 
 //------------------------------------------------------------------
 //
@@ -678,7 +678,7 @@ goog.inherits(SpriteColorOpacity, BaseLayer );
 //------------------------------------------------------------------
 var SpriteBatchColorOpacity = function() {
 
-	goog.base(this);
+	cc.base(this);
 
 	this.initialize = function() {
 		var batch = cc.SpriteBatchNode.create('grossini_dance_atlas.png', 10);
@@ -747,7 +747,7 @@ var SpriteBatchColorOpacity = function() {
 
 	this.initialize();
 };
-goog.inherits(SpriteBatchColorOpacity, BaseLayer );
+cc.inherits(SpriteBatchColorOpacity, BaseLayer );
 
 //
 // Order of tests
