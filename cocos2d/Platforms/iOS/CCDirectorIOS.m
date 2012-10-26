@@ -332,21 +332,38 @@ CGFloat	__ccContentScaleFactor = 1;
 		[delegate_ directorDidReshapeProjection:self];
 }
 
-#pragma mark Director Point Convertion
-
--(CGPoint)convertToGL:(CGPoint)uiPoint
+static void
+GLToClipTransform(kmMat4 *transformOut)
 {
 	kmMat4 projection;
 	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
 	
-	kmMat4 inv_projection;
-	kmMat4Inverse(&inv_projection, &projection);
+	kmMat4 modelview;
+	kmGLGetMatrix(KM_GL_MODELVIEW, &modelview);
+	
+	kmMat4Multiply(transformOut, &projection, &modelview);
+}
+
+#pragma mark Director Point Convertion
+
+-(CGPoint)convertToGL:(CGPoint)uiPoint
+{
+	kmMat4 transform;
+	GLToClipTransform(&transform);
+	
+	kmMat4 transformInv;
+	kmMat4Inverse(&transformInv, &transform);
+	
+	// Calculate z=0 using -> transform*[0, 0, 0, 1]/w
+	kmScalar zClip = transform.mat[14]/transform.mat[15];
 	
 	CGSize glSize = view_.bounds.size;
-	kmVec3 glCoord;
-	kmVec3 v = {2.0*uiPoint.x/glSize.width - 1.0, 1.0 - 2.0*uiPoint.y/glSize.height, 0.0};
-	kmVec3TransformCoord(&glCoord, &v, &inv_projection);
+	kmVec3 clipCoord = {2.0*uiPoint.x/glSize.width - 1.0, 1.0 - 2.0*uiPoint.y/glSize.height, zClip};
 	
+	kmVec3 glCoord;
+	kmVec3TransformCoord(&glCoord, &clipCoord, &transformInv);
+	
+	NSLog(@"uiPoint: %@, glPoint: %@", NSStringFromCGPoint(uiPoint), NSStringFromCGPoint(ccp(glCoord.x, glCoord.y)));
 	return ccp(glCoord.x, glCoord.y);
 }
 
@@ -359,12 +376,13 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	kmMat4 projection;
-	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+	kmMat4 transform;
+	GLToClipTransform(&transform);
 		
 	kmVec3 clipCoord;
-	kmVec3 v = {glPoint.x, glPoint.y, 0.0};
-	kmVec3TransformCoord(&clipCoord, &v, &projection);
+	// Need to calculate the zero depth from the transform.
+	kmVec3 glCoord = {glPoint.x, glPoint.y, 0.0};
+	kmVec3TransformCoord(&clipCoord, &glCoord, &transform);
 	
 	CGSize glSize = view_.bounds.size;
 	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
