@@ -336,28 +336,38 @@ CGFloat	__ccContentScaleFactor = 1;
 
 -(CGPoint)convertToGL:(CGPoint)uiPoint
 {
-	CGSize s = winSizeInPoints_;
-	float newY = s.height - uiPoint.y;
-
-	return ccp( uiPoint.x, newY );
+	kmMat4 projection;
+	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+	
+	kmMat4 inv_projection;
+	kmMat4Inverse(&inv_projection, &projection);
+	
+	CGSize glSize = view_.bounds.size;
+	kmVec3 glCoord;
+	kmVec3 v = {2.0*uiPoint.x/glSize.width - 1.0, 1.0 - 2.0*uiPoint.y/glSize.height, 0.0};
+	kmVec3TransformCoord(&glCoord, &v, &inv_projection);
+	
+	return ccp(glCoord.x, glCoord.y);
 }
 
 -(CGPoint)convertTouchToGL:(UITouch*)touch
 {
 	CGPoint uiPoint = [touch locationInView: [touch view]];
-	CGSize s = winSizeInPoints_;
-	float newY = s.height - uiPoint.y;
-	
-	return ccp( uiPoint.x, newY );
+	return [self convertToGL:uiPoint];
 }
 
 
 -(CGPoint)convertToUI:(CGPoint)glPoint
 {
-	CGSize winSize = winSizeInPoints_;
-	int oppositeY = winSize.height - glPoint.y;
-
-	return ccp(glPoint.x, oppositeY);
+	kmMat4 projection;
+	kmGLGetMatrix(KM_GL_PROJECTION, &projection);
+		
+	kmVec3 clipCoord;
+	kmVec3 v = {glPoint.x, glPoint.y, 0.0};
+	kmVec3TransformCoord(&clipCoord, &v, &projection);
+	
+	CGSize glSize = view_.bounds.size;
+	return ccp(glSize.width*(clipCoord.x*0.5 + 0.5), glSize.height*(-clipCoord.y*0.5 + 0.5));
 }
 
 -(void) end
