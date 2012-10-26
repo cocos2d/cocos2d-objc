@@ -46,9 +46,9 @@
 
 static ccColor4F ColorForBody(cpBody *body)
 {
-	if(cpBodyIsStatic(body) || cpBodyIsSleeping(body)){
+	if(cpBodyIsRogue(body) || cpBodyIsSleeping(body)){
 		return ccc4f(0.5, 0.5, 0.5 ,0.5);
-	} else if(body->node.idleTime > body->space->sleepTimeThreshold) {
+	} else if(body->CP_PRIVATE(node).idleTime > body->CP_PRIVATE(space)->sleepTimeThreshold) {
 		return ccc4f(0.33, 0.33, 0.33, 0.5);
 	} else {
 		return ccc4f(1, 0, 0, 0.5);
@@ -61,7 +61,7 @@ DrawShape(cpShape *shape, CCDrawNode *renderer)
 	cpBody *body = shape->body;
 	ccColor4F color = ColorForBody(body);
 
-	switch(shape->klass->type){
+	switch(shape->CP_PRIVATE(klass)->type){
 		case CP_CIRCLE_SHAPE: {
 				cpCircleShape *circle = (cpCircleShape *)shape;
 				cpVect center = circle->tc;
@@ -93,7 +93,7 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	cpBody *body_a = constraint->a;
 	cpBody *body_b = constraint->b;
 
-	const cpConstraintClass *klass = constraint->klass;
+	const cpConstraintClass *klass = constraint->CP_PRIVATE(klass);
 	if(klass == cpPinJointGetClass()){
 		cpPinJoint *joint = (cpPinJoint *)constraint;
 		
