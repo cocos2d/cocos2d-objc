@@ -24,7 +24,7 @@
 
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-#import "chipmunk.h"
+struct cpBody;
 @class ChipmunkBody;
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -48,7 +48,7 @@ class b2Body;
 	BOOL	_ignoreBodyRotation;
 	
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-	cpBody	*_body;
+	struct cpBody	*_body;
 	
 #elif CC_ENABLE_BOX2D_INTEGRATION
 	b2Body	*_body;
@@ -64,7 +64,7 @@ class b2Body;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 /** Body accessor when using regular Chipmunk */
-@property(nonatomic, assign) cpBody *body;
+@property(nonatomic, assign) struct cpBody *body;
 
 /** Body accessor when using Objective-Chipmunk */
 @property(nonatomic, assign) ChipmunkBody *chipmunkBody;
