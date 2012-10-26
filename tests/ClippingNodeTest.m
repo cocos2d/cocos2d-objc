@@ -10,6 +10,11 @@
 
 #import "ClippingNodeTest.h"
 
+#if COCOS2D_DEBUG > 1
+#import "CCGL.h"
+#import "CCDrawingPrimitives.h"
+#endif
+
 enum {
 	kTagTitleLabel = 1,
 	kTagSubtitleLabel = 2,
@@ -28,6 +33,13 @@ static NSString *transitions[] = {
     @"SpriteNoAlphaTest",
 	@"SpriteInvertedTest",
     @"NestedTest",
+#if COCOS2D_DEBUG > 1
+	@"RawStencilBufferTest",
+    @"RawStencilBufferTest2",
+    @"RawStencilBufferTest3",
+    @"RawStencilBufferTest4",
+    @"RawStencilBufferTest5",
+#endif
 };
 
 #pragma mark Callbacks
@@ -453,42 +465,33 @@ Class restartAction()
 
 - (void)setup
 {
-    outerClipper_ = [[CCClippingNode clippingNode] retain];
-    outerClipper_.anchorPoint = ccp(0.5, 0.5);
-    outerClipper_.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
-    [outerClipper_ runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
-    
     CCSprite *target = [CCSprite spriteWithFile:@"blocks.png"];
-    target.anchorPoint = ccp(0.5, 0.5);
-    target.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
+    target.anchorPoint = CGPointZero;
     target.scale = 3;
+    
+    outerClipper_ = [[CCClippingNode clippingNode] retain];
+    outerClipper_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
+    outerClipper_.anchorPoint = ccp(0.5, 0.5);
+    outerClipper_.position = ccpMult(ccpFromSize(self.contentSize), 0.5);
+    [outerClipper_ runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:45]]];
     
     outerClipper_.stencil = target;
     
     CCClippingNode *holesClipper = [CCClippingNode clippingNode];
-    holesClipper.anchorPoint = ccp(0.5, 0.5);
-    holesClipper.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
     holesClipper.inverted = YES;
     holesClipper.alphaThreshold = 0.05;
-    //holesClipper.alphaThreshold = 0;
     
     [holesClipper addChild:target];
     
-    [outerClipper_ addChild:holesClipper];
-    
     holes_ = [[CCNode node] retain];
-    holes_.anchorPoint = ccp(0.5, 0.5);
-    holes_.position = ccp(outerClipper_.contentSize.width / 2, outerClipper_.contentSize.height / 2);
-    holes_.contentSize = CGSizeApplyAffineTransform(target.contentSize, CGAffineTransformMakeScale(target.scale, target.scale));
     
     [holesClipper addChild:holes_];
     
     holesStencil_ = [[CCNode node] retain];
-    holesStencil_.anchorPoint = ccp(0.5, 0.5);
-    holesStencil_.position = ccp(holesClipper.contentSize.width / 2, holesClipper.contentSize.height / 2);
-    holesStencil_.contentSize = holes_.contentSize;
     
     holesClipper.stencil = holesStencil_;
+    
+    [outerClipper_ addChild:holesClipper];
     
     [self addChild:outerClipper_];
         
@@ -505,17 +508,17 @@ Class restartAction()
     float rotation = CCRANDOM_0_1() * 360;
     
     CCSprite *hole = [CCSprite spriteWithFile:@"hole_effect.png"];
-    hole.anchorPoint = ccp(0.5, 0.5);
     hole.position = point;
     hole.rotation = rotation;
     hole.scale = scale;
+    
     [holes_ addChild:hole];
     
     CCSprite *holeStencil = [CCSprite spriteWithFile:@"hole_stencil.png"];
-    holeStencil.anchorPoint = ccp(0.5, 0.5);
     holeStencil.position = point;
     holeStencil.rotation = rotation;
     holeStencil.scale = scale;
+    
     [holesStencil_ addChild:holeStencil];
 
     [outerClipper_ runAction:[CCSequence actionOne:[CCScaleBy actionWithDuration:0.05 scale:0.95]
@@ -527,8 +530,8 @@ Class restartAction()
 -(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	UITouch *touch = [touches anyObject];
-	CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return;
+	CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
 }
 
@@ -536,8 +539,8 @@ Class restartAction()
 
 - (BOOL)ccMouseDown:(NSEvent*)event
 {
-    CGPoint point = [holes_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, holes_.contentSize.width, holes_.contentSize.height), point)) return NO;
+    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return NO;
     [self pokeHoleAtPoint:point];
     return YES;
 }
@@ -659,6 +662,234 @@ Class restartAction()
 #endif
 
 @end
+
+#pragma mark - RawStencilBufferTests
+
+#if COCOS2D_DEBUG > 1
+
+static GLint _stencilBits = -1;
+
+static const GLfloat _alphaThreshold = 0.05;
+
+static const int _planeCount = 8;
+static const ccColor4F _planeColor[] = {
+    {0, 0, 0, 0.65},
+    {0.7, 0, 0, 0.6},
+    {0, 0.7, 0, 0.55},
+    {0, 0, 0.7, 0.5},
+    {0.7, 0.7, 0, 0.45},
+    {0, 0.7, 0.7, 0.4},
+    {0.7, 0, 0.7, 0.35},
+    {0.7, 0.7, 0.7, 0.3},
+};
+
+@implementation RawStencilBufferTest
+
+- (void)dealloc
+{
+    [sprite_ release];
+    [super dealloc];
+}
+
+-(NSString*) title
+{
+	return @"Raw Stencil Tests";
+}
+
+-(NSString*) subtitle
+{
+	return @"1:Default";
+}
+
+- (void)setup
+{
+    glGetIntegerv(GL_STENCIL_BITS, &_stencilBits);
+    if (_stencilBits < 3) {
+        CCLOGWARN(@"Stencil must be enabled for the current CCGLView.");
+    }
+    sprite_ = [[CCSprite spriteWithFile:@"grossini.png"] retain];
+    sprite_.anchorPoint = ccp(0.5, 0);
+    sprite_.scale = 2.5;
+    [[CCDirector sharedDirector] setAlphaBlending:YES];
+}
+
+- (void)draw
+{    
+    CGPoint winPoint = ccpFromSize([[CCDirector sharedDirector] winSize]);
+    
+    CGPoint planeSize = ccpMult(winPoint, 1.0 / _planeCount);
+    
+    glEnable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+        
+    for (int i = 0; i < _planeCount; i++) {
+        
+        CGPoint stencilPoint = ccpMult(planeSize, _planeCount - i);
+        stencilPoint.x = winPoint.x;
+        
+        CGPoint spritePoint = ccpMult(planeSize, i);
+        spritePoint.x += planeSize.x / 2;
+        spritePoint.y = 0;
+        sprite_.position = spritePoint;
+
+        [self setupStencilForClippingOnPlane:i];
+        CHECK_GL_ERROR_DEBUG();
+
+        ccDrawSolidRect(CGPointZero, stencilPoint, (ccColor4F){1, 1, 1, 1});
+        
+        kmGLPushMatrix();
+        [self transform];
+        [sprite_ visit];
+        kmGLPopMatrix();
+        
+        [self setupStencilForDrawingOnPlane:i];
+        CHECK_GL_ERROR_DEBUG();
+        
+        ccDrawSolidRect(CGPointZero, winPoint, _planeColor[i]);
+        
+        kmGLPushMatrix();
+        [self transform];
+        [sprite_ visit];
+        kmGLPopMatrix();
+    }
+    
+    glDisable(GL_STENCIL_TEST);
+    CHECK_GL_ERROR_DEBUG();
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    GLint planeMask = 0x1 << plane;
+    glStencilMask(planeMask);
+    glClearStencil(0x0);
+    glClear(GL_STENCIL_BUFFER_BIT);
+    glStencilFunc(GL_NEVER, planeMask, planeMask);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+    GLint planeMask = 0x1 << plane;
+    GLint equalOrLessPlanesMask = planeMask | (planeMask - 1);
+    glStencilFunc(GL_EQUAL, equalOrLessPlanesMask, equalOrLessPlanesMask);
+    glStencilOp(GL_KEEP, GL_KEEP, GL_KEEP);
+}
+
+@end
+
+@implementation RawStencilBufferTest2
+
+-(NSString*) subtitle
+{
+	return @"2:DepthMask:FALSE";
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    [super setupStencilForClippingOnPlane:plane];
+    glDepthMask(GL_FALSE);
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+    glDepthMask(GL_TRUE);
+    [super setupStencilForDrawingOnPlane:plane];
+}
+
+@end
+
+@implementation RawStencilBufferTest3
+
+-(NSString*) subtitle
+{
+	return @"3:DepthTest:DISABLE,DepthMask:FALSE";
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    [super setupStencilForClippingOnPlane:plane];
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
+    [super setupStencilForDrawingOnPlane:plane];
+}
+
+@end
+
+@implementation RawStencilBufferTest4
+
+-(NSString*) subtitle
+{
+	return @"4:DepthMask:FALSE,AlphaTest:ENABLE";
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    [super setupStencilForClippingOnPlane:plane];
+    glDepthMask(GL_FALSE);
+#if defined(__CC_PLATFORM_IOS)
+    CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
+    sprite_.shaderProgram = program;
+#elif defined(__CC_PLATFORM_MAC)
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, _alphaThreshold);
+#endif
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+#if defined(__CC_PLATFORM_MAC)
+    glDisable(GL_ALPHA_TEST);
+#endif
+    glDepthMask(GL_TRUE);
+    [super setupStencilForDrawingOnPlane:plane];
+}
+
+@end
+
+@implementation RawStencilBufferTest5
+
+-(NSString*) subtitle
+{
+	return @"5:DepthTest:DISABLE,DepthMask:FALSE,AlphaTest:ENABLE";
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    [super setupStencilForClippingOnPlane:plane];
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+#if defined(__CC_PLATFORM_IOS)
+    CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
+    sprite_.shaderProgram = program;
+#elif defined(__CC_PLATFORM_MAC)
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, _alphaThreshold);
+#endif
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+#if defined(__CC_PLATFORM_MAC)
+    glDisable(GL_ALPHA_TEST);
+#endif
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
+    [super setupStencilForDrawingOnPlane:plane];
+}
+
+@end
+
+#endif // COCOS2D_DEBUG > 1
 
 #pragma mark - AppDelegate
 
