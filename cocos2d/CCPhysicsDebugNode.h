@@ -23,11 +23,6 @@
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-#ifdef CP_ALLOW_PRIVATE_ACCESS
-#undef CP_ALLOW_PRIVATE_ACCESS
-#endif
-
-#define CP_ALLOW_PRIVATE_ACCESS 1
 #import "chipmunk.h"
 
 #import "CCDrawNode.h"
