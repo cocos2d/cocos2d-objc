@@ -71,6 +71,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Author of CCDrawNode: a node that batches drawing primitives
 	Author of CCPhysicsDebugNode and CCPhysicsSprite
 	Fix assert on Texture when updating filter on NPOT textures
+	Director iOS: Returns correct GL value for coordinates event in custom projections	
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac

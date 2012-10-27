@@ -13,6 +13,7 @@ version 2.1-beta3  xx-Oct-2012
 . [FIX] Director: Fixed possible retain cycle with the delegate
 		Fixed possible crash when purgeCacheData is called before the view is initialized (issue #1440)
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
+. [FIX] Director: Returns correct GL value for coordinates event in custom projections
 . [FIX] Documentation: Fixes DrawingPrimitives doc (issue #1409)
 . [FIX] GL Cache: when texture is deleted, it is removed form teh GL cache (issue #1429)
 . [FIX] LabelAtlas: Honors the directory of the .plist file when loading the .png file
