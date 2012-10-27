@@ -89,4 +89,7 @@
 @interface RawStencilBufferTest5 : RawStencilBufferTest
 @end
 
+@interface RawStencilBufferTest6 : RawStencilBufferTest
+@end
+
 #endif
