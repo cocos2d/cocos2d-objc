@@ -39,6 +39,7 @@ static NSString *transitions[] = {
     @"RawStencilBufferTest3",
     @"RawStencilBufferTest4",
     @"RawStencilBufferTest5",
+    @"RawStencilBufferTest6",
 #endif
 };
 
@@ -885,6 +886,75 @@ static const ccColor4F _planeColor[] = {
     glDepthMask(GL_TRUE);
     glEnable(GL_DEPTH_TEST);
     [super setupStencilForDrawingOnPlane:plane];
+}
+
+@end
+
+@implementation RawStencilBufferTest6
+
+-(NSString*) subtitle
+{
+	return @"6:ManualClear,AlphaTest:ENABLE";
+}
+
+- (void)setup
+{
+#if defined(__CC_PLATFORM_MAC)
+    CGPoint winPoint = ccpFromSize([[CCDirector sharedDirector] winSize]);
+    unsigned char bits = 0;
+    glStencilMask(~0);
+    glClearStencil(0);
+    glClear(GL_STENCIL_BUFFER_BIT);
+    glFlush();
+    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
+    CCLabelTTF *clearToZeroLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"00=%02x", bits] fontName:@"Arial" fontSize:20];
+    clearToZeroLabel.position = ccp((winPoint.x / 3) * 1, winPoint.y - 10);
+    [self addChild:clearToZeroLabel];
+    glStencilMask(0x0F);
+    glClearStencil(0xAA);
+    glClear(GL_STENCIL_BUFFER_BIT);
+    glFlush();
+    glReadPixels(0, 0, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_BYTE, &bits);
+    CCLabelTTF *clearToMaskLabel = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"0a=%02x", bits] fontName:@"Arial" fontSize:20];
+    clearToMaskLabel.position = ccp((winPoint.x / 3) * 2, winPoint.y - 10);
+    [self addChild:clearToMaskLabel];
+#endif
+    glStencilMask(~0);
+    [super setup];
+}
+
+- (void)setupStencilForClippingOnPlane:(GLint)plane
+{
+    GLint planeMask = 0x1 << plane;
+    glStencilMask(planeMask);
+    glStencilFunc(GL_NEVER, 0, planeMask);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+    ccDrawSolidRect(CGPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), (ccColor4F){1, 1, 1, 1});
+    glStencilFunc(GL_NEVER, planeMask, planeMask);
+    glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
+    glDisable(GL_DEPTH_TEST);
+    glDepthMask(GL_FALSE);
+#if defined(__CC_PLATFORM_IOS)
+    CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
+    GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+    [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
+    sprite_.shaderProgram = program;
+#elif defined(__CC_PLATFORM_MAC)
+    glEnable(GL_ALPHA_TEST);
+    glAlphaFunc(GL_GREATER, _alphaThreshold);
+#endif
+    glFlush();
+}
+
+- (void)setupStencilForDrawingOnPlane:(GLint)plane
+{
+#if defined(__CC_PLATFORM_MAC)
+    glDisable(GL_ALPHA_TEST);
+#endif
+    glDepthMask(GL_TRUE);
+    glEnable(GL_DEPTH_TEST);
+    [super setupStencilForDrawingOnPlane:plane];
+    glFlush();
 }
 
 @end
