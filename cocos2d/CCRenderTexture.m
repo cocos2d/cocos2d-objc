@@ -154,6 +154,9 @@
 		
 		// Diabled by default.
 		autoDraw_ = NO;
+		
+		// add sprite for backward compatibility
+		[self addChild:sprite_];
 	}
 	return self;
 }
@@ -317,6 +320,7 @@
 	}
 
 	[self transform];
+	[sprite_ visit];
 	[self draw];
 	
 	if (grid_ && grid_.active)
@@ -372,13 +376,14 @@
 		
 		CCNode *child;
 		CCARRAY_FOREACH(children_, child) {
-			[child visit];
+			if( child != sprite_)
+				[child visit];
 		}
 		[self end];
 
 	}
 
-	[sprite_ visit];
+//	[sprite_ visit];
 }
 
 #pragma mark RenderTexture - Save Image
