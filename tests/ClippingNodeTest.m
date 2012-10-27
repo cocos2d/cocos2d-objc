@@ -764,6 +764,7 @@ static const ccColor4F _planeColor[] = {
     glStencilMask(planeMask);
     glClearStencil(0x0);
     glClear(GL_STENCIL_BUFFER_BIT);
+    glFlush();
     glStencilFunc(GL_NEVER, planeMask, planeMask);
     glStencilOp(GL_REPLACE, GL_KEEP, GL_KEEP);
 }
