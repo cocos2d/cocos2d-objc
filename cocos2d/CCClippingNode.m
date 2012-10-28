@@ -31,6 +31,10 @@
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
 
+#import "CCDirector.h"
+#import "CCDrawingPrimitives.h"
+#import "CGPointExtension.h"
+
 #import "kazmath/GL/matrix.h"
 
 static GLint _stencilBits = -1;
@@ -157,11 +161,6 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     ///////////////////////////////////
     // INIT
 
-    // all 0 mask
-    static const GLuint mask_zeros = 0;
-    // all 1 mask
-    static const GLuint mask_ones = ~0;
-    
     // increment the current layer
     layer++;
     
@@ -174,10 +173,10 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     
     // manually save the stencil state
     GLboolean currentStencilEnabled = GL_FALSE;
-    GLuint currentStencilWriteMask = mask_ones;
+    GLuint currentStencilWriteMask = ~0;
     GLenum currentStencilFunc = GL_ALWAYS;
     GLint currentStencilRef = 0;
-    GLuint currentStencilValueMask = mask_ones;
+    GLuint currentStencilValueMask = ~0;
     GLenum currentStencilFail = GL_KEEP;
     GLenum currentStencilPassDepthFail = GL_KEEP;
     GLenum currentStencilPassDepthPass = GL_KEEP;
@@ -199,12 +198,34 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     // this means that operation like glClear or glStencilOp will be masked with this value
     glStencilMask(mask_layer);
     
-    // value to use when clearing the stencil buffer
-    // all 0, or all 1 if in inverted mode
-    glClearStencil(!inverted_ ? mask_zeros : mask_ones);
+    // manually save the depth test state
+    //GLboolean currentDepthTestEnabled = GL_TRUE;
+    GLboolean currentDepthWriteMask = GL_TRUE;
+    //currentDepthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
+    glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
     
-    // clear the stencil buffer
-    glClear(GL_STENCIL_BUFFER_BIT);
+    // disable depth test while drawing the stencil
+    //glDisable(GL_DEPTH_TEST);
+    // disable update to the depth buffer while drawing the stencil,
+    // as the stencil is not meant to be rendered in the real scene,
+    // it should never prevent something else to be drawn,
+    // only disabling depth buffer update should do
+    glDepthMask(GL_FALSE);
+    
+    ///////////////////////////////////
+    // CLEAR STENCIL BUFFER
+    
+    // manually clear the stencil buffer by drawing a fullscreen rectangle on it
+    // setup the stencil test func like this:
+    // for each pixel in the fullscreen rectangle
+    //     never draw it into the frame buffer
+    //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
+    //     if in inverted mode: set the current layer value to 1 in the stencil buffer
+    glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glStencilOp(!inverted_ ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
+    
+    // draw a fullscreen solid rectangle to clear the stencil buffer
+    ccDrawSolidRect(CGPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
@@ -249,32 +270,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 #endif
     }
 
-    // manually save the depth test state
-    //GLboolean currentDepthTestEnabled = GL_TRUE;
-    GLboolean currentDepthWriteMask = GL_TRUE;
-    //currentDepthTestEnabled = glIsEnabled(GL_DEPTH_TEST);
-    glGetBooleanv(GL_DEPTH_WRITEMASK, &currentDepthWriteMask);
-    
-    // disable depth test while drawing the stencil
-    //glDisable(GL_DEPTH_TEST);
-    // disable update to the depth buffer while drawing the stencil,
-    // as the stencil is not meant to be rendered in the real scene,
-    // it should never prevent something else to be drawn,
-    // only disabling depth buffer update should do
-    glDepthMask(GL_FALSE);
-    
     // draw the stencil node as if it was one of our child
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     [self transform];
     [stencil_ visit];
     kmGLPopMatrix();
-    
-    // restore the depth test state
-    glDepthMask(currentDepthWriteMask);
-    //if (currentDepthTestEnabled) {
-    //    glEnable(GL_DEPTH_TEST);
-    //}
     
     // restore alpha test state
     if (alphaThreshold_ < 1) {
@@ -288,6 +289,12 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         }
 #endif
     }
+    
+    // restore the depth test state
+    glDepthMask(currentDepthWriteMask);
+    //if (currentDepthTestEnabled) {
+    //    glEnable(GL_DEPTH_TEST);
+    //}
     
     ///////////////////////////////////
     // DRAW CONTENT
