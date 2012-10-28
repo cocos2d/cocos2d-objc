@@ -53,6 +53,14 @@ enum  {
 	kCCImplementsTouchesEnded		= 1 << 15,
 	kCCImplementsTouchesCancelled	= 1 << 16,
 
+    // gesture
+    kCCImplementsBeginGestureWithEvent = 1 << 0,
+    kCCImplementsMagnifyWithEvent      = 1 << 1,
+    kCCImplementsSmartMagnifyWithEvent = 1 << 2,
+    kCCImplementsRotateWithEvent       = 1 << 3,
+    kCCImplementsSwipeWithEvent        = 1 << 4,
+    kCCImplementsEndGestureWithEvent   = 1 << 5,
+    
 	// keyboard
 	kCCImplementsKeyUp				= 1 << 0,
 	kCCImplementsKeyDown			= 1 << 1,
@@ -122,6 +130,7 @@ typedef struct _listAddedEntry
 		keyboardDelegates_ = NULL;
 		mouseDelegates_ = NULL;
 		touchDelegates_ = NULL;
+        gestureDelegates_ = NULL;
 		
 		delegatesToBeAdded_ = NULL;
 		delegatesToBeRemoved_ = NULL;
@@ -340,6 +349,35 @@ typedef struct _listAddedEntry
 	[self removeAllDelegatesFromList:&touchDelegates_];
 }
 
+- (void)addGestureDelegate:(id<CCGestureEventDelegate>)delegate priority:(NSInteger)priority
+{
+	NSUInteger flags = 0;
+    
+	flags |= ( [delegate respondsToSelector:@selector(ccBeginGestureWithEvent:)] ? kCCImplementsBeginGestureWithEvent : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccMagnifyWithEvent:)] ? kCCImplementsMagnifyWithEvent : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccSmartMagnifyWithEvent:)] ? kCCImplementsSmartMagnifyWithEvent : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccRotateWithEvent:)] ? kCCImplementsRotateWithEvent : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccSwipeWithEvent:)] ? kCCImplementsSwipeWithEvent : 0 );
+	flags |= ( [delegate respondsToSelector:@selector(ccEndGestureWithEvent:)] ? kCCImplementsEndGestureWithEvent : 0 );
+    
+	if( locked_ )
+		[self addLaterDelegate:delegate priority:priority flags:flags list:&gestureDelegates_];
+	else
+		[self addDelegate:delegate priority:priority flags:flags list:&gestureDelegates_];
+}
+
+- (void)removeGestureDelegate:(id) delegate
+{
+	if( locked_ )
+		[self removeLaterDelegate:delegate fromList:&gestureDelegates_];
+	else
+		[self removeDelegate:delegate fromList:&gestureDelegates_];
+}
+
+- (void)removeAllGestureDelegates
+{
+	[self removeAllDelegatesFromList:&gestureDelegates_];
+}
 
 #pragma mark CCEventDispatcher - Mouse events
 //
@@ -668,6 +706,100 @@ typedef struct _listAddedEntry
 		}
 	}
 }
+
+#pragma mark CCEventDispatcher - Gesture events
+
+- (void)beginGestureWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsBeginGestureWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccBeginGestureWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)magnifyWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsMagnifyWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccMagnifyWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)smartMagnifyWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsSmartMagnifyWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccSmartMagnifyWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)rotateWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsRotateWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccRotateWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)swipeWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsSwipeWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccSwipeWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+- (void)endGestureWithEvent:(NSEvent *)event
+{
+	if( dispatchEvents_ ) {
+		tListEntry *entry, *tmp;
+        
+		DL_FOREACH_SAFE( gestureDelegates_, entry, tmp ) {
+			if ( entry->flags & kCCImplementsEndGestureWithEvent) {
+				void *swallows = [entry->delegate performSelector:@selector(ccEndGestureWithEvent:) withObject:event];
+				if( swallows )
+					break;
+			}
+		}
+	}
+}
+
+#pragma mark CCEventDispatcher - Dispatch
 
 - (void)dispatchEvent:(CCEventObject*)e
 {
