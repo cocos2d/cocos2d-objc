@@ -445,7 +445,10 @@
 {
 #if CC_USES_VBO
 	glBindBuffer(GL_ARRAY_BUFFER, quadsID_);
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0])*totalParticles, nil, GL_STREAM_DRAW);
+	void *buf = glMapBufferOES(GL_ARRAY_BUFFER, GL_WRITE_ONLY_OES);
+	memcpy(buf, quads_, sizeof(quads_[0])*particleCount);
+	glUnmapBufferOES(GL_ARRAY_BUFFER);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 #endif
 }
