@@ -66,10 +66,10 @@ Z_LABEL = 30;
 Z_DEBUG_MENU = 30;
 
 // Game state
-STATE_PAUSE = 0;
-STATE_PLAYING = 1;
-STATE_GAME_OVER = 2;
-STATE_LEVEL_COMPLETE = 3;
+STATE_PAUSE = 1;
+STATE_PLAYING = 2;
+STATE_GAME_OVER = 3;
+STATE_LEVEL_COMPLETE = 4;
 
 audioEngine = cc.AudioEngine.getInstance();
 director = cc.Director.getInstance();
@@ -224,8 +224,8 @@ var GameLayer = cc.LayerGradient.extend({
         var item1_pause = cc.MenuItemFont.create("Pause" );
         var item1_resume = cc.MenuItemFont.create("Resume" );
         var item1 = cc.MenuItemToggle.create( item1_pause, item1_resume );
-        item1.setCallback( this, this.onPause);
-        var item2 = cc.MenuItemFont.create("Debug On/Off", this, this.onToggleDebug);
+        item1.setCallback( this.onPause, this);
+        var item2 = cc.MenuItemFont.create("Debug On/Off", this.onToggleDebug, this);
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
@@ -369,7 +369,7 @@ var GameLayer = cc.LayerGradient.extend({
         var scale = cc.ScaleBy.create(1.1, 5);
         var fade = cc.FadeOut.create(1.1);
         var s = cc.Spawn.create( scale, fade );
-        var selfremove = cc.CallFunc.create(this, this.onRemoveMe );
+        var selfremove = cc.CallFunc.create(this.onRemoveMe, this );
         var seq = cc.Sequence.create(d, s, selfremove );
         label.runAction( seq );
 
@@ -403,8 +403,6 @@ var GameLayer = cc.LayerGradient.extend({
             this._shapesToRemove.push( shapeCoin );
             audioEngine.playEffect("pickup_coin.wav");
 
-//            cc.log("Adding shape: " + shapeCoin[0] + " : " + shapeCoin[1] );
-            cc.log("Adding shape: " + shapeCoin );
             this.addScore(1);
         }
         return true;
@@ -450,9 +448,6 @@ var GameLayer = cc.LayerGradient.extend({
 
         for( var i=0; i < l; i++ ) {
             var shape = this._shapesToRemove[i];
-
-//            cc.log("removing shape: " + shape[0] + " : " + shape[1] );
-            cc.log("removing shape: " + shape );
 
             this._space.removeStaticShape( shape );
             // shape.free();
@@ -526,8 +521,6 @@ var GameLayer = cc.LayerGradient.extend({
         // XXX: CCDrawNode#drawPoly is super expensive... using drawSegment instead
         // poly, fill color, border width, border color
 //        this._terrain.drawPoly( poly, cc.c4f(0,0,0,0 ), 1, cc.c4f(0.82,0.41,0.04,1) );
-
-        cc.log("World Boundary: " + x + " " + y + " " + width + " " + height );
 
         var rect = cc.rect(x,y,width,height);
         var a = cc.Follow.create( this._carSprite, rect );
@@ -849,7 +842,7 @@ var GameLayer = cc.LayerGradient.extend({
 
         if( this._level+1 < levels.length ) {
             cc.MenuItemFont.setFontSize(16 * sizeRatio );
-            item1 = cc.MenuItemFont.create("Next Level", this, this.onNextLevel);
+            item1 = cc.MenuItemFont.create("Next Level", this.onNextLevel, this);
             menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
@@ -858,7 +851,7 @@ var GameLayer = cc.LayerGradient.extend({
             legend = "LEVEL COMPLETE";
         } else {
             cc.MenuItemFont.setFontSize(16 * sizeRatio );
-            item1 = cc.MenuItemFont.create("Main Menu", this, this.onMainMenu);
+            item1 = cc.MenuItemFont.create("Main Menu", this.onMainMenu, this);
             menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
@@ -904,8 +897,8 @@ var GameLayer = cc.LayerGradient.extend({
         audioEngine.playEffect("GameOver.wav");
 
         cc.MenuItemFont.setFontSize(16 * sizeRatio );
-        var item1 = cc.MenuItemFont.create("Play Again", this, this.onRestart);
-        var item2 = cc.MenuItemFont.create("Main Menu", this, this.onMainMenu);
+        var item1 = cc.MenuItemFont.create("Play Again", this.onRestart, this);
+        var item2 = cc.MenuItemFont.create("Main Menu", this.onMainMenu, this);
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
@@ -1023,7 +1016,7 @@ var AboutLayerController = function() {};
 
 AboutLayerController.prototype.onDidLoadFromCCB = function()
 {
-    var back = cc.MenuItemFont.create("Back", this, this.onBack );
+    var back = cc.MenuItemFont.create("Back", this.onBack, this );
     back.setColor( cc.BLACK );
     var menu = cc.Menu.create( back );
     this.rootNode.addChild( menu );
@@ -1052,9 +1045,9 @@ var OptionsLayer = cc.LayerGradient.extend({
         var label2 = cc.LabelBMFont.create("MUSIC OFF", "konqa32.fnt" );
         var item2 = cc.MenuItemLabel.create(label2);
         var toggle = cc.MenuItemToggle.create( item1, item2 );
-        toggle.setCallback( this, this.onMusicToggle);
+        toggle.setCallback(this.onMusicToggle, this);
 
-        var back = cc.MenuItemFont.create("Back", this, this.onBack );
+        var back = cc.MenuItemFont.create("Back", this.onBack, this );
         var menu = cc.Menu.create( toggle, back );
         this.addChild( menu );
         menu.alignItemsVertically();
