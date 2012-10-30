@@ -43,13 +43,19 @@
  */
 typedef enum {
 	/// An horizontal orientation where the Left is nearer
-	kOrientationLeftOver = 0,
+	kCCTransitionOrientationLeftOver = 0,
 	/// An horizontal orientation where the Right is nearer
-	kOrientationRightOver = 1,
+	kCCTransitionOrientationRightOver = 1,
 	/// A vertical orientation where the Up is nearer
-	kOrientationUpOver = 0,
+	kCCTransitionOrientationUpOver = 0,
 	/// A vertical orientation where the Bottom is nearer
-	kOrientationDownOver = 1,
+	kCCTransitionOrientationDownOver = 1,
+
+	// Deprecated
+//	kOrientationLeftOver = kCCTransitionOrientationLeftOver,
+//	kOrientationRightOver = kCCTransitionOrientationRightOver,
+//	kOrientationUpOver = kCCTransitionOrientationUpOver,
+//	kOrientationDownOver = kCCTransitionOrientationDownOver,
 } tOrientation;
 
 /** Base class for CCTransition scenes
