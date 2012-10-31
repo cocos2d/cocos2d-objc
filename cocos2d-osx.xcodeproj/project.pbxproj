@@ -13,6 +13,8 @@
 			buildPhases = (
 			);
 			dependencies = (
+				A0AA70D71641A10800A38D85 /* PBXTargetDependency */,
+				A0AA70D91641A10800A38D85 /* PBXTargetDependency */,
 				A00193FD15C3786B00F3D80E /* PBXTargetDependency */,
 				A00193FF15C3786B00F3D80E /* PBXTargetDependency */,
 				A0137E6115ABB7C3000AA1C2 /* PBXTargetDependency */,
@@ -2302,7 +2304,6 @@
 		A09C8D381566FB4100ADFDA9 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		A09C8D391566FB4100ADFDA9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A09C8D3A1566FB4100ADFDA9 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
-		A09DB6951640AA7600AFCA61 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
 		A09DB6C91640AA7600AFCA61 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF115DADE5F00E1986C /* jsb_constants.js */; };
 		A09DB6CA1640AA7600AFCA61 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF215DADE5F00E1986C /* jsb_constants_chipmunk.js */; };
 		A09DB6CB1640AA7600AFCA61 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF315DADE5F00E1986C /* jsb_constants_cocos2d.js */; };
@@ -6499,6 +6500,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = E076EDB81225FEAA00DE0DA2;
 			remoteInfo = libpng;
+		};
+		A0AA70D61641A10800A38D85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B44E4F816338743000492D8;
+			remoteInfo = ClippingNodeTest;
+		};
+		A0AA70D81641A10800A38D85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A09DB68A1640AA7600AFCA61;
+			remoteInfo = "JS CocosDragon";
 		};
 		A0ADEF6214584BD3009A71F1 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -13828,7 +13843,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A09DB6951640AA7600AFCA61 /* fps_images.png in Resources */,
 				A09DB6C91640AA7600AFCA61 /* jsb_constants.js in Resources */,
 				A09DB6CA1640AA7600AFCA61 /* jsb_constants_chipmunk.js in Resources */,
 				A09DB6CB1640AA7600AFCA61 /* jsb_constants_cocos2d.js in Resources */,
@@ -18413,6 +18427,16 @@
 			isa = PBXTargetDependency;
 			target = E076EDB81225FEAA00DE0DA2 /* libpng */;
 			targetProxy = A09DB6921640AA7600AFCA61 /* PBXContainerItemProxy */;
+		};
+		A0AA70D71641A10800A38D85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B44E4F816338743000492D8 /* ClippingNodeTest */;
+			targetProxy = A0AA70D61641A10800A38D85 /* PBXContainerItemProxy */;
+		};
+		A0AA70D91641A10800A38D85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A09DB68A1640AA7600AFCA61 /* JS CocosDragon */;
+			targetProxy = A0AA70D81641A10800A38D85 /* PBXContainerItemProxy */;
 		};
 		A0ADEF6114584BD3009A71F1 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
