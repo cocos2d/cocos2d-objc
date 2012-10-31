@@ -10,3 +10,6 @@
 [submodule "tests/cocos2d-html5-tests"]
 	path = tests/cocos2d-html5-tests
 	url = git://github.com/ricardoquesada/cocos2d-html5-tests.git
+[submodule "tests/CocosDragonJS"]
+	path = tests/CocosDragonJS
+	url = git://github.com/ricardoquesada/CocosDragonJS.git
