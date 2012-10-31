@@ -30,10 +30,11 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
 		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
+	else if( [name isEqual:@"JS CocosDragon"] )
+		[[JSBCore sharedInstance] runScript:@"main.js"];
 }
 @end
 
@@ -141,6 +142,8 @@
 	else if( [name isEqual:@"JS Tests"] )
 		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 	else if( [name isEqual:@"JS Moon Warriors"] )
+		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+	else if( [name isEqual:@"JS CocosDragon"] )
 		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 	
 	return YES;
@@ -260,11 +263,11 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-//		[[JSBCore sharedInstance] runScript:@"js/main.js"];
 		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
-
+	else if( [name isEqual:@"JS CocosDragon"] )
+		[[JSBCore sharedInstance] runScript:@"main.js"];	
 }
 @end
 
