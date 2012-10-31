@@ -169,16 +169,15 @@ int compareInts (const void * a, const void * b);
 	}
 	else
 	{
-		// This code should be enough to re-init the sprite
+		// XXX HACK: Needed because if "batch node" is nil,
+		// then the Sprite'squad will be reset
+		[reusedTile_ setBatchNode:nil];
+
+		// Re-init the sprite
 		[reusedTile_ setTextureRect:rect rotated:NO untrimmedSize:rect.size];
 
-		// XXX: should not be re-init. Potential memeory leak. Not following best practices
-		// XXX: it shall call directory  [setRect:rect]
-//		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
-		
-		// Since initWithTexture resets the batchNode, we need to re add it.
-		// but should be removed once initWithTexture is not called again
-//		[reusedTile_ setBatchNode:self];
+		// restore the batch node
+		[reusedTile_ setBatchNode:self];
 	}
 
 	return reusedTile_;
