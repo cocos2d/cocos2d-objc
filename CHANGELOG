@@ -8,6 +8,7 @@ version 2.1-beta3  xx-Oct-2012
 		Added: removeAllChildren. Calls removeAllChildrenWithCleanup: with cleanup=YES
 . [NEW] RenderTexture: Supports "auto rendering" its children to the texture. No need to call being/end
 . [NEW] Scheduler: It is possible to schedule blocks too.
+. [NEW] Tests: Added 'JS CocosDragon'. Shows the power of CocosBuilder + JS
 . [FIX] Actions: TargetedAction can be copied. Calls super correctly
 		Blink: "stop" restores original "visibility" state
 . [FIX] Director: Fixed possible retain cycle with the delegate
