@@ -51,7 +51,7 @@ version 2.1-beta3  xx-Oct-2012
 		CocosBuilder Reader supports "outlets", Animation callbacks, and improved JSB API
 		Better registration code
 . [3RD] CocosBuilder Reader: Updated to v2.1
-. [3RD] SpiderMonkey: Updated to v16.0.1
+. [3RD] SpiderMonkey: Updated to v17-beta
 		Added armv7s support
 
 version 2.1-beta2 13-Sept-2012

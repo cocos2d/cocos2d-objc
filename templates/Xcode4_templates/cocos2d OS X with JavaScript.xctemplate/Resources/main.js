@@ -37,8 +37,8 @@ var MainLayer = cc.LayerGradient.extend({
 
         // Simple Menu
 
-        var item1 = cc.MenuItemFont.create("Play Game", this, this.onItem1);
-        var item2 = cc.MenuItemFont.create("Options", this, this.onItem2);
+        var item1 = cc.MenuItemFont.create("Play Game", this.onItem1, this);
+        var item2 = cc.MenuItemFont.create("Options", this.onItem2, this);
 
         // Change size and color of items
         item1.setFontSize( 20 );
