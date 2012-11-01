@@ -49,10 +49,10 @@ enum {
 		
 		// enable events
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
-		self.isAccelerometerEnabled = YES;
+		self.touchEnabled = YES;
+		self.accelerometerEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];

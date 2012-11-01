@@ -52,8 +52,8 @@ enum {
 		
 		// enable events
 		
-		self.isTouchEnabled = YES;
-		self.isAccelerometerEnabled = YES;
+		self.touchEnabled = YES;
+		self.accelerometerEnabled = YES;
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
 		// init physics
