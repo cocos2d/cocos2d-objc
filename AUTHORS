@@ -29,6 +29,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Greg Harding (http://www.flightless.co.nz/):
 	Toggle fullscreen honors the support for touches on Mac
 	Fixed some grammar errors in the Templates
+	Fixed interpolation in CatmullRom action
 
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link

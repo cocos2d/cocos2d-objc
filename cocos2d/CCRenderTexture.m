@@ -445,8 +445,8 @@
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	
-	CGImageRelease(iref);
 	CGContextRelease(context);
+	CGImageRelease(iref);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
 	
