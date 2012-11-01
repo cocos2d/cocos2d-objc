@@ -283,6 +283,7 @@ typedef struct _ccBezierConfig {
  */
 @interface CCBezierTo : CCBezierBy
 {
+	ccBezierConfig toConfig_;
 }
 // XXX: Added to prevent bug on BridgeSupport
 -(void) startWithTarget:(CCNode *)aTarget;

@@ -956,12 +956,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCBezierTo
 @implementation CCBezierTo
+-(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
+{
+	if( (self=[super initWithDuration: t]) ) {
+		toConfig_ = c;
+	}
+	return self;
+}
+
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	config_.controlPoint_1 = ccpSub(config_.controlPoint_1, startPosition_);
-	config_.controlPoint_2 = ccpSub(config_.controlPoint_2, startPosition_);
-	config_.endPosition = ccpSub(config_.endPosition, startPosition_);
+	config_.controlPoint_1 = ccpSub(toConfig_.controlPoint_1, startPosition_);
+	config_.controlPoint_2 = ccpSub(toConfig_.controlPoint_2, startPosition_);
+	config_.endPosition = ccpSub(toConfig_.endPosition, startPosition_);
 }
 @end
 

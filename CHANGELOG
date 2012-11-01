@@ -11,6 +11,7 @@ version 2.1-beta3  xx-Oct-2012
 . [NEW] Tests: Added 'JS CocosDragon'. Shows the power of CocosBuilder + JS
 . [FIX] Actions: TargetedAction can be copied. Calls super correctly
 		Blink: "stop" restores original "visibility" state
+		BezierTo: works with Repeat (issue #1008)
 . [FIX] Director: Fixed possible retain cycle with the delegate
 		Fixed possible crash when purgeCacheData is called before the view is initialized (issue #1440)
 . [FIX] Dispatcher: Queueing nested events works as expected (issue #1279, #1410)
