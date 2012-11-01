@@ -52,6 +52,8 @@ version 2.1-beta3  xx-Oct-2012
 		Chipmunk API is compatible with Chipmunk-JS
 		CocosBuilder Reader supports "outlets", Animation callbacks, and improved JSB API
 		Better registration code
+. [3RD] Chipmunk: Updated to v6.1.2.
+		Chipmunk is a git submodule now.
 . [3RD] CocosBuilder Reader: Updated to v2.1
 . [3RD] SpiderMonkey: Updated to v17-beta
 		Added armv7s support

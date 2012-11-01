@@ -13,3 +13,6 @@
 [submodule "tests/CocosDragonJS"]
 	path = tests/CocosDragonJS
 	url = git://github.com/ricardoquesada/CocosDragonJS.git
+[submodule "external/Chipmunk"]
+	path = external/Chipmunk
+	url = git://github.com/slembcke/Chipmunk-Physics.git

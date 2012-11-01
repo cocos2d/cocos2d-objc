@@ -100,7 +100,8 @@ copy_box2d_files(){
 
 copy_chipmunk_files(){
 	echo ...copying Chipmunk files
-	copy_files external/Chipmunk "$LIBS_DIR"
+	copy_files external/Chipmunk/src "$LIBS_DIR"/Chipmunk
+	copy_files external/Chipmunk/include "$LIBS_DIR"/Chipmunk
 	copy_files LICENSE_Chipmunk.txt "$LIBS_DIR"
 }
 
