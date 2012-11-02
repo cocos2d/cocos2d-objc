@@ -229,7 +229,7 @@ var GameLayer = cc.LayerGradient.extend({
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
-        menu.setPosition( cc._p( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) )  );
+        menu.setPosition( winSize.width-(50*sizeRatio), winSize.height-(80*sizeRatio) );
 
         var animCache = cc.AnimationCache.getInstance();
         animCache.addAnimations("coins_animation.plist");
@@ -846,7 +846,7 @@ var GameLayer = cc.LayerGradient.extend({
             menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
-            menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
+            menu.setPosition( winSize.width/2, winSize.height/3  );
 
             legend = "LEVEL COMPLETE";
         } else {
@@ -855,7 +855,7 @@ var GameLayer = cc.LayerGradient.extend({
             menu = cc.Menu.create( item1 );
             menu.alignItemsVertically();
             this.addChild( menu, Z_DEBUG_MENU );
-            menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
+            menu.setPosition( winSize.width/2, winSize.height/3 );
 
             legend = "GAME COMPLETE";
         }
@@ -902,7 +902,7 @@ var GameLayer = cc.LayerGradient.extend({
         var menu = cc.Menu.create( item1, item2 );
         menu.alignItemsVertically();
         this.addChild( menu, Z_DEBUG_MENU );
-        menu.setPosition( cc._p( winSize.width/2, winSize.height/3 )  );
+        menu.setPosition( winSize.width/2, winSize.height/3 );
     },
 
 
@@ -946,7 +946,7 @@ var BootLayer = cc.Layer.extend({
         this.init();
 
         // music
-        audioEngine.playBackgroundMusic("game-music.mp3");
+        audioEngine.playMusic("game-music.mp3");
         audioEngine.preloadEffect("pickup_coin.wav");
 
 		var cache = cc.SpriteFrameCache.getInstance();
@@ -1022,7 +1022,7 @@ AboutLayerController.prototype.onDidLoadFromCCB = function()
     this.rootNode.addChild( menu );
     menu.zOrder = 100;
     menu.alignItemsVertically();
-    menu.setPosition( cc._p( winSize.width - 50, 50) );
+    menu.setPosition( winSize.width - 50, 50 );
 };
 
 AboutLayerController.prototype.onBack = function()
@@ -1064,10 +1064,10 @@ var OptionsLayer = cc.LayerGradient.extend({
 
     onMusicToggle:function( sender ) {
         // music
-        if ( audioEngine.isBackgroundMusicPlaying() ) {
-            audioEngine.stopBackgroundMusic();
+        if ( audioEngine.isMusicPlaying() ) {
+            audioEngine.stopMusic();
         } else {
-            audioEngine.playBackgroundMusic("game-music.mp3");
+            audioEngine.playMusic("game-music.mp3");
         }
     }
 });
