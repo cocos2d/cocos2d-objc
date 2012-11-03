@@ -494,12 +494,21 @@
 	//
 	// Using VBO and VAO
 	//
-
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
+		// option 1: subdata
 //		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+		
+		// option 2: data
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+		
+		// option 3: orphaning + glMapBuffer
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), nil, GL_DYNAMIC_DRAW);
+		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		memcpy(buf, quads_, sizeof(quads_[0])* (n-start));
+		glUnmapBuffer(GL_ARRAY_BUFFER);		
+		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		dirty_ = NO;

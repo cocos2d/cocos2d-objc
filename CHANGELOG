@@ -31,12 +31,14 @@ version 2.1-beta3  xx-Nov-2012
 		New way to enable "targeted" touches: [self setTouchMode:kCCTouchOneByOne];
 . [FIX] LayerColor: uses correct default blending function (issues #1422 #1423)
 . [FIX] Particle: Honors the directory of the .plist file when loading the .png file
+		Uses Orphaning + glMapBuffer. Performance improve when rendering serveral particles
 . [FIX] Scheduler: API improvements:
 		unscheduleAllSelectors -> unscheduleAll (since it also unschedules blocks)
 		unscheduleAllSelectorsForTarget -> unscheduleAllForTarget (since it also unschedules blocks)
 		Old methods can be called, but are deprecated.
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
 		Fixed some grammar errors
+. [FIX] TextureAtlas: Uses Orphaning + glMapBuffer. Performance improve when rendering serveral particles
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
 		Added new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
