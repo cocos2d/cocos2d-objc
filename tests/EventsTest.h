@@ -28,4 +28,7 @@
 	NSUInteger nuSprites_;
 	NSUInteger capacity;
 }
+
+- (void)resetToTouchesMatchingPhaseTouchingWithEvent:(NSEvent *)event;
+
 @end
