@@ -306,6 +306,7 @@ Class restartAction()
 
 -(void) dealloc
 {
+    free(sprites_);
 	[super dealloc];
 }
 
