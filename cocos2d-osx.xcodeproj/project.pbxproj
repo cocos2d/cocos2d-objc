@@ -1172,7 +1172,6 @@
 		A06EA276161E55A200B025FE /* LabelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85EC161B563300FE54C8 /* LabelTest.js */; };
 		A06EA277161E55A200B025FE /* LayerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85EE161B563300FE54C8 /* LayerTest.js */; };
 		A06EA278161E55A200B025FE /* MenuTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85F0161B563300FE54C8 /* MenuTest.js */; };
-		A06EA279161E55A200B025FE /* MultiTouchTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85F2161B563300FE54C8 /* MultiTouchTest.js */; };
 		A06EA27A161E55A200B025FE /* ParallaxTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85F4161B563300FE54C8 /* ParallaxTest.js */; };
 		A06EA27B161E55A200B025FE /* ParticleTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85F6161B563300FE54C8 /* ParticleTest.js */; };
 		A06EA27C161E55A200B025FE /* ProgressActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85FF161B563300FE54C8 /* ProgressActionsTest.js */; };
@@ -7056,7 +7055,6 @@
 		A03F85EC161B563300FE54C8 /* LabelTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = LabelTest.js; sourceTree = "<group>"; };
 		A03F85EE161B563300FE54C8 /* LayerTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = LayerTest.js; sourceTree = "<group>"; };
 		A03F85F0161B563300FE54C8 /* MenuTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = MenuTest.js; sourceTree = "<group>"; };
-		A03F85F2161B563300FE54C8 /* MultiTouchTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = MultiTouchTest.js; sourceTree = "<group>"; };
 		A03F85F4161B563300FE54C8 /* ParallaxTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ParallaxTest.js; sourceTree = "<group>"; };
 		A03F85F6161B563300FE54C8 /* ParticleTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ParticleTest.js; sourceTree = "<group>"; };
 		A03F85F8161B563300FE54C8 /* PerformanceNodeChildrenTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = PerformanceNodeChildrenTest.js; sourceTree = "<group>"; };
@@ -9103,7 +9101,6 @@
 				A03F85EB161B563300FE54C8 /* LabelTest */,
 				A03F85ED161B563300FE54C8 /* LayerTest */,
 				A03F85EF161B563300FE54C8 /* MenuTest */,
-				A03F85F1161B563300FE54C8 /* MultiTouchTest */,
 				A03F85F3161B563300FE54C8 /* ParallaxTest */,
 				A03F85F5161B563300FE54C8 /* ParticleTest */,
 				A03F85F7161B563300FE54C8 /* PerformanceTest */,
@@ -9289,14 +9286,6 @@
 				A03F85F0161B563300FE54C8 /* MenuTest.js */,
 			);
 			path = MenuTest;
-			sourceTree = "<group>";
-		};
-		A03F85F1161B563300FE54C8 /* MultiTouchTest */ = {
-			isa = PBXGroup;
-			children = (
-				A03F85F2161B563300FE54C8 /* MultiTouchTest.js */,
-			);
-			path = MultiTouchTest;
 			sourceTree = "<group>";
 		};
 		A03F85F3161B563300FE54C8 /* ParallaxTest */ = {
@@ -13814,7 +13803,6 @@
 				A06EA276161E55A200B025FE /* LabelTest.js in Resources */,
 				A06EA277161E55A200B025FE /* LayerTest.js in Resources */,
 				A06EA278161E55A200B025FE /* MenuTest.js in Resources */,
-				A06EA279161E55A200B025FE /* MultiTouchTest.js in Resources */,
 				A06EA27A161E55A200B025FE /* ParallaxTest.js in Resources */,
 				A06EA27B161E55A200B025FE /* ParticleTest.js in Resources */,
 				A06EA27C161E55A200B025FE /* ProgressActionsTest.js in Resources */,
