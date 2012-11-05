@@ -90,7 +90,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize runningScene = runningScene_;
 @synthesize displayStats = displayStats_;
 @synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
-@synthesize isPaused = isPaused_;
+@synthesize paused = isPaused_;
 @synthesize isAnimating = isAnimating_;
 @synthesize sendCleanupToScene = sendCleanupToScene_;
 @synthesize runningThread = runningThread_;

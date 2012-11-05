@@ -1169,7 +1169,6 @@
 		A06EA272161E55A200B025FE /* DrawPrimitivesTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85D5161B563200FE54C8 /* DrawPrimitivesTest.js */; };
 		A06EA273161E55A200B025FE /* EaseActionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85D7161B563200FE54C8 /* EaseActionsTest.js */; };
 		A06EA274161E55A200B025FE /* FontTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85E8161B563300FE54C8 /* FontTest.js */; };
-		A06EA275161E55A200B025FE /* IntervelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85EA161B563300FE54C8 /* IntervelTest.js */; };
 		A06EA276161E55A200B025FE /* LabelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85EC161B563300FE54C8 /* LabelTest.js */; };
 		A06EA277161E55A200B025FE /* LayerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85EE161B563300FE54C8 /* LayerTest.js */; };
 		A06EA278161E55A200B025FE /* MenuTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A03F85F0161B563300FE54C8 /* MenuTest.js */; };
@@ -3121,6 +3120,7 @@
 		A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */; };
 		A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
 		A0DA0BDB15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BD915BCEB0800E80A92 /* ccShader_PositionColorLengthTexture_vert.h */; };
+		A0DA9ACC16483C4C00D882F7 /* IntervalTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DA9ACB16483C4C00D882F7 /* IntervalTest.js */; };
 		A0DB13D814FC2B8500F7CC49 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0DB13D914FC2B8500F7CC49 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
 		A0DB13DC14FC355300F7CC49 /* konqa32-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60677128ECC110099367C /* konqa32-hd.fnt */; };
@@ -7053,7 +7053,6 @@
 		A03F85E4161B563300FE54C8 /* ExtensionsTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = ExtensionsTest.js; sourceTree = "<group>"; };
 		A03F85E6161B563300FE54C8 /* TableViewTestScene.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = TableViewTestScene.js; sourceTree = "<group>"; };
 		A03F85E8161B563300FE54C8 /* FontTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = FontTest.js; sourceTree = "<group>"; };
-		A03F85EA161B563300FE54C8 /* IntervelTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = IntervelTest.js; sourceTree = "<group>"; };
 		A03F85EC161B563300FE54C8 /* LabelTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = LabelTest.js; sourceTree = "<group>"; };
 		A03F85EE161B563300FE54C8 /* LayerTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = LayerTest.js; sourceTree = "<group>"; };
 		A03F85F0161B563300FE54C8 /* MenuTest.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = MenuTest.js; sourceTree = "<group>"; };
@@ -7558,6 +7557,7 @@
 		A0DA0BBD15BCD93700E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BD815BCEB0700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
 		A0DA0BD915BCEB0800E80A92 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
+		A0DA9ACB16483C4C00D882F7 /* IntervalTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = IntervalTest.js; sourceTree = "<group>"; };
 		A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
 		A0DB13DE14FC418100F7CC49 /* west_england-64.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "west_england-64.fnt"; sourceTree = "<group>"; };
 		A0DB13DF14FC418100F7CC49 /* west_england-64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "west_england-64.png"; sourceTree = "<group>"; };
@@ -9099,7 +9099,7 @@
 				A066C181162F7AC300E3C740 /* EventTest */,
 				A03F85D8161B563200FE54C8 /* ExtensionsTest */,
 				A03F85E7161B563300FE54C8 /* FontTest */,
-				A03F85E9161B563300FE54C8 /* IntervelTest */,
+				A0DA9ACA16483C4C00D882F7 /* IntervalTest */,
 				A03F85EB161B563300FE54C8 /* LabelTest */,
 				A03F85ED161B563300FE54C8 /* LayerTest */,
 				A03F85EF161B563300FE54C8 /* MenuTest */,
@@ -9265,14 +9265,6 @@
 				A03F85E8161B563300FE54C8 /* FontTest.js */,
 			);
 			path = FontTest;
-			sourceTree = "<group>";
-		};
-		A03F85E9161B563300FE54C8 /* IntervelTest */ = {
-			isa = PBXGroup;
-			children = (
-				A03F85EA161B563300FE54C8 /* IntervelTest.js */,
-			);
-			path = IntervelTest;
 			sourceTree = "<group>";
 		};
 		A03F85EB161B563300FE54C8 /* LabelTest */ = {
@@ -10153,6 +10145,14 @@
 				E076E64F1225EC7400DE0DA2 /* CCDrawingPrimitives.m */,
 			);
 			name = "Drawing Nodes";
+			sourceTree = "<group>";
+		};
+		A0DA9ACA16483C4C00D882F7 /* IntervalTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0DA9ACB16483C4C00D882F7 /* IntervalTest.js */,
+			);
+			path = IntervalTest;
 			sourceTree = "<group>";
 		};
 		A0EC4CA11403278200EC482A /* Shaders */ = {
@@ -13663,6 +13663,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DA9ACC16483C4C00D882F7 /* IntervalTest.js in Resources */,
 				A0D2DF031639DCC6008DB73C /* UnitTest.js in Resources */,
 				A0D2DF001638B14A008DB73C /* Presentation.js in Resources */,
 				A0D2DE73163770AA008DB73C /* EffectsTest.js in Resources */,
@@ -13810,7 +13811,6 @@
 				A06EA273161E55A200B025FE /* EaseActionsTest.js in Resources */,
 				A06EA274161E55A200B025FE /* FontTest.js in Resources */,
 				A066C183162F7AC300E3C740 /* EventTest.js in Resources */,
-				A06EA275161E55A200B025FE /* IntervelTest.js in Resources */,
 				A06EA276161E55A200B025FE /* LabelTest.js in Resources */,
 				A06EA277161E55A200B025FE /* LayerTest.js in Resources */,
 				A06EA278161E55A200B025FE /* MenuTest.js in Resources */,

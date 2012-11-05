@@ -2980,6 +2980,7 @@
 		A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */; };
 		A0DA0BDE15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BDC15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
 		A0DA0BDF15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BDD15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h */; };
+		A0DA9B091648437B00D882F7 /* IntervalTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DA9B081648437B00D882F7 /* IntervalTest.js */; };
 		A0DABD5A1426679E00F3FEBE /* grossini_dance_01.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331E0FBADD5F00D574A2 /* grossini_dance_01.png */; };
 		A0DABD5B1426679E00F3FEBE /* grossini_dance_02.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A331F0FBADD5F00D574A2 /* grossini_dance_02.png */; };
 		A0DABD5C1426679E00F3FEBE /* grossini_dance_03.png in Resources */ = {isa = PBXBuildFile; fileRef = 508A33200FBADD5F00D574A2 /* grossini_dance_03.png */; };
@@ -3106,7 +3107,6 @@
 		A0DC2CF0161BE16B00DDB2BD /* ExtensionsTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B22161BE16A00DDB2BD /* ExtensionsTest.js */; };
 		A0DC2CF1161BE16B00DDB2BD /* TableViewTestScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B24161BE16A00DDB2BD /* TableViewTestScene.js */; };
 		A0DC2CF2161BE16B00DDB2BD /* FontTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B26161BE16A00DDB2BD /* FontTest.js */; };
-		A0DC2CF3161BE16B00DDB2BD /* IntervelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B28161BE16A00DDB2BD /* IntervelTest.js */; };
 		A0DC2CF4161BE16B00DDB2BD /* LabelTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B2A161BE16A00DDB2BD /* LabelTest.js */; };
 		A0DC2CF5161BE16B00DDB2BD /* LayerTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B2C161BE16A00DDB2BD /* LayerTest.js */; };
 		A0DC2CF6161BE16B00DDB2BD /* MenuTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2B2E161BE16A00DDB2BD /* MenuTest.js */; };
@@ -6171,6 +6171,7 @@
 		A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BDC15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
 		A0DA0BDD15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
+		A0DA9B081648437B00D882F7 /* IntervalTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = IntervalTest.js; sourceTree = "<group>"; };
 		A0DABD691426715A00F3FEBE /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		A0DABD6D1426715A00F3FEBE /* b2BroadPhase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = b2BroadPhase.cpp; sourceTree = "<group>"; };
 		A0DABD6E1426715A00F3FEBE /* b2BroadPhase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = b2BroadPhase.h; sourceTree = "<group>"; };
@@ -6288,7 +6289,6 @@
 		A0DC2B22161BE16A00DDB2BD /* ExtensionsTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ExtensionsTest.js; sourceTree = "<group>"; };
 		A0DC2B24161BE16A00DDB2BD /* TableViewTestScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = TableViewTestScene.js; sourceTree = "<group>"; };
 		A0DC2B26161BE16A00DDB2BD /* FontTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = FontTest.js; sourceTree = "<group>"; };
-		A0DC2B28161BE16A00DDB2BD /* IntervelTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = IntervelTest.js; sourceTree = "<group>"; };
 		A0DC2B2A161BE16A00DDB2BD /* LabelTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LabelTest.js; sourceTree = "<group>"; };
 		A0DC2B2C161BE16A00DDB2BD /* LayerTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = LayerTest.js; sourceTree = "<group>"; };
 		A0DC2B2E161BE16A00DDB2BD /* MenuTest.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MenuTest.js; sourceTree = "<group>"; };
@@ -9612,6 +9612,14 @@
 			name = "Draw Nodes";
 			sourceTree = "<group>";
 		};
+		A0DA9B071648437B00D882F7 /* IntervalTest */ = {
+			isa = PBXGroup;
+			children = (
+				A0DA9B081648437B00D882F7 /* IntervalTest.js */,
+			);
+			path = IntervalTest;
+			sourceTree = "<group>";
+		};
 		A0DABD681426715A00F3FEBE /* Box2D */ = {
 			isa = PBXGroup;
 			children = (
@@ -9809,7 +9817,7 @@
 				A066C17E162F6EB200E3C740 /* EventTest */,
 				A0DC2B16161BE16A00DDB2BD /* ExtensionsTest */,
 				A0DC2B25161BE16A00DDB2BD /* FontTest */,
-				A0DC2B27161BE16A00DDB2BD /* IntervelTest */,
+				A0DA9B071648437B00D882F7 /* IntervalTest */,
 				A0DC2B29161BE16A00DDB2BD /* LabelTest */,
 				A0DC2B2B161BE16A00DDB2BD /* LayerTest */,
 				A0DC2B2D161BE16A00DDB2BD /* MenuTest */,
@@ -9975,14 +9983,6 @@
 				A0DC2B26161BE16A00DDB2BD /* FontTest.js */,
 			);
 			path = FontTest;
-			sourceTree = "<group>";
-		};
-		A0DC2B27161BE16A00DDB2BD /* IntervelTest */ = {
-			isa = PBXGroup;
-			children = (
-				A0DC2B28161BE16A00DDB2BD /* IntervelTest.js */,
-			);
-			path = IntervelTest;
 			sourceTree = "<group>";
 		};
 		A0DC2B29161BE16A00DDB2BD /* LabelTest */ = {
@@ -14356,6 +14356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0DA9B091648437B00D882F7 /* IntervalTest.js in Resources */,
 				A01A77FA1639E71500084AC2 /* UnitTest.js in Resources */,
 				A0DC2CE1161BE16B00DDB2BD /* ActionManagerTest.js in Resources */,
 				A0DC2CE2161BE16B00DDB2BD /* ActionsTest.js in Resources */,
@@ -14378,7 +14379,6 @@
 				A0D2DE6C16376C25008DB73C /* EffectsTest.js in Resources */,
 				A066C180162F6EB200E3C740 /* EventTest.js in Resources */,
 				A0DC2CF2161BE16B00DDB2BD /* FontTest.js in Resources */,
-				A0DC2CF3161BE16B00DDB2BD /* IntervelTest.js in Resources */,
 				A0DC2CF4161BE16B00DDB2BD /* LabelTest.js in Resources */,
 				A0DC2CF5161BE16B00DDB2BD /* LayerTest.js in Resources */,
 				A0DC2CF6161BE16B00DDB2BD /* MenuTest.js in Resources */,

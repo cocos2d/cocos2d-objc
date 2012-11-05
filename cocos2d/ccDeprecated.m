@@ -93,6 +93,11 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 #pragma mark - Director
 
 @implementation CCDirector (Deprecated)
+-(BOOL) getIsPaused
+{
+	return [self isPaused];
+}
+
 -(void) setDisplayFPS:(BOOL)display
 {
 	[self setDisplayStats:display];
