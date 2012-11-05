@@ -41,6 +41,7 @@ version 2.1-beta3  xx-Nov-2012
 . [FIX] TextureAtlas: Uses Orphaning + glMapBuffer. Performance improve when rendering serveral particles
 . [FIX] Tests: Watermelon With Me uses new Chipmunk API
 		Added new JS tests for Chipmunk (Buoyancy, Pyramid, Joints, etc...)
+		EventTest (Mac): Fixed memory leaks, dangling pointer and logic
 . [FIX] Texture: Improved assert when updating filter on NPOT textures
 . [FIX] TextureCache: filenames are standarized before adding them into the cache
 . [FIX] TMX Tiled Maps: Resused code is re-initialized in a faster
