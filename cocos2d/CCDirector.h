@@ -169,7 +169,7 @@ and when to execute the Scenes.
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
-@property (nonatomic,readonly) BOOL isPaused;
+@property (nonatomic,readonly,getter=isPaused) BOOL paused;
 /** Whether or not the Director is active (animating) */
 @property (nonatomic,readonly) BOOL isAnimating;
 /** Sets an OpenGL projection */

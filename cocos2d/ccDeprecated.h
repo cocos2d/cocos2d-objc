@@ -107,6 +107,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 #define GLProgram CCGLProgram
 
 // Extensions
+
 @interface CCScheduler (Deprecated)
 // new: [director scheduler]
 +(CCScheduler*) sharedScheduler DEPRECATED_ATTRIBUTE;
@@ -138,6 +139,8 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 #endif // __CC_PLATFORM_MAC
 
 @interface CCDirector (Deprecated)
+// new: [director isPaused]
+-(BOOL) getIsPaused DEPRECATED_ATTRIBUTE;
 // new: setView:
 -(void) setOpenGLView:(CCGLView*)view DEPRECATED_ATTRIBUTE;
 // new: view
