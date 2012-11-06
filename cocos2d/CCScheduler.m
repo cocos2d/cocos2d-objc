@@ -117,7 +117,6 @@ typedef struct _hashSelectorEntry
 		impMethod = (TICK_IMP) [t methodForSelector:s];
 		elapsed = -1;
 		interval = seconds;
-		repeat = r;
 		delay = d;
 		useDelay = (delay > 0) ? YES : NO;
 		repeat = r;
@@ -602,6 +601,15 @@ typedef struct _hashSelectorEntry
     {
 		return element->paused;
     }
+	
+	// We should check update selectors if target does not have custom selectors
+	tHashUpdateEntry * elementUpdate = NULL;
+	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
+	if ( elementUpdate )
+	{
+		return elementUpdate->entry->paused;
+	}
+	
     return NO;  // should never get here
 
 }
@@ -627,20 +635,32 @@ typedef struct _hashSelectorEntry
         DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
             if(entry->priority >= minPriority) {
                 entry->paused = YES;
-                [idsWithSelectors addObject:entry->target];
+				// avoid adding one target for twice
+				if( ![idsWithSelectors containsObject:entry->target] )
+				{
+					[idsWithSelectors addObject:entry->target];
+				}
             }
         }
     }
     if(minPriority <= 0) {
         DL_FOREACH_SAFE( updates0, entry, tmp ) {
             entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
+			// avoid adding one target for twice
+			if( ![idsWithSelectors containsObject:entry->target] )
+			{
+				[idsWithSelectors addObject:entry->target];
+			}
         }
     }
     DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
         if(entry->priority >= minPriority) {
             entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
+			// avoid adding one target for twice
+			if( ![idsWithSelectors containsObject:entry->target] )
+			{
+				[idsWithSelectors addObject:entry->target];
+			}
         }
     }
     
