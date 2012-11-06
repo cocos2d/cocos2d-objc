@@ -179,80 +179,13 @@
 
 #pragma mark - AppController - Common
 
-- (void)initThoMoServer
-{
-    thoMoServer = [[ThoMoServerStub alloc] initWithProtocolIdentifier:@"JSConsole"];
-    [thoMoServer setDelegate:self];
-    [thoMoServer start];
-}
-
-- (void) server:(ThoMoServerStub *)theServer acceptedConnectionFromClient:(NSString *)aClientIdString {
-    NSLog(@"New Client: %@", aClientIdString);
-}
-
-- (void) server:(ThoMoServerStub *)theServer didReceiveData:(id)theData fromClient:(NSString *)aClientIdString {
-    NSString *script = (NSString *)theData;
-	
-	
-	NSThread *cocos2dThread = [[CCDirector sharedDirector] runningThread];
-	
-	[cocos2dThread performBlock:^(void) { 
-		NSString * string = @"None\n";
-		jsval out;
-		BOOL success = [[JSBCore sharedInstance] evalString:script outVal:&out];
-		
-		if(success)
-		{
-			if(JSVAL_IS_BOOLEAN(out))
-			{
-				string = [NSString stringWithFormat:@"Result(bool): %@.\n", (JSVAL_TO_BOOLEAN(out)) ? @"true" : @"false"];
-			}
-			else if(JSVAL_IS_INT(out))
-			{
-				string = [NSString stringWithFormat:@"Result(int): %i.\n", JSVAL_TO_INT(out)];
-			}
-			else if(JSVAL_IS_DOUBLE(out))
-			{
-				string = [NSString stringWithFormat:@"Result(double): %f.\n", JSVAL_TO_DOUBLE(out)];
-			}
-			else if(JSVAL_IS_STRING(out)) {
-				NSString *tmp;
-				jsval_to_NSString( [[JSBCore sharedInstance] globalContext], out, &tmp );
-				string = [NSString stringWithFormat:@"Result(string): %@.\n", tmp];
-			}
-			else if (JSVAL_IS_VOID(out) )
-				string = @"Result(void):\n";
-			else
-				string = @"Result(object?):\n";
-		}
-		else
-		{
-			string = [NSString stringWithFormat:@"Error evaluating script:\n#############################\n%@\n#############################\n", script];
-		}
-		
-		[thoMoServer sendToAllClients:string];
-		
-	}
-				  waitUntilDone:NO];
-	
-}
-
-
 -(void)dealloc
 {
-	[thoMoServer stop];
-	[thoMoServer release];
-
 	[super dealloc];
 }
 
 -(void) run
 {
-#if DEBUG
-	// init server
-	[self initThoMoServer];
-#endif
-
 //	CCScene *scene = [CCScene node];
 //	BootLayer *layer = [BootLayer node];
 //	[scene addChild:layer];

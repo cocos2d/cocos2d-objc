@@ -1,6 +1,3 @@
-[submodule "external/Fragaria"]
-	path = external/Fragaria
-	url = https://github.com/nicolasgramlich/Fragaria
 [submodule "tests/MoonWarriors"]
 	path = tests/MoonWarriors
 	url = git://github.com/ricardoquesada/MoonWarriors.git
