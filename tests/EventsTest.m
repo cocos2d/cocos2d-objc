@@ -299,6 +299,7 @@ Class restartAction()
 		}
 
 		self.touchEnabled = YES;
+        self.gestureEnabled = YES;
 	}
 
 	return self;
@@ -317,7 +318,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Touch the trackpad. See the console";
+	return @"Touch, pinch, rotate, swipe the trackpad. See the console";
 }
 
 
@@ -397,6 +398,53 @@ Class restartAction()
     return YES;
 }
 
+- (BOOL)ccBeginGestureWithEvent:(NSEvent *)event
+{
+	NSLog(@"beginGesture: %@", event);
+    [self stopAllActions];
+    return YES;
+}
+
+- (BOOL)ccMagnifyWithEvent:(NSEvent *)event
+{
+	NSLog(@"magnify: %@", event);
+    self.scale += event.magnification;
+    return YES;
+}
+
+- (BOOL)ccSmartMagnifyWithEvent:(NSEvent *)event
+{
+	NSLog(@"smartMagnify: %@", event);
+    self.scale = self.scale == 1 ? 1.2 : 1;
+    return YES;
+}
+
+- (BOOL)ccRotateWithEvent:(NSEvent *)event
+{
+	NSLog(@"rotate: %@", event);
+    self.rotation -= event.rotation;
+    return YES;
+}
+
+- (BOOL)ccSwipeWithEvent:(NSEvent *)event
+{
+	NSLog(@"swipe: %@", event);
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    CGPoint swipeTo = ccp(winSize.width * -event.deltaX, winSize.height * event.deltaY);
+    [self runAction:[CCSequence actionOne:[CCMoveTo actionWithDuration:0.2 position:swipeTo]
+                                      two:[CCEaseBackOut actionWithAction:[CCMoveTo actionWithDuration:0.5 position:CGPointZero]]]];
+    return YES;
+}
+
+- (BOOL)ccEndGestureWithEvent:(NSEvent *)event
+{
+	NSLog(@"endGesture: %@", event);
+    if (self.rotation != 0)
+        [self runAction:[CCEaseBackOut actionWithAction:[CCRotateTo actionWithDuration:0.5 angle:0]]];
+    if (self.scale != 1)
+        [self runAction:[CCEaseBackOut actionWithAction:[CCScaleTo actionWithDuration:0.5 scale:1]]];
+    return YES;
+}
 
 @end
 
