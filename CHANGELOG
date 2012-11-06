@@ -5,6 +5,8 @@ version 2.1-beta3  xx-Nov-2012
 		Added: removeChildByTag. Calls removeChildByTag:cleanup: with cleanup=YES
 		Added: removeFromParent. Calls removeFromParentAndCleanup: with cleanup=YES
 		Added: removeAllChildren. Calls removeAllChildrenWithCleanup: with cleanup=YES
+. [NEW] EventDispatcher: Adds support for gestures in OSX
+. [NEW] Layer: Added support of gestures in OSX
 . [NEW] RenderTexture: Supports "auto rendering" its children to the texture. No need to call being/end
 . [NEW] Scheduler: It is possible to schedule blocks too.
 . [NEW] Tests: Added 'JS CocosDragon'. Shows the power of CocosBuilder + JS
