@@ -675,7 +675,9 @@
         NSString* ccbFileName = [self readCachedString];
         
         // Change path extension to .ccbi
-        ccbFileName = [NSString stringWithFormat:@"%@.ccbi", [ccbFileName stringByDeletingPathExtension]];
+        if ([ccbFileName hasSuffix:@".ccb"]) ccbFileName = [ccbFileName stringByDeletingPathExtension];
+        
+        ccbFileName = [NSString stringWithFormat:@"%@.ccbi", ccbFileName];
         
         // Load sub file
         NSString* path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:ccbFileName];
@@ -1127,6 +1129,9 @@
 
 - (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)o parentSize:(CGSize)parentSize
 {
+    // Add ccbi suffix
+    if (![file hasSuffix:@".ccbi"]) file = [file stringByAppendingString:@".ccbi"];
+    
     NSString* path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file];
     NSData* d = [NSData dataWithContentsOfFile:path];
     
