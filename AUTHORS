@@ -31,6 +31,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fixed some grammar errors in the Templates
 	Fixed interpolation in CatmullRom action
 
+* HarrisonXi (https://github.com/HarrisonXi):
+	Fixed some logic errors in the Scheduler and Timer
+
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
 
