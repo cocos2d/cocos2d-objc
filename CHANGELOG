@@ -38,6 +38,8 @@ version 2.1-beta3  xx-Nov-2012
 		unscheduleAllSelectors -> unscheduleAll (since it also unschedules blocks)
 		unscheduleAllSelectorsForTarget -> unscheduleAllForTarget (since it also unschedules blocks)
 		Old methods can be called, but are deprecated.
+		isTargetPaused: fixed logic error
+		Timer: fixed logic error in non repeat-forever timers
 . [FIX] Templates: Autoration can be overriden in runtime on iOS 6
 		Fixed some grammar errors
 . [FIX] TextureAtlas: Uses Orphaning + glMapBuffer. Performance improve when rendering serveral particles

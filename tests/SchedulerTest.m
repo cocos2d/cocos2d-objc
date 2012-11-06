@@ -287,10 +287,13 @@ Class restartTest()
     NSLog(@"Pausing");
 	CCDirector *director = [CCDirector sharedDirector];
     self.pausedTargets = [director.scheduler pauseAllTargets];
-	if([self.pausedTargets count] > 2)
+	
+	NSUInteger c = [self.pausedTargets count];
+	
+	if(c > 2)
 	{
 		// should have only 2 items: CCActionManager, self
-		NSLog(@"Error: pausedTargets should have only 2 items");
+		NSLog(@"Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
 	}
 }
 

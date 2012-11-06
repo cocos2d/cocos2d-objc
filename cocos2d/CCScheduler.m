@@ -767,61 +767,56 @@ typedef struct _hashSelectorEntry
 	tHashTimerEntry *element = NULL;
 	HASH_FIND_INT(hashForTimers, &target, element);
 	if( element )
-    {
 		return element->paused;
-    }
 	
 	// We should check update selectors if target does not have custom selectors
 	tHashUpdateEntry * elementUpdate = NULL;
 	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
 	if ( elementUpdate )
-	{
 		return elementUpdate->entry->paused;
-	}
 	
-    return NO;  // should never get here
-
+	return NO;  // should never get here
 }
 
 -(NSSet*) pauseAllTargets
 {
-    return [self pauseAllTargetsWithMinPriority:kCCPrioritySystem];
+	return [self pauseAllTargetsWithMinPriority:kCCPrioritySystem];
 }
 
 -(NSSet*) pauseAllTargetsWithMinPriority:(NSInteger)minPriority
 {
-    NSMutableSet* idsWithSelectors = [NSMutableSet setWithCapacity:50];
-    
-    // Custom Selectors
-    for(tHashTimerEntry *element=hashForTimers; element != NULL; element=element->hh.next) {
-        element->paused = YES;
-        [idsWithSelectors addObject:element->target];
-    }
-    
-    // Updates selectors
-    tListEntry *entry, *tmp;
-    if(minPriority < 0) {
-        DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-            if(entry->priority >= minPriority) {
-                entry->paused = YES;
+	NSMutableSet* idsWithSelectors = [NSMutableSet setWithCapacity:50];
+
+	// Custom Selectors
+	for(tHashTimerEntry *element=hashForTimers; element != NULL; element=element->hh.next) {
+		element->paused = YES;
+		[idsWithSelectors addObject:element->target];
+	}
+
+	// Updates selectors
+	tListEntry *entry, *tmp;
+	if(minPriority < 0) {
+		DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
+			if(entry->priority >= minPriority) {
+				entry->paused = YES;
 				[idsWithSelectors addObject:entry->target];
-            }
-        }
-    }
-    if(minPriority <= 0) {
-        DL_FOREACH_SAFE( updates0, entry, tmp ) {
-            entry->paused = YES;
+			}
+		}
+	}
+	if(minPriority <= 0) {
+		DL_FOREACH_SAFE( updates0, entry, tmp ) {
+			entry->paused = YES;
 			[idsWithSelectors addObject:entry->target];
-        }
-    }
-    DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-        if(entry->priority >= minPriority) {
-            entry->paused = YES;
+		}
+	}
+	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
+		if(entry->priority >= minPriority) {
+			entry->paused = YES;
 			[idsWithSelectors addObject:entry->target];
-        }
-    }
-    
-    return idsWithSelectors;
+		}
+	}
+
+	return idsWithSelectors;
 }
 
 -(void) resumeTargets:(NSSet *)targetsToResume
