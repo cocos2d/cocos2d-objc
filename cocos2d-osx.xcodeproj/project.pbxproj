@@ -345,6 +345,58 @@
 		A014BE0F15D0DCB7009479BB /* test_image_rgba5551_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A014BE0115D0DCB7009479BB /* test_image_rgba5551_v3.pvr */; };
 		A014BE1015D0DCB7009479BB /* test_image_rgba8888_v3.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A014BE0215D0DCB7009479BB /* test_image_rgba8888_v3.pvr */; };
 		A014BE1115D0DCB7009479BB /* test_image-bad_encoding.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A014BE0315D0DCB7009479BB /* test_image-bad_encoding.pvr */; };
+		A01665CE1648B37D00EE63F2 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = A016657F1648B37C00EE63F2 /* .gitignore */; };
+		A01665D81648B37D00EE63F2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A016658A1648B37D00EE63F2 /* README.md */; };
+		A01665D91648B37D00EE63F2 /* Bomb.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A016658C1648B37D00EE63F2 /* Bomb.ccb */; };
+		A01665DA1648B37D00EE63F2 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A016658D1648B37D00EE63F2 /* Bomb.ccbi */; };
+		A01665DB1648B37D00EE63F2 /* ccbDefaultImages-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A016658F1648B37D00EE63F2 /* ccbDefaultImages-hd.plist */; };
+		A01665DC1648B37D00EE63F2 /* ccbDefaultImages-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665901648B37D00EE63F2 /* ccbDefaultImages-hd.png */; };
+		A01665DD1648B37D00EE63F2 /* ccbDefaultImages-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = A01665911648B37D00EE63F2 /* ccbDefaultImages-ipad.plist */; };
+		A01665DE1648B37D00EE63F2 /* ccbDefaultImages-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A01665921648B37D00EE63F2 /* ccbDefaultImages-ipadhd.plist */; };
+		A01665DF1648B37D00EE63F2 /* ccbDefaultImages.plist in Resources */ = {isa = PBXBuildFile; fileRef = A01665931648B37D00EE63F2 /* ccbDefaultImages.plist */; };
+		A01665E01648B37D00EE63F2 /* ccbDefaultImages.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665941648B37D00EE63F2 /* ccbDefaultImages.png */; };
+		A01665E11648B37D00EE63F2 /* ccbParticleFire.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665951648B37D00EE63F2 /* ccbParticleFire.png */; };
+		A01665E21648B37D00EE63F2 /* ccbParticleSmoke.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665961648B37D00EE63F2 /* ccbParticleSmoke.png */; };
+		A01665E31648B37D00EE63F2 /* ccbParticleSnow.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665971648B37D00EE63F2 /* ccbParticleSnow.png */; };
+		A01665E41648B37D00EE63F2 /* ccbParticleStars.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665981648B37D00EE63F2 /* ccbParticleStars.png */; };
+		A01665E51648B37D00EE63F2 /* cloud-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665991648B37D00EE63F2 /* cloud-hd.png */; };
+		A01665E61648B37D00EE63F2 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A016659A1648B37D00EE63F2 /* cloud.png */; };
+		A01665E71648B37D00EE63F2 /* CocosDragonJS.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = A016659B1648B37D00EE63F2 /* CocosDragonJS.ccbproj */; };
+		A01665E81648B37D00EE63F2 /* CocosDragonJS.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = A016659C1648B37D00EE63F2 /* CocosDragonJS.ccbresourcelog */; };
+		A01665E91648B37D00EE63F2 /* Coin.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A016659D1648B37D00EE63F2 /* Coin.ccb */; };
+		A01665EA1648B37D00EE63F2 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A016659E1648B37D00EE63F2 /* Coin.ccbi */; };
+		A01665EB1648B37D00EE63F2 /* Dragon.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A016659F1648B37D00EE63F2 /* Dragon.ccb */; };
+		A01665EC1648B37D00EE63F2 /* Dragon.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665A01648B37D00EE63F2 /* Dragon.ccbi */; };
+		A01665ED1648B37D00EE63F2 /* EndCoin.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665A11648B37D00EE63F2 /* EndCoin.ccb */; };
+		A01665EE1648B37D00EE63F2 /* EndCoin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665A21648B37D00EE63F2 /* EndCoin.ccbi */; };
+		A01665EF1648B37D00EE63F2 /* Explosion.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665A31648B37D00EE63F2 /* Explosion.ccb */; };
+		A01665F01648B37D00EE63F2 /* Explosion.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665A41648B37D00EE63F2 /* Explosion.ccbi */; };
+		A01665F11648B37D00EE63F2 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665A51648B37D00EE63F2 /* fps_images-hd.png */; };
+		A01665F21648B37D00EE63F2 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665A61648B37D00EE63F2 /* fps_images-ipadhd.png */; };
+		A01665F31648B37D00EE63F2 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665A71648B37D00EE63F2 /* fps_images.png */; };
+		A01665F41648B37D00EE63F2 /* gameobjects-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A01665A81648B37D00EE63F2 /* gameobjects-hd.plist */; };
+		A01665F51648B37D00EE63F2 /* gameobjects-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665A91648B37D00EE63F2 /* gameobjects-hd.png */; };
+		A01665F61648B37D00EE63F2 /* gameobjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = A01665AA1648B37D00EE63F2 /* gameobjects.plist */; };
+		A01665F71648B37D00EE63F2 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665AB1648B37D00EE63F2 /* gameobjects.png */; };
+		A01665F81648B37D00EE63F2 /* GameScene.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665AC1648B37D00EE63F2 /* GameScene.ccb */; };
+		A01665F91648B37D00EE63F2 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665AD1648B37D00EE63F2 /* GameScene.ccbi */; };
+		A01665FA1648B37D00EE63F2 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665AE1648B37D00EE63F2 /* grossini_dance_atlas.png */; };
+		A01665FB1648B37D00EE63F2 /* HelloCocosBuilder.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665AF1648B37D00EE63F2 /* HelloCocosBuilder.ccb */; };
+		A01665FC1648B37D00EE63F2 /* HelloCocosBuilder.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665B01648B37D00EE63F2 /* HelloCocosBuilder.ccbi */; };
+		A01666091648B37D00EE63F2 /* Level.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665BE1648B37D00EE63F2 /* Level.ccb */; };
+		A016660A1648B37D00EE63F2 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665BF1648B37D00EE63F2 /* Level.ccbi */; };
+		A016660B1648B37D00EE63F2 /* logo-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665C01648B37D00EE63F2 /* logo-hd.png */; };
+		A016660C1648B37D00EE63F2 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665C11648B37D00EE63F2 /* logo.png */; };
+		A016660D1648B37D00EE63F2 /* MainMenuScene.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A01665C21648B37D00EE63F2 /* MainMenuScene.ccb */; };
+		A016660E1648B37D00EE63F2 /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A01665C31648B37D00EE63F2 /* MainMenuScene.ccbi */; };
+		A016660F1648B37D00EE63F2 /* CocosDragon-Mac.xib in Resources */ = {isa = PBXBuildFile; fileRef = A01665C51648B37D00EE63F2 /* CocosDragon-Mac.xib */; };
+		A01666101648B37D00EE63F2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A01665C71648B37D00EE63F2 /* InfoPlist.strings */; };
+		A01666121648B37D00EE63F2 /* play-button-down-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665CA1648B37D00EE63F2 /* play-button-down-hd.png */; };
+		A01666131648B37D00EE63F2 /* play-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665CB1648B37D00EE63F2 /* play-button-down.png */; };
+		A01666141648B37D00EE63F2 /* play-button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665CC1648B37D00EE63F2 /* play-button-hd.png */; };
+		A01666151648B37D00EE63F2 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = A01665CD1648B37D00EE63F2 /* play-button.png */; };
+		A01666171648B38E00EE63F2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A01666161648B38E00EE63F2 /* js */; };
+		A016662A1648B54C00EE63F2 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = A01666291648B54C00EE63F2 /* icon.icns */; };
 		A02F6E421591585E000975D7 /* libchipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBA8A614A51386002DF395 /* libchipmunk.a */; };
 		A031B8E615D9CF8E00E1986C /* car_smoke.plist in Resources */ = {isa = PBXBuildFile; fileRef = A031B88E15D9CF8E00E1986C /* car_smoke.plist */; };
 		A031B8E715D9CF8E00E1986C /* Abadi40-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A031B89015D9CF8E00E1986C /* Abadi40-hd.fnt */; };
@@ -2431,74 +2483,6 @@
 		A09DB74C1640AA7600AFCA61 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A09DB74D1640AA7600AFCA61 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A09DB74E1640AA7600AFCA61 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03E20D815F9617100E58C9D /* libjs_static.a */; };
-		A09DB79A1640AB5C00AFCA61 /* Bomb.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7561640AB5C00AFCA61 /* Bomb.ccb */; };
-		A09DB79B1640AB5C00AFCA61 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7571640AB5C00AFCA61 /* Bomb.ccbi */; };
-		A09DB79D1640AB5C00AFCA61 /* ccbDefaultImages-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75A1640AB5C00AFCA61 /* ccbDefaultImages-hd.plist */; };
-		A09DB79E1640AB5C00AFCA61 /* ccbDefaultImages-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75B1640AB5C00AFCA61 /* ccbDefaultImages-hd.png */; };
-		A09DB79F1640AB5C00AFCA61 /* ccbDefaultImages-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75C1640AB5C00AFCA61 /* ccbDefaultImages-ipad.plist */; };
-		A09DB7A01640AB5C00AFCA61 /* ccbDefaultImages-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75D1640AB5C00AFCA61 /* ccbDefaultImages-ipadhd.plist */; };
-		A09DB7A11640AB5C00AFCA61 /* ccbDefaultImages.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75E1640AB5C00AFCA61 /* ccbDefaultImages.plist */; };
-		A09DB7A21640AB5C00AFCA61 /* ccbDefaultImages.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB75F1640AB5C00AFCA61 /* ccbDefaultImages.png */; };
-		A09DB7A31640AB5C00AFCA61 /* ccbParticleFire.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7601640AB5C00AFCA61 /* ccbParticleFire.png */; };
-		A09DB7A41640AB5C00AFCA61 /* ccbParticleSmoke.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7611640AB5C00AFCA61 /* ccbParticleSmoke.png */; };
-		A09DB7A51640AB5C00AFCA61 /* ccbParticleSnow.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7621640AB5C00AFCA61 /* ccbParticleSnow.png */; };
-		A09DB7A61640AB5C00AFCA61 /* ccbParticleStars.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7631640AB5C00AFCA61 /* ccbParticleStars.png */; };
-		A09DB7A71640AB5C00AFCA61 /* cloud-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7641640AB5C00AFCA61 /* cloud-hd.png */; };
-		A09DB7A81640AB5C00AFCA61 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7651640AB5C00AFCA61 /* cloud.png */; };
-		A09DB7A91640AB5C00AFCA61 /* CocosDragonJS.ccbproj in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7661640AB5C00AFCA61 /* CocosDragonJS.ccbproj */; };
-		A09DB7AA1640AB5C00AFCA61 /* CocosDragonJS.ccbresourcelog in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7671640AB5C00AFCA61 /* CocosDragonJS.ccbresourcelog */; };
-		A09DB7AB1640AB5C00AFCA61 /* Coin.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7681640AB5C00AFCA61 /* Coin.ccb */; };
-		A09DB7AC1640AB5C00AFCA61 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7691640AB5C00AFCA61 /* Coin.ccbi */; };
-		A09DB7AE1640AB5C00AFCA61 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB76B1640AB5C00AFCA61 /* Default-568h@2x.png */; };
-		A09DB7AF1640AB5C00AFCA61 /* Default-Landscape~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB76C1640AB5C00AFCA61 /* Default-Landscape~ipad.png */; };
-		A09DB7B01640AB5C00AFCA61 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB76D1640AB5C00AFCA61 /* Default.png */; };
-		A09DB7B11640AB5C00AFCA61 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB76E1640AB5C00AFCA61 /* Default@2x.png */; };
-		A09DB7B21640AB5C00AFCA61 /* Dragon.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB76F1640AB5C00AFCA61 /* Dragon.ccb */; };
-		A09DB7B31640AB5C00AFCA61 /* Dragon.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7701640AB5C00AFCA61 /* Dragon.ccbi */; };
-		A09DB7B51640AB5C00AFCA61 /* EndCoin.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7721640AB5C00AFCA61 /* EndCoin.ccb */; };
-		A09DB7B61640AB5C00AFCA61 /* EndCoin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7731640AB5C00AFCA61 /* EndCoin.ccbi */; };
-		A09DB7B81640AB5C00AFCA61 /* Explosion.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7751640AB5C00AFCA61 /* Explosion.ccb */; };
-		A09DB7B91640AB5C00AFCA61 /* Explosion.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7761640AB5C00AFCA61 /* Explosion.ccbi */; };
-		A09DB7BB1640AB5C00AFCA61 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7781640AB5C00AFCA61 /* fps_images-hd.png */; };
-		A09DB7BC1640AB5C00AFCA61 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7791640AB5C00AFCA61 /* fps_images-ipadhd.png */; };
-		A09DB7BD1640AB5C00AFCA61 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77A1640AB5C00AFCA61 /* fps_images.png */; };
-		A09DB7BE1640AB5C00AFCA61 /* gameobjects-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77B1640AB5C00AFCA61 /* gameobjects-hd.plist */; };
-		A09DB7BF1640AB5C00AFCA61 /* gameobjects-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77C1640AB5C00AFCA61 /* gameobjects-hd.png */; };
-		A09DB7C01640AB5C00AFCA61 /* gameobjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77D1640AB5C00AFCA61 /* gameobjects.plist */; };
-		A09DB7C11640AB5C00AFCA61 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77E1640AB5C00AFCA61 /* gameobjects.png */; };
-		A09DB7C21640AB5C00AFCA61 /* GameScene.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB77F1640AB5C00AFCA61 /* GameScene.ccb */; };
-		A09DB7C31640AB5C00AFCA61 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7801640AB5C00AFCA61 /* GameScene.ccbi */; };
-		A09DB7C51640AB5C00AFCA61 /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7821640AB5C00AFCA61 /* grossini_dance_atlas.png */; };
-		A09DB7C61640AB5C00AFCA61 /* HelloCocosBuilder.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7831640AB5C00AFCA61 /* HelloCocosBuilder.ccb */; };
-		A09DB7C71640AB5C00AFCA61 /* HelloCocosBuilder.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7841640AB5C00AFCA61 /* HelloCocosBuilder.ccbi */; };
-		A09DB7C81640AB5C00AFCA61 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7851640AB5C00AFCA61 /* Icon-72.png */; };
-		A09DB7C91640AB5C00AFCA61 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7861640AB5C00AFCA61 /* Icon-Small-50.png */; };
-		A09DB7CA1640AB5C00AFCA61 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7871640AB5C00AFCA61 /* Icon-Small.png */; };
-		A09DB7CB1640AB5C00AFCA61 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7881640AB5C00AFCA61 /* Icon-Small@2x.png */; };
-		A09DB7CC1640AB5C00AFCA61 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7891640AB5C00AFCA61 /* Icon.png */; };
-		A09DB7CD1640AB5C00AFCA61 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB78A1640AB5C00AFCA61 /* Icon@2x.png */; };
-		A09DB7CF1640AB5C00AFCA61 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A09DB78C1640AB5C00AFCA61 /* iTunesArtwork */; };
-		A09DB7D01640AB5C00AFCA61 /* Level.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB78D1640AB5C00AFCA61 /* Level.ccb */; };
-		A09DB7D11640AB5C00AFCA61 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB78E1640AB5C00AFCA61 /* Level.ccbi */; };
-		A09DB7D31640AB5C00AFCA61 /* logo-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7901640AB5C00AFCA61 /* logo-hd.png */; };
-		A09DB7D41640AB5C00AFCA61 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7911640AB5C00AFCA61 /* logo.png */; };
-		A09DB7D61640AB5C00AFCA61 /* MainMenuScene.ccb in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7931640AB5C00AFCA61 /* MainMenuScene.ccb */; };
-		A09DB7D71640AB5C00AFCA61 /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7941640AB5C00AFCA61 /* MainMenuScene.ccbi */; };
-		A09DB7D91640AB5C00AFCA61 /* play-button-down-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7961640AB5C00AFCA61 /* play-button-down-hd.png */; };
-		A09DB7DA1640AB5C00AFCA61 /* play-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7971640AB5C00AFCA61 /* play-button-down.png */; };
-		A09DB7DB1640AB5C00AFCA61 /* play-button-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7981640AB5C00AFCA61 /* play-button-hd.png */; };
-		A09DB7DC1640AB5C00AFCA61 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7991640AB5C00AFCA61 /* play-button.png */; };
-		A09DB7E21640ADFC00AFCA61 /* CocosDragon-Mac.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7DE1640ADFC00AFCA61 /* CocosDragon-Mac.xib */; };
-		A09DB7E31640ADFC00AFCA61 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E01640ADFC00AFCA61 /* InfoPlist.strings */; };
-		A09DB7EE164191B300AFCA61 /* Bomb.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E5164191B300AFCA61 /* Bomb.js */; };
-		A09DB7EF164191B300AFCA61 /* Coin.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E6164191B300AFCA61 /* Coin.js */; };
-		A09DB7F0164191B300AFCA61 /* Dragon.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E7164191B300AFCA61 /* Dragon.js */; };
-		A09DB7F1164191B300AFCA61 /* EndCoin.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E8164191B300AFCA61 /* EndCoin.js */; };
-		A09DB7F2164191B300AFCA61 /* Explosion.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7E9164191B300AFCA61 /* Explosion.js */; };
-		A09DB7F3164191B300AFCA61 /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7EA164191B300AFCA61 /* GameScene.js */; };
-		A09DB7F4164191B300AFCA61 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7EB164191B300AFCA61 /* Level.js */; };
-		A09DB7F5164191B300AFCA61 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7EC164191B300AFCA61 /* main.js */; };
-		A09DB7F6164191B300AFCA61 /* MainMenuScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A09DB7ED164191B300AFCA61 /* MainMenuScene.js */; };
 		A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */; };
 		A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
@@ -6905,6 +6889,59 @@
 		A014BE0115D0DCB7009479BB /* test_image_rgba5551_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba5551_v3.pvr; sourceTree = "<group>"; };
 		A014BE0215D0DCB7009479BB /* test_image_rgba8888_v3.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba8888_v3.pvr; sourceTree = "<group>"; };
 		A014BE0315D0DCB7009479BB /* test_image-bad_encoding.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "test_image-bad_encoding.pvr"; sourceTree = "<group>"; };
+		A016657F1648B37C00EE63F2 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		A016658A1648B37D00EE63F2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		A016658C1648B37D00EE63F2 /* Bomb.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Bomb.ccb; sourceTree = "<group>"; };
+		A016658D1648B37D00EE63F2 /* Bomb.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bomb.ccbi; sourceTree = "<group>"; };
+		A016658F1648B37D00EE63F2 /* ccbDefaultImages-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-hd.plist"; sourceTree = "<group>"; };
+		A01665901648B37D00EE63F2 /* ccbDefaultImages-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ccbDefaultImages-hd.png"; sourceTree = "<group>"; };
+		A01665911648B37D00EE63F2 /* ccbDefaultImages-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-ipad.plist"; sourceTree = "<group>"; };
+		A01665921648B37D00EE63F2 /* ccbDefaultImages-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-ipadhd.plist"; sourceTree = "<group>"; };
+		A01665931648B37D00EE63F2 /* ccbDefaultImages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ccbDefaultImages.plist; sourceTree = "<group>"; };
+		A01665941648B37D00EE63F2 /* ccbDefaultImages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbDefaultImages.png; sourceTree = "<group>"; };
+		A01665951648B37D00EE63F2 /* ccbParticleFire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleFire.png; sourceTree = "<group>"; };
+		A01665961648B37D00EE63F2 /* ccbParticleSmoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleSmoke.png; sourceTree = "<group>"; };
+		A01665971648B37D00EE63F2 /* ccbParticleSnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleSnow.png; sourceTree = "<group>"; };
+		A01665981648B37D00EE63F2 /* ccbParticleStars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleStars.png; sourceTree = "<group>"; };
+		A01665991648B37D00EE63F2 /* cloud-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cloud-hd.png"; sourceTree = "<group>"; };
+		A016659A1648B37D00EE63F2 /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud.png; sourceTree = "<group>"; };
+		A016659B1648B37D00EE63F2 /* CocosDragonJS.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosDragonJS.ccbproj; sourceTree = "<group>"; };
+		A016659C1648B37D00EE63F2 /* CocosDragonJS.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocosDragonJS.ccbresourcelog; sourceTree = "<group>"; };
+		A016659D1648B37D00EE63F2 /* Coin.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Coin.ccb; sourceTree = "<group>"; };
+		A016659E1648B37D00EE63F2 /* Coin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Coin.ccbi; sourceTree = "<group>"; };
+		A016659F1648B37D00EE63F2 /* Dragon.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dragon.ccb; sourceTree = "<group>"; };
+		A01665A01648B37D00EE63F2 /* Dragon.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dragon.ccbi; sourceTree = "<group>"; };
+		A01665A11648B37D00EE63F2 /* EndCoin.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EndCoin.ccb; sourceTree = "<group>"; };
+		A01665A21648B37D00EE63F2 /* EndCoin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = EndCoin.ccbi; sourceTree = "<group>"; };
+		A01665A31648B37D00EE63F2 /* Explosion.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Explosion.ccb; sourceTree = "<group>"; };
+		A01665A41648B37D00EE63F2 /* Explosion.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Explosion.ccbi; sourceTree = "<group>"; };
+		A01665A51648B37D00EE63F2 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
+		A01665A61648B37D00EE63F2 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
+		A01665A71648B37D00EE63F2 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		A01665A81648B37D00EE63F2 /* gameobjects-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "gameobjects-hd.plist"; sourceTree = "<group>"; };
+		A01665A91648B37D00EE63F2 /* gameobjects-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameobjects-hd.png"; sourceTree = "<group>"; };
+		A01665AA1648B37D00EE63F2 /* gameobjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gameobjects.plist; sourceTree = "<group>"; };
+		A01665AB1648B37D00EE63F2 /* gameobjects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameobjects.png; sourceTree = "<group>"; };
+		A01665AC1648B37D00EE63F2 /* GameScene.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GameScene.ccb; sourceTree = "<group>"; };
+		A01665AD1648B37D00EE63F2 /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameScene.ccbi; sourceTree = "<group>"; };
+		A01665AE1648B37D00EE63F2 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
+		A01665AF1648B37D00EE63F2 /* HelloCocosBuilder.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = HelloCocosBuilder.ccb; sourceTree = "<group>"; };
+		A01665B01648B37D00EE63F2 /* HelloCocosBuilder.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelloCocosBuilder.ccbi; sourceTree = "<group>"; };
+		A01665BE1648B37D00EE63F2 /* Level.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Level.ccb; sourceTree = "<group>"; };
+		A01665BF1648B37D00EE63F2 /* Level.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ccbi; sourceTree = "<group>"; };
+		A01665C01648B37D00EE63F2 /* logo-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd.png"; sourceTree = "<group>"; };
+		A01665C11648B37D00EE63F2 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		A01665C21648B37D00EE63F2 /* MainMenuScene.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainMenuScene.ccb; sourceTree = "<group>"; };
+		A01665C31648B37D00EE63F2 /* MainMenuScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = MainMenuScene.ccbi; sourceTree = "<group>"; };
+		A01665C61648B37D00EE63F2 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "English.lproj/CocosDragon-Mac.xib"; sourceTree = "<group>"; };
+		A01665C81648B37D00EE63F2 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A01665C91648B37D00EE63F2 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A01665CA1648B37D00EE63F2 /* play-button-down-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-down-hd.png"; sourceTree = "<group>"; };
+		A01665CB1648B37D00EE63F2 /* play-button-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-down.png"; sourceTree = "<group>"; };
+		A01665CC1648B37D00EE63F2 /* play-button-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-hd.png"; sourceTree = "<group>"; };
+		A01665CD1648B37D00EE63F2 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
+		A01666161648B38E00EE63F2 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		A01666291648B54C00EE63F2 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
 		A031B88E15D9CF8E00E1986C /* car_smoke.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = car_smoke.plist; sourceTree = "<group>"; };
 		A031B89015D9CF8E00E1986C /* Abadi40-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Abadi40-hd.fnt"; sourceTree = "<group>"; };
 		A031B89115D9CF8E00E1986C /* Abadi40-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Abadi40-hd.png"; sourceTree = "<group>"; };
@@ -7363,75 +7400,6 @@
 		A098134B14B9E0C1004812AD /* white-512x512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "white-512x512.png"; sourceTree = "<group>"; };
 		A09C8D3E1566FB4100ADFDA9 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A09DB7521640AA7600AFCA61 /* JS CocosDragon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS CocosDragon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		A09DB7561640AB5C00AFCA61 /* Bomb.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Bomb.ccb; sourceTree = "<group>"; };
-		A09DB7571640AB5C00AFCA61 /* Bomb.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bomb.ccbi; sourceTree = "<group>"; };
-		A09DB75A1640AB5C00AFCA61 /* ccbDefaultImages-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-hd.plist"; sourceTree = "<group>"; };
-		A09DB75B1640AB5C00AFCA61 /* ccbDefaultImages-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "ccbDefaultImages-hd.png"; sourceTree = "<group>"; };
-		A09DB75C1640AB5C00AFCA61 /* ccbDefaultImages-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-ipad.plist"; sourceTree = "<group>"; };
-		A09DB75D1640AB5C00AFCA61 /* ccbDefaultImages-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ccbDefaultImages-ipadhd.plist"; sourceTree = "<group>"; };
-		A09DB75E1640AB5C00AFCA61 /* ccbDefaultImages.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ccbDefaultImages.plist; sourceTree = "<group>"; };
-		A09DB75F1640AB5C00AFCA61 /* ccbDefaultImages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbDefaultImages.png; sourceTree = "<group>"; };
-		A09DB7601640AB5C00AFCA61 /* ccbParticleFire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleFire.png; sourceTree = "<group>"; };
-		A09DB7611640AB5C00AFCA61 /* ccbParticleSmoke.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleSmoke.png; sourceTree = "<group>"; };
-		A09DB7621640AB5C00AFCA61 /* ccbParticleSnow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleSnow.png; sourceTree = "<group>"; };
-		A09DB7631640AB5C00AFCA61 /* ccbParticleStars.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ccbParticleStars.png; sourceTree = "<group>"; };
-		A09DB7641640AB5C00AFCA61 /* cloud-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cloud-hd.png"; sourceTree = "<group>"; };
-		A09DB7651640AB5C00AFCA61 /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud.png; sourceTree = "<group>"; };
-		A09DB7661640AB5C00AFCA61 /* CocosDragonJS.ccbproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = CocosDragonJS.ccbproj; sourceTree = "<group>"; };
-		A09DB7671640AB5C00AFCA61 /* CocosDragonJS.ccbresourcelog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CocosDragonJS.ccbresourcelog; sourceTree = "<group>"; };
-		A09DB7681640AB5C00AFCA61 /* Coin.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Coin.ccb; sourceTree = "<group>"; };
-		A09DB7691640AB5C00AFCA61 /* Coin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Coin.ccbi; sourceTree = "<group>"; };
-		A09DB76B1640AB5C00AFCA61 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		A09DB76C1640AB5C00AFCA61 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
-		A09DB76D1640AB5C00AFCA61 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		A09DB76E1640AB5C00AFCA61 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		A09DB76F1640AB5C00AFCA61 /* Dragon.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Dragon.ccb; sourceTree = "<group>"; };
-		A09DB7701640AB5C00AFCA61 /* Dragon.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Dragon.ccbi; sourceTree = "<group>"; };
-		A09DB7721640AB5C00AFCA61 /* EndCoin.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = EndCoin.ccb; sourceTree = "<group>"; };
-		A09DB7731640AB5C00AFCA61 /* EndCoin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = EndCoin.ccbi; sourceTree = "<group>"; };
-		A09DB7751640AB5C00AFCA61 /* Explosion.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Explosion.ccb; sourceTree = "<group>"; };
-		A09DB7761640AB5C00AFCA61 /* Explosion.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Explosion.ccbi; sourceTree = "<group>"; };
-		A09DB7781640AB5C00AFCA61 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
-		A09DB7791640AB5C00AFCA61 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
-		A09DB77A1640AB5C00AFCA61 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
-		A09DB77B1640AB5C00AFCA61 /* gameobjects-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "gameobjects-hd.plist"; sourceTree = "<group>"; };
-		A09DB77C1640AB5C00AFCA61 /* gameobjects-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gameobjects-hd.png"; sourceTree = "<group>"; };
-		A09DB77D1640AB5C00AFCA61 /* gameobjects.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = gameobjects.plist; sourceTree = "<group>"; };
-		A09DB77E1640AB5C00AFCA61 /* gameobjects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameobjects.png; sourceTree = "<group>"; };
-		A09DB77F1640AB5C00AFCA61 /* GameScene.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = GameScene.ccb; sourceTree = "<group>"; };
-		A09DB7801640AB5C00AFCA61 /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameScene.ccbi; sourceTree = "<group>"; };
-		A09DB7821640AB5C00AFCA61 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
-		A09DB7831640AB5C00AFCA61 /* HelloCocosBuilder.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = HelloCocosBuilder.ccb; sourceTree = "<group>"; };
-		A09DB7841640AB5C00AFCA61 /* HelloCocosBuilder.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = HelloCocosBuilder.ccbi; sourceTree = "<group>"; };
-		A09DB7851640AB5C00AFCA61 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		A09DB7861640AB5C00AFCA61 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		A09DB7871640AB5C00AFCA61 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		A09DB7881640AB5C00AFCA61 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		A09DB7891640AB5C00AFCA61 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		A09DB78A1640AB5C00AFCA61 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		A09DB78B1640AB5C00AFCA61 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A09DB78C1640AB5C00AFCA61 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		A09DB78D1640AB5C00AFCA61 /* Level.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Level.ccb; sourceTree = "<group>"; };
-		A09DB78E1640AB5C00AFCA61 /* Level.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ccbi; sourceTree = "<group>"; };
-		A09DB7901640AB5C00AFCA61 /* logo-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "logo-hd.png"; sourceTree = "<group>"; };
-		A09DB7911640AB5C00AFCA61 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
-		A09DB7931640AB5C00AFCA61 /* MainMenuScene.ccb */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = MainMenuScene.ccb; sourceTree = "<group>"; };
-		A09DB7941640AB5C00AFCA61 /* MainMenuScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = MainMenuScene.ccbi; sourceTree = "<group>"; };
-		A09DB7961640AB5C00AFCA61 /* play-button-down-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-down-hd.png"; sourceTree = "<group>"; };
-		A09DB7971640AB5C00AFCA61 /* play-button-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-down.png"; sourceTree = "<group>"; };
-		A09DB7981640AB5C00AFCA61 /* play-button-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button-hd.png"; sourceTree = "<group>"; };
-		A09DB7991640AB5C00AFCA61 /* play-button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "play-button.png"; sourceTree = "<group>"; };
-		A09DB7DF1640ADFC00AFCA61 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "CocosDragon-Mac.xib"; sourceTree = "<group>"; };
-		A09DB7E11640ADFC00AFCA61 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = InfoPlist.strings; sourceTree = "<group>"; };
-		A09DB7E5164191B300AFCA61 /* Bomb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Bomb.js; sourceTree = "<group>"; };
-		A09DB7E6164191B300AFCA61 /* Coin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Coin.js; sourceTree = "<group>"; };
-		A09DB7E7164191B300AFCA61 /* Dragon.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Dragon.js; sourceTree = "<group>"; };
-		A09DB7E8164191B300AFCA61 /* EndCoin.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = EndCoin.js; sourceTree = "<group>"; };
-		A09DB7E9164191B300AFCA61 /* Explosion.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Explosion.js; sourceTree = "<group>"; };
-		A09DB7EA164191B300AFCA61 /* GameScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameScene.js; sourceTree = "<group>"; };
-		A09DB7EB164191B300AFCA61 /* Level.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Level.js; sourceTree = "<group>"; };
-		A09DB7EC164191B300AFCA61 /* main.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.js; sourceTree = "<group>"; };
-		A09DB7ED164191B300AFCA61 /* MainMenuScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = MainMenuScene.js; sourceTree = "<group>"; };
 		A0A0EB881641C14A002E6481 /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
 		A0A0EB8A1641C14A002E6481 /* Barrier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Barrier.h; sourceTree = "<group>"; };
 		A0A0EB8B1641C14A002E6481 /* Heap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
@@ -8802,6 +8770,91 @@
 			name = Sounds;
 			sourceTree = "<group>";
 		};
+		A016657E1648B37C00EE63F2 /* CocosDragonJS */ = {
+			isa = PBXGroup;
+			children = (
+				A01666161648B38E00EE63F2 /* js */,
+				A016658B1648B37D00EE63F2 /* Resources */,
+				A016657F1648B37C00EE63F2 /* .gitignore */,
+				A016658A1648B37D00EE63F2 /* README.md */,
+			);
+			name = CocosDragonJS;
+			path = tests/CocosDragonJS;
+			sourceTree = "<group>";
+		};
+		A016658B1648B37D00EE63F2 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A01665C41648B37D00EE63F2 /* OSX */,
+				A016658E1648B37D00EE63F2 /* ccbResources */,
+				A016658C1648B37D00EE63F2 /* Bomb.ccb */,
+				A016658D1648B37D00EE63F2 /* Bomb.ccbi */,
+				A01665991648B37D00EE63F2 /* cloud-hd.png */,
+				A016659A1648B37D00EE63F2 /* cloud.png */,
+				A016659B1648B37D00EE63F2 /* CocosDragonJS.ccbproj */,
+				A016659C1648B37D00EE63F2 /* CocosDragonJS.ccbresourcelog */,
+				A016659D1648B37D00EE63F2 /* Coin.ccb */,
+				A016659E1648B37D00EE63F2 /* Coin.ccbi */,
+				A016659F1648B37D00EE63F2 /* Dragon.ccb */,
+				A01665A01648B37D00EE63F2 /* Dragon.ccbi */,
+				A01665A11648B37D00EE63F2 /* EndCoin.ccb */,
+				A01665A21648B37D00EE63F2 /* EndCoin.ccbi */,
+				A01665A31648B37D00EE63F2 /* Explosion.ccb */,
+				A01665A41648B37D00EE63F2 /* Explosion.ccbi */,
+				A01665A51648B37D00EE63F2 /* fps_images-hd.png */,
+				A01665A61648B37D00EE63F2 /* fps_images-ipadhd.png */,
+				A01665A71648B37D00EE63F2 /* fps_images.png */,
+				A01665A81648B37D00EE63F2 /* gameobjects-hd.plist */,
+				A01665A91648B37D00EE63F2 /* gameobjects-hd.png */,
+				A01665AA1648B37D00EE63F2 /* gameobjects.plist */,
+				A01665AB1648B37D00EE63F2 /* gameobjects.png */,
+				A01665AC1648B37D00EE63F2 /* GameScene.ccb */,
+				A01665AD1648B37D00EE63F2 /* GameScene.ccbi */,
+				A01665AE1648B37D00EE63F2 /* grossini_dance_atlas.png */,
+				A01665AF1648B37D00EE63F2 /* HelloCocosBuilder.ccb */,
+				A01665B01648B37D00EE63F2 /* HelloCocosBuilder.ccbi */,
+				A01665BE1648B37D00EE63F2 /* Level.ccb */,
+				A01665BF1648B37D00EE63F2 /* Level.ccbi */,
+				A01665C01648B37D00EE63F2 /* logo-hd.png */,
+				A01665C11648B37D00EE63F2 /* logo.png */,
+				A01665C21648B37D00EE63F2 /* MainMenuScene.ccb */,
+				A01665C31648B37D00EE63F2 /* MainMenuScene.ccbi */,
+				A01665CA1648B37D00EE63F2 /* play-button-down-hd.png */,
+				A01665CB1648B37D00EE63F2 /* play-button-down.png */,
+				A01665CC1648B37D00EE63F2 /* play-button-hd.png */,
+				A01665CD1648B37D00EE63F2 /* play-button.png */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A016658E1648B37D00EE63F2 /* ccbResources */ = {
+			isa = PBXGroup;
+			children = (
+				A016658F1648B37D00EE63F2 /* ccbDefaultImages-hd.plist */,
+				A01665901648B37D00EE63F2 /* ccbDefaultImages-hd.png */,
+				A01665911648B37D00EE63F2 /* ccbDefaultImages-ipad.plist */,
+				A01665921648B37D00EE63F2 /* ccbDefaultImages-ipadhd.plist */,
+				A01665931648B37D00EE63F2 /* ccbDefaultImages.plist */,
+				A01665941648B37D00EE63F2 /* ccbDefaultImages.png */,
+				A01665951648B37D00EE63F2 /* ccbParticleFire.png */,
+				A01665961648B37D00EE63F2 /* ccbParticleSmoke.png */,
+				A01665971648B37D00EE63F2 /* ccbParticleSnow.png */,
+				A01665981648B37D00EE63F2 /* ccbParticleStars.png */,
+			);
+			path = ccbResources;
+			sourceTree = "<group>";
+		};
+		A01665C41648B37D00EE63F2 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				A01666291648B54C00EE63F2 /* icon.icns */,
+				A01665C51648B37D00EE63F2 /* CocosDragon-Mac.xib */,
+				A01665C71648B37D00EE63F2 /* InfoPlist.strings */,
+				A01665C91648B37D00EE63F2 /* Info.plist */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
 		A031B88B15D9CF8E00E1986C /* JS Watermelon With Me */ = {
 			isa = PBXGroup;
 			children = (
@@ -9795,107 +9848,6 @@
 			path = config;
 			sourceTree = "<group>";
 		};
-		A09DB7551640AB5C00AFCA61 /* JS CocosDragon */ = {
-			isa = PBXGroup;
-			children = (
-				A09DB7E4164191B300AFCA61 /* js */,
-				A09DB7DD1640ADFC00AFCA61 /* English.lproj */,
-				A09DB7591640AB5C00AFCA61 /* ccbResources */,
-				A09DB7561640AB5C00AFCA61 /* Bomb.ccb */,
-				A09DB7571640AB5C00AFCA61 /* Bomb.ccbi */,
-				A09DB7641640AB5C00AFCA61 /* cloud-hd.png */,
-				A09DB7651640AB5C00AFCA61 /* cloud.png */,
-				A09DB7661640AB5C00AFCA61 /* CocosDragonJS.ccbproj */,
-				A09DB7671640AB5C00AFCA61 /* CocosDragonJS.ccbresourcelog */,
-				A09DB7681640AB5C00AFCA61 /* Coin.ccb */,
-				A09DB7691640AB5C00AFCA61 /* Coin.ccbi */,
-				A09DB76B1640AB5C00AFCA61 /* Default-568h@2x.png */,
-				A09DB76C1640AB5C00AFCA61 /* Default-Landscape~ipad.png */,
-				A09DB76D1640AB5C00AFCA61 /* Default.png */,
-				A09DB76E1640AB5C00AFCA61 /* Default@2x.png */,
-				A09DB76F1640AB5C00AFCA61 /* Dragon.ccb */,
-				A09DB7701640AB5C00AFCA61 /* Dragon.ccbi */,
-				A09DB7721640AB5C00AFCA61 /* EndCoin.ccb */,
-				A09DB7731640AB5C00AFCA61 /* EndCoin.ccbi */,
-				A09DB7751640AB5C00AFCA61 /* Explosion.ccb */,
-				A09DB7761640AB5C00AFCA61 /* Explosion.ccbi */,
-				A09DB7781640AB5C00AFCA61 /* fps_images-hd.png */,
-				A09DB7791640AB5C00AFCA61 /* fps_images-ipadhd.png */,
-				A09DB77A1640AB5C00AFCA61 /* fps_images.png */,
-				A09DB77B1640AB5C00AFCA61 /* gameobjects-hd.plist */,
-				A09DB77C1640AB5C00AFCA61 /* gameobjects-hd.png */,
-				A09DB77D1640AB5C00AFCA61 /* gameobjects.plist */,
-				A09DB77E1640AB5C00AFCA61 /* gameobjects.png */,
-				A09DB77F1640AB5C00AFCA61 /* GameScene.ccb */,
-				A09DB7801640AB5C00AFCA61 /* GameScene.ccbi */,
-				A09DB7821640AB5C00AFCA61 /* grossini_dance_atlas.png */,
-				A09DB7831640AB5C00AFCA61 /* HelloCocosBuilder.ccb */,
-				A09DB7841640AB5C00AFCA61 /* HelloCocosBuilder.ccbi */,
-				A09DB7851640AB5C00AFCA61 /* Icon-72.png */,
-				A09DB7861640AB5C00AFCA61 /* Icon-Small-50.png */,
-				A09DB7871640AB5C00AFCA61 /* Icon-Small.png */,
-				A09DB7881640AB5C00AFCA61 /* Icon-Small@2x.png */,
-				A09DB7891640AB5C00AFCA61 /* Icon.png */,
-				A09DB78A1640AB5C00AFCA61 /* Icon@2x.png */,
-				A09DB78B1640AB5C00AFCA61 /* Info.plist */,
-				A09DB78C1640AB5C00AFCA61 /* iTunesArtwork */,
-				A09DB78D1640AB5C00AFCA61 /* Level.ccb */,
-				A09DB78E1640AB5C00AFCA61 /* Level.ccbi */,
-				A09DB7901640AB5C00AFCA61 /* logo-hd.png */,
-				A09DB7911640AB5C00AFCA61 /* logo.png */,
-				A09DB7931640AB5C00AFCA61 /* MainMenuScene.ccb */,
-				A09DB7941640AB5C00AFCA61 /* MainMenuScene.ccbi */,
-				A09DB7961640AB5C00AFCA61 /* play-button-down-hd.png */,
-				A09DB7971640AB5C00AFCA61 /* play-button-down.png */,
-				A09DB7981640AB5C00AFCA61 /* play-button-hd.png */,
-				A09DB7991640AB5C00AFCA61 /* play-button.png */,
-			);
-			name = "JS CocosDragon";
-			path = tests/CocosDragonJS/CocosDragonJS/Resources;
-			sourceTree = "<group>";
-		};
-		A09DB7591640AB5C00AFCA61 /* ccbResources */ = {
-			isa = PBXGroup;
-			children = (
-				A09DB75A1640AB5C00AFCA61 /* ccbDefaultImages-hd.plist */,
-				A09DB75B1640AB5C00AFCA61 /* ccbDefaultImages-hd.png */,
-				A09DB75C1640AB5C00AFCA61 /* ccbDefaultImages-ipad.plist */,
-				A09DB75D1640AB5C00AFCA61 /* ccbDefaultImages-ipadhd.plist */,
-				A09DB75E1640AB5C00AFCA61 /* ccbDefaultImages.plist */,
-				A09DB75F1640AB5C00AFCA61 /* ccbDefaultImages.png */,
-				A09DB7601640AB5C00AFCA61 /* ccbParticleFire.png */,
-				A09DB7611640AB5C00AFCA61 /* ccbParticleSmoke.png */,
-				A09DB7621640AB5C00AFCA61 /* ccbParticleSnow.png */,
-				A09DB7631640AB5C00AFCA61 /* ccbParticleStars.png */,
-			);
-			path = ccbResources;
-			sourceTree = "<group>";
-		};
-		A09DB7DD1640ADFC00AFCA61 /* English.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				A09DB7DE1640ADFC00AFCA61 /* CocosDragon-Mac.xib */,
-				A09DB7E01640ADFC00AFCA61 /* InfoPlist.strings */,
-			);
-			path = English.lproj;
-			sourceTree = "<group>";
-		};
-		A09DB7E4164191B300AFCA61 /* js */ = {
-			isa = PBXGroup;
-			children = (
-				A09DB7E5164191B300AFCA61 /* Bomb.js */,
-				A09DB7E6164191B300AFCA61 /* Coin.js */,
-				A09DB7E7164191B300AFCA61 /* Dragon.js */,
-				A09DB7E8164191B300AFCA61 /* EndCoin.js */,
-				A09DB7E9164191B300AFCA61 /* Explosion.js */,
-				A09DB7EA164191B300AFCA61 /* GameScene.js */,
-				A09DB7EB164191B300AFCA61 /* Level.js */,
-				A09DB7EC164191B300AFCA61 /* main.js */,
-				A09DB7ED164191B300AFCA61 /* MainMenuScene.js */,
-			);
-			path = js;
-			sourceTree = "<group>";
-		};
 		A0A0EB861641C14A002E6481 /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -10212,10 +10164,10 @@
 		E076E4531225C53300DE0DA2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				A016657E1648B37C00EE63F2 /* CocosDragonJS */,
 				A03F841B161B563000FE54C8 /* cocos2d-html5-tests */,
 				A031B93B15D9CFD800E1986C /* JS Tests */,
 				A031B88B15D9CF8E00E1986C /* JS Watermelon With Me */,
-				A09DB7551640AB5C00AFCA61 /* JS CocosDragon */,
 				A08F3DE315D6E65300B4C422 /* JS Moon Warriors */,
 				A044439514A6027B00E62742 /* Box2dTest Helper */,
 				A04443E014A91DB600E62742 /* BaseAppController.h */,
@@ -13828,74 +13780,58 @@
 				A09DB6CB1640AA7600AFCA61 /* jsb_constants_cocos2d.js in Resources */,
 				A09DB6CC1640AA7600AFCA61 /* jsb_constants_cocosbuilder.js in Resources */,
 				A09DB6CD1640AA7600AFCA61 /* jsb_constants_gl.js in Resources */,
-				A09DB7EE164191B300AFCA61 /* Bomb.js in Resources */,
-				A09DB7EF164191B300AFCA61 /* Coin.js in Resources */,
-				A09DB7F0164191B300AFCA61 /* Dragon.js in Resources */,
-				A09DB7F1164191B300AFCA61 /* EndCoin.js in Resources */,
-				A09DB7F2164191B300AFCA61 /* Explosion.js in Resources */,
-				A09DB7F3164191B300AFCA61 /* GameScene.js in Resources */,
-				A09DB7F4164191B300AFCA61 /* Level.js in Resources */,
-				A09DB7F5164191B300AFCA61 /* main.js in Resources */,
-				A09DB7F6164191B300AFCA61 /* MainMenuScene.js in Resources */,
-				A09DB79A1640AB5C00AFCA61 /* Bomb.ccb in Resources */,
-				A09DB79B1640AB5C00AFCA61 /* Bomb.ccbi in Resources */,
-				A09DB79D1640AB5C00AFCA61 /* ccbDefaultImages-hd.plist in Resources */,
-				A09DB79E1640AB5C00AFCA61 /* ccbDefaultImages-hd.png in Resources */,
-				A09DB79F1640AB5C00AFCA61 /* ccbDefaultImages-ipad.plist in Resources */,
-				A09DB7A01640AB5C00AFCA61 /* ccbDefaultImages-ipadhd.plist in Resources */,
-				A09DB7A11640AB5C00AFCA61 /* ccbDefaultImages.plist in Resources */,
-				A09DB7A21640AB5C00AFCA61 /* ccbDefaultImages.png in Resources */,
-				A09DB7A31640AB5C00AFCA61 /* ccbParticleFire.png in Resources */,
-				A09DB7A41640AB5C00AFCA61 /* ccbParticleSmoke.png in Resources */,
-				A09DB7A51640AB5C00AFCA61 /* ccbParticleSnow.png in Resources */,
-				A09DB7A61640AB5C00AFCA61 /* ccbParticleStars.png in Resources */,
-				A09DB7A71640AB5C00AFCA61 /* cloud-hd.png in Resources */,
-				A09DB7A81640AB5C00AFCA61 /* cloud.png in Resources */,
-				A09DB7A91640AB5C00AFCA61 /* CocosDragonJS.ccbproj in Resources */,
-				A09DB7AA1640AB5C00AFCA61 /* CocosDragonJS.ccbresourcelog in Resources */,
-				A09DB7AB1640AB5C00AFCA61 /* Coin.ccb in Resources */,
-				A09DB7AC1640AB5C00AFCA61 /* Coin.ccbi in Resources */,
-				A09DB7AE1640AB5C00AFCA61 /* Default-568h@2x.png in Resources */,
-				A09DB7AF1640AB5C00AFCA61 /* Default-Landscape~ipad.png in Resources */,
-				A09DB7B01640AB5C00AFCA61 /* Default.png in Resources */,
-				A09DB7B11640AB5C00AFCA61 /* Default@2x.png in Resources */,
-				A09DB7B21640AB5C00AFCA61 /* Dragon.ccb in Resources */,
-				A09DB7B31640AB5C00AFCA61 /* Dragon.ccbi in Resources */,
-				A09DB7B51640AB5C00AFCA61 /* EndCoin.ccb in Resources */,
-				A09DB7B61640AB5C00AFCA61 /* EndCoin.ccbi in Resources */,
-				A09DB7B81640AB5C00AFCA61 /* Explosion.ccb in Resources */,
-				A09DB7B91640AB5C00AFCA61 /* Explosion.ccbi in Resources */,
-				A09DB7BB1640AB5C00AFCA61 /* fps_images-hd.png in Resources */,
-				A09DB7BC1640AB5C00AFCA61 /* fps_images-ipadhd.png in Resources */,
-				A09DB7BD1640AB5C00AFCA61 /* fps_images.png in Resources */,
-				A09DB7BE1640AB5C00AFCA61 /* gameobjects-hd.plist in Resources */,
-				A09DB7BF1640AB5C00AFCA61 /* gameobjects-hd.png in Resources */,
-				A09DB7C01640AB5C00AFCA61 /* gameobjects.plist in Resources */,
-				A09DB7C11640AB5C00AFCA61 /* gameobjects.png in Resources */,
-				A09DB7C21640AB5C00AFCA61 /* GameScene.ccb in Resources */,
-				A09DB7C31640AB5C00AFCA61 /* GameScene.ccbi in Resources */,
-				A09DB7C51640AB5C00AFCA61 /* grossini_dance_atlas.png in Resources */,
-				A09DB7C61640AB5C00AFCA61 /* HelloCocosBuilder.ccb in Resources */,
-				A09DB7C71640AB5C00AFCA61 /* HelloCocosBuilder.ccbi in Resources */,
-				A09DB7C81640AB5C00AFCA61 /* Icon-72.png in Resources */,
-				A09DB7C91640AB5C00AFCA61 /* Icon-Small-50.png in Resources */,
-				A09DB7CA1640AB5C00AFCA61 /* Icon-Small.png in Resources */,
-				A09DB7CB1640AB5C00AFCA61 /* Icon-Small@2x.png in Resources */,
-				A09DB7CC1640AB5C00AFCA61 /* Icon.png in Resources */,
-				A09DB7CD1640AB5C00AFCA61 /* Icon@2x.png in Resources */,
-				A09DB7CF1640AB5C00AFCA61 /* iTunesArtwork in Resources */,
-				A09DB7D01640AB5C00AFCA61 /* Level.ccb in Resources */,
-				A09DB7D11640AB5C00AFCA61 /* Level.ccbi in Resources */,
-				A09DB7D31640AB5C00AFCA61 /* logo-hd.png in Resources */,
-				A09DB7D41640AB5C00AFCA61 /* logo.png in Resources */,
-				A09DB7D61640AB5C00AFCA61 /* MainMenuScene.ccb in Resources */,
-				A09DB7D71640AB5C00AFCA61 /* MainMenuScene.ccbi in Resources */,
-				A09DB7D91640AB5C00AFCA61 /* play-button-down-hd.png in Resources */,
-				A09DB7DA1640AB5C00AFCA61 /* play-button-down.png in Resources */,
-				A09DB7DB1640AB5C00AFCA61 /* play-button-hd.png in Resources */,
-				A09DB7DC1640AB5C00AFCA61 /* play-button.png in Resources */,
-				A09DB7E21640ADFC00AFCA61 /* CocosDragon-Mac.xib in Resources */,
-				A09DB7E31640ADFC00AFCA61 /* InfoPlist.strings in Resources */,
+				A01665CE1648B37D00EE63F2 /* .gitignore in Resources */,
+				A01665D81648B37D00EE63F2 /* README.md in Resources */,
+				A01665D91648B37D00EE63F2 /* Bomb.ccb in Resources */,
+				A01665DA1648B37D00EE63F2 /* Bomb.ccbi in Resources */,
+				A01665DB1648B37D00EE63F2 /* ccbDefaultImages-hd.plist in Resources */,
+				A01665DC1648B37D00EE63F2 /* ccbDefaultImages-hd.png in Resources */,
+				A01665DD1648B37D00EE63F2 /* ccbDefaultImages-ipad.plist in Resources */,
+				A01665DE1648B37D00EE63F2 /* ccbDefaultImages-ipadhd.plist in Resources */,
+				A01665DF1648B37D00EE63F2 /* ccbDefaultImages.plist in Resources */,
+				A01665E01648B37D00EE63F2 /* ccbDefaultImages.png in Resources */,
+				A01665E11648B37D00EE63F2 /* ccbParticleFire.png in Resources */,
+				A01665E21648B37D00EE63F2 /* ccbParticleSmoke.png in Resources */,
+				A01665E31648B37D00EE63F2 /* ccbParticleSnow.png in Resources */,
+				A01665E41648B37D00EE63F2 /* ccbParticleStars.png in Resources */,
+				A01665E51648B37D00EE63F2 /* cloud-hd.png in Resources */,
+				A01665E61648B37D00EE63F2 /* cloud.png in Resources */,
+				A01665E71648B37D00EE63F2 /* CocosDragonJS.ccbproj in Resources */,
+				A01665E81648B37D00EE63F2 /* CocosDragonJS.ccbresourcelog in Resources */,
+				A01665E91648B37D00EE63F2 /* Coin.ccb in Resources */,
+				A01665EA1648B37D00EE63F2 /* Coin.ccbi in Resources */,
+				A01665EB1648B37D00EE63F2 /* Dragon.ccb in Resources */,
+				A01665EC1648B37D00EE63F2 /* Dragon.ccbi in Resources */,
+				A01665ED1648B37D00EE63F2 /* EndCoin.ccb in Resources */,
+				A01665EE1648B37D00EE63F2 /* EndCoin.ccbi in Resources */,
+				A01665EF1648B37D00EE63F2 /* Explosion.ccb in Resources */,
+				A01665F01648B37D00EE63F2 /* Explosion.ccbi in Resources */,
+				A01665F11648B37D00EE63F2 /* fps_images-hd.png in Resources */,
+				A01665F21648B37D00EE63F2 /* fps_images-ipadhd.png in Resources */,
+				A01665F31648B37D00EE63F2 /* fps_images.png in Resources */,
+				A01665F41648B37D00EE63F2 /* gameobjects-hd.plist in Resources */,
+				A01665F51648B37D00EE63F2 /* gameobjects-hd.png in Resources */,
+				A01665F61648B37D00EE63F2 /* gameobjects.plist in Resources */,
+				A01665F71648B37D00EE63F2 /* gameobjects.png in Resources */,
+				A01665F81648B37D00EE63F2 /* GameScene.ccb in Resources */,
+				A01665F91648B37D00EE63F2 /* GameScene.ccbi in Resources */,
+				A01665FA1648B37D00EE63F2 /* grossini_dance_atlas.png in Resources */,
+				A01665FB1648B37D00EE63F2 /* HelloCocosBuilder.ccb in Resources */,
+				A01665FC1648B37D00EE63F2 /* HelloCocosBuilder.ccbi in Resources */,
+				A01666091648B37D00EE63F2 /* Level.ccb in Resources */,
+				A016660A1648B37D00EE63F2 /* Level.ccbi in Resources */,
+				A016660B1648B37D00EE63F2 /* logo-hd.png in Resources */,
+				A016660C1648B37D00EE63F2 /* logo.png in Resources */,
+				A016660D1648B37D00EE63F2 /* MainMenuScene.ccb in Resources */,
+				A016660E1648B37D00EE63F2 /* MainMenuScene.ccbi in Resources */,
+				A016660F1648B37D00EE63F2 /* CocosDragon-Mac.xib in Resources */,
+				A01666101648B37D00EE63F2 /* InfoPlist.strings in Resources */,
+				A01666121648B37D00EE63F2 /* play-button-down-hd.png in Resources */,
+				A01666131648B37D00EE63F2 /* play-button-down.png in Resources */,
+				A01666141648B37D00EE63F2 /* play-button-hd.png in Resources */,
+				A01666151648B37D00EE63F2 /* play-button.png in Resources */,
+				A01666171648B38E00EE63F2 /* js in Resources */,
+				A016662A1648B54C00EE63F2 /* icon.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -18635,18 +18571,18 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A09DB7DE1640ADFC00AFCA61 /* CocosDragon-Mac.xib */ = {
+		A01665C51648B37D00EE63F2 /* CocosDragon-Mac.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A09DB7DF1640ADFC00AFCA61 /* English */,
+				A01665C61648B37D00EE63F2 /* English */,
 			);
 			name = "CocosDragon-Mac.xib";
 			sourceTree = "<group>";
 		};
-		A09DB7E01640ADFC00AFCA61 /* InfoPlist.strings */ = {
+		A01665C71648B37D00EE63F2 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A09DB7E11640ADFC00AFCA61 /* English */,
+				A01665C81648B37D00EE63F2 /* English */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -19283,7 +19219,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "tests/CocosDragonJS/CocosDragonJS/Resources/Info-Mac.plist";
+				INFOPLIST_FILE = tests/CocosDragonJS/Resources/OSX/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -19324,7 +19260,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "tests/CocosDragonJS/CocosDragonJS/Resources/Info-Mac.plist";
+				INFOPLIST_FILE = tests/CocosDragonJS/Resources/OSX/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
