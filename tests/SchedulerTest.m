@@ -235,6 +235,7 @@ Class restartTest()
         [self addChild:sprite];
         [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
         
+		[self scheduleUpdate];
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(pause:) interval:3 repeat:NO delay:0];
@@ -266,6 +267,11 @@ Class restartTest()
 	return @"Everything will pause after 3s, then resume at 5s. See console";
 }
 
+-(void) update:(ccTime)delta
+{
+	// do nothing
+}
+
 -(void) tick1:(ccTime)dt
 {
 	NSLog(@"tick1");
@@ -281,6 +287,11 @@ Class restartTest()
     NSLog(@"Pausing");
 	CCDirector *director = [CCDirector sharedDirector];
     self.pausedTargets = [director.scheduler pauseAllTargets];
+	if([self.pausedTargets count] > 2)
+	{
+		// should have only 2 items: CCActionManager, self
+		NSLog(@"Error: pausedTargets should have only 2 items");
+	}
 }
 
 - (void) resume
