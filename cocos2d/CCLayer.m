@@ -77,6 +77,8 @@
 #ifdef __CC_PLATFORM_IOS
 		accelerometerEnabled_ = NO;
 #elif defined(__CC_PLATFORM_MAC)
+        gestureEnabled_ = NO;
+        gesturePriority_ = 0;
 		mouseEnabled_ = NO;
 		keyboardEnabled_ = NO;
 #endif
@@ -284,6 +286,42 @@
 	}
 }
 
+-(BOOL) isGestureEnabled
+{
+	return gestureEnabled_;
+}
+
+-(void) setGestureEnabled:(BOOL)enabled
+{
+	if( gestureEnabled_ != enabled ) {
+		gestureEnabled_ = enabled;
+		if( isRunning_ ) {
+			CCDirector *director = [CCDirector sharedDirector];
+			if( enabled )
+				[[director eventDispatcher] addGestureDelegate:self priority:gesturePriority_];
+			else
+				[[director eventDispatcher] removeGestureDelegate:self];
+		}
+	}
+}
+
+-(NSInteger) gesturePriority
+{
+	return gesturePriority_;
+}
+
+-(void) setGesturePriority:(NSInteger)gesturePriority
+{
+	if( gesturePriority_ != gesturePriority ) {
+		gesturePriority_ = gesturePriority;
+		
+		if( gestureEnabled_) {
+			[self setGestureEnabled:NO];
+			[self setGestureEnabled:YES];
+		}
+	}
+}
+
 #endif // Mac
 
 
@@ -308,7 +346,10 @@
 
 	if( touchEnabled_)
 		[eventDispatcher addTouchDelegate:self priority:touchPriority_];
-
+    
+	if( gestureEnabled_)
+		[eventDispatcher addGestureDelegate:self priority:gesturePriority_];
+    
 #endif
 
 	// then iterate over all the children
@@ -349,7 +390,10 @@
 
 	if( touchEnabled_ )
 		[eventDispatcher removeTouchDelegate:self];
-
+    
+	if( gestureEnabled_ )
+		[eventDispatcher removeGestureDelegate:self];
+    
 #endif
 
 	[super onExit];
