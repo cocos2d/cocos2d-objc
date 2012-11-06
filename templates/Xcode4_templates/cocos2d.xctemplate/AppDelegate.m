@@ -16,6 +16,7 @@
 @implementation AppDelegate
 
 @synthesize window;
+@synthesize viewController;
 
 - (void) removeStartupFlicker
 {
@@ -23,15 +24,21 @@
 	// THIS CODE REMOVES THE STARTUP FLICKER
 	//
 	// Uncomment the following code if you Application only supports landscape mode
+        // You need this now on iOS 6 on both landscape and portrait
 	//
 #if GAME_AUTOROTATION == kGameAutorotationUIViewController
 
 //	CC_ENABLE_DEFAULT_GL_STATES();
 //	CCDirector *director = [CCDirector sharedDirector];
 //	CGSize size = [director winSize];
-//	CCSprite *sprite = [CCSprite spriteWithFile:@"Default.png"];
+//	CCSprite *sprite;
+//	if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad && CC_CONTENT_SCALE_FACTOR() == 2) sprite = [CCSprite spriteWithFile:@"Default-Portrait@2x.png"];
+//	else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) sprite = [CCSprite spriteWithFile:@"Default-Portrait.png"];
+//	else if ([[CCDirector sharedDirector] winSize].width == 568 || [[CCDirector sharedDirector] winSize].height == 568) sprite = [CCSprite spriteWithFile:@"Default-568h@2x.png"];
+//	else if (CC_CONTENT_SCALE_FACTOR() == 2) sprite = [CCSprite spriteWithFile:@"Default@2x.png"];
+//	else sprite = [CCSprite spriteWithFile:@"Default.png"];
 //	sprite.position = ccp(size.width/2, size.height/2);
-//	sprite.rotation = -90;
+//	if (size.width > size.height) sprite.rotation = -90;
 //	[sprite visit];
 //	[[director openGLView] swapBuffers];
 //	CC_ENABLE_DEFAULT_GL_STATES();
