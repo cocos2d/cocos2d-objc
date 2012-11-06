@@ -2,11 +2,8 @@
 #import "BaseAppController.h"
 #import "cocos2d.h"
 
-#import "ThoMoServerStub.h"
-
-@interface AppController : BaseAppController <ThoMoServerDelegateProtocol>
+@interface AppController : BaseAppController
 {
-	ThoMoServerStub *thoMoServer;
 }
 @end
 

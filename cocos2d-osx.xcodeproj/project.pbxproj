@@ -78,10 +78,6 @@
 		2B44E5F21633942D000492D8 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E076E7BD1225EDD000DE0DA2 /* background2.jpg */; };
 		2B44E5FA1633AE12000492D8 /* hole_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F81633ADF4000492D8 /* hole_effect.png */; };
 		2B44E5FB1633AE12000492D8 /* hole_stencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F91633ADF4000492D8 /* hole_stencil.png */; };
-		4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
-		4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
-		4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
-		4AD3B6FF15991C48002E68D1 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
 		4AD3B8A0159A5415002E68D1 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		4AD3B8A1159A5415002E68D1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		4AD3B8A2159A5415002E68D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -2307,10 +2303,6 @@
 		A09DB6CB1640AA7600AFCA61 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF315DADE5F00E1986C /* jsb_constants_cocos2d.js */; };
 		A09DB6CC1640AA7600AFCA61 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A064EC0B162289E300020E06 /* jsb_constants_cocosbuilder.js */; };
 		A09DB6CD1640AA7600AFCA61 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A031BFF415DADE5F00E1986C /* jsb_constants_gl.js */; };
-		A09DB6D21640AA7600AFCA61 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
-		A09DB6D31640AA7600AFCA61 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
-		A09DB6D41640AA7600AFCA61 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
-		A09DB6D51640AA7600AFCA61 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
 		A09DB6D61640AA7600AFCA61 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		A09DB6D71640AA7600AFCA61 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A09DB6D81640AA7600AFCA61 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
@@ -2873,10 +2865,6 @@
 		A0D2DF001638B14A008DB73C /* Presentation.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DEFF1638B14A008DB73C /* Presentation.js */; };
 		A0D2DF031639DCC6008DB73C /* UnitTest.js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DF021639DCC6008DB73C /* UnitTest.js */; };
 		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
-		A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
-		A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
-		A0D4682E15C339E100588ADE /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
-		A0D4682F15C339E100588ADE /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
 		A0D4683015C339E100588ADE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		A0D4683115C339E100588ADE /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A0D4683215C339E100588ADE /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
@@ -3114,10 +3102,6 @@
 		A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7C61225EDD000DE0DA2 /* btn-play-selected.png */; };
 		A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0137F5F15AE39A9000AA1C2 /* fps_images.plist */; };
-		A0E5F95D15C1B21700D44C32 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */; };
-		A0E5F95E15C1B21700D44C32 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */; };
-		A0E5F95F15C1B21700D44C32 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */; };
-		A0E5F96015C1B21700D44C32 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */; };
 		A0E5F96115C1B21700D44C32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E076EAED1225EE8500DE0DA2 /* main.m */; };
 		A0E5F96215C1B21700D44C32 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A0E5F96315C1B21700D44C32 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A0CBEC1F156ABF3B009D35B4 /* JRSwizzle.m */; };
@@ -6805,20 +6789,6 @@
 		2B44E55616338743000492D8 /* ClippingNodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClippingNodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B44E5F81633ADF4000492D8 /* hole_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_effect.png; sourceTree = "<group>"; };
 		2B44E5F91633ADF4000492D8 /* hole_stencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_stencil.png; sourceTree = "<group>"; };
-		4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
-		4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
-		4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
-		4AD3B6F015991A64002E68D1 /* ThoMoClientStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub.h; sourceTree = "<group>"; };
-		4AD3B6F115991A64002E68D1 /* ThoMoNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworking.h; sourceTree = "<group>"; };
-		4AD3B6F215991A64002E68D1 /* ThoMoNetworkStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworkStub.h; sourceTree = "<group>"; };
-		4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoNetworkStub.m; sourceTree = "<group>"; };
-		4AD3B6F515991A64002E68D1 /* ThoMoServerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerDelegateProtocol.h; sourceTree = "<group>"; };
-		4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoServerStub.m; sourceTree = "<group>"; };
-		4AD3B6F715991A64002E68D1 /* ThoMoServerStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub_private.h; sourceTree = "<group>"; };
-		4AD3B6F815991A64002E68D1 /* ThoMoServerStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub.h; sourceTree = "<group>"; };
-		4AD3B6F915991A64002E68D1 /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
-		4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
-		4AD3B6FB15991A64002E68D1 /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
 		4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
 		4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
@@ -8657,44 +8627,6 @@
 				A03416FB1548806D00AE4D93 /* libffi.dylib */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		4AD3B6EB15991A64002E68D1 /* ThoMoNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				4AD3B6EC15991A64002E68D1 /* ThoMoClient */,
-				4AD3B6F015991A64002E68D1 /* ThoMoClientStub.h */,
-				4AD3B6F115991A64002E68D1 /* ThoMoNetworking.h */,
-				4AD3B6F215991A64002E68D1 /* ThoMoNetworkStub.h */,
-				4AD3B6F315991A64002E68D1 /* ThoMoNetworkStub.m */,
-				4AD3B6F415991A64002E68D1 /* ThoMoServer */,
-				4AD3B6F815991A64002E68D1 /* ThoMoServerStub.h */,
-				4AD3B6F915991A64002E68D1 /* ThoMoTCPConnection.h */,
-				4AD3B6FA15991A64002E68D1 /* ThoMoTCPConnection.m */,
-				4AD3B6FB15991A64002E68D1 /* ThoMoTCPConnectionDelegateProtocol.h */,
-			);
-			name = ThoMoNetworking;
-			path = external/ThoMoNetworking;
-			sourceTree = "<group>";
-		};
-		4AD3B6EC15991A64002E68D1 /* ThoMoClient */ = {
-			isa = PBXGroup;
-			children = (
-				4AD3B6ED15991A64002E68D1 /* ThoMoClientDelegateProtocol.h */,
-				4AD3B6EE15991A64002E68D1 /* ThoMoClientStub.m */,
-				4AD3B6EF15991A64002E68D1 /* ThoMoClientStub_private.h */,
-			);
-			path = ThoMoClient;
-			sourceTree = "<group>";
-		};
-		4AD3B6F415991A64002E68D1 /* ThoMoServer */ = {
-			isa = PBXGroup;
-			children = (
-				4AD3B6F515991A64002E68D1 /* ThoMoServerDelegateProtocol.h */,
-				4AD3B6F615991A64002E68D1 /* ThoMoServerStub.m */,
-				4AD3B6F715991A64002E68D1 /* ThoMoServerStub_private.h */,
-			);
-			path = ThoMoServer;
 			sourceTree = "<group>";
 		};
 		4AD3B8A9159A54CD002E68D1 /* CocosDenshion */ = {
@@ -10831,7 +10763,6 @@
 				A07082BC15F96057001C1263 /* SpiderMonkey */,
 				A031BFAA15DADE5F00E1986C /* jsbindings */,
 				A0644A5315B60A59004AB807 /* CocosBuilderReader */,
-				4AD3B6EB15991A64002E68D1 /* ThoMoNetworking */,
 				A0CBEC1D156ABF3B009D35B4 /* JRSwizzle */,
 				A044416314A5158500E62742 /* Box2D */,
 				A0443F8714A513E500E62742 /* Chipmunk */,
@@ -17256,10 +17187,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AD3B6FC15991C48002E68D1 /* ThoMoClientStub.m in Sources */,
-				4AD3B6FD15991C48002E68D1 /* ThoMoNetworkStub.m in Sources */,
-				4AD3B6FE15991C48002E68D1 /* ThoMoServerStub.m in Sources */,
-				4AD3B6FF15991C48002E68D1 /* ThoMoTCPConnection.m in Sources */,
 				A09C8D281566FB4100ADFDA9 /* main.m in Sources */,
 				A09C8D291566FB4100ADFDA9 /* BaseAppController.m in Sources */,
 				A0CBEC21156ABF3B009D35B4 /* JRSwizzle.m in Sources */,
@@ -17375,10 +17302,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A09DB6D21640AA7600AFCA61 /* ThoMoClientStub.m in Sources */,
-				A09DB6D31640AA7600AFCA61 /* ThoMoNetworkStub.m in Sources */,
-				A09DB6D41640AA7600AFCA61 /* ThoMoServerStub.m in Sources */,
-				A09DB6D51640AA7600AFCA61 /* ThoMoTCPConnection.m in Sources */,
 				A09DB6D61640AA7600AFCA61 /* main.m in Sources */,
 				A09DB6D71640AA7600AFCA61 /* BaseAppController.m in Sources */,
 				A09DB6D81640AA7600AFCA61 /* JRSwizzle.m in Sources */,
@@ -17504,10 +17427,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0D4682C15C339E100588ADE /* ThoMoClientStub.m in Sources */,
-				A0D4682D15C339E100588ADE /* ThoMoNetworkStub.m in Sources */,
-				A0D4682E15C339E100588ADE /* ThoMoServerStub.m in Sources */,
-				A0D4682F15C339E100588ADE /* ThoMoTCPConnection.m in Sources */,
 				A0D4683015C339E100588ADE /* main.m in Sources */,
 				A0D4683115C339E100588ADE /* BaseAppController.m in Sources */,
 				A0D4683215C339E100588ADE /* JRSwizzle.m in Sources */,
@@ -17623,10 +17542,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0E5F95D15C1B21700D44C32 /* ThoMoClientStub.m in Sources */,
-				A0E5F95E15C1B21700D44C32 /* ThoMoNetworkStub.m in Sources */,
-				A0E5F95F15C1B21700D44C32 /* ThoMoServerStub.m in Sources */,
-				A0E5F96015C1B21700D44C32 /* ThoMoTCPConnection.m in Sources */,
 				A0E5F96115C1B21700D44C32 /* main.m in Sources */,
 				A0E5F96215C1B21700D44C32 /* BaseAppController.m in Sources */,
 				A0E5F96315C1B21700D44C32 /* JRSwizzle.m in Sources */,

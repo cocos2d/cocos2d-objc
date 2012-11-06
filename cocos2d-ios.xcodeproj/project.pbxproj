@@ -1251,10 +1251,6 @@
 		A001944015C379F400F3D80E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		A001944115C379F400F3D80E /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A001944A15C379F400F3D80E /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A04E8673159B707C00F4BE65 /* JRSwizzle.m */; };
-		A001944D15C379F400F3D80E /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */; };
-		A001944E15C379F400F3D80E /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */; };
-		A001944F15C379F400F3D80E /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */; };
-		A001945015C379F400F3D80E /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */; };
 		A001945B15C379F400F3D80E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A001945C15C379F400F3D80E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A001945D15C379F400F3D80E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -2080,10 +2076,6 @@
 		A0AA56B11641955000A38D85 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		A0AA56B21641955000A38D85 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0AA56B31641955000A38D85 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A04E8673159B707C00F4BE65 /* JRSwizzle.m */; };
-		A0AA56B41641955000A38D85 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */; };
-		A0AA56B51641955000A38D85 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */; };
-		A0AA56B61641955000A38D85 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */; };
-		A0AA56B71641955000A38D85 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */; };
 		A0AA56B81641955000A38D85 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
 		A0AA56BA1641955000A38D85 /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A031B73915D9BD0800E1986C /* libjsbindings.a */; };
 		A0AA56BB1641955000A38D85 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -3163,10 +3155,6 @@
 		A0DC2F5E1491B36A005B814E /* test_image_rgb888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */; };
 		A0DEFC351538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */; };
 		A0DEFC381538E2B300530CC5 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */; };
-		A0E1DBF7159E3FC20056725B /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */; };
-		A0E1DBF8159E3FC20056725B /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */; };
-		A0E1DBF9159E3FC20056725B /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */; };
-		A0E1DBFA159E3FC20056725B /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */; };
 		A0E2A52B14D26D8D003450DF /* animations in Resources */ = {isa = PBXBuildFile; fileRef = 502C8C9810A701D300D137BA /* animations */; };
 		A0E431F31460741E00424477 /* background1-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C29123821EE009C628B /* background1-hd.jpg */; };
 		A0E431F41460741E00424477 /* background2-hd.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E0704C2A123821EE009C628B /* background2-hd.jpg */; };
@@ -3202,10 +3190,6 @@
 		A0E5F88315C1AE5F00D44C32 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		A0E5F88415C1AE5F00D44C32 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0E5F88D15C1AE5F00D44C32 /* JRSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = A04E8673159B707C00F4BE65 /* JRSwizzle.m */; };
-		A0E5F89015C1AE5F00D44C32 /* ThoMoClientStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */; };
-		A0E5F89115C1AE5F00D44C32 /* ThoMoNetworkStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */; };
-		A0E5F89215C1AE5F00D44C32 /* ThoMoServerStub.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */; };
-		A0E5F89315C1AE5F00D44C32 /* ThoMoTCPConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */; };
 		A0E5F89E15C1AE5F00D44C32 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A0E5F89F15C1AE5F00D44C32 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A0E5F8A015C1AE5F00D44C32 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -6367,20 +6351,6 @@
 		A0DC2F5D1491B36A005B814E /* test_image_rgb888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgb888.pvr; sourceTree = "<group>"; };
 		A0DEFC341538DE0000530CC5 /* grossini_dance_atlas_nomipmap-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "grossini_dance_atlas_nomipmap-hd.png"; sourceTree = "<group>"; };
 		A0DEFC371538E2B300530CC5 /* grossini_pvr_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = grossini_pvr_rgba8888.pvr; sourceTree = "<group>"; };
-		A0E1DBE8159E3FC20056725B /* ThoMoClientDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientDelegateProtocol.h; sourceTree = "<group>"; };
-		A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoClientStub.m; sourceTree = "<group>"; };
-		A0E1DBEA159E3FC20056725B /* ThoMoClientStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub_private.h; sourceTree = "<group>"; };
-		A0E1DBEB159E3FC20056725B /* ThoMoClientStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoClientStub.h; sourceTree = "<group>"; };
-		A0E1DBEC159E3FC20056725B /* ThoMoNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworking.h; sourceTree = "<group>"; };
-		A0E1DBED159E3FC20056725B /* ThoMoNetworkStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoNetworkStub.h; sourceTree = "<group>"; };
-		A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoNetworkStub.m; sourceTree = "<group>"; };
-		A0E1DBF0159E3FC20056725B /* ThoMoServerDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerDelegateProtocol.h; sourceTree = "<group>"; };
-		A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoServerStub.m; sourceTree = "<group>"; };
-		A0E1DBF2159E3FC20056725B /* ThoMoServerStub_private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub_private.h; sourceTree = "<group>"; };
-		A0E1DBF3159E3FC20056725B /* ThoMoServerStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoServerStub.h; sourceTree = "<group>"; };
-		A0E1DBF4159E3FC20056725B /* ThoMoTCPConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnection.h; sourceTree = "<group>"; };
-		A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ThoMoTCPConnection.m; sourceTree = "<group>"; };
-		A0E1DBF6159E3FC20056725B /* ThoMoTCPConnectionDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThoMoTCPConnectionDelegateProtocol.h; sourceTree = "<group>"; };
 		A0E5F8AD15C1AE5F00D44C32 /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0E6415A15AB8B8B008735E6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "bugs/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
@@ -7695,7 +7665,6 @@
 				A03E211D15F9626500E58C9D /* SpiderMonkey */,
 				A031BF1015DAC68500E1986C /* jsbindings */,
 				A02900EE15B5FB6900D64F82 /* CocosBuilderReader */,
-				A0E1DBE6159E3FC20056725B /* ThoMoNetworking */,
 				A04E8671159B707C00F4BE65 /* JRSwizzle */,
 				A015BFAB13B826D800C73E76 /* kazmath */,
 				50E5F309110690D300E3FCF5 /* Chipmunk */,
@@ -10243,44 +10212,6 @@
 				A0DC2B51161BE16A00DDB2BD /* TransitionsTest.js */,
 			);
 			path = TransitionsTest;
-			sourceTree = "<group>";
-		};
-		A0E1DBE6159E3FC20056725B /* ThoMoNetworking */ = {
-			isa = PBXGroup;
-			children = (
-				A0E1DBE7159E3FC20056725B /* ThoMoClient */,
-				A0E1DBEB159E3FC20056725B /* ThoMoClientStub.h */,
-				A0E1DBEC159E3FC20056725B /* ThoMoNetworking.h */,
-				A0E1DBED159E3FC20056725B /* ThoMoNetworkStub.h */,
-				A0E1DBEE159E3FC20056725B /* ThoMoNetworkStub.m */,
-				A0E1DBEF159E3FC20056725B /* ThoMoServer */,
-				A0E1DBF3159E3FC20056725B /* ThoMoServerStub.h */,
-				A0E1DBF4159E3FC20056725B /* ThoMoTCPConnection.h */,
-				A0E1DBF5159E3FC20056725B /* ThoMoTCPConnection.m */,
-				A0E1DBF6159E3FC20056725B /* ThoMoTCPConnectionDelegateProtocol.h */,
-			);
-			name = ThoMoNetworking;
-			path = external/ThoMoNetworking;
-			sourceTree = "<group>";
-		};
-		A0E1DBE7159E3FC20056725B /* ThoMoClient */ = {
-			isa = PBXGroup;
-			children = (
-				A0E1DBE8159E3FC20056725B /* ThoMoClientDelegateProtocol.h */,
-				A0E1DBE9159E3FC20056725B /* ThoMoClientStub.m */,
-				A0E1DBEA159E3FC20056725B /* ThoMoClientStub_private.h */,
-			);
-			path = ThoMoClient;
-			sourceTree = "<group>";
-		};
-		A0E1DBEF159E3FC20056725B /* ThoMoServer */ = {
-			isa = PBXGroup;
-			children = (
-				A0E1DBF0159E3FC20056725B /* ThoMoServerDelegateProtocol.h */,
-				A0E1DBF1159E3FC20056725B /* ThoMoServerStub.m */,
-				A0E1DBF2159E3FC20056725B /* ThoMoServerStub_private.h */,
-			);
-			path = ThoMoServer;
 			sourceTree = "<group>";
 		};
 		A0E6415D15AB8B90008735E6 /* Bugs */ = {
@@ -16101,10 +16032,6 @@
 				A001944015C379F400F3D80E /* main.m in Sources */,
 				A001944115C379F400F3D80E /* BaseAppController.m in Sources */,
 				A001944A15C379F400F3D80E /* JRSwizzle.m in Sources */,
-				A001944D15C379F400F3D80E /* ThoMoClientStub.m in Sources */,
-				A001944E15C379F400F3D80E /* ThoMoNetworkStub.m in Sources */,
-				A001944F15C379F400F3D80E /* ThoMoServerStub.m in Sources */,
-				A001945015C379F400F3D80E /* ThoMoTCPConnection.m in Sources */,
 				A031B87515D9C86C00E1986C /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -16279,10 +16206,6 @@
 				A0AA56B11641955000A38D85 /* main.m in Sources */,
 				A0AA56B21641955000A38D85 /* BaseAppController.m in Sources */,
 				A0AA56B31641955000A38D85 /* JRSwizzle.m in Sources */,
-				A0AA56B41641955000A38D85 /* ThoMoClientStub.m in Sources */,
-				A0AA56B51641955000A38D85 /* ThoMoNetworkStub.m in Sources */,
-				A0AA56B61641955000A38D85 /* ThoMoServerStub.m in Sources */,
-				A0AA56B71641955000A38D85 /* ThoMoTCPConnection.m in Sources */,
 				A0AA56B81641955000A38D85 /* AppController.mm in Sources */,
 				A0BBB00E1649C71300AD5E89 /* Bomb.js in Sources */,
 				A0BBB01C1649C71300AD5E89 /* Coin.js in Sources */,
@@ -16311,10 +16234,6 @@
 				A0D6C029159B6A25008EED97 /* main.m in Sources */,
 				A0D6C02B159B6A25008EED97 /* BaseAppController.m in Sources */,
 				A04E8675159B707C00F4BE65 /* JRSwizzle.m in Sources */,
-				A0E1DBF7159E3FC20056725B /* ThoMoClientStub.m in Sources */,
-				A0E1DBF8159E3FC20056725B /* ThoMoNetworkStub.m in Sources */,
-				A0E1DBF9159E3FC20056725B /* ThoMoServerStub.m in Sources */,
-				A0E1DBFA159E3FC20056725B /* ThoMoTCPConnection.m in Sources */,
 				A031B85315D9C80C00E1986C /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -16326,10 +16245,6 @@
 				A0E5F88315C1AE5F00D44C32 /* main.m in Sources */,
 				A0E5F88415C1AE5F00D44C32 /* BaseAppController.m in Sources */,
 				A0E5F88D15C1AE5F00D44C32 /* JRSwizzle.m in Sources */,
-				A0E5F89015C1AE5F00D44C32 /* ThoMoClientStub.m in Sources */,
-				A0E5F89115C1AE5F00D44C32 /* ThoMoNetworkStub.m in Sources */,
-				A0E5F89215C1AE5F00D44C32 /* ThoMoServerStub.m in Sources */,
-				A0E5F89315C1AE5F00D44C32 /* ThoMoTCPConnection.m in Sources */,
 				A031B87415D9C86B00E1986C /* AppController.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
