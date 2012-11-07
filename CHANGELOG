@@ -63,6 +63,9 @@ version 2.1-beta3  xx-Nov-2012
 . [3RD] CocosBuilder Reader: Updated to v2.1
 . [3RD] SpiderMonkey: Updated to v17-beta
 		Added armv7s support
+. [3RD] uthash: Updated to v1.9.7
+. [3RD] ThoMoNetwork / Fragaria: Removed. No longer bundled with cocos2d.
+
 
 version 2.1-beta2 13-Sept-2012
 . [NEW] Templates: Support for new iPhone5 resolution: Added Default-568h@2x.png in templates and cocos2d-ios.xcodeproj
