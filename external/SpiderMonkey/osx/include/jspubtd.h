@@ -115,7 +115,11 @@ typedef enum JSProtoKey {
 /* js_CheckAccess mode enumeration. */
 typedef enum JSAccessMode {
     JSACC_PROTO  = 0,           /* XXXbe redundant w.r.t. id */
-    JSACC_PARENT = 1,           /* XXXbe redundant w.r.t. id */
+
+                                /*
+                                 * enum value #1 formerly called JSACC_PARENT,
+                                 * gap preserved for ABI compatibility.
+                                 */
 
                                 /*
                                  * enum value #2 formerly called JSACC_IMPORT,
@@ -230,9 +234,26 @@ enum ThingRootKind
     THING_ROOT_SCRIPT,
     THING_ROOT_XML,
     THING_ROOT_ID,
+    THING_ROOT_PROPERTY_ID,
     THING_ROOT_VALUE,
+    THING_ROOT_TYPE,
     THING_ROOT_LIMIT
 };
+
+template <typename T>
+struct RootKind;
+
+/*
+ * Specifically mark the ThingRootKind of externally visible types, so that
+ * JSAPI users may use JSRooted... types without having the class definition
+ * available.
+ */
+template <> struct RootKind<JSObject *> { static ThingRootKind rootKind() { return THING_ROOT_OBJECT; }; };
+template <> struct RootKind<JSFunction *> { static ThingRootKind rootKind() { return THING_ROOT_OBJECT; }; };
+template <> struct RootKind<JSString *> { static ThingRootKind rootKind() { return THING_ROOT_STRING; }; };
+template <> struct RootKind<JSScript *> { static ThingRootKind rootKind() { return THING_ROOT_SCRIPT; }; };
+template <> struct RootKind<jsid> { static ThingRootKind rootKind() { return THING_ROOT_ID; }; };
+template <> struct RootKind<Value> { static ThingRootKind rootKind() { return THING_ROOT_VALUE; }; };
 
 struct ContextFriendFields {
     JSRuntime *const    runtime;
@@ -248,15 +269,15 @@ struct ContextFriendFields {
         return reinterpret_cast<ContextFriendFields *>(cx);
     }
 
-#ifdef JSGC_ROOT_ANALYSIS
-
+#if defined(JSGC_ROOT_ANALYSIS) || defined(JSGC_USE_EXACT_ROOTING)
     /*
      * Stack allocated GC roots for stack GC heap pointers, which may be
      * overwritten if moved during a GC.
      */
     Rooted<void*> *thingGCRooters[THING_ROOT_LIMIT];
+#endif
 
-#ifdef DEBUG
+#if defined(DEBUG) && defined(JS_GC_ZEAL) && defined(JSGC_ROOT_ANALYSIS) && !defined(JS_THREADSAFE)
     /*
      * Stack allocated list of stack locations which hold non-relocatable
      * GC heap pointers (where the target is rooted somewhere else) or integer
@@ -267,8 +288,6 @@ struct ContextFriendFields {
      */
     SkipRoot *skipGCRooters;
 #endif
-
-#endif /* JSGC_ROOT_ANALYSIS */
 };
 
 } /* namespace JS */

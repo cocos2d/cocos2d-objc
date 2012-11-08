@@ -26,8 +26,22 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
 
+* Greg Harding (http://www.flightless.co.nz/):
+	Toggle fullscreen honors the support for touches on Mac
+	Fixed some grammar errors in the Templates
+	Fixed interpolation in CatmullRom action
+
+* HarrisonXi (https://github.com/HarrisonXi):
+	Fixed some logic errors in the Scheduler and Timer
+
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
+
+* kamorris:
+	Patch that prevent crash on director when purgeCacheData is called before the creation of the view
+
+* Krzysztof Zablocki (http://merowing.info):
+	Author of CCRenderTargetNode, which later was merged into RenderTexture as the "auto render" feature.
 
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
@@ -38,9 +52,22 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * michaelm (http://ironapegames.com/):
 	Patch for RENDER_IN_SUBPIXEL. It works as expected with negative numbers
-	
+
+* Mike Daley (http://www.71squared.com/)
+	LabelBMFont: contextSize honors shadows and strokes patch.
+
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
+
+* Peter Johnston (https://github.com/ptrrj)
+	Fixed possible retain cycle with Director's delegate
+
+* Pierre-David Bélanger (https://github.com/pierredavidbelanger):
+	Author of Clipping Node
+	Author of 9 tests for Clipping Node
+	Added support for Stencil Buffer in the GLView
+	Fixed EventTests: memory leaks, dangling pointer and logic
+	Added support for gestures in OSX
 
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
@@ -49,9 +76,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code
 	Author of CCDrawNode: a node that batches drawing primitives
 	Author of CCPhysicsDebugNode and CCPhysicsSprite
+	Fix assert on Texture when updating filter on NPOT textures
+	Director iOS: Returns correct GL value for coordinates event in custom projections	
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
+	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
@@ -124,7 +154,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added tests for LabelTTF vertical alignment
 	Added tetts for Scheduler/ActionManager resume/pause all actions
 	Director doesn't raise assert when startAnimation is called twice
-	
+
+* Kirillkh (https://github.com/kirillkh):
+	Particles: uses Orphaning + glMapBuffer. Performance fix
+
 * Krzysztof Zablocki (http://merowing.info):
 	Added support for Depth Stencil in RenderTexture
 

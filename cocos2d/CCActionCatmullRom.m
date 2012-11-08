@@ -223,7 +223,10 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 {
 	[super startWithTarget:target];
 	
-	deltaT_ = (CGFloat) 1 / [points_ count];
+//	deltaT_ = (CGFloat) 1 / [points_ count];
+	
+	// Issue #1441
+	deltaT_ = (CGFloat) 1 / ([points_ count]-1);
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -232,13 +235,16 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
     return copy;
 }
 
--(void) update:(ccTime) dt
-{	
+-(void) update:(ccTime)dt
+{
 	NSUInteger p;
 	CGFloat lt;
-	
-	// border
-	if( dt == 1 ) {
+
+	// eg.
+	// p..p..p..p..p..p..p
+	// 1..2..3..4..5..6..7
+	// want p to be 1, 2, 3, 4, 5, 6
+	if (dt == 1) {
 		p = [points_ count] - 1;
 		lt = 1;
 	} else {
@@ -251,9 +257,9 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 	CGPoint pp1 = [points_ getControlPointAtIndex:p+0];
 	CGPoint pp2 = [points_ getControlPointAtIndex:p+1];
 	CGPoint pp3 = [points_ getControlPointAtIndex:p+2];
-	
+
 	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension_, lt );
-	
+
 	[self updatePosition:newPos];
 }
 

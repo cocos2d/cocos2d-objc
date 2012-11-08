@@ -139,6 +139,7 @@
 		return;
 
 	CCGLView *openGLview = (CCGLView*) self.view;
+    BOOL viewAcceptsTouchEvents = openGLview.acceptsTouchEvents;
 
     if( fullscreen ) {
         originalWinRect_ = [openGLview frame];
@@ -199,7 +200,9 @@
 
     // re-configure glView
     [self setView:openGLview];
-
+    
+    [openGLview setAcceptsTouchEvents:viewAcceptsTouchEvents];
+    
     [openGLview release]; // Retain -1
 
     [openGLview setNeedsDisplay:YES];

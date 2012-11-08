@@ -31,6 +31,8 @@
 #import "CCConfiguration.h"
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
+#import "Support/CGPointExtension.h"
+#import "CCGrid.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -42,6 +44,11 @@
 @implementation CCRenderTexture
 
 @synthesize sprite=sprite_;
+@synthesize autoDraw=autoDraw_;
+@synthesize clearColor=clearColor_;
+@synthesize clearDepth=clearDepth_;
+@synthesize clearStencil=clearStencil_;
+@synthesize clearFlags=clearFlags_;
 
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
@@ -124,7 +131,7 @@
 			glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
 
 			// if depth format is the one with stencil part, bind same render buffer as stencil attachment
-			if (depthStencilFormat == CC_GL_DEPTH24_STENCIL8)
+			if (depthStencilFormat == GL_DEPTH24_STENCIL8)
 				glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthRenderBufffer_);
 		}
 
@@ -133,17 +140,23 @@
 
 		[texture_ setAliasTexParameters];
 
-		sprite_ = [CCSprite spriteWithTexture:texture_];
+		// retained
+		self.sprite = [CCSprite spriteWithTexture:texture_];
 
 		[texture_ release];
 		[sprite_ setScaleY:-1];
-		[self addChild:sprite_];
 
 		// issue #937
 		[sprite_ setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 
 		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
+		
+		// Diabled by default.
+		autoDraw_ = NO;
+		
+		// add sprite for backward compatibility
+		[self addChild:sprite_];
 	}
 	return self;
 }
@@ -154,6 +167,7 @@
 	if (depthRenderBufffer_)
 		glDeleteRenderbuffers(1, &depthRenderBufffer_);
 
+	[sprite_ release];
 	[super dealloc];
 }
 
@@ -185,61 +199,54 @@
 	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
 }
 
--(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue flags:(GLbitfield)flags
 {
 	[self begin];
-
+	
 	// save clear color
 	GLfloat	clearColor[4];
-	glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+	GLfloat depthClearValue;
+	int stencilClearValue;
+	
+	if(flags & GL_COLOR_BUFFER_BIT) {
+		glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
+		glClearColor(r, g, b, a);
+	}
+	
+	if( flags & GL_DEPTH_BUFFER_BIT ) {
+		glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+		glClearDepth(depthValue);
+	}
+	
+	if( flags & GL_STENCIL_BUFFER_BIT ) {
+		glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+		glClearStencil(stencilValue);
+	}
+	
+	glClear(flags);
+	
+	
+	// restore
+	if( flags & GL_COLOR_BUFFER_BIT)
+		glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+	if( flags & GL_DEPTH_BUFFER_BIT)
+		glClearDepth(depthClearValue);
+	if( flags & GL_STENCIL_BUFFER_BIT)
+		glClearStencil(stencilClearValue);
+}
 
-	glClearColor(r, g, b, a);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	// restore clear color
-	glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
+-(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a
+{
+	[self beginWithClear:r g:g b:b a:a depth:0 stencil:0 flags:GL_COLOR_BUFFER_BIT];
 }
 
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue
 {
-  [self begin];
-
-  // save clear color
-  GLfloat	clearColor[4];
-  GLfloat depthClearValue;
-  glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-  glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-
-  glClearColor(r, g, b, a);
-  glClearDepth(depthValue);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  // restore clear color
-  glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-  glClearDepth(depthClearValue);
+	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:0 flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT];
 }
-
 -(void)beginWithClear:(float)r g:(float)g b:(float)b a:(float)a depth:(float)depthValue stencil:(int)stencilValue
 {
-  [self begin];
-
-  // save clear color
-  GLfloat	clearColor[4];
-  GLfloat depthClearValue;
-  int stencilClearValue;
-  glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
-  glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
-  glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
-
-  glClearColor(r, g, b, a);
-  glClearDepth(depthValue);
-  glClearStencil(stencilValue);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-  // restore clear color
-  glClearColor(clearColor[0], clearColor[1], clearColor[2], clearColor[3]);
-  glClearDepth(depthClearValue);
-  glClearStencil(stencilClearValue);
+	[self beginWithClear:r g:g b:b a:a depth:depthValue stencil:stencilValue flags:GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT|GL_STENCIL_BUFFER_BIT];
 }
 
 -(void)end
@@ -270,30 +277,113 @@
 
 - (void)clearDepth:(float)depthValue
 {
-  [self begin];
-  //! save old depth value
-  GLfloat depthClearValue;
-  glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
+	[self begin];
+	//! save old depth value
+	GLfloat depthClearValue;
+	glGetFloatv(GL_DEPTH_CLEAR_VALUE, &depthClearValue);
 
-  glClearDepth(depthValue);
-  glClear(GL_DEPTH_BUFFER_BIT);
+	glClearDepth(depthValue);
+	glClear(GL_DEPTH_BUFFER_BIT);
 
-  // restore clear color
-  glClearDepth(depthClearValue);
-  [self end];
+	// restore clear color
+	glClearDepth(depthClearValue);
+	[self end];
 }
 
 - (void)clearStencil:(int)stencilValue
 {
-  // save old stencil value
-  int stencilClearValue;
-  glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
+	// save old stencil value
+	int stencilClearValue;
+	glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &stencilClearValue);
 
-  glClearStencil(stencilValue);
-  glClear(GL_STENCIL_BUFFER_BIT);
+	glClearStencil(stencilValue);
+	glClear(GL_STENCIL_BUFFER_BIT);
 
-  // restore clear color
-  glClearStencil(stencilClearValue);
+	// restore clear color
+	glClearStencil(stencilClearValue);
+}
+
+#pragma mark RenderTexture - "auto" update
+
+- (void)visit
+{
+	// override visit.
+	// Don't call visit on its children
+	if (!visible_)
+		return;
+	
+	kmGLPushMatrix();
+	
+	if (grid_ && grid_.active) {
+		[grid_ beforeDraw];
+		[self transformAncestors];
+	}
+
+	[self transform];
+	[sprite_ visit];
+	[self draw];
+	
+	if (grid_ && grid_.active)
+		[grid_ afterDraw:self];
+	
+	kmGLPopMatrix();
+	
+	orderOfArrival_ = 0;
+}
+
+- (void)draw
+{
+	if( autoDraw_) {
+		
+		[self begin];
+		
+		if (clearFlags_) {
+			
+			GLfloat oldClearColor[4];
+			GLfloat oldDepthClearValue;
+			GLint oldStencilClearValue;
+			
+			// backup and set
+			if( clearFlags_ & GL_COLOR_BUFFER_BIT ) {
+				glGetFloatv(GL_COLOR_CLEAR_VALUE, oldClearColor);
+				glClearColor(clearColor_.r, clearColor_.g, clearColor_.b, clearColor_.a);
+			}
+			
+			if( clearFlags_ & GL_DEPTH_BUFFER_BIT ) {
+				glGetFloatv(GL_DEPTH_CLEAR_VALUE, &oldDepthClearValue);
+				glClearDepth(clearDepth_);
+			}
+			
+			if( clearFlags_ & GL_STENCIL_BUFFER_BIT ) {
+				glGetIntegerv(GL_STENCIL_CLEAR_VALUE, &oldStencilClearValue);
+				glClearStencil(clearStencil_);
+			}
+			
+			// clear
+			glClear(clearFlags_);
+			
+			// restore
+			if( clearFlags_ & GL_COLOR_BUFFER_BIT )
+				glClearColor(oldClearColor[0], oldClearColor[1], oldClearColor[2], oldClearColor[3]);
+			if( clearFlags_ & GL_DEPTH_BUFFER_BIT )
+				glClearDepth(oldDepthClearValue);
+			if( clearFlags_ & GL_STENCIL_BUFFER_BIT )
+				glClearStencil(oldStencilClearValue);
+		}
+		
+		//! make sure all children are drawn
+		[self sortAllChildren];
+		
+		CCNode *child;
+		CCARRAY_FOREACH(children_, child) {
+			if( child != sprite_)
+				[child visit];
+		}
+		[self end];
+
+	}
+
+//	[sprite_ visit];
 }
 
 #pragma mark RenderTexture - Save Image
@@ -355,8 +445,8 @@
 	CGContextDrawImage(context, CGRectMake(0.0f, 0.0f, tx, ty), iref);
 	CGImageRef image = CGBitmapContextCreateImage(context);
 	
-	CGImageRelease(iref);
 	CGContextRelease(context);
+	CGImageRelease(iref);
 	CGColorSpaceRelease(colorSpaceRef);
 	CGDataProviderRelease(provider);
 	
@@ -387,7 +477,7 @@
 #if __CC_PLATFORM_IOS
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
-	NSData *imageData;
+	NSData *imageData = nil;
 
 	if( format == kCCImageFormatPNG )
 		imageData = UIImagePNGRepresentation( image );

@@ -21,7 +21,9 @@ enum {
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-        self.isTouchEnabled = YES;
+		[self setTouchEnabled:YES];
+		[self setTouchPriority:kCCMenuHandlerPriority+1];
+		[self setTouchMode:kCCTouchesOneByOne];
 #endif
 		// Font Item
 
@@ -87,20 +89,27 @@ enum {
 			[scene addChild:[LayerPriorityTest node]];
 			[[CCDirector sharedDirector] pushScene:scene];			
 		}];
+
+		// Bugs Item
+		CCMenuItemFont *item7 = [CCMenuItemFont itemWithString:@"Bugs" block:^(id sender) {
+			CCScene *scene = [CCScene node];
+			[scene addChild:[BugsTest node]];
+			[[CCDirector sharedDirector] pushScene:scene];
+		}];
 		
 		// Font Item
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
-		CCMenuItemFont *item7 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
+		CCMenuItemFont *item8 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
 			CC_DIRECTOR_END();
 		}];
 
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
 		id seq = [CCSequence actions:color_action, color_back, nil];
-		[item7 runAction:[CCRepeatForever actionWithAction:seq]];
+		[item8 runAction:[CCRepeatForever actionWithAction:seq]];
 
-		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, item7, nil];
+		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, item7, item8, nil];
 		[menu alignItemsVertically];
 
 
@@ -132,11 +141,6 @@ enum {
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:kCCMenuHandlerPriority+1 swallowsTouches:YES];
-}
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -563,6 +567,60 @@ enum {
 @end
 
 
+#pragma mark - BugsTest
+
+@implementation BugsTest
+-(id) init
+{
+	if( (self = [super init] ) ) {
+	
+		CCMenuItemFont *issue1410 = [CCMenuItemFont itemWithString:@"Issue 1410" block:^(id sender){
+			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
+#if __CC_PLATFORM_IOS
+			menu.touchEnabled=NO;
+			menu.touchEnabled=YES;
+#elif __CC_PLATFORM_MAC
+			menu.mouseEnabled=NO;
+			menu.mouseEnabled=YES;
+#endif
+			NSLog(@"NO CRASHES");
+		}];
+
+		CCMenuItemFont *issue1410_2 = [CCMenuItemFont itemWithString:@"Issue 1410 #2" block:^(id sender){
+			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
+#if __CC_PLATFORM_IOS
+			menu.touchEnabled=YES;
+			menu.touchEnabled=NO;
+#elif __CC_PLATFORM_MAC
+			menu.mouseEnabled=YES;
+			menu.mouseEnabled=NO;
+#endif
+			NSLog(@"NO CRASHES. AND MENU SHOULD STOP WORKING");
+		}];
+
+		
+		CCMenuItemFont *back = [CCMenuItemFont itemWithString:@"Back" block:^(id sender){
+			CCScene *scene = [CCScene node];
+			[scene addChild:[LayerMainMenu node]];
+			[[CCDirector sharedDirector] replaceScene:scene];
+		}];
+		
+		CCMenu *menu = [CCMenu menuWithItems:issue1410, issue1410_2, back, nil];
+		[self addChild:menu];
+		[menu alignItemsVertically];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+	return self;
+}
+
+- (void) dealloc
+{
+	[super dealloc];
+}
+
+@end
 
 
 

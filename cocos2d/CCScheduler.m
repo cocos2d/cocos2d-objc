@@ -91,7 +91,6 @@ typedef struct _hashSelectorEntry
     _nTimesExecuted = 0;
 	_elapsed = -1;
 	_interval = seconds;
-	_repeat = r;
 	_delay = d;
 	_useDelay = (_delay > 0) ? YES : NO;
 	_repeat = r;
@@ -156,7 +155,7 @@ typedef struct _hashSelectorEntry
 				}
 			}
 
-			if (_nTimesExecuted > _repeat)
+			if (!_runForever && _nTimesExecuted > _repeat)
 			{	//unschedule timer
 				[self cancel];
 			}
@@ -164,6 +163,8 @@ typedef struct _hashSelectorEntry
 	}
 }
 @end
+
+#pragma mark CCTimerTargetSelector
 
 @implementation CCTimerTargetSelector
 
@@ -219,20 +220,24 @@ typedef struct _hashSelectorEntry
 
 @end
 
+#pragma mark CCTimerBlock
+
 @implementation CCTimerBlock
 
 @synthesize key=_key;
+@synthesize target=_target;
 
-+(id) timerWithInterval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block
++(id) timerWithTarget:(id)owner interval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block
 {
-	return [[[self alloc] initWithInterval:seconds repeat:kCCRepeatForever delay:0 key:key block:block] autorelease];
+	return [[[self alloc] initWithTarget:(id)owner interval:seconds repeat:kCCRepeatForever delay:0 key:key block:block] autorelease];
 }
 
--(id) initWithInterval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block
+-(id) initWithTarget:(id)owner interval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block
 {
 	if( (self=[super init]) ) {
 		_block = [block copy];
 		_key = [key copy];
+		_target = owner;
 		
 		[self setupTimerWithInterval:seconds repeat:r delay:d];
 	}
@@ -260,7 +265,7 @@ typedef struct _hashSelectorEntry
 
 -(void) cancel
 {
-//	[[[CCDirector sharedDirector] scheduler] unscheduleSelector:_selector forTarget:_target];
+	[[[CCDirector sharedDirector] scheduler] unscheduleBlockForKey:_key target:_target];
 }
 
 @end
@@ -270,7 +275,6 @@ typedef struct _hashSelectorEntry
 //
 // CCScheduler
 //
-#pragma mark -
 #pragma mark - CCScheduler
 
 @interface CCScheduler (Private)
@@ -315,7 +319,7 @@ typedef struct _hashSelectorEntry
 {
 	CCLOG(@"cocos2d: deallocing %@", self);
 
-	[self unscheduleAllSelectors];
+	[self unscheduleAll];
 
 	[super dealloc];
 }
@@ -333,10 +337,10 @@ typedef struct _hashSelectorEntry
 
 -(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused
 {
-	[self scheduleSelector:selector forTarget:target interval:interval paused:paused repeat:kCCRepeatForever delay:0.0f];
+	[self scheduleSelector:selector forTarget:target interval:interval repeat:kCCRepeatForever delay:0.0f paused:paused];
 }
 
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused repeat:(uint) repeat delay:(ccTime) delay
+-(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused 
 {
 	NSAssert( selector != nil, @"Argument selector must be non-nil");
 	NSAssert( target != nil, @"Argument target must be non-nil");
@@ -377,7 +381,7 @@ typedef struct _hashSelectorEntry
 	[timer release];
 }
 
--(void) scheduleBlockForKey:(NSString*)key target:(id)owner interval:(ccTime)interval paused:(BOOL)paused repeat:(uint)repeat delay:(ccTime)delay block:(void(^)(ccTime dt))block
+-(void) scheduleBlockForKey:(NSString*)key target:(id)owner interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused block:(void(^)(ccTime dt))block
 {
 	NSAssert( block != nil, @"Argument block must be non-nil");
 	NSAssert( owner != nil, @"Argument owner must be non-nil");
@@ -412,7 +416,7 @@ typedef struct _hashSelectorEntry
 		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
-	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithInterval:interval repeat:repeat delay:delay key:key block:block];
+	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithTarget:owner interval:interval repeat:repeat delay:delay key:key block:block];
 	ccArrayAppendObject(element->timers, timer);
 	[timer release];
 }
@@ -655,18 +659,18 @@ typedef struct _hashSelectorEntry
 
 #pragma mark CCScheduler - Common for Update selector & Custom Selectors
 
--(void) unscheduleAllSelectors
+-(void) unscheduleAll
 {
-    [self unscheduleAllSelectorsWithMinPriority:kCCPrioritySystem];
+    [self unscheduleAllWithMinPriority:kCCPrioritySystem];
 }
 
--(void) unscheduleAllSelectorsWithMinPriority:(NSInteger)minPriority
+-(void) unscheduleAllWithMinPriority:(NSInteger)minPriority
 {
 	// Custom Selectors
 	for(tHashTimerEntry *element=hashForTimers; element != NULL; ) {
 		id target = element->target;
 		element=element->hh.next;
-		[self unscheduleAllSelectorsForTarget:target];
+		[self unscheduleAllForTarget:target];
 	}
 
 	// Updates selectors
@@ -691,7 +695,7 @@ typedef struct _hashSelectorEntry
 
 }
 
--(void) unscheduleAllSelectorsForTarget:(id)target
+-(void) unscheduleAllForTarget:(id)target
 {
 	// explicit nil handling
 	if( target == nil )
@@ -764,52 +768,56 @@ typedef struct _hashSelectorEntry
 	tHashTimerEntry *element = NULL;
 	HASH_FIND_INT(hashForTimers, &target, element);
 	if( element )
-    {
 		return element->paused;
-    }
-    return NO;  // should never get here
-
+	
+	// We should check update selectors if target does not have custom selectors
+	tHashUpdateEntry * elementUpdate = NULL;
+	HASH_FIND_INT(hashForUpdates, &target, elementUpdate);
+	if ( elementUpdate )
+		return elementUpdate->entry->paused;
+	
+	return NO;  // should never get here
 }
 
 -(NSSet*) pauseAllTargets
 {
-    return [self pauseAllTargetsWithMinPriority:kCCPrioritySystem];
+	return [self pauseAllTargetsWithMinPriority:kCCPrioritySystem];
 }
 
 -(NSSet*) pauseAllTargetsWithMinPriority:(NSInteger)minPriority
 {
-    NSMutableSet* idsWithSelectors = [NSMutableSet setWithCapacity:50];
-    
-    // Custom Selectors
-    for(tHashTimerEntry *element=hashForTimers; element != NULL; element=element->hh.next) {
-        element->paused = YES;
-        [idsWithSelectors addObject:element->target];
-    }
-    
-    // Updates selectors
-    tListEntry *entry, *tmp;
-    if(minPriority < 0) {
-        DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-            if(entry->priority >= minPriority) {
-                entry->paused = YES;
-                [idsWithSelectors addObject:entry->target];
-            }
-        }
-    }
-    if(minPriority <= 0) {
-        DL_FOREACH_SAFE( updates0, entry, tmp ) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
-        }
-    }
-    DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-        if(entry->priority >= minPriority) {
-            entry->paused = YES;
-            [idsWithSelectors addObject:entry->target];
-        }
-    }
-    
-    return idsWithSelectors;
+	NSMutableSet* idsWithSelectors = [NSMutableSet setWithCapacity:50];
+
+	// Custom Selectors
+	for(tHashTimerEntry *element=hashForTimers; element != NULL; element=element->hh.next) {
+		element->paused = YES;
+		[idsWithSelectors addObject:element->target];
+	}
+
+	// Updates selectors
+	tListEntry *entry, *tmp;
+	if(minPriority < 0) {
+		DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
+			if(entry->priority >= minPriority) {
+				entry->paused = YES;
+				[idsWithSelectors addObject:entry->target];
+			}
+		}
+	}
+	if(minPriority <= 0) {
+		DL_FOREACH_SAFE( updates0, entry, tmp ) {
+			entry->paused = YES;
+			[idsWithSelectors addObject:entry->target];
+		}
+	}
+	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
+		if(entry->priority >= minPriority) {
+			entry->paused = YES;
+			[idsWithSelectors addObject:entry->target];
+		}
+	}
+
+	return idsWithSelectors;
 }
 
 -(void) resumeTargets:(NSSet *)targetsToResume

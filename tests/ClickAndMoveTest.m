@@ -16,7 +16,7 @@ enum
 {
 	if( ( self=[super init] ))
 	{
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 
 		CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
 

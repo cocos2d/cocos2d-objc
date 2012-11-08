@@ -289,6 +289,37 @@
 	DISPATCH_EVENT(theEvent, _cmd);
 }
 
+#pragma mark CCGLView - Gesture events
+- (void)beginGestureWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)magnifyWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)smartMagnifyWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)rotateWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)swipeWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)endGestureWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
 @end
 
 #endif // __CC_PLATFORM_MAC

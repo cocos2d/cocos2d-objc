@@ -518,7 +518,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -565,7 +565,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationUpOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -611,7 +611,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -656,7 +656,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -708,7 +708,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationUpOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -761,7 +761,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;

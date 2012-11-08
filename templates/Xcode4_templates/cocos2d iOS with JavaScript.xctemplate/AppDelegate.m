@@ -11,6 +11,46 @@
 #import "AppDelegate.h"
 #import "js_bindings_core.h"
 
+@implementation MyNavigationController
+
+// The available orientations should be defined in the Info.plist file.
+// And in iOS 6+ only, you can override it in the Root View controller in the "supportedInterfaceOrientations" method.
+// Only valid for iOS 6+. NOT VALID for iOS 4 / 5.
+-(NSUInteger)supportedInterfaceOrientations {
+	
+	// iPhone only
+	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
+		return UIInterfaceOrientationMaskLandscape;
+	
+	// iPad only
+	return UIInterfaceOrientationMaskLandscape;
+}
+
+// Supported orientations. Customize it for your own needs
+// Only valid on iOS 4 / 5. NOT VALID for iOS 6.
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+	// iPhone only
+	if( [[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone )
+		return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+	
+	// iPad only
+	// iPhone only
+	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil) {
+		// Run the JS
+		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
+}
+@end
+
 @implementation AppController
 
 @synthesize window=window_, navController=navController_, director=director_;
@@ -46,9 +86,6 @@
 	// attach the openglView to the director
 	[director_ setView:glView];
 	
-	// for rotation and other messages
-	[director_ setDelegate:self];
-	
 	// 2D projection
 	[director_ setProjection:kCCDirectorProjection2D];
 //	[director setProjection:kCCDirectorProjection3D];
@@ -76,8 +113,11 @@
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
 	// Create a Navigation Controller with the Director
-	navController_ = [[UINavigationController alloc] initWithRootViewController:director_];
+	navController_ = [[MyNavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;
+
+	// for rotation and other messages
+	[director_ setDelegate:navController_];
 	
 	// set the Navigation Controller as the root view controller
 	[window_ setRootViewController:navController_];
@@ -87,24 +127,6 @@
 	
 	return YES;
 }
-
-// This is needed for iOS4 and iOS5 in order to ensure
-// that the 1st scene has the correct dimensions
-// This is not needed on iOS6 and could be added to the application:didFinish...
--(void) directorDidReshapeProjection:(CCDirector*)director
-{
-	if(director.runningScene == nil) {
-		// Run the JS
-		[[JSBCore sharedInstance] runScript:@"main.js"];
-	}
-}
-
-// Supported orientations: Landscape. Customize it for your own needs
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
-}
-
 
 // getting a call, pause the game
 -(void) applicationWillResignActive:(UIApplication *)application

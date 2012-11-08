@@ -30,8 +30,7 @@
 @class CCTexture2D;
 @class CCDirector;
 
-#pragma mark -
-#pragma mark CCRGBAProtocol
+#pragma mark - CCRGBAProtocol
 
 /// CC RGBA protocol
 @protocol CCRGBAProtocol <NSObject>
@@ -65,8 +64,7 @@
  -(BOOL) doesOpacityModifyRGB;
 @end
 
-#pragma mark -
-#pragma mark CCBlendProtocol
+#pragma mark - CCBlendProtocol
 /**
  You can specify the blending function.
  @since v0.99.0
@@ -79,8 +77,7 @@
 @end
 
 
-#pragma mark -
-#pragma mark CCTextureProtocol
+#pragma mark - CCTextureProtocol
 
 /** CCNode objects that uses a Texture2D to render the images.
  The texture can have a blending function.
@@ -98,8 +95,7 @@
 -(void) setTexture:(CCTexture2D*)texture;
 @end
 
-#pragma mark -
-#pragma mark CCLabelProtocol
+#pragma mark - CCLabelProtocol
 /** Common interface for Labels */
 @protocol CCLabelProtocol <NSObject>
 /** sets a new label using an NSString.
@@ -117,8 +113,7 @@
 @end
 
 
-#pragma mark -
-#pragma mark CCDirectorDelegate
+#pragma mark - CCDirectorDelegate
 /** CCDirector delegate */
 @protocol CCDirectorDelegate <NSObject>
 
@@ -137,3 +132,17 @@
 #endif // __CC_PLATFORM_IOS
 
 @end
+
+
+#pragma mark - CCAccelerometerDelegate
+
+#ifdef __CC_PLATFORM_IOS
+/** CCAccelerometerDelegate delegate */
+@class UIAcceleration;
+@class UIAccelerometer;
+@protocol CCAccelerometerDelegate <NSObject>
+
+@optional
+- (void)accelerometer:(UIAccelerometer *)accelerometer didAccelerate:(UIAcceleration *)acceleration;
+@end
+#endif // __CC_PLATFORM_IOS

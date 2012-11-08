@@ -283,6 +283,7 @@ typedef struct _ccBezierConfig {
  */
 @interface CCBezierTo : CCBezierBy
 {
+	ccBezierConfig toConfig_;
 }
 // XXX: Added to prevent bug on BridgeSupport
 -(void) startWithTarget:(CCNode *)aTarget;
@@ -326,6 +327,7 @@ typedef struct _ccBezierConfig {
 @interface CCBlink : CCActionInterval <NSCopying>
 {
 	NSUInteger times_;
+	BOOL originalState_;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;

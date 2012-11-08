@@ -35,7 +35,7 @@
 	if( (self=[super init] )) {
 
 
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 

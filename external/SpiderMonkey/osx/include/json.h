@@ -7,6 +7,7 @@
 
 #include "jsprvtd.h"
 #include "jspubtd.h"
+#include "jsapi.h"
 
 #include "js/Vector.h"
 
@@ -17,7 +18,8 @@ extern JSObject *
 js_InitJSONClass(JSContext *cx, JSObject *obj);
 
 extern JSBool
-js_Stringify(JSContext *cx, js::Value *vp, JSObject *replacer, js::Value space,
+js_Stringify(JSContext *cx, js::MutableHandleValue vp,
+             JSObject *replacer, js::Value space,
              js::StringBuffer &sb);
 
 // Avoid build errors on certain platforms that define these names as constants
@@ -36,8 +38,8 @@ enum DecodingMode { STRICT, LEGACY };
 namespace js {
 
 extern JS_FRIEND_API(JSBool)
-ParseJSONWithReviver(JSContext *cx, const jschar *chars, size_t length, const Value &filter,
-                     Value *vp, DecodingMode decodingMode = STRICT);
+ParseJSONWithReviver(JSContext *cx, const jschar *chars, size_t length, HandleValue filter,
+                     MutableHandleValue vp, DecodingMode decodingMode = STRICT);
 
 } /* namespace js */
 

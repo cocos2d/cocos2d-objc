@@ -406,7 +406,19 @@
 -(void) postStep
 {
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0] );
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
+	
+	// Option 1: Sub Data
+//	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
+	
+	// Option 2: Data
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * particleCount, quads_, GL_DYNAMIC_DRAW);
+	
+	// Option 3: Orphaning + glMapBuffer
+	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0])*totalParticles, nil, GL_STREAM_DRAW);
+	void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+	memcpy(buf, quads_, sizeof(quads_[0])*particleCount);
+	glUnmapBuffer(GL_ARRAY_BUFFER);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	CHECK_GL_ERROR_DEBUG();

@@ -1,7 +1,0 @@
-//
-// Prefix header for all source files of the 'cocos2d-ios-jsconsole-client' target in the 'cocos2d-ios-jsconsole-client' project
-//
-
-#ifdef __OBJC__
-    #import <Cocoa/Cocoa.h>
-#endif

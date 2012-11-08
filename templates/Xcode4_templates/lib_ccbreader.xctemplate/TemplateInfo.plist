@@ -11,6 +11,50 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
+		<key>libs/CocosBuilderReader/CCBAnimationManager.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBAnimationManager.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBAnimationManager.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBAnimationManager.m</string>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBKeyframe.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBKeyframe.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBKeyframe.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBKeyframe.m</string>
+		</dict>
 		<key>libs/CocosBuilderReader/CCBReader.h</key>
 		<dict>
 			<key>Group</key>
@@ -33,6 +77,72 @@
 			<key>Path</key>
 			<string>libs/CocosBuilderReader/CCBReader.m</string>
 		</dict>
+		<key>libs/CocosBuilderReader/CCBSequence.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBSequence.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBSequence.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBSequence.m</string>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBSequenceProperty.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBSequenceProperty.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/CocosBuilderReader/CCBSequenceProperty.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCBSequenceProperty.m</string>
+		</dict>
+		<key>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>CocosBuilderReader</string>
+			</array>
+			<key>Path</key>
+			<string>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.m</string>
+		</dict>
 		<key>libs/LICENSE_CCBReader.txt</key>
 		<dict>
 			<key>Group</key>
@@ -47,8 +157,18 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/CocosBuilderReader/CCBAnimationManager.h</string>
+		<string>libs/CocosBuilderReader/CCBAnimationManager.m</string>
+		<string>libs/CocosBuilderReader/CCBKeyframe.h</string>
+		<string>libs/CocosBuilderReader/CCBKeyframe.m</string>
 		<string>libs/CocosBuilderReader/CCBReader.h</string>
 		<string>libs/CocosBuilderReader/CCBReader.m</string>
+		<string>libs/CocosBuilderReader/CCBSequence.h</string>
+		<string>libs/CocosBuilderReader/CCBSequence.m</string>
+		<string>libs/CocosBuilderReader/CCBSequenceProperty.h</string>
+		<string>libs/CocosBuilderReader/CCBSequenceProperty.m</string>
+		<string>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.h</string>
+		<string>libs/CocosBuilderReader/CCNode+CCBRelativePositioning.m</string>
 		<string>libs/LICENSE_CCBReader.txt</string>
 	</array>
 </dict>

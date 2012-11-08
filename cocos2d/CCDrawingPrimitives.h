@@ -58,17 +58,23 @@ extern "C" {
 /**
  @file
  Drawing OpenGL ES primitives.
-  - ccDrawPoint
+  - ccDrawPoint, ccDrawPoints
   - ccDrawLine
-  - ccDrawPoly
+  - ccDrawRect, ccDrawSolidRect
+  - ccDrawPoly, ccDrawSolidPoly
   - ccDrawCircle
   - ccDrawQuadBezier
   - ccDrawCubicBezier
+  - ccDrawCatmullRom
+  - ccDrawCardinalSpline
 
- You can change the color, width and other property by calling the
-   glColor4ub(), glLineWidth(), glPointSize().
+ You can change the color, point size, width by calling:
+  - ccDrawColor4B(), ccDrawColor4F()
+  - ccPointSize()
+  - glLineWidth()
 
- @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
+ @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use CCDrawNode
+ 
  */
 
 

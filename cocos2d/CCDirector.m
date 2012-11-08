@@ -90,7 +90,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize runningScene = runningScene_;
 @synthesize displayStats = displayStats_;
 @synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
-@synthesize isPaused = isPaused_;
+@synthesize paused = isPaused_;
 @synthesize isAnimating = isAnimating_;
 @synthesize sendCleanupToScene = sendCleanupToScene_;
 @synthesize runningThread = runningThread_;
@@ -191,7 +191,6 @@ static CCDirector *_sharedDirector = nil;
 	[scenesStack_ release];
 	[scheduler_ release];
 	[actionManager_ release];
-	[delegate_ release];
 
 	_sharedDirector = nil;
 
@@ -252,7 +251,8 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCLabelBMFont purgeCachedData];
-	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	if ([_sharedDirector view])
+		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 }
 
@@ -455,7 +455,6 @@ static CCDirector *_sharedDirector = nil;
 	[drawsLabel_ release];
 	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil;
 
-	[delegate_ release];
 	delegate_ = nil;
 
 	[self setView:nil];

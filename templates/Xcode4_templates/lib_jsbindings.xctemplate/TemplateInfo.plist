@@ -419,6 +419,46 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</string>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.h</key>
 		<dict>
 			<key>Group</key>
@@ -855,6 +895,18 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/js/jsb_constants_cocos2d.js</string>
 		</dict>
+		<key>libs/jsbindings/src/js/jsb_constants_cocosbuilder.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/js/jsb_constants_cocosbuilder.js</string>
+		</dict>
 		<key>libs/jsbindings/src/js/jsb_constants_gl.js</key>
 		<dict>
 			<key>Group</key>
@@ -919,6 +971,32 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/manual/js_bindings_chipmunk_manual.mm</string>
 		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.mm</string>
+		</dict>
 		<key>libs/jsbindings/src/manual/js_bindings_cocos2d_manual.h</key>
 		<dict>
 			<key>Group</key>
@@ -944,6 +1022,32 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/src/manual/js_bindings_cocos2d_manual.mm</string>
+		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.mm</string>
 		</dict>
 		<key>libs/jsbindings/src/manual/js_bindings_CocosBuilderReader_manual.mm</key>
 		<dict>
@@ -1067,6 +1171,9 @@
 		<string>libs/jsbindings/generate_js_bindings.py</string>
 		<string>libs/jsbindings/LICENSE.txt</string>
 		<string>libs/jsbindings/README.md</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.h</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes.mm</string>
+		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_auto_classes_registration.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions.mm</string>
 		<string>libs/jsbindings/src/auto/js_bindings_chipmunk_functions_registration.h</string>
@@ -1100,13 +1207,18 @@
 		<string>libs/jsbindings/src/js/jsb_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_chipmunk.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_cocos2d.js</string>
+		<string>libs/jsbindings/src/js/jsb_constants_cocosbuilder.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_gl.js</string>
 		<string>libs/jsbindings/src/manual/js_bindings_basic_conversions.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_basic_conversions.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_chipmunk_manual.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_chipmunk_manual.mm</string>
+		<string>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.h</string>
+		<string>libs/jsbindings/src/manual/js_bindings_chipmunk_registration.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_manual.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_manual.mm</string>
+		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.h</string>
+		<string>libs/jsbindings/src/manual/js_bindings_cocos2d_registration.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_CocosBuilderReader_manual.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_config.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_core.h</string>

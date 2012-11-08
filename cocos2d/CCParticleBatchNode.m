@@ -359,7 +359,7 @@
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	[children_ makeObjectsPerformSelector:@selector(useSelfRender)];
+	[children_ makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
 
 	[super removeAllChildrenWithCleanup:doCleanup];
 

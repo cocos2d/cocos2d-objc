@@ -35,19 +35,6 @@
 #endif // CC_ENABLE_CHIPMUNK_INTEGRATION
 
 @implementation CCPhysicsSprite
-{
-	BOOL	_ignoreBodyRotation;
-	
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-	cpBody	*_body;
-	
-#elif CC_ENABLE_BOX2D_INTEGRATION
-	b2Body	*_body;
-	
-	// Pixels to Meters ratio
-	float	_PTMRatio;
-#endif // CC_ENABLE_BOX2D_INTEGRATION
-}
 
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
 

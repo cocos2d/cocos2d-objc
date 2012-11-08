@@ -5,11 +5,13 @@
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
-	<integer>1</integer>
+	<integer>0</integer>
+	<key>currentSequenceId</key>
+	<integer>0</integer>
 	<key>fileType</key>
 	<string>CocosBuilder</string>
 	<key>fileVersion</key>
-	<integer>3</integer>
+	<integer>4</integer>
 	<key>guides</key>
 	<array>
 		<dict>
@@ -19,6 +21,8 @@
 			<real>512</real>
 		</dict>
 	</array>
+	<key>jsControlled</key>
+	<true/>
 	<key>nodeGraph</key>
 	<dict>
 		<key>baseClass</key>
@@ -32,24 +36,14 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>displayName</key>
+				<string>CCLayerGradient</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
 				<integer>0</integer>
 				<key>properties</key>
 				<array>
-					<dict>
-						<key>name</key>
-						<string>position</string>
-						<key>type</key>
-						<string>Position</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
-						</array>
-					</dict>
 					<dict>
 						<key>name</key>
 						<string>contentSize</string>
@@ -88,31 +82,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>0.0</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>tag</string>
-						<key>type</key>
-						<string>Integer</string>
-						<key>value</key>
-						<integer>-1</integer>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>ignoreAnchorPointForPosition</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>visible</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
@@ -172,14 +142,6 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>startOpacity</string>
-						<key>type</key>
-						<string>Byte</string>
-						<key>value</key>
-						<integer>255</integer>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>endColor</string>
 						<key>type</key>
 						<string>Color3</string>
@@ -189,14 +151,6 @@
 							<integer>255</integer>
 							<integer>255</integer>
 						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>endOpacity</string>
-						<key>type</key>
-						<string>Byte</string>
-						<key>value</key>
-						<integer>255</integer>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -229,6 +183,8 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>displayName</key>
+				<string>CCParticleSystemQuad</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -245,18 +201,6 @@
 							<real>50</real>
 							<real>-1</real>
 							<integer>4</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>0.0</real>
-							<real>0.0</real>
-							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -285,35 +229,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>0.0</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>tag</string>
-						<key>type</key>
-						<string>Integer</string>
-						<key>value</key>
-						<integer>-1</integer>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>ignoreAnchorPointForPosition</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
 						<false/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -538,10 +458,12 @@
 				<array/>
 				<key>customClass</key>
 				<string></string>
+				<key>displayName</key>
+				<string>CCLabelBMFont</string>
 				<key>memberVarAssignmentName</key>
-				<string></string>
+				<string>titleLabel</string>
 				<key>memberVarAssignmentType</key>
-				<integer>0</integer>
+				<integer>1</integer>
 				<key>properties</key>
 				<array>
 					<dict>
@@ -554,18 +476,6 @@
 							<real>50</real>
 							<real>82</real>
 							<integer>4</integer>
-						</array>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>contentSize</string>
-						<key>type</key>
-						<string>Size</string>
-						<key>value</key>
-						<array>
-							<real>353</real>
-							<real>40</real>
-							<integer>0</integer>
 						</array>
 					</dict>
 					<dict>
@@ -594,14 +504,6 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>0.0</real>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>tag</string>
 						<key>type</key>
 						<string>Integer</string>
@@ -618,39 +520,11 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>visible</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>fntFile</string>
 						<key>type</key>
 						<string>FntFile</string>
 						<key>value</key>
 						<string>konqa32.fnt</string>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>opacity</string>
-						<key>type</key>
-						<string>Byte</string>
-						<key>value</key>
-						<integer>255</integer>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>color</string>
-						<key>type</key>
-						<string>Color3</string>
-						<key>value</key>
-						<array>
-							<integer>255</integer>
-							<integer>255</integer>
-							<integer>255</integer>
-						</array>
 					</dict>
 					<dict>
 						<key>name</key>
@@ -685,6 +559,8 @@
 						<array/>
 						<key>customClass</key>
 						<string></string>
+						<key>displayName</key>
+						<string>CCMenuItemImage</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -701,18 +577,6 @@
 									<real>0.0</real>
 									<real>-7.5520834922790527</real>
 									<integer>4</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>contentSize</string>
-								<key>type</key>
-								<string>Size</string>
-								<key>value</key>
-								<array>
-									<real>256</real>
-									<real>64</real>
-									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -741,22 +605,6 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>rotation</string>
-								<key>type</key>
-								<string>Degrees</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>tag</string>
-								<key>type</key>
-								<string>Integer</string>
-								<key>value</key>
-								<integer>-1</integer>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>ignoreAnchorPointForPosition</string>
 								<key>type</key>
 								<string>Check</string>
@@ -765,21 +613,13 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>visible</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<true/>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>block</string>
 								<key>type</key>
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>onOptions:</string>
-									<integer>2</integer>
+									<string>onOptions</string>
+									<integer>1</integer>
 								</array>
 							</dict>
 							<dict>
@@ -832,6 +672,8 @@
 						<array/>
 						<key>customClass</key>
 						<string></string>
+						<key>displayName</key>
+						<string>CCMenuItemImage</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -848,18 +690,6 @@
 									<real>0.0</real>
 									<real>-15.494791984558105</real>
 									<integer>4</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>contentSize</string>
-								<key>type</key>
-								<string>Size</string>
-								<key>value</key>
-								<array>
-									<real>256</real>
-									<real>64</real>
-									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -888,22 +718,6 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>rotation</string>
-								<key>type</key>
-								<string>Degrees</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>tag</string>
-								<key>type</key>
-								<string>Integer</string>
-								<key>value</key>
-								<integer>-1</integer>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>ignoreAnchorPointForPosition</string>
 								<key>type</key>
 								<string>Check</string>
@@ -912,21 +726,13 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>visible</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<true/>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>block</string>
 								<key>type</key>
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>onAbout:</string>
-									<integer>2</integer>
+									<string>onAbout</string>
+									<integer>1</integer>
 								</array>
 							</dict>
 							<dict>
@@ -979,6 +785,8 @@
 						<array/>
 						<key>customClass</key>
 						<string></string>
+						<key>displayName</key>
+						<string>CCMenuItemImage</string>
 						<key>memberVarAssignmentName</key>
 						<string></string>
 						<key>memberVarAssignmentType</key>
@@ -992,21 +800,9 @@
 								<string>Position</string>
 								<key>value</key>
 								<array>
-									<real>0.0</real>
+									<real>0.09765625</real>
 									<real>0.2604166567325592</real>
 									<integer>4</integer>
-								</array>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>contentSize</string>
-								<key>type</key>
-								<string>Size</string>
-								<key>value</key>
-								<array>
-									<real>256</real>
-									<real>64</real>
-									<integer>0</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1035,22 +831,6 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>rotation</string>
-								<key>type</key>
-								<string>Degrees</string>
-								<key>value</key>
-								<real>0.0</real>
-							</dict>
-							<dict>
-								<key>name</key>
-								<string>tag</string>
-								<key>type</key>
-								<string>Integer</string>
-								<key>value</key>
-								<integer>-1</integer>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>ignoreAnchorPointForPosition</string>
 								<key>type</key>
 								<string>Check</string>
@@ -1059,21 +839,13 @@
 							</dict>
 							<dict>
 								<key>name</key>
-								<string>visible</string>
-								<key>type</key>
-								<string>Check</string>
-								<key>value</key>
-								<true/>
-							</dict>
-							<dict>
-								<key>name</key>
 								<string>block</string>
 								<key>type</key>
 								<string>Block</string>
 								<key>value</key>
 								<array>
-									<string>onPlay:</string>
-									<integer>2</integer>
+									<string>onPlay</string>
+									<integer>1</integer>
 								</array>
 							</dict>
 							<dict>
@@ -1122,6 +894,8 @@
 				</array>
 				<key>customClass</key>
 				<string></string>
+				<key>displayName</key>
+				<string>CCMenu</string>
 				<key>memberVarAssignmentName</key>
 				<string></string>
 				<key>memberVarAssignmentType</key>
@@ -1178,31 +952,7 @@
 					</dict>
 					<dict>
 						<key>name</key>
-						<string>rotation</string>
-						<key>type</key>
-						<string>Degrees</string>
-						<key>value</key>
-						<real>0.0</real>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>tag</string>
-						<key>type</key>
-						<string>Integer</string>
-						<key>value</key>
-						<integer>-1</integer>
-					</dict>
-					<dict>
-						<key>name</key>
 						<string>ignoreAnchorPointForPosition</string>
-						<key>type</key>
-						<string>Check</string>
-						<key>value</key>
-						<true/>
-					</dict>
-					<dict>
-						<key>name</key>
-						<string>visible</string>
 						<key>type</key>
 						<string>Check</string>
 						<key>value</key>
@@ -1253,24 +1003,16 @@
 		</array>
 		<key>customClass</key>
 		<string></string>
+		<key>displayName</key>
+		<string>CCLayer</string>
+		<key>jsController</key>
+		<string>MenuLayerController</string>
 		<key>memberVarAssignmentName</key>
 		<string></string>
 		<key>memberVarAssignmentType</key>
 		<integer>0</integer>
 		<key>properties</key>
 		<array>
-			<dict>
-				<key>name</key>
-				<string>position</string>
-				<key>type</key>
-				<string>Position</string>
-				<key>value</key>
-				<array>
-					<real>0.0</real>
-					<real>0.0</real>
-					<integer>0</integer>
-				</array>
-			</dict>
 			<dict>
 				<key>name</key>
 				<string>contentSize</string>
@@ -1309,31 +1051,7 @@
 			</dict>
 			<dict>
 				<key>name</key>
-				<string>rotation</string>
-				<key>type</key>
-				<string>Degrees</string>
-				<key>value</key>
-				<real>0.0</real>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>tag</string>
-				<key>type</key>
-				<string>Integer</string>
-				<key>value</key>
-				<integer>-1</integer>
-			</dict>
-			<dict>
-				<key>name</key>
 				<string>ignoreAnchorPointForPosition</string>
-				<key>type</key>
-				<string>Check</string>
-				<key>value</key>
-				<true/>
-			</dict>
-			<dict>
-				<key>name</key>
-				<string>visible</string>
 				<key>type</key>
 				<string>Check</string>
 				<key>value</key>
@@ -1414,5 +1132,30 @@
 			<integer>1024</integer>
 		</dict>
 	</array>
+	<key>sequences</key>
+	<array>
+		<dict>
+			<key>autoPlay</key>
+			<true/>
+			<key>chainedSequenceId</key>
+			<integer>0</integer>
+			<key>length</key>
+			<real>2</real>
+			<key>name</key>
+			<string>Default Timeline</string>
+			<key>offset</key>
+			<real>0.0</real>
+			<key>position</key>
+			<real>2</real>
+			<key>resolution</key>
+			<real>30</real>
+			<key>scale</key>
+			<real>128</real>
+			<key>sequenceId</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>stageBorder</key>
+	<integer>0</integer>
 </dict>
 </plist>

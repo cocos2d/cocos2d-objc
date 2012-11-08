@@ -956,12 +956,20 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCBezierTo
 @implementation CCBezierTo
+-(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
+{
+	if( (self=[super initWithDuration: t]) ) {
+		toConfig_ = c;
+	}
+	return self;
+}
+
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	config_.controlPoint_1 = ccpSub(config_.controlPoint_1, startPosition_);
-	config_.controlPoint_2 = ccpSub(config_.controlPoint_2, startPosition_);
-	config_.endPosition = ccpSub(config_.endPosition, startPosition_);
+	config_.controlPoint_1 = ccpSub(toConfig_.controlPoint_1, startPosition_);
+	config_.controlPoint_2 = ccpSub(toConfig_.controlPoint_2, startPosition_);
+	config_.endPosition = ccpSub(toConfig_.endPosition, startPosition_);
 }
 @end
 
@@ -1063,6 +1071,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	return copy;
 }
 
+-(void) startWithTarget:(id)target
+{
+	[super startWithTarget:target];
+	originalState_ = [target visible];
+}
+
 -(void) update: (ccTime) t
 {
 	if( ! [self isDone] ) {
@@ -1070,6 +1084,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		ccTime m = fmodf(t, slice);
 		[target_ setVisible: (m > slice/2) ? YES : NO];
 	}
+}
+
+-(void) stop
+{
+	[target_ setVisible:originalState_];
+	[super stop];
 }
 
 -(CCActionInterval*) reverse
@@ -1511,7 +1531,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:target_ action:[[action_ copy] autorelease]];
+	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:forcedTarget_ action:[[action_ copy] autorelease]];
 	return copy;
 }
 
@@ -1530,7 +1550,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 - (void) startWithTarget:(id)aTarget
 {
-	[super startWithTarget:forcedTarget_];
+	[super startWithTarget:target_];
 	[action_ startWithTarget:forcedTarget_];
 }
 

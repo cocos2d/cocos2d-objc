@@ -51,7 +51,6 @@ typedef struct JSArgumentFormatMap  JSArgumentFormatMap;
 typedef struct JSGCThing            JSGCThing;
 typedef struct JSGenerator          JSGenerator;
 typedef struct JSNativeEnumerator   JSNativeEnumerator;
-typedef struct JSProperty           JSProperty;
 typedef struct JSSharpObjectMap     JSSharpObjectMap;
 typedef struct JSTryNote            JSTryNote;
 
@@ -83,7 +82,6 @@ class JSExtensibleString;
 class JSExternalString;
 class JSLinearString;
 class JSFixedString;
-class JSStaticAtom;
 class JSRope;
 class JSAtom;
 class JSWrapper;
@@ -131,27 +129,11 @@ class StackSegment;
 class StackSpace;
 class ContextStack;
 class ScriptFrameIter;
-class CallReceiver;
-class CallArgs;
-
-struct BytecodeEmitter;
-struct Definition;
-struct FunctionBox;
-struct ObjectBox;
-struct ParseNode;
-struct Parser;
-struct SharedContext;
-class TokenStream;
-struct Token;
-struct TokenPos;
-struct TokenPtr;
-struct TreeContext;
-class UpvarCookie;
 
 class Proxy;
-class BaseProxyHandler;
-class DirectWrapper;
-class CrossCompartmentWrapper;
+class JS_FRIEND_API(BaseProxyHandler);
+class JS_FRIEND_API(DirectWrapper);
+class JS_FRIEND_API(CrossCompartmentWrapper);
 
 class TempAllocPolicy;
 class RuntimeAllocPolicy;
@@ -175,14 +157,6 @@ class Bindings;
 struct StackBaseShape;
 struct StackShape;
 
-class MultiDeclRange;
-class ParseMapPool;
-class DefnOrHeader;
-typedef InlineMap<JSAtom *, Definition *, 24> AtomDefnMap;
-typedef InlineMap<JSAtom *, jsatomid, 24> AtomIndexMap;
-typedef InlineMap<JSAtom *, DefnOrHeader, 24> AtomDOHMap;
-typedef Vector<UpvarCookie, 8> UpvarCookies;
-
 class Breakpoint;
 class BreakpointSite;
 class Debugger;
@@ -200,6 +174,22 @@ typedef JSNative             Native;
 typedef JSPropertyOp         PropertyOp;
 typedef JSStrictPropertyOp   StrictPropertyOp;
 typedef JSPropertyDescriptor PropertyDescriptor;
+
+namespace frontend {
+
+struct BytecodeEmitter;
+struct Definition;
+struct FunctionBox;
+struct ObjectBox;
+struct Token;
+struct TokenPos;
+struct TokenPtr;
+class TokenStream;
+struct Parser;
+class ParseMapPool;
+struct ParseNode;
+
+} /* namespace frontend */
 
 namespace analyze {
 
@@ -226,6 +216,8 @@ typedef JS::Handle<BaseShape*>         HandleBaseShape;
 typedef JS::Handle<types::TypeObject*> HandleTypeObject;
 typedef JS::Handle<JSAtom*>            HandleAtom;
 typedef JS::Handle<PropertyName*>      HandlePropertyName;
+
+typedef JS::MutableHandle<Shape*>      MutableHandleShape;
 
 typedef JS::Rooted<Shape*>             RootedShape;
 typedef JS::Rooted<BaseShape*>         RootedBaseShape;
