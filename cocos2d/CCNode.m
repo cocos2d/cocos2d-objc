@@ -722,6 +722,11 @@ static NSUInteger globalOrderOfArrival = 0;
 
 }
 
+- (GLFloat*) transformGL
+{
+    return transformGL_;
+}
+
 #pragma mark CCNode SceneManagement
 
 -(void) onEnter
