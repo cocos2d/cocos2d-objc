@@ -722,7 +722,7 @@ static NSUInteger globalOrderOfArrival = 0;
 
 }
 
-- (GLFloat*) transformGL
+- (GLfloat*) transformGL
 {
     return transformGL_;
 }
