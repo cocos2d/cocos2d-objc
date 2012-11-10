@@ -1,3 +1,6 @@
+version 2.1-beta4  XX-Dec-2012
+. [FIX] Transitions: Fixed possible memory leak in some tranitions.
+
 version 2.1-beta3  7-Nov-2012
 . [NEW] Clipping Node: New node that let's you clip objects inside it. Check the demos!
 . [NEW] Node API additions:
