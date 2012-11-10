@@ -848,7 +848,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onExit
 {
 	[super onExit];
-	[self removeChildByTag:kSceneFade cleanup:NO];
+	[self removeChildByTag:kSceneFade cleanup:YES];
 }
 @end
 
@@ -933,7 +933,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onExit
 {
 	// remove our layer and release all containing objects
-	[self removeChildByTag:kSceneFade cleanup:NO];
+	[self removeChildByTag:kSceneFade cleanup:YES];
 
 	[super onExit];
 }

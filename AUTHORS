@@ -79,6 +79,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fix assert on Texture when updating filter on NPOT textures
 	Director iOS: Returns correct GL value for coordinates event in custom projections	
 
+* Vargusz (https://github.com/vargusz)
+	Fixed possible memory leak in RadialTransitions
+
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
