@@ -39,7 +39,9 @@ enum {
 
 		entryID = entryId;
 
-		[self setTouchEnabled:YES mode:kCCTouchesOneByOne priority:0];
+		[self setTouchPriority:0];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchEnabled:YES];
 
 		Box2DView *view = [Box2DView viewWithEntryID:entryId];
 		[self addChild:view z:0 tag:kTagBox2DNode];
@@ -141,8 +143,10 @@ enum {
 {
     if ((self = [super init])) {
 
-		self.isAccelerometerEnabled = YES;
-		[self setTouchEnabled:YES mode:kCCTouchesOneByOne priority:-10];
+		[self setAccelerometerEnabled:YES];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchPriority:-10];
+		[self setTouchEnabled:YES];
 
 		[self schedule:@selector(tick:)];
 
