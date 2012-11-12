@@ -1,6 +1,8 @@
 version 2.1-beta4  XX-Dec-2012
+. [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
 . [FIX] Transitions: Fixed possible memory leak in some tranitions.
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
+
 
 version 2.1-beta3  7-Nov-2012
 . [NEW] Clipping Node: New node that let's you clip objects inside it. Check the demos!
