@@ -43,10 +43,12 @@
 //
 
 // opengl
+#import "Support/TransformUtils.h"
 #import "Platforms/CCGL.h"
 
 // cocos2d
 #import "ccConfig.h"
+#import "CCGrid.h"
 #if CC_ENABLE_PROFILERS
 #import "Support/CCProfiling.h"
 #endif
@@ -64,6 +66,15 @@
 #import "Support/ZipUtils.h"
 #import "Support/CCFileUtils.h"
 
+#if CC_COCOSNODE_RENDER_SUBPIXEL
+#define RENDER_IN_SUBPIXEL
+#else
+#define RENDER_IN_SUBPIXEL (NSInteger)
+#endif
+
+@interface CCParticleSystem (private)
+-(void) updateLookAtMatrix;
+@end
 
 @implementation CCParticleSystem
 @synthesize active, duration;
@@ -87,6 +98,7 @@
 @synthesize atlasIndex = atlasIndex_;
 @synthesize useBatchNode = useBatchNode_;
 @synthesize animationType=animationType_;
+@synthesize worldNode=worldNode_;
 
 +(id) particleWithFile:(NSString*) plistFile
 {
@@ -341,9 +353,13 @@
 		totalFrameCount_ = 0;
 		animationFrameData_ = NULL;
 		animationType_ = kCCParticleAnimationTypeLoop;
-
+        
+        cachedLookAtMatrix_ = NULL;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLookAtMatrix) name:@"ProjectionChanged" object:nil];
+        
 		// udpate after action in run!
-		[self scheduleUpdateWithPriority:1];
+		[self scheduleUpdateWithPriority:100];
 	}
 	return self;
 }
@@ -356,6 +372,11 @@
 
 	if (animationFrameData_)
 		free(animationFrameData_);
+    
+    if (cachedLookAtMatrix_)
+        free(cachedLookAtMatrix_);
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[texture_ release];
 	// profiling
@@ -378,6 +399,119 @@
 
 	return YES;
 }
+
+-(void) transform
+{
+	// transformations
+    
+#if CC_NODE_TRANSFORM_USING_AFFINE_MATRIX
+	// BEGIN alternative -- using cached transform
+	//
+    if (positionType_ != kCCPositionTypeWorld)
+    {
+        if( isTransformGLDirty_ ) {
+            CGAffineTransform t = [self nodeToParentTransform];
+            CGAffineToGL(&t, transformGL_);
+            isTransformGLDirty_ = NO;
+        }
+    
+        glMultMatrixf(transformGL_);
+    }
+    else
+    {
+        glLoadIdentity();
+        
+        CCDirector *director = [CCDirector sharedDirector];
+        if ([director projection] == kCCDirectorProjection3D)
+        {
+            if (!cachedLookAtMatrix_)
+            {
+                CGSize size = director.winSizeInPixels;
+                cachedLookAtMatrix_ = gluLookAtMatrix( size.width/2, size.height/2, [director getZEye],
+                                size.width/2, size.height/2, 0,
+                                0.0f, 1.0f, 0.0f);
+            }
+            glMultMatrixf(cachedLookAtMatrix_);
+        }
+        
+        glMultMatrixf([worldNode_ transformGL]);
+    }
+    
+	if( vertexZ_ )
+		glTranslatef(0, 0, vertexZ_);
+    
+	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
+	if ( camera_ && !(grid_ && grid_.active) )
+	{
+		BOOL translate = (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f);
+        
+		if( translate )
+			ccglTranslate(RENDER_IN_SUBPIXEL(anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(anchorPointInPixels_.y), 0);
+        
+		[camera_ locate];
+        
+		if( translate )
+			ccglTranslate(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+	}
+    
+    
+	// END alternative
+    
+#else
+	// BEGIN original implementation
+	//
+	// translate
+	if ( isRelativeAnchorPoint_ && (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0 ) )
+		glTranslatef( RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+    
+	if (anchorPointInPixels_.x != 0 || anchorPointInPixels_.y != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x + anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y + anchorPointInPixels_.y), vertexZ_);
+	else if ( positionInPixels_.x !=0 || positionInPixels_.y !=0 || vertexZ_ != 0)
+		glTranslatef( RENDER_IN_SUBPIXEL(positionInPixels_.x), RENDER_IN_SUBPIXEL(positionInPixels_.y), vertexZ_ );
+    
+	// rotate
+	if (rotation_ != 0.0f )
+		glRotatef( -rotation_, 0.0f, 0.0f, 1.0f );
+    
+	// scale
+	if (scaleX_ != 1.0f || scaleY_ != 1.0f)
+		glScalef( scaleX_, scaleY_, 1.0f );
+    
+	// skew
+	if ( (skewX_ != 0.0f) || (skewY_ != 0.0f) ) {
+		CGAffineTransform skewMatrix = CGAffineTransformMake( 1.0f, tanf(CC_DEGREES_TO_RADIANS(skewY_)), tanf(CC_DEGREES_TO_RADIANS(skewX_)), 1.0f, 0.0f, 0.0f );
+		GLfloat	glMatrix[16];
+		CGAffineToGL(&skewMatrix, glMatrix);
+		glMultMatrixf(glMatrix);
+	}
+    
+	if ( camera_ && !(grid_ && grid_.active) )
+		[camera_ locate];
+    
+	// restore and re-position point
+	if (anchorPointInPixels_.x != 0.0f || anchorPointInPixels_.y != 0.0f)
+		glTranslatef(RENDER_IN_SUBPIXEL(-anchorPointInPixels_.x), RENDER_IN_SUBPIXEL(-anchorPointInPixels_.y), 0);
+    
+	//
+	// END original implementation
+#endif
+    
+}
+
+//forces cachedLookAtMatrix to be recalculated, called by notification when projection changes
+- (void) updateLookAtMatrix
+{
+    CCDirector *director = [CCDirector sharedDirector];
+    if ([director projection] == kCCDirectorProjection3D)
+    {
+        if (cachedLookAtMatrix_)
+        {
+            free(cachedLookAtMatrix_);
+            cachedLookAtMatrix_ = NULL;
+        }
+    }
+}
+
 
 -(void) initParticle: (tCCParticle*) particle
 {
@@ -455,20 +589,32 @@
 
 	// position
     //divide by scale to get correct position, issue 1352
-	if( positionType_ == kCCPositionTypeFree ) {
+	if( positionType_ == kCCPositionTypeFree) {
 		CGPoint p = [self convertToWorldSpace:CGPointZero];
 		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
         particle->startPos.x /= scaleX_;
         particle->startPos.y /= scaleY_;
-	}
-	else if( positionType_ == kCCPositionTypeRelative ) {
+        
+    }
+	else if( positionType_ == kCCPositionTypeRelative) {
 		particle->startPos = ccpMult( position_, CC_CONTENT_SCALE_FACTOR() );
 
         particle->startPos.x /= scaleX_;
         particle->startPos.y /= scaleY_;
 
 	}
+    
+    if (positionType_ == kCCPositionTypeWorld) {
+        CGPoint p1 = [self convertToWorldSpace:CGPointZero];
+        //need to express position relative to worldNode, since particle moves/rotates/scales along with worldNode
+        NSAssert(worldNode_,@"for position type world, worldNode needs to be set");
+        CGPoint p = [worldNode_ convertToNodeSpace:p1];
 
+		particle->startPos = ccpMult( p, CC_CONTENT_SCALE_FACTOR() );
+        particle->startPos.x /= scaleX_;
+        particle->startPos.y /= scaleY_;
+    }
+    
 	// direction
 	float a = CC_DEGREES_TO_RADIANS( angle + angleVar * CCRANDOM_MINUS1_1() );
 
@@ -584,27 +730,27 @@
 	CCProfilingBeginTimingBlock(_profilingTimer);
 #endif
 
-	CGPoint currentPosition;
-	//if (useBatchNode_) currentPosition = [self.parent convertToWorldSpace:self.position];
-	//else
-	currentPosition = CGPointZero;
+	CGPoint currentPosition = CGPointZero;
 
     //divide by scale to get correct position, issue 1352
 
-	if( positionType_ == kCCPositionTypeFree ) {
+	if( positionType_ == kCCPositionTypeFree) {
 		currentPosition = [self convertToWorldSpace:CGPointZero];
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR() / scaleX_;
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR() / scaleY_;
+     
 	}
-	else if( positionType_ == kCCPositionTypeRelative ) {
+	else if( positionType_ == kCCPositionTypeRelative) {
 	//currentPosition = [self convertToWorldSpace:CGPointZero];
 		currentPosition = position_;
 		currentPosition.x *= CC_CONTENT_SCALE_FACTOR() / scaleX_;
 		currentPosition.y *= CC_CONTENT_SCALE_FACTOR() / scaleY_;
+        
+        // CCLOG(@"currentPos %f %f",currentPosition.x,currentPosition.y);
 	}
 
 	if (visible_)
-	{
+	{        
 		while( particleIdx < particleCount )
 		{
 			tCCParticle *p = &particles[particleIdx];
@@ -721,12 +867,17 @@
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
 					newPos = ccpSub(p->pos, diff);
-				} else
+				}
+                else if (positionType_ == kCCPositionTypeWorld)
+                {
+					newPos = ccpAdd(p->startPos,p->pos);   
+                }
+                else
 					newPos = p->pos;
 
 				//translate newPos to correct position, since matrix transform isn't performed in batchnode
 				//don't update the particle with the new position information, it will interfere with the radius and tangential calculations
-				if (useBatchNode_)
+				if (useBatchNode_ && positionType_ != kCCPositionTypeWorld)
 				{
 						newPos.x += positionInPixels_.x;
 						newPos.y += positionInPixels_.y;
@@ -1029,6 +1180,5 @@
 	transformSystemDirty_ = YES;
 	[super setScaleY:newScaleY];
 }
-
 
 @end

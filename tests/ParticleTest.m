@@ -57,7 +57,9 @@ static NSString *transitions[] = {
 	@"Issue872",
 	@"Issue870",
 	@"AnimatedParticles",
+    @"RotateSystem",
     @"PremultipliedAlphaTest",
+
 };
 
 Class nextAction(void);
@@ -127,7 +129,7 @@ Class restartAction()
 								   [CCMenuItemFont itemFromString: @"Free Movement"],
 								   [CCMenuItemFont itemFromString: @"Relative Movement"],
 								   [CCMenuItemFont itemFromString: @"Grouped Movement"],
-
+                                    [CCMenuItemFont itemFromString: @"World Translations"],
 								 nil];
 
 		CCMenu *menu = [CCMenu menuWithItems:item1, item2, item3, item4, nil];
@@ -160,6 +162,14 @@ Class restartAction()
 	}
 
 	return self;
+}
+
+- (void) setEmitter:(CCParticleSystem *)emitter
+{
+    [emitter retain];
+    [emitter_ release];
+    emitter_ = emitter;
+    emitter_.worldNode = background;
 }
 
 - (void) dealloc
@@ -237,12 +247,14 @@ Class restartAction()
 
 -(void) toggleCallback: (id) sender
 {
-	if( emitter_.positionType == kCCPositionTypeGrouped )
+	if( emitter_.positionType == kCCPositionTypeWorld )
 		emitter_.positionType = kCCPositionTypeFree;
 	else if( emitter_.positionType == kCCPositionTypeFree )
 		emitter_.positionType = kCCPositionTypeRelative;
 	else if( emitter_.positionType == kCCPositionTypeRelative )
 		emitter_.positionType = kCCPositionTypeGrouped;
+    else if( emitter_.positionType == kCCPositionTypeGrouped )
+		emitter_.positionType = kCCPositionTypeWorld;
 }
 
 -(void) restartCallback: (id) sender
@@ -387,7 +399,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:50];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithTotalParticles:50] autorelease];
 
 	[background addChild:emitter_ z:10];
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -469,7 +481,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:300];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithTotalParticles:300] autorelease];
 	[background addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars2-grayscale.png"];
@@ -700,7 +712,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	emitter_ = [[CCParticleSystemPoint alloc] initWithTotalParticles:1000];
+	self.emitter = [[[CCParticleSystemPoint alloc] initWithTotalParticles:1000] autorelease];
 	[background addChild:emitter_ z:10];
 
 	CGSize s = [[CCDirector sharedDirector] winSize];
@@ -780,7 +792,7 @@ Class restartAction()
 -(void) onEnter
 {
 	[super onEnter];
-	emitter_ = [[CCParticleFlower alloc] initWithTotalParticles:500];
+	self.emitter = [[[CCParticleFlower alloc] initWithTotalParticles:500] autorelease];
 	[background addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -820,11 +832,15 @@ Class restartAction()
 	[p addChild:p2 z:2 parallaxRatio:ccp(1.5f,1) positionOffset:ccp(0,50)];
 
 
-	emitter_ = [[CCParticleFlower alloc] initWithTotalParticles:500];
+	self.emitter = [[[CCParticleFlower alloc] initWithTotalParticles:500] autorelease];
+    
+    //needed for pos type world 
+    self.emitter.worldNode = p1;
 	[p1 addChild:emitter_ z:10];
 	[emitter_ setPosition:ccp(250,200)];
 
-	id par = [[CCParticleSun alloc] initWithTotalParticles:250];
+	CCParticleSystem *par = [[[CCParticleSun alloc] initWithTotalParticles:250] autorelease];
+    par.worldNode = p2; 
 	[p2 addChild:par z:10];
 	[par release];
 
@@ -855,6 +871,7 @@ Class restartAction()
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpookyPeas.plist"];
 	[self addChild:emitter_ z:10];
+    emitter_.worldNode = self;
 
 	// custom spinning
 	emitter_.startSpin = 0;
@@ -881,6 +898,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/SpinningPeas.plist"];
+    emitter_.worldNode = self;
 
 	[self addChild:emitter_ z:10];
 }
@@ -904,6 +922,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/LavaFlow.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 
 }
@@ -922,11 +941,13 @@ Class restartAction()
 	[super onEnter];
 
 	[self setColor:ccBLACK];
+    
+    [self removeChild:background cleanup:YES];
+	background = nil;
+    
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/ExplodingRing.plist"];
 	[self addChild:emitter_ z:10];
-
-	[self removeChild:background cleanup:YES];
-	background = nil;
+    emitter_.worldNode = self;
 }
 
 -(NSString *) title
@@ -947,6 +968,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Comet.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -968,6 +990,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BurstPipe.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -989,6 +1012,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BoilingFoam.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -1010,6 +1034,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Flower.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -1037,6 +1062,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -1064,6 +1090,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Galaxy.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -1089,6 +1116,8 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/debian.plist"];
+    emitter_.worldNode = self;
+    
 	[self addChild:emitter_ z:10];
 }
 
@@ -1114,6 +1143,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/Phoenix.plist"];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 }
 
@@ -1137,6 +1167,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/StayPut.plist"];
+    emitter_.worldNode = self;
     self.emitter.posVar = ccp(0.f,0.f);
     self.emitter.totalParticles = 1;
 	[self addChild:self.emitter];
@@ -1163,7 +1194,8 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithTotalParticles:200] autorelease];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -1247,7 +1279,8 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:200];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithTotalParticles:200] autorelease];
+    emitter_.worldNode = self;
 	[self addChild:emitter_ z:10];
 
 	emitter_.texture = [[CCTextureCache sharedTextureCache] addImage: @"stars-grayscale.png"];
@@ -1332,7 +1365,8 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	emitter_ = [[CCParticleSystemQuad alloc] initWithTotalParticles:100];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithTotalParticles:100] autorelease];
+    emitter_.worldNode = self;
 
 	[self addChild:emitter_ z:10];
 
@@ -1424,7 +1458,9 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	emitter_ = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/Upsidedown.plist"];
+	self.emitter = [[[CCParticleSystemQuad alloc] initWithFile:@"Particles/Upsidedown.plist"] autorelease];
+    emitter_.worldNode = self;
+
 	[self addChild:emitter_ z:10];
 }
 
@@ -1450,12 +1486,13 @@ Class restartAction()
 	[self removeChild:background cleanup:YES];
 	background = nil;
 
-	CCParticleSystemQuad *system = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/SpinningPeas.plist"];
+	CCParticleSystemQuad *system = [[[CCParticleSystemQuad alloc] initWithFile:@"Particles/SpinningPeas.plist"] autorelease];
+    emitter_.worldNode = self;
 
 	[system setTexture: [[CCTextureCache sharedTextureCache] addImage:@"particles.png"] withRect:CGRectMake(0,0,32,32)];
 	[self addChild: system z:10];
 
-	emitter_ = system;
+	self.emitter = system;
 
 	index = 0;
 
@@ -1494,6 +1531,7 @@ Class restartAction()
 	CCSpriteFrameCache* sfc = [CCSpriteFrameCache sharedSpriteFrameCache];
 	[sfc addSpriteFramesWithFile:@"animations/animated_particles.plist"];
 
+
 	CCAnimation* anim2 = [CCAnimation animation];
 
 	[anim2 addFrame:[sfc spriteFrameByName:@"coco_1.png"] delay:0.5f];
@@ -1508,7 +1546,7 @@ Class restartAction()
 	//new properties in plist define startScale, startScaleVar, endScale, endScaleVar
 	for (int i = 0; i < 4; i++)
 	{
-		CCParticleSystemQuad *system = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/OneParticle.plist"];
+		CCParticleSystemQuad *system = [[CCParticleSystemQuad alloc] initWithFile:@"Particles/OneParticle.plist"] ;
 
 		system.emissionRate = 1.f;
 
@@ -1517,6 +1555,8 @@ Class restartAction()
 		[system setAnimation:anim2 withAnchorPoint:ccp(0.5f,0.0f)];
 		[system setAnimationType:i];
 
+        self.emitter = system;
+        emitter_.worldNode = self;
 		[self addChild: system z:10];
 		[system release];
 
@@ -1558,6 +1598,7 @@ Class restartAction()
 	background = nil;
 
 	self.emitter = [CCParticleSystemQuad particleWithFile:@"Particles/BoilingFoam.plist"];
+    emitter_.worldNode = self;
 
 	NSAssert([self.emitter doesOpacityModifyRGB], @"Particle texture does not have premultiplied alpha, test is useless");
 
@@ -1575,6 +1616,99 @@ Class restartAction()
 	self.emitter.startColorVar = self.emitter.endColorVar = ccc4f(0, 0, 0, 0);
 
 	[self addChild:emitter_ z:10];
+}
+
+@end
+
+@implementation RotateSystem
+
+-(void) onEnter
+{
+	//
+	// Purpose of this test:
+	// Emitted fire shall NOT move or rotate with girl, but emitter shall follow girl (creating a trail).
+	// Emitted fire shall not move relative the layer when layer is moved up and down and rotated. There shall not be a
+    // fire flames after the girl when the layer is moved (no trail)
+    // It shall not matter if the girl or the parent is rotated. The fire shall be the same.
+    
+    [super onEnter];
+    
+
+	[self removeChild:background cleanup:YES];
+	background = nil;
+
+    CGSize s = [[CCDirector sharedDirector] winSize];
+    
+    // Total time for the sequence below is 26 seconds
+    
+    CCLayer *sublayer = [CCLayer node];
+    CCSprite* temp = [CCSprite spriteWithFile:@"background3.png"];
+    [sublayer addChild:temp z:-1];
+    
+    id moveLayer = [CCMoveBy actionWithDuration:1.0 position:ccp(0,100)];
+    id rotateLayer = [CCRotateBy actionWithDuration:1.0 angle:90];
+    id delayForGirlAndParentMoves = [CCDelayTime actionWithDuration:22.0];
+ 
+    CCSequence *seqLayer = [CCSequence actions: delayForGirlAndParentMoves, moveLayer, [moveLayer reverse], rotateLayer, [rotateLayer reverse], nil]; // 4 seconds own time
+    [sublayer runAction: [CCRepeatForever actionWithAction:seqLayer]];
+
+    CCSprite *girl = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+    
+    id delayForLayerAndParentMoves = [CCDelayTime actionWithDuration:15.0];
+    id rotateGirl = [CCRotateBy actionWithDuration:9.0 angle:720];
+    id holdGirlToGatherFire = [CCDelayTime actionWithDuration:2.0];
+    id seqGirl = [CCSequence actions: rotateGirl, holdGirlToGatherFire, delayForLayerAndParentMoves, nil]; // 11 seconds own time
+    
+    [girl runAction: [CCRepeatForever actionWithAction:seqGirl]];
+
+    CCParticleFire *fire = [[[CCParticleFire alloc] initWithTotalParticles:100] autorelease];
+
+    self.emitter = fire;
+    
+    fire.position = ccp(0, 0);
+    fire.speed = 0;
+    fire.speedVar = 0;
+    fire.angle = 180;
+    fire.angleVar = 20;
+    fire.endSize =0;
+
+    fire.posVar = ccp(5,5);
+    fire.life = 3;
+    fire.lifeVar = 0;
+    
+    [girl addChild:fire z:2];
+
+    //the node that the particle system takes the transformations from (the layer that you can scale, rotate, translate to view the world)
+    fire.worldNode = sublayer;
+    
+    CCSprite *girlsParent = [[[CCSprite alloc] initWithFile:@"grossini.png"] autorelease];
+    
+    girlsParent.position = ccp(180, s.height/2);
+    [girlsParent addChild:girl];
+    [sublayer addChild:girlsParent z:1];
+   
+    id delayForLayerMoves = [CCDelayTime actionWithDuration:4.0];
+    id delayForGirlMoves = [CCDelayTime actionWithDuration:11.0];
+    id rotateParent = [CCRotateBy actionWithDuration:3.0 angle:360];
+    id moveParent = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+    id holdParentToGatherFire = [CCDelayTime actionWithDuration:2.0];
+
+	id seqParent = [CCSequence actions: delayForGirlMoves, moveParent, [moveParent reverse], rotateParent, holdParentToGatherFire, delayForLayerMoves, nil]; // 11 seconds own time
+    
+    [girlsParent runAction: [CCRepeatForever actionWithAction:seqParent]];
+    
+    [self addChild:sublayer z:0 tag:109];
+
+}
+
+-(NSString *) title
+{
+	return @"pos type world";
+}
+
+-(NSString*) subtitle
+{
+	return @"moves/rotates along with layer, not with sprites";
 }
 
 @end

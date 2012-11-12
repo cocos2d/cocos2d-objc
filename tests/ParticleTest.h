@@ -34,7 +34,7 @@
 	CCSprite			*background;
 }
 
-@property (readwrite,retain) CCParticleSystem *emitter;
+@property (readwrite,retain, nonatomic) CCParticleSystem *emitter;
 
 -(NSString*) title;
 -(NSString*) subtitle;
@@ -184,5 +184,9 @@
 @end
 
 @interface PremultipliedAlphaTest : ParticleDemo
+{}
+@end
+
+@interface RotateSystem : ParticleDemo
 {}
 @end

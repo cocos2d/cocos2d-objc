@@ -201,6 +201,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			ccglOrtho(0, size.width, 0, size.height, -1024 * CC_CONTENT_SCALE_FACTOR(), 1024 * CC_CONTENT_SCALE_FACTOR());
 			glMatrixMode(GL_MODELVIEW);
 			glLoadIdentity();
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ProjectionChanged" object:nil];
 			break;
 
 		case kCCDirectorProjection3D:
@@ -224,6 +225,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			gluLookAt( size.width/2, size.height/2, zeye,
 					  size.width/2, size.height/2, 0,
 					  0.0f, 1.0f, 0.0f);
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"ProjectionChanged" object:nil];
 			break;
 		}
 
@@ -232,9 +234,11 @@ CGFloat	__ccContentScaleFactor = 1;
 				[projectionDelegate_ updateProjection];
 			break;
 
+
 		default:
-			CCLOG(@"cocos2d: Director: unrecognized projecgtion");
+			CCLOG(@"cocos2d: Director: unrecognized projection");
 			break;
+        
 	}
 
 	projection_ = projection;

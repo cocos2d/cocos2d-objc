@@ -92,6 +92,8 @@ typedef enum {
 
 	/** Living particles are attached to the emitter and are translated along with it. */
 	kCCPositionTypeGrouped,
+    /** lived particles are put on the location of the emitter, but are free from any parent transformations (including the emitter). The only transformations that are applied are the ones from worldNode. Useful to create a trail of particles when also needing to move/rotate/zoom the world  */
+    kCCPositionTypeWorld
 }tCCPositionType;
 
 // backward compatible
@@ -142,7 +144,7 @@ typedef struct sCCParticle {
 	ccTime		elapsed;
 	ccTime		split;
 	NSUInteger  currentFrame;
-
+ 
 }tCCParticle;
 
 typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
@@ -337,8 +339,11 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	//contains offset positions for vertex and precalculated texture coordinates
 	ccAnimationFrameData	*animationFrameData_;
 	tCCParticleAnimationType animationType_;
-
-
+    
+    //used to cache matrix from glulookat if projection is 3d and positionType is kCCPositionTypeWorld
+    GLfloat *cachedLookAtMatrix_;
+    CCNode* worldNode_;
+   
 // profiling
 #if CC_ENABLE_PROFILERS
 	CCProfilingTimer* _profilingTimer;
@@ -477,6 +482,13 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  @since 1.1
  */
 @property (nonatomic,readwrite) tCCParticleAnimationType animationType;
+
+/** The node that represents the wold. E.g. if you have a layer which moves/rotates/scales the world, set it here 
+    @since 1.1 RC1
+ */
+@property (nonatomic,assign) CCNode* worldNode;
+
+
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
 	http://particledesigner.71squared.com/
