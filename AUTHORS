@@ -17,6 +17,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* andyispani:
+	CocosDenshion can be muted before loading a sound file. patch
+
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	Director: Fixed the initial flicker + correct size at startup
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
@@ -79,7 +82,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fix assert on Texture when updating filter on NPOT textures
 	Director iOS: Returns correct GL value for coordinates event in custom projections	
 
-* Vargusz (https://github.com/vargusz)
+* Gábor Varga (https://github.com/vargusz)
 	Fixed possible memory leak in RadialTransitions
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
