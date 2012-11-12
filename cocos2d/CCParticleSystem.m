@@ -345,9 +345,6 @@
 		updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
 		updateParticleImp = (CC_UPDATE_PARTICLE_IMP) [self methodForSelector:updateParticleSel];
 
-		//for batchNode
-		transformSystemDirty_ = NO;
-
 		// animation
 		useAnimation_ = NO;
 		totalFrameCount_ = 0;
@@ -434,7 +431,11 @@
             glMultMatrixf(cachedLookAtMatrix_);
         }
         
-        glMultMatrixf([worldNode_ transformGL]);
+        CGAffineTransform t = [worldNode_ nodeToWorldTransform];
+        GLfloat m[16];
+        CGAffineToGL(&t, m);
+        
+        glMultMatrixf(m);
     }
     
 	if( vertexZ_ )
@@ -915,7 +916,6 @@
 				}
 			}
 		}//while
-		transformSystemDirty_ = NO;
 	}
 
 #if CC_ENABLE_PROFILERS
@@ -1160,31 +1160,6 @@
 
 -(void) batchNodeInitialization
 {//override this
-}
-
-//don't use a transform matrix, this is faster
--(void) setScale:(float) s
-{
-	transformSystemDirty_ = YES;
-	[super setScale:s];
-}
-
--(void) setRotation: (float)newRotation
-{
-	transformSystemDirty_ = YES;
-	[super setRotation:newRotation];
-}
-
--(void) setScaleX: (float)newScaleX
-{
-	transformSystemDirty_ = YES;
-	[super setScaleX:newScaleX];
-}
-
--(void) setScaleY: (float)newScaleY
-{
-	transformSystemDirty_ = YES;
-	[super setScaleY:newScaleY];
 }
 
 @end

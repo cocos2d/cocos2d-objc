@@ -93,7 +93,7 @@ typedef enum {
 	/** Living particles are attached to the emitter and are translated along with it. */
 	kCCPositionTypeGrouped,
     /** lived particles are put on the location of the emitter, but are free from any parent transformations (including the emitter). The only transformations that are applied are the ones from worldNode. Useful to create a trail of particles when also needing to move/rotate/zoom the world 
-     
+          
         ONLY works for non batched particle systems
      */
     kCCPositionTypeWorld
@@ -332,8 +332,6 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	BOOL useBatchNode_;
 	//index of system in batch node array
 	NSUInteger atlasIndex_;
-	//YES if scaled or rotated
-	BOOL transformSystemDirty_;
 
 	// animation
 	BOOL				useAnimation_;
@@ -345,7 +343,10 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
     
     //used to cache matrix from glulookat if projection is 3d and positionType is kCCPositionTypeWorld
     GLfloat *cachedLookAtMatrix_;
-    CCNode* worldNode_;
+    CCNode *worldNode_;
+    
+    GLfloat *cachedParentMatrix_;
+    CCNode *parentNode_;
    
 // profiling
 #if CC_ENABLE_PROFILERS

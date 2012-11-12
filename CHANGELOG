@@ -1,6 +1,5 @@
 version 1.1-RC1 ..-..-2012
 . [NEW] glu.c gluLookAt performs a bit better, added gluLookAtMatrix which returns the gluLookAtMatrix
-. [NEW] CCNode: made transformGL, the GL transformation matrix, a public property
 . [NEW] CCParticleSystem: added kCCPositionTypeWorld, in this mode the translations of the emitter aren't taken into account, only the transformations from the property worldNode. 
 
 version 1.1-RC0 22-10-2012
