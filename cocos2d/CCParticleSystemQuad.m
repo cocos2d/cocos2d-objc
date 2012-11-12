@@ -528,6 +528,7 @@
 {
 	if (!useBatchNode_)
 	{
+        NSAssert(positionType_ != kCCPositionTypeWorld, @"position type world not yet supported for batched particle systems");
 		[super useBatchNode:batchNode];
 
 		if (quads_) free(quads_);

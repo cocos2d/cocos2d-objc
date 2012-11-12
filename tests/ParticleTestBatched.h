@@ -207,3 +207,6 @@
 {}
 @end
 
+@interface RotateSystem : ParticleDemoBatch
+@end
+

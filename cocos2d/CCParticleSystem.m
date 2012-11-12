@@ -1133,6 +1133,12 @@
 	return mode.B.rotatePerSecondVar;
 }
 
+-(void) setPositionType:(tCCPositionType)positionType
+{
+    NSAssert(!useBatchNode_ || (useBatchNode_ && positionType_ != kCCPositionTypeWorld), @"position type world not yet supported for batched particle systems");
+    positionType_ = positionType;
+}
+
 #pragma mark ParticleSystem - methods for batchNode rendering
 
 -(void) useSelfRender

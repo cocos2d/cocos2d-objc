@@ -60,6 +60,7 @@ static NSString *transitions[] = {
 	@"MultipleParticleSystemsBatched",
 	@"AddAndDeleteParticleSystems",
 	@"ReorderParticleSystems",
+    @"RotateSystem",
 	@"AnimatedParticles",
    	@"LotsOfAnimatedParticles",
 
@@ -2158,6 +2159,122 @@ Class restartAction()
 }
 @end
 
+@implementation RotateSystem
+
+-(void) onEnter
+{
+	//
+	// Purpose of this test:
+	// Emitted fire shall NOT move or rotate with girl, but emitter shall follow girl (creating a trail).
+	// Emitted fire shall not move relative the layer when layer is moved up and down and rotated. There shall not be a
+    // fire flames after the girl when the layer is moved (no trail)
+    // It shall not matter if the girl or the parent is rotated. The fire shall be the same.
+    
+    [super onEnter];
+    
+    //[self setColor:ccBLACK];
+	
+	batchNode_ = [CCParticleBatchNode  particleBatchNodeWithFile:@"fire.png" capacity:150 useQuad:YES additiveBlending:YES];
+    
+	[self addChild:batchNode_ z:1 tag:2];
+
+    
+	[self removeChild:background cleanup:YES];
+	background = nil;
+    
+    CGSize s = [[CCDirector sharedDirector] winSize];
+    
+    // Total time for the sequence below is 26 seconds
+    
+    CCLayer *sublayer = [CCLayer node];
+    CCSprite* temp = [CCSprite spriteWithFile:@"background3.png"];
+    [sublayer addChild:temp z:-1];
+    
+    id moveLayer = [CCMoveBy actionWithDuration:1.0 position:ccp(0,100)];
+    id rotateLayer = [CCRotateBy actionWithDuration:1.0 angle:90];
+    id delayForGirlAndParentMoves = [CCDelayTime actionWithDuration:22.0];
+    
+    CCSequence *seqLayer = [CCSequence actions: delayForGirlAndParentMoves, moveLayer, [moveLayer reverse], rotateLayer, [rotateLayer reverse], nil]; // 4 seconds own time
+    [sublayer runAction: [CCRepeatForever actionWithAction:seqLayer]];
+    
+    CCSprite *girl = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+    
+    id delayForLayerAndParentMoves = [CCDelayTime actionWithDuration:15.0];
+    id rotateGirl = [CCRotateBy actionWithDuration:9.0 angle:720];
+    id holdGirlToGatherFire = [CCDelayTime actionWithDuration:2.0];
+    id seqGirl = [CCSequence actions: rotateGirl, holdGirlToGatherFire, delayForLayerAndParentMoves, nil]; // 11 seconds own time
+    
+    [girl runAction: [CCRepeatForever actionWithAction:seqGirl]];
+    
+    CCParticleFire *fire = [[[CCParticleFire alloc] initWithTotalParticles:100] autorelease];
+    
+    self.emitter = fire;
+    
+    
+    CCSprite *girlsParent = [[[CCSprite alloc] initWithFile:@"grossini.png"] autorelease];
+    
+    girlsParent.position = ccp(180, s.height/2);
+    [girlsParent addChild:girl];
+    [sublayer addChild:girlsParent z:1];
+    
+    id delayForLayerMoves = [CCDelayTime actionWithDuration:4.0];
+    id delayForGirlMoves = [CCDelayTime actionWithDuration:11.0];
+    id rotateParent = [CCRotateBy actionWithDuration:3.0 angle:360];
+    id moveParent = [CCMoveBy actionWithDuration:3 position:ccp(350,0)];
+    id holdParentToGatherFire = [CCDelayTime actionWithDuration:2.0];
+    
+	id seqParent = [CCSequence actions: delayForGirlMoves, moveParent, [moveParent reverse], rotateParent, holdParentToGatherFire, delayForLayerMoves, nil]; // 11 seconds own time
+    
+    [girlsParent runAction: [CCRepeatForever actionWithAction:seqParent]];
+    
+    [self addChild:sublayer z:0 tag:109];
+
+    
+    //fire attached to batch node, so need to calculate pos
+    
+    CGPoint pos = [girl convertToWorldSpace:CGPointZero];
+    fire.position = [batchNode_ convertToNodeSpace:pos];
+    fire.speed = 0;
+    fire.speedVar = 0;
+    fire.angle = 180;
+    fire.angleVar = 20;
+    fire.endSize =0;
+    
+    fire.posVar = ccp(5,5);
+    fire.life = 3;
+    fire.lifeVar = 0;
+    
+    [batchNode_ addChild:fire z:2];
+    
+    //the node that the particle system takes the transformations from (the layer that you can scale, rotate, translate to view the world)
+    fire.worldNode = sublayer;
+    
+        
+}
+
+-(NSString *) title
+{
+	return @"pos type world";
+}
+
+-(NSString*) subtitle
+{
+	return @"moves/rotates along with layer, not with sprites";
+}
+
+-(void) toggleCallback: (id) sender
+{
+	if( emitter_.positionType == kCCPositionTypeWorld )
+		emitter_.positionType = kCCPositionTypeFree;
+	else if( emitter_.positionType == kCCPositionTypeFree )
+		emitter_.positionType = kCCPositionTypeRelative;
+	else if( emitter_.positionType == kCCPositionTypeRelative )
+		emitter_.positionType = kCCPositionTypeGrouped;
+    else if( emitter_.positionType == kCCPositionTypeGrouped )
+		emitter_.positionType = kCCPositionTypeWorld;
+}
+
+@end
 
 #pragma mark -
 #pragma mark App Delegate

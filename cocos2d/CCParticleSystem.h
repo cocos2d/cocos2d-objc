@@ -92,7 +92,10 @@ typedef enum {
 
 	/** Living particles are attached to the emitter and are translated along with it. */
 	kCCPositionTypeGrouped,
-    /** lived particles are put on the location of the emitter, but are free from any parent transformations (including the emitter). The only transformations that are applied are the ones from worldNode. Useful to create a trail of particles when also needing to move/rotate/zoom the world  */
+    /** lived particles are put on the location of the emitter, but are free from any parent transformations (including the emitter). The only transformations that are applied are the ones from worldNode. Useful to create a trail of particles when also needing to move/rotate/zoom the world 
+     
+        ONLY works for non batched particle systems
+     */
     kCCPositionTypeWorld
 }tCCPositionType;
 
