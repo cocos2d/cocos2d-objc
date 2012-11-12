@@ -50,6 +50,9 @@ Contributors (alphabetically ordered):
 
 * Dave Tatch
     CCActionTween uses keyPath instead of key for more possible use cases
+    
+* Eternity 
+    Provided test case for new particle system position type world
 
 * Fabian Rueger
     Provided Beacon.png for new spriteTest
