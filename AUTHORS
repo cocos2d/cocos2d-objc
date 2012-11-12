@@ -25,6 +25,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
 	LabelBMFont: If the character is not supported, logs a warning
 
+* Gábor Varga (https://github.com/vargusz)
+	Fixed possible memory leak in RadialTransitions
+	Events in tratisions are disabled/enabled at onEnter/onExit. patch.
+
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
@@ -81,9 +85,6 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Author of CCPhysicsDebugNode and CCPhysicsSprite
 	Fix assert on Texture when updating filter on NPOT textures
 	Director iOS: Returns correct GL value for coordinates event in custom projections	
-
-* Gábor Varga (https://github.com/vargusz)
-	Fixed possible memory leak in RadialTransitions
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
