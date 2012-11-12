@@ -1,4 +1,6 @@
 version 2.1-beta4  XX-Dec-2012
+. [FIX] From cocos2d v1.1-rc0:
+		Animate Action: Works as expected when display frame rate > than FPS (issue #1438)
 . [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
 . [FIX] Transitions: Fixed possible memory leak in some tranitions
 		Events are enabled/disabled at onEnter/onExit preventing possible bugs
