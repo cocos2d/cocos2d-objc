@@ -338,7 +338,9 @@
 
 -(void) dealloc
 {
-	[self unscheduleUpdate];
+	// Since the scheduler retains the "target (in this case the ParticleSystem)
+	// it is not needed to call "unscheduleUpdate" here. In fact, it will be called in "cleanup"
+//	[self unscheduleUpdate];
 
 	free( particles );
 
