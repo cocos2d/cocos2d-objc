@@ -5,6 +5,8 @@ version 2.1-beta4  XX-Dec-2012
 . [FIX] Transitions: Fixed possible memory leak in some tranitions
 		Events are enabled/disabled at onEnter/onExit preventing possible bugs
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
+		JS tests are using a new repo: cocos2d-js-tests
+. [3RD] JS Bindings: Updated to v0.4. Chipmunk-JS + cocos2d-html5 is compatible with cocos2d/chipmunk + JSB
 
 
 version 2.1-beta3  7-Nov-2012
