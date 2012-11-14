@@ -24,6 +24,10 @@
 
 #import "CocosDenshion.h"
 
+#ifdef CD_USE_COCOS2D_FILEUTILS
+#import "CCFileUtils.h"
+#endif
+
 ALvoid  alBufferDataStaticProc(const ALint bid, ALenum format, ALvoid* data, ALsizei size, ALsizei freq);
 ALvoid  alcMacOSXMixerOutputRateProc(const ALdouble value);
 
@@ -84,6 +88,9 @@ float const kCD_GainDefault = 1.0f;
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
+#ifdef CD_USE_COCOS2D_FILEUTILS
+    return [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:NULL ignoreResolutions:YES];
+#else
 	// do not convert an absolute path (starting with '/')
 	if(([relPath length] > 0) && ([relPath characterAtIndex:0] == '/'))
 	{
@@ -101,6 +108,7 @@ float const kCD_GainDefault = 1.0f;
 		fullpath = relPath;
 
 	return fullpath;
+#endif
 }
 
 @end
