@@ -48,6 +48,7 @@
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"
+#import "../../Support/CCFileUtils.h"
 
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
@@ -315,6 +316,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setContentScaleFactor:newScale];
 
 	// Load Hi-Res FPS label
+	[[CCFileUtils sharedFileUtils] buildSearchChain];
 	[self createStatsLabel];
 
 	return YES;
