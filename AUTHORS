@@ -20,6 +20,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * andyispani:
 	CocosDenshion can be muted before loading a sound file. patch
 
+* Ben Trengrove (http://bentrengrove.com/)
+	Added patch to support iPhone5 support in FileUtils
+
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	Director: Fixed the initial flicker + correct size at startup
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
@@ -63,6 +66,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Mike Daley (http://www.71squared.com/)
 	LabelBMFont: contextSize honors shadows and strokes patch.
 
+* Nestor Todorov (https://github.com/supernes)
+	Added patch to support iPhone5 support in FileUtils
+
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
 
@@ -89,6 +95,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
+	FileUtils: Added support to search files in subdirectories, and search files without suffix/directories
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)

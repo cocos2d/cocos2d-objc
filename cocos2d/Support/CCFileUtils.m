@@ -31,10 +31,25 @@
 #import "../ccConfig.h"
 #import "../ccTypes.h"
 
+NSString *kCCFileUtilsDefault = @"default";
+#ifdef __CC_PLATFORM_IOS
+NSString *kCCFileUtilsiPad = @"ipad";
+NSString *kCCFileUtilsiPadHD = @"ipadhd";
+NSString *kCCFileUtilsiPhone = @"iphone";
+NSString *kCCFileUtilsiPhoneHD = @"iphonehd";
+NSString *kCCFileUtilsiPhone5 = @"iphone5";
+NSString *kCCFileUtilsiPhone5HD = @"iphone5hd";
+#elif __CC_PLATFORM_MAC
+NSString *kCCFileUtilsMac = @"";
+NSString *kCCFileUtilsMacHD = @"machd";
+#endif
+
 #ifdef __CC_PLATFORM_IOS
 enum {
 	kCCiPhone,
 	kCCiPhoneRetinaDisplay,
+	kCCiPhone5,
+	kCCiPhone5RetinaDisplay,
 	kCCiPad,
 	kCCiPadRetinaDisplay,
 };
@@ -80,15 +95,15 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 @interface CCCacheValue : NSObject
 {
-	NSString			*fullpath_;
-	ccResolutionType	resolutionType_;
+	NSString			*_fullpath;
+	ccResolutionType	_resolutionType;
 }
 @property (nonatomic, readwrite, retain) NSString *fullpath;
 @property (nonatomic, readwrite ) ccResolutionType resolutionType;
 @end
 
 @implementation CCCacheValue
-@synthesize fullpath = fullpath_, resolutionType = resolutionType_;
+@synthesize fullpath = _fullpath, resolutionType = _resolutionType;
 -(id) initWithFullPath:(NSString*)path resolutionType:(ccResolutionType)resolutionType
 {
 	if( (self=[super init]) )
@@ -102,9 +117,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 - (void)dealloc
 {
-    [fullpath_ release];
+	[_fullpath release];
 
-    [super dealloc];
+	[super dealloc];
 }
 @end
 
@@ -114,23 +129,15 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(NSString *) removeSuffix:(NSString*)suffix fromPath:(NSString*)path;
 -(BOOL) fileExistsAtPath:(NSString*)string withSuffix:(NSString*)suffix;
 -(NSInteger) runningDevice;
+-(void) buildSearchChain;
 @end
 
 @implementation CCFileUtils
 
-@synthesize fileManager=fileManager_, bundle=bundle_;
-@synthesize enableFallbackSuffixes = enableFallbackSuffixes_;
-@synthesize resolutionDirectoryChain = resolutionDirectoryChain_;
-@synthesize resourcePathChain = resourcePathChain_;
-
-#ifdef __CC_PLATFORM_IOS
-@synthesize iPhoneRetinaDisplaySuffix = iPhoneRetinaDisplaySuffix_;
-@synthesize iPadSuffix = iPadSuffix_;
-@synthesize iPadRetinaDisplaySuffix = iPadRetinaDisplaySuffix_;
-#elif defined(__CC_PLATFORM_MAC)
-@synthesize macSuffix = macSuffix_;
-@synthesize macRetinaDisplaySuffix = macRetinaDisplaySuffix_;
-#endif // __CC_PLATFORM_IOS
+@synthesize fileManager=_fileManager, bundle=_bundle;
+@synthesize enableFallbackChain = _enableFallbackChain;
+@synthesize searchChain = _searchChain;
+@synthesize suffixesDict = _suffixesDict, directoriesDict = _directoriesDict;
 
 + (id)sharedFileUtils
 {
@@ -145,27 +152,57 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(id) init
 {
 	if( (self=[super init])) {
-		fileManager_ = [[NSFileManager alloc] init];
+		_fileManager = [[NSFileManager alloc] init];
 
-		fullPathCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
-        fullPathCacheNoResolutions_ = [[NSMutableDictionary alloc] initWithCapacity:30];
-		removeSuffixCache_ = [[NSMutableDictionary alloc] initWithCapacity:30];
+		_fullPathCache = [[NSMutableDictionary alloc] initWithCapacity:30];
+		_fullPathNoResolutionsCache = [[NSMutableDictionary alloc] initWithCapacity:30];
+		_removeSuffixCache = [[NSMutableDictionary alloc] initWithCapacity:30];
 		
-		bundle_ = [[NSBundle mainBundle] retain];
+		_bundle = [[NSBundle mainBundle] retain];
 
-		enableFallbackSuffixes_ = NO;
-        
-        self.resourcePathChain = [NSArray arrayWithObject:[bundle_ resourcePath]];
-
+		_enableFallbackChain = NO;
+		
+		_searchChain = [[NSMutableArray alloc] initWithCapacity:5];
+		
 #ifdef __CC_PLATFORM_IOS
-		iPhoneRetinaDisplaySuffix_ = @"-hd";
-		iPadSuffix_ = @"-ipad";
-		iPadRetinaDisplaySuffix_ = @"-ipadhd";		
+		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+						 @"-ipadhd", kCCFileUtilsiPadHD,
+						 @"-ipad", kCCFileUtilsiPad,
+						 @"", kCCFileUtilsiPhone,
+						 @"-hd", kCCFileUtilsiPhoneHD,
+						 @"-wide", kCCFileUtilsiPhone5,
+						 @"-widehd", kCCFileUtilsiPhone5HD,
+						 @"", kCCFileUtilsDefault,
+						 nil];
+
+		_directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+							@"ipadhd", kCCFileUtilsiPadHD,
+							@"ipad", kCCFileUtilsiPad,
+							@"iphone", kCCFileUtilsiPhone,
+							@"iphonehd", kCCFileUtilsiPhoneHD,
+							@"iphone5", kCCFileUtilsiPhone5,
+							@"iphone5hd", kCCFileUtilsiPhone5HD,
+							@"", kCCFileUtilsDefault,
+							nil];
+
 #elif defined(__CC_PLATFORM_MAC)
-		macRetinaDisplaySuffix_ = @"-machd";
-		macSuffix_ = @"-mac";
+		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+						 @"-mac", kCCFileUtilsMac,
+						 @"-machd", kCCFileUtilsMacHD,
+						 @"", kCCFileUtilsDefault,
+						 nil];
+		
+		_directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+							@"mac", kCCFileUtilsMac,
+							@"machd", kCCFileUtilsMacHD,
+							@"", kCCFileUtilsDefault,
+							nil];
+
 #endif // __CC_PLATFORM_IOS
 
+		_searchMode = kCCFileUtilsSearchSuffix;
+		
+		[self buildSearchChain];
 	}
 	
 	return self;
@@ -173,113 +210,127 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(void) purgeCachedEntries
 {
-	[fullPathCache_ removeAllObjects];
-    [fullPathCacheNoResolutions_ removeAllObjects];
-	[removeSuffixCache_ removeAllObjects];
+	[_fullPathCache removeAllObjects];
+	[_fullPathNoResolutionsCache removeAllObjects];
+	[_removeSuffixCache removeAllObjects];
 }
 
 - (void)dealloc
 {
-    [fileManager_ release];
-	[bundle_ release];
-	[fullPathCache_ release];
-    [fullPathCacheNoResolutions_ release];
-	[removeSuffixCache_ release];
-    [resolutionDirectoryChain_ release];
-    [resourcePathChain_ release];
-	
-#ifdef __CC_PLATFORM_IOS	
-	[iPhoneRetinaDisplaySuffix_ release];
-	[iPadSuffix_ release];
-	[iPadRetinaDisplaySuffix_ release];
-	
-#elif defined(__CC_PLATFORM_MAC)
-	[macRetinaDisplaySuffix_ release];
-	[macSuffix_ release];
+	[_fileManager release];
+	[_bundle release];
 
-#endif // __CC_PLATFORM_MAC
+	[_fullPathCache release];
+	[_fullPathNoResolutionsCache release];
+	[_removeSuffixCache release];
 	
-    [super dealloc];
+	[_suffixesDict release];
+	[_directoriesDict release];
+	[_searchChain release];
+	
+	[super dealloc];
 }
 
-- (void) setupDefaultResolutionDirectoryChainWithFallbacks:(BOOL)useFallbacks
+- (void) buildSearchChain
 {
-    NSInteger device = [self runningDevice];
-    if (device == kCCiPadRetinaDisplay)
-    {
-        if (useFallbacks) self.resolutionDirectoryChain = [NSArray arrayWithObjects:@"-ipadhd", @"-ipad", @"-hd", nil];
-        else self.resolutionDirectoryChain = [NSArray arrayWithObjects:@"-ipadhd", nil];
-    }
-    else if (device == kCCiPad)
-    {
-        if (useFallbacks) self.resolutionDirectoryChain = [NSArray arrayWithObjects: @"-ipad", @"-hd", nil];
-        else self.resolutionDirectoryChain = [NSArray arrayWithObjects:@"-ipad", nil];
-    }
-    else if (device == kCCiPhoneRetinaDisplay)
-    {
-        if (useFallbacks) self.resolutionDirectoryChain = [NSArray arrayWithObjects: @"-hd", @"-ipad", nil];
-        else self.resolutionDirectoryChain = [NSArray arrayWithObjects:@"-hd", nil];
-    }
-    else if (device == kCCiPhone)
-    {
-        self.resolutionDirectoryChain = NULL;
-    }
+	[self buildSearchChainWithFallbacks: _enableFallbackChain];
+}
+
+- (void) buildSearchChainWithFallbacks:(BOOL)useFallbacks
+{
+	NSInteger device = [self runningDevice];
+
+	[_searchChain removeAllObjects];
+	
+#ifdef __CC_PLATFORM_IOS
+	if (device == kCCiPadRetinaDisplay)
+	{
+		[_searchChain addObject:kCCFileUtilsiPadHD];
+		[_searchChain addObject:kCCFileUtilsiPad];
+		if( useFallbacks ) {
+			[_searchChain addObject:kCCFileUtilsiPhone5HD];
+			[_searchChain addObject:kCCFileUtilsiPhoneHD];
+		}
+	}
+	else if (device == kCCiPad)
+	{
+		[_searchChain addObject:kCCFileUtilsiPad];
+		if( useFallbacks ) {
+			[_searchChain addObject:kCCFileUtilsiPhone5HD];
+			[_searchChain addObject:kCCFileUtilsiPhoneHD];
+		}
+	}
+	else if (device == kCCiPhone5RetinaDisplay)
+	{
+		[_searchChain addObject:kCCFileUtilsiPhone5HD];
+		[_searchChain addObject:kCCFileUtilsiPhoneHD];
+		[_searchChain addObject:kCCFileUtilsiPhone5];
+		[_searchChain addObject:kCCFileUtilsiPhone];
+	}
+	else if (device == kCCiPhoneRetinaDisplay)
+	{
+		[_searchChain addObject:kCCFileUtilsiPhoneHD];
+		[_searchChain addObject:kCCFileUtilsiPhone5HD];
+		[_searchChain addObject:kCCFileUtilsiPhone];
+		[_searchChain addObject:kCCFileUtilsiPhone5];
+	}
+	else if (device == kCCiPhone5)
+	{
+		[_searchChain addObject:kCCFileUtilsiPhone5];
+		[_searchChain addObject:kCCFileUtilsiPhone];
+	}
+	else if (device == kCCiPhone)
+	{
+		[_searchChain addObject:kCCFileUtilsiPhone];
+		[_searchChain addObject:kCCFileUtilsiPhone5];
+	}
+	
+#elif defined(__CC_PLATFORM_MAC)
+	if (device == kCCMacRetinaDisplay)
+	{
+		[_searchChain addObject:kCCFileUtilsMacHD];
+		[_searchChain addObject:kCCFileUtilsMac];
+	}
+	else if (device == kCCMac)
+	{
+		[_searchChain addObject:kCCFileUtilsMac];
+	}
+#endif	
+	
+	[_searchChain addObject:kCCFileUtilsDefault];
 }
 
 -(NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
 {
-    // Create full file name with extension)
-    NSString* fileName = NULL;
-    if (ext && ![ext isEqualToString:@""])
-    {
-        fileName = [resource stringByAppendingPathExtension:ext];
-    }
-    else
-    {
-        fileName = resource;
-    }
-    
-    NSFileManager* fm = [NSFileManager defaultManager];
-    
-    if (resourcePathChain_)
-    {
-        // Check all resource directories in chain
-        for (NSString* resDir in resourcePathChain_)
-        {
-            // Append sub path
-            if (subpath && ![subpath isEqualToString:@""])
-            {
-                resDir = [resDir stringByAppendingPathComponent:subpath];
-            }
-            
-            NSString* absFilePath = [resDir stringByAppendingPathComponent:fileName];
-            NSString* absFileName = [absFilePath lastPathComponent];
-            NSString* absFileDir = [absFilePath stringByDeletingLastPathComponent];
-            
-            if (resolutionDirectoryChain_)
-            {
-                // Check extensions for different resolutions
-                for (NSString* resolutionDir in resolutionDirectoryChain_)
-                {
-                    NSString* absResolutionFile = [[absFileDir stringByAppendingPathComponent:resolutionDir] stringByAppendingPathComponent:absFileName];
-                    if ([fm fileExistsAtPath:absResolutionFile])
-                    {
-                        return absResolutionFile;
-                    }
-                }
-            }
-            // Default to non resolution directory
-            if ([fm fileExistsAtPath:absFilePath])
-            {
-                return absFilePath;
-            }
-        }
-    }
-    
-    // Default to normal resource directory
-    return [bundle_ pathForResource:resource
-                             ofType:ext
-                        inDirectory:subpath];
+	// Create full file name with extension)
+	NSString* fileName = NULL;
+	if (ext && ![ext isEqualToString:@""])
+	{
+		fileName = [resource stringByAppendingPathExtension:ext];
+	}
+	else
+	{
+		fileName = resource;
+	}
+	
+	NSFileManager* fm = [NSFileManager defaultManager];
+	
+	// Append sub path
+	if (subpath && ![subpath isEqualToString:@""])
+	{
+		fileName = [fileName stringByAppendingPathComponent:subpath];
+	}
+			
+	// Default to non resolution directory
+	if ([fm fileExistsAtPath:fileName])
+	{
+		return fileName;
+	}
+	
+	// Default to normal resource directory
+	return [_bundle pathForResource:resource
+							 ofType:ext
+						inDirectory:subpath];
 }
 
 -(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
@@ -325,7 +376,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 												   ofType:nil
 											  inDirectory:imageDirectory];
 	}
-	else if( [fileManager_ fileExistsAtPath:newName] )
+	else if( [_fileManager fileExistsAtPath:newName] )
 		ret = newName;
 
 	if( ! ret )
@@ -334,118 +385,137 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return ret;
 }
 
--(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
+-(NSString*) getPath:(NSString*)path forDirectory:(NSString*)directory
 {
-    if ([relPath isAbsolutePath]) return relPath;
-    
-    NSString* path = [fullPathCacheNoResolutions_ objectForKey:relPath];
-    if (path) return path;
-    
-    if (resourcePathChain_)
-    {
-        for (NSString* resDir in resourcePathChain_)
-        {
-            path = [resDir stringByAppendingPathComponent:relPath];
-            if ([fileManager_ fileExistsAtPath:path])
-            {
-                // Save in cache
-                [fullPathCacheNoResolutions_ setObject:path forKey:relPath];
-                
-                return path;
-            }
-        }
-    }
-    
-    // Default to normal resource directory
-    path = [bundle_ pathForResource:[relPath lastPathComponent]
-                             ofType:nil
-                        inDirectory:[relPath stringByDeletingLastPathComponent]];
-    
-    // Save in cache
-    if (path)
-    {
-        [fullPathCacheNoResolutions_ setObject:path forKey:relPath];
-    }
-    return path;
+	NSString *newName = path;
+	
+	NSString *ret = nil;
+	// only if it is not an absolute path
+	if( ! [path isAbsolutePath] ) {
+		
+		// pathForResource also searches in .lproj directories. issue #1230
+		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
+		
+		// If the file does not exist it will return nil.
+		ret = [self pathForResource:[newName lastPathComponent]
+							 ofType:nil
+						inDirectory:imageDirectory];
+	}
+	else if( [_fileManager fileExistsAtPath:newName] )
+		ret = newName;
+	
+	if( ! ret )
+		CCLOGINFO(@"cocos2d: CCFileUtils: file not found: %@", [newName lastPathComponent] );
+	
+	return ret;
+}
+
+-(ccResolutionType) resolutionTypeForKey:(NSString*)k inDictionary:dictionary
+{
+	// XXX XXX Super Slow
+	for( NSString *key in dictionary) {
+		NSString *value = [dictionary objectForKey:key];
+		if( [value isEqualToString:k] ) {
+			
+#ifdef __CC_PLATFORM_IOS
+			// XXX Add this in a Dictionary
+			if( [key isEqualToString:kCCFileUtilsiPad] )
+				return kCCResolutioniPad;
+			if( [key isEqualToString:kCCFileUtilsiPadHD] )
+				return kCCResolutioniPadRetinaDisplay;
+			if( [key isEqualToString:kCCFileUtilsiPhone] )
+				return kCCResolutioniPhone;
+			if( [key isEqualToString:kCCFileUtilsiPhoneHD] )
+				return kCCResolutioniPhoneRetinaDisplay;
+			if( [key isEqualToString:kCCFileUtilsiPhone5HD] )
+				return kCCResolutioniPhone5RetinaDisplay;
+			if( [key isEqualToString:kCCFileUtilsiPhone5] )
+				return kCCResolutioniPhone5;
+			if( [key isEqualToString:kCCFileUtilsDefault] )
+				return kCCResolutionUnknown;
+#elif defined(__CC_PLATFORM_MAC)
+			if( [key isEqualToString:kCCFileUtilsMacHD] )
+				return kCCResolutionMacRetinaDisplay;
+			if( [key isEqualToString:kCCFileUtilsMac] )
+				return kCCResolutionMac;
+			if( [key isEqualToString:kCCFileUtilsDefault] )
+				return kCCResolutionUnknown;
+#endif // __CC_PLATFORM_MAC
+		}
+	}
+	NSAssert(NO, @"Should not reach here");
+	return kCCResolutionUnknown;
+}
+
+
+-(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath
+{
+	if ([relPath isAbsolutePath])
+		return relPath;
+	
+	NSString* path = [_fullPathNoResolutionsCache objectForKey:relPath];
+	if (path)
+		return path;
+	
+	if ([_fileManager fileExistsAtPath:relPath])
+	{
+		// Save in cache
+		[_fullPathNoResolutionsCache setObject:path forKey:relPath];
+		
+		return path;
+	}
+	
+	// Default to normal resource directory
+	path = [_bundle pathForResource:[relPath lastPathComponent]
+							 ofType:nil
+						inDirectory:[relPath stringByDeletingLastPathComponent]];
+	
+	// Save in cache
+	if (path)
+		[_fullPathNoResolutionsCache setObject:path forKey:relPath];
+	
+	return path;
 }
 
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
 {
-    return [self fullPathFromRelativePath:relPath resolutionType:resolutionType ignoreResolutions:NO];
-}
-
--(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType ignoreResolutions:(BOOL)ignoreResolutions
-{
 	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
-
-    if (ignoreResolutions) return [self fullPathIgnoringResolutionsFromRelativePath:relPath resolutionType:resolutionType];
-    
-	CCCacheValue *value = [fullPathCache_ objectForKey:relPath];
+	
+	CCCacheValue *value = [_fullPathCache objectForKey:relPath];
 	if( value ) {
 		*resolutionType = value.resolutionType;
 		return value.fullpath;
 	}
-
-	// Initialize to non-nil
+	
 	NSString *ret = @"";
-
-	NSInteger device = [self runningDevice];
-
-#ifdef __CC_PLATFORM_IOS
 	
-	// iPad HD ?
-	if( device == kCCiPadRetinaDisplay ) {
-		ret = [self getPath:relPath forSuffix:iPadRetinaDisplaySuffix_];
-		*resolutionType = kCCResolutioniPadRetinaDisplay;
-	}
 
-	// iPad ?
-	if( device == kCCiPad || (enableFallbackSuffixes_ && !ret) ) {
-		ret = [self getPath:relPath forSuffix:iPadSuffix_];
-		*resolutionType = kCCResolutioniPad;
-	}
-	
-	// iPhone HD ?
-	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) ) {
-		ret = [self getPath:relPath forSuffix:iPhoneRetinaDisplaySuffix_];
-		*resolutionType = kCCResolutioniPhoneRetinaDisplay;
-	}
+	// Search with Suffixes
+	for( NSString *device in _searchChain ) {
 
-	// If it is not Phone HD, or if the previous "getPath" failed, then use iPhone images.
-	if( device == kCCiPhone || !ret )
-	{
-		ret = [self getPath:relPath forSuffix:@""];
-		*resolutionType = kCCResolutioniPhone;
-	}
-	
-#elif defined(__CC_PLATFORM_MAC)
+		if( _searchMode == kCCFileUtilsSearchSuffix ) {
+			// Search using suffixes
+			NSString *suffix = [_suffixesDict objectForKey:device];
+			ret = [self getPath:relPath forSuffix:suffix];
+			*resolutionType = [self resolutionTypeForKey:suffix inDictionary:_suffixesDict];
+		} else {
+			// Search in subdirectories
+			NSString *directory = [_directoriesDict objectForKey:device];
+			ret = [self getPath:relPath forDirectory:directory];
+			*resolutionType = [self resolutionTypeForKey:directory inDictionary:_directoriesDict];
+		}
 
-	if( device == kCCMacRetinaDisplay ) {
-		ret = [self getPath:relPath forSuffix:macRetinaDisplaySuffix_];
-		*resolutionType = kCCResolutionMacRetinaDisplay;
+		if( ret )
+			break;
 	}
-
-	if( device == kCCMac || (enableFallbackSuffixes_ && !ret) ) {
-		ret = [self getPath:relPath forSuffix:macSuffix_];
-		*resolutionType = kCCResolutionMac;
-	}
-
-	// Not found ? Try with empty "" suffix.
-	if( !ret )
-	{
-		ret = [self getPath:relPath forSuffix:@""];
-		*resolutionType = kCCResolutionMac;
-	}
-
-#endif // __CC_PLATFORM_MAC
 	
 	if( ! ret ) {
 		CCLOGWARN(@"cocos2d: Warning: File not found: %@", relPath);
 		ret = relPath;
 	}
-		
+	
 	value = [[CCCacheValue alloc] initWithFullPath:ret resolutionType:*resolutionType];
-	[fullPathCache_ setObject:value forKey:relPath];
+	[_fullPathCache setObject:value forKey:relPath];
 	[value release];
 	
 	return ret;
@@ -457,7 +527,43 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return [self fullPathFromRelativePath:relPath resolutionType:&ignore];
 }
 
-#pragma mark CCFileUtils - Suffix
+#pragma mark CCFileUtils - Suffix / Directory search chain
+
+
+-(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes
+{
+	[self setEnableFallbackChain:enableFallbackSuffixes];
+}
+
+-(void) setEnableFallbackChain:(BOOL)enableFallbackChain
+{
+	if( _enableFallbackChain != enableFallbackChain ) {
+		
+		_enableFallbackChain = enableFallbackChain;
+		
+		[self buildSearchChain];
+	}
+}
+
+#ifdef __CC_PLATFORM_IOS
+
+-(void) setiPadRetinaDisplaySuffix:(NSString *)suffix
+{
+	[_suffixesDict setObject:suffix forKey:kCCFileUtilsiPadHD];
+}
+
+-(void) setiPadSuffix:(NSString *)suffix
+{
+	[_suffixesDict setObject:suffix forKey:kCCFileUtilsiPad];
+}
+
+-(void) setiPhoneRetinaDisplaySuffix:(NSString *)suffix
+{
+	[_suffixesDict setObject:suffix forKey:kCCFileUtilsiPhoneHD];
+}
+
+#endif // __CC_PLATFORM_IOS
+
 
 // XXX: Optimization: This should be called only once
 -(NSInteger) runningDevice
@@ -468,17 +574,17 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = kCCiPadRetinaDisplay;
-		else
-			ret = kCCiPad;
+		ret = (CC_CONTENT_SCALE_FACTOR() == 2) ? kCCiPadRetinaDisplay : kCCiPad;
 	}
-	else
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
 	{
-		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = kCCiPhoneRetinaDisplay;
-		else
-			ret = kCCiPhone;
+		// From http://stackoverflow.com/a/12535566
+		BOOL isiPhone5 = CGSizeEqualToSize([[UIScreen mainScreen] preferredMode].size,CGSizeMake(640, 1136));
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+			ret = isiPhone5 ? kCCiPhone5RetinaDisplay : kCCiPhoneRetinaDisplay;
+		} else
+			ret = isiPhone5 ? kCCiPhone5 : kCCiPhone;
 	}
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -516,7 +622,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) removeSuffixFromFile:(NSString*) path
 {
-	NSString *withoutSuffix = [removeSuffixCache_ objectForKey:path];
+	NSString *withoutSuffix = [_removeSuffixCache objectForKey:path];
 	if( withoutSuffix )
 		return withoutSuffix;
 	
@@ -527,28 +633,28 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 #ifdef __CC_PLATFORM_IOS
 	if( device == kCCiPadRetinaDisplay )
-		ret = [self removeSuffix:iPadRetinaDisplaySuffix_ fromPath:path];
+		ret = [self removeSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPadHD] fromPath:path];
 	
-	if( device == kCCiPad || (enableFallbackSuffixes_ && !ret) )
-		ret = [self removeSuffix:iPadSuffix_ fromPath:path];
+	if( device == kCCiPad || (_enableFallbackChain && !ret) )
+		ret = [self removeSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPad] fromPath:path];
 	
-	if( device == kCCiPhoneRetinaDisplay || (enableFallbackSuffixes_ && !ret) )
-		ret = [self removeSuffix:iPhoneRetinaDisplaySuffix_ fromPath:path];
+	if( device == kCCiPhoneRetinaDisplay || (_enableFallbackChain && !ret) )
+		ret = [self removeSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPhoneHD] fromPath:path];
 	
 	if( device == kCCiPhone || !ret )
 		ret = path;	
 
 #elif defined(__CC_PLATFORM_MAC)
 	if( device == kCCMacRetinaDisplay )
-		ret = [self removeSuffix:macRetinaDisplaySuffix_ fromPath:path];
+		ret = [self removeSuffix:[_suffixesDict objectForKey:kCCFileUtilsMacHD] fromPath:path];
 
 	if( device == kCCMac|| !ret )
-		ret = [self removeSuffix:macSuffix_ fromPath:path];
+		ret = [self removeSuffix:[_suffixesDict objectForKey:kCCFileUtilsMac] fromPath:path];
 
 #endif // __CC_PLATFORM_MAC
 	
 	if( ret )
-		[removeSuffixCache_ setObject:ret forKey:path];
+		[_removeSuffixCache setObject:ret forKey:path];
 	
 	return ret;
 }
@@ -556,24 +662,24 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(BOOL) fileExistsAtPath:(NSString*)relPath withSuffix:(NSString*)suffix
 {
 	NSString *fullpath = nil;
-	
+
 	// only if it is not an absolute path
 	if( ! [relPath isAbsolutePath] ) {
 		// pathForResource also searches in .lproj directories. issue #1230
 		NSString *file = [relPath lastPathComponent];
 		NSString *imageDirectory = [relPath stringByDeletingLastPathComponent];
 		
-		fullpath = [bundle_ pathForResource:file
+		fullpath = [_bundle pathForResource:file
 									 ofType:nil
 								inDirectory:imageDirectory];
 		
 	}
-	
+
 	if (fullpath == nil)
 		fullpath = relPath;
-	
+
 	NSString *path = [self getPath:fullpath forSuffix:suffix];
-	
+
 	return ( path != nil );
 }
 
@@ -581,32 +687,31 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(BOOL) iPhoneRetinaDisplayFileExistsAtPath:(NSString*)path
 {
-	return [self fileExistsAtPath:path withSuffix:iPhoneRetinaDisplaySuffix_];
+	return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPhoneHD]];
 }
 
 -(BOOL) iPadFileExistsAtPath:(NSString*)path
 {
-	return [self fileExistsAtPath:path withSuffix:iPadSuffix_];
+	return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPad]];
 }
 
 -(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)path
 {
-	return [self fileExistsAtPath:path withSuffix:iPadRetinaDisplaySuffix_];
+	return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsiPadHD]];
 }
 
 #elif defined(__CC_PLATFORM_MAC)
 
 -(BOOL) macRetinaDisplayFileExistsAtPath:(NSString*)path
 {
-	return [self fileExistsAtPath:path withSuffix:macRetinaDisplaySuffix_];
+	return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsMacHD]];
 }
 
 -(BOOL) macFileExistsAtPath:(NSString*)path
 {
-	return [self fileExistsAtPath:path withSuffix:macSuffix_];
+	return [self fileExistsAtPath:path withSuffix:[_suffixesDict objectForKey:kCCFileUtilsMac]];
 }
 
 #endif // __CC_PLATFORM_MAC
-
 
 @end

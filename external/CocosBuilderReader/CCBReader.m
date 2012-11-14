@@ -1230,8 +1230,8 @@
     if (!self) return NULL;
     
     // Add the ccb directory to the resource path
-    self.resourcePathChain = [[NSArray arrayWithObject:[CCBReader ccbDirectoryPath]] arrayByAddingObjectsFromArray: self.resourcePathChain];
-    [self setupDefaultResolutionDirectoryChainWithFallbacks:YES];
+    self.searchChain = [[NSArray arrayWithObject:[CCBReader ccbDirectoryPath]] arrayByAddingObjectsFromArray: self.searchChain];
+    [self buildSearchChain];
     
     NSLog(@"ccbDirectoryPath: %@", [CCBReader ccbDirectoryPath]);
     

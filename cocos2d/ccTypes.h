@@ -344,8 +344,12 @@ typedef enum
 #ifdef __CC_PLATFORM_IOS
 	//! iPhone resolution type
 	kCCResolutioniPhone,
-	//! RetinaDisplay resolution type
+	//! iPhone RetinaDisplay resolution type
 	kCCResolutioniPhoneRetinaDisplay,
+	//! iPhone5 resolution type
+	kCCResolutioniPhone5,
+	//! iPhone 5 RetinaDisplay resolution type
+	kCCResolutioniPhone5RetinaDisplay,
 	//! iPad resolution type
 	kCCResolutioniPad,
 	//! iPad Retina Display resolution type
