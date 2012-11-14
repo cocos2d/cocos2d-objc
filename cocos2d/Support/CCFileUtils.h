@@ -34,9 +34,12 @@
 	NSFileManager	*fileManager_;
 	NSBundle		*bundle_;
 	NSMutableDictionary *fullPathCache_;
+    NSMutableDictionary *fullPathCacheNoResolutions_;
 	NSMutableDictionary *removeSuffixCache_;
 	
 	BOOL	enableFallbackSuffixes_;
+    NSArray* resolutionDirectoryChain_;
+    NSArray* resourcePathChain_;
 	
 #ifdef __CC_PLATFORM_IOS	
 	NSString *iPhoneRetinaDisplaySuffix_;
@@ -70,6 +73,17 @@
  */
 @property (nonatomic, readwrite) BOOL enableFallbackSuffixes;
 
+/** The directories where file utils will look for resources. When calling fullPathFromRelativePath: these directories will be visited in order and the first directory where the file is found will be used to create the absolute path. By default the resourcePathChain only contains the default resource directory.
+ 
+  @since v2.1
+ */
+@property (nonatomic, retain) NSArray* resourcePathChain;
+
+/** To enable fullPathFromRelativePath: to look for resolution specific resources in directories this property needs to be set (by default it is set to nil). Resources will be looked for in the resource specific sub directories before the default location is tried.
+ 
+  @since v2.1
+ */
+@property (nonatomic, retain) NSArray* resolutionDirectoryChain;
 
 #ifdef __CC_PLATFORM_IOS
 /** The iPhone RetinaDisplay suffixes to load resources.
@@ -126,6 +140,12 @@
  */
 -(void) purgeCachedEntries;
 
+/** Calling this method will populate the resolutionDirectoryChain property depending on the current device. The fallbacks works similarily to the suffix fallbacks, but on a directory level. 
+ 
+ @since v2.1
+ */
+- (void) setupDefaultResolutionDirectoryChainWithFallbacks:(BOOL)useFallbacks;
+
 /** Returns the fullpath of an filename.
 
  If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
@@ -139,6 +159,20 @@
 
  */
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
+
+/** Returns the fullpath of an filename.
+ 
+ If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
+ If in iPad mode, and an iPad file is found, it will return that path. If ignoreResolutions is set to true, resolution dependant directories will not be searched, and no resolution specific suffixes will be applied.
+ 
+ Examples:
+ 
+ * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
+ * In iPhone RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
+ * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
+ 
+ */
+-(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType ignoreResolutions:(BOOL)ignoreResolutions;
 
 
 /** Returns the fullpath of an filename including the resolution of the image.

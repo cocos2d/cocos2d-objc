@@ -171,7 +171,5 @@ enum
 
 @interface CCBFileUtils : CCFileUtils
 {
-    NSString* ccbDirectoryPath;
 }
-@property (nonatomic,copy) NSString* ccbDirectoryPath;
 @end
