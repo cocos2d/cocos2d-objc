@@ -10,6 +10,7 @@ version 2.1-beta4  XX-Nov-2012
 . [FIX] Templates: sets the Directors delta-time to 0 when the Application Controller become active
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
 		JS tests are using a new repo: cocos2d-js-tests
+. [FIX] TileMaps:  Fix firstGID parser issue for new version TMX file with external TSX file
 . [FIX] Transitions: Fixed possible memory leak in some tranitions
 		Events are enabled/disabled at onEnter/onExit preventing possible bugs
 . [FIX] Particles: "unscheduleUpdate" is no longer called at dealloc time
