@@ -1,7 +1,8 @@
 version 2.1-beta4  XX-Nov-2012
 . [NEW] FileUtils: Supports iPhone5 resources (-wide, -widehd)
-		Option to search resources in subdirectores, instead of using suffixes.
-		Option to search in /themes/ subdirectories.
+		Option to search "resolution resources" in "resolution directores", instead of using "resolution suffixes".
+		Option to search resources in different subdirectories (good for themes, cache, etc.)
+		Add method to search resources not associated with any resolution (ideal for music, shaders, etc.)
 . [FIX] From cocos2d v1.1-rc0:
 		Animate Action: Works as expected when display frame rate > than FPS (issue #1438)
 . [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
