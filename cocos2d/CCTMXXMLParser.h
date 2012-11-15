@@ -157,7 +157,7 @@ typedef enum ccTMXTileFlags_ {
 	int					layerAttribs;
 	int					parentElement;
 	unsigned int		parentGID_;
-
+	unsigned int		currentFirstGID;
 
 	// tmx filename
 	NSString *filename_;
