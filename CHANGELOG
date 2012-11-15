@@ -7,6 +7,7 @@ version 2.1-beta4  XX-Nov-2012
 		Animate Action: Works as expected when display frame rate > than FPS (issue #1438)
 . [FIX] Actions: Fixed CCRotateTo, startAngleX now is modded similar to startAngleY to keep the rotation values the same
 . [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
+. [FIX] LabelBMFont: Fixed bug with newlines and fixed width labels
 . [FIX] Templates: sets the Directors delta-time to 0 when the Application Controller become active
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
 		JS tests are using a new repo: cocos2d-js-tests

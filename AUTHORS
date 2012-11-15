@@ -105,6 +105,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 
+* Zakay (https://github.com/Zakay)
+	LabelBMFont: Fixed bug with newlines and fixed width labels
 
 cocos2d for iPhone 2.0 authors
 ------------------------------
