@@ -540,6 +540,10 @@
 
   //Calculate X
 	startAngleX_ = [target_ rotationX];
+	if (startAngleX_ > 0)
+		startAngleX_ = fmodf(startAngleX_, 360.0f);
+	else
+		startAngleX_ = fmodf(startAngleX_, -360.0f);
 
 	diffAngleX_ = dstAngleX_ - startAngleX_;
 	if (diffAngleX_ > 180)
@@ -547,7 +551,8 @@
 	if (diffAngleX_ < -180)
 		diffAngleX_ += 360;
   
-  //Calculate Y
+	
+  //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
 	startAngleY_ = [target_ rotationY];
 	if (startAngleY_ > 0)
 		startAngleY_ = fmodf(startAngleY_, 360.0f);
