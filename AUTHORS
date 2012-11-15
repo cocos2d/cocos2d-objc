@@ -95,7 +95,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
-	FileUtils: Added support to search files in subdirectories, and search files without suffix/directories
+	FileUtils: Added support to search files in subdirectories, and search paths for themes
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)

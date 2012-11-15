@@ -438,7 +438,7 @@
 
 	ccGLBindVAO( VAOname_ );
 	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
+	
 	CC_INCREMENT_GL_DRAWS(1);
 
 	CHECK_GL_ERROR_DEBUG();
