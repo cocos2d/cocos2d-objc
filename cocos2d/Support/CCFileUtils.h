@@ -61,7 +61,8 @@ enum {
 	NSMutableDictionary	*_directoriesDict;
 	NSMutableDictionary	*_suffixesDict;
 	
-	NSMutableArray		*_searchChain;
+	NSMutableArray		*_searchDevicesOrder;
+	NSMutableArray		*_searchPathForThemes;
 	
 	// it could be suffix (default) or directory
 	int					_searchMode;
@@ -89,7 +90,7 @@ enum {
  
  By default this functionality is off;
  */
-@property (nonatomic, readwrite, getter = isEnabledFallbackChain) BOOL enableFallbackChain;
+@property (nonatomic, readwrite, getter = isEnablediPhoneResourcesOniPad) BOOL enableiPhoneResourcesOniPad;
 
 /** Dictionary that contians the search directories for the different devices. Default values:
  - iPhone: "iphone"
@@ -124,7 +125,12 @@ enum {
 /** XXX
  @since v2.1
  */
-@property (nonatomic, copy) NSArray *searchChain;
+@property (nonatomic, copy) NSArray *searchDevicesOrder;
+
+/**
+ @since v2.1
+ */
+@property (nonatomic, copy) NSArray *searchPathForThemes;
 
 -(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes;
 
@@ -166,13 +172,11 @@ enum {
  */
 -(void) purgeCachedEntries;
 
-/** Calling this method will populate the searchChain property depending on the current device. 
+/** Calling this method will populate the searchDevicesOrder property depending on the current device.
  
  @since v2.1
  */
-- (void) buildSearchChainWithFallbacks:(BOOL)useFallbacks;
-
-- (void) buildSearchChain;
+- (void) buildSearchDevicesOrder;
 
 /** Returns the fullpath of an filename.
 

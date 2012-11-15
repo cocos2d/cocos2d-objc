@@ -316,7 +316,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setContentScaleFactor:newScale];
 
 	// Load Hi-Res FPS label
-	[[CCFileUtils sharedFileUtils] buildSearchChain];
+	[[CCFileUtils sharedFileUtils] buildSearchDevicesOrder];
 	[self createStatsLabel];
 
 	return YES;
