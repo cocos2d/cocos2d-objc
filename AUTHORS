@@ -43,6 +43,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * HarrisonXi (https://github.com/HarrisonXi):
 	Fixed some logic errors in the Scheduler and Timer
+	TMX Maps: Fixed firstGID parser issue for new version TMX file with external TSX file
 
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
