@@ -272,7 +272,7 @@
 			[tileset release];
 		}
 
-	}else if([elementName isEqualToString:@"tile"]){
+	} else if([elementName isEqualToString:@"tile"]) {
 		CCTMXTilesetInfo* info = [tilesets_ lastObject];
 		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
 		parentGID_ =  [info firstGid] + [[attributeDict objectForKey:@"id"] intValue];
@@ -280,7 +280,7 @@
 
 		parentElement = TMXPropertyTile;
 
-	}else if([elementName isEqualToString:@"layer"]) {
+	} else if([elementName isEqualToString:@"layer"]) {
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
 		layer.name = [attributeDict objectForKey:@"name"];
 
