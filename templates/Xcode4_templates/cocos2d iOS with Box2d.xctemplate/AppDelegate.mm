@@ -140,6 +140,7 @@
 // call got rejected
 -(void) applicationDidBecomeActive:(UIApplication *)application
 {
+	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 	if( [navController_ visibleViewController] == director_ )
 		[director_ resume];
 }
