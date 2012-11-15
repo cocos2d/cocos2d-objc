@@ -176,18 +176,18 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 						 nil];
 
 		_directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-							@"ipadhd", kCCFileUtilsiPadHD,
-							@"ipad", kCCFileUtilsiPad,
-							@"iphone", kCCFileUtilsiPhone,
-							@"iphonehd", kCCFileUtilsiPhoneHD,
-							@"iphone5", kCCFileUtilsiPhone5,
-							@"iphone5hd", kCCFileUtilsiPhone5HD,
+							@"-ipadhd", kCCFileUtilsiPadHD,
+							@"-ipad", kCCFileUtilsiPad,
+							@"-iphone", kCCFileUtilsiPhone,
+							@"-hd", kCCFileUtilsiPhoneHD,
+							@"-wide", kCCFileUtilsiPhone5,
+							@"-widehd", kCCFileUtilsiPhone5HD,
 							@"", kCCFileUtilsDefault,
 							nil];
 
 #elif defined(__CC_PLATFORM_MAC)
 		_suffixesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-						 @"-mac", kCCFileUtilsMac,
+						 @"", kCCFileUtilsMac,
 						 @"-machd", kCCFileUtilsMacHD,
 						 @"", kCCFileUtilsDefault,
 						 nil];

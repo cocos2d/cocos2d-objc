@@ -4,10 +4,11 @@ version 2.1-beta4  XX-Dec-2012
 . [FIX] From cocos2d v1.1-rc0:
 		Animate Action: Works as expected when display frame rate > than FPS (issue #1438)
 . [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
-. [FIX] Transitions: Fixed possible memory leak in some tranitions
-		Events are enabled/disabled at onEnter/onExit preventing possible bugs
+. [FIX] Templates: sets the Directors delta-time to 0 when the Application Controller become active
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
 		JS tests are using a new repo: cocos2d-js-tests
+. [FIX] Transitions: Fixed possible memory leak in some tranitions
+		Events are enabled/disabled at onEnter/onExit preventing possible bugs
 . [FIX] Particles: "unscheduleUpdate" is no longer called at dealloc time
 . [3RD] JS Bindings: Updated to v0.4. Chipmunk-JS + cocos2d-html5 is compatible with cocos2d/chipmunk + JSB
 
