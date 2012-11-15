@@ -149,6 +149,17 @@ enum {
  */
 @property (nonatomic, copy) NSArray *searchPath;
 
+
+/**  It determines how the "resolution resources"  are to be searched.
+ Possible values:
+	- kCCFileUtilsSearchSuffix: It will search for resources by appending suffixes like "-hd", "-ipad", etc...
+	- kCCFileUtilsSearchDirectory: It will search the resoureces in subdirectories like "resources-hd", "resources-ipad", etc...
+ 
+ Default: kCCFileUtilsSearchSuffix
+ @since v2.1
+ */
+@property (nonatomic, readwrite) int searchMode;
+
 #ifdef __CC_PLATFORM_IOS
 /** The iPhone RetinaDisplay suffixes to load resources.
  By default it is "-hd" and "" in that order.

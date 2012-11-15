@@ -138,6 +138,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @synthesize enableiPhoneResourcesOniPad = _enableiPhoneResourcesOniPad;
 @synthesize searchResolutionsOrder = _searchResolutionsOrder;
 @synthesize suffixesDict = _suffixesDict, directoriesDict = _directoriesDict;
+@synthesize searchMode = _searchMode;
 
 + (id)sharedFileUtils
 {
