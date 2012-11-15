@@ -61,13 +61,13 @@ enum {
 	NSMutableDictionary	*_directoriesDict;
 	NSMutableDictionary	*_suffixesDict;
 	
-	NSMutableArray		*_searchDevicesOrder;
-	NSMutableArray		*_searchPathForThemes;
+	NSMutableArray		*_searchResolutionsOrder;
+	NSMutableArray		*_searchPath;
 	
 	// it could be suffix (default) or directory
 	int					_searchMode;
 	
-	BOOL				_enableFallbackChain;
+	BOOL				_enableiPhoneResourcesOniPad;
 }
 
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].
@@ -82,27 +82,27 @@ enum {
 
 /** Whether of not the fallback suffixes is enabled.
  When enabled it will try to search for the following suffixes in the following order until one is found:
- * On iPad HD  : iPad HD suffix, iPad suffix, iPhone HD suffix, Without suffix
- * On iPad     : iPad suffix, iPhone HD suffix, Without suffix
- * On iPhone HD: iPhone HD suffix, Without suffix
- * On Mac HD   : Mac HD suffix, Mac suffix, Without suffix
- * On Mac      : Mac suffix, Without suffix
+ * On iPad HD  : iPad HD, iPad, iPhone HD, Resources without resolution
+ * On iPad     : iPad, iPhone HD, Resources without resolution
+ * On iPhone HD: iPhone HD, Resources without resolution
+ * On Mac HD   : Mac HD, Mac, Resources without resolution
+ * On Mac      : Mac, Resources without resolution
  
  By default this functionality is off;
  */
 @property (nonatomic, readwrite, getter = isEnablediPhoneResourcesOniPad) BOOL enableiPhoneResourcesOniPad;
 
 /** Dictionary that contians the search directories for the different devices. Default values:
- - iPhone: "iphone"
- - iPhone HD: "iphonehd"
- - iPhone5 : "iphone5"
- - iPhone5 HD: "iphone5hd"
- - iPad: "ipad"
- - iPad HD: "ipadhd"
- - Mac: "mac"
- - Mac HD: "machd"
+ - iPhone: "resources-iphone"
+ - iPhone HD: "resources-hd"
+ - iPhone5 : "resources-wide"
+ - iPhone5 HD: "resources-widehd"
+ - iPad: "resources-ipad"
+ - iPad HD: "resources-ipadhd"
+ - Mac: "resources-mac"
+ - Mac HD: "resources-machd"
  
- If "search in directories" is enabled (disabled by default), it will try to get the resources from the directories according to the rules of "search chain".
+ If "search in directories" is enabled (disabled by default), it will try to get the resources from the directories according to the order of "searchResolutionsOrder" array.
  @since v2.1
  */
 @property (nonatomic, copy) NSMutableDictionary *directoriesDict;
@@ -117,22 +117,37 @@ enum {
 	- Mac: ""
 	- Mac HD: "-machd"
 
-  If "search with suffixes" is enabled (enabled by default), it will try to get the resources by appending the suffixes according to the rules of "search chain".
+  If "search with suffixes" is enabled (enabled by default), it will try to get the resources by appending the suffixes according to the order of "searchResolutionsOrder" array.
  @since v2.1
  */
 @property (nonatomic, copy) NSMutableDictionary *suffixesDict;
 
-/** XXX
+/** Array that contains the search order of the resources based for the device.
+ By default it will try to load resources in the following order until one is found:
+   - On iPad HD: iPad HD resources, iPad resources, resources not associated with any device
+   - On iPad: iPad resources, resources not associated with any device
+   - On iPhone 5 HD: iPhone 5 HD resources, iPhone HD resouces, iPhone 5 resources, iPhone resources, resources not associated with any device
+   - On iPhone HD: iPhone HD resources, iPhone resouces, resources not associated with any device
+   - On iPhone: iPhone resources, resources not associated with any device
+
+   - On Mac HD: Mac HD resources, Mac resources, resources not associated with any device
+   - On Mac: Mac resources, resources not associated with any device
+ 
+ If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
+ 
  @since v2.1
  */
-@property (nonatomic, copy) NSArray *searchDevicesOrder;
+@property (nonatomic, copy) NSArray *searchResolutionsOrder;
 
-/**
+/** Array of search paths.
+ You can use this array to modify the search path of the resources.
+ If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
+ 
+ By default it is an array with only the "" (empty string) element.
+ 
  @since v2.1
  */
-@property (nonatomic, copy) NSArray *searchPathForThemes;
-
--(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes;
+@property (nonatomic, copy) NSArray *searchPath;
 
 #ifdef __CC_PLATFORM_IOS
 /** The iPhone RetinaDisplay suffixes to load resources.
@@ -172,11 +187,11 @@ enum {
  */
 -(void) purgeCachedEntries;
 
-/** Calling this method will populate the searchDevicesOrder property depending on the current device.
+/** Calling this method will populate the searchResolutionsOrder property depending on the current device.
  
  @since v2.1
  */
-- (void) buildSearchDevicesOrder;
+- (void) buildSearchResolutionsOrder;
 
 /** Returns the fullpath of an filename.
 
@@ -192,11 +207,12 @@ enum {
  */
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
-/** Returns the fullpath of an filename.
+/** Returns the fullpath of an filename. It will try to get the correct file for the current screen resolution.
+ Useful for loading images and other assets that are related for the screen resolution.
  
- If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
- If in iPad mode, and an iPad file is found, it will return that path. If ignoreResolutions is set to true, resolution dependant directories will not be searched, and no resolution specific suffixes will be applied.
- 
+ If in iPad mode, and an iPad file is found, it will return that path.
+ If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
+
  Examples:
  
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
@@ -206,7 +222,11 @@ enum {
  */
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
 
-/** Returns the fullpath of an filename without searching for suffixes or directories.
+/** Returns the fullpath of an filename without taking into account the screen resolution suffixes or directories.
+
+ It will use the "searchPath" though.
+ Useful for loading music files, shaders, "data" and other files that are not related to the screen resolution of the device.
+ 
  @since v2.1
  */
 -(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath;
@@ -246,6 +266,10 @@ enum {
 
 #endif // __CC_PLATFORM_MAC
 
+/**
+ @deprecated
+ */
+-(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes;
 
 @end
 
