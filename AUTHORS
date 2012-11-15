@@ -56,6 +56,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
 	Added Tests for RotationSkew feature
+	RotateTo: supports X and Y dimensions
 
 * lbeck @ cocos2d community:
 	Fix for LabelTTF in MacBook Retina Display
