@@ -270,9 +270,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	else if (device == kCCiPhoneRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:kCCFileUtilsiPhoneHD];
-		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5HD];
 		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone];
-		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5];
 	}
 	else if (device == kCCiPhone5)
 	{
@@ -282,7 +280,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	else if (device == kCCiPhone)
 	{
 		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone];
-		[_searchResolutionsOrder addObject:kCCFileUtilsiPhone5];
 	}
 	
 #elif defined(__CC_PLATFORM_MAC)
