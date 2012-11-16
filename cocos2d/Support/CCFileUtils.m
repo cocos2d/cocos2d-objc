@@ -358,9 +358,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 -(NSString*) getPath:(NSString*)path forDirectory:(NSString*)directory
-{
-	NSString *newName = path;
-	
+{	
 	NSString *ret = nil;
 	// only if it is not an absolute path
 	if( ! [path isAbsolutePath] ) {
@@ -371,8 +369,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 							 ofType:nil
 						inDirectory:directory];
 	}
-	else if( [_fileManager fileExistsAtPath:newName] )
-		ret = newName;
+	else
+	{
+		NSString* newDir = [path stringByDeletingLastPathComponent];
+		NSString* newFile = [path lastPathComponent];
+		NSString *newName = [[newDir stringByAppendingPathComponent:directory] stringByAppendingPathComponent:newFile];
+		if ([_fileManager fileExistsAtPath:newName])
+			ret = newName;
+	}
 	
 	return ret;
 }
