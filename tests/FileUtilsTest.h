@@ -22,3 +22,11 @@
 @interface Test1 : FileUtilsDemo
 {}
 @end
+
+@interface TestResolutionDirectories : FileUtilsDemo
+{}
+@end
+
+@interface TestSearchPath : FileUtilsDemo
+{}
+@end

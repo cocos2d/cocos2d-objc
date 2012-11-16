@@ -302,31 +302,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
 {
-	// Create full file name with extension)
-	NSString* fileName = NULL;
-	if (ext && ![ext isEqualToString:@""])
-	{
-		fileName = [resource stringByAppendingPathExtension:ext];
-	}
-	else
-	{
-		fileName = resource;
-	}
-	
-	NSFileManager* fm = [NSFileManager defaultManager];
-	
-	// Append sub path
-	if (subpath && ![subpath isEqualToString:@""])
-	{
-		fileName = [fileName stringByAppendingPathComponent:subpath];
-	}
-			
-	// Default to non resolution directory
-	if ([fm fileExistsAtPath:fileName])
-	{
-		return fileName;
-	}
-	
 	// Default to normal resource directory
 	return [_bundle pathForResource:resource
 							 ofType:ext
@@ -369,12 +344,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( ! [path isAbsolutePath] ) {
 		
 		// pathForResource also searches in .lproj directories. issue #1230
-		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
-		
 		// If the file does not exist it will return nil.
-		ret = [self pathForResource:[newName lastPathComponent]
-												   ofType:nil
-											  inDirectory:imageDirectory];
+		ret = [self pathForResource:newName
+							 ofType:nil
+						inDirectory:nil];
 	}
 	else if( [_fileManager fileExistsAtPath:newName] )
 		ret = newName;
@@ -393,19 +366,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// only if it is not an absolute path
 	if( ! [path isAbsolutePath] ) {
 		
-		// pathForResource also searches in .lproj directories. issue #1230
-		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
-		
+		// pathForResource also searches in .lproj directories. issue #1230		
 		// If the file does not exist it will return nil.
-		ret = [self pathForResource:[newName lastPathComponent]
+		ret = [self pathForResource:path
 							 ofType:nil
-						inDirectory:imageDirectory];
+						inDirectory:directory];
 	}
 	else if( [_fileManager fileExistsAtPath:newName] )
 		ret = newName;
-	
-	if( ! ret )
-		CCLOGINFO(@"cocos2d: CCFileUtils: file not found: %@", [newName lastPathComponent] );
 	
 	return ret;
 }
@@ -490,12 +458,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		*resolutionType = value.resolutionType;
 		return value.fullpath;
 	}
-	
+	BOOL found = NO;
 	NSString *ret = @"";
 
 	for( NSString *path in _searchPath ) {
 
-		NSString *fileWithTheme = [path stringByAppendingPathComponent:relPath];
+		NSString *fileWithPath = [path stringByAppendingPathComponent:relPath];
 		
 		// Search with Suffixes
 		for( NSString *device in _searchResolutionsOrder ) {
@@ -503,21 +471,27 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			if( _searchMode == kCCFileUtilsSearchSuffix ) {
 				// Search using suffixes
 				NSString *suffix = [_suffixesDict objectForKey:device];
-				ret = [self getPath:fileWithTheme forSuffix:suffix];
+				ret = [self getPath:fileWithPath forSuffix:suffix];
 				*resolutionType = [self resolutionTypeForKey:suffix inDictionary:_suffixesDict];
 			} else {
 				// Search in subdirectories
 				NSString *directory = [_directoriesDict objectForKey:device];
-				ret = [self getPath:fileWithTheme forDirectory:directory];
+				ret = [self getPath:fileWithPath forDirectory:directory];
 				*resolutionType = [self resolutionTypeForKey:directory inDictionary:_directoriesDict];
 			}
 
-			if( ret )
+			if( ret ) {
+				found = YES;
 				break;
+			}
 		}
+		
+		// there are 2 loops
+		if(found)
+			break;
 	}
 	
-	if( ! ret ) {
+	if( ! found ) {
 		CCLOGWARN(@"cocos2d: Warning: File not found: %@", relPath);
 		ret = relPath;
 	}
