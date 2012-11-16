@@ -33,8 +33,10 @@
 		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
-	else if( [name isEqual:@"JS CocosDragon"] )
+	else if( [name isEqual:@"JS CocosDragon"] ) {
+		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
 		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
 }
 @end
 
@@ -193,8 +195,10 @@
 		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
-	else if( [name isEqual:@"JS CocosDragon"] )
-		[[JSBCore sharedInstance] runScript:@"main.js"];	
+	else if( [name isEqual:@"JS CocosDragon"] ) {
+		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
+		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
 }
 @end
 
