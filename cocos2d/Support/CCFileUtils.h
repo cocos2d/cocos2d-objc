@@ -137,7 +137,7 @@ enum {
  
  @since v2.1
  */
-@property (nonatomic, copy) NSArray *searchResolutionsOrder;
+@property (nonatomic, copy) NSMutableArray *searchResolutionsOrder;
 
 /** Array of search paths.
  You can use this array to modify the search path of the resources.
@@ -147,7 +147,7 @@ enum {
  
  @since v2.1
  */
-@property (nonatomic, copy) NSArray *searchPath;
+@property (nonatomic, copy) NSMutableArray *searchPath;
 
 
 /**  It determines how the "resolution resources"  are to be searched.

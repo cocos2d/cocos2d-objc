@@ -14,6 +14,8 @@ static int sceneIdx=-1;
 static NSString *transitions[] = {
 	@"Issue1344",
 	@"Test1",
+	@"TestResolutionDirectories",
+	@"TestSearchPath",
 };
 
 Class nextAction(void);
@@ -216,6 +218,99 @@ Class restartAction()
 }
 @end
 
+#pragma mark - TestResolutionDirectories
+
+@implementation TestResolutionDirectories
+-(id) init
+{
+	if ((self=[super init]) ) {
+		
+		CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+
+		NSString *ret;
+		ccResolutionType resolution;
+		
+		[sharedFileUtils purgeCachedEntries];
+		[sharedFileUtils setSearchMode:kCCFileUtilsSearchDirectory];
+	
+		for( int i=1; i<7; i++) {
+			NSString *filename = [NSString stringWithFormat:@"test%d.txt", i];
+			ret = [sharedFileUtils fullPathFromRelativePath:filename resolutionType:&resolution];
+			NSLog(@"%@ -> %@ (%d)", filename, ret, resolution);
+		}
+		
+	}
+	return self;
+}
+
+-(void) onExit
+{
+	[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchSuffix];
+	[super onExit];
+}
+
+-(NSString*) title
+{
+	return @"FileUtils: resolutions in directories";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
+
+#pragma mark - TestSearchPath
+
+@implementation TestSearchPath
+-(id) init
+{
+	if ((self=[super init]) ) {
+		
+		CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+		
+		NSString *ret;
+		ccResolutionType resolution;
+		
+		[sharedFileUtils purgeCachedEntries];
+		NSMutableArray *searchPath = [sharedFileUtils searchPath];
+		
+		[searchPath insertObject:@"searchpath3" atIndex:0];
+		[searchPath insertObject:@"searchpath2" atIndex:0];
+		[searchPath insertObject:@"searchpath1" atIndex:0];
+		
+		for( int i=1; i<4; i++) {
+			NSString *filename = [NSString stringWithFormat:@"file%d.txt", i];
+			ret = [sharedFileUtils fullPathFromRelativePath:filename resolutionType:&resolution];
+			NSLog(@"%@ -> %@ (%d)", filename, ret, resolution);
+		}
+	}
+	return self;
+}
+
+-(void) onExit
+{
+	
+	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+
+	// reset search path
+	[[sharedFileUtils searchPath] removeAllObjects];
+	[[sharedFileUtils searchPath] addObject:@""];
+	
+	[sharedFileUtils setSearchMode:kCCFileUtilsSearchSuffix];
+	[super onExit];
+}
+
+-(NSString*) title
+{
+	return @"FileUtils: search path";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
+
+
 #pragma mark - AppDelegate - iOS
 
 // CLASS IMPLEMENTATIONS
@@ -266,9 +361,8 @@ Class restartAction()
 	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
-
+	[window_ setRootViewController:navController_];
+	
 	// make main window visible
 	[window_ makeKeyAndVisible];
 	
@@ -302,7 +396,7 @@ Class restartAction()
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		CCScene *scene = [CCScene node];
 		[scene addChild: [nextAction() node]];
-		[director runWithScene: scene];
+		[director runWithScene:scene];
 	}
 }
 
@@ -311,7 +405,6 @@ Class restartAction()
 	return YES;
 	//	return UIInterfaceOrientationIsLandscape(interfaceOrientation);
 }
-
 @end
 
 #pragma mark -
