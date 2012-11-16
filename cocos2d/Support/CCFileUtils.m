@@ -44,6 +44,8 @@ NSString *kCCFileUtilsMac = @"";
 NSString *kCCFileUtilsMacHD = @"machd";
 #endif
 
+NSString *kCCFileUtilsDefaultSearchPath = @"";
+
 #ifdef __CC_PLATFORM_IOS
 enum {
 	kCCiPhone,

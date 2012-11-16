@@ -272,11 +272,7 @@ Class restartAction()
 		ccResolutionType resolution;
 		
 		[sharedFileUtils purgeCachedEntries];
-		NSMutableArray *searchPath = [sharedFileUtils searchPath];
-		
-		[searchPath insertObject:@"searchpath3" atIndex:0];
-		[searchPath insertObject:@"searchpath2" atIndex:0];
-		[searchPath insertObject:@"searchpath1" atIndex:0];
+		[sharedFileUtils setSearchPath: @[ @"searchpath1", @"searchpath2", @"searchpath3", kCCFileUtilsDefaultSearchPath] ];
 		
 		for( int i=1; i<4; i++) {
 			NSString *filename = [NSString stringWithFormat:@"file%d.txt", i];
@@ -293,8 +289,7 @@ Class restartAction()
 	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
 
 	// reset search path
-	[[sharedFileUtils searchPath] removeAllObjects];
-	[[sharedFileUtils searchPath] addObject:@""];
+	[sharedFileUtils setSearchPath: @[ kCCFileUtilsDefaultSearchPath ] ];
 	
 	[sharedFileUtils setSearchMode:kCCFileUtilsSearchSuffix];
 	[super onExit];
