@@ -42,6 +42,7 @@ extern NSString const *kCCFileUtilsMac;
 extern NSString const *kCCFileUtilsMacHD;
 #endif // __CC_PLATFORM_MAC
 
+extern NSString const *kCCFileUtilsDefaultSearchPath;
 
 enum {
 	kCCFileUtilsSearchSuffix,
@@ -137,7 +138,7 @@ enum {
  
  @since v2.1
  */
-@property (nonatomic, copy) NSMutableArray *searchResolutionsOrder;
+@property (nonatomic, copy) NSArray *searchResolutionsOrder;
 
 /** Array of search paths.
  You can use this array to modify the search path of the resources.
@@ -147,7 +148,7 @@ enum {
  
  @since v2.1
  */
-@property (nonatomic, copy) NSMutableArray *searchPath;
+@property (nonatomic, copy) NSArray *searchPath;
 
 
 /**  It determines how the "resolution resources"  are to be searched.
