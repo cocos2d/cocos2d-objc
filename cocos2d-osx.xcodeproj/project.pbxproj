@@ -133,6 +133,14 @@
 		A003A95F1656CEFE00C7B792 /* resources-hd in Resources */ = {isa = PBXBuildFile; fileRef = A003A95B1656CEFE00C7B792 /* resources-hd */; };
 		A003A9601656CEFE00C7B792 /* resources-ipad in Resources */ = {isa = PBXBuildFile; fileRef = A003A95C1656CEFE00C7B792 /* resources-ipad */; };
 		A003A9611656CEFE00C7B792 /* resources-ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A003A95D1656CEFE00C7B792 /* resources-ipadhd */; };
+		A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003ACA5165731D500C7B792 /* ccFPSImages.h */; };
+		A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACA9165731FA00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACAA165731FB00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACAB165731FC00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACAC165731FD00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACAD165731FE00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A003ACAE165731FE00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -6798,6 +6806,8 @@
 		A003A95B1656CEFE00C7B792 /* resources-hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-hd"; sourceTree = "<group>"; };
 		A003A95C1656CEFE00C7B792 /* resources-ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipad"; sourceTree = "<group>"; };
 		A003A95D1656CEFE00C7B792 /* resources-ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipadhd"; sourceTree = "<group>"; };
+		A003ACA5165731D500C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		A003ACA6165731D500C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A009440015181C8D0029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009440315181D150029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009440415181D150029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -9686,6 +9696,8 @@
 				E076E64B1225EC7400DE0DA2 /* CCConfiguration.m */,
 				E076E64C1225EC7400DE0DA2 /* CCDirector.h */,
 				E076E64D1225EC7400DE0DA2 /* CCDirector.m */,
+				A003ACA5165731D500C7B792 /* ccFPSImages.h */,
+				A003ACA6165731D500C7B792 /* ccFPSImages.m */,
 				E076E6711225EC7400DE0DA2 /* CCProtocols.h */,
 				E076E6781225EC7400DE0DA2 /* CCScheduler.h */,
 				E076E6791225EC7400DE0DA2 /* CCScheduler.m */,
@@ -10543,6 +10555,7 @@
 				A0D7D69815E2D2CC000CA0C4 /* CCProtocols.h in Headers */,
 				A0D7D69915E2D2CC000CA0C4 /* CCScheduler.h in Headers */,
 				2B19285F163379400049A044 /* CCClippingNode.h in Headers */,
+				A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16430,6 +16443,7 @@
 				A0D7D74115E2D97E000CA0C4 /* ccGLStateCache.m in Sources */,
 				A0D7D74215E2D97E000CA0C4 /* CCShaderCache.m in Sources */,
 				A0D7DAF415E2F25A000CA0C4 /* ChipmunkTest.m in Sources */,
+				A003ACAA165731FB00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16527,6 +16541,7 @@
 				A0D7D74415E2D97E000CA0C4 /* CCGLProgram.m in Sources */,
 				A0D7D74515E2D97E000CA0C4 /* ccGLStateCache.m in Sources */,
 				A0D7D74615E2D97E000CA0C4 /* CCShaderCache.m in Sources */,
+				A003ACA9165731FA00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16744,6 +16759,7 @@
 				A064EC6716235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DD1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A0D2DE29163619C2008DB73C /* CCClippingNode.m in Sources */,
+				A003ACAB165731FC00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16868,6 +16884,7 @@
 				A003A92A1656CEE500C7B792 /* Level.js in Sources */,
 				A003A92C1656CEE500C7B792 /* main.js in Sources */,
 				A003A92E1656CEE500C7B792 /* MainMenuScene.js in Sources */,
+				A003ACAD165731FE00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16993,6 +17010,7 @@
 				A064EC6916235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DF1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A0D2DE2B163619C3008DB73C /* CCClippingNode.m in Sources */,
+				A003ACAE165731FE00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17108,6 +17126,7 @@
 				A064EC6816235F7C00020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A05941DE1624923300367DD1 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A0D2DE2A163619C3008DB73C /* CCClippingNode.m in Sources */,
+				A003ACAC165731FD00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17290,6 +17309,7 @@
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,
+				A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

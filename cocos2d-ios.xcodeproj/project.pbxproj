@@ -1297,6 +1297,12 @@
 		A003A8A91656C58900C7B792 /* resources-hd in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A51656C58900C7B792 /* resources-hd */; };
 		A003A8AA1656C58900C7B792 /* resources-ipad in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A61656C58900C7B792 /* resources-ipad */; };
 		A003A8AB1656C58900C7B792 /* resources-ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A71656C58900C7B792 /* resources-ipadhd */; };
+		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
+		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
+		A003AC9016572EC300C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
+		A003AC9116572EC400C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
+		A003AC9216572EC500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
+		A003AC9316572EC500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A00495DA159B8ACB00B5D4DF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E3876C10446C6E00150883 /* AVFoundation.framework */; };
 		A00495DC159B8B1500B5D4DF /* tuffy_bold_italic-charmap.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463A11062867800AB7C52 /* tuffy_bold_italic-charmap.png */; };
 		A00495DD159B8B1500B5D4DF /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83FB4151CAE7300EBBFCB /* tuffy_bold_italic-charmap.plist */; };
@@ -5573,6 +5579,8 @@
 		A003A8A51656C58900C7B792 /* resources-hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-hd"; sourceTree = "<group>"; };
 		A003A8A61656C58900C7B792 /* resources-ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipad"; sourceTree = "<group>"; };
 		A003A8A71656C58900C7B792 /* resources-ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipadhd"; sourceTree = "<group>"; };
+		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
+		A003AC8E16572D6000C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
 		A009431115180C730029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009431515180E1F0029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009431615180E1F0029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -7525,6 +7533,8 @@
 				E0EAD0E8121F4B4600B0C81C /* Platforms */,
 				50305AF30E40E33200F63373 /* cocos2d.h */,
 				50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */,
+				A003AC8B1657071100C7B792 /* ccFPSImages.h */,
+				A003AC8E16572D6000C7B792 /* ccFPSImages.m */,
 				A09AB76714EA12F7009C8B91 /* ccDeprecated.h */,
 				A09AB76814EA12F7009C8B91 /* ccDeprecated.m */,
 				505462FB1062768000AB7C52 /* ccConfig.h */,
@@ -9901,6 +9911,7 @@
 				A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
 				2B19283A1633778D0049A044 /* ClippingNodeTest.h in Headers */,
+				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14531,6 +14542,7 @@
 				A0D7DAEF15E2EEE8000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5415E312EC000CA0C4 /* CCProfiling.m in Sources */,
 				A0D2DE7616377423008DB73C /* CCClippingNode.m in Sources */,
+				A003AC9216572EC500C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14648,6 +14660,7 @@
 				A0D7D9D015E2E730000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D9D215E2E730000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				2B192836163361B10049A044 /* CCClippingNode.m in Sources */,
+				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14880,6 +14893,7 @@
 				A0D7DAED15E2EEE7000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5315E312EC000CA0C4 /* CCProfiling.m in Sources */,
 				A0D2DE7716377424008DB73C /* CCClippingNode.m in Sources */,
+				A003AC9116572EC400C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15244,6 +15258,7 @@
 				A0D7DAF115E2EEE8000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7DB5515E312ED000CA0C4 /* CCProfiling.m in Sources */,
 				A0D2DE7516377422008DB73C /* CCClippingNode.m in Sources */,
+				A003AC9316572EC500C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15469,6 +15484,7 @@
 				A064ECA416235FE700020E06 /* js_bindings_cocos2d_registration.mm in Sources */,
 				E39CB1C216239F83004528CC /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A0D2DE7816377425008DB73C /* CCClippingNode.m in Sources */,
+				A003AC9016572EC300C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

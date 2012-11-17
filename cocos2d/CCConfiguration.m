@@ -192,4 +192,36 @@ static char * glExtensions;
     NSArray *extensionsNames = [extensionsString componentsSeparatedByString:@" "];
     return [extensionsNames containsObject: searchName];
 }
+
+// XXX: Optimization: This should be called only once
+-(NSInteger) runningDevice
+{
+	NSInteger ret=-1;
+	
+#ifdef __CC_PLATFORM_IOS
+	
+	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+	{
+		ret = (CC_CONTENT_SCALE_FACTOR() == 2) ? kCCDeviceiPadRetinaDisplay : kCCDeviceiPad;
+	}
+	else if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone )
+	{
+		// From http://stackoverflow.com/a/12535566
+		BOOL isiPhone5 = CGSizeEqualToSize([[UIScreen mainScreen] preferredMode].size,CGSizeMake(640, 1136));
+		
+		if( CC_CONTENT_SCALE_FACTOR() == 2 ) {
+			ret = isiPhone5 ? kCCDeviceiPhone5RetinaDisplay : kCCDeviceiPhoneRetinaDisplay;
+		} else
+			ret = isiPhone5 ? kCCDeviceiPhone5 : kCCDeviceiPhone;
+	}
+	
+#elif defined(__CC_PLATFORM_MAC)
+	
+	// XXX: Add here support for Mac Retina Display
+	ret = kCCDeviceMac;
+	
+#endif // __CC_PLATFORM_MAC
+	
+	return ret;
+}
 @end
