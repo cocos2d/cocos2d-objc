@@ -76,7 +76,6 @@
 	<array>
 		<string>Resources/English.lproj/InfoPlist.strings</string>
 		<string>Resources/English.lproj/MainMenu.xib</string>
-		<string>Resources/fps_images.png</string>
 		<string>Resources/icon.icns</string>
 		<string>Resources/Info.plist</string>
 	</array>
@@ -112,15 +111,6 @@
 			</array>
 			<key>Path</key>
 			<string>Resources/English.lproj/MainMenu.xib</string>
-		</dict>
-		<key>Resources/fps_images.png</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>Resources</string>
-			</array>
-			<key>Path</key>
-			<string>Resources/fps_images.png</string>
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>

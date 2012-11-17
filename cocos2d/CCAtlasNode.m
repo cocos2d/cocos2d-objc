@@ -27,6 +27,7 @@
 #import "CCAtlasNode.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
+#import "CCTextureCache.h"
 #import "CCShaderCache.h"
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
@@ -60,7 +61,13 @@
 	return [[[self alloc] initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender:c] autorelease];
 }
 
--(id) initWithTileFile:(NSString*)tile tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
+-(id) initWithTileFile:(NSString*)filename tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
+{
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
+	return [self initWithTexture:texture tileWidth:w tileHeight:h itemsToRender:c];
+}
+
+-(id) initWithTexture:(CCTexture2D*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 {
 	if( (self=[super init]) ) {
 		
@@ -74,9 +81,7 @@
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
 
-		CCTextureAtlas * newAtlas = [[CCTextureAtlas alloc] initWithFile:tile capacity:c];
-		self.textureAtlas = newAtlas;
-		[newAtlas release];		
+		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:texture capacity:c];
 		
 		if( ! textureAtlas_ ) {
 			CCLOG(@"cocos2d: Could not initialize CCAtlasNode. Invalid Texture");

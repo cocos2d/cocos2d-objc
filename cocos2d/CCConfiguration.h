@@ -51,6 +51,18 @@ enum {
 	kCCMacVersion_10_8  = 0x0a080000,
 };
 
+enum {
+	kCCDeviceiPhone,
+	kCCDeviceiPhoneRetinaDisplay,
+	kCCDeviceiPhone5,
+	kCCDeviceiPhone5RetinaDisplay,
+	kCCDeviceiPad,
+	kCCDeviceiPadRetinaDisplay,
+
+	kCCDeviceMac,
+	kCCDeviceMacRetinaDisplay,
+};
+
 /**
  CCConfiguration contains some openGL variables
  @since v0.99.0
@@ -121,6 +133,7 @@ enum {
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
 
-
+/** returns the current device */
+-(NSInteger) runningDevice;
 
 @end

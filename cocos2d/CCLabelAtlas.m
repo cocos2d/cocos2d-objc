@@ -32,6 +32,7 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
+#import "CCTextureCache.h"
 #import "CCDirector.h"
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
@@ -74,14 +75,20 @@
 				   startCharMap:startChar];
 }
 
--(id) initWithString:(NSString*) theString charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
+-(id) initWithString:(NSString*)string charMapFile: (NSString*)filename itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
 {
-	if ((self=[super initWithTileFile:charmapfile tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
+	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
+	return [self initWithString:string texture:texture itemWidth:w itemHeight:h startCharMap:c];
+}
 
+-(id) initWithString:(NSString*) theString texture:(CCTexture2D*)texture itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
+{
+	if ((self=[super initWithTexture:texture tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
+		
 		mapStartChar_ = c;
 		[self setString: theString];
 	}
-
+	
 	return self;
 }
 
