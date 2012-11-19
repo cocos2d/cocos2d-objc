@@ -498,7 +498,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #pragma mark CCFileUtils - Suffix / Directory search chain
 
 
--(void) enableiPhoneResourcesOniPad:(BOOL)enable
+-(void) setEnableiPhoneResourcesOniPad:(BOOL)enable
 {
 	if( _enableiPhoneResourcesOniPad != enable ) {
 		
