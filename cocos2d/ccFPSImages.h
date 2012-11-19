@@ -30,9 +30,9 @@ extern unsigned char cc_fps_images_ipadhd_png[];
 extern "C" {
 #endif
 
-unsigned int cc_fps_images_len();
-unsigned int cc_fps_images_hd_len();
-unsigned int cc_fps_images_ipadhd_len();
+unsigned int cc_fps_images_len(void);
+unsigned int cc_fps_images_hd_len(void);
+unsigned int cc_fps_images_ipadhd_len(void);
 
 #ifdef __cplusplus
 }
