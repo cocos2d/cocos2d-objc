@@ -133,11 +133,21 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
+		CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
+		
+		CCLOG( @" %@", [fileutils searchResolutionsOrder]);
+		
+		fileutils.enableiPhoneResourcesOniPad = YES;
+
+		CCLOG( @" %@", [fileutils searchResolutionsOrder]);
+
 		for( NSUInteger i=1; i < 8 ; i++ ) {
 			NSString *file = [NSString stringWithFormat:@"issue1344-test%d.txt", i];
-			NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file];
+			NSString *path = [fileutils fullPathFromRelativePath:file];
 			NSLog(@"Test number %i: %@ -> %@", i, file, path);
 		}
+		
+		fileutils.enableiPhoneResourcesOniPad = NO;
 	}
 	return self;
 }
