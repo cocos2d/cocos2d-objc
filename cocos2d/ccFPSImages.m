@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+#import "ccFPSImages.h"
+
 unsigned char cc_fps_images_png[] = {
   0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
   0x49, 0x48, 0x44, 0x52, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x20,
@@ -4519,17 +4521,17 @@ unsigned char cc_fps_images_ipadhd_png[] = {
   0x45, 0x4e, 0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-unsigned int cc_fps_images_len()
+unsigned int cc_fps_images_len(void)
 {
 	return sizeof(cc_fps_images_png);
 }
 
-unsigned int cc_fps_images_hd_len()
+unsigned int cc_fps_images_hd_len(void)
 {
 	return sizeof(cc_fps_images_hd_png);
 }
 
-unsigned int cc_fps_images_ipadhd_len()
+unsigned int cc_fps_images_ipadhd_len(void)
 {
 	return sizeof(cc_fps_images_ipadhd_png);
 }
