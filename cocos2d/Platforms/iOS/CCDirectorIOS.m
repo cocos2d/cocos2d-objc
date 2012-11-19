@@ -43,11 +43,14 @@
 #import "../../CCGLProgram.h"
 #import "../../ccGLStateCache.h"
 #import "../../CCLayer.h"
+#import "../../ccFPSImages.h"
+#import "../../CCConfiguration.h"
 
 // support imports
 #import "../../Support/OpenGL_Internal.h"
 #import "../../Support/CGPointExtension.h"
 #import "../../Support/TransformUtils.h"
+#import "../../Support/CCFileUtils.h"
 
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
@@ -315,6 +318,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setContentScaleFactor:newScale];
 
 	// Load Hi-Res FPS label
+	[[CCFileUtils sharedFileUtils] buildSearchResolutionsOrder];
 	[self createStatsLabel];
 
 	return YES;
@@ -485,6 +489,27 @@ GLToClipTransform(kmMat4 *transformOut)
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
+#pragma mark helper
+
+-(void)getFPSImageData:(unsigned char**)datapointer lenght:(NSUInteger*)len
+{
+	int device = [[CCConfiguration sharedConfiguration] runningDevice];
+
+	if( device == kCCDeviceiPadRetinaDisplay) {
+		*datapointer = cc_fps_images_ipadhd_png;
+		*len = cc_fps_images_ipadhd_len();
+		
+	} else if( device == kCCDeviceiPhoneRetinaDisplay || device == kCCDeviceiPhone5RetinaDisplay ) {
+		*datapointer = cc_fps_images_hd_png;
+		*len = cc_fps_images_hd_len();
+
+	} else {
+		*datapointer = cc_fps_images_png;
+		*len = cc_fps_images_len();
+	}
+}
+
 @end
 
 

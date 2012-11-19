@@ -540,6 +540,10 @@
 
   //Calculate X
 	startAngleX_ = [target_ rotationX];
+	if (startAngleX_ > 0)
+		startAngleX_ = fmodf(startAngleX_, 360.0f);
+	else
+		startAngleX_ = fmodf(startAngleX_, -360.0f);
 
 	diffAngleX_ = dstAngleX_ - startAngleX_;
 	if (diffAngleX_ > 180)
@@ -547,7 +551,8 @@
 	if (diffAngleX_ < -180)
 		diffAngleX_ += 360;
   
-  //Calculate Y
+	
+  //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
 	startAngleY_ = [target_ rotationY];
 	if (startAngleY_ > 0)
 		startAngleY_ = fmodf(startAngleY_, 360.0f);
@@ -1488,10 +1493,11 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
             }
 
 			nextFrame_ = i+1;
+		// Issue 1438. Could be more than one frame per tick, due to low frame rate or frame delta < 1/FPS
         } else {
 			break;
 		}
-	}	
+	}
 }
 
 - (CCActionInterval *) reverse

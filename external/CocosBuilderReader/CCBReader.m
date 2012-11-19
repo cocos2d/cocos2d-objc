@@ -1193,7 +1193,7 @@
 
 + (NSString*) ccbDirectoryPath
 {
-    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSArray *searchPaths = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES);
     return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"ccb"];
 }
 
@@ -1224,55 +1224,22 @@
 
 @implementation CCBFileUtils
 
-@synthesize ccbDirectoryPath;
-
 - (id) init
 {
     self = [super init];
     if (!self) return NULL;
     
-    self.ccbDirectoryPath = [CCBReader ccbDirectoryPath];
+    // Add the ccb directory to the resource path
+    self.searchPath = [[NSArray arrayWithObject:[CCBReader ccbDirectoryPath]] arrayByAddingObjectsFromArray: self.searchPath];
+    
+    NSLog(@"ccbDirectoryPath: %@", [CCBReader ccbDirectoryPath]);
     
     return self;
 }
 
 - (void) dealloc
 {
-    self.ccbDirectoryPath = NULL;
+    //self.ccbDirectoryPath = NULL;
     [super dealloc];
 }
-
-- (NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
-{
-    // Check for file in Documents directory
-    NSString* resDir = NULL;
-    if (subpath && ![subpath isEqualToString:@""])
-    {
-        resDir = [ccbDirectoryPath stringByAppendingPathComponent:subpath];
-    }
-    else
-    {
-        resDir = ccbDirectoryPath;
-    }
-    
-    NSString* fileName = NULL;
-    if (ext && ![ext isEqualToString:@""])
-    {
-        fileName = [resource stringByAppendingPathExtension:ext];
-    }
-    else
-    {
-        fileName = resource;
-    }
-    
-    NSString* filePath = [resDir stringByAppendingPathComponent:fileName];
-    if ([[NSFileManager defaultManager] fileExistsAtPath:filePath])
-    {
-        return filePath;
-    }
-    
-    // Use default lookup
-    return [bundle_ pathForResource:resource ofType:ext inDirectory:subpath];
-}
-
 @end

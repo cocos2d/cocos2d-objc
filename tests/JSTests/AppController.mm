@@ -30,11 +30,13 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
+		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
-	else if( [name isEqual:@"JS CocosDragon"] )
+	else if( [name isEqual:@"JS CocosDragon"] ) {
+		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
 		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
 }
 @end
 
@@ -83,26 +85,19 @@
 //	[director_ setProjection:kCCDirectorProjection2D];
 	[director_ setProjection:kCCDirectorProjection3D];
 
-	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
-//	if( ! [director_ enableRetinaDisplay:YES] )
-//		CCLOG(@"Retina Display Not supported");
+
+	// Enables High Res mode (Retina Display) for CocosDragon
+	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
+	if( [name isEqual:@"JS CocosDragon"] ) {
+		if( ! [director_ enableRetinaDisplay:YES] )
+			CCLOG(@"Retina Display Not supported");
+	}
 
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change anytime.
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 
-	// If the 1st suffix is not found, then the fallback suffixes are going to used. If none is found, it will try with the name without suffix.
-	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
-	// On iPad     : "-ipad", "-hd"
-	// On iPhone HD: "-hd"
-	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
-	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
-	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
-
-	if( CC_CONTENT_SCALE_FACTOR() == 2 )
-		[sharedFileUtils setEnableFallbackSuffixes:YES];		// Default: NO. No fallback suffixes are going to be used
 
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
@@ -161,12 +156,6 @@
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
-
-	// Mac... Use iPad resources by default
-	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-	[sharedFileUtils setMacRetinaDisplaySuffix:@"-ipadhd"];
-	[sharedFileUtils setMacSuffix:@"-ipad"];
-	[sharedFileUtils setEnableFallbackSuffixes:YES];		// Default: NO. No fallback suffixes are going to be used
 	
 	[director_ setResizeMode:kCCDirectorResize_AutoScale];
 //	[director_ setResizeMode:kCCDirectorResize_NoScale];
@@ -196,11 +185,13 @@
 	if( [name isEqual:@"JS Watermelon"] )
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
+		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
-	else if( [name isEqual:@"JS CocosDragon"] )
-		[[JSBCore sharedInstance] runScript:@"main.js"];	
+	else if( [name isEqual:@"JS CocosDragon"] ) {
+		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
+		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
 }
 @end
 

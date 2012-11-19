@@ -4,12 +4,12 @@
 [submodule "external/jsbindings"]
 	path = external/jsbindings
 	url = git://github.com/ricardoquesada/jsbindings.git
-[submodule "tests/cocos2d-html5-tests"]
-	path = tests/cocos2d-html5-tests
-	url = git://github.com/ricardoquesada/cocos2d-html5-tests.git
 [submodule "tests/CocosDragonJS"]
 	path = tests/CocosDragonJS
 	url = git://github.com/ricardoquesada/CocosDragonJS.git
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 	url = git://github.com/slembcke/Chipmunk-Physics.git
+[submodule "tests/cocos2d-js-tests"]
+	path = tests/cocos2d-js-tests
+	url = git://github.com/ricardoquesada/cocos2d-js-tests.git

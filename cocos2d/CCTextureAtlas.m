@@ -521,7 +521,7 @@
 #else
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-
+	
 //	glBindVertexArray(0);
 	
 

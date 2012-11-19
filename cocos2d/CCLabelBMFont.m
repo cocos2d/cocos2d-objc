@@ -559,9 +559,10 @@ void FNTConfigRemoveCache( void )
         //Go through each character and insert line breaks as necessary
         for (int j = 0; j < [children_ count]; j++) {
             CCSprite *characterSprite;
-			
-            while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip]))
-                skip++;
+            int justSkipped = 0;
+            while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip+justSkipped]))
+                justSkipped++;
+            skip += justSkipped;
 			
             if (!characterSprite.visible)
 				continue;
@@ -580,13 +581,14 @@ void FNTConfigRemoveCache( void )
             //Put lastWord on the current line and start a new line
             //Reset lastWord
             if ([[NSCharacterSet newlineCharacterSet] characterIsMember:character]) {
-                lastWord = [[lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] stringByAppendingFormat:@"%C", character];
+                lastWord = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                lastWord = [lastWord stringByPaddingToLength:[lastWord length] + justSkipped withString:[NSString stringWithFormat:@"%C", character] startingAtIndex:0];
                 multilineString = [multilineString stringByAppendingString:lastWord];
                 lastWord = @"";
                 startOfWord = -1;
                 line++;
                 startOfLine = -1;
-                i++;
+                i+=justSkipped;
 				
                 //CCLabelBMFont do not have a character for new lines, so do NOT "continue;" in the for loop. Process the next character
                 if (i >= stringLength || i < 0)

@@ -17,10 +17,20 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* andyispani:
+	CocosDenshion can be muted before loading a sound file. patch
+
+* Ben Trengrove (http://bentrengrove.com/)
+	Added patch to support iPhone5 support in FileUtils
+
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	Director: Fixed the initial flicker + correct size at startup
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
 	LabelBMFont: If the character is not supported, logs a warning
+
+* Gábor Varga (https://github.com/vargusz)
+	Fixed possible memory leak in RadialTransitions
+	Events in tratisions are disabled/enabled at onEnter/onExit. patch.
 
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
@@ -33,6 +43,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * HarrisonXi (https://github.com/HarrisonXi):
 	Fixed some logic errors in the Scheduler and Timer
+	TMX Maps: Fixed firstGID parser issue for new version TMX file with external TSX file
 
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
@@ -46,6 +57,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Lam Pham (http://www.fancyratstudios.com/)
 	New RotationalSkew action that matches flash functionality
 	Added Tests for RotationSkew feature
+	RotateTo: supports X and Y dimensions
 
 * lbeck @ cocos2d community:
 	Fix for LabelTTF in MacBook Retina Display
@@ -55,6 +67,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Mike Daley (http://www.71squared.com/)
 	LabelBMFont: contextSize honors shadows and strokes patch.
+
+* Nestor Todorov (https://github.com/supernes)
+	Added patch to support iPhone5 support in FileUtils
 
 * Nicolas Gramlich (http://andengine.org):
 	Contributed the remote Javascript console
@@ -82,10 +97,16 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
+	FileUtils:
+		Added support to search resolution resources in subdirectories
+		Added method to load resources without using resolution search
+		Added search path for any kind of resources
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 
+* Zakay (https://github.com/Zakay)
+	LabelBMFont: Fixed bug with newlines and fixed width labels
 
 cocos2d for iPhone 2.0 authors
 ------------------------------
