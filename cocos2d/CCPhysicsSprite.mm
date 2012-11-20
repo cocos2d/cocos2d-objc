@@ -86,16 +86,21 @@
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {
+	// Although scale is not used by physics engines, it is calculated just in case
+	// the sprite is animated (scaled up/down) using actions.
+	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
 	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(rotationX_)) : _body->rot);
-	CGFloat x = _body->p.x + rot.x*-anchorPointInPoints_.x - rot.y*-anchorPointInPoints_.y;
-	CGFloat y = _body->p.y + rot.y*-anchorPointInPoints_.x + rot.x*-anchorPointInPoints_.y;
+	CGFloat x = _body->p.x + rot.x * -anchorPointInPoints_.x * scaleX_ - rot.y * -anchorPointInPoints_.y * scaleY_;
+	CGFloat y = _body->p.y + rot.y * -anchorPointInPoints_.x * scaleX_ + rot.x * -anchorPointInPoints_.y * scaleY_;
 	
 	if(ignoreAnchorPointForPosition_){
 		x += anchorPointInPoints_.x;
 		y += anchorPointInPoints_.y;
 	}
 	
-	return (transform_ = CGAffineTransformMake(rot.x, rot.y, -rot.y,	rot.x, x,	y));
+	return (transform_ = CGAffineTransformMake(rot.x * scaleX_, rot.y * scaleX_,
+											   -rot.y * scaleY_, rot.x * scaleY_,
+											   x,	y));
 }
 
 #elif CC_ENABLE_BOX2D_INTEGRATION
@@ -136,7 +141,6 @@
 }
 
 // returns the transform matrix according the Chipmunk Body values
-// returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {
 	b2Vec2 pos  = _body->GetPosition();
@@ -154,14 +158,17 @@
 	float c = cosf(radians);
 	float s = sinf(radians);
 	
+	// Although scale is not used by physics engines, it is calculated just in case
+	// the sprite is animated (scaled up/down) using actions.
+	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
 	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x + -s*-anchorPointInPoints_.y;
-		y += s*-anchorPointInPoints_.x + c*-anchorPointInPoints_.y;
+		x += c*-anchorPointInPoints_.x * scaleX_ + -s*-anchorPointInPoints_.y * scaleY_;
+		y += s*-anchorPointInPoints_.x * scaleX_ + c*-anchorPointInPoints_.y * scaleY_;
 	}
-	
+		
 	// Rot, Translate Matrix
-	transform_ = CGAffineTransformMake( c,  s,
-									   -s,	c,
+	transform_ = CGAffineTransformMake( c * scaleX_,	s * scaleX_,
+									   -s * scaleY_,	c * scaleY_,
 									   x,	y );
 	
 	return transform_;
