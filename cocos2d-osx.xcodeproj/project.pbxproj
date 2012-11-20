@@ -141,6 +141,8 @@
 		A003ACAC165731FD00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A003ACAD165731FE00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A003ACAE165731FE00C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
+		A0084C48165C2EC80013B856 /* src in Resources */ = {isa = PBXBuildFile; fileRef = A083E3951651EAEC00633893 /* src */; };
+		A0084C49165C2ECD0013B856 /* res in Resources */ = {isa = PBXBuildFile; fileRef = A083E3941651EAEC00633893 /* res */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -1198,8 +1200,6 @@
 		A07273E0155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */; };
 		A07273E1155B23A8003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273DC155B23A8003E961F /* test_1021x1024.png */; };
 		A083E1CB1651EAC700633893 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = A083DFB21651EAC500633893 /* README.md */; };
-		A083E3961651EAEC00633893 /* res in Resources */ = {isa = PBXBuildFile; fileRef = A083E3941651EAEC00633893 /* res */; };
-		A083E3971651EAEC00633893 /* src in Resources */ = {isa = PBXBuildFile; fileRef = A083E3951651EAEC00633893 /* src */; };
 		A08F3E1A15D6E65300B4C422 /* MoonWarriors-native.js in Resources */ = {isa = PBXBuildFile; fileRef = A08F3DE515D6E65300B4C422 /* MoonWarriors-native.js */; };
 		A08F3E1B15D6E65300B4C422 /* arial-14.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A08F3DE715D6E65300B4C422 /* arial-14.fnt */; };
 		A08F3E1D15D6E65300B4C422 /* arial-14.png in Resources */ = {isa = PBXBuildFile; fileRef = A08F3DE915D6E65300B4C422 /* arial-14.png */; };
@@ -13164,8 +13164,8 @@
 				A064EC0C162289E300020E06 /* jsb_constants_cocosbuilder.js in Resources */,
 				A031C08D15DADE5F00E1986C /* jsb_constants_gl.js in Resources */,
 				A083E1CB1651EAC700633893 /* README.md in Resources */,
-				A083E3961651EAEC00633893 /* res in Resources */,
-				A083E3971651EAEC00633893 /* src in Resources */,
+				A0084C48165C2EC80013B856 /* src in Resources */,
+				A0084C49165C2ECD0013B856 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
