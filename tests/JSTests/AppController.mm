@@ -18,29 +18,6 @@
 
 // CLASS IMPLEMENTATIONS
 
-@interface BootLayer : CCLayer
-@end
-@implementation  BootLayer
--(void) onEnter
-{
-	[super onEnter];
-	
-	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
-	
-	if( [name isEqual:@"JS Watermelon"] )
-		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
-	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
-	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[JSBCore sharedInstance] runScript:@"MoonWarriors.js"];
-	else if( [name isEqual:@"JS CocosDragon"] ) {
-		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
-		[[JSBCore sharedInstance] runScript:@"main.js"];
-	}
-}
-@end
-
-
 @implementation AppController
 
 #pragma mark - AppController - iOS
@@ -174,22 +151,26 @@
 }
 
 -(void) run
-{
-//	CCScene *scene = [CCScene node];
-//	BootLayer *layer = [BootLayer node];
-//	[scene addChild:layer];
-//	[[CCDirector sharedDirector] runWithScene:scene];
-	
+{	
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
-	
-	if( [name isEqual:@"JS Watermelon"] )
+
+	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
+
+	if( [name isEqual:@"JS Watermelon"] ) {
 		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
+#if defined(__CC_PLATFORM_MAC)
+		// Use ipad resources for Mac
+		[[fileutils suffixesDict] setObject:@"-ipad" forKey:kCCFileUtilsMac];
+		[[fileutils suffixesDict] setObject:@"-ipadhd" forKey:kCCFileUtilsMacHD];
+		NSLog(@"%@", [fileutils suffixesDict]);
+#endif
+	}
 	else if( [name isEqual:@"JS Tests"] )
 		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 	else if( [name isEqual:@"JS CocosDragon"] ) {
-		[[CCFileUtils sharedFileUtils] setSearchMode:kCCFileUtilsSearchDirectory];
+		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
 		[[JSBCore sharedInstance] runScript:@"main.js"];
 	}
 }
