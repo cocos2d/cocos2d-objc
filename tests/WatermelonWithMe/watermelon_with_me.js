@@ -522,7 +522,7 @@ var GameLayer = cc.LayerGradient.extend({
         // poly, fill color, border width, border color
 //        this._terrain.drawPoly( poly, cc.c4f(0,0,0,0 ), 1, cc.c4f(0.82,0.41,0.04,1) );
 
-        var rect = cc.rect(x,y,width,height);
+        var rect = cc.rect(x,y,width,height+250);
         var a = cc.Follow.create( this._carSprite, rect );
         this._scrollNode.runAction( a );
 
