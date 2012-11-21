@@ -381,9 +381,6 @@ enum {
 /** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
 -(void) transform;
 
-/** returns the current transformation matrix. Only valid when using CC_NODE_TRANSFORM_USING_AFFINE_MATRIX */
--(GLfloat*) transformGL;
-
 /** performs OpenGL view-matrix transformation of it's ancestors.
  Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO)
  it's necessary to transform the ancestors again.
