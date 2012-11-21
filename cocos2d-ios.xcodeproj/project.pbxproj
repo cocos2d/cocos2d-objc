@@ -1294,7 +1294,7 @@
 		A003A8A21656C56F00C7B792 /* settings-caption-tilt.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8561656C56F00C7B792 /* settings-caption-tilt.png */; };
 		A003A8A31656C56F00C7B792 /* settings-caption-touch.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8571656C56F00C7B792 /* settings-caption-touch.png */; };
 		A003A8A81656C58900C7B792 /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A41656C58900C7B792 /* ccbResources */; };
-		A003A8A91656C58900C7B792 /* resources-hd in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A51656C58900C7B792 /* resources-hd */; };
+		A003A8A91656C58900C7B792 /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A51656C58900C7B792 /* resources-iphonehd */; };
 		A003A8AA1656C58900C7B792 /* resources-ipad in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A61656C58900C7B792 /* resources-ipad */; };
 		A003A8AB1656C58900C7B792 /* resources-ipadhd in Resources */ = {isa = PBXBuildFile; fileRef = A003A8A71656C58900C7B792 /* resources-ipadhd */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
@@ -2568,6 +2568,7 @@
 		A0D3A927149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A928149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A929149D2FAF0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A0D44E54165C57E5005D92C9 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = A0D44E53165C57E5005D92C9 /* resources-iphone */; };
 		A0D6BFEF159B6A25008EED97 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A0D6BFF0159B6A25008EED97 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A0D6BFF1159B6A25008EED97 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -5576,7 +5577,7 @@
 		A003A8561656C56F00C7B792 /* settings-caption-tilt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-caption-tilt.png"; sourceTree = "<group>"; };
 		A003A8571656C56F00C7B792 /* settings-caption-touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-caption-touch.png"; sourceTree = "<group>"; };
 		A003A8A41656C58900C7B792 /* ccbResources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ccbResources; sourceTree = "<group>"; };
-		A003A8A51656C58900C7B792 /* resources-hd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-hd"; sourceTree = "<group>"; };
+		A003A8A51656C58900C7B792 /* resources-iphonehd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-iphonehd"; sourceTree = "<group>"; };
 		A003A8A61656C58900C7B792 /* resources-ipad */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipad"; sourceTree = "<group>"; };
 		A003A8A71656C58900C7B792 /* resources-ipadhd */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-ipadhd"; sourceTree = "<group>"; };
 		A003AC8B1657071100C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
@@ -6064,6 +6065,7 @@
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A0D3A8FD149D2F9D0077CD93 /* BaseAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseAppController.h; path = tests/BaseAppController.h; sourceTree = "<group>"; };
 		A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseAppController.m; path = tests/BaseAppController.m; sourceTree = "<group>"; };
+		A0D44E53165C57E5005D92C9 /* resources-iphone */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "resources-iphone"; sourceTree = "<group>"; };
 		A0D6C037159B6A25008EED97 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
 		A0D77A0F146E3244000960C7 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
@@ -8594,7 +8596,8 @@
 			isa = PBXGroup;
 			children = (
 				A003A8A41656C58900C7B792 /* ccbResources */,
-				A003A8A51656C58900C7B792 /* resources-hd */,
+				A0D44E53165C57E5005D92C9 /* resources-iphone */,
+				A003A8A51656C58900C7B792 /* resources-iphonehd */,
 				A003A8A61656C58900C7B792 /* resources-ipad */,
 				A003A8A71656C58900C7B792 /* resources-ipadhd */,
 				A003A8081656C56F00C7B792 /* Bomb.ccbi */,
@@ -13749,9 +13752,10 @@
 				A003A8761656C56F00C7B792 /* main.js in Resources */,
 				A003A8781656C56F00C7B792 /* MainMenuScene.js in Resources */,
 				A003A8A81656C58900C7B792 /* ccbResources in Resources */,
-				A003A8A91656C58900C7B792 /* resources-hd in Resources */,
+				A003A8A91656C58900C7B792 /* resources-iphonehd in Resources */,
 				A003A8AA1656C58900C7B792 /* resources-ipad in Resources */,
 				A003A8AB1656C58900C7B792 /* resources-ipadhd in Resources */,
+				A0D44E54165C57E5005D92C9 /* resources-iphone in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
