@@ -759,7 +759,7 @@ var GameLayer = cc.LayerGradient.extend({
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("coin01.png");
         var radius = 0.95 * sprite.getContentSize().width / 2;
 
-        var body = new cp.BodyStatic();
+        var body = new cp.StaticBody();
 		body.setPos( pos );
         sprite.setBody( body.handle );
 
@@ -788,7 +788,7 @@ var GameLayer = cc.LayerGradient.extend({
     createFinish:function( pos ) {
         var sprite = cc.PhysicsSprite.createWithSpriteFrameName("farmers-market.png");
         var cs = sprite.getContentSize();
-        var body = new cp.BodyStatic();
+        var body = new cp.StaticBody();
         sprite.setBody( body.handle );
         body.setPos( pos );
 
