@@ -98,28 +98,28 @@
 		4AD3B95A159A54F4002E68D1 /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */; };
 		4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
 		A003A90E1656CEE500C7B792 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8BE1656CEE500C7B792 /* Bomb.ccbi */; };
-		A003A90F1656CEE500C7B792 /* Bomb.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8BF1656CEE500C7B792 /* Bomb.js */; };
+		A003A90F1656CEE500C7B792 /* Bomb.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8BF1656CEE500C7B792 /* Bomb.js */; };
 		A003A91A1656CEE500C7B792 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8CB1656CEE500C7B792 /* cloud.png */; };
 		A003A91B1656CEE500C7B792 /* Coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = A003A8CC1656CEE500C7B792 /* Coin.caf */; };
 		A003A91C1656CEE500C7B792 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8CD1656CEE500C7B792 /* Coin.ccbi */; };
-		A003A91D1656CEE500C7B792 /* Coin.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8CE1656CEE500C7B792 /* Coin.js */; };
+		A003A91D1656CEE500C7B792 /* Coin.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8CE1656CEE500C7B792 /* Coin.js */; };
 		A003A91E1656CEE500C7B792 /* Dragon.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8CF1656CEE500C7B792 /* Dragon.ccbi */; };
-		A003A91F1656CEE500C7B792 /* Dragon.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8D01656CEE500C7B792 /* Dragon.js */; };
+		A003A91F1656CEE500C7B792 /* Dragon.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D01656CEE500C7B792 /* Dragon.js */; };
 		A003A9201656CEE500C7B792 /* EndCoin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D11656CEE500C7B792 /* EndCoin.ccbi */; };
-		A003A9211656CEE500C7B792 /* EndCoin.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8D21656CEE500C7B792 /* EndCoin.js */; };
+		A003A9211656CEE500C7B792 /* EndCoin.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D21656CEE500C7B792 /* EndCoin.js */; };
 		A003A9221656CEE500C7B792 /* Explo.caf in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D31656CEE500C7B792 /* Explo.caf */; };
 		A003A9231656CEE500C7B792 /* Explosion.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D41656CEE500C7B792 /* Explosion.ccbi */; };
-		A003A9241656CEE500C7B792 /* Explosion.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8D51656CEE500C7B792 /* Explosion.js */; };
+		A003A9241656CEE500C7B792 /* Explosion.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D51656CEE500C7B792 /* Explosion.js */; };
 		A003A9251656CEE500C7B792 /* gameobjects.plist in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D61656CEE500C7B792 /* gameobjects.plist */; };
 		A003A9261656CEE500C7B792 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D71656CEE500C7B792 /* gameobjects.png */; };
 		A003A9271656CEE500C7B792 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D81656CEE500C7B792 /* GameScene.ccbi */; };
-		A003A9281656CEE500C7B792 /* GameScene.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8D91656CEE500C7B792 /* GameScene.js */; };
+		A003A9281656CEE500C7B792 /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8D91656CEE500C7B792 /* GameScene.js */; };
 		A003A9291656CEE500C7B792 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DA1656CEE500C7B792 /* Level.ccbi */; };
-		A003A92A1656CEE500C7B792 /* Level.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8DB1656CEE500C7B792 /* Level.js */; };
+		A003A92A1656CEE500C7B792 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DB1656CEE500C7B792 /* Level.js */; };
 		A003A92B1656CEE500C7B792 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DC1656CEE500C7B792 /* logo.png */; };
-		A003A92C1656CEE500C7B792 /* main.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8DD1656CEE500C7B792 /* main.js */; };
+		A003A92C1656CEE500C7B792 /* main.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DD1656CEE500C7B792 /* main.js */; };
 		A003A92D1656CEE500C7B792 /* MainMenuScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DE1656CEE500C7B792 /* MainMenuScene.ccbi */; };
-		A003A92E1656CEE500C7B792 /* MainMenuScene.js in Sources */ = {isa = PBXBuildFile; fileRef = A003A8DF1656CEE500C7B792 /* MainMenuScene.js */; };
+		A003A92E1656CEE500C7B792 /* MainMenuScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A003A8DF1656CEE500C7B792 /* MainMenuScene.js */; };
 		A003A92F1656CEE500C7B792 /* Music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A003A8E01656CEE500C7B792 /* Music.mp3 */; };
 		A003A9301656CEE500C7B792 /* play-button-down.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8E11656CEE500C7B792 /* play-button-down.png */; };
 		A003A9311656CEE500C7B792 /* play-button.png in Resources */ = {isa = PBXBuildFile; fileRef = A003A8E21656CEE500C7B792 /* play-button.png */; };
@@ -13164,6 +13164,15 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A003A90F1656CEE500C7B792 /* Bomb.js in Resources */,
+				A003A91D1656CEE500C7B792 /* Coin.js in Resources */,
+				A003A91F1656CEE500C7B792 /* Dragon.js in Resources */,
+				A003A9211656CEE500C7B792 /* EndCoin.js in Resources */,
+				A003A9241656CEE500C7B792 /* Explosion.js in Resources */,
+				A003A9281656CEE500C7B792 /* GameScene.js in Resources */,
+				A003A92A1656CEE500C7B792 /* Level.js in Resources */,
+				A003A92C1656CEE500C7B792 /* main.js in Resources */,
+				A003A92E1656CEE500C7B792 /* MainMenuScene.js in Resources */,
 				A09DB6C91640AA7600AFCA61 /* jsb_constants.js in Resources */,
 				A09DB6CA1640AA7600AFCA61 /* jsb_constants_chipmunk.js in Resources */,
 				A09DB6CB1640AA7600AFCA61 /* jsb_constants_cocos2d.js in Resources */,
@@ -16863,15 +16872,6 @@
 				A09DB73F1640AA7600AFCA61 /* js_bindings_cocos2d_registration.mm in Sources */,
 				A09DB7401640AA7600AFCA61 /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A09DB7411640AA7600AFCA61 /* CCClippingNode.m in Sources */,
-				A003A90F1656CEE500C7B792 /* Bomb.js in Sources */,
-				A003A91D1656CEE500C7B792 /* Coin.js in Sources */,
-				A003A91F1656CEE500C7B792 /* Dragon.js in Sources */,
-				A003A9211656CEE500C7B792 /* EndCoin.js in Sources */,
-				A003A9241656CEE500C7B792 /* Explosion.js in Sources */,
-				A003A9281656CEE500C7B792 /* GameScene.js in Sources */,
-				A003A92A1656CEE500C7B792 /* Level.js in Sources */,
-				A003A92C1656CEE500C7B792 /* main.js in Sources */,
-				A003A92E1656CEE500C7B792 /* MainMenuScene.js in Sources */,
 				A003ACAD165731FE00C7B792 /* ccFPSImages.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
