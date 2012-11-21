@@ -267,7 +267,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			ret = [self removeSuffix:__suffixiPhoneRetinaDisplay fromPath:path];
+        {
+            if ([[UIScreen mainScreen] bounds].size.height == 568)
+                ret = [self removeSuffix:__suffixiPhoneFourInchDisplay fromPath:path];
+            else
+                ret = [self removeSuffix:__suffixiPhoneRetinaDisplay fromPath:path];
+        }
 		else
 			ret = path;
 	}
