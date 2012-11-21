@@ -40,7 +40,7 @@ NSString *kCCFileUtilsiPhoneHD = @"iphonehd";
 NSString *kCCFileUtilsiPhone5 = @"iphone5";
 NSString *kCCFileUtilsiPhone5HD = @"iphone5hd";
 #elif __CC_PLATFORM_MAC
-NSString *kCCFileUtilsMac = @"";
+NSString *kCCFileUtilsMac = @"mac";
 NSString *kCCFileUtilsMacHD = @"machd";
 #endif
 
@@ -407,7 +407,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 
--(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath
+-(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath
 {
 	if ([relPath isAbsolutePath])
 		return relPath;
