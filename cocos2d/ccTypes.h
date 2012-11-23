@@ -127,6 +127,35 @@ static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
 }
 
+/** Returns a ccColor4F from a hexadecimal color (ex: 0xFF0000) and alpha value.
+ */
+static inline ccColor4F ccc4FFromHexAnda(const int h, const float a)
+{    
+    const float r = (h & 0xFF0000) >> 16;
+    const float g = (h & 0xFF00) >> 8;
+    const float b = (h & 0xFF);
+    
+	return (ccColor4F) {r/255, g/255, b/255, a};
+}
+
+/** Returns a ccColor4F from a hexadecimal color (ex: 0xFF0000).
+ */
+static inline ccColor4F ccc4FFromHex(const int h)
+{    
+    return ccc4FFromHexAnda(h, 1.0f);
+}
+
+/** Returns a ccColor3B from a hexadecimal color (ex: 0xFF0000).
+ */
+static inline ccColor3B ccc3BFromHex(const int h)
+{    
+    const float r = (h & 0xFF0000) >> 16;
+    const float g = (h & 0xFF00) >> 8;
+    const float b = (h & 0xFF);
+    
+	return (ccColor3B) {r/255, g/255, b/255};
+}
+
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
