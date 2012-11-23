@@ -28,3 +28,6 @@
 {}
 @end
 
+@interface mixedAssets : HiResDemo
+{}
+@end

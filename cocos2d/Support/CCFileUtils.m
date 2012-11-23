@@ -186,14 +186,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// iPhone ?
 	else
 	{
-        //four inch support here, UIScreen size always in portrait and in points
+        //four inch support here, UIScreen size always in portrait and in points,
         if ([[UIScreen mainScreen] bounds].size.height == 568)
         {
             ret = [self getPath:fullpath forSuffix:__suffixiPhoneFourInchDisplay];
             *resolutionType = kCCResolutioniPhoneFourInchDisplay;
         }
 
-		// Retina Display ?
+		// Retina Display, if 568h isn't found it falls back to iphoneRetina
 		if(!ret && CC_CONTENT_SCALE_FACTOR() == 2 ) {
 			ret = [self getPath:fullpath forSuffix:__suffixiPhoneRetinaDisplay];
 			*resolutionType = kCCResolutioniPhoneRetinaDisplay;
@@ -269,7 +269,10 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
         {
             if ([[UIScreen mainScreen] bounds].size.height == 568)
+            {
                 ret = [self removeSuffix:__suffixiPhoneFourInchDisplay fromPath:path];
+                ret = [self removeSuffix:__suffixiPhoneRetinaDisplay fromPath:ret];
+            }
             else
                 ret = [self removeSuffix:__suffixiPhoneRetinaDisplay fromPath:path];
         }

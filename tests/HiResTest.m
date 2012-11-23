@@ -15,6 +15,7 @@ static NSString *transitions[] = {
 			@"Test1",
 			@"Test2",
             @"iPhone4Inch",
+            @"mixedAssets",
 };
 
 enum {
@@ -38,6 +39,13 @@ Class nextAction()
 	sceneIdx++;
 	sceneIdx = sceneIdx % ( sizeof(transitions) / sizeof(transitions[0]) );
 	NSString *r = transitions[sceneIdx];
+    
+    CCDirector *director = [CCDirector sharedDirector];
+    if ([r isEqualToString:@"Test2"])
+       	[director enableRetinaDisplay: NO ];
+    else
+        [director enableRetinaDisplay: YES ];
+    
 	Class c = NSClassFromString(r);
 	return c;
 }
@@ -50,6 +58,13 @@ Class backAction()
 		sceneIdx += total;
 
 	NSString *r = transitions[sceneIdx];
+    
+    CCDirector *director = [CCDirector sharedDirector];
+    if ([r isEqualToString:@"Test2"])
+       	[director enableRetinaDisplay: NO ];
+    else
+        [director enableRetinaDisplay: YES ];
+    
 	Class c = NSClassFromString(r);
 	return c;
 }
@@ -106,6 +121,7 @@ Class restartAction()
 
 -(void) restartCallback: (id) sender
 {
+    [[CCTextureCache sharedTextureCache] removeAllTextures];
 	CCScene *s = [CCScene node];
 	[s addChild: [restartAction() node]];
 	[[CCDirector sharedDirector] replaceScene: s];
@@ -113,22 +129,20 @@ Class restartAction()
 
 -(void) nextCallback: (id) sender
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	[director enableRetinaDisplay: ! hiRes_ ];
+    [[CCTextureCache sharedTextureCache] removeAllTextures];
 
 	CCScene *s = [CCScene node];
 	[s addChild: [nextAction() node]];
-	[director replaceScene: s];
+	[[CCDirector sharedDirector]  replaceScene: s];
 }
 
 -(void) backCallback: (id) sender
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	[director enableRetinaDisplay: ! hiRes_ ];
+     [[CCTextureCache sharedTextureCache] removeAllTextures];
 
 	CCScene *s = [CCScene node];
 	[s addChild: [backAction() node]];
-	[director replaceScene: s];
+	[[CCDirector sharedDirector] replaceScene: s];
 }
 
 -(NSString*) title
@@ -159,7 +173,7 @@ Class restartAction()
 		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
 		NSLog(@"screen size: %f x %f", sp.width, sp.height);
 
-		CCSprite *sprite = [CCSprite spriteWithFile:@"background1.jpg"];
+		CCSprite *sprite = [CCSprite spriteWithFile:@"background1-hd.jpg"];
 		[self addChild:sprite];
 
 		[sprite setPosition:ccp(size.width/2, size.height/2)];
@@ -172,6 +186,7 @@ Class restartAction()
 	return @"@Scene is HD";
 }
 
+//except for iphone5, screen size is 1136 x 640
 -(NSString *) subtitle
 {
 	return @"Screen size should be 960x640";
@@ -253,6 +268,50 @@ Class restartAction()
 }
 
 @end
+
+@implementation mixedAssets
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+		hiRes_ = YES;
+        
+		CGSize size = [[CCDirector sharedDirector] winSize];
+        
+		CGSize sp = [[CCDirector sharedDirector] winSizeInPixels];
+		NSLog(@"screen size: %f x %f", sp.width, sp.height);
+        
+        //adds it to the texture cache as grossini.png
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini-hd.png"];
+		[self addChild:sprite z:3];
+        
+		[sprite setPosition:ccp(size.width/2, size.height/2)];
+        
+        //adds it to the texture cache as background1.jpg
+        CCSprite *background = [CCSprite spriteWithFile:@"background1-568h.jpg"];
+        [background setPosition:ccp(size.width/2,size.height/2)];
+        
+        [self addChild:background];
+        
+        [[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+        
+	}
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Assests";
+}
+
+-(NSString *) subtitle
+{
+	return @"loading assests of various size";
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark AppDelegate
