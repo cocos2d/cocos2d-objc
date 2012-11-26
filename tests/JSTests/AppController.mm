@@ -166,7 +166,7 @@
 #endif
 	}
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"src/tests-boot-jsb.js"];
+		[[JSBCore sharedInstance] runScript:@"tests/tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 	else if( [name isEqual:@"JS CocosDragon"] ) {
