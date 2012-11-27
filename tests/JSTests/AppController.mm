@@ -171,7 +171,8 @@
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 	else if( [name isEqual:@"JS CocosDragon"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
-		[[JSBCore sharedInstance] runScript:@"main.js"];
+		[fileutils setEnableiPhoneResourcesOniPad:YES];
+		[[JSBCore sharedInstance] runScript:@"boot.js"];
 	}
 }
 @end
