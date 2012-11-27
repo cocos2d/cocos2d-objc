@@ -1,6 +1,3 @@
-[submodule "tests/MoonWarriors"]
-	path = tests/MoonWarriors
-	url = git://github.com/ricardoquesada/MoonWarriors.git
 [submodule "external/jsbindings"]
 	path = external/jsbindings
 	url = git://github.com/ricardoquesada/jsbindings.git

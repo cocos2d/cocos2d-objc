@@ -157,7 +157,7 @@
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
 
 	if( [name isEqual:@"JS Watermelon"] ) {
-		[[JSBCore sharedInstance] runScript:@"watermelon_with_me.js"];
+		[[JSBCore sharedInstance] runScript:@"boot-jsb.js"];
 #if defined(__CC_PLATFORM_MAC)
 		// Use ipad resources for Mac
 		[[fileutils suffixesDict] setObject:@"-ipad" forKey:kCCFileUtilsMac];
