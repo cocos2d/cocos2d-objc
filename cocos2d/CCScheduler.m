@@ -88,6 +88,7 @@ typedef struct _hashSelectorEntry
 
 -(void) setupTimerWithInterval:(ccTime)seconds repeat:(uint)r delay:(ccTime)d
 {
+    _nTimesExecuted = 0;
 	_elapsed = -1;
 	_interval = seconds;
 	_delay = d;
@@ -138,20 +139,19 @@ typedef struct _hashSelectorEntry
 			{
 				if( _elapsed >= _delay )
 				{
-					[self trigger];
-					_elapsed = _elapsed - _delay;
 					_nTimesExecuted+=1;
+					_elapsed = _elapsed - _delay;
 					_useDelay = NO;
+					[self trigger];
 				}
 			}
 			else
 			{
 				if (_elapsed >= _interval)
 				{
-					[self trigger];
-					_elapsed = 0;
 					_nTimesExecuted += 1;
-
+					_elapsed = 0;
+					[self trigger];
 				}
 			}
 
@@ -368,7 +368,8 @@ typedef struct _hashSelectorEntry
 			CCTimer *timer = element->timers->arr[i];
 			if( [timer isKindOfClass:[CCTimerTargetSelector class]] && selector == [(CCTimerTargetSelector*)timer selector] ) {
 				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", [timer interval], interval);
-				[timer setInterval: interval];
+                [timer setupTimerWithInterval:interval repeat:repeat delay:delay];
+                //				[timer setInterval: interval];
 				return;
 			}
 		}

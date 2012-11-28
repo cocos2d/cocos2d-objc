@@ -159,6 +159,13 @@
 {}
 @end
 
+@interface SpriteAnimationSplitRandom : SpriteDemo
+{
+    CCAnimation *animation;
+    CCSprite *sprite;
+}
+@end
+
 @interface SpriteFrameTest : SpriteDemo
 {
 	CCSprite *sprite1, *sprite2;

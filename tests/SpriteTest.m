@@ -12,6 +12,10 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+    @"SpriteAnimationSplit",
+    @"SpriteAnimationSplitRandom",
+	@"AnimationCache",
+	@"AnimationCacheFile",
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -32,7 +36,6 @@ static NSString *transitions[] = {
 	@"SpriteBatchNodeOffsetAnchorRotationalSkewScale",
 	@"SpriteOffsetAnchorFlip",
 	@"SpriteBatchNodeOffsetAnchorFlip",
-	@"SpriteAnimationSplit",
 	@"SpriteColorOpacity",
 	@"SpriteBatchNodeColorOpacity",
 	@"SpriteZOrder",
@@ -71,8 +74,6 @@ static NSString *transitions[] = {
 	@"SpriteSubclass",
 	@"SpriteDoubleResolution",
 	@"SpriteBatchBug1217",
-	@"AnimationCache",
-	@"AnimationCacheFile",
 };
 
 enum {
@@ -3324,6 +3325,81 @@ Class restartAction()
 	return @"Sprite: Animation + flip";
 }
 @end
+
+#pragma mark -
+#pragma mark Example Sprite: Animation Split
+
+@implementation SpriteAnimationSplitRandom
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:@"animations/dragon_animation.png"];
+
+		// manually add frames to the frame cache
+		CCSpriteFrame *frame0 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*0, 132, 132)];
+		CCSpriteFrame *frame1 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*0, 132, 132)];
+		CCSpriteFrame *frame2 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*2, 132*0, 132, 132)];
+		CCSpriteFrame *frame3 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*3, 132*0, 132, 132)];
+		CCSpriteFrame *frame4 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*0, 132*1, 132, 132)];
+		CCSpriteFrame *frame5 = [CCSpriteFrame frameWithTexture:texture rect:CGRectMake(132*1, 132*1, 132, 132)];
+
+
+		//
+		// Animation using Sprite batch
+		//
+		sprite = [CCSprite spriteWithSpriteFrame:frame0];
+		sprite.position = ccp( s.width/2-80, s.height/2);
+		[self addChild:sprite];
+
+		NSMutableArray *animFrames = [NSMutableArray array];
+		[animFrames addObject:frame0];
+		[animFrames addObject:frame1];
+		[animFrames addObject:frame2];
+		[animFrames addObject:frame3];
+		[animFrames addObject:frame4];
+		[animFrames addObject:frame5];
+
+		animation = [[CCAnimation animationWithSpriteFrames:animFrames delay:0.2f] retain];
+        
+        [self createAndRunAnimation];
+        
+	}
+	return self;
+}
+
+- (void) createAndRunAnimation {
+    CCAnimate *animate = [CCAnimate actionWithRandomStartAnimation:animation];
+    CCSequence *seq = [CCSequence actions:
+                       [CCShow action],
+                       animate,
+                       [CCFlipX actionWithFlipX:YES],
+                       [[animate copy] autorelease],
+                       [CCFlipX actionWithFlipX:NO],
+                       [CCHide action],
+                       [CCDelayTime actionWithDuration:1],
+                       [CCCallFunc actionWithTarget:self selector:@selector(createAndRunAnimation)],
+                       nil];
+
+    [sprite runAction:seq];
+}
+
+- (void) dealloc
+{
+    [animation release];
+	[[CCSpriteFrameCache sharedSpriteFrameCache] removeUnusedSpriteFrames];
+	[super dealloc];
+}
+
+-(NSString *) title
+{
+	return @"Sprite: Animation Random Start + flip";
+}
+@end
+
 
 #pragma mark -
 #pragma mark Sprite Hybrid
