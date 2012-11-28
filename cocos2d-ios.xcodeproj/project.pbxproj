@@ -1490,7 +1490,6 @@
 		A031B72115D9BD0800E1986C /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFC1153D9CF00D87F08 /* png.h */; };
 		A031B72215D9BD0800E1986C /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFF1153D9CF00D87F08 /* pngconf.h */; };
 		A031B76F15D9BD7E00E1986C /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
-		A031B77115D9BD7E00E1986C /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */; };
 		A031B77215D9BD7E00E1986C /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50CB2FCA1004C8B100B7A750 /* libCocosDenshion.a */; };
 		A031B77915D9C03600E1986C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A031B73915D9BD0800E1986C /* libjsbindings.a */; };
 		A031B77A15D9C0E000E1986C /* libjsbindings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A031B73915D9BD0800E1986C /* libjsbindings.a */; };
@@ -2485,6 +2484,10 @@
 		A0BD62A6166578450061A165 /* resources-iphone in Resources */ = {isa = PBXBuildFile; fileRef = A0BD62A2166578440061A165 /* resources-iphone */; };
 		A0BD62A7166578450061A165 /* resources-iphonehd in Resources */ = {isa = PBXBuildFile; fileRef = A0BD62A3166578440061A165 /* resources-iphonehd */; };
 		A0BD62A91665798E0061A165 /* ccbResources in Resources */ = {isa = PBXBuildFile; fileRef = A0BD62A81665798D0061A165 /* ccbResources */; };
+		A0BD62AC1666BCFF0061A165 /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */; };
+		A0BD62AF1666BD0F0061A165 /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */; };
+		A0BD62B01666BD170061A165 /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */; };
+		A0BD62B51666BD220061A165 /* libCocosBuilderReader.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */; };
 		A0BE62D9140535F000DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62D6140535B700DAA336 /* CCVertex.h */; };
 		A0BE62DA140535F000DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62D7140535B700DAA336 /* CCVertex.m */; };
 		A0C20AC8144FDAF700D84B47 /* CCParticleBatchNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C20AC6144FDAF700D84B47 /* CCParticleBatchNode.h */; };
@@ -4865,6 +4868,34 @@
 			remoteGlobalIDString = A00942C515180C730029A5C6;
 			remoteInfo = MultithreadTest;
 		};
+		A0BD62AA1666BCF90061A165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A02900AF15B5FA9E00D64F82;
+			remoteInfo = CocosBuilderReader;
+		};
+		A0BD62AD1666BD0B0061A165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A02900AF15B5FA9E00D64F82;
+			remoteInfo = CocosBuilderReader;
+		};
+		A0BD62B11666BD1A0061A165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A02900AF15B5FA9E00D64F82;
+			remoteInfo = CocosBuilderReader;
+		};
+		A0BD62B31666BD1E0061A165 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A02900AF15B5FA9E00D64F82;
+			remoteInfo = CocosBuilderReader;
+		};
 		A0D7D9D515E2E7C3000CA0C4 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -7171,6 +7202,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BD62AF1666BD0F0061A165 /* libCocosBuilderReader.a in Frameworks */,
 				A031B77A15D9C0E000E1986C /* libjsbindings.a in Frameworks */,
 				A001945B15C379F400F3D80E /* Foundation.framework in Frameworks */,
 				A001945C15C379F400F3D80E /* UIKit.framework in Frameworks */,
@@ -7229,7 +7261,6 @@
 			files = (
 				A0D7DB3115E3129B000CA0C4 /* libkazmath.a in Frameworks */,
 				A031B76F15D9BD7E00E1986C /* libChipmunk.a in Frameworks */,
-				A031B77115D9BD7E00E1986C /* libCocosBuilderReader.a in Frameworks */,
 				A031B77215D9BD7E00E1986C /* libCocosDenshion.a in Frameworks */,
 				A03E21D015F9626500E58C9D /* libjs_static.a in Frameworks */,
 			);
@@ -7246,6 +7277,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BD62AC1666BCFF0061A165 /* libCocosBuilderReader.a in Frameworks */,
 				A0AA56BA1641955000A38D85 /* libjsbindings.a in Frameworks */,
 				A0AA56BB1641955000A38D85 /* Foundation.framework in Frameworks */,
 				A0AA56BC1641955000A38D85 /* UIKit.framework in Frameworks */,
@@ -7264,6 +7296,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BD62B01666BD170061A165 /* libCocosBuilderReader.a in Frameworks */,
 				A031B77915D9C03600E1986C /* libjsbindings.a in Frameworks */,
 				A0D6C02D159B6A25008EED97 /* Foundation.framework in Frameworks */,
 				A0D6C02E159B6A25008EED97 /* UIKit.framework in Frameworks */,
@@ -7282,6 +7315,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0BD62B51666BD220061A165 /* libCocosBuilderReader.a in Frameworks */,
 				A031B77D15D9C13E00E1986C /* libjsbindings.a in Frameworks */,
 				A0E5F89E15C1AE5F00D44C32 /* Foundation.framework in Frameworks */,
 				A0E5F89F15C1AE5F00D44C32 /* UIKit.framework in Frameworks */,
@@ -11284,6 +11318,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0BD62AE1666BD0B0061A165 /* PBXTargetDependency */,
 				A031B77C15D9C0EB00E1986C /* PBXTargetDependency */,
 			);
 			name = "JS Moon Warriors";
@@ -11393,6 +11428,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0BD62AB1666BCF90061A165 /* PBXTargetDependency */,
 				A0AA56691641955000A38D85 /* PBXTargetDependency */,
 			);
 			name = "JS CocosDragon";
@@ -11411,6 +11447,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0BD62B21666BD1A0061A165 /* PBXTargetDependency */,
 				A031B77815D9C02A00E1986C /* PBXTargetDependency */,
 			);
 			name = "JS Tests";
@@ -11429,6 +11466,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A0BD62B41666BD1E0061A165 /* PBXTargetDependency */,
 				A031B77F15D9C14100E1986C /* PBXTargetDependency */,
 			);
 			name = "JS Watermelon";
@@ -16400,6 +16438,26 @@
 			isa = PBXTargetDependency;
 			target = A00942C515180C730029A5C6 /* MultithreadTest */;
 			targetProxy = A0BCD28A157C1ABE00CCE291 /* PBXContainerItemProxy */;
+		};
+		A0BD62AB1666BCF90061A165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A02900AF15B5FA9E00D64F82 /* CocosBuilderReader */;
+			targetProxy = A0BD62AA1666BCF90061A165 /* PBXContainerItemProxy */;
+		};
+		A0BD62AE1666BD0B0061A165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A02900AF15B5FA9E00D64F82 /* CocosBuilderReader */;
+			targetProxy = A0BD62AD1666BD0B0061A165 /* PBXContainerItemProxy */;
+		};
+		A0BD62B21666BD1A0061A165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A02900AF15B5FA9E00D64F82 /* CocosBuilderReader */;
+			targetProxy = A0BD62B11666BD1A0061A165 /* PBXContainerItemProxy */;
+		};
+		A0BD62B41666BD1E0061A165 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A02900AF15B5FA9E00D64F82 /* CocosBuilderReader */;
+			targetProxy = A0BD62B31666BD1E0061A165 /* PBXContainerItemProxy */;
 		};
 		A0D7D9D615E2E7C3000CA0C4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
