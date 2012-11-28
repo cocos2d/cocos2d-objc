@@ -372,7 +372,7 @@ Class restartAction()
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:40];
 		[self addChild:label z:1];
 		[label setPosition: ccp(s.width/2, s.height-32)];
-		[label setColor:ccc3(255,255,40)];
+		[label setColor:ccc3(200,20,20)];
 
 
 		while(quantityNodes < nodes )
