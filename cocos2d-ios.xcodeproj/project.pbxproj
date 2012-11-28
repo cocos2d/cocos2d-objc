@@ -2448,8 +2448,6 @@
 		A0BD6213166578280061A165 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6168166578270061A165 /* iTunesArtwork */; };
 		A0BD6218166578280061A165 /* Bomb.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6171166578270061A165 /* Bomb.ccbi */; };
 		A0BD6219166578280061A165 /* Bomb.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6172166578270061A165 /* Bomb.js */; };
-		A0BD621A166578280061A165 /* boot-html5.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6173166578270061A165 /* boot-html5.js */; };
-		A0BD621B166578280061A165 /* boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6174166578270061A165 /* boot.js */; };
 		A0BD6226166578290061A165 /* cloud.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6180166578270061A165 /* cloud.png */; };
 		A0BD6227166578290061A165 /* Coin.caf in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6181166578270061A165 /* Coin.caf */; };
 		A0BD6228166578290061A165 /* Coin.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6182166578270061A165 /* Coin.ccbi */; };
@@ -2465,7 +2463,6 @@
 		A0BD6232166578290061A165 /* gameobjects.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD618C166578270061A165 /* gameobjects.png */; };
 		A0BD6233166578290061A165 /* GameScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0BD618D166578270061A165 /* GameScene.ccbi */; };
 		A0BD6234166578290061A165 /* GameScene.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD618E166578270061A165 /* GameScene.js */; };
-		A0BD6235166578290061A165 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = A0BD618F166578270061A165 /* index.html */; };
 		A0BD6236166578290061A165 /* Level.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6190166578270061A165 /* Level.ccbi */; };
 		A0BD6237166578290061A165 /* Level.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6191166578270061A165 /* Level.js */; };
 		A0BD6238166578290061A165 /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6192166578270061A165 /* logo.png */; };
@@ -6144,8 +6141,6 @@
 		A0BD6168166578270061A165 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		A0BD6171166578270061A165 /* Bomb.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bomb.ccbi; sourceTree = "<group>"; };
 		A0BD6172166578270061A165 /* Bomb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Bomb.js; sourceTree = "<group>"; };
-		A0BD6173166578270061A165 /* boot-html5.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-html5.js"; sourceTree = "<group>"; };
-		A0BD6174166578270061A165 /* boot.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = boot.js; sourceTree = "<group>"; };
 		A0BD6180166578270061A165 /* cloud.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cloud.png; sourceTree = "<group>"; };
 		A0BD6181166578270061A165 /* Coin.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Coin.caf; sourceTree = "<group>"; };
 		A0BD6182166578270061A165 /* Coin.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Coin.ccbi; sourceTree = "<group>"; };
@@ -6161,7 +6156,6 @@
 		A0BD618C166578270061A165 /* gameobjects.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = gameobjects.png; sourceTree = "<group>"; };
 		A0BD618D166578270061A165 /* GameScene.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameScene.ccbi; sourceTree = "<group>"; };
 		A0BD618E166578270061A165 /* GameScene.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = GameScene.js; sourceTree = "<group>"; };
-		A0BD618F166578270061A165 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		A0BD6190166578270061A165 /* Level.ccbi */ = {isa = PBXFileReference; lastKnownFileType = file; path = Level.ccbi; sourceTree = "<group>"; };
 		A0BD6191166578270061A165 /* Level.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = Level.js; sourceTree = "<group>"; };
 		A0BD6192166578270061A165 /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
@@ -9577,8 +9571,6 @@
 				A0BD62A3166578440061A165 /* resources-iphonehd */,
 				A0BD6171166578270061A165 /* Bomb.ccbi */,
 				A0BD6172166578270061A165 /* Bomb.js */,
-				A0BD6173166578270061A165 /* boot-html5.js */,
-				A0BD6174166578270061A165 /* boot.js */,
 				A0BD6180166578270061A165 /* cloud.png */,
 				A0BD6181166578270061A165 /* Coin.caf */,
 				A0BD6182166578270061A165 /* Coin.ccbi */,
@@ -9594,7 +9586,6 @@
 				A0BD618C166578270061A165 /* gameobjects.png */,
 				A0BD618D166578270061A165 /* GameScene.ccbi */,
 				A0BD618E166578270061A165 /* GameScene.js */,
-				A0BD618F166578270061A165 /* index.html */,
 				A0BD6190166578270061A165 /* Level.ccbi */,
 				A0BD6191166578270061A165 /* Level.js */,
 				A0BD6192166578270061A165 /* logo.png */,
@@ -13944,7 +13935,6 @@
 				A0BD6231166578290061A165 /* gameobjects.plist in Resources */,
 				A0BD6232166578290061A165 /* gameobjects.png in Resources */,
 				A0BD6233166578290061A165 /* GameScene.ccbi in Resources */,
-				A0BD6235166578290061A165 /* index.html in Resources */,
 				A0BD6236166578290061A165 /* Level.ccbi in Resources */,
 				A0BD6238166578290061A165 /* logo.png in Resources */,
 				A0BD623A166578290061A165 /* MainMenuScene.ccbi in Resources */,
@@ -13962,8 +13952,6 @@
 				A0BD62A6166578450061A165 /* resources-iphone in Resources */,
 				A0BD62A7166578450061A165 /* resources-iphonehd in Resources */,
 				A0BD6219166578280061A165 /* Bomb.js in Resources */,
-				A0BD621A166578280061A165 /* boot-html5.js in Resources */,
-				A0BD621B166578280061A165 /* boot.js in Resources */,
 				A0BD6229166578290061A165 /* Coin.js in Resources */,
 				A0BD622B166578290061A165 /* Dragon.js in Resources */,
 				A0BD622D166578290061A165 /* EndCoin.js in Resources */,

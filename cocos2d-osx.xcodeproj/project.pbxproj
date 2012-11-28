@@ -2888,7 +2888,6 @@
 		A0BD61541665522D0061A165 /* settings-caption-musicoff.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD614A1665522D0061A165 /* settings-caption-musicoff.png */; };
 		A0BD61551665522D0061A165 /* settings-caption-tilt.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD614B1665522D0061A165 /* settings-caption-tilt.png */; };
 		A0BD61561665522D0061A165 /* settings-caption-touch.png in Resources */ = {isa = PBXBuildFile; fileRef = A0BD614C1665522D0061A165 /* settings-caption-touch.png */; };
-		A0BD6158166570760061A165 /* boot.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD6157166570760061A165 /* boot.js */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
@@ -7513,7 +7512,6 @@
 		A0BD614A1665522D0061A165 /* settings-caption-musicoff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-caption-musicoff.png"; sourceTree = "<group>"; };
 		A0BD614B1665522D0061A165 /* settings-caption-tilt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-caption-tilt.png"; sourceTree = "<group>"; };
 		A0BD614C1665522D0061A165 /* settings-caption-touch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-caption-touch.png"; sourceTree = "<group>"; };
-		A0BD6157166570760061A165 /* boot.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = boot.js; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
@@ -9701,7 +9699,6 @@
 				A0BD61421665522D0061A165 /* resources-iphone */,
 				A0BD613E166549270061A165 /* ccbResources */,
 				A0BD6140166551F10061A165 /* resources-jsb.js */,
-				A0BD6157166570760061A165 /* boot.js */,
 				A0BD5F8C166548D50061A165 /* Bomb.ccbi */,
 				A0BD5F8D166548D50061A165 /* Bomb.js */,
 				A0BD5F99166548D50061A165 /* cloud.png */,
@@ -13456,7 +13453,6 @@
 				A0BD60DD166548D70061A165 /* settings-button-down.png in Resources */,
 				A0BD60DE166548D70061A165 /* settings-button.png in Resources */,
 				A0BD60DF166548D70061A165 /* settings-caption-music.png in Resources */,
-				A0BD6158166570760061A165 /* boot.js in Resources */,
 				A0BD60E0166548D70061A165 /* settings-caption-musicoff.png in Resources */,
 				A0BD60E1166548D70061A165 /* settings-caption-tilt.png in Resources */,
 				A0BD60E2166548D70061A165 /* settings-caption-touch.png in Resources */,

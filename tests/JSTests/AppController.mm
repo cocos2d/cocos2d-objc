@@ -172,7 +172,7 @@
 	else if( [name isEqual:@"JS CocosDragon"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
 		[fileutils setEnableiPhoneResourcesOniPad:YES];
-		[[JSBCore sharedInstance] runScript:@"boot.js"];
+		[[JSBCore sharedInstance] runScript:@"main.js"];
 	}
 }
 @end
