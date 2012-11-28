@@ -241,7 +241,7 @@ enum {
  
  @since v2.1
  */
--(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath;
+-(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
 
 

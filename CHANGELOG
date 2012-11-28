@@ -16,7 +16,9 @@ version 2.1-beta4  XX-Nov-2012
 . [FIX] Transitions: Fixed possible memory leak in some tranitions
 		Events are enabled/disabled at onEnter/onExit preventing possible bugs
 . [FIX] Particles: "unscheduleUpdate" is no longer called at dealloc time
+. [FIX] PhysicsSprite: Can be scaled up/down. AnchorPoint works OK.
 . [3RD] JS Bindings: Updated to v0.4. Chipmunk-JS + cocos2d-html5 is compatible with cocos2d/chipmunk + JSB
+. [3RD] SpiderMonkey: Updated to v17.0
 
 
 version 2.1-beta3  7-Nov-2012

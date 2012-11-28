@@ -40,7 +40,7 @@ NSString *kCCFileUtilsiPhoneHD = @"iphonehd";
 NSString *kCCFileUtilsiPhone5 = @"iphone5";
 NSString *kCCFileUtilsiPhone5HD = @"iphone5hd";
 #elif __CC_PLATFORM_MAC
-NSString *kCCFileUtilsMac = @"";
+NSString *kCCFileUtilsMac = @"mac";
 NSString *kCCFileUtilsMacHD = @"machd";
 #endif
 
@@ -327,9 +327,14 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		
 		// pathForResource also searches in .lproj directories. issue #1230
 		// If the file does not exist it will return nil.
-		ret = [self pathForResource:newName
+		NSString *filename = [newName lastPathComponent];
+		NSString *imageDirectory = [path stringByDeletingLastPathComponent];
+		
+		// on iOS it is OK to pass inDirector=nil and pass a path in "Resources",
+		// but on OS X it doesn't work.
+		ret = [self pathForResource:filename
 							 ofType:nil
-						inDirectory:nil];
+						inDirectory:imageDirectory];
 	}
 	else if( [_fileManager fileExistsAtPath:newName] )
 		ret = newName;
@@ -402,7 +407,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 }
 
 
--(NSString*) fullPathIgnoringResolutionsFromRelativePath:(NSString*)relPath
+-(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath
 {
 	if ([relPath isAbsolutePath])
 		return relPath;
