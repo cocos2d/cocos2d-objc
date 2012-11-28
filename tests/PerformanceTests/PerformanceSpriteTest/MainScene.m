@@ -59,7 +59,7 @@ Class restartAction()
 #pragma mark SubTest
 @implementation SubTest
 
--(id) initWithSubTest:(int) subtest parent:(id)p
+-(id) initWithSubTest:(int)subtest parent:(id)p
 {
 	if( (self=[super init]) ) {
 
@@ -82,6 +82,11 @@ Class restartAction()
  *10: 64 (32-bit) PNG Batch Node of 32 x 32 each
  *11: 64 (16-bit) PNG Batch Node of 32 x 32 each
  *12: 64 (4-bit) PVRTC Batch Node of 32 x 32 each
+
+ *13: animated, 14 frames (32-bit) PNG sprites of 85 x 121 each
+ *13: animated, 14 frames (32-bit) PNG Batch Node of 85 x 121 each
+ *13: animated, 14 frames (16-bit) PNG Batch Node of 85 x 121 each
+ *13: animated, 14 frames (4-bit) PVRTC Batch Node of 85 x 121 each
  */
 
 		// purge textures
@@ -95,6 +100,7 @@ Class restartAction()
 			case 1:
 			case 5:
 			case 9:
+			case 13:
 				break;
 				///
 			case 2:
@@ -114,16 +120,19 @@ Class restartAction()
 
 				///
 			case 6:
+            case 14:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:batchNode z:0];
 				break;
 			case 7:
+            case 15:
 				[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:100];
 				[p addChild:batchNode z:0];
 				break;
 			case 8:
+            case 16:
 				batchNode = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.pvr" capacity:100];
 				[p addChild:batchNode z:0];
 				break;
@@ -237,6 +246,52 @@ Class restartAction()
 			break;
 		}
 
+            
+        case 13:
+        {
+
+            NSMutableArray *animFrames = [NSMutableArray array];
+            for(int i = 1; i < 15; i++) {
+                // Quick way of loading all textures
+                sprite = [CCSprite spriteWithFile:[NSString stringWithFormat:@"grossini_dance_%02d.png", i]];
+                [animFrames addObject:[sprite displayFrame]];
+            }
+
+            CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.08f];
+            [sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation]]];
+
+			[parent addChild:sprite z:0 tag:tag+100];
+			break;
+
+        }
+            
+		case 14:
+		case 15:
+		case 16:
+		{
+			sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(0,0,85,121)];
+
+            NSMutableArray *animFrames = [NSMutableArray array];
+            for(int i = 1; i < 15; i++) {
+                int y,x;
+                int r = (CCRANDOM_0_1() * 1400 / 100);
+
+                y = r / 5;
+                x = r % 5;
+
+                x *= 85;
+                y *= 121;
+                sprite = [CCSprite spriteWithTexture:batchNode.texture rect:CGRectMake(x,y,85,121)];
+                [animFrames addObject:[sprite displayFrame]];
+            }
+
+            CCAnimation *animation = [CCAnimation animationWithSpriteFrames:animFrames delay:0.08f];
+            [sprite runAction:[CCRepeatForever actionWithAction: [CCAnimate actionWithAnimation:animation]]];
+
+			[parent addChild:sprite z:0 tag:tag+100];
+			break;
+        }
+
 		default:
 			break;
 	}
@@ -252,6 +307,7 @@ Class restartAction()
 		case 1:
 		case 5:
 		case 9:
+		case 13:
 			[parent removeChildByTag:tag+100 cleanup:YES];
 			break;
 		case 2:
@@ -263,6 +319,9 @@ Class restartAction()
 		case 10:
 		case 11:
 		case 12:
+		case 14:
+		case 15:
+		case 16:
 			[batchNode removeChildAtIndex:tag cleanup:YES];
 //			[batchNode removeChildByTag:tag+100 cleanup:YES];
 			break;
@@ -336,6 +395,10 @@ Class restartAction()
 		CCMenuItemFont  *itemF10 = [CCMenuItemFont itemWithString:@"10 " target:self selector:@selector(testNCallback:)];
 		CCMenuItemFont  *itemF11 = [CCMenuItemFont itemWithString:@"11 " target:self selector:@selector(testNCallback:)];
 		CCMenuItemFont  *itemF12 = [CCMenuItemFont itemWithString:@"12 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF13 = [CCMenuItemFont itemWithString:@"13 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF14 = [CCMenuItemFont itemWithString:@"14 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF15 = [CCMenuItemFont itemWithString:@"15 " target:self selector:@selector(testNCallback:)];
+		CCMenuItemFont  *itemF16 = [CCMenuItemFont itemWithString:@"16 " target:self selector:@selector(testNCallback:)];
 
 		itemF1.tag = 1;
 		itemF2.tag = 2;
@@ -349,9 +412,17 @@ Class restartAction()
 		itemF10.tag = 10;
 		itemF11.tag = 11;
 		itemF12.tag = 12;
+		itemF13.tag = 13;
+		itemF14.tag = 14;
+		itemF15.tag = 15;
+		itemF16.tag = 16;
 
 
-		menu = [CCMenu menuWithItems:itemF1, itemF2, itemF3, itemF4, itemF5, itemF6, itemF7, itemF8, itemF9, itemF10, itemF11, itemF12, nil];
+		menu = [CCMenu menuWithItems:
+                itemF1, itemF2, itemF3, itemF4,
+                itemF5, itemF6, itemF7, itemF8,
+                itemF9, itemF10, itemF11, itemF12,
+                nil];
 
 		int i=0;
 		for( id child in [menu children] ) {
@@ -366,6 +437,14 @@ Class restartAction()
 
 		[menu alignItemsHorizontally];
 		menu.position = ccp(s.width/2, 80);
+		[self addChild:menu z:2];
+
+		menu = [CCMenu menuWithItems:
+                itemF13, itemF14, itemF15, itemF16,
+                nil];
+
+		[menu alignItemsHorizontally];
+		menu.position = ccp(s.width/2, 110);
 		[self addChild:menu z:2];
 
 
@@ -564,5 +643,3 @@ Class restartAction()
 	[sprite performanceActions20];
 }
 @end
-
-

@@ -7,6 +7,12 @@
 
 @implementation CCNode (PerformanceTest)
 
+- (void)performanceAnimated
+{
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
+}
+
 - (void)performanceActions
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];

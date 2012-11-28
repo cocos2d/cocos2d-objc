@@ -14,4 +14,6 @@
 
 - (void)performanceActions;
 - (void)performanceActions20;
+
+- (void)performanceAnimated;
 @end
