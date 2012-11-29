@@ -24,7 +24,8 @@
 
 #import "CocosDenshion.h"
 
-#ifdef CD_USE_COCOS2D_FILEUTILS
+// Use cocos2d Fileutils or Builtin fileutils ?
+#ifndef CD_USE_OWN_FILEUTILS
 #import "CCFileUtils.h"
 #endif
 
@@ -88,8 +89,8 @@ float const kCD_GainDefault = 1.0f;
 
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
-#ifdef CD_USE_COCOS2D_FILEUTILS
-    return [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:NULL ignoreResolutions:YES];
+#ifndef CD_USE_OWN_FILEUTILS
+    return [[CCFileUtils sharedFileUtils] fullPathFromRelativePathIgnoringResolutions:relPath];
 #else
 	// do not convert an absolute path (starting with '/')
 	if(([relPath length] > 0) && ([relPath characterAtIndex:0] == '/'))
