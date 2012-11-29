@@ -31,9 +31,9 @@
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 
-static NSUInteger _fontSize = kCCItemSize;
-static NSString *_fontName = @"Marker Felt";
-static BOOL _fontNameRelease = NO;
+static NSUInteger _globalFontSize = kCCItemSize;
+static NSString *_globalFontName = @"Marker Felt";
+static BOOL _globalFontNameRelease = NO;
 
 
 const NSInteger	kCCCurrentItemTag = 0xc0c05001;
@@ -45,7 +45,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @implementation CCMenuItem
 
-@synthesize isSelected=isSelected_;
+@synthesize isSelected=_isSelected;
 +(id) itemWithTarget:(id) r selector:(SEL) s
 {
 	return [[[self alloc] initWithTarget:r selector:s] autorelease];
@@ -78,11 +78,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	if((self=[super init]) ) {
 
 		if( block )
-			block_ = [block copy];
+			_block = [block copy];
 
-		anchorPoint_ = ccp(0.5f, 0.5f);
-		isEnabled_ = YES;
-		isSelected_ = NO;
+		self.anchorPoint = ccp(0.5f, 0.5f);
+		_isEnabled = YES;
+		_isSelected = NO;
+		
+		_releaseBlockAtCleanup = NO;
 
 	}
 	return self;
@@ -90,43 +92,45 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) dealloc
 {
-	[block_ release];
+	[_block release];
 
 	[super dealloc];
 }
 
 -(void) cleanup
 {
-	[block_ release];
-	block_ = nil;
+	if( _releaseBlockAtCleanup ) {
+		[_block release];
+		_block = nil;
+	}
 
 	[super cleanup];
 }
 
 -(void) selected
 {
-	isSelected_ = YES;
+	_isSelected = YES;
 }
 
 -(void) unselected
 {
-	isSelected_ = NO;
+	_isSelected = NO;
 }
 
 -(void) activate
 {
-	if(isEnabled_&& block_ )
-		block_(self);
+	if(_isEnabled && _block )
+		_block(self);
 }
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-    isEnabled_ = enabled;
+    _isEnabled = enabled;
 }
 
 -(BOOL) isEnabled
 {
-    return isEnabled_;
+    return _isEnabled;
 }
 
 -(CGRect) rect
@@ -138,8 +142,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setBlock:(void(^)(id sender))block
 {
-    [block_ release];
-    block_ = [block copy];
+    [_block release];
+    _block = [block copy];
 }
 
 -(void) setTarget:(id)target selector:(SEL)selector
@@ -158,7 +162,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @implementation CCMenuItemLabel
 
-@synthesize disabledColor = disabledColor_;
+@synthesize disabledColor = _disabledColor;
 
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label
 {
@@ -193,9 +197,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(id) initWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol> *)label block:(void (^)(id))block
 {
 	if( (self=[self initWithBlock:block]) ) {
-		originalScale_ = 1;
-		colorBackup = ccWHITE;
-		disabledColor_ = ccc3( 126,126,126);
+		_originalScale = 1;
+		_colorBackup = ccWHITE;
+		self.disabledColor = ccc3( 126,126,126);
 		self.label = label;
 	}
 
@@ -204,32 +208,32 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
-	return label_;
+	return _label;
 }
 -(void) setLabel:(CCNode<CCLabelProtocol, CCRGBAProtocol>*) label
 {
-	if( label != label_ ) {
-		[self removeChild:label_ cleanup:YES];
+	if( label != _label ) {
+		[self removeChild:_label cleanup:YES];
 		[self addChild:label];
 
-		label_ = label;
-		label_.anchorPoint = ccp(0,0);
+		_label = label;
+		_label.anchorPoint = ccp(0,0);
 
-		[self setContentSize:[label_ contentSize]];
+		[self setContentSize:[_label contentSize]];
 	}
 }
 
 -(void) setString:(NSString *)string
 {
-	[label_ setString:string];
-	[self setContentSize: [label_ contentSize]];
+	[_label setString:string];
+	[self setContentSize: [_label contentSize]];
 }
 
 -(void) activate {
-	if(isEnabled_) {
+	if(_isEnabled) {
 		[self stopAllActions];
 
-		self.scale = originalScale_;
+		self.scale = _originalScale;
 
 		[super activate];
 	}
@@ -238,16 +242,16 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) selected
 {
 	// subclass to change the default action
-	if(isEnabled_) {
+	if(_isEnabled) {
 		[super selected];
 
 		CCAction *action = [self getActionByTag:kCCZoomActionTag];
 		if( action )
 			[self stopAction:action];
 		else
-			originalScale_ = self.scale;
+			_originalScale = self.scale;
 
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_ * 1.2f];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:_originalScale * 1.2f];
 		zoomAction.tag = kCCZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -256,10 +260,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) unselected
 {
 	// subclass to change the default action
-	if(isEnabled_) {
+	if(_isEnabled) {
 		[super unselected];
 		[self stopActionByTag:kCCZoomActionTag];
-		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:originalScale_];
+		CCAction *zoomAction = [CCScaleTo actionWithDuration:0.1f scale:_originalScale];
 		zoomAction.tag = kCCZoomActionTag;
 		[self runAction:zoomAction];
 	}
@@ -267,13 +271,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-	if( isEnabled_ != enabled ) {
+	if( _isEnabled != enabled ) {
 		if(enabled == NO) {
-			colorBackup = [label_ color];
-			[label_ setColor: disabledColor_];
+			_colorBackup = [_label color];
+			[_label setColor: _disabledColor];
 		}
 		else
-			[label_ setColor:colorBackup];
+			[_label setColor:_colorBackup];
 	}
 
 	[super setIsEnabled:enabled];
@@ -281,19 +285,19 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-    [label_ setOpacity:opacity];
+    [_label setOpacity:opacity];
 }
 -(GLubyte) opacity
 {
-	return [label_ opacity];
+	return [_label opacity];
 }
 -(void) setColor:(ccColor3B)color
 {
-	[label_ setColor:color];
+	[_label setColor:color];
 }
 -(ccColor3B) color
 {
-	return [label_ color];
+	return [_label color];
 }
 @end
 
@@ -356,26 +360,26 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 +(void) setFontSize: (NSUInteger) s
 {
-	_fontSize = s;
+	_globalFontSize = s;
 }
 
 +(NSUInteger) fontSize
 {
-	return _fontSize;
+	return _globalFontSize;
 }
 
 +(void) setFontName: (NSString*) n
 {
-	if( _fontNameRelease )
-		[_fontName release];
+	if( _globalFontNameRelease )
+		[_globalFontName release];
 
-	_fontName = [n retain];
-	_fontNameRelease = YES;
+	_globalFontName = [n retain];
+	_globalFontNameRelease = YES;
 }
 
 +(NSString*) fontName
 {
-	return _fontName;
+	return _globalFontName;
 }
 
 +(id) itemWithString: (NSString*) value target:(id) r selector:(SEL) s
@@ -410,10 +414,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	NSAssert( [string length] > 0, @"Value length must be greater than 0");
 
-	fontName_ = [_fontName copy];
-	fontSize_ = _fontSize;
+	_fontName = [_globalFontName copy];
+	_fontSize = _globalFontSize;
 
-	CCLabelTTF *label = [CCLabelTTF labelWithString:string fontName:fontName_ fontSize:fontSize_];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:string fontName:_fontName fontSize:_fontSize];
 
 	if((self=[super initWithLabel:label block:block]) ) {
 		// do something ?
@@ -424,34 +428,34 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) recreateLabel
 {
-	CCLabelTTF *label = [[CCLabelTTF alloc] initWithString:[label_ string] fontName:fontName_ fontSize:fontSize_];
+	CCLabelTTF *label = [[CCLabelTTF alloc] initWithString:[_label string] fontName:_fontName fontSize:_fontSize];
 	self.label = label;
 	[label release];
 }
 
 -(void) setFontSize: (NSUInteger) size
 {
-	fontSize_ = size;
+	_fontSize = size;
 	[self recreateLabel];
 }
 
 -(NSUInteger) fontSize
 {
-	return fontSize_;
+	return _fontSize;
 }
 
 -(void) setFontName: (NSString*) fontName
 {
-	if (fontName_)
-		[fontName_ release];
+	if (_fontName)
+		[_fontName release];
 
-	fontName_ = [fontName copy];
+	_fontName = [fontName copy];
 	[self recreateLabel];
 }
 
 -(NSString*) fontName
 {
-	return fontName_;
+	return _fontName;
 }
 @end
 
@@ -613,7 +617,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setIsEnabled:(BOOL)enabled
 {
-	if( isEnabled_ != enabled ) {
+	if( _isEnabled != enabled ) {
 		[super setIsEnabled:enabled];
 
 		[self updateImagesVisibility];
@@ -624,7 +628,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 // Helper 
 -(void) updateImagesVisibility
 {
-	if( isEnabled_ ) {
+	if( _isEnabled ) {
 		[normalImage_ setVisible:YES];
 		[selectedImage_ setVisible:NO];
 		[disabledImage_ setVisible:NO];
@@ -739,7 +743,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 @end
 
 @implementation CCMenuItemToggle
-@synthesize currentItem = currentItem_;
+@synthesize currentItem = _currentItem;
 @synthesize subItems = subItems_;
 @synthesize opacity = opacity_, color = color_;
 
@@ -792,8 +796,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 		self.subItems = [NSMutableArray arrayWithArray:arrayOfItems];
 
-        currentItem_ = nil;
-		selectedIndex_ = NSUIntegerMax;
+        _currentItem = nil;
+		_selectedIndex = NSUIntegerMax;
 		[self setSelectedIndex:0];
 	}
 
@@ -808,13 +812,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void)setSelectedIndex:(NSUInteger)index
 {
-	if( index != selectedIndex_ ) {
-		selectedIndex_=index;
+	if( index != _selectedIndex ) {
+		_selectedIndex=index;
         
-		if( currentItem_ )
-			[currentItem_ removeFromParentAndCleanup:NO];
+		if( _currentItem )
+			[_currentItem removeFromParentAndCleanup:NO];
 		
-		CCMenuItem *item = [subItems_ objectAtIndex:selectedIndex_];
+		CCMenuItem *item = [subItems_ objectAtIndex:_selectedIndex];
 		[self addChild:item z:0];
         self.currentItem = item;
 
@@ -826,27 +830,27 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(NSUInteger) selectedIndex
 {
-	return selectedIndex_;
+	return _selectedIndex;
 }
 
 
 -(void) selected
 {
 	[super selected];
-	[[subItems_ objectAtIndex:selectedIndex_] selected];
+	[[subItems_ objectAtIndex:_selectedIndex] selected];
 }
 
 -(void) unselected
 {
 	[super unselected];
-	[[subItems_ objectAtIndex:selectedIndex_] unselected];
+	[[subItems_ objectAtIndex:_selectedIndex] unselected];
 }
 
 -(void) activate
 {
 	// update index
-	if( isEnabled_ ) {
-		NSUInteger newIndex = (selectedIndex_ + 1) % [subItems_ count];
+	if( _isEnabled ) {
+		NSUInteger newIndex = (_selectedIndex + 1) % [subItems_ count];
 		[self setSelectedIndex:newIndex];
 
 	}
@@ -856,7 +860,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setIsEnabled: (BOOL)enabled
 {
-	if( isEnabled_ != enabled ) {
+	if( _isEnabled != enabled ) {
 		[super setIsEnabled:enabled];
 		for(CCMenuItem* item in subItems_)
 			[item setIsEnabled:enabled];
@@ -865,7 +869,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(CCMenuItem*) selectedItem
 {
-	return [subItems_ objectAtIndex:selectedIndex_];
+	return [subItems_ objectAtIndex:_selectedIndex];
 }
 
 #pragma mark CCMenuItemToggle - CCRGBAProtocol protocol

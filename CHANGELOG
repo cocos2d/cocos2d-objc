@@ -10,6 +10,10 @@ version 2.1-beta4  XX-Nov-2012
 		By default it uses cocos2d fileutils. Define CD_USE_OWN_FILEUTILS to use CD fileutils
 . [FIX] Director: fps_images.png is no longer needed. It uses the image from a header file
 . [FIX] LabelBMFont: Fixed bug with newlines and fixed width labels
+. [FIX] Layer: LayerMultiplex can be created with an NSArray
+		ivars use '_' as suffix, not preffix
+. [FIX] MenuItem: block is no longer released at cleanup. To do so, enable the "releaseBlockAtCleanup" property
+		ivars use '_' as suffix, not preffix
 . [FIX] Templates: sets the Directors delta-time to 0 when the Application Controller become active
 . [FIX] Tests: Box2dTestBed: Using new API for touches/accelerometer
 		JS tests are using a new repo: cocos2d-js-tests

@@ -41,16 +41,23 @@
 @interface CCMenuItem : CCNode
 {
 	// used for menu items using a block
-	void (^block_)(id sender);
+	void (^_block)(id sender);
 
-	BOOL isEnabled_;
-	BOOL isSelected_;
+	BOOL _isEnabled;
+	BOOL _isSelected;
+	
+	BOOL _releaseBlockAtCleanup;
 }
 
 /** returns whether or not the item is selected
 @since v0.8.2
 */
 @property (nonatomic,readonly) BOOL isSelected;
+
+/** If enabled, it releases the block at cleanup time.
+ @since v2.1
+ */
+@property (nonatomic) BOOL releaseBlockAtCleanup;
 
 /** Creates a CCMenuItem with a target/selector.
  target/selector will be implemented using blocks.
@@ -117,10 +124,10 @@
  */
 @interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
 {
-	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
-	ccColor3B	colorBackup;
-	ccColor3B	disabledColor_;
-	float		originalScale_;
+	CCNode<CCLabelProtocol, CCRGBAProtocol> *_label;
+	ccColor3B	_colorBackup;
+	ccColor3B	_disabledColor;
+	float		_originalScale;
 }
 
 /** the color that will be used to disable the item */
@@ -206,8 +213,8 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
-	NSUInteger fontSize_;
-	NSString *fontName_;
+	NSUInteger _fontSize;
+	NSString *_fontName;
 }
 /** set default font size */
 +(void) setFontSize: (NSUInteger) s;
@@ -271,7 +278,7 @@
  */
 @interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
 {
-	CCNode<CCRGBAProtocol> *normalImage_, *selectedImage_, *disabledImage_;
+	CCNode<CCRGBAProtocol> *_normalImage, *_selectedImage, *_disabledImage;
 }
 
 // weak references
@@ -386,11 +393,11 @@
  */
 @interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>
 {
-	NSUInteger selectedIndex_;
-	NSMutableArray* subItems_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
-    CCMenuItem* currentItem_;
+	NSUInteger	_selectedIndex;
+	NSMutableArray* _subItems;
+	GLubyte		_opacity;
+	ccColor3B	_color;
+    CCMenuItem*	_currentItem;
 }
 
 /** conforms with CCRGBAProtocol protocol */
