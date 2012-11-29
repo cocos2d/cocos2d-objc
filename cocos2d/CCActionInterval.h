@@ -198,6 +198,36 @@ Example:
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 @end
 
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
+ x and y are relative to the position of the object.
+ Can be concurrently called.
+ @since v2.1beta2-custom
+ */
+@interface CCMoveByEx : CCActionInterval <NSCopying>
+{
+    CGPoint positionDelta_;
+    ccTime previousTick_;
+}
+/** creates the action */
++(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+/** initializes the action */
+-(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+@end
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+ Can be concurrently called.
+ @since v2.1beta2-custom
+ */
+@interface CCMoveToEx : CCMoveByEx
+{
+	CGPoint endPosition;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
+@end
+
 /** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
  @since v1.0
  */
