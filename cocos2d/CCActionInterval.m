@@ -709,6 +709,84 @@
 }
 @end
 
+//
+// MoveToEx
+//
+#pragma mark -
+#pragma mark MoveToEx
+
+@implementation CCMoveToEx
++(id) actionWithDuration: (ccTime) t position: (CGPoint) p
+{
+	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+}
+
+-(id) initWithDuration: (ccTime) t position: (CGPoint) p
+{
+	if( (self=[super initWithDuration: t]) ) {
+		endPosition = p;
+    }
+
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: endPosition];
+	return copy;
+}
+
+-(void) startWithTarget:(CCNode *)aTarget
+{
+	[super startWithTarget:aTarget];
+	positionDelta_ = ccpSub( endPosition, [(CCNode*)target_ position] );
+}
+
+@end
+
+//
+// MoveByEx
+//
+#pragma mark -
+#pragma mark MoveByEx
+
+@implementation CCMoveByEx
++(id) actionWithDuration: (ccTime) t position: (CGPoint) p
+{
+	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+}
+
+-(id) initWithDuration: (ccTime) t position: (CGPoint) p
+{
+	if( (self=[super initWithDuration: t]) )
+		positionDelta_ = p;
+	return self;
+}
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: positionDelta_];
+	return copy;
+}
+
+-(void) startWithTarget:(CCNode *)aTarget
+{
+    previousTick_ = 0;
+	[super startWithTarget:aTarget];
+}
+
+-(CCActionInterval*) reverse
+{
+	return [[self class] actionWithDuration:duration_ position:ccp( -positionDelta_.x, -positionDelta_.y)];
+}
+
+-(void) update: (ccTime) t
+{
+    [target_ moveBy:ccpMult(positionDelta_, t-previousTick_)];
+    //[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
+    previousTick_=t;
+}
+@end
 
 //
 // SkewTo
