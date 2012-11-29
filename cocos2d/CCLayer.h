@@ -56,11 +56,11 @@ typedef enum {
 #ifdef __CC_PLATFORM_IOS
 @interface CCLayer : CCNode <CCAccelerometerDelegate, CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
 {
-	BOOL touchEnabled_;
-	BOOL touchPriority_;
-	BOOL touchMode_;
+	BOOL _touchEnabled;
+	BOOL _touchPriority;
+	BOOL _touchMode;
 	
-	BOOL accelerometerEnabled_;
+	BOOL _accelerometerEnabled;
 }
 
 /** whether or not it will receive Accelerometer events
@@ -95,18 +95,18 @@ typedef enum {
 
 @interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate, CCTouchEventDelegate, CCGestureEventDelegate>
 {
-	BOOL		mouseEnabled_;
-	NSInteger	mousePriority_;
+	BOOL		_mouseEnabled;
+	NSInteger	_mousePriority;
 
-	BOOL		keyboardEnabled_;
-	NSInteger	keyboardPriority_;
+	BOOL		_keyboardEnabled;
+	NSInteger	_keyboardPriority;
 
-	BOOL		touchEnabled_;
-	NSInteger	touchPriority_;
-	NSInteger	touchMode_;
+	BOOL		_touchEnabled;
+	NSInteger	_touchPriority;
+	NSInteger	_touchMode;
     
-	BOOL		gestureEnabled_;
-	NSInteger	gesturePriority_;
+	BOOL		_gestureEnabled;
+	NSInteger	_gesturePriority;
 }
 
 /** whether or not it will receive touche events. */
@@ -155,12 +155,12 @@ typedef enum {
  */
 @interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
 {
-	GLubyte		opacity_;
-	ccColor3B	color_;
-	ccVertex2F	squareVertices_[4];
-	ccColor4F	squareColors_[4];
+	GLubyte		_opacity;
+	ccColor3B	_color;
+	ccVertex2F	_squareVertices[4];
+	ccColor4F	_squareColors[4];
 
-	ccBlendFunc	blendFunc_;
+	ccBlendFunc	_blendFunc;
 }
 
 /** creates a CCLayer with color, width and height in Points*/
@@ -217,11 +217,11 @@ the background.
  */
 @interface CCLayerGradient : CCLayerColor
 {
-	ccColor3B endColor_;
-	GLubyte startOpacity_;
-	GLubyte endOpacity_;
-	CGPoint vector_;
-	BOOL	compressedInterpolation_;
+	ccColor3B _endColor;
+	GLubyte _startOpacity;
+	GLubyte _endOpacity;
+	CGPoint _vector;
+	BOOL	_compressedInterpolation;
 }
 
 /** Creates a full-screen CCLayer with a gradient between start and end. */
@@ -261,12 +261,20 @@ the background.
  */
 @interface CCLayerMultiplex : CCLayer
 {
-	unsigned int enabledLayer_;
-	NSMutableArray *layers_;
+	unsigned int _enabledLayer;
+	NSMutableArray *_layers;
 }
 
+/** creates a CCMultiplexLayer with an array of layers.
+ @since v2.1
+ */
++(id) layerWithArray:(NSArray*)arrayOfLayers;
 /** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
 +(id) layerWithLayers: (CCLayer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
+/** initializes a CCMultiplexLayer with an array of layers
+ @since v2.1
+ */
+-(id) initWithArray:(NSArray*)arrayOfLayers;
 /** initializes a MultiplexLayer with one or more layers using a variable argument list. */
 -(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params;
 /** switches to a certain layer indexed by n.
