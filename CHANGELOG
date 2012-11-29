@@ -7,6 +7,7 @@ version 2.1-beta4  XX-Nov-2012
 		Animate Action: Works as expected when display frame rate > than FPS (issue #1438)
 . [FIX] Actions: Fixed CCRotateTo, startAngleX now is modded similar to startAngleY to keep the rotation values the same
 . [FIX] CocosDenshion: Mute can be called before loading a file (issue #1434)
+		By default it uses cocos2d fileutils. Define CD_USE_OWN_FILEUTILS to use CD fileutils
 . [FIX] Director: fps_images.png is no longer needed. It uses the image from a header file
 . [FIX] LabelBMFont: Fixed bug with newlines and fixed width labels
 . [FIX] Templates: sets the Directors delta-time to 0 when the Application Controller become active
