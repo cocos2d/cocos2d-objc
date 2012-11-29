@@ -25,6 +25,10 @@ static NSString *transitions[] = {
 		@"PerformanceTest5",
 		@"PerformanceTest6",
 		@"PerformanceTest7",
+        @"PerformanceTest8",
+        @"PerformanceTest9",
+        @"PerformanceTest10",
+        @"PerformanceTest11",
 };
 
 Class nextAction()
@@ -565,4 +569,54 @@ Class restartAction()
 }
 @end
 
+#pragma mark Test 8
+@implementation PerformanceTest8
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"H (%d) moveBy action", subtestNumber];
+}
 
+-(void) doTest:(id) sprite
+{
+	[sprite performanceMoveByActions];
+}
+@end
+
+#pragma mark Test 9
+@implementation PerformanceTest9
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"I (%d) moveTo action", subtestNumber];
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceMoveToActions];
+}
+@end
+
+#pragma mark Test 10
+@implementation PerformanceTest10
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"J (%d) moveByEx action", subtestNumber];
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceMoveByExActions];
+}
+@end
+
+#pragma mark Test 11
+@implementation PerformanceTest11
+-(NSString*) title
+{
+	return [NSString stringWithFormat:@"K (%d) moveToEx action", subtestNumber];
+}
+
+-(void) doTest:(id) sprite
+{
+	[sprite performanceMoveToExActions];
+}
+@end
