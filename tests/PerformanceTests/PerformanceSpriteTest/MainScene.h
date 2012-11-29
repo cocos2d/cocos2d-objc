@@ -59,4 +59,17 @@ Class nextAction();
 @interface PerformanceTest7 : MainScene
 {}
 @end
+@interface PerformanceTest8 : MainScene
+{}
+@end
+@interface PerformanceTest9 : MainScene
+{}
+@end
+@interface PerformanceTest10 : MainScene
+{}
+@end
+@interface PerformanceTest11 : MainScene
+{}
+@end
+
 

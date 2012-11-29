@@ -739,7 +739,7 @@
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	positionDelta_ = ccpSub( endPosition, [(CCNode*)target_ position] );
+	positionDelta_ = ccpSub( endPosition, [(CCNode*)_target position] );
 }
 
 @end
@@ -777,12 +777,12 @@
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:duration_ position:ccp( -positionDelta_.x, -positionDelta_.y)];
+	return [[self class] actionWithDuration:_duration position:ccp( -positionDelta_.x, -positionDelta_.y)];
 }
 
 -(void) update: (ccTime) t
 {
-    [target_ moveBy:ccpMult(positionDelta_, t-previousTick_)];
+    [_target moveBy:ccpMult(positionDelta_, t-previousTick_)];
     //[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
     previousTick_=t;
 }
