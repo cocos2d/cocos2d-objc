@@ -2885,6 +2885,7 @@
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
+		A0C3E3951669388C0054655A /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C3E3941669388C0054655A /* levels.js */; };
 		A0C491E2146F8C9100C4C037 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0C491DE146F8C9100C4C037 /* markerFelt-hd.fnt */; };
 		A0C491E3146F8C9100C4C037 /* markerFelt-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491DF146F8C9100C4C037 /* markerFelt-hd.png */; };
 		A0C491E4146F8C9100C4C037 /* markerFelt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0C491E0146F8C9100C4C037 /* markerFelt.fnt */; };
@@ -7503,6 +7504,7 @@
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
+		A0C3E3941669388C0054655A /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = levels.js; sourceTree = "<group>"; };
 		A0C491DE146F8C9100C4C037 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
 		A0C491DF146F8C9100C4C037 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
 		A0C491E0146F8C9100C4C037 /* markerFelt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerFelt.fnt; sourceTree = "<group>"; };
@@ -9420,6 +9422,7 @@
 		A0BD5DCA16645E0A0061A165 /* WatermelonWithMe */ = {
 			isa = PBXGroup;
 			children = (
+				A0C3E3941669388C0054655A /* levels.js */,
 				A0BD5DCB16645E0A0061A165 /* boot-html5.js */,
 				A0BD5DCC16645E0A0061A165 /* boot-jsb.js */,
 				A0BD5DCD16645E0A0061A165 /* index.html */,
@@ -13602,6 +13605,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C3E3951669388C0054655A /* levels.js in Resources */,
 				A0E5F8CC15C1B21700D44C32 /* fps_images.png in Resources */,
 				A0E5F8DA15C1B21700D44C32 /* btn-about-normal.png in Resources */,
 				A0E5F8DB15C1B21700D44C32 /* btn-about-selected.png in Resources */,

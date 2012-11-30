@@ -2493,6 +2493,7 @@
 		A0C20AC9144FDAF700D84B47 /* CCParticleBatchNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */; };
 		A0C3815114BA0548001655CC /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C3814F14BA0548001655CC /* CCTransitionProgress.h */; };
 		A0C3815214BA0548001655CC /* CCTransitionProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C3815014BA0548001655CC /* CCTransitionProgress.m */; };
+		A0C3E39716693A220054655A /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C3E39616693A220054655A /* levels.js */; };
 		A0C70B3715E313C200CD8896 /* CCActionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50CB3B0D100AC43A00B7A750 /* CCActionManager.m */; };
 		A0C70B3815E313C200CD8896 /* CCActionCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E66EF0E06E1360050992C /* CCActionCamera.m */; };
 		A0C70B3915E313C200CD8896 /* CCAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 5018F2530DFDEAFF00C013A5 /* CCAction.m */; };
@@ -6213,6 +6214,7 @@
 		A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleBatchNode.m; sourceTree = "<group>"; };
 		A0C3814F14BA0548001655CC /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
 		A0C3815014BA0548001655CC /* CCTransitionProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionProgress.m; sourceTree = "<group>"; };
+		A0C3E39616693A220054655A /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = levels.js; sourceTree = "<group>"; };
 		A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
@@ -9324,6 +9326,7 @@
 		A0BD5C1816645D710061A165 /* WatermelonWithMe */ = {
 			isa = PBXGroup;
 			children = (
+				A0C3E39616693A220054655A /* levels.js */,
 				A0BD5C1916645D710061A165 /* boot-html5.js */,
 				A0BD5C1A16645D710061A165 /* boot-jsb.js */,
 				A0BD5C1B16645D710061A165 /* index.html */,
@@ -14123,6 +14126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0C3E39716693A220054655A /* levels.js in Resources */,
 				A031C0E815DAE0B600E1986C /* jsb_constants.js in Resources */,
 				A031C0E915DAE0B600E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C0EA15DAE0B600E1986C /* jsb_constants_cocos2d.js in Resources */,
