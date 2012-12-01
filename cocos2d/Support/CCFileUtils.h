@@ -30,17 +30,14 @@
 
 // keys used for the suffix or directory dictionaries
 extern NSString const *kCCFileUtilsDefault;
-#ifdef __CC_PLATFORM_IOS
 extern NSString const *kCCFileUtilsiPad;
 extern NSString const *kCCFileUtilsiPadHD;
 extern NSString const *kCCFileUtilsiPhone;
 extern NSString const *kCCFileUtilsiPhoneHD;
 extern NSString const *kCCFileUtilsiPhone5;
 extern NSString const *kCCFileUtilsiPhone5HD;
-#elif __CC_PLATFORM_MAC
 extern NSString const *kCCFileUtilsMac;
 extern NSString const *kCCFileUtilsMacHD;
-#endif // __CC_PLATFORM_MAC
 
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 

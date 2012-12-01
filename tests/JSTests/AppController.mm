@@ -11,6 +11,9 @@
 #import "js_bindings_core.h"
 #import "js_bindings_basic_conversions.h"
 
+// CocosBuilder Reader
+#import "CCBReader.h"
+
 // SpiderMonkey
 #include "jsapi.h"  
 
@@ -171,7 +174,21 @@
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
 	else if( [name isEqual:@"JS CocosDragon"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
+#if defined(__CC_PLATFORM_MAC)
+		// Use the iPad folder for Mac resources
+		[[fileutils directoriesDict] setObject:@"resources-ipad" forKey:kCCFileUtilsMac];
+		[[fileutils directoriesDict] setObject:@"resources-iphonehd" forKey:kCCFileUtilsiPhoneHD];
+
+		// Serch on iPhoneHD resources as a fallback
+		NSMutableArray *array = [[fileutils searchResolutionsOrder] mutableCopy];
+		[array insertObject:kCCFileUtilsiPhoneHD atIndex:1];
+		[fileutils setSearchResolutionsOrder:array];
+		
+		[CCBReader setResolutionScale:2];
+
+#else
 		[fileutils setEnableiPhoneResourcesOniPad:YES];
+#endif
 		[[JSBCore sharedInstance] runScript:@"main.js"];
 	}
 }
