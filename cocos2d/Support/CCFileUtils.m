@@ -32,17 +32,15 @@
 #import "../ccTypes.h"
 
 NSString *kCCFileUtilsDefault = @"default";
-#ifdef __CC_PLATFORM_IOS
+
 NSString *kCCFileUtilsiPad = @"ipad";
 NSString *kCCFileUtilsiPadHD = @"ipadhd";
 NSString *kCCFileUtilsiPhone = @"iphone";
 NSString *kCCFileUtilsiPhoneHD = @"iphonehd";
 NSString *kCCFileUtilsiPhone5 = @"iphone5";
 NSString *kCCFileUtilsiPhone5HD = @"iphone5hd";
-#elif __CC_PLATFORM_MAC
 NSString *kCCFileUtilsMac = @"mac";
 NSString *kCCFileUtilsMacHD = @"machd";
-#endif
 
 NSString *kCCFileUtilsDefaultSearchPath = @"";
 
@@ -351,11 +349,16 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	// only if it is not an absolute path
 	if( ! [path isAbsolutePath] ) {
 		
-		// pathForResource also searches in .lproj directories. issue #1230		
+		// pathForResource also searches in .lproj directories. issue #1230
 		// If the file does not exist it will return nil.
-		ret = [self pathForResource:path
+		NSString *filename = [path lastPathComponent];
+		NSString *imageDirectory = [directory stringByAppendingPathComponent: [path stringByDeletingLastPathComponent]];
+		
+		// on iOS it is OK to pass inDirector=nil and pass a path in "Resources",
+		// but on OS X it doesn't work.
+		ret = [self pathForResource:filename
 							 ofType:nil
-						inDirectory:directory];
+						inDirectory:imageDirectory];
 	}
 	else
 	{
@@ -402,7 +405,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #endif // __CC_PLATFORM_MAC
 		}
 	}
-	NSAssert(NO, @"Should not reach here");
+//	NSAssert(NO, @"Should not reach here");
 	return kCCResolutionUnknown;
 }
 
