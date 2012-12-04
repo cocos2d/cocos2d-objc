@@ -163,6 +163,10 @@ enum
 
 + (void) setResolutionScale:(float)scale;
 
+// XXX Hack. Sets a search resource path for utils. Instead it should relative to the ccbi file path.
++ (void) setResourcePath:(NSString*)searchPath;
+
+
 #ifdef CCB_ENABLE_UNZIP
 + (BOOL) unzipResources:(NSString*)resPath;
 #endif

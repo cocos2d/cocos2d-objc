@@ -426,10 +426,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		if ([_fileManager fileExistsAtPath:ret])
 			break;
 		
+		NSString *fileName = [relPath lastPathComponent];
+		NSString *filePath = [relPath stringByDeletingLastPathComponent];
 		// Default to normal resource directory
-		ret = [_bundle pathForResource:[relPath lastPathComponent]
+		ret = [_bundle pathForResource:fileName
 								 ofType:nil
-							inDirectory:[relPath stringByDeletingLastPathComponent]];
+						   inDirectory:filePath];
 		if(ret)
 			break;
 	}
