@@ -1118,6 +1118,10 @@
 		A07273DF155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */; };
 		A07273E0155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */; };
 		A07273E1155B23A8003E961F /* test_1021x1024.png in Resources */ = {isa = PBXBuildFile; fileRef = A07273DC155B23A8003E961F /* test_1021x1024.png */; };
+		A0755307166D7CBF00976A87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A0755301166D7CBF00976A87 /* InfoPlist.strings */; };
+		A0755308166D7CBF00976A87 /* WatermelonWithMe.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0755303166D7CBF00976A87 /* WatermelonWithMe.xib */; };
+		A0755315166D7D6300976A87 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A075530F166D7D6300976A87 /* InfoPlist.strings */; };
+		A0755316166D7D6300976A87 /* MoonWarriors.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0755311166D7D6300976A87 /* MoonWarriors.xib */; };
 		A0980EA514B92A7A004812AD /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A0980EA614B92A7A004812AD /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A0980EA714B92A7A004812AD /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -2308,7 +2312,6 @@
 		A09DB74C1640AA7600AFCA61 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A09DB74D1640AA7600AFCA61 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A09DB74E1640AA7600AFCA61 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03E20D815F9617100E58C9D /* libjs_static.a */; };
-		A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */; };
 		A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
 		A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */; };
@@ -3038,7 +3041,6 @@
 		A0E5F97F15C1B21700D44C32 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A0E5F98015C1B21700D44C32 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A0E95100142698D2009F9607 /* grossini_pvr_rgba8888.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0E950FF142698D2009F9607 /* grossini_pvr_rgba8888.pvr */; };
-		A0EE7F3A15CADC6F0010D916 /* MoonWarriors.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */; };
 		A0F1615B153CD1FA0077361C /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F1615A153CD1FA0077361C /* Icon-Small-50.png */; };
 		A0F16FF6150FFB2A00CE6E92 /* example_Blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA21403278200EC482A /* example_Blur.fsh */; };
 		A0F16FF7150FFB2A00CE6E92 /* example_Flower.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A0EC4CA31403278200EC482A /* example_Flower.fsh */; };
@@ -7071,6 +7073,12 @@
 		A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba4444.pvr.gz; sourceTree = "<group>"; };
 		A07273DB155B23A8003E961F /* test_1021x1024_rgba8888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgba8888.pvr.gz; sourceTree = "<group>"; };
 		A07273DC155B23A8003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
+		A0755302166D7CBF00976A87 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A0755304166D7CBF00976A87 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/WatermelonWithMe.xib; sourceTree = "<group>"; };
+		A075530A166D7D1000976A87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A0755310166D7D6300976A87 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A0755312166D7D6300976A87 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MoonWarriors.xib; sourceTree = "<group>"; };
+		A0755313166D7D6300976A87 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A0980E9214B92A26004812AD /* ActionsProgressTest.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ActionsProgressTest.h; path = tests/ActionsProgressTest.h; sourceTree = "<group>"; };
 		A0980E9314B92A26004812AD /* ActionsProgressTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ActionsProgressTest.m; path = tests/ActionsProgressTest.m; sourceTree = "<group>"; };
 		A0980EFD14B92A7A004812AD /* ActionProgress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ActionProgress.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -7152,7 +7160,6 @@
 		A0A0EBC71641C14A002E6481 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
-		A0A1C1DE15CAE2130058D96F /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/WatermelonWithMe.xib"; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
@@ -7324,7 +7331,6 @@
 		A0EC4CAE1403278200EC482A /* example_Plasma.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Plasma.vsh; sourceTree = "<group>"; };
 		A0EC4CBB1403278200EC482A /* example_Twist.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.fsh; sourceTree = "<group>"; };
 		A0EC4CBC1403278200EC482A /* example_Twist.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Twist.vsh; sourceTree = "<group>"; };
-		A0EE7F3915CADC6F0010D916 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = "Resources-Mac/English.lproj/MoonWarriors.xib"; sourceTree = "<group>"; };
 		A0F1615A153CD1FA0077361C /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small-50.png"; path = "Resources/Icon-Small-50.png"; sourceTree = "<group>"; };
 		A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "tuffy_bold_italic-charmap.plist"; sourceTree = "<group>"; };
 		A0F840CE151D2B8F00EBBFCB /* larabie-16-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "larabie-16-hd.plist"; sourceTree = "<group>"; };
@@ -8416,8 +8422,6 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */,
-				A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */,
 				A0F1615A153CD1FA0077361C /* Icon-Small-50.png */,
 				E02A8537129F11BF00341C97 /* icon.icns */,
 				E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */,
@@ -8995,6 +8999,42 @@
 			path = external/SpiderMonkey;
 			sourceTree = "<group>";
 		};
+		A07552FD166D7CBF00976A87 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				A0755300166D7CBF00976A87 /* OSX */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		A0755300166D7CBF00976A87 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				A075530A166D7D1000976A87 /* Info.plist */,
+				A0755301166D7CBF00976A87 /* InfoPlist.strings */,
+				A0755303166D7CBF00976A87 /* WatermelonWithMe.xib */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
+		A075530B166D7D6300976A87 /* Platform */ = {
+			isa = PBXGroup;
+			children = (
+				A075530E166D7D6300976A87 /* OSX */,
+			);
+			path = Platform;
+			sourceTree = "<group>";
+		};
+		A075530E166D7D6300976A87 /* OSX */ = {
+			isa = PBXGroup;
+			children = (
+				A075530F166D7D6300976A87 /* InfoPlist.strings */,
+				A0755311166D7D6300976A87 /* MoonWarriors.xib */,
+				A0755313166D7D6300976A87 /* Info.plist */,
+			);
+			path = OSX;
+			sourceTree = "<group>";
+		};
 		A0A0EB861641C14A002E6481 /* include */ = {
 			isa = PBXGroup;
 			children = (
@@ -9242,6 +9282,7 @@
 		A0BD5DCA16645E0A0061A165 /* WatermelonWithMe */ = {
 			isa = PBXGroup;
 			children = (
+				A07552FD166D7CBF00976A87 /* Platform */,
 				A0C15B5E166D55CF00DF921C /* Resources */,
 				A0C3E3941669388C0054655A /* levels.js */,
 				A0BD5DCC16645E0A0061A165 /* boot-jsb.js */,
@@ -9254,6 +9295,7 @@
 		A0BD5ED816645E230061A165 /* MoonWarriors */ = {
 			isa = PBXGroup;
 			children = (
+				A075530B166D7D6300976A87 /* Platform */,
 				A0C15B5A166D515000DF921C /* res */,
 				A0C15B5B166D515000DF921C /* src */,
 				A0BD5ED916645E230061A165 /* index.html */,
@@ -13200,11 +13242,12 @@
 				A064EC0E162289E300020E06 /* jsb_constants_cocosbuilder.js in Resources */,
 				A031C08F15DADE5F00E1986C /* jsb_constants_gl.js in Resources */,
 				A0D467FB15C339E100588ADE /* fps_images.png in Resources */,
-				A0EE7F3A15CADC6F0010D916 /* MoonWarriors.xib in Resources */,
 				A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */,
 				A0BD5F1316645E230061A165 /* MoonWarriors-jsb.js in Resources */,
 				A0C15B5C166D515000DF921C /* res in Resources */,
 				A0C15B5D166D515000DF921C /* src in Resources */,
+				A0755315166D7D6300976A87 /* InfoPlist.strings in Resources */,
+				A0755316166D7D6300976A87 /* MoonWarriors.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13222,7 +13265,6 @@
 				A0E5F8DF15C1B21700D44C32 /* btn-play-selected.png in Resources */,
 				A0E5F91C15C1B21700D44C32 /* icon.icns in Resources */,
 				A0E5F93715C1B21700D44C32 /* fps_images.plist in Resources */,
-				A0A1C1DF15CAE2130058D96F /* WatermelonWithMe.xib in Resources */,
 				A031C08515DADE5F00E1986C /* jsb_constants.js in Resources */,
 				A031C08815DADE5F00E1986C /* jsb_constants_chipmunk.js in Resources */,
 				A031C08B15DADE5F00E1986C /* jsb_constants_cocos2d.js in Resources */,
@@ -13232,6 +13274,8 @@
 				A0BD5ED616645E0B0061A165 /* resources-jsb.js in Resources */,
 				A0BD5ED716645E0B0061A165 /* watermelon_with_me.js in Resources */,
 				A0C15B5F166D55CF00DF921C /* Resources in Resources */,
+				A0755307166D7CBF00976A87 /* InfoPlist.strings in Resources */,
+				A0755308166D7CBF00976A87 /* WatermelonWithMe.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17731,12 +17775,36 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		A0A1C1DD15CAE2130058D96F /* WatermelonWithMe.xib */ = {
+		A0755301166D7CBF00976A87 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				A0A1C1DE15CAE2130058D96F /* English */,
+				A0755302166D7CBF00976A87 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A0755303166D7CBF00976A87 /* WatermelonWithMe.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0755304166D7CBF00976A87 /* English */,
 			);
 			name = WatermelonWithMe.xib;
+			sourceTree = "<group>";
+		};
+		A075530F166D7D6300976A87 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0755310166D7D6300976A87 /* English */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A0755311166D7D6300976A87 /* MoonWarriors.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A0755312166D7D6300976A87 /* English */,
+			);
+			name = MoonWarriors.xib;
 			sourceTree = "<group>";
 		};
 		A0BD5F59166548D50061A165 /* CocosDragon-Mac.xib */ = {
@@ -17753,14 +17821,6 @@
 				A0BD5F5C166548D50061A165 /* English */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		A0EE7F3815CADC6F0010D916 /* MoonWarriors.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A0EE7F3915CADC6F0010D916 /* English */,
-			);
-			name = MoonWarriors.xib;
 			sourceTree = "<group>";
 		};
 		E076EB2E1225EFF200DE0DA2 /* MainMenu.xib */ = {
@@ -18464,10 +18524,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
@@ -18490,7 +18546,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/MoonWarriors-Info.plist";
+				INFOPLIST_FILE = "tests/cocos2d-js-tests/games/MoonWarriors/Platform/OSX/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -18506,10 +18562,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -18529,7 +18581,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/MoonWarriors-Info.plist";
+				INFOPLIST_FILE = "tests/cocos2d-js-tests/games/MoonWarriors/Platform/OSX/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -18571,7 +18623,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/WatermelonWithMe-Info.plist";
+				INFOPLIST_FILE = "tests/cocos2d-js-tests/games/WatermelonWithMe/Platform/OSX/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -18610,7 +18662,7 @@
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
-				INFOPLIST_FILE = "Resources-Mac/WatermelonWithMe-Info.plist";
+				INFOPLIST_FILE = "tests/cocos2d-js-tests/games/WatermelonWithMe/Platform/OSX/Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
