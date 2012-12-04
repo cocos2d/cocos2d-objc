@@ -2313,6 +2313,7 @@
 		A09DB74D1640AA7600AFCA61 /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E076EDB91225FEAA00DE0DA2 /* liblibpng.a */; };
 		A09DB74E1640AA7600AFCA61 /* libjs_static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A03E20D815F9617100E58C9D /* libjs_static.a */; };
 		A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = E02A8537129F11BF00341C97 /* icon.icns */; };
+		A0A42B1A166D9C8900078217 /* res in Resources */ = {isa = PBXBuildFile; fileRef = A0A42B19166D9C8900078217 /* res */; };
 		A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */; };
 		A0A7A507151416A000C8BD16 /* CCActionCatmullRom.h in Headers */ = {isa = PBXBuildFile; fileRef = A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */; };
 		A0AA8555159D789E00E77CC9 /* futura-48.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0796B5612DF8A8C002442F5 /* futura-48.fnt */; };
@@ -2734,7 +2735,6 @@
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C15B5C166D515000DF921C /* res in Resources */ = {isa = PBXBuildFile; fileRef = A0C15B5A166D515000DF921C /* res */; };
 		A0C15B5D166D515000DF921C /* src in Resources */ = {isa = PBXBuildFile; fileRef = A0C15B5B166D515000DF921C /* src */; };
-		A0C15B5F166D55CF00DF921C /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = A0C15B5E166D55CF00DF921C /* Resources */; };
 		A0C15FE5166D579900DF921C /* ActionManagerTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C15FC2166D579900DF921C /* ActionManagerTest */; };
 		A0C15FE6166D579900DF921C /* ActionsTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C15FC3166D579900DF921C /* ActionsTest */; };
 		A0C15FE7166D579900DF921C /* Box2dTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C15FC4166D579900DF921C /* Box2dTest */; };
@@ -7160,6 +7160,7 @@
 		A0A0EBC71641C14A002E6481 /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		A0A10B1E14F3003600FA38C1 /* ccDeprecated.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccDeprecated.h; sourceTree = "<group>"; };
 		A0A10B1F14F3003600FA38C1 /* ccDeprecated.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccDeprecated.m; sourceTree = "<group>"; };
+		A0A42B19166D9C8900078217 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		A0A7A504151416A000C8BD16 /* CCActionCatmullRom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCatmullRom.m; sourceTree = "<group>"; };
 		A0A7A505151416A000C8BD16 /* CCActionCatmullRom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCatmullRom.h; sourceTree = "<group>"; };
 		A0AAB8091451BD3600850F2C /* CCParticleBatchNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleBatchNode.h; sourceTree = "<group>"; };
@@ -7246,7 +7247,6 @@
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
 		A0C15B5A166D515000DF921C /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
 		A0C15B5B166D515000DF921C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
-		A0C15B5E166D55CF00DF921C /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
 		A0C15FC2166D579900DF921C /* ActionManagerTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ActionManagerTest; sourceTree = "<group>"; };
 		A0C15FC3166D579900DF921C /* ActionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ActionsTest; sourceTree = "<group>"; };
 		A0C15FC4166D579900DF921C /* Box2dTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Box2dTest; sourceTree = "<group>"; };
@@ -9282,8 +9282,8 @@
 		A0BD5DCA16645E0A0061A165 /* WatermelonWithMe */ = {
 			isa = PBXGroup;
 			children = (
+				A0A42B19166D9C8900078217 /* res */,
 				A07552FD166D7CBF00976A87 /* Platform */,
-				A0C15B5E166D55CF00DF921C /* Resources */,
 				A0C3E3941669388C0054655A /* levels.js */,
 				A0BD5DCC16645E0A0061A165 /* boot-jsb.js */,
 				A0BD5E3816645E0B0061A165 /* resources-jsb.js */,
@@ -13273,9 +13273,9 @@
 				A0BD5E6E16645E0B0061A165 /* boot-jsb.js in Resources */,
 				A0BD5ED616645E0B0061A165 /* resources-jsb.js in Resources */,
 				A0BD5ED716645E0B0061A165 /* watermelon_with_me.js in Resources */,
-				A0C15B5F166D55CF00DF921C /* Resources in Resources */,
 				A0755307166D7CBF00976A87 /* InfoPlist.strings in Resources */,
 				A0755308166D7CBF00976A87 /* WatermelonWithMe.xib in Resources */,
+				A0A42B1A166D9C8900078217 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
