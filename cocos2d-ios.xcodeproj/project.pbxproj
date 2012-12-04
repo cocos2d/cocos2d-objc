@@ -1820,7 +1820,6 @@
 		A0783C07166D73BE00B4646C /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
 		A08B0AFE166D76E500A98336 /* boot-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A08B0A8A166D76E400A98336 /* boot-jsb.js */; };
 		A08B0B00166D76E500A98336 /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = A08B0A8C166D76E400A98336 /* levels.js */; };
-		A08B0B02166D76E500A98336 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A08B0A90166D76E400A98336 /* Info.plist */; };
 		A08B0B68166D76E500A98336 /* resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A08B0AFB166D76E500A98336 /* resources-jsb.js */; };
 		A08B0B69166D76E500A98336 /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = A08B0AFC166D76E500A98336 /* watermelon_with_me.js */; };
 		A08B0B6B166D771400A98336 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = A08B0B6A166D771400A98336 /* Resources */; };
@@ -8987,7 +8986,6 @@
 			isa = PBXGroup;
 			children = (
 				A08B0A8F166D76E400A98336 /* iOS */,
-				A08B0A91166D76E400A98336 /* OSX */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -8998,13 +8996,6 @@
 				A08B0A90166D76E400A98336 /* Info.plist */,
 			);
 			path = iOS;
-			sourceTree = "<group>";
-		};
-		A08B0A91166D76E400A98336 /* OSX */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = OSX;
 			sourceTree = "<group>";
 		};
 		A0A0EB0A1641BE49002E6481 /* include */ = {
@@ -13538,7 +13529,6 @@
 				A0783BD7166D73BE00B4646C /* Icon.png in Resources */,
 				A0783BD8166D73BE00B4646C /* Icon@2x.png in Resources */,
 				A0783BD9166D73BE00B4646C /* iTunesArtwork in Resources */,
-				A08B0B02166D76E500A98336 /* Info.plist in Resources */,
 				A08B0B6B166D771400A98336 /* Resources in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
