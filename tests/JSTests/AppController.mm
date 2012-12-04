@@ -169,9 +169,9 @@
 #endif
 	}
 	else if( [name isEqual:@"JS Tests"] )
-		[[JSBCore sharedInstance] runScript:@"tests/tests-boot-jsb.js"];
+		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
 	else if( [name isEqual:@"JS Moon Warriors"] )
-		[[JSBCore sharedInstance] runScript:@"MoonWarriors-native.js"];
+		[[JSBCore sharedInstance] runScript:@"MoonWarriors-jsb.js"];
 	else if( [name isEqual:@"JS CocosDragon"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
 #if defined(__CC_PLATFORM_MAC)

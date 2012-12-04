@@ -1148,6 +1148,13 @@
     return [self nodeGraphFromFile:file owner:NULL parentSize:[[CCDirector sharedDirector] winSize]];
 }
 
++(void) setResourcePath:(NSString *)searchPath
+{
+	NSMutableArray *array = [[[CCFileUtils sharedFileUtils] searchPath] mutableCopy];
+	[array addObject:searchPath];
+	[[CCFileUtils sharedFileUtils] setSearchPath:array];
+}
+
 + (CCBReader*) reader
 {
     return [[[CCBReader alloc] init] autorelease];
