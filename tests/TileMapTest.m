@@ -12,7 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
-	
+
 	@"TMXIsoZorder",
 	@"TMXOrthoZorder",
 	@"TMXIsoVertexZ",
@@ -92,9 +92,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
@@ -132,27 +132,10 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-}
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) ccTouchesMoved:(NSSet*)set withEvent:(UIEvent *)event
 {
-	return YES;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
+	UITouch *touch = [set anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
 
@@ -685,7 +668,7 @@ Class restartAction()
 		NSLog(@"Tile GID at:(0,63) is: %d", gid);
 
 		[self schedule:@selector(updateCol:) interval:2.0f];
-		[self schedule:@selector(repaintWithGID:) interval:2];
+		[self schedule:@selector(repaintWithGID:) interval:2.05f];
 		[self schedule:@selector(removeTiles:) interval:1];
 
 
@@ -1625,8 +1608,7 @@ Class restartAction()
 	navController_.navigationBarHidden = YES;
 
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
+	[window_ setRootViewController:navController_];
 
 	// make main window visible
 	[window_ makeKeyAndVisible];
@@ -1649,14 +1631,20 @@ Class restartAction()
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 
-	// create the main scene
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	// and run it!
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene:scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

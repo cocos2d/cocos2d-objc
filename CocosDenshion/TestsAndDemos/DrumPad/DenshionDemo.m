@@ -123,7 +123,7 @@ CDSoundSource *toneSource;
 			_appState = kAppStateSoundBuffersLoading;
 		}
 
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 		toneLoopPlaying = NO;
 		toneSource = [[CDSoundSource alloc] init];
 		[toneSource retain];
@@ -460,8 +460,6 @@ CDSoundSource *toneSource;
 {
 
 	[[CCDirector sharedDirector] end];
-	if( [[UIApplication sharedApplication] respondsToSelector:@selector(terminate)] )
-		[[UIApplication sharedApplication] performSelector:@selector(terminate)];
 }
 @end
 

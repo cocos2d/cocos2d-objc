@@ -78,14 +78,6 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 		NSAssert( inScene_ != outScene_, @"Incoming scene must be different from the outgoing scene" );
 
-		// disable events while transitions
-		CCDirector *director = [CCDirector sharedDirector];
-#ifdef __CC_PLATFORM_IOS
-		[[director touchDispatcher] setDispatchEvents: NO];
-#elif defined(__CC_PLATFORM_MAC)
-		[[director eventDispatcher] setDispatchEvents: NO];
-#endif
-
 		[self sceneOrder];
 	}
 	return self;
@@ -137,13 +129,6 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 	[director replaceScene: inScene_];
 
-	// enable events while transitions
-#ifdef __CC_PLATFORM_IOS
-	[[director touchDispatcher] setDispatchEvents: YES];
-#elif defined(__CC_PLATFORM_MAC)
-	[[director eventDispatcher] setDispatchEvents: YES];
-#endif
-
 	// issue #267
 	[outScene_ setVisible:YES];
 }
@@ -159,6 +144,15 @@ const NSInteger kSceneFade = 0xFADEFADE;
 {
 	[super onEnter];
 	
+	// disable events while transitions
+	CCDirector *director = [CCDirector sharedDirector];
+#ifdef __CC_PLATFORM_IOS
+	[[director touchDispatcher] setDispatchEvents: NO];
+#elif defined(__CC_PLATFORM_MAC)
+	[[director eventDispatcher] setDispatchEvents: NO];
+#endif
+	
+	
 	// outScene_ should not receive the onExit callback
 	// only the onExitTransitionDidStart
 	[outScene_ onExitTransitionDidStart];
@@ -170,6 +164,16 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onExit
 {
 	[super onExit];
+	
+	// enable events while transitions
+	CCDirector *director = [CCDirector sharedDirector];
+#ifdef __CC_PLATFORM_IOS
+	[[director touchDispatcher] setDispatchEvents: YES];
+#elif defined(__CC_PLATFORM_MAC)
+	[[director eventDispatcher] setDispatchEvents: YES];
+#endif
+	
+
 	[outScene_ onExit];
 
 	// inScene_ should not receive the onEnter callback
@@ -216,6 +220,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // RotoZoom
 //
 @implementation CCTransitionRotoZoom
+-(id) init {
+	return [super init];
+}
+
 -(void) onEnter
 {
 	[super onEnter];
@@ -246,6 +254,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // JumpZoom
 //
 @implementation CCTransitionJumpZoom
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -465,6 +476,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ShrinkGrow Transition
 //
 @implementation CCTransitionShrinkGrow
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -495,6 +509,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipX Transition
 //
 @implementation CCTransitionFlipX
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -505,7 +522,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -539,6 +556,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipY Transition
 //
 @implementation CCTransitionFlipY
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -549,7 +569,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationUpOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -582,6 +602,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FlipAngular Transition
 //
 @implementation CCTransitionFlipAngular
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -592,7 +615,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -624,6 +647,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipX Transition
 //
 @implementation CCTransitionZoomFlipX
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -634,7 +660,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationRightOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -673,6 +699,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipY Transition
 //
 @implementation CCTransitionZoomFlipY
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -683,7 +712,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationUpOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -723,6 +752,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // ZoomFlipAngular Transition
 //
 @implementation CCTransitionZoomFlipAngular
+-(id) init {
+	return [super init];
+}
 -(void) onEnter
 {
 	[super onEnter];
@@ -733,7 +765,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	float inDeltaZ, inAngleZ;
 	float outDeltaZ, outAngleZ;
 
-	if( orientation == kOrientationRightOver ) {
+	if( orientation == kCCTransitionOrientationUpOver ) {
 		inDeltaZ = 90;
 		inAngleZ = 270;
 		outDeltaZ = 90;
@@ -820,7 +852,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onExit
 {
 	[super onExit];
-	[self removeChildByTag:kSceneFade cleanup:NO];
+	[self removeChildByTag:kSceneFade cleanup:YES];
 }
 @end
 
@@ -829,7 +861,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // Cross Fade Transition
 //
 @implementation CCTransitionCrossFade
-
+-(id) init {
+	return [super init];
+}
 -(void) draw
 {
 	// override draw since both scenes (textures) are rendered in 1 scene
@@ -903,7 +937,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 -(void) onExit
 {
 	// remove our layer and release all containing objects
-	[self removeChildByTag:kSceneFade cleanup:NO];
+	[self removeChildByTag:kSceneFade cleanup:YES];
 
 	[super onExit];
 }
@@ -913,7 +947,9 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // TurnOffTilesTransition
 //
 @implementation CCTransitionTurnOffTiles
-
+-(id) init {
+	return [super init];
+}
 // override addScenes, and change the order
 -(void) sceneOrder
 {

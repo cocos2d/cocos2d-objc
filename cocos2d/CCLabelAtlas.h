@@ -60,6 +60,9 @@
 /** initializes the CCLabelAtlas with a string, a char map file(the atlas), the width and height in points of each element and the starting char of the atlas */
 -(id) initWithString:(NSString*) string charMapFile: (NSString*) charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)firstElement;
 
+/** initializes the CCLabelAtlas with a string, a texture, the width and height in points of each element and the starting char of the atlas */
+-(id) initWithString:(NSString*) theString texture:(CCTexture2D*)texture itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c;
+
 /** initializes the CCLabelAtlas with a string and a configuration file
  @since v2.0
  */

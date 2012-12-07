@@ -38,7 +38,7 @@
 
     if ((self = [super init])) {
 
-        self.isTouchEnabled = YES;
+        self.touchEnabled = YES;
 
         // Add a sprite sheet based on the loaded texture and add it to the scene
         self.batchNode = [CCSpriteBatchNode batchNodeWithTexture:[[CCTextureCache sharedTextureCache] addImage:@"sprites.png"]];
@@ -53,7 +53,11 @@
         // Add a label to the scene
         static int LABEL_MARGIN = 20;
         static int LABEL_MARGIN_BOTTOM = 50;
-        self.label = [CCLabelTTF labelWithString:@"" dimensions:CGSizeMake(winSize.width - LABEL_MARGIN*2, winSize.height - LABEL_MARGIN-LABEL_MARGIN_BOTTOM) hAlignment:kCCTextAlignmentCenter fontName:@"Verdana" fontSize:24];
+        self.label = [CCLabelTTF labelWithString:@""
+										fontName:@"Verdana"
+										fontSize:24
+									  dimensions:CGSizeMake(winSize.width - LABEL_MARGIN*2, winSize.height - LABEL_MARGIN-LABEL_MARGIN_BOTTOM)
+									  hAlignment:kCCTextAlignmentCenter];
         _label.position = ccp(winSize.width/2, winSize.height/2);
         _label.color = ccc3(0, 0, 0);
         [self addChild:_label];

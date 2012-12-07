@@ -47,12 +47,12 @@
  *
  * if COCOS2D_DEBUG==1 then:
  *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
+ *		CCLOGWARN() will be enabled
  *		CCLOGINFO()	will be disabled
  *
  * if COCOS2D_DEBUG==2 or higher then:
  *		CCLOG() will be enabled
- *		CCLOGERROR() will be enabled
+ *		CCLOGWARN() will be enabled
  *		CCLOGINFO()	will be enabled
  */
 
@@ -110,7 +110,7 @@ simple macro that swaps 2 variables
  */
 #define CC_RADIANS_TO_DEGREES(__ANGLE__) ((__ANGLE__) * 57.29577951f) // PI * 180
 
-#define kCCRepeatForever UINT_MAX -1
+#define kCCRepeatForever (UINT_MAX -1)
 /** @def CC_BLEND_SRC
 default gl blend src function. Compatible with premultiplied alpha images.
 */
@@ -120,7 +120,7 @@ default gl blend src function. Compatible with premultiplied alpha images.
 /** @def CC_DIRECTOR_INIT
 	- Initializes an CCGLView with 0-bit depth format, and RGB565 render buffer.
 	- The CCGLView view will have multiple touches disabled.
-	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this marcro.
+	- It will create a UIWindow and it will assign it the 'window_' ivar. 'window_' must be declared before calling this macro.
     - It will create a UINavigationController and it will assign it the 'navigationController_' ivar. 'navController_' must be declared before using this macro.
     - The director_ will be the root view controller of the navController.
 	- It will connect the CCGLView to the Director
@@ -191,7 +191,7 @@ do {																							\
 	ccGLEnable( glServerState_ );																\
     NSAssert1(shaderProgram_, @"No shader program set for node: %@", self);						\
 	[shaderProgram_ use];																		\
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];									\
+	[shaderProgram_ setUniformsForBuiltins];									\
 } while(0)
 
 

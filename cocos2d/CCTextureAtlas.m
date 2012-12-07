@@ -181,7 +181,7 @@
 
 	void (^createVAO)(void) = ^{
 		glGenVertexArrays(1, &VAOname_);
-		glBindVertexArray(VAOname_);
+		ccGLBindVAO(VAOname_);
 
 	#define kQuadSize sizeof(quads_[0].bl)
 
@@ -205,7 +205,8 @@
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * capacity_ * 6, indices_, GL_STATIC_DRAW);
 
-		glBindVertexArray(0);
+		// Must unbind the VAO before changing the element buffer.
+		ccGLBindVAO(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -230,6 +231,9 @@
 
 -(void) mapBuffers
 {
+	// Avoid changing the element buffer for whatever VAO might be bound.
+	ccGLBindVAO(0);
+	
 	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * capacity_, quads_, GL_DYNAMIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -490,25 +494,35 @@
 	//
 	// Using VBO and VAO
 	//
-
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
 		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+		// option 1: subdata
+//		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+		
+		// option 2: data
+//		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), &quads_[start], GL_DYNAMIC_DRAW);
+		
+		// option 3: orphaning + glMapBuffer
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * (n-start), nil, GL_DYNAMIC_DRAW);
+		void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+		memcpy(buf, quads_, sizeof(quads_[0])* (n-start));
+		glUnmapBuffer(GL_ARRAY_BUFFER);		
+		
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 		dirty_ = NO;
 	}
 
-	glBindVertexArray( VAOname_ );
+	ccGLBindVAO( VAOname_ );
 
 #if CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
 	glDrawElements(GL_TRIANGLE_STRIP, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #else
 	glDrawElements(GL_TRIANGLES, (GLsizei) n*6, GL_UNSIGNED_SHORT, (GLvoid*) (start*6*sizeof(indices_[0])) );
 #endif // CC_TEXTURE_ATLAS_USE_TRIANGLE_STRIP
-
-	glBindVertexArray(0);
+	
+//	glBindVertexArray(0);
 	
 
 #else // ! CC_TEXTURE_ATLAS_USE_VAO
@@ -522,7 +536,10 @@
     
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (dirty_) {
-		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+//		glBufferSubData(GL_ARRAY_BUFFER, sizeof(quads_[0])*start, sizeof(quads_[0]) * n , &quads_[start] );
+
+		// Apparently this is faster... need to do performance tests
+		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * n, quads_, GL_DYNAMIC_DRAW);
 		dirty_ = NO;
 	}
 

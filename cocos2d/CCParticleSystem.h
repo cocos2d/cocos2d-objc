@@ -419,6 +419,12 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  */
 +(id) particleWithFile:(NSString*)plistFile;
 
+/* creates an void particle emitter with a maximun number of particles.
+ @since v2.1
+*/
++(id) particleWithTotalParticles:(NSUInteger) numberOfParticles;
+
+
 /** initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
 	http://particledesigner.71squared.com/
@@ -430,6 +436,11 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
  @since v0.99.3
  */
 -(id) initWithDictionary:(NSDictionary*)dictionary;
+
+/** initializes a particle system from a NSDictionary and the path from where to load the png
+ @since v2.1
+ */
+-(id) initWithDictionary:(NSDictionary *)dictionary path:(NSString*)dirname;
 
 //! Initializes a system with a fixed number of particles
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles;

@@ -33,7 +33,7 @@
 
 
 /** @def CCARRAY_FOREACH
- A convience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
+ A convenience macro to iterate over a CCArray using. It is faster than the "fast enumeration" interface.
  @since v0.99.4
  */
 

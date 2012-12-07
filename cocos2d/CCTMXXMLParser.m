@@ -152,6 +152,7 @@
 	storingCharacters = NO;
 	layerAttribs = TMXLayerAttribNone;
 	parentElement = TMXPropertyNone;
+	currentFirstGID = 0;
 }
 
 -(id) initWithXML:(NSString *)tmxString resourcePath:(NSString*)resourcePath
@@ -242,18 +243,24 @@
 		// If this is an external tileset then start parsing that
 		NSString *externalTilesetFilename = [attributeDict objectForKey:@"source"];
 		if (externalTilesetFilename) {
-				// Tileset file will be relative to the map file. So we need to convert it to an absolute path
-				NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
-				if (!dir)
-					dir = resources_;
-				externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
+			// Tileset file will be relative to the map file. So we need to convert it to an absolute path
+			NSString *dir = [filename_ stringByDeletingLastPathComponent];	// Directory of map file
+			if (!dir)
+				dir = resources_;
+			externalTilesetFilename = [dir stringByAppendingPathComponent:externalTilesetFilename];	// Append path to tileset file
 
-				[self parseXMLFile:externalTilesetFilename];
+			currentFirstGID = [[attributeDict objectForKey:@"firstgid"] intValue];
+		
+			[self parseXMLFile:externalTilesetFilename];
 		} else {
-
 			CCTMXTilesetInfo *tileset = [CCTMXTilesetInfo new];
 			tileset.name = [attributeDict objectForKey:@"name"];
-			tileset.firstGid = [[attributeDict objectForKey:@"firstgid"] intValue];
+			if(currentFirstGID == 0) {
+				tileset.firstGid = [[attributeDict objectForKey:@"firstgid"] intValue];
+			} else {
+				tileset.firstGid = currentFirstGID;
+				currentFirstGID = 0;
+			}
 			tileset.spacing = [[attributeDict objectForKey:@"spacing"] intValue];
 			tileset.margin = [[attributeDict objectForKey:@"margin"] intValue];
 			CGSize s;
@@ -265,7 +272,7 @@
 			[tileset release];
 		}
 
-	}else if([elementName isEqualToString:@"tile"]){
+	} else if([elementName isEqualToString:@"tile"]) {
 		CCTMXTilesetInfo* info = [tilesets_ lastObject];
 		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
 		parentGID_ =  [info firstGid] + [[attributeDict objectForKey:@"id"] intValue];
@@ -273,7 +280,7 @@
 
 		parentElement = TMXPropertyTile;
 
-	}else if([elementName isEqualToString:@"layer"]) {
+	} else if([elementName isEqualToString:@"layer"]) {
 		CCTMXLayerInfo *layer = [CCTMXLayerInfo new];
 		layer.name = [attributeDict objectForKey:@"name"];
 

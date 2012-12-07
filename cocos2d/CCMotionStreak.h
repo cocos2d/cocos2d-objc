@@ -62,7 +62,7 @@
 /** blending function */
 @property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
 
-/** When fast mode is enbled, new points are added faster but with lower precision */
+/** When fast mode is enabled, new points are added faster but with lower precision */
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
 /** texture used for the motion streak */

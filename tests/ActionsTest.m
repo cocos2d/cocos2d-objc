@@ -24,6 +24,8 @@ static NSString *transitions[] = {
 	@"ActionRotate",
 	@"ActionScale",
 	@"ActionSkew",
+	@"ActionRotationalSkew",
+	@"ActionRotationalSkewVSStandardSkew",
 	@"ActionSkewRotateScale",
 	@"ActionJump",
 	@"ActionCardinalSpline",
@@ -58,6 +60,7 @@ static NSString *transitions[] = {
 	@"Issue1288",
 	@"Issue1288_2",
 	@"Issue1327",
+	@"Issue1398",
 };
 
 Class nextAction()
@@ -354,6 +357,78 @@ Class restartAction()
 	return @"SkewTo / SkewBy";
 }
 
+@end
+
+
+@implementation ActionRotationalSkew
+-(void) onEnter
+{
+	[super onEnter];
+  
+	[self centerSprites:3];
+  
+	id actionTo = [CCRotateTo actionWithDuration:2 angleX:37.2f angleY:-37.2f];
+	id actionToBack = [CCRotateTo actionWithDuration:2 angleX:0 angleY:0];
+	id actionBy = [CCRotateBy actionWithDuration:2 angleX:0.0f angleY:-90.0f];
+	id actionBy2 = [CCRotateBy actionWithDuration:2 angleX:45.0f angleY:45.0f];
+	id actionByBack = [actionBy reverse];
+  
+	[tamara runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+	[grossini runAction: [CCSequence actions:actionBy, actionByBack, nil]];
+  
+	[kathia runAction: [CCSequence actions:actionBy2, [actionBy2 reverse], nil]];
+}
+-(NSString *) title
+{
+	return @"RotationalSkewTo / RotationalSkewBy";
+}
+
+@end
+
+@implementation ActionRotationalSkewVSStandardSkew
+-(void) onEnter
+{
+	[super onEnter];
+  
+	[tamara removeFromParentAndCleanup:YES];
+	[grossini removeFromParentAndCleanup:YES];
+	[kathia removeFromParentAndCleanup:YES];
+  
+  CGSize s = [CCDirector sharedDirector].winSize;
+  
+	CGSize boxSize = CGSizeMake(100.0f, 100.0f);
+  
+	CCLayerColor *box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
+	box.anchorPoint = ccp(0.5,0.5);
+	box.contentSize = boxSize;
+  box.ignoreAnchorPointForPosition = NO;
+	box.position = ccp(s.width/2, s.height - 100 - box.contentSize.height/2);
+	[self addChild:box];
+	CCLabelTTF *label = [CCLabelTTF labelWithString:@"Standard cocos2d Skew" fontName:@"Marker Felt" fontSize:16];
+	[label setPosition:ccp(s.width/2, s.height - 100 + label.contentSize.height)];
+  [self addChild:label];
+	id actionTo = [CCSkewBy actionWithDuration:2 skewX:360 skewY:0];
+	id actionToBack = [CCSkewBy actionWithDuration:2 skewX:-360 skewY:0];
+  
+	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+  
+  box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
+	box.anchorPoint = ccp(0.5,0.5);
+	box.contentSize = boxSize;
+  box.ignoreAnchorPointForPosition = NO;
+	box.position = ccp(s.width/2, s.height - 250 - box.contentSize.height/2);
+	[self addChild:box];
+  label = [CCLabelTTF labelWithString:@"Rotational Skew" fontName:@"Marker Felt" fontSize:16];
+	[label setPosition:ccp(s.width/2, s.height - 250 + label.contentSize.height/2)];
+  [self addChild:label];
+  actionTo = [CCRotateBy actionWithDuration:2 angleX:360 angleY:0];
+  actionToBack = [CCRotateBy actionWithDuration:2 angleX:-360 angleY:0];
+	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
+}
+-(NSString *) title
+{
+return @"Skew Comparison";
+}
 @end
 
 @implementation ActionSkewRotateScale
@@ -1595,6 +1670,8 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Issue1327
+
 @implementation Issue1327
 -(void) onEnter
 {
@@ -1630,6 +1707,62 @@ Class restartAction()
 }
 @end
 
+#pragma mark - Issue1398
+
+@implementation Issue1398
+
+-(void) incrementInteger {
+    testInteger++;
+    NSLog(@"incremented to %d", testInteger);
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:0];
+
+    testInteger = 0;
+    NSLog(@"testInt = %d", testInteger);
+    [self runAction:[CCSequence actions:
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"1");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"2");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"3");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"4");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"5");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"6");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"7");}],
+                     [CCCallBlock actionWithBlock:^{
+        [self incrementInteger];
+        NSLog(@"8");}],
+                     nil]];
+
+}
+-(NSString *) title
+{
+	return @"Issue 1398";
+}
+
+-(NSString*) subtitle
+{
+	return @"See console: You should see an 8";
+}
+@end
+
 
 #pragma mark - AppDelegate
 
@@ -1638,6 +1771,44 @@ Class restartAction()
 #ifdef __CC_PLATFORM_IOS
 
 #pragma mark AppController - iOS
+
+@interface BootLayer : CCLayer
+@end
+
+@implementation BootLayer
+
+// Don't create the background imate at "init" time.
+// Instead create it at "onEnter" time.
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize size = [[CCDirector sharedDirector] winSize];
+		
+		CCSprite *_background;
+		
+		if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone ) {
+			_background = [CCSprite spriteWithFile:@"Default.png"];
+			_background.rotation = 90;
+		} else {
+			_background = [CCSprite spriteWithFile:@"Default-Landscape~ipad.png"];
+		}
+		_background.position = ccp(size.width/2, size.height/2);
+		
+		[self addChild:_background];
+	}
+	return self;
+}
+
+-(void) onEnter
+{
+	[super onEnter];
+	
+	CCScene *scene = [CCScene node];
+	[scene addChild: [nextAction() node]];
+	[[CCDirector sharedDirector] replaceScene: [CCTransitionFade transitionWithDuration:1 scene:scene]];
+}
+@end
 
 @implementation AppController
 
@@ -1667,13 +1838,20 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
 
 	return YES;
 }
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [BootLayer node]];
+		[director runWithScene: scene];
+	}
+}
+
 
 //-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 //{

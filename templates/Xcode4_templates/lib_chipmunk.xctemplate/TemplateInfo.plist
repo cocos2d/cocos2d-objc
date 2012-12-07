@@ -373,28 +373,6 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>libs/Chipmunk/LICENSE.txt</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/LICENSE.txt</string>
-			<key>TargetIndices</key>
-			<array/>
-		</dict>
-		<key>libs/Chipmunk/README.textile</key>
-		<dict>
-			<key>Group</key>
-			<array>
-				<string>libs</string>
-				<string>Chipmunk</string>
-			</array>
-			<key>Path</key>
-			<string>libs/Chipmunk/README.textile</string>
-		</dict>
 		<key>libs/Chipmunk/src/chipmunk.c</key>
 		<dict>
 			<key>Group</key>
@@ -790,8 +768,6 @@
 		<string>libs/Chipmunk/include/chipmunk/cpSpace.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpSpatialIndex.h</string>
 		<string>libs/Chipmunk/include/chipmunk/cpVect.h</string>
-		<string>libs/Chipmunk/LICENSE.txt</string>
-		<string>libs/Chipmunk/README.textile</string>
 		<string>libs/Chipmunk/src/chipmunk.c</string>
 		<string>libs/Chipmunk/src/CMakeLists.txt</string>
 		<string>libs/Chipmunk/src/constraints/cpConstraint.c</string>

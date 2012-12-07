@@ -105,6 +105,8 @@
 {
 	CGPoint				startPosition_;
 }
+// XXX: To make BridgeSupport happy
+-(void) startWithTarget:(id)target;
 @end
 
 /** An action that moves the target with a CatmullRom curve to a destination point.
@@ -135,5 +137,13 @@
 -(id) initWithDuration:(ccTime)dt points:(CCPointArray*)points;
 @end
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
- CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );
+CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );
+
+#ifdef __cplusplus
+}
+#endif

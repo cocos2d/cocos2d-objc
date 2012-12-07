@@ -17,7 +17,7 @@ enum {
 };
 
 static int sceneIdx=-1;
-static NSString *transitions[] = {
+static NSString *transitions[] = {	
 
 	@"TextureMemoryAlloc",
 
@@ -28,20 +28,36 @@ static NSString *transitions[] = {
 	@"TexturePVRNonSquare",
 	@"TexturePVRNPOT4444",
 	@"TexturePVRNPOT8888",
-	@"TexturePVR2BPP",
 	@"TexturePVR",
+	
+	@"TexturePVR2BPP",
+	@"TexturePVR2BPPv3",
+	@"TexturePVRII2BPPv3",
 	@"TexturePVR4BPP",
+	@"TexturePVR4BPPv3",
+	@"TexturePVRII4BPPv3",
 	@"TexturePVRRGBA8888",
+	@"TexturePVRRGBA8888v3",	
 	@"TexturePVRBGRA8888",
+	@"TexturePVRBGRA8888v3",
 	@"TexturePVRRGBA4444",
+	@"TexturePVRRGBA4444v3",
 	@"TexturePVRRGBA4444GZ",
 	@"TexturePVRRGBA4444CCZ",
 	@"TexturePVRRGBA5551",
+	@"TexturePVRRGBA5551v3",
 	@"TexturePVRRGB565",
+	@"TexturePVRRGB565v3",
 	@"TexturePVRRGB888",
+	@"TexturePVRRGB888v3",
 	@"TexturePVRA8",
+	@"TexturePVRA8v3",
 	@"TexturePVRI8",
+	@"TexturePVRI8v3",
 	@"TexturePVRAI88",
+	@"TexturePVRAI88v3",
+
+	
 	@"TexturePVRBadEncoding",
 	@"TexturePNG",
 	@"TextureBMP",
@@ -53,6 +69,7 @@ static NSString *transitions[] = {
 	@"TextureBlend",
 	@"TextureAsync",
 	@"TextureAsyncBlock",
+    @"TextureAsyncBlock2",
 	@"TextureLibPNGTest1",
 	@"TextureLibPNGTest2",
 	@"TextureLibPNGTest3",
@@ -464,8 +481,36 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR2BPP
+#pragma mark - TexturePVR
+
+// To generate PVR images read this article:
+// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
+@implementation TexturePVR
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image.pvr"];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"This test is not supported in cocos2d-mac");
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR TC 4bpp Test #2";
+}
+@end
+
+
+#pragma mark - TexturePVR2BPP
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -492,37 +537,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark TexturePVR
-
-// To generate PVR images read this article:
-// http://developer.apple.com/iphone/library/qa/qa2008/qa1611.html
-@implementation TexturePVR
--(void) onEnter
-{
-	[super onEnter];
-	CGSize s = [[CCDirector sharedDirector] winSize];
-
-	CCSprite *img = [CCSprite spriteWithFile:@"test_image.pvr"];
-
-	if( img ) {
-		img.position = ccp( s.width/2.0f, s.height/2.0f);
-		[self addChild:img];
-	} else {
-		NSLog(@"This test is not supported in cocos2d-mac");
-	}
-	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
-
-}
-
--(NSString *) title
-{
-	return @"PVR TC 4bpp Test #2";
-}
-@end
-
-#pragma mark -
-#pragma mark TexturePVR4BPP
+#pragma mark - TexturePVR4BPP
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -552,8 +567,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark TexturePVR RGBA8888
+#pragma mark - TexturePVR RGBA8888
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -577,8 +591,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR BGRA8888
+#pragma mark - TexturePVR BGRA8888
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -606,8 +619,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark TexturePVR RGBA5551
+#pragma mark - TexturePVR RGBA5551
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -631,8 +643,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR RGBA4444
+#pragma mark - TexturePVR RGBA4444
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -656,8 +667,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR RGBA4444GZ
+#pragma mark - TexturePVR RGBA4444GZ
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -687,8 +697,7 @@ Class restartAction()
 
 @end
 
-#pragma mark -
-#pragma mark TexturePVR RGBA4444CCZ
+#pragma mark - TexturePVR RGBA4444CCZ
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -718,8 +727,7 @@ Class restartAction()
 @end
 
 
-#pragma mark -
-#pragma mark TexturePVR RGB565
+#pragma mark - TexturePVR RGB565
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -743,8 +751,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR RGB888
+#pragma mark - TexturePVR RGB888
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -768,8 +775,7 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR A8
+#pragma mark - TexturePVR A8
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -793,8 +799,8 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR I8
+
+#pragma mark - TexturePVR I8
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -818,8 +824,8 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR AI88
+
+#pragma mark - TexturePVR AI88
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -843,8 +849,393 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark TexturePVR Bad Encoding
+#pragma mark - TexturePVR2BPP v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVR2BPPv3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc2bpp_v3.pvr"];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR TC 2bpp Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR2BPP v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRII2BPPv3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtcii2bpp_v3.pvr"];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR TC II 2bpp Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR4BPPv3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVR4BPPv3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtc4bpp_v3.pvr"];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"This test is not supported in cocos2d-mac");
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR TC 4bpp Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVRII4BPPv3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRII4BPPv3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_pvrtcii4bpp_v3.pvr"];
+	
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"This test is not supported in cocos2d-mac");
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR TC II 4bpp Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR RGBA8888 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGBA8888v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba8888_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGBA  8888 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR BGRA8888 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRBGRA8888v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_bgra8888_v3.pvr"];
+	if( img ) {
+		img.position = ccp( s.width/2.0f, s.height/2.0f);
+		[self addChild:img];
+	} else {
+		NSLog(@"BGRA8888 images are not supported");
+	}
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR + BGRA 8888 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR RGBA5551 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGBA5551v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba5551_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGBA 5551 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR RGBA4444 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGBA4444v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgba4444_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGBA 4444 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR RGB565 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGB565v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb565_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGB 565 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR RGB888 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRRGB888v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_rgb888_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + RGB 888 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR A8 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRA8v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_a8_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + A8 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR I8 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRI8v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_i8_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+	
+}
+
+-(NSString *) title
+{
+	return @"PVR + I8 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+
+#pragma mark - TexturePVR AI88 v3
+
+// Image generated using PVRTexTool:
+// http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
+
+@implementation TexturePVRAI88v3
+-(void) onEnter
+{
+	[super onEnter];
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCSprite *img = [CCSprite spriteWithFile:@"test_image_ai88_v3.pvr"];
+	img.position = ccp( s.width/2.0f, s.height/2.0f);
+	[self addChild:img];
+	[[CCTextureCache sharedTextureCache] dumpCachedTextureInfo];
+}
+
+-(NSString *) title
+{
+	return @"PVR + AI88 Test";
+}
+-(NSString*) subtitle
+{
+	return @"Testing PVR File Format v3";
+}
+@end
+
+#pragma mark - TexturePVR Bad Encoding
 
 // Image generated using PVRTexTool:
 // http://www.imgtec.com/powervr/insider/powervr-pvrtextool.asp
@@ -1339,6 +1730,95 @@ Class restartAction()
 }
 @end
 
+
+#pragma mark -
+#pragma mark TextureAsyncBlock 2
+
+/*
+ This test fails if there is only a single sprite on screen and CC_ENABLE_GL_STATE_CACHE=1
+ */
+@implementation TextureAsyncBlock2
+-(id) init
+{
+	if( (self=[super init]) ) {
+		CGSize size = [[CCDirector sharedDirector] winSize];
+        
+        // add sprite1 grossini
+        sprite1_ = [CCSprite spriteWithFile:@"grossini.png"];
+        sprite1_.position = ccp(size.width/2 - sprite1_.contentSize.width, size.height/2);
+        [self addChild:sprite1_];
+        
+        // delay, then async load
+        //[self scheduleOnce:@selector(loadImage) delay:1.0f];
+        [self performSelector:@selector(loadImage) withObject:nil afterDelay:1.0f];
+	}
+	return self;
+}
+
+-(void) dealloc
+{
+	[[CCTextureCache sharedTextureCache] removeAllTextures];
+	[super dealloc];
+}
+
+-(void) loadImage
+{
+    [[CCTextureCache sharedTextureCache] addImageAsync:@"grossinis_sister1.png" withBlock:^(CCTexture2D *tex) {
+        [self replaceImage:tex];
+    }];
+}
+
+-(void) loadImageX
+{
+    void(^block)(CCTexture2D *block) = ^(CCTexture2D* tex){
+        
+		CCDirector *director = [CCDirector sharedDirector];
+        
+		NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+        
+        // add sprite2 grossini's sister
+        CGSize size = [[CCDirector sharedDirector] winSize];
+        CCSprite* sprite2_ = [CCSprite spriteWithTexture:tex];
+        sprite2_.position = ccp(size.width/2 + sprite2_.contentSize.width, size.height/2);
+        [self addChild:sprite2_];
+        
+        // replace sprite1 with grossini's sister
+		sprite1_.texture = tex;
+        
+		NSLog(@"Image loaded: %@", tex);
+	};
+    
+    [[CCTextureCache sharedTextureCache] addImageAsync:@"grossinis_sister1.png" withBlock:block];
+}
+
+-(void) replaceImage:(CCTexture2D*) tex {
+    CCDirector *director = [CCDirector sharedDirector];
+    
+    NSAssert( [NSThread currentThread] == [director runningThread], @"FAIL. Callback should be on cocos2d thread");
+    
+    // add sprite2 grossini's sister
+    CGSize size = [[CCDirector sharedDirector] winSize];
+    CCSprite* sprite2_ = [CCSprite spriteWithTexture:tex];
+    sprite2_.position = ccp(size.width/2 + sprite2_.contentSize.width, size.height/2);
+    [self addChild:sprite2_];
+    
+    // replace sprite1 with grossini's sister
+    sprite1_.texture = tex;
+    
+    NSLog(@"Image loaded: %@", tex);
+}
+
+-(NSString *) title
+{
+	return @"Texture Async Load with Blocks 2";
+}
+
+-(NSString *) subtitle
+{
+//	return @"Texture should load and replace existing sprite texture.";
+	return @"This bug cannot be reproduce in this context.";
+}
+@end
 
 
 #pragma mark -
@@ -2037,8 +2517,7 @@ Class restartAction()
 	navController_.navigationBarHidden = YES;
 	
 	// set the Navigation Controller as the root view controller
-	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
+	[window_ setRootViewController:navController_];
 
 	// make main window visible
 	[window_ makeKeyAndVisible];
@@ -2061,12 +2540,20 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene:scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

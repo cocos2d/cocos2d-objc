@@ -1,0 +1,9 @@
+[submodule "external/jsbindings"]
+	path = external/jsbindings
+	url = git://github.com/ricardoquesada/jsbindings.git
+[submodule "external/Chipmunk"]
+	path = external/Chipmunk
+	url = git://github.com/slembcke/Chipmunk-Physics.git
+[submodule "tests/cocos2d-js-tests"]
+	path = tests/cocos2d-js-tests
+	url = git://github.com/ricardoquesada/cocos2d-js-tests.git

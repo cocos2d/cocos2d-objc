@@ -139,7 +139,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 }
 
--(void)setReverseProgress:(BOOL)reverse
+-(void)setReverseDirection:(BOOL)reverse
 {
 	if( reverseDirection_ != reverse ) {
 		reverseDirection_ = reverse;

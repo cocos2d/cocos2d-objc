@@ -28,22 +28,44 @@
 #import <Foundation/Foundation.h>
 #import "../ccTypes.h"
 
+// keys used for the suffix or directory dictionaries
+extern NSString const *kCCFileUtilsDefault;
+extern NSString const *kCCFileUtilsiPad;
+extern NSString const *kCCFileUtilsiPadHD;
+extern NSString const *kCCFileUtilsiPhone;
+extern NSString const *kCCFileUtilsiPhoneHD;
+extern NSString const *kCCFileUtilsiPhone5;
+extern NSString const *kCCFileUtilsiPhone5HD;
+extern NSString const *kCCFileUtilsMac;
+extern NSString const *kCCFileUtilsMacHD;
+
+extern NSString const *kCCFileUtilsDefaultSearchPath;
+
+enum {
+	kCCFileUtilsSearchSuffix,
+	kCCFileUtilsSearchDirectory,
+};
+
+
 /** Helper class to handle file operations */
 @interface CCFileUtils : NSObject
 {
-	NSFileManager	*fileManager_;
-	NSBundle		*bundle_;
-	NSMutableDictionary *fullPathCache_;
-	NSMutableDictionary *removeSuffixCache_;
+	NSFileManager		*_fileManager;
+	NSBundle			*_bundle;
+	NSMutableDictionary *_fullPathCache;
+	NSMutableDictionary *_fullPathNoResolutionsCache;
+	NSMutableDictionary *_removeSuffixCache;
 	
+	NSMutableDictionary	*_directoriesDict;
+	NSMutableDictionary	*_suffixesDict;
 	
-#ifdef __CC_PLATFORM_IOS
-	BOOL	enableFallbackSuffixes_;
+	NSMutableArray		*_searchResolutionsOrder;
+	NSMutableArray		*_searchPath;
 	
-	NSString *iPhoneRetinaDisplaySuffix_;
-	NSString *iPadSuffix_;
-	NSString *iPadRetinaDisplaySuffix_;
-#endif // __CC_PLATFORM_IOS
+	// it could be suffix (default) or directory
+	int					_searchMode;
+	
+	BOOL				_enableiPhoneResourcesOniPad;
 }
 
 /** NSBundle used by CCFileUtils. By default it uses [NSBundle mainBundle].
@@ -51,10 +73,90 @@
  */
 @property (nonatomic, readwrite, retain) NSBundle	*bundle;
 
-/** NSFileManager used by CCFileUtils. By default it uses its own intance.
+/** NSFileManager used by CCFileUtils. By default it uses its own instance.
  @since v2.0
  */
 @property (nonatomic, readwrite, retain) NSFileManager	*fileManager;
+
+/** Whether of not the fallback suffixes is enabled.
+ When enabled it will try to search for the following suffixes in the following order until one is found:
+ * On iPad HD  : iPad HD, iPad, iPhone HD, Resources without resolution
+ * On iPad     : iPad, iPhone HD, Resources without resolution
+ * On iPhone HD: iPhone HD, Resources without resolution
+ * On Mac HD   : Mac HD, Mac, Resources without resolution
+ * On Mac      : Mac, Resources without resolution
+ 
+ By default this functionality is off;
+ */
+@property (nonatomic, readwrite, getter = isEnablediPhoneResourcesOniPad) BOOL enableiPhoneResourcesOniPad;
+
+/** Dictionary that contians the search directories for the different devices. Default values:
+ - iPhone: "resources-iphone"
+ - iPhone HD: "resources-hd"
+ - iPhone5 : "resources-wide"
+ - iPhone5 HD: "resources-widehd"
+ - iPad: "resources-ipad"
+ - iPad HD: "resources-ipadhd"
+ - Mac: "resources-mac"
+ - Mac HD: "resources-machd"
+ 
+ If "search in directories" is enabled (disabled by default), it will try to get the resources from the directories according to the order of "searchResolutionsOrder" array.
+ @since v2.1
+ */
+@property (nonatomic, copy) NSMutableDictionary *directoriesDict;
+
+/** Dictionary that contians the suffix for the different devices. Default values:
+	- iPhone: ""
+	- iPhone HD: "-hd"
+	- iPhone5 : "-wide"
+	- iPhone5 HD: "-widehd"
+	- iPad: "-ipad"
+	- iPad HD: "-ipadhd"
+	- Mac: ""
+	- Mac HD: "-machd"
+
+  If "search with suffixes" is enabled (enabled by default), it will try to get the resources by appending the suffixes according to the order of "searchResolutionsOrder" array.
+ @since v2.1
+ */
+@property (nonatomic, copy) NSMutableDictionary *suffixesDict;
+
+/** Array that contains the search order of the resources based for the device.
+ By default it will try to load resources in the following order until one is found:
+   - On iPad HD: iPad HD resources, iPad resources, resources not associated with any device
+   - On iPad: iPad resources, resources not associated with any device
+   - On iPhone 5 HD: iPhone 5 HD resources, iPhone HD resouces, iPhone 5 resources, iPhone resources, resources not associated with any device
+   - On iPhone HD: iPhone HD resources, iPhone resouces, resources not associated with any device
+   - On iPhone: iPhone resources, resources not associated with any device
+
+   - On Mac HD: Mac HD resources, Mac resources, resources not associated with any device
+   - On Mac: Mac resources, resources not associated with any device
+ 
+ If the property "enableiPhoneResourcesOniPad" is enabled, it will also search for iPhone resources if you are in an iPad.
+ 
+ @since v2.1
+ */
+@property (nonatomic, copy) NSArray *searchResolutionsOrder;
+
+/** Array of search paths.
+ You can use this array to modify the search path of the resources.
+ If you want to use "themes" or search resources in the "cache", you can do it easily by adding new entries in this array.
+ 
+ By default it is an array with only the "" (empty string) element.
+ 
+ @since v2.1
+ */
+@property (nonatomic, copy) NSArray *searchPath;
+
+
+/**  It determines how the "resolution resources"  are to be searched.
+ Possible values:
+	- kCCFileUtilsSearchSuffix: It will search for resources by appending suffixes like "-hd", "-ipad", etc...
+	- kCCFileUtilsSearchDirectory: It will search the resoureces in subdirectories like "resources-hd", "resources-ipad", etc...
+ 
+ Default: kCCFileUtilsSearchSuffix
+ @since v2.1
+ */
+@property (nonatomic, readwrite) int searchMode;
 
 #ifdef __CC_PLATFORM_IOS
 /** The iPhone RetinaDisplay suffixes to load resources.
@@ -63,7 +165,7 @@
  
  @since v1.1
  */
-@property (nonatomic,readwrite, copy, setter = setiPhoneRetinaDisplaySuffix:) NSString *iPhoneRetinaDisplaySuffix;
+-(void) setiPhoneRetinaDisplaySuffix:(NSString*)iPhoneRetinaDisplaySuffix;
 
 /** The iPad suffixes to load resources.
  By default it is "-ipad", "-hd", "", in that order.
@@ -71,7 +173,7 @@
  
  @since v1.1
  */
-@property (nonatomic,readwrite, copy, setter = setiPadSuffix:) NSString *iPadSuffix;
+-(void) setiPadSuffix:(NSString*) iPadSuffix;
 
 
 /** Sets the iPad Retina Display suffixes to load resources.
@@ -80,19 +182,10 @@
  
  @since v2.0
  */
-@property (nonatomic,readwrite, copy, setter = setiPadRetinaDisplaySuffix:) NSString *iPadRetinaDisplaySuffix;
+-(void)setiPadRetinaDisplaySuffix:(NSString*)iPadRetinaDisplaySuffix;
 
-/** Whether of not the fallback sufixes is enabled.
- When enabled it will try to search for the following suffixes in the following order until one is found:
-   * On iPad HD  : iPad HD suffix, iPad suffix, iPhone HD suffix, Without suffix
-   * On iPad     : iPad suffix, iPhone HD suffix, Without suffix
-   * On iPhone HD: iPhone HD suffix, Without suffix
- 
- By default this functionality is off;
-*/
-@property (nonatomic, readwrite) BOOL enableFallbackSuffixes;
+#endif // __CC_PLATFORM_IOS
 
- #endif // __CC_PLATFORM_IOS
 
 /** returns the shared file utils instance */
 +(CCFileUtils*) sharedFileUtils;
@@ -102,6 +195,12 @@
  Will be called automatically by the Director when a memory warning is received
  */
 -(void) purgeCachedEntries;
+
+/** Calling this method will populate the searchResolutionsOrder property depending on the current device.
+ 
+ @since v2.1
+ */
+- (void) buildSearchResolutionsOrder;
 
 /** Returns the fullpath of an filename.
 
@@ -117,23 +216,31 @@
  */
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath;
 
-
-/** Returns the fullpath of an filename including the resolution of the image.
+/** Returns the fullpath of an filename. It will try to get the correct file for the current screen resolution.
+ Useful for loading images and other assets that are related for the screen resolution.
  
- If in RetinaDisplay mode, and a RetinaDisplay file is found, it will return that path.
  If in iPad mode, and an iPad file is found, it will return that path.
- 
+ If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
+
  Examples:
  
  * In iPad mode: "image.png" -> "/full/path/image-ipad.png" (in case the -ipad file exists)
  * In iPhone RetinaDisplay mode: "image.png" -> "/full/path/image-hd.png" (in case the -hd file exists)
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
  
- If an iPad file is found, it will set resolution type to kCCResolutioniPad
- If a RetinaDisplay file is found, it will set resolution type to kCCResolutionRetinaDisplay
- 
  */
 -(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
+
+/** Returns the fullpath of an filename without taking into account the screen resolution suffixes or directories.
+
+ It will use the "searchPath" though.
+ Useful for loading music files, shaders, "data" and other files that are not related to the screen resolution of the device.
+ 
+ @since v2.1
+ */
+-(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
+
+
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -166,10 +273,14 @@
  */
 -(BOOL) iPadRetinaDisplayFileExistsAtPath:(NSString*)filename;
 
-#endif // __CC_PLATFORM_IOS
+#endif // __CC_PLATFORM_MAC
+
+/**
+ @deprecated
+ */
+-(void) setEnableFallbackSuffixes:(BOOL)enableFallbackSuffixes;
 
 @end
-
 
 #ifdef __cplusplus
 extern "C" {
@@ -182,7 +293,7 @@ extern "C" {
  @since v0.99.5
  */
 NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out);
-
+	
 #ifdef __cplusplus
 }
 #endif

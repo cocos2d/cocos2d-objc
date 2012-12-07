@@ -38,7 +38,7 @@
 	NSMutableDictionary *animations_;
 }
 
-/** Retruns ths shared instance of the Animation cache */
+/** Returns the shared instance of the Animation cache */
 + (CCAnimationCache *) sharedAnimationCache;
 
 /** Purges the cache. It releases all the CCAnimation objects and the shared instance.
