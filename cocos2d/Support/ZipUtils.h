@@ -58,13 +58,13 @@ int ccInflateMemory(unsigned char *in, unsigned int inLength, unsigned char **ou
  * Inflates either zlib or gzip deflated memory. The inflated memory is
  * expected to be freed by the caller.
  *
- * outLenghtHint is assumed to be the needed room to allocate the inflated buffer.
+ * outlengthHint is assumed to be the needed room to allocate the inflated buffer.
  *
  * @returns the length of the deflated buffer
  *
  @since v1.0.0
  */
-int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outLenghtHint );
+int ccInflateMemoryWithHint(unsigned char *in, unsigned int inLength, unsigned char **out, unsigned int outlengthHint );
 
 
 /** inflates a GZip file into memory

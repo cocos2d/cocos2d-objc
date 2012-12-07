@@ -492,7 +492,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 #pragma mark helper
 
--(void)getFPSImageData:(unsigned char**)datapointer lenght:(NSUInteger*)len
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len
 {
 	int device = [[CCConfiguration sharedConfiguration] runningDevice];
 

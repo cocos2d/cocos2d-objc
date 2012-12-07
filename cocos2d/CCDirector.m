@@ -84,7 +84,7 @@ extern NSString * cocos2dVersion(void);
 // calculates the milliseconds per frame from the start of the frame
 -(void) calculateMPF;
 // returns the FPS image data pointer and len
--(void)getFPSImageData:(unsigned char**)datapointer lenght:(NSUInteger*)len;
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len;
 @end
 
 @implementation CCDirector
@@ -611,7 +611,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director - Helper
 
--(void)getFPSImageData:(unsigned char**)datapointer lenght:(NSUInteger*)len
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len
 {
 	*datapointer = cc_fps_images_png;
 	*len = cc_fps_images_len();
@@ -641,7 +641,7 @@ static CCDirector *_sharedDirector = nil;
 
 	unsigned char *data;
 	NSUInteger data_len;
-	[self getFPSImageData:&data lenght:&data_len];
+	[self getFPSImageData:&data length:&data_len];
 	
 	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
 	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (CFDataRef) nsdata);

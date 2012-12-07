@@ -469,7 +469,7 @@ typedef struct {
 		mipmaps_[i].len = packetLength;
 		
 		dataOffset += packetLength;
-		NSAssert( dataOffset <= dataLength, @"CCTexurePVR: Invalid lenght");
+		NSAssert( dataOffset <= dataLength, @"CCTexurePVR: Invalid length");
 		
 		
 		width = MAX(width >> 1, 1);
