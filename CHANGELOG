@@ -1,4 +1,5 @@
 version 2.1-rc0	 XX-Jan-2013
+. [FIX] Director + Doc: replaced lenght with lenght
 . [3RD] JS Bindings: Updated to v0.5
 
 version 2.1-beta4  4-Dec-2012
@@ -142,7 +143,7 @@ version 2.0.0 8-Jul-2012
 . [FIX] Scheduler: removeUpdateFromHash calls [target release] at the very end to prevent a possible crash
 . [FIX] Templates: Generate no-flicker-at-startup code
 		Improved Physics templates: multitouch and gravity+accel works OK
-. [FIX] TexturePVR: wrong type when calculating PVR lenght
+. [FIX] TexturePVR: wrong type when calculating PVR length
 . [FIX] Xcode: Fixed compile errors and warnings in Xcode 4.5
 . [3RD] libpng: updated to 1.2.49
 
