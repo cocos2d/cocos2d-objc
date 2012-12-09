@@ -1,5 +1,6 @@
 version 2.1-rc0	 XX-Jan-2013
-. [FIX] Director + Doc: replaced lenght with lenght
+. [FIX] Director: replaced lenght with lenght
+		Fixed 2 memory leaks in createStatsLabel
 . [3RD] JS Bindings: Updated to v0.5
 
 version 2.1-beta4  4-Dec-2012
