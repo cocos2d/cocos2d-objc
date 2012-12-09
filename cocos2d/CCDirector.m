@@ -623,7 +623,6 @@ static CCDirector *_sharedDirector = nil;
 	CCTextureCache *textureCache = [CCTextureCache sharedTextureCache];
 	
 	if( FPSLabel_ && SPFLabel_ ) {
-		texture = [FPSLabel_ texture];
 
 		[FPSLabel_ release];
 		[SPFLabel_ release];
@@ -647,6 +646,8 @@ static CCDirector *_sharedDirector = nil;
 	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (CFDataRef) nsdata);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
 	texture = [textureCache addCGImage:imageRef forKey:@"cc_fps_images"];
+	CGDataProviderRelease(imgDataProvider);
+	CGImageRelease(imageRef);
 
 	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 	SPFLabel_ = [[CCLabelAtlas alloc]  initWithString:@"0.000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
