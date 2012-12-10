@@ -28,6 +28,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
 	LabelBMFont: If the character is not supported, logs a warning
 
+* Daniel Rice (https://github.com/dangero):
+	Director: willRotateToInterfaceOrientation is propagated to the delegate
+
 * Gábor Varga (https://github.com/vargusz)
 	Fixed possible memory leak in RadialTransitions
 	Events in tratisions are disabled/enabled at onEnter/onExit. patch.
