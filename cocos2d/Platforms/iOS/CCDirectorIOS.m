@@ -434,7 +434,8 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-	// do something ?
+	if( [delegate_ respondsToSelector:_cmd] )
+		[delegate_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
 }
 
 
