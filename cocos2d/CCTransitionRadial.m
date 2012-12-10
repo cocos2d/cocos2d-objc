@@ -98,7 +98,7 @@ enum {
 -(void) onExit
 {
 	// remove our layer and release all containing objects
-	[self removeChildByTag:kSceneRadial cleanup:NO];
+	[self removeChildByTag:kSceneRadial cleanup:YES];
 	[super onExit];
 }
 @end
