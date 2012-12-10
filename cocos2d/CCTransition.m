@@ -75,13 +75,6 @@ const uint32_t kSceneFade = 0xFADEFADE;
 
 		NSAssert( inScene_ != outScene_, @"Incoming scene must be different from the outgoing scene" );
 
-		// disable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
-#endif
-
 		[self sceneOrder];
 	}
 	return self;
@@ -133,13 +126,6 @@ const uint32_t kSceneFade = 0xFADEFADE;
 
 	[director replaceScene: inScene_];
 
-	// enable events while transitions
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
-#endif
-
 	// issue #267
 	[outScene_ setVisible:YES];
 }
@@ -154,6 +140,13 @@ const uint32_t kSceneFade = 0xFADEFADE;
 -(void) onEnter
 {
 	[super onEnter];
+	
+	// disable events while transitions
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: NO];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: NO];
+#endif
 
 	// outScene_ should not receive the onExit callback
 	// only the onExitTransitionDidStart
@@ -171,6 +164,13 @@ const uint32_t kSceneFade = 0xFADEFADE;
 	// inScene_ should not receive the onEnter callback
 	// only the onEnterTransitionDidFinish
 	[inScene_ onEnterTransitionDidFinish];
+
+	// reenable events after transitions
+#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+	[[CCTouchDispatcher sharedDispatcher] setDispatchEvents: YES];
+#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+	[[CCEventDispatcher sharedDispatcher] setDispatchEvents: YES];
+#endif
 }
 
 // custom cleanup
