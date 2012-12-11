@@ -57,7 +57,7 @@ typedef enum {
 @interface CCLayer : CCNode <CCAccelerometerDelegate, CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
 {
 	BOOL _touchEnabled;
-	BOOL _touchPriority;
+	NSInteger _touchPriority;
 	BOOL _touchMode;
 	
 	BOOL _accelerometerEnabled;
