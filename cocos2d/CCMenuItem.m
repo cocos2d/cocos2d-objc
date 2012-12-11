@@ -84,7 +84,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		_isEnabled = YES;
 		_isSelected = NO;
 		
-		_releaseBlockAtCleanup = NO;
+		// WARNING: Will be disabled in v2.2
+		_releaseBlockAtCleanup = YES;
 
 	}
 	return self;
