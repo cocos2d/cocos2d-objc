@@ -165,12 +165,15 @@ enum {
 	
 #if __CC_PLATFORM_IOS
 	
+	// to avoid a retain-cycle with the menuitem and blocks
+	__block id copy_self = self;
+	
 	// Achievement Menu Item using blocks
 	CCMenuItem *itemAchievement = [CCMenuItemFont itemWithString:@"Achievements" block:^(id sender) {
 		
 		
 		GKAchievementViewController *achivementViewController = [[GKAchievementViewController alloc] init];
-		achivementViewController.achievementDelegate = self;
+		achivementViewController.achievementDelegate = copy_self;
 		
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		
@@ -184,7 +187,7 @@ enum {
 		
 		
 		GKLeaderboardViewController *leaderboardViewController = [[GKLeaderboardViewController alloc] init];
-		leaderboardViewController.leaderboardDelegate = self;
+		leaderboardViewController.leaderboardDelegate = copy_self;
 		
 		AppController *app = (AppController*) [[UIApplication sharedApplication] delegate];
 		
