@@ -2,8 +2,9 @@ version 2.1-rc0	 XX-Jan-2013
 . [FIX] Director: replaced lenght with lenght
 		Fixed 2 memory leaks in createStatsLabel
 		willRotateToInterfaceOrientation is propagated to the delegate
-. [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
+. [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
+. [FIX] RenderTexture: Restures the Projection after using it.
 . [3RD] JS Bindings: Updated to v0.5
 
 version 2.1-beta4  4-Dec-2012
