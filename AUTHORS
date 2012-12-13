@@ -51,6 +51,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Ian Oliver (http://www.trivialtechnology.com)
 	GLProgram: Better error reporting on link
+	GLProgram: Added uniformLocationForName: method
 
 * kamorris:
 	Patch that prevent crash on director when purgeCacheData is called before the creation of the view
