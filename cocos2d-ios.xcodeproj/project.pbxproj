@@ -2610,6 +2610,7 @@
 		A0D6C030159B6A25008EED97 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		A0D6C031159B6A25008EED97 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		A0D6C033159B6A25008EED97 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		A0D746351679878C00CAF1CA /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		A0D77A09146E2CA3000960C7 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460ED1061413300AB7C52 /* Paint Boy.ttf */; };
 		A0D77A12146E3244000960C7 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */; };
 		A0D77A13146E3244000960C7 /* markerFelt-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A0F146E3244000960C7 /* markerFelt-hd.png */; };
@@ -11424,6 +11425,7 @@
 				A0A1C27115CAEA130058D96F /* Default-Landscape.png in Resources */,
 				A0579BA81601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BDD16019C6000AF8A12 /* Default@2x.png in Resources */,
+				A0D746351679878C00CAF1CA /* grossini_dance_atlas.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

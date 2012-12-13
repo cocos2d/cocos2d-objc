@@ -177,9 +177,10 @@ CGFloat	__ccContentScaleFactor = 1;
 		[self calculateMPF];
 }
 
--(void) setViewport {
-    CGSize size = winSizeInPixels_;
-    glViewport(0, 0, size.width, size.height );
+-(void) setViewport
+{
+	CGSize size = winSizeInPixels_;
+	glViewport(0, 0, size.width, size.height );
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -187,7 +188,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	CGSize size = winSizeInPixels_;
 	CGSize sizePoint = winSizeInPoints_;
     
-    [self setViewport];
+	[self setViewport];
 
 	switch (projection) {
 		case kCCDirectorProjection2D:

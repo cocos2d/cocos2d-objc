@@ -271,8 +271,9 @@ static CCDirector *_sharedDirector = nil;
 	return ( winSizeInPixels_.height / 1.1566f / CC_CONTENT_SCALE_FACTOR() );
 }
 
--(void) setViewport {
-    CCLOG(@"cocos2d: override me");
+-(void) setViewport
+{
+	CCLOG(@"cocos2d: override me");
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
