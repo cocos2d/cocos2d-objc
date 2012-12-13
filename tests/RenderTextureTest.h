@@ -52,4 +52,8 @@
 }
 @end
 
-
+@class SimpleSprite;
+@interface SpriteRenderTextureBug : RenderTextureTest
+{}
+-(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p;
+@end

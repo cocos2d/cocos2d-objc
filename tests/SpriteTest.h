@@ -14,13 +14,6 @@
 -(NSString*) subtitle;
 @end
 
-@class SimpleSprite;
-@interface SpriteRenderTextureBug : SpriteDemo
-{}
--(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p;
-@end
-
-
 @interface Sprite1 : SpriteDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;

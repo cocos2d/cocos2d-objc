@@ -14,7 +14,8 @@ static NSString *tests[] = {
 	@"RenderTextureIssue937",
 	@"RenderTextureZbuffer",
 	@"RenderTextureTestDepthStencil",
-	@"RenderTextureTargetNode"
+	@"RenderTextureTargetNode",
+	@"SpriteRenderTextureBug",
 };
 
 Class nextAction(void);
@@ -780,8 +781,140 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark AppDelegate (iOS)
+
+#pragma mark - SpriteRenderTextureBug
+
+@interface SimpleSprite : CCSprite {
+    
+    CCRenderTexture * rt;
+}
+@end
+
+@implementation SimpleSprite
+-(void) draw
+{
+
+	if(rt == nil) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		rt = [[CCRenderTexture alloc] initWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	}
+	[rt beginWithClear:0.0f g:0.0f b:0.0f a:1.0f];
+	[rt end];
+
+	CC_NODE_DRAW_SETUP();
+
+	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+
+	ccGLBindTexture2D( [texture_ name] );
+
+	//
+	// Attributes
+	//
+
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+
+	#define kQuadSize sizeof(quad_.bl)
+	long offset = (long)&quad_;
+
+	// vertex
+	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+	// texCoods
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
+	// color
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+@end
+
+
+@implementation SpriteRenderTextureBug
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+#ifdef __CC_PLATFORM_IOS
+		self.touchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.mouseEnabled = YES;
+#endif
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
+
+	}
+	return self;
+}
+
+-(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p
+{
+	int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 85;
+	int y = (idx/5) * 121;
+    
+    
+	SimpleSprite *sprite = [SimpleSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
+	[self addChild:sprite];
+    
+	sprite.position = p;
+    
+	id action;
+	float rand = CCRANDOM_0_1();
+    
+	if( rand < 0.20 )
+		action = [CCScaleBy actionWithDuration:3 scale:2];
+	else if(rand < 0.40)
+		action = [CCRotateBy actionWithDuration:3 angle:360];
+	else if( rand < 0.60)
+		action = [CCBlink actionWithDuration:1 blinks:3];
+	else if( rand < 0.8 )
+		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+	else
+		action = [CCFadeOut actionWithDuration:2];
+	id action_back = [action reverse];
+	id seq = [CCSequence actions:action, action_back, nil];
+
+	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
+
+    return sprite;
+}
+
+#ifdef __CC_PLATFORM_IOS
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		[self addNewSpriteWithCoords: location];
+	}
+}
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
+
+	return YES;
+}
+#endif
+
+-(NSString*) title
+{
+	return @"SpriteRenderTextureBug";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch the screen. Sprite should appear on under the touch";
+}
+@end
+
+
+#pragma mark - AppDelegate (iOS)
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -854,6 +987,3 @@ Class restartAction()
 }
 @end
 #endif
-
-
-

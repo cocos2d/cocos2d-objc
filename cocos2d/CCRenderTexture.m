@@ -173,10 +173,10 @@
 
 -(void)begin
 {
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPushMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPushMatrix();
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPushMatrix();
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLPushMatrix();
     
 	CCDirector *director = [CCDirector sharedDirector];
     [director setProjection:director.projection];
@@ -261,10 +261,10 @@
 	// restore viewport
 	[director setViewport];
     
-    kmGLMatrixMode(KM_GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(KM_GL_MODELVIEW);
-    kmGLPopMatrix();
+	kmGLMatrixMode(KM_GL_PROJECTION);
+	kmGLPopMatrix();
+	kmGLMatrixMode(KM_GL_MODELVIEW);
+	kmGLPopMatrix();
 }
 
 -(void)clear:(float)r g:(float)g b:(float)b a:(float)a
