@@ -318,6 +318,14 @@ typedef void (*GLLogFunction) (GLuint program,
 	return updated;
 }
 
+- (GLint)uniformLocationForName:(NSString*)name
+{
+    NSAssert(name != nil, @"Invalid uniform name" );
+    NSAssert(program_ != 0, @"Invalid operation. Cannot get uniform location when program is not initialized");
+    
+    return glGetUniformLocation(program_, [name UTF8String]);
+}
+
 -(void) setUniformLocation:(GLint)location withI1:(GLint)i1
 {
 	BOOL updated =  [self updateUniformLocation:location withData:&i1 sizeOfData:sizeof(i1)*1];

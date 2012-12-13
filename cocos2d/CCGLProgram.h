@@ -126,6 +126,9 @@ struct _hashUniformEntry;
  */
 - (void) updateUniforms;
 
+/** calls retrieves the named uniform location for this shader program. */
+- (GLint)uniformLocationForName:(NSString*)name;
+
 /** calls glUniform1i only if the values are different than the previous call for this same shader program. */
 -(void) setUniformLocation:(GLint)location withI1:(GLint)i1;
 
