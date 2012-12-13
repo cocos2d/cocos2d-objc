@@ -36,12 +36,12 @@
 @synthesize amplitude;
 @synthesize amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithWaves:wav amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -64,13 +64,13 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.x+1); i++ )
+	for( i = 0; i < (gridSize_.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.y+1); j++ )
+		for( j = 0; j < (gridSize_.height+1); j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.z += (sinf((CGFloat)M_PI*time*waves*2 + (v.y+v.x) * .01f) * amplitude * amplitudeRate);
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }
@@ -85,17 +85,17 @@
 
 +(id) actionWithDuration:(ccTime)d
 {
-	return [[[self alloc] initWithSize:ccg(1,1) duration:d] autorelease];
+	return [[[self alloc] initWithSize:CGSizeMake(1,1) duration:d] autorelease];
 }
 
 -(id) initWithDuration:(ccTime)d
 {
-	return [super initWithSize:ccg(1,1) duration:d];
+	return [super initWithSize:CGSizeMake(1,1) duration:d];
 }
 
--(id)initWithSize:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithSize:(CGSize)gSize duration:(ccTime)d
 {
-	if ( gSize.x != 1 || gSize.y != 1 )
+	if ( gSize.width != 1 || gSize.height != 1 )
 	{
 		[NSException raise:@"FlipX3D" format:@"Grid size must be (1,1)"];
 	}
@@ -119,30 +119,30 @@
 
 	ccVertex3F	v0, v1, v, diff;
 
-	v0 = [self originalVertex:ccg(1,1)];
-	v1 = [self originalVertex:ccg(0,0)];
+	v0 = [self originalVertex:ccp(1,1)];
+	v1 = [self originalVertex:ccp(0,0)];
 
 	CGFloat	x0 = v0.x;
 	CGFloat	x1 = v1.x;
 	CGFloat x;
-	ccGridSize	a, b, c, d;
+	CGPoint	a, b, c, d;
 
 	if ( x0 > x1 )
 	{
 		// Normal Grid
-		a = ccg(0,0);
-		b = ccg(0,1);
-		c = ccg(1,0);
-		d = ccg(1,1);
+		a = ccp(0,0);
+		b = ccp(0,1);
+		c = ccp(1,0);
+		d = ccp(1,1);
 		x = x0;
 	}
 	else
 	{
 		// Reversed Grid
-		c = ccg(0,0);
-		d = ccg(0,1);
-		a = ccg(1,0);
-		b = ccg(1,1);
+		c = ccp(0,0);
+		d = ccp(0,1);
+		a = ccp(1,0);
+		b = ccp(1,1);
 		x = x1;
 	}
 
@@ -192,30 +192,30 @@
 
 	ccVertex3F	v0, v1, v, diff;
 
-	v0 = [self originalVertex:ccg(1,1)];
-	v1 = [self originalVertex:ccg(0,0)];
+	v0 = [self originalVertex:ccp(1,1)];
+	v1 = [self originalVertex:ccp(0,0)];
 
 	CGFloat	y0 = v0.y;
 	CGFloat	y1 = v1.y;
 	CGFloat y;
-	ccGridSize	a, b, c, d;
+	CGPoint	a, b, c, d;
 
 	if ( y0 > y1 )
 	{
 		// Normal Grid
-		a = ccg(0,0);
-		b = ccg(0,1);
-		c = ccg(1,0);
-		d = ccg(1,1);
+		a = ccp(0,0);
+		b = ccp(0,1);
+		c = ccp(1,0);
+		d = ccp(1,1);
 		y = y0;
 	}
 	else
 	{
 		// Reversed Grid
-		b = ccg(0,0);
-		a = ccg(0,1);
-		d = ccg(1,0);
-		c = ccg(1,1);
+		b = ccp(0,0);
+		a = ccp(0,1);
+		d = ccp(1,0);
+		c = ccp(1,1);
 		y = y1;
 	}
 
@@ -258,12 +258,12 @@
 
 @synthesize lensEffect=lensEffect_;
 
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos radius:r grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -302,11 +302,11 @@
 	{
 		int i, j;
 
-		for( i = 0; i < gridSize_.x+1; i++ )
+		for( i = 0; i < gridSize_.width+1; i++ )
 		{
-			for( j = 0; j < gridSize_.y+1; j++ )
+			for( j = 0; j < gridSize_.height+1; j++ )
 			{
-				ccVertex3F	v = [self originalVertex:ccg(i,j)];
+				ccVertex3F	v = [self originalVertex:ccp(i,j)];
 				CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 
@@ -326,7 +326,7 @@
 					}
 				}
 
-				[self setVertex:ccg(i,j) vertex:v];
+				[self setVertex:ccp(i,j) vertex:v];
 			}
 		}
 
@@ -346,12 +346,12 @@
 @synthesize amplitude = amplitude_;
 @synthesize amplitudeRate = amplitudeRate_;
 
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos radius:r waves:wav amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -386,11 +386,11 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.x+1); i++ )
+	for( i = 0; i < (gridSize_.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.y+1); j++ )
+		for( j = 0; j < (gridSize_.height+1); j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
 
@@ -401,7 +401,7 @@
 				v.z += (sinf( time*(CGFloat)M_PI*waves_*2 + r * 0.1f) * amplitude_ * amplitudeRate_ * rate );
 			}
 
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }
@@ -415,12 +415,12 @@
 
 @implementation CCShaky3D
 
-+(id)actionWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithRange:(int)range shakeZ:(BOOL)sz grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithRange:range shakeZ:sz grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithRange:(int)range shakeZ:(BOOL)sz grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithRange:(int)range shakeZ:(BOOL)sz grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -441,17 +441,17 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.x+1); i++ )
+	for( i = 0; i < (gridSize_.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.y+1); j++ )
+		for( j = 0; j < (gridSize_.height+1); j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.x += ( rand() % (randrange*2) ) - randrange;
 			v.y += ( rand() % (randrange*2) ) - randrange;
 			if( shakeZ )
 				v.z += ( rand() % (randrange*2) ) - randrange;
 
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }
@@ -468,12 +468,12 @@
 @synthesize amplitude;
 @synthesize amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithWaves:wav amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -489,14 +489,14 @@
 {
 	int i, j;
 
-	for( i = 1; i < gridSize_.x; i++ )
+	for( i = 1; i < gridSize_.width; i++ )
 	{
-		for( j = 1; j < gridSize_.y; j++ )
+		for( j = 1; j < gridSize_.height; j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
 			v.y = (v.y + (sinf(time*(CGFloat)M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }
@@ -519,12 +519,12 @@
 @synthesize amplitude;
 @synthesize amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithWaves:wav amplitude:amp horizontal:h vertical:v grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -542,11 +542,11 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.x+1); i++ )
+	for( i = 0; i < (gridSize_.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.y+1); j++ )
+		for( j = 0; j < (gridSize_.height+1); j++ )
 		{
-			ccVertex3F	v = [self originalVertex:ccg(i,j)];
+			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 
 			if ( vertical )
 				v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.y * .01f) * amplitude * amplitudeRate));
@@ -554,7 +554,7 @@
 			if ( horizontal )
 				v.y = (v.y + (sinf(time*(CGFloat)M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
 
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }
@@ -577,12 +577,12 @@
 @synthesize amplitude = amplitude_;
 @synthesize amplitudeRate = amplitudeRate_;
 
-+(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d
++(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d
 {
 	return [[[self alloc] initWithPosition:pos twirls:t amplitude:amp grid:gridSize duration:d] autorelease];
 }
 
--(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(ccGridSize)gSize duration:(ccTime)d
+-(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithSize:gSize duration:d]) )
 	{
@@ -610,13 +610,13 @@
 	int i, j;
 	CGPoint	c = position_;
 
-	for( i = 0; i < (gridSize_.x+1); i++ )
+	for( i = 0; i < (gridSize_.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.y+1); j++ )
+		for( j = 0; j < (gridSize_.height+1); j++ )
 		{
-			ccVertex3F v = [self originalVertex:ccg(i,j)];
+			ccVertex3F v = [self originalVertex:ccp(i,j)];
 
-			CGPoint	avg = ccp(i-(gridSize_.x/2.0f), j-(gridSize_.y/2.0f));
+			CGPoint	avg = ccp(i-(gridSize_.width/2.0f), j-(gridSize_.height/2.0f));
 			CGFloat r = ccpLength( avg );
 
 			CGFloat amp = 0.1f * amplitude_ * amplitudeRate_;
@@ -633,7 +633,7 @@
 			v.x = c.x + d.x;
 			v.y = c.y + d.y;
 
-			[self setVertex:ccg(i,j) vertex:v];
+			[self setVertex:ccp(i,j) vertex:v];
 		}
 	}
 }

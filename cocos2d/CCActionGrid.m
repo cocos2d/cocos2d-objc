@@ -34,12 +34,12 @@
 
 @synthesize gridSize = gridSize_;
 
-+(id) actionWithSize:(ccGridSize)size duration:(ccTime)d
++(id) actionWithSize:(CGSize)size duration:(ccTime)d
 {
 	return [[[self alloc] initWithSize:size duration:d ] autorelease];
 }
 
--(id) initWithSize:(ccGridSize)gSize duration:(ccTime)d
+-(id) initWithSize:(CGSize)gSize duration:(ccTime)d
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
@@ -60,7 +60,7 @@
 
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
 	{
-		if ( targetGrid.active && targetGrid.gridSize.x == gridSize_.x && targetGrid.gridSize.y == gridSize_.y && [targetGrid isKindOfClass:[newgrid class]] )
+		if ( targetGrid.active && targetGrid.gridSize.width == gridSize_.width && targetGrid.gridSize.height == gridSize_.height && [targetGrid isKindOfClass:[newgrid class]] )
 			[targetGrid reuse];
 		else
 			[NSException raise:@"GridBase" format:@"Cannot reuse grid"];
@@ -105,19 +105,19 @@
 	return [CCGrid3D gridWithSize:gridSize_];
 }
 
--(ccVertex3F)vertex:(ccGridSize)pos
+-(ccVertex3F)vertex:(CGPoint)pos
 {
 	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	return [g vertex:pos];
 }
 
--(ccVertex3F)originalVertex:(ccGridSize)pos
+-(ccVertex3F)originalVertex:(CGPoint)pos
 {
 	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	return [g originalVertex:pos];
 }
 
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
+-(void)setVertex:(CGPoint)pos vertex:(ccVertex3F)vertex
 {
 	CCGrid3D *g = (CCGrid3D *)[target_ grid];
 	[g setVertex:pos vertex:vertex];
@@ -136,19 +136,19 @@
 	return [CCTiledGrid3D gridWithSize:gridSize_];
 }
 
--(ccQuad3)tile:(ccGridSize)pos
+-(ccQuad3)tile:(CGPoint)pos
 {
 	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	return [g tile:pos];
 }
 
--(ccQuad3)originalTile:(ccGridSize)pos
+-(ccQuad3)originalTile:(CGPoint)pos
 {
 	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	return [g originalTile:pos];
 }
 
--(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
+-(void)setTile:(CGPoint)pos coords:(ccQuad3)coords
 {
 	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
 	[g setTile:pos coords:coords];

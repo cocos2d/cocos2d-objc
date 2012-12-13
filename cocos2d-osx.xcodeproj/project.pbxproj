@@ -18330,10 +18330,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
@@ -18351,8 +18347,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18372,10 +18366,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -18390,8 +18380,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18411,10 +18399,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
@@ -18432,8 +18416,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18453,10 +18435,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -18471,8 +18449,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18541,8 +18517,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18576,8 +18550,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18597,10 +18569,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
@@ -18618,8 +18586,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);
@@ -18639,10 +18605,6 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/external/ThoMoNetworking\"",
-				);
 				GCC_ENABLE_OBJC_GC = unsupported;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -18657,8 +18619,6 @@
 					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
 					external/spidermonkey/osx/include,
-					external/Fragaria,
-					external/ThoMoNetworking,
 					CocosDenshion/CocosDenshion,
 					CocosDenshion/CocosDenshionExtras,
 				);

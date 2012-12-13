@@ -280,7 +280,7 @@ Class restartAction()
 	// over all your tiles in every frame. It's very expensive
 	//	for(int x=0; x < tilemap.tgaInfo->width; x++) {
 	//		for(int y=0; y < tilemap.tgaInfo->height; y++) {
-	//			ccColor3B c =[tilemap tileAt:ccg(x,y)];
+	//			ccColor3B c =[tilemap tileAt:CGSizeMake(x,y)];
 	//			if( c.r != 0 ) {
 	//				NSLog(@"%d,%d = %d", x,y,c.r);
 	//			}
@@ -288,14 +288,14 @@ Class restartAction()
 	//	}
 
 	// NEW since v0.7
-	ccColor3B c =[tilemap tileAt:ccg(13,21)];
+	ccColor3B c =[tilemap tileAt:ccp(13,21)];
 	c.r++;
 	c.r %= 50;
 	if( c.r==0)
 		c.r=1;
 
 	// NEW since v0.7
-	[tilemap setTile:c at:ccg(13,21)];
+	[tilemap setTile:c at:ccp(13,21)];
 
 }
 

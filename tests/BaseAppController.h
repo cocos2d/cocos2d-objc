@@ -33,9 +33,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class SMLTextView;
-@class MGSFragaria;
-
 @interface BaseAppController : NSObject <NSApplicationDelegate>
 {
 	NSWindow		*window_;

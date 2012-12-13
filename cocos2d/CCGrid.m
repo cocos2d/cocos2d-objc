@@ -58,17 +58,17 @@
 @synthesize step = step_;
 @synthesize shaderProgram = shaderProgram_;
 
-+(id) gridWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
++(id) gridWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
 	return [[[self alloc] initWithSize:gridSize texture:texture flippedTexture:flipped] autorelease];
 }
 
-+(id) gridWithSize:(ccGridSize)gridSize
++(id) gridWithSize:(CGSize)gridSize
 {
 	return [[(CCGridBase*)[self alloc] initWithSize:gridSize] autorelease];
 }
 
--(id) initWithSize:(ccGridSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
+-(id) initWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
 	if( (self=[super init]) ) {
 
@@ -80,8 +80,8 @@
 		isTextureFlipped_ = flipped;
 
 		CGSize texSize = [texture_ contentSize];
-		step_.x = texSize.width / gridSize_.x;
-		step_.y = texSize.height / gridSize_.y;
+		step_.x = texSize.width / gridSize_.width;
+		step_.y = texSize.height / gridSize_.height;
 
 		grabber_ = [[CCGrabber alloc] init];
 		[grabber_ grab:texture_];
@@ -93,7 +93,7 @@
 	return self;
 }
 
--(id)initWithSize:(ccGridSize)gSize
+-(id)initWithSize:(CGSize)gSize
 {
 	CCDirector *director = [CCDirector sharedDirector];
 	CGSize s = [director winSizeInPixels];
@@ -137,7 +137,7 @@
 }
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %ldx%ld>", [self class], self, (long)gridSize_.x, (long)gridSize_.y];
+	return [NSString stringWithFormat:@"<%@ = %p | Dimensions = %ldx%ld>", [self class], self, (long)gridSize_.width, (long)gridSize_.height];
 }
 
 - (void) dealloc
@@ -276,7 +276,7 @@
 
 -(void)blit
 {
-	NSInteger n = gridSize_.x * gridSize_.y;
+	NSInteger n = gridSize_.width * gridSize_.height;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 	[shaderProgram_ use];
@@ -310,32 +310,32 @@
 	if (texCoordinates) free(texCoordinates);
 	if (indices) free(indices);
 	
-	NSUInteger numOfPoints = (gridSize_.x+1) * (gridSize_.y+1);
+	NSUInteger numOfPoints = (gridSize_.width+1) * (gridSize_.height+1);
 	
 	vertices = malloc(numOfPoints * sizeof(ccVertex3F));
 	originalVertices = malloc(numOfPoints * sizeof(ccVertex3F));
 	texCoordinates = malloc(numOfPoints * sizeof(ccVertex2F));
-	indices = malloc( (gridSize_.x * gridSize_.y) * sizeof(GLushort)*6);
+	indices = malloc( (gridSize_.width * gridSize_.height) * sizeof(GLushort)*6);
 
 	GLfloat *vertArray = (GLfloat*)vertices;
 	GLfloat *texArray = (GLfloat*)texCoordinates;
 	GLushort *idxArray = (GLushort *)indices;
 
-	for( x = 0; x < gridSize_.x; x++ )
+	for( x = 0; x < gridSize_.width; x++ )
 	{
-		for( y = 0; y < gridSize_.y; y++ )
+		for( y = 0; y < gridSize_.height; y++ )
 		{
-			NSInteger idx = (y * gridSize_.x) + x;
+			NSInteger idx = (y * gridSize_.width) + x;
 
 			GLfloat x1 = x * step_.x;
 			GLfloat x2 = x1 + step_.x;
 			GLfloat y1 = y * step_.y;
 			GLfloat y2 = y1 + step_.y;
 
-			GLushort a = x * (gridSize_.y+1) + y;
-			GLushort b = (x+1) * (gridSize_.y+1) + y;
-			GLushort c = (x+1) * (gridSize_.y+1) + (y+1);
-			GLushort d = x * (gridSize_.y+1) + (y+1);
+			GLushort a = x * (gridSize_.height+1) + y;
+			GLushort b = (x+1) * (gridSize_.height+1) + y;
+			GLushort c = (x+1) * (gridSize_.height+1) + (y+1);
+			GLushort d = x * (gridSize_.height+1) + (y+1);
 
 			GLushort	tempidx[6] = { a, b, d, b, c, d };
 
@@ -367,12 +367,14 @@
 		}
 	}
 
-	memcpy(originalVertices, vertices, (gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
+	memcpy(originalVertices, vertices, (gridSize_.width+1)*(gridSize_.height+1)*sizeof(ccVertex3F));
 }
 
--(ccVertex3F)vertex:(ccGridSize)pos
+-(ccVertex3F)vertex:(CGPoint)pos
 {
-	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+
+	NSInteger index = (pos.x * (gridSize_.height+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -380,9 +382,11 @@
 	return vert;
 }
 
--(ccVertex3F)originalVertex:(ccGridSize)pos
+-(ccVertex3F)originalVertex:(CGPoint)pos
 {
-	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+
+	NSInteger index = (pos.x * (gridSize_.height+1) + pos.y) * 3;
 	float *vertArray = (float *)originalVertices;
 
 	ccVertex3F	vert = { vertArray[index], vertArray[index+1], vertArray[index+2] };
@@ -390,9 +394,11 @@
 	return vert;
 }
 
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex
+-(void)setVertex:(CGPoint)pos vertex:(ccVertex3F)vertex
 {
-	NSInteger index = (pos.x * (gridSize_.y+1) + pos.y) * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+
+	NSInteger index = (pos.x * (gridSize_.height+1) + pos.y) * 3;
 	float *vertArray = (float *)vertices;
 	vertArray[index] = vertex.x;
 	vertArray[index+1] = vertex.y;
@@ -403,7 +409,7 @@
 {
 	if ( reuseGrid_ > 0 )
 	{
-		memcpy(originalVertices, vertices, (gridSize_.x+1)*(gridSize_.y+1)*sizeof(ccVertex3F));
+		memcpy(originalVertices, vertices, (gridSize_.width+1)*(gridSize_.height+1)*sizeof(ccVertex3F));
 		reuseGrid_--;
 	}
 }
@@ -428,7 +434,7 @@
 
 -(void)blit
 {
-	NSInteger n = gridSize_.x * gridSize_.y;
+	NSInteger n = gridSize_.width * gridSize_.height;
 
 	[shaderProgram_ use];
 	[shaderProgram_ setUniformsForBuiltins];
@@ -456,7 +462,7 @@
 	float height = (float)texture_.pixelsHigh;
 	float imageH = texture_.contentSizeInPixels.height;
 
-	NSInteger numQuads = gridSize_.x * gridSize_.y;
+	NSInteger numQuads = gridSize_.width * gridSize_.height;
 
 	if (vertices) free(vertices);
 	if (originalVertices) free(originalVertices);
@@ -474,9 +480,9 @@
 
 	int x, y;
 
-	for( x = 0; x < gridSize_.x; x++ )
+	for( x = 0; x < gridSize_.width; x++ )
 	{
-		for( y = 0; y < gridSize_.y; y++ )
+		for( y = 0; y < gridSize_.height; y++ )
 		{
 			float x1 = x * step_.x;
 			float x2 = x1 + step_.x;
@@ -529,16 +535,20 @@
 	memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 }
 
--(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords
+-(void)setTile:(CGPoint)pos coords:(ccQuad3)coords
 {
-	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+	
+	NSInteger idx = (gridSize_.height * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 	memcpy(&vertArray[idx], &coords, sizeof(ccQuad3));
 }
 
--(ccQuad3)originalTile:(ccGridSize)pos
+-(ccQuad3)originalTile:(CGPoint)pos
 {
-	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+
+	NSInteger idx = (gridSize_.height * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)originalVertices;
 
 	ccQuad3 ret;
@@ -547,9 +557,11 @@
 	return ret;
 }
 
--(ccQuad3)tile:(ccGridSize)pos
+-(ccQuad3)tile:(CGPoint)pos
 {
-	NSInteger idx = (gridSize_.y * pos.x + pos.y) * 4 * 3;
+	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
+
+	NSInteger idx = (gridSize_.height * pos.x + pos.y) * 4 * 3;
 	float *vertArray = (float*)vertices;
 
 	ccQuad3 ret;
@@ -562,7 +574,7 @@
 {
 	if ( reuseGrid_ > 0 )
 	{
-		NSInteger numQuads = gridSize_.x * gridSize_.y;
+		NSInteger numQuads = gridSize_.width * gridSize_.height;
 
 		memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
 		reuseGrid_--;

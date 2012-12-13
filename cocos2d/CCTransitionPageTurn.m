@@ -72,7 +72,7 @@
 		y = 16;
 	}
 
-	id action  = [self actionWithSize:ccg(x,y)];
+	id action  = [self actionWithSize:CGSizeMake(x,y)];
 
 	if(! back_ )
 	{
@@ -98,7 +98,7 @@
 
 }
 
--(CCActionInterval*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (CGSize) v
 {
 	if( back_ )
 	{

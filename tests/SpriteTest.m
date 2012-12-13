@@ -9,7 +9,6 @@
 
 // local import
 #import "SpriteTest.h"
-#import "SimpleSprite.h"
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {

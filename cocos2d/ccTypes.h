@@ -198,21 +198,6 @@ typedef struct _ccQuad3 {
 	ccVertex3F		tr;
 } ccQuad3;
 
-//! A 2D grid size
-typedef struct _ccGridSize
-{
-	NSInteger	x;
-	NSInteger	y;
-} ccGridSize;
-
-//! helper function to create a ccGridSize
-static inline ccGridSize
-ccg(const NSInteger x, const NSInteger y)
-{
-	ccGridSize v = {x, y};
-	return v;
-}
-
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F
 {

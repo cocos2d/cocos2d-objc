@@ -28,11 +28,12 @@
 #import "CCTileMapAtlas.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
+#import "Support/CGPointExtension.h"
 
 @interface CCTileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
 -(void) calculateItemsToRender;
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx;
+-(void) updateAtlasValueAt:(CGPoint)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx;
 @end
 
 
@@ -123,7 +124,7 @@
 
 #pragma mark CCTileMapAtlas - Atlas generation / updates
 
--(void) setTile:(ccColor3B) tile at:(ccGridSize) pos
+-(void) setTile:(ccColor3B) tile at:(CGPoint) pos
 {
 	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
 	NSAssert( posToAtlasIndex != nil, @"posToAtlasIndex must not be nil");
@@ -132,11 +133,11 @@
 	NSAssert( tile.r != 0, @"R component must be non 0");
 
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
+	ccColor3B value = ptr[(NSUInteger)(pos.x + pos.y * tgaInfo->width)];
 	if( value.r == 0 )
 		CCLOG(@"cocos2d: Value.r must be non 0.");
 	else {
-		ptr[pos.x + pos.y * tgaInfo->width] = tile;
+		ptr[(NSUInteger)(pos.x + pos.y * tgaInfo->width)] = tile;
 
 		// XXX: this method consumes a lot of memory
 		// XXX: a tree of something like that shall be impolemented
@@ -145,19 +146,19 @@
 	}
 }
 
--(ccColor3B) tileAt:(ccGridSize) pos
+-(ccColor3B) tileAt:(CGPoint) pos
 {
 	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
 	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
 	NSAssert( pos.y < tgaInfo->height, @"Invalid position.y");
 
 	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
+	ccColor3B value = ptr[(NSUInteger)(pos.x + pos.y * tgaInfo->width)];
 
 	return value;
 }
 
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
+-(void) updateAtlasValueAt:(CGPoint)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
 {
 	ccV3F_C4B_T2F_Quad quad;
 
@@ -230,7 +231,7 @@
 				ccColor3B value = ptr[x + y * tgaInfo->width];
 
 				if( value.r != 0 ) {
-					[self updateAtlasValueAt:ccg(x,y) withValue:value withIndex:total];
+					[self updateAtlasValueAt:ccp(x,y) withValue:value withIndex:total];
 
 					NSString *key = [NSString stringWithFormat:@"%d,%d", x,y];
 					NSNumber *num = [NSNumber numberWithInt:total];
