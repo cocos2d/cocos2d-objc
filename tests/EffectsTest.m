@@ -93,13 +93,13 @@ enum {
 @implementation Shaky3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:NO grid:ccg(15,10) duration:t];
+	return [self actionWithRange:5 shakeZ:NO grid:CGSizeMake(15,10) duration:t];
 }
 @end
 @implementation Waves3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:5 amplitude:40 grid:ccg(15,10) duration:t];
+	return [self actionWithWaves:5 amplitude:40 grid:CGSizeMake(15,10) duration:t];
 }
 @end
 @implementation FlipX3DDemo
@@ -126,51 +126,51 @@ enum {
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:t];
+	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:CGSizeMake(15,10) duration:t];
 }
 @end
 @implementation Ripple3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 waves:4 amplitude:160 grid:ccg(32,24) duration:t];
+	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 waves:4 amplitude:160 grid:CGSizeMake(32,24) duration:t];
 }
 @end
 @implementation LiquidDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 grid:ccg(16,12) duration:t];
+	return [self actionWithWaves:4 amplitude:20 grid:CGSizeMake(16,12) duration:t];
 }
 @end
 @implementation WavesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:ccg(16,12) duration:t];
+	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:CGSizeMake(16,12) duration:t];
 }
 @end
 @implementation TwirlDemo
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2, size.height/2) twirls:1 amplitude:2.5f grid:ccg(12,8) duration:t];
+	return [self actionWithPosition:ccp(size.width/2, size.height/2) twirls:1 amplitude:2.5f grid:CGSizeMake(12,8) duration:t];
 }
 @end
 @implementation ShakyTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:NO grid:ccg(16,12) duration:t];
+	return [self actionWithRange:5 shakeZ:NO grid:CGSizeMake(16,12) duration:t];
 }
 @end
 @implementation ShatteredTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shatterZ:NO grid:ccg(16,12) duration:t];
+	return [self actionWithRange:5 shatterZ:NO grid:CGSizeMake(16,12) duration:t];
 }
 @end
 @implementation ShuffleTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id shuffle = [CCShuffleTiles actionWithSeed:25 grid:ccg(16,12) duration:t];
+	id shuffle = [CCShuffleTiles actionWithSeed:25 grid:CGSizeMake(16,12) duration:t];
 	id shuffle_back = [shuffle reverse];
 	id delay = [CCDelayTime actionWithDuration:2];
 
@@ -180,7 +180,7 @@ enum {
 @implementation FadeOutTRTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutTRTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutTRTiles actionWithSize:CGSizeMake(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -190,7 +190,7 @@ enum {
 @implementation FadeOutBLTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutBLTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutBLTiles actionWithSize:CGSizeMake(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -200,7 +200,7 @@ enum {
 @implementation FadeOutUpTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutUpTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutUpTiles actionWithSize:CGSizeMake(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -210,7 +210,7 @@ enum {
 @implementation FadeOutDownTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutDownTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutDownTiles actionWithSize:CGSizeMake(16,12) duration:t];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -220,7 +220,7 @@ enum {
 @implementation TurnOffTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id action = [CCTurnOffTiles actionWithSeed:25 grid:ccg(48,32) duration:t];
+	id action = [CCTurnOffTiles actionWithSeed:25 grid:CGSizeMake(48,32) duration:t];
 	id back = [action reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -230,13 +230,13 @@ enum {
 @implementation WavesTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:120 grid:ccg(15,10) duration:t];
+	return [self actionWithWaves:4 amplitude:120 grid:CGSizeMake(15,10) duration:t];
 }
 @end
 @implementation JumpTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithJumps:2 amplitude:30 grid:ccg(15,10) duration:t];
+	return [self actionWithJumps:2 amplitude:30 grid:CGSizeMake(15,10) duration:t];
 }
 @end
 @implementation SplitRowsDemo
@@ -255,7 +255,7 @@ enum {
 @implementation PageTurn3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(15,10) duration:t];
+	return [self actionWithSize:CGSizeMake(15,10) duration:t];
 }
 @end
 

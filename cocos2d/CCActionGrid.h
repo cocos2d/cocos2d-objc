@@ -33,16 +33,16 @@
 /** Base class for Grid actions */
 @interface CCGridAction : CCActionInterval
 {
-	ccGridSize gridSize_;
+	CGSize gridSize_;
 }
 
 /** size of the grid */
-@property (nonatomic,readwrite) ccGridSize gridSize;
+@property (nonatomic,readwrite) CGSize gridSize;
 
 /** creates the action with size and duration */
-+(id) actionWithSize:(ccGridSize)size duration:(ccTime)d;
++(id) actionWithSize:(CGSize)size duration:(ccTime)d;
 /** initializes the action with size and duration */
--(id) initWithSize:(ccGridSize)gridSize duration:(ccTime)d;
+-(id) initWithSize:(CGSize)gridSize duration:(ccTime)d;
 /** returns the grid */
 -(CCGridBase *)grid;
 
@@ -58,11 +58,11 @@
 }
 
 /** returns the vertex than belongs to certain position in the grid */
--(ccVertex3F)vertex:(ccGridSize)pos;
+-(ccVertex3F)vertex:(CGPoint)position;
 /** returns the non-transformed vertex than belongs to certain position in the grid */
--(ccVertex3F)originalVertex:(ccGridSize)pos;
+-(ccVertex3F)originalVertex:(CGPoint)position;
 /** sets a new vertex to a certain position of the grid */
--(void)setVertex:(ccGridSize)pos vertex:(ccVertex3F)vertex;
+-(void)setVertex:(CGPoint)position vertex:(ccVertex3F)vertex;
 
 @end
 
@@ -74,11 +74,11 @@
 }
 
 /** returns the tile that belongs to a certain position of the grid */
--(ccQuad3)tile:(ccGridSize)pos;
+-(ccQuad3)tile:(CGPoint)position;
 /** returns the non-transformed tile that belongs to a certain position of the grid */
--(ccQuad3)originalTile:(ccGridSize)pos;
+-(ccQuad3)originalTile:(CGPoint)position;
 /** sets a new tile to a certain position of the grid */
--(void)setTile:(ccGridSize)pos coords:(ccQuad3)coords;
+-(void)setTile:(CGPoint)position coords:(ccQuad3)coords;
 
 @end
 

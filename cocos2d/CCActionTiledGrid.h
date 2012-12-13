@@ -33,9 +33,9 @@
 }
 
 /** creates the action with a range, whether or not to shake Z vertices, a grid size, and duration */
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with a range, whether or not to shake Z vertices, a grid size, and duration */
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -50,9 +50,9 @@
 }
 
 /** creates the action with a range, whether of not to shatter Z vertices, a grid size and duration */
-+(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with a range, whether or not to shatter Z vertices, a grid size and duration */
--(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -70,9 +70,9 @@
 }
 
 /** creates the action with a random seed, the grid size and the duration */
-+(id)actionWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with a random seed, the grid size and the duration */
--(id)initWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -129,9 +129,9 @@
 }
 
 /** creates the action with a random seed, the grid size and the duration */
-+(id)actionWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with a random seed, the grid size and the duration */
--(id)initWithSeed:(int)s grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -150,9 +150,9 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with a number of waves, the waves amplitude, the grid size and the duration */
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with a number of waves, the waves amplitude, the grid size and the duration */
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
 
 @end
 
@@ -174,9 +174,9 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with the number of jumps, the sin amplitude, the grid size and the duration */
-+(id)actionWithJumps:(int)j amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
++(id)actionWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
 /** initializes the action with the number of jumps, the sin amplitude, the grid size and the duration */
--(id)initWithJumps:(int)j amplitude:(float)amp grid:(ccGridSize)gridSize duration:(ccTime)d;
+-(id)initWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
 
 @end
 

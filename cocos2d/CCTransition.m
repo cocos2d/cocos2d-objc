@@ -964,7 +964,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	int x = 12 * aspect;
 	int y = 12;
 
-	id toff = [CCTurnOffTiles actionWithSize: ccg(x,y) duration:duration_];
+	id toff = [CCTurnOffTiles actionWithSize: CGSizeMake(x,y) duration:duration_];
 	id action = [self easeActionWithAction:toff];
 	[outScene_ runAction: [CCSequence actions: action,
 				   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
@@ -1050,7 +1050,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	int x = 12 * aspect;
 	int y = 12;
 
-	id action  = [self actionWithSize:ccg(x,y)];
+	id action  = [self actionWithSize:CGSizeMake(x,y)];
 
 	[outScene_ runAction: [CCSequence actions:
 					[self easeActionWithAction:action],
@@ -1060,7 +1060,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	 ];
 }
 
--(CCActionInterval*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (CGSize) v
 {
 	return [CCFadeOutTRTiles actionWithSize:v duration:duration_];
 }
@@ -1076,7 +1076,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FadeBL Transition
 //
 @implementation CCTransitionFadeBL
--(CCActionInterval*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (CGSize) v
 {
 	return [CCFadeOutBLTiles actionWithSize:v duration:duration_];
 }
@@ -1086,7 +1086,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FadeUp Transition
 //
 @implementation CCTransitionFadeUp
--(CCActionInterval*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (CGSize) v
 {
 	return [CCFadeOutUpTiles actionWithSize:v duration:duration_];
 }
@@ -1096,7 +1096,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 // FadeDown Transition
 //
 @implementation CCTransitionFadeDown
--(CCActionInterval*) actionWithSize: (ccGridSize) v
+-(CCActionInterval*) actionWithSize: (CGSize) v
 {
 	return [CCFadeOutDownTiles actionWithSize:v duration:duration_];
 }

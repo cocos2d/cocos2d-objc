@@ -313,7 +313,7 @@ typedef enum {
  */
 @interface CCTransitionFadeTR : CCTransitionScene <CCTransitionEaseScene>
 {}
--(CCActionInterval*) actionWithSize:(ccGridSize) vector;
+-(CCActionInterval*) actionWithSize:(CGSize) vector;
 @end
 
 /** CCTransitionFadeBL:
@@ -321,7 +321,7 @@ typedef enum {
  */
 @interface CCTransitionFadeBL : CCTransitionFadeTR
 {}
--(CCActionInterval*) actionWithSize:(ccGridSize) vector;
+-(CCActionInterval*) actionWithSize:(CGSize) vector;
 @end
 
 /** CCTransitionFadeUp:
@@ -329,7 +329,7 @@ typedef enum {
  */
 @interface CCTransitionFadeUp : CCTransitionFadeTR
 {}
--(CCActionInterval*) actionWithSize: (ccGridSize) v;
+-(CCActionInterval*) actionWithSize: (CGSize) v;
 @end
 
 /** CCTransitionFadeDown:
@@ -337,5 +337,5 @@ typedef enum {
  */
 @interface CCTransitionFadeDown : CCTransitionFadeTR
 {}
--(CCActionInterval*) actionWithSize: (ccGridSize) v;
+-(CCActionInterval*) actionWithSize: (CGSize) v;
 @end
