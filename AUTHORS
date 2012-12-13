@@ -38,6 +38,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
+	RenderTexture: restores the projection after using it. Created test for it too.
 
 * Greg Harding (http://www.flightless.co.nz/):
 	Toggle fullscreen honors the support for touches on Mac
