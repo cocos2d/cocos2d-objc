@@ -242,39 +242,49 @@
 	}
 }
 
--(void) setProjection:(ccDirectorProjection)projection
-{
-	CGSize size = winSizeInPixels_;
-
+-(void) setViewport {
+    CGSize size = winSizeInPixels_;
+    
 	CGPoint offset = CGPointZero;
 	float widthAspect = size.width;
 	float heightAspect = size.height;
-
-
+    
+    
 	if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
-
+        
 		size = originalWinSize_;
-
+        
 		float aspect = originalWinSize_.width / originalWinSize_.height;
 		widthAspect = winSizeInPixels_.width;
 		heightAspect = winSizeInPixels_.width / aspect;
-
+        
 		if( heightAspect > winSizeInPixels_.height ) {
 			widthAspect = winSizeInPixels_.height * aspect;
 			heightAspect = winSizeInPixels_.height;
 		}
-
+        
 		winOffset_.x = (winSizeInPixels_.width - widthAspect) / 2;
 		winOffset_.y =  (winSizeInPixels_.height - heightAspect) / 2;
-
+        
 		offset = winOffset_;
-
+        
 	}
+    
+    glViewport(offset.x, offset.y, widthAspect, heightAspect);
+}
+
+-(void) setProjection:(ccDirectorProjection)projection
+{
+	CGSize size = winSizeInPixels_;
+    if( resizeMode_ == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(originalWinSize_, CGSizeZero ) ) {
+		size = originalWinSize_;
+    }
+    
+    [self setViewport];
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
 
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
@@ -292,7 +302,6 @@
 
 			float zeye = [self getZEye];
 
-			glViewport(offset.x, offset.y, widthAspect, heightAspect);
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
