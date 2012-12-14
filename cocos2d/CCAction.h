@@ -40,7 +40,7 @@ enum {
 @interface CCAction : NSObject <NSCopying>
 {
 	id			originalTarget_;
-	id			target_;
+	id			_target;
 	NSInteger	tag_;
 }
 
@@ -96,7 +96,7 @@ enum {
 @interface CCFiniteTimeAction : CCAction <NSCopying>
 {
 	//! duration in seconds
-	ccTime duration_;
+	ccTime _duration;
 }
 //! duration in seconds of the action
 @property (nonatomic,readwrite) ccTime duration;

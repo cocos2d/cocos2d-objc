@@ -265,14 +265,14 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[target_ setPosition:newPos];
+	[_target setPosition:newPos];
 }
 
 -(CCActionInterval*) reverse
 {
 	CCPointArray *reverse = [points_ reverse];
 
-	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
+	return [[self class] actionWithDuration:_duration points:reverse tension:tension_];
 }
 @end
 
@@ -289,7 +289,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[target_ setPosition:ccpAdd(newPos, startPosition_)];
+	[_target setPosition:ccpAdd(newPos, startPosition_)];
 }
 
 -(CCActionInterval*) reverse
@@ -332,7 +332,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 		p = abs;
 	}
 	
-	return [[self class] actionWithDuration:duration_ points:reverse tension:tension_];
+	return [[self class] actionWithDuration:_duration points:reverse tension:tension_];
 }
 @end
 

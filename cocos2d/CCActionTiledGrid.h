@@ -84,6 +84,8 @@
 @interface CCFadeOutTRTiles : CCTiledGrid3DAction
 {
 }
+// XXX: private, but added to make BridgeSupport happy
+-(float)testFunc:(CGSize)pos time:(ccTime)time;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -94,6 +96,8 @@
 @interface CCFadeOutBLTiles : CCFadeOutTRTiles
 {
 }
+// XXX: private, but added to make BridgeSupport happy
+-(float)testFunc:(CGSize)pos time:(ccTime)time;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -104,6 +108,8 @@
 @interface CCFadeOutUpTiles : CCFadeOutTRTiles
 {
 }
+// XXX: private, but added to make BridgeSupport happy
+-(float)testFunc:(CGSize)pos time:(ccTime)time;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -114,6 +120,8 @@
 @interface CCFadeOutDownTiles : CCFadeOutUpTiles
 {
 }
+// XXX: private, but added to make BridgeSupport happy
+-(float)testFunc:(CGSize)pos time:(ccTime)time;
 @end
 
 ////////////////////////////////////////////////////////////
@@ -139,9 +147,9 @@
 /** CCWavesTiles3D action. */
 @interface CCWavesTiles3D : CCTiledGrid3DAction
 {
-	NSUInteger waves;
-	float amplitude;
-	float amplitudeRate;
+	NSUInteger _waves;
+	float _amplitude;
+	float _amplitudeRate;
 }
 
 /** waves amplitude */

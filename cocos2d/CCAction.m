@@ -38,7 +38,7 @@
 #pragma mark Action
 @implementation CCAction
 
-@synthesize tag = tag_, target = target_, originalTarget = originalTarget_;
+@synthesize tag = tag_, target = _target, originalTarget = originalTarget_;
 
 +(id) action
 {
@@ -48,7 +48,7 @@
 -(id) init
 {
 	if( (self=[super init]) ) {
-		originalTarget_ = target_ = nil;
+		originalTarget_ = _target = nil;
 		tag_ = kCCActionTagInvalid;
 	}
 	return self;
@@ -74,12 +74,12 @@
 
 -(void) startWithTarget:(id)aTarget
 {
-	originalTarget_ = target_ = aTarget;
+	originalTarget_ = _target = aTarget;
 }
 
 -(void) stop
 {
-	target_ = nil;
+	_target = nil;
 }
 
 -(BOOL) isDone
@@ -104,7 +104,7 @@
 #pragma mark -
 #pragma mark FiniteTimeAction
 @implementation CCFiniteTimeAction
-@synthesize duration = duration_;
+@synthesize duration = _duration;
 
 - (CCFiniteTimeAction*) reverse
 {
@@ -149,7 +149,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:target_];
+	[innerAction_ startWithTarget:_target];
 }
 
 -(void) step:(ccTime) dt
@@ -157,7 +157,7 @@
 	[innerAction_ step: dt];
 	if( [innerAction_ isDone] ) {
 		ccTime diff = innerAction_.elapsed - innerAction_.duration;
-		[innerAction_ startWithTarget:target_];
+		[innerAction_ startWithTarget:_target];
 
 		// to prevent jerk. issue #390, 1247
 		[innerAction_ step: 0.0f];
@@ -215,7 +215,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:target_];
+	[innerAction_ startWithTarget:_target];
 }
 
 -(void) stop
@@ -328,10 +328,10 @@
 			return;
 
 		CGPoint tempPos = ccpSub( halfScreenSize, followedNode_.position);
-		[target_ setPosition:ccp(clampf(tempPos.x,leftBoundary,rightBoundary), clampf(tempPos.y,bottomBoundary,topBoundary))];
+		[_target setPosition:ccp(clampf(tempPos.x,leftBoundary,rightBoundary), clampf(tempPos.y,bottomBoundary,topBoundary))];
 	}
 	else
-		[target_ setPosition:ccpSub( halfScreenSize, followedNode_.position )];
+		[_target setPosition:ccpSub( halfScreenSize, followedNode_.position )];
 }
 
 
@@ -342,7 +342,7 @@
 
 -(void) stop
 {
-	target_ = nil;
+	_target = nil;
 	[super stop];
 }
 

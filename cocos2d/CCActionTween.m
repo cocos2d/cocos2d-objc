@@ -60,12 +60,12 @@
 
 - (void) update:(ccTime) dt
 {
-	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
+	[_target setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithDuration:duration_ key:key_ from:to_ to:from_];
+	return [[self class] actionWithDuration:_duration key:key_ from:to_ to:from_];
 }
 
 
