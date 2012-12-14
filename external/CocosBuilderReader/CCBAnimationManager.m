@@ -612,11 +612,11 @@
 {
     if (t < 0)
     {
-        [other update:0];
+        [_other update:0];
     }
     else
     {
-        [other update:1];
+        [_other update:1];
     }
 }
 @end

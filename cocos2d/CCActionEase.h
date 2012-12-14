@@ -30,7 +30,7 @@
  */
 @interface CCActionEase : CCActionInterval <NSCopying>
 {
-	CCActionInterval * other;
+	CCActionInterval *_other;
 }
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action;
@@ -42,7 +42,7 @@
  */
 @interface CCEaseRateAction :  CCActionEase <NSCopying>
 {
-	float	rate;
+	float	_rate;
 }
 /** rate value for the actions */
 @property (nonatomic,readwrite,assign) float rate;
@@ -129,7 +129,7 @@
  */
 @interface CCEaseElastic : CCActionEase <NSCopying>
 {
-	float period_;
+	float _period;
 }
 
 /** period of the wave in radians. default is 0.3 */
