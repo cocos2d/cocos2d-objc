@@ -273,7 +273,7 @@
 //
 #pragma mark - CCRepeat
 @implementation CCRepeat
-@synthesize innerAction=innerAction_;
+@synthesize innerAction=_innerAction;
 
 +(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
@@ -298,27 +298,27 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[innerAction_ copy] autorelease] times:times_];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_innerAction copy] autorelease] times:times_];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[innerAction_ release];
+	[_innerAction release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	total_ = 0;
-	nextDt_ = [innerAction_ duration]/_duration;
+	nextDt_ = [_innerAction duration]/_duration;
 	[super startWithTarget:aTarget];
-	[innerAction_ startWithTarget:aTarget];
+	[_innerAction startWithTarget:aTarget];
 }
 
 -(void) stop
 {
-    [innerAction_ stop];
+    [_innerAction stop];
 	[super stop];
 }
 
@@ -332,12 +332,12 @@
 		while (dt > nextDt_ && total_ < times_)
 		{
 
-			[innerAction_ update:1.0f];
+			[_innerAction update:1.0f];
 			total_++;
 
-			[innerAction_ stop];
-			[innerAction_ startWithTarget:_target];
-			nextDt_ += [innerAction_ duration]/_duration;
+			[_innerAction stop];
+			[_innerAction startWithTarget:_target];
+			nextDt_ += [_innerAction duration]/_duration;
 		}
 		
 		// fix for issue #1288, incorrect end value of repeat
@@ -351,19 +351,19 @@
 		{
 			if (total_ == times_)
 			{
-				[innerAction_ update:1];
-				[innerAction_ stop];
+				[_innerAction update:1];
+				[_innerAction stop];
 			}
 			else
 			{
 				// issue #390 prevent jerk, use right update
-				[innerAction_ update:dt - (nextDt_ - innerAction_.duration/_duration)];
+				[_innerAction update:dt - (nextDt_ - _innerAction.duration/_duration)];
 			}
 		}
 	}
 	else
 	{
-		[innerAction_ update:fmodf(dt * times_,1.0f)];
+		[_innerAction update:fmodf(dt * times_,1.0f)];
 	}
 }
 
@@ -374,7 +374,7 @@
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithAction:[innerAction_ reverse] times:times_];
+	return [[self class] actionWithAction:[_innerAction reverse] times:times_];
 }
 @end
 

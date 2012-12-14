@@ -78,7 +78,7 @@ enum
    Each layer is created using an CCTMXLayer (subclass of CCSpriteBatchNode). If you have 5 layers, then 5 CCTMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
    You can obtain the layers (CCTMXLayer objects) at runtime by:
-  - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
+  - [map getChildByTag: tax_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
   - [map layerNamed: name_of_the_layer];
 
    Each object group is created using a CCTMXObjectGroup which is a subclass of NSMutableArray.

@@ -251,7 +251,7 @@
 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | selector = %@>",
 			[self class],
 			self,
-			(long)tag_,
+			(long)_tag,
 			NSStringFromSelector(selector_)
 			];
 }
