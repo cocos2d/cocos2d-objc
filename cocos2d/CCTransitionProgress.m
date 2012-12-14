@@ -79,7 +79,7 @@ enum {
 
 	// create the blend action
 	CCActionInterval * layerAction = [CCSequence actions:
-									  [CCProgressFromTo actionWithDuration:duration_ from:from_ to:to_],
+									  [CCProgressFromTo actionWithDuration:_duration from:from_ to:to_],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 									  nil ];
 	// run the blend action

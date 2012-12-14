@@ -40,7 +40,7 @@
 -(id) init
 {
 	if( (self=[super init]) )
-		duration_ = 0;
+		_duration = 0;
 
 	return self;
 }
@@ -80,7 +80,7 @@
 @implementation CCShow
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = YES;
+	((CCNode *)_target).visible = YES;
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -97,7 +97,7 @@
 @implementation CCHide
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = NO;
+	((CCNode *)_target).visible = NO;
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -114,7 +114,7 @@
 @implementation CCToggleVisibility
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = !((CCNode *)target_).visible;
+	((CCNode *)_target).visible = !((CCNode *)_target).visible;
 }
 @end
 
@@ -139,7 +139,7 @@
 
 -(void) update:(ccTime)time
 {
-	[(CCSprite*)target_ setFlipX:flipX];
+	[(CCSprite*)_target setFlipX:flipX];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -175,7 +175,7 @@
 
 -(void) update:(ccTime)time
 {
-	[(CCSprite*)target_ setFlipY:flipY];
+	[(CCSprite*)_target setFlipY:flipY];
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -218,7 +218,7 @@
 
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).position = position;
+	((CCNode *)_target).position = position;
 }
 
 @end
@@ -288,7 +288,7 @@
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_ withObject:target_];
+	[targetCallback_ performSelector:selector_ withObject:_target];
 }
 @end
 
@@ -334,7 +334,7 @@
 
 -(void) execute
 {
-	callbackMethod_(targetCallback_,selector_,target_, data_);
+	callbackMethod_(targetCallback_,selector_,_target, data_);
 }
 @end
 
@@ -449,7 +449,7 @@
 
 -(void) execute
 {
-	block_(target_);
+	block_(_target);
 }
 
 -(void) dealloc

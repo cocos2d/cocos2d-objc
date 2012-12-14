@@ -32,7 +32,7 @@
 
 @implementation CCGridAction
 
-@synthesize gridSize = gridSize_;
+@synthesize gridSize = _gridSize;
 
 +(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize;
 {
@@ -43,7 +43,7 @@
 {
 	if ( (self = [super initWithDuration:duration]) )
 	{
-		gridSize_ = gridSize;
+		_gridSize = gridSize;
 	}
 
 	return self;
@@ -60,7 +60,7 @@
 
 	if ( targetGrid && targetGrid.reuseGrid > 0 )
 	{
-		if ( targetGrid.active && targetGrid.gridSize.width == gridSize_.width && targetGrid.gridSize.height == gridSize_.height && [targetGrid isKindOfClass:[newgrid class]] )
+		if ( targetGrid.active && targetGrid.gridSize.width == _gridSize.width && targetGrid.gridSize.height == _gridSize.height && [targetGrid isKindOfClass:[newgrid class]] )
 			[targetGrid reuse];
 		else
 			[NSException raise:@"GridBase" format:@"Cannot reuse grid"];
@@ -88,7 +88,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize];
 	return copy;
 }
 @end
@@ -102,24 +102,24 @@
 
 -(CCGridBase *)grid
 {
-	return [CCGrid3D gridWithSize:gridSize_];
+	return [CCGrid3D gridWithSize:_gridSize];
 }
 
 -(ccVertex3F)vertex:(CGPoint)pos
 {
-	CCGrid3D *g = (CCGrid3D *)[target_ grid];
+	CCGrid3D *g = (CCGrid3D *)[_target grid];
 	return [g vertex:pos];
 }
 
 -(ccVertex3F)originalVertex:(CGPoint)pos
 {
-	CCGrid3D *g = (CCGrid3D *)[target_ grid];
+	CCGrid3D *g = (CCGrid3D *)[_target grid];
 	return [g originalVertex:pos];
 }
 
 -(void)setVertex:(CGPoint)pos vertex:(ccVertex3F)vertex
 {
-	CCGrid3D *g = (CCGrid3D *)[target_ grid];
+	CCGrid3D *g = (CCGrid3D *)[_target grid];
 	[g setVertex:pos vertex:vertex];
 }
 @end
@@ -133,24 +133,24 @@
 
 -(CCGridBase *)grid
 {
-	return [CCTiledGrid3D gridWithSize:gridSize_];
+	return [CCTiledGrid3D gridWithSize:_gridSize];
 }
 
 -(ccQuad3)tile:(CGPoint)pos
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[_target grid];
 	return [g tile:pos];
 }
 
 -(ccQuad3)originalTile:(CGPoint)pos
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[_target grid];
 	return [g originalTile:pos];
 }
 
 -(void)setTile:(CGPoint)pos coords:(ccQuad3)coords
 {
-	CCTiledGrid3D *g = (CCTiledGrid3D *)[target_ grid];
+	CCTiledGrid3D *g = (CCTiledGrid3D *)[_target grid];
 	[g setTile:pos coords:coords];
 }
 
@@ -210,7 +210,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time
@@ -229,7 +229,7 @@
 
 - (CCActionInterval*) reverse
 {
-	return [CCAccelDeccelAmplitude actionWithAction:[other_ reverse] duration:duration_];
+	return [CCAccelDeccelAmplitude actionWithAction:[other_ reverse] duration:_duration];
 }
 
 @end
@@ -268,7 +268,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time
@@ -318,7 +318,7 @@
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:target_];
+	[other_ startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time

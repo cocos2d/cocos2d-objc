@@ -42,7 +42,7 @@
 {
 	BOOL		active_;
 	int			reuseGrid_;
-	CGSize	gridSize_;
+	CGSize	_gridSize;
 	CCTexture2D *texture_;
 	CGPoint		step_;
 	CCGrabber	*grabber_;

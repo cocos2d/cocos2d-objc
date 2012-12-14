@@ -55,7 +55,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ waves:waves amplitude:amplitude];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize waves:waves amplitude:amplitude];
 }
 
 
@@ -63,9 +63,9 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.width+1); i++ )
+	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.height+1); j++ )
+		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.z += (sinf((CGFloat)M_PI*time*waves*2 + (v.y+v.x) * .01f) * amplitude * amplitudeRate);
@@ -104,7 +104,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize_ duration:duration_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:_gridSize duration:_duration];
 	return copy;
 }
 
@@ -278,7 +278,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ position:position_ radius:radius_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ radius:radius_];
 	return copy;
 }
 
@@ -301,9 +301,9 @@
 	{
 		int i, j;
 
-		for( i = 0; i < gridSize_.width+1; i++ )
+		for( i = 0; i < _gridSize.width+1; i++ )
 		{
-			for( j = 0; j < gridSize_.height+1; j++ )
+			for( j = 0; j < _gridSize.height+1; j++ )
 			{
 				ccVertex3F	v = [self originalVertex:ccp(i,j)];
 				CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
@@ -377,16 +377,16 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ position:position_ radius:radius_ waves:waves_ amplitude:amplitude_];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ radius:radius_ waves:waves_ amplitude:amplitude_];
 }
 
 -(void)update:(ccTime)time
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.width+1); i++ )
+	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.height+1); j++ )
+		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
@@ -431,16 +431,16 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ range:_randrange shakeZ:_shakeZ];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize range:_randrange shakeZ:_shakeZ];
 }
 
 -(void)update:(ccTime)time
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.width+1); i++ )
+	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.height+1); j++ )
+		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.x += ( rand() % (_randrange*2) ) - _randrange;
@@ -486,9 +486,9 @@
 {
 	int i, j;
 
-	for( i = 1; i < gridSize_.width; i++ )
+	for( i = 1; i < _gridSize.width; i++ )
 	{
-		for( j = 1; j < gridSize_.height; j++ )
+		for( j = 1; j < _gridSize.height; j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 			v.x = (v.x + (sinf(time*(CGFloat)M_PI*waves*2 + v.x * .01f) * amplitude * amplitudeRate));
@@ -500,7 +500,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ waves:waves amplitude:amplitude];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize waves:waves amplitude:amplitude];
 }
 
 @end
@@ -538,9 +538,9 @@
 {
 	int i, j;
 
-	for( i = 0; i < (gridSize_.width+1); i++ )
+	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.height+1); j++ )
+		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
 
@@ -557,7 +557,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ waves:waves amplitude:amplitude horizontal:horizontal vertical:vertical];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize waves:waves amplitude:amplitude horizontal:horizontal vertical:vertical];
 }
 
 @end
@@ -605,13 +605,13 @@
 	int i, j;
 	CGPoint	c = position_;
 
-	for( i = 0; i < (gridSize_.width+1); i++ )
+	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
-		for( j = 0; j < (gridSize_.height+1); j++ )
+		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F v = [self originalVertex:ccp(i,j)];
 
-			CGPoint	avg = ccp(i-(gridSize_.width/2.0f), j-(gridSize_.height/2.0f));
+			CGPoint	avg = ccp(i-(_gridSize.width/2.0f), j-(_gridSize.height/2.0f));
 			CGFloat r = ccpLength( avg );
 
 			CGFloat amp = 0.1f * amplitude_ * amplitudeRate_;
@@ -635,7 +635,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_ position:position_ twirls:twirls_ amplitude:amplitude_];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ twirls:twirls_ amplitude:amplitude_];
 }
 
 

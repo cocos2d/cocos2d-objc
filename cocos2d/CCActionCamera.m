@@ -38,7 +38,7 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	CCCamera *camera = [target_ camera];
+	CCCamera *camera = [_target camera];
 	[camera centerX:&centerXOrig_ centerY:&centerYOrig_ centerZ:&centerZOrig_];
 	[camera eyeX:&eyeXOrig_ eyeY:&eyeYOrig_ eyeZ:&eyeZOrig_];
 	[camera upX:&upXOrig_ upY:&upYOrig_ upZ: &upZOrig_];
@@ -58,7 +58,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithDuration:duration_ radius:radius_ deltaRadius:deltaRadius_ angleZ:angleZ_ deltaAngleZ:deltaAngleZ_ angleX:angleX_ deltaAngleX:deltaAngleX_];
+	return [[[self class] allocWithZone: zone] initWithDuration:_duration radius:radius_ deltaRadius:deltaRadius_ angleZ:angleZ_ deltaAngleZ:deltaAngleZ_ angleX:angleX_ deltaAngleX:deltaAngleX_];
 }
 
 
@@ -112,7 +112,7 @@
 	float j = sinf(za) * sinf(xa) * r + centerYOrig_;
 	float k = cosf(za) * r + centerZOrig_;
 
-	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];
+	[[_target camera] setEyeX:i eyeY:j eyeZ:k];
 }
 
 -(void) sphericalRadius:(float*) newRadius zenith:(float*) zenith azimuth:(float*) azimuth
@@ -121,7 +121,7 @@
 	float r; // radius
 	float s;
 
-	CCCamera *camera = [target_ camera];
+	CCCamera *camera = [_target camera];
 	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
 	[camera centerX:&cx centerY:&cy centerZ:&cz];
 

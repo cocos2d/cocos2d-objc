@@ -44,9 +44,9 @@
 	float sinTheta = sinf(theta);
 	float cosTheta = cosf(theta);
 
-	for( int i = 0; i <=gridSize_.width; i++ )
+	for( int i = 0; i <=_gridSize.width; i++ )
 	{
-		for( int j = 0; j <= gridSize_.height; j++ )
+		for( int j = 0; j <= _gridSize.height; j++ )
 		{
 			// Get original vertex
 			ccVertex3F	p = [self originalVertex:ccp(i,j)];

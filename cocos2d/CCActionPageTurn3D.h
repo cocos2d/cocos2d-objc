@@ -38,5 +38,6 @@
 @interface CCPageTurn3D : CCGrid3DAction
 {
 }
-
+// XXX: To make BridgeSupport happy
+-(void)update:(ccTime)time;
 @end

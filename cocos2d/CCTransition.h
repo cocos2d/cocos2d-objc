@@ -64,7 +64,7 @@ typedef enum {
 {
 	CCScene	*inScene_;
 	CCScene	*outScene_;
-	ccTime	duration_;
+	ccTime	_duration;
 	BOOL	inSceneOnTop_;
 	BOOL	sendCleanupToScene_;
 }
