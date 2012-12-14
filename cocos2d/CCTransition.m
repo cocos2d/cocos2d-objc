@@ -964,7 +964,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	int x = 12 * aspect;
 	int y = 12;
 
-	id toff = [CCTurnOffTiles actionWithSize: CGSizeMake(x,y) duration:duration_];
+	id toff = [CCTurnOffTiles actionWithDuration:duration_ size:CGSizeMake(x,y)];
 	id action = [self easeActionWithAction:toff];
 	[outScene_ runAction: [CCSequence actions: action,
 				   [CCCallFunc actionWithTarget:self selector:@selector(finish)],
@@ -1010,7 +1010,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 -(CCActionInterval*) action
 {
-	return [CCSplitCols actionWithCols:3 duration:duration_/2.0f];
+	return [CCSplitCols actionWithDuration:duration_/2.0f cols:3];
 }
 
 -(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
@@ -1025,7 +1025,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionSplitRows
 -(CCActionInterval*) action
 {
-	return [CCSplitRows actionWithRows:3 duration:duration_/2.0f];
+	return [CCSplitRows actionWithDuration:duration_/2.0f rows:3];
 }
 @end
 
@@ -1062,7 +1062,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 
 -(CCActionInterval*) actionWithSize: (CGSize) v
 {
-	return [CCFadeOutTRTiles actionWithSize:v duration:duration_];
+	return [CCFadeOutTRTiles actionWithDuration:duration_ size:v];
 }
 
 -(CCActionInterval*) easeActionWithAction:(CCActionInterval*)action
@@ -1078,7 +1078,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionFadeBL
 -(CCActionInterval*) actionWithSize: (CGSize) v
 {
-	return [CCFadeOutBLTiles actionWithSize:v duration:duration_];
+	return [CCFadeOutBLTiles actionWithDuration:duration_ size:v];
 }
 @end
 
@@ -1088,7 +1088,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionFadeUp
 -(CCActionInterval*) actionWithSize: (CGSize) v
 {
-	return [CCFadeOutUpTiles actionWithSize:v duration:duration_];
+	return [CCFadeOutUpTiles actionWithDuration:duration_ size:v];
 }
 @end
 
@@ -1098,6 +1098,6 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionFadeDown
 -(CCActionInterval*) actionWithSize: (CGSize) v
 {
-	return [CCFadeOutDownTiles actionWithSize:v duration:duration_];
+	return [CCFadeOutDownTiles actionWithDuration:duration_ size:v];
 }
 @end

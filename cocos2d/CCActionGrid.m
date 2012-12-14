@@ -34,16 +34,16 @@
 
 @synthesize gridSize = gridSize_;
 
-+(id) actionWithSize:(CGSize)size duration:(ccTime)d
++(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize;
 {
-	return [[[self alloc] initWithSize:size duration:d ] autorelease];
+	return [[[self alloc] initWithDuration:duration size:gridSize] autorelease];
 }
 
--(id) initWithSize:(CGSize)gSize duration:(ccTime)d
+-(id) initWithDuration:(ccTime)duration size:(CGSize)gridSize;
 {
-	if ( (self = [super initWithDuration:d]) )
+	if ( (self = [super initWithDuration:duration]) )
 	{
-		gridSize_ = gSize;
+		gridSize_ = gridSize;
 	}
 
 	return self;
@@ -88,7 +88,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithSize:gridSize_ duration:duration_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:duration_ size:gridSize_];
 	return copy;
 }
 @end

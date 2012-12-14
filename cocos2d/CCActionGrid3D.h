@@ -29,7 +29,7 @@
 /** CCWaves3D action */
 @interface CCWaves3D : CCGrid3DAction
 {
-	int waves;
+	NSUInteger waves;
 	float amplitude;
 	float amplitudeRate;
 }
@@ -39,8 +39,10 @@
 /** amplitude rate of the wave */
 @property (nonatomic,readwrite) float amplitudeRate;
 
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
+/** creates an action with duration, grid size, waves and amplitud */
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp;
+/** initializeds an action with duration, grid size, waves and amplitud */
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp;
 
 @end
 
@@ -85,9 +87,9 @@
 @property (nonatomic,readwrite) CGPoint position;
 
 /** creates the action with center position in Points, radius, a grid size and duration */
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos radius:(float)radius;
 /** initializes the action with center position in Points, radius, a grid size and duration */
--(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos radius:(float)radius;
 
 @end
 
@@ -98,7 +100,7 @@
 {
 	CGPoint	position_;
 	float	radius_;
-	int		waves_;
+	NSUInteger		waves_;
 	float	amplitude_;
 	float	amplitudeRate_;
 }
@@ -111,9 +113,9 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with a position in points, radius, number of waves, amplitude, a grid size and duration */
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)d size:(CGSize)gridSize position:(CGPoint)pos radius:(float)r waves:(NSInteger)wav amplitude:(float)amp;
 /** initializes the action with a position in points, radius, number of waves, amplitude, a grid size and duration */
--(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)d size:(CGSize)gridSize position:(CGPoint)pos radius:(float)r waves:(NSInteger)wav amplitude:(float)amp;
 
 @end
 
@@ -122,14 +124,14 @@
 /** CCShaky3D action */
 @interface CCShaky3D : CCGrid3DAction
 {
-	int		randrange;
-	BOOL	shakeZ;
+	int		_randrange;
+	BOOL	_shakeZ;
 }
 
 /** creates the action with a range, shake Z vertices, a grid and duration */
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ;
 /** initializes the action with a range, shake Z vertices, a grid and duration */
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ;
 
 @end
 
@@ -138,7 +140,7 @@
 /** CCLiquid action */
 @interface CCLiquid : CCGrid3DAction
 {
-	int waves;
+	NSUInteger waves;
 	float amplitude;
 	float amplitudeRate;
 
@@ -150,9 +152,9 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with amplitude, a grid and duration */
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp;
 /** initializes the action with amplitude, a grid and duration */
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp;
 
 @end
 
@@ -161,7 +163,7 @@
 /** CCWaves action */
 @interface CCWaves : CCGrid3DAction
 {
-	int		waves;
+	NSUInteger	waves;
 	float	amplitude;
 	float	amplitudeRate;
 	BOOL	vertical;
@@ -174,9 +176,9 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** initializes the action with amplitude, horizontal sin, vertical sin, a grid and duration */
-+(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v;
 /** creates the action with amplitude, horizontal sin, vertical sin, a grid and duration */
--(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v;
 
 @end
 
@@ -186,7 +188,7 @@
 @interface CCTwirl : CCGrid3DAction
 {
 	CGPoint	position_;
-	int		twirls_;
+	NSUInteger	twirls_;
 	float	amplitude_;
 	float	amplitudeRate_;
 }
@@ -199,8 +201,8 @@
 @property (nonatomic,readwrite) float amplitudeRate;
 
 /** creates the action with center position, number of twirls, amplitude, a grid size and duration */
-+(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
++(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos twirls:(NSUInteger)t amplitude:(float)amp;
 /** initializes the action with center position, number of twirls, amplitude, a grid size and duration */
--(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d;
+-(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos twirls:(NSUInteger)t amplitude:(float)amp;
 
 @end

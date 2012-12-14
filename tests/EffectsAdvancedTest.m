@@ -182,8 +182,8 @@ Class restartAction()
 	//     Waves3D is Grid3D and its size is (15,10)
 
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	id lens = [CCLens3D actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:CGSizeMake(15,10) duration:0.0f];
-	id waves = [CCWaves3D actionWithWaves:18 amplitude:15 grid:CGSizeMake(15,10) duration:10];
+	id lens = [CCLens3D actionWithDuration:0 size:CGSizeMake(15, 10) position:ccp(size.width/2,size.height/2) radius:240];
+	id waves = [CCWaves3D actionWithDuration:10 size:CGSizeMake(15, 10) waves:18 amplitude:15];
 
 	id reuse = [CCReuseGrid actionWithTimes:1];
 	id delay = [CCDelayTime actionWithDuration:8];
@@ -214,9 +214,9 @@ Class restartAction()
 	//     ShakyTiles is TiledGrid3D and its size is (15,10)
 	//     Shuffletiles is TiledGrid3D and its size is (15,10)
 	//	   TurnOfftiles is TiledGrid3D and its size is (15,10)
-	id shaky = [CCShakyTiles3D actionWithRange:4 shakeZ:NO grid:CGSizeMake(15,10) duration:5];
-	id shuffle = [CCShuffleTiles actionWithSeed:0 grid:CGSizeMake(15,10) duration:3];
-	id turnoff = [CCTurnOffTiles actionWithSeed:0 grid:CGSizeMake(15,10) duration:3];
+	id shaky = [CCShakyTiles3D actionWithDuration:5 size:CGSizeMake(15, 10) range:4 shakeZ:NO];
+	id shuffle = [CCShuffleTiles actionWithDuration:3 size:CGSizeMake(15, 10) seed:0];
+	id turnoff = [CCTurnOffTiles actionWithDuration:3 size:CGSizeMake(15, 10) seed:0];
 	id turnon = [turnoff reverse];
 
 	// reuse 2 times:
@@ -250,8 +250,8 @@ Class restartAction()
 	id target1 = [bg getChildByTag:kTagSprite1];
 	id target2 = [bg getChildByTag:kTagSprite2];
 
-	id waves = [CCWaves actionWithWaves:5 amplitude:20 horizontal:YES vertical:NO grid:CGSizeMake(15,10) duration:5];
-	id shaky = [CCShaky3D actionWithRange:4 shakeZ:NO grid:CGSizeMake(15,10) duration:5];
+	id waves = [CCWaves actionWithDuration:5 size:CGSizeMake(15, 10) waves:5 amplitude:20 horizontal:YES vertical:NO];
+	id shaky = [CCShaky3D actionWithDuration:5 size:CGSizeMake(15,10) range:4 shakeZ:NO];
 
 	[target1 runAction: [CCRepeatForever actionWithAction: waves]];
 	[target2 runAction: [CCRepeatForever actionWithAction: shaky]];
@@ -273,7 +273,7 @@ Class restartAction()
 {
 	[super onEnter];
 
-	id lens = [CCLens3D actionWithPosition:ccp(100,180) radius:150 grid:CGSizeMake(32,24) duration:10];
+	id lens = [CCLens3D actionWithDuration:10 size:CGSizeMake(32,24) position:ccp(100,180) radius:150];
 //	id move = [MoveBy actionWithDuration:5 position:ccp(400,0)];
 	id move = [CCJumpBy actionWithDuration:5 position:ccp(380,0) height:100 jumps:4];
 	id move_back = [move reverse];
@@ -297,7 +297,7 @@ Class restartAction()
 {
 	[super onEnter];
 
-	id effect = [CCLiquid actionWithWaves:1 amplitude:20 grid:CGSizeMake(32,24) duration:2];
+	id effect = [CCLiquid actionWithDuration:2 size:CGSizeMake(32, 24) waves:1 amplitude:20];
 
 	id stopEffect = [CCSequence actions:
 					 effect,
@@ -326,7 +326,9 @@ Class restartAction()
 
 //	id effect = [CCLiquid actionWithWaves:1 amplitude:20 grid:CGSizeMake(32,24) duration:2];
 //	id effect = [CCShaky3D actionWithRange:16 shakeZ:NO grid:CGSizeMake(5, 5) duration:5.0f];
-	id effect = [CCSequence actions:[CCDelayTime actionWithDuration:2.0f], [CCShaky3D actionWithRange:16 shakeZ:NO grid:CGSizeMake(5, 5) duration:5.0f], nil];
+	id effect = [CCSequence actions:[CCDelayTime actionWithDuration:2.0f],
+				 [CCShaky3D actionWithDuration:5 size:CGSizeMake(5,5) range:16 shakeZ:NO],
+				 nil];
 
 	// cleanup
 	id bg = [self getChildByTag:kTagBackground];

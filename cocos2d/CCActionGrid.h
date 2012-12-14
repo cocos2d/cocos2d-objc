@@ -40,9 +40,9 @@
 @property (nonatomic,readwrite) CGSize gridSize;
 
 /** creates the action with size and duration */
-+(id) actionWithSize:(CGSize)size duration:(ccTime)d;
++(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize;
 /** initializes the action with size and duration */
--(id) initWithSize:(CGSize)gridSize duration:(ccTime)d;
+-(id) initWithDuration:(ccTime)duration size:(CGSize)gridSize;
 /** returns the grid */
 -(CCGridBase *)grid;
 
