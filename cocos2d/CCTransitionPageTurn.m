@@ -104,12 +104,12 @@
 	{
 		// Get hold of the PageTurn3DAction
 		return [CCReverseTime actionWithAction:
-				[CCPageTurn3D actionWithSize:v duration:duration_]];
+				[CCPageTurn3D actionWithDuration:duration_ size:v]];
 	}
 	else
 	{
 		// Get hold of the PageTurn3DAction
-		return [CCPageTurn3D actionWithSize:v duration:duration_];
+		return [CCPageTurn3D actionWithDuration:duration_ size:v];
 	}
 }
 
