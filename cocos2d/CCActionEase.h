@@ -30,8 +30,11 @@
  */
 @interface CCActionEase : CCActionInterval <NSCopying>
 {
-	CCActionInterval *_other;
+	CCActionInterval *_inner;
 }
+/** The inner action */
+@property (nonatomic, readonly) CCActionInterval *inner;
+
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action;
 /** initializes the action */
