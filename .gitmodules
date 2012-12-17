@@ -7,3 +7,6 @@
 [submodule "tests/cocos2d-js-tests"]
 	path = tests/cocos2d-js-tests
 	url = git://github.com/ricardoquesada/cocos2d-js-tests.git
+[submodule "external/CCBReader"]
+	path = external/CCBReader
+	url = git://github.com/ricardoquesada/CCBReader.git
