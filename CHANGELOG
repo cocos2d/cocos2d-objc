@@ -7,10 +7,12 @@ version 2.1-rc0	 XX-Jan-2013
 . [FIX] Effects: ccGridSize is no longer used. It was replaced by CGPoint and CGSize
 		API fixes: The first parameters that is received is the duration of the action. This is consistent with the actions API.
 		API fixes: parameter "grid" was renamed to "size"
+. [FIX] externals: All JS related projects are in the externals/JavaScript subfolder
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
 . [FIX] RenderTexture: Restures the Projection after using it.
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
+. [3RD] JRSwizzle: is a submodule
 . [3RD] JS Bindings: Updated to v0.5
 
 version 2.1-beta4  4-Dec-2012
