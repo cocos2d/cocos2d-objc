@@ -18,6 +18,4 @@
 - (void)performanceMoveByActions;
 - (void)performanceMoveToActions;
 
-- (void)performanceMoveByExActions;
-- (void)performanceMoveToExActions;
 @end
