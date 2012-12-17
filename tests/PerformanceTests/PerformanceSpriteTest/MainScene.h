@@ -65,11 +65,5 @@ Class nextAction();
 @interface PerformanceTest9 : MainScene
 {}
 @end
-@interface PerformanceTest10 : MainScene
-{}
-@end
-@interface PerformanceTest11 : MainScene
-{}
-@end
 
 
