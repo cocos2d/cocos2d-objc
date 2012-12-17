@@ -1,6 +1,3 @@
-[submodule "external/jsbindings"]
-	path = external/jsbindings
-	url = git://github.com/ricardoquesada/jsbindings.git
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 	url = git://github.com/slembcke/Chipmunk-Physics.git
@@ -10,3 +7,9 @@
 [submodule "external/CCBReader"]
 	path = external/CCBReader
 	url = git://github.com/ricardoquesada/CCBReader.git
+[submodule "external/JavaScript/JSSwizzle"]
+	path = external/JavaScript/JSSwizzle
+	url = git://github.com/ricardoquesada/jrswizzle.git
+[submodule "external/JavaScript/jsbindings"]
+	path = external/JavaScript/jsbindings
+	url = git://github.com/zynga/jsbindings.git
