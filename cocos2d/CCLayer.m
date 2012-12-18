@@ -408,6 +408,62 @@
 #endif
 @end
 
+
+#pragma mark -
+#pragma mark LayerRGBA
+
+@implementation CCLayerRGBA
+
+@synthesize color = _color;
+
+-(id) init
+{
+	if ( (self=[super init]) ) {
+        _displayedOpacity = _realOpacity = 255;
+        _color = ccWHITE;
+    }
+    return self;
+}
+
+// override to update opacity based on parent's
+- (void) onEnter {
+    [super onEnter];
+    self.opacity = _realOpacity;
+}
+
+-(GLubyte) opacity
+{
+	return _realOpacity;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#endif
+
+}
+
+@end
+
+
 #pragma mark -
 #pragma mark LayerColor
 
@@ -418,7 +474,6 @@
 @implementation CCLayerColor
 
 // Opacity and RGB color protocol
-@synthesize opacity = _opacity, color = _color;
 @synthesize blendFunc = blendFunc_;
 
 
@@ -449,7 +504,7 @@
 		_color.r = color.r;
 		_color.g = color.g;
 		_color.b = color.b;
-		_opacity = color.a;
+		_displayedOpacity = _realOpacity = color.a;
 
 		for (NSUInteger i = 0; i<sizeof(_squareVertices) / sizeof( _squareVertices[0]); i++ ) {
 			_squareVertices[i].x = 0.0f;
@@ -503,7 +558,7 @@
 		_squareColors[i].r = _color.r / 255.0f;
 		_squareColors[i].g = _color.g / 255.0f;
 		_squareColors[i].b = _color.b / 255.0f;
-		_squareColors[i].a = _opacity / 255.0f;
+		_squareColors[i].a = _displayedOpacity / 255.0f;
 	}
 }
 
@@ -531,13 +586,13 @@
 
 -(void) setColor:(ccColor3B)color
 {
-	_color = color;
+    [super setColor:color];
 	[self updateColor];
 }
 
--(void) setOpacity: (GLubyte) o
+-(void) setOpacity: (GLubyte) opacity
 {
-	_opacity = o;
+    [super setOpacity:opacity];
 	[self updateColor];
 }
 @end
@@ -605,7 +660,7 @@
 		u = ccpMult(u, h2 * (float)c);
 	}
 
-	float opacityf = (float)_opacity/255.0f;
+	float opacityf = (float)_displayedOpacity/255.0f;
 
     ccColor4F S = {
 		_color.r / 255.0f,

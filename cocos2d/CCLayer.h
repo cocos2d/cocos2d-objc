@@ -136,13 +136,35 @@ typedef enum {
 /** Priority of keyboard events. Default is 0 */
 @property (nonatomic, assign) NSInteger keyboardPriority;
 
-
-
-
 #endif // mac
 
+@end
+
+
+#pragma mark -
+#pragma mark CCLayerRGBA
+
+/** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
+
+ All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
+ - opacity
+ - RGB colors
+ @Since 2.1beta2-custom
+ */
+@interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
+{
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_color;
+}
+
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) GLubyte opacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) ccColor3B color;
 
 @end
+
+
 
 #pragma mark -
 #pragma mark CCLayerColor
@@ -153,10 +175,8 @@ typedef enum {
  - opacity
  - RGB colors
  */
-@interface CCLayerColor : CCLayer <CCRGBAProtocol, CCBlendProtocol>
+@interface CCLayerColor : CCLayerRGBA <CCBlendProtocol>
 {
-	GLubyte		_opacity;
-	ccColor3B	_color;
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];
 
@@ -184,10 +204,6 @@ typedef enum {
  */
 -(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 @end

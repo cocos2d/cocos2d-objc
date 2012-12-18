@@ -439,7 +439,7 @@ void FNTConfigRemoveCache( void )
 @implementation CCLabelBMFont
 
 @synthesize alignment = alignment_;
-@synthesize opacity = opacity_, color = color_;
+@synthesize color = _color;
 
 
 #pragma mark LabelBMFont - Purge Cache
@@ -507,12 +507,12 @@ void FNTConfigRemoveCache( void )
 		texture = [[[CCTexture2D alloc] init] autorelease];
     
     
-	if( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
+	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
         width_ = width;
         alignment_ = alignment;
-        
-		opacity_ = 255;
-		color_ = ccWHITE;
+
+		_displayedOpacity = _realOpacity = 255;
+		_color = ccWHITE;
 		
 		contentSize_ = CGSizeZero;
 		
@@ -812,13 +812,18 @@ void FNTConfigRemoveCache( void )
 		// Apply label properties
 		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-		[fontChar setColor:color_];
+		[fontChar setColor:_color];
         
 		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
-		if( opacity_ != 255 )
-			[fontChar setOpacity: opacity_];
-        
+		if( _displayedOpacity != 255 ) {
+#if CC_CASCADING_OPACITY
+            [fontChar setOpacity: fontChar.opacity];
+#else
+            [fontChar setOpacity: _displayedOpacity];
+#endif
+        }
+
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
 		
@@ -879,21 +884,47 @@ void FNTConfigRemoveCache( void )
 
 -(void) setColor:(ccColor3B)color
 {
-	color_ = color;
+	_color = color;
     
 	CCSprite *child;
 	CCARRAY_FOREACH(children_, child)
-		[child setColor:color_];
+		[child setColor:_color];
 }
 
--(void) setOpacity:(GLubyte)opacity
+-(GLubyte) opacity
 {
-	opacity_ = opacity;
-    
-	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(children_, child)
-		[child setOpacity:opacity_];
+	return _realOpacity;
 }
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#else
+    id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        item.opacity = displayedOpacity_;
+    }
+#endif
+
+}
+
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	opacityModifyRGB_ = modify;

@@ -50,6 +50,7 @@
  Values goes from 0 to 255, where 255 means fully opaque.
  */
 -(void) setOpacity: (GLubyte) opacity;
+@property (nonatomic, readonly) GLubyte displayedOpacity;
 @optional
 /** sets the premultipliedAlphaOpacity property.
  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);

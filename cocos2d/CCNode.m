@@ -932,5 +932,57 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #endif // __CC_PLATFORM_IOS
 
+@end
+
+
+#pragma mark -
+#pragma mark NodeRGBA
+
+@implementation CCNodeRGBA
+
+-(id) init
+{
+	if ((self=[super init]) ) {
+        _displayedOpacity = _realOpacity = 255;
+        _color =  ccWHITE;
+    }
+    return self;
+}
+
+-(void) onEnter {
+    [super onEnter];
+    self.opacity = _realOpacity;
+}
+
+-(GLubyte) opacity
+{
+	return _realOpacity;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity=item.opacity;
+        }
+    }
+#endif
+
+}
 
 @end

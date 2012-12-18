@@ -267,3 +267,19 @@
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
 #endif
+
+/** @def CC_CASCADING_OPACITY
+ If enabled, cocos2d uses transitive opacity.
+ All classes calculate their cumulative opacity from self opacity and parent's opacity.
+ For example, if you setup a CCLayerRGB with an opacity of 127 (50%) and add a children CCSprite with an opacity of 127,
+ it draws as if having an opacity of 63 (25%).
+
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+
+ If you don't need the feature, disabling it should increase performance when setting or animating the opacity.
+
+ @Since 2.1beta2-custom
+ */
+#ifndef CC_CASCADING_OPACITY
+#define CC_CASCADING_OPACITY 1
+#endif

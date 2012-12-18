@@ -116,16 +116,6 @@
         *((ccColor3B*) (colorPointer_+i*4)) = colors;
 }
 
-- (void) setColor:(ccColor3B)colors
-{
-    color_ = colors;
-}
-
-- (ccColor3B) color
-{
-    return color_;
-}
-
 - (void) setOpacity:(GLubyte)opacity
 {
     NSAssert(NO, @"Set opacity no supported");
@@ -213,8 +203,8 @@
 
         // Color asignation
         const NSUInteger offset = nuPoints_*8;
-        *((ccColor3B*)(colorPointer_ + offset)) = color_;
-        *((ccColor3B*)(colorPointer_ + offset+4)) = color_;
+        *((ccColor3B*)(colorPointer_ + offset)) = _color;
+        *((ccColor3B*)(colorPointer_ + offset+4)) = _color;
 
         // Opacity
         colorPointer_[offset+3] = 255;

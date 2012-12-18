@@ -60,7 +60,7 @@
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
+@interface CCSprite : CCNodeRGBA <CCTextureProtocol>
 {
 
 	//
@@ -99,8 +99,6 @@
 	ccV3F_C4B_T2F_Quad quad_;
 
 	// opacity and RGB protocol
-	GLubyte		opacity_;
-	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
 	BOOL		opacityModifyRGB_;
 
@@ -135,10 +133,6 @@
 	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
-/** opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** RGB colors: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
