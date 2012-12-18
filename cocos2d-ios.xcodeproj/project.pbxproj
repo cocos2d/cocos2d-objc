@@ -5284,7 +5284,7 @@
 		508CA7E711932A1F003AC397 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		509807081175041800EA7266 /* libbuild all tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509A7A970F61A2400032F449 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
