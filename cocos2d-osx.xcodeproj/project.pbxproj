@@ -1401,6 +1401,8 @@
 		A06BF202167FE9350018A802 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */; };
 		A06BF203167FE9350018A802 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */; };
 		A06BF204167FE9350018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
+		A06BF7E3167FEE390018A802 /* LocalStorage.c in Sources */ = {isa = PBXBuildFile; fileRef = A06BF7E1167FEE390018A802 /* LocalStorage.c */; };
+		A06BF7E4167FEE390018A802 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7E2167FEE390018A802 /* LocalStorage.h */; };
 		A07273DD155B23A8003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273DE155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */; };
 		A07273DF155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */; };
@@ -6917,6 +6919,8 @@
 		A06430E713C1414300CC5554 /* libkazmath.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libkazmath.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0644A5215B609D3004AB807 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06BF1E1167FE76D0018A802 /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A06BF7E1167FEE390018A802 /* LocalStorage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LocalStorage.c; sourceTree = "<group>"; };
+		A06BF7E2167FEE390018A802 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
@@ -8334,6 +8338,7 @@
 		A0191CB3167FD6C50099349A /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
+				A06BF7E0167FEE390018A802 /* sys_extensions */,
 				A0191CB4167FD6C50099349A /* JRSwizzle */,
 				A0191CCC167FD6C50099349A /* jsbindings */,
 				A0191D34167FD6C50099349A /* SpiderMonkey */,
@@ -8848,6 +8853,15 @@
 				A05B63D5156F552500ADAB65 /* cpSlideJoint.c */,
 			);
 			path = constraints;
+			sourceTree = "<group>";
+		};
+		A06BF7E0167FEE390018A802 /* sys_extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A06BF7E1167FEE390018A802 /* LocalStorage.c */,
+				A06BF7E2167FEE390018A802 /* LocalStorage.h */,
+			);
+			path = sys_extensions;
 			sourceTree = "<group>";
 		};
 		A07552FD166D7CBF00976A87 /* Platform */ = {
@@ -10137,6 +10151,7 @@
 				A0191E77167FD6C60099349A /* TypeTraits.h in Headers */,
 				A0191E78167FD6C60099349A /* Util.h in Headers */,
 				A0191E79167FD6C60099349A /* WeakPtr.h in Headers */,
+				A06BF7E4167FEE390018A802 /* LocalStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16240,6 +16255,7 @@
 				A0191DFF167FD6C60099349A /* js_bindings_CocosBuilderReader_manual.mm in Sources */,
 				A0191E02167FD6C60099349A /* js_bindings_core.mm in Sources */,
 				A0191E04167FD6C60099349A /* js_bindings_NS_manual.mm in Sources */,
+				A06BF7E3167FEE390018A802 /* LocalStorage.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
