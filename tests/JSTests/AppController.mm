@@ -160,13 +160,13 @@
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
 
 	if( [name isEqual:@"JS Watermelon"] ) {
-		[[JSBCore sharedInstance] runScript:@"boot-jsb.js"];
 #if defined(__CC_PLATFORM_MAC)
 		// Use ipad resources for Mac
 		[[fileutils suffixesDict] setObject:@"-ipad" forKey:kCCFileUtilsMac];
 		[[fileutils suffixesDict] setObject:@"-ipadhd" forKey:kCCFileUtilsMacHD];
 		NSLog(@"%@", [fileutils suffixesDict]);
 #endif
+		[[JSBCore sharedInstance] runScript:@"boot-jsb.js"];
 	}
 	else if( [name isEqual:@"JS Tests"] )
 		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];

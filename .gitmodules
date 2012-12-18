@@ -7,9 +7,9 @@
 [submodule "external/CCBReader"]
 	path = external/CCBReader
 	url = git://github.com/ricardoquesada/CCBReader.git
-[submodule "external/JavaScript/JSSwizzle"]
-	path = external/JavaScript/JSSwizzle
-	url = git://github.com/ricardoquesada/jrswizzle.git
 [submodule "external/JavaScript/jsbindings"]
 	path = external/JavaScript/jsbindings
 	url = git://github.com/zynga/jsbindings.git
+[submodule "external/JavaScript/JRSwizzle"]
+	path = external/JavaScript/JRSwizzle
+	url = git://github.com/ricardoquesada/jrswizzle.git

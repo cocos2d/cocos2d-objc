@@ -107,7 +107,7 @@ copy_chipmunk_files(){
 
 copy_ccbreader_files(){
 	echo ...copying CocosBuilderReader files
-	copy_files external/CocosBuilderReader "$LIBS_DIR"
+	copy_files external/CCBReader/CCBReader "$LIBS_DIR"
 	copy_files LICENSE_CCBReader.txt "$LIBS_DIR"
 }
 
@@ -116,24 +116,24 @@ copy_spidermonkey_files(){
 
 	LIBS_DIR="$DST_DIR""lib_spidermonkey_ios.xctemplate/libs/SpiderMonkey/"
 	mkdir -p "$LIBS_DIR"
-	copy_files external/SpiderMonkey/ios "$LIBS_DIR"
+	copy_files external/JavaScript/SpiderMonkey/ios "$LIBS_DIR"
 	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
 
 	LIBS_DIR="$DST_DIR""lib_spidermonkey_osx.xctemplate/libs/SpiderMonkey/"
 	mkdir -p "$LIBS_DIR"
-	copy_files external/SpiderMonkey/osx "$LIBS_DIR"
+	copy_files external/JavaScript/SpiderMonkey/osx "$LIBS_DIR"
 	copy_files LICENSE_SpiderMonkey.txt "$LIBS_DIR"
 }
 
 copy_jsbindings_files(){
 	echo ...copying JSBindings files
-	copy_files external/jsbindings "$LIBS_DIR"
+	copy_files external/JavaScript/jsbindings "$LIBS_DIR"
 	copy_files LICENSE_jsbindings.txt "$LIBS_DIR"
 }
 
 copy_jrswizzle_files(){
 	echo ...copying JR Swizzle files
-	copy_files external/JRSwizzle "$LIBS_DIR"
+	copy_files external/JavaScript/JRSwizzle "$LIBS_DIR"
 	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
 }
 
