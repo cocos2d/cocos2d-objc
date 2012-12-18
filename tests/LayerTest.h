@@ -12,6 +12,16 @@
 -(NSString*) subtitle;
 @end
 
+@interface LayerTestCascadingOpacityA : LayerTest
+{
+}
+@end
+
+@interface LayerTestCascadingOpacityB : LayerTest
+{
+}
+@end
+
 @interface LayerTest1 : LayerTest
 {
 }

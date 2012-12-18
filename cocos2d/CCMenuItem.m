@@ -746,7 +746,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 @implementation CCMenuItemToggle
 @synthesize currentItem = _currentItem;
 @synthesize subItems = subItems_;
-@synthesize opacity = opacity_, color = color_;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {
@@ -877,14 +876,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-	opacity_ = opacity;
-	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
+    [super setOpacity:opacity];
+    for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
 		[item setOpacity:opacity];
 }
 
 - (void) setColor:(ccColor3B)color
 {
-	color_ = color;
+	[super setColor:color];
 	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
 		[item setColor:color];
 }

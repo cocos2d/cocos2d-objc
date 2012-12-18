@@ -4973,7 +4973,7 @@
 		5012DD460FE299EA00D6DDD1 /* TouchesDemoAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TouchesDemoAppDelegate.m; sourceTree = "<group>"; };
 		5012DD4B0FE29A7D00D6DDD1 /* ball.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ball.png; sourceTree = "<group>"; };
 		5012DD4C0FE29A7D00D6DDD1 /* paddle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = paddle.png; sourceTree = "<group>"; };
-		50150433113300F900A9CA65 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProgressTimer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		50150433113300F900A9CA65 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProgressTimer.h; sourceTree = "<group>"; };
 		50150434113300F900A9CA65 /* CCProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCProgressTimer.m; sourceTree = "<group>"; };
 		50150435113300F900A9CA65 /* CCActionProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionProgressTimer.h; sourceTree = "<group>"; };
 		50150436113300F900A9CA65 /* CCActionProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionProgressTimer.m; sourceTree = "<group>"; };
@@ -4987,12 +4987,12 @@
 		5018F2570DFDEAFF00C013A5 /* CCDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirector.m; sourceTree = "<group>"; };
 		5018F2580DFDEAFF00C013A5 /* CCActionInstant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionInstant.h; sourceTree = "<group>"; };
 		5018F2590DFDEAFF00C013A5 /* CCActionInstant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionInstant.m; sourceTree = "<group>"; };
-		5018F25A0DFDEAFF00C013A5 /* CCActionInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCActionInterval.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCActionInterval.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5018F25A0DFDEAFF00C013A5 /* CCActionInterval.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCActionInterval.h; sourceTree = "<group>"; };
+		5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCActionInterval.m; sourceTree = "<group>"; };
 		5018F25C0DFDEAFF00C013A5 /* CCLabelTTF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelTTF.h; sourceTree = "<group>"; };
 		5018F25D0DFDEAFF00C013A5 /* CCLabelTTF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelTTF.m; sourceTree = "<group>"; };
-		5018F25E0DFDEAFF00C013A5 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		5018F25F0DFDEAFF00C013A5 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		5018F25E0DFDEAFF00C013A5 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLayer.h; sourceTree = "<group>"; };
+		5018F25F0DFDEAFF00C013A5 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLayer.m; sourceTree = "<group>"; };
 		5018F2600DFDEAFF00C013A5 /* CCScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScene.h; sourceTree = "<group>"; };
 		5018F2610DFDEAFF00C013A5 /* CCScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScene.m; sourceTree = "<group>"; };
 		5018F2670DFDEAFF00C013A5 /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
@@ -5229,8 +5229,8 @@
 		506882680E957C4A00F943E5 /* atlastest.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = atlastest.png; sourceTree = "<group>"; };
 		506884700E96734A00F943E5 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
 		506884710E96734A00F943E5 /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
-		506887D70E96C90000F943E5 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCAtlasNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		506887D80E96C90000F943E5 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCAtlasNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		506887D70E96C90000F943E5 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCAtlasNode.h; sourceTree = "<group>"; };
+		506887D80E96C90000F943E5 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCAtlasNode.m; sourceTree = "<group>"; };
 		5069C792100B84BC00489758 /* Bug-422.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Bug-422.h"; sourceTree = "<group>"; };
 		5069C793100B84BC00489758 /* Bug-422.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Bug-422.m"; sourceTree = "<group>"; };
 		506C77E20E01520900B48100 /* ClickAndMoveTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClickAndMoveTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5238,8 +5238,8 @@
 		506C77E60E01524200B48100 /* ClickAndMoveTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ClickAndMoveTest.m; path = tests/ClickAndMoveTest.m; sourceTree = "<group>"; };
 		506C78A50E016A7300B48100 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCMenu.h; sourceTree = "<group>"; };
 		506C78A60E016A7300B48100 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCMenu.m; sourceTree = "<group>"; };
-		506C78EA0E0178FD00B48100 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCMenuItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		506C78EB0E0178FD00B48100 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCMenuItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
+		506C78EA0E0178FD00B48100 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCMenuItem.h; sourceTree = "<group>"; };
+		506C78EB0E0178FD00B48100 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCMenuItem.m; sourceTree = "<group>"; };
 		506C7A090E01C73A00B48100 /* MenuTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MenuTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		506C7A0C0E01C78700B48100 /* MenuTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MenuTest.h; path = tests/MenuTest.h; sourceTree = "<group>"; };
 		506C7A0D0E01C78700B48100 /* MenuTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MenuTest.m; path = tests/MenuTest.m; sourceTree = "<group>"; };
@@ -5284,7 +5284,7 @@
 		508CA7E711932A1F003AC397 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		509807081175041800EA7266 /* libbuild all tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		509A79950F6188420032F449 /* CCSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCSprite.h; sourceTree = "<group>"; };
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509A7A970F61A2400032F449 /* grossini_dance_atlas.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_atlas.png; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
@@ -5338,7 +5338,7 @@
 		50A29E151153D9CF00D87F08 /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
 		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
-		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCTileMapAtlas.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCTileMapAtlas.h; sourceTree = "<group>"; };
 		50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCTileMapAtlas.m; sourceTree = "<group>"; };
 		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C4D10E100AEA00AE9530 /* libChipmunk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libChipmunk.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5409,7 +5409,7 @@
 		50E1357210ADEB1B00C9E7FA /* CCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture2D.m; sourceTree = "<group>"; };
 		50E2A14E10A45E7F00D894CE /* CCSpriteFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrame.h; sourceTree = "<group>"; };
 		50E2A14F10A45E7F00D894CE /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
-		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		50E2A25110A46CC600D894CE /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCProtocols.h; sourceTree = "<group>"; };
 		50E2A52610A4AA1700D894CE /* sprite-0-0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-0.png"; sourceTree = "<group>"; };
 		50E2A52710A4AA1700D894CE /* sprite-0-1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-1.png"; sourceTree = "<group>"; };
 		50E2A52810A4AA1700D894CE /* sprite-0-2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sprite-0-2.png"; sourceTree = "<group>"; };

@@ -32,11 +32,10 @@
 /** MotionStreak.
  Creates a trailing path.
  */
-@interface CCMotionStreak : CCNode <CCTextureProtocol, CCRGBAProtocol>
+@interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol>
 {
     CCTexture2D *texture_;
     CGPoint positionR_;
-    ccColor3B color_;
     ccBlendFunc blendFunc_;
     float stroke_;
     float fadeDelta_;

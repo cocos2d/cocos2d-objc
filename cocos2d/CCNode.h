@@ -595,3 +595,32 @@ enum {
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
 @end
+
+
+#pragma mark -
+#pragma mark CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+
+ Opacity propagates into children that conform to the CCRGBAProtocol if CC_CASCADING_OPACITY is enabled
+ in ccConfig.h.
+ @Since 1.0.1-rsanchez
+ */
+@interface CCNodeRGBA : CCNode <CCRGBAProtocol>
+{
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_color;
+}
+
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) GLubyte opacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readonly) GLubyte displayedOpacity;
+/** Opacity: conforms to CCRGBAProtocol protocol */
+@property (nonatomic,readwrite) ccColor3B color;
+
+@end

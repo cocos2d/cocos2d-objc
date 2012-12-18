@@ -126,9 +126,8 @@
 
 		dirty_ = recursiveDirty_ = NO;
 
-		opacityModifyRGB_			= YES;
-		opacity_					= 255;
-		color_ = colorUnmodified_	= ccWHITE;
+		opacityModifyRGB_ = YES;
+		colorUnmodified_ = ccWHITE;
 
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
@@ -800,7 +799,7 @@
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {color_.r, color_.g, color_.b, opacity_};
+	ccColor4B color4 = {_color.r, _color.g, _color.b, _displayedOpacity};
 
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -820,38 +819,35 @@
 	// do nothing
 }
 
--(GLubyte) opacity
+-(void) setOpacity:(GLubyte)opacity
 {
-	return opacity_;
-}
-
--(void) setOpacity:(GLubyte) anOpacity
-{
-	opacity_			= anOpacity;
-
+    [super setOpacity:opacity];
 	// special opacity for premultiplied textures
-	if( opacityModifyRGB_ )
+	if ( opacityModifyRGB_ ) {
 		[self setColor: colorUnmodified_];
+    }
 
 	[self updateColor];
 }
 
 - (ccColor3B) color
 {
-	if(opacityModifyRGB_)
+	if ( opacityModifyRGB_ ) {
 		return colorUnmodified_;
+    }
 
-	return color_;
+	return _color;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
-	color_ = colorUnmodified_ = color3;
+    [super setColor:color3];
+	colorUnmodified_ = color3;
 
 	if( opacityModifyRGB_ ){
-		color_.r = color3.r * opacity_/255.0f;
-		color_.g = color3.g * opacity_/255.0f;
-		color_.b = color3.b * opacity_/255.0f;
+		_color.r = color3.r * _displayedOpacity/255.0f;
+		_color.g = color3.g * _displayedOpacity/255.0f;
+		_color.b = color3.b * _displayedOpacity/255.0f;
 	}
 
 	[self updateColor];

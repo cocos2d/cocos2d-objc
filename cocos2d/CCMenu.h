@@ -44,19 +44,13 @@ enum {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface CCMenu : CCLayer <CCRGBAProtocol>
+@interface CCMenu : CCLayerRGBA
 {
 	tCCMenuState state_;
 	CCMenuItem	*selectedItem_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
 	BOOL		enabled_;
 }
 
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 /** whether or not the menu will receive events */
 @property (nonatomic, readwrite) BOOL enabled;
 
