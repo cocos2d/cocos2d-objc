@@ -36,13 +36,25 @@ static sqlite3 *_db;
 static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
-static char *_db_path = "js_localstorage.sqlite";
+static char *_db_path = "/Users/rquesada/Documents/db.sqlite";
 
 
-void localStorageLazyInit();
+static void localStorageLazyInit();
+static void localStorageCreateTable();
 
+static void localStorageCreateTable()
+{
+	const char *sql_createtable = "CREATE TABLE IF NOT EXISTS data(key TEXT PRIMARY KEY,value TEXT);";
+	sqlite3_stmt *stmt;
+	int ok=sqlite3_prepare_v2(_db, sql_createtable, -1, &stmt, NULL);
+	ok |= sqlite3_step(stmt);
+	ok |= sqlite3_finalize(stmt);
+	
+	if( ok != SQLITE_OK && ok != SQLITE_DONE)
+		printf("Error in CREATE TABLE\n");
+}
 
-void localStorageLazyInit()
+static void localStorageLazyInit()
 {
 	if( ! _initialized ) {
 
@@ -52,22 +64,27 @@ void localStorageLazyInit()
 			ret = sqlite3_open(":memory:",&_db);
 		else
 			ret = sqlite3_open(_db_path, &_db);
-		
+
+		localStorageCreateTable();
+
 		// SELECT
-		const char *sql_select = "SELECT value FROM data WHERE key=?";
-		ret = sqlite3_prepare_v2(_db, sql_select, -1, &_stmt_select, NULL);
+		const char *sql_select = "SELECT value FROM data WHERE key=?;";
+		ret |= sqlite3_prepare_v2(_db, sql_select, -1, &_stmt_select, NULL);
 
 		// UPDATE
 		const char *sql_update = "REPLACE INTO data (key, value) VALUES (?,?);";
-		ret = sqlite3_prepare_v2(_db, sql_update, -1, &_stmt_update, NULL);
+		ret |= sqlite3_prepare_v2(_db, sql_update, -1, &_stmt_update, NULL);
 
 		// UPDATE
 		const char *sql_remove = "DELETE FROM data WHERE key=?;";
-		ret = sqlite3_prepare_v2(_db, sql_remove, -1, &_stmt_remove, NULL);
+		ret |= sqlite3_prepare_v2(_db, sql_remove, -1, &_stmt_remove, NULL);
 
 		if( ret != SQLITE_OK ) {
+			printf("Error initializing DB\n");
 			// report error
 		}
+		
+		_initialized = 1;
 	}
 }
 
@@ -83,39 +100,48 @@ void localStorageDestroy()
 }
 
 /** sets an item in the LS */
-void localStorageSetItem( char *key, const char *value)
+void localStorageSetItem( const char *key, const char *value)
 {
 	localStorageLazyInit();
 
-	sqlite3_bind_text(_stmt_update, 1, key, -1, SQLITE_TRANSIENT);
-	sqlite3_bind_text(_stmt_update, 2, value, -1, SQLITE_TRANSIENT);
+	int ok = sqlite3_bind_text(_stmt_update, 1, key, -1, SQLITE_TRANSIENT);
+	ok |= sqlite3_bind_text(_stmt_update, 2, value, -1, SQLITE_TRANSIENT);
 
-	sqlite3_step(_stmt_update);
+	ok |= sqlite3_step(_stmt_update);
 	
-	sqlite3_reset(_stmt_update);
+	ok |= sqlite3_reset(_stmt_update);
+	
+	if( ok != SQLITE_OK && ok != SQLITE_DONE)
+		printf("Error in localStorage.setItem()\n");
 }
 
 /** gets an item from the LS */
-const unsigned char* localStorageGetItem( char *key )
+const char* localStorageGetItem( const char *key )
 {
 	localStorageLazyInit();
-	
-	sqlite3_bind_text(_stmt_select, 1, key, -1, SQLITE_TRANSIENT);
-	
-	sqlite3_step(_stmt_select);
+
+	int ok = sqlite3_reset(_stmt_select);
+
+	ok |= sqlite3_bind_text(_stmt_select, 1, key, -1, SQLITE_TRANSIENT);
+	ok |= sqlite3_step(_stmt_select);
 	const unsigned char *ret = sqlite3_column_text(_stmt_select, 0);
 	
-	sqlite3_reset(_stmt_select);
 
-	return ret;
+	if( ok != SQLITE_OK && ok != SQLITE_DONE && ok != SQLITE_ROW)
+		printf("Error in localStorage.getItem()\n");
+
+	return (const char*)ret;
 }
 
 /** removes an item from the LS */
-void localStorageRemoveItem( char *key )
+void localStorageRemoveItem( const char *key )
 {
-	sqlite3_bind_text(_stmt_remove, 1, key, -1, SQLITE_TRANSIENT);
+	int ok = sqlite3_bind_text(_stmt_remove, 1, key, -1, SQLITE_TRANSIENT);
 	
-	sqlite3_step(_stmt_remove);
+	ok |= sqlite3_step(_stmt_remove);
 	
-	sqlite3_reset(_stmt_remove);	
+	ok |= sqlite3_reset(_stmt_remove);
+
+	if( ok != SQLITE_OK && ok != SQLITE_DONE)
+		printf("Error in localStorage.removeItem()\n");
 }

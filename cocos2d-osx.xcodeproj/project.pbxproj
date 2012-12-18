@@ -1403,6 +1403,17 @@
 		A06BF204167FE9350018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
 		A06BF7E3167FEE390018A802 /* LocalStorage.c in Sources */ = {isa = PBXBuildFile; fileRef = A06BF7E1167FEE390018A802 /* LocalStorage.c */; };
 		A06BF7E4167FEE390018A802 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7E2167FEE390018A802 /* LocalStorage.h */; };
+		A06BF7F01680268D0018A802 /* js_bindings_system_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7EE1680268C0018A802 /* js_bindings_system_registration.h */; };
+		A06BF7F11680268D0018A802 /* js_bindings_system_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A06BF7EF1680268D0018A802 /* js_bindings_system_registration.mm */; };
+		A06BF7F51680270E0018A802 /* js_bindings_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7F21680270E0018A802 /* js_bindings_system_functions_registration.h */; };
+		A06BF7F61680270E0018A802 /* js_bindings_system_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7F31680270E0018A802 /* js_bindings_system_functions.h */; };
+		A06BF7F71680270E0018A802 /* js_bindings_system_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A06BF7F41680270E0018A802 /* js_bindings_system_functions.mm */; };
+		A06BF7F91680382E0018A802 /* SysTest in Resources */ = {isa = PBXBuildFile; fileRef = A06BF7F81680382E0018A802 /* SysTest */; };
+		A06BF7FB1680398D0018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF7FA1680398C0018A802 /* libsqlite3.dylib */; };
+		A06BF7FC168039A60018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF7FA1680398C0018A802 /* libsqlite3.dylib */; };
+		A06BF7FD168039A70018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF7FA1680398C0018A802 /* libsqlite3.dylib */; };
+		A06BF7FE168039A80018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF7FA1680398C0018A802 /* libsqlite3.dylib */; };
+		A06BF7FF168039A80018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF7FA1680398C0018A802 /* libsqlite3.dylib */; };
 		A07273DD155B23A8003E961F /* test_1021x1024_a8.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D8155B23A8003E961F /* test_1021x1024_a8.pvr.gz */; };
 		A07273DE155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273D9155B23A8003E961F /* test_1021x1024_rgb888.pvr.gz */; };
 		A07273DF155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = A07273DA155B23A8003E961F /* test_1021x1024_rgba4444.pvr.gz */; };
@@ -6921,6 +6932,13 @@
 		A06BF1E1167FE76D0018A802 /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06BF7E1167FEE390018A802 /* LocalStorage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LocalStorage.c; sourceTree = "<group>"; };
 		A06BF7E2167FEE390018A802 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		A06BF7EE1680268C0018A802 /* js_bindings_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_registration.h; sourceTree = "<group>"; };
+		A06BF7EF1680268D0018A802 /* js_bindings_system_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_system_registration.mm; sourceTree = "<group>"; };
+		A06BF7F21680270E0018A802 /* js_bindings_system_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions_registration.h; sourceTree = "<group>"; };
+		A06BF7F31680270E0018A802 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
+		A06BF7F41680270E0018A802 /* js_bindings_system_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_system_functions.mm; sourceTree = "<group>"; };
+		A06BF7F81680382E0018A802 /* SysTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SysTest; sourceTree = "<group>"; };
+		A06BF7FA1680398C0018A802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A0707F7515F94815001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
 		A0707F7615F94815001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
 		A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
@@ -7639,6 +7657,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A06BF7FB1680398D0018A802 /* libsqlite3.dylib in Frameworks */,
 				A0191E9D167FD8FB0099349A /* libchipmunk.a in Frameworks */,
 				A0191E9E167FD8FB0099349A /* libCocosBuilderReader.a in Frameworks */,
 				A0191E9F167FD8FB0099349A /* libCocosDenshion.a in Frameworks */,
@@ -7735,6 +7754,7 @@
 				A06BF1DB167FE76D0018A802 /* QuartzCore.framework in Frameworks */,
 				A06BF1DC167FE76D0018A802 /* ApplicationServices.framework in Frameworks */,
 				A06BF1DD167FE76D0018A802 /* libz.dylib in Frameworks */,
+				A06BF7FF168039A80018A802 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7833,6 +7853,7 @@
 				A09C8D361566FB4100ADFDA9 /* QuartzCore.framework in Frameworks */,
 				A09C8D381566FB4100ADFDA9 /* ApplicationServices.framework in Frameworks */,
 				A09C8D391566FB4100ADFDA9 /* libz.dylib in Frameworks */,
+				A06BF7FC168039A60018A802 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7849,6 +7870,7 @@
 				A09DB74A1640AA7600AFCA61 /* QuartzCore.framework in Frameworks */,
 				A09DB74B1640AA7600AFCA61 /* ApplicationServices.framework in Frameworks */,
 				A09DB74C1640AA7600AFCA61 /* libz.dylib in Frameworks */,
+				A06BF7FD168039A70018A802 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7879,6 +7901,7 @@
 				A0D4684B15C339E100588ADE /* QuartzCore.framework in Frameworks */,
 				A0D4684D15C339E100588ADE /* ApplicationServices.framework in Frameworks */,
 				A0D4684E15C339E100588ADE /* libz.dylib in Frameworks */,
+				A06BF7FE168039A80018A802 /* libsqlite3.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8250,6 +8273,7 @@
 				E0F9256D1224207200EF2362 /* libz.dylib */,
 				A03416FB1548806D00AE4D93 /* libffi.dylib */,
 				A0191EAA167FDBA40099349A /* libc++.dylib */,
+				A06BF7FA1680398C0018A802 /* libsqlite3.dylib */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -8379,6 +8403,9 @@
 		A0191CFB167FD6C50099349A /* auto */ = {
 			isa = PBXGroup;
 			children = (
+				A06BF7F21680270E0018A802 /* js_bindings_system_functions_registration.h */,
+				A06BF7F31680270E0018A802 /* js_bindings_system_functions.h */,
+				A06BF7F41680270E0018A802 /* js_bindings_system_functions.mm */,
 				A0191CFC167FD6C50099349A /* js_bindings_chipmunk_auto_classes.h */,
 				A0191CFD167FD6C50099349A /* js_bindings_chipmunk_auto_classes.mm */,
 				A0191CFE167FD6C50099349A /* js_bindings_chipmunk_auto_classes_registration.h */,
@@ -8442,6 +8469,8 @@
 				A0191D2C167FD6C50099349A /* js_bindings_cocos2d_registration.h */,
 				A0191D2D167FD6C50099349A /* js_bindings_cocos2d_registration.mm */,
 				A0191D2E167FD6C50099349A /* js_bindings_CocosBuilderReader_manual.mm */,
+				A06BF7EE1680268C0018A802 /* js_bindings_system_registration.h */,
+				A06BF7EF1680268D0018A802 /* js_bindings_system_registration.mm */,
 				A0191D2F167FD6C50099349A /* js_bindings_config.h */,
 				A0191D30167FD6C50099349A /* js_bindings_core.h */,
 				A0191D31167FD6C50099349A /* js_bindings_core.mm */,
@@ -9137,6 +9166,7 @@
 				A0C15FDC166D579900DF921C /* SceneTest */,
 				A0C15FDD166D579900DF921C /* SchedulerTest */,
 				A0C15FDE166D579900DF921C /* SpriteTest */,
+				A06BF7F81680382E0018A802 /* SysTest */,
 				A0C15FDF166D579900DF921C /* TextInputTest */,
 				A0C15FE0166D579900DF921C /* TextureCacheTest */,
 				A0C15FE1166D579900DF921C /* TileMapTest */,
@@ -10152,6 +10182,9 @@
 				A0191E78167FD6C60099349A /* Util.h in Headers */,
 				A0191E79167FD6C60099349A /* WeakPtr.h in Headers */,
 				A06BF7E4167FEE390018A802 /* LocalStorage.h in Headers */,
+				A06BF7F01680268D0018A802 /* js_bindings_system_registration.h in Headers */,
+				A06BF7F51680270E0018A802 /* js_bindings_system_functions_registration.h in Headers */,
+				A06BF7F61680270E0018A802 /* js_bindings_system_functions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13067,6 +13100,7 @@
 				A0C16005166D579900DF921C /* TouchesTest in Resources */,
 				A0C16006166D579900DF921C /* TransitionsTest in Resources */,
 				A0C16007166D579900DF921C /* UnitTest in Resources */,
+				A06BF7F91680382E0018A802 /* SysTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16256,6 +16290,8 @@
 				A0191E02167FD6C60099349A /* js_bindings_core.mm in Sources */,
 				A0191E04167FD6C60099349A /* js_bindings_NS_manual.mm in Sources */,
 				A06BF7E3167FEE390018A802 /* LocalStorage.c in Sources */,
+				A06BF7F11680268D0018A802 /* js_bindings_system_registration.mm in Sources */,
+				A06BF7F71680270E0018A802 /* js_bindings_system_functions.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

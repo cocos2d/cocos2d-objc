@@ -27,12 +27,29 @@ THE SOFTWARE.
  Works on cocos2d-iphone and cocos2d-x.
  */
 
+#ifndef __JSB_LOCALSTORAGE_H
+#define __JSB_LOCALSTORAGE_H
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 
 /** sets an item in the LS */
-void localStorageSetItem( char *key, const unsigned char *value);
+void localStorageSetItem( const char *key, const char *value);
 
 /** gets an item from the LS */
-const unsigned char* localStorageGetItem( char *key );
+const char* localStorageGetItem( const char *key );
 
 /** removes an item from the LS */
-void localStorageRemoveItem( char *key );
+void localStorageRemoveItem( const char *key );
+
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // __JSB_LOCALSTORAGE_H
