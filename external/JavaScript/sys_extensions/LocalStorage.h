@@ -37,6 +37,11 @@ THE SOFTWARE.
 extern "C" {
 #endif
 
+/** Initializes the database. If path is null, it will create an in-memory DB */
+void localStorageInit( const char *fullpath);
+
+/** Frees the allocated resources */
+void localStorageFree();
 
 /** sets an item in the LS */
 void localStorageSetItem( const char *key, const char *value);

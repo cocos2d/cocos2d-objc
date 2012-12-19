@@ -29,6 +29,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #include <sqlite3.h>
 
 static int _initialized = 0;
@@ -36,7 +37,6 @@ static sqlite3 *_db;
 static sqlite3_stmt *_stmt_select;
 static sqlite3_stmt *_stmt_remove;
 static sqlite3_stmt *_stmt_update;
-static char *_db_path = "/Users/rquesada/Documents/db.sqlite";
 
 
 static void localStorageLazyInit();
@@ -54,16 +54,16 @@ static void localStorageCreateTable()
 		printf("Error in CREATE TABLE\n");
 }
 
-static void localStorageLazyInit()
+void localStorageInit( const char *fullpath)
 {
 	if( ! _initialized ) {
 
 		int ret = 0;
 		
-		if (!_db_path)
+		if (!fullpath)
 			ret = sqlite3_open(":memory:",&_db);
 		else
-			ret = sqlite3_open(_db_path, &_db);
+			ret = sqlite3_open(fullpath, &_db);
 
 		localStorageCreateTable();
 
@@ -71,11 +71,11 @@ static void localStorageLazyInit()
 		const char *sql_select = "SELECT value FROM data WHERE key=?;";
 		ret |= sqlite3_prepare_v2(_db, sql_select, -1, &_stmt_select, NULL);
 
-		// UPDATE
+		// REPLACE
 		const char *sql_update = "REPLACE INTO data (key, value) VALUES (?,?);";
 		ret |= sqlite3_prepare_v2(_db, sql_update, -1, &_stmt_update, NULL);
 
-		// UPDATE
+		// DELETE
 		const char *sql_remove = "DELETE FROM data WHERE key=?;";
 		ret |= sqlite3_prepare_v2(_db, sql_remove, -1, &_stmt_remove, NULL);
 
@@ -88,7 +88,7 @@ static void localStorageLazyInit()
 	}
 }
 
-void localStorageDestroy()
+void localStorageFree()
 {
 	if( _initialized ) {
 		sqlite3_finalize(_stmt_select);
@@ -96,14 +96,16 @@ void localStorageDestroy()
 		sqlite3_finalize(_stmt_update);		
 
 		sqlite3_close(_db);
+		
+		_initialized = 0;
 	}
 }
 
 /** sets an item in the LS */
 void localStorageSetItem( const char *key, const char *value)
 {
-	localStorageLazyInit();
-
+	assert( _initialized );
+	
 	int ok = sqlite3_bind_text(_stmt_update, 1, key, -1, SQLITE_TRANSIENT);
 	ok |= sqlite3_bind_text(_stmt_update, 2, value, -1, SQLITE_TRANSIENT);
 
@@ -118,7 +120,7 @@ void localStorageSetItem( const char *key, const char *value)
 /** gets an item from the LS */
 const char* localStorageGetItem( const char *key )
 {
-	localStorageLazyInit();
+	assert( _initialized );
 
 	int ok = sqlite3_reset(_stmt_select);
 
@@ -136,6 +138,8 @@ const char* localStorageGetItem( const char *key )
 /** removes an item from the LS */
 void localStorageRemoveItem( const char *key )
 {
+	assert( _initialized );
+
 	int ok = sqlite3_bind_text(_stmt_remove, 1, key, -1, SQLITE_TRANSIENT);
 	
 	ok |= sqlite3_step(_stmt_remove);
