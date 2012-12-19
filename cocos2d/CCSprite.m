@@ -698,6 +698,12 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
+-(void)moveBy:(CGPoint)delta
+{
+	[super moveBy:delta];
+	SET_DIRTY_RECURSIVELY();
+}
+
 -(void)setRotation:(float)rot
 {
 	[super setRotation:rot];

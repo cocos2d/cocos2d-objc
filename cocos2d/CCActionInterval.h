@@ -171,31 +171,36 @@ Example:
 -(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
-/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying its position attribute.
-*/
-@interface CCMoveTo : CCActionInterval <NSCopying>
-{
-	CGPoint endPosition_;
-	CGPoint startPosition_;
-	CGPoint delta_;
-}
-/** creates the action */
-+(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
-/** initializes the action */
--(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
-@end
-
-/**  Moves a CCNode object x,y pixels by modifying its position attribute.
+/**  Moves a CCNode object x,y pixels by modifying it's position attribute.
  x and y are relative to the position of the object.
- Duration is is seconds.
-*/
-@interface CCMoveBy : CCMoveTo <NSCopying>
+ Several CCMoveBy actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+@interface CCMoveBy : CCActionInterval <NSCopying>
 {
+    CGPoint positionDelta_;
+    ccTime previousTick_;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
 /** initializes the action */
 -(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+@end
+
+/** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
+ Several CCMoveTo actions can be concurrently called, and the resulting
+ movement will be the sum of individual movements.
+ @since v2.1beta2-custom
+ */
+@interface CCMoveTo : CCMoveBy
+{
+	CGPoint endPosition;
+}
+/** creates the action */
++(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
+/** initializes the action */
+-(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
 @end
 
 /** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
