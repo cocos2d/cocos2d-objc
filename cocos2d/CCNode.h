@@ -296,6 +296,12 @@ enum {
 /** initializes the node */
 -(id) init;
 
+// extra methods
+
+/**  Update position by the given position delta.
+ @since v2.1beta2-custom
+ */
+-(void) moveBy: (CGPoint)positionDelta;
 
 // scene management
 
