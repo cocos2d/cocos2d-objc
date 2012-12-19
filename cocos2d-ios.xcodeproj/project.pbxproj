@@ -1875,8 +1875,6 @@
 		A06BF844168105350018A802 /* js_bindings_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF841168105350018A802 /* js_bindings_system_functions_registration.h */; };
 		A06BF845168105350018A802 /* js_bindings_system_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF842168105350018A802 /* js_bindings_system_functions.h */; };
 		A06BF846168105350018A802 /* js_bindings_system_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A06BF843168105350018A802 /* js_bindings_system_functions.mm */; };
-		A06BF84A168105500018A802 /* LocalStorage.c in Sources */ = {isa = PBXBuildFile; fileRef = A06BF848168105500018A802 /* LocalStorage.c */; };
-		A06BF84B168105500018A802 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF849168105500018A802 /* LocalStorage.h */; };
 		A06BF84D168109170018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
 		A06BF84E168109280018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
 		A06BF84F168109280018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
@@ -3090,6 +3088,8 @@
 		A0E431F61460741E00424477 /* background1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A252290F38B8DC007CAEB0 /* background1.jpg */; };
 		A0E431F71460741E00424477 /* background2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 50A2522A0F38B8DC007CAEB0 /* background2.jpg */; };
 		A0E431F81460741E00424477 /* background3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 503162E5102726E8003ACFE7 /* background3.jpg */; };
+		A0E469B6168269E700B929F6 /* LocalStorage.c in Sources */ = {isa = PBXBuildFile; fileRef = A0E469B3168269E700B929F6 /* LocalStorage.c */; };
+		A0E469B7168269E700B929F6 /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E469B4168269E700B929F6 /* LocalStorage.h */; };
 		A0E55EE614241719003F1E5A /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A0E55EE714241719003F1E5A /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A0E55EE814241719003F1E5A /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -5796,8 +5796,6 @@
 		A06BF841168105350018A802 /* js_bindings_system_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions_registration.h; sourceTree = "<group>"; };
 		A06BF842168105350018A802 /* js_bindings_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_system_functions.h; sourceTree = "<group>"; };
 		A06BF843168105350018A802 /* js_bindings_system_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_system_functions.mm; sourceTree = "<group>"; };
-		A06BF848168105500018A802 /* LocalStorage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LocalStorage.c; sourceTree = "<group>"; };
-		A06BF849168105500018A802 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
 		A06BF84C168109170018A802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A06F8BC9166D8C42008215BC /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06F8BCD166D8CD4008215BC /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-jsb.js"; sourceTree = "<group>"; };
@@ -6122,6 +6120,9 @@
 		A0E3E2FD1655E78E0073F049 /* searchpath1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = searchpath1; sourceTree = "<group>"; };
 		A0E3E2FE1655E78E0073F049 /* searchpath2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = searchpath2; sourceTree = "<group>"; };
 		A0E3E2FF1655E78E0073F049 /* searchpath3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = searchpath3; sourceTree = "<group>"; };
+		A0E469B3168269E700B929F6 /* LocalStorage.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = LocalStorage.c; sourceTree = "<group>"; };
+		A0E469B4168269E700B929F6 /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		A0E469B5168269E700B929F6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A0E6415A15AB8B8B008735E6 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape~ipad.png"; path = "bugs/Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		A0EC4A091403236C00EC482A /* example_Blur.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Blur.fsh; sourceTree = "<group>"; };
 		A0EC4A0A1403236C00EC482A /* example_Flower.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_Flower.fsh; sourceTree = "<group>"; };
@@ -8617,9 +8618,9 @@
 		A01919BB167FCB750099349A /* JavaScript */ = {
 			isa = PBXGroup;
 			children = (
-				A06BF8471681054F0018A802 /* sys_extensions */,
-				A0191B9C167FD5FF0099349A /* JRSwizzle */,
 				A01919BC167FCB750099349A /* jsbindings */,
+				A0E469B1168269E700B929F6 /* jsbindings_support */,
+				A0191B9C167FD5FF0099349A /* JRSwizzle */,
 				A0191A3C167FCB760099349A /* SpiderMonkey */,
 			);
 			name = JavaScript;
@@ -8960,15 +8961,6 @@
 				A05B5AF8156F35C100ADAB65 /* cpSlideJoint.c */,
 			);
 			path = constraints;
-			sourceTree = "<group>";
-		};
-		A06BF8471681054F0018A802 /* sys_extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A06BF848168105500018A802 /* LocalStorage.c */,
-				A06BF849168105500018A802 /* LocalStorage.h */,
-			);
-			path = sys_extensions;
 			sourceTree = "<group>";
 		};
 		A06F8BCB166D8CD4008215BC /* WatermelonWithMe */ = {
@@ -9372,6 +9364,24 @@
 				A0DABDCC1426715A00F3FEBE /* b2Rope.h */,
 			);
 			path = Rope;
+			sourceTree = "<group>";
+		};
+		A0E469B1168269E700B929F6 /* jsbindings_support */ = {
+			isa = PBXGroup;
+			children = (
+				A0E469B2168269E700B929F6 /* LocalStorage */,
+				A0E469B5168269E700B929F6 /* README.md */,
+			);
+			path = jsbindings_support;
+			sourceTree = "<group>";
+		};
+		A0E469B2168269E700B929F6 /* LocalStorage */ = {
+			isa = PBXGroup;
+			children = (
+				A0E469B3168269E700B929F6 /* LocalStorage.c */,
+				A0E469B4168269E700B929F6 /* LocalStorage.h */,
+			);
+			path = LocalStorage;
 			sourceTree = "<group>";
 		};
 		A0E6415D15AB8B90008735E6 /* Bugs */ = {
@@ -9944,7 +9954,7 @@
 				A06BF83E168105080018A802 /* js_bindings_system_registration.h in Headers */,
 				A06BF844168105350018A802 /* js_bindings_system_functions_registration.h in Headers */,
 				A06BF845168105350018A802 /* js_bindings_system_functions.h in Headers */,
-				A06BF84B168105500018A802 /* LocalStorage.h in Headers */,
+				A0E469B7168269E700B929F6 /* LocalStorage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15248,7 +15258,7 @@
 				A0191BB5167FD5FF0099349A /* JRSwizzle.m in Sources */,
 				A06BF83F168105080018A802 /* js_bindings_system_registration.mm in Sources */,
 				A06BF846168105350018A802 /* js_bindings_system_functions.mm in Sources */,
-				A06BF84A168105500018A802 /* LocalStorage.c in Sources */,
+				A0E469B6168269E700B929F6 /* LocalStorage.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
