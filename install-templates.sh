@@ -137,6 +137,12 @@ copy_jrswizzle_files(){
 	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
 }
 
+copy_jssys_files(){
+	echo ...copying JS Sys files
+	copy_files external/JavaScript/ "$LIBS_DIR"
+	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
+}
+
 
 print_template_banner(){
 	echo ''
