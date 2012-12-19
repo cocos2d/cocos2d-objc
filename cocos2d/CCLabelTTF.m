@@ -116,12 +116,12 @@
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
 
-		dimensions_ = dimensions;
-		hAlignment_ = alignment;
-		vAlignment_ = vertAlignment;
-		fontName_ = [[self getFontName: name] copy];
-		fontSize_ = size;
-		lineBreakMode_ = lineBreakMode;
+		_dimensions = dimensions;
+		_hAlignment = alignment;
+		_vAlignment = vertAlignment;
+		_fontName = [[self getFontName: name] copy];
+		_fontSize = size;
+		_lineBreakMode = lineBreakMode;
 
 		[self setString:str];
 	}
@@ -132,9 +132,9 @@
 {
 	NSAssert( str, @"Invalid string" );
 
-	if( string_.hash != str.hash ) {
-		[string_ release];
-		string_ = [str copy];
+	if( _string.hash != str.hash ) {
+		[_string release];
+		_string = [str copy];
 		
 		[self updateTexture];
 	}
@@ -142,7 +142,7 @@
 
 -(NSString*) string
 {
-	return string_;
+	return _string;
 }
 
 - (NSString*) getFontName:(NSString*)fontName
@@ -167,62 +167,62 @@
 {
     fontName = [self getFontName:fontName];
     
-	if( fontName.hash != fontName_.hash ) {
-		[fontName_ release];
-		fontName_ = [fontName copy];
+	if( fontName.hash != _fontName.hash ) {
+		[_fontName release];
+		_fontName = [fontName copy];
 		
 		// Force update
-		if( string_ )
+		if( _string )
 			[self updateTexture];
 	}
 }
 
 - (NSString*)fontName
 {
-    return fontName_;
+    return _fontName;
 }
 
 - (void) setFontSize:(float)fontSize
 {
-	if( fontSize != fontSize_ ) {
-		fontSize_ = fontSize;
+	if( fontSize != _fontSize ) {
+		_fontSize = fontSize;
 		
 		// Force update
-		if( string_ )
+		if( _string )
 			[self updateTexture];
 	}
 }
 
 - (float) fontSize
 {
-    return fontSize_;
+    return _fontSize;
 }
 
 -(void) setDimensions:(CGSize) dim
 {
-    if( dim.width != dimensions_.width || dim.height != dimensions_.height)
+    if( dim.width != _dimensions.width || dim.height != _dimensions.height)
 	{
-        dimensions_ = dim;
+        _dimensions = dim;
         
 		// Force update
-		if( string_ )
+		if( _string )
 			[self updateTexture];
     }
 }
 
 -(CGSize) dimensions
 {
-    return dimensions_;
+    return _dimensions;
 }
 
 -(void) setHorizontalAlignment:(CCTextAlignment)alignment
 {
-    if (alignment != hAlignment_)
+    if (alignment != _hAlignment)
     {
-        hAlignment_ = alignment;
+        _hAlignment = alignment;
         
         // Force update
-		if( string_ )
+		if( _string )
 			[self updateTexture];
 
     }
@@ -230,57 +230,57 @@
 
 - (CCTextAlignment) horizontalAlignment
 {
-    return hAlignment_;
+    return _hAlignment;
 }
 
 -(void) setVerticalAlignment:(CCVerticalTextAlignment)verticalAlignment
 {
-    if (vAlignment_ != verticalAlignment)
+    if (_vAlignment != verticalAlignment)
     {
-        vAlignment_ = verticalAlignment;
+        _vAlignment = verticalAlignment;
         
 		// Force update
-		if( string_ )
+		if( _string )
 			[self updateTexture];
     }
 }
 
 - (CCVerticalTextAlignment) verticalAlignment
 {
-    return vAlignment_;
+    return _vAlignment;
 }
 
 - (void) dealloc
 {
-	[string_ release];
-	[fontName_ release];
+	[_string release];
+	[_fontName release];
 
 	[super dealloc];
 }
 
 - (NSString*) description
 {
-	// XXX: string_, fontName_ can't be displayed here, since they might be already released
+	// XXX: _string, _fontName can't be displayed here, since they might be already released
 
-	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, fontSize_];
+	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, _fontSize];
 }
 
 // Helper
 - (BOOL) updateTexture
 {				
 	CCTexture2D *tex;
-	if( dimensions_.width == 0 || dimensions_.height == 0 )
-		tex = [[CCTexture2D alloc] initWithString:string_
-										 fontName:fontName_
-										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()];
+	if( _dimensions.width == 0 || _dimensions.height == 0 )
+		tex = [[CCTexture2D alloc] initWithString:_string
+										 fontName:_fontName
+										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()];
 	else
-		tex = [[CCTexture2D alloc] initWithString:string_
-										 fontName:fontName_
-										 fontSize:fontSize_  * CC_CONTENT_SCALE_FACTOR()
-									   dimensions:CC_SIZE_POINTS_TO_PIXELS(dimensions_)
-									   hAlignment:hAlignment_
-									   vAlignment:vAlignment_
-									lineBreakMode:lineBreakMode_
+		tex = [[CCTexture2D alloc] initWithString:_string
+										 fontName:_fontName
+										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()
+									   dimensions:CC_SIZE_POINTS_TO_PIXELS(_dimensions)
+									   hAlignment:_hAlignment
+									   vAlignment:_vAlignment
+									lineBreakMode:_lineBreakMode
 			   ];
 
 	if( !tex )

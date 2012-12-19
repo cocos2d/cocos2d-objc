@@ -39,13 +39,13 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
-	CGSize dimensions_;
-	CCTextAlignment			hAlignment_;
-    CCVerticalTextAlignment vAlignment_;
-	NSString * fontName_;
-	CGFloat fontSize_;
-	CCLineBreakMode lineBreakMode_;
-	NSString	*string_;
+	CGSize	_dimensions;
+	CCTextAlignment			_hAlignment;
+    CCVerticalTextAlignment _vAlignment;
+	NSString * _fontName;
+	CGFloat _fontSize;
+	CCLineBreakMode _lineBreakMode;
+	NSString	*_string;
 }
 
 /** Font name used in the label */
