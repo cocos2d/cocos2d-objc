@@ -11,6 +11,16 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
+		<key>libs/jsbindings/AUTHORS</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/AUTHORS</string>
+		</dict>
 		<key>libs/jsbindings/CHANGELOG</key>
 		<dict>
 			<key>Group</key>
@@ -368,6 +378,48 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_complement.sh</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/configs/system/gen_system_bridgesupport.sh</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>configs</string>
+				<string>system</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/configs/system/gen_system_bridgesupport.sh</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/configs/system/system.bridgesupport</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>configs</string>
+				<string>system</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/configs/system/system.bridgesupport</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/configs/system/system_jsb.ini</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>configs</string>
+				<string>system</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/configs/system/system_jsb.ini</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -859,6 +911,46 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_system_functions.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_system_functions.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_system_functions.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_system_functions.mm</string>
+		</dict>
+		<key>libs/jsbindings/src/auto/js_bindings_system_functions_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>auto</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/auto/js_bindings_system_functions_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/jsbindings/src/js/jsb_constants.js</key>
 		<dict>
 			<key>Group</key>
@@ -1127,6 +1219,68 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/manual/js_bindings_NS_manual.mm</string>
 		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_system_registration.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_system_registration.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_system_registration.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_system_registration.mm</string>
+		</dict>
+		<key>libs/jsbindings_support/LocalStorage/LocalStorage.c</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings_support</string>
+				<string>LocalStorage</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings_support/LocalStorage/LocalStorage.c</string>
+		</dict>
+		<key>libs/jsbindings_support/LocalStorage/LocalStorage.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings_support</string>
+				<string>LocalStorage</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings_support/LocalStorage/LocalStorage.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings_support/README.md</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings_support</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings_support/README.md</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/LICENSE_jsbindings.txt</key>
 		<dict>
 			<key>Group</key>
@@ -1141,6 +1295,7 @@
 	</dict>
 	<key>Nodes</key>
 	<array>
+		<string>libs/jsbindings/AUTHORS</string>
 		<string>libs/jsbindings/CHANGELOG</string>
 		<string>libs/jsbindings/configs/chipmunk/chipmunk.bridgesupport</string>
 		<string>libs/jsbindings/configs/chipmunk/chipmunk_jsb.ini</string>
@@ -1167,6 +1322,9 @@
 		<string>libs/jsbindings/configs/CocosDenshion/CocosDenshion_jsb.ini</string>
 		<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_bridgesupport.sh</string>
 		<string>libs/jsbindings/configs/CocosDenshion/gen_CocosDenshion_complement.sh</string>
+		<string>libs/jsbindings/configs/system/gen_system_bridgesupport.sh</string>
+		<string>libs/jsbindings/configs/system/system.bridgesupport</string>
+		<string>libs/jsbindings/configs/system/system_jsb.ini</string>
 		<string>libs/jsbindings/generate_complement.py</string>
 		<string>libs/jsbindings/generate_js_bindings.py</string>
 		<string>libs/jsbindings/LICENSE.txt</string>
@@ -1204,6 +1362,9 @@
 		<string>libs/jsbindings/src/auto/js_bindings_CocosDenshion_functions.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_CocosDenshion_functions.mm</string>
 		<string>libs/jsbindings/src/auto/js_bindings_CocosDenshion_functions_registration.h</string>
+		<string>libs/jsbindings/src/auto/js_bindings_system_functions.h</string>
+		<string>libs/jsbindings/src/auto/js_bindings_system_functions.mm</string>
+		<string>libs/jsbindings/src/auto/js_bindings_system_functions_registration.h</string>
 		<string>libs/jsbindings/src/js/jsb_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_chipmunk.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_cocos2d.js</string>
@@ -1225,6 +1386,11 @@
 		<string>libs/jsbindings/src/manual/js_bindings_core.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_NS_manual.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_NS_manual.mm</string>
+		<string>libs/jsbindings/src/manual/js_bindings_system_registration.h</string>
+		<string>libs/jsbindings/src/manual/js_bindings_system_registration.mm</string>
+		<string>libs/jsbindings_support/LocalStorage/LocalStorage.c</string>
+		<string>libs/jsbindings_support/LocalStorage/LocalStorage.h</string>
+		<string>libs/jsbindings_support/README.md</string>
 		<string>libs/LICENSE_jsbindings.txt</string>
 	</array>
 </dict>

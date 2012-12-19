@@ -97,6 +97,7 @@
 				<key>OTHER_LDFLAGS</key>
                 <array>
                     <string>-lz</string>
+                    <string>-lsqlite3</string>
                     <string>-ObjC</string>
                 </array>
 			</dict>
