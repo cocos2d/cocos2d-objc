@@ -131,15 +131,14 @@ copy_jsbindings_files(){
 	copy_files LICENSE_jsbindings.txt "$LIBS_DIR"
 }
 
+copy_jsbindings_support_files(){
+	echo ...copying JSBindigns Support files
+	copy_files external/JavaScript/jsbindings_support "$LIBS_DIR"
+}
+
 copy_jrswizzle_files(){
 	echo ...copying JR Swizzle files
 	copy_files external/JavaScript/JRSwizzle "$LIBS_DIR"
-	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
-}
-
-copy_jssys_files(){
-	echo ...copying JS Sys files
-	copy_files external/JavaScript/ "$LIBS_DIR"
 	copy_files LICENSE_JRSwizzle.txt "$LIBS_DIR"
 }
 
@@ -201,7 +200,9 @@ copy_xcode4_project_templates(){
 	LIBS_DIR="$DST_DIR""lib_jsbindings.xctemplate/libs/"
 	mkdir -p "$LIBS_DIR"
 	copy_jsbindings_files
+	copy_jsbindings_support_files
 
+    # SpiderMonkey defines the LIBS_DIR in its function
 	copy_spidermonkey_files
 
 	LIBS_DIR="$DST_DIR""lib_jrswizzle.xctemplate/libs/"
