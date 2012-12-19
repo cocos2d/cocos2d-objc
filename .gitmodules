@@ -13,3 +13,6 @@
 [submodule "external/JavaScript/JRSwizzle"]
 	path = external/JavaScript/JRSwizzle
 	url = git://github.com/ricardoquesada/jrswizzle.git
+[submodule "external/JavaScript/jsbindings_support"]
+	path = external/JavaScript/jsbindings_support
+	url = git://github.com/ricardoquesada/jsbindings_support.git
