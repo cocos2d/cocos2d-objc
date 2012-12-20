@@ -19,10 +19,6 @@ Class restartAction(void);
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
-	@"ActionMoveStacked",
-	@"ActionMoveJumpStacked",
-	@"ActionMoveBezierStacked",
-	
 	@"ActionManual",
 	@"ActionMove",
 	@"ActionRotate",
@@ -1621,10 +1617,8 @@ return @"Skew Comparison";
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
 	  [CCSequence actions:
-	   [CCMoveBy actionWithDuration:2 position:ccp(100,0)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0,100)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(-100,0)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0,-100)],
+	   [CCMoveBy actionWithDuration:0.1 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.1 position:ccp(-10,0)],
 	   nil]]];
 }
 
