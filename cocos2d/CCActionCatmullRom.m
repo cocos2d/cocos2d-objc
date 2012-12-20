@@ -227,6 +227,9 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 	
 	// Issue #1441
 	_deltaT = (CGFloat) 1 / ([_points count]-1);
+	
+	_previousPosition = [(CCNode*)target position];
+	_accumulatedDiff = CGPointZero;
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -260,12 +263,22 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, _tension, lt );
 
+	// Support for stacked actions
+	CCNode *node = (CCNode*)_target;
+	CGPoint diff = ccpSub( node.position, _previousPosition);
+	if( diff.x !=0 || diff.y != 0 ) {
+		_accumulatedDiff = ccpAdd( _accumulatedDiff, diff);
+		newPos = ccpAdd( newPos, _accumulatedDiff);
+	}
+	
 	[self updatePosition:newPos];
+	
 }
 
 -(void) updatePosition:(CGPoint)newPos
 {
 	[_target setPosition:newPos];
+	_previousPosition = newPos;
 }
 
 -(CCActionInterval*) reverse
@@ -289,7 +302,9 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 -(void) updatePosition:(CGPoint)newPos
 {
-	[_target setPosition:ccpAdd(newPos, _startPosition)];
+	CGPoint p = ccpAdd(newPos, _startPosition);
+	[_target setPosition:p];
+	_previousPosition = p;
 }
 
 -(CCActionInterval*) reverse

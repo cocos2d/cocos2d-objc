@@ -85,6 +85,8 @@
 	CCPointArray	*_points;
 	CGFloat			_deltaT;
 	CGFloat			_tension;
+	CGPoint			_previousPosition;
+	CGPoint			_accumulatedDiff;
 }
 
 /** Array of control points */

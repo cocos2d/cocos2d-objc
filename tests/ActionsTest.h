@@ -183,6 +183,18 @@
 {}
 @end
 
+@interface ActionCatmullRomStacked : ActionDemo
+{
+	CCPointArray *array1_;
+	CCPointArray *array2_;
+}
+@end
+
+@interface ActionCardinalSplineStacked : ActionDemo
+{
+	CCPointArray *array_;
+}
+@end
 
 @interface PauseResumeActions : ActionDemo
 {
