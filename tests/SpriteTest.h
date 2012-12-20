@@ -19,11 +19,6 @@
 -(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
-@interface SpriteMove : SpriteDemo
-{}
--(void) addNewSpriteWithCoords:(CGPoint)p;
-@end
-
 @interface SpriteBatchNode1 : SpriteDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
