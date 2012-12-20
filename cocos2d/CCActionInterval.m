@@ -921,47 +921,47 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
 {
 	if( (self=[super initWithDuration: t]) ) {
-		config_ = c;
+		_config = c;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] bezier:config_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] bezier:_config];
     return copy;
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	startPosition_ = [(CCNode*)_target position];
+	_startPosition = [(CCNode*)_target position];
 }
 
 -(void) update: (ccTime) t
 {
 	CGFloat xa = 0;
-	CGFloat xb = config_.controlPoint_1.x;
-	CGFloat xc = config_.controlPoint_2.x;
-	CGFloat xd = config_.endPosition.x;
+	CGFloat xb = _config.controlPoint_1.x;
+	CGFloat xc = _config.controlPoint_2.x;
+	CGFloat xd = _config.endPosition.x;
 
 	CGFloat ya = 0;
-	CGFloat yb = config_.controlPoint_1.y;
-	CGFloat yc = config_.controlPoint_2.y;
-	CGFloat yd = config_.endPosition.y;
+	CGFloat yb = _config.controlPoint_1.y;
+	CGFloat yc = _config.controlPoint_2.y;
+	CGFloat yd = _config.endPosition.y;
 
 	CGFloat x = bezierat(xa, xb, xc, xd, t);
 	CGFloat y = bezierat(ya, yb, yc, yd, t);
-	[_target setPosition:  ccpAdd( startPosition_, ccp(x,y))];
+	[_target setPosition:  ccpAdd( _startPosition, ccp(x,y))];
 }
 
 - (CCActionInterval*) reverse
 {
 	ccBezierConfig r;
 
-	r.endPosition	 = ccpNeg(config_.endPosition);
-	r.controlPoint_1 = ccpAdd(config_.controlPoint_2, ccpNeg(config_.endPosition));
-	r.controlPoint_2 = ccpAdd(config_.controlPoint_1, ccpNeg(config_.endPosition));
+	r.endPosition	 = ccpNeg(_config.endPosition);
+	r.controlPoint_1 = ccpAdd(_config.controlPoint_2, ccpNeg(_config.endPosition));
+	r.controlPoint_2 = ccpAdd(_config.controlPoint_1, ccpNeg(_config.endPosition));
 
 	CCBezierBy *action = [[self class] actionWithDuration:[self duration] bezier:r];
 	return action;
@@ -976,7 +976,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
 {
 	if( (self=[super initWithDuration: t]) ) {
-		toConfig_ = c;
+		_toConfig = c;
 	}
 	return self;
 }
@@ -984,9 +984,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	config_.controlPoint_1 = ccpSub(toConfig_.controlPoint_1, startPosition_);
-	config_.controlPoint_2 = ccpSub(toConfig_.controlPoint_2, startPosition_);
-	config_.endPosition = ccpSub(toConfig_.endPosition, startPosition_);
+	_config.controlPoint_1 = ccpSub(_toConfig.controlPoint_1, _startPosition);
+	_config.controlPoint_2 = ccpSub(_toConfig.controlPoint_2, _startPosition);
+	_config.endPosition = ccpSub(_toConfig.endPosition, _startPosition);
 }
 @end
 

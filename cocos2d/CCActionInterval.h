@@ -274,8 +274,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCBezierBy : CCActionInterval <NSCopying>
 {
-	ccBezierConfig config_;
-	CGPoint startPosition_;
+	ccBezierConfig _config;
+	CGPoint _startPosition;
 }
 
 /** creates the action with a duration and a bezier configuration */
@@ -290,7 +290,7 @@ typedef struct _ccBezierConfig {
  */
 @interface CCBezierTo : CCBezierBy
 {
-	ccBezierConfig toConfig_;
+	ccBezierConfig _toConfig;
 }
 // XXX: Added to prevent bug on BridgeSupport
 -(void) startWithTarget:(CCNode *)aTarget;
