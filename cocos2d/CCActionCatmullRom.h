@@ -82,7 +82,7 @@
  */
 @interface CCCardinalSplineTo : CCActionInterval
 {
-	CCPointArray		*points_;
+	CCPointArray	*points_;
 	CGFloat			deltaT_;
 	CGFloat			tension_;
 }

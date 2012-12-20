@@ -165,15 +165,24 @@
 {}
 @end
 
-@interface ActionMoveStacked : ActionDemo
+@interface ActionStacked : ActionDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
+-(void) runActionsInSprite:(CCSprite*)sprite;
 @end
 
-@interface ActionMoveJumpStacked : ActionDemo
+@interface ActionMoveStacked : ActionStacked
 {}
--(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
+
+@interface ActionMoveJumpStacked : ActionStacked
+{}
+@end
+
+@interface ActionMoveBezierStacked : ActionStacked
+{}
+@end
+
 
 @interface PauseResumeActions : ActionDemo
 {

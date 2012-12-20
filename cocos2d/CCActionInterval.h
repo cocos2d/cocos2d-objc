@@ -276,6 +276,7 @@ typedef struct _ccBezierConfig {
 {
 	ccBezierConfig _config;
 	CGPoint _startPosition;
+	CGPoint _previousPosition;
 }
 
 /** creates the action with a duration and a bezier configuration */
