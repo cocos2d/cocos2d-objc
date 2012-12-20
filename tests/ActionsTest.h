@@ -30,11 +30,6 @@
 {}
 @end
 
-@interface ActionMoveStacked : ActionDemo
-{}
--(void) addNewSpriteWithCoords:(CGPoint)p;
-@end
-
 @interface ActionRotate : ActionDemo
 {}
 @end
@@ -168,6 +163,16 @@
 
 @interface ActionTargeted : ActionDemo
 {}
+@end
+
+@interface ActionMoveStacked : ActionDemo
+{}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
+@end
+
+@interface ActionMoveJumpStacked : ActionDemo
+{}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
 @end
 
 @interface PauseResumeActions : ActionDemo

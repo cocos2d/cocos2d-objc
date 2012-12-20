@@ -1,4 +1,5 @@
 version 2.1-rc0	 XX-Jan-2013
+. [NEW] Actions: MoveBy/To and JumpBy/To can be run at the same time. The result will be the sum of all the actions
 . [NEW] GLProgram: Added uniformLocationForName: method
 . [FIX] Director: replaced lenght with lenght
 		Fixed 2 memory leaks in createStatsLabel

@@ -248,12 +248,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	isTransformDirty_ = isInverseDirty_ = YES;
 }
 
--(void) moveBy: (CGPoint)positionDelta
-{
-    position_ = ccpAdd(position_, positionDelta);
-	isTransformDirty_ = isInverseDirty_ = YES;
-}
-
 -(void) setIgnoreAnchorPointForPosition: (BOOL)newValue
 {
 	if( newValue != ignoreAnchorPointForPosition_ ) {

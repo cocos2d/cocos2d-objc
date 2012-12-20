@@ -179,8 +179,9 @@ Example:
  */
 @interface CCMoveBy : CCActionInterval <NSCopying>
 {
-    CGPoint positionDelta_;
-    ccTime previousTick_;
+	CGPoint _positionDelta;
+	CGPoint _startPos;
+	CGPoint _previousPos;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
@@ -195,7 +196,7 @@ Example:
  */
 @interface CCMoveTo : CCMoveBy
 {
-	CGPoint endPosition;
+	CGPoint _endPosition;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
@@ -237,10 +238,11 @@ Example:
 */
 @interface CCJumpBy : CCActionInterval <NSCopying>
 {
-	CGPoint startPosition_;
-	CGPoint delta_;
-	ccTime height_;
-	NSUInteger jumps_;
+	CGPoint _startPosition;
+	CGPoint _delta;
+	ccTime	_height;
+	NSUInteger _jumps;
+	CGPoint _previousPos;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;

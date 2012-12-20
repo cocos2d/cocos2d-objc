@@ -636,8 +636,7 @@
 //
 // MoveBy
 //
-#pragma mark -
-#pragma mark MoveBy
+#pragma mark - MoveBy
 
 @implementation CCMoveBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
@@ -648,32 +647,35 @@
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
 	if( (self=[super initWithDuration: t]) )
-		positionDelta_ = p;
+		_positionDelta = p;
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: positionDelta_];
-	return copy;
+	return [[[self class] allocWithZone: zone] initWithDuration:[self duration] position:_positionDelta];
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(CCNode *)target
 {
-    previousTick_ = 0;
-	[super startWithTarget:aTarget];
+	[super startWithTarget:target];
+	_previousPos = _startPos = [target position];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:_duration position:ccp( -positionDelta_.x, -positionDelta_.y)];
+	return [[self class] actionWithDuration:_duration position:ccp( -_positionDelta.x, -_positionDelta.y)];
 }
 
 -(void) update: (ccTime) t
 {
-    [_target moveBy:ccpMult(positionDelta_, t-previousTick_)];
-    //[target_ setPosition: ccpAdd(((CCNode*)target_).position, ccpMult(positionDelta_, t-previousTick_) )];
-    previousTick_=t;
+	CCNode *node = (CCNode*)_target;
+	CGPoint currentPos = [node position];
+	CGPoint diff = ccpSub(currentPos, _previousPos);
+	_startPos = ccpAdd( _startPos, diff);
+	CGPoint newPos =  ccpAdd( _startPos, ccpMult(_positionDelta, t) );
+	[_target setPosition: newPos];
+	_previousPos = newPos;
 }
 @end
 
@@ -692,7 +694,7 @@
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
 {
 	if( (self=[super initWithDuration: t]) ) {
-		endPosition = p;
+		_endPosition = p;
     }
 
 	return self;
@@ -700,14 +702,14 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: endPosition];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration: [self duration] position: _endPosition];
 	return copy;
 }
 
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	positionDelta_ = ccpSub( endPosition, [(CCNode*)_target position] );
+	_positionDelta = ccpSub( _endPosition, [(CCNode*)_target position] );
 }
 
 @end
@@ -829,45 +831,53 @@
 -(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
 {
 	if( (self=[super initWithDuration:t]) ) {
-		delta_ = pos;
-		height_ = h;
-		jumps_ = j;
+		_delta = pos;
+		_height = h;
+		_jumps = j;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] position:delta_ height:height_ jumps:jumps_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] position:_delta height:_height jumps:_jumps];
 	return copy;
 }
 
--(void) startWithTarget:(id)aTarget
+-(void) startWithTarget:(id)target
 {
-	[super startWithTarget:aTarget];
-	startPosition_ = [(CCNode*)_target position];
+	[super startWithTarget:target];
+	_previousPos = _startPosition = [(CCNode*)_target position];
 }
 
 -(void) update: (ccTime) t
 {
 	// Sin jump. Less realistic
-//	ccTime y = height * fabsf( sinf(t * (CGFloat)M_PI * jumps ) );
-//	y += delta.y * t;
-//	ccTime x = delta.x * t;
-//	[target setPosition: ccp( startPosition.x + x, startPosition.y + y )];
+//	ccTime y = _height * fabsf( sinf(t * (CGFloat)M_PI * _jumps ) );
+//	y += _delta.y * dt;
+	
+//	// parabolic jump (since v0.8.2)
+	CGFloat frac = fmodf( t * _jumps, 1.0f );
+	CGFloat y = _height * 4 * frac * (1 - frac);
+	y += _delta.y * t;
 
-	// parabolic jump (since v0.8.2)
-	ccTime frac = fmodf( t * jumps_, 1.0f );
-	ccTime y = height_ * 4 * frac * (1 - frac);
-	y += delta_.y * t;
-	ccTime x = delta_.x * t;
-	[_target setPosition: ccp( startPosition_.x + x, startPosition_.y + y )];
-
+	CGFloat x = _delta.x * t;
+	
+	CCNode *node = (CCNode*)_target;
+	CGPoint currentPos = [node position];
+	
+	CGPoint diff = ccpSub( currentPos, _previousPos );
+	_startPosition = ccpAdd( diff, _startPosition);
+	
+	CGPoint newPos = ccpAdd( _startPosition, ccp(x,y));
+	[node setPosition:newPos];
+	
+	_previousPos = newPos;
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:_duration position: ccp(-delta_.x,-delta_.y) height:height_ jumps:jumps_];
+	return [[self class] actionWithDuration:_duration position: ccp(-_delta.x,-_delta.y) height:_height jumps:_jumps];
 }
 @end
 
@@ -880,7 +890,7 @@
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	delta_ = ccp( delta_.x - startPosition_.x, delta_.y - startPosition_.y );
+	_delta = ccp( _delta.x - _startPosition.x, _delta.y - _startPosition.y );
 }
 @end
 
