@@ -1,5 +1,6 @@
 version 2.1-rc0	 XX-Jan-2013
-. [NEW] Actions: MoveBy/To and JumpBy/To can be run at the same time. The result will be the sum of all the actions
+. [NEW] Actions: All the actions that modify the position property can be run at the same time.
+		MoveBy/To, JumpBy/To, BezierTo/By, CatmullRomTo/By and CardinalSplineTo/By won't override the results of previous actions.
 . [NEW] GLProgram: Added uniformLocationForName: method
 . [FIX] Director: replaced lenght with lenght
 		Fixed 2 memory leaks in createStatsLabel

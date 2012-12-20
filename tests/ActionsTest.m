@@ -54,9 +54,11 @@ static NSString *transitions[] = {
 	@"ActionProperty",
 	@"ActionTargeted",
 	@"ActionMoveStacked",
-	@"ActionMoveJumpStacked",	
+	@"ActionMoveJumpStacked",
 	@"ActionMoveBezierStacked",
-	
+	@"ActionCardinalSplineStacked",
+	@"ActionCatmullRomStacked",
+		
     @"PauseResumeActions",
 
 	@"Issue1305",
@@ -727,7 +729,7 @@ return @"Skew Comparison";
 
 -(NSString *) title
 {
-	return @"CardinalSplineBy / CardinalSplineAt";
+	return @"CardinalSplineBy / CardinalSplineTo";
 }
 -(NSString *) subtitle
 {
@@ -1546,18 +1548,17 @@ return @"Skew Comparison";
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
 	  [CCSequence actions:
-	   [CCMoveBy actionWithDuration:6 position:ccp(200, 0)],
-	   [CCMoveBy actionWithDuration:6 position:ccp(-200, 0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,10)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,-10)],
 	   nil]]];
+	
+	id action = [CCMoveBy actionWithDuration:2 position:ccp(400,0)];
+	id action_back = [action reverse];
 	
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
-	  [CCSequence actions:
-	   [CCDelayTime actionWithDuration:1],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0, 100)],
-	   [CCDelayTime actionWithDuration:1],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0, -100)],
-	   nil]]];	
+	  [CCSequence actions:action, action_back, nil]
+	  ]];
 }
 
 
@@ -1576,16 +1577,17 @@ return @"Skew Comparison";
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
 	  [CCSequence actions:
-	   [CCMoveBy actionWithDuration:2 position:ccp(300,0)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0,300)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(-300,0)],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0,-300)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,2)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,-2)],
 	   nil]]];
 
+	id jump = [CCJumpBy actionWithDuration:2 position:ccp(400,0) height:100 jumps:5];
+	id jump_back = [jump reverse];
+	
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
-	  [CCJumpBy actionWithDuration:2 position:ccp(0,0) height:100 jumps:5]]
-	 ];
+	  [CCSequence actions:jump, jump_back, nil]
+	  ]];
 }
 
 -(NSString *) title
@@ -1617,14 +1619,231 @@ return @"Skew Comparison";
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
 	  [CCSequence actions:
-	   [CCMoveBy actionWithDuration:0.1 position:ccp(10,0)],
-	   [CCMoveBy actionWithDuration:0.1 position:ccp(-10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,0)],
 	   nil]]];
 }
 
 -(NSString *) title
 {
 	return @"Stacked Move + Bezier actions";
+}
+@end
+
+#pragma mark - ActionCatmullRomStacked
+
+@implementation ActionCatmullRomStacked
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	//
+	// sprite 1 (By)
+	//
+	// startPosition can be any coordinate, but since the movement
+	// is relative to the Catmull Rom curve, it is better to start with (0,0).
+	//
+	
+	tamara.position = ccp(50,50);
+	
+	CCPointArray *array = [CCPointArray arrayWithCapacity:20];
+	
+	[array addControlPoint:ccp(0,0)];
+	[array addControlPoint:ccp(80,80)];
+	[array addControlPoint:ccp(s.width-80,80)];
+	[array addControlPoint:ccp(s.width-80,s.height-80)];
+	[array addControlPoint:ccp(80,s.height-80)];
+	[array addControlPoint:ccp(80,80)];
+	[array addControlPoint:ccp(s.width/2, s.height/2)];
+	
+	CCCatmullRomBy *action = [CCCatmullRomBy actionWithDuration:3 points:array];
+	id reverse = [action reverse];
+	
+	CCSequence *seq = [CCSequence actions:action, reverse, nil];
+	
+	[tamara runAction: seq];
+	
+	
+	[tamara runAction:
+	 [CCRepeatForever actionWithAction:
+	  [CCSequence actions:
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,0)],
+	   nil]]];
+
+	
+	//
+	// sprite 2 (To)
+	//
+	// The startPosition is not important here, because it uses a "To" action.
+	// The initial position will be the 1st point of the Catmull Rom path
+	//
+	
+	CCPointArray *array2 = [CCPointArray arrayWithCapacity:20];
+	
+	[array2 addControlPoint:ccp(s.width/2, 30)];
+	[array2 addControlPoint:ccp(s.width-80,30)];
+	[array2 addControlPoint:ccp(s.width-80,s.height-80)];
+	[array2 addControlPoint:ccp(s.width/2,s.height-80)];
+	[array2 addControlPoint:ccp(s.width/2, 30)];
+	
+	
+	CCCatmullRomTo *action2 = [CCCatmullRomTo actionWithDuration:3 points:array2];
+	id reverse2 = [action2 reverse];
+	
+	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
+	
+	[kathia runAction: seq2];
+	
+	
+	[kathia runAction:
+	 [CCRepeatForever actionWithAction:
+	  [CCSequence actions:
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,0)],
+	   nil]]];
+
+	
+	array1_ = [array retain];
+	array2_ = [array2 retain];
+}
+
+-(void) dealloc
+{
+	[array1_ release];
+	[array2_ release];
+	
+	[super dealloc];
+}
+
+-(void) draw
+{
+	[super draw];
+	
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCatmullRom(array1_,50);
+	kmGLPopMatrix();
+	
+	ccDrawCatmullRom(array2_,50);
+}
+
+-(NSString *) title
+{
+	return @"Stacked MoveBy + CatmullRom actions";
+}
+-(NSString *) subtitle
+{
+	return @"MoveBy + CatmullRom at the same time in the same sprite";
+}
+@end
+
+#pragma mark - ActionCardinalSplineStacked
+
+@implementation ActionCardinalSplineStacked
+-(void) onEnter
+{
+	[super onEnter];
+	
+	[self centerSprites:2];
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	CCPointArray *array = [CCPointArray arrayWithCapacity:20];
+	
+	[array addControlPoint:ccp(0, 0)];
+	[array addControlPoint:ccp(s.width/2-30,0)];
+	[array addControlPoint:ccp(s.width/2-30,s.height-80)];
+	[array addControlPoint:ccp(0, s.height-80)];
+	[array addControlPoint:ccp(0, 0)];
+	
+	
+	//
+	// sprite 1 (By)
+	//
+	// Spline with no tension (tension==0)
+	//
+	
+	
+	CCCatmullRomBy *action = [CCCardinalSplineBy actionWithDuration:3 points:array tension:0];
+	id reverse = [action reverse];
+	
+	CCSequence *seq = [CCSequence actions:action, reverse, nil];
+	
+	tamara.position = ccp(50,50);
+	[tamara runAction: seq];
+	
+	[tamara runAction:
+	 [CCRepeatForever actionWithAction:
+	  [CCSequence actions:
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,0)],
+	   nil]]];
+
+	
+	//
+	// sprite 2 (By)
+	//
+	// Spline with high tension (tension==1)
+	//
+	
+	CCCatmullRomBy *action2 = [CCCardinalSplineBy actionWithDuration:3 points:array tension:1];
+	id reverse2 = [action2 reverse];
+	
+	CCSequence *seq2 = [CCSequence actions:action2, reverse2, nil];
+	
+	kathia.position = ccp(s.width/2,50);
+	
+	[kathia runAction: seq2];
+	
+	[kathia runAction:
+	 [CCRepeatForever actionWithAction:
+	  [CCSequence actions:
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(10,0)],
+	   [CCMoveBy actionWithDuration:0.05 position:ccp(-10,0)],
+	   nil]]];
+
+	
+	array_ = [array retain];
+}
+
+-(void) dealloc
+{
+	[array_ release];
+	
+	[super dealloc];
+}
+
+-(void) draw
+{
+	[super draw];
+	
+	// move to 50,50 since the "by" path will start at 50,50
+	kmGLPushMatrix();
+	kmGLTranslatef(50, 50, 0);
+	ccDrawCardinalSpline(array_, 0, 100);
+	kmGLPopMatrix();
+	
+	CGSize s = [[CCDirector sharedDirector] winSize];
+	
+	kmGLPushMatrix();
+	kmGLTranslatef(s.width/2, 50, 0);
+	ccDrawCardinalSpline(array_, 1, 100);
+	kmGLPopMatrix();
+}
+
+-(NSString *) title
+{
+	return @"Stacked MoveBy + CardinalSpline actions";
+}
+-(NSString *) subtitle
+{
+	return @"CCMoveBy + CCCardinalSplineBy/To at the same time";
 }
 @end
 
