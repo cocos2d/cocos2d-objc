@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 
 	@"ActionMoveStacked",
 	@"ActionMoveJumpStacked",
+	@"ActionMoveBezierStacked",
 	
 	@"ActionManual",
 	@"ActionMove",
@@ -58,6 +59,7 @@ static NSString *transitions[] = {
 	@"ActionTargeted",
 	@"ActionMoveStacked",
 	@"ActionMoveJumpStacked",	
+	@"ActionMoveBezierStacked",
 	
     @"PauseResumeActions",
 
@@ -1462,9 +1464,9 @@ return @"Skew Comparison";
 }
 @end
 
-#pragma mark - ActionMoveStacked
+#pragma mark - ActionStacked
 
-@implementation ActionMoveStacked
+@implementation ActionStacked
 -(id) init
 {
 	if( (self=[super init]) ) {
@@ -1494,7 +1496,54 @@ return @"Skew Comparison";
 	
 	sprite.position = p;
 	[self addChild:sprite];
+
+	[self runActionsInSprite:sprite];
+}
+
+-(void) runActionsInSprite:(CCSprite *)sprite
+{
+	// override me
+}
+
+#ifdef __CC_PLATFORM_IOS
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		
+		[self addNewSpriteWithCoords: location];
+	}
+}
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
 	
+	return YES;
+	
+}
+#endif
+
+-(NSString *) title
+{
+	return @"Override me";
+}
+
+-(NSString *) subtitle
+{
+	return @"Tap screen";
+}
+@end
+
+#pragma mark - ActionMoveStacked
+
+@implementation ActionMoveStacked
+
+-(void) runActionsInSprite:(CCSprite *)sprite
+{
 	//	[sprite runAction: [CCMoveBy actionWithDuration:2 position:ccp(300,0)]];
 	//	[sprite runAction: [CCMoveBy actionWithDuration:2 position:ccp(0,300)]];
 	
@@ -1512,96 +1561,22 @@ return @"Skew Comparison";
 	   [CCMoveBy actionWithDuration:2 position:ccp(0, 100)],
 	   [CCDelayTime actionWithDuration:1],
 	   [CCMoveBy actionWithDuration:2 position:ccp(0, -100)],
-	   nil]]];
-	
-	sprite = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
-	
-	sprite.position = p;
-	[self addChild:sprite];
-	
-	[sprite runAction:
-	 [CCRepeatForever actionWithAction:
-	  [CCSequence actions:
-	   [CCMoveTo actionWithDuration:6 position:ccpSub(p, ccp(200, 0))],
-	   [CCMoveTo actionWithDuration:6 position:p],
-	   nil]]];
-	
-	[sprite runAction:
-	 [CCRepeatForever actionWithAction:
-	  [CCSequence actions:
-	   [CCDelayTime actionWithDuration:1],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0, -100)],
-	   [CCDelayTime actionWithDuration:1],
-	   [CCMoveBy actionWithDuration:2 position:ccp(0, 100)],
-	   nil]]];
+	   nil]]];	
 }
 
-#ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteWithCoords: location];
-	}
-}
-#elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-	
-	return YES;
-	
-}
-#endif
 
 -(NSString *) title
 {
 	return @"Stacked CCMoveBy/To actions";
 }
 
--(NSString *) subtitle
-{
-	return @"Tap screen";
-}
 @end
 
 #pragma mark - ActionMoveJumpStacked
 
 @implementation ActionMoveJumpStacked
--(id) init
+-(void) runActionsInSprite:(CCSprite *)sprite
 {
-	if( (self=[super init]) ) {
-		
-		[self centerSprites:0];
-		
-#ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-		
-		CGSize s = [[CCDirector sharedDirector] winSize];
-		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
-	}
-	return self;
-}
-
--(void) addNewSpriteWithCoords:(CGPoint)p
-{
-	int idx = CCRANDOM_0_1() * 1400 / 100;
-	int x = (idx%5) * 85;
-	int y = (idx/5) * 121;
-	
-	
-	CCSprite *sprite = [CCSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
-	
-	sprite.position = p;
-	[self addChild:sprite];
-	
 	[sprite runAction:
 	 [CCRepeatForever actionWithAction:
 	  [CCSequence actions:
@@ -1617,38 +1592,46 @@ return @"Skew Comparison";
 	 ];
 }
 
-#ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteWithCoords: location];
-	}
-}
-#elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-	
-	return YES;
-	
-}
-#endif
-
 -(NSString *) title
 {
 	return @"Stacked Move + Jump actions";
 }
+@end
 
--(NSString *) subtitle
+#pragma mark - ActionMoveBezierStacked
+
+@implementation ActionMoveBezierStacked
+
+-(void) runActionsInSprite:(CCSprite*)sprite
 {
-	return @"Tap screen";
+	CGSize s = [[CCDirector sharedDirector] winSize];
+
+	// sprite 1
+	ccBezierConfig bezier;
+	bezier.controlPoint_1 = ccp(0, s.height/2);
+	bezier.controlPoint_2 = ccp(300, -s.height/2);
+	bezier.endPosition = ccp(300,100);
+	
+	id bezierForward = [CCBezierBy actionWithDuration:3 bezier:bezier];
+	id bezierBack = [bezierForward reverse];
+	id seq = [CCSequence actions: bezierForward, bezierBack, nil];
+	id rep = [CCRepeatForever actionWithAction:seq];
+	[sprite runAction:rep];
+	
+	[sprite runAction:
+	 [CCRepeatForever actionWithAction:
+	  [CCSequence actions:
+	   [CCMoveBy actionWithDuration:2 position:ccp(100,0)],
+	   [CCMoveBy actionWithDuration:2 position:ccp(0,100)],
+	   [CCMoveBy actionWithDuration:2 position:ccp(-100,0)],
+	   [CCMoveBy actionWithDuration:2 position:ccp(0,-100)],
+	   nil]]];
 }
 
+-(NSString *) title
+{
+	return @"Stacked Move + Bezier actions";
+}
 @end
 
 #pragma mark - PauseResumeActions

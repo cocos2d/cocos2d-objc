@@ -935,7 +935,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	_startPosition = [(CCNode*)_target position];
+	_previousPosition = _startPosition = [(CCNode*)_target position];
 }
 
 -(void) update: (ccTime) t
@@ -952,7 +952,16 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 	CGFloat x = bezierat(xa, xb, xc, xd, t);
 	CGFloat y = bezierat(ya, yb, yc, yd, t);
-	[_target setPosition:  ccpAdd( _startPosition, ccp(x,y))];
+	
+	CCNode *node = (CCNode*)_target;
+	CGPoint currentPos = [node position];
+	CGPoint diff = ccpSub(currentPos, _previousPosition);
+	_startPosition = ccpAdd( _startPosition, diff);
+
+	CGPoint newPos = ccpAdd( _startPosition, ccp(x,y));
+	[node setPosition: newPos];
+	
+	_previousPosition = newPos;
 }
 
 - (CCActionInterval*) reverse
