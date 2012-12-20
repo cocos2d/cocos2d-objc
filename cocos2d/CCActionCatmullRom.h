@@ -40,7 +40,7 @@
  */
 @interface CCPointArray : NSObject <NSCopying>
 {
-	NSMutableArray *controlPoints_;
+	NSMutableArray	*_controlPoints;
 }
 
 /** Array that contains the control points */
@@ -82,9 +82,9 @@
  */
 @interface CCCardinalSplineTo : CCActionInterval
 {
-	CCPointArray	*points_;
-	CGFloat			deltaT_;
-	CGFloat			tension_;
+	CCPointArray	*_points;
+	CGFloat			_deltaT;
+	CGFloat			_tension;
 }
 
 /** Array of control points */
@@ -103,7 +103,7 @@
  */
 @interface CCCardinalSplineBy : CCCardinalSplineTo
 {
-	CGPoint				startPosition_;
+	CGPoint		_startPosition;
 }
 // XXX: To make BridgeSupport happy
 -(void) startWithTarget:(id)target;
