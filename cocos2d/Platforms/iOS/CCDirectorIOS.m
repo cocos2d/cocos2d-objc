@@ -438,6 +438,7 @@ GLToClipTransform(kmMat4 *transformOut)
 	return ret;
 }
 
+// Commented. See issue #1453 for further info: http://code.google.com/p/cocos2d-iphone/issues/detail?id=1453
 //-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 //{
 //	if( [delegate_ respondsToSelector:_cmd] )
