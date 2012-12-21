@@ -46,6 +46,7 @@
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
 #import "ccFPSImages.h"
+#import "CCDrawingPrimitives.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -471,6 +472,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers / caches
+	ccDrawFree();
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];

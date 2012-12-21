@@ -72,6 +72,19 @@ static void lazy_init( void )
 
 }
 
+void ccDrawFree(void)
+{
+	[shader_ release];
+	
+	shader_ = nil;
+	initialized = NO;
+}
+
+void ccDrawInit(void)
+{
+	lazy_init();
+}
+
 void ccDrawPoint( CGPoint point )
 {
 	lazy_init();

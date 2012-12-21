@@ -78,6 +78,12 @@ extern "C" {
  */
 
 
+/** Initializes the drawing primitives */
+void ccDrawInit(void);
+
+/** Frees allocated resources by the drawing primitives */
+void ccDrawFree(void);
+
 /** draws a point given x and y coordinate measured in points. */
 void ccDrawPoint( CGPoint point );
 
