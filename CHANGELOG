@@ -5,7 +5,6 @@ version 2.1-rc0	 XX-Jan-2013
 . [FIX] Actions, Menu, Node, Sprite, Particles, Parallax, Texture: All ivars use _ as prefix, not suffix
 . [FIX] Director: replaced length with lenght
 		Fixed 2 memory leaks in createStatsLabel
-		willRotateToInterfaceOrientation is propagated to the delegate
 		Frees DrawingPrimitives resources (issue #1456)
 . [FIX] EaseActions: "other_" ivar renamed to "_inner". It is a property now
 . [FIX] Effects: ccGridSize is no longer used. It was replaced by CGPoint and CGSize
