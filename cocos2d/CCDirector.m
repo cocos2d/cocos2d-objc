@@ -102,8 +102,8 @@ extern NSString * cocos2dVersion(void);
 @synthesize delegate = delegate_;
 @synthesize totalFrames = totalFrames_;
 @synthesize secondsPerFrame = secondsPerFrame_;
-@synthesize scheduler = scheduler_;
-@synthesize actionManager = actionManager_;
+@synthesize scheduler = _scheduler;
+@synthesize actionManager = _actionManager;
 
 //
 // singleton stuff
@@ -166,11 +166,11 @@ static CCDirector *_sharedDirector = nil;
 		runningThread_ = nil;
 
 		// scheduler
-		scheduler_ = [[CCScheduler alloc] init];
+		_scheduler = [[CCScheduler alloc] init];
 
 		// action manager
-		actionManager_ = [[CCActionManager alloc] init];
-		[scheduler_ scheduleUpdateForTarget:actionManager_ priority:kCCPrioritySystem paused:NO];
+		_actionManager = [[CCActionManager alloc] init];
+		[_scheduler scheduleUpdateForTarget:_actionManager priority:kCCPrioritySystem paused:NO];
 
 		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
 	}
@@ -193,8 +193,8 @@ static CCDirector *_sharedDirector = nil;
 	[runningScene_ release];
 	[notificationNode_ release];
 	[scenesStack_ release];
-	[scheduler_ release];
-	[actionManager_ release];
+	[_scheduler release];
+	[_actionManager release];
 
 	_sharedDirector = nil;
 

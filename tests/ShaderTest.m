@@ -196,7 +196,8 @@ enum {
 -(void) setPosition:(CGPoint)newPosition
 {
 	[super setPosition:newPosition];
-	center_ = (ccVertex2F) { position_.x * CC_CONTENT_SCALE_FACTOR(), position_.y * CC_CONTENT_SCALE_FACTOR() };
+	CGPoint pos = self.position;
+	center_ = (ccVertex2F) { pos.x * CC_CONTENT_SCALE_FACTOR(), pos.y * CC_CONTENT_SCALE_FACTOR() };
 }
 
 -(void) draw
@@ -209,12 +210,12 @@ enum {
 	//
 	// Uniforms
 	//
-	[shaderProgram_ setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
-	[shaderProgram_ setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
+	[self.shaderProgram setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
+	[self.shaderProgram setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
 
 	// time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
 	glUniform1f( uniformTime, time_ );
-//	[shaderProgram_ setUniformLocation:uniformTime with1f:time_];
+//	[self.shaderProgram setUniformLocation:uniformTime with1f:time_];
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -432,27 +433,27 @@ enum {
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
 		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
-		shaderProgram_ = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
+		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
 
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-		[shaderProgram_ addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-		[shaderProgram_ addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+		[self.shaderProgram addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[self.shaderProgram addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
+		[self.shaderProgram addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ link];
+		[self.shaderProgram link];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ updateUniforms];
+		[self.shaderProgram updateUniforms];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		subLocation = glGetUniformLocation( shaderProgram_->program_, "substract");
-		blurLocation = glGetUniformLocation( shaderProgram_->program_, "blurSize");
+		subLocation = glGetUniformLocation( self.shaderProgram->program_, "substract");
+		blurLocation = glGetUniformLocation( self.shaderProgram->program_, "blurSize");
 
 		CHECK_GL_ERROR_DEBUG();
 	}
@@ -465,10 +466,10 @@ enum {
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];
-	[shaderProgram_ setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
-	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
+	[self.shaderProgram use];
+	[self.shaderProgram setUniformsForBuiltins];
+	[self.shaderProgram setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
+	[self.shaderProgram setUniformLocation:subLocation with4fv:sub_ count:1];
 
 	ccGLBindTexture2D(  [texture_ name] );
 

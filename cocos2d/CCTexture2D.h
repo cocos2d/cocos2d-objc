@@ -124,7 +124,7 @@ typedef enum {
 	ccResolutionType			resolutionType_;
 
 	// needed for drawAtRect, drawInPoint
-	CCGLProgram					*shaderProgram_;
+	CCGLProgram					*_shaderProgram;
 
 }
 /** Initializes with a texture2d with data */

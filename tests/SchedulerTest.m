@@ -706,7 +706,7 @@ Class restartTest()
 
 -(void) removeUpdates:(ccTime)dt
 {
-	for( CCNode *node in children_)
+	for( CCNode *node in self.children)
 		[node unscheduleAllSelectors];
 }
 @end

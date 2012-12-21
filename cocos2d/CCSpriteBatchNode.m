@@ -111,7 +111,7 @@ const NSUInteger defaultCapacity = 29;
 		[self updateBlendFunc];
 
 		// no lazy alloc in this node
-		children_ = [[CCArray alloc] initWithCapacity:capacity];
+		_children = [[CCArray alloc] initWithCapacity:capacity];
 		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
@@ -123,7 +123,7 @@ const NSUInteger defaultCapacity = 29;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)tag_ ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
 }
 
 -(void)dealloc
@@ -142,7 +142,7 @@ const NSUInteger defaultCapacity = 29;
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
 
-	NSAssert(parent_ != nil, @"CCSpriteBatchNode should NOT be root node");
+	NSAssert(_parent != nil, @"CCSpriteBatchNode should NOT be root node");
 
 	// CAREFUL:
 	// This visit is almost identical to CCNode#visit
@@ -151,13 +151,13 @@ const NSUInteger defaultCapacity = 29;
 	// The alternative is to have a void CCSprite#visit, but
 	// although this is less mantainable, is faster
 	//
-	if (!visible_)
+	if (!_visible)
 		return;
 
 	kmGLPushMatrix();
 
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
+	if ( _grid && _grid.active) {
+		[_grid beforeDraw];
 		[self transformAncestors];
 	}
 
@@ -165,12 +165,12 @@ const NSUInteger defaultCapacity = 29;
 	[self transform];
 	[self draw];
 
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
+	if ( _grid && _grid.active)
+		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 
-	orderOfArrival_ = 0;
+	_orderOfArrival = 0;
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
 }
@@ -191,7 +191,7 @@ const NSUInteger defaultCapacity = 29;
 -(void) reorderChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
-	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );
+	NSAssert( [_children containsObject:child], @"Child doesn't belong to Sprite" );
 
 	if( z == child.zOrder )
 		return;
@@ -207,7 +207,7 @@ const NSUInteger defaultCapacity = 29;
 	if (sprite == nil)
 		return;
 
-	NSAssert([children_ containsObject:sprite], @"CCSpriteBatchNode doesn't contain the sprite. Can't remove it");
+	NSAssert([_children containsObject:sprite], @"CCSpriteBatchNode doesn't contain the sprite. Can't remove it");
 
 	// cleanup before removing
 	[self removeSpriteFromAtlas:sprite];
@@ -217,7 +217,7 @@ const NSUInteger defaultCapacity = 29;
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL)doCleanup
 {
-	[self removeChild:(CCSprite *)[children_ objectAtIndex:index] cleanup:doCleanup];
+	[self removeChild:(CCSprite *)[_children objectAtIndex:index] cleanup:doCleanup];
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
@@ -235,10 +235,10 @@ const NSUInteger defaultCapacity = 29;
 //override sortAllChildren
 - (void) sortAllChildren
 {
-	if (isReorderChildDirty_)
+	if (_isReorderChildDirty)
 	{
-		NSInteger i,j,length = children_->data->num;
-		CCNode ** x = children_->data->arr;
+		NSInteger i,j,length = _children->data->num;
+		CCNode ** x = _children->data->arr;
 		CCNode *tempItem;
 		CCSprite *child;
 
@@ -259,20 +259,20 @@ const NSUInteger defaultCapacity = 29;
 		}
 
 		//sorted now check all children
-		if ([children_ count] > 0)
+		if ([_children count] > 0)
 		{
 			//first sort all children recursively based on zOrder
-			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
+			[_children makeObjectsPerformSelector:@selector(sortAllChildren)];
 
 			NSInteger index=0;
 
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
 			// and at the same time reorder descedants and the quads to the right index
-			CCARRAY_FOREACH(children_, child)
+			CCARRAY_FOREACH(_children, child)
 				[self updateAtlasIndex:child currentIndex:&index];
 		}
 
-		isReorderChildDirty_=NO;
+		_isReorderChildDirty=NO;
 	}
 }
 
@@ -357,7 +357,7 @@ const NSUInteger defaultCapacity = 29;
 
 - (void) reorderBatch:(BOOL) reorder
 {
-	isReorderChildDirty_=reorder;
+	_isReorderChildDirty=reorder;
 }
 
 #pragma mark CCSpriteBatchNode - draw
@@ -371,7 +371,7 @@ const NSUInteger defaultCapacity = 29;
 
 	CC_NODE_DRAW_SETUP();
 
-	[children_ makeObjectsPerformSelector:@selector(updateTransform)];
+	[_children makeObjectsPerformSelector:@selector(updateTransform)];
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 
@@ -528,7 +528,7 @@ const NSUInteger defaultCapacity = 29;
 // addChild helper, faster than insertChild
 -(void) appendChild:(CCSprite*)sprite
 {
-	isReorderChildDirty_=YES;
+	_isReorderChildDirty=YES;
 	[sprite setBatchNode:self];
 	[sprite setDirty: YES];
 

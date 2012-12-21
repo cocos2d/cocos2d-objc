@@ -47,7 +47,7 @@
 
 @implementation CCTMXLayerInfo
 
-@synthesize name = name_, layerSize = layerSize_, tiles = tiles_, visible = visible_, opacity = opacity_, ownTiles = ownTiles_, minGID = minGID_, maxGID = maxGID_, properties = properties_;
+@synthesize name = name_, layerSize = layerSize_, tiles = tiles_, visible = _visible, opacity = opacity_, ownTiles = ownTiles_, minGID = minGID_, maxGID = maxGID_, properties = properties_;
 @synthesize offset = offset_;
 -(id) init
 {

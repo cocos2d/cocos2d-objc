@@ -48,7 +48,7 @@
 	CCGrabber	*grabber_;
 	BOOL		isTextureFlipped_;
 
-	CCGLProgram	*shaderProgram_;
+	CCGLProgram	*_shaderProgram;
 
 	ccDirectorProjection	directorProjection_;
 }

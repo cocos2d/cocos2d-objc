@@ -795,8 +795,8 @@
 -(id) initWithDuration:(ccTime)t skewX:(float)deltaSkewX skewY:(float)deltaSkewY
 {
 	if( (self=[super initWithDuration:t skewX:deltaSkewX skewY:deltaSkewY]) ) {
-		skewX_ = deltaSkewX;
-		skewY_ = deltaSkewY;
+		_skewX = deltaSkewX;
+		_skewY = deltaSkewY;
 	}
 	return self;
 }
@@ -804,15 +804,15 @@
 -(void) startWithTarget:(CCNode *)aTarget
 {
 	[super startWithTarget:aTarget];
-	deltaX_ = skewX_;
-	deltaY_ = skewY_;
+	deltaX_ = _skewX;
+	deltaY_ = _skewY;
 	endSkewX_ = startSkewX_ + deltaX_;
 	endSkewY_ = startSkewY_ + deltaY_;
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithDuration:_duration skewX:-skewX_ skewY:-skewY_];
+	return [[self class] actionWithDuration:_duration skewX:-_skewX skewY:-_skewY];
 }
 @end
 

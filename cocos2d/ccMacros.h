@@ -188,10 +188,10 @@ do	{																							\
  */
 #define CC_NODE_DRAW_SETUP()																	\
 do {																							\
-	ccGLEnable( glServerState_ );																\
-    NSAssert1(shaderProgram_, @"No shader program set for node: %@", self);						\
-	[shaderProgram_ use];																		\
-	[shaderProgram_ setUniformsForBuiltins];									\
+	ccGLEnable( _glServerState );																\
+    NSAssert1(_shaderProgram, @"No shader program set for node: %@", self);						\
+	[_shaderProgram use];																		\
+	[_shaderProgram setUniformsForBuiltins];									\
 } while(0)
 
 

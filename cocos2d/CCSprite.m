@@ -136,7 +136,7 @@
 		flipY_ = flipX_ = NO;
 
 		// default transform anchor: center
-		anchorPoint_ =  ccp(0.5f, 0.5f);
+		_anchorPoint =  ccp(0.5f, 0.5f);
 
 		// zwoptex default values
 		offsetPosition_ = CGPointZero;
@@ -241,7 +241,7 @@
 {
 	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %ld | atlasIndex = %ld>", [self class], self,
 			rect_.origin.x, rect_.origin.y, rect_.size.width, rect_.size.height,
-			(long)tag_,
+			(long)_tag,
 			(unsigned long)atlasIndex_
 	];
 }
@@ -306,8 +306,8 @@
 		relativeOffset.y = -relativeOffset.y;
 
 
-	offsetPosition_.x = relativeOffset.x + (contentSize_.width - rect_.size.width) / 2;
-	offsetPosition_.y = relativeOffset.y + (contentSize_.height - rect_.size.height) / 2;
+	offsetPosition_.x = relativeOffset.x + (_contentSize.width - rect_.size.width) / 2;
+	offsetPosition_.y = relativeOffset.y + (_contentSize.height - rect_.size.height) / 2;
 
 
 	// rendering using batch node
@@ -416,7 +416,7 @@
 	if( self.dirty ) {
 
 		// If it is not visible, or one of its ancestors is not visible, then do nothing:
-		if( !visible_ || ( parent_ && parent_ != batchNode_ && ((CCSprite*)parent_)->shouldBeHidden_) ) {
+		if( !_visible || ( _parent && _parent != batchNode_ && ((CCSprite*)_parent)->shouldBeHidden_) ) {
 			quad_.br.vertices = quad_.tl.vertices = quad_.tr.vertices = quad_.bl.vertices = (ccVertex3F){0,0,0};
 			shouldBeHidden_ = YES;
 		}
@@ -425,13 +425,13 @@
 
 			shouldBeHidden_ = NO;
 
-			if( ! parent_ || parent_ == batchNode_ )
+			if( ! _parent || _parent == batchNode_ )
 				transformToBatch_ = [self nodeToParentTransform];
 
 			else {
-				NSAssert( [parent_ isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
+				NSAssert( [_parent isKindOfClass:[CCSprite class]], @"Logic error in CCSprite. Parent must be a CCSprite");
 
-				transformToBatch_ = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)parent_)->transformToBatch_ );
+				transformToBatch_ = CGAffineTransformConcat( [self nodeToParentTransform] , ((CCSprite*)_parent)->transformToBatch_ );
 			}
 
 			//
@@ -464,10 +464,10 @@
 			float dx = x1 * cr - y2 * sr2 + x;
 			float dy = x1 * sr + y2 * cr2 + y;
 
-			quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), vertexZ_ };
-			quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), vertexZ_ };
-			quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), vertexZ_ };
-			quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), vertexZ_ };
+			quad_.bl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(ax), RENDER_IN_SUBPIXEL(ay), _vertexZ };
+			quad_.br.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(bx), RENDER_IN_SUBPIXEL(by), _vertexZ };
+			quad_.tl.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(dx), RENDER_IN_SUBPIXEL(dy), _vertexZ };
+			quad_.tr.vertices = (ccVertex3F) { RENDER_IN_SUBPIXEL(cx), RENDER_IN_SUBPIXEL(cy), _vertexZ };
 		}
 
 		[textureAtlas_ updateQuad:&quad_ atIndex:atlasIndex_];
@@ -476,7 +476,7 @@
 
 	// recursively iterate over children
 	if( hasChildren_ )
-		[children_ makeObjectsPerformSelector:@selector(updateTransform)];
+		[_children makeObjectsPerformSelector:@selector(updateTransform)];
 
 #if CC_SPRITE_DEBUG_DRAW
 	// draw bounding box
@@ -570,11 +570,11 @@
 		//put it in descendants array of batch node
 		[batchNode_ appendChild:child];
 
-		if (!isReorderChildDirty_)
+		if (!_isReorderChildDirty)
 			[self setReorderChildDirtyRecursively];
 	}
 
-	//CCNode already sets isReorderChildDirty_ so this needs to be after batchNode check
+	//CCNode already sets _isReorderChildDirty so this needs to be after batchNode check
 	[super addChild:child z:z tag:aTag];
 
 	hasChildren_ = YES;
@@ -583,12 +583,12 @@
 -(void) reorderChild:(CCSprite*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
-	NSAssert( [children_ containsObject:child], @"Child doesn't belong to Sprite" );
+	NSAssert( [_children containsObject:child], @"Child doesn't belong to Sprite" );
 
 	if( z == child.zOrder )
 		return;
 
-	if( batchNode_ && ! isReorderChildDirty_)
+	if( batchNode_ && ! _isReorderChildDirty)
 	{
 		[self setReorderChildDirtyRecursively];
 		[batchNode_ reorderBatch:YES];
@@ -604,14 +604,14 @@
 
 	[super removeChild:sprite cleanup:doCleanup];
 
-	hasChildren_ = ( [children_ count] > 0 );
+	hasChildren_ = ( [_children count] > 0 );
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( batchNode_ ) {
 		CCSprite *child;
-		CCARRAY_FOREACH(children_, child)
+		CCARRAY_FOREACH(_children, child)
 			[batchNode_ removeSpriteFromAtlas:child];
 	}
 
@@ -622,10 +622,10 @@
 
 - (void) sortAllChildren
 {
-	if (isReorderChildDirty_)
+	if (_isReorderChildDirty)
 	{
-		NSInteger i,j,length = children_->data->num;
-		CCNode** x = children_->data->arr;
+		NSInteger i,j,length = _children->data->num;
+		CCNode** x = _children->data->arr;
 		CCNode *tempItem;
 
 		// insertion sort
@@ -644,9 +644,9 @@
 		}
 
 		if ( batchNode_)
-			[children_ makeObjectsPerformSelector:@selector(sortAllChildren)];
+			[_children makeObjectsPerformSelector:@selector(sortAllChildren)];
 
-		isReorderChildDirty_=NO;
+		_isReorderChildDirty=NO;
 	}
 }
 
@@ -660,10 +660,10 @@
 {
 	//only set parents flag the first time
 
-	if ( ! isReorderChildDirty_ )
+	if ( ! _isReorderChildDirty )
 	{
-		isReorderChildDirty_ = YES;
-		CCNode* node = (CCNode*) parent_;
+		_isReorderChildDirty = YES;
+		CCNode* node = (CCNode*) _parent;
 		while (node && node != batchNode_)
 		{
 			[(CCSprite*)node setReorderChildDirtyRecursively];
@@ -678,7 +678,7 @@
 	// recursively set dirty
 	if( hasChildren_ ) {
 		CCSprite *child;
-		CCARRAY_FOREACH(children_, child)
+		CCARRAY_FOREACH(_children, child)
 			[child setDirtyRecursively:YES];
 	}
 }
@@ -774,7 +774,7 @@
 {
 	if( flipX_ != b ) {
 		flipX_ = b;
-		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:_contentSize];
 	}
 }
 -(BOOL) flipX
@@ -786,7 +786,7 @@
 {
 	if( flipY_ != b ) {
 		flipY_ = b;
-		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:contentSize_];
+		[self setTextureRect:rect_ rotated:rectRotated_ untrimmedSize:_contentSize];
 	}
 }
 -(BOOL) flipY
@@ -919,7 +919,7 @@
 							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(rect_)
 								   rotated:rectRotated_
 									offset:CC_POINT_POINTS_TO_PIXELS(unflippedOffsetPositionFromCenter_)
-							  originalSize:CC_SIZE_POINTS_TO_PIXELS(contentSize_)];
+							  originalSize:CC_SIZE_POINTS_TO_PIXELS(_contentSize)];
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol

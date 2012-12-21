@@ -149,7 +149,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	/* tick before glClear: issue #533 */
 	if( ! isPaused_ )
-		[scheduler_ update: dt];
+		[_scheduler update: dt];
 
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

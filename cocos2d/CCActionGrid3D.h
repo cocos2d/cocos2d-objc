@@ -75,7 +75,7 @@
 /** CCLens3D action */
 @interface CCLens3D : CCGrid3DAction
 {
-	CGPoint	position_;
+	CGPoint	_position;
 	float	radius_;
 	float	lensEffect_;
 	BOOL	dirty_;
@@ -98,7 +98,7 @@
 /** CCRipple3D action */
 @interface CCRipple3D : CCGrid3DAction
 {
-	CGPoint	position_;
+	CGPoint	_position;
 	float	radius_;
 	NSUInteger		waves_;
 	float	amplitude_;
@@ -187,7 +187,7 @@
 /** CCTwirl action */
 @interface CCTwirl : CCGrid3DAction
 {
-	CGPoint	position_;
+	CGPoint	_position;
 	NSUInteger	twirls_;
 	float	amplitude_;
 	float	amplitudeRate_;

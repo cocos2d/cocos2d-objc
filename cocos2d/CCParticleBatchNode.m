@@ -102,7 +102,7 @@
 		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		// no lazy alloc in this node
-		children_ = [[CCArray alloc] initWithCapacity:capacity];
+		_children = [[CCArray alloc] initWithCapacity:capacity];
 
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
@@ -124,7 +124,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)tag_ ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
 }
 
 -(void)dealloc
@@ -146,13 +146,13 @@
 	// The alternative is to have a void CCSprite#visit, but
 	// although this is less mantainable, is faster
 	//
-	if (!visible_)
+	if (!_visible)
 		return;
 
 	kmGLPushMatrix();
 
-	if ( grid_ && grid_.active) {
-		[grid_ beforeDraw];
+	if ( _grid && _grid.active) {
+		[_grid beforeDraw];
 		[self transformAncestors];
 	}
 
@@ -160,8 +160,8 @@
 
 	[self draw];
 
-	if ( grid_ && grid_.active)
-		[grid_ afterDraw:self];
+	if ( _grid && _grid.active)
+		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 }
@@ -174,7 +174,7 @@
 	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
 
 	// If this is the 1st children, then copy blending function
-	if( [children_ count] == 0 )
+	if( [_children count] == 0 )
 		blendFunc_ = [child blendFunc];
 
 	NSAssert( blendFunc_.src  == child.blendFunc.src && blendFunc_.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
@@ -186,7 +186,7 @@
 	NSUInteger atlasIndex;
 
 	if (pos != 0)
-		atlasIndex = [[children_ objectAtIndex:pos-1] atlasIndex] + [[children_ objectAtIndex:pos-1] totalParticles];
+		atlasIndex = [[_children objectAtIndex:pos-1] atlasIndex] + [[_children objectAtIndex:pos-1] totalParticles];
 	else
 		atlasIndex = 0;
 
@@ -205,20 +205,20 @@
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 
-	if( ! children_ )
-		children_ = [[CCArray alloc] initWithCapacity:4];
+	if( ! _children )
+		_children = [[CCArray alloc] initWithCapacity:4];
 
 	//don't use a lazy insert
 	NSUInteger pos = [self searchNewPositionInChildrenForZ:z];
 
-	[children_ insertObject:child atIndex:pos];
+	[_children insertObject:child atIndex:pos];
 
 	child.tag = aTag;
 	[child _setZOrder:z];
 
 	[child setParent: self];
 
-	if( isRunning_ ) {
+	if( _isRunning ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -229,13 +229,13 @@
 -(void) reorderChild:(CCParticleSystem*)child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Child must be non-nil");
-	NSAssert( [children_ containsObject:child], @"Child doesn't belong to batch" );
+	NSAssert( [_children containsObject:child], @"Child doesn't belong to batch" );
 
 	if( z == child.zOrder )
 		return;
 
 	// no reordering if only 1 child
-	if( [children_ count] > 1)
+	if( [_children count] > 1)
 	{
 		NSUInteger newIndex, oldIndex;
 
@@ -243,10 +243,10 @@
 
 		if( oldIndex != newIndex ) {
 
-			// reorder children_ array
+			// reorder _children array
 			[child retain];
-			[children_ removeObjectAtIndex:oldIndex];
-			[children_ insertObject:child atIndex:newIndex];
+			[_children removeObjectAtIndex:oldIndex];
+			[_children insertObject:child atIndex:newIndex];
 			[child release];
 
 			// save old altasIndex
@@ -257,8 +257,8 @@
 
 			// Find new AtlasIndex
 			NSUInteger newAtlasIndex = 0;
-			for( NSUInteger i=0;i < [children_ count];i++) {
-				CCParticleSystem *node = [children_ objectAtIndex:i];
+			for( NSUInteger i=0;i < [_children count];i++) {
+				CCParticleSystem *node = [_children objectAtIndex:i];
 				if( node == child ) {
 					newAtlasIndex = [child atlasIndex];
 					break;
@@ -281,11 +281,11 @@
 	BOOL foundNewIdx = NO;
 
 	NSInteger  minusOne = 0;
-	NSUInteger count = [children_ count];
+	NSUInteger count = [_children count];
 
 	for( NSUInteger i=0; i < count; i++ ) {
 
-		CCNode *node = [children_ objectAtIndex:i];
+		CCNode *node = [_children objectAtIndex:i];
 
 		// new index
 		if( node.zOrder > z &&  ! foundNewIdx ) {
@@ -319,10 +319,10 @@
 
 -(NSUInteger) searchNewPositionInChildrenForZ: (NSInteger) z
 {
-	NSUInteger count = [children_ count];
+	NSUInteger count = [_children count];
 
 	for( NSUInteger i=0; i < count; i++ ) {
-		CCNode *child = [children_ objectAtIndex:i];
+		CCNode *child = [_children objectAtIndex:i];
 		if (child.zOrder > z)
 			return i;
 	}
@@ -336,7 +336,7 @@
 	if (child == nil)
 		return;
 
-	NSAssert([children_ containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
+	NSAssert([_children containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
 	[super removeChild:child cleanup:doCleanup];
 
@@ -354,12 +354,12 @@
 
 -(void)removeChildAtIndex:(NSUInteger)index cleanup:(BOOL) doCleanup
 {
-	[self removeChild:(CCParticleSystem *)[children_ objectAtIndex:index] cleanup:doCleanup];
+	[self removeChild:(CCParticleSystem *)[_children objectAtIndex:index] cleanup:doCleanup];
 }
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	[children_ makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
+	[_children makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
 
 	[super removeAllChildrenWithCleanup:doCleanup];
 
@@ -436,7 +436,7 @@
 	CCParticleSystem *child;
 	NSUInteger index = 0;
 
-	CCARRAY_FOREACH(children_,child)
+	CCARRAY_FOREACH(_children,child)
 	{
 		child.atlasIndex = index;
 		index += child.totalParticles;

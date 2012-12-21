@@ -98,7 +98,7 @@
 
 		// shader stuff
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
-		uniformColor_ = glGetUniformLocation( shaderProgram_->program_, "u_color");
+		uniformColor_ = glGetUniformLocation( _shaderProgram->program_, "u_color");
 	}
 	return self;
 }
@@ -132,7 +132,7 @@
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
 	GLfloat colors[4] = {color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f};
-	[shaderProgram_ setUniformLocation:uniformColor_ with4fv:colors count:1];
+	[_shaderProgram setUniformLocation:uniformColor_ with4fv:colors count:1];
 
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
 }

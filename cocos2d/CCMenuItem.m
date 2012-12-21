@@ -136,9 +136,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(CGRect) rect
 {
-	return CGRectMake( position_.x - contentSize_.width*anchorPoint_.x,
-					  position_.y - contentSize_.height*anchorPoint_.y,
-					  contentSize_.width, contentSize_.height);
+	return CGRectMake( _position.x - _contentSize.width*_anchorPoint.x,
+					  _position.y - _contentSize.height*_anchorPoint.y,
+					  _contentSize.width, _contentSize.height);
 }
 
 -(void) setBlock:(void(^)(id sender))block

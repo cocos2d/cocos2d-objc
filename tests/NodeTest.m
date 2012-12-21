@@ -408,7 +408,7 @@ Class restartAction()
 // remove
 - (void) removeMe: (id)node
 {
-	[parent_ removeChild:node cleanup:YES];
+	[self.parent removeChild:node cleanup:YES];
 	[self nextCallback:self];
 }
 

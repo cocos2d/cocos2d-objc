@@ -1797,7 +1797,7 @@ Class restartAction()
 	
 	uint count = 0; 
 	CCNode* item;
-	CCARRAY_FOREACH(children_, item)
+	CCARRAY_FOREACH(self.children, item)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{
