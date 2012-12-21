@@ -7,13 +7,13 @@
 
 - (CGRect)rectInPixels
 {
-	CGSize s = [texture_ contentSizeInPixels];
+	CGSize s = [self.texture contentSizeInPixels];
 	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 
 - (CGRect)rect
 {
-	CGSize s = [texture_ contentSize];
+	CGSize s = [self.texture contentSize];
 	return CGRectMake(-s.width / 2, -s.height / 2, s.width, s.height);
 }
 

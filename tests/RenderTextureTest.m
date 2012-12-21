@@ -803,9 +803,10 @@ Class restartAction()
 
 	CC_NODE_DRAW_SETUP();
 
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccBlendFunc blend = self.blendFunc;
+	ccGLBlendFunc( blend.src, blend.dst );
 
-	ccGLBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [self.texture name] );
 
 	//
 	// Attributes
@@ -813,8 +814,8 @@ Class restartAction()
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
 
-	#define kQuadSize sizeof(quad_.bl)
-	long offset = (long)&quad_;
+	#define kQuadSize sizeof(_quad.bl)
+	long offset = (long)&_quad;
 
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);

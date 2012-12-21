@@ -516,7 +516,7 @@ void FNTConfigRemoveCache( void )
 		
 		_contentSize = CGSizeZero;
 		
-		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
+		_opacityModifyRGB = [[textureAtlas_ texture] hasPremultipliedAlpha];
 		
 		_anchorPoint = ccp(0.5f, 0.5f);
         
@@ -810,7 +810,7 @@ void FNTConfigRemoveCache( void )
 		prev = c;
         
 		// Apply label properties
-		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
+		[fontChar setOpacityModifyRGB:_opacityModifyRGB];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
 		[fontChar setColor:color_];
         
@@ -896,7 +896,7 @@ void FNTConfigRemoveCache( void )
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	opacityModifyRGB_ = modify;
+	_opacityModifyRGB = modify;
     
 	id<CCRGBAProtocol> child;
 	CCARRAY_FOREACH(_children, child)
@@ -905,7 +905,7 @@ void FNTConfigRemoveCache( void )
 
 -(BOOL) doesOpacityModifyRGB
 {
-	return opacityModifyRGB_;
+	return _opacityModifyRGB;
 }
 
 #pragma mark LabelBMFont - AnchorPoint

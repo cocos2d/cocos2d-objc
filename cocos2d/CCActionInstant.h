@@ -100,8 +100,8 @@
  */
 @interface CCCallFunc : CCActionInstant <NSCopying>
 {
-	id targetCallback_;
-	SEL selector_;
+	id _targetCallback;
+	SEL _selector;
 }
 
 /** Target that will be called */

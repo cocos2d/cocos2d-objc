@@ -427,7 +427,7 @@ enum {
 {
 	if( (self=[super initWithTexture:texture rect:rect]) ) {
 
-		CGSize s = [texture_ contentSizeInPixels];
+		CGSize s = [self.texture contentSizeInPixels];
 
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
@@ -464,20 +464,21 @@ enum {
 -(void) draw
 {
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccBlendFunc blend = self.blendFunc;
+	ccGLBlendFunc( blend.src, blend.dst );
 
 	[self.shaderProgram use];
 	[self.shaderProgram setUniformsForBuiltins];
 	[self.shaderProgram setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
 	[self.shaderProgram setUniformLocation:subLocation with4fv:sub_ count:1];
 
-	ccGLBindTexture2D(  [texture_ name] );
+	ccGLBindTexture2D(  [self.texture name] );
 
 	//
 	// Attributes
 	//
-#define kQuadSize sizeof(quad_.bl)
-	long offset = (long)&quad_;
+#define kQuadSize sizeof(_quad.bl)
+	long offset = (long)&_quad;
 
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -499,7 +500,7 @@ enum {
 
 -(void) setBlurSize:(CGFloat)f
 {
-	CGSize s = [texture_ contentSizeInPixels];
+	CGSize s = [self.texture contentSizeInPixels];
 
 	blur_ = ccp(1/s.width, 1/s.height);
 	blur_ = ccpMult(blur_,f);
