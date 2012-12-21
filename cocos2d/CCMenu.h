@@ -46,10 +46,10 @@ enum {
  */
 @interface CCMenu : CCLayer <CCRGBAProtocol>
 {
-	tCCMenuState state_;
-	CCMenuItem	*selectedItem_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
+	tCCMenuState _state;
+	CCMenuItem	*_selectedItem;
+	GLubyte		_opacity;
+	ccColor3B	_color;
 	BOOL		_enabled;
 }
 

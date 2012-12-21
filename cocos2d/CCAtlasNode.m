@@ -76,7 +76,7 @@
 
 		opacity_ = 255;
 		color_ = colorUnmodified_ = ccWHITE;
-		opacityModifyRGB_ = YES;
+		_opacityModifyRGB = YES;
 
 		blendFunc_.src = CC_BLEND_SRC;
 		blendFunc_.dst = CC_BLEND_DST;
@@ -141,7 +141,7 @@
 
 - (ccColor3B) color
 {
-	if(opacityModifyRGB_)
+	if(_opacityModifyRGB)
 		return colorUnmodified_;
 
 	return color_;
@@ -151,7 +151,7 @@
 {
 	color_ = colorUnmodified_ = color3;
 
-	if( opacityModifyRGB_ ){
+	if( _opacityModifyRGB ){
 		color_.r = color3.r * opacity_/255;
 		color_.g = color3.g * opacity_/255;
 		color_.b = color3.b * opacity_/255;
@@ -168,25 +168,25 @@
 	opacity_			= anOpacity;
 
 	// special opacity for premultiplied textures
-	if( opacityModifyRGB_ )
+	if( _opacityModifyRGB )
 		[self setColor: colorUnmodified_];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	ccColor3B oldColor	= self.color;
-	opacityModifyRGB_	= modify;
+	_opacityModifyRGB	= modify;
 	self.color			= oldColor;
 }
 
 -(BOOL) doesOpacityModifyRGB
 {
-	return opacityModifyRGB_;
+	return _opacityModifyRGB;
 }
 
 -(void) updateOpacityModifyRGB
 {
-	opacityModifyRGB_ = [textureAtlas_.texture hasPremultipliedAlpha];
+	_opacityModifyRGB = [textureAtlas_.texture hasPremultipliedAlpha];
 }
 
 #pragma mark CCAtlasNode - CCNodeTexture protocol

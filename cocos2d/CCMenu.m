@@ -47,7 +47,7 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity = opacity_, color = color_, enabled=_enabled;
+@synthesize opacity=_opacity, color=_color, enabled=_enabled;
 
 +(id) menuWithArray:(NSArray *)arrayOfItems
 {
@@ -126,8 +126,8 @@ enum {
 
 //		[self alignItemsVertically];
 		
-		selectedItem_ = nil;
-		state_ = kCCMenuStateWaiting;
+		_selectedItem = nil;
+		_state = kCCMenuStateWaiting;
 	}
 	
 	return self;
@@ -149,11 +149,11 @@ enum {
 
 - (void) onExit
 {
-	if(state_ == kCCMenuStateTrackingTouch)
+	if(_state == kCCMenuStateTrackingTouch)
 	{
-		[selectedItem_ unselected];
-		state_ = kCCMenuStateWaiting;
-		selectedItem_ = nil;
+		[_selectedItem unselected];
+		_state = kCCMenuStateWaiting;
+		_selectedItem = nil;
 	}
 	[super onExit];
 }
@@ -200,18 +200,18 @@ enum {
 
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	if( state_ != kCCMenuStateWaiting || !_visible || ! _enabled)
+	if( _state != kCCMenuStateWaiting || !_visible || ! _enabled)
 		return NO;
 
 	for( CCNode *c = self.parent; c != nil; c = c.parent )
 		if( c.visible == NO )
 			return NO;
 
-	selectedItem_ = [self itemForTouch:touch];
-	[selectedItem_ selected];
+	_selectedItem = [self itemForTouch:touch];
+	[_selectedItem selected];
 
-	if( selectedItem_ ) {
-		state_ = kCCMenuStateTrackingTouch;
+	if( _selectedItem ) {
+		_state = kCCMenuStateTrackingTouch;
 		return YES;
 	}
 	return NO;
@@ -219,33 +219,33 @@ enum {
 
 -(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state_ == kCCMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
+	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
 
-	[selectedItem_ unselected];
-	[selectedItem_ activate];
+	[_selectedItem unselected];
+	[_selectedItem activate];
 
-	state_ = kCCMenuStateWaiting;
+	_state = kCCMenuStateWaiting;
 }
 
 -(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state_ == kCCMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
+	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
 
-	[selectedItem_ unselected];
+	[_selectedItem unselected];
 
-	state_ = kCCMenuStateWaiting;
+	_state = kCCMenuStateWaiting;
 }
 
 -(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	NSAssert(state_ == kCCMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
+	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
 
 	CCMenuItem *currentItem = [self itemForTouch:touch];
 
-	if (currentItem != selectedItem_) {
-		[selectedItem_ unselected];
-		selectedItem_ = currentItem;
-		[selectedItem_ selected];
+	if (currentItem != _selectedItem) {
+		[_selectedItem unselected];
+		_selectedItem = currentItem;
+		[_selectedItem selected];
 	}
 }
 
@@ -279,12 +279,12 @@ enum {
 	if( ! _visible || ! _enabled)
 		return NO;
 
-	if(state_ == kCCMenuStateTrackingTouch) {
-		if( selectedItem_ ) {
-			[selectedItem_ unselected];
-			[selectedItem_ activate];
+	if(_state == kCCMenuStateTrackingTouch) {
+		if( _selectedItem ) {
+			[_selectedItem unselected];
+			[_selectedItem activate];
 		}
-		state_ = kCCMenuStateWaiting;
+		_state = kCCMenuStateWaiting;
 
 		return YES;
 	}
@@ -296,11 +296,11 @@ enum {
 	if( ! _visible || ! _enabled)
 		return NO;
 
-	selectedItem_ = [self itemForMouseEvent:event];
-	[selectedItem_ selected];
+	_selectedItem = [self itemForMouseEvent:event];
+	[_selectedItem selected];
 
-	if( selectedItem_ ) {
-		state_ = kCCMenuStateTrackingTouch;
+	if( _selectedItem ) {
+		_state = kCCMenuStateTrackingTouch;
 		return YES;
 	}
 
@@ -312,13 +312,13 @@ enum {
 	if( ! _visible || ! _enabled)
 		return NO;
 
-	if(state_ == kCCMenuStateTrackingTouch) {
+	if(_state == kCCMenuStateTrackingTouch) {
 		CCMenuItem *currentItem = [self itemForMouseEvent:event];
 
-		if (currentItem != selectedItem_) {
-			[selectedItem_ unselected];
-			selectedItem_ = currentItem;
-			[selectedItem_ selected];
+		if (currentItem != _selectedItem) {
+			[_selectedItem unselected];
+			_selectedItem = currentItem;
+			[_selectedItem selected];
 		}
 
 		return YES;
@@ -544,19 +544,19 @@ enum {
 /** Override synthesized setOpacity to recurse items */
 - (void) setOpacity:(GLubyte)newOpacity
 {
-	opacity_ = newOpacity;
+	_opacity = newOpacity;
 
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(_children, item)
-		[item setOpacity:opacity_];
+		[item setOpacity:_opacity];
 }
 
 -(void) setColor:(ccColor3B)color
 {
-	color_ = color;
+	_color = color;
 
 	id<CCRGBAProtocol> item;
 	CCARRAY_FOREACH(_children, item)
-		[item setColor:color_];
+		[item setColor:_color];
 }
 @end

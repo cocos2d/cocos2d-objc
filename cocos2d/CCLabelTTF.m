@@ -308,7 +308,7 @@
 	[tex release];
 	
 	CGRect rect = CGRectZero;
-	rect.size = [texture_ contentSize];
+	rect.size = [_texture contentSize];
 	[self setTextureRect: rect];
 	
 	return YES;

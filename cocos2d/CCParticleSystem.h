@@ -187,7 +187,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
 	// Different modes
 
-	NSInteger emitterMode_;
+	NSInteger _emitterMode;
 	union {
 		// Mode A:Gravity + Tangential Accel + Radial Accel
 		struct {
@@ -274,17 +274,17 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	float emitCounter;
 
 	// Texture of the particles
-	CCTexture2D *texture_;
+	CCTexture2D *_texture;
 	// blend function
-	ccBlendFunc	blendFunc_;
+	ccBlendFunc	_blendFunc;
 	// Texture alpha behavior
-	BOOL opacityModifyRGB_;
+	BOOL _opacityModifyRGB;
 
 	// movment type: free or grouped
-	tCCPositionType	positionType_;
+	tCCPositionType	_positionType;
 
 	// Whether or not the node will be auto-removed when there are not particles
-	BOOL	autoRemoveOnFinish_;
+	BOOL	_autoRemoveOnFinish;
 
 	//  particle idx
 	NSUInteger particleIdx;
@@ -294,13 +294,13 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	SEL						updateParticleSel;
 
 	// for batching. If nil, then it won't be batched
-	CCParticleBatchNode *batchNode_;
+	CCParticleBatchNode *_batchNode;
 
 	// index of system in batch node array
-	NSUInteger atlasIndex_;
+	NSUInteger _atlasIndex;
 
 	//YES if scaled or rotated
-	BOOL transformSystemDirty_;
+	BOOL _transformSystemDirty;
 }
 
 /** Is the emitter active */

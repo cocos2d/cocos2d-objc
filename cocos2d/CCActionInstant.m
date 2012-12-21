@@ -230,7 +230,7 @@
 
 @implementation CCCallFunc
 
-@synthesize targetCallback = targetCallback_;
+@synthesize targetCallback = _targetCallback;
 
 +(id) actionWithTarget: (id) t selector:(SEL) s
 {
@@ -241,7 +241,7 @@
 {
 	if( (self=[super init]) ) {
 		self.targetCallback = t;
-		selector_ = s;
+		_selector = s;
 	}
 	return self;
 }
@@ -252,19 +252,19 @@
 			[self class],
 			self,
 			(long)_tag,
-			NSStringFromSelector(selector_)
+			NSStringFromSelector(_selector)
 			];
 }
 
 -(void) dealloc
 {
-	[targetCallback_ release];
+	[_targetCallback release];
 	[super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector];
 	return copy;
 }
 
@@ -275,7 +275,7 @@
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_];
+	[_targetCallback performSelector:_selector];
 }
 @end
 
@@ -288,7 +288,7 @@
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_ withObject:_target];
+	[_targetCallback performSelector:_selector withObject:_target];
 }
 @end
 
@@ -322,7 +322,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ data:data_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector data:data_];
 	return copy;
 }
 
@@ -334,7 +334,7 @@
 
 -(void) execute
 {
-	callbackMethod_(targetCallback_,selector_,_target, data_);
+	callbackMethod_(_targetCallback,_selector,_target, data_);
 }
 @end
 
@@ -362,14 +362,14 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ object:object_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector object:object_];
 	return copy;
 }
 
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_ withObject:object_];
+	[_targetCallback performSelector:_selector withObject:object_];
 }
 
 @end

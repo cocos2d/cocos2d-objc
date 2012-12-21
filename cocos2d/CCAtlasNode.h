@@ -65,7 +65,7 @@
 	GLubyte		opacity_;
 	ccColor3B	color_;
 	ccColor3B	colorUnmodified_;
-	BOOL opacityModifyRGB_;
+	BOOL _opacityModifyRGB;
 
 	// color uniform
 	GLint	uniformColor_;

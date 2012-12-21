@@ -6736,7 +6736,6 @@
 		A031B93C15D9CFD800E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A031B93D15D9CFD800E1986C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		A03416FB1548806D00AE4D93 /* libffi.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libffi.dylib; path = usr/lib/libffi.dylib; sourceTree = SDKROOT; };
 		A03714D5154F1D9300081CBA /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
 		A03714D6154F1D9300081CBA /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
 		A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "geneva-32.fnt"; sourceTree = "<group>"; };
@@ -8272,7 +8271,6 @@
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				E0F9256D1224207200EF2362 /* libz.dylib */,
-				A03416FB1548806D00AE4D93 /* libffi.dylib */,
 				A0191EAA167FDBA40099349A /* libc++.dylib */,
 				A06BF7FA1680398C0018A802 /* libsqlite3.dylib */,
 			);

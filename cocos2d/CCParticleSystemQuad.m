@@ -73,7 +73,7 @@
 		}
 
 		// Don't initialize the texCoords yet since there are not textures
-//		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
+//		[self initTexCoordsWithRect:CGRectMake(0, 0, [_texture pixelsWide], [_texture pixelsHigh])];
 
 		[self initIndices];
 		[self initVAO];
@@ -87,7 +87,7 @@
 -(BOOL) allocMemory
 {
 	NSAssert( ( !quads_ && !indices_), @"Memory already alloced");
-	NSAssert( !batchNode_, @"Memory should not be alloced when not using batchNode");
+	NSAssert( !_batchNode, @"Memory should not be alloced when not using batchNode");
 
 	quads_ = calloc( sizeof(quads_[0]) * totalParticles, 1 );
 	indices_ = calloc( sizeof(indices_[0]) * totalParticles * 6, 1 );
@@ -148,7 +148,7 @@
         totalParticles = tp;
         
         // Init particles
-        if (batchNode_)
+        if (_batchNode)
 		{
 			for (int i = 0; i < totalParticles; i++)
 			{
@@ -213,7 +213,7 @@
 
 -(void) dealloc
 {
-	if( ! batchNode_ ) {
+	if( ! _batchNode ) {
 		free(quads_);
 		free(indices_);
 
@@ -235,8 +235,8 @@
 							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
 
-	GLfloat wide = [texture_ pixelsWide];
-	GLfloat high = [texture_ pixelsHigh];
+	GLfloat wide = [_texture pixelsWide];
+	GLfloat high = [_texture pixelsHigh];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	GLfloat left = (rect.origin.x*2+1) / (wide*2);
@@ -255,11 +255,11 @@
 
 	ccV3F_C4B_T2F_Quad *quads;
 	NSUInteger start, end;
-	if (batchNode_)
+	if (_batchNode)
 	{
-		quads = [[batchNode_ textureAtlas] quads];
-		start = atlasIndex_;
-		end = atlasIndex_ + totalParticles;
+		quads = [[_batchNode textureAtlas] quads];
+		start = _atlasIndex;
+		end = _atlasIndex + totalParticles;
 	}
 	else
 	{
@@ -288,7 +288,7 @@
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect
 {
 	// Only update the texture if is different from the current one
-	if( [texture name] != [texture_ name] )
+	if( [texture name] != [_texture name] )
 		[super setTexture:texture];
 
 	[self initTexCoordsWithRect:rect];
@@ -306,7 +306,7 @@
 	NSAssert( CGPointEqualToPoint( spriteFrame.offsetInPixels , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
     
 	// update texture before updating texture rect
-	if ( spriteFrame.texture.name != texture_.name )
+	if ( spriteFrame.texture.name != _texture.name )
 		[self setTexture: spriteFrame.texture];
 }
 
@@ -329,15 +329,15 @@
 {
 	ccV3F_C4B_T2F_Quad *quad;
 
-	if (batchNode_)
+	if (_batchNode)
 	{
-		ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads];
-		quad = &(batchQuads[atlasIndex_+p->atlasIndex]);
+		ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
+		quad = &(batchQuads[_atlasIndex+p->atlasIndex]);
 	}
 	else
 		quad = &(quads_[particleIdx]);
 
-	ccColor4B color = (opacityModifyRGB_)
+	ccColor4B color = (_opacityModifyRGB)
 		? (ccColor4B){ p->color.r*p->color.a*255, p->color.g*p->color.a*255, p->color.b*p->color.a*255, p->color.a*255}
 		: (ccColor4B){ p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
 
@@ -427,12 +427,12 @@
 // overriding draw method
 -(void) draw
 {
-	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode");
+	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");
 
 	CC_NODE_DRAW_SETUP();
 
-	ccGLBindTexture2D( [texture_ name] );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBindTexture2D( [_texture name] );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
 	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
 
@@ -446,9 +446,9 @@
 
 -(void) setBatchNode:(CCParticleBatchNode *)batchNode
 {
-	if( batchNode_ != batchNode ) {
+	if( _batchNode != batchNode ) {
 
-		CCParticleBatchNode *oldBatch = batchNode_;
+		CCParticleBatchNode *oldBatch = _batchNode;
 
 		[super setBatchNode:batchNode];
 
@@ -464,8 +464,8 @@
 		else if( ! oldBatch )
 		{
 			// copy current state to batch
-			ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads];
-			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[atlasIndex_] );
+			ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
+			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[_atlasIndex] );
 			memcpy( quad, quads_, totalParticles * sizeof(quads_[0]) );
 
 			if (quads_)
