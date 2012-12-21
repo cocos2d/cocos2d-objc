@@ -514,11 +514,11 @@ void FNTConfigRemoveCache( void )
 		opacity_ = 255;
 		color_ = ccWHITE;
 		
-		contentSize_ = CGSizeZero;
+		_contentSize = CGSizeZero;
 		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
 		
-		anchorPoint_ = ccp(0.5f, 0.5f);
+		_anchorPoint = ccp(0.5f, 0.5f);
         
 		imageOffset_ = offset;
         
@@ -557,7 +557,7 @@ void FNTConfigRemoveCache( void )
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
         //Go through each character and insert line breaks as necessary
-        for (int j = 0; j < [children_ count]; j++) {
+        for (int j = 0; j < [_children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
             while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip+justSkipped]))
@@ -866,7 +866,7 @@ void FNTConfigRemoveCache( void )
     }
 	
     CCSprite *child;
-    CCARRAY_FOREACH(children_, child)
+    CCARRAY_FOREACH(_children, child)
 		child.visible = NO;
 	
 	[self createFontChars];
@@ -882,7 +882,7 @@ void FNTConfigRemoveCache( void )
 	color_ = color;
     
 	CCSprite *child;
-	CCARRAY_FOREACH(children_, child)
+	CCARRAY_FOREACH(_children, child)
 		[child setColor:color_];
 }
 
@@ -891,7 +891,7 @@ void FNTConfigRemoveCache( void )
 	opacity_ = opacity;
     
 	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(children_, child)
+	CCARRAY_FOREACH(_children, child)
 		[child setOpacity:opacity_];
 }
 -(void) setOpacityModifyRGB:(BOOL)modify
@@ -899,7 +899,7 @@ void FNTConfigRemoveCache( void )
 	opacityModifyRGB_ = modify;
     
 	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(children_, child)
+	CCARRAY_FOREACH(_children, child)
 		[child setOpacityModifyRGB:modify];
 }
 
@@ -911,7 +911,7 @@ void FNTConfigRemoveCache( void )
 #pragma mark LabelBMFont - AnchorPoint
 -(void) setAnchorPoint:(CGPoint)point
 {
-	if( ! CGPointEqualToPoint(point, anchorPoint_) ) {
+	if( ! CGPointEqualToPoint(point, _anchorPoint) ) {
 		[super setAnchorPoint:point];
 		[self createFontChars];
 	}

@@ -121,7 +121,7 @@
 
 -(CGPoint) absolutePosition_
 {
-	CGPoint ret = position_;
+	CGPoint ret = _position;
 
 	CCNode *cn = self;
 
@@ -140,7 +140,7 @@
 */
 -(void) visit
 {
-//	CGPoint pos = position_;
+//	CGPoint pos = _position;
 //	CGPoint	pos = [self convertToWorldSpace:CGPointZero];
 	CGPoint pos = [self absolutePosition_];
 	if( ! CGPointEqualToPoint(pos, lastPosition) ) {

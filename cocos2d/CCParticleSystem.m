@@ -351,7 +351,7 @@
 
 -(void) initParticle: (tCCParticle*) particle
 {
-	//CGPoint currentPosition = position_;
+	//CGPoint currentPosition = _position;
 	// timeToLive
 	// no negative life. prevent division by 0
 	particle->timeToLive = life + lifeVar * CCRANDOM_MINUS1_1();
@@ -404,7 +404,7 @@
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 
 	else if( positionType_ == kCCPositionTypeRelative )
-		particle->startPos = position_;
+		particle->startPos = _position;
 
 
 	// direction
@@ -510,9 +510,9 @@
 		currentPosition = [self convertToWorldSpace:CGPointZero];
 
 	else if( positionType_ == kCCPositionTypeRelative )
-		currentPosition = position_;
+		currentPosition = _position;
 
-	if (visible_)
+	if (_visible)
 	{
 		while( particleIdx < particleCount )
 		{
@@ -589,8 +589,8 @@
 				// don't update the particle with the new position information, it will interfere with the radius and tangential calculations
 				if (batchNode_)
 				{
-					newPos.x+=position_.x;
-					newPos.y+=position_.y;
+					newPos.x+=_position.x;
+					newPos.y+=_position.y;
 				}
 
 				updateParticleImp(self, updateParticleSel, p, newPos);
@@ -618,7 +618,7 @@
 
 				if( particleCount == 0 && autoRemoveOnFinish_ ) {
 					[self unscheduleUpdate];
-					[parent_ removeChild:self cleanup:YES];
+					[_parent removeChild:self cleanup:YES];
 					return;
 				}
 			}

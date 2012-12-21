@@ -109,7 +109,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 
 @synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
-@synthesize shaderProgram = shaderProgram_;
+@synthesize shaderProgram = _shaderProgram;
 @synthesize resolutionType = resolutionType_;
 
 
@@ -195,7 +195,7 @@ static CCTexture2DPixelFormat defaultAlphaPixelFormat_ = kCCTexture2DPixelFormat
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[shaderProgram_ release];
+	[_shaderProgram release];
 
 	if( name_ )
 		ccGLDeleteTexture( name_ );
@@ -772,8 +772,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		width + point.x,	height  + point.y };
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins];
 
 	ccGLBindTexture2D( name_ );
 
@@ -800,8 +800,8 @@ static BOOL PVRHaveAlphaPremultiplied_ = NO;
 		rect.origin.x + rect.size.width,						rect.origin.y + rect.size.height };
 
 
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];    
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins];    
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
 

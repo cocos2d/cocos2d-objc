@@ -169,7 +169,7 @@ Class restartAction()
 
 -(void) removeThis
 {
-	[parent_ removeChild:self cleanup:YES];
+	[self.parent removeChild:self cleanup:YES];
 
 	[self nextCallback:self];
 }

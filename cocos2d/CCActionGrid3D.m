@@ -266,7 +266,7 @@
 {
 	if ( (self = [super initWithDuration:duration size:gridSize]) )
 	{
-		position_ = ccp(-1,-1);
+		_position = ccp(-1,-1);
 		self.position = pos;
 		radius_ = radius;
 		lensEffect_ = 0.7f;
@@ -278,21 +278,21 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ radius:radius_];
+	CCGridAction *copy = [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:_position radius:radius_];
 	return copy;
 }
 
 -(void) setPosition:(CGPoint)pos
 {
-	if( ! CGPointEqualToPoint(pos, position_) ) {
-		position_ = pos;
+	if( ! CGPointEqualToPoint(pos, _position) ) {
+		_position = pos;
 		dirty_ = YES;
 	}
 }
 
 -(CGPoint) position
 {
-	return position_;
+	return _position;
 }
 
 -(void)update:(ccTime)time
@@ -306,7 +306,7 @@
 			for( j = 0; j < _gridSize.height+1; j++ )
 			{
 				ccVertex3F	v = [self originalVertex:ccp(i,j)];
-				CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
+				CGPoint vect = ccpSub(_position, ccp(v.x,v.y));
 				CGFloat r = ccpLength(vect);
 
 				if ( r < radius_ )
@@ -367,17 +367,17 @@
 
 -(CGPoint) position
 {
-	return position_;
+	return _position;
 }
 
 -(void) setPosition:(CGPoint)pos
 {
-	position_ = pos;
+	_position = pos;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ radius:radius_ waves:waves_ amplitude:amplitude_];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:_position radius:radius_ waves:waves_ amplitude:amplitude_];
 }
 
 -(void)update:(ccTime)time
@@ -389,7 +389,7 @@
 		for( j = 0; j < (_gridSize.height+1); j++ )
 		{
 			ccVertex3F	v = [self originalVertex:ccp(i,j)];
-			CGPoint vect = ccpSub(position_, ccp(v.x,v.y));
+			CGPoint vect = ccpSub(_position, ccp(v.x,v.y));
 			CGFloat r = ccpLength(vect);
 
 			if ( r < radius_ )
@@ -592,18 +592,18 @@
 
 -(void) setPosition:(CGPoint)pos
 {
-	position_ = pos;
+	_position = pos;
 }
 
 -(CGPoint) position
 {
-	return position_;
+	return _position;
 }
 
 -(void)update:(ccTime)time
 {
 	int i, j;
-	CGPoint	c = position_;
+	CGPoint	c = _position;
 
 	for( i = 0; i < (_gridSize.width+1); i++ )
 	{
@@ -635,7 +635,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:position_ twirls:twirls_ amplitude:amplitude_];
+	return [[[self class] allocWithZone:zone] initWithDuration:_duration size:_gridSize position:_position twirls:twirls_ amplitude:amplitude_];
 }
 
 

@@ -209,8 +209,8 @@ Example:
  */
 @interface CCSkewTo : CCActionInterval <NSCopying>
 {
-	float skewX_;
-	float skewY_;
+	float _skewX;
+	float _skewY;
 	float startSkewX_;
 	float startSkewY_;
 	float endSkewX_;
@@ -302,8 +302,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCScaleTo : CCActionInterval <NSCopying>
 {
-	float scaleX_;
-	float scaleY_;
+	float _scaleX;
+	float _scaleY;
 	float startScaleX_;
 	float startScaleY_;
 	float endScaleX_;

@@ -352,7 +352,7 @@ Class restartAction()
         
 		CCSprite *sprite = sprites_[nuSprites_++];
         sprite.visible = YES;
-        sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(contentSize_));
+        sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(self.contentSize));
         sprite.userObject = touch.identity;
         
         if (nuSprites_ > capacity) {
@@ -377,7 +377,7 @@ Class restartAction()
         for(int i = 0; i < nuSprites_; i++) {
             CCSprite *sprite = sprites_[i];
             if ([sprite.userObject isEqual:touch.identity])
-                sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(contentSize_));
+                sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(self.contentSize));
         }
     }
     

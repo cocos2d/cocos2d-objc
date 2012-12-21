@@ -81,7 +81,7 @@ typedef enum ccTMXTileFlags_ {
 	NSString			*name_;
 	CGSize				layerSize_;
 	unsigned int		*tiles_;
-	BOOL				visible_;
+	BOOL				_visible;
 	unsigned char		opacity_;
 	BOOL				ownTiles_;
 	unsigned int		minGID_;

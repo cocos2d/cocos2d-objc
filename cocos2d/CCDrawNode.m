@@ -187,8 +187,8 @@ static inline ccTex2F __t(ccVertex2F v )
 {
 	ccGLBlendFunc(_blendFunc.src, _blendFunc.dst);
 	
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins];
 	
 	[self render];	
 }

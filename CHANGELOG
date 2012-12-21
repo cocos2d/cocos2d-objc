@@ -2,7 +2,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [NEW] Actions: All the actions that modify the position property can be run at the same time.
 		MoveBy/To, JumpBy/To, BezierTo/By, CatmullRomTo/By and CardinalSplineTo/By won't override the results of previous actions.
 . [NEW] GLProgram: Added uniformLocationForName: method
-. [FIX] Director: replaced lenght with lenght
+. [FIX] Director: replaced length with lenght
 		Fixed 2 memory leaks in createStatsLabel
 		willRotateToInterfaceOrientation is propagated to the delegate
 		Frees DrawingPrimitives resources (issue #1456)
@@ -12,6 +12,7 @@ version 2.1-rc0	 XX-Jan-2013
 		API fixes: parameter "grid" was renamed to "size"
 . [FIX] externals: All JS related projects are in the externals/JavaScript subfolder
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
+. [FIX] Node: All ivars use _ as prefix, not suffix
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
 . [FIX] RenderTexture: Restures the Projection after using it.
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version

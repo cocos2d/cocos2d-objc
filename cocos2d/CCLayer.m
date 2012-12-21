@@ -66,7 +66,7 @@
 	if( (self=[super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		anchorPoint_ = ccp(0.5f, 0.5f);
+		_anchorPoint = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
 		self.ignoreAnchorPointForPosition = YES;
 
@@ -109,7 +109,7 @@
 {
 	if( enabled != _accelerometerEnabled ) {
 		_accelerometerEnabled = enabled;
-		if( isRunning_ ) {
+		if( _isRunning ) {
 			if( enabled )
 				[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
 			else
@@ -132,7 +132,7 @@
 {	
 	if( _touchEnabled != enabled ) {
 		_touchEnabled = enabled;
-		if( isRunning_) {
+		if( _isRunning) {
 			if( enabled )
 				[self registerWithTouchDispatcher];
 			else {
@@ -189,7 +189,7 @@
 	if( _mouseEnabled != enabled ) {
 		_mouseEnabled = enabled;
 		
-		if( isRunning_ ) {
+		if( _isRunning ) {
 			CCDirector *director = [CCDirector sharedDirector];
 			if( enabled )
 				[[director eventDispatcher] addMouseDelegate:self priority:_mousePriority];
@@ -225,7 +225,7 @@
 	if( _keyboardEnabled != enabled ) {
 		_keyboardEnabled = enabled;
 
-		if( isRunning_ ) {
+		if( _isRunning ) {
 			CCDirector *director = [CCDirector sharedDirector];
 			if( enabled )
 				[[director eventDispatcher] addKeyboardDelegate:self priority:_keyboardPriority ];
@@ -260,7 +260,7 @@
 {
 	if( _touchEnabled != enabled ) {
 		_touchEnabled = enabled;
-		if( isRunning_ ) {
+		if( _isRunning ) {
 			CCDirector *director = [CCDirector sharedDirector];
 			if( enabled )
 				[[director eventDispatcher] addTouchDelegate:self priority:_touchPriority];
@@ -295,7 +295,7 @@
 {
 	if( _gestureEnabled != enabled ) {
 		_gestureEnabled = enabled;
-		if( isRunning_ ) {
+		if( _isRunning ) {
 			CCDirector *director = [CCDirector sharedDirector];
 			if( enabled )
 				[[director eventDispatcher] addGestureDelegate:self priority:_gesturePriority];
@@ -488,12 +488,12 @@
 
 -(void) changeWidth: (GLfloat) w
 {
-	[self setContentSize:CGSizeMake(w, contentSize_.height)];
+	[self setContentSize:CGSizeMake(w, _contentSize.height)];
 }
 
 -(void) changeHeight: (GLfloat) h
 {
-	[self setContentSize:CGSizeMake(contentSize_.width, h)];
+	[self setContentSize:CGSizeMake(_contentSize.width, h)];
 }
 
 - (void) updateColor

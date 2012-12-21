@@ -89,17 +89,17 @@
 	// Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(rotationX_)) : _body->rot);
-	CGFloat x = _body->p.x + rot.x * -anchorPointInPoints_.x * scaleX_ - rot.y * -anchorPointInPoints_.y * scaleY_;
-	CGFloat y = _body->p.y + rot.y * -anchorPointInPoints_.x * scaleX_ + rot.x * -anchorPointInPoints_.y * scaleY_;
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _body->rot);
+	CGFloat x = _body->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+	CGFloat y = _body->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
 	
-	if(ignoreAnchorPointForPosition_){
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
+	if(_ignoreAnchorPointForPosition){
+		x += _anchorPointInPoints.x;
+		y += _anchorPointInPoints.y;
 	}
 	
-	return (transform_ = CGAffineTransformMake(rot.x * scaleX_, rot.y * scaleX_,
-											   -rot.y * scaleY_, rot.x * scaleY_,
+	return (_transform = CGAffineTransformMake(rot.x * _scaleX, rot.y * _scaleX,
+											   -rot.y * _scaleY, rot.x * _scaleY,
 											   x,	y));
 }
 
@@ -148,9 +148,9 @@
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
 	
-	if ( ignoreAnchorPointForPosition_ ) {
-		x += anchorPointInPoints_.x;
-		y += anchorPointInPoints_.y;
+	if ( _ignoreAnchorPointForPosition ) {
+		x += _anchorPointInPoints.x;
+		y += _anchorPointInPoints.y;
 	}
 	
 	// Make matrix
@@ -161,17 +161,17 @@
 	// Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	if( ! CGPointEqualToPoint(anchorPointInPoints_, CGPointZero) ){
-		x += c*-anchorPointInPoints_.x * scaleX_ + -s*-anchorPointInPoints_.y * scaleY_;
-		y += s*-anchorPointInPoints_.x * scaleX_ + c*-anchorPointInPoints_.y * scaleY_;
+	if( ! CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) ){
+		x += c*-_anchorPointInPoints.x * _scaleX + -s*-_anchorPointInPoints.y * _scaleY;
+		y += s*-_anchorPointInPoints.x * _scaleX + c*-_anchorPointInPoints.y * _scaleY;
 	}
 		
 	// Rot, Translate Matrix
-	transform_ = CGAffineTransformMake( c * scaleX_,	s * scaleX_,
-									   -s * scaleY_,	c * scaleY_,
+	_transform = CGAffineTransformMake( c * _scaleX,	s * _scaleX,
+									   -s * _scaleY,	c * _scaleY,
 									   x,	y );
 	
-	return transform_;
+	return _transform;
 }
 #endif // CC_ENABLE_BOX2D_INTEGRATION
 

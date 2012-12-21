@@ -395,7 +395,7 @@ int compareInts (const void * a, const void * b);
 
 	// update possible children
 	CCSprite *sprite;
-	CCARRAY_FOREACH(children_, sprite) {
+	CCARRAY_FOREACH(_children, sprite) {
 		NSUInteger ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -547,7 +547,7 @@ int compareInts (const void * a, const void * b)
 	if( ! sprite )
 		return;
 
-	NSAssert( [children_ containsObject:sprite], @"Tile does not belong to TMXLayer");
+	NSAssert( [_children containsObject:sprite], @"Tile does not belong to TMXLayer");
 
 	NSUInteger atlasIndex = [sprite atlasIndex];
 	NSUInteger zz = (NSUInteger) atlasIndexArray_->arr[atlasIndex];
@@ -582,7 +582,7 @@ int compareInts (const void * a, const void * b)
 			[textureAtlas_ removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			CCARRAY_FOREACH(children_, sprite) {
+			CCARRAY_FOREACH(_children, sprite) {
 				NSUInteger ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];

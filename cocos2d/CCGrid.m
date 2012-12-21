@@ -56,7 +56,7 @@
 @synthesize grabber = grabber_;
 @synthesize gridSize = _gridSize;
 @synthesize step = step_;
-@synthesize shaderProgram = shaderProgram_;
+@synthesize shaderProgram = _shaderProgram;
 
 +(id) gridWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
@@ -279,8 +279,8 @@
 	NSInteger n = _gridSize.width * _gridSize.height;
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_TexCoords );
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins];
 
 	//
 	// Attributes
@@ -436,8 +436,8 @@
 {
 	NSInteger n = _gridSize.width * _gridSize.height;
 
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformsForBuiltins];
+	[_shaderProgram use];
+	[_shaderProgram setUniformsForBuiltins];
 
 
 	//

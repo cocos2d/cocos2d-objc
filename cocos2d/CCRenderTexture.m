@@ -307,13 +307,13 @@
 {
 	// override visit.
 	// Don't call visit on its children
-	if (!visible_)
+	if (!_visible)
 		return;
 	
 	kmGLPushMatrix();
 	
-	if (grid_ && grid_.active) {
-		[grid_ beforeDraw];
+	if (_grid && _grid.active) {
+		[_grid beforeDraw];
 		[self transformAncestors];
 	}
 
@@ -321,12 +321,12 @@
 	[sprite_ visit];
 	[self draw];
 	
-	if (grid_ && grid_.active)
-		[grid_ afterDraw:self];
+	if (_grid && _grid.active)
+		[_grid afterDraw:self];
 	
 	kmGLPopMatrix();
 	
-	orderOfArrival_ = 0;
+	_orderOfArrival = 0;
 }
 
 - (void)draw
@@ -373,7 +373,7 @@
 		[self sortAllChildren];
 		
 		CCNode *child;
-		CCARRAY_FOREACH(children_, child) {
+		CCARRAY_FOREACH(_children, child) {
 			if( child != sprite_)
 				[child visit];
 		}

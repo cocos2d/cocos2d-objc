@@ -50,7 +50,7 @@ enum {
 	CCMenuItem	*selectedItem_;
 	GLubyte		opacity_;
 	ccColor3B	color_;
-	BOOL		enabled_;
+	BOOL		_enabled;
 }
 
 /** conforms to CCRGBAProtocol protocol */
