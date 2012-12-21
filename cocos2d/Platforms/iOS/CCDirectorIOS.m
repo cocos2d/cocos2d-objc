@@ -438,11 +438,11 @@ GLToClipTransform(kmMat4 *transformOut)
 	return ret;
 }
 
--(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
-{
-	if( [delegate_ respondsToSelector:_cmd] )
-		[delegate_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
-}
+//-(void)willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+//{
+//	if( [delegate_ respondsToSelector:_cmd] )
+//		[delegate_ willRotateToInterfaceOrientation:toInterfaceOrientation duration:duration];
+//}
 
 
 -(void) viewWillAppear:(BOOL)animated
