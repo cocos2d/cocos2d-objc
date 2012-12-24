@@ -81,6 +81,7 @@
 		2B44E5F71633A21D000492D8 /* hole_stencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F51633A1ED000492D8 /* hole_stencil.png */; };
 		2BE185F716385EE600A8BA73 /* hole_effect-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BE185F516385EE600A8BA73 /* hole_effect-hd.png */; };
 		2BE185F816385EE600A8BA73 /* hole_stencil-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = 2BE185F616385EE600A8BA73 /* hole_stencil-hd.png */; };
+		2CFA5406168805CD006CA4B9 /* SysTest in Resources */ = {isa = PBXBuildFile; fileRef = 2CFA5405168805CD006CA4B9 /* SysTest */; };
 		3BB41AD414E43A51006CD0D8 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		3BB5C8E911410A4000DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		3BB5C8EF11410A5300DD65EF /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
@@ -4949,6 +4950,7 @@
 		2B44E5F51633A1ED000492D8 /* hole_stencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_stencil.png; sourceTree = "<group>"; };
 		2BE185F516385EE600A8BA73 /* hole_effect-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hole_effect-hd.png"; sourceTree = "<group>"; };
 		2BE185F616385EE600A8BA73 /* hole_stencil-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "hole_stencil-hd.png"; sourceTree = "<group>"; };
+		2CFA5405168805CD006CA4B9 /* SysTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SysTest; sourceTree = "<group>"; };
 		2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		495E73F7104B74E20012BB52 /* RenderTextureTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RenderTextureTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -9180,6 +9182,7 @@
 				A0C164C4166D589300DF921C /* SceneTest */,
 				A0C164C5166D589300DF921C /* SchedulerTest */,
 				A0C164C6166D589300DF921C /* SpriteTest */,
+				2CFA5405168805CD006CA4B9 /* SysTest */,
 				A0C164C7166D589300DF921C /* TextInputTest */,
 				A0C164C8166D589300DF921C /* TextureCacheTest */,
 				A0C164C9166D589300DF921C /* TileMapTest */,
@@ -13724,6 +13727,7 @@
 				A0C164F3166D58A500DF921C /* tests_resources-jsb.js in Resources */,
 				A0C164F4166D58A500DF921C /* tests-boot-jsb.js in Resources */,
 				A0C164F5166D58A500DF921C /* tests-main.js in Resources */,
+				2CFA5406168805CD006CA4B9 /* SysTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
