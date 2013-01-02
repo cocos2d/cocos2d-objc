@@ -203,8 +203,8 @@
 
         // Color asignation
         const NSUInteger offset = nuPoints_*8;
-        *((ccColor3B*)(colorPointer_ + offset)) = _color;
-        *((ccColor3B*)(colorPointer_ + offset+4)) = _color;
+        *((ccColor3B*)(colorPointer_ + offset)) = _displayedColor;
+        *((ccColor3B*)(colorPointer_ + offset+4)) = _displayedColor;
 
         // Opacity
         colorPointer_[offset+3] = 255;

@@ -283,3 +283,17 @@
 #ifndef CC_CASCADING_OPACITY
 #define CC_CASCADING_OPACITY 1
 #endif
+
+/** @def CC_CASCADING_COLOR
+ If enabled, cocos2d uses transitive color (tint).
+ All classes calculate their cumulative color from self color and parent's color.
+
+ To enable set it to 1. Use 0 to disable it. Enabled by default.
+
+ If you don't need the feature, disabling it should increase performance when setting or animating the color.
+
+ @Since 2.1beta2-custom
+ */
+#ifndef CC_CASCADING_COLOR
+#define CC_CASCADING_COLOR 1
+#endif

@@ -38,6 +38,8 @@
  @since v0.8
  */
 @property (nonatomic) ccColor3B color;
+@property (nonatomic, readonly) ccColor3B displayedColor;
+@property (nonatomic) BOOL cascadeColor;
 
 /** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
@@ -45,6 +47,7 @@
  */
 @property (nonatomic) GLubyte opacity;
 @property (nonatomic, readonly) GLubyte displayedOpacity;
+@property (nonatomic) BOOL cascadeOpacity;
 
 @optional
 /** sets the premultipliedAlphaOpacity property.

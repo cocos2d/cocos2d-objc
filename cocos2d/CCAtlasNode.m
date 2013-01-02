@@ -130,7 +130,10 @@
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	GLfloat colors[4] = {_color.r / 255.0f, _color.g / 255.0f, _color.b / 255.0f, _displayedOpacity / 255.0f};
+	GLfloat colors[4] = { _displayedColor.r / 255.0f,
+                          _displayedColor.g / 255.0f,
+                          _displayedColor.b / 255.0f,
+                          _displayedOpacity / 255.0f};
 	[shaderProgram_ setUniformLocation:uniformColor_ with4fv:colors count:1];
 
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
@@ -140,22 +143,22 @@
 
 - (ccColor3B) color
 {
-	if(opacityModifyRGB_)
+	if (opacityModifyRGB_)
 		return colorUnmodified_;
 
-	return _color;
+	return super.color;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
-    [super setColor:color3];
 	colorUnmodified_ = color3;
 
 	if( opacityModifyRGB_ ){
-		_color.r = color3.r * _displayedOpacity/255;
-		_color.g = color3.g * _displayedOpacity/255;
-		_color.b = color3.b * _displayedOpacity/255;
+		color3.r = color3.r * _displayedOpacity/255;
+		color3.g = color3.g * _displayedOpacity/255;
+		color3.b = color3.b * _displayedOpacity/255;
 	}
+    [super setColor:color3];
 }
 
 -(void) setOpacity:(GLubyte) anOpacity

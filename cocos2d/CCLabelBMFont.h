@@ -178,7 +178,7 @@ typedef struct _KerningHashElement
     
 	// texture RGBA
 	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_color;
+	ccColor3B	_displayedColor, _realColor;
 	BOOL opacityModifyRGB_;
 	
 	// offset of the texture atlas
