@@ -278,7 +278,7 @@
 
  If you don't need the feature, disabling it should increase performance when setting or animating the opacity.
 
- @Since 2.1
+ @since 2.1
  */
 #ifndef CC_CASCADING_OPACITY
 #define CC_CASCADING_OPACITY 0
@@ -292,7 +292,7 @@
 
  If you don't need the feature, disabling it should increase performance when setting or animating the color.
 
- @Since 2.1
+ @since 2.1
  */
 #ifndef CC_CASCADING_COLOR
 #define CC_CASCADING_COLOR 0
