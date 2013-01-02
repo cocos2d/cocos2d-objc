@@ -151,11 +151,9 @@ static CCTextureCache *sharedTextureCache;
 
 	// optimization
 	__block CCTexture2D * tex;
-
-#ifdef __CC_PLATFORM_IOS
+	
 	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile:path];
-#endif
-
+	
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
 	});
@@ -214,9 +212,7 @@ static CCTextureCache *sharedTextureCache;
 	// optimization
 	__block CCTexture2D * tex;
 
-#ifdef __CC_PLATFORM_IOS
 	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile:path];
-#endif
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
@@ -278,9 +274,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex = nil;
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-#ifdef __CC_PLATFORM_IOS
 	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile: path];
-#endif
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey: path];
@@ -448,9 +442,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex;
 
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-#ifdef __CC_PLATFORM_IOS
 	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile: path];
-#endif
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
