@@ -16,6 +16,12 @@ enum {
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+	@"LayerTestCascadingOpacityA",
+	@"LayerTestCascadingOpacityB",
+	@"LayerTestCascadingOpacityC",
+	@"LayerTestCascadingColorA",
+	@"LayerTestCascadingColorB",
+	@"LayerTestCascadingColorC",
 	@"LayerTest1",
 	@"LayerTest2",
 	@"LayerTestBlend",
@@ -59,6 +65,302 @@ Class restartAction()
 	Class c = NSClassFromString(r);
 	return c;
 }
+
+#pragma mark -
+#pragma mark Example LayerTestCascadingOpacity
+
+@implementation LayerTestCascadingOpacityA
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerRGBA* layer1 = [CCLayerRGBA node];
+ 
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+
+    }
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"LayerRGBA: cascading opacity";
+}
+@end
+
+@implementation LayerTestCascadingOpacityB
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
+        layer1.cascadeColor = NO;
+
+        layer1.position = ccp(0, s.height/2);
+
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: cascading opacity";
+}
+@end
+
+@implementation LayerTestCascadingOpacityC
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
+        layer1.cascadeColor = NO;
+        layer1.cascadeOpacity = NO;
+
+        layer1.position = ccp(0, s.height/2);
+
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:4 opacity:0],
+           [CCFadeTo actionWithDuration:4 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCFadeTo actionWithDuration:2 opacity:0],
+           [CCFadeTo actionWithDuration:2 opacity:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: non-cascading opacity";
+}
+@end
+
+#pragma mark -
+#pragma mark Example LayerTestCascadingColor
+
+@implementation LayerTestCascadingColorA
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerRGBA* layer1 = [CCLayerRGBA node];
+
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, s.height/2);
+		sister2.position = ccp( s.width*2/3, s.height/2);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+    }
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"LayerRGBA: cascading color";
+}
+@end
+
+@implementation LayerTestCascadingColorB
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:s.width height:s.height/2];
+
+        layer1.position = ccp(0, s.height/2);
+
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: cascading color";
+}
+@end
+
+@implementation LayerTestCascadingColorC
+-(id) init
+{
+	if( (self=[super init] )) {
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:s.width height:s.height/2];
+        layer1.cascadeColor = NO;
+        layer1.position = ccp(0, s.height/2);
+
+		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
+		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+
+		[layer1 addChild:sister1];
+		[layer1 addChild:sister2];
+		[self addChild: layer1 z:0 tag:kTagLayer];
+
+		sister1.position = ccp( s.width*1/3, 0);
+		sister2.position = ccp( s.width*2/3, 0);
+
+        [layer1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:6 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:6 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+
+        [sister1 runAction:
+         [CCRepeatForever actionWithAction:
+          [CCSequence actions:
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:0],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:0 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:0 blue:255],
+           [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
+           [CCDelayTime actionWithDuration:1],
+           nil]]];
+	}
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"CCLayerColor: non-cascading color";
+}
+@end
 
 
 @implementation LayerTest
@@ -413,7 +715,7 @@ Class restartAction()
 		CGSize lsize = [l contentSize];
 		[child setPosition:ccp(lsize.width/2, lsize.height/2)];
 		
-		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toogle ignore anchor point" block:^(id sender) {
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Toggle ignore anchor point" block:^(id sender) {
 			BOOL ignore = [l ignoreAnchorPointForPosition];
 			[l setIgnoreAnchorPointForPosition: ! ignore];
 		}

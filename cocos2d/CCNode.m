@@ -54,6 +54,8 @@
 #endif
 
 
+#pragma mark - Node
+
 @interface CCNode ()
 // lazy allocs
 -(void) childrenAlloc;
@@ -932,5 +934,98 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #endif // __CC_PLATFORM_IOS
 
+@end
+
+
+#pragma mark - NodeRGBA
+
+@implementation CCNodeRGBA
+
+@synthesize cascadeColor=_cascadeColor, cascadeOpacity=_cascadeOpacity;
+
+-(id) init
+{
+	if ((self=[super init]) ) {
+        _displayedOpacity = _realOpacity = 255;
+        _displayedColor = _realColor = ccWHITE;
+        _cascadeOpacity = YES;
+        _cascadeColor = YES;
+    }
+    return self;
+}
+
+-(void) onEnter {
+    [super onEnter];
+    self.opacity = _realOpacity;
+    self.color = _realColor;
+}
+
+-(GLubyte) opacity
+{
+	return _realOpacity;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+    if (_cascadeOpacity) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(_children, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                item.opacity=item.opacity;
+            }
+        }
+    }
+#endif
+}
+
+-(ccColor3B) color
+{
+	return _realColor;
+}
+
+-(ccColor3B) displayedColor
+{
+	return _displayedColor;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setColor:(ccColor3B)color
+{
+	_displayedColor = _realColor = color;
+
+#if CC_CASCADING_COLOR
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
+        _displayedColor.r = _realColor.r * ((id<CCRGBAProtocol>)self.parent).displayedColor.r/255.0;
+        _displayedColor.g = _realColor.g * ((id<CCRGBAProtocol>)self.parent).displayedColor.g/255.0;
+        _displayedColor.b = _realColor.b * ((id<CCRGBAProtocol>)self.parent).displayedColor.b/255.0;
+    }
+
+    if (_cascadeColor) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(_children, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                item.color=item.color;
+            }
+        }
+    }
+#endif
+}
 
 @end

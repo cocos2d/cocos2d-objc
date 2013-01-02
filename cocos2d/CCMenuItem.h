@@ -38,7 +38,7 @@
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
-@interface CCMenuItem : CCNode
+@interface CCMenuItem : CCNodeRGBA
 {
 	// used for menu items using a block
 	void (^_block)(id sender);
@@ -122,7 +122,7 @@
    - CCLabelAtlas
    - CCLabelTTF
  */
-@interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
+@interface CCMenuItemLabel : CCMenuItem
 {
 	CCNode<CCLabelProtocol, CCRGBAProtocol> *_label;
 	ccColor3B	_colorBackup;
@@ -395,15 +395,8 @@
 {
 	NSUInteger	_selectedIndex;
 	NSMutableArray* _subItems;
-	GLubyte		_opacity;
-	ccColor3B	_color;
     CCMenuItem*	_currentItem;
 }
-
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */
 @property (nonatomic,readwrite) NSUInteger selectedIndex;

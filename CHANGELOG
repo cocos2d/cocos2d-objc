@@ -2,6 +2,8 @@ version 2.1-rc0	 XX-Jan-2013
 . [NEW] Actions: All the actions that modify the position property can be run at the same time.
 		MoveBy/To, JumpBy/To, BezierTo/By, CatmullRomTo/By and CardinalSplineTo/By won't override the results of previous actions.
 . [NEW] GLProgram: Added uniformLocationForName: method
+. [NEW] NodeRGBA: New node that implements opacity and color. Sprite, Label, Menu and other are subclasses of this one.
+		It also supports cascading color and opacity (disabled by default in v2.1)
 . [FIX] Actions, Menu, Node, Sprite, Particles, Parallax, Texture: All ivars use _ as prefix, not suffix
 . [FIX] Director: replaced length with lenght
 		Fixed 2 memory leaks in createStatsLabel

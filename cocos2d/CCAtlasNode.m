@@ -74,8 +74,7 @@
 		itemWidth_ = w;
 		itemHeight_ = h;
 
-		opacity_ = 255;
-		color_ = colorUnmodified_ = ccWHITE;
+		_colorUnmodified = ccWHITE;
 		_opacityModifyRGB = YES;
 
 		blendFunc_.src = CC_BLEND_SRC;
@@ -131,7 +130,10 @@
 
 	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
 	
-	GLfloat colors[4] = {color_.r / 255.0f, color_.g / 255.0f, color_.b / 255.0f, opacity_ / 255.0f};
+	GLfloat colors[4] = { _displayedColor.r / 255.0f,
+                          _displayedColor.g / 255.0f,
+                          _displayedColor.b / 255.0f,
+                          _displayedOpacity / 255.0f};
 	[_shaderProgram setUniformLocation:uniformColor_ with4fv:colors count:1];
 
 	[textureAtlas_ drawNumberOfQuads:quadsToDraw_ fromIndex:0];
@@ -141,35 +143,31 @@
 
 - (ccColor3B) color
 {
-	if(_opacityModifyRGB)
-		return colorUnmodified_;
+	if (_opacityModifyRGB)
+		return _colorUnmodified;
 
-	return color_;
+	return super.color;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
-	color_ = colorUnmodified_ = color3;
+	_colorUnmodified = color3;
 
 	if( _opacityModifyRGB ){
-		color_.r = color3.r * opacity_/255;
-		color_.g = color3.g * opacity_/255;
-		color_.b = color3.b * opacity_/255;
+		color3.r = color3.r * _displayedOpacity/255;
+		color3.g = color3.g * _displayedOpacity/255;
+		color3.b = color3.b * _displayedOpacity/255;
 	}
-}
-
--(GLubyte) opacity
-{
-	return opacity_;
+    [super setColor:color3];
 }
 
 -(void) setOpacity:(GLubyte) anOpacity
 {
-	opacity_			= anOpacity;
+    [super setOpacity:anOpacity];
 
 	// special opacity for premultiplied textures
 	if( _opacityModifyRGB )
-		[self setColor: colorUnmodified_];
+		[self setColor: _colorUnmodified];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify

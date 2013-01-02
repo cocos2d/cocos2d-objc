@@ -34,22 +34,21 @@
 
 /// CC RGBA protocol
 @protocol CCRGBAProtocol <NSObject>
-/** sets Color
+/** sets and returns the color (tint)
  @since v0.8
  */
--(void) setColor:(ccColor3B)color;
-/** returns the color
- @since v0.8
- */
--(ccColor3B) color;
+@property (nonatomic) ccColor3B color;
+@property (nonatomic, readonly) ccColor3B displayedColor;
+@property (nonatomic) BOOL cascadeColor;
 
-/// returns the opacity
--(GLubyte) opacity;
-/** sets the opacity.
+/** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
--(void) setOpacity: (GLubyte) opacity;
+@property (nonatomic) GLubyte opacity;
+@property (nonatomic, readonly) GLubyte displayedOpacity;
+@property (nonatomic) BOOL cascadeOpacity;
+
 @optional
 /** sets the premultipliedAlphaOpacity property.
  If set to NO then opacity will be applied as: glColor(R,G,B,opacity);
