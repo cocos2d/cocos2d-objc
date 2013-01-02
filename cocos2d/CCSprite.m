@@ -865,6 +865,20 @@
 	return _opacityModifyRGB;
 }
 
+-(void)updateDisplayedOpacity {
+    [super updateDisplayedOpacity];
+    // special opacity for premultiplied textures
+	if ( _opacityModifyRGB ) {
+		[self setColor: _colorUnmodified];
+    }
+    [self updateColor];
+}
+
+-(void)updateDisplayedColor {
+    [super updateDisplayedColor];
+    [self updateColor];
+}
+
 //
 // Frames
 //
