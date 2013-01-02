@@ -611,6 +611,7 @@ enum {
 {
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
+	BOOL		_cascadeColor, _cascadeOpacity;
 }
 
 @end

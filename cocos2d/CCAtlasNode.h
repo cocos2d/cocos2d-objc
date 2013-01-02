@@ -76,8 +76,6 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) ccColor3B color;
 
 /** how many quads to draw */

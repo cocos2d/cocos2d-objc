@@ -41,7 +41,7 @@
 
 @implementation CCPointArray
 
-@synthesize controlPoints = control_points;
+@synthesize controlPoints = _controlPoints;
 
 +(id) arrayWithCapacity:(NSUInteger)capacity
 {
@@ -57,7 +57,7 @@
 -(id) initWithCapacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
-		control_points = [[NSMutableArray alloc] initWithCapacity:capacity];
+		_controlPoints = [[NSMutableArray alloc] initWithCapacity:capacity];
 	}
 	
 	return self;
@@ -65,7 +65,7 @@
 
 -(id) copyWithZone:(NSZone *)zone
 {
-	NSMutableArray *newArray = [control_points mutableCopy];
+	NSMutableArray *newArray = [_controlPoints mutableCopy];
 	CCPointArray *points = [[[self class] allocWithZone:zone] initWithCapacity:10];
 	points.controlPoints = newArray;
 	[newArray release];
@@ -75,7 +75,7 @@
 
 -(void) dealloc
 {
-	[control_points release];
+	[_controlPoints release];
 	
 	[super dealloc];
 }
@@ -88,7 +88,7 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
-	[control_points addObject:value];
+	[_controlPoints addObject:value];
 }
 
 -(void) insertControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index
@@ -99,15 +99,15 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 	
-	[control_points insertObject:value atIndex:index];
+	[_controlPoints insertObject:value atIndex:index];
 	
 }
 
 -(CGPoint) getControlPointAtIndex:(NSInteger)index
 {
-	index = MIN([control_points count]-1, MAX(index, 0));
+	index = MIN([_controlPoints count]-1, MAX(index, 0));
 
-	NSValue *value = [control_points objectAtIndex:index];
+	NSValue *value = [_controlPoints objectAtIndex:index];
 
 #ifdef __CC_PLATFORM_MAC
 	CGPoint point = NSPointToCGPoint([value pointValue]);
@@ -126,23 +126,23 @@
 	NSValue *value = [NSValue valueWithCGPoint:controlPoint];
 #endif
 
-	[control_points replaceObjectAtIndex:index withObject:value];
+	[_controlPoints replaceObjectAtIndex:index withObject:value];
 }
 
 -(void) removeControlPointAtIndex:(NSUInteger)index
 {
-	[control_points removeObjectAtIndex:index];
+	[_controlPoints removeObjectAtIndex:index];
 }
 
 -(NSUInteger) count
 {
-	return [control_points count];
+	return [_controlPoints count];
 }
 
 -(CCPointArray*) reverse
 {
-	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:[control_points count]];
-	NSEnumerator *enumerator = [control_points reverseObjectEnumerator];
+	NSMutableArray *newArray = [[NSMutableArray alloc] initWithCapacity:[_controlPoints count]];
+	NSEnumerator *enumerator = [_controlPoints reverseObjectEnumerator];
 	for (id element in enumerator)
 		[newArray addObject:element];
 
@@ -156,9 +156,9 @@
 
 -(void) reverseInline
 {
-	NSUInteger l = [control_points count];
+	NSUInteger l = [_controlPoints count];
 	for( NSUInteger i=0; i<l/2;i++)
-		[control_points exchangeObjectAtIndex:i withObjectAtIndex:l-i-1];
+		[_controlPoints exchangeObjectAtIndex:i withObjectAtIndex:l-i-1];
 }
 @end
 

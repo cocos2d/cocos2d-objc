@@ -46,6 +46,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 @implementation CCMenuItem
 
 @synthesize isSelected=_isSelected;
+@synthesize releaseBlockAtCleanup=_releaseBlockAtCleanup;
+
 +(id) itemWithTarget:(id) r selector:(SEL) s
 {
 	return [[[self alloc] initWithTarget:r selector:s] autorelease];
@@ -468,7 +470,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @implementation CCMenuItemSprite
 
-@synthesize normalImage=normalImage_, selectedImage=selectedImage_, disabledImage=disabledImage_;
+@synthesize normalImage=_normalImage, selectedImage=_selectedImage, disabledImage=_disabledImage;
 
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite
 {
@@ -516,22 +518,22 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		self.selectedImage = selectedSprite;
 		self.disabledImage = disabledSprite;
 
-		[self setContentSize: [normalImage_ contentSize]];
+		[self setContentSize: [_normalImage contentSize]];
 	}
 	return self;
 }
 
 -(void) setNormalImage:(CCNode <CCRGBAProtocol>*)image
 {
-	if( image != normalImage_ ) {
+	if( image != _normalImage ) {
 		image.anchorPoint = ccp(0,0);
 
-		[self removeChild:normalImage_ cleanup:YES];
+		[self removeChild:_normalImage cleanup:YES];
 		[self addChild:image];
 
-		normalImage_ = image;
+		_normalImage = image;
         
-        [self setContentSize: [normalImage_ contentSize]];
+        [self setContentSize: [_normalImage contentSize]];
 		
 		[self updateImagesVisibility];
 	}
@@ -539,13 +541,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setSelectedImage:(CCNode <CCRGBAProtocol>*)image
 {
-	if( image != selectedImage_ ) {
+	if( image != _selectedImage ) {
 		image.anchorPoint = ccp(0,0);
 
-		[self removeChild:selectedImage_ cleanup:YES];
+		[self removeChild:_selectedImage cleanup:YES];
 		[self addChild:image];
 
-		selectedImage_ = image;
+		_selectedImage = image;
 		
 		[self updateImagesVisibility];
 	}
@@ -553,13 +555,13 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setDisabledImage:(CCNode <CCRGBAProtocol>*)image
 {
-	if( image != disabledImage_ ) {
+	if( image != _disabledImage ) {
 		image.anchorPoint = ccp(0,0);
 
-		[self removeChild:disabledImage_ cleanup:YES];
+		[self removeChild:_disabledImage cleanup:YES];
 		[self addChild:image];
 
-		disabledImage_ = image;
+		_disabledImage = image;
 		
 		[self updateImagesVisibility];
 	}
@@ -569,51 +571,51 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 - (void) setOpacity: (GLubyte)opacity
 {
-	[normalImage_ setOpacity:opacity];
-	[selectedImage_ setOpacity:opacity];
-	[disabledImage_ setOpacity:opacity];
+	[_normalImage setOpacity:opacity];
+	[_selectedImage setOpacity:opacity];
+	[_disabledImage setOpacity:opacity];
 }
 
 -(void) setColor:(ccColor3B)color
 {
-	[normalImage_ setColor:color];
-	[selectedImage_ setColor:color];
-	[disabledImage_ setColor:color];
+	[_normalImage setColor:color];
+	[_selectedImage setColor:color];
+	[_disabledImage setColor:color];
 }
 
 -(GLubyte) opacity
 {
-	return [normalImage_ opacity];
+	return [_normalImage opacity];
 }
 
 -(ccColor3B) color
 {
-	return [normalImage_ color];
+	return [_normalImage color];
 }
 
 -(void) selected
 {
 	[super selected];
 
-	if( selectedImage_ ) {
-		[normalImage_ setVisible:NO];
-		[selectedImage_ setVisible:YES];
-		[disabledImage_ setVisible:NO];
+	if( _selectedImage ) {
+		[_normalImage setVisible:NO];
+		[_selectedImage setVisible:YES];
+		[_disabledImage setVisible:NO];
 
 	} else { // there is not selected image
 
-		[normalImage_ setVisible:YES];
-		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];
+		[_normalImage setVisible:YES];
+		[_selectedImage setVisible:NO];
+		[_disabledImage setVisible:NO];
 	}
 }
 
 -(void) unselected
 {
 	[super unselected];
-	[normalImage_ setVisible:YES];
-	[selectedImage_ setVisible:NO];
-	[disabledImage_ setVisible:NO];
+	[_normalImage setVisible:YES];
+	[_selectedImage setVisible:NO];
+	[_disabledImage setVisible:NO];
 }
 
 -(void) setIsEnabled:(BOOL)enabled
@@ -630,19 +632,19 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) updateImagesVisibility
 {
 	if( _isEnabled ) {
-		[normalImage_ setVisible:YES];
-		[selectedImage_ setVisible:NO];
-		[disabledImage_ setVisible:NO];
+		[_normalImage setVisible:YES];
+		[_selectedImage setVisible:NO];
+		[_disabledImage setVisible:NO];
 		
 	} else {
-		if( disabledImage_ ) {
-			[normalImage_ setVisible:NO];
-			[selectedImage_ setVisible:NO];
-			[disabledImage_ setVisible:YES];
+		if( _disabledImage ) {
+			[_normalImage setVisible:NO];
+			[_selectedImage setVisible:NO];
+			[_disabledImage setVisible:YES];
 		} else {
-			[normalImage_ setVisible:YES];
-			[selectedImage_ setVisible:NO];
-			[disabledImage_ setVisible:NO];
+			[_normalImage setVisible:YES];
+			[_selectedImage setVisible:NO];
+			[_disabledImage setVisible:NO];
 		}
 	}
 }
@@ -745,7 +747,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @implementation CCMenuItemToggle
 @synthesize currentItem = _currentItem;
-@synthesize subItems = subItems_;
+@synthesize subItems = _subItems;
 
 +(id) itemWithTarget: (id)t selector: (SEL)sel items: (CCMenuItem*) item, ...
 {
@@ -806,7 +808,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) dealloc
 {
-	[subItems_ release];
+	[_subItems release];
 	[super dealloc];
 }
 
@@ -818,7 +820,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		if( _currentItem )
 			[_currentItem removeFromParentAndCleanup:NO];
 		
-		CCMenuItem *item = [subItems_ objectAtIndex:_selectedIndex];
+		CCMenuItem *item = [_subItems objectAtIndex:_selectedIndex];
 		[self addChild:item z:0];
         self.currentItem = item;
 
@@ -837,20 +839,20 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(void) selected
 {
 	[super selected];
-	[[subItems_ objectAtIndex:_selectedIndex] selected];
+	[[_subItems objectAtIndex:_selectedIndex] selected];
 }
 
 -(void) unselected
 {
 	[super unselected];
-	[[subItems_ objectAtIndex:_selectedIndex] unselected];
+	[[_subItems objectAtIndex:_selectedIndex] unselected];
 }
 
 -(void) activate
 {
 	// update index
 	if( _isEnabled ) {
-		NSUInteger newIndex = (_selectedIndex + 1) % [subItems_ count];
+		NSUInteger newIndex = (_selectedIndex + 1) % [_subItems count];
 		[self setSelectedIndex:newIndex];
 
 	}
@@ -862,14 +864,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
 	if( _isEnabled != enabled ) {
 		[super setIsEnabled:enabled];
-		for(CCMenuItem* item in subItems_)
+		for(CCMenuItem* item in _subItems)
 			[item setIsEnabled:enabled];
 	}
 }
 
 -(CCMenuItem*) selectedItem
 {
-	return [subItems_ objectAtIndex:_selectedIndex];
+	return [_subItems objectAtIndex:_selectedIndex];
 }
 
 #pragma mark CCMenuItemToggle - CCRGBAProtocol protocol
@@ -877,14 +879,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 - (void) setOpacity: (GLubyte)opacity
 {
     [super setOpacity:opacity];
-    for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
+    for(CCMenuItem<CCRGBAProtocol>* item in _subItems)
 		[item setOpacity:opacity];
 }
 
 - (void) setColor:(ccColor3B)color
 {
 	[super setColor:color];
-	for(CCMenuItem<CCRGBAProtocol>* item in subItems_)
+	for(CCMenuItem<CCRGBAProtocol>* item in _subItems)
 		[item setColor:color];
 }
 
