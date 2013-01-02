@@ -439,8 +439,7 @@ void FNTConfigRemoveCache( void )
 @implementation CCLabelBMFont
 
 @synthesize alignment = alignment_;
-@synthesize opacity = opacity_, color = color_;
-
+@synthesize cascadeColor = _cascadeColor, cascadeOpacity = _cascadeOpacity;
 
 #pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
@@ -507,13 +506,15 @@ void FNTConfigRemoveCache( void )
 		texture = [[[CCTexture2D alloc] init] autorelease];
     
     
-	if( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
+	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
         width_ = width;
         alignment_ = alignment;
-        
-		opacity_ = 255;
-		color_ = ccWHITE;
-		
+
+		_displayedOpacity = _realOpacity = 255;
+		_displayedColor = _realColor = ccWHITE;
+        _cascadeOpacity = YES;
+        _cascadeColor = YES;
+
 		_contentSize = CGSizeZero;
 		
 		_opacityModifyRGB = [[textureAtlas_ texture] hasPremultipliedAlpha];
@@ -812,13 +813,22 @@ void FNTConfigRemoveCache( void )
 		// Apply label properties
 		[fontChar setOpacityModifyRGB:_opacityModifyRGB];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-		[fontChar setColor:color_];
-        
+#if CC_CASCADING_COLOR
+		[fontChar setColor:fontChar.color];
+#else 
+		[fontChar setColor:fontChar.displayedColor];
+#endif
+
 		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
-		if( opacity_ != 255 )
-			[fontChar setOpacity: opacity_];
-        
+		if( _displayedOpacity != 255 ) {
+#if CC_CASCADING_OPACITY
+            [fontChar setOpacity: fontChar.opacity];
+#else
+            [fontChar setOpacity: _displayedOpacity];
+#endif
+        }
+
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
 		
@@ -877,23 +887,77 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark LabelBMFont - CCRGBAProtocol protocol
 
--(void) setColor:(ccColor3B)color
+-(ccColor3B) color
 {
-	color_ = color;
-    
-	CCSprite *child;
-	CCARRAY_FOREACH(_children, child)
-		[child setColor:color_];
+	return _realColor;
 }
 
--(void) setOpacity:(GLubyte)opacity
+-(ccColor3B) displayedColor
 {
-	opacity_ = opacity;
-    
-	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(_children, child)
-		[child setOpacity:opacity_];
+	return _displayedColor;
 }
+
+-(void) setColor:(ccColor3B)color
+{
+	_displayedColor = _realColor = color;
+
+#if CC_CASCADING_COLOR
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
+        _displayedColor.r = _realColor.r * ((id<CCRGBAProtocol>)self.parent).displayedColor.r/255.0;
+        _displayedColor.g = _realColor.g * ((id<CCRGBAProtocol>)self.parent).displayedColor.g/255.0;
+        _displayedColor.b = _realColor.b * ((id<CCRGBAProtocol>)self.parent).displayedColor.b/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.color=item.color;
+        }
+    }
+#else
+	CCSprite *child;
+	CCARRAY_FOREACH(_children, child)
+		[child setColor:color];
+#endif
+
+}
+
+-(GLubyte) opacity
+{
+	return _realOpacity;
+}
+
+-(GLubyte) displayedOpacity
+{
+	return _displayedOpacity;
+}
+
+/** Override synthesized setOpacity to recurse items */
+- (void) setOpacity:(GLubyte)opacity
+{
+	_displayedOpacity = _realOpacity = opacity;
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(_children, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.opacity = item.opacity;
+        }
+    }
+#else
+    id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(_children, item) {
+        item.opacity = _displayedOpacity;
+    }
+#endif
+
+}
+
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
 	_opacityModifyRGB = modify;

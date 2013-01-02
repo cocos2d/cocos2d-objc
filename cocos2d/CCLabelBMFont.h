@@ -177,9 +177,9 @@ typedef struct _KerningHashElement
 	CCBMFontConfiguration	*configuration_;
     
 	// texture RGBA
-	GLubyte		opacity_;
-	ccColor3B	color_;
-	BOOL _opacityModifyRGB;
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_displayedColor, _realColor;
+	BOOL		_opacityModifyRGB;
 	
 	// offset of the texture atlas
 	CGPoint			imageOffset_;

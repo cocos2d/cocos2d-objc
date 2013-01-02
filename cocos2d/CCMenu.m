@@ -47,7 +47,7 @@ enum {
 
 @implementation CCMenu
 
-@synthesize opacity=_opacity, color=_color, enabled=_enabled;
+@synthesize enabled=_enabled;
 
 +(id) menuWithArray:(NSArray *)arrayOfItems
 {
@@ -537,26 +537,5 @@ enum {
 
 	[columnWidths release];
 	[columnHeights release];
-}
-
-#pragma mark Menu - Opacity Protocol
-
-/** Override synthesized setOpacity to recurse items */
-- (void) setOpacity:(GLubyte)newOpacity
-{
-	_opacity = newOpacity;
-
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(_children, item)
-		[item setOpacity:_opacity];
-}
-
--(void) setColor:(ccColor3B)color
-{
-	_color = color;
-
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(_children, item)
-		[item setColor:_color];
 }
 @end

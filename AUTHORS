@@ -96,6 +96,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added "stackable" support for Move Actions
 	Added Test case for stackable Move actions
 	Added Performance test for stackable Move actions
+	Author of CCNodeRGBA, node that implments color and opacity
+	Added support for cascading color and opacity in all the cocos2d nodes
+	Added tests for cascading color and opacity
 
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
