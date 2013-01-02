@@ -3211,6 +3211,8 @@
 		A0F841F6151D5E4700EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */; };
 		A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */; };
 		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
+		A922FE4F1694DBE300F564AF /* js_bindings_dbg.h in Headers */ = {isa = PBXBuildFile; fileRef = A922FE4D1694DBE300F564AF /* js_bindings_dbg.h */; };
+		A922FE501694DBE300F564AF /* js_bindings_dbg.mm in Sources */ = {isa = PBXBuildFile; fileRef = A922FE4E1694DBE300F564AF /* js_bindings_dbg.mm */; };
 		AAEA834B0FD5704400F08728 /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
@@ -6167,6 +6169,8 @@
 		A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343-hd.png"; sourceTree = "<group>"; };
 		A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
 		A0F841F4151D5E4600EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
+		A922FE4D1694DBE300F564AF /* js_bindings_dbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_dbg.h; sourceTree = "<group>"; };
+		A922FE4E1694DBE300F564AF /* js_bindings_dbg.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_dbg.mm; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -8720,6 +8724,8 @@
 				A06BF83C168105080018A802 /* js_bindings_system_registration.h */,
 				A06BF83D168105080018A802 /* js_bindings_system_registration.mm */,
 				A0191A1F167FCB760099349A /* js_bindings_config.h */,
+				A922FE4D1694DBE300F564AF /* js_bindings_dbg.h */,
+				A922FE4E1694DBE300F564AF /* js_bindings_dbg.mm */,
 				A0191A20167FCB760099349A /* js_bindings_core.h */,
 				A0191A21167FCB760099349A /* js_bindings_core.mm */,
 				A0191A22167FCB760099349A /* js_bindings_NS_manual.h */,
@@ -9958,6 +9964,7 @@
 				A06BF844168105350018A802 /* js_bindings_system_functions_registration.h in Headers */,
 				A06BF845168105350018A802 /* js_bindings_system_functions.h in Headers */,
 				A0E469B7168269E700B929F6 /* LocalStorage.h in Headers */,
+				A922FE4F1694DBE300F564AF /* js_bindings_dbg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -15263,6 +15270,7 @@
 				A06BF83F168105080018A802 /* js_bindings_system_registration.mm in Sources */,
 				A06BF846168105350018A802 /* js_bindings_system_functions.mm in Sources */,
 				A0E469B6168269E700B929F6 /* LocalStorage.c in Sources */,
+				A922FE501694DBE300F564AF /* js_bindings_dbg.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
