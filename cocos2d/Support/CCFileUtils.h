@@ -240,20 +240,16 @@ enum {
  */
 -(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
-
-
-#ifdef __CC_PLATFORM_IOS
-
 /** removes the suffix from a path
  * On iPhone RetinaDisplay it will remove the -hd suffix
  * On iPad it will remove the -ipad suffix
  * On iPad RetinaDisplay it will remove the -ipadhd suffix
-
- Only valid on iOS. Not valid for OS X.
-
+ 
  @since v0.99.5
  */
 -(NSString *)removeSuffixFromFile:(NSString*) path;
+
+#ifdef __CC_PLATFORM_IOS
 
 /** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
  Only available on iOS. Not supported on OS X.
