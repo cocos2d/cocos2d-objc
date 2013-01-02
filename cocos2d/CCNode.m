@@ -940,7 +940,8 @@ static NSUInteger globalOrderOfArrival = 1;
 
 @implementation CCNodeRGBA
 
-@synthesize cascadeColor=_cascadeColor, cascadeOpacity=_cascadeOpacity;
+@synthesize cascadeColor=_cascadeColor;
+@synthesize cascadeOpacity=_cascadeOpacity;
 
 -(id) init
 {
@@ -955,8 +956,9 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) onEnter {
     [super onEnter];
-    self.opacity = _realOpacity;
-    self.color = _realColor;
+
+    [self updateDisplayedOpacity];
+    [self updateDisplayedColor];
 }
 
 -(GLubyte) opacity
@@ -975,21 +977,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_displayedOpacity = _realOpacity = opacity;
 
-#if CC_CASCADING_OPACITY
-    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
-        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
-        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
-    }
-
-    if (_cascadeOpacity) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(children_, item) {
-            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                item.opacity=item.opacity;
-            }
-        }
-    }
-#endif
+    [self updateDisplayedOpacity];
 }
 
 -(ccColor3B) color
@@ -1008,6 +996,28 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_displayedColor = _realColor = color;
 
+    [self updateDisplayedColor];
+}
+
+- (void)updateDisplayedOpacity {
+#if CC_CASCADING_OPACITY
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
+        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
+    }
+
+    if (_cascadeOpacity) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(children_, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                [item updateDisplayedOpacity];
+            }
+        }
+    }
+#endif
+}
+
+- (void)updateDisplayedColor {
 #if CC_CASCADING_COLOR
     if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
         && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
@@ -1020,7 +1030,7 @@ static NSUInteger globalOrderOfArrival = 1;
         id<CCRGBAProtocol> item;
         CCARRAY_FOREACH(children_, item) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                item.color=item.color;
+                [item updateDisplayedColor];
             }
         }
     }
