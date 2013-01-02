@@ -122,6 +122,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @synthesize searchResolutionsOrder = _searchResolutionsOrder;
 @synthesize suffixesDict = _suffixesDict, directoriesDict = _directoriesDict;
 @synthesize searchMode = _searchMode;
+@synthesize searchPath = _searchPath;
 
 + (id)sharedFileUtils
 {

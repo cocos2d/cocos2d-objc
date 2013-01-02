@@ -414,16 +414,16 @@
 
 @implementation CCLayerRGBA
 
-@synthesize cascadeOpacity = _cascadeOpacity;
 @synthesize cascadeColor = _cascadeColor;
+@synthesize cascadeOpacity = _cascadeOpacity;
 
 -(id) init
 {
 	if ( (self=[super init]) ) {
         _displayedOpacity = _realOpacity = 255;
         _displayedColor = _realColor = ccWHITE;
-        _cascadeOpacity = YES;
-        _cascadeColor = YES;
+		self.cascadeOpacity = YES;
+		self.cascadeColor = YES;
     }
     return self;
 }
@@ -523,7 +523,7 @@
 @implementation CCLayerColor
 
 // Opacity and RGB color protocol
-@synthesize blendFunc = blendFunc_;
+@synthesize blendFunc = _blendFunc;
 
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
@@ -548,7 +548,7 @@
 	if( (self=[super init]) ) {
 
 		// default blend function
-		blendFunc_ = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
+		_blendFunc = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
 		_displayedColor.r = _realColor.r = color.r;
 		_displayedColor.g = _realColor.g = color.g;
@@ -629,7 +629,7 @@
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _squareVertices);
 	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, _squareColors);
 
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	
@@ -658,9 +658,9 @@
 
 @implementation CCLayerGradient
 
-@synthesize startOpacity = start_opacity;
-@synthesize endColor = end_color, endOpacity = end_opacity;
-@synthesize vector = vector_;
+@synthesize startOpacity = _startOpacity;
+@synthesize endColor = _endColor, endOpacity = _endOpacity;
+@synthesize vector = _vector;
 
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
@@ -684,13 +684,13 @@
 
 - (id) initWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
-	end_color.r = end.r;
-	end_color.g = end.g;
-	end_color.b = end.b;
+	_endColor.r = end.r;
+	_endColor.g = end.g;
+	_endColor.b = end.b;
 
-	end_opacity		= end.a;
-	start_opacity	= start.a;
-	vector_ = v;
+	_endOpacity		= end.a;
+	_startOpacity	= start.a;
+	_vector = v;
 
 	start.a	= 255;
 	_compressedInterpolation = YES;
@@ -702,12 +702,12 @@
 {
     [super updateColor];
 
-	float h = ccpLength(vector_);
+	float h = ccpLength(_vector);
     if (h == 0)
 		return;
 
 	float c = sqrtf(2);
-    CGPoint u = ccp(vector_.x / h, vector_.y / h);
+    CGPoint u = ccp(_vector.x / h, _vector.y / h);
 
 	// Compressed Interpolation mode
 	if( _compressedInterpolation ) {
@@ -721,14 +721,14 @@
 		_displayedColor.r / 255.0f,
 		_displayedColor.g / 255.0f,
 		_displayedColor.b / 255.0f,
-		start_opacity*opacityf / 255.0f,
+		_startOpacity*opacityf / 255.0f,
 	};
 
     ccColor4F E = {
-		end_color.r / 255.0f,
-		end_color.g / 255.0f,
-		end_color.b / 255.0f,
-		end_opacity*opacityf / 255.0f,
+		_endColor.r / 255.0f,
+		_endColor.g / 255.0f,
+		_endColor.b / 255.0f,
+		_endOpacity*opacityf / 255.0f,
 	};
 
 
@@ -766,25 +766,25 @@
 
 -(void) setEndColor:(ccColor3B)color
 {
-    end_color = color;
+    _endColor = color;
     [self updateColor];
 }
 
 -(void) setStartOpacity: (GLubyte) o
 {
-	start_opacity = o;
+	_startOpacity = o;
     [self updateColor];
 }
 
 -(void) setEndOpacity: (GLubyte) o
 {
-    end_opacity = o;
+    _endOpacity = o;
     [self updateColor];
 }
 
 -(void) setVector: (CGPoint) v
 {
-    vector_ = v;
+    _vector = v;
     [self updateColor];
 }
 
