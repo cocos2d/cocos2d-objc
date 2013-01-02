@@ -47,13 +47,13 @@
 {
 
 	/// info about the map file
-	tImageTGA		*tgaInfo;
+	tImageTGA		*_tgaInfo;
 
 	/// x,y to altas dictionary
-	NSMutableDictionary	*posToAtlasIndex;
+	NSMutableDictionary	*_posToAtlasIndex;
 
 	/// numbers of tiles to render
-	int				itemsToRender;
+	int				_itemsToRender;
 }
 
 /** TileMap info */

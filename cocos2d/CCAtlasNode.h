@@ -43,30 +43,30 @@
 @interface CCAtlasNode : CCNodeRGBA <CCTextureProtocol>
 {
 	// texture atlas
-	CCTextureAtlas	*textureAtlas_;
+	CCTextureAtlas	*_textureAtlas;
 
 	// chars per row
-	NSUInteger		itemsPerRow_;
+	NSUInteger		_itemsPerRow;
 	// chars per column
-	NSUInteger		itemsPerColumn_;
+	NSUInteger		_itemsPerColumn;
 
 	// width of each char
-	NSUInteger		itemWidth_;
+	NSUInteger		_itemWidth;
 	// height of each char
-	NSUInteger		itemHeight_;
+	NSUInteger		_itemHeight;
 
 	// quads to draw
-	NSUInteger		quadsToDraw_;
+	NSUInteger		_quadsToDraw;
 
 	// blend function
-	ccBlendFunc		blendFunc_;
+	ccBlendFunc		_blendFunc;
 
 	// texture RGBA.
 	ccColor3B	_colorUnmodified;
 	BOOL		_opacityModifyRGB;
 
 	// color uniform
-	GLint	uniformColor_;
+	GLint	_uniformColor;
 }
 
 /** conforms to CCTextureProtocol protocol */

@@ -42,10 +42,10 @@
 @interface CCLabelAtlas : CCAtlasNode  <CCLabelProtocol>
 {
 	// string to render
-	NSString		*string_;
+	NSString		*_string;
 
 	// the first char in the charmap
-	NSUInteger		mapStartChar_;
+	NSUInteger		_mapStartChar;
 }
 
 
