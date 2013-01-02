@@ -439,8 +439,7 @@ void FNTConfigRemoveCache( void )
 @implementation CCLabelBMFont
 
 @synthesize alignment = alignment_;
-@synthesize color = _color;
-
+@synthesize cascadeColor = _cascadeColor, cascadeOpacity = _cascadeOpacity;
 
 #pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
@@ -512,8 +511,10 @@ void FNTConfigRemoveCache( void )
         alignment_ = alignment;
 
 		_displayedOpacity = _realOpacity = 255;
-		_color = ccWHITE;
-		
+		_displayedColor = _realColor = ccWHITE;
+        _cascadeOpacity = YES;
+        _cascadeColor = YES;
+
 		contentSize_ = CGSizeZero;
 		
 		opacityModifyRGB_ = [[textureAtlas_ texture] hasPremultipliedAlpha];
@@ -812,8 +813,12 @@ void FNTConfigRemoveCache( void )
 		// Apply label properties
 		[fontChar setOpacityModifyRGB:opacityModifyRGB_];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-		[fontChar setColor:_color];
-        
+#if CC_CASCADING_COLOR
+		[fontChar setColor:fontChar.color];
+#else 
+		[fontChar setColor:fontChar.displayedColor];
+#endif
+
 		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
 		if( _displayedOpacity != 255 ) {
@@ -882,13 +887,40 @@ void FNTConfigRemoveCache( void )
 
 #pragma mark LabelBMFont - CCRGBAProtocol protocol
 
+-(ccColor3B) color
+{
+	return _realColor;
+}
+
+-(ccColor3B) displayedColor
+{
+	return _displayedColor;
+}
+
 -(void) setColor:(ccColor3B)color
 {
-	_color = color;
-    
+	_displayedColor = _realColor = color;
+
+#if CC_CASCADING_COLOR
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
+        _displayedColor.r = _realColor.r * ((id<CCRGBAProtocol>)self.parent).displayedColor.r/255.0;
+        _displayedColor.g = _realColor.g * ((id<CCRGBAProtocol>)self.parent).displayedColor.g/255.0;
+        _displayedColor.b = _realColor.b * ((id<CCRGBAProtocol>)self.parent).displayedColor.b/255.0;
+    }
+
+	id<CCRGBAProtocol> item;
+	CCARRAY_FOREACH(children_, item) {
+        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+            item.color=item.color;
+        }
+    }
+#else
 	CCSprite *child;
 	CCARRAY_FOREACH(children_, child)
-		[child setColor:_color];
+		[child setColor:color];
+#endif
+
 }
 
 -(GLubyte) opacity
@@ -906,7 +938,8 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedOpacity = _realOpacity = opacity;
 #if CC_CASCADING_OPACITY
-    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
         _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
     }
 

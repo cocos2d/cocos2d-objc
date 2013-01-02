@@ -799,7 +799,7 @@
 #pragma mark CCSprite - RGBA protocol
 -(void) updateColor
 {
-	ccColor4B color4 = {_color.r, _color.g, _color.b, _displayedOpacity};
+	ccColor4B color4 = {_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity};
 
 	quad_.bl.colors = color4;
 	quad_.br.colors = color4;
@@ -836,20 +836,20 @@
 		return colorUnmodified_;
     }
 
-	return _color;
+	return super.color;
 }
 
 -(void) setColor:(ccColor3B)color3
 {
-    [super setColor:color3];
 	colorUnmodified_ = color3;
 
 	if( opacityModifyRGB_ ){
-		_color.r = color3.r * _displayedOpacity/255.0f;
-		_color.g = color3.g * _displayedOpacity/255.0f;
-		_color.b = color3.b * _displayedOpacity/255.0f;
+		color3.r = color3.r * _displayedOpacity/255.0f;
+		color3.g = color3.g * _displayedOpacity/255.0f;
+		color3.b = color3.b * _displayedOpacity/255.0f;
 	}
 
+    [super setColor:color3];
 	[self updateColor];
 }
 

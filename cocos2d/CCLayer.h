@@ -154,14 +154,8 @@ typedef enum {
 @interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
 {
 	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_color;
+	ccColor3B	_displayedColor, _realColor;
 }
-
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** Opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
-
 @end
 
 

@@ -22,6 +22,26 @@
 }
 @end
 
+@interface LayerTestCascadingOpacityC : LayerTest
+{
+}
+@end
+
+@interface LayerTestCascadingColorA : LayerTest
+{
+}
+@end
+
+@interface LayerTestCascadingColorB : LayerTest
+{
+}
+@end
+
+@interface LayerTestCascadingColorC : LayerTest
+{
+}
+@end
+
 @interface LayerTest1 : LayerTest
 {
 }

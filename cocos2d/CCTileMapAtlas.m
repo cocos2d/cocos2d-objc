@@ -207,7 +207,7 @@
 	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
 	quad.tr.vertices.z = 0.0f;
 
-	ccColor4B color = { _color.r, _color.g, _color.b, _displayedOpacity };
+	ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
 	quad.tr.colors = color;
 	quad.tl.colors = color;
 	quad.br.colors = color;

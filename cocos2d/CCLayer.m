@@ -414,13 +414,15 @@
 
 @implementation CCLayerRGBA
 
-@synthesize color = _color;
+@synthesize cascadeOpacity = _cascadeOpacity, cascadeColor = _cascadeColor;
 
 -(id) init
 {
 	if ( (self=[super init]) ) {
         _displayedOpacity = _realOpacity = 255;
-        _color = ccWHITE;
+        _displayedColor = _realColor = ccWHITE;
+        _cascadeOpacity = YES;
+        _cascadeColor = YES;
     }
     return self;
 }
@@ -429,6 +431,7 @@
 - (void) onEnter {
     [super onEnter];
     self.opacity = _realOpacity;
+    self.color = _realColor;
 }
 
 -(GLubyte) opacity
@@ -447,18 +450,56 @@
 	_displayedOpacity = _realOpacity = opacity;
 
 #if CC_CASCADING_OPACITY
-    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
         _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
     }
 
-	id<CCRGBAProtocol> item;
-	CCARRAY_FOREACH(children_, item) {
-        if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-            item.opacity = item.opacity;
+    if (_cascadeOpacity) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(children_, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                item.opacity = item.opacity;
+            }
         }
     }
 #endif
 
+}
+
+-(ccColor3B) color
+{
+	return _realColor;
+}
+
+-(ccColor3B) displayedColor
+{
+	return _displayedColor;
+}
+
+// Update displayedOpacity_ based on parent's displayedOpacity_
+// and recurse child items
+- (void) setColor:(ccColor3B)color
+{
+	_displayedColor = _realColor = color;
+
+#if CC_CASCADING_COLOR
+    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
+        && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
+        _displayedColor.r = _realColor.r * ((id<CCRGBAProtocol>)self.parent).displayedColor.r/255.0;
+        _displayedColor.g = _realColor.g * ((id<CCRGBAProtocol>)self.parent).displayedColor.g/255.0;
+        _displayedColor.b = _realColor.b * ((id<CCRGBAProtocol>)self.parent).displayedColor.b/255.0;
+    }
+
+    if (_cascadeColor) {
+        id<CCRGBAProtocol> item;
+        CCARRAY_FOREACH(children_, item) {
+            if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
+                item.color=item.color;
+            }
+        }
+    }
+#endif
 }
 
 @end
@@ -501,9 +542,9 @@
 		// default blend function
 		blendFunc_ = (ccBlendFunc) { GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA };
 
-		_color.r = color.r;
-		_color.g = color.g;
-		_color.b = color.b;
+		_displayedColor.r = _realColor.r = color.r;
+		_displayedColor.g = _realColor.g = color.g;
+		_displayedColor.b = _realColor.b = color.b;
 		_displayedOpacity = _realOpacity = color.a;
 
 		for (NSUInteger i = 0; i<sizeof(_squareVertices) / sizeof( _squareVertices[0]); i++ ) {
@@ -523,6 +564,12 @@
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];
+}
+
+-(void) onEnter {
+    [super onEnter];
+    self.opacity = _realOpacity;
+    self.color = _realColor;
 }
 
 // override contentSize
@@ -555,9 +602,9 @@
 {
 	for( NSUInteger i = 0; i < 4; i++ )
 	{
-		_squareColors[i].r = _color.r / 255.0f;
-		_squareColors[i].g = _color.g / 255.0f;
-		_squareColors[i].b = _color.b / 255.0f;
+		_squareColors[i].r = _displayedColor.r / 255.0f;
+		_squareColors[i].g = _displayedColor.g / 255.0f;
+		_squareColors[i].b = _displayedColor.b / 255.0f;
 		_squareColors[i].a = _displayedOpacity / 255.0f;
 	}
 }
@@ -663,9 +710,9 @@
 	float opacityf = (float)_displayedOpacity/255.0f;
 
     ccColor4F S = {
-		_color.r / 255.0f,
-		_color.g / 255.0f,
-		_color.b / 255.0f,
+		_displayedColor.r / 255.0f,
+		_displayedColor.g / 255.0f,
+		_displayedColor.b / 255.0f,
 		start_opacity*opacityf / 255.0f,
 	};
 
@@ -701,17 +748,17 @@
 
 -(ccColor3B) startColor
 {
-	return _color;
+	return _realColor;
 }
 
--(void) setStartColor:(ccColor3B)colors
+-(void) setStartColor:(ccColor3B)color
 {
-	[self setColor:colors];
+	[self setColor:color];
 }
 
--(void) setEndColor:(ccColor3B)colors
+-(void) setEndColor:(ccColor3B)color
 {
-    end_color = colors;
+    end_color = color;
     [self updateColor];
 }
 
