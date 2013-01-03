@@ -161,8 +161,8 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 						 @"-ipadhd", kCCFileUtilsiPadHD,
 						 @"", kCCFileUtilsiPhone,
 						 @"-hd", kCCFileUtilsiPhoneHD,
-						 @"-wide", kCCFileUtilsiPhone5,
-						 @"-widehd", kCCFileUtilsiPhone5HD,
+						 @"-iphone5", kCCFileUtilsiPhone5,
+						 @"-iphone5hd", kCCFileUtilsiPhone5HD,
 						 @"", kCCFileUtilsDefault,
 						 nil];
 
