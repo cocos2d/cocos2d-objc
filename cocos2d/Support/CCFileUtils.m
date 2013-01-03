@@ -564,8 +564,18 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	}
 }
 
-#pragma mark CCFileUtils - Suffix / Directory search chain
+#pragma mark Helpers
 
+-(NSString*) standarizePath:(NSString*)path
+{
+	NSString *ret = [path stringByStandardizingPath];
+	if( _searchMode == kCCFileUtilsSearchSuffix )
+		ret = [self removeSuffixFromFile:ret];
+	
+	return ret;
+}
+
+#pragma mark CCFileUtils - Suffix / Directory search chain
 
 -(void) setEnableiPhoneResourcesOniPad:(BOOL)enable
 {
