@@ -40,17 +40,17 @@
  */
 @interface CCGridBase : NSObject
 {
-	BOOL		active_;
-	int			reuseGrid_;
-	CGSize	_gridSize;
-	CCTexture2D *texture_;
-	CGPoint		step_;
-	CCGrabber	*grabber_;
-	BOOL		isTextureFlipped_;
+	BOOL		_active;
+	int			_reuseGrid;
+	CGSize		_gridSize;
+	CCTexture2D *_texture;
+	CGPoint		_step;
+	CCGrabber	*_grabber;
+	BOOL		_isTextureFlipped;
 
 	CCGLProgram	*_shaderProgram;
 
-	ccDirectorProjection	directorProjection_;
+	ccDirectorProjection	_directorProjection;
 }
 
 /** whether or not the grid is active */

@@ -87,8 +87,8 @@
 /** CCAccelDeccelAmplitude action */
 @interface CCAccelDeccelAmplitude : CCActionInterval
 {
-	float			rate_;
-	CCActionInterval *other_;
+	float			_rate;
+	CCActionInterval *_other;
 }
 
 /** amplitude rate */
@@ -106,8 +106,8 @@
 /** CCAccelAmplitude action */
 @interface CCAccelAmplitude : CCActionInterval
 {
-	float			rate_;
-	CCActionInterval *other_;
+	float			_rate;
+	CCActionInterval *_other;
 }
 
 /** amplitude rate */
@@ -125,8 +125,8 @@
 /** CCDeccelAmplitude action */
 @interface CCDeccelAmplitude : CCActionInterval
 {
-	float			rate_;
-	CCActionInterval *other_;
+	float			_rate;
+	CCActionInterval *_other;
 }
 
 /** amplitude rate */
@@ -156,7 +156,7 @@
 /** CCReuseGrid action */
 @interface CCReuseGrid : CCActionInstant
 {
-	int t_;
+	int _times;
 }
 /** creates an action with the number of times that the current grid will be reused */
 +(id) actionWithTimes: (int) times;
