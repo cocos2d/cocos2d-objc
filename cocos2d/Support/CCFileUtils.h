@@ -340,6 +340,14 @@ enum {
  */
 -(NSString *)removeSuffixFromFile:(NSString*) path;
 
+/* Stadarize a path.
+ 
+ It calls [string stringByStandardizingPath], and if "suffix mode" is on, it will also call [self removeSuffixFromFile:path];
+ 
+ @since v2.1
+ */
+-(NSString*) standarizePath:(NSString*)path;
+
 #ifdef __CC_PLATFORM_IOS
 
 /** Returns whether or not a given path exists with the iPhone RetinaDisplay suffix.
