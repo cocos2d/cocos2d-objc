@@ -105,7 +105,7 @@
 {
 	NSAssert( file != nil, @"file must be non-nil");
 
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file ];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file ];
 
 //	//Find the path of the file
 //	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;

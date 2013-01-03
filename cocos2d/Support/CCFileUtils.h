@@ -164,8 +164,8 @@ enum {
 /** Dictionary used to lookup filenames based on a key.
  It is used internally by the following methods:
 
-  *	-(NSString*) fullPathForKey:(NSString*)key resolutionType:(ccResolutionType*)resolutionType;
-  *	-(NSString*) fullPathForKeyIgnoringResolutions:(NSString*)key;
+  *	-(NSString*) fullPathForFilename:(NSString*)key resolutionType:(ccResolutionType*)resolutionType;
+  *	-(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
 
  @since v2.1
  */
@@ -259,20 +259,18 @@ enum {
  */
 -(NSString*) fullPathFromRelativePathIgnoringResolutions:(NSString*)relPath;
 
-/** Returns the fullpath for a given key.
+/** Returns the fullpath for a given filename.
  
- First it will try to get the value from the "filenameLookup" dictionary. If the key can't be found on the dictionary, it will use the key as the value.
- It will try to search for the filename following the CCFileUtils search rules.
+ First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
+ Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
  
  If in iPad mode, and an iPad file is found, it will return that path.
  If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
  
- If the filename can't be found, it will return nil.
-
+ If the filename can't be found on the file system, it will return nil.
  
  This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
  you might need to load differerent resources for a given file in the different platforms.
- 
  
  Examples:
  
@@ -281,12 +279,33 @@ enum {
  
  @since v2.1
  */
--(NSString*) fullPathForKey:(NSString*)key resolutionType:(ccResolutionType*)resolutionType;
+-(NSString*) fullPathForFilename:(NSString*)filename;
 
-/** Returns the fullpath for a given key, without taking into account device resolution.
+/** Returns the fullpath for a given filename.
  
- First it will try to get the filename for the key, from the "filenameLookup" dictionary.
- If it can't find the value, it will use key as the filename.
+ First it will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
+ Then it will try obtain the full path of the filename using the CCFileUtils search rules: resolutions, and search paths
+ 
+ If in iPad mode, and an iPad file is found, it will return that path.
+ If in iPhoneRetinaDisplay mode, and a RetinaDisplay file is found, it will return that path. But if it is not found, it will try load an iPhone Non-RetinaDisplay  file.
+ 
+ If the filename can't be found on the file system, it will return nil.
+ 
+ This method was added to simplify multiplatform support. Whether you are using cocos2d-js or any cross-compilation toolchain like StellaSDK or Apportable,
+ you might need to load differerent resources for a given file in the different platforms.
+ 
+ Examples:
+ 
+ * In iPad mode: "image.png" -> "image.pvr" -> "/full/path/image-ipad.pvr" (in case the -ipad file exists)
+ * In Android: "image.png" -> "image.png" -> "/full/path/image.png"
+ 
+ @since v2.1
+ */
+-(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(ccResolutionType*)resolutionType;
+
+/** Returns the fullpath for a given filename, without taking into account device resolution.
+ 
+ It will try to get a new filename from the "filenameLookup" dictionary. If a new filename can't be found on the dictionary, it will use the original filename.
  
  Once it gets the filename, it will try to get the fullpath for the filename, using the "searchPath", but it won't use any resolution search rules.
  If the file can't be found, it will return nil.
@@ -304,7 +323,7 @@ enum {
  
  @since v2.1
  */
--(NSString*) fullPathForKeyIgnoringResolutions:(NSString*)key;
+-(NSString*) fullPathForFilenameIgnoringResolutions:(NSString*)key;
 
 /* Loads the filenameLookup dictionary from the contents of a filename.
  

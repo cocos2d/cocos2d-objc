@@ -716,7 +716,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 -(id) initWithPVRFile: (NSString*) relPath
 {
 	ccResolutionType resolution;
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:&resolution];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath resolutionType:&resolution];
 
 	if( (self = [super init]) ) {
 		CCTexturePVR *pvr = [[CCTexturePVR alloc] initWithContentsOfFile:fullpath];

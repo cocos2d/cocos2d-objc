@@ -432,7 +432,7 @@ enum {
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
 		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
 
 
@@ -630,7 +630,7 @@ enum {
 {
 	if( (self=[super init] ) ) {
 		
-		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"example_HorizontalColor.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:@"example_HorizontalColor.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
 		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert fragmentShaderByteArray:fragSource];
 		
 		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];

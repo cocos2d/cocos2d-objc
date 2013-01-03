@@ -1466,7 +1466,7 @@ Class restartAction()
 		NSString* resources = @"TileMaps";		// partial paths are OK as resource paths.
 		NSString* file = [resources stringByAppendingPathComponent:@"orthogonal-test1.tmx"];
 		NSError* error = nil;
-		NSString* str = [NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file] encoding:NSUTF8StringEncoding error:&error];
+		NSString* str = [NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilename:file] encoding:NSUTF8StringEncoding error:&error];
 		NSAssert3(!error, @"Unable to open file %@, %@ (%ld)", file, [error localizedDescription], (long)[error code]);
 
 		CCTMXTiledMap *map = [CCTMXTiledMap tiledMapWithXML:str resourcePath:resources];

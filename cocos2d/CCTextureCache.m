@@ -267,7 +267,7 @@ static CCTextureCache *sharedTextureCache;
 
 -(CCTexture2D*) addImage: (NSString*) path
 {
-	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
+	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
 	path = [path stringByStandardizingPath];
 	
@@ -282,10 +282,16 @@ static CCTextureCache *sharedTextureCache;
 
 	if( ! tex ) {
 
-		NSString *lowerCase = [path lowercaseString];
+		ccResolutionType resolution;
+		NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:path resolutionType:&resolution];
+		if( ! fullpath ) {
+			CCLOG(@"cocos2d: Couldn't find file:%@", path);
+			return nil;
+		}
+
+		NSString *lowerCase = [fullpath lowercaseString];
 
 		// all images are handled by UIKit/AppKit except PVR extension that is handled by cocos2d's handler
-
 
 		if ( [lowerCase hasSuffix:@".pvr"] || [lowerCase hasSuffix:@".pvr.gz"] || [lowerCase hasSuffix:@".pvr.ccz"] )
 			tex = [self addPVRImage:path];
@@ -293,8 +299,6 @@ static CCTextureCache *sharedTextureCache;
 #ifdef __CC_PLATFORM_IOS
 
 		else {
-			ccResolutionType resolution;
-			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForKey:path resolutionType:&resolution];
 
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			tex = [[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution];
@@ -305,7 +309,7 @@ static CCTextureCache *sharedTextureCache;
 					[textures_ setObject: tex forKey:path];
 				});
 			}else{
-				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
 			}
 
 			// autorelease prevents possible crash in multithreaded environments
@@ -315,8 +319,6 @@ static CCTextureCache *sharedTextureCache;
 
 #elif defined(__CC_PLATFORM_MAC)
 		else {
-			ccResolutionType resolution;
-			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForKey:path resolutionType:&resolution];
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
@@ -330,7 +332,7 @@ static CCTextureCache *sharedTextureCache;
 					[textures_ setObject: tex forKey:path];
 				});
 			}else{
-				CCLOG(@"cocos2d: Couldn't add image:%@ in CCTextureCache", path);
+				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
 			}
 
 			// autorelease prevents possible crash in multithreaded environments
