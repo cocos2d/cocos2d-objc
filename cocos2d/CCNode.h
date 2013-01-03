@@ -614,4 +614,7 @@ enum {
 	BOOL		_cascadeColor, _cascadeOpacity;
 }
 
+// XXX To make BridgeSupport happy
+-(GLubyte) opacity;
+
 @end
