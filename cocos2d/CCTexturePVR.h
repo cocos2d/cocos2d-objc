@@ -97,16 +97,16 @@ enum {
  */
 @interface CCTexturePVR : NSObject
 {
-	struct CCPVRMipmap	mipmaps_[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
-	NSUInteger	numberOfMipmaps_;					// number of mipmap used
+	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
+	NSUInteger	_numberOfMipmaps;					// number of mipmap used
 
-	uint32_t width_, height_;
-	GLuint	name_;
-	BOOL hasAlpha_;
+	uint32_t _width, _height;
+	GLuint	_name;
+	BOOL	_hasAlpha;
 
 	// cocos2d integration
-	BOOL retainName_;
-	CCTexture2DPixelFormat format_;
+	BOOL _retainName;
+	CCTexture2DPixelFormat _format;
 	
 	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
