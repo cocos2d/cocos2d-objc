@@ -147,13 +147,13 @@ static CCTextureCache *sharedTextureCache;
 	NSAssert(target != nil, @"TextureCache: target can't be nil");
 	NSAssert(selector != NULL, @"TextureCache: selector can't be NULL");
 
-	path = [path stringByStandardizingPath];
+	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	path = [fileUtils standarizePath:path];
 
 	// optimization
 	__block CCTexture2D * tex;
-	
-	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile:path];
-	
+		
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
 	});
@@ -207,12 +207,12 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
-	path = [path stringByStandardizingPath];
+	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	path = [fileUtils standarizePath:path];
 
 	// optimization
 	__block CCTexture2D * tex;
-
-	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile:path];
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
@@ -269,12 +269,11 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
-	path = [path stringByStandardizingPath];
-	
-	__block CCTexture2D * tex = nil;
-
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile: path];
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	path = [fileUtils standarizePath:path];
+
+	__block CCTexture2D * tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey: path];
@@ -283,7 +282,7 @@ static CCTextureCache *sharedTextureCache;
 	if( ! tex ) {
 
 		ccResolutionType resolution;
-		NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:path resolutionType:&resolution];
+		NSString *fullpath = [fileUtils fullPathForFilename:path resolutionType:&resolution];
 		if( ! fullpath ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
 			return nil;
@@ -441,11 +440,12 @@ static CCTextureCache *sharedTextureCache;
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
-	__block CCTexture2D * tex;
-
 	// remove possible -HD suffix to prevent caching the same image twice (issue #1040)
-	path = [[CCFileUtils sharedFileUtils] removeSuffixFromFile: path];
+	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
+	path = [fileUtils standarizePath:path];
 
+	__block CCTexture2D * tex;
+	
 	dispatch_sync(_dictQueue, ^{
 		tex = [textures_ objectForKey:path];
 	});
