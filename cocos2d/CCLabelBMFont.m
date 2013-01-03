@@ -158,7 +158,7 @@ void FNTConfigRemoveCache( void )
 
 - (NSMutableString *)parseConfigFile:(NSString*)fntFile
 {
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fntFile];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:fntFile];
 	NSError *error;
 	NSString *contents = [NSString stringWithContentsOfFile:fullpath encoding:NSUTF8StringEncoding error:&error];
   

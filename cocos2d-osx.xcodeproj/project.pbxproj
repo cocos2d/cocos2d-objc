@@ -683,6 +683,7 @@
 		A0191EB1167FDC510099349A /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B93D15D9CFD800E1986C /* AppController.mm */; };
 		A0191EB3167FDC520099349A /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B93D15D9CFD800E1986C /* AppController.mm */; };
 		A0191EB4167FDC530099349A /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B93D15D9CFD800E1986C /* AppController.mm */; };
+		A02521E11696368D0087E514 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = A02521E01696368D0087E514 /* FileUtils */; };
 		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
 		A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A03714D6154F1D9300081CBA /* CCNode+Debug.m */; };
 		A03A1CBA14F5B3F00019B6F3 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */; };
@@ -6733,6 +6734,7 @@
 		A0191DBD167FD6C60099349A /* WeakPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeakPtr.h; sourceTree = "<group>"; };
 		A0191DBF167FD6C60099349A /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A0191EAA167FDBA40099349A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
+		A02521E01696368D0087E514 /* FileUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FileUtils; sourceTree = "<group>"; };
 		A031B93C15D9CFD800E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A031B93D15D9CFD800E1986C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -9260,6 +9262,7 @@
 				A0C15FCC166D579900DF921C /* EffectsTest */,
 				A0C15FCD166D579900DF921C /* EventTest */,
 				A0C15FCE166D579900DF921C /* ExtensionsTest */,
+				A02521E01696368D0087E514 /* FileUtils */,
 				A0C15FCF166D579900DF921C /* FontTest */,
 				A0C15FD0166D579900DF921C /* IntervalTest */,
 				A0C15FD1166D579900DF921C /* LabelTest */,
@@ -13643,6 +13646,7 @@
 				A0C16006166D579900DF921C /* TransitionsTest in Resources */,
 				A0C16007166D579900DF921C /* UnitTest in Resources */,
 				A06BF7F91680382E0018A802 /* SysTest in Resources */,
+				A02521E11696368D0087E514 /* FileUtils in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

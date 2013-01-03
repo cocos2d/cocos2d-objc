@@ -209,7 +209,7 @@
 
 - (void) parseXMLFile:(NSString *)xmlFilename
 {
-	NSURL *url = [NSURL fileURLWithPath:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:xmlFilename] ];
+	NSURL *url = [NSURL fileURLWithPath:[[CCFileUtils sharedFileUtils] fullPathForFilename:xmlFilename] ];
 	NSData *data = [NSData dataWithContentsOfURL:url];
 	[self parseXMLData:data];
 }

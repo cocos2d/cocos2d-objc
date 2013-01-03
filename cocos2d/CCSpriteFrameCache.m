@@ -242,7 +242,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	if( ! [loadedFilenames_ member:plist] ) {
 
-		NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
+		NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
 		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 		[self addSpriteFramesWithDictionary:dict textureReference:textureReference];
@@ -270,7 +270,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 	
 	if( ! [loadedFilenames_ member:plist] ) {
 
-		NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
+		NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
 		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 		NSString *texturePath = nil;
@@ -356,7 +356,7 @@ static CCSpriteFrameCache *sharedSpriteFrameCache_=nil;
 
 - (void) removeSpriteFramesFromFile:(NSString*) plist
 {
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	[self removeSpriteFramesFromDictionary:dict];

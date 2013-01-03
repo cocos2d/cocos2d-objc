@@ -238,7 +238,7 @@ static CCAnimationCache *sharedAnimationCache_=nil;
 {
 	NSAssert( plist, @"Invalid texture file name");
 
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plist];
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
 	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
 
 	NSAssert1( dict, @"CCAnimationCache: File could not be found: %@", plist);

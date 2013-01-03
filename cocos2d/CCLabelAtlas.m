@@ -56,7 +56,7 @@
 
 -(id) initWithString:(NSString*) theString fntFile:(NSString*)fntFile
 {
-	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:fntFile]];
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilename:fntFile]];
 	
 	NSAssert( [[dict objectForKey:@"version"] intValue] == 1, @"Unsupported version. Upgrade cocos2d version");
 

@@ -314,10 +314,10 @@ Class restartAction()
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 #ifdef __CC_PLATFORM_IOS
-	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath: @"test_image.png" ]];
+	UIImage *image = [[UIImage alloc] initWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilename: @"test_image.png" ]];
 #elif defined(__CC_PLATFORM_MAC)
 
-	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"test_image.png"];
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:@"test_image.png"];
 	NSData *data = [NSData dataWithContentsOfFile:fullpath];
 	NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
 #endif
@@ -1910,7 +1910,7 @@ Class restartAction()
 {
 	png_uint_32 width, height, width2, height2;
 	int bits = 0;
-	NSString *newName = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:name];
+	NSString *newName = [[CCFileUtils sharedFileUtils] fullPathForFilename:name];
 
 	FILE *png_file = fopen([newName UTF8String], "rb");
 	NSAssert(png_file, @"PNG doesn't exists");

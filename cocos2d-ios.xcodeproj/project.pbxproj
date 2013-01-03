@@ -1607,6 +1607,7 @@
 		A01AB915149709E300C93DB6 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
+		A02521DE169635910087E514 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = A02521DD169635910087E514 /* FileUtils */; };
 		A031B72115D9BD0800E1986C /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFC1153D9CF00D87F08 /* png.h */; };
 		A031B72215D9BD0800E1986C /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFF1153D9CF00D87F08 /* pngconf.h */; };
 		A031B76F15D9BD7E00E1986C /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
@@ -5710,6 +5711,7 @@
 		A01AB91A149709E300C93DB6 /* DirectorTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DirectorTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
+		A02521DD169635910087E514 /* FileUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FileUtils; sourceTree = "<group>"; };
 		A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B73915D9BD0800E1986C /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B83315D9C80C00E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -9166,6 +9168,7 @@
 				A0C164B4166D589300DF921C /* EffectsTest */,
 				A0C164B5166D589300DF921C /* EventTest */,
 				A0C164B6166D589300DF921C /* ExtensionsTest */,
+				A02521DD169635910087E514 /* FileUtils */,
 				A0C164B7166D589300DF921C /* FontTest */,
 				A0C164B8166D589300DF921C /* IntervalTest */,
 				A0C164B9166D589300DF921C /* LabelTest */,
@@ -13728,6 +13731,7 @@
 				A0C164F4166D58A500DF921C /* tests-boot-jsb.js in Resources */,
 				A0C164F5166D58A500DF921C /* tests-main.js in Resources */,
 				2CFA5406168805CD006CA4B9 /* SysTest in Resources */,
+				A02521DE169635910087E514 /* FileUtils in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

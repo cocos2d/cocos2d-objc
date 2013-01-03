@@ -606,7 +606,7 @@ typedef struct {
 				printf("\n");
 				NSLog(@"cocos2d: WARNING. Using RGB888 texture. Convert it to RGB565 or RGBA8888 in order to reduce memory");
 				NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
-				NSLog(@"cocos2d: WARNING: For furhter info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
+				NSLog(@"cocos2d: WARNING: For further info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
 				printf("\n");
 			}
 
@@ -634,7 +634,7 @@ typedef struct {
 					printf("\n");
 					NSLog(@"cocos2d: WARNING. Current texture size=(%d,%d). Convert it to size=(%d,%d) in order to save memory", width_, height_, width_ + neededBytes, height_ );
 					NSLog(@"cocos2d: WARNING: File: %@", [path lastPathComponent] );
-					NSLog(@"cocos2d: WARNING: For furhter info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
+					NSLog(@"cocos2d: WARNING: For further info visit: http://www.cocos2d-iphone.org/forum/topic/31092");
 					printf("\n");
 				}
 			}
