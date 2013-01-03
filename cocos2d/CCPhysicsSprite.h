@@ -48,10 +48,10 @@ class b2Body;
 	BOOL	_ignoreBodyRotation;
 	
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-	cpBody	*_body;
+	cpBody	*_cpBody;
 	
 #elif CC_ENABLE_BOX2D_INTEGRATION
-	b2Body	*_body;
+	b2Body	*_b2Body;
 	
 	// Pixels to Meters ratio
 	float	_PTMRatio;
@@ -64,7 +64,7 @@ class b2Body;
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
 /** Body accessor when using regular Chipmunk */
-@property(nonatomic, assign) cpBody *body;
+@property(nonatomic, assign) cpBody *CPBody;
 
 /** Body accessor when using Objective-Chipmunk */
 @property(nonatomic, assign) ChipmunkBody *chipmunkBody;
@@ -73,7 +73,7 @@ class b2Body;
 #elif CC_ENABLE_BOX2D_INTEGRATION
 
 /** Body accessor when using box2d */
-@property(nonatomic, assign) b2Body *body;
+@property(nonatomic, assign) b2Body *b2Body;
 
 @property(nonatomic, assign) float PTMRatio;
 

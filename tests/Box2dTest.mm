@@ -212,7 +212,7 @@ enum {
 	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:spriteTexture_ rect:CGRectMake(32 * idx,32 * idy,32,32)];
 	[parent addChild:sprite];
 
-	[sprite setBody:body];
+	[sprite setB2Body: body];
 	[sprite setPTMRatio:PTM_RATIO];
 	[sprite setPosition: ccp( p.x, p.y) ];
 }

@@ -258,7 +258,7 @@ enum {
 	[parent addChild:sprite];
 	
 	[sprite setPTMRatio:PTM_RATIO];
-	[sprite setBody:body];
+	[sprite setB2Body:body];
 	[sprite setPosition: ccp( p.x, p.y)];
 
 }

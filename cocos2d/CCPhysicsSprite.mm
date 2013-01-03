@@ -39,10 +39,10 @@
 @synthesize ignoreBodyRotation = _ignoreBodyRotation;
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
-@synthesize body = _body;
+@synthesize CPBody = _cpBody;
 #endif
 #if CC_ENABLE_BOX2D_INTEGRATION
-@synthesize body = _body;
+@synthesize b2Body = _b2Body;
 @synthesize PTMRatio = _PTMRatio;
 #endif
 
@@ -51,27 +51,27 @@
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 -(ChipmunkBody *)chipmunkBody
 {
-	return (ChipmunkBody *) _body->data;
+	return (ChipmunkBody *) _cpBody->data;
 }
 
 -(void)setChipmunkBody:(ChipmunkBody *)chipmunkBody
 {
-	_body = chipmunkBody.body;
+	_cpBody = chipmunkBody.body;
 }
 // Override the setters and getters to always reflect the body's properties.
 -(CGPoint)position
 {
-	return cpBodyGetPos(_body);
+	return cpBodyGetPos(_cpBody);
 }
 
 -(void)setPosition:(CGPoint)position
 {
-	cpBodySetPos(_body, position);
+	cpBodySetPos(_cpBody, position);
 }
 
 -(float)rotation
 {
-	return (_ignoreBodyRotation ? super.rotation : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_body)));
+	return (_ignoreBodyRotation ? super.rotation : -CC_RADIANS_TO_DEGREES(cpBodyGetAngle(_cpBody)));
 }
 
 -(void)setRotation:(float)rotation
@@ -79,7 +79,7 @@
 	if(_ignoreBodyRotation){
 		super.rotation = rotation;
 	} else {
-		cpBodySetAngle(_body, -CC_DEGREES_TO_RADIANS(rotation));
+		cpBodySetAngle(_cpBody, -CC_DEGREES_TO_RADIANS(rotation));
 	}
 }
 
@@ -89,9 +89,9 @@
 	// Although scale is not used by physics engines, it is calculated just in case
 	// the sprite is animated (scaled up/down) using actions.
 	// For more info see: http://www.cocos2d-iphone.org/forum/topic/68990
-	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _body->rot);
-	CGFloat x = _body->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
-	CGFloat y = _body->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
+	cpVect rot = (_ignoreBodyRotation ? cpvforangle(-CC_DEGREES_TO_RADIANS(_rotationX)) : _cpBody->rot);
+	CGFloat x = _cpBody->p.x + rot.x * -_anchorPointInPoints.x * _scaleX - rot.y * -_anchorPointInPoints.y * _scaleY;
+	CGFloat y = _cpBody->p.y + rot.y * -_anchorPointInPoints.x * _scaleX + rot.x * -_anchorPointInPoints.y * _scaleY;
 	
 	if(_ignoreAnchorPointForPosition){
 		x += _anchorPointInPoints.x;
@@ -110,7 +110,7 @@
 // Override the setters and getters to always reflect the body's properties.
 -(CGPoint)position
 {
-	b2Vec2 pos  = _body->GetPosition();
+	b2Vec2 pos  = _b2Body->GetPosition();
 	
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
@@ -119,14 +119,14 @@
 
 -(void)setPosition:(CGPoint)position
 {
-	float angle = _body->GetAngle();
-	_body->SetTransform( b2Vec2(position.x / _PTMRatio, position.y / _PTMRatio), angle );
+	float angle = _b2Body->GetAngle();
+	_b2Body->SetTransform( b2Vec2(position.x / _PTMRatio, position.y / _PTMRatio), angle );
 }
 
 -(float)rotation
 {
 	return (_ignoreBodyRotation ? super.rotation :
-			CC_RADIANS_TO_DEGREES( _body->GetAngle() ) );
+			CC_RADIANS_TO_DEGREES( _b2Body->GetAngle() ) );
 }
 
 -(void)setRotation:(float)rotation
@@ -134,16 +134,16 @@
 	if(_ignoreBodyRotation){
 		super.rotation = rotation;
 	} else {
-		b2Vec2 p = _body->GetPosition();
+		b2Vec2 p = _b2Body->GetPosition();
 		float radians = CC_DEGREES_TO_RADIANS(rotation);
-		_body->SetTransform( p, radians);
+		_b2Body->SetTransform( p, radians);
 	}
 }
 
 // returns the transform matrix according the Chipmunk Body values
 -(CGAffineTransform) nodeToParentTransform
 {
-	b2Vec2 pos  = _body->GetPosition();
+	b2Vec2 pos  = _b2Body->GetPosition();
 	
 	float x = pos.x * _PTMRatio;
 	float y = pos.y * _PTMRatio;
@@ -154,7 +154,7 @@
 	}
 	
 	// Make matrix
-	float radians = _body->GetAngle();
+	float radians = _b2Body->GetAngle();
 	float c = cosf(radians);
 	float s = sinf(radians);
 	
