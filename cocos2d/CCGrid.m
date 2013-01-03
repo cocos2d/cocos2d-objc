@@ -51,11 +51,11 @@
 
 @implementation CCGridBase
 
-@synthesize reuseGrid = reuseGrid_;
-@synthesize texture = texture_;
-@synthesize grabber = grabber_;
+@synthesize reuseGrid = _reuseGrid;
+@synthesize texture = _texture;
+@synthesize grabber = _grabber;
 @synthesize gridSize = _gridSize;
-@synthesize step = step_;
+@synthesize step = _step;
 @synthesize shaderProgram = _shaderProgram;
 
 +(id) gridWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
@@ -72,19 +72,19 @@
 {
 	if( (self=[super init]) ) {
 
-		active_ = NO;
-		reuseGrid_ = 0;
+		_active = NO;
+		_reuseGrid = 0;
 		_gridSize = gridSize;
 
 		self.texture = texture;
-		isTextureFlipped_ = flipped;
+		_isTextureFlipped = flipped;
 
-		CGSize texSize = [texture_ contentSize];
-		step_.x = texSize.width / _gridSize.width;
-		step_.y = texSize.height / _gridSize.height;
+		CGSize texSize = [_texture contentSize];
+		_step.x = texSize.width / _gridSize.width;
+		_step.y = texSize.height / _gridSize.height;
 
-		grabber_ = [[CCGrabber alloc] init];
-		[grabber_ grab:texture_];
+		_grabber = [[CCGrabber alloc] init];
+		[_grabber grab:_texture];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 
@@ -146,20 +146,20 @@
 
 //	[self setActive: NO];
 
-	[texture_ release];
-	[grabber_ release];
+	[_texture release];
+	[_grabber release];
 	[super dealloc];
 }
 
 // properties
 -(BOOL) active
 {
-	return active_;
+	return _active;
 }
 
 -(void) setActive:(BOOL)active
 {
-	active_ = active;
+	_active = active;
 	if( ! active ) {
 		CCDirector *director = [CCDirector sharedDirector];
 		ccDirectorProjection proj = [director projection];
@@ -169,13 +169,13 @@
 
 -(BOOL) isTextureFlipped
 {
-	return isTextureFlipped_;
+	return _isTextureFlipped;
 }
 
 -(void) setIsTextureFlipped:(BOOL)flipped
 {
-	if( isTextureFlipped_ != flipped ) {
-		isTextureFlipped_ = flipped;
+	if( _isTextureFlipped != flipped ) {
+		_isTextureFlipped = flipped;
 		[self calculateVertexPoints];
 	}
 }
@@ -205,24 +205,24 @@
 {
 	// save projection
 	CCDirector *director = [CCDirector sharedDirector];
-	directorProjection_ = [director projection];
+	_directorProjection = [director projection];
 	
 	// 2d projection
 //	[director setProjection:kCCDirectorProjection2D];
 	[self set2DProjection];
 
 	
-	[grabber_ beforeRender:texture_];
+	[_grabber beforeRender:_texture];
 }
 
 
 -(void)afterDraw:(CCNode *)target
 {
-	[grabber_ afterRender:texture_];
+	[_grabber afterRender:_texture];
 
 	// restore projection
 	CCDirector *director = [CCDirector sharedDirector];
-	[director setProjection: directorProjection_];
+	[director setProjection: _directorProjection];
 
 	if( target.camera.dirty ) {
 
@@ -236,7 +236,7 @@
 		kmGLTranslatef(-offset.x, -offset.y, 0);
 	}
 
-	ccGLBindTexture2D( texture_.name );
+	ccGLBindTexture2D( _texture.name );
 
 	[self blit];
 }
@@ -299,9 +299,9 @@
 
 -(void)calculateVertexPoints
 {
-	float width = (float)texture_.pixelsWide;
-	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSizeInPixels.height;
+	float width = (float)_texture.pixelsWide;
+	float height = (float)_texture.pixelsHigh;
+	float imageH = _texture.contentSizeInPixels.height;
 
 	int x, y, i;
 
@@ -327,10 +327,10 @@
 		{
 			NSInteger idx = (y * _gridSize.width) + x;
 
-			GLfloat x1 = x * step_.x;
-			GLfloat x2 = x1 + step_.x;
-			GLfloat y1 = y * step_.y;
-			GLfloat y2 = y1 + step_.y;
+			GLfloat x1 = x * _step.x;
+			GLfloat x2 = x1 + _step.x;
+			GLfloat y1 = y * _step.y;
+			GLfloat y2 = y1 + _step.y;
 
 			GLushort a = x * (_gridSize.height+1) + y;
 			GLushort b = (x+1) * (_gridSize.height+1) + y;
@@ -359,7 +359,7 @@
 				vertArray[ l1[i] + 2 ] = l2[i].z;
 
 				texArray[ tex1[i] ] = tex2[i].x / width;
-				if( isTextureFlipped_ )
+				if( _isTextureFlipped )
 					texArray[ tex1[i] + 1 ] = (imageH - tex2[i].y) / height;
 				else
 					texArray[ tex1[i] + 1 ] = tex2[i].y / height;
@@ -407,10 +407,10 @@
 
 -(void)reuse
 {
-	if ( reuseGrid_ > 0 )
+	if ( _reuseGrid > 0 )
 	{
 		memcpy(originalVertices, vertices, (_gridSize.width+1)*(_gridSize.height+1)*sizeof(ccVertex3F));
-		reuseGrid_--;
+		_reuseGrid--;
 	}
 }
 
@@ -458,9 +458,9 @@
 
 -(void)calculateVertexPoints
 {
-	float width = (float)texture_.pixelsWide;
-	float height = (float)texture_.pixelsHigh;
-	float imageH = texture_.contentSizeInPixels.height;
+	float width = (float)_texture.pixelsWide;
+	float height = (float)_texture.pixelsHigh;
+	float imageH = _texture.contentSizeInPixels.height;
 
 	NSInteger numQuads = _gridSize.width * _gridSize.height;
 
@@ -484,10 +484,10 @@
 	{
 		for( y = 0; y < _gridSize.height; y++ )
 		{
-			float x1 = x * step_.x;
-			float x2 = x1 + step_.x;
-			float y1 = y * step_.y;
-			float y2 = y1 + step_.y;
+			float x1 = x * _step.x;
+			float x2 = x1 + _step.x;
+			float y1 = y * _step.y;
+			float y2 = y1 + _step.y;
 
 			*vertArray++ = x1;
 			*vertArray++ = y1;
@@ -505,7 +505,7 @@
 			float newY1 = y1;
 			float newY2 = y2;
 
-			if( isTextureFlipped_ ) {
+			if( _isTextureFlipped ) {
 				newY1 = imageH - y1;
 				newY2 = imageH - y2;
 			}
@@ -572,12 +572,12 @@
 
 -(void)reuse
 {
-	if ( reuseGrid_ > 0 )
+	if ( _reuseGrid > 0 )
 	{
 		NSInteger numQuads = _gridSize.width * _gridSize.height;
 
 		memcpy(originalVertices, vertices, numQuads*12*sizeof(GLfloat));
-		reuseGrid_--;
+		_reuseGrid--;
 	}
 }
 

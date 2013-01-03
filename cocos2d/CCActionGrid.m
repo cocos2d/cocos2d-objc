@@ -183,7 +183,7 @@
 
 @implementation CCAccelDeccelAmplitude
 
-@synthesize rate=rate_;
+@synthesize rate=_rate;
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
@@ -194,8 +194,8 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate_ = 1.0f;
-		other_ = (CCActionInterval*)[action retain];
+		_rate = 1.0f;
+		_other = (CCActionInterval*)[action retain];
 	}
 
 	return self;
@@ -203,14 +203,14 @@
 
 -(void)dealloc
 {
-	[other_ release];
+	[_other release];
 	[super dealloc];
 }
 
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:_target];
+	[_other startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time
@@ -223,13 +223,13 @@
 		f = 1 - f;
 	}
 
-	[other_ setAmplitudeRate:powf(f, rate_)];
-	[other_ update:time];
+	[_other setAmplitudeRate:powf(f, _rate)];
+	[_other update:time];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCAccelDeccelAmplitude actionWithAction:[other_ reverse] duration:_duration];
+	return [CCAccelDeccelAmplitude actionWithAction:[_other reverse] duration:_duration];
 }
 
 @end
@@ -241,7 +241,7 @@
 
 @implementation CCAccelAmplitude
 
-@synthesize rate=rate_;
+@synthesize rate=_rate;
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
@@ -252,8 +252,8 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate_ = 1.0f;
-		other_ = (CCActionInterval*)[action retain];
+		_rate = 1.0f;
+		_other = (CCActionInterval*)[action retain];
 	}
 
 	return self;
@@ -261,25 +261,25 @@
 
 -(void)dealloc
 {
-	[other_ release];
+	[_other release];
 	[super dealloc];
 }
 
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:_target];
+	[_other startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time
 {
-	[other_ setAmplitudeRate:powf(time, rate_)];
-	[other_ update:time];
+	[_other setAmplitudeRate:powf(time, _rate)];
+	[_other update:time];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCAccelAmplitude actionWithAction:[other_ reverse] duration:self.duration];
+	return [CCAccelAmplitude actionWithAction:[_other reverse] duration:self.duration];
 }
 
 @end
@@ -291,7 +291,7 @@
 
 @implementation CCDeccelAmplitude
 
-@synthesize rate=rate_;
+@synthesize rate=_rate;
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
@@ -302,8 +302,8 @@
 {
 	if ( (self = [super initWithDuration:d]) )
 	{
-		rate_ = 1.0f;
-		other_ = (CCActionInterval*)[action retain];
+		_rate = 1.0f;
+		_other = (CCActionInterval*)[action retain];
 	}
 
 	return self;
@@ -311,25 +311,25 @@
 
 -(void)dealloc
 {
-	[other_ release];
+	[_other release];
 	[super dealloc];
 }
 
 -(void)startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other_ startWithTarget:_target];
+	[_other startWithTarget:_target];
 }
 
 -(void) update: (ccTime) time
 {
-	[other_ setAmplitudeRate:powf((1-time), rate_)];
-	[other_ update:time];
+	[_other setAmplitudeRate:powf((1-time), _rate)];
+	[_other update:time];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCDeccelAmplitude actionWithAction:[other_ reverse] duration:self.duration];
+	return [CCDeccelAmplitude actionWithAction:[_other reverse] duration:self.duration];
 }
 
 @end
@@ -369,7 +369,7 @@
 -(id)initWithTimes:(int)times
 {
 	if ( (self = [super init]) )
-		t_ = times;
+		_times = times;
 
 	return self;
 }
@@ -380,7 +380,7 @@
 
 	CCNode *myTarget = (CCNode*) [self target];
 	if ( myTarget.grid && myTarget.grid.active )
-		myTarget.grid.reuseGrid += t_;
+		myTarget.grid.reuseGrid += _times;
 }
 
 @end
