@@ -30,3 +30,7 @@
 @interface TestSearchPath : FileUtilsDemo
 {}
 @end
+
+@interface TestFilenameLookup : FileUtilsDemo
+{}
+@end

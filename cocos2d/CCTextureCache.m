@@ -294,7 +294,7 @@ static CCTextureCache *sharedTextureCache;
 
 		else {
 			ccResolutionType resolution;
-			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:path resolutionType:&resolution];
+			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForKey:path resolutionType:&resolution];
 
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
 			tex = [[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution];
@@ -316,7 +316,7 @@ static CCTextureCache *sharedTextureCache;
 #elif defined(__CC_PLATFORM_MAC)
 		else {
 			ccResolutionType resolution;
-			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:path resolutionType:&resolution];
+			NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForKey:path resolutionType:&resolution];
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
