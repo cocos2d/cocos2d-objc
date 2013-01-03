@@ -16,6 +16,7 @@ static NSString *transitions[] = {
 	@"Test1",
 	@"TestResolutionDirectories",
 	@"TestSearchPath",
+	@"TestFilenameLookup",
 };
 
 Class nextAction(void);
@@ -315,6 +316,51 @@ Class restartAction()
 }
 @end
 
+#pragma mark - TestFilenameLookup
+
+@implementation TestFilenameLookup
+-(id) init
+{
+	if ((self=[super init]) ) {
+		
+		CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+
+		NSDictionary *dict = @{ @"grossini.bmp" : @"grossini.png",
+										@"grossini.xcf" : @"grossini.png" };
+		
+		[sharedFileUtils setFilenameLookup: [dict mutableCopy]];
+		
+		
+		// Instead of loading carlitos.xcf, it will load grossini.png
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.xcf"];
+		[self addChild:sprite];
+		
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[sprite setPosition:ccp(s.width/2, s.height/2)];
+	}
+	return self;
+}
+
+-(void) onExit
+{
+	
+	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+	
+	// reset filename lookup
+	[sharedFileUtils setFilenameLookup:[NSMutableDictionary dictionary]];
+	
+	[super onExit];
+}
+
+-(NSString*) title
+{
+	return @"FileUtils: search path";
+}
+-(NSString *) subtitle
+{
+	return @"See the console";
+}
+@end
 
 #pragma mark - AppDelegate - iOS
 
