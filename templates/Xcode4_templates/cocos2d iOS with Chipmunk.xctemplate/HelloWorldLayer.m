@@ -235,7 +235,7 @@ enum {
 	
 	CCPhysicsSprite *sprite = [CCPhysicsSprite spriteWithTexture:_spriteTexture rect:CGRectMake(posx, posy, 85, 121)];
 	[parent addChild: sprite];
-	[sprite setBody:body];
+	[sprite setCPBody:body];
 	[sprite setPosition: pos];
 }
 
