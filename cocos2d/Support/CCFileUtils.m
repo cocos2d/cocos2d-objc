@@ -549,7 +549,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return [self fullPathFromRelativePath:relPath resolutionType:&ignore];
 }
 
--(void) loadFilenameLookupFromFile:(NSString*)filename
+-(void) loadFilenameLookupDictionaryFromFile:(NSString*)filename
 {
 	NSString *fullpath = [self fullPathForKeyIgnoringResolutions:filename];
 	if( fullpath ) {

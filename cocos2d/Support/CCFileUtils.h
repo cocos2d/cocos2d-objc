@@ -310,7 +310,7 @@ enum {
  
  @since v2.1
  */
--(void) loadFilenameLookupFromFile:(NSString*)filename;
+-(void) loadFilenameLookupDictionaryFromFile:(NSString*)filename;
 
 /** removes the suffix from a path
  * On iPhone RetinaDisplay it will remove the -hd suffix
