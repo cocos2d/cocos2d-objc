@@ -559,8 +559,17 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	NSString *fullpath = [self fullPathForFilenameIgnoringResolutions:filename];
 	if( fullpath ) {
-		NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:fullpath];
-		self.filenameLookup = dict;
+		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullpath];
+
+		NSDictionary *metadata = [dict objectForKey:@"metadata"];
+		NSInteger version = [[metadata objectForKey:@"version"] integerValue];
+		if( version != 1) {
+			CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, filename);
+			return;
+		}
+		
+		NSMutableDictionary *filenames = [dict objectForKey:@"filenames"];
+		self.filenameLookup = filenames;
 	}
 }
 
