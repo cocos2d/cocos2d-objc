@@ -26,9 +26,9 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
-static NSString *version = @"cocos2d v2.1-rc0-pre";
+const char *cocos2d_version = "cocos2d-iphone v2.1-rc0-pre";
 
 NSString *cocos2dVersion()
 {
-	return version;
+	return [NSString stringWithCString:cocos2d_version encoding:NSUTF8StringEncoding];
 }
