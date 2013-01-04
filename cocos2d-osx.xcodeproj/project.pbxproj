@@ -686,14 +686,38 @@
 		A02521E11696368D0087E514 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = A02521E01696368D0087E514 /* FileUtils */; };
 		A025223316965D790087E514 /* js_bindings_dbg.h in Headers */ = {isa = PBXBuildFile; fileRef = A025223116965D790087E514 /* js_bindings_dbg.h */; };
 		A025223416965D790087E514 /* js_bindings_dbg.mm in Sources */ = {isa = PBXBuildFile; fileRef = A025223216965D790087E514 /* js_bindings_dbg.mm */; };
-		A025223716965E140087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223516965E140087E514 /* debugger.js */; };
-		A025223816965E140087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223516965E140087E514 /* debugger.js */; };
-		A025223916965E140087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223516965E140087E514 /* debugger.js */; };
-		A025223A16965E140087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223516965E140087E514 /* debugger.js */; };
 		A025223B16965E140087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223616965E140087E514 /* main.example.js */; };
 		A025223C16965E140087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223616965E140087E514 /* main.example.js */; };
 		A025223D16965E140087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223616965E140087E514 /* main.example.js */; };
 		A025223E16965E140087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223616965E140087E514 /* main.example.js */; };
+		A02528EA169765AF0087E514 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E3169765AE0087E514 /* jsb_chipmunk.js */; };
+		A02528EB169765AF0087E514 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E3169765AE0087E514 /* jsb_chipmunk.js */; };
+		A02528EC169765AF0087E514 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E3169765AE0087E514 /* jsb_chipmunk.js */; };
+		A02528ED169765AF0087E514 /* jsb_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E3169765AE0087E514 /* jsb_chipmunk.js */; };
+		A02528EE169765AF0087E514 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E4169765AE0087E514 /* jsb_cocos2d.js */; };
+		A02528EF169765AF0087E514 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E4169765AE0087E514 /* jsb_cocos2d.js */; };
+		A02528F0169765AF0087E514 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E4169765AE0087E514 /* jsb_cocos2d.js */; };
+		A02528F1169765AF0087E514 /* jsb_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E4169765AE0087E514 /* jsb_cocos2d.js */; };
+		A02528F2169765AF0087E514 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */; };
+		A02528F3169765AF0087E514 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */; };
+		A02528F4169765AF0087E514 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */; };
+		A02528F5169765AF0087E514 /* jsb_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */; };
+		A02528F6169765AF0087E514 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E6169765AF0087E514 /* jsb_debugger.js */; };
+		A02528F7169765AF0087E514 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E6169765AF0087E514 /* jsb_debugger.js */; };
+		A02528F8169765AF0087E514 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E6169765AF0087E514 /* jsb_debugger.js */; };
+		A02528F9169765AF0087E514 /* jsb_debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E6169765AF0087E514 /* jsb_debugger.js */; };
+		A02528FA169765AF0087E514 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E7169765AF0087E514 /* jsb_opengl.js */; };
+		A02528FB169765AF0087E514 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E7169765AF0087E514 /* jsb_opengl.js */; };
+		A02528FC169765AF0087E514 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E7169765AF0087E514 /* jsb_opengl.js */; };
+		A02528FD169765AF0087E514 /* jsb_opengl.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E7169765AF0087E514 /* jsb_opengl.js */; };
+		A02528FE169765AF0087E514 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E8169765AF0087E514 /* jsb_sys.js */; };
+		A02528FF169765AF0087E514 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E8169765AF0087E514 /* jsb_sys.js */; };
+		A0252900169765AF0087E514 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E8169765AF0087E514 /* jsb_sys.js */; };
+		A0252901169765AF0087E514 /* jsb_sys.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E8169765AF0087E514 /* jsb_sys.js */; };
+		A0252902169765AF0087E514 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E9169765AF0087E514 /* jsb.js */; };
+		A0252903169765AF0087E514 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E9169765AF0087E514 /* jsb.js */; };
+		A0252904169765AF0087E514 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E9169765AF0087E514 /* jsb.js */; };
+		A0252905169765AF0087E514 /* jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A02528E9169765AF0087E514 /* jsb.js */; };
 		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
 		A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A03714D6154F1D9300081CBA /* CCNode+Debug.m */; };
 		A03A1CBA14F5B3F00019B6F3 /* geneva-32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A03A1CB714F5B3F00019B6F3 /* geneva-32.fnt */; };
@@ -1392,26 +1416,6 @@
 		A06BF1EE167FE8A80018A802 /* levels.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C3E3941669388C0054655A /* levels.js */; };
 		A06BF1EF167FE8A80018A802 /* resources-jsb.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5E3816645E0B0061A165 /* resources-jsb.js */; };
 		A06BF1F0167FE8A80018A802 /* watermelon_with_me.js in Resources */ = {isa = PBXBuildFile; fileRef = A0BD5E3916645E0B0061A165 /* watermelon_with_me.js */; };
-		A06BF1F1167FE9330018A802 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1E167FD6C50099349A /* jsb_constants.js */; };
-		A06BF1F2167FE9330018A802 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */; };
-		A06BF1F3167FE9330018A802 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */; };
-		A06BF1F4167FE9330018A802 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */; };
-		A06BF1F5167FE9330018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
-		A06BF1F6167FE9340018A802 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1E167FD6C50099349A /* jsb_constants.js */; };
-		A06BF1F7167FE9340018A802 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */; };
-		A06BF1F8167FE9340018A802 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */; };
-		A06BF1F9167FE9340018A802 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */; };
-		A06BF1FA167FE9340018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
-		A06BF1FB167FE9350018A802 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1E167FD6C50099349A /* jsb_constants.js */; };
-		A06BF1FC167FE9350018A802 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */; };
-		A06BF1FD167FE9350018A802 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */; };
-		A06BF1FE167FE9350018A802 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */; };
-		A06BF1FF167FE9350018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
-		A06BF200167FE9350018A802 /* jsb_constants.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1E167FD6C50099349A /* jsb_constants.js */; };
-		A06BF201167FE9350018A802 /* jsb_constants_chipmunk.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */; };
-		A06BF202167FE9350018A802 /* jsb_constants_cocos2d.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */; };
-		A06BF203167FE9350018A802 /* jsb_constants_cocosbuilder.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */; };
-		A06BF204167FE9350018A802 /* jsb_constants_gl.js in Resources */ = {isa = PBXBuildFile; fileRef = A0191D22167FD6C50099349A /* jsb_constants_gl.js */; };
 		A06BF7F01680268D0018A802 /* js_bindings_system_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7EE1680268C0018A802 /* js_bindings_system_registration.h */; };
 		A06BF7F11680268D0018A802 /* js_bindings_system_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A06BF7EF1680268D0018A802 /* js_bindings_system_registration.mm */; };
 		A06BF7F51680270E0018A802 /* js_bindings_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A06BF7F21680270E0018A802 /* js_bindings_system_functions_registration.h */; };
@@ -6663,11 +6667,6 @@
 		A0191D1A167FD6C50099349A /* js_bindings_CocosDenshion_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions.h; sourceTree = "<group>"; };
 		A0191D1B167FD6C50099349A /* js_bindings_CocosDenshion_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_CocosDenshion_functions.mm; sourceTree = "<group>"; };
 		A0191D1C167FD6C50099349A /* js_bindings_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
-		A0191D1E167FD6C50099349A /* jsb_constants.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants.js; sourceTree = "<group>"; };
-		A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_chipmunk.js; sourceTree = "<group>"; };
-		A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocos2d.js; sourceTree = "<group>"; };
-		A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_cocosbuilder.js; sourceTree = "<group>"; };
-		A0191D22167FD6C50099349A /* jsb_constants_gl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_constants_gl.js; sourceTree = "<group>"; };
 		A0191D24167FD6C50099349A /* js_bindings_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_basic_conversions.h; sourceTree = "<group>"; };
 		A0191D25167FD6C50099349A /* js_bindings_basic_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_basic_conversions.mm; sourceTree = "<group>"; };
 		A0191D26167FD6C50099349A /* js_bindings_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_chipmunk_manual.h; sourceTree = "<group>"; };
@@ -6747,8 +6746,14 @@
 		A02521E01696368D0087E514 /* FileUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FileUtils; sourceTree = "<group>"; };
 		A025223116965D790087E514 /* js_bindings_dbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_dbg.h; sourceTree = "<group>"; };
 		A025223216965D790087E514 /* js_bindings_dbg.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_dbg.mm; sourceTree = "<group>"; };
-		A025223516965E140087E514 /* debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = debugger.js; sourceTree = "<group>"; };
 		A025223616965E140087E514 /* main.example.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.example.js; sourceTree = "<group>"; };
+		A02528E3169765AE0087E514 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
+		A02528E4169765AE0087E514 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
+		A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
+		A02528E6169765AF0087E514 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
+		A02528E7169765AF0087E514 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
+		A02528E8169765AF0087E514 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
+		A02528E9169765AF0087E514 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		A031B93C15D9CFD800E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
 		A031B93D15D9CFD800E1986C /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -8581,13 +8586,14 @@
 		A0191D1D167FD6C50099349A /* js */ = {
 			isa = PBXGroup;
 			children = (
-				A025223516965E140087E514 /* debugger.js */,
+				A02528E3169765AE0087E514 /* jsb_chipmunk.js */,
+				A02528E4169765AE0087E514 /* jsb_cocos2d.js */,
+				A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */,
+				A02528E6169765AF0087E514 /* jsb_debugger.js */,
+				A02528E7169765AF0087E514 /* jsb_opengl.js */,
+				A02528E8169765AF0087E514 /* jsb_sys.js */,
+				A02528E9169765AF0087E514 /* jsb.js */,
 				A025223616965E140087E514 /* main.example.js */,
-				A0191D1E167FD6C50099349A /* jsb_constants.js */,
-				A0191D1F167FD6C50099349A /* jsb_constants_chipmunk.js */,
-				A0191D20167FD6C50099349A /* jsb_constants_cocos2d.js */,
-				A0191D21167FD6C50099349A /* jsb_constants_cocosbuilder.js */,
-				A0191D22167FD6C50099349A /* jsb_constants_gl.js */,
 			);
 			path = js;
 			sourceTree = "<group>";
@@ -12534,11 +12540,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A06BF200167FE9350018A802 /* jsb_constants.js in Resources */,
-				A06BF201167FE9350018A802 /* jsb_constants_chipmunk.js in Resources */,
-				A06BF202167FE9350018A802 /* jsb_constants_cocos2d.js in Resources */,
-				A06BF203167FE9350018A802 /* jsb_constants_cocosbuilder.js in Resources */,
-				A06BF204167FE9350018A802 /* jsb_constants_gl.js in Resources */,
 				A06BF1EB167FE87E0018A802 /* boot-jsb.js in Resources */,
 				A06BF1EE167FE8A80018A802 /* levels.js in Resources */,
 				A06BF1EF167FE8A80018A802 /* resources-jsb.js in Resources */,
@@ -12547,8 +12548,14 @@
 				A06BF1EA167FE86D0018A802 /* WatermelonWithMe.xib in Resources */,
 				A06BF1EC167FE88F0018A802 /* res in Resources */,
 				A06BF1ED167FE8A00018A802 /* InfoPlist.strings in Resources */,
-				A025223A16965E140087E514 /* debugger.js in Resources */,
 				A025223E16965E140087E514 /* main.example.js in Resources */,
+				A02528ED169765AF0087E514 /* jsb_chipmunk.js in Resources */,
+				A02528F1169765AF0087E514 /* jsb_cocos2d.js in Resources */,
+				A02528F5169765AF0087E514 /* jsb_cocosbuilder.js in Resources */,
+				A02528F9169765AF0087E514 /* jsb_debugger.js in Resources */,
+				A02528FD169765AF0087E514 /* jsb_opengl.js in Resources */,
+				A0252901169765AF0087E514 /* jsb_sys.js in Resources */,
+				A0252905169765AF0087E514 /* jsb.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13502,13 +13509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A025223716965E140087E514 /* debugger.js in Resources */,
 				A025223B16965E140087E514 /* main.example.js in Resources */,
-				A06BF1F1167FE9330018A802 /* jsb_constants.js in Resources */,
-				A06BF1F2167FE9330018A802 /* jsb_constants_chipmunk.js in Resources */,
-				A06BF1F3167FE9330018A802 /* jsb_constants_cocos2d.js in Resources */,
-				A06BF1F4167FE9330018A802 /* jsb_constants_cocosbuilder.js in Resources */,
-				A06BF1F5167FE9330018A802 /* jsb_constants_gl.js in Resources */,
 				A09C8CC31566FB4100ADFDA9 /* A Damn Mess.ttf in Resources */,
 				A09C8CC41566FB4100ADFDA9 /* Abberancy.ttf in Resources */,
 				A09C8CC51566FB4100ADFDA9 /* Abduction.ttf in Resources */,
@@ -13633,6 +13634,13 @@
 				A0C1600C166D57AE00DF921C /* tests-boot-jsb.js in Resources */,
 				A0C1600D166D57AE00DF921C /* tests-main.js in Resources */,
 				A0BD4E1C16641A3C0061A165 /* README.md in Resources */,
+				A02528EA169765AF0087E514 /* jsb_chipmunk.js in Resources */,
+				A02528EE169765AF0087E514 /* jsb_cocos2d.js in Resources */,
+				A02528F2169765AF0087E514 /* jsb_cocosbuilder.js in Resources */,
+				A02528F6169765AF0087E514 /* jsb_debugger.js in Resources */,
+				A02528FA169765AF0087E514 /* jsb_opengl.js in Resources */,
+				A02528FE169765AF0087E514 /* jsb_sys.js in Resources */,
+				A0252902169765AF0087E514 /* jsb.js in Resources */,
 				A0C15FE5166D579900DF921C /* ActionManagerTest in Resources */,
 				A0C15FE6166D579900DF921C /* ActionsTest in Resources */,
 				A0C15FE7166D579900DF921C /* Box2dTest in Resources */,
@@ -13677,11 +13685,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A06BF1F6167FE9340018A802 /* jsb_constants.js in Resources */,
-				A06BF1F7167FE9340018A802 /* jsb_constants_chipmunk.js in Resources */,
-				A06BF1F8167FE9340018A802 /* jsb_constants_cocos2d.js in Resources */,
-				A06BF1F9167FE9340018A802 /* jsb_constants_cocosbuilder.js in Resources */,
-				A06BF1FA167FE9340018A802 /* jsb_constants_gl.js in Resources */,
 				A0BD605F166548D70061A165 /* CocosDragon-Mac.xib in Resources */,
 				A0BD6060166548D70061A165 /* InfoPlist.strings in Resources */,
 				A0BD6061166548D70061A165 /* icon.icns in Resources */,
@@ -13718,8 +13721,14 @@
 				A0BC32FF16697A5700A811E0 /* main.js in Resources */,
 				A0BC330116697A5800A811E0 /* MainMenuScene.js in Resources */,
 				A0BC330516697A5800A811E0 /* resources-html5.js in Resources */,
-				A025223816965E140087E514 /* debugger.js in Resources */,
 				A025223C16965E140087E514 /* main.example.js in Resources */,
+				A02528EB169765AF0087E514 /* jsb_chipmunk.js in Resources */,
+				A02528EF169765AF0087E514 /* jsb_cocos2d.js in Resources */,
+				A02528F3169765AF0087E514 /* jsb_cocosbuilder.js in Resources */,
+				A02528F7169765AF0087E514 /* jsb_debugger.js in Resources */,
+				A02528FB169765AF0087E514 /* jsb_opengl.js in Resources */,
+				A02528FF169765AF0087E514 /* jsb_sys.js in Resources */,
+				A0252903169765AF0087E514 /* jsb.js in Resources */,
 				A0BC333D16697A7C00A811E0 /* ccbResources in Resources */,
 				A0BC333E16697A7C00A811E0 /* resources-ipad in Resources */,
 				A0BC333F16697A7C00A811E0 /* resources-ipadhd in Resources */,
@@ -13836,19 +13845,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A06BF1FB167FE9350018A802 /* jsb_constants.js in Resources */,
-				A06BF1FC167FE9350018A802 /* jsb_constants_chipmunk.js in Resources */,
-				A06BF1FD167FE9350018A802 /* jsb_constants_cocos2d.js in Resources */,
-				A06BF1FE167FE9350018A802 /* jsb_constants_cocosbuilder.js in Resources */,
-				A06BF1FF167FE9350018A802 /* jsb_constants_gl.js in Resources */,
 				A0D467FB15C339E100588ADE /* fps_images.png in Resources */,
 				A0A1C1E015CAE55B0058D96F /* icon.icns in Resources */,
 				A0BD5F1316645E230061A165 /* MoonWarriors-jsb.js in Resources */,
 				A0C15B5C166D515000DF921C /* res in Resources */,
 				A0C15B5D166D515000DF921C /* src in Resources */,
+				A02528EC169765AF0087E514 /* jsb_chipmunk.js in Resources */,
+				A02528F0169765AF0087E514 /* jsb_cocos2d.js in Resources */,
+				A02528F4169765AF0087E514 /* jsb_cocosbuilder.js in Resources */,
+				A02528F8169765AF0087E514 /* jsb_debugger.js in Resources */,
+				A02528FC169765AF0087E514 /* jsb_opengl.js in Resources */,
+				A0252900169765AF0087E514 /* jsb_sys.js in Resources */,
+				A0252904169765AF0087E514 /* jsb.js in Resources */,
 				A0755315166D7D6300976A87 /* InfoPlist.strings in Resources */,
 				A0755316166D7D6300976A87 /* MoonWarriors.xib in Resources */,
-				A025223916965E140087E514 /* debugger.js in Resources */,
 				A025223D16965E140087E514 /* main.example.js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -188,6 +188,7 @@ extern "C" {
 
 // free functions
 NSString * cocos2dVersion(void);
+extern const char * cocos2d_version;
 
 #ifdef __cplusplus
 }
