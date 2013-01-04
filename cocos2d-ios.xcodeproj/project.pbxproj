@@ -1608,6 +1608,16 @@
 		A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		A01AB95414970B1F00C93DB6 /* DirectorTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A01AB95314970B1F00C93DB6 /* DirectorTest.m */; };
 		A02521DE169635910087E514 /* FileUtils in Resources */ = {isa = PBXBuildFile; fileRef = A02521DD169635910087E514 /* FileUtils */; };
+		A025222E16965CC80087E514 /* js_bindings_dbg.h in Headers */ = {isa = PBXBuildFile; fileRef = A025222C16965CC80087E514 /* js_bindings_dbg.h */; };
+		A025222F16965CC80087E514 /* js_bindings_dbg.mm in Sources */ = {isa = PBXBuildFile; fileRef = A025222D16965CC80087E514 /* js_bindings_dbg.mm */; };
+		A025224116965E4F0087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223F16965E4F0087E514 /* debugger.js */; };
+		A025224216965E4F0087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223F16965E4F0087E514 /* debugger.js */; };
+		A025224316965E4F0087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223F16965E4F0087E514 /* debugger.js */; };
+		A025224416965E4F0087E514 /* debugger.js in Resources */ = {isa = PBXBuildFile; fileRef = A025223F16965E4F0087E514 /* debugger.js */; };
+		A025224516965E4F0087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025224016965E4F0087E514 /* main.example.js */; };
+		A025224616965E4F0087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025224016965E4F0087E514 /* main.example.js */; };
+		A025224716965E4F0087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025224016965E4F0087E514 /* main.example.js */; };
+		A025224816965E4F0087E514 /* main.example.js in Resources */ = {isa = PBXBuildFile; fileRef = A025224016965E4F0087E514 /* main.example.js */; };
 		A031B72115D9BD0800E1986C /* png.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFC1153D9CF00D87F08 /* png.h */; };
 		A031B72215D9BD0800E1986C /* pngconf.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A29DFF1153D9CF00D87F08 /* pngconf.h */; };
 		A031B76F15D9BD7E00E1986C /* libChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B2C4D10E100AEA00AE9530 /* libChipmunk.a */; };
@@ -5712,6 +5722,10 @@
 		A01AB95214970B1F00C93DB6 /* DirectorTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DirectorTest.h; path = tests/DirectorTest.h; sourceTree = "<group>"; };
 		A01AB95314970B1F00C93DB6 /* DirectorTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DirectorTest.m; path = tests/DirectorTest.m; sourceTree = "<group>"; };
 		A02521DD169635910087E514 /* FileUtils */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FileUtils; sourceTree = "<group>"; };
+		A025222C16965CC80087E514 /* js_bindings_dbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = js_bindings_dbg.h; sourceTree = "<group>"; };
+		A025222D16965CC80087E514 /* js_bindings_dbg.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = js_bindings_dbg.mm; sourceTree = "<group>"; };
+		A025223F16965E4F0087E514 /* debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = debugger.js; sourceTree = "<group>"; };
+		A025224016965E4F0087E514 /* main.example.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.example.js; sourceTree = "<group>"; };
 		A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B73915D9BD0800E1986C /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B83315D9C80C00E1986C /* AppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppController.h; sourceTree = "<group>"; };
@@ -8696,6 +8710,8 @@
 		A0191A0D167FCB760099349A /* js */ = {
 			isa = PBXGroup;
 			children = (
+				A025223F16965E4F0087E514 /* debugger.js */,
+				A025224016965E4F0087E514 /* main.example.js */,
 				A0191A0E167FCB760099349A /* jsb_constants.js */,
 				A0191A0F167FCB760099349A /* jsb_constants_chipmunk.js */,
 				A0191A10167FCB760099349A /* jsb_constants_cocos2d.js */,
@@ -8721,6 +8737,8 @@
 				A0191A1E167FCB760099349A /* js_bindings_CocosBuilderReader_manual.mm */,
 				A06BF83C168105080018A802 /* js_bindings_system_registration.h */,
 				A06BF83D168105080018A802 /* js_bindings_system_registration.mm */,
+				A025222C16965CC80087E514 /* js_bindings_dbg.h */,
+				A025222D16965CC80087E514 /* js_bindings_dbg.mm */,
 				A0191A1F167FCB760099349A /* js_bindings_config.h */,
 				A0191A20167FCB760099349A /* js_bindings_core.h */,
 				A0191A21167FCB760099349A /* js_bindings_core.mm */,
@@ -9961,6 +9979,7 @@
 				A06BF844168105350018A802 /* js_bindings_system_functions_registration.h in Headers */,
 				A06BF845168105350018A802 /* js_bindings_system_functions.h in Headers */,
 				A0E469B7168269E700B929F6 /* LocalStorage.h in Headers */,
+				A025222E16965CC80087E514 /* js_bindings_dbg.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13341,6 +13360,8 @@
 				A001941815C379F400F3D80E /* fps_images-hd.plist in Resources */,
 				A0579B9C1601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BD116019C6000AF8A12 /* Default@2x.png in Resources */,
+				A025224216965E4F0087E514 /* debugger.js in Resources */,
+				A025224616965E4F0087E514 /* main.example.js in Resources */,
 				A0C164FA166D58EC00DF921C /* res in Resources */,
 				A0C164FB166D58EC00DF921C /* src in Resources */,
 				A06F8CC4166D90A9008215BC /* Default-Landscape.png in Resources */,
@@ -13503,6 +13524,8 @@
 				A06F8CC1166D90A5008215BC /* Default@2x.png in Resources */,
 				A06F8CC2166D90A5008215BC /* Default-Landscape.png in Resources */,
 				A06F8CC3166D90A5008215BC /* Default-568h@2x.png in Resources */,
+				A025224416965E4F0087E514 /* debugger.js in Resources */,
+				A025224816965E4F0087E514 /* main.example.js in Resources */,
 				A0A42B17166D9BCB00078217 /* res in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13559,6 +13582,8 @@
 				A0BD642616672D5D0061A165 /* settings-caption-music.png in Resources */,
 				A0BD642716672D5D0061A165 /* settings-caption-musicoff.png in Resources */,
 				A0BD642816672D5D0061A165 /* settings-caption-tilt.png in Resources */,
+				A025224116965E4F0087E514 /* debugger.js in Resources */,
+				A025224516965E4F0087E514 /* main.example.js in Resources */,
 				A0BD642916672D5D0061A165 /* settings-caption-touch.png in Resources */,
 				A0BD642F16672D7F0061A165 /* ccbResources in Resources */,
 				A0BD643016672D7F0061A165 /* resources-ipad in Resources */,
@@ -13572,6 +13597,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A025224316965E4F0087E514 /* debugger.js in Resources */,
+				A025224716965E4F0087E514 /* main.example.js in Resources */,
 				A06BF210167FE9480018A802 /* jsb_constants.js in Resources */,
 				A06BF211167FE9480018A802 /* jsb_constants_chipmunk.js in Resources */,
 				A06BF212167FE9480018A802 /* jsb_constants_cocos2d.js in Resources */,
@@ -15267,6 +15294,7 @@
 				A06BF83F168105080018A802 /* js_bindings_system_registration.mm in Sources */,
 				A06BF846168105350018A802 /* js_bindings_system_functions.mm in Sources */,
 				A0E469B6168269E700B929F6 /* LocalStorage.c in Sources */,
+				A025222F16965CC80087E514 /* js_bindings_dbg.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

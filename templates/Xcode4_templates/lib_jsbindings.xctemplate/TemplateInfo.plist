@@ -951,6 +951,18 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/jsbindings/src/js/debugger.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/js/debugger.js</string>
+		</dict>
 		<key>libs/jsbindings/src/js/jsb_constants.js</key>
 		<dict>
 			<key>Group</key>
@@ -1010,6 +1022,18 @@
 			</array>
 			<key>Path</key>
 			<string>libs/jsbindings/src/js/jsb_constants_gl.js</string>
+		</dict>
+		<key>libs/jsbindings/src/js/main.example.js</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>js</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/js/main.example.js</string>
 		</dict>
 		<key>libs/jsbindings/src/manual/js_bindings_basic_conversions.h</key>
 		<dict>
@@ -1193,6 +1217,32 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/manual/js_bindings_core.mm</string>
 		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_dbg.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_dbg.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/jsbindings/src/manual/js_bindings_dbg.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>jsbindings</string>
+				<string>src</string>
+				<string>manual</string>
+			</array>
+			<key>Path</key>
+			<string>libs/jsbindings/src/manual/js_bindings_dbg.mm</string>
+		</dict>
 		<key>libs/jsbindings/src/manual/js_bindings_NS_manual.h</key>
 		<dict>
 			<key>Group</key>
@@ -1365,11 +1415,13 @@
 		<string>libs/jsbindings/src/auto/js_bindings_system_functions.h</string>
 		<string>libs/jsbindings/src/auto/js_bindings_system_functions.mm</string>
 		<string>libs/jsbindings/src/auto/js_bindings_system_functions_registration.h</string>
+		<string>libs/jsbindings/src/js/debugger.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_chipmunk.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_cocos2d.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_cocosbuilder.js</string>
 		<string>libs/jsbindings/src/js/jsb_constants_gl.js</string>
+		<string>libs/jsbindings/src/js/main.example.js</string>
 		<string>libs/jsbindings/src/manual/js_bindings_basic_conversions.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_basic_conversions.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_chipmunk_manual.h</string>
@@ -1384,6 +1436,8 @@
 		<string>libs/jsbindings/src/manual/js_bindings_config.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_core.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_core.mm</string>
+		<string>libs/jsbindings/src/manual/js_bindings_dbg.h</string>
+		<string>libs/jsbindings/src/manual/js_bindings_dbg.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_NS_manual.h</string>
 		<string>libs/jsbindings/src/manual/js_bindings_NS_manual.mm</string>
 		<string>libs/jsbindings/src/manual/js_bindings_system_registration.h</string>
