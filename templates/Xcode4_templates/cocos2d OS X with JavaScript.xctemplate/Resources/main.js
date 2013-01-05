@@ -9,7 +9,7 @@
 //
 
 // Loads cocos2d, chipmunk constants and helper functions
-require("jsb_constants.js");
+require("jsb.js");
 
 director = cc.Director.getInstance();
 winSize = director.getWinSize();
