@@ -5,6 +5,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [NEW] GLProgram: Added uniformLocationForName: method
 . [NEW] NodeRGBA: New node that implements opacity and color. Sprite, Label, Menu and other are subclasses of this one.
 		It also supports cascading color and opacity (disabled by default in v2.1)
+. [NEW] OpenGL: CC_ENABLE_GL_STATE_CACHE is enabled by default. If you are migrating from v1.x, then turn it off to easy the transition
 . [FIX] Actions, Menu, Node, Sprite, Particles, Parallax, Texture: All ivars use _ as prefix, not suffix
 . [FIX] Configuration: Can be initialized before an OpenGL context is created (issue #1450)
 . [FIX] Director: replaced length with lenght
