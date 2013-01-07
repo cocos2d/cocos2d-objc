@@ -47,6 +47,7 @@
 #import "CCShaderCache.h"
 #import "ccFPSImages.h"
 #import "CCDrawingPrimitives.h"
+#import "CCConfiguration.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -134,11 +135,7 @@ static CCDirector *_sharedDirector = nil;
 
 - (id) init
 {
-	CCLOG(@"cocos2d: %@", cocos2dVersion() );
-
 	if( (self=[super init] ) ) {
-
-		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
 
 		// scenes
 		runningScene_ = nil;
@@ -329,6 +326,9 @@ static CCDirector *_sharedDirector = nil;
 		// it could be nil
 		if( view )
 			[self setGLDefaultValues];
+
+		// Dump info once OpenGL was initilized
+		[[CCConfiguration sharedConfiguration] dumpInfo];
 
 		CHECK_GL_ERROR_DEBUG();
 	}
