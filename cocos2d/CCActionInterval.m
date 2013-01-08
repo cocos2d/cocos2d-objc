@@ -213,6 +213,7 @@
 
 -(void) update: (ccTime) t
 {
+
 	int found = 0;
 	ccTime new_t = 0.0f;
 	
@@ -247,6 +248,12 @@
 			[_actions[0] update: 1.0f];
 			[_actions[0] stop];
 		}
+	}
+	else if(found==0 && _last==1 )
+	{
+		// Reverse mode ?
+		[_actions[1] update:0];
+		[_actions[1] stop];
 	}
 	
 	// Last action found and it is done.
