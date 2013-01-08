@@ -125,7 +125,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	CCDirector *director = [CCDirector sharedDirector];
 
 	// Before replacing, save the "send cleanup to scene"
-	sendCleanupToScene_ = [director sendCleanupToScene];
+	_sendCleanupToScene = [director sendCleanupToScene];
 
 	[director replaceScene: inScene_];
 
@@ -186,7 +186,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 {
 	[super cleanup];
 
-	if( sendCleanupToScene_ )
+	if( _sendCleanupToScene )
 	   [outScene_ cleanup];
 }
 

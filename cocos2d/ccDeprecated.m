@@ -110,7 +110,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 -(CCGLView*) openGLView
 {
-	return (CCGLView*)view_;
+	return (CCGLView*)__view;
 }
 @end
 
