@@ -23,6 +23,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
 . [3RD] JRSwizzle: is a submodule
 . [3RD] JS Bindings: Updated to v0.5
+. [3RD] SpiderMonkey: Updated to v18.0
 
 version 2.1-beta4  4-Dec-2012
 . [NEW] FileUtils: Supports iPhone5 resources (-wide, -widehd)

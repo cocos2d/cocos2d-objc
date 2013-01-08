@@ -443,6 +443,20 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/SpiderMonkey/ios/include/jsprototypes.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>SpiderMonkey</string>
+				<string>ios</string>
+				<string>include</string>
+			</array>
+			<key>Path</key>
+			<string>libs/SpiderMonkey/ios/include/jsprototypes.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/SpiderMonkey/ios/include/jsproxy.h</key>
 		<dict>
 			<key>Group</key>
@@ -969,6 +983,7 @@
 		<string>libs/SpiderMonkey/ios/include/jsperf.h</string>
 		<string>libs/SpiderMonkey/ios/include/jsprf.h</string>
 		<string>libs/SpiderMonkey/ios/include/jsproto.tbl</string>
+		<string>libs/SpiderMonkey/ios/include/jsprototypes.h</string>
 		<string>libs/SpiderMonkey/ios/include/jsproxy.h</string>
 		<string>libs/SpiderMonkey/ios/include/jsprvtd.h</string>
 		<string>libs/SpiderMonkey/ios/include/jspubtd.h</string>
