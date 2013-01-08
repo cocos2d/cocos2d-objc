@@ -49,8 +49,8 @@ Example:
 */
 @interface CCActionInterval: CCFiniteTimeAction <NSCopying>
 {
-	ccTime	elapsed_;
-	BOOL	firstTick_;
+	ccTime	_elapsed;
+	BOOL	_firstTick;
 }
 
 /** how many seconds had elapsed since the actions started to run. */
@@ -70,9 +70,9 @@ Example:
  */
 @interface CCSequence : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *actions_[2];
-	ccTime split_;
-	int last_;
+	CCFiniteTimeAction *_actions[2];
+	ccTime _split;
+	int _last;
 }
 /** helper constructor to create an array of sequence-able actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
@@ -92,10 +92,10 @@ Example:
  */
 @interface CCRepeat : CCActionInterval <NSCopying>
 {
-	NSUInteger times_;
-	NSUInteger total_;
-	ccTime nextDt_;
-	BOOL isActionInstant_;
+	NSUInteger _times;
+	NSUInteger _total;
+	ccTime _nextDt;
+	BOOL _isActionInstant;
 	CCFiniteTimeAction *_innerAction;
 }
 
@@ -211,12 +211,12 @@ Example:
 {
 	float _skewX;
 	float _skewY;
-	float startSkewX_;
-	float startSkewY_;
-	float endSkewX_;
-	float endSkewY_;
-	float deltaX_;
-	float deltaY_;
+	float _startSkewX;
+	float _startSkewY;
+	float _endSkewX;
+	float _endSkewY;
+	float _deltaX;
+	float _deltaY;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
@@ -304,12 +304,12 @@ typedef struct _ccBezierConfig {
 {
 	float _scaleX;
 	float _scaleY;
-	float startScaleX_;
-	float startScaleY_;
-	float endScaleX_;
-	float endScaleY_;
-	float deltaX_;
-	float deltaY_;
+	float _startScaleX;
+	float _startScaleY;
+	float _endScaleX;
+	float _endScaleY;
+	float _deltaX;
+	float _deltaY;
 }
 /** creates the action with the same scale factor for X and Y */
 +(id) actionWithDuration: (ccTime)duration scale:(float) s;
@@ -334,8 +334,8 @@ typedef struct _ccBezierConfig {
 */
 @interface CCBlink : CCActionInterval <NSCopying>
 {
-	NSUInteger times_;
-	BOOL originalState_;
+	NSUInteger _times;
+	BOOL _originalState;
 }
 /** creates the action */
 +(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
@@ -368,8 +368,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCFadeTo : CCActionInterval <NSCopying>
 {
-	GLubyte toOpacity_;
-	GLubyte fromOpacity_;
+	GLubyte _toOpacity;
+	GLubyte _fromOpacity;
 }
 /** creates an action with duration and opacity */
 +(id) actionWithDuration:(ccTime)duration opacity:(GLubyte)opactiy;
@@ -383,8 +383,8 @@ typedef struct _ccBezierConfig {
 */
 @interface CCTintTo : CCActionInterval <NSCopying>
 {
-	ccColor3B to_;
-	ccColor3B from_;
+	ccColor3B _to;
+	ccColor3B _from;
 }
 /** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
@@ -397,8 +397,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCTintBy : CCActionInterval <NSCopying>
 {
-	GLshort deltaR_, deltaG_, deltaB_;
-	GLshort fromR_, fromG_, fromB_;
+	GLshort _deltaR, _deltaG, _deltaB;
+	GLshort _fromR, _fromG, _fromB;
 }
 /** creates an action with duration and color */
 +(id) actionWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
@@ -424,7 +424,7 @@ typedef struct _ccBezierConfig {
 */
 @interface CCReverseTime : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction * other_;
+	CCFiniteTimeAction * _other;
 }
 /** creates the action */
 +(id) actionWithAction: (CCFiniteTimeAction*) action;
@@ -438,11 +438,11 @@ typedef struct _ccBezierConfig {
 /** Animates a sprite given the name of an Animation */
 @interface CCAnimate : CCActionInterval <NSCopying>
 {
-	NSMutableArray		*splitTimes_;
-	NSInteger			nextFrame_;
-	CCAnimation			*animation_;
-	id					origFrame_;
-	NSUInteger			executedLoops_;
+	NSMutableArray		*_splitTimes;
+	NSInteger			_nextFrame;
+	CCAnimation			*_animation;
+	id					_origFrame;
+	NSUInteger			_executedLoops;
 }
 /** animation used for the image */
 @property (readwrite,nonatomic,retain) CCAnimation * animation;
@@ -458,8 +458,8 @@ typedef struct _ccBezierConfig {
  */
 @interface CCTargetedAction : CCActionInterval <NSCopying>
 {
-	id forcedTarget_;
-	CCFiniteTimeAction* action_;
+	id _forcedTarget;
+	CCFiniteTimeAction* _action;
 }
 /** This is the target that the action will be forced to run with */
 @property(readwrite,nonatomic,retain) id forcedTarget;
