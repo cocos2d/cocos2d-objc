@@ -66,7 +66,7 @@ typedef enum {
 	CCScene	*outScene_;
 	ccTime	_duration;
 	BOOL	inSceneOnTop_;
-	BOOL	sendCleanupToScene_;
+	BOOL	_sendCleanupToScene;
 }
 /** creates a base transition with duration and incoming scene */
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s;
