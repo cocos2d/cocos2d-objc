@@ -91,10 +91,10 @@
  */
 @interface CCGrid3D : CCGridBase
 {
-	GLvoid		*texCoordinates;
-	GLvoid		*vertices;
-	GLvoid		*originalVertices;
-	GLushort	*indices;
+	GLvoid		*_texCoordinates;
+	GLvoid		*_vertices;
+	GLvoid		*_originalVertices;
+	GLushort	*_indices;
 }
 
 /** returns the vertex at a given position */
@@ -114,10 +114,10 @@
 */
 @interface CCTiledGrid3D : CCGridBase
 {
-	GLvoid		*texCoordinates;
-	GLvoid		*vertices;
-	GLvoid		*originalVertices;
-	GLushort	*indices;
+	GLvoid		*_texCoordinates;
+	GLvoid		*_vertices;
+	GLvoid		*_originalVertices;
+	GLushort	*_indices;
 }
 
 /** returns the tile at the given position */

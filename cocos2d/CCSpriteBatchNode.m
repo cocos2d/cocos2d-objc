@@ -57,9 +57,9 @@ const NSUInteger defaultCapacity = 29;
 
 @implementation CCSpriteBatchNode
 
-@synthesize textureAtlas = textureAtlas_;
-@synthesize blendFunc = blendFunc_;
-@synthesize descendants = descendants_;
+@synthesize textureAtlas = _textureAtlas;
+@synthesize blendFunc = _blendFunc;
+@synthesize descendants = _descendants;
 
 
 /*
@@ -104,15 +104,15 @@ const NSUInteger defaultCapacity = 29;
 {
 	if( (self=[super init])) {
 
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
-		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
+		_blendFunc.src = CC_BLEND_SRC;
+		_blendFunc.dst = CC_BLEND_DST;
+		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		[self updateBlendFunc];
 
 		// no lazy alloc in this node
 		_children = [[CCArray alloc] initWithCapacity:capacity];
-		descendants_ = [[CCArray alloc] initWithCapacity:capacity];
+		_descendants = [[CCArray alloc] initWithCapacity:capacity];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -128,8 +128,8 @@ const NSUInteger defaultCapacity = 29;
 
 -(void)dealloc
 {
-	[textureAtlas_ release];
-	[descendants_ release];
+	[_textureAtlas release];
+	[_descendants release];
 
 	[super dealloc];
 }
@@ -180,7 +180,7 @@ const NSUInteger defaultCapacity = 29;
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
-	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCSprite is not using the same texture id");
+	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
 
 	[super addChild:child z:z tag:aTag];
 
@@ -224,12 +224,12 @@ const NSUInteger defaultCapacity = 29;
 {
 	// Invalidate atlas index. issue #569
 	// useSelfRender should be performed on all descendants. issue #1216
-	[descendants_ makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
+	[_descendants makeObjectsPerformSelector:@selector(setBatchNode:) withObject:nil];
 
 	[super removeAllChildrenWithCleanup:doCleanup];
 
-	[descendants_ removeAllObjects];
-	[textureAtlas_ removeAllQuads];
+	[_descendants removeAllObjects];
+	[_textureAtlas removeAllQuads];
 }
 
 //override sortAllChildren
@@ -340,8 +340,8 @@ const NSUInteger defaultCapacity = 29;
 
 - (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
-	id* x = descendants_->data->arr;
-	ccV3F_C4B_T2F_Quad* quads = textureAtlas_.quads;
+	id* x = _descendants->data->arr;
+	ccV3F_C4B_T2F_Quad* quads = _textureAtlas.quads;
 
 	id tempItem = x[oldIndex];
 	ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
@@ -366,16 +366,16 @@ const NSUInteger defaultCapacity = 29;
 	CC_PROFILER_START(@"CCSpriteBatchNode - draw");
 
 	// Optimization: Fast Dispatch
-	if( textureAtlas_.totalQuads == 0 )
+	if( _textureAtlas.totalQuads == 0 )
 		return;
 
 	CC_NODE_DRAW_SETUP();
 
 	[_children makeObjectsPerformSelector:@selector(updateTransform)];
 
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-	[textureAtlas_ drawQuads];
+	[_textureAtlas drawQuads];
 
 	CC_PROFILER_STOP(@"CCSpriteBatchNode - draw");
 }
@@ -386,14 +386,14 @@ const NSUInteger defaultCapacity = 29;
 	// if we're going beyond the current CCTextureAtlas's capacity,
 	// all the previously initialized sprites will need to redo their texture coords
 	// this is likely computationally expensive
-	NSUInteger quantity = (textureAtlas_.capacity + 1) * 4 / 3;
+	NSUInteger quantity = (_textureAtlas.capacity + 1) * 4 / 3;
 
 	CCLOG(@"cocos2d: CCSpriteBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
-		  (long)textureAtlas_.capacity,
+		  (long)_textureAtlas.capacity,
 		  (long)quantity);
 
 
-	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
+	if( ! [_textureAtlas resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOGWARN(@"cocos2d: WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: CCSpriteBatchNode#increaseAtlasCapacity SHALL handle this assert");
@@ -500,13 +500,13 @@ const NSUInteger defaultCapacity = 29;
 	[sprite setAtlasIndex:index];
 	[sprite setDirty: YES];
 
-	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
+	if(_textureAtlas.totalQuads == _textureAtlas.capacity)
 		[self increaseAtlasCapacity];
 
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[textureAtlas_ insertQuad:&quad atIndex:index];
+	[_textureAtlas insertQuad:&quad atIndex:index];
 
-	ccArray *descendantsData = descendants_->data;
+	ccArray *descendantsData = _descendants->data;
 
 	ccArrayInsertObjectAtIndex(descendantsData, sprite, index);
 
@@ -532,10 +532,10 @@ const NSUInteger defaultCapacity = 29;
 	[sprite setBatchNode:self];
 	[sprite setDirty: YES];
 
-	if(textureAtlas_.totalQuads == textureAtlas_.capacity)
+	if(_textureAtlas.totalQuads == _textureAtlas.capacity)
 		[self increaseAtlasCapacity];
 
-	ccArray *descendantsData = descendants_->data;
+	ccArray *descendantsData = _descendants->data;
 
 	ccArrayAppendObjectWithResize(descendantsData, sprite);
 
@@ -544,7 +544,7 @@ const NSUInteger defaultCapacity = 29;
 	sprite.atlasIndex=index;
 
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[textureAtlas_ insertQuad:&quad atIndex:index];
+	[_textureAtlas insertQuad:&quad atIndex:index];
 
 	// add children recursively
 	CCSprite* child;
@@ -557,12 +557,12 @@ const NSUInteger defaultCapacity = 29;
 -(void) removeSpriteFromAtlas:(CCSprite*)sprite
 {
 	// remove from TextureAtlas
-	[textureAtlas_ removeQuadAtIndex:sprite.atlasIndex];
+	[_textureAtlas removeQuadAtIndex:sprite.atlasIndex];
 
 	// Cleanup sprite. It might be reused (issue #569)
 	[sprite setBatchNode:nil];
 
-	ccArray *descendantsData = descendants_->data;
+	ccArray *descendantsData = _descendants->data;
 	NSUInteger index = ccArrayGetIndexOfObject(descendantsData, sprite);
 	if( index != NSNotFound ) {
 		ccArrayRemoveObjectAtIndex(descendantsData, index);
@@ -587,21 +587,21 @@ const NSUInteger defaultCapacity = 29;
 
 -(void) updateBlendFunc
 {
-	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
+		_blendFunc.src = GL_SRC_ALPHA;
+		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
 }
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	textureAtlas_.texture = texture;
+	_textureAtlas.texture = texture;
 	[self updateBlendFunc];
 }
 
 -(CCTexture2D*) texture
 {
-	return textureAtlas_.texture;
+	return _textureAtlas.texture;
 }
 @end
 
@@ -616,7 +616,7 @@ const NSUInteger defaultCapacity = 29;
 	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	
 	// make needed room
-	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
+	while(index >= _textureAtlas.capacity || _textureAtlas.capacity == _textureAtlas.totalQuads )
 		[self increaseAtlasCapacity];
 	
 	//
@@ -627,7 +627,7 @@ const NSUInteger defaultCapacity = 29;
 	[sprite setAtlasIndex:index];
 	
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
-	[textureAtlas_ insertQuad:&quad atIndex:index];
+	[_textureAtlas insertQuad:&quad atIndex:index];
 	
 	// XXX: updateTransform will update the textureAtlas too, using updateQuad.
 	// XXX: so, it should be AFTER the insertQuad
@@ -641,7 +641,7 @@ const NSUInteger defaultCapacity = 29;
 	NSAssert( [sprite isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 
 	// make needed room
-	while(index >= textureAtlas_.capacity || textureAtlas_.capacity == textureAtlas_.totalQuads )
+	while(index >= _textureAtlas.capacity || _textureAtlas.capacity == _textureAtlas.totalQuads )
 		[self increaseAtlasCapacity];
 
 	//
@@ -667,12 +667,12 @@ const NSUInteger defaultCapacity = 29;
 	
 	// XXX: optimize with a binary search
 	int i=0;
-	for( CCSprite *c in descendants_ ) {
+	for( CCSprite *c in _descendants ) {
 		if( c.atlasIndex >= z )
 			break;
 		i++;
 	}
-	[descendants_ insertObject:child atIndex:i];
+	[_descendants insertObject:child atIndex:i];
 	
 	
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array

@@ -88,15 +88,15 @@ struct _hashUniformEntry;
  */
 @interface CCGLProgram : NSObject
 {
-	struct _hashUniformEntry	*hashForUniforms_;
+	struct _hashUniformEntry	*_hashForUniforms;
 
 @public
-	GLuint          program_,
-					vertShader_,
-					fragShader_;
+	GLuint          _program,
+					_vertShader,
+					_fragShader;
 
-	GLint			uniforms_[kCCUniform_MAX];
-	BOOL usesTime_;
+	GLint			_uniforms[kCCUniform_MAX];
+	BOOL _usesTime;
 }
 
 @property(nonatomic, readonly) GLuint program;

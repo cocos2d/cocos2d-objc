@@ -40,7 +40,7 @@
 -(id) initWithDuration:(ccTime) t scene:(CCScene*)s backwards:(BOOL) back
 {
 	// XXX: needed before [super init]
-	back_ = back;
+	_back = back;
 
 	if( ( self = [super initWithDuration:t scene:s] ) )
 	{
@@ -51,7 +51,7 @@
 
 -(void) sceneOrder
 {
-	inSceneOnTop_ = back_;
+	_inSceneOnTop = _back;
 }
 
 //
@@ -74,9 +74,9 @@
 
 	id action  = [self actionWithSize:CGSizeMake(x,y)];
 
-	if(! back_ )
+	if(! _back )
 	{
-		[outScene_ runAction: [CCSequence actions:
+		[_outScene runAction: [CCSequence actions:
 							  action,
 							  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 							  [CCStopGrid action],
@@ -86,8 +86,8 @@
 	else
 	{
 		// to prevent initial flicker
-		inScene_.visible = NO;
-		[inScene_ runAction: [CCSequence actions:
+		_inScene.visible = NO;
+		[_inScene runAction: [CCSequence actions:
 							 [CCShow action],
 							 action,
 							 [CCCallFunc actionWithTarget:self selector:@selector(finish)],
@@ -100,7 +100,7 @@
 
 -(CCActionInterval*) actionWithSize: (CGSize) v
 {
-	if( back_ )
+	if( _back )
 	{
 		// Get hold of the PageTurn3DAction
 		return [CCReverseTime actionWithAction:

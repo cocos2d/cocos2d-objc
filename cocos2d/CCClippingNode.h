@@ -32,9 +32,9 @@
  */
 @interface CCClippingNode : CCNode
 {
-    CCNode *stencil_;
-    GLfloat alphaThreshold_;
-    BOOL inverted_;
+    CCNode *_stencil;
+    GLfloat _alphaThreshold;
+    BOOL _inverted;
 }
 
 /** The CCNode to use as a stencil to do the clipping.

@@ -45,7 +45,7 @@ typedef enum {
 @interface CCProgressTimer : CCNodeRGBA {
 	CCProgressTimerType	type_;
 	float				percentage_;
-	CCSprite			*sprite_;
+	CCSprite			*_sprite;
 
 	int					vertexDataCount_;
 	ccV2F_C4B_T2F		*vertexData_;

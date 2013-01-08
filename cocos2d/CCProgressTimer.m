@@ -54,7 +54,7 @@ const char kCCProgressTextureCoords = 0x4b;
 
 @implementation CCProgressTimer
 @synthesize percentage = percentage_;
-@synthesize sprite = sprite_;
+@synthesize sprite = _sprite;
 @synthesize type = type_;
 @synthesize reverseDirection = reverseDirection_;
 @synthesize midpoint = midpoint_;
@@ -97,7 +97,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	if(vertexData_){
 		free(vertexData_);
 	}
-	[sprite_ release];
+	[_sprite release];
 	[super dealloc];
 }
 
@@ -111,10 +111,10 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)setSprite:(CCSprite *)newSprite
 {
-	if(sprite_ != newSprite){
-		[sprite_ release];
-		sprite_ = [newSprite retain];
-		self.contentSize = sprite_.contentSize;
+	if(_sprite != newSprite){
+		[_sprite release];
+		_sprite = [newSprite retain];
+		self.contentSize = _sprite.contentSize;
     
 		//	Everytime we set a new sprite, we free the current vertex data
 		if(vertexData_){
@@ -155,24 +155,24 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)setColor:(ccColor3B)c
 {
-	sprite_.color = c;
+	_sprite.color = c;
 	[self updateColor];
 }
 
 -(ccColor3B)color
 {
-	return sprite_.color;
+	return _sprite.color;
 }
 
 -(void)setOpacity:(GLubyte)o
 {
-	sprite_.opacity = o;
+	_sprite.opacity = o;
 	[self updateColor];
 }
 
 -(GLubyte)opacity
 {
-	return sprite_.opacity;
+	return _sprite.opacity;
 }
 
 #pragma mark ProgressTimer Internal
@@ -182,14 +182,14 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 -(ccTex2F)textureCoordFromAlphaPoint:(CGPoint) alpha
 {
-	if (!sprite_) {
+	if (!_sprite) {
 		return (ccTex2F){0,0};
 	}
-	ccV3F_C4B_T2F_Quad quad = sprite_.quad;
+	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
 	CGPoint min = (CGPoint){quad.bl.texCoords.u,quad.bl.texCoords.v};
 	CGPoint max = (CGPoint){quad.tr.texCoords.u,quad.tr.texCoords.v};
   //  Fix bug #1303 so that progress timer handles sprite frame texture rotation
-  if (sprite_.textureRectRotated) {
+  if (_sprite.textureRectRotated) {
     CC_SWAP(alpha.x, alpha.y);
   }
 	return (ccTex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
@@ -197,10 +197,10 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(ccVertex2F)vertexFromAlphaPoint:(CGPoint) alpha
 {
-	if (!sprite_) {
+	if (!_sprite) {
 		return (ccVertex2F){0.f, 0.f};
 	}
-	ccV3F_C4B_T2F_Quad quad = sprite_.quad;
+	ccV3F_C4B_T2F_Quad quad = _sprite.quad;
 	CGPoint min = (CGPoint){quad.bl.vertices.x,quad.bl.vertices.y};
 	CGPoint max = (CGPoint){quad.tr.vertices.x,quad.tr.vertices.y};
 	return (ccVertex2F){min.x * (1.f - alpha.x) + max.x * alpha.x, min.y * (1.f - alpha.y) + max.y * alpha.y};
@@ -208,11 +208,11 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void)updateColor
 {
-	if (!sprite_) {
+	if (!_sprite) {
 		return;
 	}
 	if(vertexData_){
-		ccColor4B sc = sprite_.quad.tl.colors;
+		ccColor4B sc = _sprite.quad.tl.colors;
 		for (int i=0; i < vertexDataCount_; ++i) {
 			vertexData_[i].colors = sc;
 		}
@@ -259,7 +259,7 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 -(void)updateRadial
 {
-	if (!sprite_) {
+	if (!_sprite) {
 		return;
 	}
   
@@ -394,7 +394,7 @@ const char kCCProgressTextureCoords = 0x4b;
 ///
 -(void)updateBar
 {
-	if (!sprite_) {
+	if (!_sprite) {
 		return;
 	}
 	float alpha = percentage_ / 100.f;
@@ -499,16 +499,16 @@ const char kCCProgressTextureCoords = 0x4b;
 
 -(void) draw
 {
-	if( ! vertexData_ || ! sprite_)
+	if( ! vertexData_ || ! _sprite)
 		return;
   
 	CC_NODE_DRAW_SETUP();
   
-	ccGLBlendFunc( sprite_.blendFunc.src, sprite_.blendFunc.dst );
+	ccGLBlendFunc( _sprite.blendFunc.src, _sprite.blendFunc.dst );
   
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
   
-	ccGLBindTexture2D( sprite_.texture.name );
+	ccGLBindTexture2D( _sprite.texture.name );
   
   glVertexAttribPointer( kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]) , &vertexData_[0].vertices);
   glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(vertexData_[0]), &vertexData_[0].texCoords);

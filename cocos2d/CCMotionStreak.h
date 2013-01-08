@@ -34,9 +34,9 @@
  */
 @interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol>
 {
-    CCTexture2D *texture_;
+    CCTexture2D *_texture;
     CGPoint positionR_;
-    ccBlendFunc blendFunc_;
+    ccBlendFunc _blendFunc;
     float stroke_;
     float fadeDelta_;
     float minSeg_;

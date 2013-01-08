@@ -62,7 +62,7 @@
         }
 		
 		depthFormat_ = depthFormat;
-		pixelFormat_ = pixelFormat;
+		_pixelFormat = pixelFormat;
 		multiSampling_ = multiSampling;
 
         // Create default framebuffer object. The backing will be allocated for the current layer in -resizeFromLayer
@@ -125,7 +125,7 @@
 		
 		glBindRenderbuffer(GL_RENDERBUFFER, msaaColorbuffer_);
 		
-		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, pixelFormat_ , backingWidth_, backingHeight_);
+		glRenderbufferStorageMultisampleAPPLE(GL_RENDERBUFFER, samplesToUse_, _pixelFormat , backingWidth_, backingHeight_);
 		
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_RENDERBUFFER, msaaColorbuffer_);
 		

@@ -46,7 +46,7 @@
 	BOOL			multiSampling_;
 
 	unsigned int	depthFormat_;
-	unsigned int	pixelFormat_;
+	unsigned int	_pixelFormat;
 
 	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
     GLuint defaultFramebuffer_;

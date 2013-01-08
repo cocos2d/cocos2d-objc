@@ -63,8 +63,8 @@
 
 @implementation CCParticleBatchNode
 
-@synthesize textureAtlas = textureAtlas_;
-@synthesize blendFunc = blendFunc_;
+@synthesize textureAtlas = _textureAtlas;
+@synthesize blendFunc = _blendFunc;
 
 /*
  * creation with CCTexture2D
@@ -99,13 +99,13 @@
 {
 	if (self = [super init])
 	{
-		textureAtlas_ = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
+		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		// no lazy alloc in this node
 		_children = [[CCArray alloc] initWithCapacity:capacity];
 
-		blendFunc_.src = CC_BLEND_SRC;
-		blendFunc_.dst = CC_BLEND_DST;
+		_blendFunc.src = CC_BLEND_SRC;
+		_blendFunc.dst = CC_BLEND_DST;
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -129,7 +129,7 @@
 
 -(void)dealloc
 {
-	[textureAtlas_ release];
+	[_textureAtlas release];
 	[super dealloc];
 }
 
@@ -171,13 +171,13 @@
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCParticleSystem class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
-	NSAssert( child.texture.name == textureAtlas_.texture.name, @"CCParticleSystem is not using the same texture id");
+	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCParticleSystem is not using the same texture id");
 
 	// If this is the 1st children, then copy blending function
 	if( [_children count] == 0 )
-		blendFunc_ = [child blendFunc];
+		_blendFunc = [child blendFunc];
 
-	NSAssert( blendFunc_.src  == child.blendFunc.src && blendFunc_.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
+	NSAssert( _blendFunc.src  == child.blendFunc.src && _blendFunc.dst  == child.blendFunc.dst, @"Can't add a PaticleSystem that uses a differnt blending function");
 
 	//no lazy sorting, so don't call super addChild, call helper instead
 	NSUInteger pos = [self addChildHelper:child z:z tag:aTag];
@@ -266,7 +266,7 @@
 			}
 
 			// reorder textureAtlas quads
-			[textureAtlas_ moveQuadsFromIndex:oldAtlasIndex  amount:child.totalParticles atIndex:newAtlasIndex];
+			[_textureAtlas moveQuadsFromIndex:oldAtlasIndex  amount:child.totalParticles atIndex:newAtlasIndex];
 
 			[child updateWithNoTime];
 		}
@@ -341,10 +341,10 @@
 	[super removeChild:child cleanup:doCleanup];
 
 	// remove child helper
-	[textureAtlas_ removeQuadsAtIndex:child.atlasIndex amount:child.totalParticles];
+	[_textureAtlas removeQuadsAtIndex:child.atlasIndex amount:child.totalParticles];
 
 	// after memmove of data, empty the quads at the end of array
-	[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.totalQuads amount:child.totalParticles];
+	[_textureAtlas fillWithEmptyQuadsFromIndex:_textureAtlas.totalQuads amount:child.totalParticles];
 
 	// paticle could be reused for self rendering
 	[child setBatchNode:nil];
@@ -363,7 +363,7 @@
 
 	[super removeAllChildrenWithCleanup:doCleanup];
 
-	[textureAtlas_ removeAllQuads];
+	[_textureAtlas removeAllQuads];
 }
 
 #pragma mark CCParticleBatchNode - Node overrides
@@ -371,14 +371,14 @@
 {
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 
-	if( textureAtlas_.totalQuads == 0 )
+	if( _textureAtlas.totalQuads == 0 )
 		return;
 
 	CC_NODE_DRAW_SETUP();
 
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-	[textureAtlas_ drawQuads];
+	[_textureAtlas drawQuads];
 
 	CC_PROFILER_STOP(@"CCParticleBatchNode - draw");
 }
@@ -388,10 +388,10 @@
 -(void) increaseAtlasCapacityTo:(NSUInteger) quantity
 {
 	CCLOG(@"cocos2d: CCParticleBatchNode: resizing TextureAtlas capacity from [%lu] to [%lu].",
-		  (long)textureAtlas_.capacity,
+		  (long)_textureAtlas.capacity,
 		  (long)quantity);
 
-	if( ! [textureAtlas_ resizeCapacity:quantity] ) {
+	if( ! [_textureAtlas resizeCapacity:quantity] ) {
 		// serious problems
 		CCLOGWARN(@"cocos2d: WARNING: Not enough memory to resize the atlas");
 		NSAssert(NO,@"XXX: CCParticleBatchNode #increaseAtlasCapacity SHALL handle this assert");
@@ -401,7 +401,7 @@
 //sets a 0'd quad into the quads array
 -(void) disableParticle:(NSUInteger)particleIndex
 {
-	ccV3F_C4B_T2F_Quad* quad = &((textureAtlas_.quads)[particleIndex]);
+	ccV3F_C4B_T2F_Quad* quad = &((_textureAtlas.quads)[particleIndex]);
 	quad->br.vertices.x = quad->br.vertices.y = quad->tr.vertices.x = quad->tr.vertices.y = quad->tl.vertices.x = quad->tl.vertices.y = quad->bl.vertices.x = quad->bl.vertices.y = 0.0f;
 }
 
@@ -412,20 +412,20 @@
 {
 	pSystem.atlasIndex = index;
 
-	if(textureAtlas_.totalQuads + pSystem.totalParticles > textureAtlas_.capacity)
+	if(_textureAtlas.totalQuads + pSystem.totalParticles > _textureAtlas.capacity)
 	{
-		[self increaseAtlasCapacityTo:textureAtlas_.totalQuads + pSystem.totalParticles];
+		[self increaseAtlasCapacityTo:_textureAtlas.totalQuads + pSystem.totalParticles];
 
 		// after a realloc empty quads of textureAtlas can be filled with gibberish (realloc doesn't perform calloc), insert empty quads to prevent it
-		[textureAtlas_ fillWithEmptyQuadsFromIndex:textureAtlas_.capacity - pSystem.totalParticles amount:pSystem.totalParticles];
+		[_textureAtlas fillWithEmptyQuadsFromIndex:_textureAtlas.capacity - pSystem.totalParticles amount:pSystem.totalParticles];
 	}
 
 	// make room for quads, not necessary for last child
-	if (pSystem.atlasIndex + pSystem.totalParticles != textureAtlas_.totalQuads)
-		[textureAtlas_ moveQuadsFromIndex:index to:index+pSystem.totalParticles];
+	if (pSystem.atlasIndex + pSystem.totalParticles != _textureAtlas.totalQuads)
+		[_textureAtlas moveQuadsFromIndex:index to:index+pSystem.totalParticles];
 
 	// increase totalParticles here for new particles, update method of particlesystem will fill the quads
-	[textureAtlas_ increaseTotalQuadsWith:pSystem.totalParticles];
+	[_textureAtlas increaseTotalQuadsWith:pSystem.totalParticles];
 
 	[self updateAllAtlasIndexes];
 }
@@ -447,27 +447,27 @@
 
 -(void) updateBlendFunc
 {
-	if( ! [textureAtlas_.texture hasPremultipliedAlpha] ) {
-		blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+	if( ! [_textureAtlas.texture hasPremultipliedAlpha] ) {
+		_blendFunc.src = GL_SRC_ALPHA;
+		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
 }
 
 -(void) setTexture:(CCTexture2D*)texture
 {
-	textureAtlas_.texture = texture;
+	_textureAtlas.texture = texture;
 
 	// If the new texture has No premultiplied alpha, AND the blendFunc hasn't been changed, then update it
-	if( texture && ! [texture hasPremultipliedAlpha] && ( blendFunc_.src == CC_BLEND_SRC && blendFunc_.dst == CC_BLEND_DST ) )
+	if( texture && ! [texture hasPremultipliedAlpha] && ( _blendFunc.src == CC_BLEND_SRC && _blendFunc.dst == CC_BLEND_DST ) )
 	{
-			blendFunc_.src = GL_SRC_ALPHA;
-			blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+			_blendFunc.src = GL_SRC_ALPHA;
+			_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 	}
 }
 
 -(CCTexture2D*) texture
 {
-	return textureAtlas_.texture;
+	return _textureAtlas.texture;
 }
 
 @end
