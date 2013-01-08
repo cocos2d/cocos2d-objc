@@ -619,13 +619,13 @@ Class restartAction()
 
 -(void) altertime:(ccTime)dt
 {
-	id action1 = [grossini getActionByTag:kTagAction1];
-	id action2 = [tamara getActionByTag:kTagAction1];
-	id action3 = [kathia getActionByTag:kTagAction1];
+	CCSpeed *action1 = (CCSpeed*)[grossini getActionByTag:kTagAction1];
+	CCSpeed *action2 = (CCSpeed*)[tamara getActionByTag:kTagAction1];
+	CCSpeed *action3 = (CCSpeed*)[kathia getActionByTag:kTagAction1];
 
-	[action1 setSpeed: CCRANDOM_0_1() * 2];
-	[action2 setSpeed: CCRANDOM_0_1() * 2];
-	[action3 setSpeed: CCRANDOM_0_1() * 2];
+	[action1 setSpeed: CCRANDOM_MINUS1_1() * 2];
+	[action2 setSpeed: CCRANDOM_MINUS1_1() * 2];
+	[action3 setSpeed: CCRANDOM_MINUS1_1() * 2];
 
 }
 
