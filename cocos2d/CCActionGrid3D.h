@@ -29,9 +29,9 @@
 /** CCWaves3D action */
 @interface CCWaves3D : CCGrid3DAction
 {
-	NSUInteger waves;
-	float amplitude;
-	float amplitudeRate;
+	NSUInteger _waves;
+	float _amplitude;
+	float _amplitudeRate;
 }
 
 /** amplitude of the wave */
@@ -76,9 +76,9 @@
 @interface CCLens3D : CCGrid3DAction
 {
 	CGPoint	_position;
-	float	radius_;
-	float	lensEffect_;
-	BOOL	dirty_;
+	float	_radius;
+	float	_lensEffect;
+	BOOL	_dirty;
 }
 
 /** lens effect. Defaults to 0.7 - 0 means no effect, 1 is very strong effect */
@@ -99,10 +99,10 @@
 @interface CCRipple3D : CCGrid3DAction
 {
 	CGPoint	_position;
-	float	radius_;
-	NSUInteger		waves_;
-	float	amplitude_;
-	float	amplitudeRate_;
+	float	_radius;
+	NSUInteger		_waves;
+	float	_amplitude;
+	float	_amplitudeRate;
 }
 
 /** center position in Points */
@@ -140,9 +140,9 @@
 /** CCLiquid action */
 @interface CCLiquid : CCGrid3DAction
 {
-	NSUInteger waves;
-	float amplitude;
-	float amplitudeRate;
+	NSUInteger _waves;
+	float _amplitude;
+	float _amplitudeRate;
 
 }
 
@@ -163,11 +163,11 @@
 /** CCWaves action */
 @interface CCWaves : CCGrid3DAction
 {
-	NSUInteger	waves;
-	float	amplitude;
-	float	amplitudeRate;
-	BOOL	vertical;
-	BOOL	horizontal;
+	NSUInteger	_waves;
+	float	_amplitude;
+	float	_amplitudeRate;
+	BOOL	_vertical;
+	BOOL	_horizontal;
 }
 
 /** amplitude */
@@ -188,9 +188,9 @@
 @interface CCTwirl : CCGrid3DAction
 {
 	CGPoint	_position;
-	NSUInteger	twirls_;
-	float	amplitude_;
-	float	amplitudeRate_;
+	NSUInteger	_twirls;
+	float	_amplitude;
+	float	_amplitudeRate;
 }
 
 /** twirl center */

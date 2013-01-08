@@ -181,7 +181,7 @@
 
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"sprite_frame_01".
+ For example, a valid key is: @"_spriteframe_01".
  If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */
@@ -229,7 +229,7 @@
 
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"sprite_frame_01".
+ For example, a valid key is: @"_spriteframe_01".
  If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */

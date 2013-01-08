@@ -87,7 +87,7 @@
 {
 	if( (self=[super init]) )
     {
-		texture_ = nil;
+		_texture = nil;
 		textureFilename_ = [filename copy];
 		rectInPixels_ = rect;
 		rect_ = CC_RECT_PIXELS_TO_POINTS( rect );
@@ -117,7 +117,7 @@
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
-	[texture_ release];
+	[_texture release];
 	[textureFilename_ release];
 	[super dealloc];
 }
@@ -125,7 +125,7 @@
 -(id) copyWithZone: (NSZone*) zone
 {
 	CCSpriteFrame *copy = [[[self class] allocWithZone: zone] initWithTextureFilename:textureFilename_ rectInPixels:rectInPixels_ rotated:rotated_ offset:offsetInPixels_ originalSize:originalSizeInPixels_];
-	copy.texture = texture_;
+	copy.texture = _texture;
 	return copy;
 }
 
@@ -165,16 +165,16 @@
 
 -(void) setTexture:(CCTexture2D *)texture
 {
-	if( texture_ != texture ) {
-		[texture_ release];
-		texture_ = [texture retain];
+	if( _texture != texture ) {
+		[_texture release];
+		_texture = [texture retain];
 	}
 }
 
 -(CCTexture2D*) texture
 {
-	if( texture_ )
-		return texture_;
+	if( _texture )
+		return _texture;
 
 	if( textureFilename_ )
 		return [[CCTextureCache sharedTextureCache] addImage:textureFilename_];

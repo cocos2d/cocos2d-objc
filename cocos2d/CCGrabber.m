@@ -36,17 +36,17 @@
 {
 	if(( self = [super init] )) {
 		// generate FBO
-		glGenFramebuffers(1, &fbo_);
+		glGenFramebuffers(1, &_FBO);
 	}
 	return self;
 }
 
 -(void)grab:(CCTexture2D*)texture
 {
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 
 	// bind
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
+	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
 	// associate texture with FBO
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, texture.name, 0);
@@ -56,13 +56,13 @@
 	if (status != GL_FRAMEBUFFER_COMPLETE)
 		[NSException raise:@"Frame Grabber" format:@"Could not attach texture to framebuffer"];
 
-	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 }
 
 -(void)beforeRender:(CCTexture2D*)texture
 {
-	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &oldFBO_);
-	glBindFramebuffer(GL_FRAMEBUFFER, fbo_);
+	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+	glBindFramebuffer(GL_FRAMEBUFFER, _FBO);
 
 	// save clear color
 	glGetFloatv(GL_COLOR_CLEAR_VALUE,oldClearColor_);
@@ -82,7 +82,7 @@
 
 -(void)afterRender:(CCTexture2D*)texture
 {
-	glBindFramebuffer(GL_FRAMEBUFFER, oldFBO_);
+	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
 //	glColorMask(TRUE, TRUE, TRUE, TRUE);	// #631
 	
 	// Restore clear color
@@ -92,7 +92,7 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	glDeleteFramebuffers(1, &fbo_);
+	glDeleteFramebuffers(1, &_FBO);
 	[super dealloc];
 }
 

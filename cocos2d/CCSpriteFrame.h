@@ -47,7 +47,7 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSize_;
 	CGSize			originalSizeInPixels_;
-	CCTexture2D		*texture_;
+	CCTexture2D		*_texture;
 	NSString		*textureFilename_;
 }
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */

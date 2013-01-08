@@ -179,9 +179,9 @@ enum {
 
 	[shader updateUniforms];
 
-	uniformCenter = glGetUniformLocation( shader->program_, "center");
-	uniformResolution = glGetUniformLocation( shader->program_, "resolution");
-	uniformTime = glGetUniformLocation( shader->program_, "time");
+	uniformCenter = glGetUniformLocation( shader.program, "center");
+	uniformResolution = glGetUniformLocation( shader.program, "resolution");
+	uniformTime = glGetUniformLocation( shader.program, "time");
 
 	self.shaderProgram = shader;
 
@@ -452,8 +452,8 @@ enum {
 
 		CHECK_GL_ERROR_DEBUG();
 
-		subLocation = glGetUniformLocation( self.shaderProgram->program_, "substract");
-		blurLocation = glGetUniformLocation( self.shaderProgram->program_, "blurSize");
+		subLocation = glGetUniformLocation( self.shaderProgram.program, "substract");
+		blurLocation = glGetUniformLocation( self.shaderProgram.program, "blurSize");
 
 		CHECK_GL_ERROR_DEBUG();
 	}

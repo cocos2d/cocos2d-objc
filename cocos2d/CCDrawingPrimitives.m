@@ -65,8 +65,8 @@ static void lazy_init( void )
 		shader_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
 		[shader_ retain];
 
-		colorLocation_ = glGetUniformLocation( shader_->program_, "u_color");
-		pointSizeLocation_ = glGetUniformLocation( shader_->program_, "u_pointSize");
+		colorLocation_ = glGetUniformLocation( shader_.program, "u_color");
+		pointSizeLocation_ = glGetUniformLocation( shader_.program, "u_pointSize");
 
 		initialized = YES;
 	}

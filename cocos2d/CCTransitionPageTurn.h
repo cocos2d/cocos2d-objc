@@ -39,7 +39,7 @@
  */
 @interface CCTransitionPageTurn : CCTransitionScene
 {
-	BOOL	back_;
+	BOOL	_back;
 }
 /**
  * creates a base transition with duration and incoming scene

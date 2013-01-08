@@ -113,8 +113,8 @@ Example:
  */
 @interface CCSpawn : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *one_;
-	CCFiniteTimeAction *two_;
+	CCFiniteTimeAction *_one;
+	CCFiniteTimeAction *_two;
 }
 /** helper constructor to create an array of spawned actions */
 +(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
@@ -134,13 +134,13 @@ Example:
 */
 @interface CCRotateTo : CCActionInterval <NSCopying>
 {
-	float dstAngleX_;
-	float startAngleX_;
-	float diffAngleX_;
+	float _dstAngleX;
+	float _startAngleX;
+	float _diffAngleX;
   
-	float dstAngleY_;
-	float startAngleY_;
-	float diffAngleY_;
+	float _dstAngleY;
+	float _startAngleY;
+	float _diffAngleY;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)angle;
@@ -156,10 +156,10 @@ Example:
 */
 @interface CCRotateBy : CCActionInterval <NSCopying>
 {
-	float angleX_;
-	float startAngleX_;
-	float angleY_;
-	float startAngleY_;
+	float _angleX;
+	float _startAngleX;
+	float _angleY;
+	float _startAngleY;
 }
 /** creates the action */
 +(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;

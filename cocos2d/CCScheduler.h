@@ -125,7 +125,7 @@ struct _hashUpdateEntry;
 
 @interface CCScheduler : NSObject
 {
-	ccTime				timeScale_;
+	ccTime				_timeScale;
 
 	//
 	// "updates with priority" stuff

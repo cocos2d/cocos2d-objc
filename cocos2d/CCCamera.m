@@ -32,7 +32,7 @@
 
 @implementation CCCamera
 
-@synthesize dirty = dirty_;
+@synthesize dirty = _dirty;
 
 -(id) init
 {
@@ -44,7 +44,7 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | center = (%.2f,%.2f,%.2f)>", [self class], self, centerX_, centerY_, centerZ_];
+	return [NSString stringWithFormat:@"<%@ = %p | center = (%.2f,%.2f,%.2f)>", [self class], self, _centerX, _centerY, _centerZ];
 }
 
 
@@ -56,37 +56,37 @@
 
 -(void) restore
 {
-	eyeX_ = eyeY_ = 0;
-	eyeZ_ = [CCCamera getZEye];
+	_eyeX = _eyeY = 0;
+	_eyeZ = [CCCamera getZEye];
 
-	centerX_ = centerY_ = centerZ_ = 0;
+	_centerX = _centerY = _centerZ = 0;
 
-	upX_ = 0.0f;
-	upY_ = 1.0f;
-	upZ_ = 0.0f;
+	_upX = 0.0f;
+	_upY = 1.0f;
+	_upZ = 0.0f;
 
-	kmMat4Identity( &lookupMatrix_ );
+	kmMat4Identity( &_lookupMatrix );
 
-	dirty_ = NO;
+	_dirty = NO;
 }
 
 -(void) locate
 {
-	if( dirty_ ) {
+	if( _dirty ) {
 
 		kmVec3 eye, center, up;
 
-		kmVec3Fill( &eye, eyeX_, eyeY_ , eyeZ_ );
-		kmVec3Fill( &center, centerX_, centerY_, centerZ_ );
+		kmVec3Fill( &eye, _eyeX, _eyeY , _eyeZ );
+		kmVec3Fill( &center, _centerX, _centerY, _centerZ );
 
-		kmVec3Fill( &up, upX_, upY_, upZ_);
-		kmMat4LookAt( &lookupMatrix_, &eye, &center, &up);
+		kmVec3Fill( &up, _upX, _upY, _upZ);
+		kmMat4LookAt( &_lookupMatrix, &eye, &center, &up);
 
-		dirty_ = NO;
+		_dirty = NO;
 
 	}
 
-	kmGLMultMatrix( &lookupMatrix_ );
+	kmGLMultMatrix( &_lookupMatrix );
 
 }
 
@@ -99,50 +99,50 @@
 
 -(void) setEyeX: (float)x eyeY:(float)y eyeZ:(float)z
 {
-	eyeX_ = x;
-	eyeY_ = y;
-	eyeZ_ = z;
+	_eyeX = x;
+	_eyeY = y;
+	_eyeZ = z;
 
-	dirty_ = YES;
+	_dirty = YES;
 }
 
 -(void) setCenterX: (float)x centerY:(float)y centerZ:(float)z
 {
-	centerX_ = x;
-	centerY_ = y;
-	centerZ_ = z;
+	_centerX = x;
+	_centerY = y;
+	_centerZ = z;
 
-	dirty_ = YES;
+	_dirty = YES;
 }
 
 -(void) setUpX: (float)x upY:(float)y upZ:(float)z
 {
-	upX_ = x;
-	upY_ = y;
-	upZ_ = z;
+	_upX = x;
+	_upY = y;
+	_upZ = z;
 
-	dirty_ = YES;
+	_dirty = YES;
 }
 
 -(void) eyeX: (float*)x eyeY:(float*)y eyeZ:(float*)z
 {
-	*x = eyeX_;
-	*y = eyeY_;
-	*z = eyeZ_;
+	*x = _eyeX;
+	*y = _eyeY;
+	*z = _eyeZ;
 }
 
 -(void) centerX: (float*)x centerY:(float*)y centerZ:(float*)z
 {
-	*x = centerX_;
-	*y = centerY_;
-	*z = centerZ_;
+	*x = _centerX;
+	*y = _centerY;
+	*z = _centerZ;
 }
 
 -(void) upX: (float*)x upY:(float*)y upZ:(float*)z
 {
-	*x = upX_;
-	*y = upY_;
-	*z = upZ_;
+	*x = _upX;
+	*y = _upY;
+	*z = _upZ;
 }
 
 @end

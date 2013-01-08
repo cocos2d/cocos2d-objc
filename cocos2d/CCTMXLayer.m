@@ -164,7 +164,7 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) reusedTileWithRect:(CGRect)rect
 {	
 	if( ! reusedTile_ ) {
-		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
+		reusedTile_ = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect rotated:NO];
 		[reusedTile_ setBatchNode:self];
 	}
 	else
@@ -186,14 +186,14 @@ int compareInts (const void * a, const void * b);
 -(void) setupTiles
 {
 	// Optimization: quick hack that sets the image size on the tileset
-	tileset_.imageSize = [textureAtlas_.texture contentSizeInPixels];
+	tileset_.imageSize = [_textureAtlas.texture contentSizeInPixels];
 
 	// By default all the tiles are aliased
 	// pros:
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[textureAtlas_.texture setAliasTexParameters];
+	[_textureAtlas.texture setAliasTexParameters];
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];
@@ -248,7 +248,7 @@ int compareInts (const void * a, const void * b);
 
 			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
 
-			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram->program_, kCCUniformAlphaTestValue);
+			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram.program, kCCUniformAlphaTestValue);
 
 			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
 			[self.shaderProgram setUniformLocation:alphaValueLocation withF1:alphaFuncValue];
@@ -579,7 +579,7 @@ int compareInts (const void * a, const void * b)
 		if( sprite )
 			[super removeChild:sprite cleanup:YES];
 		else {
-			[textureAtlas_ removeQuadAtIndex:atlasIndex];
+			[_textureAtlas removeQuadAtIndex:atlasIndex];
 
 			// update possible children
 			CCARRAY_FOREACH(_children, sprite) {

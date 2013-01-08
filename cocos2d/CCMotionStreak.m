@@ -35,8 +35,8 @@
 
 
 @implementation CCMotionStreak
-@synthesize texture = texture_;
-@synthesize blendFunc = blendFunc_;
+@synthesize texture = _texture;
+@synthesize blendFunc = _blendFunc;
 @synthesize fastMode = fastMode_;
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
@@ -85,8 +85,8 @@
         colorPointer_ =  malloc(sizeof(GLubyte) * maxPoints_ * 2 * 4);
 
         // Set blend mode
-        blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+        _blendFunc.src = GL_SRC_ALPHA;
+		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
@@ -251,9 +251,9 @@
 	CC_NODE_DRAW_SETUP();
 
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-	ccGLBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [_texture name] );
 
 	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices_);
 	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);
@@ -266,7 +266,7 @@
 
 - (void)dealloc
 {
-    [texture_ release];
+    [_texture release];
 
     free(pointState_);
     free(pointVertexes_);

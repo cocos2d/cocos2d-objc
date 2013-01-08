@@ -31,8 +31,8 @@
 
 @interface CCTransitionProgress : CCTransitionScene
 {
-	float to_, from_;
-	CCScene *sceneToBeModified_;
+	float _to, _from;
+	CCScene *_sceneToBeModified;
 }
 // Needed for BridgeSupport
 -(CCProgressTimer*) progressTimerNodeWithRenderTexture:(CCRenderTexture*)texture;

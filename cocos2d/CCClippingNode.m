@@ -49,13 +49,13 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
 @implementation CCClippingNode
 
-@synthesize stencil = stencil_;
-@synthesize alphaThreshold = alphaThreshold_;
-@synthesize inverted = inverted_;
+@synthesize stencil = _stencil;
+@synthesize alphaThreshold = _alphaThreshold;
+@synthesize inverted = _inverted;
 
 - (void)dealloc
 {
-    [stencil_ release];
+    [_stencil release];
     [super dealloc];
 }
 
@@ -100,24 +100,24 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 - (void)onEnter
 {
     [super onEnter];
-    [stencil_ onEnter];
+    [_stencil onEnter];
 }
 
 - (void)onEnterTransitionDidFinish
 {
     [super onEnterTransitionDidFinish];
-    [stencil_ onEnterTransitionDidFinish];
+    [_stencil onEnterTransitionDidFinish];
 }
 
 - (void)onExitTransitionDidStart
 {
-    [stencil_ onExitTransitionDidStart];
+    [_stencil onExitTransitionDidStart];
     [super onExitTransitionDidStart];
 }
 
 - (void)onExit
 {
-    [stencil_ onExit];
+    [_stencil onExit];
     [super onExit];
 }
 
@@ -133,8 +133,8 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     // return fast (draw nothing, or draw everything if in inverted mode) if:
     // - nil stencil node
     // - or stencil node invisible:
-    if (!stencil_ || !stencil_.visible) {
-        if (inverted_) {
+    if (!_stencil || !_stencil.visible) {
+        if (_inverted) {
             // draw everything
             [super visit];
         }
@@ -222,7 +222,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(!inverted_ ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
+    glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
     
     // draw a fullscreen solid rectangle to clear the stencil buffer
     ccDrawSolidRect(CGPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
@@ -236,7 +236,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     //     if not in inverted mode: set the current layer value to 1 in the stencil buffer
     //     if in inverted mode: set the current layer value to 0 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
-    glStencilOp(!inverted_ ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
+    glStencilOp(!_inverted ? GL_REPLACE : GL_ZERO, GL_KEEP, GL_KEEP);
     
     // enable alpha test only if the alpha threshold < 1,
     // indeed if alpha threshold == 1, every pixel will be drawn anyways
@@ -245,17 +245,17 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     GLenum currentAlphaTestFunc = GL_ALWAYS;
     GLclampf currentAlphaTestRef = 1;
 #endif
-    if (alphaThreshold_ < 1) {
+    if (_alphaThreshold < 1) {
 #if defined(__CC_PLATFORM_IOS)
         // since glAlphaTest do not exists in OES, use a shader that writes
         // pixel only if greater than an alpha threshold
         CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-        GLint alphaValueLocation = glGetUniformLocation(program->program_, kCCUniformAlphaTestValue);
+        GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue);
         // set our alphaThreshold
-        [program setUniformLocation:alphaValueLocation withF1:alphaThreshold_];
+        [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
         // we need to recursively apply this shader to all the nodes in the stencil node
         // XXX: we should have a way to apply shader to all nodes without having to do this
-        setProgram(stencil_, program);
+        setProgram(_stencil, program);
 #elif defined(__CC_PLATFORM_MAC)
         // manually save the alpha test state
         currentAlphaTestEnabled = glIsEnabled(GL_ALPHA_TEST);
@@ -266,7 +266,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
         // check for OpenGL error while enabling alpha test
         CHECK_GL_ERROR_DEBUG();
         // pixel will be drawn only if greater than an alpha threshold
-        glAlphaFunc(GL_GREATER, alphaThreshold_);
+        glAlphaFunc(GL_GREATER, _alphaThreshold);
 #endif
     }
 
@@ -274,11 +274,11 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     // (according to the stencil test func/op and alpha (or alpha shader) test)
     kmGLPushMatrix();
     [self transform];
-    [stencil_ visit];
+    [_stencil visit];
     kmGLPopMatrix();
     
     // restore alpha test state
-    if (alphaThreshold_ < 1) {
+    if (_alphaThreshold < 1) {
 #if defined(__CC_PLATFORM_IOS)
         // XXX: we need to find a way to restore the shaders of the stencil node and its childs
 #elif defined(__CC_PLATFORM_MAC)

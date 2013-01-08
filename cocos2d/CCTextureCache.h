@@ -40,7 +40,7 @@
  */
 @interface CCTextureCache : NSObject
 {
-	NSMutableDictionary *textures_;
+	NSMutableDictionary *_textures;
 
 	dispatch_queue_t _loadingQueue;
 	dispatch_queue_t _dictQueue;

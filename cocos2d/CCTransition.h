@@ -62,10 +62,10 @@ typedef enum {
  */
 @interface CCTransitionScene : CCScene
 {
-	CCScene	*inScene_;
-	CCScene	*outScene_;
+	CCScene	*_inScene;
+	CCScene	*_outScene;
 	ccTime	_duration;
-	BOOL	inSceneOnTop_;
+	BOOL	_inSceneOnTop;
 	BOOL	_sendCleanupToScene;
 }
 /** creates a base transition with duration and incoming scene */

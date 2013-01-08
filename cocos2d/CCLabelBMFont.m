@@ -517,13 +517,13 @@ void FNTConfigRemoveCache( void )
 
 		_contentSize = CGSizeZero;
 		
-		_opacityModifyRGB = [[textureAtlas_ texture] hasPremultipliedAlpha];
+		_opacityModifyRGB = [[_textureAtlas texture] hasPremultipliedAlpha];
 		
 		_anchorPoint = ccp(0.5f, 0.5f);
         
 		imageOffset_ = offset;
         
-		reusedChar_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
+		reusedChar_ = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:CGRectMake(0, 0, 0, 0) rotated:NO];
 		[reusedChar_ setBatchNode:self];
 
 		[self setString:theString updateLabel:YES];
@@ -787,7 +787,7 @@ void FNTConfigRemoveCache( void )
 				fontChar.batchNode = nil;
 				hasSprite = NO;
 			} else {
-				fontChar = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect];
+				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
 				[self addChild:fontChar z:i tag:i];
 				[fontChar release];
 			}
