@@ -132,17 +132,17 @@ enum {
 @interface CCSpeed : CCAction <NSCopying>
 {
 	CCActionInterval	*_innerAction;
-	float speed_;
+	CGFloat _speed;
 }
 /** alter the speed of the inner function in runtime */
-@property (nonatomic,readwrite) float speed;
+@property (nonatomic,readwrite) CGFloat speed;
 /** Inner action of CCSpeed */
 @property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
 
 /** creates the action */
-+(id) actionWithAction: (CCActionInterval*) action speed:(float)value;
++(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;
 /** initializes the action */
--(id) initWithAction: (CCActionInterval*) action speed:(float)value;
+-(id) initWithAction: (CCActionInterval*) action speed:(CGFloat)value;
 @end
 
 @class CCNode;

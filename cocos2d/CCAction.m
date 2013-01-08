@@ -183,26 +183,26 @@
 #pragma mark -
 #pragma mark Speed
 @implementation CCSpeed
-@synthesize speed=speed_;
+@synthesize speed=_speed;
 @synthesize innerAction=_innerAction;
 
-+(id) actionWithAction: (CCActionInterval*) action speed:(float)value
++(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value
 {
 	return [[[self alloc] initWithAction: action speed:value] autorelease];
 }
 
--(id) initWithAction: (CCActionInterval*) action speed:(float)value
+-(id) initWithAction: (CCActionInterval*) action speed:(CGFloat)value
 {
 	if( (self=[super init]) ) {
 		self.innerAction = action;
-		speed_ = value;
+		_speed = value;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[[_innerAction copy] autorelease] speed:speed_];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[[_innerAction copy] autorelease] speed:_speed];
     return copy;
 }
 
@@ -226,7 +226,7 @@
 
 -(void) step:(ccTime) dt
 {
-	[_innerAction step: dt * speed_];
+	[_innerAction step: dt * _speed];
 }
 
 -(BOOL) isDone
@@ -236,7 +236,7 @@
 
 - (CCActionInterval *) reverse
 {
-	return [CCSpeed actionWithAction:[_innerAction reverse] speed:speed_];
+	return [CCSpeed actionWithAction:[_innerAction reverse] speed:_speed];
 }
 @end
 
