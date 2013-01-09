@@ -43,15 +43,15 @@ typedef enum {
  @since v0.99.1
  */
 @interface CCProgressTimer : CCNodeRGBA {
-	CCProgressTimerType	type_;
-	float				percentage_;
+	CCProgressTimerType	_type;
+	float				_percentage;
 	CCSprite			*_sprite;
 
-	int					vertexDataCount_;
-	ccV2F_C4B_T2F		*vertexData_;
-	CGPoint				midpoint_;
-	CGPoint				barChangeRate_;
-	BOOL				reverseDirection_;
+	int					_vertexDataCount;
+	ccV2F_C4B_T2F		*_vertexData;
+	CGPoint				_midpoint;
+	CGPoint				_barChangeRate;
+	BOOL				_reverseDirection;
 }
 /**	Change the percentage to change progress. */
 @property (nonatomic, readwrite) CCProgressTimerType type;
