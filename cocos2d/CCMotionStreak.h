@@ -35,28 +35,28 @@
 @interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol>
 {
     CCTexture2D *_texture;
-    CGPoint positionR_;
+    CGPoint _positionR;
     ccBlendFunc _blendFunc;
-    float stroke_;
-    float fadeDelta_;
-    float minSeg_;
+    float _stroke;
+    float _fadeDelta;
+    float _minSeg;
 
-    NSUInteger maxPoints_;
-    NSUInteger nuPoints_;
-	NSUInteger previousNuPoints_;
+    NSUInteger _maxPoints;
+    NSUInteger _nuPoints;
+	NSUInteger _previousNuPoints;
 
     /** Pointers */
-    CGPoint *pointVertexes_;
-    float *pointState_;
+    CGPoint *_pointVertexes;
+    float *_pointState;
 
     // Opengl
-    ccVertex2F *vertices_;
-    unsigned char *colorPointer_;
-    ccTex2F *texCoords_;
+    ccVertex2F *_vertices;
+    unsigned char *_colorPointer;
+    ccTex2F *_texCoords;
 
-    BOOL	fastMode_;
+    BOOL	_fastMode;
 	
-	BOOL	startingPositionInitialized_;
+	BOOL	_startingPositionInitialized;
 }
 /** blending function */
 @property (nonatomic, readwrite, assign) ccBlendFunc blendFunc;
