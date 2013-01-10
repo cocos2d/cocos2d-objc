@@ -15,7 +15,11 @@
 #import "CCBReader.h"
 
 // SpiderMonkey
-#include "jsapi.h"  
+#include "jsapi.h"
+
+#if JSB_ENABLE_DEBUGGER
+#include "js_bindings_dbg.h"
+#endif
 
 #pragma mark - AppDelegate - iOS
 
@@ -158,6 +162,11 @@
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
+#if JSB_ENABLE_DEBUGGER
+	[[JSBCore sharedInstance] enableDebugger];
+	[[JSBCore sharedInstance] runScript:@"main.example.js"];
+	return;
+#endif
 
 	if( [name isEqual:@"JS Watermelon"] ) {
 #if defined(__CC_PLATFORM_MAC)
