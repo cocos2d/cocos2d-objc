@@ -476,6 +476,13 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(ccResolutionType*)resolutionType
 {
+	// fullpath? return it
+	if ([filename isAbsolutePath]) {
+		CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
+		*resolutionType = kCCResolutionUnknown;
+		return filename;
+	}
+
 	// Already Cached ?
 	CCCacheValue *value = [_fullPathCache objectForKey:filename];
 	if( value ) {
