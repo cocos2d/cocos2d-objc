@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5018F24C0DFDEAC400C013A5"
-               BuildableName = "libcocos2d.a"
-               BlueprintName = "cocos2d"
-               ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+               BlueprintIdentifier = "503164CC10277665003ACFE7"
+               BuildableName = "liblibpng.a"
+               BlueprintName = "libpng"
+               ReferencedContainer = "container:cocos2d-tests-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
