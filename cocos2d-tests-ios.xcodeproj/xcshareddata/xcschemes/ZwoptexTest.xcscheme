@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5018F24C0DFDEAC400C013A5"
-               BuildableName = "libcocos2d.a"
-               BlueprintName = "cocos2d"
-               ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+               BlueprintIdentifier = "E0C5586211FE48E600B9E4CB"
+               BuildableName = "ZwoptexTest.app"
+               BlueprintName = "ZwoptexTest"
+               ReferencedContainer = "container:cocos2d-tests-ios.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E0C5586211FE48E600B9E4CB"
+            BuildableName = "ZwoptexTest.app"
+            BlueprintName = "ZwoptexTest"
+            ReferencedContainer = "container:cocos2d-tests-ios.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E0C5586211FE48E600B9E4CB"
+            BuildableName = "ZwoptexTest.app"
+            BlueprintName = "ZwoptexTest"
+            ReferencedContainer = "container:cocos2d-tests-ios.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "E0C5586211FE48E600B9E4CB"
+            BuildableName = "ZwoptexTest.app"
+            BlueprintName = "ZwoptexTest"
+            ReferencedContainer = "container:cocos2d-tests-ios.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
