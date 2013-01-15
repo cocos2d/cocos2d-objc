@@ -605,7 +605,7 @@ enum {
 
  Opacity propagates into children that conform to the CCRGBAProtocol if CC_CASCADING_OPACITY is enabled
  in ccConfig.h.
- @Since 1.0.1-rsanchez
+ @since v2.1
  */
 @interface CCNodeRGBA : CCNode <CCRGBAProtocol>
 {
