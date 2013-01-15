@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A0EFA4AF169CDABA006D1B22"
-               BuildableName = "libcocos2d_chipmunk.a"
-               BlueprintName = "cocos2d_chipmunk"
-               ReferencedContainer = "container:cocos2d-osx.xcodeproj">
+               BlueprintIdentifier = "A044422314A515EE00E62742"
+               BuildableName = "ChipmunkTest.app"
+               BlueprintName = "ChipmunkTest"
+               ReferencedContainer = "container:cocos2d-tests-osx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       buildConfiguration = "Debug">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A044422314A515EE00E62742"
+            BuildableName = "ChipmunkTest.app"
+            BlueprintName = "ChipmunkTest"
+            ReferencedContainer = "container:cocos2d-tests-osx.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </TestAction>
    <LaunchAction
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
@@ -39,6 +48,15 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A044422314A515EE00E62742"
+            BuildableName = "ChipmunkTest.app"
+            BlueprintName = "ChipmunkTest"
+            ReferencedContainer = "container:cocos2d-tests-osx.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -48,6 +66,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <BuildableProductRunnable>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A044422314A515EE00E62742"
+            BuildableName = "ChipmunkTest.app"
+            BlueprintName = "ChipmunkTest"
+            ReferencedContainer = "container:cocos2d-tests-osx.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
