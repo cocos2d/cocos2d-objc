@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A0EFA4AF169CDABA006D1B22"
-               BuildableName = "libcocos2d_chipmunk.a"
-               BlueprintName = "cocos2d_chipmunk"
-               ReferencedContainer = "container:cocos2d-osx.xcodeproj">
+               BlueprintIdentifier = "E076EB631225F7AB00DE0DA2"
+               BuildableName = "build all tests"
+               BlueprintName = "build all tests"
+               ReferencedContainer = "container:cocos2d-tests-osx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
