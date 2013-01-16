@@ -191,7 +191,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #endif // __CC_PLATFORM_IOS
 
-		_searchMode = kCCFileUtilsSearchSuffix;
+		_searchMode = kCCFileUtilsSearchSuffixMode;
 		
 		[self buildSearchResolutionsOrder];
 	}
@@ -293,7 +293,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 						inDirectory:subpath];
 }
 
--(NSString*) getPath:(NSString*)path forSuffix:(NSString*)suffix
+-(NSString*) getPathForFilename:(NSString*)path withSuffix:(NSString*)suffix
 {
 	NSString *newName = path;
 	
@@ -348,28 +348,31 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return ret;
 }
 
--(NSString*) getPath:(NSString*)path forDirectory:(NSString*)directory
+-(NSString*) getPathForFilename:(NSString*)filename withResourceDirectory:(NSString*)resourceDirectory withSearchPath:(NSString*)searchPath
 {	
 	NSString *ret = nil;
+	
+	NSString *file = [filename lastPathComponent];
+	NSString *file_path = [filename stringByDeletingLastPathComponent];
+
+	// searchPath + file_path + resourceDirectory
+	NSString * path = [searchPath stringByAppendingPathComponent:file_path];
+	path = [path stringByAppendingPathComponent:resourceDirectory];
+
 	// only if it is not an absolute path
-	if( ! [path isAbsolutePath] ) {
+	if( ! [filename isAbsolutePath] ) {
 		
 		// pathForResource also searches in .lproj directories. issue #1230
-		// If the file does not exist it will return nil.
-		NSString *filename = [path lastPathComponent];
-		NSString *imageDirectory = [directory stringByAppendingPathComponent: [path stringByDeletingLastPathComponent]];
-		
+		// If the file does not exist it will return nil.		
 		// on iOS it is OK to pass inDirector=nil and pass a path in "Resources",
 		// but on OS X it doesn't work.
-		ret = [self pathForResource:filename
+		ret = [self pathForResource:file
 							 ofType:nil
-						inDirectory:imageDirectory];
+						inDirectory:path];
 	}
 	else
 	{
-		NSString* newDir = [path stringByDeletingLastPathComponent];
-		NSString* newFile = [path lastPathComponent];
-		NSString *newName = [[newDir stringByAppendingPathComponent:directory] stringByAppendingPathComponent:newFile];
+		NSString *newName = [[file_path stringByAppendingPathComponent:path] stringByAppendingPathComponent:file];
 		if ([_fileManager fileExistsAtPath:newName])
 			ret = newName;
 	}
@@ -439,12 +442,12 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		if ([_fileManager fileExistsAtPath:ret])
 			break;
 		
-		NSString *fileName = [newfilename lastPathComponent];
-		NSString *filePath = [newfilename stringByDeletingLastPathComponent];
+		NSString *file = [ret lastPathComponent];
+		NSString *file_path = [ret stringByDeletingLastPathComponent];
 		// Default to normal resource directory
-		ret = [_bundle pathForResource:fileName
+		ret = [_bundle pathForResource:file
 								ofType:nil
-						   inDirectory:filePath];
+						   inDirectory:file_path];
 		if(ret)
 			break;
 	}
@@ -500,20 +503,20 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	
 	for( NSString *path in _searchPath ) {
 		
-		NSString *fileWithPath = [path stringByAppendingPathComponent:newfilename];
-		
 		// Search with Suffixes
 		for( NSString *device in _searchResolutionsOrder ) {
+
+			NSString *fileWithPath = [path stringByAppendingPathComponent:newfilename];
 			
-			if( _searchMode == kCCFileUtilsSearchSuffix ) {
+			if( _searchMode == kCCFileUtilsSearchSuffixMode ) {
 				// Search using suffixes
 				NSString *suffix = [_suffixesDict objectForKey:device];
-				ret = [self getPath:fileWithPath forSuffix:suffix];
+				ret = [self getPathForFilename:fileWithPath withSuffix:suffix];
 				*resolutionType = [self resolutionTypeForKey:suffix inDictionary:_suffixesDict];
 			} else {
 				// Search in subdirectories
 				NSString *directory = [_directoriesDict objectForKey:device];
-				ret = [self getPath:fileWithPath forDirectory:directory];
+				ret = [self getPathForFilename:newfilename withResourceDirectory:directory withSearchPath:path];
 				*resolutionType = [self resolutionTypeForKey:directory inDictionary:_directoriesDict];
 			}
 			
@@ -585,7 +588,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(NSString*) standarizePath:(NSString*)path
 {
 	NSString *ret = [path stringByStandardizingPath];
-	if( _searchMode == kCCFileUtilsSearchSuffix )
+	if( _searchMode == kCCFileUtilsSearchSuffixMode )
 		ret = [self removeSuffixFromFile:ret];
 	
 	return ret;
@@ -690,7 +693,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if (fullpath == nil)
 		fullpath = relPath;
 
-	NSString *path = [self getPath:fullpath forSuffix:suffix];
+	NSString *path = [self getPathForFilename:fullpath withSuffix:suffix];
 
 	return ( path != nil );
 }
