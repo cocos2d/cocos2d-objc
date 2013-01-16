@@ -460,7 +460,7 @@ version 1.1-rc0 .. -..-2012
 . [FIX] CCRenderTexture: fixed getUIImageFromBuffer
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
 . [FIX] CCGrabber: added log message to warn that grabber doesn't support transparent parts with a color buffer of RGB565
-. [FIX] Compiler: fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0. 
+. [FIX] Compiler: fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0.
 
 version 1.1-beta2b 14-Mar-2012
 . [FIX] CCUtils: missing method declaration
@@ -470,13 +470,13 @@ version 1.1-beta2 12-Mar-2012
 			LabelBMFont: added setFntFile method
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
-. [NEW] All: Code is compatible with ARC (issue #1199) 
+. [NEW] All: Code is compatible with ARC (issue #1199)
 . [NEW] CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
 . [NEW] ccFileUtiles: new iPad retina file extension (ipadhd)
 . [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
 . [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
-. [NEW] ParticleSystem: supports animations in new animation format 
+. [NEW] ParticleSystem: supports animations in new animation format
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [NEW] Touchdispatcher: new implementation, supporting changing dispatchers based on (ranges) of properties, custom sorting and more (full list in online release notes)
@@ -489,7 +489,7 @@ version 1.1-beta2 12-Mar-2012
 . [FIX] ColorLayer: incorrect size in init method
 . [FIX] Director: 3d projection setting for iPad retina
 . [FIX] Denshion: Background music fades ok (issue #1304)
-. [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
+. [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254)
 . [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
