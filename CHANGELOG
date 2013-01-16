@@ -21,6 +21,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
 . [FIX] RenderTexture: Restures the Projection after using it.
+. [FIX] Particles: Adding or removing particles in runtime from an emitter works as expected
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
 . [3RD] JRSwizzle: is a submodule
 . [3RD] JS Bindings: Updated to v0.5
