@@ -1655,7 +1655,7 @@ Class restartAction()
 		self.blendAdditive = NO;
         
 		// duration
-		duration = kCCParticleDurationInfinity;
+		self.duration = kCCParticleDurationInfinity;
 		
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -1673,38 +1673,38 @@ Class restartAction()
         
 		
 		// angle
-		angle = 180;
-		angleVar = 0;
+		self.angle = 180;
+		self.angleVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 		
 		// life of particles
-		life = 0.5f;
-		lifeVar = 0;
+		self.life = 0.5f;
+		self.lifeVar = 0;
 		
 		// size, in pixels
-		startSize = 25.0f;
-		startSizeVar = 0;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		self.startSize = 25.0f;
+		self.startSizeVar = 0;
+		self.endSize = kCCParticleStartSizeEqualToEndSize;
         
 		// emits per seconds
-		emissionRate = totalParticles/life;
+		self.emissionRate = self.totalParticles/self.life;
 		
 		// color of particles
-		startColor = ccc4FFromccc4B(ccc4(50, 50, 50, 50));
-        endColor = ccc4FFromccc4B(ccc4(0, 0, 0, 0));
+		self.startColor = ccc4FFromccc4B(ccc4(50, 50, 50, 50));
+        self.endColor = ccc4FFromccc4B(ccc4(0, 0, 0, 0));
         
-        startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 		
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
 	}
@@ -1714,7 +1714,7 @@ Class restartAction()
 
 -(void) update: (ccTime) dt
 {
-    emitCounter = 0;
+	_emitCounter = 0;
     [super update: dt];
 }
 @end
