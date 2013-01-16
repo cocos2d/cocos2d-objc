@@ -128,8 +128,9 @@
             _indices = indicesNew;
             
             // Clear the memory
+			// XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
+//            memset(_quads, 0, quadsSize);
             memset(_particles, 0, particlesSize);
-            memset(_quads, 0, quadsSize);
             memset(_indices, 0, indicesSize);
             
             _allocatedParticles = tp;
@@ -168,7 +169,7 @@
     {
         _totalParticles = tp;
     }
-	
+
 	[self resetSystem];
 }
 
