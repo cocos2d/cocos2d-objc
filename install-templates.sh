@@ -77,13 +77,8 @@ copy_cocos2d_files(){
 
 copy_cocosdenshion_files(){
 	echo ...copying CocosDenshion files
-	copy_files CocosDenshion/CocosDenshion "$LIBS_DIR"
+	copy_files CocosDenshion "$LIBS_DIR"
 	copy_files LICENSE_CocosDenshion.txt "$LIBS_DIR"
-}
-
-copy_cocosdenshionextras_files(){
-	echo ...copying CocosDenshionExtras files
-	copy_files CocosDenshion/CocosDenshionExtras "$LIBS_DIR"
 }
 
 copy_kazmath_files(){
@@ -170,9 +165,6 @@ copy_xcode4_project_templates(){
 	mkdir -p "$LIBS_DIR"
 	copy_cocosdenshion_files
 
-	LIBS_DIR="$DST_DIR""lib_cocosdenshionextras.xctemplate/libs/"
-	mkdir -p "$LIBS_DIR"
-	copy_cocosdenshionextras_files
 
 	LIBS_DIR="$DST_DIR""lib_kazmath.xctemplate/libs/"
 	mkdir -p "$LIBS_DIR"
