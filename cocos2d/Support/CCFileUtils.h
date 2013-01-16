@@ -42,8 +42,8 @@ extern NSString const *kCCFileUtilsMacHD;
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 
 enum {
-	kCCFileUtilsSearchSuffix,
-	kCCFileUtilsSearchDirectory,
+	kCCFileUtilsSearchSuffixMode,
+	kCCFileUtilsSearchDirectoryMode,
 };
 
 

@@ -120,6 +120,8 @@
 		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 	else if( [name isEqual:@"JS CocosDragon"] )
 		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
+	else if( [name isEqual:@"JS Crystal Craze"] )
+		return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 	
 	return YES;
 }
@@ -159,6 +161,9 @@
 
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
 
+	//
+	// Watermelon
+	//
 	if( [name isEqual:@"JS Watermelon"] ) {
 #if defined(__CC_PLATFORM_MAC)
 		// Use ipad resources for Mac
@@ -168,12 +173,24 @@
 #endif
 		[[JSBCore sharedInstance] runScript:@"boot-jsb.js"];
 	}
+
+	//
+	// Tests
+	//
 	else if( [name isEqual:@"JS Tests"] )
 		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
+	//
+	// Moon Warriors
+	//
 	else if( [name isEqual:@"JS Moon Warriors"] )
 		[[JSBCore sharedInstance] runScript:@"MoonWarriors-jsb.js"];
+	//
+	// CocosDragon
+	//
 	else if( [name isEqual:@"JS CocosDragon"] ) {
-		[fileutils setSearchMode:kCCFileUtilsSearchDirectory];
+		[fileutils setSearchMode:kCCFileUtilsSearchDirectoryMode];
+		[fileutils setSearchPath:@[@"Published files iOS",@""]];
+
 #if defined(__CC_PLATFORM_MAC)
 		// Use the iPad folder for Mac resources
 		[[fileutils directoriesDict] setObject:@"resources-ipad" forKey:kCCFileUtilsMac];
@@ -191,6 +208,23 @@
 #endif
 		[[JSBCore sharedInstance] runScript:@"main.js"];
 	}
+
+	//
+	// Crystal Craze
+	//
+	else if( [name isEqual:@"JS Crystal Craze"] ) {
+		[fileutils setSearchMode:kCCFileUtilsSearchDirectoryMode];
+		[fileutils setSearchPath:@[@"Published-iOS",@""]];
+		
+#if defined(__CC_PLATFORM_MAC)
+		// Use the iPhone folder for Mac resources
+		[[fileutils directoriesDict] setObject:@"resources-iphone" forKey:kCCFileUtilsMac];
+#else
+		[fileutils setEnableiPhoneResourcesOniPad:YES];
+#endif
+		[[JSBCore sharedInstance] runScript:@"main.js"];
+	}
+
 }
 @end
 
