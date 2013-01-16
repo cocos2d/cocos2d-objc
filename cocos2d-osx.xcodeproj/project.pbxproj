@@ -26,19 +26,6 @@
 		4AD3B8A1159A5415002E68D1 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		4AD3B8A2159A5415002E68D1 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		4AD3B8A3159A5415002E68D1 /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
-		4AD3B921159A54CE002E68D1 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */; };
-		4AD3B922159A54CE002E68D1 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */; };
-		4AD3B923159A54CE002E68D1 /* CDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AD159A54CD002E68D1 /* CDConfig.h */; };
-		4AD3B924159A54CE002E68D1 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */; };
-		4AD3B925159A54CE002E68D1 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */; };
-		4AD3B926159A54CE002E68D1 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */; };
-		4AD3B927159A54CE002E68D1 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */; };
-		4AD3B928159A54CE002E68D1 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */; };
-		4AD3B929159A54CE002E68D1 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */; };
-		4AD3B92A159A54CE002E68D1 /* CDXMacOSXSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */; };
-		4AD3B92B159A54CE002E68D1 /* CDXMacOSXSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */; };
-		4AD3B92C159A54CE002E68D1 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = 4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */; };
-		4AD3B92D159A54CE002E68D1 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = 4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */; };
 		A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003ACA5165731D500C7B792 /* ccFPSImages.h */; };
 		A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003ACA6165731D500C7B792 /* ccFPSImages.m */; };
 		A009FB83150EC87500897349 /* ccShader_Position_uColor_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A009FB74150EC87500897349 /* ccShader_Position_uColor_frag.h */; };
@@ -245,6 +232,19 @@
 		A025223416965D790087E514 /* js_bindings_dbg.mm in Sources */ = {isa = PBXBuildFile; fileRef = A025223216965D790087E514 /* js_bindings_dbg.mm */; };
 		A03714D7154F1D9300081CBA /* CCNode+Debug.h in Headers */ = {isa = PBXBuildFile; fileRef = A03714D5154F1D9300081CBA /* CCNode+Debug.h */; };
 		A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */ = {isa = PBXBuildFile; fileRef = A03714D6154F1D9300081CBA /* CCNode+Debug.m */; };
+		A0407ECA16A73A7E00161E77 /* CDAudioManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EBD16A73A7E00161E77 /* CDAudioManager.h */; };
+		A0407ECB16A73A7E00161E77 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EBE16A73A7E00161E77 /* CDAudioManager.m */; };
+		A0407ECC16A73A7E00161E77 /* CDConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EBF16A73A7E00161E77 /* CDConfig.h */; };
+		A0407ECD16A73A7E00161E77 /* CDOpenALSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EC016A73A7E00161E77 /* CDOpenALSupport.h */; };
+		A0407ECE16A73A7E00161E77 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EC116A73A7E00161E77 /* CDOpenALSupport.m */; };
+		A0407ECF16A73A7E00161E77 /* CDXMacOSXSupport.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EC216A73A7E00161E77 /* CDXMacOSXSupport.h */; };
+		A0407ED016A73A7E00161E77 /* CDXMacOSXSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EC316A73A7E00161E77 /* CDXMacOSXSupport.m */; };
+		A0407ED116A73A7E00161E77 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EC416A73A7E00161E77 /* CDXPropertyModifierAction.h */; };
+		A0407ED216A73A7E00161E77 /* CDXPropertyModifierAction.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EC516A73A7E00161E77 /* CDXPropertyModifierAction.m */; };
+		A0407ED316A73A7E00161E77 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EC616A73A7E00161E77 /* CocosDenshion.h */; };
+		A0407ED416A73A7E00161E77 /* CocosDenshion.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EC716A73A7E00161E77 /* CocosDenshion.m */; };
+		A0407ED516A73A7E00161E77 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = A0407EC816A73A7E00161E77 /* SimpleAudioEngine.h */; };
+		A0407ED616A73A7E00161E77 /* SimpleAudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = A0407EC916A73A7E00161E77 /* SimpleAudioEngine.m */; };
 		A04441C814A5158500E62742 /* Box2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A044416414A5158500E62742 /* Box2D.h */; };
 		A04441C914A5158500E62742 /* b2BroadPhase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A044416814A5158500E62742 /* b2BroadPhase.cpp */; };
 		A04441CA14A5158500E62742 /* b2BroadPhase.h in Headers */ = {isa = PBXBuildFile; fileRef = A044416914A5158500E62742 /* b2BroadPhase.h */; };
@@ -1228,19 +1228,6 @@
 		2B19285D163379400049A044 /* CCClippingNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCClippingNode.h; sourceTree = "<group>"; };
 		2B19285E163379400049A044 /* CCClippingNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCClippingNode.m; sourceTree = "<group>"; };
 		4AD3B8A7159A5415002E68D1 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
-		4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
-		4AD3B8AD159A54CD002E68D1 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
-		4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
-		4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
-		4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
-		4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
-		4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
-		4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
-		4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXMacOSXSupport.h; sourceTree = "<group>"; };
-		4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXMacOSXSupport.m; sourceTree = "<group>"; };
-		4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXPropertyModifierAction.h; sourceTree = "<group>"; };
-		4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXPropertyModifierAction.m; sourceTree = "<group>"; };
 		4AD3B8B9159A54CD002E68D1 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		A003ACA5165731D500C7B792 /* ccFPSImages.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccFPSImages.h; sourceTree = "<group>"; };
 		A003ACA6165731D500C7B792 /* ccFPSImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccFPSImages.m; sourceTree = "<group>"; };
@@ -1259,22 +1246,6 @@
 		A009FB80150EC87500897349 /* ccShader_PositionTextureColorAlphaTest_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionTextureColorAlphaTest_frag.h; sourceTree = "<group>"; };
 		A009FB81150EC87500897349 /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A009FB82150EC87500897349 /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
-		A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = 808_120bpm.wav; path = TestsAndDemos/DrumPad/Sounds/808_120bpm.wav; sourceTree = "<group>"; };
-		A0137E8B15ACE678000AA1C2 /* ballbounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = ballbounce.wav; path = TestsAndDemos/DrumPad/Sounds/ballbounce.wav; sourceTree = "<group>"; };
-		A0137E8C15ACE678000AA1C2 /* cowbell.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = cowbell.wav; path = TestsAndDemos/DrumPad/Sounds/cowbell.wav; sourceTree = "<group>"; };
-		A0137E8D15ACE678000AA1C2 /* explodelow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = explodelow.wav; path = TestsAndDemos/DrumPad/Sounds/explodelow.wav; sourceTree = "<group>"; };
-		A0137E8E15ACE678000AA1C2 /* karate.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = karate.wav; path = TestsAndDemos/DrumPad/Sounds/karate.wav; sourceTree = "<group>"; };
-		A0137E8F15ACE678000AA1C2 /* machinegun.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = machinegun.caf; path = TestsAndDemos/DrumPad/Sounds/machinegun.caf; sourceTree = "<group>"; };
-		A0137E9015ACE678000AA1C2 /* machinegun.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = machinegun.wav; path = TestsAndDemos/DrumPad/Sounds/machinegun.wav; sourceTree = "<group>"; };
-		A0137E9115ACE678000AA1C2 /* mula_tito_on_timbales.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = mula_tito_on_timbales.mp3; path = TestsAndDemos/DrumPad/Sounds/mula_tito_on_timbales.mp3; sourceTree = "<group>"; };
-		A0137E9215ACE678000AA1C2 /* onesample.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = onesample.wav; path = TestsAndDemos/DrumPad/Sounds/onesample.wav; sourceTree = "<group>"; };
-		A0137E9315ACE678000AA1C2 /* rustylow.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = rustylow.wav; path = TestsAndDemos/DrumPad/Sounds/rustylow.wav; sourceTree = "<group>"; };
-		A0137E9415ACE678000AA1C2 /* silencio.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = silencio.wav; path = TestsAndDemos/DrumPad/Sounds/silencio.wav; sourceTree = "<group>"; };
-		A0137E9515ACE678000AA1C2 /* sine256samples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sine256samples.wav; path = TestsAndDemos/DrumPad/Sounds/sine256samples.wav; sourceTree = "<group>"; };
-		A0137E9615ACE678000AA1C2 /* sine440.caf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sine440.caf; path = TestsAndDemos/DrumPad/Sounds/sine440.caf; sourceTree = "<group>"; };
-		A0137E9715ACE678000AA1C2 /* sine440.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sine440.wav; path = TestsAndDemos/DrumPad/Sounds/sine440.wav; sourceTree = "<group>"; };
-		A0137E9815ACE678000AA1C2 /* sixteensamples.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = sixteensamples.wav; path = TestsAndDemos/DrumPad/Sounds/sixteensamples.wav; sourceTree = "<group>"; };
-		A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "Cyber Advance!.mp3"; path = "TestsAndDemos/FancyRatMeteringDemo/Resources/Cyber Advance!.mp3"; sourceTree = "<group>"; };
 		A019170F167FAA3A0099349A /* CCBAnimationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBAnimationManager.h; sourceTree = "<group>"; };
 		A0191710167FAA3A0099349A /* CCBAnimationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCBAnimationManager.m; sourceTree = "<group>"; };
 		A0191711167FAA3A0099349A /* CCBKeyframe.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCBKeyframe.h; sourceTree = "<group>"; };
@@ -1356,6 +1327,19 @@
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		A03714D5154F1D9300081CBA /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
 		A03714D6154F1D9300081CBA /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
+		A0407EBD16A73A7E00161E77 /* CDAudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDAudioManager.h; sourceTree = "<group>"; };
+		A0407EBE16A73A7E00161E77 /* CDAudioManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDAudioManager.m; sourceTree = "<group>"; };
+		A0407EBF16A73A7E00161E77 /* CDConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDConfig.h; sourceTree = "<group>"; };
+		A0407EC016A73A7E00161E77 /* CDOpenALSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDOpenALSupport.h; sourceTree = "<group>"; };
+		A0407EC116A73A7E00161E77 /* CDOpenALSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDOpenALSupport.m; sourceTree = "<group>"; };
+		A0407EC216A73A7E00161E77 /* CDXMacOSXSupport.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXMacOSXSupport.h; sourceTree = "<group>"; };
+		A0407EC316A73A7E00161E77 /* CDXMacOSXSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXMacOSXSupport.m; sourceTree = "<group>"; };
+		A0407EC416A73A7E00161E77 /* CDXPropertyModifierAction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDXPropertyModifierAction.h; sourceTree = "<group>"; };
+		A0407EC516A73A7E00161E77 /* CDXPropertyModifierAction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDXPropertyModifierAction.m; sourceTree = "<group>"; };
+		A0407EC616A73A7E00161E77 /* CocosDenshion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosDenshion.h; sourceTree = "<group>"; };
+		A0407EC716A73A7E00161E77 /* CocosDenshion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosDenshion.m; sourceTree = "<group>"; };
+		A0407EC816A73A7E00161E77 /* SimpleAudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleAudioEngine.h; sourceTree = "<group>"; };
+		A0407EC916A73A7E00161E77 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		A0443F7E14A5131900E62742 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
 		A044416414A5158500E62742 /* Box2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Box2D.h; sourceTree = "<group>"; };
 		A044416514A5158500E62742 /* Box2DConfig.cmake */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Box2DConfig.cmake; sourceTree = "<group>"; };
@@ -2132,62 +2116,22 @@
 		4AD3B8A9159A54CD002E68D1 /* CocosDenshion */ = {
 			isa = PBXGroup;
 			children = (
-				A0137EA815ACE680000AA1C2 /* Sounds */,
-				4AD3B8AA159A54CD002E68D1 /* CocosDenshion */,
-				4AD3B8B4159A54CD002E68D1 /* CocosDenshionExtras */,
+				A0407EBD16A73A7E00161E77 /* CDAudioManager.h */,
+				A0407EBE16A73A7E00161E77 /* CDAudioManager.m */,
+				A0407EBF16A73A7E00161E77 /* CDConfig.h */,
+				A0407EC016A73A7E00161E77 /* CDOpenALSupport.h */,
+				A0407EC116A73A7E00161E77 /* CDOpenALSupport.m */,
+				A0407EC216A73A7E00161E77 /* CDXMacOSXSupport.h */,
+				A0407EC316A73A7E00161E77 /* CDXMacOSXSupport.m */,
+				A0407EC416A73A7E00161E77 /* CDXPropertyModifierAction.h */,
+				A0407EC516A73A7E00161E77 /* CDXPropertyModifierAction.m */,
+				A0407EC616A73A7E00161E77 /* CocosDenshion.h */,
+				A0407EC716A73A7E00161E77 /* CocosDenshion.m */,
+				A0407EC816A73A7E00161E77 /* SimpleAudioEngine.h */,
+				A0407EC916A73A7E00161E77 /* SimpleAudioEngine.m */,
 				4AD3B8B9159A54CD002E68D1 /* README.mdown */,
 			);
 			path = CocosDenshion;
-			sourceTree = "<group>";
-		};
-		4AD3B8AA159A54CD002E68D1 /* CocosDenshion */ = {
-			isa = PBXGroup;
-			children = (
-				4AD3B8AB159A54CD002E68D1 /* CDAudioManager.h */,
-				4AD3B8AC159A54CD002E68D1 /* CDAudioManager.m */,
-				4AD3B8AD159A54CD002E68D1 /* CDConfig.h */,
-				4AD3B8AE159A54CD002E68D1 /* CDOpenALSupport.h */,
-				4AD3B8AF159A54CD002E68D1 /* CDOpenALSupport.m */,
-				4AD3B8B0159A54CD002E68D1 /* CocosDenshion.h */,
-				4AD3B8B1159A54CD002E68D1 /* CocosDenshion.m */,
-				4AD3B8B2159A54CD002E68D1 /* SimpleAudioEngine.h */,
-				4AD3B8B3159A54CD002E68D1 /* SimpleAudioEngine.m */,
-			);
-			path = CocosDenshion;
-			sourceTree = "<group>";
-		};
-		4AD3B8B4159A54CD002E68D1 /* CocosDenshionExtras */ = {
-			isa = PBXGroup;
-			children = (
-				4AD3B8B5159A54CD002E68D1 /* CDXMacOSXSupport.h */,
-				4AD3B8B6159A54CD002E68D1 /* CDXMacOSXSupport.m */,
-				4AD3B8B7159A54CD002E68D1 /* CDXPropertyModifierAction.h */,
-				4AD3B8B8159A54CD002E68D1 /* CDXPropertyModifierAction.m */,
-			);
-			path = CocosDenshionExtras;
-			sourceTree = "<group>";
-		};
-		A0137EA815ACE680000AA1C2 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				A0137EA915ACE7F6000AA1C2 /* Cyber Advance!.mp3 */,
-				A0137E8A15ACE678000AA1C2 /* 808_120bpm.wav */,
-				A0137E8B15ACE678000AA1C2 /* ballbounce.wav */,
-				A0137E8C15ACE678000AA1C2 /* cowbell.wav */,
-				A0137E8D15ACE678000AA1C2 /* explodelow.wav */,
-				A0137E8E15ACE678000AA1C2 /* karate.wav */,
-				A0137E8F15ACE678000AA1C2 /* machinegun.caf */,
-				A0137E9015ACE678000AA1C2 /* machinegun.wav */,
-				A0137E9115ACE678000AA1C2 /* mula_tito_on_timbales.mp3 */,
-				A0137E9215ACE678000AA1C2 /* onesample.wav */,
-				A0137E9315ACE678000AA1C2 /* rustylow.wav */,
-				A0137E9415ACE678000AA1C2 /* silencio.wav */,
-				A0137E9515ACE678000AA1C2 /* sine256samples.wav */,
-				A0137E9615ACE678000AA1C2 /* sine440.caf */,
-				A0137E9715ACE678000AA1C2 /* sine440.wav */,
-				A0137E9815ACE678000AA1C2 /* sixteensamples.wav */,
-			);
-			name = Sounds;
 			sourceTree = "<group>";
 		};
 		A019170E167FAA3A0099349A /* CCBReader */ = {
@@ -3639,13 +3583,13 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AD3B921159A54CE002E68D1 /* CDAudioManager.h in Headers */,
-				4AD3B923159A54CE002E68D1 /* CDConfig.h in Headers */,
-				4AD3B924159A54CE002E68D1 /* CDOpenALSupport.h in Headers */,
-				4AD3B926159A54CE002E68D1 /* CocosDenshion.h in Headers */,
-				4AD3B928159A54CE002E68D1 /* SimpleAudioEngine.h in Headers */,
-				4AD3B92A159A54CE002E68D1 /* CDXMacOSXSupport.h in Headers */,
-				4AD3B92C159A54CE002E68D1 /* CDXPropertyModifierAction.h in Headers */,
+				A0407ECA16A73A7E00161E77 /* CDAudioManager.h in Headers */,
+				A0407ECC16A73A7E00161E77 /* CDConfig.h in Headers */,
+				A0407ECD16A73A7E00161E77 /* CDOpenALSupport.h in Headers */,
+				A0407ECF16A73A7E00161E77 /* CDXMacOSXSupport.h in Headers */,
+				A0407ED116A73A7E00161E77 /* CDXPropertyModifierAction.h in Headers */,
+				A0407ED316A73A7E00161E77 /* CocosDenshion.h in Headers */,
+				A0407ED516A73A7E00161E77 /* SimpleAudioEngine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4548,12 +4492,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4AD3B922159A54CE002E68D1 /* CDAudioManager.m in Sources */,
-				4AD3B925159A54CE002E68D1 /* CDOpenALSupport.m in Sources */,
-				4AD3B927159A54CE002E68D1 /* CocosDenshion.m in Sources */,
-				4AD3B929159A54CE002E68D1 /* SimpleAudioEngine.m in Sources */,
-				4AD3B92B159A54CE002E68D1 /* CDXMacOSXSupport.m in Sources */,
-				4AD3B92D159A54CE002E68D1 /* CDXPropertyModifierAction.m in Sources */,
+				A0407ECB16A73A7E00161E77 /* CDAudioManager.m in Sources */,
+				A0407ECE16A73A7E00161E77 /* CDOpenALSupport.m in Sources */,
+				A0407ED016A73A7E00161E77 /* CDXMacOSXSupport.m in Sources */,
+				A0407ED216A73A7E00161E77 /* CDXPropertyModifierAction.m in Sources */,
+				A0407ED416A73A7E00161E77 /* CocosDenshion.m in Sources */,
+				A0407ED616A73A7E00161E77 /* SimpleAudioEngine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

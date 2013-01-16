@@ -11,7 +11,7 @@
 #import "ClippingNodeTest.h"
 
 #if COCOS2D_DEBUG > 1
-#import "CCGL.h"
+#import "Platforms/CCGL.h"
 #import "CCDrawingPrimitives.h"
 #endif
 
