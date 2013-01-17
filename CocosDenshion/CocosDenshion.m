@@ -613,7 +613,7 @@ static BOOL _mixerRateSet = NO;
 #endif
 		return result;
 	} else {
-		CDLOG(@"Denshion::CDSoundEngine Could not find file!\n");
+		CDLOG(@"Denshion::CDSoundEngine Could not find file: %@\n", filePath);
 		//Don't change buffer state here as it will be the same as before method was called
 		return FALSE;
 	}
