@@ -256,4 +256,6 @@
 }
 @end
 
-
+@interface TexturePVRv3Premult : TextureDemo
+{}
+@end
