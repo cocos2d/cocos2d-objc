@@ -287,6 +287,17 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) pathForResource:(NSString*)resource ofType:(NSString *)ext inDirectory:(NSString *)subpath
 {
+    // An absolute path could be used if the searchPath contains absolute paths
+    if( [subpath isAbsolutePath] ) {
+        NSString *fullpath = [subpath stringByAppendingPathComponent:resource];
+        if( ext )
+            fullpath = [fullpath stringByAppendingPathExtension:ext];
+        
+        if( [_fileManager fileExistsAtPath:fullpath] )
+            return fullpath;
+        return nil;
+    }
+    
 	// Default to normal resource directory
 	return [_bundle pathForResource:resource
 							 ofType:ext
