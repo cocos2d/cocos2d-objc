@@ -1702,6 +1702,8 @@
 		A0A1C28215CAEA1E0058D96F /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C25015CAE9C40058D96F /* Default-Landscape.png */; };
 		A0A1C28315CAEA1F0058D96F /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C25015CAE9C40058D96F /* Default-Landscape.png */; };
 		A0A42B17166D9BCB00078217 /* res in Resources */ = {isa = PBXBuildFile; fileRef = A0A42B16166D9BCB00078217 /* res */; };
+		A0A6ACEB16A78F3100D9743D /* grossinis_sister1-testalpha_nopremult.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0A6ACE916A78F3100D9743D /* grossinis_sister1-testalpha_nopremult.pvr */; };
+		A0A6ACEC16A78F3100D9743D /* grossinis_sister1-testalpha_premult.pvr in Resources */ = {isa = PBXBuildFile; fileRef = A0A6ACEA16A78F3100D9743D /* grossinis_sister1-testalpha_premult.pvr */; };
 		A0AA56B11641955000A38D85 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		A0AA56B21641955000A38D85 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0AA56B81641955000A38D85 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
@@ -4799,6 +4801,8 @@
 		A0A1C24F15CAE9AA0058D96F /* 1024x768-splash-angry-02.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "1024x768-splash-angry-02.png"; sourceTree = "<group>"; };
 		A0A1C25015CAE9C40058D96F /* Default-Landscape.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-Landscape.png"; path = "Resources/Default-Landscape.png"; sourceTree = "<group>"; };
 		A0A42B16166D9BCB00078217 /* res */ = {isa = PBXFileReference; lastKnownFileType = folder; path = res; sourceTree = "<group>"; };
+		A0A6ACE916A78F3100D9743D /* grossinis_sister1-testalpha_nopremult.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha_nopremult.pvr"; sourceTree = "<group>"; };
+		A0A6ACEA16A78F3100D9743D /* grossinis_sister1-testalpha_premult.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = "grossinis_sister1-testalpha_premult.pvr"; sourceTree = "<group>"; };
 		A0AA56C81641955000A38D85 /* JS CocosDragon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS CocosDragon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0B035FA13EA09270073E59A /* only_in_hd-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "only_in_hd-hd.pvr.ccz"; sourceTree = "<group>"; };
 		A0B0376D13EA1FDB0073E59A /* b1-ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "b1-ipad.png"; sourceTree = "<group>"; };
@@ -7967,6 +7971,8 @@
 		E0A4A24A11F899BB003B9D29 /* PVR images */ = {
 			isa = PBXGroup;
 			children = (
+				A0A6ACE916A78F3100D9743D /* grossinis_sister1-testalpha_nopremult.pvr */,
+				A0A6ACEA16A78F3100D9743D /* grossinis_sister1-testalpha_premult.pvr */,
 				A01889C715D092E600FF6F4E /* test_image_a8_v3.pvr */,
 				A01889C815D092E600FF6F4E /* test_image_ai88_v3.pvr */,
 				A01889C915D092E600FF6F4E /* test_image_bgra8888_v3.pvr */,
@@ -10325,6 +10331,8 @@
 				A01889E015D092E600FF6F4E /* test_image_rgba8888_v3.pvr in Resources */,
 				A0579BAE1601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BE316019C6000AF8A12 /* Default@2x.png in Resources */,
+				A0A6ACEB16A78F3100D9743D /* grossinis_sister1-testalpha_nopremult.pvr in Resources */,
+				A0A6ACEC16A78F3100D9743D /* grossinis_sister1-testalpha_premult.pvr in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

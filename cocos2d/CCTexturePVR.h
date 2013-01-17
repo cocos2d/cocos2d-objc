@@ -103,6 +103,8 @@ enum {
 	uint32_t _width, _height;
 	GLuint	_name;
 	BOOL	_hasAlpha;
+	BOOL	_hasPremultipliedAlpha;
+	BOOL	_forcePremultipliedAlpha;
 
 	// cocos2d integration
 	BOOL _retainName;
@@ -128,6 +130,10 @@ enum {
 @property (nonatomic,readonly) uint32_t height;
 /** whether or not the texture has alpha */
 @property (nonatomic,readonly) BOOL hasAlpha;
+/** whether or not the texture has premultiplied alpha */
+@property (nonatomic,readonly) BOOL hasPremultipliedAlpha;
+/** whether or not the texture should use hasPremultipliedAlpha instead of global default */
+@property (nonatomic,readonly) BOOL forcePremultipliedAlpha;
 /** how many mipmaps the texture has. 1 means one level (level 0 */
 @property (nonatomic, readonly) NSUInteger numberOfMipmaps;
 

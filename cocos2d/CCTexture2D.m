@@ -729,7 +729,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 			_width = pvr.width;
 			_height = pvr.height;
 			_size = CGSizeMake(_width, _height);
-			_hasPremultipliedAlpha = _PVRHaveAlphaPremultiplied;
+			_hasPremultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
 			_format = pvr.format;
 
 			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
