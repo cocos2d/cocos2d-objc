@@ -8,6 +8,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [NEW] OpenGL: CC_ENABLE_GL_STATE_CACHE is enabled by default. If you are migrating from v1.x, then turn it off to easy the transition
 . [FIX] Texture: PVRv3 textures automatically set the correct value for premultiplid alpha
 . [FIX] Actions, Animations, Camera, Director, Menu, Node, Particles, Parallax, Sprite, SpriteBatch, Texture, TextureAtlas, Transitions: All ivars use _ as prefix, not as suffix
+. [FIX] CocosDenshion: Tests moved to tests directory. Merged CocosDenshion and CocosDenshionExtras directories
 . [FIX] Configuration: Can be initialized before an OpenGL context is created (issue #1450)
 . [FIX] Director: replaced length with lenght
 		Fixed 2 memory leaks in createStatsLabel
