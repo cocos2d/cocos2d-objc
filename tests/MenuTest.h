@@ -46,3 +46,8 @@
 {
 }
 @end
+
+@interface TouchAreaTest : CCLayer
+{
+}
+@end
