@@ -1,9 +1,6 @@
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 	url = git://github.com/slembcke/Chipmunk-Physics.git
-[submodule "external/CCBReader"]
-	path = external/CCBReader
-	url = git://github.com/ricardoquesada/CCBReader.git
 [submodule "external/JavaScript/jsbindings"]
 	path = external/JavaScript/jsbindings
 	url = git://github.com/zynga/jsbindings.git
@@ -16,3 +13,6 @@
 [submodule "tests/cocos2d-js-tests"]
 	path = tests/cocos2d-js-tests
 	url = git://github.com/cocos2d/cocos2d-js-tests.git
+[submodule "external/CCBReader"]
+	path = external/CCBReader
+	url = git://github.com/cocos2d/CCBReader.git
