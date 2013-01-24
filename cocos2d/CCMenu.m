@@ -128,6 +128,10 @@ enum {
 		
 		_selectedItem = nil;
 		_state = kCCMenuStateWaiting;
+		
+		// enable cascade color and opacity on menus
+		self.cascadeColor = YES;
+		self.cascadeOpacity = YES;
 	}
 	
 	return self;

@@ -409,8 +409,7 @@
 @end
 
 
-#pragma mark -
-#pragma mark LayerRGBA
+#pragma mark - LayerRGBA
 
 @implementation CCLayerRGBA
 
@@ -422,17 +421,10 @@
 	if ( (self=[super init]) ) {
         _displayedOpacity = _realOpacity = 255;
         _displayedColor = _realColor = ccWHITE;
-		self.cascadeOpacity = YES;
-		self.cascadeColor = YES;
+		self.cascadeOpacity = NO;
+		self.cascadeColor = NO;
     }
     return self;
-}
-
-// override to update opacity based on parent's
-- (void) onEnter {
-    [super onEnter];
-    [self updateDisplayedOpacity];
-    [self updateDisplayedColor];
 }
 
 -(GLubyte) opacity
@@ -448,9 +440,10 @@
 /** Override synthesized setOpacity to recurse items */
 - (void) setOpacity:(GLubyte)opacity
 {
-	_displayedOpacity = _realOpacity = opacity;
+	_realOpacity = opacity;
 
-    [self updateDisplayedOpacity];
+	// XXX: should get parent's opacity
+    [self updateDisplayedOpacity:255];
 }
 
 -(ccColor3B) color
@@ -467,47 +460,40 @@
 // and recurse child items
 - (void) setColor:(ccColor3B)color
 {
-	_displayedColor = _realColor = color;
-
-    [self updateDisplayedColor];
+	_realColor = color;
+	
+	// XXX: should get parent's color
+	[self updateDisplayedColor:ccWHITE];
 }
 
-- (void)updateDisplayedOpacity {
-#if CC_CASCADING_OPACITY
-    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
-        && ((id<CCRGBAProtocol>)self.parent).cascadeOpacity) {
-        _displayedOpacity = _realOpacity * ((id<CCRGBAProtocol>)self.parent).displayedOpacity/255.0;
-    }
+- (void)updateDisplayedOpacity:(GLubyte)parentOpacity
+{
+	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 
     if (_cascadeOpacity) {
         id<CCRGBAProtocol> item;
         CCARRAY_FOREACH(_children, item) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedOpacity];
+                [item updateDisplayedOpacity:_displayedOpacity];
             }
         }
     }
-#endif
 }
 
-- (void)updateDisplayedColor {
-#if CC_CASCADING_COLOR
-    if ([self.parent conformsToProtocol:@protocol(CCRGBAProtocol)]
-        && ((id<CCRGBAProtocol>)self.parent).cascadeColor) {
-        _displayedColor.r = _realColor.r * ((id<CCRGBAProtocol>)self.parent).displayedColor.r/255.0;
-        _displayedColor.g = _realColor.g * ((id<CCRGBAProtocol>)self.parent).displayedColor.g/255.0;
-        _displayedColor.b = _realColor.b * ((id<CCRGBAProtocol>)self.parent).displayedColor.b/255.0;
-    }
+- (void)updateDisplayedColor:(ccColor3B)parentColor
+{
+	_displayedColor.r = _realColor.r * parentColor.r/255.0;
+	_displayedColor.g = _realColor.g * parentColor.g/255.0;
+	_displayedColor.b = _realColor.b * parentColor.b/255.0;
 
     if (_cascadeColor) {
         id<CCRGBAProtocol> item;
         CCARRAY_FOREACH(_children, item) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
-                [item updateDisplayedColor];
+                [item updateDisplayedColor:_displayedColor];
             }
         }
     }
-#endif
 }
 
 @end
@@ -574,11 +560,6 @@
 	return [self initWithColor:color width:s.width height:s.height];
 }
 
--(void) onEnter {
-    [super onEnter];
-    [self updateDisplayedOpacity];
-    [self updateDisplayedColor];
-}
 
 // override contentSize
 -(void) setContentSize: (CGSize) size
