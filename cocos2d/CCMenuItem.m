@@ -204,6 +204,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		_colorBackup = ccWHITE;
 		self.disabledColor = ccc3( 126,126,126);
 		self.label = label;
+		
+		self.cascadeColor = YES;
+		self.cascadeOpacity = YES;
 	}
 
 	return self;
@@ -284,23 +287,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	}
 
 	[super setIsEnabled:enabled];
-}
-
-- (void) setOpacity: (GLubyte)opacity
-{
-    [_label setOpacity:opacity];
-}
--(GLubyte) opacity
-{
-	return [_label opacity];
-}
--(void) setColor:(ccColor3B)color
-{
-	[_label setColor:color];
-}
--(ccColor3B) color
-{
-	return [_label color];
 }
 @end
 
@@ -519,6 +505,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		self.disabledImage = disabledSprite;
 
 		[self setContentSize: [_normalImage contentSize]];
+		
+		self.cascadeColor = YES;
+		self.cascadeOpacity = YES;
 	}
 	return self;
 }
@@ -565,32 +554,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		
 		[self updateImagesVisibility];
 	}
-}
-
-#pragma mark CCMenuItemSprite - CCRGBAProtocol protocol
-
-- (void) setOpacity: (GLubyte)opacity
-{
-	[_normalImage setOpacity:opacity];
-	[_selectedImage setOpacity:opacity];
-	[_disabledImage setOpacity:opacity];
-}
-
--(void) setColor:(ccColor3B)color
-{
-	[_normalImage setColor:color];
-	[_selectedImage setColor:color];
-	[_disabledImage setColor:color];
-}
-
--(GLubyte) opacity
-{
-	return [_normalImage opacity];
-}
-
--(ccColor3B) color
-{
-	return [_normalImage color];
 }
 
 -(void) selected
@@ -801,6 +764,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
         _currentItem = nil;
 		_selectedIndex = NSUIntegerMax;
 		[self setSelectedIndex:0];
+		
+		self.cascadeColor = YES;
+		self.cascadeOpacity = YES;
 	}
 
 	return self;
@@ -872,22 +838,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(CCMenuItem*) selectedItem
 {
 	return [_subItems objectAtIndex:_selectedIndex];
-}
-
-#pragma mark CCMenuItemToggle - CCRGBAProtocol protocol
-
-- (void) setOpacity: (GLubyte)opacity
-{
-    [super setOpacity:opacity];
-    for(CCMenuItem<CCRGBAProtocol>* item in _subItems)
-		[item setOpacity:opacity];
-}
-
-- (void) setColor:(ccColor3B)color
-{
-	[super setColor:color];
-	for(CCMenuItem<CCRGBAProtocol>* item in _subItems)
-		[item setColor:color];
 }
 
 @end

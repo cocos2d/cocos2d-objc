@@ -38,20 +38,26 @@
  @since v0.8
  */
 @property (nonatomic) ccColor3B color;
-// Cascading properties and methods
+/** returns the displayed color */
 @property (nonatomic, readonly) ccColor3B displayedColor;
+/** whether or not color should be propagated to its children */
 @property (nonatomic) BOOL cascadeColor;
-- (void)updateDisplayedColor;
+
+/** recursive method that updates display color */
+- (void)updateDisplayedColor:(ccColor3B)color;
 
 /** sets and returns the opacity.
  @warning If the the texture has premultiplied alpha then, the R, G and B channels will be modified.
  Values goes from 0 to 255, where 255 means fully opaque.
  */
 @property (nonatomic) GLubyte opacity;
-// Cascading properties and methods
+/** returns the displayed opacity */
 @property (nonatomic, readonly) GLubyte displayedOpacity;
+/** whether or not opacity should be propagated to its children */
 @property (nonatomic) BOOL cascadeOpacity;
-- (void)updateDisplayedOpacity;
+
+/** recursive method that updates the displayed opacity */
+- (void)updateDisplayedOpacity:(GLubyte)opacity;
 
 @optional
 /** sets the premultipliedAlphaOpacity property.

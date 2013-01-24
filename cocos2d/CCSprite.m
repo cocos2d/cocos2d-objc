@@ -865,8 +865,9 @@
 	return _opacityModifyRGB;
 }
 
--(void)updateDisplayedOpacity {
-    [super updateDisplayedOpacity];
+-(void)updateDisplayedOpacity:(GLubyte)parentOpacity
+{
+    [super updateDisplayedOpacity:parentOpacity];
     // special opacity for premultiplied textures
 	if ( _opacityModifyRGB ) {
 		[self setColor: _colorUnmodified];
@@ -874,8 +875,9 @@
     [self updateColor];
 }
 
--(void)updateDisplayedColor {
-    [super updateDisplayedColor];
+-(void)updateDisplayedColor:(ccColor3B)parentColor
+{
+    [super updateDisplayedColor:parentColor];
     [self updateColor];
 }
 
