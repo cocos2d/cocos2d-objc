@@ -813,21 +813,12 @@ void FNTConfigRemoveCache( void )
 		// Apply label properties
 		[fontChar setOpacityModifyRGB:_opacityModifyRGB];
 		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-#if CC_CASCADING_COLOR
-		[fontChar setColor:fontChar.color];
-#else 
-        [fontChar updateDisplayedColor];
-#endif
+		[fontChar setColor:_displayedColor];
 
 		// only apply opacity if it is different than 255 )
 		// to prevent modifying the color too (issue #610)
-		if( _displayedOpacity != 255 ) {
-#if CC_CASCADING_OPACITY
-            [fontChar setOpacity: fontChar.opacity];
-#else
-            [fontChar updateDisplayedOpacity];
-#endif
-        }
+		if( _displayedOpacity != 255 )
+            [fontChar setOpacity: _displayedOpacity];
 
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
