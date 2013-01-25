@@ -164,17 +164,19 @@ int compareInts (const void * a, const void * b);
 -(CCSprite*) reusedTileWithRect:(CGRect)rect
 {	
 	if( ! reusedTile_ ) {
-		reusedTile_ = [[CCSprite alloc] initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
+		reusedTile_ = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect rotated:NO];
 		[reusedTile_ setBatchNode:self];
 	}
 	else
 	{
-		// XXX: should not be re-init. Potential memeory leak. Not following best practices
-		// XXX: it shall call directory  [setRect:rect]
-		[reusedTile_ initWithTexture:textureAtlas_.texture rect:rect rotated:NO];
-		
-		// Since initWithTexture resets the batchNode, we need to re add it.
-		// but should be removed once initWithTexture is not called again
+		// XXX HACK: Needed because if "batch node" is nil,
+		// then the Sprite'squad will be reset
+		[reusedTile_ setBatchNode:nil];
+
+		// Re-init the sprite
+		[reusedTile_ setTextureRect:rect rotated:NO untrimmedSize:rect.size];
+
+		// restore the batch node
 		[reusedTile_ setBatchNode:self];
 	}
 
@@ -184,14 +186,14 @@ int compareInts (const void * a, const void * b);
 -(void) setupTiles
 {
 	// Optimization: quick hack that sets the image size on the tileset
-	tileset_.imageSize = [textureAtlas_.texture contentSizeInPixels];
+	tileset_.imageSize = [_textureAtlas.texture contentSizeInPixels];
 
 	// By default all the tiles are aliased
 	// pros:
 	//  - easier to render
 	// cons:
 	//  - difficult to scale / rotate / etc.
-	[textureAtlas_.texture setAliasTexParameters];
+	[_textureAtlas.texture setAliasTexParameters];
 
 	// Parse cocos2d properties
 	[self parseInternalProperties];
@@ -246,7 +248,7 @@ int compareInts (const void * a, const void * b);
 
 			self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
 
-			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram->program_, kCCUniformAlphaTestValue);
+			GLint alphaValueLocation = glGetUniformLocation(self.shaderProgram.program, kCCUniformAlphaTestValue);
 
 			// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
 			[self.shaderProgram setUniformLocation:alphaValueLocation withF1:alphaFuncValue];
@@ -386,14 +388,14 @@ int compareInts (const void * a, const void * b);
 	NSUInteger indexForZ = [self atlasIndexForNewZ:z];
 
 	// Optimization: add the quad without adding a child
-	[self addQuadFromSprite:tile quadIndex:indexForZ];
+	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 	// insert it into the local atlasindex array
 	ccCArrayInsertValueAtIndex(atlasIndexArray_, (void*)z, indexForZ);
 
 	// update possible children
 	CCSprite *sprite;
-	CCARRAY_FOREACH(children_, sprite) {
+	CCARRAY_FOREACH(_children, sprite) {
 		NSUInteger ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -447,7 +449,7 @@ int compareInts (const void * a, const void * b);
 
 
 	// don't add it using the "standard" way.
-	[self addQuadFromSprite:tile quadIndex:indexForZ];
+	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 
 	// append should be after addQuadFromSprite since it modifies the quantity values
@@ -545,7 +547,7 @@ int compareInts (const void * a, const void * b)
 	if( ! sprite )
 		return;
 
-	NSAssert( [children_ containsObject:sprite], @"Tile does not belong to TMXLayer");
+	NSAssert( [_children containsObject:sprite], @"Tile does not belong to TMXLayer");
 
 	NSUInteger atlasIndex = [sprite atlasIndex];
 	NSUInteger zz = (NSUInteger) atlasIndexArray_->arr[atlasIndex];
@@ -577,10 +579,10 @@ int compareInts (const void * a, const void * b)
 		if( sprite )
 			[super removeChild:sprite cleanup:YES];
 		else {
-			[textureAtlas_ removeQuadAtIndex:atlasIndex];
+			[_textureAtlas removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			CCARRAY_FOREACH(children_, sprite) {
+			CCARRAY_FOREACH(_children, sprite) {
 				NSUInteger ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];

@@ -35,9 +35,9 @@
 
 
 @implementation CCMotionStreak
-@synthesize texture = texture_;
-@synthesize blendFunc = blendFunc_;
-@synthesize fastMode = fastMode_;
+@synthesize texture = _texture;
+@synthesize blendFunc = _blendFunc;
+@synthesize fastMode = _fastMode;
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
 {
@@ -66,27 +66,27 @@
         [self setAnchorPoint:CGPointZero];
         [self setIgnoreAnchorPointForPosition:YES];
 
-		startingPositionInitialized_ = NO;
-        positionR_ = CGPointZero;
-        fastMode_ = YES;
-        minSeg_ = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
-        minSeg_ *= minSeg_;
+		_startingPositionInitialized = NO;
+        _positionR = CGPointZero;
+        _fastMode = YES;
+        _minSeg = (minSeg == -1.0f) ? stroke/5.0f : minSeg;
+        _minSeg *= _minSeg;
 
-        stroke_ = stroke;
-        fadeDelta_ = 1.0f/fade;
+        _stroke = stroke;
+        _fadeDelta = 1.0f/fade;
 
-        maxPoints_ = (int)(fade*60.0f)+2;
-        nuPoints_ = previousNuPoints_ = 0;
-        pointState_ = malloc(sizeof(float) * maxPoints_);
-        pointVertexes_ = malloc(sizeof(CGPoint) * maxPoints_);
+        _maxPoints = (int)(fade*60.0f)+2;
+        _nuPoints = _previousNuPoints = 0;
+        _pointState = malloc(sizeof(float) * _maxPoints);
+        _pointVertexes = malloc(sizeof(CGPoint) * _maxPoints);
 
-        vertices_ = malloc(sizeof(ccVertex2F) * maxPoints_ * 2);
-        texCoords_ = malloc(sizeof(ccTex2F) * maxPoints_ * 2);
-        colorPointer_ =  malloc(sizeof(GLubyte) * maxPoints_ * 2 * 4);
+        _vertices = malloc(sizeof(ccVertex2F) * _maxPoints * 2);
+        _texCoords = malloc(sizeof(ccTex2F) * _maxPoints * 2);
+        _colorPointer =  malloc(sizeof(GLubyte) * _maxPoints * 2 * 4);
 
         // Set blend mode
-        blendFunc_.src = GL_SRC_ALPHA;
-		blendFunc_.dst = GL_ONE_MINUS_SRC_ALPHA;
+        _blendFunc.src = GL_SRC_ALPHA;
+		_blendFunc.dst = GL_ONE_MINUS_SRC_ALPHA;
 
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
@@ -103,8 +103,8 @@
 
 - (void) setPosition:(CGPoint)position
 {
-	startingPositionInitialized_ = YES;
-    positionR_ = position;
+	_startingPositionInitialized = YES;
+    _positionR = position;
 }
 
 - (void) tintWithColor:(ccColor3B)colors
@@ -112,18 +112,8 @@
     [self setColor:colors];
 
     // Fast assignation
-    for(int i = 0; i<nuPoints_*2; i++)
-        *((ccColor3B*) (colorPointer_+i*4)) = colors;
-}
-
-- (void) setColor:(ccColor3B)colors
-{
-    color_ = colors;
-}
-
-- (ccColor3B) color
-{
-    return color_;
+    for(int i = 0; i<_nuPoints*2; i++)
+        *((ccColor3B*) (_colorPointer+i*4)) = colors;
 }
 
 - (void) setOpacity:(GLubyte)opacity
@@ -141,20 +131,20 @@
 
 - (void) update:(ccTime)delta
 {
-	if( !startingPositionInitialized_ )
+	if( !_startingPositionInitialized )
 		return;
 
-    delta *= fadeDelta_;
+    delta *= _fadeDelta;
 	
     NSUInteger newIdx, newIdx2, i, i2;
     NSUInteger mov = 0;
 
     // Update current points
-    for(i = 0; i<nuPoints_; i++)
+    for(i = 0; i<_nuPoints; i++)
     {
-        pointState_[i]-=delta;
+        _pointState[i]-=delta;
 
-        if(pointState_[i] <= 0)
+        if(_pointState[i] <= 0)
             mov++;
         else
         {
@@ -163,126 +153,126 @@
             if(mov>0)
             {
                 // Move data
-                pointState_[newIdx] = pointState_[i];
+                _pointState[newIdx] = _pointState[i];
 
                 // Move point
-                pointVertexes_[newIdx] = pointVertexes_[i];
+                _pointVertexes[newIdx] = _pointVertexes[i];
 
                 // Move vertices
                 i2 = i*2;
                 newIdx2 = newIdx*2;
-                vertices_[newIdx2] = vertices_[i2];
-                vertices_[newIdx2+1] = vertices_[i2+1];
+                _vertices[newIdx2] = _vertices[i2];
+                _vertices[newIdx2+1] = _vertices[i2+1];
 
                 // Move color
                 i2 *= 4;
                 newIdx2 *= 4;
-                colorPointer_[newIdx2+0] = colorPointer_[i2+0];
-                colorPointer_[newIdx2+1] = colorPointer_[i2+1];
-                colorPointer_[newIdx2+2] = colorPointer_[i2+2];
-                colorPointer_[newIdx2+4] = colorPointer_[i2+4];
-                colorPointer_[newIdx2+5] = colorPointer_[i2+5];
-                colorPointer_[newIdx2+6] = colorPointer_[i2+6];
+                _colorPointer[newIdx2+0] = _colorPointer[i2+0];
+                _colorPointer[newIdx2+1] = _colorPointer[i2+1];
+                _colorPointer[newIdx2+2] = _colorPointer[i2+2];
+                _colorPointer[newIdx2+4] = _colorPointer[i2+4];
+                _colorPointer[newIdx2+5] = _colorPointer[i2+5];
+                _colorPointer[newIdx2+6] = _colorPointer[i2+6];
             }else
                 newIdx2 = newIdx*8;
 
-            const GLubyte op = pointState_[newIdx] * 255.0f;
-            colorPointer_[newIdx2+3] = op;
-            colorPointer_[newIdx2+7] = op;
+            const GLubyte op = _pointState[newIdx] * 255.0f;
+            _colorPointer[newIdx2+3] = op;
+            _colorPointer[newIdx2+7] = op;
         }
     }
-    nuPoints_-=mov;
+    _nuPoints-=mov;
 
     // Append new point
     BOOL appendNewPoint = YES;
-    if(nuPoints_ >= maxPoints_)
+    if(_nuPoints >= _maxPoints)
         appendNewPoint = NO;
 
-    else if(nuPoints_>0)
+    else if(_nuPoints>0)
     {
-        BOOL a1 = ccpDistanceSQ(pointVertexes_[nuPoints_-1], positionR_) < minSeg_;
-        BOOL a2 = (nuPoints_ == 1) ? NO : (ccpDistanceSQ(pointVertexes_[nuPoints_-2], positionR_) < (minSeg_ * 2.0f));
+        BOOL a1 = ccpDistanceSQ(_pointVertexes[_nuPoints-1], _positionR) < _minSeg;
+        BOOL a2 = (_nuPoints == 1) ? NO : (ccpDistanceSQ(_pointVertexes[_nuPoints-2], _positionR) < (_minSeg * 2.0f));
         if(a1 || a2)
             appendNewPoint = NO;
     }
 
     if(appendNewPoint)
     {
-        pointVertexes_[nuPoints_] = positionR_;
-        pointState_[nuPoints_] = 1.0f;
+        _pointVertexes[_nuPoints] = _positionR;
+        _pointState[_nuPoints] = 1.0f;
 
         // Color asignation
-        const NSUInteger offset = nuPoints_*8;
-        *((ccColor3B*)(colorPointer_ + offset)) = color_;
-        *((ccColor3B*)(colorPointer_ + offset+4)) = color_;
+        const NSUInteger offset = _nuPoints*8;
+        *((ccColor3B*)(_colorPointer + offset)) = _displayedColor;
+        *((ccColor3B*)(_colorPointer + offset+4)) = _displayedColor;
 
         // Opacity
-        colorPointer_[offset+3] = 255;
-        colorPointer_[offset+7] = 255;
+        _colorPointer[offset+3] = 255;
+        _colorPointer[offset+7] = 255;
 
         // Generate polygon
-        if(nuPoints_ > 0 && fastMode_ )
+        if(_nuPoints > 0 && _fastMode )
         {
-            if(nuPoints_ > 1)
-                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, nuPoints_, 1);
+            if(_nuPoints > 1)
+                ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, _nuPoints, 1);
             else
-                ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, 0, 2);
+                ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, 2);
         }
 
-        nuPoints_ ++;
+        _nuPoints ++;
     }
 
-    if( ! fastMode_ )
-        ccVertexLineToPolygon(pointVertexes_, stroke_, vertices_, 0, nuPoints_);
+    if( ! _fastMode )
+        ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
 	
 	
 	// Updated Tex Coords only if they are different than previous step
-	if( nuPoints_  && previousNuPoints_ != nuPoints_ ) {
-		float texDelta = 1.0f / nuPoints_;
-		for( i=0; i < nuPoints_; i++ ) {
-			texCoords_[i*2] = (ccTex2F) {0, texDelta*i};
-			texCoords_[i*2+1] = (ccTex2F) {1, texDelta*i};
+	if( _nuPoints  && _previousNuPoints != _nuPoints ) {
+		float texDelta = 1.0f / _nuPoints;
+		for( i=0; i < _nuPoints; i++ ) {
+			_texCoords[i*2] = (ccTex2F) {0, texDelta*i};
+			_texCoords[i*2+1] = (ccTex2F) {1, texDelta*i};
 		}
 		
-		previousNuPoints_ = nuPoints_;
+		_previousNuPoints = _nuPoints;
 	}
 }
 
 - (void) reset
 {
-    nuPoints_ = 0;
+    _nuPoints = 0;
 }
 
 - (void) draw
 {
-    if(nuPoints_ <= 1)
+    if(_nuPoints <= 1)
         return;
 
 	CC_NODE_DRAW_SETUP();
 
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-	ccGLBindTexture2D( [texture_ name] );
+	ccGLBindTexture2D( [_texture name] );
 
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices_);
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, texCoords_);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, colorPointer_);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, _vertices);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, 0, _texCoords);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, 0, _colorPointer);
 
-    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)nuPoints_*2);
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)_nuPoints*2);
 	
 	CC_INCREMENT_GL_DRAWS(1);
 }
 
 - (void)dealloc
 {
-    [texture_ release];
+    [_texture release];
 
-    free(pointState_);
-    free(pointVertexes_);
-    free(vertices_);
-    free(colorPointer_);
-    free(texCoords_);
+    free(_pointState);
+    free(_pointVertexes);
+    free(_vertices);
+    free(_colorPointer);
+    free(_texCoords);
 
     [super dealloc];
 }

@@ -93,13 +93,13 @@ enum {
 @implementation Shaky3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:NO grid:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(15,10) range:5 shakeZ:NO];
 }
 @end
 @implementation Waves3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:5 amplitude:40 grid:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(15,10) waves:5 amplitude:40];
 }
 @end
 @implementation FlipX3DDemo
@@ -126,51 +126,51 @@ enum {
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 grid:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(15,10) position:ccp(size.width/2,size.height/2) radius:240];
 }
 @end
 @implementation Ripple3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2,size.height/2) radius:240 waves:4 amplitude:160 grid:ccg(32,24) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(32,24) position:ccp(size.width/2,size.height/2) radius:240 waves:4 amplitude:160];
 }
 @end
 @implementation LiquidDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 grid:ccg(16,12) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16,12) waves:4 amplitude:20];
 }
 @end
 @implementation WavesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:20 horizontal:YES vertical:YES grid:ccg(16,12) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16,12) waves:4 amplitude:20 horizontal:YES vertical:YES];
 }
 @end
 @implementation TwirlDemo
 +(id) actionWithDuration:(ccTime)t
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];
-	return [self actionWithPosition:ccp(size.width/2, size.height/2) twirls:1 amplitude:2.5f grid:ccg(12,8) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(12,8) position:ccp(size.width/2, size.height/2) twirls:1 amplitude:2.5f];
 }
 @end
 @implementation ShakyTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shakeZ:NO grid:ccg(16,12) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16, 12) range:5 shakeZ:NO];
 }
 @end
 @implementation ShatteredTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRange:5 shatterZ:NO grid:ccg(16,12) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16,12) range:5 shatterZ:NO];
 }
 @end
 @implementation ShuffleTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id shuffle = [CCShuffleTiles actionWithSeed:25 grid:ccg(16,12) duration:t];
+	id shuffle = [CCShuffleTiles actionWithDuration:t size:CGSizeMake(16,12) seed:25];
 	id shuffle_back = [shuffle reverse];
 	id delay = [CCDelayTime actionWithDuration:2];
 
@@ -180,7 +180,7 @@ enum {
 @implementation FadeOutTRTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutTRTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutTRTiles actionWithDuration:t size:CGSizeMake(16,12)];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -190,7 +190,7 @@ enum {
 @implementation FadeOutBLTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutBLTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutBLTiles actionWithDuration:t size:CGSizeMake(16,12)];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -200,7 +200,7 @@ enum {
 @implementation FadeOutUpTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutUpTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutUpTiles actionWithDuration:t size:CGSizeMake(16,12)];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -210,7 +210,7 @@ enum {
 @implementation FadeOutDownTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id fadeout = [CCFadeOutDownTiles actionWithSize:ccg(16,12) duration:t];
+	id fadeout = [CCFadeOutDownTiles actionWithDuration:t size:CGSizeMake(16,12)];
 	id back = [fadeout reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -220,7 +220,7 @@ enum {
 @implementation TurnOffTilesDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	id action = [CCTurnOffTiles actionWithSeed:25 grid:ccg(48,32) duration:t];
+	id action = [CCTurnOffTiles actionWithDuration:t size:CGSizeMake(16,12) seed:25];
 	id back = [action reverse];
 	id delay = [CCDelayTime actionWithDuration:0.5f];
 
@@ -230,32 +230,32 @@ enum {
 @implementation WavesTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithWaves:4 amplitude:120 grid:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16,12) waves:4 amplitude:120];
 }
 @end
 @implementation JumpTiles3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithJumps:2 amplitude:30 grid:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(16,12) jumps:2 amplitude:30];
 }
 @end
 @implementation SplitRowsDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithRows:9 duration:t];
+	return [self actionWithDuration:t rows:9];
 }
 @end
 @implementation SplitColsDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithCols:9 duration:t];
+	return [self actionWithDuration:t cols:9];
 }
 @end
 
 @implementation PageTurn3DDemo
 +(id) actionWithDuration:(ccTime)t
 {
-	return [self actionWithSize:ccg(15,10) duration:t];
+	return [self actionWithDuration:t size:CGSizeMake(15,10)];
 }
 @end
 
@@ -487,8 +487,8 @@ Class restartAction()
 
 	// set the Navigation Controller as the root view controller
 	[window_ addSubview:navController_.view];
-//	[window_ setRootViewController:navController_];	// iOS6 bug: Needs setRootViewController
 
+	
 	// make main window visible
 	[window_ makeKeyAndVisible];
 
@@ -507,12 +507,20 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [TextLayer node] z:0 tag:kTagTextLayer];
+		[director runWithScene: scene];
+	}
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

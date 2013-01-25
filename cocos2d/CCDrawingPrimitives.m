@@ -23,6 +23,17 @@
  * THE SOFTWARE.
  */
 
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT 
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
+
 #import <math.h>
 #import <stdlib.h>
 #import <string.h>
@@ -52,13 +63,27 @@ static void lazy_init( void )
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
 		shader_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
+		[shader_ retain];
 
-		colorLocation_ = glGetUniformLocation( shader_->program_, "u_color");
-		pointSizeLocation_ = glGetUniformLocation( shader_->program_, "u_pointSize");
+		colorLocation_ = glGetUniformLocation( shader_.program, "u_color");
+		pointSizeLocation_ = glGetUniformLocation( shader_.program, "u_pointSize");
 
 		initialized = YES;
 	}
 
+}
+
+void ccDrawFree(void)
+{
+	[shader_ release];
+	
+	shader_ = nil;
+	initialized = NO;
+}
+
+void ccDrawInit(void)
+{
+	lazy_init();
 }
 
 void ccDrawPoint( CGPoint point )
@@ -70,7 +95,7 @@ void ccDrawPoint( CGPoint point )
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];
+	[shader_ setUniformsForBuiltins];
 
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 	[shader_ setUniformLocation:pointSizeLocation_ withF1:pointSize_];
@@ -89,7 +114,7 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];
+	[shader_ setUniformsForBuiltins];
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 	[shader_ setUniformLocation:pointSizeLocation_ withF1:pointSize_];
 
@@ -125,7 +150,7 @@ void ccDrawLine( CGPoint origin, CGPoint destination )
 	};
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];
+	[shader_ setUniformsForBuiltins];
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -160,7 +185,7 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	lazy_init();
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];
+	[shader_ setUniformsForBuiltins];
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -194,7 +219,7 @@ void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F 
 	lazy_init();
     
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformsForBuiltins];    
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -245,7 +270,7 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	vertices[(segs+1)*2+1] = center.y;
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformsForBuiltins];    
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -274,7 +299,7 @@ void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUI
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformsForBuiltins];    
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -325,7 +350,7 @@ void ccDrawCardinalSpline( CCPointArray *config, CGFloat tension,  NSUInteger se
 	}
 	
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformsForBuiltins];    
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 	
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -352,7 +377,7 @@ void ccDrawCubicBezier(CGPoint origin, CGPoint control1, CGPoint control2, CGPoi
 	vertices[segments] = (ccVertex2F) {destination.x, destination.y};
 
 	[shader_ use];
-	[shader_ setUniformForModelViewProjectionMatrix];    
+	[shader_ setUniformsForBuiltins];    
 	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );

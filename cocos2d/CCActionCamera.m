@@ -38,10 +38,10 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	CCCamera *camera = [target_ camera];
-	[camera centerX:&centerXOrig_ centerY:&centerYOrig_ centerZ:&centerZOrig_];
-	[camera eyeX:&eyeXOrig_ eyeY:&eyeYOrig_ eyeZ:&eyeZOrig_];
-	[camera upX:&upXOrig_ upY:&upYOrig_ upZ: &upZOrig_];
+	CCCamera *camera = [_target camera];
+	[camera centerX:&_centerXOrig centerY:&_centerYOrig centerZ:&_centerZOrig];
+	[camera eyeX:&_eyeXOrig eyeY:&_eyeYOrig eyeZ:&_eyeZOrig];
+	[camera upX:&_upXOrig upY:&_upYOrig upZ: &_upZOrig];
 }
 
 -(id) reverse
@@ -58,7 +58,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithDuration:duration_ radius:radius_ deltaRadius:deltaRadius_ angleZ:angleZ_ deltaAngleZ:deltaAngleZ_ angleX:angleX_ deltaAngleX:deltaAngleX_];
+	return [[[self class] allocWithZone: zone] initWithDuration:_duration radius:_radius deltaRadius:_deltaRadius angleZ:_angleZ deltaAngleZ:_deltaAngleZ angleX:_angleX deltaAngleX:_deltaAngleX];
 }
 
 
@@ -66,15 +66,15 @@
 {
 	if((self=[super initWithDuration:t]) ) {
 
-		radius_ = r;
-		deltaRadius_ = dr;
-		angleZ_ = z;
-		deltaAngleZ_ = dz;
-		angleX_ = x;
-		deltaAngleX_ = dx;
+		_radius = r;
+		_deltaRadius = dr;
+		_angleZ = z;
+		_deltaAngleZ = dz;
+		_angleX = x;
+		_deltaAngleX = dx;
 
-		radDeltaZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
-		radDeltaX_ = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
+		_radDeltaZ = (CGFloat)CC_DEGREES_TO_RADIANS(dz);
+		_radDeltaX = (CGFloat)CC_DEGREES_TO_RADIANS(dx);
 	}
 
 	return self;
@@ -88,31 +88,31 @@
 	[self sphericalRadius: &r zenith:&zenith azimuth:&azimuth];
 
 #if 0 // isnan() is not supported on the simulator, and isnan() always returns false.
-	if( isnan(radius_) )
-		radius_ = r;
+	if( isnan(_radius) )
+		_radius = r;
 
-	if( isnan( angleZ_) )
-		angleZ_ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
+	if( isnan( _angleZ) )
+		_angleZ = (CGFloat)CC_RADIANS_TO_DEGREES(zenith);
 
-	if( isnan( angleX_ ) )
-		angleX_ = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
+	if( isnan( _angleX ) )
+		_angleX = (CGFloat)CC_RADIANS_TO_DEGREES(azimuth);
 #endif
 
-	radZ_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleZ_);
-	radX_ = (CGFloat)CC_DEGREES_TO_RADIANS(angleX_);
+	_radZ = (CGFloat)CC_DEGREES_TO_RADIANS(_angleZ);
+	_radX = (CGFloat)CC_DEGREES_TO_RADIANS(_angleX);
 }
 
 -(void) update: (ccTime) dt
 {
-	float r = (radius_ + deltaRadius_ * dt) *[CCCamera getZEye];
-	float za = radZ_ + radDeltaZ_ * dt;
-	float xa = radX_ + radDeltaX_ * dt;
+	float r = (_radius + _deltaRadius * dt) *[CCCamera getZEye];
+	float za = _radZ + _radDeltaZ * dt;
+	float xa = _radX + _radDeltaX * dt;
 
-	float i = sinf(za) * cosf(xa) * r + centerXOrig_;
-	float j = sinf(za) * sinf(xa) * r + centerYOrig_;
-	float k = cosf(za) * r + centerZOrig_;
+	float i = sinf(za) * cosf(xa) * r + _centerXOrig;
+	float j = sinf(za) * sinf(xa) * r + _centerYOrig;
+	float k = cosf(za) * r + _centerZOrig;
 
-	[[target_ camera] setEyeX:i eyeY:j eyeZ:k];
+	[[_target camera] setEyeX:i eyeY:j eyeZ:k];
 }
 
 -(void) sphericalRadius:(float*) newRadius zenith:(float*) zenith azimuth:(float*) azimuth
@@ -121,7 +121,7 @@
 	float r; // radius
 	float s;
 
-	CCCamera *camera = [target_ camera];
+	CCCamera *camera = [_target camera];
 	[camera eyeX:&ex eyeY:&ey eyeZ:&ez];
 	[camera centerX:&cx centerY:&cy centerZ:&cz];
 

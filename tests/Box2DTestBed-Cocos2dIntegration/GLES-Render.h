@@ -34,7 +34,7 @@
 #import <OpenGL/OpenGL.h>
 #endif
 
-#include "Box2D.h"
+#include "Box2d/Box2D.h"
 
 struct b2AABB;
 

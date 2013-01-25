@@ -133,7 +133,10 @@
 	[director reshapeProjection: NSSizeToCGSize(rect.size) ];
 
 	// avoid flicker
-	[director drawScene];
+  // Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
+	if(director.runningScene){
+    [director drawScene];
+  }
 //	[self setNeedsDisplay:YES];
 	
 	[self unlockOpenGLContext];
@@ -282,6 +285,37 @@
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+#pragma mark CCGLView - Gesture events
+- (void)beginGestureWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)magnifyWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)smartMagnifyWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)rotateWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)swipeWithEvent:(NSEvent *)theEvent
+{
+	DISPATCH_EVENT(theEvent, _cmd);
+}
+
+- (void)endGestureWithEvent:(NSEvent *)theEvent
 {
 	DISPATCH_EVENT(theEvent, _cmd);
 }

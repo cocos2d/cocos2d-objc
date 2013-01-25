@@ -59,6 +59,16 @@ struct CCPVRMipmap {
 	unsigned int len;
 };
 
+typedef struct _ccPVRTexturePixelFormatInfo {
+	GLenum internalFormat;
+	GLenum format;
+	GLenum type;
+	uint32_t bpp;
+	BOOL compressed;
+	BOOL alpha;
+	CCTexture2DPixelFormat ccPixelFormat;
+} ccPVRTexturePixelFormatInfo;
+
 enum {
 	CC_PVRMIPMAP_MAX = 16,
 };
@@ -87,17 +97,20 @@ enum {
  */
 @interface CCTexturePVR : NSObject
 {
-	struct CCPVRMipmap	mipmaps_[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
-	NSUInteger	numberOfMipmaps_;					// number of mipmap used
+	struct CCPVRMipmap	_mipmaps[CC_PVRMIPMAP_MAX];	// pointer to mipmap images
+	NSUInteger	_numberOfMipmaps;					// number of mipmap used
 
-	unsigned int	tableFormatIndex_;
-	uint32_t width_, height_;
-	GLuint	name_;
-	BOOL hasAlpha_;
+	uint32_t _width, _height;
+	GLuint	_name;
+	BOOL	_hasAlpha;
+	BOOL	_hasPremultipliedAlpha;
+	BOOL	_forcePremultipliedAlpha;
 
 	// cocos2d integration
-	BOOL retainName_;
-	CCTexture2DPixelFormat format_;
+	BOOL _retainName;
+	CCTexture2DPixelFormat _format;
+	
+	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
 
 /** initializes a CCTexturePVR with a path */
@@ -117,6 +130,10 @@ enum {
 @property (nonatomic,readonly) uint32_t height;
 /** whether or not the texture has alpha */
 @property (nonatomic,readonly) BOOL hasAlpha;
+/** whether or not the texture has premultiplied alpha */
+@property (nonatomic,readonly) BOOL hasPremultipliedAlpha;
+/** whether or not the texture should use hasPremultipliedAlpha instead of global default */
+@property (nonatomic,readonly) BOOL forcePremultipliedAlpha;
 /** how many mipmaps the texture has. 1 means one level (level 0 */
 @property (nonatomic, readonly) NSUInteger numberOfMipmaps;
 

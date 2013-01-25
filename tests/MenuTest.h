@@ -41,3 +41,8 @@
 {
 }
 @end
+
+@interface BugsTest : CCLayer
+{
+}
+@end

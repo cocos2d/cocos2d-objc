@@ -129,7 +129,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.isKeyboardEnabled = YES;
+		self.keyboardEnabled = YES;
 	}
 
 	return self;
@@ -178,7 +178,7 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 	}
 
 	return self;
@@ -298,7 +298,8 @@ Class restartAction()
 			[batch_ addChild:sprites_[i]];
 		}
 
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
+        self.gestureEnabled = YES;
 	}
 
 	return self;
@@ -306,6 +307,7 @@ Class restartAction()
 
 -(void) dealloc
 {
+    free(sprites_);
 	[super dealloc];
 }
 
@@ -316,7 +318,7 @@ Class restartAction()
 
 -(NSString *) subtitle
 {
-	return @"Touch the trackpad. See the console";
+	return @"Touch, pinch, rotate, swipe the trackpad. See the console";
 }
 
 
@@ -336,109 +338,113 @@ Class restartAction()
 	[super onExit];
 }
 
+- (void)resetToTouchesMatchingPhaseTouchingWithEvent:(NSEvent *)event
+{
+    for(int i = 0; i < nuSprites_; i++) {
+        CCSprite *sprite = sprites_[i];
+        sprite.visible = NO;
+        sprite.userObject = nil;
+    }
+    nuSprites_ = 0;
+    
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching inView:[CCDirector sharedDirector].view];
+    for (NSTouch *touch in touches) {
+        
+		CCSprite *sprite = sprites_[nuSprites_++];
+        sprite.visible = YES;
+        sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(self.contentSize));
+        sprite.userObject = touch.identity;
+        
+        if (nuSprites_ > capacity) {
+            nuSprites_ = capacity;
+            break;
+        }
+    }
+}
+
 -(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event
 {
-	NSLog(@"touchesBegan: %@", event);
-
-	NSView *view = [[CCDirector sharedDirector] view];
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
-
-	for (NSTouch *touch in touches)
-	{
-		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
-		// convert to absolute position
-		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
-
-		CCSprite *newSprite = sprites_[nuSprites_];
-		[newSprite setVisible:YES];
-		[newSprite setUserData:[touch identity]];
-		[newSprite setPosition:pos];
-
-		nuSprites_++;
-		nuSprites_ = nuSprites_ >capacity ? capacity : nuSprites_;
-	}
-	return YES;
+    NSLog(@"touchesBegan: %@", event);
+    [self resetToTouchesMatchingPhaseTouchingWithEvent:event];
+    return YES;
 }
 
 -(BOOL) ccTouchesMovedWithEvent:(NSEvent *)event
 {
-	NSLog(@"touchesMoved: %@", event);
-
-	NSView *view = [[CCDirector sharedDirector] view];
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:view];
-
-	for (NSTouch *touch in touches)
-	{
-		id <NSObject> identity = [touch identity];
-		CGPoint pos = CCNSPointToCGPoint(touch.normalizedPosition);
-		pos = ccpCompMult(pos, ccp(contentSize_.width, contentSize_.height));
-
-		for(int i = 0; i<nuSprites_; i++)
-		{
-			CCSprite *sprite = sprites_[i];
-			if([identity isEqual:[sprite userData]])
-				[sprite setPosition:pos];
-		}
-	}
-	return YES;
+    NSLog(@"touchesMoved: %@", event);
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:[CCDirector sharedDirector].view];
+    for (NSTouch *touch in touches) {
+        for(int i = 0; i < nuSprites_; i++) {
+            CCSprite *sprite = sprites_[i];
+            if ([sprite.userObject isEqual:touch.identity])
+                sprite.position = ccpCompMult(CCNSPointToCGPoint(touch.normalizedPosition), ccpFromSize(self.contentSize));
+        }
+    }
+    
+    return YES;
 }
 
 -(BOOL) ccTouchesEndedWithEvent:(NSEvent *)event
 {
-	NSLog(@"touchesEnded: %@", event);
-
-	NSView *view = [[CCDirector sharedDirector] view];
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseEnded inView:view];
-
-	for (NSTouch *touch in touches)
-	{
-		id <NSObject> identity = [touch identity];
-
-		for(int i = 0; i<nuSprites_; i++)
-		{
-			CCSprite *sprite = sprites_[i];
-			if([identity isEqual:[sprite userData]])
-			{
-				[sprite setVisible:NO];
-				[sprite setUserData:nil];
-
-				nuSprites_--;
-				sprites_[i] = sprites_[nuSprites_];
-				sprites_[nuSprites_] = sprite;
-			}
-		}
-	}
-	return YES;
+    NSLog(@"touchesEnded: %@", event);
+    [self resetToTouchesMatchingPhaseTouchingWithEvent:event];
+    return YES;
 }
 
 -(BOOL) ccTouchesCancelledWithEvent:(NSEvent *)event
 {
-	NSLog(@"touchesCancelled: %@", event);
-
-	NSView *view = [[CCDirector sharedDirector] view];
-	NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseCancelled inView:view];
-
-	for (NSTouch *touch in touches)
-	{
-		id <NSObject> identity = [touch identity];
-
-		for(int i = 0; i<nuSprites_; i++)
-		{
-			CCSprite *sprite = sprites_[i];
-			if([identity isEqual:[sprite userData]])
-			{
-				[sprite setVisible:NO];
-				[sprite setUserData:nil];
-
-				nuSprites_--;
-				sprites_[i] = sprites_[nuSprites_];
-				sprites_[nuSprites_] = sprite;
-			}
-		}
-	}
-	return YES;
+    NSLog(@"touchesCancelled: %@", event);
+    [self resetToTouchesMatchingPhaseTouchingWithEvent:event];
+    return YES;
 }
 
+- (BOOL)ccBeginGestureWithEvent:(NSEvent *)event
+{
+	NSLog(@"beginGesture: %@", event);
+    [self stopAllActions];
+    return YES;
+}
+
+- (BOOL)ccMagnifyWithEvent:(NSEvent *)event
+{
+	NSLog(@"magnify: %@", event);
+    self.scale += event.magnification;
+    return YES;
+}
+
+- (BOOL)ccSmartMagnifyWithEvent:(NSEvent *)event
+{
+	NSLog(@"smartMagnify: %@", event);
+    self.scale = self.scale == 1 ? 1.2 : 1;
+    return YES;
+}
+
+- (BOOL)ccRotateWithEvent:(NSEvent *)event
+{
+	NSLog(@"rotate: %@", event);
+    self.rotation -= event.rotation;
+    return YES;
+}
+
+- (BOOL)ccSwipeWithEvent:(NSEvent *)event
+{
+	NSLog(@"swipe: %@", event);
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    CGPoint swipeTo = ccp(winSize.width * -event.deltaX, winSize.height * event.deltaY);
+    [self runAction:[CCSequence actionOne:[CCMoveTo actionWithDuration:0.2 position:swipeTo]
+                                      two:[CCEaseBackOut actionWithAction:[CCMoveTo actionWithDuration:0.5 position:CGPointZero]]]];
+    return YES;
+}
+
+- (BOOL)ccEndGestureWithEvent:(NSEvent *)event
+{
+	NSLog(@"endGesture: %@", event);
+    if (self.rotation != 0)
+        [self runAction:[CCEaseBackOut actionWithAction:[CCRotateTo actionWithDuration:0.5 angle:0]]];
+    if (self.scale != 1)
+        [self runAction:[CCEaseBackOut actionWithAction:[CCScaleTo actionWithDuration:0.5 scale:1]]];
+    return YES;
+}
 
 @end
 

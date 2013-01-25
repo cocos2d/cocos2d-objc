@@ -47,13 +47,13 @@
 	CGPoint			offsetInPixels_;
 	CGSize			originalSize_;
 	CGSize			originalSizeInPixels_;
-	CCTexture2D		*texture_;
+	CCTexture2D		*_texture;
 	NSString		*textureFilename_;
 }
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;
 
-/** rect of the frame in pixels. If it is updated, then rect (points) will be udpated too. */
+/** rect of the frame in pixels. If it is updated, then rect (points) will be updated too. */
 @property (nonatomic,readwrite) CGRect rectInPixels;
 
 /** whether or not the rect of the frame is rotated ( x = x+width, y = y+height, width = height, height = width ) */

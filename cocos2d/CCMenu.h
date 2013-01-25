@@ -44,30 +44,24 @@ enum {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface CCMenu : CCLayer <CCRGBAProtocol>
+@interface CCMenu : CCLayerRGBA
 {
-	tCCMenuState state_;
-	CCMenuItem	*selectedItem_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
-	BOOL		enabled_;
+	tCCMenuState _state;
+	CCMenuItem	*_selectedItem;
+	BOOL		_enabled;
 }
 
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 /** whether or not the menu will receive events */
 @property (nonatomic, readwrite) BOOL enabled;
 
-/** creates a CCMenu with its items */
+/** creates a CCMenu with CCMenuItem objects */
 + (id) menuWithItems: (CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
+
+/** creates a CCMenu with CCMenuItem objects */
++ (id) menuWithItems: (CCMenuItem*) firstItem vaList: (va_list) args;
 
 /** creates a CCMenu with a NSArray of CCMenuItem objects */
 + (id) menuWithArray:(NSArray*)arrayOfItems;
-
-/** initializes a CCMenu with its items */
-- (id) initWithItems: (CCMenuItem*) item vaList: (va_list) args;
 
 /** initializes a CCMenu with a NSArray of CCMenuItem objects */
 - (id) initWithArray:(NSArray*)arrayOfItems;
@@ -89,10 +83,12 @@ enum {
 /** align items in rows of columns */
 -(void) alignItemsInColumns: (NSNumber *) columns, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInColumns: (NSNumber *) columns vaList: (va_list) args;
+-(void) alignItemsInColumnsWithArray:(NSArray*) arrayOfNumbers;
 
 /** align items in columns of rows */
 -(void) alignItemsInRows: (NSNumber *) rows, ... NS_REQUIRES_NIL_TERMINATION;
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
+-(void) alignItemsInRowsWithArray: (NSArray*) arrayOfNumbers;
 
 /** set event handler priority. By default it is: kCCMenuTouchPriority */
 -(void) setHandlerPriority:(NSInteger)newPriority;

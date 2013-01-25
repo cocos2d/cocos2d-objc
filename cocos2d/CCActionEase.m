@@ -44,6 +44,8 @@
 //
 @implementation CCActionEase
 
+@synthesize inner=_inner;
+
 +(id) actionWithAction: (CCActionInterval*) action
 {
 	return [[[self alloc] initWithAction: action] autorelease ];
@@ -54,43 +56,43 @@
 	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
 
 	if( (self=[super initWithDuration: action.duration]) )
-		other = [action retain];
+		_inner = [action retain];
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease]];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease]];
 	return copy;
 }
 
 -(void) dealloc
 {
-	[other release];
+	[_inner release];
 	[super dealloc];
 }
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	[other startWithTarget:target_];
+	[_inner startWithTarget:_target];
 }
 
 -(void) stop
 {
-	[other stop];
+	[_inner stop];
 	[super stop];
 }
 
 -(void) update: (ccTime) t
 {
-	[other update: t];
+	[_inner update: t];
 }
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithAction: [other reverse]];
+	return [[self class] actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -102,23 +104,23 @@
 // EaseRateAction
 //
 @implementation CCEaseRateAction
-@synthesize rate;
-+(id) actionWithAction: (CCActionInterval*) action rate:(float)aRate
+@synthesize rate=_rate;
++(id) actionWithAction: (CCActionInterval*) action rate:(float)rate
 {
-	return [[[self alloc] initWithAction: action rate:aRate] autorelease ];
+	return [[[self alloc] initWithAction: action rate:rate] autorelease ];
 }
 
--(id) initWithAction: (CCActionInterval*) action rate:(float)aRate
+-(id) initWithAction: (CCActionInterval*) action rate:(float)rate
 {
 	if( (self=[super initWithAction:action ]) )
-		self.rate = aRate;
+		self.rate = rate;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] rate:rate];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease] rate:_rate];
 	return copy;
 }
 
@@ -129,7 +131,7 @@
 
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithAction: [other reverse] rate:1/rate];
+	return [[self class] actionWithAction: [_inner reverse] rate:1/_rate];
 }
 @end
 
@@ -139,7 +141,7 @@
 @implementation CCEaseIn
 -(void) update: (ccTime) t
 {
-	[other update: powf(t,rate)];
+	[_inner update: powf(t,_rate)];
 }
 @end
 
@@ -149,7 +151,7 @@
 @implementation CCEaseOut
 -(void) update: (ccTime) t
 {
-	[other update: powf(t,1/rate)];
+	[_inner update: powf(t,1/_rate)];
 }
 @end
 
@@ -161,17 +163,17 @@
 {
 	t *= 2;
 	if (t < 1) {
-		[other update: 0.5f * powf (t, rate)];
+		[_inner update: 0.5f * powf (t, _rate)];
     }
 	else {
-		[other update: 1.0f - 0.5f * powf(2-t, rate)];
+		[_inner update: 1.0f - 0.5f * powf(2-t, _rate)];
     }
 }
 
 // InOut and OutIn are symmetrical
 -(CCActionInterval*) reverse
 {
-	return [[self class] actionWithAction: [other reverse] rate:rate];
+	return [[self class] actionWithAction: [_inner reverse] rate:_rate];
 }
 
 @end
@@ -185,12 +187,12 @@
 @implementation CCEaseExponentialIn
 -(void) update: (ccTime) t
 {
-	[other update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
+	[_inner update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseExponentialOut actionWithAction: [other reverse]];
+	return [CCEaseExponentialOut actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -200,12 +202,12 @@
 @implementation CCEaseExponentialOut
 -(void) update: (ccTime) t
 {
-	[other update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
+	[_inner update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseExponentialIn actionWithAction: [other reverse]];
+	return [CCEaseExponentialIn actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -221,7 +223,7 @@
 	else
 		t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
 
-	[other update:t];
+	[_inner update:t];
 }
 @end
 
@@ -235,12 +237,12 @@
 @implementation CCEaseSineIn
 -(void) update: (ccTime) t
 {
-	[other update:-1*cosf(t * (float)M_PI_2) +1];
+	[_inner update:-1*cosf(t * (float)M_PI_2) +1];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseSineOut actionWithAction: [other reverse]];
+	return [CCEaseSineOut actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -250,12 +252,12 @@
 @implementation CCEaseSineOut
 -(void) update: (ccTime) t
 {
-	[other update:sinf(t * (float)M_PI_2)];
+	[_inner update:sinf(t * (float)M_PI_2)];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseSineIn actionWithAction: [other reverse]];
+	return [CCEaseSineIn actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -265,7 +267,7 @@
 @implementation CCEaseSineInOut
 -(void) update: (ccTime) t
 {
-	[other update:-0.5f*(cosf( (float)M_PI*t) - 1)];
+	[_inner update:-0.5f*(cosf( (float)M_PI*t) - 1)];
 }
 @end
 
@@ -277,7 +279,7 @@
 //
 @implementation CCEaseElastic
 
-@synthesize period = period_;
+@synthesize period = _period;
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
@@ -297,14 +299,14 @@
 -(id) initWithAction: (CCActionInterval*) action period:(float)period
 {
 	if( (self=[super initWithAction:action]) )
-		period_ = period;
+		_period = period;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[other copy] autorelease] period:period_];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease] period:_period];
 	return copy;
 }
 
@@ -328,16 +330,16 @@
 		newT = t;
 
 	else {
-		float s = period_ / 4;
+		float s = _period / 4;
 		t = t - 1;
-		newT = -powf(2, 10 * t) * sinf( (t-s) *M_PI_X_2 / period_);
+		newT = -powf(2, 10 * t) * sinf( (t-s) *M_PI_X_2 / _period);
 	}
-	[other update:newT];
+	[_inner update:newT];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseElasticOut actionWithAction: [other reverse] period:period_];
+	return [CCEaseElasticOut actionWithAction: [_inner reverse] period:_period];
 }
 
 @end
@@ -354,15 +356,15 @@
 		newT = t;
 
 	} else {
-		float s = period_ / 4;
-		newT = powf(2, -10 * t) * sinf( (t-s) *M_PI_X_2 / period_) + 1;
+		float s = _period / 4;
+		newT = powf(2, -10 * t) * sinf( (t-s) *M_PI_X_2 / _period) + 1;
 	}
-	[other update:newT];
+	[_inner update:newT];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseElasticIn actionWithAction: [other reverse] period:period_];
+	return [CCEaseElasticIn actionWithAction: [_inner reverse] period:_period];
 }
 
 @end
@@ -379,22 +381,22 @@
 		newT = t;
 	else {
 		t = t * 2;
-		if(! period_ )
-			period_ = 0.3f * 1.5f;
-		ccTime s = period_ / 4;
+		if(! _period )
+			_period = 0.3f * 1.5f;
+		ccTime s = _period / 4;
 
 		t = t -1;
 		if( t < 0 )
-			newT = -0.5f * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / period_);
+			newT = -0.5f * powf(2, 10 * t) * sinf((t - s) * M_PI_X_2 / _period);
 		else
-			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / period_) * 0.5f + 1;
+			newT = powf(2, -10 * t) * sinf((t - s) * M_PI_X_2 / _period) * 0.5f + 1;
 	}
-	[other update:newT];
+	[_inner update:newT];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseElasticInOut actionWithAction: [other reverse] period:period_];
+	return [CCEaseElasticInOut actionWithAction: [_inner reverse] period:_period];
 }
 
 @end
@@ -434,12 +436,12 @@
 -(void) update: (ccTime) t
 {
 	ccTime newT = 1 - [self bounceTime:1-t];
-	[other update:newT];
+	[_inner update:newT];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseBounceOut actionWithAction: [other reverse]];
+	return [CCEaseBounceOut actionWithAction: [_inner reverse]];
 }
 
 @end
@@ -449,12 +451,12 @@
 -(void) update: (ccTime) t
 {
 	ccTime newT = [self bounceTime:t];
-	[other update:newT];
+	[_inner update:newT];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseBounceIn actionWithAction: [other reverse]];
+	return [CCEaseBounceIn actionWithAction: [_inner reverse]];
 }
 
 @end
@@ -470,7 +472,7 @@
 	} else
 		newT = [self bounceTime:t * 2 - 1] * 0.5f + 0.5f;
 
-	[other update:newT];
+	[_inner update:newT];
 }
 @end
 
@@ -485,12 +487,12 @@
 -(void) update: (ccTime) t
 {
 	ccTime overshoot = 1.70158f;
-	[other update: t * t * ((overshoot + 1) * t - overshoot)];
+	[_inner update: t * t * ((overshoot + 1) * t - overshoot)];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseBackOut actionWithAction: [other reverse]];
+	return [CCEaseBackOut actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -503,12 +505,12 @@
 	ccTime overshoot = 1.70158f;
 
 	t = t - 1;
-	[other update: t * t * ((overshoot + 1) * t + overshoot) + 1];
+	[_inner update: t * t * ((overshoot + 1) * t + overshoot) + 1];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseBackIn actionWithAction: [other reverse]];
+	return [CCEaseBackIn actionWithAction: [_inner reverse]];
 }
 @end
 
@@ -523,10 +525,10 @@
 
 	t = t * 2;
 	if (t < 1)
-		[other update: (t * t * ((overshoot + 1) * t - overshoot)) / 2];
+		[_inner update: (t * t * ((overshoot + 1) * t - overshoot)) / 2];
 	else {
 		t = t - 2;
-		[other update: (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1];
+		[_inner update: (t * t * ((overshoot + 1) * t + overshoot)) / 2 + 1];
 	}
 }
 @end

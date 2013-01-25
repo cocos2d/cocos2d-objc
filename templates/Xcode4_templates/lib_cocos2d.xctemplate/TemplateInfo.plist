@@ -385,6 +385,28 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCCamera.m</string>
 		</dict>
+		<key>libs/cocos2d/CCClippingNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCClippingNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCClippingNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCClippingNode.m</string>
+		</dict>
 		<key>libs/cocos2d/ccConfig.h</key>
 		<dict>
 			<key>Group</key>
@@ -484,6 +506,50 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/CCDrawingPrimitives.m</string>
+		</dict>
+		<key>libs/cocos2d/CCDrawNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCDrawNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCDrawNode.m</string>
+		</dict>
+		<key>libs/cocos2d/ccFPSImages.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccFPSImages.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccFPSImages.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccFPSImages.m</string>
 		</dict>
 		<key>libs/cocos2d/CCGLProgram.h</key>
 		<dict>
@@ -893,6 +959,50 @@
 			<key>Path</key>
 			<string>libs/cocos2d/CCParticleSystemQuad.m</string>
 		</dict>
+		<key>libs/cocos2d/CCPhysicsDebugNode.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsDebugNode.m</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsSprite.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/CCPhysicsSprite.mm</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/CCPhysicsSprite.mm</string>
+		</dict>
 		<key>libs/cocos2d/CCProgressTimer.h</key>
 		<dict>
 			<key>Group</key>
@@ -1038,6 +1148,30 @@
 			</array>
 			<key>Path</key>
 			<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>cocos2d</string>
+			</array>
+			<key>Path</key>
+			<string>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -2242,6 +2376,8 @@
 		<string>libs/cocos2d/CCAtlasNode.m</string>
 		<string>libs/cocos2d/CCCamera.h</string>
 		<string>libs/cocos2d/CCCamera.m</string>
+		<string>libs/cocos2d/CCClippingNode.h</string>
+		<string>libs/cocos2d/CCClippingNode.m</string>
 		<string>libs/cocos2d/ccConfig.h</string>
 		<string>libs/cocos2d/CCConfiguration.h</string>
 		<string>libs/cocos2d/CCConfiguration.m</string>
@@ -2251,6 +2387,10 @@
 		<string>libs/cocos2d/CCDirector.m</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.h</string>
 		<string>libs/cocos2d/CCDrawingPrimitives.m</string>
+		<string>libs/cocos2d/CCDrawNode.h</string>
+		<string>libs/cocos2d/CCDrawNode.m</string>
+		<string>libs/cocos2d/ccFPSImages.h</string>
+		<string>libs/cocos2d/ccFPSImages.m</string>
 		<string>libs/cocos2d/CCGLProgram.h</string>
 		<string>libs/cocos2d/CCGLProgram.m</string>
 		<string>libs/cocos2d/ccGLStateCache.h</string>
@@ -2288,6 +2428,10 @@
 		<string>libs/cocos2d/CCParticleSystem.m</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.h</string>
 		<string>libs/cocos2d/CCParticleSystemQuad.m</string>
+		<string>libs/cocos2d/CCPhysicsDebugNode.h</string>
+		<string>libs/cocos2d/CCPhysicsDebugNode.m</string>
+		<string>libs/cocos2d/CCPhysicsSprite.h</string>
+		<string>libs/cocos2d/CCPhysicsSprite.mm</string>
 		<string>libs/cocos2d/CCProgressTimer.h</string>
 		<string>libs/cocos2d/CCProgressTimer.m</string>
 		<string>libs/cocos2d/CCProtocols.h</string>
@@ -2301,6 +2445,8 @@
 		<string>libs/cocos2d/ccShader_Position_uColor_vert.h</string>
 		<string>libs/cocos2d/ccShader_PositionColor_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionColor_vert.h</string>
+		<string>libs/cocos2d/ccShader_PositionColorLengthTexture_frag.h</string>
+		<string>libs/cocos2d/ccShader_PositionColorLengthTexture_vert.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_uColor_frag.h</string>
 		<string>libs/cocos2d/ccShader_PositionTexture_uColor_vert.h</string>

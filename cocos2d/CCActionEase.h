@@ -30,8 +30,11 @@
  */
 @interface CCActionEase : CCActionInterval <NSCopying>
 {
-	CCActionInterval * other;
+	CCActionInterval *_inner;
 }
+/** The inner action */
+@property (nonatomic, readonly) CCActionInterval *inner;
+
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action;
 /** initializes the action */
@@ -42,7 +45,7 @@
  */
 @interface CCEaseRateAction :  CCActionEase <NSCopying>
 {
-	float	rate;
+	float	_rate;
 }
 /** rate value for the actions */
 @property (nonatomic,readwrite,assign) float rate;
@@ -54,41 +57,82 @@
 
 /** CCEaseIn action with a rate
  */
-@interface CCEaseIn : CCEaseRateAction <NSCopying> {} @end
+@interface CCEaseIn : CCEaseRateAction <NSCopying>
+{} 
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseOut action with a rate
  */
-@interface CCEaseOut : CCEaseRateAction <NSCopying> {} @end
+@interface CCEaseOut : CCEaseRateAction <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseInOut action with a rate
  */
-@interface CCEaseInOut : CCEaseRateAction <NSCopying> {} @end
+@interface CCEaseInOut : CCEaseRateAction <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEase Exponential In
  */
-@interface CCEaseExponentialIn : CCActionEase <NSCopying> {} @end
+@interface CCEaseExponentialIn : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Exponential Out
  */
-@interface CCEaseExponentialOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseExponentialOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Exponential InOut
  */
-@interface CCEaseExponentialInOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseExponentialInOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Sine In
  */
-@interface CCEaseSineIn : CCActionEase <NSCopying> {} @end
+@interface CCEaseSineIn : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Sine Out
  */
-@interface CCEaseSineOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseSineOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Sine InOut
  */
-@interface CCEaseSineInOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseSineInOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** Ease Elastic abstract class
  @since v0.8.2
  */
 @interface CCEaseElastic : CCActionEase <NSCopying>
 {
-	float period_;
+	float _period;
 }
 
 /** period of the wave in radians. default is 0.3 */
@@ -101,59 +145,101 @@
 @end
 
 /** Ease Elastic In action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseElasticIn : CCEaseElastic <NSCopying> {} @end
+@interface CCEaseElasticIn : CCEaseElastic <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Elastic Out action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseElasticOut : CCEaseElastic <NSCopying> {} @end
+@interface CCEaseElasticOut : CCEaseElastic <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
 /** Ease Elastic InOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseElasticInOut : CCEaseElastic <NSCopying> {} @end
+@interface CCEaseElasticInOut : CCEaseElastic <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseBounce abstract class.
  @since v0.8.2
 */
-@interface CCEaseBounce : CCActionEase <NSCopying> {} @end
+@interface CCEaseBounce : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(ccTime) bounceTime:(ccTime) t;
+@end
 
 /** CCEaseBounceIn action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
 */
-@interface CCEaseBounceIn : CCEaseBounce <NSCopying> {} @end
+@interface CCEaseBounceIn : CCEaseBounce <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** EaseBounceOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseBounceOut : CCEaseBounce <NSCopying> {} @end
+@interface CCEaseBounceOut : CCEaseBounce <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseBounceInOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseBounceInOut : CCEaseBounce <NSCopying> {} @end
+@interface CCEaseBounceInOut : CCEaseBounce <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseBackIn action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseBackIn : CCActionEase <NSCopying> {} @end
+@interface CCEaseBackIn : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseBackOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseBackOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseBackOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 
 /** CCEaseBackInOut action.
- @warning This action doesn't use a bijective fucntion. Actions like Sequence might have an unexpected result when used with this action.
+ @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
  */
-@interface CCEaseBackInOut : CCActionEase <NSCopying> {} @end
+@interface CCEaseBackInOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
 

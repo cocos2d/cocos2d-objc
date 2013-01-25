@@ -46,4 +46,14 @@
 @interface RenderTextureTestDepthStencil : RenderTextureTest
 @end
 
+@interface RenderTextureTargetNode : RenderTextureTest {
+	CCSprite *_sprite1, *_sprite2;
+	CCRenderTexture *_renderTexture;
+}
+@end
 
+@class SimpleSprite;
+@interface SpriteRenderTextureBug : RenderTextureTest
+{}
+-(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p;
+@end
