@@ -138,6 +138,16 @@ static CDBufferManager *bufferManager = nil;
 	}
 }
 
+- (ALuint)playEffectWithLoop:(NSString*)filePath
+{
+	int soundId = [bufferManager bufferForFile:filePath create:YES];
+	if (soundId != kCDNoBuffer) {
+		return [soundEngine playSound:soundId sourceGroupId:0 pitch:1.0f pan:0.0f gain:1.0f loop:true];
+	} else {
+		return CD_MUTE;
+	}
+}
+
 -(void) stopEffect:(ALuint) soundId {
 	[soundEngine stopSound:soundId];
 }
