@@ -440,10 +440,17 @@
 /** Override synthesized setOpacity to recurse items */
 - (void) setOpacity:(GLubyte)opacity
 {
-	_realOpacity = opacity;
+	_displayedOpacity = _realOpacity = opacity;
 
-	// XXX: should get parent's opacity
-    [self updateDisplayedOpacity:255];
+	// XXX: It should ask for the parent's _cascadeOpacity flag
+	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
+	// XXX: the performance if _cascadeOpacity is NO
+	if( _cascadeOpacity ) {
+		GLubyte parentOpacity = 255;
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
+		[self updateDisplayedOpacity:parentOpacity];
+	}
 }
 
 -(ccColor3B) color
@@ -456,14 +463,19 @@
 	return _displayedColor;
 }
 
-// Update displayedOpacity_ based on parent's displayedOpacity_
-// and recurse child items
 - (void) setColor:(ccColor3B)color
 {
-	_realColor = color;
+	_displayedColor = _realColor = color;
 	
-	// XXX: should get parent's color
-	[self updateDisplayedColor:ccWHITE];
+	// XXX: It should ask for the parent's _cascadeColor flag
+	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
+	// XXX: the performance if _cascadeColor is NO
+	if( _cascadeColor ) {
+		ccColor3B parentColor = ccWHITE;
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
+		[self updateDisplayedColor:parentColor];
+	}
 }
 
 - (void)updateDisplayedOpacity:(GLubyte)parentOpacity
