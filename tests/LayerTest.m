@@ -66,8 +66,24 @@ Class restartAction()
 	return c;
 }
 
-#pragma mark -
-#pragma mark Example LayerTestCascadingOpacity
+#pragma mark - Cascading support extensions
+
+@interface CCNode (cascading)
+@end
+@implementation CCNode (cascading)
+-(void) setEnableRecursiveCascading:(BOOL)enable
+{
+	if( [self conformsToProtocol:@protocol(CCRGBAProtocol)] ) {
+		[(id<CCRGBAProtocol>)self setCascadeColor:enable];
+		[(id<CCRGBAProtocol>)self setCascadeOpacity:enable];
+		
+	}
+	for( CCNode* child in self.children)
+		[child setEnableRecursiveCascading:enable];
+}
+@end
+
+#pragma mark - Example LayerTestCascadingOpacity
 
 @implementation LayerTestCascadingOpacityA
 -(id) init
@@ -79,13 +95,16 @@ Class restartAction()
  
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
 
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
 
 		sister1.position = ccp( s.width*1/3, s.height/2);
 		sister2.position = ccp( s.width*2/3, s.height/2);
+		label.position = ccp( s.width/2, s.height/2);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:
@@ -106,6 +125,8 @@ Class restartAction()
            nil]]];
 
 
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
     }
 	return self;
 }
@@ -129,13 +150,16 @@ Class restartAction()
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
-
+		
 		sister1.position = ccp( s.width*1/3, 0);
 		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:
@@ -154,6 +178,9 @@ Class restartAction()
            [CCFadeTo actionWithDuration:2 opacity:255],
            [CCDelayTime actionWithDuration:1],
            nil]]];
+		
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
 	}
 	return self;
 }
@@ -178,13 +205,16 @@ Class restartAction()
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
-
+		
 		sister1.position = ccp( s.width*1/3, 0);
 		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:
@@ -226,13 +256,16 @@ Class restartAction()
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
-
+		
 		sister1.position = ccp( s.width*1/3, s.height/2);
 		sister2.position = ccp( s.width*2/3, s.height/2);
+		label.position = ccp( s.width/2, s.height/2);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:
@@ -253,6 +286,9 @@ Class restartAction()
            [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
            [CCDelayTime actionWithDuration:1],
            nil]]];
+
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
 
     }
 	return self;
@@ -276,13 +312,16 @@ Class restartAction()
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
-
+		
 		sister1.position = ccp( s.width*1/3, 0);
 		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:
@@ -303,6 +342,9 @@ Class restartAction()
            [CCTintTo actionWithDuration:2 red:255 green:255 blue:255],
            [CCDelayTime actionWithDuration:1],
            nil]]];
+		
+		// Enable cascading in scene
+		[self setEnableRecursiveCascading:YES];
 	}
 	return self;
 }
@@ -325,13 +367,16 @@ Class restartAction()
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
 		CCSprite *sister2 = [CCSprite spriteWithFile:@"grossinis_sister2.png"];
-
+		CCLabelBMFont *label = [CCLabelBMFont labelWithString:@"Test" fntFile:@"bitmapFontTest.fnt"];
+		
 		[layer1 addChild:sister1];
 		[layer1 addChild:sister2];
+		[layer1 addChild:label];
 		[self addChild: layer1 z:0 tag:kTagLayer];
-
+		
 		sister1.position = ccp( s.width*1/3, 0);
 		sister2.position = ccp( s.width*2/3, 0);
+		label.position = ccp( s.width/2, 0);
 
         [layer1 runAction:
          [CCRepeatForever actionWithAction:

@@ -2142,6 +2142,8 @@
 		A0D3A927149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A928149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A929149D2FAF0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A0D5F3FA16B235A0000523E9 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 505463971062867800AB7C52 /* bitmapFontTest.fnt */; };
+		A0D5F3FB16B235A0000523E9 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463981062867800AB7C52 /* bitmapFontTest.png */; };
 		A0D6BFEF159B6A25008EED97 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
 		A0D6BFF0159B6A25008EED97 /* b2.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659E0E72DB470085673F /* b2.png */; };
 		A0D6BFF1159B6A25008EED97 /* f1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659F0E72DB470085673F /* f1.png */; };
@@ -9873,6 +9875,8 @@
 				A0A1C26915CAEA0D0058D96F /* Default-Landscape.png in Resources */,
 				A0579BA01601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BD516019C6000AF8A12 /* Default@2x.png in Resources */,
+				A0D5F3FA16B235A0000523E9 /* bitmapFontTest.fnt in Resources */,
+				A0D5F3FB16B235A0000523E9 /* bitmapFontTest.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
