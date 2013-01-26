@@ -84,6 +84,7 @@
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize emitterMode = _emitterMode;
 @synthesize atlasIndex = _atlasIndex;
+@synthesize totalParticles = _totalParticles;
 
 +(id) particleWithFile:(NSString*) plistFile
 {
