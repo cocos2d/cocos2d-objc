@@ -96,20 +96,20 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 @interface CCGLView : UIView
 {
-    id<CCESRenderer>		renderer_;
-	EAGLContext				*context_; // weak ref
+    id<CCESRenderer>		_renderer;
+	EAGLContext				*_context; // weak ref
 
-	NSString				*pixelformat_;
-	GLuint					depthFormat_;
-	BOOL					preserveBackbuffer_;
+	NSString				*_pixelformat;
+	GLuint					_depthFormat;
+	BOOL					_preserveBackbuffer;
 
-	CGSize					size_;
-	BOOL					discardFramebufferSupported_;
-	id<CCTouchDelegate>		touchDelegate_;
+	CGSize					_size;
+	BOOL					_discardFramebufferSupported;
+	id<CCTouchDelegate>		_touchDelegate;
 
 	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int			requestedSamples_;
+	BOOL					_multisampling;
+	unsigned int			_requestedSamples;
 }
 
 /** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
