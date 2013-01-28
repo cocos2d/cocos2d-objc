@@ -244,16 +244,12 @@
 
 -(void) setViewport
 {
-	CGSize size = _winSizeInPixels;
-
 	CGPoint offset = CGPointZero;
-	float widthAspect = size.width;
-	float heightAspect = size.height;
+	float widthAspect = _winSizeInPixels.width;
+	float heightAspect = _winSizeInPixels.height;
 
 
 	if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSize, CGSizeZero ) ) {
-
-		size = _originalWinSize;
 		
 		float aspect = _originalWinSize.width / _originalWinSize.height;
 		widthAspect = _winSizeInPixels.width;
@@ -268,7 +264,6 @@
 		_winOffset.y =  (_winSizeInPixels.height - heightAspect) / 2;
 		
 		offset = _winOffset;
-		
 	}
 
 	glViewport(offset.x, offset.y, widthAspect, heightAspect);
