@@ -749,7 +749,7 @@ void FNTConfigRemoveCache( void )
 		}
     
 		if(![charSet characterIsMember:c]){
-			CCLOGWARN(@"CCLabelBMFont: Attempted to use character not defined in this bitmap: %C", c);
+			CCLOGWARN(@"cocos2d: CCLabelBMFont: Attempted to use character not defined in this bitmap: %C", c);
 			continue;
 		}
         
@@ -761,7 +761,7 @@ void FNTConfigRemoveCache( void )
 		NSUInteger key = (NSUInteger)c;
 		HASH_FIND_INT(_configuration->_fontDefDictionary , &key, element);
 		if( ! element ) {
-			CCLOGWARN(@"cocos2d: LabelBMFont: characer not found %c", c);
+			CCLOGWARN(@"cocos2d: CCLabelBMFont: characer not found %c", c);
 			continue;
 		}
         
@@ -777,7 +777,14 @@ void FNTConfigRemoveCache( void )
 
 		BOOL hasSprite = YES;
 		fontChar = (CCSprite*) [self getChildByTag:i];
-		if( ! fontChar ) {
+		if( fontChar )
+		{
+			// Reusing previous Sprite
+			fontChar.visible = YES;
+		}
+		else
+		{
+			// New Sprite ? Set correct color, opacity, etc...
 			if( 0 ) {
 				/* WIP: Doesn't support many features yet.
 				 But this code is super fast. It doesn't create any sprite.
@@ -791,14 +798,18 @@ void FNTConfigRemoveCache( void )
 				[self addChild:fontChar z:i tag:i];
 				[fontChar release];
 			}
+			
+			// Apply label properties
+			[fontChar setOpacityModifyRGB:_opacityModifyRGB];
+
+			// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
+			[fontChar updateDisplayedColor:_displayedColor];
+			[fontChar updateDisplayedOpacity:_displayedOpacity];
 		}
 
 		// updating previous sprite
 		[fontChar setTextureRect:rect rotated:NO untrimmedSize:rect.size];
-		
-		// restore to default in case they were modified
-		fontChar.visible = YES;
-		fontChar.opacity = 255;
+	
         
 		// See issue 1343. cast( signed short + unsigned integer ) == unsigned integer (sign is lost!)
 		NSInteger yOffset = _configuration->_commonHeight - fontDef.yOffset;
@@ -810,15 +821,6 @@ void FNTConfigRemoveCache( void )
 		nextFontPositionX += fontDef.xAdvance + kerningAmount;
 		prev = c;
         
-		// Apply label properties
-		[fontChar setOpacityModifyRGB:_opacityModifyRGB];
-		// Color MUST be set before opacity, since opacity might change color if OpacityModifyRGB is on
-		[fontChar setColor:_displayedColor];
-
-		// only apply opacity if it is different than 255 )
-		// to prevent modifying the color too (issue #610)
-		if( _displayedOpacity != 255 )
-            [fontChar setOpacity: _displayedOpacity];
 
 		if (longestLine < nextFontPositionX)
 			longestLine = nextFontPositionX;
@@ -892,12 +894,9 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedColor = _realColor = color;
 	
-	// XXX: It should ask for the parent's _cascadeColor flag
-	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
-	// XXX: the performance if _cascadeColor is NO
 	if( _cascadeColor ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColor] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
@@ -918,12 +917,9 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedOpacity = _realOpacity = opacity;
 
-	// XXX: It should ask for the parent's _cascadeOpacity flag
-	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
-	// XXX: the performance if _cascadeOpacity is NO
 	if( _cascadeOpacity ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacity] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}
