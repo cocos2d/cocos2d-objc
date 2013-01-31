@@ -99,7 +99,6 @@
 	ccV3F_C4B_T2F_Quad _quad;
 
 	// opacity and RGB protocol
-	ccColor3B	_colorUnmodified;
 	BOOL		_opacityModifyRGB;
 
 	// image is flipped

@@ -127,7 +127,6 @@
 		_dirty = _recursiveDirty = NO;
 
 		_opacityModifyRGB = YES;
-		_colorUnmodified = ccWHITE;
 
 		_blendFunc.src = CC_BLEND_SRC;
 		_blendFunc.dst = CC_BLEND_DST;
@@ -801,6 +800,14 @@
 {
 	ccColor4B color4 = {_displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity};
 
+	
+	// special opacity for premultiplied textures
+	if ( _opacityModifyRGB ) {
+		color4.r *= _displayedOpacity/255.0f;
+		color4.g *= _displayedOpacity/255.0f;
+		color4.b *= _displayedOpacity/255.0f;
+    }
+
 	_quad.bl.colors = color4;
 	_quad.br.colors = color4;
 	_quad.tl.colors = color4;
@@ -819,45 +826,28 @@
 	// do nothing
 }
 
--(void) setOpacity:(GLubyte)opacity
+-(void) setColor:(ccColor3B)color3
 {
-    [super setOpacity:opacity];
-	// special opacity for premultiplied textures
-	if ( _opacityModifyRGB ) {
-		[self setColor: _colorUnmodified];
-    }
-
+    [super setColor:color3];
 	[self updateColor];
 }
 
-- (ccColor3B) color
+-(void)updateDisplayedColor:(ccColor3B)parentColor
 {
-	if ( _opacityModifyRGB ) {
-		return _colorUnmodified;
-    }
-
-	return super.color;
+    [super updateDisplayedColor:parentColor];
+    [self updateColor];
 }
 
--(void) setColor:(ccColor3B)color3
+-(void) setOpacity:(GLubyte)opacity
 {
-	_colorUnmodified = color3;
-
-	if( _opacityModifyRGB ){
-		color3.r = color3.r * _displayedOpacity/255.0f;
-		color3.g = color3.g * _displayedOpacity/255.0f;
-		color3.b = color3.b * _displayedOpacity/255.0f;
-	}
-
-    [super setColor:color3];
+    [super setOpacity:opacity];
 	[self updateColor];
 }
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	ccColor3B oldColor	= self.color;
-	_opacityModifyRGB	= modify;
-	self.color			= oldColor;
+	if( _opacityModifyRGB != modify )
+		[self updateColor];
 }
 
 -(BOOL) doesOpacityModifyRGB
@@ -868,18 +858,9 @@
 -(void)updateDisplayedOpacity:(GLubyte)parentOpacity
 {
     [super updateDisplayedOpacity:parentOpacity];
-    // special opacity for premultiplied textures
-	if ( _opacityModifyRGB ) {
-		[self setColor: _colorUnmodified];
-    }
     [self updateColor];
 }
 
--(void)updateDisplayedColor:(ccColor3B)parentColor
-{
-    [super updateDisplayedColor:parentColor];
-    [self updateColor];
-}
 
 //
 // Frames

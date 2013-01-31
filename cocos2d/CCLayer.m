@@ -442,12 +442,9 @@
 {
 	_displayedOpacity = _realOpacity = opacity;
 
-	// XXX: It should ask for the parent's _cascadeOpacity flag
-	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
-	// XXX: the performance if _cascadeOpacity is NO
 	if( _cascadeOpacity ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacity] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}
@@ -467,12 +464,9 @@
 {
 	_displayedColor = _realColor = color;
 	
-	// XXX: It should ask for the parent's _cascadeColor flag
-	// XXX: But seems to be good enough for 95% of the cases, and also this solution does not affect
-	// XXX: the performance if _cascadeColor is NO
 	if( _cascadeColor ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColor] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
