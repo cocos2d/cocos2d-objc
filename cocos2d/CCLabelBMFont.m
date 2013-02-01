@@ -439,7 +439,7 @@ void FNTConfigRemoveCache( void )
 @implementation CCLabelBMFont
 
 @synthesize alignment = _alignment;
-@synthesize cascadeColor = _cascadeColor, cascadeOpacity = _cascadeOpacity;
+@synthesize cascadeColorEnabled = _cascadeColorEnabled, cascadeOpacityEnabled = _cascadeOpacityEnabled;
 
 #pragma mark LabelBMFont - Purge Cache
 +(void) purgeCachedData
@@ -512,8 +512,8 @@ void FNTConfigRemoveCache( void )
 
 		_displayedOpacity = _realOpacity = 255;
 		_displayedColor = _realColor = ccWHITE;
-        _cascadeOpacity = YES;
-        _cascadeColor = YES;
+        _cascadeOpacityEnabled = YES;
+        _cascadeColorEnabled = YES;
 
 		_contentSize = CGSizeZero;
 		
@@ -894,9 +894,9 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedColor = _realColor = color;
 	
-	if( _cascadeColor ) {
+	if( _cascadeColorEnabled ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColor] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
@@ -917,9 +917,9 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedOpacity = _realOpacity = opacity;
 
-	if( _cascadeOpacity ) {
+	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacity] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}

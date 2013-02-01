@@ -252,7 +252,7 @@
 	else if(found==0 && _last==1 )
 	{
 		// Reverse mode ?
-		// XXX: Bug. this case doesn't not contemplate when _last==-1, found=0 and in "reverse mode"
+		// XXX: Bug. this case doesn't contemplate when _last==-1, found=0 and in "reverse mode"
 		// since it will require a hack to know if an action is on reverse mode or not.
 		// "step" should be overriden, and the "reverseMode" value propagated to inner Sequences.
 		[_actions[1] update:0];

@@ -41,7 +41,7 @@
 /** returns the displayed color */
 @property (nonatomic, readonly) ccColor3B displayedColor;
 /** whether or not color should be propagated to its children */
-@property (nonatomic) BOOL cascadeColor;
+@property (nonatomic, getter = isCascadeColorEnabled) BOOL cascadeColorEnabled;
 
 /** recursive method that updates display color */
 - (void)updateDisplayedColor:(ccColor3B)color;
@@ -54,7 +54,7 @@
 /** returns the displayed opacity */
 @property (nonatomic, readonly) GLubyte displayedOpacity;
 /** whether or not opacity should be propagated to its children */
-@property (nonatomic) BOOL cascadeOpacity;
+@property (nonatomic, getter = isCascadeOpacityEnabled) BOOL cascadeOpacityEnabled;
 
 /** recursive method that updates the displayed opacity */
 - (void)updateDisplayedOpacity:(GLubyte)opacity;

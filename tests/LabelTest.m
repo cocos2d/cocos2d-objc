@@ -315,7 +315,9 @@ Class restartAction()
 
 		id fade = [CCFadeOut actionWithDuration:1.0f];
 		id fade_in = [fade reverse];
-		id seq = [CCSequence actions:fade, fade_in, nil];
+		id call = [CCCallBlock actionWithBlock:^(void) { CCLOG(@"Action finished"); }];
+		id seq = [CCSequence actions:fade, fade_in, call, nil];
+
 		id repeat = [CCRepeatForever actionWithAction:seq];
 		[label2 runAction:repeat];
 

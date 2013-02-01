@@ -205,8 +205,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		self.disabledColor = ccc3( 126,126,126);
 		self.label = label;
 		
-		self.cascadeColor = YES;
-		self.cascadeOpacity = YES;
+		self.cascadeColorEnabled = YES;
+		self.cascadeOpacityEnabled = YES;
 	}
 
 	return self;
@@ -506,8 +506,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 		[self setContentSize: [_normalImage contentSize]];
 		
-		self.cascadeColor = YES;
-		self.cascadeOpacity = YES;
+		self.cascadeColorEnabled = YES;
+		self.cascadeOpacityEnabled = YES;
 	}
 	return self;
 }
@@ -765,8 +765,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 		_selectedIndex = NSUIntegerMax;
 		[self setSelectedIndex:0];
 		
-		self.cascadeColor = YES;
-		self.cascadeOpacity = YES;
+		self.cascadeColorEnabled = YES;
+		self.cascadeOpacityEnabled = YES;
 	}
 
 	return self;
