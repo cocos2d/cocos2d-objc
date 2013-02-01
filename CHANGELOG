@@ -2,6 +2,7 @@ version 2.1-rc1	 XX-Mar-2013
 
 . [FIX] LabelBMFont: setting color of label and individual chars works as expected
 . [FIX] RGBAProtocol: color and opacity are propagated if parent has cascade property enabled
+		renamed methods: cascadeColor -> cascadeColorEnabled, cascadeOpacity -> cascadeOpacityEnabled
 . [FIX] Sprite: color code improved. Removed 'unmodifiedColor' ivar.
 
 version 2.1-rc0	 28-Jan-2013

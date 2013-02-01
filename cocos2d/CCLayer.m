@@ -413,16 +413,16 @@
 
 @implementation CCLayerRGBA
 
-@synthesize cascadeColor = _cascadeColor;
-@synthesize cascadeOpacity = _cascadeOpacity;
+@synthesize cascadeColorEnabled = _cascadeColorEnabled;
+@synthesize cascadeOpacityEnabled = _cascadeOpacityEnabled;
 
 -(id) init
 {
 	if ( (self=[super init]) ) {
         _displayedOpacity = _realOpacity = 255;
         _displayedColor = _realColor = ccWHITE;
-		self.cascadeOpacity = NO;
-		self.cascadeColor = NO;
+		self.cascadeOpacityEnabled = NO;
+		self.cascadeColorEnabled = NO;
     }
     return self;
 }
@@ -442,9 +442,9 @@
 {
 	_displayedOpacity = _realOpacity = opacity;
 
-	if( _cascadeOpacity ) {
+	if( _cascadeOpacityEnabled ) {
 		GLubyte parentOpacity = 255;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeOpacity] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeOpacityEnabled] )
 			parentOpacity = [(id<CCRGBAProtocol>)_parent displayedOpacity];
 		[self updateDisplayedOpacity:parentOpacity];
 	}
@@ -464,9 +464,9 @@
 {
 	_displayedColor = _realColor = color;
 	
-	if( _cascadeColor ) {
+	if( _cascadeColorEnabled ) {
 		ccColor3B parentColor = ccWHITE;
-		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent cascadeColor] )
+		if( [_parent conformsToProtocol:@protocol(CCRGBAProtocol)] && [(id<CCRGBAProtocol>)_parent isCascadeColorEnabled] )
 			parentColor = [(id<CCRGBAProtocol>)_parent displayedColor];
 		[self updateDisplayedColor:parentColor];
 	}
@@ -476,7 +476,7 @@
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 
-    if (_cascadeOpacity) {
+    if (_cascadeOpacityEnabled) {
         id<CCRGBAProtocol> item;
         CCARRAY_FOREACH(_children, item) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
@@ -492,7 +492,7 @@
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
 
-    if (_cascadeColor) {
+    if (_cascadeColorEnabled) {
         id<CCRGBAProtocol> item;
         CCARRAY_FOREACH(_children, item) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {

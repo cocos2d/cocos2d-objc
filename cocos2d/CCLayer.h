@@ -155,7 +155,7 @@ typedef enum {
 {
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeOpacity, _cascadeColor;
+	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
 }
 
 // XXX: To make BridgeSupport happy
