@@ -31,6 +31,7 @@
 
 #import "CCLayer.h"
 #import "CCDirector.h"
+#import "CCScene.h"
 #import "ccMacros.h"
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"

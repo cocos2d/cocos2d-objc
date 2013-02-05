@@ -40,6 +40,8 @@
 
 #pragma mark - CCLayer
 
+@class CCScene;
+
 typedef enum {
 	kCCTouchesAllAtOnce,
 	kCCTouchesOneByOne,
