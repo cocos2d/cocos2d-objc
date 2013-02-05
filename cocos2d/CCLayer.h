@@ -138,6 +138,9 @@ typedef enum {
 
 #endif // mac
 
+/** Returns a scene containing an instance of this layer as its only child. */
++ (CCScene *)scene;
+
 @end
 
 

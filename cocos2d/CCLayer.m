@@ -406,6 +406,14 @@
 	return YES;
 }
 #endif
+
++ (CCScene *)scene
+{
+    CCScene *scene = [CCScene node];
+    [scene addChild:[self node]];
+    return scene;
+}
+
 @end
 
 
