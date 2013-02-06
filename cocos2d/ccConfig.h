@@ -61,7 +61,7 @@
  @since v2.1
  */
 #ifndef CC_ENABLE_STACKABLE_ACTIONS
-#define CC_ENABLE_STACKABLE_ACTIONS 0
+#define CC_ENABLE_STACKABLE_ACTIONS 1
 #endif
 
 

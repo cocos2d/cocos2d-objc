@@ -263,20 +263,16 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, _tension, lt );
 
-	CCNode *node = (CCNode*)_target;
-
 #if CC_ENABLE_STACKABLE_ACTIONS
+	CCNode *node = (CCNode*)_target;
 	CGPoint diff = ccpSub( node.position, _previousPosition);
 	if( diff.x !=0 || diff.y != 0 ) {
 		_accumulatedDiff = ccpAdd( _accumulatedDiff, diff);
 		newPos = ccpAdd( newPos, _accumulatedDiff);
 	}
-	
-	[self updatePosition:newPos];
-#else
-	[node setPosition: newPos];
-#endif // !CC_ENABLE_STACKABLE_ACTIONS
-	
+#endif
+
+	[self updatePosition:newPos];	
 }
 
 -(void) updatePosition:(CGPoint)newPos
