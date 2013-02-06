@@ -679,13 +679,19 @@
 
 -(void) update: (ccTime) t
 {
+
 	CCNode *node = (CCNode*)_target;
+
+#if CC_ENABLE_STACKABLE_ACTIONS
 	CGPoint currentPos = [node position];
 	CGPoint diff = ccpSub(currentPos, _previousPos);
 	_startPos = ccpAdd( _startPos, diff);
 	CGPoint newPos =  ccpAdd( _startPos, ccpMult(_positionDelta, t) );
 	[_target setPosition: newPos];
 	_previousPos = newPos;
+#else
+	[node setPosition: ccpAdd( _startPos, ccpMult(_positionDelta, t))];
+#endif // CC_ENABLE_STACKABLE_ACTIONS
 }
 @end
 
@@ -874,6 +880,8 @@
 	CGFloat x = _delta.x * t;
 	
 	CCNode *node = (CCNode*)_target;
+
+#if CC_ENABLE_STACKABLE_ACTIONS
 	CGPoint currentPos = [node position];
 	
 	CGPoint diff = ccpSub( currentPos, _previousPos );
@@ -883,6 +891,9 @@
 	[node setPosition:newPos];
 	
 	_previousPos = newPos;
+#else
+	[node setPosition: ccpAdd( _startPosition, ccp(x,y))];
+#endif // !CC_ENABLE_STACKABLE_ACTIONS
 }
 
 -(CCActionInterval*) reverse
@@ -964,6 +975,8 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	CGFloat y = bezierat(ya, yb, yc, yd, t);
 	
 	CCNode *node = (CCNode*)_target;
+
+#if CC_ENABLE_STACKABLE_ACTIONS
 	CGPoint currentPos = [node position];
 	CGPoint diff = ccpSub(currentPos, _previousPosition);
 	_startPosition = ccpAdd( _startPosition, diff);
@@ -972,6 +985,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	[node setPosition: newPos];
 	
 	_previousPosition = newPos;
+#else
+	[node setPosition: ccpAdd( _startPosition, ccp(x,y))];
+#endif // !CC_ENABLE_STACKABLE_ACTIONS
 }
 
 - (CCActionInterval*) reverse
