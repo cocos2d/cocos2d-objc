@@ -4,6 +4,7 @@ version 2.1-rc1	 XX-Mar-2013
 . [FIX] RGBAProtocol: color and opacity are propagated if parent has cascade property enabled
 		renamed methods: cascadeColor -> cascadeColorEnabled, cascadeOpacity -> cascadeOpacityEnabled
 . [FIX] Sprite: color code improved. Removed 'unmodifiedColor' ivar.
+. [FIX] SpriteFrame: rectInPixels is calculated correctly
 
 version 2.1-rc0	 28-Jan-2013
 . [NEW] Actions: All the actions that modify the position property can be run at the same time.

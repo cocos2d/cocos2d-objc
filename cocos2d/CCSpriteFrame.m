@@ -57,13 +57,13 @@
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	CGRect rectInPixels = CC_RECT_PIXELS_TO_POINTS( rect );
+	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
 	return [self initWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
 }
 
 -(id) initWithTextureFilename:(NSString*)filename rect:(CGRect)rect
 {
-	CGRect rectInPixels = CC_RECT_PIXELS_TO_POINTS( rect );
+	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
 	return [self initWithTextureFilename:filename rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
 }
 
@@ -142,7 +142,7 @@
 -(void) setRect:(CGRect)rect
 {
 	_rect = rect;
-	_rectInPixels = CC_RECT_PIXELS_TO_POINTS( _rect );
+	_rectInPixels = CC_RECT_POINTS_TO_PIXELS(_rect);
 }
 
 -(void) setRectInPixels:(CGRect)rectInPixels
