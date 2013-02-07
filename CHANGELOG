@@ -1,5 +1,6 @@
 version 2.1-rc0a  07-Feb-2013
 . [NEW] Actions: Stackable actions behavior can be disabled at compile time (issue #1461)
+		BezierTo copy: works as expected
 . [FIX] LabelBMFont: setting color of label and individual chars works as expected
 . [FIX] RGBAProtocol: color and opacity are propagated if parent has cascade property enabled
 		renamed methods: cascadeColor -> cascadeColorEnabled, cascadeOpacity -> cascadeOpacityEnabled
