@@ -949,8 +949,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithDuration:[self duration] bezier:_config];
-    return copy;
+	return [[[self class] allocWithZone: zone] initWithDuration:[self duration] bezier:_config];
 }
 
 -(void) startWithTarget:(id)aTarget
@@ -1023,6 +1022,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_config.controlPoint_2 = ccpSub(_toConfig.controlPoint_2, _startPosition);
 	_config.endPosition = ccpSub(_toConfig.endPosition, _startPosition);
 }
+
+-(id) copyWithZone: (NSZone*) zone
+{
+	return [[[self class] allocWithZone: zone] initWithDuration:[self duration] bezier:_toConfig];
+}
+
 @end
 
 
