@@ -74,8 +74,8 @@ Class restartAction()
 -(void) setEnableRecursiveCascading:(BOOL)enable
 {
 	if( [self conformsToProtocol:@protocol(CCRGBAProtocol)] ) {
-		[(id<CCRGBAProtocol>)self setCascadeColor:enable];
-		[(id<CCRGBAProtocol>)self setCascadeOpacity:enable];
+		[(id<CCRGBAProtocol>)self setCascadeColorEnabled:enable];
+		[(id<CCRGBAProtocol>)self setCascadeOpacityEnabled:enable];
 		
 	}
 	for( CCNode* child in self.children)
@@ -144,7 +144,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
-        layer1.cascadeColor = NO;
+        layer1.cascadeColorEnabled = NO;
 
         layer1.position = ccp(0, s.height/2);
 
@@ -198,8 +198,8 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(192, 0, 0, 255) width:s.width height:s.height/2];
-        layer1.cascadeColor = NO;
-        layer1.cascadeOpacity = NO;
+        layer1.cascadeColorEnabled = NO;
+        layer1.cascadeOpacityEnabled = NO;
 
         layer1.position = ccp(0, s.height/2);
 
@@ -362,7 +362,7 @@ Class restartAction()
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLayerColor* layer1 = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:s.width height:s.height/2];
-        layer1.cascadeColor = NO;
+        layer1.cascadeColorEnabled = NO;
         layer1.position = ccp(0, s.height/2);
 
 		CCSprite *sister1 = [CCSprite spriteWithFile:@"grossinis_sister1.png"];
