@@ -831,6 +831,7 @@
 		A04443F314A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A04443F414A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
 		A04443F514A91DB600E62742 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A04443E114A91DB600E62742 /* BaseAppController.m */; };
+		A04A478C16C56FB900BA75DC /* BaseTestLayer in Resources */ = {isa = PBXBuildFile; fileRef = A04A478B16C56FB900BA75DC /* BaseTestLayer */; };
 		A04B0DC814A007D0005EB429 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = A04B0DC714A007D0005EB429 /* bugs */; };
 		A04B0F0614A29B77005EB429 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A04B0F0714A29B77005EB429 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
@@ -5662,6 +5663,7 @@
 		A044439314A6027300E62742 /* GLES-Render.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "GLES-Render.mm"; path = "tests/Box2DTestBed-Cocos2dIntegration/GLES-Render.mm"; sourceTree = "<group>"; };
 		A04443E014A91DB600E62742 /* BaseAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseAppController.h; path = tests/BaseAppController.h; sourceTree = "<group>"; };
 		A04443E114A91DB600E62742 /* BaseAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseAppController.m; path = tests/BaseAppController.m; sourceTree = "<group>"; };
+		A04A478B16C56FB900BA75DC /* BaseTestLayer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseTestLayer; sourceTree = "<group>"; };
 		A04B0DC714A007D0005EB429 /* bugs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = bugs; path = Resources/Images/bugs; sourceTree = "<group>"; };
 		A04B0F5D14A29B77005EB429 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A04B0F6114A29BEB005EB429 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
@@ -6936,6 +6938,7 @@
 				A0C16008166D57AE00DF921C /* tests_resources-jsb.js */,
 				A0C16009166D57AE00DF921C /* tests-boot-jsb.js */,
 				A0C1600A166D57AE00DF921C /* tests-main.js */,
+				A04A478B16C56FB900BA75DC /* BaseTestLayer */,
 				A0C15FC2166D579900DF921C /* ActionManagerTest */,
 				A0C15FC3166D579900DF921C /* ActionsTest */,
 				A0C15FC4166D579900DF921C /* Box2dTest */,
@@ -9997,6 +10000,7 @@
 				A0C16007166D579900DF921C /* UnitTest in Resources */,
 				A06BF7F91680382E0018A802 /* SysTest in Resources */,
 				A02521E11696368D0087E514 /* FileUtils in Resources */,
+				A04A478C16C56FB900BA75DC /* BaseTestLayer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

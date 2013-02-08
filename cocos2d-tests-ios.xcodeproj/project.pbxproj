@@ -1401,6 +1401,7 @@
 		A040881F16A73DC100161E77 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = A040880C16A73DC100161E77 /* iTunesArtwork */; };
 		A040882816A7624000161E77 /* Published-iOS in Resources */ = {isa = PBXBuildFile; fileRef = A040882716A7624000161E77 /* Published-iOS */; };
 		A040882A16A7625100161E77 /* Published files iOS in Resources */ = {isa = PBXBuildFile; fileRef = A040882916A7625100161E77 /* Published files iOS */; };
+		A04A479316C5A76900BA75DC /* BaseTestLayer in Resources */ = {isa = PBXBuildFile; fileRef = A04A479216C5A76900BA75DC /* BaseTestLayer */; };
 		A04B0D4A149E701A005EB429 /* bugs in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA4A711CBD7FB007B009D /* bugs */; };
 		A04B0D4C149E7FFA005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A04B0D4D149E7FFB005EB429 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
@@ -4668,6 +4669,7 @@
 		A040880C16A73DC100161E77 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
 		A040882716A7624000161E77 /* Published-iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published-iOS"; sourceTree = "<group>"; };
 		A040882916A7625100161E77 /* Published files iOS */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Published files iOS"; sourceTree = "<group>"; };
+		A04A479216C5A76900BA75DC /* BaseTestLayer */ = {isa = PBXFileReference; lastKnownFileType = folder; path = BaseTestLayer; sourceTree = "<group>"; };
 		A0579B861601975E00AF8A12 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Resources/Default-568h@2x.png"; sourceTree = "<group>"; };
 		A0579BBB16019C6000AF8A12 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default@2x.png"; path = "Resources/Default@2x.png"; sourceTree = "<group>"; };
 		A05B5ACE156F35C100ADAB65 /* chipmunk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chipmunk.h; sourceTree = "<group>"; };
@@ -7582,6 +7584,7 @@
 				A0C164F0166D58A500DF921C /* tests_resources-jsb.js */,
 				A0C164F1166D58A500DF921C /* tests-boot-jsb.js */,
 				A0C164F2166D58A500DF921C /* tests-main.js */,
+				A04A479216C5A76900BA75DC /* BaseTestLayer */,
 				A0C164AA166D589300DF921C /* ActionManagerTest */,
 				A0C164AB166D589300DF921C /* ActionsTest */,
 				A0C164AC166D589300DF921C /* Box2dTest */,
@@ -11721,6 +11724,7 @@
 				A025296116976BD50087E514 /* jsb.js in Resources */,
 				2CFA5406168805CD006CA4B9 /* SysTest in Resources */,
 				A02521DE169635910087E514 /* FileUtils in Resources */,
+				A04A479316C5A76900BA75DC /* BaseTestLayer in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
