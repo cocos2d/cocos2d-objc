@@ -385,12 +385,16 @@
 		A0D31E8C16C73B46004FFCD2 /* jsb_CocosDenshion_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6516C73B46004FFCD2 /* jsb_CocosDenshion_functions_registration.h */; };
 		A0D31E8D16C73B46004FFCD2 /* jsb_CocosDenshion_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6616C73B46004FFCD2 /* jsb_CocosDenshion_functions.h */; };
 		A0D31E8E16C73B46004FFCD2 /* jsb_CocosDenshion_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31E6716C73B46004FFCD2 /* jsb_CocosDenshion_functions.mm */; };
-		A0D31E8F16C73B46004FFCD2 /* jsb_gl_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6816C73B46004FFCD2 /* jsb_gl_functions_registration.h */; };
-		A0D31E9016C73B46004FFCD2 /* jsb_gl_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6916C73B46004FFCD2 /* jsb_gl_functions.h */; };
-		A0D31E9116C73B46004FFCD2 /* jsb_gl_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31E6A16C73B46004FFCD2 /* jsb_gl_functions.mm */; };
 		A0D31E9216C73B46004FFCD2 /* jsb_system_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6B16C73B46004FFCD2 /* jsb_system_functions_registration.h */; };
 		A0D31E9316C73B46004FFCD2 /* jsb_system_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E6C16C73B46004FFCD2 /* jsb_system_functions.h */; };
 		A0D31E9416C73B46004FFCD2 /* jsb_system_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31E6D16C73B46004FFCD2 /* jsb_system_functions.mm */; };
+		A0D31EA916C742E5004FFCD2 /* jsb_opengl_functions_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EA616C742E5004FFCD2 /* jsb_opengl_functions_registration.h */; };
+		A0D31EAA16C742E5004FFCD2 /* jsb_opengl_functions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EA716C742E5004FFCD2 /* jsb_opengl_functions.h */; };
+		A0D31EAB16C742E5004FFCD2 /* jsb_opengl_functions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31EA816C742E5004FFCD2 /* jsb_opengl_functions.mm */; };
+		A0D31EC016C75C1D004FFCD2 /* jsb_opengl_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */; };
+		A0D31EC116C75C1D004FFCD2 /* jsb_opengl_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */; };
+		A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */; };
+		A0D31EC416C75C47004FFCD2 /* jsb_opengl_enum.js in Sources */ = {isa = PBXBuildFile; fileRef = A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */; };
 		A0D7D9CF15E2E730000CA0C4 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */; };
 		A0D7D9D015E2E730000CA0C4 /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */; };
 		A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */; };
@@ -1373,7 +1377,6 @@
 		A025294116976BD40087E514 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
 		A025294216976BD40087E514 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
 		A025294316976BD40087E514 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
-		A025294416976BD40087E514 /* jsb_opengl.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl.js; sourceTree = "<group>"; };
 		A025294516976BD40087E514 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
 		A025294616976BD50087E514 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1597,12 +1600,16 @@
 		A0D31E6516C73B46004FFCD2 /* jsb_CocosDenshion_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_CocosDenshion_functions_registration.h; sourceTree = "<group>"; };
 		A0D31E6616C73B46004FFCD2 /* jsb_CocosDenshion_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_CocosDenshion_functions.h; sourceTree = "<group>"; };
 		A0D31E6716C73B46004FFCD2 /* jsb_CocosDenshion_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_CocosDenshion_functions.mm; sourceTree = "<group>"; };
-		A0D31E6816C73B46004FFCD2 /* jsb_gl_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_gl_functions_registration.h; sourceTree = "<group>"; };
-		A0D31E6916C73B46004FFCD2 /* jsb_gl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_gl_functions.h; sourceTree = "<group>"; };
-		A0D31E6A16C73B46004FFCD2 /* jsb_gl_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_gl_functions.mm; sourceTree = "<group>"; };
 		A0D31E6B16C73B46004FFCD2 /* jsb_system_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_system_functions_registration.h; sourceTree = "<group>"; };
 		A0D31E6C16C73B46004FFCD2 /* jsb_system_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_system_functions.h; sourceTree = "<group>"; };
 		A0D31E6D16C73B46004FFCD2 /* jsb_system_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_system_functions.mm; sourceTree = "<group>"; };
+		A0D31EA616C742E5004FFCD2 /* jsb_opengl_functions_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions_registration.h; sourceTree = "<group>"; };
+		A0D31EA716C742E5004FFCD2 /* jsb_opengl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions.h; sourceTree = "<group>"; };
+		A0D31EA816C742E5004FFCD2 /* jsb_opengl_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_functions.mm; sourceTree = "<group>"; };
+		A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
+		A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
+		A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_registration.mm; sourceTree = "<group>"; };
+		A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_enum.js; sourceTree = "<group>"; };
 		A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
 		A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
@@ -2483,6 +2490,9 @@
 		A01919EB167FCB750099349A /* auto */ = {
 			isa = PBXGroup;
 			children = (
+				A0D31EA616C742E5004FFCD2 /* jsb_opengl_functions_registration.h */,
+				A0D31EA716C742E5004FFCD2 /* jsb_opengl_functions.h */,
+				A0D31EA816C742E5004FFCD2 /* jsb_opengl_functions.mm */,
 				A0D31E4716C73B46004FFCD2 /* jsb_chipmunk_auto_classes_registration.h */,
 				A0D31E4816C73B46004FFCD2 /* jsb_chipmunk_auto_classes.h */,
 				A0D31E4916C73B46004FFCD2 /* jsb_chipmunk_auto_classes.mm */,
@@ -2516,9 +2526,6 @@
 				A0D31E6516C73B46004FFCD2 /* jsb_CocosDenshion_functions_registration.h */,
 				A0D31E6616C73B46004FFCD2 /* jsb_CocosDenshion_functions.h */,
 				A0D31E6716C73B46004FFCD2 /* jsb_CocosDenshion_functions.mm */,
-				A0D31E6816C73B46004FFCD2 /* jsb_gl_functions_registration.h */,
-				A0D31E6916C73B46004FFCD2 /* jsb_gl_functions.h */,
-				A0D31E6A16C73B46004FFCD2 /* jsb_gl_functions.mm */,
 				A0D31E6B16C73B46004FFCD2 /* jsb_system_functions_registration.h */,
 				A0D31E6C16C73B46004FFCD2 /* jsb_system_functions.h */,
 				A0D31E6D16C73B46004FFCD2 /* jsb_system_functions.mm */,
@@ -2529,11 +2536,11 @@
 		A0191A0D167FCB760099349A /* js */ = {
 			isa = PBXGroup;
 			children = (
+				A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */,
 				A025294016976BD40087E514 /* jsb_chipmunk.js */,
 				A025294116976BD40087E514 /* jsb_cocos2d.js */,
 				A025294216976BD40087E514 /* jsb_cocosbuilder.js */,
 				A025294316976BD40087E514 /* jsb_debugger.js */,
-				A025294416976BD40087E514 /* jsb_opengl.js */,
 				A025294516976BD40087E514 /* jsb_sys.js */,
 				A025294616976BD50087E514 /* jsb.js */,
 				A025224016965E4F0087E514 /* main.example.js */,
@@ -2555,6 +2562,9 @@
 				A0D31E2716C73B25004FFCD2 /* jsb_cocos2d_registration.h */,
 				A0D31E2816C73B25004FFCD2 /* jsb_cocos2d_registration.mm */,
 				A0D31E2916C73B25004FFCD2 /* jsb_CocosBuilderReader_manual.mm */,
+				A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */,
+				A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */,
+				A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */,
 				A0D31E2A16C73B25004FFCD2 /* jsb_config.h */,
 				A0D31E2B16C73B25004FFCD2 /* jsb_core.h */,
 				A0D31E2C16C73B25004FFCD2 /* jsb_core.mm */,
@@ -3490,10 +3500,12 @@
 				A0D31E8A16C73B46004FFCD2 /* jsb_CocosDenshion_classes.h in Headers */,
 				A0D31E8C16C73B46004FFCD2 /* jsb_CocosDenshion_functions_registration.h in Headers */,
 				A0D31E8D16C73B46004FFCD2 /* jsb_CocosDenshion_functions.h in Headers */,
-				A0D31E8F16C73B46004FFCD2 /* jsb_gl_functions_registration.h in Headers */,
-				A0D31E9016C73B46004FFCD2 /* jsb_gl_functions.h in Headers */,
 				A0D31E9216C73B46004FFCD2 /* jsb_system_functions_registration.h in Headers */,
 				A0D31E9316C73B46004FFCD2 /* jsb_system_functions.h in Headers */,
+				A0D31EA916C742E5004FFCD2 /* jsb_opengl_functions_registration.h in Headers */,
+				A0D31EAA16C742E5004FFCD2 /* jsb_opengl_functions.h in Headers */,
+				A0D31EC016C75C1D004FFCD2 /* jsb_opengl_manual.h in Headers */,
+				A0D31EC116C75C1D004FFCD2 /* jsb_opengl_registration.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4355,8 +4367,10 @@
 				A0D31E8816C73B46004FFCD2 /* jsb_CocosBuilderReader_classes.mm in Sources */,
 				A0D31E8B16C73B46004FFCD2 /* jsb_CocosDenshion_classes.mm in Sources */,
 				A0D31E8E16C73B46004FFCD2 /* jsb_CocosDenshion_functions.mm in Sources */,
-				A0D31E9116C73B46004FFCD2 /* jsb_gl_functions.mm in Sources */,
 				A0D31E9416C73B46004FFCD2 /* jsb_system_functions.mm in Sources */,
+				A0D31EAB16C742E5004FFCD2 /* jsb_opengl_functions.mm in Sources */,
+				A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */,
+				A0D31EC416C75C47004FFCD2 /* jsb_opengl_enum.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
