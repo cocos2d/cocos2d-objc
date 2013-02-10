@@ -8,8 +8,8 @@
 
 // local import
 #import "AppController.h"
-#import "js_bindings_core.h"
-#import "js_bindings_basic_conversions.h"
+#import "jsb_core.h"
+#import "jsb_basic_conversions.h"
 
 // CocosBuilder Reader
 #import "CCBReader.h"

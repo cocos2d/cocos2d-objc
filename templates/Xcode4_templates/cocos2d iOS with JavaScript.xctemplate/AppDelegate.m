@@ -9,7 +9,7 @@
 #import "cocos2d.h"
 
 #import "AppDelegate.h"
-#import "js_bindings_core.h"
+#import "jsb_core.h"
 
 @implementation MyNavigationController
 
