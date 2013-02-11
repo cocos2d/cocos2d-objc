@@ -40,15 +40,15 @@
  */
 @interface CCSpriteFrame : NSObject <NSCopying>
 {
-	CGRect			rect_;
-	CGRect			rectInPixels_;
-	BOOL			rotated_;
-    CGPoint			offset_;
-	CGPoint			offsetInPixels_;
-	CGSize			originalSize_;
-	CGSize			originalSizeInPixels_;
-	CCTexture2D		*texture_;
-	NSString		*textureFilename_;
+	CGRect			_rect;
+	CGRect			_rectInPixels;
+	BOOL			_rotated;
+    CGPoint			_offset;
+	CGPoint			_offsetInPixels;
+	CGSize			_originalSize;
+	CGSize			_originalSizeInPixels;
+	CCTexture2D		*_texture;
+	NSString		*_textureFilename;
 }
 /** rect of the frame in points. If it is updated, then rectInPixels will be updated too. */
 @property (nonatomic,readwrite) CGRect rect;

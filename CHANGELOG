@@ -1,4 +1,13 @@
-version 2.1-rc0	 XX-Jan-2013
+version 2.1-rc0a  07-Feb-2013
+. [NEW] Actions: Stackable actions behavior can be disabled at compile time (issue #1461)
+		BezierTo copy: works as expected
+. [FIX] LabelBMFont: setting color of label and individual chars works as expected
+. [FIX] RGBAProtocol: color and opacity are propagated if parent has cascade property enabled
+		renamed methods: cascadeColor -> cascadeColorEnabled, cascadeOpacity -> cascadeOpacityEnabled
+. [FIX] Sprite: color code improved. Removed 'unmodifiedColor' ivar.
+. [FIX] SpriteFrame: rectInPixels is calculated correctly
+
+version 2.1-rc0	 28-Jan-2013
 . [NEW] Actions: All the actions that modify the position property can be run at the same time.
 		MoveBy/To, JumpBy/To, BezierTo/By, CatmullRomTo/By and CardinalSplineTo/By won't override the results of previous actions.
 . [NEW] FileUtils: Added "filename lookup" dictionary, useful to alter the name of an asset in runtime. Useful for cross platform
@@ -6,11 +15,14 @@ version 2.1-rc0	 XX-Jan-2013
 . [NEW] NodeRGBA: New node that implements opacity and color. Sprite, Label, Menu and other are subclasses of this one.
 		It also supports cascading color and opacity (disabled by default in v2.1)
 . [NEW] OpenGL: CC_ENABLE_GL_STATE_CACHE is enabled by default. If you are migrating from v1.x, then turn it off to easy the transition
-. [FIX] Actions, Menu, Node, Sprite, Particles, Parallax, Texture: All ivars use _ as prefix, not suffix
+. [FIX] Texture: PVRv3 textures automatically set the correct value for premultiplid alpha
+. [FIX] Actions, Animations, Camera, Director, Menu, Node, Particles, Parallax, Sprite, SpriteBatch, Texture, TextureAtlas, Transitions: All ivars use _ as prefix, not as suffix
+. [FIX] CocosDenshion: Tests moved to tests directory. Merged CocosDenshion and CocosDenshionExtras directories
 . [FIX] Configuration: Can be initialized before an OpenGL context is created (issue #1450)
 . [FIX] Director: replaced length with lenght
 		Fixed 2 memory leaks in createStatsLabel
 		Frees DrawingPrimitives resources (issue #1456)
+		The 1st dt after startAnimation will be 0 (issue #1435)
 . [FIX] EaseActions: "other_" ivar renamed to "_inner". It is a property now
 . [FIX] Effects: ccGridSize is no longer used. It was replaced by CGPoint and CGSize
 		API fixes: The first parameters that is received is the duration of the action. This is consistent with the actions API.
@@ -20,6 +32,7 @@ version 2.1-rc0	 XX-Jan-2013
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
 . [FIX] RenderTexture: Restures the Projection after using it.
+. [FIX] Particles: Adding or removing particles in runtime from an emitter works as expected
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
 . [3RD] JRSwizzle: is a submodule
 . [3RD] JS Bindings: Updated to v0.5
@@ -146,7 +159,7 @@ version 2.1-beta 7-Sept-2012
 . [NEW] Node: Added RotationalSkew featur (compatible with Flash)
 . [NEW] Physics nodes: PhysicsSprite and PhysicsDebugNode are part of cocos2d
 . [NEW] Tests: Tests for RotationalSkew feature
-. [NEW] Texture: Supports PVR v3 file format
+. [NEW] Texture: Supports PVR v3 file format (issue #1385)
 . [FIX] All: fixed many English grammar/syntax errors in the docstrings
 . [FIX] Actions: Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 . [FIX] Director: Fixed flicker again.
@@ -459,7 +472,7 @@ version 1.1-rc0 .. -..-2012
 . [FIX] CCRenderTexture: fixed getUIImageFromBuffer
 . [FIX] CCTouchDispatcher: fixed crash after showing UIAlertView (issue #1279)
 . [FIX] CCGrabber: added log message to warn that grabber doesn't support transparent parts with a color buffer of RGB565
-. [FIX] Compiler: fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0. 
+. [FIX] Compiler: fixed unrecognised clang pragmas so cocos can still be compiled with LLVM version < 2.0.
 
 version 1.1-beta2b 14-Mar-2012
 . [FIX] CCUtils: missing method declaration
@@ -469,13 +482,13 @@ version 1.1-beta2 12-Mar-2012
 			LabelBMFont: added setFntFile method
 			Animation: Added new animation format that supports delays per frame and notifications per frame
 			Actions: Added ActionTargeted action. Useful to target other nodes from a sequence.
-. [NEW] All: Code is compatible with ARC (issue #1199) 
+. [NEW] All: Code is compatible with ARC (issue #1199)
 . [NEW] CCArray: new sorting methods, replaceObjectAtIndex, isEqualToArray
 . [NEW] ccFileUtiles: new iPad retina file extension (ipadhd)
 . [NEW] DrawPrimitives: Added new functions, ccDrawRect, ccDrawSolidRect, ccDrawSolidPoly
 . [NEW] DrawPrimitives: Added batch drawing of lines, ccDrawLines (issue #1081)
 . [NEW] Node: Added onExitTransitionDidStart (issue #792)
-. [NEW] ParticleSystem: supports animations in new animation format 
+. [NEW] ParticleSystem: supports animations in new animation format
 . [NEW] TileMap: supports in-memory TMX map creation (issue #1239)
 . [NEW] TileMap: Flipped tiles can be changed during runtime (issue #1264)
 . [NEW] Touchdispatcher: new implementation, supporting changing dispatchers based on (ranges) of properties, custom sorting and more (full list in online release notes)
@@ -488,7 +501,7 @@ version 1.1-beta2 12-Mar-2012
 . [FIX] ColorLayer: incorrect size in init method
 . [FIX] Director: 3d projection setting for iPad retina
 . [FIX] Denshion: Background music fades ok (issue #1304)
-. [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254) 
+. [FIX] EAGLView: always destroy and recreate OpenGL buffers completely (issue #1254)
 . [FIX] MenuItem: removed warning when deleting item
 . [FIX] Node: orderOfArrival is @synthezied correctly (issue #1273)
 . [FIX] Node & Sprite: Scale before Skew to prevent issues with negatives scales.
@@ -874,7 +887,7 @@ version 0.99.4 - 14-Jul-2010
  . [FIX] Director: Avoid re-scale initial issue (issue #899, issue #350)
  . [FIX] Director: convertToUI works as expected (issue #902)
  . [FIX] Director: renamed mainLoop -> drawScene
- . [FIX] Director: appended '_' to ivars (eg: FPSLabel -> FPSLabel_)
+ . [FIX] Director: appended '_' to ivars (eg: FPSLabel -> _FPSLabel)
 
 version 0.99.4-rc2 - 24-Jun-2010
  . [NEW] CCArray: Internally uses CCARRAY_FOREACH. Improved performance (issue #353)

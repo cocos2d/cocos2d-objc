@@ -54,19 +54,19 @@ typedef enum
  */
 @interface CCRenderTexture : CCNode
 {
-	GLuint				fbo_;
-	GLuint depthRenderBufffer_;
-	GLint				oldFBO_;
-	CCTexture2D*		texture_;
-	CCSprite*			sprite_;
-	GLenum				pixelFormat_;
+	GLuint				_FBO;
+	GLuint				_depthRenderBufffer;
+	GLint				_oldFBO;
+	CCTexture2D*		_texture;
+	CCSprite*			_sprite;
+	GLenum				_pixelFormat;
 
 	// code for "auto" update
-	GLbitfield			clearFlags_;
-	ccColor4F			clearColor_;
-	GLclampf			clearDepth_;
-	GLint				clearStencil_;
-	BOOL				autoDraw_;
+	GLbitfield			_clearFlags;
+	ccColor4F			_clearColor;
+	GLclampf			_clearDepth;
+	GLint				_clearStencil;
+	BOOL				_autoDraw;
 }
 
 /** The CCSprite being used.

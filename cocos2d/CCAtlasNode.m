@@ -97,7 +97,7 @@
 
 		// shader stuff
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture_uColor];
-		_uniformColor = glGetUniformLocation( _shaderProgram->program_, "u_color");
+		_uniformColor = glGetUniformLocation( _shaderProgram.program, "u_color");
 	}
 	return self;
 }

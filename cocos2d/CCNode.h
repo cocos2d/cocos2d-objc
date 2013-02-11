@@ -603,15 +603,14 @@ enum {
  - opacity
  - RGB colors
 
- Opacity propagates into children that conform to the CCRGBAProtocol if CC_CASCADING_OPACITY is enabled
- in ccConfig.h.
- @Since 1.0.1-rsanchez
+ Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ @since v2.1
  */
 @interface CCNodeRGBA : CCNode <CCRGBAProtocol>
 {
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeColor, _cascadeOpacity;
+	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
 }
 
 // XXX To make BridgeSupport happy

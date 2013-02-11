@@ -99,12 +99,12 @@ enum
  */
 @interface CCTMXTiledMap : CCNode
 {
-	CGSize				mapSize_;
-	CGSize				tileSize_;
-	int					mapOrientation_;
-	NSMutableArray		*objectGroups_;
-	NSMutableDictionary	*properties_;
-	NSMutableDictionary	*tileProperties_;
+	CGSize				_mapSize;
+	CGSize				_tileSize;
+	int					_mapOrientation;
+	NSMutableArray		*_objectGroups;
+	NSMutableDictionary	*_properties;
+	NSMutableDictionary	*_tileProperties;
 }
 
 /** the map's size property measured in tiles */

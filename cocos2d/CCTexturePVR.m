@@ -124,15 +124,19 @@ struct _pixel_formathash {
 
 // Values taken from PVRTexture.h from http://www.imgtec.com
 enum {
-	kPVRTextureFlagMipmap		= (1<<8),		// has mip map levels
-	kPVRTextureFlagTwiddle		= (1<<9),		// is twiddled
-	kPVRTextureFlagBumpmap		= (1<<10),		// has normals encoded for a bump map
-	kPVRTextureFlagTiling		= (1<<11),		// is bordered for tiled pvr
-	kPVRTextureFlagCubemap		= (1<<12),		// is a cubemap/skybox
-	kPVRTextureFlagFalseMipCol	= (1<<13),		// are there false coloured MIP levels
-	kPVRTextureFlagVolume		= (1<<14),		// is this a volume texture
-	kPVRTextureFlagAlpha		= (1<<15),		// v2.1 is there transparency info in the texture
-	kPVRTextureFlagVerticalFlip	= (1<<16),		// v2.1 is the texture vertically flipped
+	kPVR2TextureFlagMipmap		= (1<<8),		// has mip map levels
+	kPVR2TextureFlagTwiddle		= (1<<9),		// is twiddled
+	kPVR2TextureFlagBumpmap		= (1<<10),		// has normals encoded for a bump map
+	kPVR2TextureFlagTiling		= (1<<11),		// is bordered for tiled pvr
+	kPVR2TextureFlagCubemap		= (1<<12),		// is a cubemap/skybox
+	kPVR2TextureFlagFalseMipCol	= (1<<13),		// are there false coloured MIP levels
+	kPVR2TextureFlagVolume		= (1<<14),		// is this a volume texture
+	kPVR2TextureFlagAlpha		= (1<<15),		// v2.1 is there transparency info in the texture
+	kPVR2TextureFlagVerticalFlip	= (1<<16),	// v2.1 is the texture vertically flipped
+};
+
+enum {
+	kPVR3TextureFlagPremultipliedAlpha	= (1<<1)	// has premultiplied alpha
 };
 
 
@@ -256,6 +260,8 @@ typedef struct {
 @synthesize width = _width;
 @synthesize height = _height;
 @synthesize hasAlpha = _hasAlpha;
+@synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
+@synthesize forcePremultipliedAlpha = _forcePremultipliedAlpha;
 @synthesize numberOfMipmaps = _numberOfMipmaps;
 
 // cocos2d integration
@@ -265,7 +271,7 @@ typedef struct {
 
 - (BOOL)unpackPVRv2Data:(unsigned char*)data PVRLen:(NSUInteger)len
 {
-	BOOL success = FALSE;
+	BOOL success = NO;
 	ccPVRv2TexHeader *header = NULL;
 	uint32_t flags, pvrTag;
 	uint32_t dataLength = 0, dataOffset = 0, dataSize = 0;
@@ -283,21 +289,21 @@ typedef struct {
 		(uint32_t)gPVRTexIdentifier[2] != ((pvrTag >> 16) & 0xff) ||
 		(uint32_t)gPVRTexIdentifier[3] != ((pvrTag >> 24) & 0xff))
 	{
-		return FALSE;
+		return NO;
 	}
 
 	CCConfiguration *configuration = [CCConfiguration sharedConfiguration];
 
 	flags = CFSwapInt32LittleToHost(header->flags);
 	formatFlags = flags & PVR_TEXTURE_FLAG_TYPE_MASK;
-	BOOL flipped = flags & kPVRTextureFlagVerticalFlip;
+	BOOL flipped = flags & kPVR2TextureFlagVerticalFlip;
 	if( flipped )
 		CCLOGWARN(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
 	if( ! [configuration supportsNPOT] &&
 	   ( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height ) ) ) {
 		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
-		return FALSE;
+		return NO;
 	}
 
 	for( NSUInteger i=0; i < (unsigned int)PVR2_MAX_TABLE_ELEMENTS ; i++) {
@@ -310,9 +316,9 @@ typedef struct {
 			_height = height = CFSwapInt32LittleToHost(header->height);
 
 			if (CFSwapInt32LittleToHost(header->bitmaskAlpha))
-				_hasAlpha = TRUE;
+				_hasAlpha = YES;
 			else
-				_hasAlpha = FALSE;
+				_hasAlpha = NO;
 
 			dataLength = CFSwapInt32LittleToHost(header->dataLength);
 			bytes = ((uint8_t *)data) + sizeof(ccPVRv2TexHeader);
@@ -336,7 +342,7 @@ typedef struct {
 					case kPVR2TexturePixelFormat_BGRA_8888:
 						if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
 							CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
-							return FALSE;
+							return NO;
 						}
 					default:
 						blockSize = 1;
@@ -367,7 +373,7 @@ typedef struct {
 				height = MAX(height >> 1, 1);
 			}
 
-			success = TRUE;
+			success = YES;
 			break;
 		}
 	}
@@ -381,7 +387,7 @@ typedef struct {
 - (BOOL)unpackPVRv3Data:(unsigned char*)dataPointer PVRLen:(NSUInteger)dataLength
 {
 	if(dataLength < sizeof(ccPVRv3TexHeader)) {
-		return FALSE;
+		return NO;
 	}
 	
 	ccPVRv3TexHeader *header = (ccPVRv3TexHeader *)dataPointer;
@@ -389,7 +395,7 @@ typedef struct {
 	// validate version
 	if(CFSwapInt32BigToHost(header->version) != 0x50565203) {
 		CCLOG(@"cocos2d: WARNING: pvr file version mismatch");
-		return FALSE;
+		return NO;
 	}
 	
 	// parse pixel format
@@ -410,9 +416,18 @@ typedef struct {
 	// unsupported / bad pixel format
 	if(!infoValid) {
 		CCLOG(@"cocos2d: WARNING: unsupported pvr pixelformat: %llx", pixelFormat );
-		return FALSE;
+		return NO;
 	}
-		
+	
+	// flags
+	uint32_t flags = CFSwapInt32LittleToHost(header->flags);
+	
+	// PVRv3 specifies premultiply alpha in a flag -- should always respect this in PVRv3 files
+	_forcePremultipliedAlpha = YES;
+	if(flags & kPVR3TextureFlagPremultipliedAlpha) {
+		_hasPremultipliedAlpha = YES;
+	}
+	
 	// sizing
 	uint32_t width = CFSwapInt32LittleToHost(header->width);
 	uint32_t height = CFSwapInt32LittleToHost(header->height);
@@ -446,7 +461,7 @@ typedef struct {
 			case kPVR3TexturePixelFormat_BGRA_8888:
 				if( ! [[CCConfiguration sharedConfiguration] supportsBGRA8888] ) {
 					CCLOG(@"cocos2d: TexturePVR. BGRA8888 not supported on this device");
-					return FALSE;
+					return NO;
 				}
 			default:
 				blockSize = 1;
@@ -476,7 +491,7 @@ typedef struct {
 		height = MAX(height >> 1, 1);
 	}
 	
-	return TRUE;
+	return YES;
 }
 
 
@@ -520,7 +535,7 @@ typedef struct {
 	{
 		if( compressed && ! [[CCConfiguration sharedConfiguration] supportsPVRTC] ) {
 			CCLOGWARN(@"cocos2d: WARNING: PVRTC images are not supported");
-			return FALSE;
+			return NO;
 		}
 
 		unsigned char *data = _mipmaps[i].address;
@@ -538,14 +553,14 @@ typedef struct {
 		if (err != GL_NO_ERROR)
 		{
 			CCLOGWARN(@"cocos2d: TexturePVR: Error uploading compressed texture level: %u . glError: 0x%04X", i, err);
-			return FALSE;
+			return NO;
 		}
 
 		width = MAX(width >> 1, 1);
 		height = MAX(height >> 1, 1);
 	}
 	
-	return TRUE;
+	return YES;
 }
 
 
@@ -576,7 +591,9 @@ typedef struct {
 
 		_name = 0;
 		_width = _height = 0;
-		_hasAlpha = FALSE;
+		_hasAlpha = NO;
+		_hasPremultipliedAlpha = NO;
+		_forcePremultipliedAlpha = NO;
 		_pixelFormatInfo = NULL;
 
 		_retainName = NO; // cocos2d integration

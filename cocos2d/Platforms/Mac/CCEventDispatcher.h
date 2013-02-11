@@ -252,18 +252,18 @@ struct _listAddedEntry;
 
  Only available on Mac
  */
-@interface CCEventDispatcher : NSObject <CCEventDelegate> {
+@interface CCEventDispatcher : NSObject <CCEventDelegate>
+{
+	BOOL					_dispatchEvents;
+	BOOL					_locked;
 
-	BOOL					dispatchEvents_;
-	BOOL					locked_;
-
-	struct	_listEntry		*keyboardDelegates_;
-	struct	_listEntry		*mouseDelegates_;
-	struct	_listEntry		*touchDelegates_;
-	struct	_listEntry		*gestureDelegates_;
+	struct	_listEntry		*_keyboardDelegates;
+	struct	_listEntry		*_mouseDelegates;
+	struct	_listEntry		*_touchDelegates;
+	struct	_listEntry		*_gestureDelegates;
 	
-	struct	_listDeletedEntry	*delegatesToBeRemoved_;
-	struct	_listAddedEntry		*delegatesToBeAdded_;
+	struct	_listDeletedEntry	*_delegatesToBeRemoved;
+	struct	_listAddedEntry		*_delegatesToBeAdded;
 	
 }
 

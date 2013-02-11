@@ -47,10 +47,10 @@
  */
 @interface CCActionTween : CCActionInterval
 {
-	NSString		*key_;
+	NSString		*_key;
 
-	float			from_, to_;
-	float			delta_;
+	float			_from, _to;
+	float			_delta;
 }
 
 /** creates an initializes the action with the property name (key), and the from and to parameters. */

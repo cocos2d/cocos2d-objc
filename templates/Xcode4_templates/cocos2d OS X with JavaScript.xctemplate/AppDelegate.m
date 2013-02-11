@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-#import "js_bindings_core.h"
+#import "jsb_core.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
 @synthesize window=window_, glView=glView_;

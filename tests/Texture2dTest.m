@@ -57,6 +57,8 @@ static NSString *transitions[] = {
 	@"TexturePVRAI88",
 	@"TexturePVRAI88v3",
 
+	@"TexturePVRv3Premult",
+
 	
 	@"TexturePVRBadEncoding",
 	@"TexturePNG",
@@ -2458,6 +2460,64 @@ Class restartAction()
 -(NSString *) subtitle
 {
 	return @"Testing Texture Memory allocation. Use Instruments + VM Tracker";
+}
+@end
+
+#pragma mark - TexturePVRv3Premult
+
+@implementation TexturePVRv3Premult
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+		CGSize size =[[CCDirector sharedDirector] winSize];
+		
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(128,128,128,255) width:size.width height:size.height];
+		[self addChild:background z:-1];
+		
+		
+		// PVR premultiplied
+		CCSprite *pvr1 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha_premult.pvr"];
+		[self addChild:pvr1 z:0];
+		pvr1.position = ccp(size.width/4*1, size.height/2);
+		[self transformSprite:pvr1];
+		
+		// PVR non-premultiplied
+		CCSprite *pvr2 = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha_nopremult.pvr"];
+		[self addChild:pvr2 z:0];
+		pvr2.position = ccp(size.width/4*2, size.height/2);
+		[self transformSprite:pvr2];
+
+		// PNG
+		[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+		[[CCTextureCache sharedTextureCache] removeTextureForKey:@"grossinis_sister1-testalpha.png"];
+		CCSprite *png = [CCSprite spriteWithFile:@"grossinis_sister1-testalpha.png"];
+		[self addChild:png z:0];
+		png.position = ccp(size.width/4*3, size.height/2);
+		[self transformSprite:png];
+
+	}
+	return self;
+}
+
+-(void) transformSprite:(CCSprite*)sprite
+{
+	id fade = [CCFadeOut actionWithDuration:2];
+	id dl = [CCDelayTime actionWithDuration:2];
+	id fadein = [fade reverse];
+	id seq = [CCSequence actions: fade, fadein, dl, nil];
+	id repeat = [CCRepeatForever actionWithAction:seq];
+	[sprite runAction:repeat];
+}
+
+-(NSString*) title
+{
+	return @"PVRv3 Premult Flag";
+}
+-(NSString*) subtitle
+{
+	return @"All images should look exactly the same";
 }
 @end
 

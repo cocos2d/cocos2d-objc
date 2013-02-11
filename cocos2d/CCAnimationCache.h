@@ -35,7 +35,7 @@
  */
 @interface CCAnimationCache : NSObject
 {
-	NSMutableDictionary *animations_;
+	NSMutableDictionary *_animations;
 }
 
 /** Returns the shared instance of the Animation cache */

@@ -102,6 +102,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Robert J Payne (http://www.zwopple.com/)
 	Initial PVR v3 file format support
+	Added PVRv3 premultiplied autodetection
 
 * Scott Lembcke (AKA slembcke) (http://chipmunk-physics.net/)
 	Many improvements in the OpenGL ES 2.0 code: better error reporting, better blending function, better shader code

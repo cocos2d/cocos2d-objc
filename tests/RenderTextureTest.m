@@ -760,7 +760,7 @@ Class restartAction()
 	return self;
 }
 
-- (void)update:(float)dt
+- (void)update:(ccTime)dt
 {
 	  static float time = 0;
 	  float r = 80;

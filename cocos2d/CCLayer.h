@@ -149,13 +149,13 @@ typedef enum {
  All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
  - opacity
  - RGB colors
- @Since 2.1beta2-custom
+ @since 2.1
  */
 @interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
 {
 	GLubyte		_displayedOpacity, _realOpacity;
 	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeOpacity, _cascadeColor;
+	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
 }
 
 // XXX: To make BridgeSupport happy

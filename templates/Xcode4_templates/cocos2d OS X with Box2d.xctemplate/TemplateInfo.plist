@@ -9,7 +9,6 @@
 		<string>com.cocos2d-v2.cocos2dlib</string>
 		<string>com.cocos2d-v2.box2dlib</string>
 		<string>com.cocos2d-v2.cocosdenshionlib</string>
-		<string>com.cocos2d-v2.cocosdenshionextraslib</string>
 		<string>com.cocos2d-v2.kazmathlib</string>
 	</array>
 	<key>Concrete</key>

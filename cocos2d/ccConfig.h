@@ -51,6 +51,19 @@
 #define CC_ENABLE_BOX2D_INTEGRATION 0
 #endif
 
+/** @def CC_ENABLE_STACKABLE_ACTIONS
+ If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.
+ If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions. 
+ If disabled, only the last run action will take effect.
+ 
+ Enabled by default. Disable to be compatible with v2.0 and older versions.
+
+ @since v2.1
+ */
+#ifndef CC_ENABLE_STACKABLE_ACTIONS
+#define CC_ENABLE_STACKABLE_ACTIONS 1
+#endif
+
 
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
@@ -268,32 +281,3 @@
 #define CC_ENABLE_PROFILERS 0
 #endif
 
-/** @def CC_CASCADING_OPACITY
- If enabled, cocos2d uses transitive opacity.
- All classes calculate their cumulative opacity from self opacity and parent's opacity.
- For example, if you setup a CCLayerRGB with an opacity of 127 (50%) and add a children CCSprite with an opacity of 127,
- it draws as if having an opacity of 63 (25%).
-
- To enable set it to 1. Use 0 to disable it. Disabled by default.
-
- If you don't need the feature, disabling it should increase performance when setting or animating the opacity.
-
- @since 2.1
- */
-#ifndef CC_CASCADING_OPACITY
-#define CC_CASCADING_OPACITY 0
-#endif
-
-/** @def CC_CASCADING_COLOR
- If enabled, cocos2d uses transitive color (tint).
- All classes calculate their cumulative color from self color and parent's color.
-
- To enable set it to 1. Use 0 to disable it. Disabled by default.
-
- If you don't need the feature, disabling it should increase performance when setting or animating the color.
-
- @since 2.1
- */
-#ifndef CC_CASCADING_COLOR
-#define CC_CASCADING_COLOR 0
-#endif
