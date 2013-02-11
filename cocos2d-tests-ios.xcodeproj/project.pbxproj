@@ -2067,6 +2067,7 @@
 		A0D2C4CD16C94FA800DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4CA16C94FA700DA6C86 /* js */; };
 		A0D2C4CE16C94FA800DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4CA16C94FA700DA6C86 /* js */; };
 		A0D2C4CF16C94FA800DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4CA16C94FA700DA6C86 /* js */; };
+		A0D2C4D416C9B8B700DA6C86 /* OpenGLTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4D316C9B8B700DA6C86 /* OpenGLTest */; };
 		A0D3A8FF149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A900149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A901149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
@@ -4772,6 +4773,7 @@
 		A0C164F9166D58EC00DF921C /* src */ = {isa = PBXFileReference; lastKnownFileType = folder; path = src; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A0D2C4CA16C94FA700DA6C86 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		A0D2C4D316C9B8B700DA6C86 /* OpenGLTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OpenGLTest; sourceTree = "<group>"; };
 		A0D31E9516C73BB5004FFCD2 /* jsb_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_basic_conversions.h; sourceTree = "<group>"; };
 		A0D31E9616C73BB5004FFCD2 /* jsb_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_manual.h; sourceTree = "<group>"; };
 		A0D31E9716C73BB5004FFCD2 /* jsb_chipmunk_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_registration.h; sourceTree = "<group>"; };
@@ -7455,6 +7457,7 @@
 				A0C164B9166D589300DF921C /* LabelTest */,
 				A0C164BA166D589300DF921C /* LayerTest */,
 				A0C164BB166D589300DF921C /* MenuTest */,
+				A0D2C4D316C9B8B700DA6C86 /* OpenGLTest */,
 				A0C164BC166D589300DF921C /* ParallaxTest */,
 				A0C164BD166D589300DF921C /* ParticleTest */,
 				A0C164BE166D589300DF921C /* PerformanceTest */,
@@ -11541,6 +11544,7 @@
 				A02521DE169635910087E514 /* FileUtils in Resources */,
 				A04A479316C5A76900BA75DC /* BaseTestLayer in Resources */,
 				A0D2C4CE16C94FA800DA6C86 /* js in Resources */,
+				A0D2C4D416C9B8B700DA6C86 /* OpenGLTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
