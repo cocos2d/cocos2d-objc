@@ -18,7 +18,7 @@
 #include "jsapi.h"
 
 #if JSB_ENABLE_DEBUGGER
-#include "js_bindings_dbg.h"
+#include "jsb_dbg.h"
 #endif
 
 #pragma mark - AppDelegate - iOS
@@ -164,14 +164,15 @@
 	NSString *name = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutable"];
 
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
+
+	// Add the "js" folder in the search path, since it is a "blue folder"
+	[fileutils setSearchPath:@[@"js", @""]];
+
 #if JSB_ENABLE_DEBUGGER
 	[[JSBCore sharedInstance] enableDebugger];
 	[[JSBCore sharedInstance] runScript:@"main.example.js"];
 	return;
 #endif
-
-	// Add the "js" folder in the search path, since it is a "blue folder"
-	[fileutils setSearchPath:@[@"js", @""]];
 
 	//
 	// Watermelon
