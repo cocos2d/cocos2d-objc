@@ -1288,13 +1288,6 @@
 		A0191EAA167FDBA40099349A /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		A025223116965D790087E514 /* jsb_dbg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_dbg.h; sourceTree = "<group>"; };
 		A025223216965D790087E514 /* jsb_dbg.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_dbg.mm; sourceTree = "<group>"; };
-		A025223616965E140087E514 /* main.example.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.example.js; sourceTree = "<group>"; };
-		A02528E3169765AE0087E514 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
-		A02528E4169765AE0087E514 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
-		A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
-		A02528E6169765AF0087E514 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
-		A02528E8169765AF0087E514 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
-		A02528E9169765AF0087E514 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		A03416F91548803400AE4D93 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		A03714D5154F1D9300081CBA /* CCNode+Debug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CCNode+Debug.h"; sourceTree = "<group>"; };
 		A03714D6154F1D9300081CBA /* CCNode+Debug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CCNode+Debug.m"; sourceTree = "<group>"; };
@@ -1524,6 +1517,7 @@
 		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
 		A0C879AB14F98F0200C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
+		A0D2C4B816C94E8A00DA6C86 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = external/JavaScript/jsbindings/src/js; sourceTree = SOURCE_ROOT; };
 		A0D31DCB16C7392D004FFCD2 /* jsb_chipmunk_auto_classes_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_auto_classes_registration.h; sourceTree = "<group>"; };
 		A0D31DCC16C7392D004FFCD2 /* jsb_chipmunk_auto_classes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_auto_classes.h; sourceTree = "<group>"; };
 		A0D31DCD16C7392D004FFCD2 /* jsb_chipmunk_auto_classes.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_chipmunk_auto_classes.mm; sourceTree = "<group>"; };
@@ -1564,7 +1558,6 @@
 		A0D31EA016C740BD004FFCD2 /* jsb_opengl_functions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_functions.h; sourceTree = "<group>"; };
 		A0D31EA116C740BD004FFCD2 /* jsb_opengl_functions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_functions.mm; sourceTree = "<group>"; };
 		A0D31EAC16C756D4004FFCD2 /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
-		A0D31EAE16C757C7004FFCD2 /* jsb_opengl_enum.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_enum.js; sourceTree = "<group>"; };
 		A0D31EB916C75A4F004FFCD2 /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
 		A0D31EBA16C75A50004FFCD2 /* jsb_opengl_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_registration.mm; sourceTree = "<group>"; };
 		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
@@ -2198,8 +2191,8 @@
 		A0191CFA167FD6C50099349A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A0D2C4B816C94E8A00DA6C86 /* js */,
 				A0191CFB167FD6C50099349A /* auto */,
-				A0191D1D167FD6C50099349A /* js */,
 				A0191D23167FD6C50099349A /* manual */,
 			);
 			path = src;
@@ -2249,21 +2242,6 @@
 				A0D31DEB16C7392D004FFCD2 /* jsb_CocosDenshion_functions.mm */,
 			);
 			path = auto;
-			sourceTree = "<group>";
-		};
-		A0191D1D167FD6C50099349A /* js */ = {
-			isa = PBXGroup;
-			children = (
-				A0D31EAE16C757C7004FFCD2 /* jsb_opengl_enum.js */,
-				A02528E3169765AE0087E514 /* jsb_chipmunk.js */,
-				A02528E4169765AE0087E514 /* jsb_cocos2d.js */,
-				A02528E5169765AF0087E514 /* jsb_cocosbuilder.js */,
-				A02528E6169765AF0087E514 /* jsb_debugger.js */,
-				A02528E8169765AF0087E514 /* jsb_sys.js */,
-				A02528E9169765AF0087E514 /* jsb.js */,
-				A025223616965E140087E514 /* main.example.js */,
-			);
-			path = js;
 			sourceTree = "<group>";
 		};
 		A0191D23167FD6C50099349A /* manual */ = {

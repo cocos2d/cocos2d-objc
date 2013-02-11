@@ -394,7 +394,6 @@
 		A0D31EC016C75C1D004FFCD2 /* jsb_opengl_manual.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */; };
 		A0D31EC116C75C1D004FFCD2 /* jsb_opengl_registration.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */; };
 		A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */; };
-		A0D31EC416C75C47004FFCD2 /* jsb_opengl_enum.js in Sources */ = {isa = PBXBuildFile; fileRef = A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */; };
 		A0D7D9CF15E2E730000CA0C4 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */; };
 		A0D7D9D015E2E730000CA0C4 /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */; };
 		A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */; };
@@ -1372,13 +1371,6 @@
 		A0191A81167FCB770099349A /* libjs_static.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libjs_static.a; sourceTree = "<group>"; };
 		A0191B9D167FD5FF0099349A /* JRSwizzle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JRSwizzle.h; sourceTree = "<group>"; };
 		A0191B9E167FD5FF0099349A /* JRSwizzle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JRSwizzle.m; sourceTree = "<group>"; };
-		A025224016965E4F0087E514 /* main.example.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = main.example.js; sourceTree = "<group>"; };
-		A025294016976BD40087E514 /* jsb_chipmunk.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_chipmunk.js; sourceTree = "<group>"; };
-		A025294116976BD40087E514 /* jsb_cocos2d.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocos2d.js; sourceTree = "<group>"; };
-		A025294216976BD40087E514 /* jsb_cocosbuilder.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_cocosbuilder.js; sourceTree = "<group>"; };
-		A025294316976BD40087E514 /* jsb_debugger.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_debugger.js; sourceTree = "<group>"; };
-		A025294516976BD40087E514 /* jsb_sys.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_sys.js; sourceTree = "<group>"; };
-		A025294616976BD50087E514 /* jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb.js; sourceTree = "<group>"; };
 		A02900ED15B5FA9E00D64F82 /* libCocosBuilderReader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosBuilderReader.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A031B73915D9BD0800E1986C /* libjsbindings.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libjsbindings.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		A034FF85149DC993009F11AA /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -1547,6 +1539,7 @@
 		A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		A0D2C4C316C94F7800DA6C86 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
 		A0D31E1F16C73B25004FFCD2 /* jsb_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_basic_conversions.h; sourceTree = "<group>"; };
 		A0D31E2016C73B25004FFCD2 /* jsb_basic_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_basic_conversions.mm; sourceTree = "<group>"; };
 		A0D31E2116C73B25004FFCD2 /* jsb_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_manual.h; sourceTree = "<group>"; };
@@ -1609,7 +1602,6 @@
 		A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_manual.h; sourceTree = "<group>"; };
 		A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_opengl_registration.h; sourceTree = "<group>"; };
 		A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_registration.mm; sourceTree = "<group>"; };
-		A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jsb_opengl_enum.js; sourceTree = "<group>"; };
 		A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
 		A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
 		A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
@@ -2480,8 +2472,8 @@
 		A01919EA167FCB750099349A /* src */ = {
 			isa = PBXGroup;
 			children = (
+				A0D2C4C316C94F7800DA6C86 /* js */,
 				A01919EB167FCB750099349A /* auto */,
-				A0191A0D167FCB760099349A /* js */,
 				A0191A13167FCB760099349A /* manual */,
 			);
 			path = src;
@@ -2531,21 +2523,6 @@
 				A0D31E6D16C73B46004FFCD2 /* jsb_system_functions.mm */,
 			);
 			path = auto;
-			sourceTree = "<group>";
-		};
-		A0191A0D167FCB760099349A /* js */ = {
-			isa = PBXGroup;
-			children = (
-				A0D31EC316C75C47004FFCD2 /* jsb_opengl_enum.js */,
-				A025294016976BD40087E514 /* jsb_chipmunk.js */,
-				A025294116976BD40087E514 /* jsb_cocos2d.js */,
-				A025294216976BD40087E514 /* jsb_cocosbuilder.js */,
-				A025294316976BD40087E514 /* jsb_debugger.js */,
-				A025294516976BD40087E514 /* jsb_sys.js */,
-				A025294616976BD50087E514 /* jsb.js */,
-				A025224016965E4F0087E514 /* main.example.js */,
-			);
-			path = js;
 			sourceTree = "<group>";
 		};
 		A0191A13167FCB760099349A /* manual */ = {
@@ -4370,7 +4347,6 @@
 				A0D31E9416C73B46004FFCD2 /* jsb_system_functions.mm in Sources */,
 				A0D31EAB16C742E5004FFCD2 /* jsb_opengl_functions.mm in Sources */,
 				A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */,
-				A0D31EC416C75C47004FFCD2 /* jsb_opengl_enum.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
