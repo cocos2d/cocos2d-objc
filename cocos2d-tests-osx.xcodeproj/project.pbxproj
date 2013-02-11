@@ -2117,6 +2117,7 @@
 		A0D2C4C016C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4C116C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4C216C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
+		A0D2C4D116C9AEDC00DA6C86 /* OpenGLTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4D016C9AEDC00DA6C86 /* OpenGLTest */; };
 		A0D2DE6616375D9C008DB73C /* boundsTestFont.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6416375D9C008DB73C /* boundsTestFont.fnt */; };
 		A0D2DE6716375D9C008DB73C /* boundsTestFont.png in Resources */ = {isa = PBXBuildFile; fileRef = A0D2DE6516375D9C008DB73C /* boundsTestFont.png */; };
 		A0D467FB15C339E100588ADE /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = E076E7B11225EDD000DE0DA2 /* fps_images.png */; };
@@ -5734,6 +5735,7 @@
 		A0C491E9146F8CA500C4C037 /* arrowsBar-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrowsBar-hd.png"; sourceTree = "<group>"; };
 		A0C491EA146F8CA500C4C037 /* arrowsBar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrowsBar.png; sourceTree = "<group>"; };
 		A0D2C4BD16C94EED00DA6C86 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; name = js; path = external/JavaScript/jsbindings/src/js; sourceTree = "<group>"; };
+		A0D2C4D016C9AEDC00DA6C86 /* OpenGLTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = OpenGLTest; sourceTree = "<group>"; };
 		A0D2DE6416375D9C008DB73C /* boundsTestFont.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = boundsTestFont.fnt; sourceTree = "<group>"; };
 		A0D2DE6516375D9C008DB73C /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -6901,6 +6903,7 @@
 				A0C15FD1166D579900DF921C /* LabelTest */,
 				A0C15FD2166D579900DF921C /* LayerTest */,
 				A0C15FD3166D579900DF921C /* MenuTest */,
+				A0D2C4D016C9AEDC00DA6C86 /* OpenGLTest */,
 				A0C15FD4166D579900DF921C /* ParallaxTest */,
 				A0C15FD5166D579900DF921C /* ParticleTest */,
 				A0C15FD6166D579900DF921C /* PerformanceTest */,
@@ -9923,6 +9926,7 @@
 				A02521E11696368D0087E514 /* FileUtils in Resources */,
 				A04A478C16C56FB900BA75DC /* BaseTestLayer in Resources */,
 				A0D2C4BE16C94EED00DA6C86 /* js in Resources */,
+				A0D2C4D116C9AEDC00DA6C86 /* OpenGLTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
