@@ -161,6 +161,9 @@
 
 	CCFileUtils *fileutils = [CCFileUtils sharedFileUtils];
 
+	// Add the "js" folder in the search path, since it is a "blue folder"
+	[fileutils setSearchPath:@[@"js", @""]];
+
 	//
 	// Watermelon
 	//
