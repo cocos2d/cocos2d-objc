@@ -331,6 +331,7 @@
 		A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */; };
 		A0C87D1B14F9A3A100C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */; };
 		A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
+		A0D2C4DF16CA518900DA6C86 /* jsb_opengl_manual.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D2C4DE16CA518900DA6C86 /* jsb_opengl_manual.mm */; };
 		A0D2DE7816377425008DB73C /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B192834163361B10049A044 /* CCClippingNode.m */; };
 		A0D31E3316C73B25004FFCD2 /* jsb_basic_conversions.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D31E1F16C73B25004FFCD2 /* jsb_basic_conversions.h */; };
 		A0D31E3416C73B25004FFCD2 /* jsb_basic_conversions.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0D31E2016C73B25004FFCD2 /* jsb_basic_conversions.mm */; };
@@ -1540,6 +1541,7 @@
 		A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		A0D2C4C316C94F7800DA6C86 /* js */ = {isa = PBXFileReference; lastKnownFileType = folder; path = js; sourceTree = "<group>"; };
+		A0D2C4DE16CA518900DA6C86 /* jsb_opengl_manual.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_opengl_manual.mm; sourceTree = "<group>"; };
 		A0D31E1F16C73B25004FFCD2 /* jsb_basic_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_basic_conversions.h; sourceTree = "<group>"; };
 		A0D31E2016C73B25004FFCD2 /* jsb_basic_conversions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = jsb_basic_conversions.mm; sourceTree = "<group>"; };
 		A0D31E2116C73B25004FFCD2 /* jsb_chipmunk_manual.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = jsb_chipmunk_manual.h; sourceTree = "<group>"; };
@@ -2539,6 +2541,7 @@
 				A0D31E2716C73B25004FFCD2 /* jsb_cocos2d_registration.h */,
 				A0D31E2816C73B25004FFCD2 /* jsb_cocos2d_registration.mm */,
 				A0D31E2916C73B25004FFCD2 /* jsb_CocosBuilderReader_manual.mm */,
+				A0D2C4DE16CA518900DA6C86 /* jsb_opengl_manual.mm */,
 				A0D31EBD16C75C1D004FFCD2 /* jsb_opengl_manual.h */,
 				A0D31EBE16C75C1D004FFCD2 /* jsb_opengl_registration.h */,
 				A0D31EBF16C75C1D004FFCD2 /* jsb_opengl_registration.mm */,
@@ -4347,6 +4350,7 @@
 				A0D31E9416C73B46004FFCD2 /* jsb_system_functions.mm in Sources */,
 				A0D31EAB16C742E5004FFCD2 /* jsb_opengl_functions.mm in Sources */,
 				A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */,
+				A0D2C4DF16CA518900DA6C86 /* jsb_opengl_manual.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
