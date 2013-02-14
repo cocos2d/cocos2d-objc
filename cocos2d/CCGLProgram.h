@@ -96,10 +96,13 @@ struct _hashUniformEntry;
 					_fragShader;
 
 	GLint			_uniforms[kCCUniform_MAX];
-	BOOL _usesTime;
+	BOOL			_usesTime;
 }
 
 @property(nonatomic, readonly) GLuint program;
+
+/** creates the CCGLProgram with a vertex and fragment with contents of filenames */
++ (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
 /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
