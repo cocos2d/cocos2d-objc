@@ -38,7 +38,7 @@
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
 								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
-							preserveBackbuffer:NO
+							preserveBackbuffer:YES
 									sharegroup:nil
 								 multiSampling:NO
 							   numberOfSamples:4];
