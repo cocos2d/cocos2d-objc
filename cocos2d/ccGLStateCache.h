@@ -109,6 +109,12 @@ void ccSetProjectionMatrixDirty( void );
  */
 void ccGLEnableVertexAttribs( unsigned int flags );
 
+/** If the texture is not already bound to texture unit 0 and if target is GL_TEXTURE_2D, it binds it.
+ If CC_ENABLE_GL_STATE_CACHE is disabled or if target != GL_TEXTURE_2D it will call glBindTexture() directly.
+ @since v2.1
+ */
+void ccGLBindTexture( GLenum target, GLuint textureId );
+
 /** If the texture is not already bound to texture unit 0, it binds it.
  If CC_ENABLE_GL_STATE_CACHE is disabled, it will call glBindTexture() directly.
  @since v2.0.0
