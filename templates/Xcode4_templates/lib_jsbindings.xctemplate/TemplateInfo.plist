@@ -1131,7 +1131,7 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/js/jsb_chipmunk.js</string>
 		</dict>
-		<key>libs/jsbindings/src/js/jsb_chipmunk_enums.js</key>
+		<key>libs/jsbindings/src/js/jsb_chipmunk_constants.js</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1141,7 +1141,7 @@
 				<string>js</string>
 			</array>
 			<key>Path</key>
-			<string>libs/jsbindings/src/js/jsb_chipmunk_enums.js</string>
+			<string>libs/jsbindings/src/js/jsb_chipmunk_constants.js</string>
 		</dict>
 		<key>libs/jsbindings/src/js/jsb_cocos2d.js</key>
 		<dict>
@@ -1155,7 +1155,7 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/js/jsb_cocos2d.js</string>
 		</dict>
-		<key>libs/jsbindings/src/js/jsb_cocos2d_enums.js</key>
+		<key>libs/jsbindings/src/js/jsb_cocos2d_constants.js</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1165,7 +1165,7 @@
 				<string>js</string>
 			</array>
 			<key>Path</key>
-			<string>libs/jsbindings/src/js/jsb_cocos2d_enums.js</string>
+			<string>libs/jsbindings/src/js/jsb_cocos2d_constants.js</string>
 		</dict>
 		<key>libs/jsbindings/src/js/jsb_cocosbuilder.js</key>
 		<dict>
@@ -1203,7 +1203,7 @@
 			<key>Path</key>
 			<string>libs/jsbindings/src/js/jsb_opengl.js</string>
 		</dict>
-		<key>libs/jsbindings/src/js/jsb_opengl_enums.js</key>
+		<key>libs/jsbindings/src/js/jsb_opengl_constants.js</key>
 		<dict>
 			<key>Group</key>
 			<array>
@@ -1213,7 +1213,7 @@
 				<string>js</string>
 			</array>
 			<key>Path</key>
-			<string>libs/jsbindings/src/js/jsb_opengl_enums.js</string>
+			<string>libs/jsbindings/src/js/jsb_opengl_constants.js</string>
 		</dict>
 		<key>libs/jsbindings/src/js/jsb_sys.js</key>
 		<dict>
@@ -1686,13 +1686,13 @@
 		<string>libs/jsbindings/src/auto/jsb_system_functions_registration.h</string>
 		<string>libs/jsbindings/src/js/jsb.js</string>
 		<string>libs/jsbindings/src/js/jsb_chipmunk.js</string>
-		<string>libs/jsbindings/src/js/jsb_chipmunk_enums.js</string>
+		<string>libs/jsbindings/src/js/jsb_chipmunk_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_cocos2d.js</string>
-		<string>libs/jsbindings/src/js/jsb_cocos2d_enums.js</string>
+		<string>libs/jsbindings/src/js/jsb_cocos2d_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_cocosbuilder.js</string>
 		<string>libs/jsbindings/src/js/jsb_debugger.js</string>
 		<string>libs/jsbindings/src/js/jsb_opengl.js</string>
-		<string>libs/jsbindings/src/js/jsb_opengl_enums.js</string>
+		<string>libs/jsbindings/src/js/jsb_opengl_constants.js</string>
 		<string>libs/jsbindings/src/js/jsb_sys.js</string>
 		<string>libs/jsbindings/src/js/main.example.js</string>
 		<string>libs/jsbindings/src/manual/jsb_basic_conversions.h</string>

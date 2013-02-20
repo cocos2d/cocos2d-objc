@@ -836,7 +836,7 @@ static const ccColor4F _planeColor[] = {
     glDepthMask(GL_FALSE);
 #if defined(__CC_PLATFORM_IOS)
     CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
     [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
     sprite_.shaderProgram = program;
 #elif defined(__CC_PLATFORM_MAC)
@@ -870,7 +870,7 @@ static const ccColor4F _planeColor[] = {
     glDepthMask(GL_FALSE);
 #if defined(__CC_PLATFORM_IOS)
     CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
     [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
     sprite_.shaderProgram = program;
 #elif defined(__CC_PLATFORM_MAC)
@@ -937,7 +937,7 @@ static const ccColor4F _planeColor[] = {
     glDepthMask(GL_FALSE);
 #if defined(__CC_PLATFORM_IOS)
     CCGLProgram *program = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue);
+    GLint alphaValueLocation = glGetUniformLocation(program.program, kCCUniformAlphaTestValue_s);
     [program setUniformLocation:alphaValueLocation withF1:_alphaThreshold];
     sprite_.shaderProgram = program;
 #elif defined(__CC_PLATFORM_MAC)

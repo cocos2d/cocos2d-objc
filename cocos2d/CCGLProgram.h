@@ -70,7 +70,7 @@ enum {
 #define kCCUniformCosTime_s				"CC_CosTime"
 #define kCCUniformRandom01_s			"CC_Random01"
 #define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue		"CC_alpha_value"
+#define kCCUniformAlphaTestValue_s		"CC_AlphaValue"
 
 // Attribute names
 #define	kCCAttributeNameColor			@"a_color"
@@ -100,6 +100,9 @@ struct _hashUniformEntry;
 }
 
 @property(nonatomic, readonly) GLuint program;
+
+/** creates the CCGLProgram with a vertex and fragment from byte arrays */
++ (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
 
 /** creates the CCGLProgram with a vertex and fragment with contents of filenames */
 + (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
