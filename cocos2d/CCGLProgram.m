@@ -120,8 +120,17 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
 {
-	const GLchar * vertexSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:vShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
-	const GLchar * fragmentSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:fShaderFilename] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+	NSString *v = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:vShaderFilename];
+	NSString *f = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:fShaderFilename];
+	if( !(v || f) ) {
+		if(!v)
+			CCLOGWARN(@"Could not open vertex shader: %@", vShaderFilename);
+		if(!f)
+			CCLOGWARN(@"Could not open fragment shader: %@", fShaderFilename);
+		return nil;
+	}
+	const GLchar * vertexSource = (GLchar*) [[NSString stringWithContentsOfFile:v encoding:NSUTF8StringEncoding error:nil] UTF8String];
+	const GLchar * fragmentSource = (GLchar*) [[NSString stringWithContentsOfFile:f encoding:NSUTF8StringEncoding error:nil] UTF8String];
 
 	return [self initWithVertexShaderByteArray:vertexSource fragmentShaderByteArray:fragmentSource];
 }
