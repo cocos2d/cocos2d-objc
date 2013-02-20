@@ -30,16 +30,16 @@ precision lowp float;										\n\
 varying vec4 v_fragmentColor;								\n\
 varying vec2 v_texCoord;									\n\
 uniform sampler2D CC_Texture0;								\n\
-uniform float CC_alpha_value;								\n\
+uniform float CC_AlphaValue;								\n\
 															\n\
 void main()													\n\
 {															\n\
 	vec4 texColor = texture2D(CC_Texture0, v_texCoord);		\n\
 															\n\
 	// mimic: glAlphaFunc(GL_GREATER)						\n\
-	// pass if ( incoming_pixel >= CC_alpha_value ) => fail if incoming_pixel < CC_alpha_value		\n\
+	// pass if ( incoming_pixel >= CC_AlphaValue ) => fail if incoming_pixel < CC_AlphaValue		\n\
 															\n\
-	if ( texColor.a <= CC_alpha_value )						\n\
+	if ( texColor.a <= CC_AlphaValue )						\n\
 		discard;											\n\
 															\n\
 	gl_FragColor = texColor * v_fragmentColor;				\n\
