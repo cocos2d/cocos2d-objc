@@ -1,3 +1,9 @@
+version 2.1-rc1 - XX-Mar-2013
+. [NEW] GLProgram: Added 2 class methods to create the instance
+. [FIX] GLProgram: If shader files are not found at init time, returns nil and log warning on console
+. [3RD] JS Bindings: Updated to v0.6
+. [3RD] CCBReader: new version of CCBReader (which version is it???)
+
 version 2.1-rc0a  07-Feb-2013
 . [NEW] Actions: Stackable actions behavior can be disabled at compile time (issue #1461)
 		BezierTo copy: works as expected
