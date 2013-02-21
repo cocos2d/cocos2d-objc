@@ -221,6 +221,8 @@
 	NSAssert(spriteFrameName!=nil, @"Invalid spriteFrameName for sprite");
 
 	CCSpriteFrame *frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:spriteFrameName];
+    NSAssert(frame != nil, @"frame not found for sprite frame name: %@", spriteFrameName);
+    
 	return [self initWithSpriteFrame:frame];
 }
 
