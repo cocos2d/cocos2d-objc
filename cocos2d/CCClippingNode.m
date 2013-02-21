@@ -215,17 +215,15 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     ///////////////////////////////////
     // CLEAR STENCIL BUFFER
     
-    // manually clear the stencil buffer by drawing a fullscreen rectangle on it
     // setup the stencil test func like this:
-    // for each pixel in the fullscreen rectangle
+    // for each pixel in the stencil buffer
     //     never draw it into the frame buffer
     //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
+    glClearStencil(!_inverted ? 0 : ~0);
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
-    
-    // draw a fullscreen solid rectangle to clear the stencil buffer
-    ccDrawSolidRect(CGPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
+    glClear(GL_STENCIL_BUFFER_BIT);
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL
