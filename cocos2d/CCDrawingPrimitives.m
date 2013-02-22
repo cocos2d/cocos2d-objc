@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -281,6 +282,127 @@ void ccDrawCircle( CGPoint center, float r, float a, NSUInteger segs, BOOL drawL
 	free( vertices );
 	
 	CC_INCREMENT_GL_DRAWS(1);
+}
+
+void ccDrawSolidCircle( CGPoint center, float r, NSUInteger segs)
+{
+	lazy_init();
+    
+	int additionalSegment = 1;
+    
+	const float coef = 2.0f * (float)M_PI/segs;
+    
+	GLfloat *vertices = calloc( sizeof(GLfloat)*2*(segs+2), 1);
+	if( ! vertices )
+		return;
+    
+	for(NSUInteger i = 0;i <= segs; i++) {
+		float rads = i*coef;
+		GLfloat j = r * cosf(rads) + center.x;
+		GLfloat k = r * sinf(rads) + center.y;
+        
+		vertices[i*2] = j;
+		vertices[i*2+1] = k;
+	}
+	vertices[(segs+1)*2] = center.x;
+	vertices[(segs+1)*2+1] = center.y;
+    
+	[shader_ use];
+	[shader_ setUniformsForBuiltins];
+	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
+    
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segs+additionalSegment);
+    
+	free( vertices );
+	
+	CC_INCREMENT_GL_DRAWS(1);
+}
+
+void ccDrawArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs, BOOL drawLineToCenter)
+{
+	lazy_init();
+    
+	int additionalSegment = 1;
+	if (drawLineToCenter)
+		additionalSegment++;
+    
+    const float coef = arcLength / segs;
+    
+    GLfloat *vertices = calloc( sizeof(GLfloat)*2*(segs+2), 1);
+    if( ! vertices )
+        return;
+    
+	for(NSUInteger i = 0;i <= segs; i++) {
+		float rads = i*coef;
+		GLfloat j = r * cosf(rads + a) + center.x;
+		GLfloat k = r * sinf(rads + a) + center.y;
+        
+		vertices[i*2] = j;
+		vertices[i*2+1] = k;
+	}
+	vertices[(segs+1)*2] = center.x;
+	vertices[(segs+1)*2+1] = center.y;
+    
+    vertices[(segs+1)*2] = center.x;
+	vertices[(segs+1)*2+1] = center.y;
+    
+	[shader_ use];
+	[shader_ setUniformsForBuiltins];
+	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
+    
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) segs+additionalSegment);
+    
+	free( vertices );
+	
+	CC_INCREMENT_GL_DRAWS(1);
+    
+}
+
+void ccDrawSolidArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs)
+{
+    if (arcLength == 0.0) return;
+    
+    const int additionalSegment = 2;
+    
+    const float coef = arcLength / segs;
+    
+    GLfloat *vertices = calloc( sizeof(GLfloat)*2*(segs+2), 1);
+    if( ! vertices )
+        return;
+    
+	for(NSUInteger i = 0;i <= segs; i++) {
+		float rads = i*coef;
+		GLfloat j = r * cosf(rads + a) + center.x;
+		GLfloat k = r * sinf(rads + a) + center.y;
+        
+		vertices[i*2] = j;
+		vertices[i*2+1] = k;
+	}
+	vertices[(segs+1)*2] = center.x;
+	vertices[(segs+1)*2+1] = center.y;
+    
+    vertices[(segs+1)*2] = center.x;
+	vertices[(segs+1)*2+1] = center.y;
+    
+	[shader_ use];
+	[shader_ setUniformsForBuiltins];
+	[shader_ setUniformLocation:colorLocation_ with4fv:(GLfloat*) &color_.r count:1];
+    
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
+    
+	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
+	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) segs+additionalSegment);
+    
+	free( vertices );
+	
+	CC_INCREMENT_GL_DRAWS(1);
+    
 }
 
 void ccDrawQuadBezier(CGPoint origin, CGPoint control, CGPoint destination, NSUInteger segments)
