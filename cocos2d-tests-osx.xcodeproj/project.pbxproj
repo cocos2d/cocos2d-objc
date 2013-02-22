@@ -2112,9 +2112,9 @@
 		A0C491EC146F8CA500C4C037 /* arrows.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491E8146F8CA500C4C037 /* arrows.png */; };
 		A0C491ED146F8CA500C4C037 /* arrowsBar-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491E9146F8CA500C4C037 /* arrowsBar-hd.png */; };
 		A0C491EE146F8CA500C4C037 /* arrowsBar.png in Resources */ = {isa = PBXBuildFile; fileRef = A0C491EA146F8CA500C4C037 /* arrowsBar.png */; };
+		A0C8EA0D16D73493009F99E2 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4BE16C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4BF16C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
-		A0D2C4C016C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4C116C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4C216C94EED00DA6C86 /* js in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4BD16C94EED00DA6C86 /* js */; };
 		A0D2C4D116C9AEDC00DA6C86 /* OpenGLTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D2C4D016C9AEDC00DA6C86 /* OpenGLTest */; };
@@ -8333,7 +8333,7 @@
 				A0408A7F16A7640000161E77 /* InfoPlist.strings in Resources */,
 				A0408A8016A7640000161E77 /* icon.icns in Resources */,
 				A0408C2216A7641D00161E77 /* Published-iOS in Resources */,
-				A0D2C4C016C94EED00DA6C86 /* js in Resources */,
+				A0C8EA0D16D73493009F99E2 /* js in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
