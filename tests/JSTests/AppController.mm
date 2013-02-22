@@ -217,7 +217,7 @@
 	//
 	else if( [name isEqual:@"JS Crystal Craze"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectoryMode];
-		[fileutils setSearchPath:@[@"Published-iOS",@""]];
+		[fileutils setSearchPath:@[@"Published-iOS",@"js", @""]];
 		
 #if defined(__CC_PLATFORM_MAC)
 		// Use the iPhone folder for Mac resources
