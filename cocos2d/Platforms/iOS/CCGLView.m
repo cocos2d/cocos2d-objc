@@ -89,11 +89,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @implementation CCGLView
 
-@synthesize surfaceSize=size_;
-@synthesize pixelFormat=pixelformat_, depthFormat=depthFormat_;
-@synthesize touchDelegate=touchDelegate_;
-@synthesize context=context_;
-@synthesize multiSampling=multiSampling_;
+@synthesize surfaceSize=_size;
+@synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
+@synthesize touchDelegate=_touchDelegate;
+@synthesize context=_context;
+@synthesize multiSampling=_multiSampling;
 
 + (Class) layerClass
 {
@@ -134,11 +134,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	if((self = [super initWithFrame:frame]))
 	{
-		pixelformat_ = format;
-		depthFormat_ = depth;
-		multiSampling_ = sampling;
-		requestedSamples_ = nSamples;
-		preserveBackbuffer_ = retained;
+		_pixelformat = format;
+		_depthFormat = depth;
+		_multiSampling = sampling;
+		_requestedSamples = nSamples;
+		_preserveBackbuffer = retained;
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			[self release];
@@ -157,11 +157,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 		CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];
 
-		pixelformat_ = kEAGLColorFormatRGB565;
-		depthFormat_ = 0; // GL_DEPTH_COMPONENT24;
-		multiSampling_= NO;
-		requestedSamples_ = 0;
-		size_ = [eaglLayer bounds].size;
+		_pixelformat = kEAGLColorFormatRGB565;
+		_depthFormat = 0; // GL_DEPTH_COMPONENT24;
+		_multiSampling= NO;
+		_requestedSamples = 0;
+		_size = [eaglLayer bounds].size;
 
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
 			[self release];
@@ -180,24 +180,24 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	eaglLayer.opaque = YES;
 	eaglLayer.drawableProperties = [NSDictionary dictionaryWithObjectsAndKeys:
-									[NSNumber numberWithBool:preserveBackbuffer_], kEAGLDrawablePropertyRetainedBacking,
-									pixelformat_, kEAGLDrawablePropertyColorFormat, nil];
+									[NSNumber numberWithBool:_preserveBackbuffer], kEAGLDrawablePropertyRetainedBacking,
+									_pixelformat, kEAGLDrawablePropertyColorFormat, nil];
 
 	// ES2 renderer only
-	renderer_ = [[CCES2Renderer alloc] initWithDepthFormat:depthFormat_
-										 withPixelFormat:[self convertPixelFormat:pixelformat_]
+	_renderer = [[CCES2Renderer alloc] initWithDepthFormat:_depthFormat
+										 withPixelFormat:[self convertPixelFormat:_pixelformat]
 										  withSharegroup:sharegroup
-									   withMultiSampling:multiSampling_
-									 withNumberOfSamples:requestedSamples_];
+									   withMultiSampling:_multiSampling
+									 withNumberOfSamples:_requestedSamples];
 
-	NSAssert( renderer_, @"OpenGL ES 2.0 is required");
+	NSAssert( _renderer, @"OpenGL ES 2.0 is required");
 
-	if (!renderer_)
+	if (!_renderer)
 		return NO;
 
-	context_ = [renderer_ context];
+	_context = [_renderer context];
 
-	discardFramebufferSupported_ = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
+	_discardFramebufferSupported = [[CCConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
 	CHECK_GL_ERROR_DEBUG();
 
@@ -208,46 +208,49 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[renderer_ release];
+	[_renderer release];
 	[super dealloc];
 }
 
 - (void) layoutSubviews
 {
-	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+	[_renderer resizeFromLayer:(CAEAGLLayer*)self.layer];
 
-	size_ = [renderer_ backingSize];
+	_size = [_renderer backingSize];
 
 	// Issue #914 #924
 	CCDirector *director = [CCDirector sharedDirector];
-	[director reshapeProjection:size_];
+	[director reshapeProjection:_size];
 
 	// Avoid flicker. Issue #350
-	NSThread *thread = [director runningThread];
-	[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+	// Only draw if there is something to draw, otherwise it actually creates a flicker of the current glClearColor
+//	if(director.runningScene){
+//		NSThread *thread = [director runningThread];
+//		[director performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
+//	}
 }
 
 - (void) swapBuffers
 {
 	// IMPORTANT:
 	// - preconditions
-	//	-> context_ MUST be the OpenGL context
+	//	-> _context MUST be the OpenGL context
 	//	-> renderbuffer_ must be the the RENDER BUFFER
 
-	if (multiSampling_)
+	if (_multiSampling)
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);
-		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [_renderer msaaFrameBuffer]);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [_renderer defaultFrameBuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
 
-	if( discardFramebufferSupported_)
+	if( _discardFramebufferSupported)
 	{
-		if (multiSampling_)
+		if (_multiSampling)
 		{
-			if (depthFormat_)
+			if (_depthFormat)
 			{
 				GLenum attachments[] = {GL_COLOR_ATTACHMENT0, GL_DEPTH_ATTACHMENT};
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 2, attachments);
@@ -258,24 +261,24 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 				glDiscardFramebufferEXT(GL_READ_FRAMEBUFFER_APPLE, 1, attachments);
 			}
 
-			glBindRenderbuffer(GL_RENDERBUFFER, [renderer_ colorRenderBuffer]);
+			glBindRenderbuffer(GL_RENDERBUFFER, [_renderer colorRenderBuffer]);
 
 		}
 
 		// not MSAA
-		else if (depthFormat_ ) {
+		else if (_depthFormat ) {
 			GLenum attachments[] = { GL_DEPTH_ATTACHMENT};
 			glDiscardFramebufferEXT(GL_FRAMEBUFFER, 1, attachments);
 		}
 	}
 
-	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
+	if(![_context presentRenderbuffer:GL_RENDERBUFFER])
 		CCLOG(@"cocos2d: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
-	if( multiSampling_ )
-		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
+	if( _multiSampling )
+		glBindFramebuffer(GL_FRAMEBUFFER, [_renderer msaaFrameBuffer]);
 
 	CHECK_GL_ERROR_DEBUG();
 }
@@ -310,14 +313,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CGRect bounds = [self bounds];
 
-	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * size_.width, (point.y - bounds.origin.y) / bounds.size.height * size_.height);
+	return CGPointMake((point.x - bounds.origin.x) / bounds.size.width * _size.width, (point.y - bounds.origin.y) / bounds.size.height * _size.height);
 }
 
 - (CGRect) convertRectFromViewToSurface:(CGRect)rect
 {
 	CGRect bounds = [self bounds];
 
-	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
+	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
 }
 
 // Pass the touches to the superview
@@ -325,32 +328,32 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate_)
+	if(_touchDelegate)
 	{
-		[touchDelegate_ touchesBegan:touches withEvent:event];
+		[_touchDelegate touchesBegan:touches withEvent:event];
 	}
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate_)
+	if(_touchDelegate)
 	{
-		[touchDelegate_ touchesMoved:touches withEvent:event];
+		[_touchDelegate touchesMoved:touches withEvent:event];
 	}
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate_)
+	if(_touchDelegate)
 	{
-		[touchDelegate_ touchesEnded:touches withEvent:event];
+		[_touchDelegate touchesEnded:touches withEvent:event];
 	}
 }
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if(touchDelegate_)
+	if(_touchDelegate)
 	{
-		[touchDelegate_ touchesCancelled:touches withEvent:event];
+		[_touchDelegate touchesCancelled:touches withEvent:event];
 	}
 }
 

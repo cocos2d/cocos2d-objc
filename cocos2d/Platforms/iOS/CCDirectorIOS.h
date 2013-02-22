@@ -55,13 +55,16 @@
  It will enable Retina Display on iPhone4 and iPod Touch 4.
  It will return YES, if it could enabled it, otherwise it will return NO.
 
- This is the recommened way to enable Retina Display.
+ This is the recommended way to enable Retina Display.
  @since v0.99.5
  */
 -(BOOL) enableRetinaDisplay:(BOOL)enableRetina;
 
 /** returns the content scale factor */
 -(CGFloat) contentScaleFactor;
+
+/** converts a UITouch to a GL point */
+-(CGPoint)convertTouchToGL:(UITouch*)touch;
 @end
 
 #pragma mark -
@@ -73,10 +76,14 @@
 @interface CCDirectorIOS : CCDirector
 {
 	/* contentScaleFactor could be simulated */
-	BOOL	isContentScaleSupported_;
+	BOOL	_isContentScaleSupported;
 	
-	CCTouchDispatcher	*touchDispatcher_;
+	CCTouchDispatcher	*_touchDispatcher;
 }
+
+// XXX: At least one method is needed for BridgeSupport
+- (void) drawScene;
+
 @end
 
 /** DisplayLinkDirector is a Director that synchronizes timers with the refresh rate of the display.
@@ -92,8 +99,8 @@
  */
 @interface CCDirectorDisplayLink : CCDirectorIOS
 {
-	CADisplayLink	*displayLink_;
-	CFTimeInterval	lastDisplayTime_;
+	CADisplayLink	*_displayLink;
+	CFTimeInterval	_lastDisplayTime;
 }
 -(void) mainLoop:(id)sender;
 @end

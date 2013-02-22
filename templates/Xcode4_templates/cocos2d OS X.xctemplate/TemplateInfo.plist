@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Ancestors</key>
+	<array>
+		<string>com.cocos2d-v2.bundlebase</string>
+		<string>com.cocos2d-v2.macbase</string>
+		<string>com.cocos2d-v2.cocos2dlib</string>
+		<string>com.cocos2d-v2.cocosdenshionlib</string>
+		<string>com.cocos2d-v2.kazmathlib</string>
+	</array>
+	<key>Concrete</key>
+	<true/>
+	<key>Definitions</key>
+	<dict>
+		<key>Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<string>Supporting Files</string>
+			<key>Path</key>
+			<string>Prefix.pch</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>main.m</key>
+		<dict>
+			<key>Group</key>
+			<string>Supporting Files</string>
+			<key>Path</key>
+			<string>main.m</string>
+		</dict>
+		<key>HelloWorldLayer.h</key>
+		<dict>
+			<key>Path</key>
+			<string>HelloWorldLayer.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>HelloWorldLayer.m</key>
+		<dict>
+			<key>Path</key>
+			<string>HelloWorldLayer.m</string>
+		</dict>
+		<key>AppDelegate.h</key>
+		<dict>
+			<key>Path</key>
+			<string>AppDelegate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>AppDelegate.m</key>
+		<dict>
+			<key>Path</key>
+			<string>AppDelegate.m</string>
+		</dict>
+	</dict>
+	<key>Nodes</key>
+	<array>
+		<string>Prefix.pch</string>
+		<string>main.m</string>
+		<string>AppDelegate.h</string>
+		<string>AppDelegate.m</string>
+		<string>HelloWorldLayer.h</string>
+		<string>HelloWorldLayer.m</string>
+	</array>
+	<key>Description</key>
+	<string>This template provides a starting point for an application that uses cocos2d v2.0 for Mac. It also includes CocosDenshion.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d-v2.cocos2dOnlyMacTemplate</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+</dict>
+</plist>

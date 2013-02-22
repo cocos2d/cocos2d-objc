@@ -33,6 +33,8 @@
 @interface CCActionInstant : CCFiniteTimeAction <NSCopying>
 {
 }
+// XXX Needed for BridgeSupport
+-(id) init;
 @end
 
 /** Show the node
@@ -40,6 +42,8 @@
  @interface CCShow : CCActionInstant
 {
 }
+// XXX Needed for BridgeSupport
+-(void) update:(ccTime)time;
 @end
 
 /** Hide the node
@@ -47,6 +51,7 @@
 @interface CCHide : CCActionInstant
 {
 }
+-(void) update:(ccTime)time;
 @end
 
 /** Toggles the visibility of a node
@@ -54,6 +59,7 @@
 @interface CCToggleVisibility : CCActionInstant
 {
 }
+-(void) update:(ccTime)time;
 @end
 
 /** Flips the sprite horizontally
@@ -61,7 +67,7 @@
  */
 @interface CCFlipX : CCActionInstant
 {
-	BOOL	flipX;
+	BOOL	_flipX;
 }
 +(id) actionWithFlipX:(BOOL)x;
 -(id) initWithFlipX:(BOOL)x;
@@ -72,7 +78,7 @@
  */
 @interface CCFlipY : CCActionInstant
 {
-	BOOL	flipY;
+	BOOL	_flipY;
 }
 +(id) actionWithFlipY:(BOOL)y;
 -(id) initWithFlipY:(BOOL)y;
@@ -82,7 +88,7 @@
  */
 @interface CCPlace : CCActionInstant <NSCopying>
 {
-	CGPoint position;
+	CGPoint _position;
 }
 /** creates a Place action with a position */
 +(id) actionWithPosition: (CGPoint) pos;
@@ -94,8 +100,8 @@
  */
 @interface CCCallFunc : CCActionInstant <NSCopying>
 {
-	id targetCallback_;
-	SEL selector_;
+	id _targetCallback;
+	SEL _selector;
 }
 
 /** Target that will be called */
@@ -105,7 +111,7 @@
 +(id) actionWithTarget: (id) t selector:(SEL) s;
 /** initializes the action with the callback */
 -(id) initWithTarget: (id) t selector:(SEL) s;
-/** exeuctes the callback */
+/** executes the callback */
 -(void) execute;
 @end
 
@@ -115,6 +121,8 @@
 @interface CCCallFuncN : CCCallFunc
 {
 }
+// XXX: Needed for BridgeSupport
+-(void) execute;
 @end
 
 typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
@@ -123,8 +131,8 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 @interface CCCallFuncND : CCCallFuncN
 {
-	void			*data_;
-	CC_CALLBACK_ND	callbackMethod_;
+	void			*_data;
+	CC_CALLBACK_ND	_callbackMethod;
 }
 
 /** Invocation object that has the target#selector and the parameters */
@@ -142,7 +150,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 @interface CCCallFuncO : CCCallFunc
 {
-	id	object_;
+	id	_object;
 }
 /** object to be passed as argument */
 @property (nonatomic, readwrite, retain) id object;
@@ -160,7 +168,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 @interface CCCallBlock : CCActionInstant<NSCopying>
 {
-	void (^block_)();
+	void (^_block)();
 }
 
 /** creates the action with the specified block, to be used as a callback.
@@ -183,7 +191,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 @interface CCCallBlockN : CCActionInstant<NSCopying>
 {
-	void (^block_)(CCNode *);
+	void (^_block)(CCNode *);
 }
 
 /** creates the action with the specified block, to be used as a callback.
@@ -205,8 +213,8 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  */
 @interface CCCallBlockO : CCActionInstant<NSCopying>
 {
-	void (^block_)(id object);
-	id object_;
+	void (^_block)(id object);
+	id _object;
 }
 
 /** object to be passed to the block */

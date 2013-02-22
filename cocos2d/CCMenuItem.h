@@ -38,19 +38,26 @@
  *
  *  Subclass CCMenuItem (or any subclass) to create your custom CCMenuItem objects.
  */
-@interface CCMenuItem : CCNode
+@interface CCMenuItem : CCNodeRGBA
 {
 	// used for menu items using a block
-	void (^block_)(id sender);
+	void (^_block)(id sender);
 
-	BOOL isEnabled_;
-	BOOL isSelected_;
+	BOOL _isEnabled;
+	BOOL _isSelected;
+	
+	BOOL _releaseBlockAtCleanup;
 }
 
 /** returns whether or not the item is selected
 @since v0.8.2
 */
 @property (nonatomic,readonly) BOOL isSelected;
+
+/** If enabled, it releases the block at cleanup time.
+ @since v2.1
+ */
+@property (nonatomic) BOOL releaseBlockAtCleanup;
 
 /** Creates a CCMenuItem with a target/selector.
  target/selector will be implemented using blocks.
@@ -115,12 +122,12 @@
    - CCLabelAtlas
    - CCLabelTTF
  */
-@interface CCMenuItemLabel : CCMenuItem  <CCRGBAProtocol>
+@interface CCMenuItemLabel : CCMenuItem
 {
-	CCNode<CCLabelProtocol, CCRGBAProtocol> *label_;
-	ccColor3B	colorBackup;
-	ccColor3B	disabledColor_;
-	float		originalScale_;
+	CCNode<CCLabelProtocol, CCRGBAProtocol> *_label;
+	ccColor3B	_colorBackup;
+	ccColor3B	_disabledColor;
+	float		_originalScale;
 }
 
 /** the color that will be used to disable the item */
@@ -129,7 +136,7 @@
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
 @property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
 
-/** creates a CCMenuItemLabel with a Label. Block will benil */
+/** creates a CCMenuItemLabel with a Label. */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label;
 
 /** creates a CCMenuItemLabel with a Label, target and selector.
@@ -206,8 +213,8 @@
  */
 @interface CCMenuItemFont : CCMenuItemLabel
 {
-	NSUInteger fontSize_;
-	NSString *fontName_;
+	NSUInteger _fontSize;
+	NSString *_fontName;
 }
 /** set default font size */
 +(void) setFontSize: (NSUInteger) s;
@@ -271,7 +278,7 @@
  */
 @interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
 {
-	CCNode<CCRGBAProtocol> *normalImage_, *selectedImage_, *disabledImage_;
+	CCNode<CCRGBAProtocol> *_normalImage, *_selectedImage, *_disabledImage;
 }
 
 // weak references
@@ -290,7 +297,7 @@
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector;
 
-/** creates a menu item with a normal,selected  and disabled image with target/selector.
+/** creates a menu item with a normal, selected and disabled image with target/selector.
  The "target" won't be retained.
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector;
@@ -300,7 +307,7 @@
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block;
 
-/** creates a menu item with a normal,selected  and disabled image with a block.
+/** creates a menu item with a normal, selected and disabled image with a block.
  The block will be "copied".
  */
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block;
@@ -335,10 +342,13 @@
 /** creates a menu item with a normal and selected image*/
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2;
 
+/** creates a menu item with a normal, selected and disabled image */
++(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage: (NSString*) value3;
+
 /** creates a menu item with a normal and selected image with target/selector */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s;
 
-/** creates a menu item with a normal,selected  and disabled image with target/selector.
+/** creates a menu item with a normal, selected and disabled image with target/selector.
  The "target" won't be retained.
  */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s;
@@ -348,7 +358,7 @@
  */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block;
 
-/** creates a menu item with a normal,selected  and disabled image with a block.
+/** creates a menu item with a normal, selected and disabled image with a block.
  The block will be "copied".
 */
 +(id) itemWithNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block;
@@ -383,16 +393,10 @@
  */
 @interface CCMenuItemToggle : CCMenuItem <CCRGBAProtocol>
 {
-	NSUInteger selectedIndex_;
-	NSMutableArray* subItems_;
-	GLubyte		opacity_;
-	ccColor3B	color_;
+	NSUInteger	_selectedIndex;
+	NSMutableArray* _subItems;
+    CCMenuItem*	_currentItem;
 }
-
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) GLubyte opacity;
-/** conforms with CCRGBAProtocol protocol */
-@property (nonatomic,readonly) ccColor3B color;
 
 /** returns the selected item */
 @property (nonatomic,readwrite) NSUInteger selectedIndex;
@@ -403,14 +407,15 @@
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;
++(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list)args;
+
+/** creates a menu item from a list of items. */
++(id) itemWithItems:(NSArray*)arrayOfItems;
 
 /** creates a menu item from a list of items and executes the given block when the item is selected.
  The block will be "copied".
  */
 +(id) itemWithItems:(NSArray*)arrayOfItems block:(void(^)(id sender))block;
-
-/** initializes a menu item from a list of items with a target selector */
--(id) initWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item vaList:(va_list) args;
 
 /** initializes a menu item from a list of items with a block.
  The block will be "copied".

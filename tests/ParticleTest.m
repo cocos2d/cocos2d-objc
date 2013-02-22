@@ -114,9 +114,9 @@ Class restartAction()
 	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 
@@ -181,28 +181,22 @@ Class restartAction()
 	[super dealloc];
 }
 
-
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
+
+-(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:NO];
+	[self ccTouchesEnded:touches withEvent:event];
 }
 
--(BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event
+- (void)ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	[self ccTouchEnded:touch withEvent:event];
-
-	// claim the touch
-	return YES;
-}
-- (void)ccTouchMoved:(UITouch*)touch withEvent:(UIEvent *)event
-{
-	[self ccTouchEnded:touch withEvent:event];
+	[self ccTouchesEnded:touches withEvent:event];
 }
 
-- (void)ccTouchEnded:(UITouch*)touch withEvent:(UIEvent *)event
+- (void)ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
 {
+	UITouch *touch = [touches anyObject];
+
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 
@@ -212,8 +206,8 @@ Class restartAction()
 		pos = [background convertToWorldSpace:CGPointZero];
 	emitter_.position = ccpSub(convertedLocation, pos);
 }
-#elif defined(__CC_PLATFORM_MAC)
 
+#elif defined(__CC_PLATFORM_MAC)
 
 -(BOOL) ccMouseDragged:(NSEvent *)event
 {
@@ -1661,7 +1655,7 @@ Class restartAction()
 		self.blendAdditive = NO;
         
 		// duration
-		duration = kCCParticleDurationInfinity;
+		self.duration = kCCParticleDurationInfinity;
 		
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -1679,38 +1673,38 @@ Class restartAction()
         
 		
 		// angle
-		angle = 180;
-		angleVar = 0;
+		self.angle = 180;
+		self.angleVar = 0;
 		
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 		
 		// life of particles
-		life = 0.5f;
-		lifeVar = 0;
+		self.life = 0.5f;
+		self.lifeVar = 0;
 		
 		// size, in pixels
-		startSize = 25.0f;
-		startSizeVar = 0;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		self.startSize = 25.0f;
+		self.startSizeVar = 0;
+		self.endSize = kCCParticleStartSizeEqualToEndSize;
         
 		// emits per seconds
-		emissionRate = totalParticles/life;
+		self.emissionRate = self.totalParticles/self.life;
 		
 		// color of particles
-		startColor = ccc4FFromccc4B(ccc4(50, 50, 50, 50));
-        endColor = ccc4FFromccc4B(ccc4(0, 0, 0, 0));
+		self.startColor = ccc4FFromccc4B(ccc4(50, 50, 50, 50));
+        self.endColor = ccc4FFromccc4B(ccc4(0, 0, 0, 0));
         
-        startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 		
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"particles.png"];
 	}
@@ -1720,7 +1714,7 @@ Class restartAction()
 
 -(void) update: (ccTime) dt
 {
-    emitCounter = 0;
+	_emitCounter = 0;
     [super update: dt];
 }
 @end
@@ -1803,7 +1797,7 @@ Class restartAction()
 	
 	uint count = 0; 
 	CCNode* item;
-	CCARRAY_FOREACH(children_, item)
+	CCARRAY_FOREACH(self.children, item)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{
@@ -2200,12 +2194,20 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene: scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

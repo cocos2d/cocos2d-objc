@@ -66,7 +66,7 @@ typedef enum {
 /**Class that creates and handle the main Window and manages how
 and when to execute the Scenes.
 
- The CCDirector is also resposible for:
+ The CCDirector is also responsible for:
   - initializing the OpenGL ES context
   - setting the OpenGL pixel format (default on is RGB565)
   - setting the OpenGL buffer depth (default one is 0-bit)
@@ -84,74 +84,74 @@ and when to execute the Scenes.
 @interface CCDirector : CC_VIEWCONTROLLER
 {
 	// internal timer
-	NSTimeInterval animationInterval_;
-	NSTimeInterval oldAnimationInterval_;
+	NSTimeInterval _animationInterval;
+	NSTimeInterval _oldAnimationInterval;
 
 	/* stats */
-	BOOL	displayStats_;
+	BOOL	_displayStats;
 
-	NSUInteger frames_;
-	NSUInteger totalFrames_;
-	ccTime secondsPerFrame_;
+	NSUInteger _frames;
+	NSUInteger _totalFrames;
+	ccTime _secondsPerFrame;
 
-	ccTime		accumDt_;
-	ccTime		frameRate_;
-	CCLabelAtlas *FPSLabel_;
-	CCLabelAtlas *SPFLabel_;
-	CCLabelAtlas *drawsLabel_;
+	ccTime		_accumDt;
+	ccTime		_frameRate;
+	CCLabelAtlas *_FPSLabel;
+	CCLabelAtlas *_SPFLabel;
+	CCLabelAtlas *_drawsLabel;
 
 	/* is the running scene paused */
-	BOOL isPaused_;
+	BOOL _isPaused;
     
     /* Is the director running */
-    BOOL isAnimating_;
+    BOOL _isAnimating;
 
 	/* The running scene */
-	CCScene *runningScene_;
+	CCScene *_runningScene;
 
 	/* This object will be visited after the scene. Useful to hook a notification node */
-	id notificationNode_;
+	id _notificationNode;
 
 	/* will be the next 'runningScene' in the next frame
 	 nextScene is a weak reference. */
-	CCScene *nextScene_;
+	CCScene *_nextScene;
 
 	/* If YES, then "old" scene will receive the cleanup message */
-	BOOL	sendCleanupToScene_;
+	BOOL	_sendCleanupToScene;
 
 	/* scheduled scenes */
-	NSMutableArray *scenesStack_;
+	NSMutableArray *_scenesStack;
 
 	/* last time the main loop was updated */
-	struct timeval lastUpdate_;
+	struct timeval _lastUpdate;
 	/* delta time since last tick to main loop */
-	ccTime dt;
+	ccTime _dt;
 	/* whether or not the next delta time will be zero */
-	BOOL nextDeltaTimeZero_;
+	BOOL _nextDeltaTimeZero;
 
 	/* projection used */
-	ccDirectorProjection projection_;
+	ccDirectorProjection _projection;
 
 	/* CCDirector delegate */
-	id<CCDirectorDelegate>	delegate_;
+	id<CCDirectorDelegate>	_delegate;
 
 	/* window size in points */
-	CGSize	winSizeInPoints_;
+	CGSize	_winSizeInPoints;
 
 	/* window size in pixels */
-	CGSize	winSizeInPixels_;
+	CGSize	_winSizeInPixels;
 
 	/* the cocos2d running thread */
-	NSThread	*runningThread_;
+	NSThread	*_runningThread;
 
 	/* scheduler associated with this director */
-	CCScheduler *scheduler_;
+	CCScheduler *_scheduler;
 
 	/* action manager associated with this director */
-	CCActionManager *actionManager_;
+	CCActionManager *_actionManager;
 	
 	/*  OpenGLView. On iOS it is a copy of self.view */
-	CCGLView		*view_;
+	CCGLView		*__view;
 }
 
 /** returns the cocos2d thread.
@@ -169,7 +169,7 @@ and when to execute the Scenes.
 /** whether or not the next delta time will be zero */
 @property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
-@property (nonatomic,readonly) BOOL isPaused;
+@property (nonatomic,readonly,getter=isPaused) BOOL paused;
 /** Whether or not the Director is active (animating) */
 @property (nonatomic,readonly) BOOL isAnimating;
 /** Sets an OpenGL projection */
@@ -193,10 +193,10 @@ and when to execute the Scenes.
  */
 @property (nonatomic, readwrite, retain) id	notificationNode;
 
-/** CCDirector delegate. It shall implemente the CCDirectorDelegate protocol
+/** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  @since v0.99.5
  */
-@property (nonatomic, readwrite, retain) id<CCDirectorDelegate> delegate;
+@property (nonatomic, readwrite, assign) id<CCDirectorDelegate> delegate;
 
 /** CCScheduler associated with this director
  @since v2.0
@@ -226,8 +226,11 @@ and when to execute the Scenes.
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
 
+/** Sets the glViewport*/
+-(void) setViewport;
+
 /** converts a UIKit coordinate to an OpenGL coordinate
- Useful to convert (multi) touchs coordinates to the current layout (portrait or landscape)
+ Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
  */
 -(CGPoint) convertToGL: (CGPoint) p;
 /** converts an OpenGL coordinate to a UIKit coordinate
@@ -281,7 +284,7 @@ and when to execute the Scenes.
 
 /** Pauses the running scene.
  The running scene will be _drawed_ but all scheduled timers will be paused
- While paused, the draw rate will be 4 FPS to reduce CPU consuption
+ While paused, the draw rate will be 4 FPS to reduce CPU consumption
  */
 -(void) pause;
 
@@ -292,13 +295,13 @@ and when to execute the Scenes.
 -(void) resume;
 
 /** Stops the animation. Nothing will be drawn. The main loop won't be triggered anymore.
- If you wan't to pause your animation call [pause] instead.
+ If you want to pause your animation call [pause] instead.
  */
 -(void) stopAnimation;
 
 /** The main loop is triggered again.
  Call this function only if [stopAnimation] was called earlier
- @warning Dont' call this function to start the main loop. To run the main loop call runWithScene
+ @warning Don't call this function to start the main loop. To run the main loop call runWithScene
  */
 -(void) startAnimation;
 

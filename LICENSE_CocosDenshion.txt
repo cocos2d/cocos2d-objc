@@ -1,3 +1,5 @@
+ http://www.cocos2d-iphone.org/
+
  CocosDenshion Sound Engine
 
  Copyright (c) 2010 Steve Oldmeadow

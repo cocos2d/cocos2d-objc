@@ -235,6 +235,7 @@ Class restartTest()
         [self addChild:sprite];
         [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3.0 angle:360]]];
         
+		[self scheduleUpdate];
 		[self schedule:@selector(tick1:) interval:0.5f];
 		[self schedule:@selector(tick2:) interval:1];
 		[self schedule:@selector(pause:) interval:3 repeat:NO delay:0];
@@ -266,6 +267,11 @@ Class restartTest()
 	return @"Everything will pause after 3s, then resume at 5s. See console";
 }
 
+-(void) update:(ccTime)delta
+{
+	// do nothing
+}
+
 -(void) tick1:(ccTime)dt
 {
 	NSLog(@"tick1");
@@ -281,6 +287,14 @@ Class restartTest()
     NSLog(@"Pausing");
 	CCDirector *director = [CCDirector sharedDirector];
     self.pausedTargets = [director.scheduler pauseAllTargets];
+	
+	NSUInteger c = [self.pausedTargets count];
+	
+	if(c > 2)
+	{
+		// should have only 2 items: CCActionManager, self
+		NSLog(@"Error: pausedTargets should have only 2 items, and not %u", (unsigned int)c);
+	}
 }
 
 - (void) resume
@@ -486,7 +500,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectors];
+	[[director scheduler] unscheduleAll];
     actionManagerActive = NO;
 }
 @end
@@ -548,7 +562,7 @@ Class restartTest()
 -(void) unscheduleAll:(ccTime)dt
 {
 	CCDirector *director = [CCDirector sharedDirector];
-	[[director scheduler] unscheduleAllSelectorsWithMinPriority:kCCPriorityNonSystemMin];
+	[[director scheduler] unscheduleAllWithMinPriority:kCCPriorityNonSystemMin];
 }
 @end
 
@@ -692,7 +706,7 @@ Class restartTest()
 
 -(void) removeUpdates:(ccTime)dt
 {
-	for( CCNode *node in children_)
+	for( CCNode *node in self.children)
 		[node unscheduleAllSelectors];
 }
 @end
@@ -1202,8 +1216,8 @@ Class restartTest()
 -(void) dealloc
 {
 	CCScheduler *defaultScheduler = [[CCDirector sharedDirector] scheduler];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched1];
-	[defaultScheduler unscheduleAllSelectorsForTarget:sched2];
+	[defaultScheduler unscheduleAllForTarget:sched1];
+	[defaultScheduler unscheduleAllForTarget:sched2];
 
 	[sliderCtl1 release];
 	[sliderCtl2 release];
@@ -1260,12 +1274,20 @@ Class restartTest()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextTest() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextTest() node]];		
+		[director runWithScene:scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

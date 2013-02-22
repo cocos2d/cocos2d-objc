@@ -619,13 +619,13 @@ Class restartAction()
 
 -(void) altertime:(ccTime)dt
 {
-	id action1 = [grossini getActionByTag:kTagAction1];
-	id action2 = [tamara getActionByTag:kTagAction1];
-	id action3 = [kathia getActionByTag:kTagAction1];
+	CCSpeed *action1 = (CCSpeed*)[grossini getActionByTag:kTagAction1];
+	CCSpeed *action2 = (CCSpeed*)[tamara getActionByTag:kTagAction1];
+	CCSpeed *action3 = (CCSpeed*)[kathia getActionByTag:kTagAction1];
 
-	[action1 setSpeed: CCRANDOM_0_1() * 2];
-	[action2 setSpeed: CCRANDOM_0_1() * 2];
-	[action3 setSpeed: CCRANDOM_0_1() * 2];
+	[action1 setSpeed: CCRANDOM_MINUS1_1() * 2];
+	[action2 setSpeed: CCRANDOM_MINUS1_1() * 2];
+	[action3 setSpeed: CCRANDOM_MINUS1_1() * 2];
 
 }
 
@@ -665,12 +665,17 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene: scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

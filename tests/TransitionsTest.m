@@ -59,7 +59,7 @@
 
 @implementation FlipXLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationLeftOver];
 }
 @end
 @implementation FadeWhiteTransition
@@ -70,57 +70,57 @@
 
 @implementation FlipXRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationRightOver];
 }
 @end
 @implementation FlipYUpOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationUpOver];
 }
 @end
 @implementation FlipYDownOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationDownOver];
 }
 @end
 @implementation FlipAngularLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationLeftOver];
 }
 @end
 @implementation FlipAngularRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationRightOver];
 }
 @end
 @implementation ZoomFlipXLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationLeftOver];
 }
 @end
 @implementation ZoomFlipXRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationRightOver];
 }
 @end
 @implementation ZoomFlipYUpOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationUpOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationUpOver];
 }
 @end
 @implementation ZoomFlipYDownOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationDownOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationDownOver];
 }
 @end
 @implementation ZoomFlipAngularLeftOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationLeftOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationLeftOver];
 }
 @end
 @implementation ZoomFlipAngularRightOver
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s {
-	return [self transitionWithDuration:t scene:s orientation:kOrientationRightOver];
+	return [self transitionWithDuration:t scene:s orientation:kCCTransitionOrientationRightOver];
 }
 @end
 
@@ -483,12 +483,20 @@ Class restartTransition()
 	// 2D on transitions only for debugging purposes
 //	[director_ setProjection:kCCDirectorProjection2D];
 	
-	CCScene *scene = [CCScene node];
-	[scene addChild: [TextLayer node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [TextLayer node]];
+		[director runWithScene:scene];
+	}
 }
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

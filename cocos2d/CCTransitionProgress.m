@@ -66,12 +66,12 @@ enum {
 	// render outScene to its texturebuffer
 	[texture clear:0 g:0 b:0 a:1];
 	[texture begin];
-	[sceneToBeModified_ visit];
+	[_sceneToBeModified visit];
 	[texture end];
 
 
 	//	Since we've passed the outScene to the texture we don't need it.
-	if( sceneToBeModified_ == outScene_ )
+	if( _sceneToBeModified == _outScene )
 		[self hideOutShowIn];
 
 	//	We need the texture in RenderTexture.
@@ -79,7 +79,7 @@ enum {
 
 	// create the blend action
 	CCActionInterval * layerAction = [CCSequence actions:
-									  [CCProgressFromTo actionWithDuration:duration_ from:from_ to:to_],
+									  [CCProgressFromTo actionWithDuration:_duration from:_from to:_to],
 									  [CCCallFunc actionWithTarget:self selector:@selector(finish)],
 									  nil ];
 	// run the blend action
@@ -93,20 +93,20 @@ enum {
 -(void) onExit
 {
 	// remove our layer and release all containing objects
-	[self removeChildByTag:kCCSceneRadial cleanup:NO];
+	[self removeChildByTag:kCCSceneRadial cleanup:YES];
 	[super onExit];
 }
 
 -(void) sceneOrder
 {
-	inSceneOnTop_ = NO;
+	_inSceneOnTop = NO;
 }
 
 -(void) setupTransition
 {
-	sceneToBeModified_ = outScene_;
-	from_ = 100;
-	to_ = 0;
+	_sceneToBeModified = _outScene;
+	_from = 100;
+	_to = 0;
 }
 
 -(CCProgressTimer*) progressTimerNodeWithRenderTexture:(CCRenderTexture*)texture
@@ -217,14 +217,14 @@ enum {
 
 -(void) sceneOrder
 {
-	inSceneOnTop_ = NO;
+	_inSceneOnTop = NO;
 }
 
 -(void) setupTransition
 {
-	sceneToBeModified_ = inScene_;
-	from_ = 0;
-	to_ = 100;	
+	_sceneToBeModified = _inScene;
+	_from = 0;
+	_to = 100;	
 }
 
 -(CCProgressTimer*) progressTimerNodeWithRenderTexture:(CCRenderTexture*)texture

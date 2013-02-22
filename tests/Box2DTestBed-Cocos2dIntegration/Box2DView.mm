@@ -39,7 +39,9 @@ enum {
 
 		entryID = entryId;
 
-		self.isTouchEnabled = YES;
+		[self setTouchPriority:0];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchEnabled:YES];
 
 		Box2DView *view = [Box2DView viewWithEntryID:entryId];
 		[self addChild:view z:0 tag:kTagBox2DNode];
@@ -99,12 +101,6 @@ enum {
 	[[CCDirector sharedDirector] replaceScene: s];
 }
 
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
-}
-
 -(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	return YES;
@@ -147,8 +143,10 @@ enum {
 {
     if ((self = [super init])) {
 
-		self.isAccelerometerEnabled = YES;
-		self.isTouchEnabled = YES;
+		[self setAccelerometerEnabled:YES];
+		[self setTouchMode:kCCTouchesOneByOne];
+		[self setTouchPriority:-10];
+		[self setTouchEnabled:YES];
 
 		[self schedule:@selector(tick:)];
 
@@ -195,13 +193,6 @@ enum {
 {
 	delete test;
     [super dealloc];
-}
-
--(void) registerWithTouchDispatcher
-{
-	// higher priority than dragging
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director touchDispatcher] addTargetedDelegate:self priority:-10 swallowsTouches:YES];
 }
 
 - (BOOL) ccTouchBegan:(UITouch*)touch withEvent:(UIEvent*)event

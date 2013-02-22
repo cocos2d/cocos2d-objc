@@ -37,9 +37,9 @@
 
 	if ((self = [super initWithDuration:aDuration])) {
 
-		key_	= [key copy];
-		to_		= to;
-		from_	= from;
+		_key	= [key copy];
+		_to		= to;
+		_from	= from;
 
 	}
 
@@ -48,24 +48,24 @@
 
 - (void) dealloc
 {
-	[key_ release];
+	[_key release];
 	[super dealloc];
 }
 
 - (void)startWithTarget:aTarget
 {
 	[super startWithTarget:aTarget];
-	delta_ = to_ - from_;
+	_delta = _to - _from;
 }
 
 - (void) update:(ccTime) dt
 {
-	[target_ setValue:[NSNumber numberWithFloat:to_  - delta_ * (1 - dt)] forKey:key_];
+	[_target setValue:[NSNumber numberWithFloat:_to  - _delta * (1 - dt)] forKey:_key];
 }
 
 - (CCActionInterval *) reverse
 {
-	return [[self class] actionWithDuration:duration_ key:key_ from:to_ to:from_];
+	return [[self class] actionWithDuration:_duration key:_key from:_to to:_from];
 }
 
 

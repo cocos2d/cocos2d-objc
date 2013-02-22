@@ -90,7 +90,7 @@ enum {
 
  Order in transformations with grid enabled
  -# The node will be translated (position)
- -# The node will be rotated (rotation)
+ -# The node will be rotated (rotation, rotationX, rotationY)
  -# The node will be skewed (skewX, skewY)
  -# The node will be scaled (scale, scaleX, scaleY)
  -# The grid will capture the screen
@@ -103,81 +103,80 @@ enum {
 @interface CCNode : NSObject
 {
 	// rotation angle
-	float rotation_;
+	float _rotationX, _rotationY;
 
 	// scaling factors
-	float scaleX_, scaleY_;
+	float _scaleX, _scaleY;
 
 	// openGL real Z vertex
-	float vertexZ_;
+	float _vertexZ;
 
 	// position of the node
-	CGPoint position_;
+	CGPoint _position;
 
 	// skew angles
-	float skewX_, skewY_;
+	float _skewX, _skewY;
 
 	// anchor point in points
-	CGPoint anchorPointInPoints_;
+	CGPoint _anchorPointInPoints;
 	// anchor point normalized (NOT in points)
-	CGPoint anchorPoint_;
+	CGPoint _anchorPoint;
 
 	// untransformed size of the node
-	CGSize	contentSize_;
+	CGSize	_contentSize;
 
 	// transform
-	CGAffineTransform transform_, inverse_;
+	CGAffineTransform _transform, _inverse;
+	BOOL _isTransformDirty;
+	BOOL _isInverseDirty;
 
 	// a Camera
-	CCCamera *camera_;
+	CCCamera *_camera;
 
 	// a Grid
-	CCGridBase *grid_;
+	CCGridBase *_grid;
 
 	// z-order value
-	NSInteger zOrder_;
+	NSInteger _zOrder;
 
 	// array of children
-	CCArray *children_;
+	CCArray *_children;
 
-	// weakref to parent
-	CCNode *parent_;
+	// weak ref to parent
+	CCNode *_parent;
 
 	// a tag. any number you want to assign to the node
-	NSInteger tag_;
+	NSInteger _tag;
 
 	// user data field
-	void *userData_;
-	id userObject_;
+	void *_userData;
+	id _userObject;
 
 	// Shader
-	CCGLProgram	*shaderProgram_;
+	CCGLProgram	*_shaderProgram;
 
 	// Server side state
-	ccGLServerState glServerState_;
+	ccGLServerState _glServerState;
 
 	// used to preserve sequence while sorting children with the same zOrder
-	NSUInteger orderOfArrival_;
+	NSUInteger _orderOfArrival;
 
 	// scheduler used to schedule timers and updates
-	CCScheduler		*scheduler_;
+	CCScheduler		*_scheduler;
 
 	// ActionManager used to handle all the actions
-	CCActionManager	*actionManager_;
+	CCActionManager	*_actionManager;
 
 	// Is running
-	BOOL isRunning_;
-
-	BOOL isTransformDirty_;
-	BOOL isInverseDirty_;
+	BOOL _isRunning;
 
 	// is visible
-	BOOL visible_;
+	BOOL _visible;
 	// If YES, the Anchor Point will be (0,0) when you position the CCNode.
 	// Used by CCLayer and CCScene
-	BOOL ignoreAnchorPointForPosition_;
+	BOOL _ignoreAnchorPointForPosition;
 
-	BOOL isReorderChildDirty_;	
+	BOOL _isReorderChildDirty;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -207,6 +206,11 @@ enum {
 @property(nonatomic,readwrite,assign) float skewY;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationX;
+/** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
+@property(nonatomic,readwrite,assign) float rotationY;
+
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
@@ -291,8 +295,7 @@ enum {
 /** initializes the node */
 -(id) init;
 
-
-// scene managment
+// scene management
 
 /** Event that is called every time the CCNode enters the 'stage'.
  If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
@@ -342,21 +345,42 @@ enum {
 
 // composition: REMOVE
 
+/** Remove itself from its parent node forcing a cleanup.
+ If the node orphan, then nothing happens.
+ @since v2.1
+ */
+-(void) removeFromParent;
+
 /** Remove itself from its parent node. If cleanup is YES, then also remove all actions and callbacks.
  If the node orphan, then nothing happens.
  @since v0.99.3
  */
 -(void) removeFromParentAndCleanup:(BOOL)cleanup;
 
+/** Removes a child from the container forcing a cleanup
+ @since v2.1
+ */
+-(void) removeChild:(CCNode*)child;
+
 /** Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
  */
 -(void) removeChild: (CCNode*)node cleanup:(BOOL)cleanup;
 
+/** Removes a child from the container by tag value forcing a cleanup.
+ @since v2.1
+ */
+-(void) removeChildByTag:(NSInteger) tag;
+
 /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
  @since v0.7.1
  */
 -(void) removeChildByTag:(NSInteger) tag cleanup:(BOOL)cleanup;
+
+/** Removes all children from the container forcing a cleanup.
+ @since v2.1
+ */
+-(void) removeAllChildren;
 
 /** Removes all children from the container and do a cleanup all running actions depending on the cleanup parameter.
  @since v0.7.1
@@ -454,7 +478,7 @@ enum {
 
 /** schedules the "update" method. It will use the order number 0. This method will be called every frame.
  Scheduled methods with a lower order value will be called before the ones that have a higher order value.
- Only one "udpate" method could be scheduled per node.
+ Only one "update" method could be scheduled per node.
 
  @since v0.99.3
  */
@@ -462,7 +486,7 @@ enum {
 
 /** schedules the "update" selector with a custom priority. This selector will be called every frame.
  Scheduled selectors with a lower priority will be called before the ones that have a higher value.
- Only one "udpate" selector could be scheduled per node (You can't have 2 'update' selectors).
+ Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
 
  @since v0.99.3
  */
@@ -473,7 +497,6 @@ enum {
  @since v0.99.3
  */
 -(void) unscheduleUpdate;
-
 
 /** schedules a selector.
  The scheduled selector will be ticked every frame
@@ -515,6 +538,9 @@ enum {
  */
 -(void) pauseSchedulerAndActions;
 
+/* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
+ */
+-(void) update:(ccTime)delta;
 
 // transformation methods
 
@@ -528,7 +554,7 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
-/** Retrusn the world affine transform matrix. The matrix is in Pixels.
+/** Returns the world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
@@ -566,4 +592,28 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
+@end
+
+
+#pragma mark - CCNodeRGBA
+
+/** CCNodeRGBA is a subclass of CCNode that implements the CCRGBAProtocol protocol.
+
+ All features from CCNode are valid, plus the following new features:
+ - opacity
+ - RGB colors
+
+ Opacity/Color propagates into children that conform to the CCRGBAProtocol if cascadeOpacity/cascadeColor is enabled.
+ @since v2.1
+ */
+@interface CCNodeRGBA : CCNode <CCRGBAProtocol>
+{
+	GLubyte		_displayedOpacity, _realOpacity;
+	ccColor3B	_displayedColor, _realColor;
+	BOOL		_cascadeColorEnabled, _cascadeOpacityEnabled;
+}
+
+// XXX To make BridgeSupport happy
+-(GLubyte) opacity;
+
 @end

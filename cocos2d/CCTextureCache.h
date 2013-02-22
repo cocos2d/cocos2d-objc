@@ -40,7 +40,7 @@
  */
 @interface CCTextureCache : NSObject
 {
-	NSMutableDictionary *textures_;
+	NSMutableDictionary *_textures;
 
 	dispatch_queue_t _loadingQueue;
 	dispatch_queue_t _dictQueue;
@@ -58,7 +58,7 @@
 /** Returns a Texture2D object given an file image
  * If the file image was not previously loaded, it will create a new CCTexture2D
  *  object and it will return it. It will use the filename as a key.
- * Otherwise it will return a reference of a previosly loaded image.
+ * Otherwise it will return a reference of a previously loaded image.
  * Supported image extensions: .png, .bmp, .tiff, .jpeg, .pvr, .gif
  */
 -(CCTexture2D*) addImage: (NSString*) fileimage;
@@ -106,7 +106,7 @@
 
 /** Removes unused textures
  * Textures that have a retain count of 1 will be deleted
- * It is convinient to call this method after when starting a new Scene
+ * It is convenient to call this method after when starting a new Scene
  * @since v0.8
  */
 -(void) removeUnusedTextures;
@@ -127,7 +127,7 @@
 
 /** Returns a Texture2D object given an PVR filename.
  * If the file image was not previously loaded, it will create a new CCTexture2D
- *  object and it will return it. Otherwise it will return a reference of a previosly loaded image
+ *  object and it will return it. Otherwise it will return a reference of a previously loaded image
  *
  */
 -(CCTexture2D*) addPVRImage:(NSString*) filename;

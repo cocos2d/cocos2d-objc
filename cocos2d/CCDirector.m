@@ -45,6 +45,9 @@
 #import "CCLayer.h"
 #import "ccGLStateCache.h"
 #import "CCShaderCache.h"
+#import "ccFPSImages.h"
+#import "CCDrawingPrimitives.h"
+#import "CCConfiguration.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -82,24 +85,26 @@ extern NSString * cocos2dVersion(void);
 -(void) calculateDeltaTime;
 // calculates the milliseconds per frame from the start of the frame
 -(void) calculateMPF;
+// returns the FPS image data pointer and len
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len;
 @end
 
 @implementation CCDirector
 
-@synthesize animationInterval = animationInterval_;
-@synthesize runningScene = runningScene_;
-@synthesize displayStats = displayStats_;
-@synthesize nextDeltaTimeZero = nextDeltaTimeZero_;
-@synthesize isPaused = isPaused_;
-@synthesize isAnimating = isAnimating_;
-@synthesize sendCleanupToScene = sendCleanupToScene_;
-@synthesize runningThread = runningThread_;
-@synthesize notificationNode = notificationNode_;
-@synthesize delegate = delegate_;
-@synthesize totalFrames = totalFrames_;
-@synthesize secondsPerFrame = secondsPerFrame_;
-@synthesize scheduler = scheduler_;
-@synthesize actionManager = actionManager_;
+@synthesize animationInterval = _animationInterval;
+@synthesize runningScene = _runningScene;
+@synthesize displayStats = _displayStats;
+@synthesize nextDeltaTimeZero = _nextDeltaTimeZero;
+@synthesize paused = _isPaused;
+@synthesize isAnimating = _isAnimating;
+@synthesize sendCleanupToScene = _sendCleanupToScene;
+@synthesize runningThread = _runningThread;
+@synthesize notificationNode = _notificationNode;
+@synthesize delegate = _delegate;
+@synthesize totalFrames = _totalFrames;
+@synthesize secondsPerFrame = _secondsPerFrame;
+@synthesize scheduler = _scheduler;
+@synthesize actionManager = _actionManager;
 
 //
 // singleton stuff
@@ -130,45 +135,41 @@ static CCDirector *_sharedDirector = nil;
 
 - (id) init
 {
-	CCLOG(@"cocos2d: %@", cocos2dVersion() );
-
 	if( (self=[super init] ) ) {
 
-		CCLOG(@"cocos2d: Using Director Type:%@", [self class]);
-
 		// scenes
-		runningScene_ = nil;
-		nextScene_ = nil;
+		_runningScene = nil;
+		_nextScene = nil;
 
-		notificationNode_ = nil;
+		_notificationNode = nil;
 
-		oldAnimationInterval_ = animationInterval_ = 1.0 / kDefaultFPS;
-		scenesStack_ = [[NSMutableArray alloc] initWithCapacity:10];
+		_oldAnimationInterval = _animationInterval = 1.0 / kDefaultFPS;
+		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
 		// Set default projection (3D)
-		projection_ = kCCDirectorProjectionDefault;
+		_projection = kCCDirectorProjectionDefault;
 
 		// projection delegate if "Custom" projection is used
-		delegate_ = nil;
+		_delegate = nil;
 
 		// FPS
-		displayStats_ = NO;
-		totalFrames_ = frames_ = 0;
+		_displayStats = NO;
+		_totalFrames = _frames = 0;
 
 		// paused ?
-		isPaused_ = NO;
+		_isPaused = NO;
 
 		// running thread
-		runningThread_ = nil;
+		_runningThread = nil;
 
 		// scheduler
-		scheduler_ = [[CCScheduler alloc] init];
+		_scheduler = [[CCScheduler alloc] init];
 
 		// action manager
-		actionManager_ = [[CCActionManager alloc] init];
-		[scheduler_ scheduleUpdateForTarget:actionManager_ priority:kCCPrioritySystem paused:NO];
+		_actionManager = [[CCActionManager alloc] init];
+		[_scheduler scheduleUpdateForTarget:_actionManager priority:kCCPrioritySystem paused:NO];
 
-		winSizeInPixels_ = winSizeInPoints_ = CGSizeZero;
+		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
 	}
 
 	return self;
@@ -176,22 +177,21 @@ static CCDirector *_sharedDirector = nil;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, winSizeInPoints_.width, winSizeInPoints_.height, view_];
+	return [NSString stringWithFormat:@"<%@ = %p | Size: %0.f x %0.f, view = %@>", [self class], self, _winSizeInPoints.width, _winSizeInPoints.height, __view];
 }
 
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[FPSLabel_ release];
-	[SPFLabel_ release];
-	[drawsLabel_ release];
-	[runningScene_ release];
-	[notificationNode_ release];
-	[scenesStack_ release];
-	[scheduler_ release];
-	[actionManager_ release];
-	[delegate_ release];
+	[_FPSLabel release];
+	[_SPFLabel release];
+	[_drawsLabel release];
+	[_runningScene release];
+	[_notificationNode release];
+	[_scenesStack release];
+	[_scheduler release];
+	[_actionManager release];
 
 	_sharedDirector = nil;
 
@@ -200,12 +200,12 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setGLDefaultValues
 {
-	// This method SHOULD be called only after view_ was initialized
-	NSAssert( view_, @"view_ must be initialized");
+	// This method SHOULD be called only after __view was initialized
+	NSAssert( __view, @"__view must be initialized");
 
 	[self setAlphaBlending: YES];
-	[self setDepthTest: view_.depthFormat];
-	[self setProjection: projection_];
+	[self setDepthTest: __view.depthFormat];
+	[self setProjection: _projection];
 
 	// set other opengl default values
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -225,26 +225,26 @@ static CCDirector *_sharedDirector = nil;
 
 	if( gettimeofday( &now, NULL) != 0 ) {
 		CCLOG(@"cocos2d: error in gettimeofday");
-		dt = 0;
+		_dt = 0;
 		return;
 	}
 
 	// new delta time
-	if( nextDeltaTimeZero_ ) {
-		dt = 0;
-		nextDeltaTimeZero_ = NO;
+	if( _nextDeltaTimeZero ) {
+		_dt = 0;
+		_nextDeltaTimeZero = NO;
 	} else {
-		dt = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
-		dt = MAX(0,dt);
+		_dt = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+		_dt = MAX(0,_dt);
 	}
 
 #ifdef DEBUG
 	// If we are debugging our code, prevent big delta time
-	if( dt > 0.2f )
-		dt = 1/60.0f;
+	if( _dt > 0.2f )
+		_dt = 1/60.0f;
 #endif
 
-	lastUpdate_ = now;
+	_lastUpdate = now;
 }
 
 #pragma mark Director - Memory Helper
@@ -252,7 +252,8 @@ static CCDirector *_sharedDirector = nil;
 -(void) purgeCachedData
 {
 	[CCLabelBMFont purgeCachedData];
-	[[CCTextureCache sharedTextureCache] removeUnusedTextures];
+	if ([_sharedDirector view])
+		[[CCTextureCache sharedTextureCache] removeUnusedTextures];
 	[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 }
 
@@ -260,12 +261,17 @@ static CCDirector *_sharedDirector = nil;
 
 -(ccDirectorProjection) projection
 {
-	return projection_;
+	return _projection;
 }
 
 -(float) getZEye
 {
-	return ( winSizeInPixels_.height / 1.1566f / CC_CONTENT_SCALE_FACTOR() );
+	return ( _winSizeInPixels.height / 1.1566f / CC_CONTENT_SCALE_FACTOR() );
+}
+
+-(void) setViewport
+{
+	CCLOG(@"cocos2d: override me");
 }
 
 -(void) setProjection:(ccDirectorProjection)projection
@@ -276,11 +282,10 @@ static CCDirector *_sharedDirector = nil;
 - (void) setAlphaBlending: (BOOL) on
 {
 	if (on) {
-		ccGLEnable(CC_GL_BLEND);
 		ccGLBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
 
 	} else
-		glDisable(GL_BLEND);
+		ccGLBlendFunc(GL_ONE, GL_ZERO);
 
 	CHECK_GL_ERROR_DEBUG();
 }
@@ -305,16 +310,16 @@ static CCDirector *_sharedDirector = nil;
 {
 //	NSAssert( view, @"OpenGLView must be non-nil");
 
-	if( view != view_ ) {
+	if( view != __view ) {
 	
 #ifdef __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
-		[view_ release];
-		view_ = [view retain];
+		[__view release];
+		__view = [view retain];
 
 		// set size
-		winSizeInPixels_ = winSizeInPoints_ = CCNSSizeToCGSize( [view_ bounds].size );
+		_winSizeInPixels = _winSizeInPoints = CCNSSizeToCGSize( [__view bounds].size );
 
 		[self createStatsLabel];
 		
@@ -322,13 +327,16 @@ static CCDirector *_sharedDirector = nil;
 		if( view )
 			[self setGLDefaultValues];
 
+		// Dump info once OpenGL was initilized
+		[[CCConfiguration sharedConfiguration] dumpInfo];
+
 		CHECK_GL_ERROR_DEBUG();
 	}
 }
 
 -(CCGLView*) view
 {
-	return  view_;
+	return  __view;
 }
 
 
@@ -348,18 +356,18 @@ static CCDirector *_sharedDirector = nil;
 
 -(CGSize)winSize
 {
-	return winSizeInPoints_;
+	return _winSizeInPoints;
 }
 
 -(CGSize)winSizeInPixels
 {
-	return winSizeInPixels_;
+	return _winSizeInPixels;
 }
 
 -(void) reshapeProjection:(CGSize)newWindowSize
 {
-	winSizeInPixels_ = winSizeInPoints_ = newWindowSize;
-	[self setProjection:projection_];
+	_winSizeInPixels = _winSizeInPoints = newWindowSize;
+	[self setProjection:_projection];
 }
 
 #pragma mark Director Scene Management
@@ -367,6 +375,7 @@ static CCDirector *_sharedDirector = nil;
 - (void)runWithScene:(CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
+	NSAssert(_runningScene == nil, @"This command can only be used to start the CCDirector. There is already a scene present.");
 
 	[self pushScene:scene];
 	[self startAnimation];
@@ -374,85 +383,88 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) replaceScene: (CCScene*) scene
 {
+	NSAssert( _runningScene, @"Use runWithScene: instead to start the director");
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
-	NSUInteger index = [scenesStack_ count];
+	NSUInteger index = [_scenesStack count];
 
-	sendCleanupToScene_ = YES;
-	[scenesStack_ replaceObjectAtIndex:index-1 withObject:scene];
-	nextScene_ = scene;	// nextScene_ is a weak ref
+	_sendCleanupToScene = YES;
+	[_scenesStack replaceObjectAtIndex:index-1 withObject:scene];
+	_nextScene = scene;	// _nextScene is a weak ref
 }
 
 - (void) pushScene: (CCScene*) scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
-	sendCleanupToScene_ = NO;
+	_sendCleanupToScene = NO;
 
-	[scenesStack_ addObject: scene];
-	nextScene_ = scene;	// nextScene_ is a weak ref
+	[_scenesStack addObject: scene];
+	_nextScene = scene;	// _nextScene is a weak ref
 }
 
 -(void) popScene
 {
-	NSAssert( runningScene_ != nil, @"A running Scene is needed");
+	NSAssert( _runningScene != nil, @"A running Scene is needed");
 
-	[scenesStack_ removeLastObject];
-	NSUInteger c = [scenesStack_ count];
+	[_scenesStack removeLastObject];
+	NSUInteger c = [_scenesStack count];
 
 	if( c == 0 )
 		[self end];
 	else {
-		sendCleanupToScene_ = YES;
-		nextScene_ = [scenesStack_ objectAtIndex:c-1];
+		_sendCleanupToScene = YES;
+		_nextScene = [_scenesStack objectAtIndex:c-1];
 	}
 }
 
 -(void) popToRootScene
 {
-	NSAssert(runningScene_ != nil, @"A running Scene is needed");
-	NSUInteger c = [scenesStack_ count];
+	NSAssert(_runningScene != nil, @"A running Scene is needed");
+	NSUInteger c = [_scenesStack count];
 	
-    if (c == 1) {
-        [scenesStack_ removeLastObject];
-        [self end];
-    } else {
-        while (c > 1) {
-			CCScene *current = [scenesStack_ lastObject];
-			if( [current isRunning] )
+	if (c == 1) {
+		[_scenesStack removeLastObject];
+		[self end];
+	} else {
+		while (c > 1) {
+			CCScene *current = [_scenesStack lastObject];
+			if( [current isRunning] ){
+				[current onExitTransitionDidStart];
 				[current onExit];
+			}
 			[current cleanup];
-			
-			[scenesStack_ removeLastObject];
+
+			[_scenesStack removeLastObject];
 			c--;
-        }
-		nextScene_ = [scenesStack_ lastObject];
-		sendCleanupToScene_ = NO;
-    }
+		}
+		_nextScene = [_scenesStack lastObject];
+		_sendCleanupToScene = NO;
+	}
 }
 
 -(void) end
 {
-	[runningScene_ onExit];
-	[runningScene_ cleanup];
-	[runningScene_ release];
+	[_runningScene onExitTransitionDidStart];
+	[_runningScene onExit];
+	[_runningScene cleanup];
+	[_runningScene release];
 
-	runningScene_ = nil;
-	nextScene_ = nil;
+	_runningScene = nil;
+	_nextScene = nil;
 
 	// remove all objects, but don't release it.
 	// runWithScene might be executed after 'end'.
-	[scenesStack_ removeAllObjects];
+	[_scenesStack removeAllObjects];
 
 	[self stopAnimation];
 
-	[FPSLabel_ release];
-	[SPFLabel_ release];
-	[drawsLabel_ release];
-	FPSLabel_ = nil, SPFLabel_=nil, drawsLabel_=nil;
+	[_FPSLabel release];
+	[_SPFLabel release];
+	[_drawsLabel release];
+	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
-	[delegate_ release];
-	delegate_ = nil;
+	_delegate = nil;
 
 	[self setView:nil];
 	
@@ -460,6 +472,7 @@ static CCDirector *_sharedDirector = nil;
 	[CCLabelBMFont purgeCachedData];
 
 	// Purge all managers / caches
+	ccDrawFree();
 	[CCAnimationCache purgeSharedAnimationCache];
 	[CCSpriteFrameCache purgeSharedSpriteFrameCache];
 	[CCTextureCache purgeSharedTextureCache];
@@ -482,66 +495,67 @@ static CCDirector *_sharedDirector = nil;
 -(void) setNextScene
 {
 	Class transClass = [CCTransitionScene class];
-	BOOL runningIsTransition = [runningScene_ isKindOfClass:transClass];
-	BOOL newIsTransition = [nextScene_ isKindOfClass:transClass];
+	BOOL runningIsTransition = [_runningScene isKindOfClass:transClass];
+	BOOL newIsTransition = [_nextScene isKindOfClass:transClass];
 
 	// If it is not a transition, call onExit/cleanup
 	if( ! newIsTransition ) {
-		[runningScene_ onExit];
+		[_runningScene onExitTransitionDidStart];
+		[_runningScene onExit];
 
 		// issue #709. the root node (scene) should receive the cleanup message too
 		// otherwise it might be leaked.
-		if( sendCleanupToScene_)
-			[runningScene_ cleanup];
+		if( _sendCleanupToScene)
+			[_runningScene cleanup];
 	}
 
-	[runningScene_ release];
+	[_runningScene release];
 
-	runningScene_ = [nextScene_ retain];
-	nextScene_ = nil;
+	_runningScene = [_nextScene retain];
+	_nextScene = nil;
 
 	if( ! runningIsTransition ) {
-		[runningScene_ onEnter];
-		[runningScene_ onEnterTransitionDidFinish];
+		[_runningScene onEnter];
+		[_runningScene onEnterTransitionDidFinish];
 	}
 }
 
 -(void) pause
 {
-	if( isPaused_ )
+	if( _isPaused )
 		return;
 
-	oldAnimationInterval_ = animationInterval_;
+	_oldAnimationInterval = _animationInterval;
 
 	// when paused, don't consume CPU
 	[self setAnimationInterval:1/4.0];
 	
 	[self willChangeValueForKey:@"isPaused"];
-	isPaused_ = YES;
+	_isPaused = YES;
 	[self didChangeValueForKey:@"isPaused"];
 }
 
 -(void) resume
 {
-	if( ! isPaused_ )
+	if( ! _isPaused )
 		return;
 
-	[self setAnimationInterval: oldAnimationInterval_];
+	[self setAnimationInterval: _oldAnimationInterval];
 
-	if( gettimeofday( &lastUpdate_, NULL) != 0 ) {
+	if( gettimeofday( &_lastUpdate, NULL) != 0 ) {
 		CCLOG(@"cocos2d: Director: Error in gettimeofday");
 	}
 
 	[self willChangeValueForKey:@"isPaused"];
-	isPaused_ = NO;
+	_isPaused = NO;
 	[self didChangeValueForKey:@"isPaused"];
 
-	dt = 0;
+	_dt = 0;
 }
 
 - (void)startAnimation
 {
-	CCLOG(@"cocos2d: Director#startAnimation. Override me");
+	_nextDeltaTimeZero = YES;
 }
 
 - (void)stopAnimation
@@ -558,37 +572,37 @@ static CCDirector *_sharedDirector = nil;
 // display statistics
 -(void) showStats
 {
-	frames_++;
-	accumDt_ += dt;
+	_frames++;
+	_accumDt += _dt;
 
-	if( displayStats_ ) {
+	if( _displayStats ) {
 		// Ms per Frame
 
-		if( accumDt_ > CC_DIRECTOR_STATS_INTERVAL)
+		if( _accumDt > CC_DIRECTOR_STATS_INTERVAL)
 		{
-			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", secondsPerFrame_];
-			[SPFLabel_ setString:spfstr];
+			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", _secondsPerFrame];
+			[_SPFLabel setString:spfstr];
 			[spfstr release];
 
-			frameRate_ = frames_/accumDt_;
-			frames_ = 0;
-			accumDt_ = 0;
+			_frameRate = _frames/_accumDt;
+			_frames = 0;
+			_accumDt = 0;
 
 //			sprintf(format,"%.1f",frameRate);
 //			[FPSLabel setCString:format];
 
-			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", frameRate_];
-			[FPSLabel_ setString:fpsstr];
+			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
+			[_FPSLabel setString:fpsstr];
 			[fpsstr release];
 			
 			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
-			[drawsLabel_ setString:draws];
+			[_drawsLabel setString:draws];
 			[draws release];
 		}
 
-		[drawsLabel_ visit];
-		[FPSLabel_ visit];
-		[SPFLabel_ visit];
+		[_drawsLabel visit];
+		[_FPSLabel visit];
+		[_SPFLabel visit];
 	}
 	
 	__ccNumberOfDraws = 0;
@@ -599,38 +613,58 @@ static CCDirector *_sharedDirector = nil;
 	struct timeval now;
 	gettimeofday( &now, NULL);
 
-	secondsPerFrame_ = (now.tv_sec - lastUpdate_.tv_sec) + (now.tv_usec - lastUpdate_.tv_usec) / 1000000.0f;
+	_secondsPerFrame = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
 }
 
 #pragma mark Director - Helper
 
+-(void)getFPSImageData:(unsigned char**)datapointer length:(NSUInteger*)len
+{
+	*datapointer = cc_fps_images_png;
+	*len = cc_fps_images_len();
+}
+
 -(void) createStatsLabel
 {
-	if( FPSLabel_ && SPFLabel_ ) {
-		CCTexture2D *texture = [FPSLabel_ texture];
+	CCTexture2D *texture;
+	CCTextureCache *textureCache = [CCTextureCache sharedTextureCache];
+	
+	if( _FPSLabel && _SPFLabel ) {
 
-		[FPSLabel_ release];
-		[SPFLabel_ release];
-		[drawsLabel_ release];
-		[[CCTextureCache sharedTextureCache ] removeTexture:texture];
-		FPSLabel_ = nil;
-		SPFLabel_ = nil;
-		drawsLabel_ = nil;
+		[_FPSLabel release];
+		[_SPFLabel release];
+		[_drawsLabel release];
+		[textureCache removeTextureForKey:@"cc_fps_images"];
+		_FPSLabel = nil;
+		_SPFLabel = nil;
+		_drawsLabel = nil;
 		
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
 
 	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
 	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
-	FPSLabel_ = [[CCLabelAtlas alloc]  initWithString:@"00.0" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
-	SPFLabel_ = [[CCLabelAtlas alloc]  initWithString:@"0.000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
-	drawsLabel_ = [[CCLabelAtlas alloc]  initWithString:@"000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
+
+	unsigned char *data;
+	NSUInteger data_len;
+	[self getFPSImageData:&data length:&data_len];
+	
+	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
+	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (CFDataRef) nsdata);
+	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
+	texture = [textureCache addCGImage:imageRef forKey:@"cc_fps_images"];
+	CGDataProviderRelease(imgDataProvider);
+	CGImageRelease(imageRef);
+
+	_FPSLabel = [[CCLabelAtlas alloc]  initWithString:@"00.0" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
+	_SPFLabel = [[CCLabelAtlas alloc]  initWithString:@"0.000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
+	_drawsLabel = [[CCLabelAtlas alloc]  initWithString:@"000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 
 	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
 
-	[drawsLabel_ setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
-	[SPFLabel_ setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];
-	[FPSLabel_ setPosition: CC_DIRECTOR_STATS_POSITION ];
+	[_drawsLabel setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
+	[_SPFLabel setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];
+	[_FPSLabel setPosition: CC_DIRECTOR_STATS_POSITION ];
 }
 
 @end

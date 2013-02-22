@@ -14,7 +14,6 @@
 -(NSString*) subtitle;
 @end
 
-
 @interface Sprite1 : SpriteDemo
 {}
 -(void) addNewSpriteWithCoords:(CGPoint)p;
@@ -190,7 +189,15 @@
 {}
 @end
 
+@interface SpriteOffsetAnchorRotationalSkew : SpriteDemo
+{}
+@end
+
 @interface SpriteBatchNodeOffsetAnchorSkew : SpriteDemo
+{}
+@end
+
+@interface SpriteBatchNodeOffsetAnchorRotationalSkew : SpriteDemo
 {}
 @end
 
@@ -198,10 +205,17 @@
 {}
 @end
 
+@interface SpriteOffsetAnchorRotationalSkewScale : SpriteDemo
+{}
+@end
+
 @interface SpriteBatchNodeOffsetAnchorSkewScale : SpriteDemo
 {}
 @end
 
+@interface SpriteBatchNodeOffsetAnchorRotationalSkewScale : SpriteDemo
+{}
+@end
 
 @interface SpriteOffsetAnchorFlip : SpriteDemo
 {}
@@ -258,7 +272,15 @@
 {}
 @end
 
+@interface SpriteBatchNodeRotationalSkewNegativeScaleChildren : SpriteDemo
+{}
+@end
+
 @interface SpriteSkewNegativeScaleChildren : SpriteDemo
+{}
+@end
+
+@interface SpriteRotationalSkewNegativeScaleChildren : SpriteDemo
 {}
 @end
 

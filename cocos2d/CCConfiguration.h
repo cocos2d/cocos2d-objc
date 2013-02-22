@@ -51,29 +51,40 @@ enum {
 	kCCMacVersion_10_8  = 0x0a080000,
 };
 
+enum {
+	kCCDeviceiPhone,
+	kCCDeviceiPhoneRetinaDisplay,
+	kCCDeviceiPhone5,
+	kCCDeviceiPhone5RetinaDisplay,
+	kCCDeviceiPad,
+	kCCDeviceiPadRetinaDisplay,
+
+	kCCDeviceMac,
+	kCCDeviceMacRetinaDisplay,
+};
+
 /**
  CCConfiguration contains some openGL variables
  @since v0.99.0
  */
 @interface CCConfiguration : NSObject {
 
-	GLint			maxTextureSize_;
-	GLint			maxModelviewStackDepth_;
-	BOOL			supportsPVRTC_;
-	BOOL			supportsNPOT_;
-	BOOL			supportsBGRA8888_;
-	BOOL			supportsDiscardFramebuffer_;
-	BOOL			supportsShareableVAO_;
-	unsigned int	OSVersion_;
-	GLint			maxSamplesAllowed_;
-	GLint			maxTextureUnits_;
+	BOOL			_openGLInitialized;
+	
+	GLint			_maxTextureSize;
+	BOOL			_supportsPVRTC;
+	BOOL			_supportsNPOT;
+	BOOL			_supportsBGRA8888;
+	BOOL			_supportsDiscardFramebuffer;
+	BOOL			_supportsShareableVAO;
+	GLint			_maxSamplesAllowed;
+	GLint			_maxTextureUnits;
+
+	unsigned int	_OSVersion;
 }
 
 /** OpenGL Max texture size. */
 @property (nonatomic, readonly) GLint maxTextureSize;
-
-/** OpenGL Max Modelview Stack Depth. */
-@property (nonatomic, readonly) GLint maxModelviewStackDepth;
 
 /** returns the maximum texture units
  @since v2.0.0
@@ -115,12 +126,19 @@ enum {
  */
 @property (nonatomic, readonly) unsigned int OSVersion;
 
+
 /** returns a shared instance of the CCConfiguration */
 +(CCConfiguration *) sharedConfiguration;
 
 /** returns whether or not an OpenGL is supported */
 - (BOOL) checkForGLExtension:(NSString *)searchName;
 
+/** returns the current device */
+-(NSInteger) runningDevice;
 
+/** dumps in the console the CCConfiguration information.
+ @since v2.1
+ */
+-(void) dumpInfo;
 
 @end

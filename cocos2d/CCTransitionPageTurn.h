@@ -39,7 +39,7 @@
  */
 @interface CCTransitionPageTurn : CCTransitionScene
 {
-	BOOL	back_;
+	BOOL	_back;
 }
 /**
  * creates a base transition with duration and incoming scene
@@ -55,6 +55,6 @@
  */
 -(id) initWithDuration:(ccTime) t scene:(CCScene*)s backwards:(BOOL) back;
 
--(CCActionInterval*) actionWithSize:(ccGridSize) vector;
+-(CCActionInterval*) actionWithSize:(CGSize) vector;
 
 @end

@@ -42,6 +42,14 @@
 {}
 @end
 
+@interface ActionRotationalSkew : ActionDemo
+{}
+@end
+
+@interface ActionRotationalSkewVSStandardSkew : ActionDemo
+{}
+@end
+
 @interface ActionSkewRotateScale : ActionDemo
 {}
 @end
@@ -157,6 +165,37 @@
 {}
 @end
 
+@interface ActionStacked : ActionDemo
+{}
+-(void) addNewSpriteWithCoords:(CGPoint)p;
+-(void) runActionsInSprite:(CCSprite*)sprite;
+@end
+
+@interface ActionMoveStacked : ActionStacked
+{}
+@end
+
+@interface ActionMoveJumpStacked : ActionStacked
+{}
+@end
+
+@interface ActionMoveBezierStacked : ActionStacked
+{}
+@end
+
+@interface ActionCatmullRomStacked : ActionDemo
+{
+	CCPointArray *array1_;
+	CCPointArray *array2_;
+}
+@end
+
+@interface ActionCardinalSplineStacked : ActionDemo
+{
+	CCPointArray *array_;
+}
+@end
+
 @interface PauseResumeActions : ActionDemo
 {
     NSSet* pausedTargets_;
@@ -184,4 +223,10 @@
 
 @interface Issue1327 : ActionDemo
 {}
+@end
+
+@interface Issue1398 : ActionDemo
+{
+	int testInteger;
+}
 @end

@@ -39,26 +39,26 @@
 @interface CCES2Renderer : NSObject <CCESRenderer>
 {
     // The pixel dimensions of the CAEAGLLayer
-    GLint backingWidth_;
-    GLint backingHeight_;
+    GLint _backingWidth;
+    GLint _backingHeight;
 
-	unsigned int	samplesToUse_;
-	BOOL			multiSampling_;
+	unsigned int	_samplesToUse;
+	BOOL			_multiSampling;
 
-	unsigned int	depthFormat_;
-	unsigned int	pixelFormat_;
+	unsigned int	_depthFormat;
+	unsigned int	_pixelFormat;
 
 	// The OpenGL ES names for the framebuffer and renderbuffer used to render to this view
-    GLuint defaultFramebuffer_;
-	GLuint colorRenderbuffer_;
-	GLuint depthBuffer_;
+	GLuint _defaultFramebuffer;
+	GLuint _colorRenderbuffer;
+	GLuint _depthBuffer;
 
 
 	//buffers for MSAA
-	GLuint msaaFramebuffer_;
-	GLuint msaaColorbuffer_;
+	GLuint _msaaFramebuffer;
+	GLuint _msaaColorbuffer;
 
-	EAGLContext *context_;
+	EAGLContext *_context;
 }
 
 /** Color Renderbuffer */

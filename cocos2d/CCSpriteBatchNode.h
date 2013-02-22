@@ -53,11 +53,11 @@
  */
 @interface CCSpriteBatchNode : CCNode <CCTextureProtocol>
 {
-	CCTextureAtlas	*textureAtlas_;
-	ccBlendFunc		blendFunc_;
+	CCTextureAtlas	*_textureAtlas;
+	ccBlendFunc		_blendFunc;
 
-	// all descendants: chlidren, gran children, etc...
-	CCArray	*descendants_;
+	// all descendants: children, grandchildren, etc...
+	CCArray	*_descendants;
 }
 
 /** returns the TextureAtlas that is used */
@@ -66,7 +66,7 @@
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
-/** descendants (children, gran children, etc) */
+/** descendants (children, grandchildren, etc) */
 @property (nonatomic,readonly) CCArray *descendants;
 
 /** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
@@ -125,14 +125,21 @@
 @end
 
 @interface CCSpriteBatchNode (QuadExtensions)
-/** Adds a quad into the texture atlas but it won't be added into the children array.
+/** Inserts a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
  This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
- For example: a tile map (CCTMXMap) or a label with lots of characgers (CCLabelBMFont)
+ For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
  */
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+-(void) insertQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
+
+/** Updates a quad at a certain index into the texture atlas. The CCSprite won't be added into the children array.
+ This method should be called only when you are dealing with very big AtlasSrite and when most of the CCSprite won't be updated.
+ For example: a tile map (CCTMXMap) or a label with lots of characters (CCLabelBMFont)
+ */
+-(void) updateQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
 
 /* This is the opposite of "addQuadFromSprite".
  It adds the sprite to the children and descendants array, but it doesn't add it to the texture atlas.
  */
--(void) addQuadFromSprite:(CCSprite*)sprite quadIndex:(NSUInteger)index;
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag;
+
 @end
