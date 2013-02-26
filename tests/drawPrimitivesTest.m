@@ -208,6 +208,27 @@ Class restartAction()
 
 	CHECK_GL_ERROR_DEBUG();
 
+	// draw a green Arc with 50 segments without line to center
+	glLineWidth(2);
+	ccDrawColor4B(0, 255, 255, 255);
+	ccDrawArc( ccp(s.width-105, s.height/2-105), 100, CC_DEGREES_TO_RADIANS(90), CC_DEGREES_TO_RADIANS(90), 50, NO);
+    
+	CHECK_GL_ERROR_DEBUG();
+    
+	// draw a green solid Arc with 50 segments without line to center
+	glLineWidth(2);
+	ccDrawColor4B(0, 255, 255, 255);
+	ccDrawSolidArc( ccp(s.width-105, s.height/2+105), 100, CC_DEGREES_TO_RADIANS(90), CC_DEGREES_TO_RADIANS(90), 50);
+    
+	CHECK_GL_ERROR_DEBUG();
+    
+	// draw a green solid circle with 50 segments with line to center
+	glLineWidth(1);
+	ccDrawColor4B(0, 255, 255, 255);
+	ccDrawSolidCircle( ccp(105, s.height/2), 100, 50);
+    
+	CHECK_GL_ERROR_DEBUG();
+    
 	// open yellow poly
 	ccDrawColor4B(255, 255, 0, 255);
 	glLineWidth(10);
