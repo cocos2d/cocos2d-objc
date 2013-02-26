@@ -52,9 +52,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fixed some logic errors in the Scheduler and Timer
 	TMX Maps: Fixed firstGID parser issue for new version TMX file with external TSX file
 
-* Ian Oliver (http://www.trivialtechnology.com)
+* Ian Oliver (http://www.trivialtechnology.com):
 	GLProgram: Better error reporting on link
 	GLProgram: Added uniformLocationForName: method
+
+* James Munro (https://github.com/jdmunro):
+	Patch to don't allocate labelsStats on director, if view is nil
 
 * kamorris:
 	Patch that prevent crash on director when purgeCacheData is called before the creation of the view

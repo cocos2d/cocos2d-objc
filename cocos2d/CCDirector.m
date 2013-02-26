@@ -321,11 +321,11 @@ static CCDirector *_sharedDirector = nil;
 		// set size
 		_winSizeInPixels = _winSizeInPoints = CCNSSizeToCGSize( [__view bounds].size );
 
-		[self createStatsLabel];
-		
 		// it could be nil
-		if( view )
+		if( view ) {
+			[self createStatsLabel];
 			[self setGLDefaultValues];
+		}
 
 		// Dump info once OpenGL was initilized
 		[[CCConfiguration sharedConfiguration] dumpInfo];
