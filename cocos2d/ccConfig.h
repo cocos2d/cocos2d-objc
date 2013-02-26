@@ -36,7 +36,11 @@
  @since v2.1
  */
 #ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
-#define CC_ENABLE_CHIPMUNK_INTEGRATION 0
+#define CC_ENABLE_CHIPMUNK_INTEGRATION 1
+
+// If you are using Objective-Chipmunk/ChipmunkPro, you'll need to change this to "ObjectiveChipmunk.h"
+#define CC_CHIPMUNK_IMPORT "chipmunk.h"
+//#define CC_CHIPMUNK_IMPORT "ObjectiveChipmunk.h"
 #endif
 
 /** @def CC_ENABLE_BOX2D_INTEGRATION
