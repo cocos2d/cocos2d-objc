@@ -40,6 +40,8 @@
 
 #pragma mark - CCLayer
 
+@class CCScene;
+
 typedef enum {
 	kCCTouchesAllAtOnce,
 	kCCTouchesOneByOne,
@@ -137,6 +139,9 @@ typedef enum {
 @property (nonatomic, assign) NSInteger keyboardPriority;
 
 #endif // mac
+
+/** Returns a scene containing an instance of this layer as its only child. */
++ (CCScene *)scene;
 
 @end
 
