@@ -92,6 +92,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fixed EventTests: memory leaks, dangling pointer and logic
 	Added support for gestures in OSX
 
+* rakkarage (https://github.com/rakkarage):
+	Fixed wrong log when using RGB565 textures
+
 * Ricardo Sánchez-Sáez (https://github.com/rsanchezsaez)
 	Added "stackable" support for Move Actions
 	Added Test case for stackable Move actions
