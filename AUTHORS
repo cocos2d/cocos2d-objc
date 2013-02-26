@@ -76,6 +76,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Mike Daley (http://www.71squared.com/)
 	LabelBMFont: contextSize honors shadows and strokes patch.
 
+* Nader Eloshaiker (https://github.com/nader-eloshaiker)
+	Added DrawSolidCircle, DrawArc and DrawSolidArc
+
 * Nestor Todorov (https://github.com/supernes)
 	Added patch to support iPhone5 support in FileUtils
 
