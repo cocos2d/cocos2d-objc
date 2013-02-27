@@ -10,8 +10,6 @@
 
 static int sceneIdx=-1;
 static NSString *tests[] = {
-	@"RenderTextureIssue1464",
-
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
 	@"RenderTextureIssue1464",
