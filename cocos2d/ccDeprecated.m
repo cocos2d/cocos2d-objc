@@ -198,6 +198,21 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
+@implementation CCMenuItem (Deprecated)
+// new: -(CGRect) activeArea;
+-(CGRect) rect
+{
+	NSAssert(NO, @"Use CCMenuItem # activeArea instead");
+	return CGRectZero;
+}
+
+-(void) setRect:(CGRect)rect
+{
+	NSAssert(NO, @"Use CCMenuItem # setActiveArea instead");
+}
+
+@end
+
 #pragma mark - MenuItemAtlasFont
 
 @implementation CCMenuItemAtlasFont (Deprecated)

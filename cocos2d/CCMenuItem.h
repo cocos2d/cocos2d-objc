@@ -59,8 +59,8 @@
  */
 @property (nonatomic) BOOL releaseBlockAtCleanup;
 
-/** the touch area (relative to the current position) */
-@property (nonatomic,assign) CGRect touchArea;
+/** the active area (relative to the current position) */
+@property (nonatomic,assign) CGRect activeArea;
 
 /** Creates a CCMenuItem with a target/selector.
  target/selector will be implemented using blocks.

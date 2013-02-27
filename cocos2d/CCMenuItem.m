@@ -47,7 +47,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @synthesize isSelected=_isSelected;
 @synthesize releaseBlockAtCleanup=_releaseBlockAtCleanup;
-@synthesize touchArea=_touchArea;
+@synthesize activeArea=_activeArea;
 
 +(id) itemWithTarget:(id) r selector:(SEL) s
 {
@@ -98,7 +98,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
     [super setContentSize:contentSize];
     
     // Reset touch area to match the outside box
-    _touchArea = CGRectMake(0, 0, contentSize.width, contentSize.height);
+    _activeArea = CGRectMake(0, 0, contentSize.width, contentSize.height);
 }
 
 
