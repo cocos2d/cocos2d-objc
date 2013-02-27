@@ -535,4 +535,17 @@
 	return [image autorelease];
 }
 #endif // __CC_PLATFORM_IOS
+
+#pragma RenderTexture - Override
+
+-(CGSize) contentSize
+{
+	return _texture.contentSize;
+}
+
+-(void) setContentSize:(CGSize)size
+{
+	NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+}
+
 @end

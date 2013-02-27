@@ -724,7 +724,7 @@ Class restartAction()
 		CGSize s = [CCDirector sharedDirector].winSize;
 
 		/* Create the render texture */
-		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width/2 height:s.height/2 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 		_renderTexture = renderTexture;
 
 		[renderTexture setPosition:ccp(s.width/2, s.height/2)];
@@ -762,12 +762,15 @@ Class restartAction()
 
 - (void)update:(ccTime)dt
 {
-	  static float time = 0;
-	  float r = 80;
-	  _sprite1.position = ccp(cosf(time * 2) * r, sinf(time * 2) * r);
-	  _sprite2.position = ccp(sinf(time * 2) * r, cosf(time * 2) * r);
+	CGSize cs = _renderTexture.contentSize;
+	CGPoint p =  ccp(cs.width/2, cs.height/2);
 
-	  time += dt;
+	static float time = 0;
+	float r = 80;
+	_sprite1.position = ccp(cosf(time * 2) * r + p.x, sinf(time * 2) * r + p.y);
+	_sprite2.position = ccp(sinf(time * 2) * r + p.x, cosf(time * 2) * r + p.y);
+
+	time += dt;
 }
 
 -(NSString*) title
