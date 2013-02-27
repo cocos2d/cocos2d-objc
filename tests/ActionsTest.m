@@ -400,40 +400,40 @@ Class restartAction()
 	[grossini removeFromParentAndCleanup:YES];
 	[kathia removeFromParentAndCleanup:YES];
   
-  CGSize s = [CCDirector sharedDirector].winSize;
-  
+	CGSize s = [CCDirector sharedDirector].winSize;
+
 	CGSize boxSize = CGSizeMake(100.0f, 100.0f);
-  
+
 	CCLayerColor *box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
 	box.anchorPoint = ccp(0.5,0.5);
 	box.contentSize = boxSize;
-  box.ignoreAnchorPointForPosition = NO;
+	box.ignoreAnchorPointForPosition = NO;
 	box.position = ccp(s.width/2, s.height - 100 - box.contentSize.height/2);
 	[self addChild:box];
 	CCLabelTTF *label = [CCLabelTTF labelWithString:@"Standard cocos2d Skew" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp(s.width/2, s.height - 100 + label.contentSize.height)];
-  [self addChild:label];
+	[self addChild:label];
 	id actionTo = [CCSkewBy actionWithDuration:2 skewX:360 skewY:0];
 	id actionToBack = [CCSkewBy actionWithDuration:2 skewX:-360 skewY:0];
-  
+
 	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
-  
-  box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
+
+	box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
 	box.anchorPoint = ccp(0.5,0.5);
 	box.contentSize = boxSize;
-  box.ignoreAnchorPointForPosition = NO;
+	box.ignoreAnchorPointForPosition = NO;
 	box.position = ccp(s.width/2, s.height - 250 - box.contentSize.height/2);
 	[self addChild:box];
-  label = [CCLabelTTF labelWithString:@"Rotational Skew" fontName:@"Marker Felt" fontSize:16];
+	label = [CCLabelTTF labelWithString:@"Rotational Skew" fontName:@"Marker Felt" fontSize:16];
 	[label setPosition:ccp(s.width/2, s.height - 250 + label.contentSize.height/2)];
-  [self addChild:label];
-  actionTo = [CCRotateBy actionWithDuration:2 angleX:360 angleY:0];
-  actionToBack = [CCRotateBy actionWithDuration:2 angleX:-360 angleY:0];
+	[self addChild:label];
+	actionTo = [CCRotateBy actionWithDuration:2 angleX:360 angleY:0];
+	actionToBack = [CCRotateBy actionWithDuration:2 angleX:-360 angleY:0];
 	[box runAction:[CCSequence actions:actionTo, actionToBack, nil]];
 }
 -(NSString *) title
 {
-return @"Skew Comparison";
+	return @"Skew Comparison";
 }
 @end
 
