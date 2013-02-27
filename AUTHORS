@@ -38,6 +38,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fixed possible memory leak in RadialTransitions
 	Events in tratisions are disabled/enabled at onEnter/onExit. patch.
 
+* Glenna (https://github.com/glenna):
+	Fixed deprecations warnings on CCTexture2D
+
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
 	GLProgram: Better error reporting on link
