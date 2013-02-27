@@ -46,7 +46,7 @@ version 2.1-rc0	 28-Jan-2013
 . [FIX] FileUtils: Suffixes for iPhone5 are: "-iphone5" and "-iphone5hd", and not "-wide" and "-widehd"
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
-. [FIX] RenderTexture: Restures the Projection after using it.
+. [FIX] RenderTexture: Restures the Projection after using it (issue #1425)
 . [FIX] Particles: Adding or removing particles in runtime from an emitter works as expected
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
 . [3RD] JRSwizzle: is a submodule
