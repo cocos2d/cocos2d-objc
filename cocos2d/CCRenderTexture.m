@@ -148,6 +148,8 @@
 
 		// issue #937
 		[_sprite setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+		// issue #1464
+		[_sprite setOpacityModifyRGB:YES];
 
 		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
