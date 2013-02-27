@@ -76,6 +76,8 @@
 		2B44E5FA1633AE12000492D8 /* hole_effect.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F81633ADF4000492D8 /* hole_effect.png */; };
 		2B44E5FB1633AE12000492D8 /* hole_stencil.png in Resources */ = {isa = PBXBuildFile; fileRef = 2B44E5F91633ADF4000492D8 /* hole_stencil.png */; };
 		4AD3B96D159A558B002E68D1 /* tuffy_bold_italic-charmap.plist in Resources */ = {isa = PBXBuildFile; fileRef = A0F83F7E151CAAC900EBBFCB /* tuffy_bold_italic-charmap.plist */; };
+		A0002A5216DE82F6004BDF16 /* toucharea_menuitem_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = A0002A5016DE82F6004BDF16 /* toucharea_menuitem_selected.png */; };
+		A0002A5316DE82F6004BDF16 /* toucharea_menuitem.png in Resources */ = {isa = PBXBuildFile; fileRef = A0002A5116DE82F6004BDF16 /* toucharea_menuitem.png */; };
 		A009433515181C8D0029A5C6 /* A Damn Mess.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A21225EDD000DE0DA2 /* A Damn Mess.ttf */; };
 		A009433615181C8D0029A5C6 /* Abberancy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A31225EDD000DE0DA2 /* Abberancy.ttf */; };
 		A009433715181C8D0029A5C6 /* Abduction.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E076E7A41225EDD000DE0DA2 /* Abduction.ttf */; };
@@ -5533,6 +5535,8 @@
 		2B44E55616338743000492D8 /* ClippingNodeTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClippingNodeTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B44E5F81633ADF4000492D8 /* hole_effect.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_effect.png; sourceTree = "<group>"; };
 		2B44E5F91633ADF4000492D8 /* hole_stencil.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hole_stencil.png; sourceTree = "<group>"; };
+		A0002A5016DE82F6004BDF16 /* toucharea_menuitem_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toucharea_menuitem_selected.png; sourceTree = "<group>"; };
+		A0002A5116DE82F6004BDF16 /* toucharea_menuitem.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toucharea_menuitem.png; sourceTree = "<group>"; };
 		A009440015181C8D0029A5C6 /* MultithreadTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultithreadTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A009440315181D150029A5C6 /* MultithreadTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MultithreadTest.h; path = tests/MultithreadTest.h; sourceTree = "<group>"; };
 		A009440415181D150029A5C6 /* MultithreadTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MultithreadTest.m; path = tests/MultithreadTest.m; sourceTree = "<group>"; };
@@ -7105,6 +7109,8 @@
 		E076E7B71225EDD000DE0DA2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				A0002A5016DE82F6004BDF16 /* toucharea_menuitem_selected.png */,
+				A0002A5116DE82F6004BDF16 /* toucharea_menuitem.png */,
 				A0A6AD0716A7900000D9743D /* grossinis_sister1-testalpha_nopremult.pvr */,
 				A0A6AD0816A7900000D9743D /* grossinis_sister1-testalpha_premult.pvr */,
 				A014BDF615D0DCB7009479BB /* test_image_a8_v3.pvr */,
@@ -10641,6 +10647,8 @@
 				E076EB301225EFF200DE0DA2 /* MainMenu.xib in Resources */,
 				E05052B2122D5655005B74CB /* fps_images.png in Resources */,
 				E02A853F129F11BF00341C97 /* icon.icns in Resources */,
+				A0002A5216DE82F6004BDF16 /* toucharea_menuitem_selected.png in Resources */,
+				A0002A5316DE82F6004BDF16 /* toucharea_menuitem.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
