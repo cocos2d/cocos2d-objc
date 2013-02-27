@@ -192,8 +192,7 @@ enum {
 		if ( [item visible] && [item isEnabled] ) {
 
 			CGPoint local = [item convertToNodeSpace:touchLocation];
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
+			CGRect r = [item touchArea];
 
 			if( CGRectContainsPoint( r, local ) )
 				return item;
@@ -268,8 +267,7 @@ enum {
 
 			CGPoint local = [item convertToNodeSpace:location];
 
-			CGRect r = [item rect];
-			r.origin = CGPointZero;
+			CGRect r = [item touchArea];
 
 			if( CGRectContainsPoint( r, local ) )
 				return item;

@@ -47,6 +47,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 @synthesize isSelected=_isSelected;
 @synthesize releaseBlockAtCleanup=_releaseBlockAtCleanup;
+@synthesize touchArea=_touchArea;
 
 +(id) itemWithTarget:(id) r selector:(SEL) s
 {
@@ -93,6 +94,14 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	return self;
 }
 
+-(void) setContentSize:(CGSize)contentSize {
+    [super setContentSize:contentSize];
+    
+    // Reset touch area to match the outside box
+    _touchArea = CGRectMake(0, 0, contentSize.width, contentSize.height);
+}
+
+
 -(void) dealloc
 {
 	[_block release];
@@ -134,13 +143,6 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 -(BOOL) isEnabled
 {
     return _isEnabled;
-}
-
--(CGRect) rect
-{
-	return CGRectMake( _position.x - _contentSize.width*_anchorPoint.x,
-					  _position.y - _contentSize.height*_anchorPoint.y,
-					  _contentSize.width, _contentSize.height);
 }
 
 -(void) setBlock:(void(^)(id sender))block

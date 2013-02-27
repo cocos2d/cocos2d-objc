@@ -97,19 +97,26 @@ enum {
 			[[CCDirector sharedDirector] pushScene:scene];
 		}];
 		
+        // TouchArea Item
+		CCMenuItemFont *item8 = [CCMenuItemFont itemWithString:@"Touch area" block:^(id sender) {
+			CCScene *scene = [CCScene node];
+			[scene addChild:[TouchAreaTest node]];
+			[[CCDirector sharedDirector] pushScene:scene];
+		}];
+
 		// Font Item
 		[CCMenuItemFont setFontSize:30];
 		[CCMenuItemFont setFontName: @"Courier New"];
-		CCMenuItemFont *item8 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
+		CCMenuItemFont *item9 = [CCMenuItemFont itemWithString: @"Quit" block:^(id sender){
 			CC_DIRECTOR_END();
 		}];
 
 		id color_action = [CCTintBy actionWithDuration:0.5f red:0 green:-255 blue:-255];
 		id color_back = [color_action reverse];
 		id seq = [CCSequence actions:color_action, color_back, nil];
-		[item8 runAction:[CCRepeatForever actionWithAction:seq]];
+		[item9 runAction:[CCRepeatForever actionWithAction:seq]];
 
-		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, item7, item8, nil];
+		CCMenu *menu = [CCMenu menuWithItems: item1, item2, item3, item4, item5, item6, item7, item8, item9, nil];
 		[menu alignItemsVertically];
 
 
@@ -622,7 +629,26 @@ enum {
 
 @end
 
+@implementation TouchAreaTest
 
+-(id) init {
+    if(self = [super init]) {
+        CCMenuItem *item = [CCMenuItemImage itemWithNormalImage:@"toucharea_menuitem.png" selectedImage:@"toucharea_menuitem_selected.png" target:self selector:@selector(backCallback:)];
+        item.touchArea = CGRectMake(item.contentSize.width/4, item.contentSize.height/4, item.contentSize.width/2, item.contentSize.height/2);
+        CCMenu *menu = [CCMenu menuWithItems:item, nil];
+        [self addChild:menu];
+    }
+    return self;
+}
+
+-(void) backCallback: (id) sender
+{
+	CCScene *scene = [CCScene node];
+	[scene addChild:[LayerMainMenu node]];
+	[[CCDirector sharedDirector] replaceScene:scene];
+}
+
+@end
 
 // CLASS IMPLEMENTATIONS
 
