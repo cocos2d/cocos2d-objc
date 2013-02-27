@@ -6,6 +6,7 @@ version 2.1-rc1 - XX-Mar-2013
 . [FIX] Director: Only create the statsLabels if view is not nil
 . [FIX] GLProgram: If shader files are not found at init time, returns nil and log warning on console
 . [FIX] RenderTexture: returns correct value of contentSize
+			Internal sprite sets opacityModifyRGB=YES (issue #1464)
 . [FIX] Texture2D: Logs using RGB565 textures only if RGB565 is being used
 			Fixed deprecation warnings on iOS6 (issue #1467)
 . [3RD] JS Bindings: Updated to v0.6
