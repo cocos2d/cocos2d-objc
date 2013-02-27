@@ -65,7 +65,12 @@
 	
 	// Create an CCGLView with a RGB565 color buffer, and a depth buffer of 0-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
-								   pixelFormat:kEAGLColorFormatRGB565	//kEAGLColorFormatRGBA8
+#if TARGET_IPHONE_SIMULATOR
+								   pixelFormat:kEAGLColorFormatRGBA8
+#else
+								   pixelFormat:kEAGLColorFormatRGB565
+#endif
+						
 								   depthFormat:0	//GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:NO
 									sharegroup:nil
