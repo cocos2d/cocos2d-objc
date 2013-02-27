@@ -634,7 +634,7 @@ enum {
 -(id) init {
     if(self = [super init]) {
         CCMenuItem *item = [CCMenuItemImage itemWithNormalImage:@"toucharea_menuitem.png" selectedImage:@"toucharea_menuitem_selected.png" target:self selector:@selector(backCallback:)];
-        item.touchArea = CGRectMake(item.contentSize.width/4, item.contentSize.height/4, item.contentSize.width/2, item.contentSize.height/2);
+        item.activeArea = CGRectMake(item.contentSize.width/4, item.contentSize.height/4, item.contentSize.width/2, item.contentSize.height/2);
         CCMenu *menu = [CCMenu menuWithItems:item, nil];
         [self addChild:menu];
     }

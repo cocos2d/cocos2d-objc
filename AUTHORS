@@ -126,6 +126,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * SeanLin (http://www.cocos2d-x.org)
 	Xcode fixes to make SysTests work on iOS
 
+* Sébastien Dabet (https://github.com/sdabet)
+	Added activeArea to CCMenuItem
+
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
