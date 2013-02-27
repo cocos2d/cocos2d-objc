@@ -215,17 +215,47 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
     ///////////////////////////////////
     // CLEAR STENCIL BUFFER
     
-    // manually clear the stencil buffer by drawing a fullscreen rectangle on it
     // setup the stencil test func like this:
-    // for each pixel in the fullscreen rectangle
+    // for each pixel in the stencil buffer
     //     never draw it into the frame buffer
     //     if not in inverted mode: set the current layer value to 0 in the stencil buffer
     //     if in inverted mode: set the current layer value to 1 in the stencil buffer
+#if defined(__CC_PLATFORM_MAC)
+    // There is a bug in some ATI drivers where glStencilMask does not affect glClear.
+    // Draw a full screen rectangle to clear the stencil buffer.
     glStencilFunc(GL_NEVER, mask_layer, mask_layer);
     glStencilOp(!_inverted ? GL_ZERO : GL_REPLACE, GL_KEEP, GL_KEEP);
-    
-    // draw a fullscreen solid rectangle to clear the stencil buffer
-    ccDrawSolidRect(CGPointZero, ccpFromSize([[CCDirector sharedDirector] winSize]), ccc4f(1, 1, 1, 1));
+
+    int viewport[4];
+    glGetIntegerv(GL_VIEWPORT, viewport);
+
+    int x = viewport[0];
+    int y = viewport[1];
+    int width = viewport[2];
+    int height = viewport[3];
+
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+
+    kmMat4 orthoMatrix;
+    kmMat4OrthographicProjection(&orthoMatrix, x, width, y, height, -1, 1);
+    kmGLMultMatrix( &orthoMatrix );
+
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPushMatrix();
+    kmGLLoadIdentity();
+
+    ccDrawSolidRect(ccp(x, y), ccp(width, height), ccc4f(1, 1, 1, 1));
+
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    kmGLPopMatrix();
+#else
+    glClearStencil(!_inverted ? 0 : ~0);
+    glClear(GL_STENCIL_BUFFER_BIT);
+#endif
     
     ///////////////////////////////////
     // DRAW CLIPPING STENCIL

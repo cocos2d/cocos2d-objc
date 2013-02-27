@@ -64,6 +64,9 @@
 @interface ScrollViewDemo : BaseClippingNodeTest
 @end
 
+@interface NegativeCoordinateTest : BaseClippingNodeTest
+@end
+
 #if COCOS2D_DEBUG > 1
 
 @interface RawStencilBufferTest : BaseClippingNodeTest

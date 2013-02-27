@@ -33,6 +33,7 @@ static NSString *transitions[] = {
     @"SpriteNoAlphaTest",
 	@"SpriteInvertedTest",
     @"NestedTest",
+    @"NegativeCoordinateTest",
 #if COCOS2D_DEBUG > 1
 	@"RawStencilBufferTest",
     @"RawStencilBufferTest2",
@@ -661,6 +662,44 @@ Class restartAction()
 }
 
 #endif
+
+@end
+
+#pragma mark - NegativeCoordinateTest
+
+@implementation NegativeCoordinateTest
+
+-(NSString*) title
+{
+	return @"Negative Coordinate Test";
+}
+
+-(NSString*) subtitle
+{
+	return @"Rotating square should be cut out of center";
+}
+
+- (void)setup
+{
+    CCLayerColor *stencil = [CCLayerColor layerWithColor:ccc4(0, 0, 0, 255) width:50 height:50];
+    stencil.position = ccp(-25, -25);
+    CCLayerColor *square = [CCLayerColor layerWithColor:ccc4(255, 255, 255, 255) width:100 height:100];
+    square.position = ccp(-50, -50);
+
+    CCClippingNode *clipper = [CCClippingNode clippingNode];
+    clipper.position = ccp(0, 0);
+    clipper.stencil = stencil;
+    clipper.inverted = YES;
+    [clipper addChild:square];
+
+    CCNode *parent = [CCNode node];
+    parent.position = ccp(self.contentSize.width / 2, self.contentSize.height / 2);
+
+    [parent addChild:clipper];
+    [self addChild: parent];
+
+    [stencil runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:1 angle:90]]];
+}
 
 @end
 
