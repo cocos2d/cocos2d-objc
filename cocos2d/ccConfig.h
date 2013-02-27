@@ -37,10 +37,15 @@
  */
 #ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
 #define CC_ENABLE_CHIPMUNK_INTEGRATION 0
+#endif
 
-// If you are using Objective-Chipmunk/ChipmunkPro, you'll need to change this to "ObjectiveChipmunk.h"
+/** @def CC_CHIPMUNK_IMPORT
+ Which file to import if using Chipmunk.
+ Change it to "ObjectiveChipmunk.h" or define it as a preprocessor macro if you are using ObjectiveChipmunk.
+ @since v2.1
+ */
+#if CC_ENABLE_CHIPMUNK_INTEGRATION && !defined(CC_CHIPMUNK_IMPORT)
 #define CC_CHIPMUNK_IMPORT "chipmunk.h"
-//#define CC_CHIPMUNK_IMPORT "ObjectiveChipmunk.h"
 #endif
 
 /** @def CC_ENABLE_BOX2D_INTEGRATION
