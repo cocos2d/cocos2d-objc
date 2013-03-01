@@ -394,6 +394,11 @@ enum {
  */
 -(CCNode*) getChildByTag:(NSInteger) tag;
 
+/** Recursively gets a child from the container given its tag
+ @return returns a CCNode object
+ */
+-(CCNode*) getChildByTagRecursive:(NSInteger) tag;
+
 /** Reorders a child according to a new z value.
  * The child MUST be already added.
  */

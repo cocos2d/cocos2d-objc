@@ -345,6 +345,20 @@ static NSUInteger globalOrderOfArrival = 1;
 	return nil;
 }
 
+-(CCNode*) getChildByTagRecursive:(NSInteger) aTag
+{
+	CCNode* result = [self getChildByTag:aTag];
+ 
+	if(result == nil) {
+		for(CCNode* child in [self children]) {
+			result = [child getChildByTagRecursive:aTag];
+			if(result != nil) break;
+		}
+	}
+ 
+	return result;
+}
+
 /* "add" logic MUST only be on this method
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
