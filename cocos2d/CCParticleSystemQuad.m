@@ -38,6 +38,7 @@
 #import "CCTextureCache.h"
 #import "ccMacros.h"
 #import "CCSpriteFrame.h"
+#import "CCSpriteFrameCache.h"
 #import "CCDirector.h"
 #import "CCShaderCache.h"
 #import "ccGLStateCache.h"
@@ -49,6 +50,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 #import "Support/NSThread+performBlock.h"
+#import "Support/CCFileUtils.h"
 
 // extern
 #import "kazmath/GL/matrix.h"
@@ -59,6 +61,30 @@
 @end
 
 @implementation CCParticleSystemQuad
+
+// overriding the init method
+-(id) initWithFile:(NSString *)plistFile
+{
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:plistFile];
+	NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:path];
+	
+	NSAssert( dict != nil, @"Particles: file not found");
+	
+	// look in CCSpriteFrameCache for texture in sprite sheet
+	NSString *textureFileName = [dict valueForKey:@"textureFileName"];
+	CCSpriteFrame *spriteFrame = nil;
+	
+	if (textureFileName && (spriteFrame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:textureFileName]) && !spriteFrame.rotated) {
+		NSMutableDictionary *redirectDict = [[dict mutableCopy] autorelease];
+		[redirectDict setValue:spriteFrame.textureFilename forKey:@"textureFileName"];
+		
+		// base initialization with redirected texture file name, then tex coords rect init from sprite frame
+		if ((self = [super initWithDictionary:redirectDict]))
+			[self initTexCoordsWithRect:spriteFrame.rect];
+		return self;
+	} else
+		return [super initWithDictionary:dict];
+}
 
 // overriding the init method
 -(id) initWithTotalParticles:(NSUInteger) numberOfParticles
