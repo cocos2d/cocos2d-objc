@@ -205,8 +205,10 @@ typedef void (*GLLogFunction) (GLuint program,
 	_uniforms[kCCUniformTime] = glGetUniformLocation(_program, kCCUniformTime_s);
 	_uniforms[kCCUniformSinTime] = glGetUniformLocation(_program, kCCUniformSinTime_s);
 	_uniforms[kCCUniformCosTime] = glGetUniformLocation(_program, kCCUniformCosTime_s);
-	
-	_usesTime = (
+
+	_flags.usesMVP = _uniforms[kCCUniformMVPMatrix] != -1;
+	_flags.usesMV = (_uniforms[kCCUniformMVMatrix] != -1 && _uniforms[kCCUniformPMatrix] != -1 );
+	_flags.usesTime = (
 		_uniforms[kCCUniformTime] != -1 ||
 		_uniforms[kCCUniformSinTime] != -1 ||
 		_uniforms[kCCUniformCosTime] != -1
@@ -424,18 +426,22 @@ typedef void (*GLLogFunction) (GLuint program,
 {
 	kmMat4 matrixP;
 	kmMat4 matrixMV;
-	kmMat4 matrixMVP;
-	
+
 	kmGLGetMatrix(KM_GL_PROJECTION, &matrixP );
 	kmGLGetMatrix(KM_GL_MODELVIEW, &matrixMV );
 	
-	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
-	
-	[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.mat count:1];
-	[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.mat count:1];
-	[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
-	
-	if(_usesTime){
+	if( _flags.usesMVP) {
+		kmMat4 matrixMVP;
+		kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
+		[self setUniformLocation:_uniforms[kCCUniformMVPMatrix] withMatrix4fv:matrixMVP.mat count:1];
+	}
+
+	if( _flags.usesMV) {
+		[self setUniformLocation:_uniforms[  kCCUniformPMatrix] withMatrix4fv:  matrixP.mat count:1];
+		[self setUniformLocation:_uniforms[ kCCUniformMVMatrix] withMatrix4fv: matrixMV.mat count:1];
+	}
+
+	if(_flags.usesTime){
 		CCDirector *director = [CCDirector sharedDirector];
 		// This doesn't give the most accurate global time value.
 		// Cocos2D doesn't store a high precision time value, so this will have to do.

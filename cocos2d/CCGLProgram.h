@@ -96,7 +96,12 @@ struct _hashUniformEntry;
 					_fragShader;
 
 	GLint			_uniforms[kCCUniform_MAX];
-	BOOL			_usesTime;
+
+	struct {
+        unsigned int usesTime:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+    } _flags;
 }
 
 @property(nonatomic, readonly) GLuint program;
