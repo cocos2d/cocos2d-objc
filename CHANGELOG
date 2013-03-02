@@ -2,6 +2,7 @@ version 2.1-rc1 - XX-Mar-2013
 . [NEW] DrawingPrimitives: Added DrawSolidCircle, DrawArc, DrawSolidArc (issue #1465)
 . [NEW] GLProgram: Added 2 class methods to create the instance
 . [NEW] MenuItem: rect -> renamed activeArea. If contentSize is modified, activeArea is modified too
+. [PRF] Uniforms: small performance improvement when setting uniforms
 . [FIX] ClippingNode: Uses glClear to clear the stencil buffer (issue #1463)
 . [FIX] Director: Only create the statsLabels if view is not nil
 . [FIX] GLProgram: If shader files are not found at init time, returns nil and log warning on console
