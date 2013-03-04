@@ -187,7 +187,7 @@
 @implementation CCEaseExponentialIn
 -(void) update: (ccTime) t
 {
-	[_inner update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) - 1 * 0.001f];
+	[_inner update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) /* - 1 * 0.001f */];
 }
 
 - (CCActionInterval*) reverse
@@ -217,11 +217,14 @@
 @implementation CCEaseExponentialInOut
 -(void) update: (ccTime) t
 {
-	t /= 0.5f;
-	if (t < 1)
-		t = 0.5f * powf(2, 10 * (t - 1));
-	else
-		t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
+	// prevents rouding errors
+	if( t != 1 && t != 0 ) {
+		t *= 2;
+		if (t < 1)
+			t = 0.5f * powf(2, 10 * (t - 1));
+		else
+			t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
+	}
 
 	[_inner update:t];
 }
@@ -435,7 +438,11 @@
 
 -(void) update: (ccTime) t
 {
-	ccTime newT = 1 - [self bounceTime:1-t];
+	ccTime newT = t;
+	// prevents rounding errors
+	if( t !=0 && t!=1)
+		newT = 1 - [self bounceTime:1-t];
+
 	[_inner update:newT];
 }
 
@@ -450,7 +457,11 @@
 
 -(void) update: (ccTime) t
 {
-	ccTime newT = [self bounceTime:t];
+	ccTime newT = t;
+	// prevents rounding errors
+	if( t !=0 && t!=1)
+		newT = [self bounceTime:t];
+
 	[_inner update:newT];
 }
 
@@ -465,8 +476,11 @@
 
 -(void) update: (ccTime) t
 {
-	ccTime newT = 0;
-	if (t < 0.5) {
+	ccTime newT;
+	// prevents possible rounding errors
+	if( t ==0 || t==1)
+		newT = t;
+	else if (t < 0.5) {
 		t = t * 2;
 		newT = (1 - [self bounceTime:1-t] ) * 0.5f;
 	} else
