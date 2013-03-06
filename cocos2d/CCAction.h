@@ -39,9 +39,9 @@ enum {
  */
 @interface CCAction : NSObject <NSCopying>
 {
-	id			originalTarget_;
-	id			target_;
-	NSInteger	tag_;
+	id			_originalTarget;
+	id			_target;
+	NSInteger	_tag;
 }
 
 /** The "target". The action will modify the target properties.
@@ -91,12 +91,12 @@ enum {
  Possible actions:
    - An action with a duration of 0 seconds
    - An action with a duration of 35.5 seconds
- Infitite time actions are valid
+ Infinite time actions are valid
  */
 @interface CCFiniteTimeAction : CCAction <NSCopying>
 {
 	//! duration in seconds
-	ccTime duration_;
+	ccTime _duration;
 }
 //! duration in seconds of the action
 @property (nonatomic,readwrite) ccTime duration;
@@ -109,11 +109,11 @@ enum {
 @class CCActionInterval;
 /** Repeats an action for ever.
  To repeat the an action for a limited number of times use the Repeat action.
- @warning This action can't be Sequenceable because it is not an IntervalAction
+ @warning This action can't be Sequence-able because it is not an IntervalAction
  */
 @interface CCRepeatForever : CCAction <NSCopying>
 {
-	CCActionInterval *innerAction_;
+	CCActionInterval *_innerAction;
 }
 /** Inner action */
 @property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
@@ -127,22 +127,22 @@ enum {
 /** Changes the speed of an action, making it take longer (speed<1)
  or less (speed>1) time.
  Useful to simulate 'slow motion' or 'fast forward' effect.
- @warning This action can't be Sequenceable because it is not an CCIntervalAction
+ @warning This action can't be Sequence-able because it is not an CCIntervalAction
  */
 @interface CCSpeed : CCAction <NSCopying>
 {
-	CCActionInterval	*innerAction_;
-	float speed_;
+	CCActionInterval	*_innerAction;
+	CGFloat _speed;
 }
 /** alter the speed of the inner function in runtime */
-@property (nonatomic,readwrite) float speed;
+@property (nonatomic,readwrite) CGFloat speed;
 /** Inner action of CCSpeed */
 @property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
 
 /** creates the action */
-+(id) actionWithAction: (CCActionInterval*) action speed:(float)value;
++(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;
 /** initializes the action */
--(id) initWithAction: (CCActionInterval*) action speed:(float)value;
+-(id) initWithAction: (CCActionInterval*) action speed:(CGFloat)value;
 @end
 
 @class CCNode;
@@ -157,23 +157,23 @@ enum {
 @interface CCFollow : CCAction <NSCopying>
 {
 	/* node to follow */
-	CCNode	*followedNode_;
+	CCNode	*_followedNode;
 
 	/* whether camera should be limited to certain area */
-	BOOL boundarySet;
+	BOOL _boundarySet;
 
-	/* if screensize is bigger than the boundary - update not needed */
-	BOOL boundaryFullyCovered;
+	/* if screen-size is bigger than the boundary - update not needed */
+	BOOL _boundaryFullyCovered;
 
 	/* fast access to the screen dimensions */
-	CGPoint halfScreenSize;
-	CGPoint fullScreenSize;
+	CGPoint _halfScreenSize;
+	CGPoint _fullScreenSize;
 
 	/* world boundaries */
-	float leftBoundary;
-	float rightBoundary;
-	float topBoundary;
-	float bottomBoundary;
+	float _leftBoundary;
+	float _rightBoundary;
+	float _topBoundary;
+	float _bottomBoundary;
 }
 
 /** alter behavior - turn on/off boundary */

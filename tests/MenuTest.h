@@ -41,3 +41,13 @@
 {
 }
 @end
+
+@interface BugsTest : CCLayer
+{
+}
+@end
+
+@interface TouchAreaTest : CCLayer
+{
+}
+@end

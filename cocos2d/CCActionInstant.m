@@ -40,7 +40,7 @@
 -(id) init
 {
 	if( (self=[super init]) )
-		duration_ = 0;
+		_duration = 0;
 
 	return self;
 }
@@ -80,7 +80,7 @@
 @implementation CCShow
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = YES;
+	((CCNode *)_target).visible = YES;
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -97,7 +97,7 @@
 @implementation CCHide
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = NO;
+	((CCNode *)_target).visible = NO;
 }
 
 -(CCFiniteTimeAction*) reverse
@@ -114,7 +114,7 @@
 @implementation CCToggleVisibility
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).visible = !((CCNode *)target_).visible;
+	((CCNode *)_target).visible = !((CCNode *)_target).visible;
 }
 @end
 
@@ -132,24 +132,24 @@
 -(id) initWithFlipX:(BOOL)x
 {
 	if(( self=[super init]))
-		flipX = x;
+		_flipX = x;
 
 	return self;
 }
 
 -(void) update:(ccTime)time
 {
-	[(CCSprite*)target_ setFlipX:flipX];
+	[(CCSprite*)_target setFlipX:_flipX];
 }
 
 -(CCFiniteTimeAction*) reverse
 {
-	return [CCFlipX actionWithFlipX:!flipX];
+	return [CCFlipX actionWithFlipX:!_flipX];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipX:flipX];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipX:_flipX];
 	return copy;
 }
 @end
@@ -168,24 +168,24 @@
 -(id) initWithFlipY:(BOOL)y
 {
 	if(( self=[super init]))
-		flipY = y;
+		_flipY = y;
 
 	return self;
 }
 
 -(void) update:(ccTime)time
 {
-	[(CCSprite*)target_ setFlipY:flipY];
+	[(CCSprite*)_target setFlipY:_flipY];
 }
 
 -(CCFiniteTimeAction*) reverse
 {
-	return [CCFlipY actionWithFlipY:!flipY];
+	return [CCFlipY actionWithFlipY:!_flipY];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipY:flipY];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithFlipY:_flipY];
 	return copy;
 }
 @end
@@ -205,20 +205,20 @@
 -(id) initWithPosition: (CGPoint) pos
 {
 	if( (self=[super init]) )
-		position = pos;
+		_position = pos;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: position];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithPosition: _position];
 	return copy;
 }
 
 -(void) update:(ccTime)time
 {
-	((CCNode *)target_).position = position;
+	((CCNode *)_target).position = _position;
 }
 
 @end
@@ -230,7 +230,7 @@
 
 @implementation CCCallFunc
 
-@synthesize targetCallback = targetCallback_;
+@synthesize targetCallback = _targetCallback;
 
 +(id) actionWithTarget: (id) t selector:(SEL) s
 {
@@ -241,7 +241,7 @@
 {
 	if( (self=[super init]) ) {
 		self.targetCallback = t;
-		selector_ = s;
+		_selector = s;
 	}
 	return self;
 }
@@ -251,20 +251,20 @@
 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld | selector = %@>",
 			[self class],
 			self,
-			(long)tag_,
-			NSStringFromSelector(selector_)
+			(long)_tag,
+			NSStringFromSelector(_selector)
 			];
 }
 
 -(void) dealloc
 {
-	[targetCallback_ release];
+	[_targetCallback release];
 	[super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector];
 	return copy;
 }
 
@@ -275,7 +275,7 @@
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_];
+	[_targetCallback performSelector:_selector];
 }
 @end
 
@@ -288,7 +288,7 @@
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_ withObject:target_];
+	[_targetCallback performSelector:_selector withObject:_target];
 }
 @end
 
@@ -299,7 +299,7 @@
 
 @implementation CCCallFuncND
 
-@synthesize callbackMethod = callbackMethod_;
+@synthesize callbackMethod = _callbackMethod;
 
 +(id) actionWithTarget:(id)t selector:(SEL)s data:(void*)d
 {
@@ -309,20 +309,20 @@
 -(id) initWithTarget:(id)t selector:(SEL)s data:(void*)d
 {
 	if( (self=[super initWithTarget:t selector:s]) ) {
-		data_ = d;
+		_data = d;
 
 #if COCOS2D_DEBUG
 		NSMethodSignature * sig = [t methodSignatureForSelector:s]; // added
 		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void)name:(id)sender data:(void*)data");
 #endif
-		callbackMethod_ = (CC_CALLBACK_ND) [t methodForSelector:s];
+		_callbackMethod = (CC_CALLBACK_ND) [t methodForSelector:s];
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ data:data_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector data:_data];
 	return copy;
 }
 
@@ -334,12 +334,12 @@
 
 -(void) execute
 {
-	callbackMethod_(targetCallback_,selector_,target_, data_);
+	_callbackMethod(_targetCallback,_selector,_target, _data);
 }
 @end
 
 @implementation CCCallFuncO
-@synthesize  object = object_;
+@synthesize  object = _object;
 
 +(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object
 {
@@ -356,20 +356,20 @@
 
 - (void) dealloc
 {
-	[object_ release];
+	[_object release];
 	[super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:targetCallback_ selector:selector_ object:object_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector object:_object];
 	return copy;
 }
 
 
 -(void) execute
 {
-	[targetCallback_ performSelector:selector_ withObject:object_];
+	[_targetCallback performSelector:_selector withObject:_object];
 }
 
 @end
@@ -390,14 +390,14 @@
 -(id) initWithBlock:(void(^)())block
 {
 	if ((self = [super init]))
-		block_ = [block copy];
+		_block = [block copy];
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:_block];
 	return copy;
 }
 
@@ -408,12 +408,12 @@
 
 -(void) execute
 {
-	block_();
+	_block();
 }
 
 -(void) dealloc
 {
-	[block_ release];
+	[_block release];
 	[super dealloc];
 }
 
@@ -431,14 +431,14 @@
 -(id) initWithBlock:(void(^)(CCNode *node))block
 {
 	if ((self = [super init]))
-		block_ = [block copy];
+		_block = [block copy];
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:_block];
 	return copy;
 }
 
@@ -449,12 +449,12 @@
 
 -(void) execute
 {
-	block_(target_);
+	_block(_target);
 }
 
 -(void) dealloc
 {
-	[block_ release];
+	[_block release];
 	[super dealloc];
 }
 
@@ -464,7 +464,7 @@
 
 @implementation CCCallBlockO
 
-@synthesize object=object_;
+@synthesize object=_object;
 
 +(id) actionWithBlock:(void(^)(id object))block object:(id)object
 {
@@ -474,8 +474,8 @@
 -(id) initWithBlock:(void(^)(id object))block object:(id)object
 {
 	if ((self = [super init])) {
-		block_ = [block copy];
-		object_ = [object retain];
+		_block = [block copy];
+		_object = [object retain];
 	}
 
 	return self;
@@ -483,7 +483,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:block_];
+	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:_block];
 	return copy;
 }
 
@@ -494,13 +494,13 @@
 
 -(void) execute
 {
-	block_(object_);
+	_block(_object);
 }
 
 -(void) dealloc
 {
-	[object_ release];
-	[block_ release];
+	[_object release];
+	[_block release];
 
 	[super dealloc];
 }

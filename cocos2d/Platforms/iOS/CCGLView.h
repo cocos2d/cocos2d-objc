@@ -90,26 +90,41 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //CLASS INTERFACE:
 
 /** CCGLView Class.
- * This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
- * The view content is basically an EAGL surface you render your OpenGL scene into.
- * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
+ This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
+ The view content is basically an EAGL surface you render your OpenGL scene into.
+ Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
+
+ Parameters:
+
+ - viewWithFrame: size of the OpenGL view. For full screen use [_window bounds]
+	- Possible values: any CGRect
+ - pixelFormat: Format of the render buffer. Use RGBA8 for better color precision (eg: gradients). But it takes more memory and it is slower
+	- Possible values: kEAGLColorFormatRGBA8, kEAGLColorFormatRGB565
+ - depthFormat: Use stencil if you plan to use CCClippingNode. Use Depth if you plan to use 3D effects, like CCCamera or CCNode#vertexZ
+	- Possible values: 0, GL_DEPTH_COMPONENT24_OES, GL_DEPTH24_STENCIL8_OES
+ - sharegroup: OpenGL sharegroup. Useful if you want to share the same OpenGL context between different threads
+	- Possible values: nil, or any valid EAGLSharegroup group
+ - multiSampling: Whether or not to enable multisampling
+	- Possible values: YES, NO
+ - numberOfSamples: Only valid if multisampling is enabled
+	- Possible values: 0 to glGetIntegerv(GL_MAX_SAMPLES_APPLE)
  */
 @interface CCGLView : UIView
 {
-    id<CCESRenderer>		renderer_;
-	EAGLContext				*context_; // weak ref
+    id<CCESRenderer>		_renderer;
+	EAGLContext				*_context; // weak ref
 
-	NSString				*pixelformat_;
-	GLuint					depthFormat_;
-	BOOL					preserveBackbuffer_;
+	NSString				*_pixelformat;
+	GLuint					_depthFormat;
+	BOOL					_preserveBackbuffer;
 
-	CGSize					size_;
-	BOOL					discardFramebufferSupported_;
-	id<CCTouchDelegate>		touchDelegate_;
+	CGSize					_size;
+	BOOL					_discardFramebufferSupported;
+	id<CCTouchDelegate>		_touchDelegate;
 
 	//fsaa addition
-	BOOL					multisampling_;
-	unsigned int			requestedSamples_;
+	BOOL					_multisampling;
+	unsigned int			_requestedSamples;
 }
 
 /** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */

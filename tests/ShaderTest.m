@@ -21,6 +21,7 @@ static NSString *transitions[] = {
 	@"ShaderPlasma",
 	@"ShaderBlur",
 	@"ShaderRetroEffect",
+	@"ShaderFail",
 };
 
 Class nextAction()
@@ -130,7 +131,7 @@ Class restartAction()
 	ccVertex2F	center_;
 	ccVertex2F	resolution_;
 	float		time_;
-	GLuint		uniformCenter, uniformResolution, uniformTime;
+	GLuint		uniformCenter, uniformResolution;
 }
 
 +(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag;
@@ -178,9 +179,8 @@ enum {
 
 	[shader updateUniforms];
 
-	uniformCenter = glGetUniformLocation( shader->program_, "center");
-	uniformResolution = glGetUniformLocation( shader->program_, "resolution");
-	uniformTime = glGetUniformLocation( shader->program_, "time");
+	uniformCenter = glGetUniformLocation( shader.program, "center");
+	uniformResolution = glGetUniformLocation( shader.program, "resolution");
 
 	self.shaderProgram = shader;
 
@@ -195,7 +195,8 @@ enum {
 -(void) setPosition:(CGPoint)newPosition
 {
 	[super setPosition:newPosition];
-	center_ = (ccVertex2F) { position_.x * CC_CONTENT_SCALE_FACTOR(), position_.y * CC_CONTENT_SCALE_FACTOR() };
+	CGPoint pos = self.position;
+	center_ = (ccVertex2F) { pos.x * CC_CONTENT_SCALE_FACTOR(), pos.y * CC_CONTENT_SCALE_FACTOR() };
 }
 
 -(void) draw
@@ -208,12 +209,8 @@ enum {
 	//
 	// Uniforms
 	//
-	[shaderProgram_ setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
-	[shaderProgram_ setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
-
-	// time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-	glUniform1f( uniformTime, time_ );
-//	[shaderProgram_ setUniformLocation:uniformTime with1f:time_];
+	[self.shaderProgram setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
+	[self.shaderProgram setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );
@@ -425,33 +422,33 @@ enum {
 {
 	if( (self=[super initWithTexture:texture rect:rect]) ) {
 
-		CGSize s = [texture_ contentSizeInPixels];
+		CGSize s = [self.texture contentSizeInPixels];
 
 		blur_ = ccp(1/s.width, 1/s.height);
 		sub_[0] = sub_[1] = sub_[2] = sub_[3] = 0;
 
-		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
-		shaderProgram_ = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:@"example_Blur.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		self.shaderProgram = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTextureColor_vert fragmentShaderByteArray:fragSource];
 
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
-		[shaderProgram_ addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
-		[shaderProgram_ addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+		[self.shaderProgram addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[self.shaderProgram addAttribute:kCCAttributeNameColor index:kCCVertexAttrib_Color];
+		[self.shaderProgram addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ link];
+		[self.shaderProgram link];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		[shaderProgram_ updateUniforms];
+		[self.shaderProgram updateUniforms];
 
 		CHECK_GL_ERROR_DEBUG();
 
-		subLocation = glGetUniformLocation( shaderProgram_->program_, "substract");
-		blurLocation = glGetUniformLocation( shaderProgram_->program_, "blurSize");
+		subLocation = glGetUniformLocation( self.shaderProgram.program, "substract");
+		blurLocation = glGetUniformLocation( self.shaderProgram.program, "blurSize");
 
 		CHECK_GL_ERROR_DEBUG();
 	}
@@ -462,20 +459,21 @@ enum {
 -(void) draw
 {
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccBlendFunc blend = self.blendFunc;
+	ccGLBlendFunc( blend.src, blend.dst );
 
-	[shaderProgram_ use];
-	[shaderProgram_ setUniformForModelViewProjectionMatrix];
-	[shaderProgram_ setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
-	[shaderProgram_ setUniformLocation:subLocation with4fv:sub_ count:1];
+	[self.shaderProgram use];
+	[self.shaderProgram setUniformsForBuiltins];
+	[self.shaderProgram setUniformLocation:blurLocation withF1:blur_.x f2:blur_.y];
+	[self.shaderProgram setUniformLocation:subLocation with4fv:sub_ count:1];
 
-	ccGLBindTexture2D(  [texture_ name] );
+	ccGLBindTexture2D(  [self.texture name] );
 
 	//
 	// Attributes
 	//
-#define kQuadSize sizeof(quad_.bl)
-	long offset = (long)&quad_;
+#define kQuadSize sizeof(_quad.bl)
+	long offset = (long)&_quad;
 
 	// vertex
 	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
@@ -497,7 +495,7 @@ enum {
 
 -(void) setBlurSize:(CGFloat)f
 {
-	CGSize s = [texture_ contentSizeInPixels];
+	CGSize s = [self.texture contentSizeInPixels];
 
 	blur_ = ccp(1/s.width, 1/s.height);
 	blur_ = ccpMult(blur_,f);
@@ -620,15 +618,14 @@ enum {
 }
 @end
 
-#pragma mark -
-#pragma mark ShaderRetroEffect
+#pragma mark - ShaderRetroEffect
 
 @implementation ShaderRetroEffect
 -(id) init
 {
 	if( (self=[super init] ) ) {
 		
-		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"example_HorizontalColor.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
+		GLchar * fragSource = (GLchar*) [[NSString stringWithContentsOfFile:[[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:@"example_HorizontalColor.fsh"] encoding:NSUTF8StringEncoding error:nil] UTF8String];
 		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert fragmentShaderByteArray:fragSource];
 		
 		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
@@ -692,6 +689,65 @@ enum {
 }
 @end
 
+#pragma mark - ShaderFail
+
+const GLchar *shader_frag_fail = "\n\
+#ifdef GL_ES					\n\
+precision lowp float;			\n\
+#endif							\n\
+										\n\
+varying vec2 v_texCoord;				\n\
+uniform sampler2D CC_Texture0;			\n\
+										\n\
+vec4 colors[10];						\n\
+										\n\
+void main(void)								\n\
+{											\n\
+	colors[0] = vec4(1,0,0,1);				\n\
+	colors[1] = vec4(0,1,0,1);				\n\
+	colors[2] = vec4(0,0,1,1);				\n\
+	colors[3] = vec4(0,1,1,1);				\n\
+	colors[4] = vec4(1,0,1,1);				\n\
+	colors[5] = vec4(1,1,0,1);				\n\
+	colors[6] = vec4(1,1,1,1);				\n\
+	colors[7] = vec4(1,0.5,0,1);			\n\
+	colors[8] = vec4(1,0.5,0.5,1);			\n\
+	colors[9] = vec4(0.5,0.5,1,1);			\n\
+																			\n\
+	int y = int( mod(gl_FragCoord.y / 3.0, 10.0 ) );						\n\
+	gl_FragColor = colors[z] * texture2D(CC_Texture0, v_texCoord);			\n\
+}																			\n\
+\n";
+
+@implementation ShaderFail
+-(id) init
+{
+	if( (self=[super init] ) ) {
+		
+		CCGLProgram *p = [[CCGLProgram alloc] initWithVertexShaderByteArray:ccPositionTexture_vert fragmentShaderByteArray:shader_frag_fail];
+		
+		[p addAttribute:kCCAttributeNamePosition index:kCCVertexAttrib_Position];
+		[p addAttribute:kCCAttributeNameTexCoord index:kCCVertexAttrib_TexCoords];
+		
+		[p link];
+		[p updateUniforms];
+		[p release];
+	}
+	
+	return self;
+}
+
+-(NSString *) title
+{
+	return @"Shader: Invalid shader";
+}
+
+-(NSString *) subtitle
+{
+	return @"See console for output with useful error log";
+}
+@end
+
 
 // CLASS IMPLEMENTATIONS
 #ifdef __CC_PLATFORM_IOS
@@ -711,15 +767,22 @@ enum {
 	// Turn on display FPS
 	[director_ setDisplayStats:YES];
 
-
-	CCScene *scene = [CCScene node];
-	
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene:scene];
+	}
+}
+
 @end
 
 #elif defined(__CC_PLATFORM_MAC)

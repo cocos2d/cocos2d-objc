@@ -62,6 +62,14 @@
 - (void)touchesEndedWithEvent:(NSEvent *)event;
 - (void)touchesCancelledWithEvent:(NSEvent *)event;
 
+// Gestures
+- (void)beginGestureWithEvent:(NSEvent *)event;
+- (void)magnifyWithEvent:(NSEvent *)event;
+- (void)smartMagnifyWithEvent:(NSEvent *)event;
+- (void)rotateWithEvent:(NSEvent *)event;
+- (void)swipeWithEvent:(NSEvent *)event;
+- (void)endGestureWithEvent:(NSEvent *)event;
+
 @end
 
 /** CCGLView
@@ -69,7 +77,7 @@
  Only available for Mac OS X
  */
 @interface CCGLView : NSOpenGLView {
-	id<CCEventDelegate> eventDelegate_;
+	id<CCEventDelegate> _eventDelegate;
 }
 
 /** Event delegate */

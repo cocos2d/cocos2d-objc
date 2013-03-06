@@ -7,6 +7,36 @@
 
 @implementation CCNode (PerformanceTest)
 
+- (void)performanceMoveByActions
+{
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
+
+	float moveDuration = 0.5f + (random() % 1000) / 500.0f;
+    CGPoint moveDestination = ccp(-100 + random()%200, -100 + random()%200);
+
+	CCActionInterval *move = [CCMoveBy actionWithDuration:moveDuration position:moveDestination];
+	CCAction *permanentMove = [CCRepeatForever actionWithAction:[CCSequence actionOne:move two:[move reverse]]];
+	[self runAction:permanentMove];
+}
+
+- (void)performanceMoveToActions
+{
+	CGSize size = [[CCDirector sharedDirector] winSize];
+	self.position = ccp(random() % (int)size.width, random() % (int)size.height);
+    CGPoint moveDestination = ccp(random() % (int)size.width, random() % (int)size.height);
+
+	float moveDuration = 0.5f + (random() % 1000) / 500.0f;
+	CCActionInterval *move = [CCMoveTo actionWithDuration:moveDuration
+                                                 position:moveDestination];
+	CCActionInterval *moveBack = [CCMoveTo actionWithDuration:moveDuration
+                                                     position:self.position];
+	CCAction *permanentMove = [CCRepeatForever actionWithAction:
+                               [CCSequence actionOne:move
+                                                 two:moveBack]];
+	[self runAction:permanentMove];
+}
+
 - (void)performanceActions
 {
 	CGSize size = [[CCDirector sharedDirector] winSize];

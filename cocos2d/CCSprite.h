@@ -60,53 +60,50 @@
  *
  * The default anchorPoint in CCSprite is (0.5, 0.5).
  */
-@interface CCSprite : CCNode <CCRGBAProtocol, CCTextureProtocol>
+@interface CCSprite : CCNodeRGBA <CCTextureProtocol>
 {
 
 	//
 	// Data used when the sprite is rendered using a CCSpriteBatchNode
 	//
-	CCTextureAtlas			*textureAtlas_;			// Sprite Sheet texture atlas (weak reference)
-	NSUInteger				atlasIndex_;			// Absolute (real) Index on the batch node
-	CCSpriteBatchNode		*batchNode_;			// Used batch node (weak reference)
-	CGAffineTransform		transformToBatch_;		//
-	BOOL					dirty_;					// Sprite needs to be updated
-	BOOL					recursiveDirty_;		// Subchildren needs to be updated
-	BOOL					hasChildren_;			// optimization to check if it contain children
-	BOOL					shouldBeHidden_;		// should not be drawn because one of the ancestors is not visible
+	CCTextureAtlas			*_textureAtlas;			// Sprite Sheet texture atlas (weak reference)
+	NSUInteger				_atlasIndex;			// Absolute (real) Index on the batch node
+	CCSpriteBatchNode		*_batchNode;			// Used batch node (weak reference)
+	CGAffineTransform		_transformToBatch;		//
+	BOOL					_dirty;					// Sprite needs to be updated
+	BOOL					_recursiveDirty;		// Subchildren needs to be updated
+	BOOL					_hasChildren;			// optimization to check if it contain children
+	BOOL					_shouldBeHidden;		// should not be drawn because one of the ancestors is not visible
 
 	//
 	// Data used when the sprite is self-rendered
 	//
-	ccBlendFunc				blendFunc_;				// Needed for the texture protocol
-	CCTexture2D				*texture_;				// Texture used to render the sprite
+	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
+	CCTexture2D				*_texture;				// Texture used to render the sprite
 
 	//
 	// Shared data
 	//
 
 	// sprite rectangle
-	CGRect	rect_;
+	CGRect	_rect;
 
 	// texture
-	BOOL	rectRotated_;
+	BOOL	_rectRotated;
 
 	// Offset Position (used by Zwoptex)
-	CGPoint	offsetPosition_;
-	CGPoint unflippedOffsetPositionFromCenter_;
+	CGPoint	_offsetPosition;
+	CGPoint _unflippedOffsetPositionFromCenter;
 
 	// vertex coords, texture coords and color info
-	ccV3F_C4B_T2F_Quad quad_;
+	ccV3F_C4B_T2F_Quad _quad;
 
 	// opacity and RGB protocol
-	GLubyte		opacity_;
-	ccColor3B	color_;
-	ccColor3B	colorUnmodified_;
-	BOOL		opacityModifyRGB_;
+	BOOL		_opacityModifyRGB;
 
 	// image is flipped
-	BOOL	flipX_;
-	BOOL	flipY_;
+	BOOL	_flipX;
+	BOOL	_flipY;
 }
 
 /** whether or not the Sprite needs to be updated in the Atlas */
@@ -135,10 +132,6 @@
 	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
-/** opacity: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) GLubyte opacity;
-/** RGB colors: conforms to CCRGBAProtocol protocol */
-@property (nonatomic,readwrite) ccColor3B color;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */
 @property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
@@ -187,7 +180,7 @@
 
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"sprite_frame_01".
+ For example, a valid key is: @"_spriteframe_01".
  If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */
@@ -235,7 +228,7 @@
 
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
- For example, a valid key is: @"sprite_frame_01".
+ For example, a valid key is: @"_spriteframe_01".
  If key is nil, then a new texture will be created each time by the CCTextureCache.
  @since v0.99.0
  */

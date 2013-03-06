@@ -169,7 +169,7 @@ Class restartAction()
 
 -(void) removeThis
 {
-	[parent_ removeChild:self cleanup:YES];
+	[self.parent removeChild:self cleanup:YES];
 
 	[self nextCallback:self];
 }
@@ -383,12 +383,16 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
 }
 
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene: scene];
+	}
+}
 @end

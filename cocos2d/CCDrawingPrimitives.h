@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +24,17 @@
  * THE SOFTWARE.
  */
 
+
+/*
+ *
+ * IMPORTANT       IMPORTANT        IMPORTANT        IMPORTANT 
+ *
+ *
+ * LEGACY FUNCTIONS
+ *
+ * USE CCDrawNode instead
+ *
+ */
 
 #ifndef __CC_DRAWING_PRIMITIVES_H
 #define __CC_DRAWING_PRIMITIVES_H
@@ -47,19 +59,32 @@ extern "C" {
 /**
  @file
  Drawing OpenGL ES primitives.
-  - ccDrawPoint
+  - ccDrawPoint, ccDrawPoints
   - ccDrawLine
-  - ccDrawPoly
-  - ccDrawCircle
+  - ccDrawRect, ccDrawSolidRect
+  - ccDrawPoly, ccDrawSolidPoly
+  - ccDrawCircle, ccDrawSolidCircle 
+  - ccDrawArc, ccDrawSolidArc
   - ccDrawQuadBezier
   - ccDrawCubicBezier
+  - ccDrawCatmullRom
+  - ccDrawCardinalSpline
 
- You can change the color, width and other property by calling the
-   glColor4ub(), glLineWidth(), glPointSize().
+ You can change the color, point size, width by calling:
+  - ccDrawColor4B(), ccDrawColor4F()
+  - ccPointSize()
+  - glLineWidth()
 
- @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch.
+ @warning These functions draws the Line, Point, Polygon, immediately. They aren't batched. If you are going to make a game that depends on these primitives, I suggest creating a batch. Instead you should use CCDrawNode
+ 
  */
 
+
+/** Initializes the drawing primitives */
+void ccDrawInit(void);
+
+/** Frees allocated resources by the drawing primitives */
+void ccDrawFree(void);
 
 /** draws a point given x and y coordinate measured in points. */
 void ccDrawPoint( CGPoint point );
@@ -80,17 +105,26 @@ void ccDrawRect( CGPoint origin, CGPoint destination );
  */
 void ccDrawSolidRect( CGPoint origin, CGPoint destination, ccColor4F color );
 
-/** draws a poligon given a pointer to CGPoint coordiantes and the number of vertices measured in points.
+/** draws a polygon given a pointer to CGPoint coordinates and the number of vertices measured in points.
  The polygon can be closed or open
  */
 void ccDrawPoly( const CGPoint *vertices, NSUInteger numOfVertices, BOOL closePolygon );
 
-/** draws a solid polygon given a pointer to CGPoint coordiantes, the number of vertices measured in points, and a color.
+/** draws a solid polygon given a pointer to CGPoint coordinates, the number of vertices measured in points, and a color.
  */
 void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F color );
     
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
+
+/** draws a solid circle given the center, radius and number of segments measured in points */
+void ccDrawSolidCircle( CGPoint center, float radius, NSUInteger segments);
+    
+/** draws a arc given the center, radius, arc length and number of segments measured in points */
+void ccDrawArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs, BOOL drawLineToCenter);
+
+/** draws a solid arc given the center, radius, arc length and number of segments measured in points */
+void ccDrawSolidArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs);
 
 /** draws a quad bezier path measured in points.
  @warning This function could be pretty slow. Use it only for debugging purposes.

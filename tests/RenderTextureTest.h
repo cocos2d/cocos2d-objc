@@ -26,6 +26,11 @@
 {}
 @end
 
+@interface RenderTextureIssue1464 : RenderTextureTest
+{}
+@end
+
+
 @interface RenderTextureZbuffer : RenderTextureTest
 {
 	CCSprite *sp1;
@@ -46,4 +51,14 @@
 @interface RenderTextureTestDepthStencil : RenderTextureTest
 @end
 
+@interface RenderTextureTargetNode : RenderTextureTest {
+	CCSprite *_sprite1, *_sprite2;
+	CCRenderTexture *_renderTexture;
+}
+@end
 
+@class SimpleSprite;
+@interface SpriteRenderTextureBug : RenderTextureTest
+{}
+-(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p;
+@end

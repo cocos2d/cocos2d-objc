@@ -28,17 +28,18 @@
 #import "CCTileMapAtlas.h"
 #import "ccMacros.h"
 #import "Support/CCFileUtils.h"
+#import "Support/CGPointExtension.h"
 
 @interface CCTileMapAtlas (Private)
 -(void) loadTGAfile:(NSString*)file;
 -(void) calculateItemsToRender;
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx;
+-(void) updateAtlasValueAt:(CGPoint)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx;
 @end
 
 
 @implementation CCTileMapAtlas
 
-@synthesize tgaInfo;
+@synthesize tgaInfo=_tgaInfo;
 
 #pragma mark CCTileMapAtlas - Creation & Init
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h
@@ -52,15 +53,13 @@
 	[self loadTGAfile: map];
 	[self calculateItemsToRender];
 
-	if( (self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: itemsToRender]) ) {
+	if( (self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: _itemsToRender]) ) {
 
-		color_ = ccWHITE;
-
-		posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:itemsToRender] retain];
+		_posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:_itemsToRender] retain];
 
 		[self updateAtlasValues];
 
-		[self setContentSize: CGSizeMake(tgaInfo->width*itemWidth_, tgaInfo->height*itemHeight_)];
+		[self setContentSize: CGSizeMake(_tgaInfo->width*_itemWidth, _tgaInfo->height*_itemHeight)];
 	}
 
 	return self;
@@ -68,36 +67,36 @@
 
 -(void) dealloc
 {
-	if( tgaInfo )
-		tgaDestroy(tgaInfo);
+	if( _tgaInfo )
+		tgaDestroy(_tgaInfo);
 
-	[posToAtlasIndex release];
+	[_posToAtlasIndex release];
 
 	[super dealloc];
 }
 
 -(void) releaseMap
 {
-	if( tgaInfo )
-		tgaDestroy(tgaInfo);
+	if( _tgaInfo )
+		tgaDestroy(_tgaInfo);
 
-	tgaInfo = nil;
+	_tgaInfo = nil;
 
-	[posToAtlasIndex release];
-	posToAtlasIndex = nil;
+	[_posToAtlasIndex release];
+	_posToAtlasIndex = nil;
 }
 
 -(void) calculateItemsToRender
 {
-	NSAssert( tgaInfo != nil, @"tgaInfo must be non-nil");
+	NSAssert( _tgaInfo != nil, @"tgaInfo must be non-nil");
 
-	itemsToRender = 0;
-	for(int x = 0;x < tgaInfo->width; x++ ) {
-		for(int y = 0; y < tgaInfo->height; y++ ) {
-			ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-			ccColor3B value = ptr[x + y * tgaInfo->width];
+	_itemsToRender = 0;
+	for(int x = 0;x < _tgaInfo->width; x++ ) {
+		for(int y = 0; y < _tgaInfo->height; y++ ) {
+			ccColor3B *ptr = (ccColor3B*) _tgaInfo->imageData;
+			ccColor3B value = ptr[x + y * _tgaInfo->width];
 			if( value.r )
-				itemsToRender++;
+				_itemsToRender++;
 		}
 	}
 }
@@ -106,16 +105,16 @@
 {
 	NSAssert( file != nil, @"file must be non-nil");
 
-	NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:file ];
+	NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file ];
 
 //	//Find the path of the file
 //	NSBundle *mainBndl = [CCDirector sharedDirector].loadingBundle;
 //	NSString *resourcePath = [mainBndl resourcePath];
 //	NSString * path = [resourcePath stringByAppendingPathComponent:file];
 
-	tgaInfo = tgaLoad( [path UTF8String] );
+	_tgaInfo = tgaLoad( [path UTF8String] );
 #if 1
-	if( tgaInfo->status != TGA_OK )
+	if( _tgaInfo->status != TGA_OK )
 		[NSException raise:@"TileMapAtlasLoadTGA" format:@"TileMapAtas cannot load TGA file"];
 
 #endif
@@ -123,54 +122,54 @@
 
 #pragma mark CCTileMapAtlas - Atlas generation / updates
 
--(void) setTile:(ccColor3B) tile at:(ccGridSize) pos
+-(void) setTile:(ccColor3B) tile at:(CGPoint) pos
 {
-	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
-	NSAssert( posToAtlasIndex != nil, @"posToAtlasIndex must not be nil");
-	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
-	NSAssert( pos.y < tgaInfo->height, @"Invalid position.x");
+	NSAssert( _tgaInfo != nil, @"_tgaInfo must not be nil");
+	NSAssert( _posToAtlasIndex != nil, @"_posToAtlasIndex must not be nil");
+	NSAssert( pos.x < _tgaInfo->width, @"Invalid position.x");
+	NSAssert( pos.y < _tgaInfo->height, @"Invalid position.x");
 	NSAssert( tile.r != 0, @"R component must be non 0");
 
-	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
+	ccColor3B *ptr = (ccColor3B*) _tgaInfo->imageData;
+	ccColor3B value = ptr[(NSUInteger)(pos.x + pos.y * _tgaInfo->width)];
 	if( value.r == 0 )
 		CCLOG(@"cocos2d: Value.r must be non 0.");
 	else {
-		ptr[pos.x + pos.y * tgaInfo->width] = tile;
+		ptr[(NSUInteger)(pos.x + pos.y * _tgaInfo->width)] = tile;
 
 		// XXX: this method consumes a lot of memory
 		// XXX: a tree of something like that shall be impolemented
-		NSNumber *num = [posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%ld,%ld", (long)pos.x, (long)pos.y]];
+		NSNumber *num = [_posToAtlasIndex objectForKey: [NSString stringWithFormat:@"%ld,%ld", (long)pos.x, (long)pos.y]];
 		[self updateAtlasValueAt:pos withValue:tile withIndex: [num integerValue]];
 	}
 }
 
--(ccColor3B) tileAt:(ccGridSize) pos
+-(ccColor3B) tileAt:(CGPoint) pos
 {
-	NSAssert( tgaInfo != nil, @"tgaInfo must not be nil");
-	NSAssert( pos.x < tgaInfo->width, @"Invalid position.x");
-	NSAssert( pos.y < tgaInfo->height, @"Invalid position.y");
+	NSAssert( _tgaInfo != nil, @"_tgaInfo must not be nil");
+	NSAssert( pos.x < _tgaInfo->width, @"Invalid position.x");
+	NSAssert( pos.y < _tgaInfo->height, @"Invalid position.y");
 
-	ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-	ccColor3B value = ptr[pos.x + pos.y * tgaInfo->width];
+	ccColor3B *ptr = (ccColor3B*) _tgaInfo->imageData;
+	ccColor3B value = ptr[(NSUInteger)(pos.x + pos.y * _tgaInfo->width)];
 
 	return value;
 }
 
--(void) updateAtlasValueAt:(ccGridSize)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
+-(void) updateAtlasValueAt:(CGPoint)pos withValue:(ccColor3B)value withIndex:(NSUInteger)idx
 {
 	ccV3F_C4B_T2F_Quad quad;
 
 	NSInteger x = pos.x;
 	NSInteger y = pos.y;
-	float row = (value.r % itemsPerRow_);
-	float col = (value.r / itemsPerRow_);
+	float row = (value.r % _itemsPerRow);
+	float col = (value.r / _itemsPerRow);
 
-	float textureWide = [[textureAtlas_ texture] pixelsWide];
-	float textureHigh = [[textureAtlas_ texture] pixelsHigh];
+	float textureWide = [[_textureAtlas texture] pixelsWide];
+	float textureHigh = [[_textureAtlas texture] pixelsHigh];
 
-	float itemWidthInPixels = itemWidth_ * CC_CONTENT_SCALE_FACTOR();
-    float itemHeightInPixels = itemHeight_ * CC_CONTENT_SCALE_FACTOR();
+	float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
+    float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
 
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
@@ -195,46 +194,46 @@
 	quad.br.texCoords.u = right;
 	quad.br.texCoords.v = bottom;
 
-	quad.bl.vertices.x = (int) (x * itemWidth_);
-	quad.bl.vertices.y = (int) (y * itemHeight_);
+	quad.bl.vertices.x = (int) (x * _itemWidth);
+	quad.bl.vertices.y = (int) (y * _itemHeight);
 	quad.bl.vertices.z = 0.0f;
-	quad.br.vertices.x = (int)(x * itemWidth_ + itemWidth_);
-	quad.br.vertices.y = (int)(y * itemHeight_);
+	quad.br.vertices.x = (int)(x * _itemWidth + _itemWidth);
+	quad.br.vertices.y = (int)(y * _itemHeight);
 	quad.br.vertices.z = 0.0f;
-	quad.tl.vertices.x = (int)(x * itemWidth_);
-	quad.tl.vertices.y = (int)(y * itemHeight_ + itemHeight_);
+	quad.tl.vertices.x = (int)(x * _itemWidth);
+	quad.tl.vertices.y = (int)(y * _itemHeight + _itemHeight);
 	quad.tl.vertices.z = 0.0f;
-	quad.tr.vertices.x = (int)(x * itemWidth_ + itemWidth_);
-	quad.tr.vertices.y = (int)(y * itemHeight_ + itemHeight_);
+	quad.tr.vertices.x = (int)(x * _itemWidth + _itemWidth);
+	quad.tr.vertices.y = (int)(y * _itemHeight + _itemHeight);
 	quad.tr.vertices.z = 0.0f;
 
-	ccColor4B color = { color_.r, color_.g, color_.b, opacity_ };
+	ccColor4B color = { _displayedColor.r, _displayedColor.g, _displayedColor.b, _displayedOpacity };
 	quad.tr.colors = color;
 	quad.tl.colors = color;
 	quad.br.colors = color;
 	quad.bl.colors = color;
-	[textureAtlas_ updateQuad:&quad atIndex:idx];
+	[_textureAtlas updateQuad:&quad atIndex:idx];
 }
 
 -(void) updateAtlasValues
 {
-	NSAssert( tgaInfo != nil, @"tgaInfo must be non-nil");
+	NSAssert( _tgaInfo != nil, @"_tgaInfo must be non-nil");
 
 
 	int total = 0;
 
-	for(int x = 0;x < tgaInfo->width; x++ ) {
-		for(int y = 0; y < tgaInfo->height; y++ ) {
-			if( total < itemsToRender ) {
-				ccColor3B *ptr = (ccColor3B*) tgaInfo->imageData;
-				ccColor3B value = ptr[x + y * tgaInfo->width];
+	for(int x = 0;x < _tgaInfo->width; x++ ) {
+		for(int y = 0; y < _tgaInfo->height; y++ ) {
+			if( total < _itemsToRender ) {
+				ccColor3B *ptr = (ccColor3B*) _tgaInfo->imageData;
+				ccColor3B value = ptr[x + y * _tgaInfo->width];
 
 				if( value.r != 0 ) {
-					[self updateAtlasValueAt:ccg(x,y) withValue:value withIndex:total];
+					[self updateAtlasValueAt:ccp(x,y) withValue:value withIndex:total];
 
 					NSString *key = [NSString stringWithFormat:@"%d,%d", x,y];
 					NSNumber *num = [NSNumber numberWithInt:total];
-					[posToAtlasIndex setObject:num forKey:key];
+					[_posToAtlasIndex setObject:num forKey:key];
 
 					total++;
 				}

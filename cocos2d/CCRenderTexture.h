@@ -45,7 +45,7 @@ typedef enum
 /**
  CCRenderTexture is a generic rendering target. To render things into it,
  simply construct a render target, call begin on it, call visit on any cocos2d
- scenes or objects to render them, and call end. For convienience, render texture
+ scenes or objects to render them, and call end. For convenience, render texture
  adds a sprite as its display child with the results, so you can simply add
  the render texture to your scene and treat it like any other CCNode.
  There are also functions for saving the render texture to disk in PNG or JPG format.
@@ -54,13 +54,19 @@ typedef enum
  */
 @interface CCRenderTexture : CCNode
 {
-	GLuint				fbo_;
-  GLuint depthRenderBufffer_;
-  GLint				oldFBO_;
-	CCTexture2D*		texture_;
-	CCSprite*			sprite_;
+	GLuint				_FBO;
+	GLuint				_depthRenderBufffer;
+	GLint				_oldFBO;
+	CCTexture2D*		_texture;
+	CCSprite*			_sprite;
+	GLenum				_pixelFormat;
 
-	GLenum				pixelFormat_;
+	// code for "auto" update
+	GLbitfield			_clearFlags;
+	ccColor4F			_clearColor;
+	GLclampf			_clearDepth;
+	GLint				_clearStencil;
+	BOOL				_autoDraw;
 }
 
 /** The CCSprite being used.
@@ -68,7 +74,21 @@ typedef enum
  The blending function can be changed in runtime by calling:
 	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 */
-@property (nonatomic,readwrite, assign) CCSprite* sprite;
+@property (nonatomic,readwrite, retain) CCSprite* sprite;
+
+/** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
+@property (nonatomic, readwrite) GLbitfield clearFlags;
+/** Clear color value. Valid only when "autoDraw" is YES. */
+@property (nonatomic, readwrite) ccColor4F clearColor;
+/** Value for clearDepth. Valid only when autoDraw is YES. */
+@property (nonatomic, readwrite) GLclampf clearDepth;
+/** Value for clear Stencil. Valid only when autoDraw is YES */
+@property (nonatomic, readwrite) GLint clearStencil;
+/** When enabled, it will render its children into the texture automatically. Disabled by default for compatiblity reasons.
+ Will be enabled in the future.
+ */
+@property (nonatomic, readwrite) BOOL autoDraw;
+
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;

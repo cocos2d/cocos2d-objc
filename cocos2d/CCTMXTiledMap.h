@@ -71,14 +71,14 @@ enum
 
  Limitations:
  - It only supports one tileset per layer.
- - Embeded images are not supported
+ - Embedded images are not supported
  - It only supports the XML format (the JSON format is not supported)
 
  Technical description:
    Each layer is created using an CCTMXLayer (subclass of CCSpriteBatchNode). If you have 5 layers, then 5 CCTMXLayer will be created,
    unless the layer visibility is off. In that case, the layer won't be created at all.
    You can obtain the layers (CCTMXLayer objects) at runtime by:
-  - [map getChildByTag: tag_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
+  - [map getChildByTag: tax_number];  // 0=1st layer, 1=2nd layer, 2=3rd layer, etc...
   - [map layerNamed: name_of_the_layer];
 
    Each object group is created using a CCTMXObjectGroup which is a subclass of NSMutableArray.
@@ -99,12 +99,12 @@ enum
  */
 @interface CCTMXTiledMap : CCNode
 {
-	CGSize				mapSize_;
-	CGSize				tileSize_;
-	int					mapOrientation_;
-	NSMutableArray		*objectGroups_;
-	NSMutableDictionary	*properties_;
-	NSMutableDictionary	*tileProperties_;
+	CGSize				_mapSize;
+	CGSize				_tileSize;
+	int					_mapOrientation;
+	NSMutableArray		*_objectGroups;
+	NSMutableDictionary	*_properties;
+	NSMutableDictionary	*_tileProperties;
 }
 
 /** the map's size property measured in tiles */
@@ -133,7 +133,7 @@ enum
 /** return the TMXLayer for the specific layer */
 -(CCTMXLayer*) layerNamed:(NSString *)layerName;
 
-/** return the TMXObjectGroup for the secific group */
+/** return the TMXObjectGroup for the specific group */
 -(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName;
 
 /** return the value for the specific property name */

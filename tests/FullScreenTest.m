@@ -135,7 +135,8 @@ Class restartAction()
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_AutoScale];
 
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
+        self.touchEnabled = YES;
 
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
@@ -205,6 +206,25 @@ Class restartAction()
 	[self addNewSpriteWithCoords: location];
 
 	return YES;
+}
+
+-(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event {
+    // get touches began
+    NSView *view = [[CCDirector sharedDirector] view];
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
+    
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    for (NSTouch *touch in touches) {
+        // convert touch to window location
+        CGPoint location = CCNSPointToCGPoint(touch.normalizedPosition);
+        location = ccpCompMult(location, ccp(winSize.width, winSize.height));
+        
+        CCLOG(@"touch began: %.2f,%.2f", location.x, location.y);
+        [self addNewSpriteWithCoords: location];
+    }
+    
+    return YES;
 }
 #endif
 
@@ -233,7 +253,8 @@ Class restartAction()
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
 
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
+        self.touchEnabled = YES;
 
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
@@ -305,6 +326,25 @@ Class restartAction()
 	return YES;
 
 }
+
+-(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event {
+    // get touches began
+    NSView *view = [[CCDirector sharedDirector] view];
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
+    
+    CGSize winSize = [[CCDirector sharedDirector] winSize];
+    
+    for (NSTouch *touch in touches) {
+        // convert touch to window location
+        CGPoint location = CCNSPointToCGPoint(touch.normalizedPosition);
+        location = ccpCompMult(location, ccp(winSize.width, winSize.height));
+        
+        CCLOG(@"touch began: %.2f,%.2f", location.x, location.y);
+        [self addNewSpriteWithCoords: location];
+    }
+    
+    return YES;
+}
 #endif
 
 -(NSString *) title
@@ -331,7 +371,8 @@ Class restartAction()
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
 
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
+        self.touchEnabled = YES;
 
 		CGSize s = [director winSize];
 
@@ -526,7 +567,9 @@ Class restartAction()
 	[scene addChild: [nextAction() node]];
 
 //	[director setProjection:kCCDirectorProjection2D];
-
+    
+    [[(CCDirectorMac*)director_ view] setAcceptsTouchEvents:YES];
+    
 	[director_ runWithScene:scene];
 }
 @end

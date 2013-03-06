@@ -114,9 +114,9 @@ NSString* restartAction()
 
 
 	CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
-	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" dimensions:blockSize hAlignment:kCCTextAlignmentLeft vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
-	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" dimensions:blockSize hAlignment:kCCTextAlignmentCenter vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
-	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" dimensions:blockSize hAlignment:kCCTextAlignmentRight vAlignment:verticalAlignment[vAlignIdx] fontName:aFont fontSize:fontSize];
+	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentLeft vAlignment:verticalAlignment[vAlignIdx] ];
+	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentCenter vAlignment:verticalAlignment[vAlignIdx] ];
+	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentRight vAlignment:verticalAlignment[vAlignIdx] ];
 
     CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
@@ -199,12 +199,20 @@ NSString* restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [FontTest node]];
-
-	[director_ pushScene: scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [FontTest node]];
+		[director runWithScene: scene];
+	}
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

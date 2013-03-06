@@ -73,7 +73,7 @@
 		}
 
 		// Don't initialize the texCoords yet since there are not textures
-//		[self initTexCoordsWithRect:CGRectMake(0, 0, [texture_ pixelsWide], [texture_ pixelsHigh])];
+//		[self initTexCoordsWithRect:CGRectMake(0, 0, [_texture pixelsWide], [_texture pixelsHigh])];
 
 		[self initIndices];
 		[self initVAO];
@@ -86,18 +86,18 @@
 
 -(BOOL) allocMemory
 {
-	NSAssert( ( !quads_ && !indices_), @"Memory already alloced");
-	NSAssert( !batchNode_, @"Memory should not be alloced when not using batchNode");
+	NSAssert( ( !_quads && !_indices), @"Memory already alloced");
+	NSAssert( !_batchNode, @"Memory should not be alloced when not using batchNode");
 
-	quads_ = calloc( sizeof(quads_[0]) * totalParticles, 1 );
-	indices_ = calloc( sizeof(indices_[0]) * totalParticles * 6, 1 );
+	_quads = calloc( sizeof(_quads[0]) * _totalParticles, 1 );
+	_indices = calloc( sizeof(_indices[0]) * _totalParticles * 6, 1 );
 
-	if( !quads_ || !indices_) {
+	if( !_quads || !_indices) {
 		CCLOG(@"cocos2d: Particle system: not enough memory");
-		if( quads_ )
-			free( quads_ );
-		if(indices_)
-			free(indices_);
+		if( _quads )
+			free( _quads );
+		if(_indices)
+			free(_indices);
 
 		return NO;
 	}
@@ -109,60 +109,68 @@
 {
     // If we are setting the total numer of particles to a number higher
     // than what is allocated, we need to allocate new arrays
-    if( tp > allocatedParticles )
+    if( tp > _allocatedParticles )
     {
         // Allocate new memory
         size_t particlesSize = tp * sizeof(tCCParticle);
-        size_t quadsSize = sizeof(quads_[0]) * tp * 1;
-        size_t indicesSize = sizeof(indices_[0]) * tp * 6 * 1;
+        size_t quadsSize = sizeof(_quads[0]) * tp * 1;
+        size_t indicesSize = sizeof(_indices[0]) * tp * 6 * 1;
         
-        tCCParticle* particlesNew = realloc(particles, particlesSize);
-        ccV3F_C4B_T2F_Quad *quadsNew = realloc(quads_, quadsSize);
-        GLushort* indicesNew = realloc(indices_, indicesSize);
+        tCCParticle* particlesNew = realloc(_particles, particlesSize);
+        ccV3F_C4B_T2F_Quad *quadsNew = realloc(_quads, quadsSize);
+        GLushort* indicesNew = realloc(_indices, indicesSize);
         
         if (particlesNew && quadsNew && indicesNew)
         {
             // Assign pointers
-            particles = particlesNew;
-            quads_ = quadsNew;
-            indices_ = indicesNew;
+            _particles = particlesNew;
+            _quads = quadsNew;
+            _indices = indicesNew;
             
             // Clear the memory
-            memset(particles, 0, particlesSize);
-            memset(quads_, 0, quadsSize);
-            memset(indices_, 0, indicesSize);
+			// XXX: Bug? If the quads are cleared, then drawing doesn't work... WHY??? XXX
+//            memset(_quads, 0, quadsSize);
+            memset(_particles, 0, particlesSize);
+            memset(_indices, 0, indicesSize);
             
-            allocatedParticles = tp;
+            _allocatedParticles = tp;
         }
         else
         {
             // Out of memory, failed to resize some array
-            if (particlesNew) particles = particlesNew;
-            if (quadsNew) quads_ = quadsNew;
-            if (indicesNew) indices_ = indicesNew;
+            if (particlesNew) _particles = particlesNew;
+            if (quadsNew) _quads = quadsNew;
+            if (indicesNew) _indices = indicesNew;
             
             CCLOG(@"Particle system: out of memory");
             return;
         }
         
-        totalParticles = tp;
+        _totalParticles = tp;
         
         // Init particles
-        if (batchNode_)
+        if (_batchNode)
 		{
-			for (int i = 0; i < totalParticles; i++)
+			for (int i = 0; i < _totalParticles; i++)
 			{
-				particles[i].atlasIndex=i;
+				_particles[i].atlasIndex=i;
 			}
 		}
         
         [self initIndices];
+		
+		// clean VAO
+		glDeleteBuffers(2, &_buffersVBO[0]);
+		glDeleteVertexArrays(1, &_VAOname);
+
         [self initVAO];
     }
     else
     {
-        totalParticles = tp;
+        _totalParticles = tp;
     }
+
+	[self resetSystem];
 }
 
 -(void) initVAO
@@ -171,15 +179,15 @@
 	// https://devforums.apple.com/thread/145566?tstart=0
 	
 	void (^createVAO)(void) = ^ {
-		glGenVertexArrays(1, &VAOname_);
-		glBindVertexArray(VAOname_);
+		glGenVertexArrays(1, &_VAOname);
+		ccGLBindVAO(_VAOname);
 
-	#define kQuadSize sizeof(quads_[0].bl)
+	#define kQuadSize sizeof(_quads[0].bl)
 
-		glGenBuffers(2, &buffersVBO_[0]);
+		glGenBuffers(2, &_buffersVBO[0]);
 
-		glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(quads_[0]) * totalParticles, quads_, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
 
 		// vertices
 		glEnableVertexAttribArray(kCCVertexAttrib_Position);
@@ -193,10 +201,11 @@
 		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, buffersVBO_[1]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices_[0]) * totalParticles * 6, indices_, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
 
-		glBindVertexArray(0);
+		// Must unbind the VAO before changing the element buffer.
+		ccGLBindVAO(0);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 
@@ -212,12 +221,12 @@
 
 -(void) dealloc
 {
-	if( ! batchNode_ ) {
-		free(quads_);
-		free(indices_);
+	if( ! _batchNode ) {
+		free(_quads);
+		free(_indices);
 
-		glDeleteBuffers(2, &buffersVBO_[0]);
-		glDeleteVertexArrays(1, &VAOname_);
+		glDeleteBuffers(2, &_buffersVBO[0]);
+		glDeleteVertexArrays(1, &_VAOname);
 	}
 
 	[super dealloc];
@@ -234,8 +243,8 @@
 							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
 
-	GLfloat wide = [texture_ pixelsWide];
-	GLfloat high = [texture_ pixelsHigh];
+	GLfloat wide = [_texture pixelsWide];
+	GLfloat high = [_texture pixelsHigh];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	GLfloat left = (rect.origin.x*2+1) / (wide*2);
@@ -254,17 +263,17 @@
 
 	ccV3F_C4B_T2F_Quad *quads;
 	NSUInteger start, end;
-	if (batchNode_)
+	if (_batchNode)
 	{
-		quads = [[batchNode_ textureAtlas] quads];
-		start = atlasIndex_;
-		end = atlasIndex_ + totalParticles;
+		quads = [[_batchNode textureAtlas] quads];
+		start = _atlasIndex;
+		end = _atlasIndex + _totalParticles;
 	}
 	else
 	{
-		quads = quads_;
+		quads = _quads;
 		start = 0;
-		end = totalParticles;
+		end = _totalParticles;
 	}
 
 	for(NSUInteger i=start; i<end; i++) {
@@ -287,7 +296,7 @@
 -(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect
 {
 	// Only update the texture if is different from the current one
-	if( [texture name] != [texture_ name] )
+	if( [texture name] != [_texture name] )
 		[super setTexture:texture];
 
 	[self initTexCoordsWithRect:rect];
@@ -305,22 +314,22 @@
 	NSAssert( CGPointEqualToPoint( spriteFrame.offsetInPixels , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
     
 	// update texture before updating texture rect
-	if ( spriteFrame.texture.name != texture_.name )
+	if ( spriteFrame.texture.name != _texture.name )
 		[self setTexture: spriteFrame.texture];
 }
 
 -(void) initIndices
 {
-	for( NSUInteger i = 0; i < totalParticles; i++) {
+	for( NSUInteger i = 0; i < _totalParticles; i++) {
 		const NSUInteger i6 = i*6;
 		const NSUInteger i4 = i*4;
-		indices_[i6+0] = (GLushort) i4+0;
-		indices_[i6+1] = (GLushort) i4+1;
-		indices_[i6+2] = (GLushort) i4+2;
+		_indices[i6+0] = (GLushort) i4+0;
+		_indices[i6+1] = (GLushort) i4+1;
+		_indices[i6+2] = (GLushort) i4+2;
 
-		indices_[i6+5] = (GLushort) i4+1;
-		indices_[i6+4] = (GLushort) i4+2;
-		indices_[i6+3] = (GLushort) i4+3;
+		_indices[i6+5] = (GLushort) i4+1;
+		_indices[i6+4] = (GLushort) i4+2;
+		_indices[i6+3] = (GLushort) i4+3;
 	}
 }
 
@@ -328,15 +337,15 @@
 {
 	ccV3F_C4B_T2F_Quad *quad;
 
-	if (batchNode_)
+	if (_batchNode)
 	{
-		ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads];
-		quad = &(batchQuads[atlasIndex_+p->atlasIndex]);
+		ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
+		quad = &(batchQuads[_atlasIndex+p->atlasIndex]);
 	}
 	else
-		quad = &(quads_[particleIdx]);
+		quad = &(_quads[_particleIdx]);
 
-	ccColor4B color = (opacityModifyRGB_)
+	ccColor4B color = (_opacityModifyRGB)
 		? (ccColor4B){ p->color.r*p->color.a*255, p->color.g*p->color.a*255, p->color.b*p->color.a*255, p->color.a*255}
 		: (ccColor4B){ p->color.r*255, p->color.g*255, p->color.b*255, p->color.a*255};
 
@@ -404,8 +413,20 @@
 
 -(void) postStep
 {
-	glBindBuffer(GL_ARRAY_BUFFER, buffersVBO_[0] );
-	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(quads_[0])*particleCount, quads_);
+	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0] );
+	
+	// Option 1: Sub Data
+//	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0])*_particleCount, _quads);
+	
+	// Option 2: Data
+	glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _particleCount, _quads, GL_DYNAMIC_DRAW);
+	
+	// Option 3: Orphaning + glMapBuffer
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, nil, GL_STREAM_DRAW);
+//	void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
+//	memcpy(buf, _quads, sizeof(_quads[0])*_particleCount);
+//	glUnmapBuffer(GL_ARRAY_BUFFER);
+
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	CHECK_GL_ERROR_DEBUG();
@@ -414,21 +435,18 @@
 // overriding draw method
 -(void) draw
 {
-	NSAssert(!batchNode_,@"draw should not be called when added to a particleBatchNode");
+	NSAssert(!_batchNode,@"draw should not be called when added to a particleBatchNode");
 
 	CC_NODE_DRAW_SETUP();
 
-	ccGLBindTexture2D( [texture_ name] );
-	ccGLBlendFunc( blendFunc_.src, blendFunc_.dst );
+	ccGLBindTexture2D( [_texture name] );
+	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
 
-	NSAssert( particleIdx == particleCount, @"Abnormal error in particle quad");
+	NSAssert( _particleIdx == _particleCount, @"Abnormal error in particle quad");
 
-	glBindVertexArray( VAOname_ );
-
-	glDrawElements(GL_TRIANGLES, (GLsizei) particleIdx*6, GL_UNSIGNED_SHORT, 0);
-
-	glBindVertexArray( 0 );
-
+	ccGLBindVAO( _VAOname );
+	glDrawElements(GL_TRIANGLES, (GLsizei) _particleIdx*6, GL_UNSIGNED_SHORT, 0);
+	
 	CC_INCREMENT_GL_DRAWS(1);
 
 	CHECK_GL_ERROR_DEBUG();
@@ -436,9 +454,9 @@
 
 -(void) setBatchNode:(CCParticleBatchNode *)batchNode
 {
-	if( batchNode_ != batchNode ) {
+	if( _batchNode != batchNode ) {
 
-		CCParticleBatchNode *oldBatch = batchNode_;
+		CCParticleBatchNode *oldBatch = _batchNode;
 
 		[super setBatchNode:batchNode];
 
@@ -454,20 +472,20 @@
 		else if( ! oldBatch )
 		{
 			// copy current state to batch
-			ccV3F_C4B_T2F_Quad *batchQuads = [[batchNode_ textureAtlas] quads];
-			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[atlasIndex_] );
-			memcpy( quad, quads_, totalParticles * sizeof(quads_[0]) );
+			ccV3F_C4B_T2F_Quad *batchQuads = [[_batchNode textureAtlas] quads];
+			ccV3F_C4B_T2F_Quad *quad = &(batchQuads[_atlasIndex] );
+			memcpy( quad, _quads, _totalParticles * sizeof(_quads[0]) );
 
-			if (quads_)
-				free(quads_);
-			quads_ = NULL;
+			if (_quads)
+				free(_quads);
+			_quads = NULL;
 
-			if (indices_)
-				free(indices_);
-			indices_ = NULL;
+			if (_indices)
+				free(_indices);
+			_indices = NULL;
 
-			glDeleteBuffers(2, &buffersVBO_[0]);
-			glDeleteVertexArrays(1, &VAOname_);
+			glDeleteBuffers(2, &_buffersVBO[0]);
+			glDeleteVertexArrays(1, &_VAOname);
 		}
 	}
 }

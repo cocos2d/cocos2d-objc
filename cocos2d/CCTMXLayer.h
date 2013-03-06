@@ -63,36 +63,36 @@
  */
 @interface CCTMXLayer : CCSpriteBatchNode
 {
-	CCTMXTilesetInfo	*tileset_;
-	NSString			*layerName_;
-	CGSize				layerSize_;
-	CGSize				mapTileSize_;
-	uint32_t			*tiles_;			// GID are 32 bit
-	NSUInteger			layerOrientation_;
-	NSMutableArray		*properties_;
+	CCTMXTilesetInfo	*_tileset;
+	NSString			*_layerName;
+	CGSize				_layerSize;
+	CGSize				_mapTileSize;
+	uint32_t			*_tiles;			// GID are 32 bit
+	NSUInteger			_layerOrientation;
+	NSMutableArray		*_properties;
 
-	unsigned char		opacity_; // TMX Layer supports opacity
+	unsigned char		_opacity; // TMX Layer supports opacity
 
-	NSUInteger			minGID_;
-	NSUInteger			maxGID_;
+	NSUInteger			_minGID;
+	NSUInteger			_maxGID;
 
 	// Only used when vertexZ is used
-	NSInteger			vertexZvalue_;
-	BOOL				useAutomaticVertexZ_;
+	NSInteger			_vertexZvalue;
+	BOOL				_useAutomaticVertexZ;
 
 	// used for optimization
-	CCSprite		*reusedTile_;
-	ccCArray		*atlasIndexArray_;
+	CCSprite		*_reusedTile;
+	ccCArray		*_atlasIndexArray;
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;
 /** size of the layer in tiles */
 @property (nonatomic,readwrite) CGSize layerSize;
-/** size of the map's tile (could be differnt from the tile's size) */
+/** size of the map's tile (could be different from the tile's size) */
 @property (nonatomic,readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */
 @property (nonatomic,readwrite) uint32_t *tiles;
-/** Tilset information for the layer */
+/** Tileset information for the layer */
 @property (nonatomic,readwrite,retain) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) NSUInteger layerOrientation;

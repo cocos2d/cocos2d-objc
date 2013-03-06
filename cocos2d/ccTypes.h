@@ -41,6 +41,11 @@
 /** RGB color composed of bytes 3 bytes
 @since v0.8
  */
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 typedef struct _ccColor3B
 {
 	GLubyte	r;
@@ -55,7 +60,8 @@ ccc3(const GLubyte r, const GLubyte g, const GLubyte b)
 	ccColor3B c = {r, g, b};
 	return c;
 }
-//ccColor3B predefined colors
+
+	//ccColor3B predefined colors
 //! White color (255,255,255)
 static const ccColor3B ccWHITE = {255,255,255};
 //! Yellow color (255,255,0)
@@ -93,17 +99,15 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 	return c;
 }
 
-
 /** RGBA color composed of 4 floats
 @since v0.8
 */
-struct ccColor4F {
+typedef struct _ccColor4F {
 	GLfloat r;
 	GLfloat g;
 	GLfloat b;
 	GLfloat a;
-};
-typedef struct ccColor4F ccColor4F;
+} ccColor4F;
 
 //! helper that creates a ccColor4f type
 static inline ccColor4F ccc4f(const GLfloat r, const GLfloat g, const GLfloat b, const GLfloat a)
@@ -134,6 +138,12 @@ static inline BOOL ccc4FEqual(ccColor4F a, ccColor4F b)
 {
 	return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
 }
+	
+static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
+{
+	return (ccColor4B){(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
+}
+
 
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8
@@ -187,21 +197,6 @@ typedef struct _ccQuad3 {
 	ccVertex3F		tl;
 	ccVertex3F		tr;
 } ccQuad3;
-
-//! A 2D grid size
-typedef struct _ccGridSize
-{
-	NSInteger	x;
-	NSInteger	y;
-} ccGridSize;
-
-//! helper function to create a ccGridSize
-static inline ccGridSize
-ccg(const NSInteger x, const NSInteger y)
-{
-	ccGridSize v = {x, y};
-	return v;
-}
 
 //! a Point with a vertex point, a tex coord point and a color 4B
 typedef struct _ccV2F_C4B_T2F
@@ -264,7 +259,19 @@ typedef struct _ccV3F_C4B_T2F
 	ccTex2F			texCoords;			// 8 byts
 } ccV3F_C4B_T2F;
 
-//! 4 ccVertex2FTex2FColor4B Quad
+	
+//! A Triangle of ccV2F_C4B_T2F 
+typedef struct _ccV2F_C4B_T2F_Triangle
+{
+	//! Point A
+	ccV2F_C4B_T2F a;
+	//! Point B
+	ccV2F_C4B_T2F b;
+	//! Point B
+	ccV2F_C4B_T2F c;
+} ccV2F_C4B_T2F_Triangle;
+	
+//! A Quad of ccV2F_C4B_T2F
 typedef struct _ccV2F_C4B_T2F_Quad
 {
 	//! bottom left
@@ -312,16 +319,22 @@ typedef struct _ccBlendFunc
 	GLenum dst;
 } ccBlendFunc;
 
+static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
+
 //! ccResolutionType
 typedef enum
 {
-	//! Unknonw resolution type
+	//! Unknown resolution type
 	kCCResolutionUnknown,
 #ifdef __CC_PLATFORM_IOS
 	//! iPhone resolution type
 	kCCResolutioniPhone,
-	//! RetinaDisplay resolution type
+	//! iPhone RetinaDisplay resolution type
 	kCCResolutioniPhoneRetinaDisplay,
+	//! iPhone5 resolution type
+	kCCResolutioniPhone5,
+	//! iPhone 5 RetinaDisplay resolution type
+	kCCResolutioniPhone5RetinaDisplay,
 	//! iPad resolution type
 	kCCResolutioniPad,
 	//! iPad Retina Display resolution type
@@ -331,13 +344,13 @@ typedef enum
 	//! Mac resolution type
 	kCCResolutionMac,
 
-	//! Mac RetinaDisplay resolution type (???)
+	//! Mac RetinaDisplay resolution type
 	kCCResolutionMacRetinaDisplay,
 #endif // platform
 
 } ccResolutionType;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
 typedef enum
 {
@@ -346,7 +359,7 @@ typedef enum
     kCCVerticalTextAlignmentBottom,
 } CCVerticalTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
 typedef enum
 {
@@ -355,7 +368,7 @@ typedef enum
 	kCCTextAlignmentRight,
 } CCTextAlignment;
 
-// XXX: If any of these enums are edited and/or reordered, udpate CCTexture2D.m
+// XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Line break modes
 typedef enum {
 	kCCLineBreakModeWordWrap,
@@ -368,7 +381,12 @@ typedef enum {
 
 //! delta time type
 //! if you want more resolution redefine it as a double
-typedef float ccTime;
+typedef CGFloat ccTime;
 //typedef double ccTime;
 
 typedef float ccMat4[16];
+	
+#ifdef __cplusplus
+}
+#endif
+

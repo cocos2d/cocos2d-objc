@@ -12,8 +12,11 @@ static int sceneIdx=-1;
 static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
+	@"RenderTextureIssue1464",
 	@"RenderTextureZbuffer",
-  @"RenderTextureTestDepthStencil"
+	@"RenderTextureTestDepthStencil",
+	@"RenderTextureTargetNode",
+	@"SpriteRenderTextureBug",
 };
 
 Class nextAction(void);
@@ -163,9 +166,9 @@ Class restartAction()
 		[brush setColor:ccRED];
 		[brush setOpacity:20];
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 		lastLocation = CGPointMake( s.width/2, s.height/2);
 #endif
 
@@ -366,8 +369,7 @@ Class restartAction()
 #endif // __CC_PLATFORM_MAC
 @end
 
-#pragma mark -
-#pragma mark RenderTextureIssue937
+#pragma mark - RenderTextureIssue937
 
 @implementation RenderTextureIssue937
 
@@ -442,8 +444,56 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark RenderTextureZbuffer
+#pragma mark - RenderTextureIssue1464
+
+@implementation RenderTextureIssue1464
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(200,200,200,255)];
+		[self addChild:background];
+
+		/* A2 & B2 setup */
+		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:256 height:256 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[sprite setPosition:ccp(128,128)];
+
+		[rend begin];
+
+		// A2
+		[sprite visit];
+
+		[rend end];
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		[self addChild:rend];
+		rend.position = ccp( s.width/2, s.height/2);
+
+		id fadeout = [CCFadeOut actionWithDuration:2];
+		id fadein = [fadeout reverse];
+		id seq = [CCSequence actions: fadeout, fadein, nil];
+		id fe = [CCRepeatForever actionWithAction:seq];
+		[rend.sprite runAction:fe];
+	}
+
+	return self;
+}
+-(NSString*) title
+{
+	return @"Testing issue #1464";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should fade in / out without problems";
+}
+@end
+
+#pragma mark - RenderTextureZbuffer
 
 @implementation RenderTextureZbuffer
 
@@ -452,9 +502,9 @@ Class restartAction()
 	if( (self=[super init] )) {
 		
 #ifdef __CC_PLATFORM_IOS
-		self.isTouchEnabled = YES;
+		self.touchEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
-		self.isMouseEnabled = YES;
+		self.mouseEnabled = YES;
 #endif
 
 		CGSize size = [[CCDirector sharedDirector] winSize];
@@ -627,7 +677,8 @@ Class restartAction()
 	[self addChild:sprite z:999999];
 	sprite.color = ccGREEN;
 
-	[sprite runAction:[CCSequence actions:[CCFadeTo actionWithDuration:2 opacity:0],
+	[sprite runAction:[CCSequence actions:
+					   [CCFadeTo actionWithDuration:2 opacity:0],
 					   [CCHide action],
 					   nil
 					   ]
@@ -650,7 +701,7 @@ Class restartAction()
     CCSprite *sprite = [CCSprite spriteWithFile:@"fire.png"];
     sprite.position = ccp(s.width * 0.25f, 0);
     sprite.scale = 10;
-    CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444 depthStencilFormat:CC_GL_DEPTH24_STENCIL8];
+    CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444 depthStencilFormat:GL_DEPTH24_STENCIL8];
 
     glStencilMask(0xFF);
     [rend beginWithClear:0 g:0 b:0 a:0 depth:0 stencil:0];
@@ -689,9 +740,233 @@ Class restartAction()
   return @"Circle should be missing 1/4 of its region";
 }
 @end
-
 #pragma mark -
-#pragma mark AppDelegate (iOS)
+#pragma mark RenderTextureTargetNode
+@implementation RenderTextureTargetNode
+
+-(id) init
+{
+	/*
+	 *     1    2
+	 * A: A1   A2
+	 *
+	 * B: B1   B2
+	 *
+	 *  A1: premulti sprite
+	 *  A2: premulti render
+	 *
+	 *  B1: non-premulti sprite
+	 *  B2: non-premulti render
+	 */
+	if( (self=[super init]) ) {
+    
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(40,40,40,255)];
+		[self addChild:background];
+    
+		// sprite 1
+		_sprite1 = [CCSprite spriteWithFile:@"fire.png"];
+    
+		// sprite 2
+		_sprite2 = [CCSprite spriteWithFile:@"fire_rgba8888.pvr"];
+    
+		CGSize s = [CCDirector sharedDirector].winSize;
+
+		/* Create the render texture */
+		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width/2 height:s.height/2 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+		_renderTexture = renderTexture;
+
+		[renderTexture setPosition:ccp(s.width/2, s.height/2)];
+//		[renderTexture setPosition:ccp(s.width, s.height)];
+//		renderTexture.scale = 2;
+
+		/* add the sprites to the render texture */
+		[renderTexture addChild:_sprite1];
+		[renderTexture addChild:_sprite2];
+		renderTexture.clearColor = ccc4f(0, 0, 0, 0);
+		renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+
+		/* add the render texture to the scene */
+		[self addChild:renderTexture];
+		
+		renderTexture.autoDraw = YES;
+
+		[self scheduleUpdate];
+		
+		// Toggle clear on / off
+		CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Clear On/Off" block:^(id sender) {
+			if( _renderTexture.clearFlags == 0 )
+				_renderTexture.clearFlags = GL_COLOR_BUFFER_BIT;
+			else
+				_renderTexture.clearFlags = 0;
+			_renderTexture.clearColor = ccc4f( CCRANDOM_0_1(), CCRANDOM_0_1(), CCRANDOM_0_1(), 1);
+		}];
+		CCMenu *menu = [CCMenu menuWithItems:item, nil];
+		[self addChild:menu];
+		[menu setPosition:ccp(s.width/2, s.height/2)];
+	}
+  
+	return self;
+}
+
+- (void)update:(ccTime)dt
+{
+	CGSize cs = _renderTexture.contentSize;
+	CGPoint p =  ccp(cs.width/2, cs.height/2);
+
+	static float time = 0;
+	float r = 80;
+	_sprite1.position = ccp(cosf(time * 2) * r + p.x, sinf(time * 2) * r + p.y);
+	_sprite2.position = ccp(sinf(time * 2) * r + p.x, cosf(time * 2) * r + p.y);
+
+	time += dt;
+}
+
+-(NSString*) title
+{
+	return @"Testing Render Target Node";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprites should be equal and move with each frame";
+}
+@end
+
+
+#pragma mark - SpriteRenderTextureBug
+
+@interface SimpleSprite : CCSprite {
+    
+    CCRenderTexture * rt;
+}
+@end
+
+@implementation SimpleSprite
+-(void) draw
+{
+
+	if(rt == nil) {
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		rt = [[CCRenderTexture alloc] initWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	}
+	[rt beginWithClear:0.0f g:0.0f b:0.0f a:1.0f];
+	[rt end];
+
+	CC_NODE_DRAW_SETUP();
+
+	ccBlendFunc blend = self.blendFunc;
+	ccGLBlendFunc( blend.src, blend.dst );
+
+	ccGLBindTexture2D( [self.texture name] );
+
+	//
+	// Attributes
+	//
+
+	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
+
+	#define kQuadSize sizeof(_quad.bl)
+	long offset = (long)&_quad;
+
+	// vertex
+	NSInteger diff = offsetof( ccV3F_C4B_T2F, vertices);
+	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*) (offset + diff));
+
+	// texCoods
+	diff = offsetof( ccV3F_C4B_T2F, texCoords);
+	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+
+	// color
+	diff = offsetof( ccV3F_C4B_T2F, colors);
+	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+}
+@end
+
+
+@implementation SpriteRenderTextureBug
+-(id) init
+{
+	if( (self=[super init]) ) {
+		
+#ifdef __CC_PLATFORM_IOS
+		self.touchEnabled = YES;
+#elif defined(__CC_PLATFORM_MAC)
+		self.mouseEnabled = YES;
+#endif
+		CGSize s = [[CCDirector sharedDirector] winSize];
+		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
+
+	}
+	return self;
+}
+
+-(SimpleSprite*) addNewSpriteWithCoords:(CGPoint)p
+{
+	int idx = CCRANDOM_0_1() * 1400 / 100;
+	int x = (idx%5) * 85;
+	int y = (idx/5) * 121;
+    
+    
+	SimpleSprite *sprite = [SimpleSprite spriteWithFile:@"grossini_dance_atlas.png" rect:CGRectMake(x,y,85,121)];
+	[self addChild:sprite];
+    
+	sprite.position = p;
+    
+	id action;
+	float rand = CCRANDOM_0_1();
+    
+	if( rand < 0.20 )
+		action = [CCScaleBy actionWithDuration:3 scale:2];
+	else if(rand < 0.40)
+		action = [CCRotateBy actionWithDuration:3 angle:360];
+	else if( rand < 0.60)
+		action = [CCBlink actionWithDuration:1 blinks:3];
+	else if( rand < 0.8 )
+		action = [CCTintBy actionWithDuration:2 red:0 green:-255 blue:-255];
+	else
+		action = [CCFadeOut actionWithDuration:2];
+	id action_back = [action reverse];
+	id seq = [CCSequence actions:action, action_back, nil];
+
+	[sprite runAction: [CCRepeatForever actionWithAction:seq]];
+
+    return sprite;
+}
+
+#ifdef __CC_PLATFORM_IOS
+- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+	for( UITouch *touch in touches ) {
+		CGPoint location = [touch locationInView: [touch view]];
+		location = [[CCDirector sharedDirector] convertToGL: location];
+		[self addNewSpriteWithCoords: location];
+	}
+}
+#elif defined(__CC_PLATFORM_MAC)
+-(BOOL) ccMouseUp:(NSEvent *)event
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	[self addNewSpriteWithCoords: location];
+
+	return YES;
+}
+#endif
+
+-(NSString*) title
+{
+	return @"SpriteRenderTextureBug";
+}
+
+-(NSString*) subtitle
+{
+	return @"Touch the screen. Sprite should appear on under the touch";
+}
+@end
+
+
+#pragma mark - AppDelegate (iOS)
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -722,12 +997,20 @@ Class restartAction()
 	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
 	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
 
-	CCScene *scene = [CCScene node];
-	[scene addChild: [nextAction() node]];
-	
-	[director_ pushScene:scene];
-
 	return YES;
+}
+
+// This is needed for iOS4 and iOS5 in order to ensure
+// that the 1st scene has the correct dimensions
+// This is not needed on iOS6 and could be added to the application:didFinish...
+-(void) directorDidReshapeProjection:(CCDirector*)director
+{
+	if(director.runningScene == nil){
+		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
+		CCScene *scene = [CCScene node];
+		[scene addChild: [nextAction() node]];
+		[director runWithScene: scene];
+	}
 }
 
 -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

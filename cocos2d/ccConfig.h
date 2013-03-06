@@ -28,29 +28,75 @@
  cocos2d (cc) configuration file
 */
 
+/** @def CC_ENABLE_CHIPMUNK_INTEGRATION
+ If enabled, it will include CCPhysicsScript and CCPhysicsDebugNode with Chipmunk Physics support.
+ If you enable it, make sure that Chipmunk is in the search path.
+ Disabled by default
+
+ @since v2.1
+ */
+#ifndef CC_ENABLE_CHIPMUNK_INTEGRATION
+#define CC_ENABLE_CHIPMUNK_INTEGRATION 0
+#endif
+
+/** @def CC_CHIPMUNK_IMPORT
+ Which file to import if using Chipmunk.
+ Change it to "ObjectiveChipmunk.h" or define it as a preprocessor macro if you are using ObjectiveChipmunk.
+ @since v2.1
+ */
+#if CC_ENABLE_CHIPMUNK_INTEGRATION && !defined(CC_CHIPMUNK_IMPORT)
+#define CC_CHIPMUNK_IMPORT "chipmunk.h"
+#endif
+
+/** @def CC_ENABLE_BOX2D_INTEGRATION
+ If enabled, it will include CCPhysicsScript with Box2D Physics support.
+ If you enable it, make sure that Box2D is in the search path.
+ 
+ Disabled by default
+ 
+ @since v2.1
+ */
+#ifndef CC_ENABLE_BOX2D_INTEGRATION
+#define CC_ENABLE_BOX2D_INTEGRATION 0
+#endif
+
+/** @def CC_ENABLE_STACKABLE_ACTIONS
+ If enabled, actions that alter the position property (eg: CCMoveBy, CCJumpBy, CCBezierBy, etc..) will be stacked.
+ If you run 2 or more 'position' actions at the same time on a node, then end position will be the sum of all the positions. 
+ If disabled, only the last run action will take effect.
+ 
+ Enabled by default. Disable to be compatible with v2.0 and older versions.
+
+ @since v2.1
+ */
+#ifndef CC_ENABLE_STACKABLE_ACTIONS
+#define CC_ENABLE_STACKABLE_ACTIONS 1
+#endif
+
+
 /** @def CC_ENABLE_GL_STATE_CACHE
  If enabled, cocos2d will maintain an OpenGL state cache internally to avoid unnecessary switches.
- In order to use them, you have to use the following functions, insead of the the GL ones:
+ In order to use them, you have to use the following functions, instead of the the GL ones:
 	- ccGLUseProgram() instead of glUseProgram()
 	- ccGLDeleteProgram() instead of glDeleteProgram()
 	- ccGLBlendFunc() instead of glBlendFunc()
 
  If this functionality is disabled, then ccGLUseProgram(), ccGLDeleteProgram(), ccGLBlendFunc() will call the GL ones, without using the cache.
 
- It is recommened to enable it whenever possible to improve speed.
+ It is recommended to enable it whenever possible to improve speed.
  If you are migrating your code from GL ES 1.1, then keep it disabled. Once all your code works as expected, turn it on.
 
- Default value: Disabled by default
+ Default value: Enabled by default
 
  @since v2.0.0
  */
 #ifndef CC_ENABLE_GL_STATE_CACHE
-#define CC_ENABLE_GL_STATE_CACHE 0
+#define CC_ENABLE_GL_STATE_CACHE 1
 #endif
 
 /** @def CC_ENABLE_DEPRECATED
  If enabled, cocos2d will compile all deprecated methods, classes and free functions. Also, renamed constants will be active as well.
- Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocdos2d version.
+ Enable it only when migrating a v1.0 or earlier v2.0 versions to the most recent cocos2d version.
  
  Default value: Enabled by default
  
@@ -108,7 +154,7 @@
 /** @def CC_DIRECTOR_IOS_USE_BACKGROUND_THREAD
  If enabled, cocos2d-ios will run on a background thread. If disabled cocos2d-ios will run the main thread.
 
- To enable set it to a 1, to disable it set to 0. Enabled by default.
+ To enable set it to a 1, to disable it set to 0. Disabled by default.
 
  Only valid for cocos2d-ios. Not supported on cocos2d-mac.
  
@@ -200,7 +246,7 @@
 
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box.
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  If the CCSprite is being drawn by a CCSpriteBatchNode, the bounding box might be a bit different.
  To enable set it to a value different than 0. Disabled by default:
@@ -215,7 +261,7 @@
 
 /** @def CC_LABELBMFONT_DEBUG_DRAW
  If enabled, all subclasses of CCLabelBMFont will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  To enable set it to a value different than 0. Disabled by default.
  */
@@ -225,7 +271,7 @@
 
 /** @def CC_LABELATLAS_DEBUG_DRAW
  If enabled, all subclasses of CCLabeltAtlas will draw a bounding box
- Useful for debugging purposes only. It is recommened to leave it disabled.
+ Useful for debugging purposes only. It is recommended to leave it disabled.
 
  To enable set it to a value different than 0. Disabled by default.
  */
@@ -243,3 +289,4 @@
 #ifndef CC_ENABLE_PROFILERS
 #define CC_ENABLE_PROFILERS 0
 #endif
+

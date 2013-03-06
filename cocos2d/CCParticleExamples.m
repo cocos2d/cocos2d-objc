@@ -43,8 +43,8 @@
 -(id) initWithTotalParticles:(NSUInteger)p
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -65,38 +65,38 @@
 		self.position = ccp(winSize.width/2, winSize.height/2);
 
 		// angle
-		angle = 90;
-		angleVar = 20;
+		_angle = 90;
+		_angleVar = 20;
 
 		// life of particles
-		life = 3.5f;
-		lifeVar = 1;
+		_life = 3.5f;
+		_lifeVar = 1;
 
 		// emits per frame
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.5f;
-		startColor.g = 0.5f;
-		startColor.b = 0.5f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.5f;
-		startColorVar.g = 0.5f;
-		startColorVar.b = 0.5f;
-		startColorVar.a = 0.1f;
-		endColor.r = 0.1f;
-		endColor.g = 0.1f;
-		endColor.b = 0.1f;
-		endColor.a = 0.2f;
-		endColorVar.r = 0.1f;
-		endColorVar.g = 0.1f;
-		endColorVar.b = 0.1f;
-		endColorVar.a = 0.2f;
+		_startColor.r = 0.5f;
+		_startColor.g = 0.5f;
+		_startColor.b = 0.5f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.5f;
+		_startColorVar.g = 0.5f;
+		_startColorVar.b = 0.5f;
+		_startColorVar.a = 0.1f;
+		_endColor.r = 0.1f;
+		_endColor.g = 0.1f;
+		_endColor.b = 0.1f;
+		_endColor.a = 0.2f;
+		_endColorVar.r = 0.1f;
+		_endColorVar.g = 0.1f;
+		_endColorVar.b = 0.1f;
+		_endColorVar.a = 0.2f;
 
 		// size, in pixels
-		startSize = 8.0f;
-		startSizeVar = 2.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 8.0f;
+		_startSizeVar = 2.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -121,8 +121,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -138,45 +138,45 @@
 		self.speed = 60;
 		self.speedVar = 20;
 
-		// starting angle
-		angle = 90;
-		angleVar = 10;
+		// starting _angle
+		_angle = 90;
+		_angleVar = 10;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, 60);
-		posVar = ccp(40, 20);
+		self.posVar = ccp(40, 20);
 
-		// life of particles
-		life = 3;
-		lifeVar = 0.25f;
+		// _life of particles
+		_life = 3;
+		_lifeVar = 0.25f;
 
 
 		// size, in pixels
-		startSize = 54.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 54.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per frame
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.76f;
-		startColor.g = 0.25f;
-		startColor.b = 0.12f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.76f;
+		_startColor.g = 0.25f;
+		_startColor.b = 0.12f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -204,8 +204,8 @@
 		// additive
 		self.blendAdditive = YES;
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -222,44 +222,44 @@
 		self.speedVar = 5;
 
 
-		// angle
-		angle = 90;
-		angleVar = 360;
+		// _angle
+		_angle = 90;
+		_angleVar = 360;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 1;
-		lifeVar = 0.5f;
+		// _life of particles
+		_life = 1;
+		_lifeVar = 0.5f;
 
 		// size, in pixels
-		startSize = 30.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 30.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per seconds
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.76f;
-		startColor.g = 0.25f;
-		startColor.b = 0.12f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.76f;
+		_startColor.g = 0.25f;
+		_startColor.b = 0.12f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 	}
@@ -281,8 +281,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -302,44 +302,44 @@
 		self.tangentialAccel = 80;
 		self.tangentialAccelVar = 0;
 
-		// angle
-		angle = 90;
-		angleVar = 360;
+		// _angle
+		_angle = 90;
+		_angleVar = 360;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 4;
-		lifeVar = 1;
+		// _life of particles
+		_life = 4;
+		_lifeVar = 1;
 
 		// size, in pixels
-		startSize = 37.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 37.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.12f;
-		startColor.g = 0.25f;
-		startColor.b = 0.76f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.12f;
+		_startColor.g = 0.25f;
+		_startColor.b = 0.76f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -364,8 +364,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -385,44 +385,44 @@
 		self.tangentialAccel = 15;
 		self.tangentialAccelVar = 0;
 
-		// angle
-		angle = 90;
-		angleVar = 360;
+		// _angle
+		_angle = 90;
+		_angleVar = 360;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 4;
-		lifeVar = 1;
+		// _life of particles
+		_life = 4;
+		_lifeVar = 1;
 
 		// size, in pixels
-		startSize = 30.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 30.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.50f;
-		startColor.g = 0.50f;
-		startColor.b = 0.50f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.5f;
-		startColorVar.g = 0.5f;
-		startColorVar.b = 0.5f;
-		startColorVar.a = 0.5f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.50f;
+		_startColor.g = 0.50f;
+		_startColor.b = 0.50f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.5f;
+		_startColorVar.g = 0.5f;
+		_startColorVar.b = 0.5f;
+		_startColorVar.a = 0.5f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -447,8 +447,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -468,44 +468,44 @@
 		self.tangentialAccel = 0;
 		self.tangentialAccelVar = 0;
 
-		// angle
-		angle = 90;
-		angleVar = 360;
+		// _angle
+		_angle = 90;
+		_angleVar = 360;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 2;
-		lifeVar = 1;
+		// _life of particles
+		_life = 2;
+		_lifeVar = 1;
 
 		// size, in pixels
-		startSize = 60.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 60.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.2f;
-		startColor.g = 0.4f;
-		startColor.b = 0.7f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.2f;
-		startColorVar.a = 0.1f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.2f;
+		_startColor.g = 0.4f;
+		_startColor.b = 0.7f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.2f;
+		_startColorVar.a = 0.1f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -530,8 +530,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -551,44 +551,44 @@
 		self.tangentialAccel = 45;
 		self.tangentialAccelVar = 0;
 
-		// angle
-		angle = 90;
-		angleVar = 0;
+		// _angle
+		_angle = 90;
+		_angleVar = 0;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 12;
-		lifeVar = 0;
+		// _life of particles
+		_life = 12;
+		_lifeVar = 0;
 
 		// size, in pixels
-		startSize = 20.0f;
-		startSizeVar = 0.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 20.0f;
+		_startSizeVar = 0.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.5f;
-		startColor.g = 0.5f;
-		startColor.b = 0.5f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.5f;
-		startColorVar.g = 0.5f;
-		startColorVar.b = 0.5f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.5f;
-		endColor.g = 0.5f;
-		endColor.b = 0.5f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.5f;
-		endColorVar.g = 0.5f;
-		endColorVar.b = 0.5f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.5f;
+		_startColor.g = 0.5f;
+		_startColor.b = 0.5f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.5f;
+		_startColorVar.g = 0.5f;
+		_startColorVar.b = 0.5f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.5f;
+		_endColor.g = 0.5f;
+		_endColor.b = 0.5f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.5f;
+		_endColorVar.g = 0.5f;
+		_endColorVar.b = 0.5f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -613,8 +613,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = 0.1f;
+		// _duration
+		_duration = 0.1f;
 
 		self.emitterMode = kCCParticleModeGravity;
 
@@ -633,44 +633,44 @@
 		self.tangentialAccel = 0;
 		self.tangentialAccelVar = 0;
 
-		// angle
-		angle = 90;
-		angleVar = 360;
+		// _angle
+		_angle = 90;
+		_angleVar = 360;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, winSize.height/2);
-		posVar = CGPointZero;
+		self.posVar = CGPointZero;
 
-		// life of particles
-		life = 5.0f;
-		lifeVar = 2;
+		// _life of particles
+		_life = 5.0f;
+		_lifeVar = 2;
 
 		// size, in pixels
-		startSize = 15.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 15.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = totalParticles/duration;
+		_emissionRate = _totalParticles/_duration;
 
 		// color of particles
-		startColor.r = 0.7f;
-		startColor.g = 0.1f;
-		startColor.b = 0.2f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.5f;
-		startColorVar.g = 0.5f;
-		startColorVar.b = 0.5f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.5f;
-		endColor.g = 0.5f;
-		endColor.b = 0.5f;
-		endColor.a = 0.0f;
-		endColorVar.r = 0.5f;
-		endColorVar.g = 0.5f;
-		endColorVar.b = 0.5f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.7f;
+		_startColor.g = 0.1f;
+		_startColor.b = 0.2f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.5f;
+		_startColorVar.g = 0.5f;
+		_startColorVar.b = 0.5f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.5f;
+		_endColor.g = 0.5f;
+		_endColor.b = 0.5f;
+		_endColor.a = 0.0f;
+		_endColorVar.r = 0.5f;
+		_endColorVar.g = 0.5f;
+		_endColorVar.b = 0.5f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -695,8 +695,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// Emitter mode: Gravity Mode
 		self.emitterMode = kCCParticleModeGravity;
@@ -712,44 +712,44 @@
 		self.speed = 25;
 		self.speedVar = 10;
 
-		// angle
-		angle = 90;
-		angleVar = 5;
+		// _angle
+		_angle = 90;
+		_angleVar = 5;
 
 		// emitter position
 		CGSize winSize = [[CCDirector sharedDirector] winSize];
 		self.position = ccp(winSize.width/2, 0);
-		posVar = ccp(20, 0);
+		self.posVar = ccp(20, 0);
 
-		// life of particles
-		life = 4;
-		lifeVar = 1;
+		// _life of particles
+		_life = 4;
+		_lifeVar = 1;
 
 		// size, in pixels
-		startSize = 60.0f;
-		startSizeVar = 10.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 60.0f;
+		_startSizeVar = 10.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per frame
-		emissionRate = totalParticles/life;
+		_emissionRate = _totalParticles/_life;
 
 		// color of particles
-		startColor.r = 0.8f;
-		startColor.g = 0.8f;
-		startColor.b = 0.8f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.02f;
-		startColorVar.g = 0.02f;
-		startColorVar.b = 0.02f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.0f;
-		endColor.g = 0.0f;
-		endColor.b = 0.0f;
-		endColor.a = 1.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.8f;
+		_startColor.g = 0.8f;
+		_startColor.b = 0.8f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.02f;
+		_startColorVar.g = 0.02f;
+		_startColorVar.b = 0.02f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.0f;
+		_endColor.g = 0.0f;
+		_endColor.b = 0.0f;
+		_endColor.a = 1.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -771,8 +771,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		// set gravity mode.
 		self.emitterMode = kCCParticleModeGravity;
@@ -797,41 +797,41 @@
 			[[CCDirector sharedDirector] winSize].width / 2,
 			[[CCDirector sharedDirector] winSize].height + 10
 		};
-		posVar = ccp( [[CCDirector sharedDirector] winSize].width / 2, 0 );
+		self.posVar = ccp( [[CCDirector sharedDirector] winSize].width / 2, 0 );
 
-		// angle
-		angle = -90;
-		angleVar = 5;
+		// _angle
+		_angle = -90;
+		_angleVar = 5;
 
-		// life of particles
-		life = 45;
-		lifeVar = 15;
+		// _life of particles
+		_life = 45;
+		_lifeVar = 15;
 
 		// size, in pixels
-		startSize = 10.0f;
-		startSizeVar = 5.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 10.0f;
+		_startSizeVar = 5.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = 10;
+		_emissionRate = 10;
 
 		// color of particles
-		startColor.r = 1.0f;
-		startColor.g = 1.0f;
-		startColor.b = 1.0f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColor.r = 1.0f;
-		endColor.g = 1.0f;
-		endColor.b = 1.0f;
-		endColor.a = 0.0f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 1.0f;
+		_startColor.g = 1.0f;
+		_startColor.b = 1.0f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 1.0f;
+		_endColor.g = 1.0f;
+		_endColor.b = 1.0f;
+		_endColor.a = 0.0f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -853,8 +853,8 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 
-		// duration
-		duration = kCCParticleDurationInfinity;
+		// _duration
+		_duration = kCCParticleDurationInfinity;
 
 		self.emitterMode = kCCParticleModeGravity;
 
@@ -873,9 +873,9 @@
 		self.speed = 130;
 		self.speedVar = 30;
 
-		// angle
-		angle = -90;
-		angleVar = 5;
+		// _angle
+		_angle = -90;
+		_angleVar = 5;
 
 
 		// emitter position
@@ -883,37 +883,37 @@
 			[[CCDirector sharedDirector] winSize].width / 2,
 			[[CCDirector sharedDirector] winSize].height
 		};
-		posVar = ccp( [[CCDirector sharedDirector] winSize].width / 2, 0 );
+		self.posVar = ccp( [[CCDirector sharedDirector] winSize].width / 2, 0 );
 
-		// life of particles
-		life = 4.5f;
-		lifeVar = 0;
+		// _life of particles
+		_life = 4.5f;
+		_lifeVar = 0;
 
 		// size, in pixels
-		startSize = 4.0f;
-		startSizeVar = 2.0f;
-		endSize = kCCParticleStartSizeEqualToEndSize;
+		_startSize = 4.0f;
+		_startSizeVar = 2.0f;
+		_endSize = kCCParticleStartSizeEqualToEndSize;
 
 		// emits per second
-		emissionRate = 20;
+		_emissionRate = 20;
 
 		// color of particles
-		startColor.r = 0.7f;
-		startColor.g = 0.8f;
-		startColor.b = 1.0f;
-		startColor.a = 1.0f;
-		startColorVar.r = 0.0f;
-		startColorVar.g = 0.0f;
-		startColorVar.b = 0.0f;
-		startColorVar.a = 0.0f;
-		endColor.r = 0.7f;
-		endColor.g = 0.8f;
-		endColor.b = 1.0f;
-		endColor.a = 0.5f;
-		endColorVar.r = 0.0f;
-		endColorVar.g = 0.0f;
-		endColorVar.b = 0.0f;
-		endColorVar.a = 0.0f;
+		_startColor.r = 0.7f;
+		_startColor.g = 0.8f;
+		_startColor.b = 1.0f;
+		_startColor.a = 1.0f;
+		_startColorVar.r = 0.0f;
+		_startColorVar.g = 0.0f;
+		_startColorVar.b = 0.0f;
+		_startColorVar.a = 0.0f;
+		_endColor.r = 0.7f;
+		_endColor.g = 0.8f;
+		_endColor.b = 1.0f;
+		_endColor.a = 0.5f;
+		_endColorVar.r = 0.0f;
+		_endColorVar.g = 0.0f;
+		_endColorVar.b = 0.0f;
+		_endColorVar.a = 0.0f;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
