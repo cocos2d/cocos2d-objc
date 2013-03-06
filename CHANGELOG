@@ -36,7 +36,7 @@ version 2.1-rc0	 28-Jan-2013
 . [FIX] Actions, Animations, Camera, Director, Menu, Node, Particles, Parallax, Sprite, SpriteBatch, Texture, TextureAtlas, Transitions: All ivars use _ as prefix, not as suffix
 . [FIX] CocosDenshion: Tests moved to tests directory. Merged CocosDenshion and CocosDenshionExtras directories
 . [FIX] Configuration: Can be initialized before an OpenGL context is created (issue #1450)
-. [FIX] Director: replaced length with lenght
+. [FIX] Director: replaced lenght with length
 		Fixed 2 memory leaks in createStatsLabel
 		Frees DrawingPrimitives resources (issue #1456)
 		The 1st dt after startAnimation will be 0 (issue #1435)

@@ -101,6 +101,7 @@ struct _hashUniformEntry;
         unsigned int usesTime:1;
         unsigned int usesMVP:1;
         unsigned int usesMV:1;
+		unsigned int usesRandom:1;
     } _flags;
 }
 
