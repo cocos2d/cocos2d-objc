@@ -206,6 +206,10 @@ typedef void (*GLLogFunction) (GLuint program,
 	_uniforms[kCCUniformSinTime] = glGetUniformLocation(_program, kCCUniformSinTime_s);
 	_uniforms[kCCUniformCosTime] = glGetUniformLocation(_program, kCCUniformCosTime_s);
 
+	_uniforms[kCCUniformRandom01] = glGetUniformLocation(_program, kCCUniformRandom01_s);
+
+	_uniforms[kCCUniformSampler] = glGetUniformLocation(_program, kCCUniformSampler_s);
+
 	_flags.usesMVP = _uniforms[kCCUniformMVPMatrix] != -1;
 	_flags.usesMV = (_uniforms[kCCUniformMVMatrix] != -1 && _uniforms[kCCUniformPMatrix] != -1 );
 	_flags.usesTime = (
@@ -213,10 +217,8 @@ typedef void (*GLLogFunction) (GLuint program,
 		_uniforms[kCCUniformSinTime] != -1 ||
 		_uniforms[kCCUniformCosTime] != -1
 	);
+	_flags.usesRandom = _uniforms[kCCUniformRandom01] != -1;
 
-	_uniforms[kCCUniformRandom01] = glGetUniformLocation(_program, kCCUniformRandom01_s);
-	
-	_uniforms[kCCUniformSampler] = glGetUniformLocation(_program, kCCUniformSampler_s);
 
 	[self use];
 	
@@ -453,9 +455,8 @@ typedef void (*GLLogFunction) (GLuint program,
 		[self setUniformLocation:_uniforms[kCCUniformCosTime] withF1:cosf(time/8.0) f2:cosf(time/4.0) f3:cosf(time/2.0) f4:cosf(time)];
 	}
 	
-	if(_uniforms[kCCUniformRandom01] != -1){
+	if(_flags.usesRandom)
 		[self setUniformLocation:_uniforms[kCCUniformRandom01] withF1:CCRANDOM_0_1() f2:CCRANDOM_0_1() f3:CCRANDOM_0_1() f4:CCRANDOM_0_1()];
-	}
 }
 
 -(void)setUniformForModelViewProjectionMatrix;

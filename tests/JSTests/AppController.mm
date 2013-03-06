@@ -37,11 +37,11 @@
 	// Create an CCGLView with a RGB8 color buffer, and a depth buffer of 24-bits
 	CCGLView *glView = [CCGLView viewWithFrame:[window_ bounds]
 								   pixelFormat:kEAGLColorFormatRGBA8
-								   depthFormat:0 //GL_DEPTH_COMPONENT24_OES
+								   depthFormat:GL_DEPTH_COMPONENT24_OES
 							preserveBackbuffer:YES
 									sharegroup:nil
 								 multiSampling:NO
-							   numberOfSamples:4];
+							   numberOfSamples:0];
 
 	director_ = (CCDirectorIOS*) [CCDirector sharedDirector];
 
@@ -62,8 +62,8 @@
 	[director_ setDelegate:self];
 
 	// 2D projection
-//	[director_ setProjection:kCCDirectorProjection2D];
-	[director_ setProjection:kCCDirectorProjection3D];
+	[director_ setProjection:kCCDirectorProjection2D];
+//	[director_ setProjection:kCCDirectorProjection3D];
 
 
 	// Enables High Res mode (Retina Display) for CocosDragon
