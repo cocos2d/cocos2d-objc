@@ -11,8 +11,9 @@ version 2.1-rc1 - XX-Mar-2013
 . [FIX] Texture2D: Logs using RGB565 textures only if RGB565 is being used
 			Fixed deprecation warnings on iOS6 (issue #1467)
 . [PERF] Uniforms: small performance improvement when setting uniforms
-. [3RD] JS Bindings: Updated to v0.6
 . [3RD] CCBReader: new version of CCBReader (which version is it???)
+. [3RD] Chipmunk: Updated to 6.1.4
+. [3RD] JS Bindings: Updated to v0.6
 . [3RD] SpiderMonkey: Updated to v19.0
 
 version 2.1-rc0a  07-Feb-2013
