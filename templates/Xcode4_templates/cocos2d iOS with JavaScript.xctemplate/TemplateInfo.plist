@@ -26,10 +26,10 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>AppDelegate.m</key>
+		<key>AppDelegate.mm</key>
 		<dict>
 			<key>Path</key>
-			<string>AppDelegate.m</string>
+			<string>AppDelegate.mm</string>
 		</dict>
 		<key>main.m</key>
 		<dict>
@@ -73,7 +73,7 @@
 		<string>Prefix.pch</string>
 		<string>main.m</string>
 		<string>AppDelegate.h</string>
-		<string>AppDelegate.m</string>
+		<string>AppDelegate.mm</string>
 		<string>Resources/grossini_dance_atlas.png</string>
 		<string>Resources/main.js</string>
 	</array>
