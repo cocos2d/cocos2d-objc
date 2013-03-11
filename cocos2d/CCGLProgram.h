@@ -70,7 +70,7 @@ enum {
 #define kCCUniformCosTime_s				"CC_CosTime"
 #define kCCUniformRandom01_s			"CC_Random01"
 #define kCCUniformSampler_s				"CC_Texture0"
-#define kCCUniformAlphaTestValue		"CC_alpha_value"
+#define kCCUniformAlphaTestValue_s		"CC_AlphaValue"
 
 // Attribute names
 #define	kCCAttributeNameColor			@"a_color"
@@ -96,10 +96,22 @@ struct _hashUniformEntry;
 					_fragShader;
 
 	GLint			_uniforms[kCCUniform_MAX];
-	BOOL _usesTime;
+
+	struct {
+        unsigned int usesTime:1;
+        unsigned int usesMVP:1;
+        unsigned int usesMV:1;
+		unsigned int usesRandom:1;
+    } _flags;
 }
 
 @property(nonatomic, readonly) GLuint program;
+
+/** creates the CCGLProgram with a vertex and fragment from byte arrays */
++ (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;
+
+/** creates the CCGLProgram with a vertex and fragment with contents of filenames */
++ (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename;
 
 /** Initializes the CCGLProgram with a vertex and fragment with bytes array */
 - (id)initWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray;

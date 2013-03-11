@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -62,7 +63,8 @@ extern "C" {
   - ccDrawLine
   - ccDrawRect, ccDrawSolidRect
   - ccDrawPoly, ccDrawSolidPoly
-  - ccDrawCircle
+  - ccDrawCircle, ccDrawSolidCircle 
+  - ccDrawArc, ccDrawSolidArc
   - ccDrawQuadBezier
   - ccDrawCubicBezier
   - ccDrawCatmullRom
@@ -114,6 +116,15 @@ void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F 
     
 /** draws a circle given the center, radius and number of segments measured in points */
 void ccDrawCircle( CGPoint center, float radius, float angle, NSUInteger segments, BOOL drawLineToCenter);
+
+/** draws a solid circle given the center, radius and number of segments measured in points */
+void ccDrawSolidCircle( CGPoint center, float radius, NSUInteger segments);
+    
+/** draws a arc given the center, radius, arc length and number of segments measured in points */
+void ccDrawArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs, BOOL drawLineToCenter);
+
+/** draws a solid arc given the center, radius, arc length and number of segments measured in points */
+void ccDrawSolidArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs);
 
 /** draws a quad bezier path measured in points.
  @warning This function could be pretty slow. Use it only for debugging purposes.

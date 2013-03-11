@@ -12,6 +12,7 @@
 
 static int sceneIdx=-1;
 static NSString *transitions[] = {
+
 	@"Sprite1",
 	@"SpriteBatchNode1",
 	@"SpriteFrameTest",
@@ -1192,11 +1193,12 @@ Class restartAction()
 		// Configure shader to mimic glAlphaTest
 		//
 		CCGLProgram *alphaTestShader = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader.program, kCCUniformAlphaTestValue);
+		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader.program, kCCUniformAlphaTestValue_s);
 
+		[alphaTestShader use];
 		// set alpha test value
 		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-		[self.shaderProgram setUniformLocation:alphaValueLocation withF1:0.0f];
+		[alphaTestShader setUniformLocation:alphaValueLocation withF1:0.5f];
 
 		dir = 1;
 		time = 0;
@@ -1270,11 +1272,13 @@ Class restartAction()
 		// Configure shader to mimic glAlphaTest
 		//
 		CCGLProgram *alphaTestShader = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColorAlphaTest];
-		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader.program, kCCUniformAlphaTestValue);
+		GLint alphaValueLocation = glGetUniformLocation(alphaTestShader.program, kCCUniformAlphaTestValue_s);
 
+		
+		[alphaTestShader use];
 		// set alpha test value
 		// NOTE: alpha test shader is hard-coded to use the equivalent of a glAlphaFunc(GL_GREATER) comparison
-		[self.shaderProgram setUniformLocation:alphaValueLocation withF1:0.0f];
+		[alphaTestShader setUniformLocation:alphaValueLocation withF1:0.5f];
 
 
 		CGSize s = [[CCDirector sharedDirector] winSize];

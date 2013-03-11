@@ -846,8 +846,10 @@
 
 -(void) setOpacityModifyRGB:(BOOL)modify
 {
-	if( _opacityModifyRGB != modify )
+	if( _opacityModifyRGB != modify ) {
+		_opacityModifyRGB = modify;
 		[self updateColor];
+	}
 }
 
 -(BOOL) doesOpacityModifyRGB

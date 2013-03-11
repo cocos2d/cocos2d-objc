@@ -188,6 +188,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
 @end
 
+@interface CCMenuItem (Deprecated)
+// new: -(CGRect) activeArea;
+-(CGRect) rect DEPRECATED_ATTRIBUTE;
+-(void) setRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+@end
+
 @interface CCMenuItemAtlasFont (Deprecated)
 // new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap
 +(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap DEPRECATED_ATTRIBUTE;

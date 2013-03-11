@@ -148,6 +148,8 @@
 
 		// issue #937
 		[_sprite setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
+		// issue #1464
+		[_sprite setOpacityModifyRGB:YES];
 
 		glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
 		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -535,4 +537,17 @@
 	return [image autorelease];
 }
 #endif // __CC_PLATFORM_IOS
+
+#pragma RenderTexture - Override
+
+-(CGSize) contentSize
+{
+	return _texture.contentSize;
+}
+
+-(void) setContentSize:(CGSize)size
+{
+	NSAssert(NO, @"You cannot change the content size of an already created CCRenderTexture. Recreate it");
+}
+
 @end

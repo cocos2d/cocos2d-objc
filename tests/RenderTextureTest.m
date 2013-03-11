@@ -12,6 +12,7 @@ static int sceneIdx=-1;
 static NSString *tests[] = {
 	@"RenderTextureSave",
 	@"RenderTextureIssue937",
+	@"RenderTextureIssue1464",
 	@"RenderTextureZbuffer",
 	@"RenderTextureTestDepthStencil",
 	@"RenderTextureTargetNode",
@@ -368,8 +369,7 @@ Class restartAction()
 #endif // __CC_PLATFORM_MAC
 @end
 
-#pragma mark -
-#pragma mark RenderTextureIssue937
+#pragma mark - RenderTextureIssue937
 
 @implementation RenderTextureIssue937
 
@@ -444,8 +444,56 @@ Class restartAction()
 }
 @end
 
-#pragma mark -
-#pragma mark RenderTextureZbuffer
+#pragma mark - RenderTextureIssue1464
+
+@implementation RenderTextureIssue1464
+
+-(id) init
+{
+	if( (self=[super init]) ) {
+
+		CCLayerColor *background = [CCLayerColor layerWithColor:ccc4(200,200,200,255)];
+		[self addChild:background];
+
+		/* A2 & B2 setup */
+		CCRenderTexture *rend = [CCRenderTexture renderTextureWithWidth:256 height:256 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+
+		CCSprite *sprite = [CCSprite spriteWithFile:@"grossini.png"];
+		[sprite setPosition:ccp(128,128)];
+
+		[rend begin];
+
+		// A2
+		[sprite visit];
+
+		[rend end];
+
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		[self addChild:rend];
+		rend.position = ccp( s.width/2, s.height/2);
+
+		id fadeout = [CCFadeOut actionWithDuration:2];
+		id fadein = [fadeout reverse];
+		id seq = [CCSequence actions: fadeout, fadein, nil];
+		id fe = [CCRepeatForever actionWithAction:seq];
+		[rend.sprite runAction:fe];
+	}
+
+	return self;
+}
+-(NSString*) title
+{
+	return @"Testing issue #1464";
+}
+
+-(NSString*) subtitle
+{
+	return @"Sprite should fade in / out without problems";
+}
+@end
+
+#pragma mark - RenderTextureZbuffer
 
 @implementation RenderTextureZbuffer
 
@@ -724,7 +772,7 @@ Class restartAction()
 		CGSize s = [CCDirector sharedDirector].winSize;
 
 		/* Create the render texture */
-		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width height:s.height pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+		CCRenderTexture *renderTexture = [CCRenderTexture renderTextureWithWidth:s.width/2 height:s.height/2 pixelFormat:kCCTexture2DPixelFormat_RGBA4444];
 		_renderTexture = renderTexture;
 
 		[renderTexture setPosition:ccp(s.width/2, s.height/2)];
@@ -762,12 +810,15 @@ Class restartAction()
 
 - (void)update:(ccTime)dt
 {
-	  static float time = 0;
-	  float r = 80;
-	  _sprite1.position = ccp(cosf(time * 2) * r, sinf(time * 2) * r);
-	  _sprite2.position = ccp(sinf(time * 2) * r, cosf(time * 2) * r);
+	CGSize cs = _renderTexture.contentSize;
+	CGPoint p =  ccp(cs.width/2, cs.height/2);
 
-	  time += dt;
+	static float time = 0;
+	float r = 80;
+	_sprite1.position = ccp(cosf(time * 2) * r + p.x, sinf(time * 2) * r + p.y);
+	_sprite2.position = ccp(sinf(time * 2) * r + p.x, cosf(time * 2) * r + p.y);
+
+	time += dt;
 }
 
 -(NSString*) title

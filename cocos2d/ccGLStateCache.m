@@ -123,6 +123,14 @@ void ccGLBlendResetToCache(void)
 #endif // CC_ENABLE_GL_STATE_CACHE
 }
 
+void ccGLBindTexture( GLenum target, GLuint textureId )
+{
+	if( target == GL_TEXTURE_2D )
+		ccGLBindTexture2DN(0, textureId);
+	else
+		glBindTexture(target, textureId);
+}
+
 void ccGLBindTexture2D( GLuint textureId )
 {
 	ccGLBindTexture2DN(0, textureId);

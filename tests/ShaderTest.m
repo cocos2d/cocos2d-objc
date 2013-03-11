@@ -131,7 +131,7 @@ Class restartAction()
 	ccVertex2F	center_;
 	ccVertex2F	resolution_;
 	float		time_;
-	GLuint		uniformCenter, uniformResolution, uniformTime;
+	GLuint		uniformCenter, uniformResolution;
 }
 
 +(id) shaderNodeWithVertex:(NSString*)vert fragment:(NSString*)frag;
@@ -181,7 +181,6 @@ enum {
 
 	uniformCenter = glGetUniformLocation( shader.program, "center");
 	uniformResolution = glGetUniformLocation( shader.program, "resolution");
-	uniformTime = glGetUniformLocation( shader.program, "time");
 
 	self.shaderProgram = shader;
 
@@ -212,10 +211,6 @@ enum {
 	//
 	[self.shaderProgram setUniformLocation:uniformCenter withF1:center_.x f2:center_.y];
 	[self.shaderProgram setUniformLocation:uniformResolution withF1:resolution_.x f2:resolution_.y];
-
-	// time changes all the time, so it is Ok to call OpenGL directly, and not the "cached" version
-	glUniform1f( uniformTime, time_ );
-//	[self.shaderProgram setUniformLocation:uniformTime with1f:time_];
 
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position );

@@ -28,6 +28,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
 	LabelBMFont: If the character is not supported, logs a warning
 
+* colesbury (https://github.com/colesbury):
+	CCClippingNode uses glClear to clear stencil buffer (issue #1463)
+
 * Daniel Rice (https://github.com/dangero):
 	Director: willRotateToInterfaceOrientation is propagated to the delegate
 
@@ -37,6 +40,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Gábor Varga (https://github.com/vargusz)
 	Fixed possible memory leak in RadialTransitions
 	Events in tratisions are disabled/enabled at onEnter/onExit. patch.
+
+* Glenna (https://github.com/glenna):
+	Fixed deprecations warnings on CCTexture2D
 
 * Goffredo Marocchi (https://github.com/panajev):
 	LabelBMFont: removed forward declarations for tFontDefHashElement and tKerningHashElement. They are in the header now.
@@ -52,9 +58,12 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Fixed some logic errors in the Scheduler and Timer
 	TMX Maps: Fixed firstGID parser issue for new version TMX file with external TSX file
 
-* Ian Oliver (http://www.trivialtechnology.com)
+* Ian Oliver (http://www.trivialtechnology.com):
 	GLProgram: Better error reporting on link
 	GLProgram: Added uniformLocationForName: method
+
+* James Munro (https://github.com/jdmunro):
+	Patch to don't allocate labelsStats on director, if view is nil
 
 * kamorris:
 	Patch that prevent crash on director when purgeCacheData is called before the creation of the view
@@ -76,6 +85,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Mike Daley (http://www.71squared.com/)
 	LabelBMFont: contextSize honors shadows and strokes patch.
 
+* Nader Eloshaiker (https://github.com/nader-eloshaiker)
+	Added DrawSolidCircle, DrawArc and DrawSolidArc
+
 * Nestor Todorov (https://github.com/supernes)
 	Added patch to support iPhone5 support in FileUtils
 
@@ -91,6 +103,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	Added support for Stencil Buffer in the GLView
 	Fixed EventTests: memory leaks, dangling pointer and logic
 	Added support for gestures in OSX
+
+* rakkarage (https://github.com/rakkarage):
+	Fixed wrong log when using RGB565 textures
 
 * Ricardo Sánchez-Sáez (https://github.com/rsanchezsaez)
 	Added "stackable" support for Move Actions
@@ -113,6 +128,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * SeanLin (http://www.cocos2d-x.org)
 	Xcode fixes to make SysTests work on iOS
+
+* Sébastien Dabet (https://github.com/sdabet)
+	Added activeArea to CCMenuItem
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac

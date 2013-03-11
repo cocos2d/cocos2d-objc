@@ -26,6 +26,11 @@
 {}
 @end
 
+@interface RenderTextureIssue1464 : RenderTextureTest
+{}
+@end
+
+
 @interface RenderTextureZbuffer : RenderTextureTest
 {
 	CCSprite *sp1;

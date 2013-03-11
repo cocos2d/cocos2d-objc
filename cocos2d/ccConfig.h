@@ -39,6 +39,15 @@
 #define CC_ENABLE_CHIPMUNK_INTEGRATION 0
 #endif
 
+/** @def CC_CHIPMUNK_IMPORT
+ Which file to import if using Chipmunk.
+ Change it to "ObjectiveChipmunk.h" or define it as a preprocessor macro if you are using ObjectiveChipmunk.
+ @since v2.1
+ */
+#if CC_ENABLE_CHIPMUNK_INTEGRATION && !defined(CC_CHIPMUNK_IMPORT)
+#define CC_CHIPMUNK_IMPORT "chipmunk.h"
+#endif
+
 /** @def CC_ENABLE_BOX2D_INTEGRATION
  If enabled, it will include CCPhysicsScript with Box2D Physics support.
  If you enable it, make sure that Box2D is in the search path.

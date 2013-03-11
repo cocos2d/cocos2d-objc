@@ -1,3 +1,21 @@
+version 2.1-rc1 - XX-Mar-2013
+. [NEW] DrawingPrimitives: Added DrawSolidCircle, DrawArc, DrawSolidArc (issue #1465)
+. [NEW] GLProgram: Added 2 class methods to create the instance
+. [NEW] MenuItem: rect -> renamed activeArea. If contentSize is modified, activeArea is modified too
+. [FIX] ClippingNode: Uses glClear to clear the stencil buffer (issue #1463)
+. [FIX] Director: Only create the statsLabels if view is not nil
+. [FIX] EaseActions: fixed rounding error in BounceXXX and ExpXXX actions
+. [FIX] GLProgram: If shader files are not found at init time, returns nil and log warning on console
+. [FIX] RenderTexture: returns correct value of contentSize
+			Internal sprite sets opacityModifyRGB=YES (issue #1464)
+. [FIX] Texture2D: Logs using RGB565 textures only if RGB565 is being used
+			Fixed deprecation warnings on iOS6 (issue #1467)
+. [PERF] Uniforms: small performance improvement when setting uniforms
+. [3RD] CCBReader: new version of CCBReader (which version is it???)
+. [3RD] Chipmunk: Updated to 6.1.4
+. [3RD] JS Bindings: Updated to v0.6
+. [3RD] SpiderMonkey: Updated to v19.0
+
 version 2.1-rc0a  07-Feb-2013
 . [NEW] Actions: Stackable actions behavior can be disabled at compile time (issue #1461)
 		BezierTo copy: works as expected
@@ -19,7 +37,7 @@ version 2.1-rc0	 28-Jan-2013
 . [FIX] Actions, Animations, Camera, Director, Menu, Node, Particles, Parallax, Sprite, SpriteBatch, Texture, TextureAtlas, Transitions: All ivars use _ as prefix, not as suffix
 . [FIX] CocosDenshion: Tests moved to tests directory. Merged CocosDenshion and CocosDenshionExtras directories
 . [FIX] Configuration: Can be initialized before an OpenGL context is created (issue #1450)
-. [FIX] Director: replaced length with lenght
+. [FIX] Director: replaced lenght with length
 		Fixed 2 memory leaks in createStatsLabel
 		Frees DrawingPrimitives resources (issue #1456)
 		The 1st dt after startAnimation will be 0 (issue #1435)
@@ -31,7 +49,7 @@ version 2.1-rc0	 28-Jan-2013
 . [FIX] FileUtils: Suffixes for iPhone5 are: "-iphone5" and "-iphone5hd", and not "-wide" and "-widehd"
 . [FIX] Layer: _touchPriority is an NSInteger, not a BOOL (issue #1449)
 . [FIX] MenuItem: "releaseBlockAtCleanup" enabled by default. Rolls back behavior from v2.1-beta4
-. [FIX] RenderTexture: Restures the Projection after using it.
+. [FIX] RenderTexture: Restures the Projection after using it (issue #1425)
 . [FIX] Particles: Adding or removing particles in runtime from an emitter works as expected
 . [3RD] CCBReader: is a submodule in github. Using lastest stable version
 . [3RD] JRSwizzle: is a submodule
