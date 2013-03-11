@@ -4082,7 +4082,6 @@
 		501945740F964C620059CE7C /* drawPrimitivesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = drawPrimitivesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5019457F0F964CFD0059CE7C /* drawPrimitivesTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = drawPrimitivesTest.h; path = tests/drawPrimitivesTest.h; sourceTree = "<group>"; };
 		501945800F964CFD0059CE7C /* drawPrimitivesTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = drawPrimitivesTest.m; path = tests/drawPrimitivesTest.m; sourceTree = "<group>"; };
-		501A7CAC0EBC97BA005BC158 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		501C7C910F91EFFF0024A296 /* SpriteTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		501C7CA60F91F1B20024A296 /* SpriteTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SpriteTest.h; path = tests/SpriteTest.h; sourceTree = "<group>"; };
 		501C7CA70F91F1B20024A296 /* SpriteTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SpriteTest.m; path = tests/SpriteTest.m; sourceTree = "<group>"; };
@@ -4219,7 +4218,6 @@
 		508A33290FBADD5F00D574A2 /* grossini_dance_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_12.png; sourceTree = "<group>"; };
 		508A332A0FBADD5F00D574A2 /* grossini_dance_13.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_13.png; sourceTree = "<group>"; };
 		508A332B0FBADD5F00D574A2 /* grossini_dance_14.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = grossini_dance_14.png; sourceTree = "<group>"; };
-		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		508CA7DA1193270F003AC397 /* SchedulerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SchedulerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		508CA7E511932966003AC397 /* SchedulerTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SchedulerTest.m; path = tests/SchedulerTest.m; sourceTree = "<group>"; };
 		508CA7E711932A1F003AC397 /* SchedulerTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SchedulerTest.h; path = tests/SchedulerTest.h; sourceTree = "<group>"; };
@@ -4259,11 +4257,9 @@
 		50A29E151153D9CF00D87F08 /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
 		50A783C40F3AFCE500104C45 /* MotionStreakTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MotionStreakTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50A783DC0F3AFDD700104C45 /* streak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = streak.png; sourceTree = "<group>"; };
-		50AC0A500EC34DD400EB5EDC /* DONORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = DONORS; sourceTree = "<group>"; };
 		50B2C5E80E100EF000AE9530 /* ChipmunkTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChipmunkTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50B2C5EB0E100F8800AE9530 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		50B2C5EC0E100F8800AE9530 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
-		50B2C9BF0E109A5900AE9530 /* CHANGELOG */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG; sourceTree = "<group>"; };
 		50B2CB170E10EE0800AE9530 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = tests/main.m; sourceTree = "<group>"; };
 		50B2CB180E10EE0800AE9530 /* Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Prefix.pch; path = tests/Prefix.pch; sourceTree = "<group>"; };
 		50B2CB240E10EE4A00AE9530 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Default.png; path = Resources/Default.png; sourceTree = "<group>"; };
@@ -4637,17 +4633,12 @@
 		A05B5B08156F35C100ADAB65 /* cpSweep1D.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpSweep1D.c; sourceTree = "<group>"; };
 		A05B5B09156F35C100ADAB65 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A05B5B0A156F35C100ADAB65 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
-		A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_Kazmath.txt; sourceTree = "<group>"; };
 		A06BF84C168109170018A802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		A06F8BC9166D8C42008215BC /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06F8BCD166D8CD4008215BC /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-jsb.js"; sourceTree = "<group>"; };
 		A06F8BCF166D8CD4008215BC /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = levels.js; sourceTree = "<group>"; };
 		A06F8C43166D8CD4008215BC /* resources-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "resources-jsb.js"; sourceTree = "<group>"; };
 		A06F8C44166D8CD4008215BC /* watermelon_with_me.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = watermelon_with_me.js; sourceTree = "<group>"; };
-		A0707F6215F946E9001C1263 /* LICENSE_CCBReader.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CCBReader.txt; sourceTree = "<group>"; };
-		A0707F6315F946E9001C1263 /* LICENSE_JRSwizzle.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_JRSwizzle.txt; sourceTree = "<group>"; };
-		A0707F6415F946E9001C1263 /* LICENSE_jsbindings.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_jsbindings.txt; sourceTree = "<group>"; };
-		A0707F6515F946E9001C1263 /* LICENSE_SpiderMonkey.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_SpiderMonkey.txt; sourceTree = "<group>"; };
 		A07273BC155B1F07003E961F /* test_1021x1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test_1021x1024.png; sourceTree = "<group>"; };
 		A07273C3155B217C003E961F /* test_1021x1024_a8.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_a8.pvr.gz; sourceTree = "<group>"; };
 		A07273C4155B217C003E961F /* test_1021x1024_rgb888.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_1021x1024_rgb888.pvr.gz; sourceTree = "<group>"; };
@@ -4696,7 +4687,6 @@
 		A0793478141990CD00AC44D4 /* VaryingRestitution.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VaryingRestitution.h; sourceTree = "<group>"; };
 		A0793479141990CD00AC44D4 /* VerticalStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VerticalStack.h; sourceTree = "<group>"; };
 		A079347A141990CD00AC44D4 /* Web.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Web.h; sourceTree = "<group>"; };
-		A07EC9B2141A8D32008C1F12 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		A08C378E14144FBB004538FD /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
 		A08C379014144FDE004538FD /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
 		A093FC24150D0ED40039327A /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
@@ -5072,12 +5062,6 @@
 		E0B1F6631266476800ACD961 /* paddle-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "paddle-hd.png"; sourceTree = "<group>"; };
 		E0BBADE71282E838007DB81E /* test_image_rgba4444.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = test_image_rgba4444.pvr.ccz; sourceTree = "<group>"; };
 		E0BBADE81282E838007DB81E /* test_image_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = test_image_rgba4444.pvr.gz; sourceTree = "<group>"; };
-		E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_artwork.txt; sourceTree = "<group>"; };
-		E0BC7D6F1342CC58001B4DCC /* LICENSE_Box2D.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Box2D.txt; sourceTree = "<group>"; };
-		E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_Chipmunk.txt; sourceTree = "<group>"; };
-		E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_cocos2d.txt; sourceTree = "<group>"; };
-		E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CocosDenshion.txt; sourceTree = "<group>"; };
-		E0BC7D741342CC58001B4DCC /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
 		E0C54E7411F9D8C700B9E4CB /* fire_rgba8888.pvr */ = {isa = PBXFileReference; lastKnownFileType = file; path = fire_rgba8888.pvr; sourceTree = "<group>"; };
 		E0C5588611FE48E600B9E4CB /* ZwoptexTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZwoptexTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E0C5588911FE493B00B9E4CB /* ZwoptexTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZwoptexTest.h; path = tests/ZwoptexTest.h; sourceTree = "<group>"; };
@@ -6061,22 +6045,6 @@
 			isa = PBXGroup;
 			children = (
 				A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */,
-				A07EC9B2141A8D32008C1F12 /* README.md */,
-				501A7CAC0EBC97BA005BC158 /* AUTHORS */,
-				508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */,
-				50B2C9BF0E109A5900AE9530 /* CHANGELOG */,
-				50AC0A500EC34DD400EB5EDC /* DONORS */,
-				E0BC7D711342CC58001B4DCC /* LICENSE_cocos2d.txt */,
-				E0BC7D6E1342CC58001B4DCC /* LICENSE_artwork.txt */,
-				E0BC7D6F1342CC58001B4DCC /* LICENSE_Box2D.txt */,
-				E0BC7D701342CC58001B4DCC /* LICENSE_Chipmunk.txt */,
-				E0BC7D721342CC58001B4DCC /* LICENSE_CocosDenshion.txt */,
-				E0BC7D741342CC58001B4DCC /* LICENSE_libpng.txt */,
-				A060106813C2992800BB6F49 /* LICENSE_Kazmath.txt */,
-				A0707F6215F946E9001C1263 /* LICENSE_CCBReader.txt */,
-				A0707F6315F946E9001C1263 /* LICENSE_JRSwizzle.txt */,
-				A0707F6415F946E9001C1263 /* LICENSE_jsbindings.txt */,
-				A0707F6515F946E9001C1263 /* LICENSE_SpiderMonkey.txt */,
 				501756090F335CE900624901 /* external */,
 				50B130FC0DFE0923003BAB56 /* tests */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
