@@ -3,7 +3,7 @@
 	url = git://github.com/slembcke/Chipmunk-Physics.git
 [submodule "external/JavaScript/jsbindings"]
 	path = external/JavaScript/jsbindings
-	url = git://github.com/zynga/jsbindings.git
+	url = git://github.com/funkaster/jsbindings.git
 [submodule "external/JavaScript/JRSwizzle"]
 	path = external/JavaScript/JRSwizzle
 	url = git://github.com/ricardoquesada/jrswizzle.git

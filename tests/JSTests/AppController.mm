@@ -15,7 +15,11 @@
 #import "CCBReader.h"
 
 // SpiderMonkey
-#include "jsapi.h"  
+#include "jsapi.h"
+
+#if JSB_ENABLE_DEBUGGER
+#include "jsb_dbg.h"
+#endif
 
 #pragma mark - AppDelegate - iOS
 
@@ -163,6 +167,12 @@
 
 	// Add the "js" folder in the search path, since it is a "blue folder"
 	[fileutils setSearchPath:@[@"js", @""]];
+
+#if JSB_ENABLE_DEBUGGER
+	[[JSBCore sharedInstance] enableDebugger];
+	[[JSBCore sharedInstance] runScript:@"main.example.js"];
+	return;
+#endif
 
 	//
 	// Watermelon
