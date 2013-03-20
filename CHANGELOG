@@ -1,4 +1,4 @@
-version 2.1-rc1 - XX-Mar-2013
+version 2.1-rc1 - 20-Mar-2013
 . [NEW] DrawingPrimitives: Added DrawSolidCircle, DrawArc, DrawSolidArc (issue #1465)
 . [NEW] GLProgram: Added 2 class methods to create the instance
 . [NEW] MenuItem: rect -> renamed activeArea. If contentSize is modified, activeArea is modified too
