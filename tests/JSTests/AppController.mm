@@ -192,7 +192,7 @@
 	//
 	else if( [name isEqual:@"JS CocosDragon"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectoryMode];
-		[fileutils setSearchPath:@[@"Published files iOS",@""]];
+		[fileutils setSearchPath:@[@"Published files iOS", @"js", @""]];
 
 #if defined(__CC_PLATFORM_MAC)
 		// Use the iPad folder for Mac resources
@@ -217,7 +217,7 @@
 	//
 	else if( [name isEqual:@"JS Crystal Craze"] ) {
 		[fileutils setSearchMode:kCCFileUtilsSearchDirectoryMode];
-		[fileutils setSearchPath:@[@"Published-iOS",@"js", @""]];
+		[fileutils setSearchPath:@[@"Published-iOS", @"js", @""]];
 		
 #if defined(__CC_PLATFORM_MAC)
 		// Use the iPhone folder for Mac resources
