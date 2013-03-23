@@ -59,6 +59,7 @@ typedef enum {
 	BOOL _touchEnabled;
 	NSInteger _touchPriority;
 	BOOL _touchMode;
+    BOOL _touchSwallow;
 	
 	BOOL _accelerometerEnabled;
 }
@@ -84,6 +85,9 @@ typedef enum {
  */
 @property(nonatomic, assign) ccTouchesMode touchMode;
 
+/** whether touch events are swallowed (in kCCTouchesOneByOne mode) */
+@property(nonatomic, assign) BOOL touchSwallow;
+
 /** sets the accelerometer's update frequency. A value of 1/2 means that the callback is going to be called twice per second.
  @since v2.1
  */
@@ -104,7 +108,8 @@ typedef enum {
 	BOOL		_touchEnabled;
 	NSInteger	_touchPriority;
 	NSInteger	_touchMode;
-    
+    BOOL        _touchSwallow;
+
 	BOOL		_gestureEnabled;
 	NSInteger	_gesturePriority;
 }
