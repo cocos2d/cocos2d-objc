@@ -83,6 +83,23 @@
 @implementation CCTMXTilesetInfo
 
 @synthesize name = _name, firstGid = _firstGid, tileSize = _tileSize, spacing = _spacing, margin = _margin, sourceImage = _sourceImage, imageSize = _imageSize;
+@synthesize tileOffset = _tileOffset, tileAnchorPoint = _tileAnchorPoint;
+
+/**
+ Custom Setter:
+ Sets the _tileOffset property (expressed in pixels) as specified in the TMX file (should be double for retina).
+ Then it calculates the anchorPoint for the tiles (expressed as %), and stores it in the _tileAnchorPoint readonly property.
+ The CCTMXLayer is then responsible for  setting the anchorPoint of its tile sprites.
+ (implemented in -[CCTMXLayer setupTileSprite:position:withGID:])
+ */
+- (void)setTileOffset:(CGPoint)tileOffset
+{
+	_tileOffset = tileOffset;
+	NSAssert((self.tileSize.width > 0 && self.tileSize.height > 0), @"Error in [CCTMXTilesetInfo setTileOffset:], tileSize is Zero");
+	float normalizedOffsetX = tileOffset.x / _tileSize.width;
+	float normalizedOffsetY = tileOffset.y / _tileSize.height;
+	_tileAnchorPoint = CGPointMake(normalizedOffsetX, normalizedOffsetY);
+}
 
 - (void) dealloc
 {
@@ -267,12 +284,21 @@
 			s.width = [[attributeDict objectForKey:@"tilewidth"] intValue];
 			s.height = [[attributeDict objectForKey:@"tileheight"] intValue];
 			tileset.tileSize = s;
+			tileset.tileOffset = CGPointZero; //default offset (0,0)
 
 			[_tilesets addObject:tileset];
 			[tileset release];
 		}
 
-	} else if([elementName isEqualToString:@"tile"]) {
+	}
+	else if([elementName isEqualToString:@"tileoffset"]) {
+		//should only be found within a tileset. Getting the parent.
+		CCTMXTilesetInfo *tileset = [_tilesets lastObject];
+		CGPoint offset = CGPointMake([[attributeDict objectForKey:@"x"] floatValue],
+									 [[attributeDict objectForKey:@"y"] floatValue]);
+		tileset.tileOffset = offset;
+	}
+	else if([elementName isEqualToString:@"tile"]) {
 		CCTMXTilesetInfo* info = [_tilesets lastObject];
 		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:3];
 		_parentGID =  [info firstGid] + [[attributeDict objectForKey:@"id"] intValue];

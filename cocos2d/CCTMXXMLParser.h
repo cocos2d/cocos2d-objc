@@ -119,6 +119,15 @@ typedef enum ccTMXTileFlags_ {
 	CGSize			_tileSize;
 	unsigned int	_spacing;
 	unsigned int	_margin;
+	
+	//	Offset of tiles. New TMX XML node introduced here: https://github.com/bjorn/tiled/issues/16 .
+	//	Node structure:
+	//	(...) <tileset firstgid="1" name="mytileset-ipad" tilewidth="40" tileheight="40" spacing="1" margin="1">
+	//			  <tileoffset x="0" y="10"/>
+	//			  <image source="mytileset-ipad.png" width="256" height="256"/>
+	//	(...)
+	CGPoint         _tileOffset;
+	CGPoint			_tileAnchorPoint; //normalized anchor point	
 
 	// filename containing the tiles (should be spritesheet / texture atlas)
 	NSString	*_sourceImage;
@@ -133,6 +142,8 @@ typedef enum ccTMXTileFlags_ {
 @property (nonatomic,readwrite,assign) unsigned int margin;
 @property (nonatomic,readwrite,retain) NSString *sourceImage;
 @property (nonatomic,readwrite,assign) CGSize imageSize;
+@property (nonatomic,readwrite,assign) CGPoint tileOffset; //setter has a custom implementation
+@property (nonatomic,readonly,assign) CGPoint tileAnchorPoint; //set automatically when tileOffset changes
 
 -(CGRect) rectForGID:(unsigned int)gid;
 @end
