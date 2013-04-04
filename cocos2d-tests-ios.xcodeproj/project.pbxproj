@@ -1982,7 +1982,6 @@
 		A0C164D6166D589300DF921C /* EaseActionsTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B3166D589300DF921C /* EaseActionsTest */; };
 		A0C164D7166D589300DF921C /* EffectsTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B4166D589300DF921C /* EffectsTest */; };
 		A0C164D8166D589300DF921C /* EventTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B5166D589300DF921C /* EventTest */; };
-		A0C164D9166D589300DF921C /* ExtensionsTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B6166D589300DF921C /* ExtensionsTest */; };
 		A0C164DA166D589300DF921C /* FontTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B7166D589300DF921C /* FontTest */; };
 		A0C164DB166D589300DF921C /* IntervalTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B8166D589300DF921C /* IntervalTest */; };
 		A0C164DC166D589300DF921C /* LabelTest in Resources */ = {isa = PBXBuildFile; fileRef = A0C164B9166D589300DF921C /* LabelTest */; };
@@ -2109,6 +2108,8 @@
 		A0D3A927149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A928149D2FAE0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A0D3A929149D2FAF0077CD93 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A0D5A9171705789900135A88 /* ExtensionsTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D5A9161705789900135A88 /* ExtensionsTest */; };
+		A0D5A91F170578D000135A88 /* EffectsAdvancedTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D5A91E170578D000135A88 /* EffectsAdvancedTest */; };
 		A0D5F3FA16B235A0000523E9 /* bitmapFontTest.fnt in Resources */ = {isa = PBXBuildFile; fileRef = 505463971062867800AB7C52 /* bitmapFontTest.fnt */; };
 		A0D5F3FB16B235A0000523E9 /* bitmapFontTest.png in Resources */ = {isa = PBXBuildFile; fileRef = 505463981062867800AB7C52 /* bitmapFontTest.png */; };
 		A0D6BFEF159B6A25008EED97 /* b1.png in Resources */ = {isa = PBXBuildFile; fileRef = 5001659D0E72DB470085673F /* b1.png */; };
@@ -4732,7 +4733,6 @@
 		A0C164B3166D589300DF921C /* EaseActionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EaseActionsTest; sourceTree = "<group>"; };
 		A0C164B4166D589300DF921C /* EffectsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EffectsTest; sourceTree = "<group>"; };
 		A0C164B5166D589300DF921C /* EventTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EventTest; sourceTree = "<group>"; };
-		A0C164B6166D589300DF921C /* ExtensionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ExtensionsTest; sourceTree = "<group>"; };
 		A0C164B7166D589300DF921C /* FontTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = FontTest; sourceTree = "<group>"; };
 		A0C164B8166D589300DF921C /* IntervalTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = IntervalTest; sourceTree = "<group>"; };
 		A0C164B9166D589300DF921C /* LabelTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = LabelTest; sourceTree = "<group>"; };
@@ -4776,6 +4776,8 @@
 		A0D31E9E16C73BB5004FFCD2 /* jsb_system_registration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = jsb_system_registration.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		A0D3A8FD149D2F9D0077CD93 /* BaseAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BaseAppController.h; path = tests/BaseAppController.h; sourceTree = "<group>"; };
 		A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BaseAppController.m; path = tests/BaseAppController.m; sourceTree = "<group>"; };
+		A0D5A9161705789900135A88 /* ExtensionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ExtensionsTest; sourceTree = "<group>"; };
+		A0D5A91E170578D000135A88 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EffectsAdvancedTest; sourceTree = "<group>"; };
 		A0D6C037159B6A25008EED97 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
 		A0D77A0F146E3244000960C7 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
@@ -7421,8 +7423,9 @@
 				A0C164B2166D589300DF921C /* DrawPrimitivesTest */,
 				A0C164B3166D589300DF921C /* EaseActionsTest */,
 				A0C164B4166D589300DF921C /* EffectsTest */,
+				A0D5A91E170578D000135A88 /* EffectsAdvancedTest */,
+				A0D5A9161705789900135A88 /* ExtensionsTest */,
 				A0C164B5166D589300DF921C /* EventTest */,
-				A0C164B6166D589300DF921C /* ExtensionsTest */,
 				A02521DD169635910087E514 /* FileUtils */,
 				A0C164B7166D589300DF921C /* FontTest */,
 				A0C164B8166D589300DF921C /* IntervalTest */,
@@ -11486,7 +11489,6 @@
 				A0C164D6166D589300DF921C /* EaseActionsTest in Resources */,
 				A0C164D7166D589300DF921C /* EffectsTest in Resources */,
 				A0C164D8166D589300DF921C /* EventTest in Resources */,
-				A0C164D9166D589300DF921C /* ExtensionsTest in Resources */,
 				A0C164DA166D589300DF921C /* FontTest in Resources */,
 				A0C164DB166D589300DF921C /* IntervalTest in Resources */,
 				A0C164DC166D589300DF921C /* LabelTest in Resources */,
@@ -11517,6 +11519,8 @@
 				A04A479316C5A76900BA75DC /* BaseTestLayer in Resources */,
 				A0D2C4CE16C94FA800DA6C86 /* js in Resources */,
 				A0D2C4D416C9B8B700DA6C86 /* OpenGLTest in Resources */,
+				A0D5A9171705789900135A88 /* ExtensionsTest in Resources */,
+				A0D5A91F170578D000135A88 /* EffectsAdvancedTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
