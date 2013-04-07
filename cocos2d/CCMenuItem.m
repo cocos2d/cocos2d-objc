@@ -153,9 +153,9 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 -(void) setTarget:(id)target selector:(SEL)selector
 {
-    [self setBlock:^(id sender) {
-        
-		[target performSelector:selector withObject:sender];
+   __block id weakTarget = target; // avoid retain cycle
+   [self setBlock:^(id sender) {
+		[weakTarget performSelector:selector withObject:sender];
 	}];
 }
 
