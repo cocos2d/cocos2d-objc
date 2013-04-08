@@ -17,6 +17,9 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+* Alexander Tkachenko (https://github.com/tkach)
+	MenuItem: target is not retained when using setTarget:selector:
+
 * andyispani:
 	CocosDenshion can be muted before loading a sound file. patch
 
