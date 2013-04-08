@@ -323,14 +323,19 @@ int compareInts (const void * a, const void * b);
 {
 	[sprite setPosition: [self positionAt:pos]];
 	[sprite setVertexZ: [self vertexZForPos:pos]];
-	sprite.anchorPoint = CGPointZero;
+	//sprite.anchorPoint = CGPointZero; // was the default
 	[sprite setOpacity:_opacity];
 	
 	//issue 1264, flip can be undone as well
 	sprite.flipX = NO;
 	sprite.flipY = NO;
 	sprite.rotation = 0;
-	sprite.anchorPoint = ccp(0,0);
+	//sprite.anchorPoint = ccp(0,0); // was the default
+	
+	// All tile sprites in the layer should have the same anchorpoint.
+	// The default anchor point is defined in the TMX file (within the tileset node) and stored in the
+	// CCTMXTilesetInfo* property of the CCTMXLayer.
+	sprite.anchorPoint = _tileset.tileAnchorPoint;
 	
 	// Rotation in tiled is achieved using 3 flipped states, flipping across the horizontal, vertical, and diagonal axes of the tiles.
 	if (gid & kCCTMXTileDiagonalFlag)
