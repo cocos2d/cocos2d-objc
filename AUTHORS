@@ -151,6 +151,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added method to load resources without using resolution search
 		Added search path for any kind of resources
 
+* xynyn (http://xynyn.com):
+	Progress Actions: "updateProgress" is called after calling setType
+
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
 
