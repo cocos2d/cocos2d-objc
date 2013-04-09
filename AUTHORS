@@ -138,6 +138,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Sébastien Dabet (https://github.com/sdabet)
 	Added activeArea to CCMenuItem
+	Added "touchSwallow" as a property in CCLayer
 
 * Tommaso Pavese (https://github.com/tompave)
 	TMX tile maps: Added support for tile's offset property
