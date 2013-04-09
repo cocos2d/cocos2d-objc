@@ -73,6 +73,7 @@
 		_touchEnabled = NO;
 		_touchPriority = 0;
 		_touchMode = kCCTouchesAllAtOnce;
+        _touchSwallow = YES;
 
 #ifdef __CC_PLATFORM_IOS
 		_accelerometerEnabled = NO;
@@ -97,7 +98,7 @@
 	if( _touchMode == kCCTouchesAllAtOnce )
 		[[director touchDispatcher] addStandardDelegate:self priority:_touchPriority];
 	else /* one by one */
-		[[director touchDispatcher] addTargetedDelegate:self priority:_touchPriority swallowsTouches:YES];
+		[[director touchDispatcher] addTargetedDelegate:self priority:_touchPriority swallowsTouches:_touchSwallow];
 }
 
 -(BOOL) isAccelerometerEnabled
@@ -167,6 +168,21 @@
 {
 	if( _touchMode != touchMode ) {
 		_touchMode = touchMode;
+		if( _touchEnabled) {
+			[self setTouchEnabled:NO];
+			[self setTouchEnabled:YES];
+		}
+	}
+}
+
+-(BOOL) touchSwallow
+{
+	return _touchSwallow;
+}
+-(void) setTouchSwallow:(BOOL)touchSwallow
+{
+	if( _touchSwallow != touchSwallow ) {
+		_touchSwallow = touchSwallow;
 		if( _touchEnabled) {
 			[self setTouchEnabled:NO];
 			[self setTouchEnabled:YES];
