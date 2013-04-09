@@ -65,6 +65,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Ian Oliver (http://www.trivialtechnology.com):
 	GLProgram: Better error reporting on link
 	GLProgram: Added uniformLocationForName: method
+	
+* Ian Voyce (http://www.voyce.com/):
+	DrawingPrimitives: ccDrawSolicArc calls lazy_init()
 
 * James Munro (https://github.com/jdmunro):
 	Patch to don't allocate labelsStats on director, if view is nil
