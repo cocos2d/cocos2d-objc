@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2009 Jason Booth
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -182,17 +183,61 @@
 #pragma mark EaseExponential
 
 //
+// EaseExponential
+//
+
+#define kDefaultPolynomial 6
+@implementation CCEaseExponential
+
+@dynamic polynomialOrder;
+
++(id) actionWithAction: (CCActionInterval*) action
+{
+	return [[[self alloc] initWithAction: action] autorelease];
+}
+
+-(id) initWithAction: (CCActionInterval*) action
+{
+	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
+
+	if (self = [super initWithAction: action]) {
+		_polynomialOrder = kDefaultPolynomial;
+        _hasInflection = FALSE;
+        _intersetValue = 1.78179743628068f;
+    }
+
+	return self;
+}
+
+-(void)setPolynomialOrder:(NSUInteger)val {
+    NSAssert(val>1, @"Polynomial order must be greater than 1");
+    _polynomialOrder = val;
+    _hasInflection = (val % 2 > 0);
+    _intersetValue = powf(0.5f, 1.0f / val) / 0.5f;
+}
+
+-(NSUInteger)polynomialOrder {
+    return _polynomialOrder;
+}
+@end
+
+//
 // EaseExponentialIn
 //
 @implementation CCEaseExponentialIn
 -(void) update: (ccTime) t
 {
-	[_inner update: (t==0) ? 0 : powf(2, 10 * (t/1 - 1)) /* - 1 * 0.001f */];
+	[_inner update: powf(t, _polynomialOrder)];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseExponentialOut actionWithAction: [_inner reverse]];
+	CCEaseExponentialOut *action = [CCEaseExponentialOut actionWithAction: [_inner reverse]];
+    if (_polynomialOrder != kDefaultPolynomial) {
+        action.polynomialOrder = _polynomialOrder;
+    }
+
+    return action;
 }
 @end
 
@@ -202,12 +247,23 @@
 @implementation CCEaseExponentialOut
 -(void) update: (ccTime) t
 {
-	[_inner update: (t==1) ? 1 : (-powf(2, -10 * t/1) + 1)];
+    if (_hasInflection) {
+        t = powf(t-1.0f, _polynomialOrder) + 1.0f;
+    } else {
+        t = -powf(t-1.0f, _polynomialOrder) + 1.0f;
+    }
+
+    [_inner update:t];
 }
 
 - (CCActionInterval*) reverse
 {
-	return [CCEaseExponentialIn actionWithAction: [_inner reverse]];
+	CCEaseExponentialOut *action = [CCEaseExponentialIn actionWithAction: [_inner reverse]];
+    if (_polynomialOrder != kDefaultPolynomial) {
+        action.polynomialOrder = _polynomialOrder;
+    }
+
+    return action;
 }
 @end
 
@@ -217,14 +273,15 @@
 @implementation CCEaseExponentialInOut
 -(void) update: (ccTime) t
 {
-	// prevents rouding errors
-	if( t != 1 && t != 0 ) {
-		t *= 2;
-		if (t < 1)
-			t = 0.5f * powf(2, 10 * (t - 1));
-		else
-			t = 0.5f * (-powf(2, -10 * (t -1) ) + 2);
-	}
+	if (t < 0.5f) {
+		t = powf(t*_intersetValue, _polynomialOrder);
+	} else {
+        if (_hasInflection) {
+            t = powf((t - 1.0f)*_intersetValue, _polynomialOrder) + 1.0f;
+        } else {
+            t = -powf((t - 1.0f)*_intersetValue, _polynomialOrder) + 1.0f;
+        }
+    }
 
 	[_inner update:t];
 }

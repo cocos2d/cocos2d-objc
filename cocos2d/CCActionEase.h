@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2009 Jason Booth
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +59,7 @@
 /** CCEaseIn action with a rate
  */
 @interface CCEaseIn : CCEaseRateAction <NSCopying>
-{} 
+{}
 // Needed for BridgeSupport
 -(void) update: (ccTime) t;
 @end
@@ -79,9 +80,26 @@
 -(void) update: (ccTime) t;
 @end
 
+/** CCEase Exponential abstract class
+ @since v2.1
+ */
+@interface CCEaseExponential : CCActionEase <NSCopying> {
+@protected
+    NSUInteger _polynomialOrder;
+    CGFloat _intersetValue; //Used for InOut mid point
+    BOOL _hasInflection; //odd numbered polynomial orders will display a point of inflection where the curve will invert
+}
+/** Used to determine the steepness of the timing curve.
+ As the value increases, so does the steepness of the curve.
+ Default value is 6  ; gives a close representation to a log2 curve,
+ @warning Value must be greater than 1
+ */
+@property (nonatomic, readwrite, assign) NSUInteger polynomialOrder;
+@end
+
 /** CCEase Exponential In
  */
-@interface CCEaseExponentialIn : CCActionEase <NSCopying>
+@interface CCEaseExponentialIn : CCEaseExponential <NSCopying>
 {}
 // Needed for BridgeSupport
 -(void) update: (ccTime) t;
@@ -89,7 +107,7 @@
 
 /** Ease Exponential Out
  */
-@interface CCEaseExponentialOut : CCActionEase <NSCopying>
+@interface CCEaseExponentialOut : CCEaseExponential <NSCopying>
 {}
 // Needed for BridgeSupport
 -(void) update: (ccTime) t;
@@ -97,7 +115,7 @@
 
 /** Ease Exponential InOut
  */
-@interface CCEaseExponentialInOut : CCActionEase <NSCopying>
+@interface CCEaseExponentialInOut : CCEaseExponential <NSCopying>
 {}
 // Needed for BridgeSupport
 -(void) update: (ccTime) t;
@@ -176,7 +194,7 @@
 
 /** CCEaseBounce abstract class.
  @since v0.8.2
-*/
+ */
 @interface CCEaseBounce : CCActionEase <NSCopying>
 {}
 // Needed for BridgeSupport
@@ -186,7 +204,7 @@
 /** CCEaseBounceIn action.
  @warning This action doesn't use a bijective function. Actions like Sequence might have an unexpected result when used with this action.
  @since v0.8.2
-*/
+ */
 @interface CCEaseBounceIn : CCEaseBounce <NSCopying>
 {}
 // Needed for BridgeSupport
