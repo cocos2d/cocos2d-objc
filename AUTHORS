@@ -17,6 +17,7 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+
 * Alexander Tkachenko (https://github.com/tkach)
 	MenuItem: target is not retained when using setTarget:selector:
 
@@ -134,6 +135,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Sébastien Dabet (https://github.com/sdabet)
 	Added activeArea to CCMenuItem
+
+* Tommaso Pavese (https://github.com/tompave)
+	TMX tile maps: Added support for tile's offset property
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
