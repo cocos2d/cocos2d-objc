@@ -136,6 +136,7 @@ const char kCCProgressTextureCoords = 0x4b;
 			_vertexDataCount = 0;
 		}
 		_type = newType;
+		[self updateProgress];
 	}
 }
 
