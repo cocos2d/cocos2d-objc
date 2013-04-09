@@ -366,6 +366,8 @@ void ccDrawArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteg
 
 void ccDrawSolidArc(CGPoint center, CGFloat r, CGFloat a, CGFloat arcLength, NSUInteger segs)
 {
+    lazy_init();
+    
     if (arcLength == 0.0) return;
     
     const int additionalSegment = 2;
