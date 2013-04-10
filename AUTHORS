@@ -17,6 +17,10 @@ Lead Developer:
 
 People/companies who were/are contributing code to cocos2d for iPhone (alphabetically ordered):
 
+
+* Alexander Tkachenko (https://github.com/tkach)
+	MenuItem: target is not retained when using setTarget:selector:
+
 * andyispani:
 	CocosDenshion can be muted before loading a sound file. patch
 
@@ -61,6 +65,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Ian Oliver (http://www.trivialtechnology.com):
 	GLProgram: Better error reporting on link
 	GLProgram: Added uniformLocationForName: method
+	
+* Ian Voyce (http://www.voyce.com/):
+	DrawingPrimitives: ccDrawSolicArc calls lazy_init()
 
 * James Munro (https://github.com/jdmunro):
 	Patch to don't allocate labelsStats on director, if view is nil
@@ -131,6 +138,10 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Sébastien Dabet (https://github.com/sdabet)
 	Added activeArea to CCMenuItem
+	Added "touchSwallow" as a property in CCLayer
+
+* Tommaso Pavese (https://github.com/tompave)
+	TMX tile maps: Added support for tile's offset property
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
 	LabelTTF loads custom fonts correctly on Mac
@@ -139,6 +150,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 		Added support to search resolution resources in subdirectories
 		Added method to load resources without using resolution search
 		Added search path for any kind of resources
+
+* xynyn (http://xynyn.com):
+	Progress Actions: "updateProgress" is called after calling setType
 
 * yichao.zhang (https://github.com/zeaster)
 	Fixed possible double 'fire' of instant actions inside a sequence (issue #1398)
