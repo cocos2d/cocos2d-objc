@@ -205,6 +205,13 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
  @since v1.0
  */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
+/** Initializes a texture from a string with alignment, line break mode, font name and font size
+ Supported lineBreakModes:
+	- iOS: all UILineBreakMode supported modes
+	- Mac: Only NSLineBreakByWordWrapping is supported.
+ @since v1.0
+ */
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
 /** Initializes a texture from a string with dimensions, alignment, font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment;
 /** Initializes a texture from a string with font name and font size */

@@ -15,4 +15,4 @@
 	url = git://github.com/cocos2d/cocos2d-js-tests.git
 [submodule "external/CCBReader"]
 	path = external/CCBReader
-	url = git://github.com/cocos2d/CCBReader.git
+url=git@github.com:singledigitlabs/CCBReader.git

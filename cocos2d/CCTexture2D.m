@@ -661,6 +661,73 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	return [self initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vAlignment lineBreakMode:kCCLineBreakModeWordWrap];
 }
 
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size hAlignment:(CCTextAlignment)hAlignment vAlignment:(CCVerticalTextAlignment)vAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode
+{
+    CGSize dim;
+
+#ifdef __CC_PLATFORM_IOS
+    UIFont *uifont = [UIFont fontWithName:name size:size];
+    if( ! uifont ) {
+        CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
+        [self release];
+        return nil;
+    }
+
+    // Is it a multiline ? sizeWithFont: only works with single line.
+    CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+    dim = [string sizeWithFont:uifont
+             constrainedToSize:boundingSize
+                 lineBreakMode:NSLineBreakByWordWrapping];
+
+    if(dim.width == 0)
+        dim.width = 1;
+    if(dim.height == 0)
+        dim.height = 1;
+
+    return [self initWithString:string dimensions:dim hAlignment:hAlignment vAlignment:vAlignment lineBreakMode:lineBreakMode font:uifont];
+
+#elif defined(__CC_PLATFORM_MAC)
+
+	// select font
+	NSFont *font = [NSFont fontWithName:name size:size];
+	if( ! font ) {
+		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
+		[self release];
+		return nil;
+	}
+
+	// create paragraph style
+	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, -1, -1, -1, -1, -1};
+	NSUInteger alignments[] = { NSLeftTextAlignment, NSCenterTextAlignment, NSRightTextAlignment };
+
+	NSMutableParagraphStyle *pstyle = [[NSMutableParagraphStyle alloc] init];
+	[pstyle setAlignment: alignments[hAlignment] ];
+	[pstyle setLineBreakMode: linebreaks[lineBreakMode] ];
+
+	// put attributes into a NSDictionary
+	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, pstyle, NSParagraphStyleAttributeName, nil];
+
+	[pstyle release];
+
+	// create string with attributes
+	NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:attributes] autorelease];
+
+	// Is it a multiline ? sizeWithFont: only works with single line.
+	CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+	dim = [string sizeWithFont:font
+			 constrainedToSize:boundingSize
+				 lineBreakMode:NSLineBreakByWordWrapping];
+
+	if(dim.width == 0)
+		dim.width = 1;
+	if(dim.height == 0)
+		dim.height = 1;
+
+	return [self initWithString:string dimensions:dim hAlignment:hAlignment vAlignment:vAlignment attributedString:stringWithAttributes];
+
+#endif // Mac
+}
+
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)hAlignment vAlignment:(CCVerticalTextAlignment)vAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode 
 {
 #ifdef __CC_PLATFORM_IOS

@@ -129,6 +129,12 @@
 		50FBB2DB117613F500150761 /* CCActionTween.m in Sources */ = {isa = PBXBuildFile; fileRef = 50FBB2D9117613F500150761 /* CCActionTween.m */; };
 		6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 6F305B5D0FB9D2790052E700 /* TransformUtils.h */; };
 		6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F305B5E0FB9D2790052E700 /* TransformUtils.m */; };
+		751A5025171391EC007B5459 /* CCBAnimationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A0191729167FC1030099349A /* CCBAnimationManager.m */; };
+		751A5026171391EC007B5459 /* CCBKeyframe.m in Sources */ = {isa = PBXBuildFile; fileRef = A019172B167FC1030099349A /* CCBKeyframe.m */; };
+		751A5027171391EC007B5459 /* CCBReader.m in Sources */ = {isa = PBXBuildFile; fileRef = A019172D167FC1030099349A /* CCBReader.m */; };
+		751A5028171391EC007B5459 /* CCBsequence.m in Sources */ = {isa = PBXBuildFile; fileRef = A019172F167FC1030099349A /* CCBsequence.m */; };
+		751A5029171391EC007B5459 /* CCBSequenceProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = A0191731167FC1030099349A /* CCBSequenceProperty.m */; };
+		751A502A171391EC007B5459 /* CCNode+CCBRelativePositioning.m in Sources */ = {isa = PBXBuildFile; fileRef = A0191733167FC1030099349A /* CCNode+CCBRelativePositioning.m */; };
 		A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */ = {isa = PBXBuildFile; fileRef = A003AC8B1657071100C7B792 /* ccFPSImages.h */; };
 		A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
 		A003AC9016572EC300C7B792 /* ccFPSImages.m in Sources */ = {isa = PBXBuildFile; fileRef = A003AC8E16572D6000C7B792 /* ccFPSImages.m */; };
@@ -4003,6 +4009,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				751A5025171391EC007B5459 /* CCBAnimationManager.m in Sources */,
+				751A5026171391EC007B5459 /* CCBKeyframe.m in Sources */,
+				751A5027171391EC007B5459 /* CCBReader.m in Sources */,
+				751A5028171391EC007B5459 /* CCBsequence.m in Sources */,
+				751A5029171391EC007B5459 /* CCBSequenceProperty.m in Sources */,
+				751A502A171391EC007B5459 /* CCNode+CCBRelativePositioning.m in Sources */,
 				506887F70E96D4F000F943E5 /* CCAtlasNode.m in Sources */,
 				506884D70E96921100F943E5 /* CCLabelAtlas.m in Sources */,
 				506882160E95770400F943E5 /* CCTextureAtlas.m in Sources */,
@@ -4651,7 +4663,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				LIBRARY_SEARCH_PATHS = (
@@ -4659,7 +4671,7 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
 			};
@@ -4675,14 +4687,14 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
-				GCC_WARN_FOUR_CHARACTER_CONSTANTS = YES;
+				GCC_WARN_FOUR_CHARACTER_CONSTANTS = NO;
 				GCC_WARN_INITIALIZER_NOT_FULLY_BRACKETED = YES;
 				GCC_WARN_SHADOW = YES;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
-				OTHER_LDFLAGS = "";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;

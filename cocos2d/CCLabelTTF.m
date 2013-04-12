@@ -272,15 +272,19 @@
 	if( _dimensions.width == 0 || _dimensions.height == 0 )
 		tex = [[CCTexture2D alloc] initWithString:_string
 										 fontName:_fontName
-										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()];
+										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()
+                                         hAlignment:_hAlignment
+                                         vAlignment:_vAlignment
+                                         lineBreakMode:_lineBreakMode
+        ];
 	else
 		tex = [[CCTexture2D alloc] initWithString:_string
 										 fontName:_fontName
 										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()
-									   dimensions:CC_SIZE_POINTS_TO_PIXELS(_dimensions)
-									   hAlignment:_hAlignment
-									   vAlignment:_vAlignment
-									lineBreakMode:_lineBreakMode
+									     dimensions:CC_SIZE_POINTS_TO_PIXELS(_dimensions)
+									     hAlignment:_hAlignment
+									     vAlignment:_vAlignment
+									     lineBreakMode:_lineBreakMode
 			   ];
 
 	if( !tex )
