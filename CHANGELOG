@@ -4,6 +4,7 @@ version 2.1-rc2 - XX-May-2013
 . [FIX] MenuItem: target is not retained when using setTarget:selector: (issue #1482)
 . [FIX] Progress Actions: "updateProgress" is called after setting the type
 . [FIX] TileMaps: tile's offset property is used
+. [3RD] SpiderMonkey: Updated to v20.0
 
 version 2.1-rc1 - 20-Mar-2013
 . [NEW] DrawingPrimitives: Added DrawSolidCircle, DrawArc, DrawSolidArc (issue #1465)
