@@ -145,6 +145,8 @@ struct _hashUpdateEntry;
 	SEL					updateSelector;
 
     BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
+
+	BOOL				_paused;
 }
 
 /** Modifies the time of all scheduled callbacks.
@@ -155,6 +157,18 @@ struct _hashUpdateEntry;
  @warning It will affect EVERY scheduled selector / action.
  */
 @property (nonatomic,readwrite) ccTime	timeScale;
+
+
+/** Will pause / resume the CCScheduler.
+ It won't dispatch any message to any target/selector, block if it is paused.
+
+ The difference between `pauseAllTargets` and `pause, is that `setPaused` will pause the CCScheduler,
+ while `pauseAllTargets` will pause all the targets, one by one.
+ `setPaused` will pause the whole Scheduler, meaning that calls to `resumeTargets:`, `resumeTarget:` won't affect it.
+
+ @since v2.1.0
+ */
+@property (nonatomic,readonly,getter=isPaused) BOOL paused;
 
 /** 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.

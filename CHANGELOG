@@ -1,4 +1,5 @@
 version 2.1-rc2 - XX-May-2013
+. [NEW] Scheduler: Added 'setPaused' / 'isPaused' property
 . [FIX] DrawingPrimitives: DrawSolidCircle calls lazy_init()
 . [FIX] Layer: "swallow" is now a property. Can be changed in runtime.
 . [FIX] MenuItem: target is not retained when using setTarget:selector: (issue #1482)

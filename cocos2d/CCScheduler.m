@@ -283,6 +283,7 @@ typedef struct _hashSelectorEntry
 
 @implementation CCScheduler
 
+@synthesize paused = _paused;
 @synthesize timeScale = _timeScale;
 
 - (id) init
@@ -305,6 +306,7 @@ typedef struct _hashSelectorEntry
 		currentTargetSalvaged = NO;
 		hashForTimers = nil;
         updateHashLocked = NO;
+		_paused = NO;
 	}
 
 	return self;
@@ -830,6 +832,10 @@ typedef struct _hashSelectorEntry
 
 -(void) update: (ccTime) dt
 {
+	// all "dt" are going to be ignored if paused
+	if( _paused )
+		return;
+
     updateHashLocked = YES;
 
 	if( _timeScale != 1.0f )
