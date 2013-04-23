@@ -420,27 +420,38 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) popToRootScene
 {
+	[self popToSceneStackLevel:1];
+}
+
+-(void) popToSceneStackLevel:(NSUInteger)level
+{
 	NSAssert(_runningScene != nil, @"A running Scene is needed");
 	NSUInteger c = [_scenesStack count];
-	
-	if (c == 1) {
-		[_scenesStack removeLastObject];
-		[self end];
-	} else {
-		while (c > 1) {
-			CCScene *current = [_scenesStack lastObject];
-			if( [current isRunning] ){
-				[current onExitTransitionDidStart];
-				[current onExit];
-			}
-			[current cleanup];
 
-			[_scenesStack removeLastObject];
-			c--;
-		}
-		_nextScene = [_scenesStack lastObject];
-		_sendCleanupToScene = NO;
+	// level 0? -> end
+	if( level == 0) {
+		[self end];
+		return;
 	}
+
+	// current level or lower -> nothing
+	if( level >= c)
+		return;
+
+	// pop stack until reaching desired level
+	while (c > level) {
+		CCScene *current = [_scenesStack lastObject];
+		if( [current isRunning] ){
+			[current onExitTransitionDidStart];
+			[current onExit];
+		}
+		[current cleanup];
+
+		[_scenesStack removeLastObject];
+		c--;
+	}
+	_nextScene = [_scenesStack lastObject];
+	_sendCleanupToScene = NO;
 }
 
 -(void) end
