@@ -18,7 +18,7 @@ static NSString *transitions[] = {
 	@"DirectorViewDidDisappear",
 	@"DirectorAndGameCenter",
 	@"DirectorStartStopAnimating",
-
+	@"DirectorRootToLevel",
 };
 
 Class nextAction(void);
@@ -317,9 +317,68 @@ Class restartAction()
 }
 @end
 
+#pragma mark - DirectorRootToLevel
 
-#pragma mark -
-#pragma mark AppDelegate
+@implementation DirectorRootToLevel
+
+@synthesize level = _level;
+
+-(id) init
+{
+	return [self initWithLevel:1];
+}
+
+-(id) initWithLevel:(NSUInteger)level
+{
+	if( (self=[super init]) ) {
+
+		_level = level;
+		CGSize s = [[CCDirector sharedDirector] winSize];
+
+		NSString *str = [NSString stringWithFormat:@"Stack Level: %d", level];
+		CCLabelTTF *label = [CCLabelTTF labelWithString:str fontName:@"Marker Felt" fontSize:32];
+		[self addChild:label];
+		[label setPosition:ccp(s.width/2, s.height/2)];
+
+		CCMenuItemFont *item1 = [CCMenuItemFont itemWithString:@"Push Scene" target:self selector:@selector(pushScene:)];
+		CCMenuItemFont *item2 = [CCMenuItemFont itemWithString:@"Pop To Root" target:self selector:@selector(popToRoot:)];
+		CCMenu *menu = [CCMenu menuWithItems:item1, item2, nil];
+		[menu alignItemsVertically];
+		[self addChild:menu];
+	}
+
+	return self;
+}
+
+-(void) pushScene:(id)sender
+{
+	CCScene *scene = [CCScene node];
+	CCNode *child = [[[DirectorRootToLevel alloc] initWithLevel:_level+1] autorelease];
+
+	[scene addChild:child];
+
+	[[CCDirector sharedDirector] pushScene:scene];
+}
+
+-(void) popToRoot:(id)sender
+{
+	[[CCDirector sharedDirector] popToSceneStackLevel:1];
+}
+
+-(NSString *) title
+{
+	return @"popToRootStackLevel";
+}
+
+-(NSString *) subtitle
+{
+	return @"Press Add to add a scene. Press Pop to return to root scene";
+}
+@end
+
+
+
+#pragma mark - AppDelegate
 
 // CLASS IMPLEMENTATIONS
 
