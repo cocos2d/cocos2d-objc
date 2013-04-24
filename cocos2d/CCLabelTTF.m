@@ -35,6 +35,7 @@
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
+#import <CoreText/CoreText.h>
 #endif
 
 #if CC_USE_LA88_LABELS
@@ -147,7 +148,6 @@
 
 - (NSString*) getFontName:(NSString*)fontName
 {
-#ifdef __CC_PLATFORM_MAC
 	// Custom .ttf file ?
     if ([[fontName lowercaseString] hasSuffix:@".ttf"])
     {
@@ -158,7 +158,6 @@
 
 		return [[fontFile lastPathComponent] stringByDeletingPathExtension];
     }
-#endif //
 
     return fontName;
 }
