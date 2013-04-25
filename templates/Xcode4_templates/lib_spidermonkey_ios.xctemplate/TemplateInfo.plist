@@ -513,6 +513,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/SpiderMonkey/ios/include/mozilla/Char16.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>SpiderMonkey</string>
+				<string>ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/SpiderMonkey/ios/include/mozilla/Char16.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/SpiderMonkey/ios/include/mozilla/CheckedInt.h</key>
 		<dict>
 			<key>Group</key>
@@ -540,6 +555,21 @@
 			</array>
 			<key>Path</key>
 			<string>libs/SpiderMonkey/ios/include/mozilla/Constants.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>libs/SpiderMonkey/ios/include/mozilla/DebugOnly.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>SpiderMonkey</string>
+				<string>ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/SpiderMonkey/ios/include/mozilla/DebugOnly.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
@@ -738,6 +768,21 @@
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
+		<key>libs/SpiderMonkey/ios/include/mozilla/SplayTree.h</key>
+		<dict>
+			<key>Group</key>
+			<array>
+				<string>libs</string>
+				<string>SpiderMonkey</string>
+				<string>ios</string>
+				<string>include</string>
+				<string>mozilla</string>
+			</array>
+			<key>Path</key>
+			<string>libs/SpiderMonkey/ios/include/mozilla/SplayTree.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
 		<key>libs/SpiderMonkey/ios/include/mozilla/StandardInteger.h</key>
 		<dict>
 			<key>Group</key>
@@ -902,8 +947,10 @@
 		<string>libs/SpiderMonkey/ios/include/mozilla/Assertions.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/Attributes.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/BloomFilter.h</string>
+		<string>libs/SpiderMonkey/ios/include/mozilla/Char16.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/CheckedInt.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/Constants.h</string>
+		<string>libs/SpiderMonkey/ios/include/mozilla/DebugOnly.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/EnumSet.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/FloatingPoint.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/GuardObjects.h</string>
@@ -917,6 +964,7 @@
 		<string>libs/SpiderMonkey/ios/include/mozilla/RefPtr.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/Scoped.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/SHA1.h</string>
+		<string>libs/SpiderMonkey/ios/include/mozilla/SplayTree.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/StandardInteger.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/ThreadLocal.h</string>
 		<string>libs/SpiderMonkey/ios/include/mozilla/Types.h</string>

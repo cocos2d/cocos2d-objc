@@ -1530,6 +1530,61 @@
 		A06BF84E168109280018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
 		A06BF84F168109280018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
 		A06BF850168109290018A802 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A06BF84C168109170018A802 /* libsqlite3.dylib */; };
+		A06D9C161728D63D00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C1D1728D64C00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C1E1728D64C00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C1F1728D64D00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C201728D64E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C211728D64E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C221728D64F00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C231728D64F00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C241728D65400704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C251728D65400704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C261728D65500704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C271728D65600704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C281728D65600704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C291728D65700704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2A1728D65700704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2B1728D65800704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2C1728D65900704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2D1728D65A00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2E1728D65A00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C2F1728D65D00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C301728D65E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C311728D65E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C321728D65F00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C331728D65F00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C341728D66000704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C351728D66000704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C361728D66100704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C371728D66100704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C381728D66200704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C391728D66300704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3A1728D66400704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3B1728D66500704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3C1728D66500704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3D1728D66600704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3E1728D66800704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C3F1728D66900704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C401728D66A00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C411728D66A00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C421728D66B00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C431728D66B00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C441728D66C00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C451728D66C00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C461728D66D00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C471728D66E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C481728D66E00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C491728D66F00704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4A1728D67000704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4B1728D67000704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4C1728D67100704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4D1728D67100704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4E1728D67200704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C4F1728D67400704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C501728D67400704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C511728D67500704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A06D9C521728D67500704732 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
 		A06F8BB5166D8C42008215BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
 		A06F8BB6166D8C42008215BC /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
 		A06F8BB8166D8C42008215BC /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = A031B83415D9C80C00E1986C /* AppController.mm */; };
@@ -4635,6 +4690,7 @@
 		A05B5B09156F35C100ADAB65 /* cpVect.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = cpVect.c; sourceTree = "<group>"; };
 		A05B5B0A156F35C100ADAB65 /* prime.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prime.h; sourceTree = "<group>"; };
 		A06BF84C168109170018A802 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		A06D9C151728D63D00704732 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		A06F8BC9166D8C42008215BC /* JS Watermelon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Watermelon.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A06F8BCD166D8CD4008215BC /* boot-jsb.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "boot-jsb.js"; sourceTree = "<group>"; };
 		A06F8BCF166D8CD4008215BC /* levels.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = levels.js; sourceTree = "<group>"; };
@@ -5093,6 +5149,7 @@
 				05CA7AFE10ED674700F12774 /* QuartzCore.framework in Frameworks */,
 				05CA7B0010ED674700F12774 /* libz.dylib in Frameworks */,
 				A0CFE62215BE3D2F00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C1E1728D64C00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5108,6 +5165,7 @@
 				2B44E48D163383A0000492D8 /* QuartzCore.framework in Frameworks */,
 				2B44E48F163383A0000492D8 /* libz.dylib in Frameworks */,
 				2B44E490163383A0000492D8 /* CoreMotion.framework in Frameworks */,
+				A06D9C241728D65400704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5123,6 +5181,7 @@
 				495E74F2104B752C0012BB52 /* QuartzCore.framework in Frameworks */,
 				495E74F4104B752C0012BB52 /* libz.dylib in Frameworks */,
 				A0CFE63F15BE3D4600264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C401728D66A00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5139,6 +5198,7 @@
 				50010ECB103B3DB80059EC2E /* QuartzCore.framework in Frameworks */,
 				503092D3104474FC005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62515BE3D3100264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C211728D64E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5154,6 +5214,7 @@
 				5012DD360FE2994300D6DDD1 /* QuartzCore.framework in Frameworks */,
 				5030931710447A97005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64715BE3D4E00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C481728D66E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5169,6 +5230,7 @@
 				501504E711330E1700A9CA65 /* QuartzCore.framework in Frameworks */,
 				501504E911330E1700A9CA65 /* libz.dylib in Frameworks */,
 				A0CFE63E15BE3D4600264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3F1728D66900704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5184,6 +5246,7 @@
 				5019456F0F964C620059CE7C /* QuartzCore.framework in Frameworks */,
 				503092E4104477DD005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62D15BE3D3600264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2B1728D65800704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5199,6 +5262,7 @@
 				501C7C8C0F91EFFF0024A296 /* QuartzCore.framework in Frameworks */,
 				503092CF104474A4005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64415BE3D4B00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C451728D66C00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5214,6 +5278,7 @@
 				502BF56311E39CC30030C477 /* QuartzCore.framework in Frameworks */,
 				502BF56511E39CC30030C477 /* libz.dylib in Frameworks */,
 				A0CFE65015BE3D5400264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C511728D67500704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5229,6 +5294,7 @@
 				502C67060DFEFE1000E4107D /* QuartzCore.framework in Frameworks */,
 				5030930A104479F8005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64015BE3D4700264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C411728D66A00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5251,6 +5317,7 @@
 				503F5CB9101FE930002A37E5 /* QuartzCore.framework in Frameworks */,
 				5030931310447A69005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64615BE3D4D00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C471728D66E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5267,6 +5334,7 @@
 				504226280FC0B5D500B992F7 /* QuartzCore.framework in Frameworks */,
 				503092D1104474DC005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62415BE3D3000264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C201728D64E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5282,6 +5350,7 @@
 				504799AC100F6A4200D1C71A /* QuartzCore.framework in Frameworks */,
 				503092FC104478CA005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63715BE3D4100264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C381728D66200704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5297,6 +5366,7 @@
 				50E386E810445F4600150883 /* QuartzCore.framework in Frameworks */,
 				50DF7F98104498FF0089218C /* libz.dylib in Frameworks */,
 				A0CFE62315BE3D2F00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C1F1728D64D00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5304,6 +5374,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A06D9C161728D63D00704732 /* CoreText.framework in Frameworks */,
 				A02E266916A4EE85007F064C /* libcocos2d.a in Frameworks */,
 				504CC3251035BDE90096894C /* Foundation.framework in Frameworks */,
 				504CC3261035BDE90096894C /* UIKit.framework in Frameworks */,
@@ -5327,6 +5398,7 @@
 				504E18DD11C4C85A00E19835 /* UIKit.framework in Frameworks */,
 				504E18DE11C4C85A00E19835 /* libz.dylib in Frameworks */,
 				A0CFE62E15BE3D3600264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2A1728D65700704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5346,6 +5418,7 @@
 				50D1E6A511BE89E60030A027 /* UIKit.framework in Frameworks */,
 				E04C0F9F12886799000C4393 /* libz.dylib in Frameworks */,
 				A0CFE62815BE3D3300264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C251728D65400704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5365,6 +5438,7 @@
 				50D1E6AA11BE89E70030A027 /* UIKit.framework in Frameworks */,
 				E04C0FA11288679D000C4393 /* libz.dylib in Frameworks */,
 				A0CFE62915BE3D3300264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C261728D65500704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5384,6 +5458,7 @@
 				50D1E6AF11BE89E80030A027 /* UIKit.framework in Frameworks */,
 				E04C0FA21288679E000C4393 /* libz.dylib in Frameworks */,
 				A0CFE62A15BE3D3400264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C271728D65600704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5403,6 +5478,7 @@
 				50D1E6B411BE89E80030A027 /* UIKit.framework in Frameworks */,
 				E04C0FA3128867A1000C4393 /* libz.dylib in Frameworks */,
 				A0CFE62B15BE3D3400264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C281728D65600704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5419,6 +5495,7 @@
 				5031657D10277875003ACFE7 /* liblibpng.a in Frameworks */,
 				5030931110447A4A005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64515BE3D4C00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C461728D66D00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5434,6 +5511,7 @@
 				505B639E0F2F4210001B4104 /* QuartzCore.framework in Frameworks */,
 				503092F51044781B005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62F15BE3D3700264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2C1728D65900704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5449,6 +5527,7 @@
 				506144030E589A2E003CCDB7 /* QuartzCore.framework in Frameworks */,
 				503092E3104477BF005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63B15BE3D4400264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3C1728D66500704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5464,6 +5543,7 @@
 				5068820C0E95761200F943E5 /* QuartzCore.framework in Frameworks */,
 				503092CA10447456005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63615BE3D4000264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C371728D66100704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5479,6 +5559,7 @@
 				506C77DD0E01520900B48100 /* QuartzCore.framework in Frameworks */,
 				503092E010447736005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62715BE3D3200264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C231728D64F00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5494,6 +5575,7 @@
 				506C7A040E01C73A00B48100 /* QuartzCore.framework in Frameworks */,
 				503092FE10447906005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63815BE3D4200264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C391728D66300704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5509,6 +5591,7 @@
 				506C80090E041C9300B48100 /* QuartzCore.framework in Frameworks */,
 				5030930C10447A13005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64115BE3D4800264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C421728D66B00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5524,6 +5607,7 @@
 				5078B52A0E3E43540004233A /* QuartzCore.framework in Frameworks */,
 				503092FA104478A2005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63315BE3D3D00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C311728D65E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5539,6 +5623,7 @@
 				507C0F0511D609290075E747 /* QuartzCore.framework in Frameworks */,
 				507C0F0711D609290075E747 /* libz.dylib in Frameworks */,
 				A0CFE64F15BE3D5300264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C501728D67400704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5554,6 +5639,7 @@
 				507FF8EC116D16F600B6FAB2 /* QuartzCore.framework in Frameworks */,
 				507FF8EE116D16F600B6FAB2 /* libz.dylib in Frameworks */,
 				A0CFE64A15BE3D5000264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4B1728D67000704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5569,6 +5655,7 @@
 				508CA7D41193270F003AC397 /* QuartzCore.framework in Frameworks */,
 				508CA7D61193270F003AC397 /* libz.dylib in Frameworks */,
 				A0CFE64215BE3D4800264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C431728D66B00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5591,6 +5678,7 @@
 				50A24E3F0F377FA1007CAEB0 /* QuartzCore.framework in Frameworks */,
 				503092F610447837005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63015BE3D3A00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2D1728D65A00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5606,6 +5694,7 @@
 				50A783BF0F3AFCE500104C45 /* QuartzCore.framework in Frameworks */,
 				503093001044792C005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63915BE3D4300264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3A1728D66400704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5622,6 +5711,7 @@
 				50B2C5E20E100EF000AE9530 /* QuartzCore.framework in Frameworks */,
 				503092D510447514005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62615BE3D3100264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C221728D64F00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5637,6 +5727,7 @@
 				50C1955B0EE4B57E00829067 /* QuartzCore.framework in Frameworks */,
 				5030930210447950005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63C15BE3D4500264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3D1728D66600704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5652,6 +5743,7 @@
 				50C938DA0E0A9DBB00517B01 /* QuartzCore.framework in Frameworks */,
 				5030931910447AB4005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64815BE3D4E00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C491728D66F00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5667,6 +5759,7 @@
 				50C93AA70E0BF6E000517B01 /* QuartzCore.framework in Frameworks */,
 				5030930F10447A31005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE62115BE3D2E00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C1D1728D64C00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5682,6 +5775,7 @@
 				50CBA48111CBD6FB007B009D /* QuartzCore.framework in Frameworks */,
 				50CBA48311CBD6FB007B009D /* libz.dylib in Frameworks */,
 				A0CFE64E15BE3D5200264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4F1728D67400704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5697,6 +5791,7 @@
 				50D56FCD0F3FABEC007CD6B9 /* QuartzCore.framework in Frameworks */,
 				503092F710447855005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63115BE3D3B00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2E1728D65A00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5712,6 +5807,7 @@
 				50DB1BC50E1C1E5900A89DFF /* QuartzCore.framework in Frameworks */,
 				50309307104479A8005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE63D15BE3D4500264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3E1728D66800704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5732,6 +5828,7 @@
 				A001946415C379F400F3D80E /* AVFoundation.framework in Frameworks */,
 				A001946615C379F400F3D80E /* CoreMotion.framework in Frameworks */,
 				A06BF84E168109280018A802 /* libsqlite3.dylib in Frameworks */,
+				A06D9C341728D66000704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5747,6 +5844,7 @@
 				A009430B15180C730029A5C6 /* QuartzCore.framework in Frameworks */,
 				A009430D15180C730029A5C6 /* libz.dylib in Frameworks */,
 				A0CFE63A15BE3D4300264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C3B1728D66500704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5763,6 +5861,7 @@
 				A01AB914149709E300C93DB6 /* QuartzCore.framework in Frameworks */,
 				A01AB916149709E300C93DB6 /* libz.dylib in Frameworks */,
 				A0CFE62C15BE3D3500264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C291728D65700704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5783,6 +5882,7 @@
 				A040843C16A73C9700161E77 /* AudioToolbox.framework in Frameworks */,
 				A040843D16A73C9700161E77 /* AVFoundation.framework in Frameworks */,
 				A040843E16A73C9700161E77 /* CoreMotion.framework in Frameworks */,
+				A06D9C331728D65F00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5803,6 +5903,7 @@
 				A06F8BC4166D8C42008215BC /* AVFoundation.framework in Frameworks */,
 				A06F8BC5166D8C42008215BC /* CoreMotion.framework in Frameworks */,
 				A06BF850168109290018A802 /* libsqlite3.dylib in Frameworks */,
+				A06D9C361728D66100704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5823,6 +5924,7 @@
 				A0AA56C21641955000A38D85 /* AudioToolbox.framework in Frameworks */,
 				A0AA56C31641955000A38D85 /* AVFoundation.framework in Frameworks */,
 				A0AA56C41641955000A38D85 /* CoreMotion.framework in Frameworks */,
+				A06D9C321728D65F00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5843,6 +5945,7 @@
 				A00495DA159B8ACB00B5D4DF /* AVFoundation.framework in Frameworks */,
 				A0CFE63515BE3D3E00264229 /* CoreMotion.framework in Frameworks */,
 				A06BF84F168109280018A802 /* libsqlite3.dylib in Frameworks */,
+				A06D9C351728D66000704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5858,6 +5961,7 @@
 				A0F84187151D3B3000EBBFCB /* QuartzCore.framework in Frameworks */,
 				A0F84189151D3B3000EBBFCB /* libz.dylib in Frameworks */,
 				A0CFE63215BE3D3C00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C2F1728D65D00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5873,6 +5977,7 @@
 				DA5F0EDF0FFE96D400C7C82E /* QuartzCore.framework in Frameworks */,
 				5030931D10447B16005F7AFC /* libz.dylib in Frameworks */,
 				A0CFE64B15BE3D5100264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4C1728D67100704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5888,6 +5993,7 @@
 				DAABAA931059A42E00794EB3 /* QuartzCore.framework in Frameworks */,
 				DAABAA961059A42E00794EB3 /* libz.dylib in Frameworks */,
 				A0CFE63415BE3D3D00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C301728D65E00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5903,6 +6009,7 @@
 				E02BC2C71270E489006E46A2 /* QuartzCore.framework in Frameworks */,
 				E02BC2C91270E489006E46A2 /* libz.dylib in Frameworks */,
 				A0CFE64D15BE3D5200264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4E1728D67200704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5918,6 +6025,7 @@
 				E037DA461281C7F0003D39D7 /* QuartzCore.framework in Frameworks */,
 				E037DA481281C7F0003D39D7 /* libz.dylib in Frameworks */,
 				A0CFE64C15BE3D5100264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4D1728D67100704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5933,6 +6041,7 @@
 				E03A4F631355041F00D4B515 /* QuartzCore.framework in Frameworks */,
 				E03A4F651355041F00D4B515 /* libz.dylib in Frameworks */,
 				A0CFE64315BE3D4900264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C441728D66C00704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5948,6 +6057,7 @@
 				E0C5588011FE48E600B9E4CB /* QuartzCore.framework in Frameworks */,
 				E0C5588211FE48E600B9E4CB /* libz.dylib in Frameworks */,
 				A0CFE64915BE3D4F00264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C4A1728D67000704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5963,6 +6073,7 @@
 				E0EA569F134B9CA800F212C8 /* QuartzCore.framework in Frameworks */,
 				E0EA56A1134B9CA800F212C8 /* libz.dylib in Frameworks */,
 				A0CFE65115BE3D5600264229 /* CoreMotion.framework in Frameworks */,
+				A06D9C521728D67500704732 /* CoreText.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6091,6 +6202,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A06D9C151728D63D00704732 /* CoreText.framework */,
 				A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */,
 				1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */,
 				1D30AB110D05D00D00671497 /* Foundation.framework */,
