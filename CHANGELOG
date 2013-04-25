@@ -1,5 +1,6 @@
 version 2.1-rc2 - XX-May-2013
 . [NEW] Director: Added popToSceneStackLevel method
+. [NEW] LabelTTF: Can load .ttf in runtime without adding them in the info.plist file for iOS
 . [NEW] Scheduler: Added 'setPaused' / 'isPaused' property
 . [FIX] DrawingPrimitives: DrawSolidCircle calls lazy_init()
 . [FIX] Layer: "swallow" is now a property. Can be changed in runtime.

@@ -144,7 +144,7 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 	TMX tile maps: Added support for tile's offset property
 
 * Viktor Lidholt (http://www.cocosbuilder.com)
-	LabelTTF loads custom fonts correctly on Mac
+	LabelTTF loads custom fonts correctly on Mac and iOS
 	Updated JS Bindings for CocosBuilderReader. Added support for "outlets".
 	FileUtils:
 		Added support to search resolution resources in subdirectories
