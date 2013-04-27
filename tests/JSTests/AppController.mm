@@ -180,8 +180,16 @@
 	//
 	// Tests
 	//
-	else if( [name isEqual:@"JS Tests"] )
+	else if( [name isEqual:@"JS Tests"] ) {
+		struct timeval	startTime, endTime;
+
+		gettimeofday(&startTime, NULL);
 		[[JSBCore sharedInstance] runScript:@"tests-boot-jsb.js"];
+		gettimeofday(&endTime, NULL);
+		timersub(&endTime, &startTime, &endTime);
+		double duration = endTime.tv_sec * 1000.0 + endTime.tv_usec / 1000.0;
+		printf("--> duration: %f ms\n", duration);
+	}
 	//
 	// Moon Warriors
 	//

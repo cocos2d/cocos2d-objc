@@ -149,6 +149,8 @@
 @interface CCStopGrid : CCActionInstant
 {
 }
+// to make BridgeSupport happy
+-(void)startWithTarget:(id)aTarget;
 @end
 
 ////////////////////////////////////////////////////////////
