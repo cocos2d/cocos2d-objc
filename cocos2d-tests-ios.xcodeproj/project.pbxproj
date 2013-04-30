@@ -2232,6 +2232,7 @@
 		A0D6C030159B6A25008EED97 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
 		A0D6C031159B6A25008EED97 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
 		A0D6C033159B6A25008EED97 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		A0D6DBBA17307A50007421B7 /* ClippingNodeTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D6DBB917307A50007421B7 /* ClippingNodeTest */; };
 		A0D746351679878C00CAF1CA /* grossini_dance_atlas.png in Resources */ = {isa = PBXBuildFile; fileRef = 509A7A970F61A2400032F449 /* grossini_dance_atlas.png */; };
 		A0D77A09146E2CA3000960C7 /* Paint Boy.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 505460ED1061413300AB7C52 /* Paint Boy.ttf */; };
 		A0D77A12146E3244000960C7 /* markerFelt-hd.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */; };
@@ -4835,6 +4836,7 @@
 		A0D5A9161705789900135A88 /* ExtensionsTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ExtensionsTest; sourceTree = "<group>"; };
 		A0D5A91E170578D000135A88 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EffectsAdvancedTest; sourceTree = "<group>"; };
 		A0D6C037159B6A25008EED97 /* JS Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Tests.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0D6DBB917307A50007421B7 /* ClippingNodeTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ClippingNodeTest; sourceTree = "<group>"; };
 		A0D77A0E146E3244000960C7 /* markerFelt-hd.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "markerFelt-hd.fnt"; sourceTree = "<group>"; };
 		A0D77A0F146E3244000960C7 /* markerFelt-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "markerFelt-hd.png"; sourceTree = "<group>"; };
 		A0D77A10146E3244000960C7 /* markerFelt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = markerFelt.fnt; sourceTree = "<group>"; };
@@ -7529,6 +7531,7 @@
 				A0C164AC166D589300DF921C /* Box2dTest */,
 				A0C164AD166D589300DF921C /* ChipmunkTest */,
 				A0C164AE166D589300DF921C /* ClickAndMoveTest */,
+				A0D6DBB917307A50007421B7 /* ClippingNodeTest */,
 				A0C164AF166D589300DF921C /* CocosDenshionTest */,
 				A0C164B0166D589300DF921C /* CocosNodeTest */,
 				A0C164B1166D589300DF921C /* CurrentLanguageTest */,
@@ -11633,6 +11636,7 @@
 				A0D2C4D416C9B8B700DA6C86 /* OpenGLTest in Resources */,
 				A0D5A9171705789900135A88 /* ExtensionsTest in Resources */,
 				A0D5A91F170578D000135A88 /* EffectsAdvancedTest in Resources */,
+				A0D6DBBA17307A50007421B7 /* ClippingNodeTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
