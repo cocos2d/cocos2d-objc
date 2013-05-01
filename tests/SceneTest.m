@@ -86,8 +86,8 @@
 
 -(void) onQuit: (id) sender
 {
+	// since there are no more scenes on the stack, popScene will call CCDirector#end
 	[[CCDirector sharedDirector] popScene];
-	[[CCDirector sharedDirector] end];
 }
 
 -(void) onVoid: (id) sender
