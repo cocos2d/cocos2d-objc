@@ -97,7 +97,7 @@ version 2.1-beta4  4-Dec-2012
 
 
 version 2.1-beta3  7-Nov-2012
-. [NEW] Clipping Node: New node that let's you clip objects inside it. Check the demos!
+. [NEW] ClippingNode: New node that let's you clip objects inside it. Check the demos!
 . [NEW] Node API additions:
 		Added: removeChild. Calls removeChild:cleanup: with cleanup=YES
 		Added: removeChildByTag. Calls removeChildByTag:cleanup: with cleanup=YES
