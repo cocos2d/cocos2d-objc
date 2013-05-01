@@ -1,3 +1,6 @@
+version 2.1-final - XX-Jun-2013
+
+
 version 2.1-rc2 - 01-May-2013
 . [NEW] Director: Added popToSceneStackLevel method
 . [NEW] LabelTTF: Can load .ttf in runtime without adding them in the info.plist file for iOS
@@ -8,6 +11,7 @@ version 2.1-rc2 - 01-May-2013
 . [FIX] ParticleSystem: renders particles OK on device (issue #1462)
 . [FIX] Progress Actions: "updateProgress" is called after setting the type
 . [FIX] TileMaps: tile's offset property is used
+. [3RD] JS Bindings: Updated to v0.7
 . [3RD] SpiderMonkey: Updated to v20.0
 
 version 2.1-rc1 - 20-Mar-2013
