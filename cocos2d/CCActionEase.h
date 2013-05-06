@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2009 Jason Booth
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -98,6 +99,52 @@
 /** Ease Exponential InOut
  */
 @interface CCEaseExponentialInOut : CCActionEase <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
+/** CCEase Polynomial abstract class
+ @since v2.1
+ */
+@interface CCEasePolynomial : CCActionEase <NSCopying> {
+@protected
+    NSUInteger _polynomialOrder;
+    CGFloat _intersetValue; //Used for InOut mid point time calculation
+    BOOL _hasInflection; //odd numbered polynomial orders will display a point of inflection where the curve will invert
+}
+/** Used to determine the steepness of the timing curve.
+ As the value increases, so does the steepness/rate of the curve.
+ Default value is 6, gives a similar curve to EaseExponential.
+ Values less than 6, produces a softer ease action.
+ Values greater than 6, produces a more pronounced action.
+ @warning Value must be greater than 1
+ */
+@property (nonatomic, readwrite, assign) NSUInteger polynomialOrder;
+@end
+
+/** CCEase Polynomial In
+ @since v2.1
+ */
+@interface CCEasePolynomialIn : CCEasePolynomial <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
+/** Ease Polynomial Out
+ @since v2.1
+ */
+@interface CCEasePolynomialOut : CCEasePolynomial <NSCopying>
+{}
+// Needed for BridgeSupport
+-(void) update: (ccTime) t;
+@end
+
+/** Ease Polynomial InOut
+ @since v2.1
+ */
+@interface CCEasePolynomialInOut : CCEasePolynomial <NSCopying>
 {}
 // Needed for BridgeSupport
 -(void) update: (ccTime) t;
