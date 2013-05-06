@@ -2,6 +2,7 @@
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
  * Copyright (c) 2008-2009 Jason Booth
+ * Copyright (c) 2013 Nader Eloshaiker
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -230,6 +231,113 @@
 }
 @end
 
+
+#pragma mark -
+#pragma mark EasePolynomial
+
+//
+// EasePolynomial
+//
+#define kDefaultPolynomial 6
+@implementation CCEasePolynomial
+
+@dynamic polynomialOrder;
+
++(id) actionWithAction: (CCActionInterval*) action
+{
+    return [[[self alloc] initWithAction: action] autorelease];
+}
+
+-(id) initWithAction: (CCActionInterval*) action
+{
+    NSAssert( action!=nil, @"Ease: arguments must be non-nil");
+    
+    if (self = [super initWithAction: action]) {
+		_polynomialOrder = kDefaultPolynomial;
+        _hasInflection = FALSE;
+        _intersetValue = 1.78179743628068f;
+    }
+    
+    return self;
+}
+
+-(void)setPolynomialOrder:(NSUInteger)val {
+    NSAssert(val>1, @"Polynomial order must be greater than 1");
+    _polynomialOrder = val;
+    _hasInflection = (val % 2 > 0);
+    _intersetValue = powf(0.5f, 1.0f / val) / 0.5f;
+}
+
+-(NSUInteger)polynomialOrder {
+    return _polynomialOrder;
+}
+@end
+
+//
+// EasePolynomialIn
+//
+@implementation CCEasePolynomialIn
+-(void) update: (ccTime) t
+{
+    [_inner update: powf(t, _polynomialOrder)];
+}
+
+- (CCActionInterval*) reverse
+{
+    CCEasePolynomialOut *action = [CCEasePolynomialOut actionWithAction: [_inner reverse]];
+    if (_polynomialOrder != kDefaultPolynomial) {
+        action.polynomialOrder = _polynomialOrder;
+    }
+    
+    return action;
+}
+@end
+
+//
+// EasePolynomialOut
+//
+@implementation CCEasePolynomialOut
+-(void) update: (ccTime) t
+{
+    if (_hasInflection) {
+        t = powf(t-1.0f, _polynomialOrder) + 1.0f;
+    } else {
+        t = -powf(t-1.0f, _polynomialOrder) + 1.0f;
+    }
+    
+    [_inner update:t];
+}
+
+- (CCActionInterval*) reverse
+{
+    CCEasePolynomialIn *action = [CCEasePolynomialIn actionWithAction: [_inner reverse]];
+    if (_polynomialOrder != kDefaultPolynomial) {
+        action.polynomialOrder = _polynomialOrder;
+    }
+    
+    return action;
+}
+@end
+
+//
+// EasePolynomialInOut
+//
+@implementation CCEasePolynomialInOut
+-(void) update: (ccTime) t
+{
+    if (t < 0.5f) {
+        t = powf(t*_intersetValue, _polynomialOrder);
+    } else {
+        if (_hasInflection) {
+            t = powf((t - 1.0f)*_intersetValue, _polynomialOrder) + 1.0f;
+        } else {
+            t = -powf((t - 1.0f)*_intersetValue, _polynomialOrder) + 1.0f;
+        }
+    }
+    
+    [_inner update:t];
+}
+@end
 
 #pragma mark -
 #pragma mark EaseSin actions
