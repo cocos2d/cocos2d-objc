@@ -94,6 +94,8 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 
 * Nader Eloshaiker (https://github.com/nader-eloshaiker)
 	Added DrawSolidCircle, DrawArc and DrawSolidArc
+	Author of CCEasePolynomialIn,Out,InOut
+	Added Tests for CCEasePolynomialIn,Out,InOut
 
 * Nestor Todorov (https://github.com/supernes)
 	Added patch to support iPhone5 support in FileUtils
