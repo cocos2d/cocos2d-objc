@@ -1568,7 +1568,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 - (void) startWithTarget:(id)aTarget
 {
-	[super startWithTarget:_target];
+	[super startWithTarget:aTarget];
 	[_action startWithTarget:_forcedTarget];
 }
 
