@@ -38,6 +38,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Daniel Rice (https://github.com/dangero):
 	Director: willRotateToInterfaceOrientation is propagated to the delegate
 
+* Edward Marchant (https://github.com/ejmarchant):
+	Actions: fixed startWithTarget in TargetedAction
+
 * Evan Todd (http://et1337.wordpress.com/):
 	CCFileUtils removes suffixes on Mac too
 
