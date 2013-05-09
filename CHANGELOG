@@ -1,6 +1,6 @@
 version 2.1-final - XX-Jun-2013
 . [NEW] EaseActions: Added CCEasePolynomialIn,Out,InOut
-. [FIX] Actions: TargetedAction # startWithTarget uses correct arguments
+. [FIX] Actions: TargetedAction # startWithTarget uses correct arguments (issue #1488)
 
 version 2.1-rc2 - 01-May-2013
 . [NEW] Director: Added popToSceneStackLevel method
