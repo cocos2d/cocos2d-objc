@@ -186,12 +186,12 @@
 
 	CGSize	size = [director winSizeInPixels];
 	
-	glViewport(0, 0, size.width * CC_CONTENT_SCALE_FACTOR(), size.height * CC_CONTENT_SCALE_FACTOR() );
+	glViewport(0, 0, size.width, size.height);
 	kmGLMatrixMode(KM_GL_PROJECTION);
 	kmGLLoadIdentity();
 	
 	kmMat4 orthoMatrix;
-	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width * CC_CONTENT_SCALE_FACTOR(), 0, size.height * CC_CONTENT_SCALE_FACTOR(), -1, 1);
+	kmMat4OrthographicProjection(&orthoMatrix, 0, size.width, 0, size.height, -1, 1);
 	kmGLMultMatrix( &orthoMatrix );
 	
 	kmGLMatrixMode(KM_GL_MODELVIEW);
