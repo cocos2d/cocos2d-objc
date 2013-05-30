@@ -90,6 +90,7 @@
 				<string>UIKit</string>
 				<string>Foundation</string>
 				<string>CoreGraphics</string>
+				<string>CoreText</string>
 				<string>GameKit</string>
 			</array>
 			<key>SharedSettings</key>

@@ -5,7 +5,7 @@ cocos2d for iPhone
 
 [cocos2d for iPhone][1] is a framework for building 2D games, demos, and other
 graphical/interactive applications for iPod Touch, iPhone, iPad and Mac OS X.
-It is based on the [cocos2d][2] design but instead of using python it, uses objective-c.
+It is based on the [cocos2d][2] design, but instead of using python it uses objective-c.
 
 cocos2d for iPhone is:
 
@@ -74,7 +74,7 @@ Runtime Requirements
   * Snow Leopard (v10.6) or newer for Mac games
 
 
-How to run the tests
+Running Tests
 --------------------
 
 Select the test you want from Xcode Scheme chooser.
@@ -82,10 +82,10 @@ Select the test you want from Xcode Scheme chooser.
 Then click on Xcode -> Product -> Run
 
 
-How to contribute to the project
+Contributing to the Project
 --------------------------------
 
-Did you find a bug ? Do you have feature request ? Do you want to merge a feature ?
+Did you find a bug? Do you have feature request? Do you want to merge a feature?
 
   * [contributing to cocos2d][3]
 
@@ -94,7 +94,7 @@ Forum
   * [cocos2d for iphone forum][4]
 
 
-Download from github
+Download from Github
 --------------------
 
     $ git clone git://github.com/cocos2d/cocos2d-iphone.git

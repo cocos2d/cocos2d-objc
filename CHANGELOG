@@ -1,9 +1,19 @@
-version 2.1-rc2 - XX-May-2013
+version 2.1-final - XX-Jun-2013
+. [NEW] EaseActions: Added CCEasePolynomialIn,Out,InOut
+. [FIX] Actions: TargetedAction # startWithTarget uses correct arguments (issue #1488)
+. [3RD] SpiderMonkey: Updated to v21.0
+
+version 2.1-rc2 - 01-May-2013
+. [NEW] Director: Added popToSceneStackLevel method
+. [NEW] LabelTTF: Can load .ttf in runtime without adding them in the info.plist file for iOS
+. [NEW] Scheduler: Added 'setPaused' / 'isPaused' property
 . [FIX] DrawingPrimitives: DrawSolidCircle calls lazy_init()
 . [FIX] Layer: "swallow" is now a property. Can be changed in runtime.
 . [FIX] MenuItem: target is not retained when using setTarget:selector: (issue #1482)
+. [FIX] ParticleSystem: renders particles OK on device (issue #1462)
 . [FIX] Progress Actions: "updateProgress" is called after setting the type
 . [FIX] TileMaps: tile's offset property is used
+. [3RD] JS Bindings: Updated to v0.7
 . [3RD] SpiderMonkey: Updated to v20.0
 
 version 2.1-rc1 - 20-Mar-2013
@@ -93,7 +103,7 @@ version 2.1-beta4  4-Dec-2012
 
 
 version 2.1-beta3  7-Nov-2012
-. [NEW] Clipping Node: New node that let's you clip objects inside it. Check the demos!
+. [NEW] ClippingNode: New node that let's you clip objects inside it. Check the demos!
 . [NEW] Node API additions:
 		Added: removeChild. Calls removeChild:cleanup: with cleanup=YES
 		Added: removeChildByTag. Calls removeChildByTag:cleanup: with cleanup=YES

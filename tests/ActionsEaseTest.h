@@ -38,6 +38,14 @@
 {}
 @end
 
+@interface SpriteEasePolynomial : SpriteDemo
+{}
+@end
+
+@interface SpriteEasePolynomialInOut : SpriteDemo
+{}
+@end
+
 @interface SpriteEaseSine : SpriteDemo
 {}
 @end

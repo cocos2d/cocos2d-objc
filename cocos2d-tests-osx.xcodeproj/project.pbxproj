@@ -2133,6 +2133,7 @@
 		A0D4684D15C339E100588ADE /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		A0D4684E15C339E100588ADE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = E0F9256D1224207200EF2362 /* libz.dylib */; };
 		A0D5A910170576A000135A88 /* EffectsAdvancedTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D5A90F170576A000135A88 /* EffectsAdvancedTest */; };
+		A0D6DBB31730765E007421B7 /* ClippingNodeTest in Resources */ = {isa = PBXBuildFile; fileRef = A0D6DBB21730765E007421B7 /* ClippingNodeTest */; };
 		A0D7DAF415E2F25A000CA0C4 /* ChipmunkTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */; };
 		A0DB13D814FC2B8500F7CC49 /* konqa32.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E0C60679128ECC110099367C /* konqa32.fnt */; };
 		A0DB13D914FC2B8500F7CC49 /* konqa32.png in Resources */ = {isa = PBXBuildFile; fileRef = E0C6067A128ECC110099367C /* konqa32.png */; };
@@ -5740,6 +5741,7 @@
 		A0D2DE6516375D9C008DB73C /* boundsTestFont.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = boundsTestFont.png; sourceTree = "<group>"; };
 		A0D4685415C339E100588ADE /* JS Moon Warriors.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "JS Moon Warriors.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0D5A90F170576A000135A88 /* EffectsAdvancedTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = EffectsAdvancedTest; sourceTree = "<group>"; };
+		A0D6DBB21730765E007421B7 /* ClippingNodeTest */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ClippingNodeTest; sourceTree = "<group>"; };
 		A0D7DAF215E2F25A000CA0C4 /* ChipmunkTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ChipmunkTest.h; path = tests/ChipmunkTest.h; sourceTree = "<group>"; };
 		A0D7DAF315E2F25A000CA0C4 /* ChipmunkTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ChipmunkTest.m; path = tests/ChipmunkTest.m; sourceTree = "<group>"; };
 		A0DB13DA14FC305900F7CC49 /* example_HorizontalColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = example_HorizontalColor.fsh; sourceTree = "<group>"; };
@@ -6863,6 +6865,7 @@
 				A0C15FC4166D579900DF921C /* Box2dTest */,
 				A0C15FC5166D579900DF921C /* ChipmunkTest */,
 				A0C15FC6166D579900DF921C /* ClickAndMoveTest */,
+				A0D6DBB21730765E007421B7 /* ClippingNodeTest */,
 				A0C15FC7166D579900DF921C /* CocosDenshionTest */,
 				A0C15FC8166D579900DF921C /* CocosNodeTest */,
 				A0C15FC9166D579900DF921C /* CurrentLanguageTest */,
@@ -9905,6 +9908,7 @@
 				A0D2C4BE16C94EED00DA6C86 /* js in Resources */,
 				A0D2C4D116C9AEDC00DA6C86 /* OpenGLTest in Resources */,
 				A0D5A910170576A000135A88 /* EffectsAdvancedTest in Resources */,
+				A0D6DBB31730765E007421B7 /* ClippingNodeTest in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
