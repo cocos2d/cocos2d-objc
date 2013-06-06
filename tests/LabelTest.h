@@ -160,6 +160,11 @@
 }
 @end
 
+@interface LabelTTFShadowStroke : AtlasDemo
+{
+}
+@end
+
 
 @interface Issue1343 : AtlasDemo
 {
