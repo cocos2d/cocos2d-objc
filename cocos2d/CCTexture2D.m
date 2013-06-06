@@ -781,6 +781,13 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	return self;
 }
+
+- (id) initWithString:(NSString*)string fontDefinition:(ccFontDefinition *)definition
+{
+    CCLOGWARN(@"initWithString:fontDefinition not yet implemented on MAC");
+    return nil;
+}
+
 #endif // __CC_PLATFORM_MAC
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
