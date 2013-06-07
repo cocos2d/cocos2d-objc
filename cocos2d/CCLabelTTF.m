@@ -53,7 +53,7 @@
 @implementation CCLabelTTF
 
 // - 
-+ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition*)definition
++ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition)definition
 {
     return [[self alloc] initWithString:string fontDefinition:definition];
 }
@@ -280,7 +280,7 @@
     {
         ccFontDefinition tempDefinition;
         tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
-        tex = [[CCTexture2D alloc] initWithString:_string fontDefinition:&tempDefinition];
+        tex = [[CCTexture2D alloc] initWithString:_string fontDef:&tempDefinition];
     }
     else
     {
@@ -331,24 +331,24 @@
 }
 
 /* init the label using string and a font definition*/
-- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition *)fontDefinition
+- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition) fontDefinition
 {
     if( (self=[super init]) ) {
         
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
         
-		_dimensions     = fontDefinition->m_dimensions;
-		_hAlignment     = fontDefinition->m_alignment;
-		_vAlignment     = fontDefinition->m_vertAlignment;
-		_fontName       = [fontDefinition->m_fontName copy];
-		_fontSize       = fontDefinition->m_fontSize;
-		_lineBreakMode  = fontDefinition->m_lineBreakMode;
+		_dimensions     = fontDefinition.m_dimensions;
+		_hAlignment     = fontDefinition.m_alignment;
+		_vAlignment     = fontDefinition.m_vertAlignment;
+		_fontName       = [fontDefinition.m_fontName copy];
+		_fontSize       = fontDefinition.m_fontSize;
+		_lineBreakMode  = fontDefinition.m_lineBreakMode;
         
         // take care of shadow
-        if (fontDefinition->m_shadow.m_shadowEnabled)
+        if (fontDefinition.m_shadow.m_shadowEnabled)
         {
-            [self enableShadowWithOffset:fontDefinition->m_shadow.m_shadowOffset opacity:fontDefinition->m_shadow.m_shadowOpacity blur:fontDefinition->m_shadow.m_shadowBlur updateImage: false];
+            [self enableShadowWithOffset:fontDefinition.m_shadow.m_shadowOffset opacity:fontDefinition.m_shadow.m_shadowOpacity blur:fontDefinition.m_shadow.m_shadowBlur updateImage: false];
         }
         else
         {
@@ -356,9 +356,9 @@
         }
         
         // take care of stroke
-        if (fontDefinition->m_stroke.m_strokeEnabled)
+        if (fontDefinition.m_stroke.m_strokeEnabled)
         {
-            [self enableStrokeWithColor:fontDefinition->m_stroke.m_strokeColor size:fontDefinition->m_stroke.m_strokeSize updateImage:false];
+            [self enableStrokeWithColor:fontDefinition.m_stroke.m_strokeColor size:fontDefinition.m_stroke.m_strokeSize updateImage:false];
         }
         else
         {
@@ -366,7 +366,7 @@
         }
         
         
-        [self setFontFillColor: fontDefinition->m_fontFillColor updateImage:false];
+        [self setFontFillColor: fontDefinition.m_fontFillColor updateImage:false];
         
         
         // actually update the string

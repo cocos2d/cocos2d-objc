@@ -210,7 +210,7 @@ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_
 /** Initializes a texture from a string with font name and font size */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 /** Initializes a texture from a string with font definition */
-- (id) initWithString:(NSString*)string fontDefinition:(ccFontDefinition *)definition;
+- (id) initWithString:(NSString*)string fontDef:(ccFontDefinition *)definition;
 @end
 
 

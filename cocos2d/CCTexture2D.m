@@ -459,7 +459,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 #ifdef __CC_PLATFORM_IOS
 
 
-- (id) initWithString:(NSString*)string fontDefinition:(ccFontDefinition *)definition
+- (id) initWithString:(NSString*)string fontDef:(ccFontDefinition *)definition
 {
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
