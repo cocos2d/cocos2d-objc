@@ -46,6 +46,20 @@
 	CGFloat _fontSize;
 	CCLineBreakMode _lineBreakMode;
 	NSString	*_string;
+    
+    /** font shadow */
+    bool    m_shadowEnabled;
+    float   m_shadowOpacity;
+    float   m_shadowBlur;
+    CGSize  m_shadowOffset;
+    
+    /** font stroke */
+    bool        m_strokeEnabled;
+    ccColor3B   m_strokeColor;
+    float       m_strokeSize;
+    
+    /** font fill color */
+    ccColor3B   m_textFillColor;
 }
 
 /** Font name used in the label */
@@ -59,6 +73,8 @@
 /** The vertical alignment of the label */
 @property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
 
+/** creates a CCLabelTTF with a string and a font definition */
++ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition*)definition;
 
 /** creates a CCLabelTTF with a font name and font size in points*/
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
@@ -128,5 +144,28 @@
  * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
  */
 - (void) setString:(NSString*)str;
+
+
+/** enable or disable shadow for the label */
+- (void) enableShadowWithOffset:(CGSize)shadowOffset opacity:(float)shadowOpacity blur:(float)shadowBlur updateImage:(Boolean) mustUpdate;
+
+/** disable shadow rendering */
+- (void) disableShadowAndUpdateImage:(Boolean)mustUpdate;
+
+/** enable or disable stroke */
+- (void) enableStrokeWithColor:(ccColor3B)strokeColor size:(float)strokeSize updateImage:(Boolean) mustUpdate;
+
+/** disable stroke */
+- (void) disableStrokeAndUpdateImage:(Boolean) mustUpdate;
+
+/** set text tinting */
+- (void) setFontFillColor:(ccColor3B) tintColor updateImage:(Boolean) mustUpdate;
+
+/** init the label with string and text definition*/
+- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition *)fontDefinition;
+
+
+
+
 
 @end
