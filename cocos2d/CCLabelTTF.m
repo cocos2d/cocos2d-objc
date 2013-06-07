@@ -47,9 +47,16 @@
 @interface CCLabelTTF ()
 - (BOOL) updateTexture;
 - (NSString*) getFontName:(NSString*)fontName;
+- (ccFontDefinition) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust;
 @end
 
 @implementation CCLabelTTF
+
+// - 
++ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition*)definition
+{
+    return [[self alloc] initWithString:string fontDefinition:definition];
+}
 
 // -
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
@@ -268,19 +275,29 @@
 - (BOOL) updateTexture
 {				
 	CCTexture2D *tex;
-	if( _dimensions.width == 0 || _dimensions.height == 0 )
-		tex = [[CCTexture2D alloc] initWithString:_string
-										 fontName:_fontName
-										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()];
-	else
-		tex = [[CCTexture2D alloc] initWithString:_string
-										 fontName:_fontName
-										 fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()
-									   dimensions:CC_SIZE_POINTS_TO_PIXELS(_dimensions)
-									   hAlignment:_hAlignment
-									   vAlignment:_vAlignment
-									lineBreakMode:_lineBreakMode
-			   ];
+    
+    if ( m_shadowEnabled || m_strokeEnabled )
+    {
+        ccFontDefinition tempDefinition;
+        tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
+        tex = [[CCTexture2D alloc] initWithString:_string fontDefinition:&tempDefinition];
+    }
+    else
+    {
+        if( _dimensions.width == 0 || _dimensions.height == 0 )
+            tex = [[CCTexture2D alloc] initWithString:_string
+                                             fontName:_fontName
+                                             fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()];
+        else
+            tex = [[CCTexture2D alloc] initWithString:_string
+                                             fontName:_fontName
+                                             fontSize:_fontSize  * CC_CONTENT_SCALE_FACTOR()
+                                           dimensions:CC_SIZE_POINTS_TO_PIXELS(_dimensions)
+                                           hAlignment:_hAlignment
+                                           vAlignment:_vAlignment
+                                        lineBreakMode:_lineBreakMode
+                   ];
+    }
 
 	if( !tex )
 		return NO;
@@ -312,4 +329,222 @@
 	
 	return YES;
 }
+
+/* init the label using string and a font definition*/
+- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition *)fontDefinition
+{
+    if( (self=[super init]) ) {
+        
+		// shader program
+		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+        
+		_dimensions     = fontDefinition->m_dimensions;
+		_hAlignment     = fontDefinition->m_alignment;
+		_vAlignment     = fontDefinition->m_vertAlignment;
+		_fontName       = [fontDefinition->m_fontName copy];
+		_fontSize       = fontDefinition->m_fontSize;
+		_lineBreakMode  = fontDefinition->m_lineBreakMode;
+        
+        // take care of shadow
+        if (fontDefinition->m_shadow.m_shadowEnabled)
+        {
+            [self enableShadowWithOffset:fontDefinition->m_shadow.m_shadowOffset opacity:fontDefinition->m_shadow.m_shadowOpacity blur:fontDefinition->m_shadow.m_shadowBlur updateImage: false];
+        }
+        else
+        {
+            [self disableShadowAndUpdateImage:false];
+        }
+        
+        // take care of stroke
+        if (fontDefinition->m_stroke.m_strokeEnabled)
+        {
+            [self enableStrokeWithColor:fontDefinition->m_stroke.m_strokeColor size:fontDefinition->m_stroke.m_strokeSize updateImage:false];
+        }
+        else
+        {
+            [self disableStrokeAndUpdateImage:false];
+        }
+        
+        
+        [self setFontFillColor: fontDefinition->m_fontFillColor updateImage:false];
+        
+        
+        // actually update the string
+        [self setString:string];
+	}
+    
+	return self;
+}
+
+/** enable or disable shadow for the label */
+- (void) enableShadowWithOffset:(CGSize)shadowOffset opacity:(float)shadowOpacity blur:(float)shadowBlur updateImage:(Boolean) mustUpdate
+{
+    bool valueChanged = false;
+    
+    if (false == m_shadowEnabled)
+    {
+        m_shadowEnabled = true;
+        valueChanged    = true;
+    }
+    
+    if ( (m_shadowOffset.width != shadowOffset.width) || (m_shadowOffset.height!=shadowOffset.height) )
+    {
+        m_shadowOffset.width  = shadowOffset.width;
+        m_shadowOffset.height = shadowOffset.height;
+        
+        valueChanged = true;
+    }
+    
+    if (m_shadowOpacity != shadowOpacity )
+    {
+        m_shadowOpacity = shadowOpacity;
+        valueChanged = true;
+    }
+    
+    if (m_shadowBlur    != shadowBlur)
+    {
+        m_shadowBlur = shadowBlur;
+        valueChanged = true;
+    }
+    
+    if ( valueChanged && mustUpdate )
+    {
+        [self updateTexture];
+    }
+}
+
+/** disable shadow rendering */
+- (void) disableShadowAndUpdateImage:(Boolean)mustUpdate
+{
+    if (m_shadowEnabled)
+    {
+        m_shadowEnabled = false;
+        
+        if ( mustUpdate )
+        {
+            [self updateTexture];
+        }
+    }
+}
+
+/** enable or disable stroke */
+- (void) enableStrokeWithColor:(ccColor3B)strokeColor size:(float)strokeSize updateImage:(Boolean) mustUpdate
+{
+    bool valueChanged = false;
+    
+    if(m_strokeEnabled == false)
+    {
+        m_strokeEnabled = true;
+        valueChanged = true;
+    }
+    
+    if ( (m_strokeColor.r != strokeColor.r) || (m_strokeColor.g != strokeColor.g) || (m_strokeColor.b != strokeColor.b) )
+    {
+        m_strokeColor = strokeColor;
+        valueChanged = true;
+    }
+    
+    if (m_strokeSize!=strokeSize)
+    {
+        m_strokeSize = strokeSize;
+        valueChanged = true;
+    }
+    
+    if ( valueChanged && mustUpdate )
+    {
+        [self updateTexture];
+    }
+
+}
+
+/** disable stroke */
+- (void) disableStrokeAndUpdateImage:(Boolean) mustUpdate
+{
+    
+    if ( m_strokeEnabled )
+    {
+        m_strokeEnabled = false;
+        
+        if ( mustUpdate )
+        {
+            [self updateTexture];
+        }
+    }
+}
+
+/** set fill color */
+- (void) setFontFillColor:(ccColor3B) tintColor updateImage:(Boolean) mustUpdate
+{
+    if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)
+    {
+        m_textFillColor = tintColor;
+        
+        if (mustUpdate)
+        {
+            [self updateTexture];
+        }
+    }
+}
+
+- (ccFontDefinition) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust
+{
+    ccFontDefinition texDef;
+    
+    if (resAdjust)
+        texDef.m_fontSize       =  _fontSize * CC_CONTENT_SCALE_FACTOR();
+    else
+        texDef.m_fontSize       =  _fontSize;
+    
+    texDef.m_fontName       = [_fontName copy];
+    texDef.m_alignment      =  _hAlignment;
+    texDef.m_vertAlignment  =  _vAlignment;
+    
+    if (resAdjust)
+        texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(_dimensions);
+    else
+        texDef.m_dimensions     =  _dimensions;
+    
+    
+    // stroke
+    if ( m_strokeEnabled )
+    {
+        texDef.m_stroke.m_strokeEnabled = true;
+        texDef.m_stroke.m_strokeColor   = m_strokeColor;
+        
+        if (resAdjust)
+            texDef.m_stroke.m_strokeSize = m_strokeSize * CC_CONTENT_SCALE_FACTOR();
+        else
+            texDef.m_stroke.m_strokeSize = m_strokeSize;
+        
+        
+    }
+    else
+    {
+        texDef.m_stroke.m_strokeEnabled = false;
+    }
+    
+    
+    // shadow
+    if ( m_shadowEnabled )
+    {
+        texDef.m_shadow.m_shadowEnabled         = true;
+        texDef.m_shadow.m_shadowBlur            = m_shadowBlur;
+        texDef.m_shadow.m_shadowOpacity         = m_shadowOpacity;
+        
+        if (resAdjust)
+            texDef.m_shadow.m_shadowOffset = CC_SIZE_POINTS_TO_PIXELS(m_shadowOffset);
+        else
+            texDef.m_shadow.m_shadowOffset = m_shadowOffset;
+    }
+    else
+    {
+        texDef.m_shadow.m_shadowEnabled = false;
+    }
+    
+    // text tint
+    texDef.m_fontFillColor = m_textFillColor;
+    
+    return texDef;
+}
+
 @end
