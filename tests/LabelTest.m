@@ -1539,19 +1539,19 @@ static float menuItemPaddingCenter = 50;
         
         tempDefinition.m_stroke.m_strokeEnabled = false;
         tempDefinition.m_shadow.m_shadowEnabled = true;
-        CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:&tempDefinition];
+        CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:tempDefinition];
 		shadowLabel.position = ccp(s.width/2,450);
 		[self addChild:shadowLabel];
         
         tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_shadow.m_shadowEnabled = false;
-        CCLabelTTF *strokeLabel = [CCLabelTTF labelWithString:@"Test stroke" fontDefinition:&tempDefinition];
+        CCLabelTTF *strokeLabel = [CCLabelTTF labelWithString:@"Test stroke" fontDefinition:tempDefinition];
 		strokeLabel.position = ccp(s.width/2,350);
 		[self addChild:strokeLabel];
         
         tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_shadow.m_shadowEnabled = true;
-        CCLabelTTF *strokeAndShadowLable = [CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:&tempDefinition];
+        CCLabelTTF *strokeAndShadowLable = [CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
 		strokeAndShadowLable.position = ccp(s.width/2,250);
 		[self addChild:strokeAndShadowLable];
 	}
