@@ -276,7 +276,7 @@
 {				
 	CCTexture2D *tex;
     
-    if ( m_shadowEnabled || m_strokeEnabled )
+    if ( _shadowEnabled || _strokeEnabled )
     {
         ccFontDefinition tempDefinition;
         tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
@@ -381,29 +381,29 @@
 {
     bool valueChanged = false;
     
-    if (false == m_shadowEnabled)
+    if (false == _shadowEnabled)
     {
-        m_shadowEnabled = true;
+        _shadowEnabled = true;
         valueChanged    = true;
     }
     
-    if ( (m_shadowOffset.width != shadowOffset.width) || (m_shadowOffset.height!=shadowOffset.height) )
+    if ( (_shadowOffset.width != shadowOffset.width) || (_shadowOffset.height!=shadowOffset.height) )
     {
-        m_shadowOffset.width  = shadowOffset.width;
-        m_shadowOffset.height = shadowOffset.height;
+        _shadowOffset.width  = shadowOffset.width;
+        _shadowOffset.height = shadowOffset.height;
         
         valueChanged = true;
     }
     
-    if (m_shadowOpacity != shadowOpacity )
+    if (_shadowOpacity != shadowOpacity )
     {
-        m_shadowOpacity = shadowOpacity;
+        _shadowOpacity = shadowOpacity;
         valueChanged = true;
     }
     
-    if (m_shadowBlur    != shadowBlur)
+    if (_shadowBlur    != shadowBlur)
     {
-        m_shadowBlur = shadowBlur;
+        _shadowBlur = shadowBlur;
         valueChanged = true;
     }
     
@@ -416,9 +416,9 @@
 /** disable shadow rendering */
 - (void) disableShadowAndUpdateImage:(Boolean)mustUpdate
 {
-    if (m_shadowEnabled)
+    if (_shadowEnabled)
     {
-        m_shadowEnabled = false;
+        _shadowEnabled = false;
         
         if ( mustUpdate )
         {
@@ -432,21 +432,21 @@
 {
     bool valueChanged = false;
     
-    if(m_strokeEnabled == false)
+    if(_strokeEnabled == false)
     {
-        m_strokeEnabled = true;
+        _strokeEnabled = true;
         valueChanged = true;
     }
     
-    if ( (m_strokeColor.r != strokeColor.r) || (m_strokeColor.g != strokeColor.g) || (m_strokeColor.b != strokeColor.b) )
+    if ( (_strokeColor.r != strokeColor.r) || (_strokeColor.g != strokeColor.g) || (_strokeColor.b != strokeColor.b) )
     {
-        m_strokeColor = strokeColor;
+        _strokeColor = strokeColor;
         valueChanged = true;
     }
     
-    if (m_strokeSize!=strokeSize)
+    if (_strokeSize!=strokeSize)
     {
-        m_strokeSize = strokeSize;
+        _strokeSize = strokeSize;
         valueChanged = true;
     }
     
@@ -461,9 +461,9 @@
 - (void) disableStrokeAndUpdateImage:(Boolean) mustUpdate
 {
     
-    if ( m_strokeEnabled )
+    if ( _strokeEnabled )
     {
-        m_strokeEnabled = false;
+        _strokeEnabled = false;
         
         if ( mustUpdate )
         {
@@ -475,9 +475,9 @@
 /** set fill color */
 - (void) setFontFillColor:(ccColor3B) tintColor updateImage:(Boolean) mustUpdate
 {
-    if (m_textFillColor.r != tintColor.r || m_textFillColor.g != tintColor.g || m_textFillColor.b != tintColor.b)
+    if (_textFillColor.r != tintColor.r || _textFillColor.g != tintColor.g || _textFillColor.b != tintColor.b)
     {
-        m_textFillColor = tintColor;
+        _textFillColor = tintColor;
         
         if (mustUpdate)
         {
@@ -495,9 +495,12 @@
     else
         texDef.m_fontSize       =  _fontSize;
     
+    
     texDef.m_fontName       = [_fontName copy];
     texDef.m_alignment      =  _hAlignment;
     texDef.m_vertAlignment  =  _vAlignment;
+    texDef.m_lineBreakMode  =  _lineBreakMode;
+    texDef.m_fontFillColor  =  _textFillColor;
     
     if (resAdjust)
         texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(_dimensions);
@@ -506,15 +509,15 @@
     
     
     // stroke
-    if ( m_strokeEnabled )
+    if ( _strokeEnabled )
     {
         texDef.m_stroke.m_strokeEnabled = true;
-        texDef.m_stroke.m_strokeColor   = m_strokeColor;
+        texDef.m_stroke.m_strokeColor   = _strokeColor;
         
         if (resAdjust)
-            texDef.m_stroke.m_strokeSize = m_strokeSize * CC_CONTENT_SCALE_FACTOR();
+            texDef.m_stroke.m_strokeSize = _strokeSize * CC_CONTENT_SCALE_FACTOR();
         else
-            texDef.m_stroke.m_strokeSize = m_strokeSize;
+            texDef.m_stroke.m_strokeSize = _strokeSize;
         
         
     }
@@ -525,24 +528,27 @@
     
     
     // shadow
-    if ( m_shadowEnabled )
+    if ( _shadowEnabled )
     {
         texDef.m_shadow.m_shadowEnabled         = true;
-        texDef.m_shadow.m_shadowBlur            = m_shadowBlur;
-        texDef.m_shadow.m_shadowOpacity         = m_shadowOpacity;
+        texDef.m_shadow.m_shadowBlur            = _shadowBlur;
+        texDef.m_shadow.m_shadowOpacity         = _shadowOpacity;
+        
+        
+        float scaleFactor  = CC_CONTENT_SCALE_FACTOR();
         
         if (resAdjust)
-            texDef.m_shadow.m_shadowOffset = CC_SIZE_POINTS_TO_PIXELS(m_shadowOffset);
+        {
+            texDef.m_shadow.m_shadowOffset.width  =  _shadowOffset.width  * scaleFactor;
+            texDef.m_shadow.m_shadowOffset.height =  _shadowOffset.height * scaleFactor;
+        }
         else
-            texDef.m_shadow.m_shadowOffset = m_shadowOffset;
+            texDef.m_shadow.m_shadowOffset = _shadowOffset;
     }
     else
     {
         texDef.m_shadow.m_shadowEnabled = false;
     }
-    
-    // text tint
-    texDef.m_fontFillColor = m_textFillColor;
     
     return texDef;
 }

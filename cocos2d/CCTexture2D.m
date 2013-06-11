@@ -464,23 +464,58 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
     
-    NSUInteger textureWidth  = ccNextPOT(definition->m_dimensions.width);
-	NSUInteger textureHeight = ccNextPOT(definition->m_dimensions.height);
+    
+    UIFont *uifont = [UIFont fontWithName:definition->m_fontName size:definition->m_fontSize];
+	if( ! uifont )
+    {
+		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", definition->m_fontName);
+		[self release];
+		return nil;
+	}
+
+    // width and height
+    NSUInteger textureWidth   = 0;
+	NSUInteger textureHeight  = 0;
+    
+    // the final dimension
+    CGSize computedDimension;
+    
+    if (definition->m_dimensions.width == 0 || definition->m_dimensions.height == 0)
+    {
+        CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+        CGSize dim = [string sizeWithFont:uifont
+                 constrainedToSize:boundingSize
+                     lineBreakMode:NSLineBreakByWordWrapping];
+        
+        if(dim.width == 0)
+            dim.width = 1;
+        if(dim.height == 0)
+            dim.height = 1;
+        
+        textureWidth  = dim.width;
+        textureHeight = dim.height;
+        
+        computedDimension = dim;
+    }
+    else
+    {
+        textureWidth        = ccNextPOT(definition->m_dimensions.width);
+        textureHeight       = ccNextPOT(definition->m_dimensions.height);
+        computedDimension   = definition->m_dimensions;
+    }
 	
     unsigned char*			data;
 	CGContextRef			context;
 	CGColorSpaceRef			colorSpace;
     
-    
     // check if stroke or shadows are enabled
     bool effectsEnabled = ((definition->m_shadow.m_shadowEnabled) || (definition->m_stroke.m_strokeEnabled));
-    
-    
-    
     
     // compute the padding needed by shadow and stroke
     float shadowStrokePaddingX = 0.0f;
     float shadowStrokePaddingY = 0.0f;
+    
+    
     
     if ( definition->m_stroke.m_strokeEnabled )
     {
@@ -520,7 +555,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     {
         colorSpace = CGColorSpaceCreateDeviceRGB();
         context    = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-        //carloX
         CGContextSetRGBFillColor(context, ((float)definition->m_fontFillColor.r) /255.0, ((float)definition->m_fontFillColor.g/255.0), ((float)definition->m_fontFillColor.b/255.0), 1.0);
     }
     else
@@ -538,12 +572,10 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		return nil;
 	}
     
-	
-	CGContextTranslateCTM(context, 0.0f, textureHeight);
+    
+    CGContextTranslateCTM(context, 0.0f, textureHeight - shadowStrokePaddingY);
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	UIGraphicsPushContext(context);
-    
-    
     
     // take care of stroke if needed
     if ( definition->m_stroke.m_strokeEnabled )
@@ -570,36 +602,27 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         textOriginX = shadowStrokePaddingX;
     }
     
-    if ( definition->m_shadow.m_shadowOffset.height > 0 )
+    if ( definition->m_shadow.m_shadowOffset.height < 0 )
     {
-        textOriginY = shadowStrokePaddingY;
+       textOriginY = (-shadowStrokePaddingY);
     }
     
     CGRect drawArea;
-    UIFont *uifont = [UIFont fontWithName:definition->m_fontName size:definition->m_fontSize];
-	if( ! uifont )
-    {
-		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", definition->m_fontName);
-		[self release];
-		return nil;
-	}
-    
-    
     if(definition->m_vertAlignment == kCCVerticalTextAlignmentTop)
     {
-        drawArea = CGRectMake(textOriginX, textOriginY, definition->m_dimensions.width, definition->m_dimensions.height);
+        drawArea = CGRectMake(textOriginX, textOriginY, computedDimension.width, computedDimension.height);
     }
     else
     {
-        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:definition->m_dimensions lineBreakMode:linebreaks[definition->m_lineBreakMode] ];
+        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:computedDimension lineBreakMode:linebreaks[definition->m_lineBreakMode] ];
         
         if(definition->m_vertAlignment == kCCVerticalTextAlignmentBottom)
         {
-            drawArea = CGRectMake(textOriginX, (definition->m_dimensions.height - drawSize.height) + textOriginY, definition->m_dimensions.width, drawSize.height);
+            drawArea = CGRectMake(textOriginX, (computedDimension.height - drawSize.height) + textOriginY, computedDimension.width, drawSize.height);
         }
         else // kCCVerticalTextAlignmentCenter
         {
-            drawArea = CGRectMake(textOriginX, ((definition->m_dimensions.height - drawSize.height) / 2) + textOriginY, definition->m_dimensions.width, drawSize.height);
+            drawArea = CGRectMake(textOriginX, ((computedDimension.height - drawSize.height) / 2) + textOriginY, computedDimension.width, drawSize.height);
         }
     }
     
@@ -612,7 +635,10 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
     if (effectsEnabled)
     {
-         self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:definition->m_dimensions];
+        CGSize finalSize;
+        finalSize.width  = textureWidth;
+        finalSize.height = textureHeight;
+        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:finalSize];
     }
     else
     {
@@ -622,7 +648,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         for(int i = textureSize-1; i>=0; i--) //Convert A8 to AI88
         la88_data[i] = (data[i] << 8) | 0xff;
     #endif
-         self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:definition->m_dimensions];
+         self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:computedDimension];
     }
     
 	CGContextRelease(context);
