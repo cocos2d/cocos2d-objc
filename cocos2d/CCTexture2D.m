@@ -582,6 +582,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	if( ! uifont )
     {
 		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", definition->m_fontName);
+		CGContextRelease(context);
 		[self release];
 		return nil;
 	}
