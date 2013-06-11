@@ -278,8 +278,7 @@
     
     if ( _shadowEnabled || _strokeEnabled )
     {
-        ccFontDefinition tempDefinition;
-        tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
+        ccFontDefinition tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
         tex = [[CCTexture2D alloc] initWithString:_string fontDef:&tempDefinition];
     }
     else
@@ -489,7 +488,8 @@
 - (ccFontDefinition) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust
 {
     ccFontDefinition texDef;
-    
+
+	texDef.m_lineBreakMode = _lineBreakMode;
     if (resAdjust)
         texDef.m_fontSize       =  _fontSize * CC_CONTENT_SCALE_FACTOR();
     else

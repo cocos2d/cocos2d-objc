@@ -69,7 +69,7 @@
 	CGSize				_mapTileSize;
 	uint32_t			*_tiles;			// GID are 32 bit
 	NSUInteger			_layerOrientation;
-	NSMutableArray		*_properties;
+	NSMutableDictionary	*_properties;
 
 	unsigned char		_opacity; // TMX Layer supports opacity
 
@@ -97,7 +97,7 @@
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) NSUInteger layerOrientation;
 /** properties from the layer. They can be added using Tiled */
-@property (nonatomic,readwrite,retain) NSMutableArray *properties;
+@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
 
 /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
