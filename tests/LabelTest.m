@@ -12,6 +12,8 @@
 static int sceneIdx=-1;
 static NSString *transitions[] = {
 
+	@"LabelTTFShadowStroke",
+
 	@"LabelAtlasTest",
 	@"LabelAtlasColorTest",
 	@"Atlas3",
@@ -1540,20 +1542,25 @@ static float menuItemPaddingCenter = 50;
         tempDefinition.m_stroke.m_strokeEnabled = false;
         tempDefinition.m_shadow.m_shadowEnabled = true;
         CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:tempDefinition];
-		shadowLabel.position = ccp(s.width/2,450);
-		[self addChild:shadowLabel];
-        
-        tempDefinition.m_stroke.m_strokeEnabled = true;
+		shadowLabel.position = ccp(s.width/2,s.height/2+50);
+//		[self addChild:shadowLabel];
+
+        tempDefinition.m_stroke.m_strokeEnabled = false;
         tempDefinition.m_shadow.m_shadowEnabled = false;
         CCLabelTTF *strokeLabel = [CCLabelTTF labelWithString:@"Test stroke" fontDefinition:tempDefinition];
-		strokeLabel.position = ccp(s.width/2,350);
+		strokeLabel.position = ccp(s.width/2,s.height/2+0);
+		strokeLabel.anchorPoint = ccp(0.5,0.5);
 		[self addChild:strokeLabel];
         
         tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_shadow.m_shadowEnabled = true;
         CCLabelTTF *strokeAndShadowLable = [CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
-		strokeAndShadowLable.position = ccp(s.width/2,250);
-		[self addChild:strokeAndShadowLable];
+		strokeAndShadowLable.position = ccp(s.width/2,s.height/2-50);
+//		[self addChild:strokeAndShadowLable];
+
+		id tt = [CCLabelTTF labelWithString:@"AAAAA" fontName:@"Helvetica" fontSize:32];
+		[self addChild:tt];
+		[tt setPosition:ccp(s.width/2, s.height/2)];
 	}
     
 	return self;
