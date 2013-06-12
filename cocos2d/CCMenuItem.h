@@ -47,6 +47,7 @@
 	BOOL _isSelected;
 	
 	BOOL _releaseBlockAtCleanup;
+	CGRect _activeArea;
 }
 
 /** returns whether or not the item is selected
