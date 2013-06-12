@@ -351,7 +351,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		case kCCTexture2DPixelFormat_A8:
 			data = malloc(textureHeight * textureWidth);
 			info = kCGImageAlphaOnly;
-			// XXX ios7.
 			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, (CGBitmapInfo)info);
 			break;
 		default:
@@ -527,7 +526,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     else
     {
         colorSpace = CGColorSpaceCreateDeviceGray();
-		// XXX ios7
         context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
         CGContextSetGrayFillColor(context, 1.0f, 1.0f);
     }
@@ -656,7 +654,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 #endif
 
 	colorSpace = CGColorSpaceCreateDeviceGray();
-	// XXX ios7
 	context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
 	CGColorSpaceRelease(colorSpace);
 
