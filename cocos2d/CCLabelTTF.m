@@ -553,4 +553,51 @@
     return texDef;
 }
 
+- (ccFontDefinition) getFontDefinition
+{
+    return [self prepareFontDefinitionAndAdjustForResolution:false];
+}
+
+- (void) setFontDefinition: (ccFontDefinition) fontDef
+{
+    if(_fontName)
+    {
+        [_fontName release];
+    }
+    
+    _dimensions     = fontDef.m_dimensions;
+    _hAlignment     = fontDef.m_alignment;
+    _vAlignment     = fontDef.m_vertAlignment;
+    _fontName       = [fontDef.m_fontName copy];
+    _fontSize       = fontDef.m_fontSize;
+    _lineBreakMode  = fontDef.m_lineBreakMode;
+    
+    // take care of shadow
+    if (fontDef.m_shadow.m_shadowEnabled)
+    {
+        [self enableShadowWithOffset:fontDef.m_shadow.m_shadowOffset opacity:fontDef.m_shadow.m_shadowOpacity blur:fontDef.m_shadow.m_shadowBlur updateImage: false];
+    }
+    else
+    {
+        [self disableShadowAndUpdateImage:false];
+    }
+    
+    // take care of stroke
+    if (fontDef.m_stroke.m_strokeEnabled)
+    {
+        [self enableStrokeWithColor:fontDef.m_stroke.m_strokeColor size:fontDef.m_stroke.m_strokeSize updateImage:false];
+    }
+    else
+    {
+        [self disableStrokeAndUpdateImage:false];
+    }
+    
+    
+    [self setFontFillColor: fontDef.m_fontFillColor updateImage:false];
+    
+    
+    // actually update the texture
+    [self updateTexture];
+}
+
 @end
