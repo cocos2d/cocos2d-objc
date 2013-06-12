@@ -1518,21 +1518,21 @@ static float menuItemPaddingCenter = 50;
         tempDefinition.m_fontName      = @"Helvetica";
         tempDefinition.m_fontSize      = 32;
         tempDefinition.m_dimensions    = CGSizeMake(0,0);
-		tempDefinition.m_alignment     = kCCTextAlignmentCenter;
+		tempDefinition.m_alignment     = kCCTextAlignmentRight;
         tempDefinition.m_vertAlignment = kCCVerticalTextAlignmentTop;
         tempDefinition.m_lineBreakMode = kCCLineBreakModeWordWrap;
         
         // shadow
         tempDefinition.m_shadow.m_shadowEnabled       = true;
         tempDefinition.m_shadow.m_shadowBlur          = 1.0;
-        tempDefinition.m_shadow.m_shadowOffset.width  = 5;
-        tempDefinition.m_shadow.m_shadowOffset.height = 5;
+        tempDefinition.m_shadow.m_shadowOffset.width  = 7;
+        tempDefinition.m_shadow.m_shadowOffset.height = 7;
         
         // stroke
         tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_stroke.m_strokeColor.r = 0.0;
         tempDefinition.m_stroke.m_strokeColor.g = 0.0;
-        tempDefinition.m_stroke.m_strokeColor.b = 1.0;
+        tempDefinition.m_stroke.m_strokeColor.b = 255.0;
         tempDefinition.m_stroke.m_strokeSize    = 1;
         
         tempDefinition.m_fontFillColor.r = 255;
@@ -1542,7 +1542,7 @@ static float menuItemPaddingCenter = 50;
         tempDefinition.m_stroke.m_strokeEnabled = false;
         tempDefinition.m_shadow.m_shadowEnabled = true;
         CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:tempDefinition];
-		shadowLabel.position = ccp(s.width/2,s.height/2);
+		shadowLabel.position = ccp(s.width/2,s.height/2 );
 		[self addChild:shadowLabel];
         
         tempDefinition.m_stroke.m_strokeEnabled = true;
