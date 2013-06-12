@@ -1517,7 +1517,7 @@ static float menuItemPaddingCenter = 50;
         
         tempDefinition.m_fontName      = @"Helvetica";
         tempDefinition.m_fontSize      = 32;
-        tempDefinition.m_dimensions    = CGSizeMake(s.width/2,200);
+        tempDefinition.m_dimensions    = CGSizeMake(0,0);
 		tempDefinition.m_alignment     = kCCTextAlignmentCenter;
         tempDefinition.m_vertAlignment = kCCVerticalTextAlignmentTop;
         tempDefinition.m_lineBreakMode = kCCLineBreakModeWordWrap;
@@ -1525,8 +1525,8 @@ static float menuItemPaddingCenter = 50;
         // shadow
         tempDefinition.m_shadow.m_shadowEnabled       = true;
         tempDefinition.m_shadow.m_shadowBlur          = 1.0;
-        tempDefinition.m_shadow.m_shadowOffset.width  = 10;
-        tempDefinition.m_shadow.m_shadowOffset.height = 10;
+        tempDefinition.m_shadow.m_shadowOffset.width  = 5;
+        tempDefinition.m_shadow.m_shadowOffset.height = 5;
         
         // stroke
         tempDefinition.m_stroke.m_strokeEnabled = true;
@@ -1542,25 +1542,20 @@ static float menuItemPaddingCenter = 50;
         tempDefinition.m_stroke.m_strokeEnabled = false;
         tempDefinition.m_shadow.m_shadowEnabled = true;
         CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:tempDefinition];
-		shadowLabel.position = ccp(s.width/2,s.height/2+50);
-//		[self addChild:shadowLabel];
-
-        tempDefinition.m_stroke.m_strokeEnabled = false;
+		shadowLabel.position = ccp(s.width/2,s.height/2);
+		[self addChild:shadowLabel];
+        
+        tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_shadow.m_shadowEnabled = false;
         CCLabelTTF *strokeLabel = [CCLabelTTF labelWithString:@"Test stroke" fontDefinition:tempDefinition];
-		strokeLabel.position = ccp(s.width/2,s.height/2+0);
-		strokeLabel.anchorPoint = ccp(0.5,0.5);
+		strokeLabel.position = ccp(s.width/2,s.height/2 +50);
 		[self addChild:strokeLabel];
         
         tempDefinition.m_stroke.m_strokeEnabled = true;
         tempDefinition.m_shadow.m_shadowEnabled = true;
         CCLabelTTF *strokeAndShadowLable = [CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
-		strokeAndShadowLable.position = ccp(s.width/2,s.height/2-50);
-//		[self addChild:strokeAndShadowLable];
-
-		id tt = [CCLabelTTF labelWithString:@"AAAAA" fontName:@"Helvetica" fontSize:32];
-		[self addChild:tt];
-		[tt setPosition:ccp(s.width/2, s.height/2)];
+		strokeAndShadowLable.position = ccp(s.width/2,s.height/2 -50);
+		[self addChild:strokeAndShadowLable];
 	}
     
 	return self;

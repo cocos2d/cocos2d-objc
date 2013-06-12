@@ -48,18 +48,18 @@
 	NSString	*_string;
     
     /** font shadow */
-    bool    m_shadowEnabled;
-    float   m_shadowOpacity;
-    float   m_shadowBlur;
-    CGSize  m_shadowOffset;
+    bool    _shadowEnabled;
+    float   _shadowOpacity;
+    float   _shadowBlur;
+    CGSize  _shadowOffset;
     
     /** font stroke */
-    bool        m_strokeEnabled;
-    ccColor3B   m_strokeColor;
-    float       m_strokeSize;
+    bool        _strokeEnabled;
+    ccColor3B   _strokeColor;
+    float       _strokeSize;
     
     /** font fill color */
-    ccColor3B   m_textFillColor;
+    ccColor3B   _textFillColor;
 }
 
 /** Font name used in the label */
