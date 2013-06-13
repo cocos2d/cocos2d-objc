@@ -1565,10 +1565,8 @@ static float menuItemPaddingCenter = 50;
 		strokeAndShadowLable.position = ccp(s.width/2,s.height/2 -50);
 		[self addChild:strokeAndShadowLable];
         
-        CCFontDefinition *pDef = [[CCFontDefinition alloc]init];
-        //[pDef initWithFontName:@"Helvetica" fontSize:32];
-        pDef.fontName = @"Helvetica";
-        [pDef release];
+        // we don't need this anymore
+        [tempDefinition release];
 	}
     
 	return self;
