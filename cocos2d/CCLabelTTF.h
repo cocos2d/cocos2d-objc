@@ -164,6 +164,12 @@
 /** init the label with string and text definition*/
 - (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition)definition;
 
+/** get and set the font definition */
+- (ccFontDefinition) getFontDefinition;
+
+/** get and set the font definition */
+- (void) setFontDefinition: (ccFontDefinition) fontDef;
+
 
 
 

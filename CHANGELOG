@@ -1,5 +1,6 @@
 version 2.1-final - XX-Jun-2013
 . [NEW] EaseActions: Added CCEasePolynomialIn,Out,InOut
+. [NEW] LabelTTF: Added support for Shadow and stroke
 . [FIX] Actions: TargetedAction # startWithTarget uses correct arguments (issue #1488)
 . [FIX] All: Compiles and runs on iOS7
 . [3RD] SpiderMonkey: Updated to v21.0

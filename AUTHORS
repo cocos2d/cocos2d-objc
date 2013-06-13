@@ -27,6 +27,9 @@ People/companies who were/are contributing code to cocos2d for iPhone (alphabeti
 * Ben Trengrove (http://bentrengrove.com/)
 	Added patch to support iPhone5 support in FileUtils
 
+* Carlo Morgantini (http://zynga.com)
+	Added support for shadows and stroke in LabelTTF
+
 * CJ Hanson (myBuddyCJ) (http://www.hansoninteractive.com/):
 	Director: Fixed the initial flicker + correct size at startup
 	Director: onExitTransitionDidFinish when the director is ended and other "corner" cases.
