@@ -7,6 +7,9 @@
 // cocos import
 #import "cocos2d.h"
 
+
+#import "CCFontDefinition.h"
+
 // local import
 #import "LabelTest.h"
 static int sceneIdx=-1;
@@ -1513,49 +1516,59 @@ static float menuItemPaddingCenter = 50;
         CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(0,190,0,255) width:s.width height:s.height];
         [self addChild:layer];
         
-        ccFontDefinition tempDefinition;
+        CCFontDefinition *tempDefinition = [[CCFontDefinition alloc]initWithFontName:@"Helvetica" fontSize:32];
         
-        tempDefinition.m_fontName      = @"Helvetica";
-        tempDefinition.m_fontSize      = 32;
-        tempDefinition.m_dimensions    = CGSizeMake(0,0);
-		tempDefinition.m_alignment     = kCCTextAlignmentRight;
-        tempDefinition.m_vertAlignment = kCCVerticalTextAlignmentTop;
-        tempDefinition.m_lineBreakMode = kCCLineBreakModeWordWrap;
+        tempDefinition.dimensions    = CGSizeMake(0,0);
+		tempDefinition.alignment     = kCCTextAlignmentRight;
+        tempDefinition.vertAlignment = kCCVerticalTextAlignmentTop;
+        tempDefinition.lineBreakMode = kCCLineBreakModeWordWrap;
         
         // shadow
-        tempDefinition.m_shadow.m_shadowEnabled       = true;
-        tempDefinition.m_shadow.m_shadowBlur          = 1.0;
-        tempDefinition.m_shadow.m_shadowOffset.width  = 7;
-        tempDefinition.m_shadow.m_shadowOffset.height = 7;
+        CGSize shadowOffset;
+        shadowOffset.width  = 7;
+        shadowOffset.height = 7;
+        [tempDefinition enableShadow:true];
+        [tempDefinition setShadowBlur: 1.0];
+        [tempDefinition setShadowOffset:shadowOffset];
         
         // stroke
-        tempDefinition.m_stroke.m_strokeEnabled = true;
-        tempDefinition.m_stroke.m_strokeColor.r = 0.0;
-        tempDefinition.m_stroke.m_strokeColor.g = 0.0;
-        tempDefinition.m_stroke.m_strokeColor.b = 255.0;
-        tempDefinition.m_stroke.m_strokeSize    = 1;
+        ccColor3B strokeColor;
+        strokeColor.r = 0;
+        strokeColor.g = 0;
+        strokeColor.b = 255;
+        [tempDefinition enableStoke:true];
+        [tempDefinition setStrokeColor:strokeColor];
+        [tempDefinition setStrokeSize:1];
+       
+        // fill color
+        ccColor3B fillColor;
+        fillColor.r = 255;
+        fillColor.g = 0;
+        fillColor.b = 0;
+        tempDefinition.fontFillColor = fillColor;
         
-        tempDefinition.m_fontFillColor.r = 255;
-        tempDefinition.m_fontFillColor.g = 0;
-        tempDefinition.m_fontFillColor.b = 0;
+        [tempDefinition enableStoke:false];
         
-        tempDefinition.m_stroke.m_strokeEnabled = false;
-        tempDefinition.m_shadow.m_shadowEnabled = true;
-        CCLabelTTF *shadowLabel = [CCLabelTTF labelWithString:@"Test shadow" fontDefinition:tempDefinition];
+        CCLabelTTF *shadowLabel =[CCLabelTTF labelWithString:@"Test Shadow" fontDefinition:tempDefinition];
 		shadowLabel.position = ccp(s.width/2,s.height/2 );
 		[self addChild:shadowLabel];
         
-        tempDefinition.m_stroke.m_strokeEnabled = true;
-        tempDefinition.m_shadow.m_shadowEnabled = false;
-        CCLabelTTF *strokeLabel = [CCLabelTTF labelWithString:@"Test stroke" fontDefinition:tempDefinition];
+        [tempDefinition enableStoke:true];
+        [tempDefinition enableShadow:false];
+        CCLabelTTF *strokeLabel =[CCLabelTTF labelWithString:@"Test Stroke" fontDefinition:tempDefinition];
 		strokeLabel.position = ccp(s.width/2,s.height/2 +50);
 		[self addChild:strokeLabel];
         
-        tempDefinition.m_stroke.m_strokeEnabled = true;
-        tempDefinition.m_shadow.m_shadowEnabled = true;
-        CCLabelTTF *strokeAndShadowLable = [CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
+        [tempDefinition enableStoke:true];
+        [tempDefinition enableShadow:true];
+        CCLabelTTF *strokeAndShadowLable =[CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
 		strokeAndShadowLable.position = ccp(s.width/2,s.height/2 -50);
 		[self addChild:strokeAndShadowLable];
+        
+        CCFontDefinition *pDef = [[CCFontDefinition alloc]init];
+        //[pDef initWithFontName:@"Helvetica" fontSize:32];
+        pDef.fontName = @"Helvetica";
+        [pDef release];
 	}
     
 	return self;

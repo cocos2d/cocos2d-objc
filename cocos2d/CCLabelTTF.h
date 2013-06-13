@@ -27,6 +27,7 @@
 
 #import "CCTexture2D.h"
 #import "CCSprite.h"
+#import "CCFontDefinition.h"
 #import "Platforms/CCNS.h"
 
 
@@ -73,8 +74,10 @@
 /** The vertical alignment of the label */
 @property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
 
+
+
 /** creates a CCLabelTTF with a string and a font definition */
-+ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition)definition;
++ (id) labelWithString:(NSString*)string fontDefinition:(CCFontDefinition *)definition;
 
 /** creates a CCLabelTTF with a font name and font size in points*/
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
@@ -162,13 +165,13 @@
 - (void) setFontFillColor:(ccColor3B) tintColor updateImage:(Boolean) mustUpdate;
 
 /** init the label with string and text definition*/
-- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition)definition;
+- (id) initWithString:(NSString *) string fontDefinition:(CCFontDefinition *)definition;
 
 /** get and set the font definition */
-- (ccFontDefinition) getFontDefinition;
+- (CCFontDefinition*) getFontDefinition;
 
 /** get and set the font definition */
-- (void) setFontDefinition: (ccFontDefinition) fontDef;
+- (void) setFontDefinition: (CCFontDefinition *) fontDef;
 
 
 

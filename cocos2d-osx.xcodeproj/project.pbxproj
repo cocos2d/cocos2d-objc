@@ -20,6 +20,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		01813A53176940B700A9D861 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 01813A51176940B700A9D861 /* CCFontDefinition.h */; };
+		01813A54176940B700A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A52176940B700A9D861 /* CCFontDefinition.m */; };
 		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
 		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		4AD3B8A0159A5415002E68D1 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
@@ -1227,6 +1229,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01813A51176940B700A9D861 /* CCFontDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontDefinition.h; sourceTree = "<group>"; };
+		01813A52176940B700A9D861 /* CCFontDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFontDefinition.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -3372,6 +3376,8 @@
 				E076E6571225EC7400DE0DA2 /* CCLabelBMFont.m */,
 				E076E6581225EC7400DE0DA2 /* CCLabelTTF.h */,
 				E076E6591225EC7400DE0DA2 /* CCLabelTTF.m */,
+				01813A51176940B700A9D861 /* CCFontDefinition.h */,
+				01813A52176940B700A9D861 /* CCFontDefinition.m */,
 			);
 			name = "Label Nodes";
 			sourceTree = "<group>";
@@ -4286,6 +4292,7 @@
 				A0D7D69915E2D2CC000CA0C4 /* CCScheduler.h in Headers */,
 				2B19285F163379400049A044 /* CCClippingNode.h in Headers */,
 				A003ACA7165731D500C7B792 /* ccFPSImages.h in Headers */,
+				01813A53176940B700A9D861 /* CCFontDefinition.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5026,6 +5033,7 @@
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,
 				A003ACA8165731D500C7B792 /* ccFPSImages.m in Sources */,
+				01813A54176940B700A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
