@@ -40,12 +40,12 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
-	CGSize	_dimensions;
-	CCTextAlignment			_hAlignment;
-    CCVerticalTextAlignment _vAlignment;
-	NSString * _fontName;
-	CGFloat _fontSize;
-	CCLineBreakMode _lineBreakMode;
+	CGSize                       _dimensions;
+	CCTextAlignment              _hAlignment;
+    CCVerticalTextAlignment      _vAlignment;
+	NSString                    *_fontName;
+	CGFloat                      _fontSize;
+	CCLineBreakMode              _lineBreakMode;
 	NSString	*_string;
     
     /** font shadow */

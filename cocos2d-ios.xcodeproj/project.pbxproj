@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		01813A5A176A705D00A9D861 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 01813A58176A705D00A9D861 /* CCFontDefinition.h */; };
 		01813A5B176A705D00A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A59176A705D00A9D861 /* CCFontDefinition.m */; };
+		01813A5E176B93A100A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A59176A705D00A9D861 /* CCFontDefinition.m */; };
+		01813A5F176B93A200A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A59176A705D00A9D861 /* CCFontDefinition.m */; };
+		01813A60176B93A300A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A59176A705D00A9D861 /* CCFontDefinition.m */; };
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		2B192835163361B10049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
@@ -4404,6 +4407,7 @@
 				A0D31EAB16C742E5004FFCD2 /* jsb_opengl_functions.mm in Sources */,
 				A0D31EC216C75C1D004FFCD2 /* jsb_opengl_registration.mm in Sources */,
 				A0D2C4DF16CA518900DA6C86 /* jsb_opengl_manual.mm in Sources */,
+				01813A60176B93A300A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4519,6 +4523,7 @@
 				A0EFA79D169CDF9C006D1B22 /* CCPhysicsSprite.mm in Sources */,
 				A0EFA79E169CDF9C006D1B22 /* CCClippingNode.m in Sources */,
 				A0EFA79F169CDF9C006D1B22 /* ccFPSImages.m in Sources */,
+				01813A5E176B93A100A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4614,6 +4619,7 @@
 				A0EFA877169CDFA4006D1B22 /* CCPhysicsSprite.mm in Sources */,
 				A0EFA878169CDFA4006D1B22 /* CCClippingNode.m in Sources */,
 				A0EFA879169CDFA4006D1B22 /* ccFPSImages.m in Sources */,
+				01813A5F176B93A200A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

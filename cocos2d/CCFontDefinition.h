@@ -10,26 +10,26 @@
 @interface CCFontDefinition : NSObject
 {
     // font name
-    NSString               *fontName;
+    NSString               *_fontName;
     // font size
-    int                     fontSize;
+    int                     _fontSize;
     // horizontal alignment
-    CCTextAlignment         alignment;
+    CCTextAlignment         _alignment;
     // vertical alignment
-    CCVerticalTextAlignment vertAlignment;
+    CCVerticalTextAlignment _vertAlignment;
     // line break mode
-    CCLineBreakMode         lineBreakMode;
+    CCLineBreakMode         _lineBreakMode;
     // renering box
-    CGSize                  dimensions;
+    CGSize                  _dimensions;
     // font color
-    ccColor3B               fontFillColor;
+    ccColor3B               _fontFillColor;
     // font shadow
-    ccFontShadow            shadow;
+    ccFontShadow            _shadow;
     // font stroke
-    ccFontStroke            stroke;
+    ccFontStroke            _stroke;
 }
 
-@property (nonatomic,copy) NSString*                        fontName;
+@property (nonatomic,copy)   NSString*                      fontName;
 @property (nonatomic,assign) int                            fontSize;
 @property (nonatomic,assign) CCTextAlignment                alignment;
 @property (nonatomic,assign) CCVerticalTextAlignment        vertAlignment;
@@ -37,20 +37,23 @@
 @property (nonatomic,assign) CGSize                         dimensions;
 @property (nonatomic,assign) ccColor3B                      fontFillColor;
 
--(id) init;
--(id) initWithFontName:(NSString *)name fontSize:(int)fontSize;
--(void) enableShadow:(bool) shadowEnabled;
--(bool) shadowEnabled;
--(void) setShadowOffset:(CGSize)offset;
--(CGSize) shadowOffset;
--(void) setShadowBlur:(CGFloat)blur;
+-(id)      init;
+-(id)      initWithFontName:(NSString *)name fontSize:(int)fontSize;
+
+// shadow
+-(void)    enableShadow:(bool) shadowEnabled;
+-(bool)    shadowEnabled;
+-(void)    setShadowOffset:(CGSize)offset;
+-(CGSize)  shadowOffset;
+-(void)    setShadowBlur:(CGFloat)blur;
 -(CGFloat) shadowBlur;
 
--(void) enableStoke:(bool) strokeEnabled;
--(bool) strokeEnabled;
--(void) setStrokeSize:(CGFloat)size;
--(CGFloat) strokeSize;
--(void) setStrokeColor:(ccColor3B)strokeColor;
--(ccColor3B) strokeColor;
+// stroke
+-(void)     enableStroke:(bool) strokeEnabled;
+-(bool)     strokeEnabled;
+-(void)     setStrokeSize:(CGFloat)size;
+-(CGFloat)  strokeSize;
+-(void)     setStrokeColor:(ccColor3B)strokeColor;
+-(ccColor3B)strokeColor;
 
 @end
