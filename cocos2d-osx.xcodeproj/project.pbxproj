@@ -22,6 +22,9 @@
 /* Begin PBXBuildFile section */
 		01813A53176940B700A9D861 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 01813A51176940B700A9D861 /* CCFontDefinition.h */; };
 		01813A54176940B700A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A52176940B700A9D861 /* CCFontDefinition.m */; };
+		01813A63176BD25500A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A52176940B700A9D861 /* CCFontDefinition.m */; };
+		01813A64176BD25600A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A52176940B700A9D861 /* CCFontDefinition.m */; };
+		01813A65176BD25900A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A52176940B700A9D861 /* CCFontDefinition.m */; };
 		2B19285F163379400049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B19285D163379400049A044 /* CCClippingNode.h */; };
 		2B192860163379400049A044 /* CCClippingNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2B19285E163379400049A044 /* CCClippingNode.m */; };
 		4AD3B8A0159A5415002E68D1 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
@@ -4628,6 +4631,7 @@
 				A0D31EA416C740BE004FFCD2 /* jsb_opengl_functions.mm in Sources */,
 				A0D31EBC16C75A52004FFCD2 /* jsb_opengl_registration.mm in Sources */,
 				A0D2C4DC16CA42BE00DA6C86 /* jsb_opengl_manual.mm in Sources */,
+				01813A65176BD25900A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4755,6 +4759,7 @@
 				A0EFA57A169CDABA006D1B22 /* CCScheduler.m in Sources */,
 				A0EFA57B169CDABA006D1B22 /* CCClippingNode.m in Sources */,
 				A0EFA57C169CDABA006D1B22 /* ccFPSImages.m in Sources */,
+				01813A64176BD25600A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4850,6 +4855,7 @@
 				A0EFA651169CDAC8006D1B22 /* CCScheduler.m in Sources */,
 				A0EFA652169CDAC8006D1B22 /* CCClippingNode.m in Sources */,
 				A0EFA653169CDAC8006D1B22 /* ccFPSImages.m in Sources */,
+				01813A63176BD25500A9D861 /* CCFontDefinition.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5341,6 +5347,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5370,6 +5377,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,

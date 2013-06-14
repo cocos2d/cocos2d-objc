@@ -55,7 +55,7 @@
 // -
 + (id) labelWithString:(NSString*)string fontDefinition:(CCFontDefinition *)definition
 {
-    return [[self alloc] initWithString:string fontDefinition:definition];
+    return [[[self alloc] initWithString:string fontDefinition:definition] autorelease];
 }
 
 // -
