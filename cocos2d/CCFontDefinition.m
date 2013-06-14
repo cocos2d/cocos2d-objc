@@ -10,13 +10,13 @@
 
 @implementation CCFontDefinition
 
-@synthesize fontName;
-@synthesize fontSize;
-@synthesize alignment;
-@synthesize vertAlignment;
-@synthesize lineBreakMode;
-@synthesize dimensions;
-@synthesize fontFillColor;
+@synthesize fontName        = _fontName;
+@synthesize fontSize        = _fontSize;
+@synthesize alignment       = _alignment;
+@synthesize vertAlignment   = _vertAlignment;
+@synthesize lineBreakMode   = _lineBreakMode;
+@synthesize dimensions      = _dimensions;
+@synthesize fontFillColor   = _fontFillColor;
 
 -(id) init
 {
@@ -40,67 +40,67 @@
 
 -(void) enableShadow:(bool) shadowEnabled
 {
-    shadow.m_shadowEnabled = shadowEnabled;
+    _shadow.m_shadowEnabled = shadowEnabled;
 }
 
 -(bool) shadowEnabled
 {
-    return  shadow.m_shadowEnabled;
+    return  _shadow.m_shadowEnabled;
 }
 
 -(void) setShadowOffset:(CGSize)offset
 {
-    shadow.m_shadowOffset = offset;
+    _shadow.m_shadowOffset = offset;
 }
 
 -(CGSize) shadowOffset
 {
-    return shadow.m_shadowOffset;
+    return _shadow.m_shadowOffset;
 }
 
 -(void) setShadowBlur:(CGFloat)blur
 {
-    shadow.m_shadowBlur = blur;
+    _shadow.m_shadowBlur = blur;
 }
 
 -(CGFloat) shadowBlur
 {
-    return shadow.m_shadowBlur;
+    return _shadow.m_shadowBlur;
 }
 
--(void) enableStoke:(bool) strokeEnabled
+-(void) enableStroke:(bool) strokeEnabled
 {
-    stroke.m_strokeEnabled = strokeEnabled;
+    _stroke.m_strokeEnabled = strokeEnabled;
 }
 
 -(bool) strokeEnabled
 {
-    return stroke.m_strokeEnabled;
+    return _stroke.m_strokeEnabled;
 }
 
 -(void) setStrokeSize:(CGFloat)size
 {
-    stroke.m_strokeSize = size;
+    _stroke.m_strokeSize = size;
 }
 
 -(CGFloat) strokeSize
 {
-    return stroke.m_strokeSize;
+    return _stroke.m_strokeSize;
 }
 
 -(void) setStrokeColor:(ccColor3B)strokeColor
 {
-    stroke.m_strokeColor = strokeColor;
+    _stroke.m_strokeColor = strokeColor;
 }
 
 -(ccColor3B) strokeColor
 {
-    return stroke.m_strokeColor;
+    return _stroke.m_strokeColor;
 }
 
 - (void) dealloc
 {
-    [fontName release];
+    [_fontName release];
     [super dealloc];
 }
 

@@ -512,7 +512,7 @@
         // stroke
         if ( _strokeEnabled )
         {
-            [retDefinition enableStoke: true];
+            [retDefinition enableStroke: true];
             [retDefinition setStrokeColor: _strokeColor];
             
             if (resAdjust)
@@ -522,7 +522,7 @@
         }
         else
         {
-            [retDefinition enableStoke: false];
+            [retDefinition enableStroke: false];
         }
         
         
