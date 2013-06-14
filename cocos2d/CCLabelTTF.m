@@ -47,13 +47,13 @@
 @interface CCLabelTTF ()
 - (BOOL) updateTexture;
 - (NSString*) getFontName:(NSString*)fontName;
-- (ccFontDefinition) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust;
+- (CCFontDefinition*) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust;
 @end
 
 @implementation CCLabelTTF
 
-// - 
-+ (id) labelWithString:(NSString*)string fontDefinition:(ccFontDefinition)definition
+// -
++ (id) labelWithString:(NSString*)string fontDefinition:(CCFontDefinition *)definition
 {
     return [[[self alloc] initWithString:string fontDefinition:definition] autorelease];
 }
@@ -278,8 +278,8 @@
     
     if ( _shadowEnabled || _strokeEnabled )
     {
-        ccFontDefinition tempDefinition = [self prepareFontDefinitionAndAdjustForResolution:true];
-        tex = [[CCTexture2D alloc] initWithString:_string fontDef:&tempDefinition];
+        CCFontDefinition *tempDef = [self prepareFontDefinitionAndAdjustForResolution:true];
+        tex = [[CCTexture2D alloc ]initWithString:_string fontDef:tempDef];
     }
     else
     {
@@ -329,25 +329,25 @@
 	return YES;
 }
 
-/* init the label using string and a font definition*/
-- (id) initWithString:(NSString *) string fontDefinition:(ccFontDefinition) fontDefinition
+/** init the label with string and text definition*/
+- (id) initWithString:(NSString *) string fontDefinition:(CCFontDefinition *)definition
 {
     if( (self=[super init]) ) {
         
 		// shader program
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
         
-		_dimensions     = fontDefinition.m_dimensions;
-		_hAlignment     = fontDefinition.m_alignment;
-		_vAlignment     = fontDefinition.m_vertAlignment;
-		_fontName       = [fontDefinition.m_fontName copy];
-		_fontSize       = fontDefinition.m_fontSize;
-		_lineBreakMode  = fontDefinition.m_lineBreakMode;
+		_dimensions     = definition.dimensions;
+		_hAlignment     = definition.alignment;
+		_vAlignment     = definition.vertAlignment;
+		_fontName       = [definition.fontName copy];
+		_fontSize       = definition.fontSize;
+		_lineBreakMode  = definition.lineBreakMode;
         
         // take care of shadow
-        if (fontDefinition.m_shadow.m_shadowEnabled)
+        if ([definition shadowEnabled])
         {
-            [self enableShadowWithOffset:fontDefinition.m_shadow.m_shadowOffset opacity:fontDefinition.m_shadow.m_shadowOpacity blur:fontDefinition.m_shadow.m_shadowBlur updateImage: false];
+            [self enableShadowWithOffset:[definition shadowOffset] opacity:0.5 blur:[definition shadowBlur] updateImage: false];
         }
         else
         {
@@ -355,9 +355,9 @@
         }
         
         // take care of stroke
-        if (fontDefinition.m_stroke.m_strokeEnabled)
+        if ([definition strokeEnabled])
         {
-            [self enableStrokeWithColor:fontDefinition.m_stroke.m_strokeColor size:fontDefinition.m_stroke.m_strokeSize updateImage:false];
+            [self enableStrokeWithColor:[definition strokeColor] size:[definition strokeSize] updateImage:false];
         }
         else
         {
@@ -365,15 +365,16 @@
         }
         
         
-        [self setFontFillColor: fontDefinition.m_fontFillColor updateImage:false];
+        [self setFontFillColor: definition.fontFillColor updateImage:false];
         
         
         // actually update the string
         [self setString:string];
 	}
     
-	return self;
+    return self;
 }
+
 
 /** enable or disable shadow for the label */
 - (void) enableShadowWithOffset:(CGSize)shadowOffset opacity:(float)shadowOpacity blur:(float)shadowBlur updateImage:(Boolean) mustUpdate
@@ -485,97 +486,93 @@
     }
 }
 
-- (ccFontDefinition) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust
+- (CCFontDefinition*) prepareFontDefinitionAndAdjustForResolution:(Boolean) resAdjust
 {
-    ccFontDefinition texDef;
-
-	texDef.m_lineBreakMode = _lineBreakMode;
-    if (resAdjust)
-        texDef.m_fontSize       =  _fontSize * CC_CONTENT_SCALE_FACTOR();
-    else
-        texDef.m_fontSize       =  _fontSize;
-    
-    
-    texDef.m_fontName       = [_fontName copy];
-    texDef.m_alignment      =  _hAlignment;
-    texDef.m_vertAlignment  =  _vAlignment;
-    texDef.m_lineBreakMode  =  _lineBreakMode;
-    texDef.m_fontFillColor  =  _textFillColor;
+    int tempFontSize = 0;
     
     if (resAdjust)
-        texDef.m_dimensions     =  CC_SIZE_POINTS_TO_PIXELS(_dimensions);
+       tempFontSize       =  _fontSize * CC_CONTENT_SCALE_FACTOR();
     else
-        texDef.m_dimensions     =  _dimensions;
+       tempFontSize       =  _fontSize;
     
+    CCFontDefinition *retDefinition = [[CCFontDefinition alloc]initWithFontName:_fontName fontSize:tempFontSize];
     
-    // stroke
-    if ( _strokeEnabled )
+    if (retDefinition)
     {
-        texDef.m_stroke.m_strokeEnabled = true;
-        texDef.m_stroke.m_strokeColor   = _strokeColor;
         
-        if (resAdjust)
-            texDef.m_stroke.m_strokeSize = _strokeSize * CC_CONTENT_SCALE_FACTOR();
-        else
-            texDef.m_stroke.m_strokeSize = _strokeSize;
+        [retDefinition autorelease];
         
-        
-    }
-    else
-    {
-        texDef.m_stroke.m_strokeEnabled = false;
-    }
+        retDefinition.lineBreakMode  = _lineBreakMode;
+        retDefinition.alignment      = _hAlignment;
+        retDefinition.vertAlignment  = _vAlignment;
+        retDefinition.lineBreakMode  = _lineBreakMode;
+        retDefinition.fontFillColor  = _textFillColor;
     
     
-    // shadow
-    if ( _shadowEnabled )
-    {
-        texDef.m_shadow.m_shadowEnabled         = true;
-        texDef.m_shadow.m_shadowBlur            = _shadowBlur;
-        texDef.m_shadow.m_shadowOpacity         = _shadowOpacity;
-        
-        
-        float scaleFactor  = CC_CONTENT_SCALE_FACTOR();
-        
-        if (resAdjust)
+        // stroke
+        if ( _strokeEnabled )
         {
-            texDef.m_shadow.m_shadowOffset.width  =  _shadowOffset.width  * scaleFactor;
-            texDef.m_shadow.m_shadowOffset.height =  _shadowOffset.height * scaleFactor;
+            [retDefinition enableStroke: true];
+            [retDefinition setStrokeColor: _strokeColor];
+            
+            if (resAdjust)
+                [retDefinition setStrokeSize: _strokeSize * CC_CONTENT_SCALE_FACTOR()];
+            else
+                [retDefinition setStrokeSize: _strokeSize];
         }
         else
-            texDef.m_shadow.m_shadowOffset = _shadowOffset;
-    }
-    else
-    {
-        texDef.m_shadow.m_shadowEnabled = false;
+        {
+            [retDefinition enableStroke: false];
+        }
+        
+        
+        // shadow
+        if ( _shadowEnabled )
+        {
+            [retDefinition enableShadow:true];
+            [retDefinition setShadowBlur:_shadowBlur];
+            
+            if (resAdjust)
+            {
+                [retDefinition setShadowOffset: CC_SIZE_POINTS_TO_PIXELS(_shadowOffset)];
+            }
+            else
+            {
+                [retDefinition setShadowOffset: _shadowOffset];
+            }
+        }
+        else
+        {
+            [retDefinition enableShadow:false];
+        }
     }
     
-    return texDef;
+    return retDefinition;
 }
 
-- (ccFontDefinition) getFontDefinition
+- (CCFontDefinition *) getFontDefinition
 {
     return [self prepareFontDefinitionAndAdjustForResolution:false];
 }
 
-- (void) setFontDefinition: (ccFontDefinition) fontDef
+- (void) setFontDefinition: (CCFontDefinition *) fontDef
 {
     if(_fontName)
     {
         [_fontName release];
     }
     
-    _dimensions     = fontDef.m_dimensions;
-    _hAlignment     = fontDef.m_alignment;
-    _vAlignment     = fontDef.m_vertAlignment;
-    _fontName       = [fontDef.m_fontName copy];
-    _fontSize       = fontDef.m_fontSize;
-    _lineBreakMode  = fontDef.m_lineBreakMode;
+    _dimensions     = fontDef.dimensions;
+    _hAlignment     = fontDef.alignment;
+    _vAlignment     = fontDef.vertAlignment;
+    _fontName       = [fontDef.fontName copy];
+    _fontSize       = fontDef.fontSize;
+    _lineBreakMode  = fontDef.lineBreakMode;
     
     // take care of shadow
-    if (fontDef.m_shadow.m_shadowEnabled)
+    if ([fontDef shadowEnabled])
     {
-        [self enableShadowWithOffset:fontDef.m_shadow.m_shadowOffset opacity:fontDef.m_shadow.m_shadowOpacity blur:fontDef.m_shadow.m_shadowBlur updateImage: false];
+        [self enableShadowWithOffset:[fontDef shadowOffset] opacity:0.5 blur:[fontDef shadowBlur] updateImage: false];
     }
     else
     {
@@ -583,9 +580,9 @@
     }
     
     // take care of stroke
-    if (fontDef.m_stroke.m_strokeEnabled)
+    if ([fontDef strokeEnabled])
     {
-        [self enableStrokeWithColor:fontDef.m_stroke.m_strokeColor size:fontDef.m_stroke.m_strokeSize updateImage:false];
+        [self enableStrokeWithColor:[fontDef strokeColor] size:[fontDef strokeSize] updateImage:false];
     }
     else
     {
@@ -593,7 +590,7 @@
     }
     
     
-    [self setFontFillColor: fontDef.m_fontFillColor updateImage:false];
+    [self setFontFillColor: fontDef.fontFillColor updateImage:false];
     
     
     // actually update the texture

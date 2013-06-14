@@ -411,6 +411,7 @@ typedef struct _ccFontStroke
     
 } ccFontStroke;
     
+/*
 typedef struct _ccFontDefinition
 {
     // font name
@@ -433,8 +434,7 @@ typedef struct _ccFontDefinition
     ccFontStroke            m_stroke;
     
 } ccFontDefinition;
-
-
+*/
     
 #ifdef __cplusplus
 }
