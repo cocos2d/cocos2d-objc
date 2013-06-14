@@ -31,11 +31,17 @@
 {
     if( (self=[super init]) )
     {
-        self.fontName = [name copy];
-        self.fontSize = size;
+        _fontName = [name copy];
+        _fontSize = size;
     }
     
     return self;
+}
+
+- (void) dealloc
+{
+    [_fontName release];
+    [super dealloc];
 }
 
 -(void) enableShadow:(bool) shadowEnabled
@@ -96,12 +102,6 @@
 -(ccColor3B) strokeColor
 {
     return _stroke.m_strokeColor;
-}
-
-- (void) dealloc
-{
-    [_fontName release];
-    [super dealloc];
 }
 
 @end
