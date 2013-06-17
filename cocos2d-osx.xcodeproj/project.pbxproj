@@ -5211,7 +5211,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = CocosBuilderReader;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -5223,7 +5222,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = CocosBuilderReader;
-				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -5301,7 +5299,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = chipmunk;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -5313,7 +5310,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = chipmunk;
-				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -5327,7 +5323,6 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				PRODUCT_NAME = box2d;
-				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -5339,7 +5334,6 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = box2d;
-				SDKROOT = macosx;
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -5347,7 +5341,7 @@
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -5377,7 +5371,7 @@
 		C01FCF5008A954540054247B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
