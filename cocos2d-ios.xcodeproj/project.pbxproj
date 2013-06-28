@@ -267,7 +267,6 @@
 		A093FF09150E9BE00039327A /* ccShaders.h in Headers */ = {isa = PBXBuildFile; fileRef = A093FF07150E9BE00039327A /* ccShaders.h */; };
 		A093FF0A150E9BE00039327A /* ccShaders.m in Sources */ = {isa = PBXBuildFile; fileRef = A093FF08150E9BE00039327A /* ccShaders.m */; };
 		A0977616174BDD2D001BA00C /* BitArray.h in Headers */ = {isa = PBXBuildFile; fileRef = A09775CC174BDD2C001BA00C /* BitArray.h */; };
-		A0977617174BDD2D001BA00C /* Root.h in Headers */ = {isa = PBXBuildFile; fileRef = A09775CF174BDD2C001BA00C /* Root.h */; };
 		A0977618174BDD2D001BA00C /* Anchor.h in Headers */ = {isa = PBXBuildFile; fileRef = A09775D2174BDD2C001BA00C /* Anchor.h */; };
 		A0977619174BDD2D001BA00C /* CharacterEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = A09775D3174BDD2C001BA00C /* CharacterEncoding.h */; };
 		A097761A174BDD2D001BA00C /* GCAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A09775D4174BDD2C001BA00C /* GCAPI.h */; };
@@ -1530,7 +1529,6 @@
 		A093FF07150E9BE00039327A /* ccShaders.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShaders.h; sourceTree = "<group>"; };
 		A093FF08150E9BE00039327A /* ccShaders.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccShaders.m; sourceTree = "<group>"; };
 		A09775CC174BDD2C001BA00C /* BitArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BitArray.h; sourceTree = "<group>"; };
-		A09775CF174BDD2C001BA00C /* Root.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Root.h; sourceTree = "<group>"; };
 		A09775D2174BDD2C001BA00C /* Anchor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Anchor.h; sourceTree = "<group>"; };
 		A09775D3174BDD2C001BA00C /* CharacterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterEncoding.h; sourceTree = "<group>"; };
 		A09775D4174BDD2C001BA00C /* GCAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GCAPI.h; sourceTree = "<group>"; };
@@ -2825,7 +2823,6 @@
 		A09775CD174BDD2C001BA00C /* gc */ = {
 			isa = PBXGroup;
 			children = (
-				A09775CF174BDD2C001BA00C /* Root.h */,
 			);
 			path = gc;
 			sourceTree = "<group>";
@@ -3474,7 +3471,6 @@
 				A0D31EC016C75C1D004FFCD2 /* jsb_opengl_manual.h in Headers */,
 				A0D31EC116C75C1D004FFCD2 /* jsb_opengl_registration.h in Headers */,
 				A0977616174BDD2D001BA00C /* BitArray.h in Headers */,
-				A0977617174BDD2D001BA00C /* Root.h in Headers */,
 				A0977618174BDD2D001BA00C /* Anchor.h in Headers */,
 				A0977619174BDD2D001BA00C /* CharacterEncoding.h in Headers */,
 				A097761A174BDD2D001BA00C /* GCAPI.h in Headers */,
