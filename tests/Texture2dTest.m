@@ -19,6 +19,8 @@ enum {
 static int sceneIdx=-1;
 static NSString *transitions[] = {	
 
+	@"TexturePixelFormat",
+	
 	@"TextureMemoryAlloc",
 
 	@"TextureAlias",
