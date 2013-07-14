@@ -73,6 +73,8 @@
 -(CGSize)  shadowOffset;
 -(void)    setShadowBlur:(CGFloat)blur;
 -(CGFloat) shadowBlur;
+-(void)    setShadowOpacity:(CGFloat)opacity;
+-(CGFloat) shadowOpacity;
 
 // stroke
 -(void)     enableStroke:(bool) strokeEnabled;
