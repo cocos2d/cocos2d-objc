@@ -190,7 +190,8 @@ BOOL ccpLineIntersect(CGPoint A, CGPoint B,
 
 float ccpAngle(CGPoint a, CGPoint b)
 {
-	float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
-	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
+	CGPoint delta = ccpSub(a, b);
+	CGFloat angle = atan2f(delta.y, delta.x);
+	if (fabs(angle) < kCGPointEpsilon) return 0.0f;
 	return angle;
 }
