@@ -43,6 +43,10 @@ static GLuint	_ccCurrentShaderProgram = -1;
 static GLuint	_ccCurrentBoundTexture[kCCMaxActiveTexture] =  {-1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, -1,-1,-1,-1, };
 static GLenum	_ccBlendingSource = -1;
 static GLenum	_ccBlendingDest = -1;
+static GLenum   _ccBlendingSourceRGB = -1;
+static GLenum   _ccBlendingDestRGB = -1;
+static GLenum   _ccBlendingSourceAlpha = -1;
+static GLenum   _ccBlendingDestAlpha = -1;
 static ccGLServerState _ccGLServerState = 0;
 static GLuint _ccVAO = 0;
 #endif // CC_ENABLE_GL_STATE_CACHE
@@ -64,6 +68,10 @@ void ccGLInvalidateStateCache( void )
 		_ccCurrentBoundTexture[i] = -1;
 	_ccBlendingSource = -1;
 	_ccBlendingDest = -1;
+    _ccBlendingSourceRGB = -1;
+    _ccBlendingSourceAlpha = -1;
+    _ccBlendingDestRGB = -1;
+    _ccBlendingDestAlpha = -1;
 	_ccGLServerState = 0;
 #endif
 }
@@ -106,11 +114,32 @@ void ccGLBlendFunc(GLenum sfactor, GLenum dfactor)
 	if( sfactor != _ccBlendingSource || dfactor != _ccBlendingDest ) {
 		_ccBlendingSource = sfactor;
 		_ccBlendingDest = dfactor;
+        _ccBlendingSourceRGB = -1;
+        _ccBlendingSourceAlpha = -1;
+        _ccBlendingDestRGB = -1;
+        _ccBlendingDestAlpha = -1;
 		SetBlending( sfactor, dfactor );
 	}
 #else
 	SetBlending( sfactor, dfactor );
 #endif // CC_ENABLE_GL_STATE_CACHE
+}
+
+void ccGLBlendFuncSeparate(GLenum srcRGB, GLenum dstRGB, GLenum srcAlpha, GLenum dstAlpha)
+{
+#if CC_ENABLE_GL_STATE_CACHE
+    if (srcRGB != _ccBlendingSourceRGB || dstRGB != _ccBlendingDestRGB || srcAlpha != _ccBlendingSourceAlpha || dstAlpha != _ccBlendingDestAlpha) {
+        _ccBlendingSource = -1;
+        _ccBlendingDest = -1;
+        _ccBlendingSourceRGB = srcRGB;
+        _ccBlendingSourceAlpha = srcAlpha;
+        _ccBlendingDestRGB = dstRGB;
+        _ccBlendingDestAlpha = dstAlpha;
+        glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+    }
+#else
+    glBlendFuncSeparate(srcRGB, dstRGB, srcAlpha, dstAlpha);
+#endif
 }
 
 void ccGLBlendResetToCache(void)
