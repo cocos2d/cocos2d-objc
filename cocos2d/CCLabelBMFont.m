@@ -867,10 +867,9 @@ void FNTConfigRemoveCache( void )
         [_initialString release];
         _initialString = [newString copy];
     }
-	
-    CCSprite *child;
-    CCARRAY_FOREACH(_children, child)
-		child.visible = NO;
+    
+    for (CCSprite* child in _children)
+        child.visible = NO;
 	
 	[self createFontChars];
 	
@@ -929,9 +928,8 @@ void FNTConfigRemoveCache( void )
 {
 	_opacityModifyRGB = modify;
     
-	id<CCRGBAProtocol> child;
-	CCARRAY_FOREACH(_children, child)
-		[child setOpacityModifyRGB:modify];
+    for (id<CCRGBAProtocol> child in _children)
+        [child setOpacityModifyRGB:modify];
 }
 
 -(BOOL) doesOpacityModifyRGB
@@ -943,8 +941,7 @@ void FNTConfigRemoveCache( void )
 {
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 
-	CCSprite *item;
-	CCARRAY_FOREACH(_children, item) {
+    for (CCSprite* item in _children) {
 		[item updateDisplayedOpacity:_displayedOpacity];
 	}
 }
@@ -955,8 +952,7 @@ void FNTConfigRemoveCache( void )
 	_displayedColor.g = _realColor.g * parentColor.g/255.0;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
 
-	CCSprite *item;
-	CCARRAY_FOREACH(_children, item) {
+	for (CCSprite* item in _children) {
 		[item updateDisplayedColor:_displayedColor];
 	}
 }

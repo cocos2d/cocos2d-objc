@@ -82,7 +82,7 @@
 
 	// used for optimization
 	CCSprite		*_reusedTile;
-	ccCArray		*_atlasIndexArray;
+	NSMutableArray		*_atlasIndexArray;
 }
 /** name of the layer */
 @property (nonatomic,readwrite,retain) NSString *layerName;

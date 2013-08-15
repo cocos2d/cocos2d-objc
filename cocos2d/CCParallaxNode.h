@@ -25,7 +25,6 @@
  */
 
 #import "CCNode.h"
-#import "Support/ccCArray.h"
 
 /** CCParallaxNode: A node that simulates a parallax scroller
 
@@ -34,12 +33,12 @@
  */
 @interface CCParallaxNode : CCNode
 {
-	ccArray				*_parallaxArray;
+	NSMutableArray *_parallaxArray;
 	CGPoint				_lastPosition;
 }
 
 /** array that holds the offset / ratio of the children */
-@property (nonatomic,readwrite) ccArray * parallaxArray;
+@property (nonatomic,readonly) NSArray * parallaxArray;
 
 /** Adds a child to the container with a z-order, a parallax ratio and a position offset
  It returns self, so you can chain several addChilds.

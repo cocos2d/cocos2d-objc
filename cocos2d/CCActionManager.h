@@ -29,12 +29,11 @@
 
 #import "CCAction.h"
 #import "ccMacros.h"
-#import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
 typedef struct _hashElement
 {
-	struct ccArray	*actions;
+	NSMutableArray	*actions;
 	NSUInteger		actionIndex;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;

@@ -374,8 +374,7 @@
 		//! make sure all children are drawn
 		[self sortAllChildren];
 		
-		CCNode *child;
-		CCARRAY_FOREACH(_children, child) {
+        for (CCNode *child in _children) {
 			if( child != _sprite)
 				[child visit];
 		}

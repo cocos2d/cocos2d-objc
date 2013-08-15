@@ -608,8 +608,7 @@
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( _batchNode ) {
-		CCSprite *child;
-		CCARRAY_FOREACH(_children, child)
+        for (CCSprite *child in _children)
 			[_batchNode removeSpriteFromAtlas:child];
 	}
 
@@ -622,6 +621,13 @@
 {
 	if (_isReorderChildDirty)
 	{
+        // TODO: This may need to be done more efficiently (old solution not too good but saved for reference)
+        [_children sortUsingDescriptors:[NSArray arrayWithObjects:
+                                         [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
+                                         [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],
+                                         NULL]];
+        
+        /*
 		NSInteger i,j,length = _children->data->num;
 		CCNode** x = _children->data->arr;
 		CCNode *tempItem;
@@ -639,7 +645,7 @@
 				j = j-1;
 			}
 			x[j+1] = tempItem;
-		}
+		}*/
 
 		if ( _batchNode)
 			[_children makeObjectsPerformSelector:@selector(sortAllChildren)];
@@ -675,8 +681,7 @@
 	_dirty = _recursiveDirty = b;
 	// recursively set dirty
 	if( _hasChildren ) {
-		CCSprite *child;
-		CCARRAY_FOREACH(_children, child)
+        for (CCSprite *child in _children)
 			[child setDirtyRecursively:YES];
 	}
 }

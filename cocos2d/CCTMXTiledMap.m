@@ -184,8 +184,7 @@
 
 -(CCTMXLayer*) layerNamed:(NSString *)layerName
 {
-	CCTMXLayer *layer;
-	CCARRAY_FOREACH(_children, layer) {
+    for (CCTMXLayer *layer in _children) {
 		if([layer isKindOfClass:[CCTMXLayer class]])
 			if([layer.layerName isEqual:layerName])
 				return layer;

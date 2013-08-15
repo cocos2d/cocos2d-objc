@@ -186,8 +186,7 @@ enum {
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 
-	CCMenuItem* item;
-	CCARRAY_FOREACH(_children, item){
+    for (CCMenuItem* item in _children) {
 		// ignore invisible and disabled items: issue #779, #866
 		if ( [item visible] && [item isEnabled] ) {
 
@@ -260,8 +259,7 @@ enum {
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
 
-	CCMenuItem* item;
-	CCARRAY_FOREACH(_children, item){
+	for (CCMenuItem* item in _children) {
 		// ignore invisible and disabled items: issue #779, #866
 		if ( [item visible] && [item isEnabled] ) {
 
@@ -339,13 +337,12 @@ enum {
 {
 	float height = -padding;
 
-	CCMenuItem *item;
-	CCARRAY_FOREACH(_children, item)
+	for (CCMenuItem* item in _children)
 	    height += item.contentSize.height * item.scaleY + padding;
 
 	float y = height / 2.0f;
 
-	CCARRAY_FOREACH(_children, item) {
+	for (CCMenuItem* item in _children) {
 		CGSize itemSize = item.contentSize;
 	    [item setPosition:ccp(0, y - itemSize.height * item.scaleY / 2.0f)];
 	    y -= itemSize.height * item.scaleY + padding;
@@ -361,13 +358,12 @@ enum {
 {
 
 	float width = -padding;
-	CCMenuItem *item;
-	CCARRAY_FOREACH(_children, item)
+	for (CCMenuItem* item in _children)
 	    width += item.contentSize.width * item.scaleX + padding;
 
 	float x = -width / 2.0f;
 
-	CCARRAY_FOREACH(_children, item){
+	for (CCMenuItem* item in _children) {
 		CGSize itemSize = item.contentSize;
 		[item setPosition:ccp(x + itemSize.width * item.scaleX / 2.0f, 0)];
 		x += itemSize.width * item.scaleX + padding;
@@ -402,8 +398,8 @@ enum {
 {	
 	int height = -5;
     NSUInteger row = 0, rowHeight = 0, columnsOccupied = 0, rowColumns;
-	CCMenuItem *item;
-	CCARRAY_FOREACH(_children, item){
+
+	for (CCMenuItem* item in _children) {
 		NSAssert( row < [rows count], @"Too many menu items for the amount of rows/columns.");
 		
 		rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
@@ -426,7 +422,7 @@ enum {
 	
 	row = 0; rowHeight = 0; rowColumns = 0;
 	float w, x, y = height / 2;
-	CCARRAY_FOREACH(_children, item) {
+	for (CCMenuItem* item in _children) {
 		if(rowColumns == 0) {
 			rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
 			w = winSize.width / (1 + rowColumns);
@@ -483,8 +479,7 @@ enum {
 	
 	int width = -10, columnHeight = -5;
 	NSUInteger column = 0, columnWidth = 0, rowsOccupied = 0, columnRows;
-	CCMenuItem *item;
-	CCARRAY_FOREACH(_children, item){
+	for (CCMenuItem* item in _children){
 		NSAssert( column < [columns count], @"Too many menu items for the amount of rows/columns.");
 		
 		columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
@@ -513,7 +508,7 @@ enum {
 	column = 0; columnWidth = 0; columnRows = 0;
 	float x = -width / 2, y;
 	
-	CCARRAY_FOREACH(_children, item){
+	for (CCMenuItem* item in _children){
 		if(columnRows == 0) {
 			columnRows = [(NSNumber *) [columns objectAtIndex:column] unsignedIntegerValue];
 			y = ([(NSNumber *) [columnHeights objectAtIndex:column] intValue] + winSize.height) / 2;
