@@ -346,6 +346,7 @@ typedef struct _hashSelectorEntry
 
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
+        CFRetain(t);
 		element->target = target;
 		HASH_ADD_INT( hashForTimers, target, element );
 
