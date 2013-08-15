@@ -302,8 +302,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) childrenAlloc
 {
-#warning Why 4? Has this been tested performance-wise??
-	_children = [[NSMutableArray alloc] initWithCapacity:4];
+	_children = [[NSMutableArray alloc] init];
 }
 
 // camera: lazy alloc

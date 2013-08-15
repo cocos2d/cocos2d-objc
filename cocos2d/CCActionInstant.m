@@ -28,6 +28,7 @@
 #import "CCActionInstant.h"
 #import "CCNode.h"
 #import "CCSprite.h"
+#import <objc/message.h>
 
 
 //
@@ -270,7 +271,7 @@
 
 -(void) execute
 {
-	[_targetCallback performSelector:_selector];
+    objc_msgSend(_targetCallback, _selector);
 }
 @end
 
@@ -283,7 +284,7 @@
 
 -(void) execute
 {
-	[_targetCallback performSelector:_selector withObject:_target];
+    objc_msgSend(_targetCallback, _selector, _target);
 }
 @end
 
@@ -354,7 +355,7 @@
 
 -(void) execute
 {
-	[_targetCallback performSelector:_selector withObject:_object];
+    objc_msgSend(_targetCallback, _selector, _object);
 }
 
 @end

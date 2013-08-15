@@ -238,7 +238,7 @@
      */
 }
 
-@property (nonatomic) NSEvent* event;
+@property (nonatomic,retain) NSEvent* event;
 @property (nonatomic) SEL selector;
 @end
 

@@ -30,6 +30,7 @@
 #import "CCActionInterval.h"
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
+#import <objc/message.h>
 
 static NSUInteger _globalFontSize = kCCItemSize;
 static NSString *_globalFontName = @"Marker Felt";
@@ -68,8 +69,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	// avoid retain cycle
 	__unsafe_unretained id t = target;
 	return [self initWithBlock:^(id sender) {
-
-		[t performSelector:selector withObject:sender];
+        
+        objc_msgSend(t, selector, sender);
 	}];
 
 }
@@ -147,7 +148,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 {
    __unsafe_unretained id weakTarget = target; // avoid retain cycle
    [self setBlock:^(id sender) {
-		[weakTarget performSelector:selector withObject:sender];
+       objc_msgSend(weakTarget, selector, sender);
 	}];
 }
 
@@ -182,7 +183,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 
 	self = [self initWithLabel:label block: ^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	}
 			];
 	return self;
@@ -309,7 +310,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 
 	return [self initWithString:value charMapFile:charMapFile itemWidth:itemWidth itemHeight:itemHeight startCharMap:startCharMap block:^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	} ];
 }
 
@@ -379,7 +380,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 
 	return [self initWithString:value block:^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	}];
 }
 
@@ -473,7 +474,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 
 	return [self initWithNormalSprite:normalSprite selectedSprite:selectedSprite disabledSprite:disabledSprite block:^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	} ];
 }
 
@@ -638,7 +639,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 
 	return [self initWithNormalImage:normalI selectedImage:selectedI disabledImage:disabledI block:^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	}];
 }
 
@@ -723,7 +724,7 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 	__unsafe_unretained id t = target;
 	
 	return [[self alloc] initWithItems:array block:^(id sender) {
-		[t performSelector:selector withObject:sender];
+        objc_msgSend(t, selector, sender);
 	}
 			 ];
 }

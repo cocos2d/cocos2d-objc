@@ -55,8 +55,8 @@ typedef struct _hashElement
  */
 @interface CCActionManager : NSObject
 {
-	__unsafe_unretained tHashElement	*targets;
-	__unsafe_unretained tHashElement	*currentTarget;
+    tHashElement	*targets;
+    tHashElement	*currentTarget;
 	BOOL			currentTargetSalvaged;
 }
 

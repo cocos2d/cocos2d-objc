@@ -37,6 +37,8 @@
 #import "Support/CCFileUtils.h"
 #import "Support/NSThread+performBlock.h"
 
+#import <objc/message.h>
+
 
 #ifdef __CC_PLATFORM_MAC
 #import "Platforms/Mac/CCDirectorMac.h"
@@ -155,7 +157,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 
 	if(tex) {
-		[target performSelector:selector withObject:tex];
+        objc_msgSend(target, selector, tex);
 		return;
 	}
 
@@ -374,7 +376,7 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-#warning Not implemented
+#warning Not implemented with ARC
     /*
 	dispatch_sync(_dictQueue, ^{
 		NSArray *keys = [_textures allKeys];
