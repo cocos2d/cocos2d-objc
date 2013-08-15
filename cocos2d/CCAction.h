@@ -39,8 +39,8 @@ enum {
  */
 @interface CCAction : NSObject <NSCopying>
 {
-	id			_originalTarget;
-	id			_target;
+	id			__unsafe_unretained _originalTarget;
+	id			__unsafe_unretained _target;
 	NSInteger	_tag;
 }
 
@@ -49,13 +49,13 @@ enum {
  When the 'stop' method is called, target will be set to nil.
  The target is 'assigned', it is not 'retained'.
  */
-@property (nonatomic,readonly,assign) id target;
+@property (nonatomic,readonly,unsafe_unretained) id target;
 
 /** The original target, since target can be nil.
  Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
  @since v0.8.2
 */
-@property (nonatomic,readonly,assign) id originalTarget;
+@property (nonatomic,readonly,unsafe_unretained) id originalTarget;
 
 
 /** The action tag. An identifier of the action */
@@ -116,7 +116,7 @@ enum {
 	CCActionInterval *_innerAction;
 }
 /** Inner action */
-@property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
+@property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
 
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action;
@@ -137,7 +137,7 @@ enum {
 /** alter the speed of the inner function in runtime */
 @property (nonatomic,readwrite) CGFloat speed;
 /** Inner action of CCSpeed */
-@property (nonatomic, readwrite, retain) CCActionInterval *innerAction;
+@property (nonatomic, readwrite, strong) CCActionInterval *innerAction;
 
 /** creates the action */
 +(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value;

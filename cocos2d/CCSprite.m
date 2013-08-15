@@ -75,27 +75,27 @@
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
-	return [[[self alloc] initWithTexture:texture] autorelease];
+	return [[self alloc] initWithTexture:texture];
 }
 
 +(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
+	return [[self alloc] initWithTexture:texture rect:rect];
 }
 
 +(id)spriteWithFile:(NSString*)filename
 {
-	return [[[self alloc] initWithFile:filename] autorelease];
+	return [[self alloc] initWithFile:filename];
 }
 
 +(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect
 {
-	return [[[self alloc] initWithFile:filename rect:rect] autorelease];
+	return [[self alloc] initWithFile:filename rect:rect];
 }
 
 +(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
-	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
+	return [[self alloc] initWithSpriteFrame:spriteFrame];
 }
 
 +(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
@@ -108,7 +108,7 @@
 
 +(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
-	return [[[self alloc] initWithCGImage:image key:key] autorelease];
+	return [[self alloc] initWithCGImage:image key:key];
 }
 
 -(id) init
@@ -189,7 +189,6 @@
 		return [self initWithTexture:texture rect:rect];
 	}
 
-	[self release];
 	return nil;
 }
 
@@ -201,7 +200,6 @@
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
 
-	[self release];
 	return nil;
 }
 
@@ -244,11 +242,6 @@
 	];
 }
 
-- (void) dealloc
-{
-	[_texture release];
-	[super dealloc];
-}
 
 -(CCSpriteBatchNode*) batchNode
 {
@@ -949,8 +942,7 @@
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
 	if( ! _batchNode && _texture != texture ) {
-		[_texture release];
-		_texture = [texture retain];
+		_texture = texture;
 
 		[self updateBlendFunc];
 	}

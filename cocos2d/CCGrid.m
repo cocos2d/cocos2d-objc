@@ -60,12 +60,12 @@
 
 +(id) gridWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
 {
-	return [[[self alloc] initWithSize:gridSize texture:texture flippedTexture:flipped] autorelease];
+	return [[self alloc] initWithSize:gridSize texture:texture flippedTexture:flipped];
 }
 
 +(id) gridWithSize:(CGSize)gridSize
 {
-	return [[(CCGridBase*)[self alloc] initWithSize:gridSize] autorelease];
+	return [(CCGridBase*)[self alloc] initWithSize:gridSize];
 }
 
 -(id) initWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped
@@ -116,7 +116,6 @@
 	void *data = calloc((size_t)(POTWide * POTHigh * bpp), 1);
 	if( ! data ) {
 		CCLOG(@"cocos2d: CCGrid: not enough memory");
-		[self release];
 		return nil;
 	}
 
@@ -125,13 +124,11 @@
 
 	if( ! texture ) {
 		CCLOG(@"cocos2d: CCGrid: error creating texture");
-		[self release];
 		return nil;
 	}
 
 	self = [self initWithSize:gSize texture:texture flippedTexture:NO];
 
-	[texture release];
 
 	return self;
 }
@@ -146,9 +143,6 @@
 
 //	[self setActive: NO];
 
-	[_texture release];
-	[_grabber release];
-	[super dealloc];
 }
 
 // properties
@@ -271,7 +265,6 @@
 	free(_vertices);
 	free(_indices);
 	free(_originalVertices);
-	[super dealloc];
 }
 
 -(void)blit
@@ -429,7 +422,6 @@
 	free(_vertices);
 	free(_indices);
 	free(_originalVertices);
-	[super dealloc];
 }
 
 -(void)blit

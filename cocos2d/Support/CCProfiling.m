@@ -59,7 +59,6 @@ static CCProfiler* g_sharedProfiler;
 {
 	CCProfilingTimer* t = [[CCProfilingTimer alloc] initWithName:timerName];
 	[activeTimers setObject:t forKey:timerName];
-	[t release];
 	return t;
 }
 
@@ -82,11 +81,6 @@ static CCProfiler* g_sharedProfiler;
 	return self;
 }
 
-- (void)dealloc
-{
-	[activeTimers release];
-	[super dealloc];
-}
 
 - (void)displayTimers
 {
@@ -121,8 +115,6 @@ static CCProfiler* g_sharedProfiler;
 - (void)dealloc
 {
 	CCLOGINFO(@"deallocing %@", self);
-	[name release];
-	[super dealloc];
 }
 
 - (NSString*)description

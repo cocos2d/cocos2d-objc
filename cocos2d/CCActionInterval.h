@@ -100,7 +100,7 @@ Example:
 }
 
 /** Inner action */
-@property (nonatomic,readwrite,retain) CCFiniteTimeAction *innerAction;
+@property (nonatomic,readwrite,strong) CCFiniteTimeAction *innerAction;
 
 /** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT.
  */
@@ -445,7 +445,7 @@ typedef struct _ccBezierConfig {
 	NSUInteger			_executedLoops;
 }
 /** animation used for the image */
-@property (readwrite,nonatomic,retain) CCAnimation * animation;
+@property (readwrite,nonatomic,strong) CCAnimation * animation;
 
 /** creates the action with an Animation and will restore the original frame when the animation is over */
 +(id) actionWithAnimation:(CCAnimation*)animation;
@@ -462,7 +462,7 @@ typedef struct _ccBezierConfig {
 	CCFiniteTimeAction* _action;
 }
 /** This is the target that the action will be forced to run with */
-@property(readwrite,nonatomic,retain) id forcedTarget;
+@property(readwrite,nonatomic,strong) id forcedTarget;
 
 /** Create an action with the specified action and forced target */
 + (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action;

@@ -133,7 +133,7 @@ and when to execute the Scenes.
 	ccDirectorProjection _projection;
 
 	/* CCDirector delegate */
-	id<CCDirectorDelegate>	_delegate;
+	id<CCDirectorDelegate>	__unsafe_unretained _delegate;
 
 	/* window size in points */
 	CGSize	_winSizeInPoints;
@@ -142,7 +142,7 @@ and when to execute the Scenes.
 	CGSize	_winSizeInPixels;
 
 	/* the cocos2d running thread */
-	NSThread	*_runningThread;
+	NSThread	*__unsafe_unretained _runningThread;
 
 	/* scheduler associated with this director */
 	CCScheduler *_scheduler;
@@ -159,7 +159,7 @@ and when to execute the Scenes.
  On iOS usually it is the main thread.
  @since v0.99.5
  */
-@property (readonly, nonatomic ) NSThread *runningThread;
+@property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
 /** The current running Scene. Director can only run one Scene at the time */
 @property (nonatomic,readonly) CCScene* runningScene;
 /** The FPS value */
@@ -191,22 +191,22 @@ and when to execute the Scenes.
  Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
  @since v0.99.5
  */
-@property (nonatomic, readwrite, retain) id	notificationNode;
+@property (nonatomic, readwrite, strong) id	notificationNode;
 
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  @since v0.99.5
  */
-@property (nonatomic, readwrite, assign) id<CCDirectorDelegate> delegate;
+@property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
 
 /** CCScheduler associated with this director
  @since v2.0
  */
-@property (nonatomic,readwrite,retain) CCScheduler *scheduler;
+@property (nonatomic,readwrite,strong) CCScheduler *scheduler;
 
 /** CCActionManager associated with this director
  @since v2.0
  */
-@property (nonatomic,readwrite,retain) CCActionManager *actionManager;
+@property (nonatomic,readwrite,strong) CCActionManager *actionManager;
 
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;

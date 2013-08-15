@@ -33,7 +33,7 @@
 /** creates a base transition with duration and incoming scene */
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s backwards:(BOOL) back
 {
-	return [[[self alloc] initWithDuration:t scene:s backwards:back] autorelease];
+	return [[self alloc] initWithDuration:t scene:s backwards:back];
 }
 
 /** initializes a transition with duration and incoming scene */

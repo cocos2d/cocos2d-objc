@@ -43,7 +43,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize range:range shakeZ:shakeZ] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize range:range shakeZ:shakeZ];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ
@@ -108,7 +108,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shatterZ:(BOOL)shatterZ
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize range:range shatterZ:shatterZ] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize range:range shatterZ:shatterZ];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shatterZ:(BOOL)shatterZ
@@ -180,7 +180,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize seed:(unsigned)seed
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize seed:seed] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize seed:seed];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize seed:(unsigned)seed
@@ -207,7 +207,6 @@ typedef struct
 		free(_tilesOrder);
 	if(_tiles)
 		free(_tiles);
-	[super dealloc];
 }
 
 -(void)shuffle:(NSUInteger*)array count:(NSUInteger)len
@@ -449,7 +448,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize seed:(unsigned)seed
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize seed:seed] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize seed:seed];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize seed:(unsigned)seed
@@ -472,7 +471,6 @@ typedef struct
 {
 	if(_tilesOrder)
 		free(_tilesOrder);
-	[super dealloc];
 }
 
 -(void)shuffle:(NSUInteger*)array count:(NSUInteger)len
@@ -551,7 +549,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
@@ -606,7 +604,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize jumps:(NSUInteger)numberOfJumps amplitude:(float)amplitude
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize jumps:numberOfJumps amplitude:amplitude] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize jumps:numberOfJumps amplitude:amplitude];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize jumps:(NSUInteger)numberOfJumps amplitude:(float)amplitude
@@ -671,7 +669,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration rows:(NSUInteger)rows
 {
-	return [[[self alloc] initWithDuration:duration rows:rows] autorelease];
+	return [[self alloc] initWithDuration:duration rows:rows];
 }
 
 -(id)initWithDuration:(ccTime)duration rows:(NSUInteger)rows
@@ -725,7 +723,7 @@ typedef struct
 
 +(id)actionWithDuration:(ccTime)duration cols:(NSUInteger)cols
 {
-	return [[[self alloc] initWithDuration:duration cols:cols] autorelease];
+	return [[self alloc] initWithDuration:duration cols:cols];
 }
 
 -(id)initWithDuration:(ccTime)duration cols:(NSUInteger)cols

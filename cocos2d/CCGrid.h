@@ -48,7 +48,7 @@
 	CCGrabber	*_grabber;
 	BOOL		_isTextureFlipped;
 
-	CCGLProgram	*_shaderProgram;
+	CCGLProgram	*__unsafe_unretained _shaderProgram;
 
 	ccDirectorProjection	_directorProjection;
 }
@@ -62,13 +62,13 @@
 /** pixels between the grids */
 @property (nonatomic,readwrite) CGPoint step;
 /** texture used */
-@property (nonatomic, retain) CCTexture2D *texture;
+@property (nonatomic, strong) CCTexture2D *texture;
 /** grabber used */
-@property (nonatomic, retain) CCGrabber *grabber;
+@property (nonatomic, strong) CCGrabber *grabber;
 /** is texture flipped */
 @property (nonatomic, readwrite) BOOL isTextureFlipped;
 /** shader program */
-@property (nonatomic, readwrite, assign) CCGLProgram *shaderProgram;
+@property (nonatomic, readwrite, unsafe_unretained) CCGLProgram *shaderProgram;
 
 +(id) gridWithSize:(CGSize)gridSize texture:(CCTexture2D*)texture flippedTexture:(BOOL)flipped;
 +(id) gridWithSize:(CGSize)gridSize;

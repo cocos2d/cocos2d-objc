@@ -77,11 +77,11 @@
  Only available for Mac OS X
  */
 @interface CCGLView : NSOpenGLView {
-	id<CCEventDelegate> _eventDelegate;
+	id<CCEventDelegate> __unsafe_unretained _eventDelegate;
 }
 
 /** Event delegate */
-@property (nonatomic, readwrite, assign) id<CCEventDelegate> eventDelegate;
+@property (nonatomic, readwrite, unsafe_unretained) id<CCEventDelegate> eventDelegate;
 
 /** initializes the CCGLView with a frame rect and an OpenGL context */
 - (id) initWithFrame:(NSRect)frameRect shareContext:(NSOpenGLContext*)context;

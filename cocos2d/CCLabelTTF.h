@@ -64,7 +64,7 @@
 }
 
 /** Font name used in the label */
-@property (nonatomic,retain) NSString* fontName;
+@property (nonatomic,strong) NSString* fontName;
 /** Font size of the label */
 @property (nonatomic,assign) float fontSize;
 /** Dimensions of the label in Points */

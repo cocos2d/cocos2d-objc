@@ -59,7 +59,6 @@
 
 	[self removeAllActions];
 
-	[super dealloc];
 }
 
 #pragma mark ActionManager - Private
@@ -77,7 +76,7 @@
 
 -(void) actionAllocWithHashElement:(tHashElement*)element
 {
-    NSMutableArray* aObj = [[[NSMutableArray alloc] init] autorelease];
+    NSMutableArray* aObj = [[NSMutableArray alloc] init];
     void* a = (__bridge void*) aObj;
     CFRetain(a);
     
@@ -167,7 +166,7 @@
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
 		element->paused = paused;
-        CFRetain(t);
+        CFBridgingRetain(t);
         element->target = t;
 		HASH_ADD_INT(targets, target, element);
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);

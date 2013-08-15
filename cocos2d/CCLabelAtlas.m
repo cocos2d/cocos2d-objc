@@ -46,12 +46,12 @@
 #pragma mark CCLabelAtlas - Creation & Init
 +(id) labelWithString:(NSString*)string charMapFile:(NSString*)charmapfile itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
 {
-	return [[[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c] autorelease];
+	return [[self alloc] initWithString:string charMapFile:charmapfile itemWidth:w itemHeight:h startCharMap:c];
 }
 
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile] autorelease];
+	return [[self alloc] initWithString:string fntFile:fntFile];
 }
 
 -(id) initWithString:(NSString*) theString fntFile:(NSString*)fntFile
@@ -92,12 +92,6 @@
 	return self;
 }
 
--(void) dealloc
-{
-	[_string release];
-
-	[super dealloc];
-}
 
 #pragma mark CCLabelAtlas - Atlas generation
 
@@ -179,7 +173,6 @@
 		if( len > _textureAtlas.capacity )
 			[_textureAtlas resizeCapacity:len];
 
-		[_string release];
 		_string = [newString copy];
 		[self updateAtlasValues];
 

@@ -156,7 +156,7 @@ typedef enum {
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 
 /** shader program used by drawAtPoint and drawInRect */
-@property(nonatomic,readwrite,retain) CCGLProgram *shaderProgram;
+@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
 /** Returns the resolution type of the texture.
  Is it a RetinaDisplay texture, an iPad texture, a Mac, a Mac RetinaDisplay or an standard texture ?

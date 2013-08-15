@@ -31,11 +31,11 @@
 {
 	CGPoint	_ratio;
 	CGPoint _offset;
-	CCNode *_child;	// weak ref
+	CCNode *__unsafe_unretained _child;	// weak ref
 }
 @property (nonatomic,readwrite) CGPoint ratio;
 @property (nonatomic,readwrite) CGPoint offset;
-@property (nonatomic,readwrite,assign) CCNode *child;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode *child;
 +(id) pointWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 -(id) initWithCGPoint:(CGPoint)point offset:(CGPoint)offset;
 @end
@@ -46,7 +46,7 @@
 
 +(id) pointWithCGPoint:(CGPoint)ratio offset:(CGPoint)offset
 {
-	return [[[self alloc] initWithCGPoint:ratio offset:offset] autorelease];
+	return [[self alloc] initWithCGPoint:ratio offset:offset];
 }
 -(id) initWithCGPoint:(CGPoint)ratio offset:(CGPoint)offset
 {
@@ -71,11 +71,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_parallaxArray release];
-	[super dealloc];
-}
 
 -(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger)tag
 {

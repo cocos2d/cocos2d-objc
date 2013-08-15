@@ -135,7 +135,7 @@
 @property (nonatomic,readwrite) ccColor3B disabledColor;
 
 /** Label that is rendered. It can be any CCNode that implements the CCLabelProtocol */
-@property (nonatomic,readwrite,assign) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode<CCLabelProtocol, CCRGBAProtocol>* label;
 
 /** creates a CCMenuItemLabel with a Label. */
 +(id) itemWithLabel:(CCNode<CCLabelProtocol,CCRGBAProtocol>*)label;
@@ -279,17 +279,17 @@
  */
 @interface CCMenuItemSprite : CCMenuItem <CCRGBAProtocol>
 {
-	CCNode<CCRGBAProtocol> *_normalImage, *_selectedImage, *_disabledImage;
+	CCNode<CCRGBAProtocol> *__unsafe_unretained _normalImage, *__unsafe_unretained _selectedImage, *__unsafe_unretained _disabledImage;
 }
 
 // weak references
 
 /** the image used when the item is not selected */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *normalImage;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode<CCRGBAProtocol> *normalImage;
 /** the image used when the item is selected */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *selectedImage;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode<CCRGBAProtocol> *selectedImage;
 /** the image used when the item is disabled */
-@property (nonatomic,readwrite,assign) CCNode<CCRGBAProtocol> *disabledImage;
+@property (nonatomic,readwrite,unsafe_unretained) CCNode<CCRGBAProtocol> *disabledImage;
 
 /** creates a menu item with a normal and selected image*/
 +(id) itemWithNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite;
@@ -396,7 +396,7 @@
 {
 	NSUInteger	_selectedIndex;
 	NSMutableArray* _subItems;
-    CCMenuItem*	_currentItem;
+    CCMenuItem*	__unsafe_unretained _currentItem;
 }
 
 /** returns the selected item */
@@ -404,7 +404,7 @@
 /** NSMutableArray that contains the subitems. You can add/remove items in runtime, and you can replace the array with a new one.
  @since v0.7.2
  */
-@property (nonatomic,readwrite,retain) NSMutableArray *subItems;
+@property (nonatomic,readwrite,strong) NSMutableArray *subItems;
 
 /** creates a menu item from a list of items with a target/selector */
 +(id) itemWithTarget:(id)target selector:(SEL)selector items:(CCMenuItem*) item, ... NS_REQUIRES_NIL_TERMINATION;

@@ -61,7 +61,7 @@
 }
 
 /** returns the TextureAtlas that is used */
-@property (nonatomic,readwrite,retain) CCTextureAtlas * textureAtlas;
+@property (nonatomic,readwrite,strong) CCTextureAtlas * textureAtlas;
 
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;

@@ -49,7 +49,7 @@
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
-	return [[[self alloc] initWithAction: action] autorelease ];
+	return [[self alloc] initWithAction: action];
 }
 
 -(id) initWithAction: (CCActionInterval*) action
@@ -57,22 +57,17 @@
 	NSAssert( action!=nil, @"Ease: arguments must be non-nil");
 
 	if( (self=[super initWithDuration: action.duration]) )
-		_inner = [action retain];
+		_inner = action;
 
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease]];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[_inner copy]];
 	return copy;
 }
 
--(void) dealloc
-{
-	[_inner release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -108,7 +103,7 @@
 @synthesize rate=_rate;
 +(id) actionWithAction: (CCActionInterval*) action rate:(float)rate
 {
-	return [[[self alloc] initWithAction: action rate:rate] autorelease ];
+	return [[self alloc] initWithAction: action rate:rate];
 }
 
 -(id) initWithAction: (CCActionInterval*) action rate:(float)rate
@@ -121,14 +116,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease] rate:_rate];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[_inner copy] rate:_rate];
 	return copy;
 }
 
--(void) dealloc
-{
-	[super dealloc];
-}
 
 -(CCActionInterval*) reverse
 {
@@ -245,7 +236,7 @@
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
-    return [[[self alloc] initWithAction: action] autorelease];
+    return [[self alloc] initWithAction: action];
 }
 
 -(id) initWithAction: (CCActionInterval*) action
@@ -394,12 +385,12 @@
 
 +(id) actionWithAction: (CCActionInterval*) action
 {
-	return [[[self alloc] initWithAction:action period:0.3f] autorelease];
+	return [[self alloc] initWithAction:action period:0.3f];
 }
 
 +(id) actionWithAction: (CCActionInterval*) action period:(float)period
 {
-	return [[[self alloc] initWithAction:action period:period] autorelease];
+	return [[self alloc] initWithAction:action period:period];
 }
 
 -(id) initWithAction: (CCActionInterval*) action
@@ -417,7 +408,7 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_inner copy] autorelease] period:_period];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[_inner copy] period:_period];
 	return copy;
 }
 

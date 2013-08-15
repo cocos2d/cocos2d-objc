@@ -55,11 +55,6 @@
     return self;
 }
 
-- (void) dealloc
-{
-    [_fontName release];
-    [super dealloc];
-}
 
 -(void) enableShadow:(bool) shadowEnabled
 {

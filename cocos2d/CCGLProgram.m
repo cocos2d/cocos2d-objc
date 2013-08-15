@@ -73,12 +73,12 @@ typedef void (*GLLogFunction) (GLuint program,
 
 + (id)programWithVertexShaderByteArray:(const GLchar*)vShaderByteArray fragmentShaderByteArray:(const GLchar*)fShaderByteArray
 {
-	return [[[self alloc] initWithVertexShaderByteArray:vShaderByteArray fragmentShaderByteArray:fShaderByteArray] autorelease];
+	return [[self alloc] initWithVertexShaderByteArray:vShaderByteArray fragmentShaderByteArray:fShaderByteArray];
 }
 
 + (id)programWithVertexShaderFilename:(NSString *)vShaderFilename fragmentShaderFilename:(NSString *)fShaderFilename
 {
-	return [[[self alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename] autorelease];
+	return [[self alloc] initWithVertexShaderFilename:vShaderFilename fragmentShaderFilename:fShaderFilename];
 }
 
 - (id)initWithVertexShaderByteArray:(const GLchar *)vShaderByteArray fragmentShaderByteArray:(const GLchar *)fShaderByteArray
@@ -276,10 +276,9 @@ typedef void (*GLLogFunction) (GLuint program,
 
 	char *logBytes = malloc(logLength);
 	logFunc(object, logLength, &charsWritten, logBytes);
-	NSString *log = [[[NSString alloc] initWithBytes:logBytes
+	NSString *log = [[NSString alloc] initWithBytes:logBytes
 											  length:logLength
-											encoding:NSUTF8StringEncoding]
-					  autorelease];
+											encoding:NSUTF8StringEncoding];
 	free(logBytes);
 	return log;
 }
@@ -487,6 +486,5 @@ typedef void (*GLLogFunction) (GLuint program,
 		free(current_element);
 	}
 
-	[super dealloc];
 }
 @end

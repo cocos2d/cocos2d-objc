@@ -79,7 +79,7 @@ int compareInts (const void * a, const void * b);
 
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
 {
-	return [[[self alloc] initWithTilesetInfo:tilesetInfo layerInfo:layerInfo mapInfo:mapInfo] autorelease];
+	return [[self alloc] initWithTilesetInfo:tilesetInfo layerInfo:layerInfo mapInfo:mapInfo];
 }
 
 -(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
@@ -128,13 +128,8 @@ int compareInts (const void * a, const void * b);
 
 - (void) dealloc
 {
-	[_layerName release];
-	[_tileset release];
-	[_reusedTile release];
-	[_properties release];
 
 	if( _atlasIndexArray ) {
-        [_atlasIndexArray release];
 		_atlasIndexArray = NULL;
 	}
 
@@ -143,7 +138,6 @@ int compareInts (const void * a, const void * b);
 		_tiles = NULL;
 	}
 
-	[super dealloc];
 }
 
 -(void) releaseMap
@@ -154,7 +148,6 @@ int compareInts (const void * a, const void * b);
 	}
 
 	if( _atlasIndexArray ) {
-        [_atlasIndexArray release];
 		_atlasIndexArray = NULL;
 	}
 }
@@ -288,7 +281,6 @@ int compareInts (const void * a, const void * b);
 
 			NSUInteger indexForZ = [self atlasIndexForExistantZ:z];
 			[self addSpriteWithoutQuad:tile z:indexForZ tag:z];
-			[tile release];
 		}
 	}
 	return tile;

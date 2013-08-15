@@ -41,7 +41,7 @@
  The stencil node will be retained.
  This default to nil.
  */
-@property (nonatomic, retain) CCNode *stencil;
+@property (nonatomic, strong) CCNode *stencil;
 
 /** The alpha threshold.
  The content is drawn only where the stencil have pixel with alpha greater than the alphaThreshold.

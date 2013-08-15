@@ -103,16 +103,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_eventDispatcher release];
-	[__view release];
-    [_superViewGLView release];
-	[_fullScreenWindow release];
-	[_windowGLView release];
-
-	[super dealloc];
-}
 
 //
 // setFullScreen code taken from GLFullScreen example by Apple
@@ -147,10 +137,9 @@
 
         // Cache normal window and superview of openGLView
         if(!_windowGLView)
-            _windowGLView = [[openGLview window] retain];
+            _windowGLView = [openGLview window];
 
-        [_superViewGLView release];
-        _superViewGLView = [[openGLview superview] retain];
+        _superViewGLView = [openGLview superview];
 
 
         // Get screen size
@@ -178,7 +167,6 @@
         [openGLview removeFromSuperview];
 
         // Release fullscreen window
-        [_fullScreenWindow release];
         _fullScreenWindow = nil;
 
         // Attach glView to superview
@@ -197,14 +185,14 @@
 
     _isFullScreen = fullscreen;
 
-    [openGLview retain]; // Retain +1
+     // Retain +1
 
     // re-configure glView
     [self setView:openGLview];
     
     [openGLview setAcceptsTouchEvents:viewAcceptsTouchEvents];
     
-    [openGLview release]; // Retain -1
+     // Retain -1
 
     [openGLview setNeedsDisplay:YES];
 #else
@@ -381,8 +369,7 @@
 -(void) setEventDispatcher:(CCEventDispatcher *)dispatcher
 {
 	if( dispatcher != _eventDispatcher ) {
-		[_eventDispatcher release];
-		_eventDispatcher = [dispatcher retain];
+		_eventDispatcher = dispatcher;
 	}
 }
 
@@ -405,20 +392,20 @@
 	if( ! _runningThread )
 		_runningThread = [NSThread currentThread];
 
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[self drawScene];
+		[self drawScene];
 
-	// Process timers and other events
-	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
+		// Process timers and other events
+		[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
 
-	[pool release];
-		
+			
 #else
-	[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
+		[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
 #endif
 
     return kCVReturnSuccess;
+    }
 }
 
 // This is the renderer output callback function
@@ -449,7 +436,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	CVDisplayLinkCreateWithActiveCGDisplays(&displayLink);
 
 	// Set the renderer output callback function
-	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, self);
+	CVDisplayLinkSetOutputCallback(displayLink, &MyDisplayLinkCallback, (__bridge void *)(self));
 
 	// Set the display link for the current renderer
 	CCGLView *openGLview = (CCGLView*) self.view;
@@ -493,7 +480,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 		CVDisplayLinkStop(displayLink);
 		CVDisplayLinkRelease(displayLink);
 	}
-	[super dealloc];
 }
 
 //
@@ -504,11 +490,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 	while( ![[NSThread currentThread] isCancelled] ) {
 		// There is no autorelease pool when this method is called because it will be called from a background thread
 		// It's important to create one or you will leak objects
-		NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+		@autoreleasepool {
 
-		[[NSRunLoop currentRunLoop] run];
+			[[NSRunLoop currentRunLoop] run];
 
-		[pool release];
+		}
 	}
 }
 

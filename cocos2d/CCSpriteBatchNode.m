@@ -67,12 +67,12 @@ const NSUInteger defaultCapacity = 29;
  */
 +(id)batchNodeWithTexture:(CCTexture2D *)tex
 {
-	return [[[self alloc] initWithTexture:tex capacity:defaultCapacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:defaultCapacity];
 }
 
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
-	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
 
 /*
@@ -80,17 +80,17 @@ const NSUInteger defaultCapacity = 29;
  */
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[self alloc] initWithFile:fileImage capacity:capacity];
 }
 
 +(id)batchNodeWithFile:(NSString*) imageFile
 {
-	return [[[self alloc] initWithFile:imageFile capacity:defaultCapacity] autorelease];
+	return [[self alloc] initWithFile:imageFile capacity:defaultCapacity];
 }
 
 -(id)init
 {
-    return [self initWithTexture:[[[CCTexture2D alloc] init] autorelease] capacity:0];
+    return [self initWithTexture:[[CCTexture2D alloc] init] capacity:0];
 }
 
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
@@ -126,13 +126,6 @@ const NSUInteger defaultCapacity = 29;
 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
 }
 
--(void)dealloc
-{
-	[_textureAtlas release];
-	[_descendants release];
-
-	[super dealloc];
-}
 
 #pragma mark CCSpriteBatchNode - composition
 

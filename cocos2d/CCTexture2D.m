@@ -195,12 +195,10 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[_shaderProgram release];
 
 	if( _name )
 		ccGLDeleteTexture( _name );
 
-	[super dealloc];
 }
 
 - (NSString*) description
@@ -240,7 +238,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	if(cgImage == NULL) {
 		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. cgImage is nil");
-		[self release];
 		return nil;
 	}
 
@@ -327,7 +324,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	   CCLOGWARN(@"cocos2d: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			 (long)textureWidth, (long)textureHeight,
 			 (long)maxTextureSize, (long)maxTextureSize);
-	   [self release];
 	   return nil;
    }
    
@@ -806,8 +802,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	data = [self keepData:dst length:textureSize];
 
 	self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
-	[bitmap release];
-	[image release];
 
 	return self;
 }
@@ -820,7 +814,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     NSFont* font = [NSFont fontWithName:definition.fontName size:definition.fontSize];
     if( ! font ) {
         CCLOGWARN(@"cocos2d: WARNING: Unable to load font %@", definition.fontName);
-        [self release];
         return nil;
     }
     
@@ -849,7 +842,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         useAdvancedAttributes = true;
         
         // release it
-        [textShadow release];
     }
     
     if ([definition strokeEnabled])
@@ -889,7 +881,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     
     
     
-    NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:dict] autorelease];
+    NSAttributedString *stringWithAttributes = [[NSAttributedString alloc] initWithString:string attributes:dict];
     
     CGSize dim;
     if (definition.dimensions.width == 0 || definition.dimensions.height == 0)
@@ -1056,8 +1048,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dim];
 	}
 
-	[bitmap release];
-	[image release];
 
 	return self;
     
@@ -1098,13 +1088,12 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
         NSFont* font = [NSFont fontWithName:name size:size];
         if( ! font ) {
 			CCLOGWARN(@"cocos2d: WARNING: Unable to load font %@", name);
-            [self release];
             return nil;
         }
 
 		NSDictionary *dict = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
 
-		NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:dict] autorelease];
+		NSAttributedString *stringWithAttributes = [[NSAttributedString alloc] initWithString:string attributes:dict];
 
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
 
@@ -1137,7 +1126,6 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	NSFont *font = [NSFont fontWithName:name size:size];
 	if( ! font ) {
 		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
-		[self release];
 		return nil;
 	}
 
@@ -1152,10 +1140,9 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	// put attributes into a NSDictionary
 	NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:font, NSFontAttributeName, pstyle, NSParagraphStyleAttributeName, nil];
 
-	[pstyle release];
 
 	// create string with attributes
-	NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:attributes] autorelease];
+	NSAttributedString *stringWithAttributes = [[NSAttributedString alloc] initWithString:string attributes:attributes];
 
 	return [self initWithString:string dimensions:dimensions hAlignment:hAlignment vAlignment:vAlignment attributedString:stringWithAttributes];
 
@@ -1191,12 +1178,10 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 			_format = pvr.format;
 
 			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
-			[pvr release];
 
 		} else {
 
 			CCLOG(@"cocos2d: Couldn't load PVR image: %@", relPath);
-			[self release];
 			return nil;
 		}
 		_resolutionType = resolution;

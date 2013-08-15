@@ -105,7 +105,7 @@
 }
 
 /** Target that will be called */
-@property (nonatomic, readwrite, retain) id targetCallback;
+@property (nonatomic, readwrite, strong) id targetCallback;
 
 /** creates the action with the callback */
 +(id) actionWithTarget: (id) t selector:(SEL) s;
@@ -153,7 +153,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 	id	_object;
 }
 /** object to be passed as argument */
-@property (nonatomic, readwrite, retain) id object;
+@property (nonatomic, readwrite, strong) id object;
 
 /** creates the action with the callback and the object to pass as an argument */
 +(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object;
@@ -218,7 +218,7 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
 }
 
 /** object to be passed to the block */
-@property (nonatomic,retain) id object;
+@property (nonatomic,strong) id object;
 
 /** creates the action with the specified block, to be used as a callback.
  The block will be "copied".

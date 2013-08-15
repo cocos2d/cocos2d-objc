@@ -82,7 +82,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	NSString			*_fullpath;
 	ccResolutionType	_resolutionType;
 }
-@property (nonatomic, readwrite, retain) NSString *fullpath;
+@property (nonatomic, readwrite, strong) NSString *fullpath;
 @property (nonatomic, readwrite ) ccResolutionType resolutionType;
 @end
 
@@ -99,12 +99,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return self;
 }
 
-- (void)dealloc
-{
-	[_fullpath release];
-
-	[super dealloc];
-}
 @end
 
 #pragma mark - CCFileUtils
@@ -144,7 +138,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 		_fullPathNoResolutionsCache = [[NSMutableDictionary alloc] initWithCapacity:30];
 		_removeSuffixCache = [[NSMutableDictionary alloc] initWithCapacity:30];
 		
-		_bundle = [[NSBundle mainBundle] retain];
+		_bundle = [NSBundle mainBundle];
 
 		_enableiPhoneResourcesOniPad = NO;
 		
@@ -206,23 +200,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	[_removeSuffixCache removeAllObjects];
 }
 
-- (void)dealloc
-{
-	[_fileManager release];
-	[_bundle release];
-
-	[_fullPathCache release];
-	[_fullPathNoResolutionsCache release];
-	[_removeSuffixCache release];
-	
-	[_suffixesDict release];
-	[_directoriesDict release];
-	[_searchResolutionsOrder release];
-	[_searchPath release];
-	[_filenameLookup release];
-	
-	[super dealloc];
-}
 
 - (void) buildSearchResolutionsOrder
 {
@@ -545,7 +522,6 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	if( found ) {
 		value = [[CCCacheValue alloc] initWithFullPath:ret resolutionType:*resolutionType];
 		[_fullPathCache setObject:value forKey:filename];
-		[value release];
 	}
 	else
 	{

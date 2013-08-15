@@ -582,7 +582,6 @@ typedef struct {
 			pvrlen = ccLoadFileIntoMemory( [path UTF8String], &pvrdata );
 
 		if( pvrlen < 0 ) {
-			[self release];
 			return nil;
 		}
 
@@ -603,7 +602,6 @@ typedef struct {
 		   [self createGLTexture] ) )
 		{
 			free(pvrdata);
-			[self release];
 			return nil;
 		}
 		
@@ -671,7 +669,6 @@ typedef struct {
 	if (![url isFileURL])
 	{
 		CCLOG(@"cocos2d: CCPVRTexture: Only files are supported");
-		[self release];
 		return nil;
 	}
 
@@ -681,7 +678,7 @@ typedef struct {
 
 + (id)pvrTextureWithContentsOfFile:(NSString *)path
 {
-	return [[[self alloc] initWithContentsOfFile:path] autorelease];
+	return [[self alloc] initWithContentsOfFile:path];
 }
 
 
@@ -701,7 +698,6 @@ typedef struct {
 	if (_name != 0 && ! _retainName )
 		ccGLDeleteTexture( _name );
 
-	[super dealloc];
 }
 
 @end

@@ -31,7 +31,7 @@
 @implementation CCProgressTo
 +(id) actionWithDuration: (ccTime) t percent: (float) v
 {
-	return [[[ self alloc] initWithDuration: t percent: v] autorelease];
+	return [[ self alloc] initWithDuration: t percent: v];
 }
 
 -(id) initWithDuration: (ccTime) t percent: (float) v
@@ -68,7 +68,7 @@
 @implementation CCProgressFromTo
 +(id) actionWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
 {
-	return [[[self alloc] initWithDuration: t from: fromPercentage to: toPercentage] autorelease];
+	return [[self alloc] initWithDuration: t from: fromPercentage to: toPercentage];
 }
 
 -(id) initWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage

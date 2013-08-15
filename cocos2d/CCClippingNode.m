@@ -51,11 +51,6 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 @synthesize alphaThreshold = _alphaThreshold;
 @synthesize inverted = _inverted;
 
-- (void)dealloc
-{
-    [_stencil release];
-    [super dealloc];
-}
 
 + (id)clippingNode
 {
@@ -64,7 +59,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
 + (id)clippingNodeWithStencil:(CCNode *)stencil
 {
-    return [[[self alloc] initWithStencil:stencil] autorelease];
+    return [[self alloc] initWithStencil:stencil];
 }
 
 - (id)init

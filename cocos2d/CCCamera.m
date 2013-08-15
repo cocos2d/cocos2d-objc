@@ -51,7 +51,6 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[super dealloc];
 }
 
 -(void) restore

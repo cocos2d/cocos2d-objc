@@ -38,7 +38,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
@@ -84,7 +84,7 @@
 
 +(id) actionWithDuration:(ccTime)d
 {
-	return [[[self alloc] initWithDuration:d size:CGSizeMake(1,1)] autorelease];
+	return [[self alloc] initWithDuration:d size:CGSizeMake(1,1)];
 }
 
 -(id) initWithDuration:(ccTime)d
@@ -259,7 +259,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos radius:(float)radius
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize position:pos radius:radius] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize position:pos radius:radius];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos radius:(float)radius
@@ -348,7 +348,7 @@
 
 +(id)actionWithDuration:(ccTime)d size:(CGSize)gridSize position:(CGPoint)pos radius:(float)r waves:(NSInteger)wav amplitude:(float)amp
 {
-	return [[[self alloc] initWithDuration:d size:gridSize position:pos radius:r waves:wav amplitude:amp] autorelease];
+	return [[self alloc] initWithDuration:d size:gridSize position:pos radius:r waves:wav amplitude:amp];
 }
 
 -(id)initWithDuration:(ccTime)d size:(CGSize)gridSize position:(CGPoint)pos radius:(float)r waves:(NSInteger)wav amplitude:(float)amp
@@ -415,7 +415,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize range:range shakeZ:shakeZ] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize range:range shakeZ:shakeZ];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize range:(int)range shakeZ:(BOOL)shakeZ
@@ -467,7 +467,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp
@@ -517,7 +517,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp horizontal:h vertical:v] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize waves:wav amplitude:amp horizontal:h vertical:v];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize waves:(NSUInteger)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v
@@ -574,7 +574,7 @@
 
 +(id)actionWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos twirls:(NSUInteger)t amplitude:(float)amp
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize position:pos twirls:t amplitude:amp] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize position:pos twirls:t amplitude:amp];
 }
 
 -(id)initWithDuration:(ccTime)duration size:(CGSize)gridSize position:(CGPoint)pos twirls:(NSUInteger)t amplitude:(float)amp
