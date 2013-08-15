@@ -237,7 +237,8 @@ const NSUInteger defaultCapacity = 29;
 {
 	if (_isReorderChildDirty)
 	{
-        // TODO: This may need to be done more efficiently (old solution not too good but saved for reference)
+#warning This may need to be done more efficiently (old solution not too good but saved for reference)
+#warning Also fails sprite test when reordering
         [_children sortUsingDescriptors:[NSArray arrayWithObjects:
                                          [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
                                          [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],

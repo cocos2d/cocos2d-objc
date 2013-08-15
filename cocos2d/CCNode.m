@@ -310,7 +310,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) childrenAlloc
 {
-    // TODO: Why 4? Has this been tested performance-wise??
+#warning Why 4? Has this been tested performance-wise??
 	_children = [[NSMutableArray alloc] initWithCapacity:4];
 }
 
@@ -507,7 +507,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	if (_isReorderChildDirty)
 	{
-        // TODO: This may need to be done more efficiently (old solution not too good but saved for reference)
+#warning This may need to be done more efficiently (old solution not too good but saved for reference)
         [_children sortUsingDescriptors:[NSArray arrayWithObjects:
                                          [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
                                          [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],
