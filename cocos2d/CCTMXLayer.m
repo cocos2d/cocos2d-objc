@@ -471,7 +471,7 @@ int compareInts (const void * a, const void * b)
 
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
-    // TODO: Needs to be improved (old solution below)
+#warning Needs to be improved (old solution below)
     NSUInteger idx = 0;
     for (NSNumber* zValue in _atlasIndexArray)
     {
