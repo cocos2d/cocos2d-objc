@@ -48,7 +48,7 @@
 
 + (id)handlerWithDelegate:(id) aDelegate priority:(int)aPriority
 {
-	return [[[self alloc] initWithDelegate:aDelegate priority:aPriority] autorelease];
+	return [[self alloc] initWithDelegate:aDelegate priority:aPriority];
 }
 
 - (id)initWithDelegate:(id) aDelegate priority:(int)aPriority
@@ -66,8 +66,6 @@
 
 - (void)dealloc {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[_delegate release];
-	[super dealloc];
 }
 @end
 
@@ -103,7 +101,7 @@
 
 + (id)handlerWithDelegate:(id)aDelegate priority:(int)priority swallowsTouches:(BOOL)swallow
 {
-	return [[[self alloc] initWithDelegate:aDelegate priority:priority swallowsTouches:swallow] autorelease];
+	return [[self alloc] initWithDelegate:aDelegate priority:priority swallowsTouches:swallow];
 }
 
 - (id)initWithDelegate:(id)aDelegate priority:(int)aPriority swallowsTouches:(BOOL)swallow
@@ -125,10 +123,6 @@
 	return self;
 }
 
-- (void)dealloc {
-	[_claimedTouches release];
-	[super dealloc];
-}
 @end
 
 

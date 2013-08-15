@@ -474,18 +474,17 @@
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
 	NSData *imageData = nil;
-
+    
 	if( format == kCCImageFormatPNG )
 		imageData = UIImagePNGRepresentation( image );
-
+    
 	else if( format == kCCImageFormatJPEG )
 		imageData = UIImageJPEGRepresentation(image, 0.9f);
-
+    
 	else
 		NSAssert(NO, @"Unsupported format");
 	
-	[image release];
-
+    
 	success = [imageData writeToFile:fullPath atomically:YES];
 
 	
@@ -527,10 +526,10 @@
 	CGImageRef imageRef = [self newCGImage];
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
-
+    
 	CGImageRelease( imageRef );
-
-	return [image autorelease];
+    
+	return image;
 }
 #endif // __CC_PLATFORM_IOS
 

@@ -102,22 +102,22 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 + (id) viewWithFrame:(CGRect)frame
 {
-	return [[[self alloc] initWithFrame:frame] autorelease];
+	return [[self alloc] initWithFrame:frame];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
+	return [[self alloc] initWithFrame:frame pixelFormat:format];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
 + (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+	return [[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples];
 }
 
 - (id) initWithFrame:(CGRect)frame
@@ -141,7 +141,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_preserveBackbuffer = retained;
 
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
-			[self release];
 			return nil;
 		}
 
@@ -164,7 +163,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		_size = [eaglLayer bounds].size;
 
 		if( ! [self setupSurfaceWithSharegroup:nil] ) {
-			[self release];
 			return nil;
 		}
 
@@ -208,8 +206,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[_renderer release];
-	[super dealloc];
 }
 
 - (void) layoutSubviews

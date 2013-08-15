@@ -62,14 +62,6 @@
 	return self;
 }
 
--(void) dealloc
-{
-	[targetedHandlers release];
-	[standardHandlers release];
-	[handlersToAdd release];
-	[handlersToRemove release];
-	[super dealloc];
-}
 
 //
 // handlers management
@@ -313,8 +305,6 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 				[handler.delegate performSelector:helper.touchesSel withObject:mutableTouches withObject:event];
 		}
 	}
-	if( needsMutableSet )
-		[mutableTouches release];
 
 	//
 	// Optimization. To prevent a [handlers copy] which is expensive
