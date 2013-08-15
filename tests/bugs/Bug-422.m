@@ -55,7 +55,7 @@
 
 -(void) check:(CCNode *)t {
 
-	CCArray *array = [t children];
+	NSArray *array = [t children];
     for (CCNode *node in array) {
         NSLog(@"0x%x, rc: %d", (unsigned int)node, [node retainCount]);
         [self check:node];
