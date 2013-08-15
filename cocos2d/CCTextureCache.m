@@ -294,11 +294,10 @@ static CCTextureCache *sharedTextureCache;
 #ifdef __CC_PLATFORM_IOS
 
 		else {
-
+            
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
-			tex = [[[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution] autorelease];
-			[image release];
-
+			tex = [[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution];
+            
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
 					[_textures setObject: tex forKey:path];
@@ -306,9 +305,6 @@ static CCTextureCache *sharedTextureCache;
 			}else{
 				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
 			}
-
-			// autorelease prevents possible crash in multithreaded environments
-			[tex autorelease];
 		}
 
 

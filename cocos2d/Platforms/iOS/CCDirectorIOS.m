@@ -128,12 +128,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	return self;
 }
 
-- (void) dealloc
-{
-	[_touchDispatcher release];
-
-	[super dealloc];
-}
 
 //
 // Draw the Scene
@@ -267,8 +261,7 @@ CGFloat	__ccContentScaleFactor = 1;
 -(void) setTouchDispatcher:(CCTouchDispatcher*)touchDispatcher
 {
 	if( touchDispatcher != _touchDispatcher ) {
-		[_touchDispatcher release];
-		_touchDispatcher = [touchDispatcher retain];
+		_touchDispatcher = touchDispatcher;
 	}
 }
 
@@ -623,21 +616,16 @@ GLToClipTransform(kmMat4 *transformOut)
 //
 -(void) threadMainLoop
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	@autoreleasepool {
 
-	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+		[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 
-	// start the run loop
-	[[NSRunLoop currentRunLoop] run];
+		// start the run loop
+		[[NSRunLoop currentRunLoop] run];
 
-	[pool release];
+	}
 }
 
--(void) dealloc
-{
-	[_displayLink release];
-	[super dealloc];
-}
 @end
 
 #endif // __CC_PLATFORM_IOS

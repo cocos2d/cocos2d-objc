@@ -49,7 +49,7 @@
 }
 
 /** delegate */
-@property(nonatomic, readwrite, retain) id delegate;
+@property(nonatomic, readwrite, strong) id delegate;
 /** priority */
 @property(nonatomic, readwrite) int priority; // default 0
 /** enabled selectors */

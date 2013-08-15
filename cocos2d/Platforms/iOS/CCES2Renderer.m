@@ -57,7 +57,6 @@
 
         if (!_context || ![EAGLContext setCurrentContext:_context] )
         {
-            [self release];
             return nil;
         }
 		
@@ -241,10 +240,7 @@
     if ([EAGLContext currentContext] == _context)
         [EAGLContext setCurrentContext:nil];
 
-    [_context release];
-    _context = nil;
 
-    [super dealloc];
 }
 
 @end

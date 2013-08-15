@@ -446,8 +446,8 @@ typedef struct _hashSelectorEntry
 			if( [timer isKindOfClass:[CCTimerTargetSelector class]] && selector == [(CCTimerTargetSelector*)timer selector] ) {
 				
 				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
-					void* t = (__bridge void*) element->currentTimer;
-                    CFRetain(t);
+					void* ct = (__bridge void*) element->currentTimer;
+                    CFRetain(ct);
 					element->currentTimerSalvaged = YES;
 				}
 				
@@ -495,8 +495,8 @@ typedef struct _hashSelectorEntry
 			if( [timer isKindOfClass:[CCTimerBlock class]] &&  [key isEqualToString: [(CCTimerBlock*)timer key]] ) {
 
 				if( timer == element->currentTimer && !element->currentTimerSalvaged ) {
-                    void* t = (__bridge void*) element->currentTimer;
-                    CFRetain(t);
+                    void* ct = (__bridge void*) element->currentTimer;
+                    CFRetain(ct);
 					element->currentTimerSalvaged = YES;
 				}
                 
@@ -719,8 +719,8 @@ typedef struct _hashSelectorEntry
 
 	if( element ) {
 		if( [element->timers containsObject:element->currentTimer] && !element->currentTimerSalvaged ) {
-            void* t = (__bridge void*) element->currentTimer;
-            CFRetain(t);
+            void* ct = (__bridge void*) element->currentTimer;
+            CFRetain(ct);
 			element->currentTimerSalvaged = YES;
 		}
         [element->timers removeAllObjects];
