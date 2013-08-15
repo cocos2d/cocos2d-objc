@@ -115,7 +115,7 @@ int compareInts (const void * a, const void * b);
 		CGPoint offset = [self calculateLayerOffset:layerInfo.offset];
 		[self setPosition:CC_POINT_PIXELS_TO_POINTS(offset)];
 
-		_atlasIndexArray = ccCArrayNew(totalNumberOfTiles);
+		_atlasIndexArray = [[NSMutableArray alloc] initWithCapacity:totalNumberOfTiles];
 
 		[self setContentSize:CC_SIZE_PIXELS_TO_POINTS(CGSizeMake( _layerSize.width * _mapTileSize.width, _layerSize.height * _mapTileSize.height ))];
 
@@ -134,7 +134,7 @@ int compareInts (const void * a, const void * b);
 	[_properties release];
 
 	if( _atlasIndexArray ) {
-		ccCArrayFree(_atlasIndexArray);
+        [_atlasIndexArray release];
 		_atlasIndexArray = NULL;
 	}
 
@@ -154,7 +154,7 @@ int compareInts (const void * a, const void * b);
 	}
 
 	if( _atlasIndexArray ) {
-		ccCArrayFree(_atlasIndexArray);
+        [_atlasIndexArray release];
 		_atlasIndexArray = NULL;
 	}
 }
@@ -396,11 +396,10 @@ int compareInts (const void * a, const void * b);
 	[self insertQuadFromSprite:tile quadIndex:indexForZ];
 
 	// insert it into the local atlasindex array
-	ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
+    [_atlasIndexArray insertObject:[NSNumber numberWithInt:(int)z] atIndex:indexForZ];
 
 	// update possible children
-	CCSprite *sprite;
-	CCARRAY_FOREACH(_children, sprite) {
+    for (CCSprite *sprite in _children) {
 		NSUInteger ai = [sprite atlasIndex];
 		if( ai >= indexForZ)
 			[sprite setAtlasIndex: ai+1];
@@ -450,7 +449,7 @@ int compareInts (const void * a, const void * b);
 	// optimization:
 	// The difference between appendTileForGID and insertTileforGID is that append is faster, since
 	// it appends the tile at the end of the texture atlas
-	NSUInteger indexForZ = _atlasIndexArray->num;
+	NSUInteger indexForZ = _atlasIndexArray.count;
 
 
 	// don't add it using the "standard" way.
@@ -458,7 +457,7 @@ int compareInts (const void * a, const void * b);
 
 
 	// append should be after addQuadFromSprite since it modifies the quantity values
-	ccCArrayInsertValueAtIndex(_atlasIndexArray, (void*)z, indexForZ);
+    [_atlasIndexArray insertObject:[NSNumber numberWithInt:(int)z] atIndex:indexForZ];
 
 	return tile;
 }
@@ -472,6 +471,14 @@ int compareInts (const void * a, const void * b)
 
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
+    // TODO: Needs to be improved (old solution below)
+    NSUInteger idx = 0;
+    for (NSNumber* zValue in _atlasIndexArray)
+    {
+        if ([zValue intValue] == z) return idx;
+        idx++;
+    }
+    /*
 	NSInteger key = z;
 	NSInteger *item = bsearch((void*)&key, (void*)&_atlasIndexArray->arr[0], _atlasIndexArray->num, sizeof(void*), compareInts);
 
@@ -479,14 +486,18 @@ int compareInts (const void * a, const void * b)
 
 	NSUInteger index = ((NSInteger)item - (NSInteger)_atlasIndexArray->arr) / sizeof(void*);
 	return index;
+     */
+    
+    // Shouldn't happen
+    return 0;
 }
 
 -(NSUInteger)atlasIndexForNewZ:(NSUInteger)z
 {
 	// XXX: This can be improved with a sort of binary search
 	NSUInteger i = 0;
-	for(i = 0; i< _atlasIndexArray->num; i++) {
-		NSUInteger val = (NSUInteger) _atlasIndexArray->arr[i];
+	for(i = 0; i< _atlasIndexArray.count; i++) {
+		NSUInteger val = (NSUInteger) [[_atlasIndexArray objectAtIndex:i] intValue];
 		if( z < val )
 			break;
 	}
@@ -555,9 +566,9 @@ int compareInts (const void * a, const void * b)
 	NSAssert( [_children containsObject:sprite], @"Tile does not belong to TMXLayer");
 
 	NSUInteger atlasIndex = [sprite atlasIndex];
-	NSUInteger zz = (NSUInteger) _atlasIndexArray->arr[atlasIndex];
+	NSUInteger zz = (NSUInteger) [[_atlasIndexArray objectAtIndex:atlasIndex] intValue];
 	_tiles[zz] = 0;
-	ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
+    [_atlasIndexArray removeObjectAtIndex:atlasIndex];
 	[super removeChild:sprite cleanup:cleanup];
 }
 
@@ -577,7 +588,7 @@ int compareInts (const void * a, const void * b)
 		_tiles[z] = 0;
 
 		// remove tile from atlas position array
-		ccCArrayRemoveValueAtIndex(_atlasIndexArray, atlasIndex);
+        [_atlasIndexArray removeObjectAtIndex:atlasIndex];
 
 		// remove it from sprites and/or texture atlas
 		id sprite = [self getChildByTag:z];
@@ -587,7 +598,8 @@ int compareInts (const void * a, const void * b)
 			[_textureAtlas removeQuadAtIndex:atlasIndex];
 
 			// update possible children
-			CCARRAY_FOREACH(_children, sprite) {
+            for (sprite in _children)
+            {
 				NSUInteger ai = [sprite atlasIndex];
 				if( ai >= atlasIndex) {
 					[sprite setAtlasIndex: ai-1];

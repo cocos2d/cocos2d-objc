@@ -89,7 +89,6 @@
 		A0B532D113C141FF0072EDA4 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B532B813C141FF0072EDA4 /* vec4.c */; };
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
-		A0C1EDC91562F979000709DA /* ccCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C1EDC81562F979000709DA /* ccCArray.m */; };
 		A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */; };
 		A0D7D68115E2BC9E000CA0C4 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF338215E2A4CB008707BD /* CCPhysicsDebugNode.h */; };
 		A0D7D68215E2BC9E000CA0C4 /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FF338315E2A4CB008707BD /* CCPhysicsDebugNode.m */; };
@@ -230,9 +229,6 @@
 		E076E75A1225EC7400DE0DA2 /* CCGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6B71225EC7400DE0DA2 /* CCGLView.m */; };
 		E076E75B1225EC7400DE0DA2 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = E076E6B91225EC7400DE0DA2 /* base64.c */; };
 		E076E75C1225EC7400DE0DA2 /* base64.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6BA1225EC7400DE0DA2 /* base64.h */; };
-		E076E75D1225EC7400DE0DA2 /* CCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6BB1225EC7400DE0DA2 /* CCArray.h */; };
-		E076E75E1225EC7400DE0DA2 /* CCArray.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6BC1225EC7400DE0DA2 /* CCArray.m */; };
-		E076E75F1225EC7400DE0DA2 /* ccCArray.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6BD1225EC7400DE0DA2 /* ccCArray.h */; };
 		E076E7601225EC7400DE0DA2 /* CCFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6BE1225EC7400DE0DA2 /* CCFileUtils.h */; };
 		E076E7611225EC7400DE0DA2 /* CCFileUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6BF1225EC7400DE0DA2 /* CCFileUtils.m */; };
 		E076E7621225EC7400DE0DA2 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6C01225EC7400DE0DA2 /* CCProfiling.h */; };
@@ -350,7 +346,6 @@
 		A0B532B813C141FF0072EDA4 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A0BE62FA140552BD00DAA336 /* CCVertex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCVertex.h; sourceTree = "<group>"; };
 		A0BE62FB140552BD00DAA336 /* CCVertex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCVertex.m; sourceTree = "<group>"; };
-		A0C1EDC81562F979000709DA /* ccCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ccCArray.m; sourceTree = "<group>"; };
 		A0C879AB14F98F0200C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0DA0BBC15BCD93700E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
@@ -614,9 +609,6 @@
 		E076E6B71225EC7400DE0DA2 /* CCGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGLView.m; sourceTree = "<group>"; };
 		E076E6B91225EC7400DE0DA2 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = base64.c; sourceTree = "<group>"; };
 		E076E6BA1225EC7400DE0DA2 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = base64.h; sourceTree = "<group>"; };
-		E076E6BB1225EC7400DE0DA2 /* CCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCArray.h; sourceTree = "<group>"; };
-		E076E6BC1225EC7400DE0DA2 /* CCArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCArray.m; sourceTree = "<group>"; };
-		E076E6BD1225EC7400DE0DA2 /* ccCArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccCArray.h; sourceTree = "<group>"; };
 		E076E6BE1225EC7400DE0DA2 /* CCFileUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFileUtils.h; sourceTree = "<group>"; };
 		E076E6BF1225EC7400DE0DA2 /* CCFileUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFileUtils.m; sourceTree = "<group>"; };
 		E076E6C01225EC7400DE0DA2 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
@@ -1384,12 +1376,8 @@
 			children = (
 				E076E6B91225EC7400DE0DA2 /* base64.c */,
 				E076E6BA1225EC7400DE0DA2 /* base64.h */,
-				A0C1EDC81562F979000709DA /* ccCArray.m */,
-				E076E6BD1225EC7400DE0DA2 /* ccCArray.h */,
 				E076E6C21225EC7400DE0DA2 /* ccUtils.c */,
 				E076E6C31225EC7400DE0DA2 /* ccUtils.h */,
-				E076E6BB1225EC7400DE0DA2 /* CCArray.h */,
-				E076E6BC1225EC7400DE0DA2 /* CCArray.m */,
 				E076E6BE1225EC7400DE0DA2 /* CCFileUtils.h */,
 				E076E6BF1225EC7400DE0DA2 /* CCFileUtils.m */,
 				E076E6C01225EC7400DE0DA2 /* CCProfiling.h */,
@@ -1735,8 +1723,6 @@
 				E076E7571225EC7400DE0DA2 /* CCEventDispatcher.h in Headers */,
 				E076E7591225EC7400DE0DA2 /* CCGLView.h in Headers */,
 				E076E75C1225EC7400DE0DA2 /* base64.h in Headers */,
-				E076E75D1225EC7400DE0DA2 /* CCArray.h in Headers */,
-				E076E75F1225EC7400DE0DA2 /* ccCArray.h in Headers */,
 				E076E7601225EC7400DE0DA2 /* CCFileUtils.h in Headers */,
 				E076E7621225EC7400DE0DA2 /* CCProfiling.h in Headers */,
 				E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */,
@@ -1941,7 +1927,6 @@
 				E076E7581225EC7400DE0DA2 /* CCEventDispatcher.m in Sources */,
 				E076E75A1225EC7400DE0DA2 /* CCGLView.m in Sources */,
 				E076E75B1225EC7400DE0DA2 /* base64.c in Sources */,
-				E076E75E1225EC7400DE0DA2 /* CCArray.m in Sources */,
 				E076E7611225EC7400DE0DA2 /* CCFileUtils.m in Sources */,
 				E076E7631225EC7400DE0DA2 /* CCProfiling.m in Sources */,
 				E076E7641225EC7400DE0DA2 /* ccUtils.c in Sources */,
@@ -1966,7 +1951,6 @@
 				A009FB91150EC87600897349 /* ccShaders.m in Sources */,
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
-				A0C1EDC91562F979000709DA /* ccCArray.m in Sources */,
 				A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */,
 				A0D7D68215E2BC9E000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
 				A0D7D68415E2BC9E000CA0C4 /* CCPhysicsSprite.mm in Sources */,

@@ -766,8 +766,7 @@ Class restartAction()
 	[self unschedule:_cmd];
 
 	NSLog(@"Before reorder--");
-	CCSprite *child;
-	CCARRAY_FOREACH(node.children,child)
+    for (CCSprite* child in node.children)
 		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 
 
@@ -779,7 +778,7 @@ Class restartAction()
 	[node sortAllChildren];
 
 	NSLog(@"After reorder--");
-	CCARRAY_FOREACH(node.children,child)
+	for (CCSprite* child in node.children)
 		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 
 }
@@ -844,9 +843,7 @@ Class restartAction()
 	[batchNode reorderChild:sprite1 z:4];
 
 	[batchNode sortAllChildren];
-	CCSprite* child;
-	CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",(int)child.tag);
-
+    for (CCSprite* child in batchNode.descendants) NSLog(@"tag %i",(int)child.tag);
 }
 
 // on "init" you need to initialize your instance

@@ -30,7 +30,6 @@
 #import "CCDirector.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
-#import "Support/ccCArray.h"
 
 //
 // Data structures
@@ -60,7 +59,7 @@ typedef struct _hashUpdateEntry
 // Hash Element used for "selectors with interval"
 typedef struct _hashSelectorEntry
 {
-	struct ccArray	*timers;
+	NSMutableArray	*timers;
 	id				target;		// hash key (retained)
 	unsigned int	timerIndex;
 	CCTimer			*currentTimer;
@@ -331,7 +330,7 @@ typedef struct _hashSelectorEntry
 
 -(void) removeHashElement:(tHashTimerEntry*)element
 {
-	ccArrayFree(element->timers);
+    [element->timers release];
 	[element->target release];
 	HASH_DEL(hashForTimers, element);
 	free(element);
@@ -363,22 +362,21 @@ typedef struct _hashSelectorEntry
 
 
 	if( element->timers == nil )
-		element->timers = ccArrayNew(10);
+		element->timers = [[NSMutableArray alloc] init];
 	else
 	{
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
+		for( unsigned int i=0; i< element->timers.count; i++ ) {
+			CCTimer *timer = [element->timers objectAtIndex:i];
 			if( [timer isKindOfClass:[CCTimerTargetSelector class]] && selector == [(CCTimerTargetSelector*)timer selector] ) {
 				CCLOG(@"CCScheduler#scheduleSelector. Selector already scheduled. Updating interval from: %.4f to %.4f", [timer interval], interval);
 				[timer setInterval: interval];
 				return;
 			}
 		}
-		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 
 	CCTimerTargetSelector *timer = [[CCTimerTargetSelector alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
-	ccArrayAppendObject(element->timers, timer);
+    [element->timers addObject:timer];
 	[timer release];
 }
 
@@ -403,22 +401,21 @@ typedef struct _hashSelectorEntry
 	
 	
 	if( element->timers == nil )
-		element->timers = ccArrayNew(10);
+		element->timers = [[NSMutableArray alloc] init];
 	else
 	{
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
+		for( unsigned int i=0; i< element->timers.count; i++ ) {
+			CCTimer *timer = [element->timers objectAtIndex:i];
 			if( [timer isKindOfClass:[CCTimerBlock class]] && [key isEqualToString:[(CCTimerBlock*)timer key] ] ) {
 				CCLOG(@"CCScheduler#scheduleBlock. Block already scheduled. Updating interval from: %.4f to %.4f", [timer interval], interval);
 				[timer setInterval: interval];
 				return;
 			}
 		}
-		ccArrayEnsureExtraCapacity(element->timers, 1);
 	}
 	
 	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithTarget:owner interval:interval repeat:repeat delay:delay key:key block:block];
-	ccArrayAppendObject(element->timers, timer);
+    [element->timers addObject:timer];
 	[timer release];
 }
 
@@ -436,8 +433,8 @@ typedef struct _hashSelectorEntry
 	
 	if( element ) {
 		
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
+		for( unsigned int i=0; i< element->timers.count; i++ ) {
+			CCTimer *timer = [element->timers objectAtIndex:i];
 			
 			
 			if( [timer isKindOfClass:[CCTimerTargetSelector class]] && selector == [(CCTimerTargetSelector*)timer selector] ) {
@@ -447,13 +444,13 @@ typedef struct _hashSelectorEntry
 					element->currentTimerSalvaged = YES;
 				}
 				
-				ccArrayRemoveObjectAtIndex(element->timers, i );
+                [element->timers removeObjectAtIndex:i];
 				
 				// update timerIndex in case we are in tick:, looping over the actions
 				if( element->timerIndex >= i )
 					element->timerIndex--;
 				
-				if( element->timers->num == 0 ) {
+				if( element->timers.count == 0 ) {
 					if( currentTarget == element )
 						currentTargetSalvaged = YES;
 					else
@@ -483,8 +480,8 @@ typedef struct _hashSelectorEntry
 
 	if( element ) {
 
-		for( unsigned int i=0; i< element->timers->num; i++ ) {
-			CCTimer *timer = element->timers->arr[i];
+		for( unsigned int i=0; i< element->timers.count; i++ ) {
+			CCTimer *timer = [element->timers objectAtIndex:i];
 
 
 			if( [timer isKindOfClass:[CCTimerBlock class]] &&  [key isEqualToString: [(CCTimerBlock*)timer key]] ) {
@@ -493,14 +490,14 @@ typedef struct _hashSelectorEntry
 					[element->currentTimer retain];
 					element->currentTimerSalvaged = YES;
 				}
-
-				ccArrayRemoveObjectAtIndex(element->timers, i );
+                
+                [element->timers removeObjectAtIndex:i];
 
 				// update timerIndex in case we are in tick:, looping over the actions
 				if( element->timerIndex >= i )
 					element->timerIndex--;
 
-				if( element->timers->num == 0 ) {
+				if( element->timers.count == 0 ) {
 					if( currentTarget == element )
 						currentTargetSalvaged = YES;
 					else
@@ -707,11 +704,11 @@ typedef struct _hashSelectorEntry
 	HASH_FIND_INT(hashForTimers, &target, element);
 
 	if( element ) {
-		if( ccArrayContainsObject(element->timers, element->currentTimer) && !element->currentTimerSalvaged ) {
+		if( [element->timers containsObject:element->currentTimer] && !element->currentTimerSalvaged ) {
 			[element->currentTimer retain];
 			element->currentTimerSalvaged = YES;
 		}
-		ccArrayRemoveAllObjects(element->timers);
+        [element->timers removeAllObjects];
 		if( currentTarget == element )
 			currentTargetSalvaged = YES;
 		else
@@ -873,8 +870,8 @@ typedef struct _hashSelectorEntry
 		if( ! currentTarget->paused ) {
 
 			// The 'timers' ccArray may change while inside this loop.
-			for( elt->timerIndex = 0; elt->timerIndex < elt->timers->num; elt->timerIndex++) {
-				elt->currentTimer = elt->timers->arr[elt->timerIndex];
+			for( elt->timerIndex = 0; elt->timerIndex < elt->timers.count; elt->timerIndex++) {
+				elt->currentTimer = [elt->timers objectAtIndex: elt->timerIndex];
 				elt->currentTimerSalvaged = NO;
 
 				impMethod( elt->currentTimer, updateSelector, dt);
@@ -895,7 +892,7 @@ typedef struct _hashSelectorEntry
 		elt = elt->hh.next;
 
 		// only delete currentTarget if no actions were scheduled during the cycle (issue #481)
-		if( currentTargetSalvaged && currentTarget->timers->num == 0 )
+		if( currentTargetSalvaged && currentTarget->timers.count == 0 )
 			[self removeHashElement:currentTarget];
 	}
 

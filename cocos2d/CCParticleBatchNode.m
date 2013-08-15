@@ -102,7 +102,7 @@
 		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		// no lazy alloc in this node
-		_children = [[CCArray alloc] initWithCapacity:capacity];
+		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
 
 		_blendFunc.src = CC_BLEND_SRC;
 		_blendFunc.dst = CC_BLEND_DST;
@@ -206,7 +206,7 @@
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 
 	if( ! _children )
-		_children = [[CCArray alloc] initWithCapacity:4];
+		_children = [[NSMutableArray alloc] initWithCapacity:4];
 
 	//don't use a lazy insert
 	NSUInteger pos = [self searchNewPositionInChildrenForZ:z];
@@ -433,10 +433,9 @@
 //rebuild atlas indexes
 -(void) updateAllAtlasIndexes
 {
-	CCParticleSystem *child;
 	NSUInteger index = 0;
 
-	CCARRAY_FOREACH(_children,child)
+    for (CCParticleSystem *child in _children)
 	{
 		child.atlasIndex = index;
 		index += child.totalParticles;

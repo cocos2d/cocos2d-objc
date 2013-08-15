@@ -34,7 +34,6 @@
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccCArray.h"
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
@@ -184,8 +183,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	[_userObject release];
 
 	// children
-	CCNode *child;
-	CCARRAY_FOREACH(_children, child)
+    for (CCNode* child in _children)
 		child.parent = nil;
 
 	[_children release];
@@ -312,7 +310,8 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) childrenAlloc
 {
-	_children = [[CCArray alloc] initWithCapacity:4];
+    // TODO: Why 4? Has this been tested performance-wise??
+	_children = [[NSMutableArray alloc] initWithCapacity:4];
 }
 
 // camera: lazy alloc
@@ -336,8 +335,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
 
-	CCNode *node;
-	CCARRAY_FOREACH(_children, node){
+    for (CCNode* node in _children) {
 		if( node.tag == aTag )
 			return node;
 	}
@@ -437,8 +435,7 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup
 {
 	// not using detachChild improves speed here
-	CCNode *c;
-	CCARRAY_FOREACH(_children, c)
+    for (CCNode* c in _children)
 	{
 		// IMPORTANT:
 		//  -1st do onExit
@@ -492,7 +489,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_isReorderChildDirty=YES;
 
-	ccArrayAppendObjectWithResize(_children->data, child);
+    [_children addObject:child];
 	[child _setZOrder:z];
 }
 
@@ -510,6 +507,13 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	if (_isReorderChildDirty)
 	{
+        // TODO: This may need to be done more efficiently (old solution not too good but saved for reference)
+        [_children sortUsingDescriptors:[NSArray arrayWithObjects:
+                                         [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
+                                         [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],
+                                         NULL]];
+        
+        /*
 		NSInteger i,j,length = _children->data->num;
 		CCNode ** x = _children->data->arr;
 		CCNode *tempItem;
@@ -528,6 +532,7 @@ static NSUInteger globalOrderOfArrival = 1;
 			}
 			x[j+1] = tempItem;
 		}
+         */
 
 		//don't need to check children recursively, that's done in visit of each child
 
@@ -558,12 +563,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		[self sortAllChildren];
 
-		ccArray *arrayData = _children->data;
 		NSUInteger i = 0;
 
 		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child = arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			if ( [child zOrder] < 0 )
 				[child visit];
 			else
@@ -574,8 +578,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		[self draw];
 
 		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child =  arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			[child visit];
 		}
 
@@ -982,8 +986,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 	
     if (_cascadeOpacityEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
+        for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
                 [item updateDisplayedOpacity:_displayedOpacity];
             }
@@ -1020,8 +1023,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
 
     if (_cascadeColorEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
+        for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
                 [item updateDisplayedColor:_displayedColor];
             }

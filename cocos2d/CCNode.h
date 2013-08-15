@@ -30,7 +30,6 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
-#import "Support/CCArray.h"
 #import "kazmath/kazmath.h"
 
 enum {
@@ -140,7 +139,7 @@ enum {
 	NSInteger _zOrder;
 
 	// array of children
-	CCArray *_children;
+	NSMutableArray *_children;
 
 	// weak ref to parent
 	CCNode *_parent;
@@ -222,7 +221,7 @@ enum {
 /** A CCCamera object that lets you move the node using a gluLookAt */
 @property(nonatomic,readonly) CCCamera* camera;
 /** Array of children */
-@property(nonatomic,readonly) CCArray *children;
+@property(nonatomic,readonly) NSArray *children;
 /** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,retain) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */

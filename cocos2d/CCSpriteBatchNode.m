@@ -111,8 +111,8 @@ const NSUInteger defaultCapacity = 29;
 		[self updateBlendFunc];
 
 		// no lazy alloc in this node
-		_children = [[CCArray alloc] initWithCapacity:capacity];
-		_descendants = [[CCArray alloc] initWithCapacity:capacity];
+		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
+		_descendants = [[NSMutableArray alloc] initWithCapacity:capacity];
 
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 	}
@@ -237,6 +237,12 @@ const NSUInteger defaultCapacity = 29;
 {
 	if (_isReorderChildDirty)
 	{
+        // TODO: This may need to be done more efficiently (old solution not too good but saved for reference)
+        [_children sortUsingDescriptors:[NSArray arrayWithObjects:
+                                         [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
+                                         [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],
+                                         NULL]];
+        /*
 		NSInteger i,j,length = _children->data->num;
 		CCNode ** x = _children->data->arr;
 		CCNode *tempItem;
@@ -256,7 +262,7 @@ const NSUInteger defaultCapacity = 29;
 			}
 
 			x[j+1] = tempItem;
-		}
+		}*/
 
 		//sorted now check all children
 		if ([_children count] > 0)
@@ -268,7 +274,7 @@ const NSUInteger defaultCapacity = 29;
 
 			//fast dispatch, give every child a new atlasIndex based on their relative zOrder (keep parent -> child relations intact)
 			// and at the same time reorder descedants and the quads to the right index
-			CCARRAY_FOREACH(_children, child)
+            for (CCSprite* child in _children)
 				[self updateAtlasIndex:child currentIndex:&index];
 		}
 
@@ -278,7 +284,7 @@ const NSUInteger defaultCapacity = 29;
 
 -(void) updateAtlasIndex:(CCSprite*) sprite currentIndex:(NSInteger*) curIndex
 {
-	CCArray *array = [sprite children];
+	NSMutableArray *array = (NSMutableArray*)[sprite children];
 	NSUInteger count = [array count];
 	NSInteger oldIndex;
 
@@ -295,7 +301,7 @@ const NSUInteger defaultCapacity = 29;
 	{
 		BOOL needNewIndex=YES;
 
-		if (((CCSprite*) (array->data->arr[0])).zOrder >= 0)
+		if (((CCSprite*) [array objectAtIndex:0]).zOrder >= 0)
 		{
 			//all children are in front of the parent
 			oldIndex = sprite.atlasIndex;
@@ -308,8 +314,7 @@ const NSUInteger defaultCapacity = 29;
 			needNewIndex = NO;
 		}
 
-		CCSprite* child;
-		CCARRAY_FOREACH(array,child)
+        for (CCSprite* child in array)
 		{
 			if (needNewIndex && child.zOrder >= 0)
 			{
@@ -340,19 +345,7 @@ const NSUInteger defaultCapacity = 29;
 
 - (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
-	id* x = _descendants->data->arr;
-	ccV3F_C4B_T2F_Quad* quads = _textureAtlas.quads;
-
-	id tempItem = x[oldIndex];
-	ccV3F_C4B_T2F_Quad tempItemQuad=quads[oldIndex];
-
-	//update the index of other swapped item
-	((CCSprite*) x[newIndex]).atlasIndex=oldIndex;
-
-	x[oldIndex]=x[newIndex];
-	quads[oldIndex]=quads[newIndex];
-	x[newIndex]=tempItem;
-	quads[newIndex]=tempItemQuad;
+    [_descendants exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
 }
 
 - (void) reorderBatch:(BOOL) reorder
@@ -405,8 +398,7 @@ const NSUInteger defaultCapacity = 29;
 
 -(NSUInteger) rebuildIndexInOrder:(CCSprite*)node atlasIndex:(NSUInteger)index
 {
-	CCSprite *sprite;
-	CCARRAY_FOREACH(node.children, sprite){
+    for (CCSprite* sprite in node.children) {
 		if( sprite.zOrder < 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
@@ -417,7 +409,7 @@ const NSUInteger defaultCapacity = 29;
 		index++;
 	}
 
-	CCARRAY_FOREACH(node.children, sprite){
+	for (CCSprite* sprite in node.children) {
 		if( sprite.zOrder >= 0 )
 			index = [self rebuildIndexInOrder:sprite atlasIndex:index];
 	}
@@ -427,17 +419,15 @@ const NSUInteger defaultCapacity = 29;
 
 -(NSUInteger) highestAtlasIndexInChild:(CCSprite*)sprite
 {
-	CCArray *array = [sprite children];
-	NSUInteger count = [array count];
-	if( count == 0 )
+	if( sprite.children.count == 0 )
 		return sprite.atlasIndex;
 	else
-		return [self highestAtlasIndexInChild:[array lastObject]];
+		return [self highestAtlasIndexInChild:[sprite.children lastObject]];
 }
 
 -(NSUInteger) lowestAtlasIndexInChild:(CCSprite*)sprite
 {
-	CCArray *array = [sprite children];
+	NSArray *array = [sprite children];
 	NSUInteger count = [array count];
 	if( count == 0 )
 		return sprite.atlasIndex;
@@ -448,7 +438,7 @@ const NSUInteger defaultCapacity = 29;
 
 -(NSUInteger)atlasIndexForChild:(CCSprite*)sprite atZ:(NSInteger)z
 {
-	CCArray *brothers = [[sprite parent] children];
+	NSArray *brothers = [[sprite parent] children];
 	NSUInteger childIndex = [brothers indexOfObject:sprite];
 
 	// ignore parent Z if parent is batchnode
@@ -506,20 +496,18 @@ const NSUInteger defaultCapacity = 29;
 	ccV3F_C4B_T2F_Quad quad = [sprite quad];
 	[_textureAtlas insertQuad:&quad atIndex:index];
 
-	ccArray *descendantsData = _descendants->data;
-
-	ccArrayInsertObjectAtIndex(descendantsData, sprite, index);
+    [_descendants insertObject:sprite atIndex:index];
 
 	// update indices
 	NSUInteger i = index+1;
 	CCSprite *child;
-	for(; i<descendantsData->num; i++){
-		child = descendantsData->arr[i];
+	for(; i<_descendants.count; i++){
+		child = [_descendants objectAtIndex:i];
 		child.atlasIndex = child.atlasIndex + 1;
 	}
 
 	// add children recursively
-	CCARRAY_FOREACH(sprite.children, child){
+    for (child in sprite.children){
 		NSUInteger idx = [self atlasIndexForChild:child atZ: child.zOrder];
 		[self insertChild:child inAtlasAtIndex:idx];
 	}
@@ -535,11 +523,9 @@ const NSUInteger defaultCapacity = 29;
 	if(_textureAtlas.totalQuads == _textureAtlas.capacity)
 		[self increaseAtlasCapacity];
 
-	ccArray *descendantsData = _descendants->data;
+    [_descendants addObject:sprite];
 
-	ccArrayAppendObjectWithResize(descendantsData, sprite);
-
-	NSUInteger index=descendantsData->num-1;
+	NSUInteger index=_descendants.count-1;
 
 	sprite.atlasIndex=index;
 
@@ -547,8 +533,7 @@ const NSUInteger defaultCapacity = 29;
 	[_textureAtlas insertQuad:&quad atIndex:index];
 
 	// add children recursively
-	CCSprite* child;
-	CCARRAY_FOREACH(sprite.children, child)
+    for (CCSprite* child in sprite.children)
 		[self appendChild:child];
 }
 
@@ -562,24 +547,22 @@ const NSUInteger defaultCapacity = 29;
 	// Cleanup sprite. It might be reused (issue #569)
 	[sprite setBatchNode:nil];
 
-	ccArray *descendantsData = _descendants->data;
-	NSUInteger index = ccArrayGetIndexOfObject(descendantsData, sprite);
+	NSUInteger index = [_descendants indexOfObject:sprite];
 	if( index != NSNotFound ) {
-		ccArrayRemoveObjectAtIndex(descendantsData, index);
+        [_descendants removeObjectAtIndex:index];
 
 		// update all sprites beyond this one
-		NSUInteger count = descendantsData->num;
+		NSUInteger count = _descendants.count;
 
 		for(; index < count; index++)
 		{
-			CCSprite *s = descendantsData->arr[index];
+			CCSprite *s = [_descendants objectAtIndex:index];
 			s.atlasIndex = s.atlasIndex - 1;
 		}
 	}
 
 	// remove children recursively
-	CCSprite *child;
-	CCARRAY_FOREACH(sprite.children, child)
+    for (CCSprite* child in sprite.children)
 		[self removeSpriteFromAtlas:child];
 }
 

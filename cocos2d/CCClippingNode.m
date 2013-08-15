@@ -42,9 +42,7 @@ static GLint _stencilBits = -1;
 static void setProgram(CCNode *n, CCGLProgram *p) {
     n.shaderProgram = p;
     if (!n.children) return;
-    CCNode *c;
-    CCARRAY_FOREACH(n.children, c) setProgram(c, p);
-    
+    for (CCNode* c in n.children) setProgram(c,p);
 }
 
 @implementation CCClippingNode

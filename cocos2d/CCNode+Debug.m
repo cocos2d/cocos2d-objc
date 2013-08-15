@@ -41,12 +41,11 @@
 		
 		[self sortAllChildren];
 		
-		ccArray *arrayData = _children->data;
 		i = 0;
 		
 		// draw children zOrder < 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child = arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			if ( [child zOrder] < 0 )
 				[child walkSceneGraph:level+1];
 			else
@@ -57,8 +56,8 @@
 		NSLog(@"walk tree: %s> %@ %p", buf, self, self);
 		
 		// draw children zOrder >= 0
-		for( ; i < arrayData->num; i++ ) {
-			CCNode *child =  arrayData->arr[i];
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
 			[child walkSceneGraph:level+1];
 		}
 		

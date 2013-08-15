@@ -57,7 +57,7 @@
 	ccBlendFunc		_blendFunc;
 
 	// all descendants: children, grandchildren, etc...
-	CCArray	*_descendants;
+	NSMutableArray *_descendants;
 }
 
 /** returns the TextureAtlas that is used */
@@ -67,7 +67,7 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 /** descendants (children, grandchildren, etc) */
-@property (nonatomic,readonly) CCArray *descendants;
+@property (nonatomic,readonly) NSArray *descendants;
 
 /** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
