@@ -1,18 +1,3 @@
 [submodule "external/Chipmunk"]
 	path = external/Chipmunk
 	url = git://github.com/slembcke/Chipmunk-Physics.git
-[submodule "external/JavaScript/jsbindings"]
-	path = external/JavaScript/jsbindings
-	url = git://github.com/zynga/jsbindings.git
-[submodule "external/JavaScript/JRSwizzle"]
-	path = external/JavaScript/JRSwizzle
-	url = git://github.com/ricardoquesada/jrswizzle.git
-[submodule "external/JavaScript/jsbindings_support"]
-	path = external/JavaScript/jsbindings_support
-	url = git://github.com/ricardoquesada/jsbindings_support.git
-[submodule "tests/cocos2d-js-tests"]
-	path = tests/cocos2d-js-tests
-	url = git://github.com/cocos2d/cocos2d-js-tests.git
-[submodule "external/CCBReader"]
-	path = external/CCBReader
-	url = git://github.com/cocos2d/CCBReader.git
