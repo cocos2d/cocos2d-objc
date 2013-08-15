@@ -161,7 +161,7 @@
         // This is a file, register font with font manager
         NSString* fontFile = [[CCFileUtils sharedFileUtils] fullPathForFilename:fontName];
         NSURL* fontURL = [NSURL fileURLWithPath:fontFile];
-        CTFontManagerRegisterFontsForURL((CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
+        CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
 
 		return [[fontFile lastPathComponent] stringByDeletingPathExtension];
     }
@@ -495,13 +495,10 @@
     else
        tempFontSize       =  _fontSize;
     
-    CCFontDefinition *retDefinition = [[CCFontDefinition alloc]initWithFontName:_fontName fontSize:tempFontSize];
+    CCFontDefinition *retDefinition = [[[CCFontDefinition alloc]initWithFontName:_fontName fontSize:tempFontSize] autorelease];
     
     if (retDefinition)
     {
-        
-        [retDefinition autorelease];
-        
         retDefinition.lineBreakMode  = _lineBreakMode;
         retDefinition.alignment      = _hAlignment;
         retDefinition.vertAlignment  = _vAlignment;

@@ -50,11 +50,9 @@ typedef void (^BlockWithParam)(id param);
 
 - (void) performBlock:(void (^)(id param))block withObject:(id)object waitUntilDone:(BOOL)wait
 {
-	CCObjectWith2Params * obj = [[CCObjectWith2Params alloc] init];
+	CCObjectWith2Params * obj = [[[CCObjectWith2Params alloc] init] autorelease];
 	obj.block = block;
 	obj.param = object;
-	
-	[obj autorelease];
 	
     [self performSelector:@selector(executeBlock2:) 
                  onThread:self

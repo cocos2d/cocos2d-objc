@@ -36,6 +36,7 @@
 #import "CCWindow.h"
 
 #import "../../CCNode.h"
+#import "../../CCScene.h"
 #import "../../CCScheduler.h"
 #import "../../ccMacros.h"
 #import "../../CCGLProgram.h"
@@ -423,7 +424,7 @@
 // This is the renderer output callback function
 static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTimeStamp* now, const CVTimeStamp* outputTime, CVOptionFlags flagsIn, CVOptionFlags* flagsOut, void* displayLinkContext)
 {
-    CVReturn result = [(CCDirectorDisplayLink*)displayLinkContext getFrameForTime:outputTime];
+    CVReturn result = [(__bridge CCDirectorDisplayLink*)displayLinkContext getFrameForTime:outputTime];
     return result;
 }
 

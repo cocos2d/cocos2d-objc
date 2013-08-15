@@ -321,22 +321,6 @@ CGSizeMake( (__size_in_points__).width * CC_CONTENT_SCALE_FACTOR(), (__size_in_p
 
 #endif
 
-/*****************/
-/** ARC Macros  **/
-/*****************/
-#if defined(__has_feature) && __has_feature(objc_arc)
-// ARC (used for inline functions)
-#define CC_ARC_RETAIN(value)	value
-#define CC_ARC_RELEASE(value)	value = 0
-#define CC_ARC_UNSAFE_RETAINED	__unsafe_unretained
-
-#else
-// No ARC
-#define CC_ARC_RETAIN(value)	[value retain]
-#define CC_ARC_RELEASE(value)	[value release]
-#define CC_ARC_UNSAFE_RETAINED
-#endif
-
 /** @def CC_INCREMENT_GL_DRAWS
  Increments the GL Draws counts by one.
  The number of calls per frame are displayed on the screen when the CCDirector's stats are enabled.

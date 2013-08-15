@@ -66,18 +66,24 @@
 
 -(void) deleteHashElement:(tHashElement*)element
 {
-    [element->actions release];
+    void* a = (__bridge void*) element->actions;
+    CFRelease(a);
 	HASH_DEL(targets, element);
 //	CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
-	[element->target release];
+    void* t = (__bridge void*) element->target;
+    CFRelease(t);
 	free(element);
 }
 
 -(void) actionAllocWithHashElement:(tHashElement*)element
 {
+    NSMutableArray* aObj = [[NSMutableArray alloc] init];
+    void* a = (__bridge void*) aObj;
+    CFRetain(a);
+    
 	// 4 actions per Node by default
 	if( element->actions == nil )
-		element->actions = [[NSMutableArray alloc] init];
+		element->actions = aObj;
 }
 
 -(void) removeActionAtIndex:(NSUInteger)index hashElement:(tHashElement*)element
@@ -85,7 +91,8 @@
 	id action = [element->actions objectAtIndex:index];
 
 	if( action == element->currentAction && !element->currentActionSalvaged ) {
-		[element->currentAction retain];
+        void* a = (__bridge void*) element->currentAction;
+        CFRetain(a);
 		element->currentActionSalvaged = YES;
 	}
     
@@ -108,7 +115,8 @@
 -(void) pauseTarget:(id)target
 {
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element);
 	if( element )
 		element->paused = YES;
 //	else
@@ -118,7 +126,8 @@
 -(void) resumeTarget:(id)target
 {
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element);
 	if( element )
 		element->paused = NO;
 //	else
@@ -147,17 +156,19 @@
 
 #pragma mark ActionManager - run
 
--(void) addAction:(CCAction*)action target:(id)target paused:(BOOL)paused
+-(void) addAction:(CCAction*)action target:(id)t paused:(BOOL)paused
 {
 	NSAssert( action != nil, @"Argument action must be non-nil");
-	NSAssert( target != nil, @"Argument target must be non-nil");
+	NSAssert( t != nil, @"Argument target must be non-nil");
 
 	tHashElement *element = NULL;
+    void* target = (__bridge void*)t;
 	HASH_FIND_INT(targets, &target, element);
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
 		element->paused = paused;
-		element->target = [target retain];
+        void* et = (__bridge void*) element->target;
+        CFRetain(et);
 		HASH_ADD_INT(targets, target, element);
 //		CCLOG(@"cocos2d: ---- buckets: %d/%d - %@", targets->entries, targets->size, element->target);
 
@@ -168,7 +179,7 @@
 	NSAssert( ![element->actions containsObject:action], @"runAction: Action already running");
     [element->actions addObject:action];
 
-	[action startWithTarget:target];
+	[action startWithTarget:t];
 }
 
 #pragma mark ActionManager - remove
@@ -187,11 +198,13 @@
 	if( target == nil )
 		return;
 
+    void* t = (__bridge void*) target;
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+	HASH_FIND_INT(targets, &t, element);
 	if( element ) {
 		if( [element->actions containsObject:element->currentAction] && !element->currentActionSalvaged ) {
-			[element->currentAction retain];
+            void* a = (__bridge void*) element->currentAction;
+            CFRetain(a);
 			element->currentActionSalvaged = YES;
 		}
         [element->actions removeAllObjects];
@@ -213,7 +226,8 @@
 
 	tHashElement *element = NULL;
 	id target = [action originalTarget];
-	HASH_FIND_INT(targets, &target, element );
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element );
 	if( element ) {
 		NSUInteger i = [element->actions indexOfObject:action];
 		if( i != NSNotFound )
@@ -230,7 +244,8 @@
 	NSAssert( target != nil, @"Target should be ! nil");
 
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element);
 
 	if( element ) {
 		NSUInteger limit = element->actions.count;
@@ -253,7 +268,8 @@
 	NSAssert( aTag != kCCActionTagInvalid, @"Invalid tag");
 
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element);
 
 	if( element ) {
 		if( element->actions != nil ) {
@@ -276,7 +292,8 @@
 -(NSUInteger) numberOfRunningActionsInTarget:(id) target
 {
 	tHashElement *element = NULL;
-	HASH_FIND_INT(targets, &target, element);
+    void* t = (__bridge void*) target;
+	HASH_FIND_INT(targets, &t, element);
 	if( element )
 		return element->actions ? element->actions.count : 0;
 
@@ -306,7 +323,8 @@
 					// The currentAction told the node to remove it. To prevent the action from
 					// accidentally deallocating itself before finishing its step, we retained
 					// it. Now that step is done, it's safe to release it.
-					[currentTarget->currentAction release];
+                    void* a = (__bridge void*) currentTarget->currentAction;
+                    CFRelease(a);
 
 				} else if( [currentTarget->currentAction isDone] ) {
 					[currentTarget->currentAction stop];

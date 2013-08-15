@@ -27,6 +27,7 @@
 
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
+#import "CCTexture2D.h"
 #import "ccMacros.h"
 
 @implementation CCSpriteFrame
