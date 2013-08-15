@@ -142,7 +142,7 @@ enum {
 	NSMutableArray *_children;
 
 	// weak ref to parent
-	CCNode *_parent;
+	CCNode *__unsafe_unretained _parent;
 
 	// a tag. any number you want to assign to the node
 	NSInteger _tag;
@@ -219,11 +219,11 @@ enum {
 /** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** A CCCamera object that lets you move the node using a gluLookAt */
-@property(nonatomic,readonly) CCCamera* camera;
+@property(unsafe_unretained, nonatomic,readonly) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) NSArray *children;
 /** A CCGrid object that is used when applying effects */
-@property(nonatomic,readwrite,retain) CCGridBase* grid;
+@property(nonatomic,readwrite,strong) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */
 @property(nonatomic,readwrite,assign) BOOL visible;
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
@@ -249,7 +249,7 @@ enum {
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
-@property(nonatomic,readwrite,assign) CCNode* parent;
+@property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 /**  If YES, the Anchor Point will be (0,0) when you position the CCNode.
  Used by CCLayer and CCScene.
  */
@@ -259,12 +259,12 @@ enum {
 /** A custom user data pointer */
 @property(nonatomic,readwrite,assign) void* userData;
 /** Similar to userData, but instead of holding a void* it holds an id */
-@property(nonatomic,readwrite,retain) id userObject;
+@property(nonatomic,readwrite,strong) id userObject;
 
 /** Shader Program
  @since v2.0
  */
-@property(nonatomic,readwrite,retain) CCGLProgram *shaderProgram;
+@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
@@ -278,13 +278,13 @@ enum {
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
  @since v2.0
  */
-@property (nonatomic, readwrite, retain) CCActionManager *actionManager;
+@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
 
 /** CCScheduler used to schedule all "updates" and timers.
  IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
  @since v2.0
  */
-@property (nonatomic, readwrite, retain) CCScheduler *scheduler;
+@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
 
 // initializators
 /** allocates and initializes a node.

@@ -63,7 +63,7 @@
 }
 
 /** the texture atlas used for drawing the quads */
-@property (nonatomic, retain) CCTextureAtlas* textureAtlas;
+@property (nonatomic, strong) CCTextureAtlas* textureAtlas;
 /** the blend function used for drawing the quads */
 @property (nonatomic, readwrite) ccBlendFunc blendFunc;
 

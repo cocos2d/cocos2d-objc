@@ -19,17 +19,14 @@ typedef void (^BlockWithParam)(id param);
 	id param;
 }
 @property (nonatomic,copy) BlockWithParam block;
-@property (nonatomic,readwrite,retain) id param;
+@property (nonatomic,readwrite,strong) id param;
 @end
 
 @implementation CCObjectWith2Params
 @synthesize block, param;
 - (void)dealloc {
 	CCLOG(@"cocos2d: deallocing %@", self);
-	[block release];
-	[param release];
 
-    [super dealloc];
 }
 @end
 
@@ -44,13 +41,13 @@ typedef void (^BlockWithParam)(id param);
 {
     [self performSelector:@selector(executeBlock:) 
                  onThread:self
-			   withObject: [[block copy] autorelease]
+			   withObject: [block copy]
 			waitUntilDone: wait];
 }
 
 - (void) performBlock:(void (^)(id param))block withObject:(id)object waitUntilDone:(BOOL)wait
 {
-	CCObjectWith2Params * obj = [[[CCObjectWith2Params alloc] init] autorelease];
+	CCObjectWith2Params * obj = [[CCObjectWith2Params alloc] init];
 	obj.block = block;
 	obj.param = object;
 	

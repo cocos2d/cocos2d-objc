@@ -64,7 +64,6 @@ static void lazy_init( void )
 		// Position and 1 color passed as a uniform (to similate glColor4ub )
 		//
 		shader_ = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_Position_uColor];
-		[shader_ retain];
 
 		colorLocation_ = glGetUniformLocation( shader_.program, "u_color");
 		pointSizeLocation_ = glGetUniformLocation( shader_.program, "u_pointSize");
@@ -76,7 +75,6 @@ static void lazy_init( void )
 
 void ccDrawFree(void)
 {
-	[shader_ release];
 	
 	shader_ = nil;
 	initialized = NO;

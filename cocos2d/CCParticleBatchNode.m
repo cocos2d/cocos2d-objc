@@ -71,12 +71,12 @@
  */
 +(id)batchNodeWithTexture:(CCTexture2D *)tex
 {
-	return [[[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity];
 }
 
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity
 {
-	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
 
 /*
@@ -84,12 +84,12 @@
  */
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[self alloc] initWithFile:fileImage capacity:capacity];
 }
 
 +(id)batchNodeWithFile:(NSString*) imageFile
 {
-	return [[[self alloc] initWithFile:imageFile capacity:kCCParticleDefaultCapacity] autorelease];
+	return [[self alloc] initWithFile:imageFile capacity:kCCParticleDefaultCapacity];
 }
 
 /*
@@ -127,11 +127,6 @@
 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
 }
 
--(void)dealloc
-{
-	[_textureAtlas release];
-	[super dealloc];
-}
 
 #pragma mark CCParticleBatchNode - composition
 
@@ -244,10 +239,8 @@
 		if( oldIndex != newIndex ) {
 
 			// reorder _children array
-			[child retain];
 			[_children removeObjectAtIndex:oldIndex];
 			[_children insertObject:child atIndex:newIndex];
-			[child release];
 
 			// save old altasIndex
 			NSUInteger oldAtlasIndex = child.atlasIndex;

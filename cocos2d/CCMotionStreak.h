@@ -65,7 +65,7 @@
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
 /** texture used for the motion streak */
-@property (nonatomic, retain) CCTexture2D *texture;
+@property (nonatomic, strong) CCTexture2D *texture;
 
 /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;

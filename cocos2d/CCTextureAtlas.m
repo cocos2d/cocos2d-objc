@@ -60,12 +60,12 @@
 
 +(id) textureAtlasWithFile:(NSString*) file capacity: (NSUInteger) n
 {
-	return [[[self alloc] initWithFile:file capacity:n] autorelease];
+	return [[self alloc] initWithFile:file capacity:n];
 }
 
 +(id) textureAtlasWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)n
 {
-	return [[[self alloc] initWithTexture:tex capacity:n] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:n];
 }
 
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
@@ -78,7 +78,6 @@
 	// else
 	{
 		CCLOG(@"cocos2d: Could not open file: %@", file);
-		[self release];
 		return nil;
 	}
 }
@@ -106,7 +105,6 @@
 			if( _indices )
 				free(_indices);
 
-			[self release];
 			return nil;
 		}
 
@@ -142,9 +140,7 @@
 	glDeleteVertexArrays(1, &_VAOname);
 #endif
 
-	[_texture release];
 
-	[super dealloc];
 }
 
 -(void) setupIndices

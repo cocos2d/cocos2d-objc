@@ -99,7 +99,6 @@ typedef struct _hashSelectorEntry
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[super dealloc];
 }
 
 -(void) trigger
@@ -171,12 +170,12 @@ typedef struct _hashSelectorEntry
 
 +(id) timerWithTarget:(id)t selector:(SEL)s
 {
-	return [[[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0] autorelease];
+	return [[self alloc] initWithTarget:t selector:s interval:0 repeat:kCCRepeatForever delay:0];
 }
 
 +(id) timerWithTarget:(id)t selector:(SEL)s interval:(ccTime) i
 {
-	return [[[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0] autorelease];
+	return [[self alloc] initWithTarget:t selector:s interval:i repeat:kCCRepeatForever delay:0];
 }
 
 -(id) initWithTarget:(id)t selector:(SEL)s
@@ -228,7 +227,7 @@ typedef struct _hashSelectorEntry
 
 +(id) timerWithTarget:(id)owner interval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block
 {
-	return [[[self alloc] initWithTarget:(id)owner interval:seconds repeat:kCCRepeatForever delay:0 key:key block:block] autorelease];
+	return [[self alloc] initWithTarget:(id)owner interval:seconds repeat:kCCRepeatForever delay:0 key:key block:block];
 }
 
 -(id) initWithTarget:(id)owner interval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block
@@ -249,13 +248,6 @@ typedef struct _hashSelectorEntry
 	return [NSString stringWithFormat:@"<%@ = %p | block>", [self class], self];
 }
 
-- (void)dealloc
-{
-	[_key release];
-    [_block release];
-
-    [super dealloc];
-}
 
 -(void) trigger
 {
@@ -322,7 +314,6 @@ typedef struct _hashSelectorEntry
 
 	[self unscheduleAll];
 
-	[super dealloc];
 }
 
 
@@ -355,7 +346,7 @@ typedef struct _hashSelectorEntry
 
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
-		element->target = [target retain];
+		element->target = target;
 		HASH_ADD_INT( hashForTimers, target, element );
 
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
@@ -367,7 +358,7 @@ typedef struct _hashSelectorEntry
 
 	if( element->timers == nil )
     {
-        NSMutableArray* arr = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray* arr = [[NSMutableArray alloc] init];
         void* a = (__bridge void*) arr;
         CFRetain(a);
 		element->timers = arr;
@@ -386,7 +377,6 @@ typedef struct _hashSelectorEntry
 
 	CCTimerTargetSelector *timer = [[CCTimerTargetSelector alloc] initWithTarget:target selector:selector interval:interval repeat:repeat delay:delay];
     [element->timers addObject:timer];
-	[timer release];
 }
 
 -(void) scheduleBlockForKey:(NSString*)key target:(id)owner interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused block:(void(^)(ccTime dt))block
@@ -400,7 +390,7 @@ typedef struct _hashSelectorEntry
 	
 	if( ! element ) {
 		element = calloc( sizeof( *element ), 1 );
-		element->target = [owner retain];
+		element->target = owner;
 		HASH_ADD_INT( hashForTimers, target, element );
 		
 		// Is this the 1st element ? Then set the pause level to all the selectors of this target
@@ -412,7 +402,7 @@ typedef struct _hashSelectorEntry
 	
 	if( element->timers == nil )
     {
-        NSMutableArray* arr = [[[NSMutableArray alloc] init] autorelease];
+        NSMutableArray* arr = [[NSMutableArray alloc] init];
         void* a = (__bridge void*) arr;
         CFRetain(a);
 		element->timers = arr;
@@ -431,7 +421,6 @@ typedef struct _hashSelectorEntry
 	
 	CCTimerBlock *timer = [[CCTimerBlock alloc] initWithTarget:owner interval:interval repeat:repeat delay:delay key:key block:block];
     [element->timers addObject:timer];
-	[timer release];
 }
 
 -(void) unscheduleSelector:(SEL)selector forTarget:(id)target
@@ -576,7 +565,7 @@ typedef struct _hashSelectorEntry
 
 	// update hash entry for quicker access
 	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
-	hashElement->target = [target retain];
+	hashElement->target = target;
 	hashElement->list = list;
 	hashElement->entry = listElement;
 	HASH_ADD_INT(hashForUpdates, target, hashElement );
@@ -596,7 +585,7 @@ typedef struct _hashSelectorEntry
 
 	// update hash entry for quicker access
 	tHashUpdateEntry *hashElement = calloc( sizeof(*hashElement), 1 );
-	hashElement->target = [target retain];
+	hashElement->target = target;
 	hashElement->list = list;
 	hashElement->entry = listElement;
 	HASH_ADD_INT(hashForUpdates, target, hashElement );
@@ -648,7 +637,6 @@ typedef struct _hashSelectorEntry
 		
 		// target#release should be the last one to prevent
 		// a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
-		[target release];
 	}
 }
 

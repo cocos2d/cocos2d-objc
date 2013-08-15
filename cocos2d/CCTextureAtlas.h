@@ -61,7 +61,7 @@
 /** quantity of quads that can be stored with the current texture atlas size */
 @property (nonatomic,readonly) NSUInteger capacity;
 /** Texture of the texture atlas */
-@property (nonatomic,retain) CCTexture2D *texture;
+@property (nonatomic,strong) CCTexture2D *texture;
 /** Quads that are going to be rendered */
 @property (nonatomic,readwrite) ccV3F_C4B_T2F_Quad *quads;
 

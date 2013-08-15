@@ -184,18 +184,9 @@ static CCDirector *_sharedDirector = nil;
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[_FPSLabel release];
-	[_SPFLabel release];
-	[_drawsLabel release];
-	[_runningScene release];
-	[_notificationNode release];
-	[_scenesStack release];
-	[_scheduler release];
-	[_actionManager release];
 
 	_sharedDirector = nil;
 
-	[super dealloc];
 }
 
 -(void) setGLDefaultValues
@@ -315,8 +306,7 @@ static CCDirector *_sharedDirector = nil;
 #ifdef __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
-		[__view release];
-		__view = [view retain];
+		__view = view;
 
 		// set size
 		_winSizeInPixels = _winSizeInPoints = CCNSSizeToCGSize( [__view bounds].size );
@@ -459,7 +449,6 @@ static CCDirector *_sharedDirector = nil;
 	[_runningScene onExitTransitionDidStart];
 	[_runningScene onExit];
 	[_runningScene cleanup];
-	[_runningScene release];
 
 	_runningScene = nil;
 	_nextScene = nil;
@@ -470,9 +459,6 @@ static CCDirector *_sharedDirector = nil;
 
 	[self stopAnimation];
 
-	[_FPSLabel release];
-	[_SPFLabel release];
-	[_drawsLabel release];
 	_FPSLabel = nil, _SPFLabel=nil, _drawsLabel=nil;
 
 	_delegate = nil;
@@ -520,9 +506,8 @@ static CCDirector *_sharedDirector = nil;
 			[_runningScene cleanup];
 	}
 
-	[_runningScene release];
 
-	_runningScene = [_nextScene retain];
+	_runningScene = _nextScene;
 	_nextScene = nil;
 
 	if( ! runningIsTransition ) {
@@ -593,7 +578,6 @@ static CCDirector *_sharedDirector = nil;
 		{
 			NSString *spfstr = [[NSString alloc] initWithFormat:@"%.3f", _secondsPerFrame];
 			[_SPFLabel setString:spfstr];
-			[spfstr release];
 
 			_frameRate = _frames/_accumDt;
 			_frames = 0;
@@ -604,11 +588,9 @@ static CCDirector *_sharedDirector = nil;
 
 			NSString *fpsstr = [[NSString alloc] initWithFormat:@"%.1f", _frameRate];
 			[_FPSLabel setString:fpsstr];
-			[fpsstr release];
 			
 			NSString *draws = [[NSString alloc] initWithFormat:@"%4lu", (unsigned long)__ccNumberOfDraws];
 			[_drawsLabel setString:draws];
-			[draws release];
 		}
 
 		[_drawsLabel visit];
@@ -642,9 +624,6 @@ static CCDirector *_sharedDirector = nil;
 	
 	if( _FPSLabel && _SPFLabel ) {
 
-		[_FPSLabel release];
-		[_SPFLabel release];
-		[_drawsLabel release];
 		[textureCache removeTextureForKey:@"cc_fps_images"];
 		_FPSLabel = nil;
 		_SPFLabel = nil;

@@ -45,7 +45,6 @@ static CCShaderCache *_sharedShaderCache;
 
 +(void)purgeSharedShaderCache
 {
-	[_sharedShaderCache release];
 	_sharedShaderCache = nil;
 }
 
@@ -60,13 +59,10 @@ static CCShaderCache *_sharedShaderCache;
 {
 	CCLOGINFO(@"cocos2d deallocing %@", self);
 
-	[_programs release];
-    [super dealloc];
 }
 
 +(void)purgeSharedTextureCache
 {
-	[_sharedShaderCache release];
 	_sharedShaderCache = nil;
 }
 
@@ -95,7 +91,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTextureColor];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 
@@ -111,7 +106,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTextureColorAlphaTest];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 
@@ -128,7 +122,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionColor];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 
@@ -145,7 +138,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTexture];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 
@@ -162,7 +154,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTexture_uColor];
-	[p release];
 	
 	CHECK_GL_ERROR_DEBUG();
 
@@ -180,7 +171,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_PositionTextureA8Color];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 	
@@ -196,7 +186,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 
 	[_programs setObject:p forKey:kCCShader_Position_uColor];
-	[p release];
 
 	CHECK_GL_ERROR_DEBUG();
 	
@@ -214,7 +203,6 @@ static CCShaderCache *_sharedShaderCache;
 	[p updateUniforms];
 	
 	[_programs setObject:p forKey:kCCShader_PositionLengthTexureColor];
-	[p release];
 	CHECK_GL_ERROR_DEBUG();
 }
 

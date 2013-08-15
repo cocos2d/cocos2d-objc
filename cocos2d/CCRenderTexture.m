@@ -52,18 +52,18 @@
 
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
-  return [[[self alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat] autorelease];
+  return [[self alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
 
 // issue #994
 +(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format
 {
-	return [[[self alloc] initWithWidth:w height:h pixelFormat:format] autorelease];
+	return [[self alloc] initWithWidth:w height:h pixelFormat:format];
 }
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
-	return [[[self alloc] initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888 depthStencilFormat:0] autorelease];
+	return [[self alloc] initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888 depthStencilFormat:0];
 }
 
 -(id)initWithWidth:(int)w height:(int)h
@@ -143,7 +143,6 @@
 		// retained
 		self.sprite = [CCSprite spriteWithTexture:_texture];
 
-		[_texture release];
 		[_sprite setScaleY:-1];
 
 		// issue #937
@@ -169,8 +168,6 @@
 	if (_depthRenderBufffer)
 		glDeleteRenderbuffers(1, &_depthRenderBufffer);
 
-	[_sprite release];
-	[super dealloc];
 }
 
 -(void)begin
@@ -494,7 +491,7 @@
 	
 #elif __CC_PLATFORM_MAC
 	
-	CFURLRef url = (CFURLRef)[NSURL fileURLWithPath:fullPath];
+	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:fullPath];
 	
 	CGImageDestinationRef dest;
 

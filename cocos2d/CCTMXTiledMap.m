@@ -55,12 +55,12 @@
 
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile
 {
-	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
+	return [[self alloc] initWithTMXFile:tmxFile];
 }
 
 +(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
-	return [[[self alloc] initWithXML:tmxString resourcePath:resourcePath] autorelease];
+	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }
 
 -(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo
@@ -68,9 +68,9 @@
 	_mapSize = mapInfo.mapSize;
 	_tileSize = mapInfo.tileSize;
 	_mapOrientation = mapInfo.orientation;
-	_objectGroups = [mapInfo.objectGroups retain];
-	_properties = [mapInfo.properties retain];
-	_tileProperties = [mapInfo.tileProperties retain];
+	_objectGroups = mapInfo.objectGroups;
+	_properties = mapInfo.properties;
+	_tileProperties = mapInfo.tileProperties;
 
 	int idx=0;
 
@@ -124,13 +124,6 @@
 	return self;
 }
 
--(void) dealloc
-{
-	[_objectGroups release];
-	[_properties release];
-	[_tileProperties release];
-	[super dealloc];
-}
 
 // private
 -(id) parseLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo

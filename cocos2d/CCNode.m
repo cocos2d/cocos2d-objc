@@ -96,7 +96,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 +(id) node
 {
-	return [[[self alloc] init] autorelease];
+	return [[self alloc] init];
 }
 
 -(id) init
@@ -175,20 +175,12 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-	[_actionManager release];
-	[_scheduler release];
-	[_camera release];
-	[_grid release];
-	[_shaderProgram release];
-	[_userObject release];
 
 	// children
     for (CCNode* child in _children)
 		child.parent = nil;
 
-	[_children release];
 
-	[super dealloc];
 }
 
 #pragma mark Setters
@@ -668,9 +660,8 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	if( actionManager != _actionManager ) {
 		[self stopAllActions];
-		[_actionManager release];
 
-		_actionManager = [actionManager retain];
+		_actionManager = actionManager;
 	}
 }
 
@@ -720,9 +711,8 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	if( scheduler != _scheduler ) {
 		[self unscheduleAllSelectors];
-		[_scheduler release];
 
-		_scheduler = [scheduler retain];
+		_scheduler = scheduler;
 	}
 }
 

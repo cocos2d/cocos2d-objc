@@ -42,7 +42,7 @@
 
 +(id) action
 {
-	return [[[self alloc] init] autorelease];
+	return [[self alloc] init];
 }
 
 -(id) init
@@ -57,7 +57,6 @@
 -(void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[super dealloc];
 }
 
 -(NSString*) description
@@ -123,7 +122,7 @@
 @synthesize innerAction=_innerAction;
 +(id) actionWithAction: (CCActionInterval*) action
 {
-	return [[[self alloc] initWithAction: action] autorelease];
+	return [[self alloc] initWithAction: action];
 }
 
 -(id) initWithAction: (CCActionInterval*) action
@@ -136,15 +135,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[[_innerAction copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[_innerAction copy] ];
     return copy;
 }
 
--(void) dealloc
-{
-	[_innerAction release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -188,7 +182,7 @@
 
 +(id) actionWithAction: (CCActionInterval*) action speed:(CGFloat)value
 {
-	return [[[self alloc] initWithAction: action speed:value] autorelease];
+	return [[self alloc] initWithAction: action speed:value];
 }
 
 -(id) initWithAction: (CCActionInterval*) action speed:(CGFloat)value
@@ -202,15 +196,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[[_innerAction copy] autorelease] speed:_speed];
+	CCAction *copy = [[[self class] allocWithZone: zone] initWithAction:[_innerAction copy] speed:_speed];
     return copy;
 }
 
--(void) dealloc
-{
-	[_innerAction release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -251,19 +240,19 @@
 
 +(id) actionWithTarget:(CCNode *) fNode
 {
-	return [[[self alloc] initWithTarget:fNode] autorelease];
+	return [[self alloc] initWithTarget:fNode];
 }
 
 +(id) actionWithTarget:(CCNode *) fNode worldBoundary:(CGRect)rect
 {
-	return [[[self alloc] initWithTarget:fNode worldBoundary:rect] autorelease];
+	return [[self alloc] initWithTarget:fNode worldBoundary:rect];
 }
 
 -(id) initWithTarget:(CCNode *)fNode
 {
 	if( (self=[super init]) ) {
 
-		_followedNode = [fNode retain];
+		_followedNode = fNode;
 		_boundarySet = FALSE;
 		_boundaryFullyCovered = FALSE;
 
@@ -279,7 +268,7 @@
 {
 	if( (self=[super init]) ) {
 
-		_followedNode = [fNode retain];
+		_followedNode = fNode;
 		_boundarySet = TRUE;
 		_boundaryFullyCovered = FALSE;
 
@@ -346,11 +335,6 @@
 	[super stop];
 }
 
--(void) dealloc
-{
-	[_followedNode release];
-	[super dealloc];
-}
 
 @end
 

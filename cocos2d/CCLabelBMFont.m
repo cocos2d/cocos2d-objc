@@ -54,7 +54,7 @@ CCBMFontConfiguration* FNTConfigLoadFile( NSString *fntFile)
 	CCBMFontConfiguration *ret = nil;
     
 	if( configurations == nil )
-		configurations = [[NSMutableDictionary dictionaryWithCapacity:3] retain];
+		configurations = [NSMutableDictionary dictionaryWithCapacity:3];
     
 	ret = [configurations objectForKey:fntFile];
 	if( ret == nil ) {
@@ -94,7 +94,7 @@ void FNTConfigRemoveCache( void )
 
 +(id) configurationWithFNTFile:(NSString*)FNTfile
 {
-	return [[[self alloc] initWithFNTfile:FNTfile] autorelease];
+	return [[self alloc] initWithFNTfile:FNTfile];
 }
 
 -(id) initWithFNTfile:(NSString*)fntFile
@@ -107,11 +107,10 @@ void FNTConfigRemoveCache( void )
 		NSMutableString *validCharsString = [self parseConfigFile:fntFile];
 		  
 		if( ! validCharsString ) {
-			[self release];
 			return nil;
 		}
     
-		_characterSet = [[NSCharacterSet characterSetWithCharactersInString:validCharsString] retain];
+		_characterSet = [NSCharacterSet characterSetWithCharactersInString:validCharsString];
 	}
 	return self;
 }
@@ -119,11 +118,8 @@ void FNTConfigRemoveCache( void )
 - (void) dealloc
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
-	[_characterSet release];
 	[self purgeFontDefDictionary];
 	[self purgeKerningDictionary];
-	[_atlasName release];
-	[super dealloc];
 }
 
 - (NSString*) description
@@ -215,9 +211,8 @@ void FNTConfigRemoveCache( void )
 		}
 	}
 	// Finished with lines so release it
-	[lines release];
 	
-	return [validCharsString autorelease];
+	return validCharsString;
 }
 
 -(void) parseImageFileName:(NSString*)line fntFile:(NSString*)fntFile
@@ -247,7 +242,6 @@ void FNTConfigRemoveCache( void )
 	NSString *dir = [fntFile stringByDeletingLastPathComponent];
 	_atlasName = [dir stringByAppendingPathComponent:propertyValue];
     
-	[_atlasName retain];
 }
 
 -(void) parseInfoArguments:(NSString*)line
@@ -451,17 +445,17 @@ void FNTConfigRemoveCache( void )
 
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
-	return [[[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero] autorelease];
+	return [[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero];
 }
 
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
 {
-    return [[[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:CGPointZero] autorelease];
+    return [[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:CGPointZero];
 }
 
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment imageOffset:(CGPoint)offset
 {
-    return [[[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:offset] autorelease];
+    return [[self alloc] initWithString:string fntFile:fntFile width:width alignment:alignment imageOffset:offset];
 }
 
 -(id) init
@@ -493,17 +487,16 @@ void FNTConfigRemoveCache( void )
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
 		if(!newConf) {
 			CCLOGWARN(@"cocos2d: WARNING. CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
-			[self release];
 			return nil;
 		}
         
-		_configuration = [newConf retain];
+		_configuration = newConf;
 		_fntFile = [fntFile copy];
         
 		texture = [[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName];
         
 	} else
-		texture = [[[CCTexture2D alloc] init] autorelease];
+		texture = [[CCTexture2D alloc] init];
     
     
 	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {
@@ -532,16 +525,6 @@ void FNTConfigRemoveCache( void )
 	return self;
 }
 
--(void) dealloc
-{
-	[_string release];
-    [_initialString release];
-	[_configuration release];
-    [_fntFile release];
-	[_reusedChar release];
-    
-	[super dealloc];
-}
 
 #pragma mark LabelBMFont - Alignment
 
@@ -796,7 +779,6 @@ void FNTConfigRemoveCache( void )
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
 				[self addChild:fontChar z:i tag:i];
-				[fontChar release];
 			}
 			
 			// Apply label properties
@@ -861,10 +843,8 @@ void FNTConfigRemoveCache( void )
 - (void) setString:(NSString*) newString updateLabel:(BOOL)update
 {
     if( !update ) {
-        [_string release];
         _string = [newString copy];
     } else {
-        [_initialString release];
         _initialString = [newString copy];
     }
     
@@ -986,11 +966,9 @@ void FNTConfigRemoveCache( void )
 		
 		NSAssert( newConf, @"CCLabelBMFont: Impossible to create font. Please check file: '%@'", fntFile );
 		
-		[_fntFile release];
-		_fntFile = [fntFile retain];
+		_fntFile = fntFile;
 		
-		[_configuration release];
-		_configuration = [newConf retain];
+		_configuration = newConf;
         
 		[self setTexture:[[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName]];
 		[self createFontChars];

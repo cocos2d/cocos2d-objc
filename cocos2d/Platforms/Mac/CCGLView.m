@@ -78,7 +78,7 @@
 	if (!pixelFormat)
 		CCLOG(@"No OpenGL pixel format");
 
-	if( (self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]]) ) {
+	if( (self = [super initWithFrame:frameRect pixelFormat:pixelFormat]) ) {
 
 		if( context )
 			[self setOpenGLContext:context];
@@ -164,7 +164,6 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[super dealloc];
 }
 
 #define DISPATCH_EVENT(__event__, __selector__)												\

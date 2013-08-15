@@ -73,14 +73,13 @@ static CCTextureCache *sharedTextureCache;
 
 +(void)purgeSharedTextureCache
 {
-	[sharedTextureCache release];
 	sharedTextureCache = nil;
 }
 
 -(id) init
 {
 	if( (self=[super init]) ) {
-		_textures = [[NSMutableDictionary dictionaryWithCapacity: 10] retain];
+		_textures = [NSMutableDictionary dictionaryWithCapacity: 10];
 
 		// init "global" stuff
 		_loadingQueue = dispatch_queue_create("org.cocos2d.texturecacheloading", NULL);
@@ -128,15 +127,12 @@ static CCTextureCache *sharedTextureCache;
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	dispatch_sync(_dictQueue, ^{
-		[_textures release];
 	});
-	[_auxGLcontext release];
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
 	dispatch_release(_loadingQueue);
 	dispatch_release(_dictQueue);
 
-	[super dealloc];
 }
 
 #pragma mark TextureCache - Add Images
@@ -321,10 +317,8 @@ static CCTextureCache *sharedTextureCache;
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [[ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution] autorelease];
+			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
 
-			[data release];
-			[image release];
 
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
@@ -370,7 +364,7 @@ static CCTextureCache *sharedTextureCache;
 		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
 	}
 
-	return [tex autorelease];
+	return tex;
 }
 
 #pragma mark TextureCache - Remove
@@ -466,7 +460,7 @@ static CCTextureCache *sharedTextureCache;
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);
 	}
 
-	return [tex autorelease];
+	return tex;
 }
 
 @end

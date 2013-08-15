@@ -116,10 +116,10 @@ typedef struct _KerningHashElement
 }
 
 // Character set
-@property (nonatomic, retain, readonly) NSCharacterSet *characterSet;
+@property (nonatomic, strong, readonly) NSCharacterSet *characterSet;
 
 // atlasName
-@property (nonatomic, readwrite, retain) NSString *atlasName;
+@property (nonatomic, readwrite, strong) NSString *atlasName;
 
 /** allocates a CCBMFontConfiguration with a FNT file */
 +(id) configurationWithFNTFile:(NSString*)FNTfile;
@@ -198,7 +198,7 @@ typedef struct _KerningHashElement
 /** alignment used for the label */
 @property (nonatomic,assign,readonly) CCTextAlignment alignment;
 /** fntFile used for the font */
-@property (nonatomic,retain) NSString* fntFile;
+@property (nonatomic,strong) NSString* fntFile;
 /** conforms to CCRGBAProtocol protocol */
 @property (nonatomic,readwrite) GLubyte opacity;
 /** conforms to CCRGBAProtocol protocol */

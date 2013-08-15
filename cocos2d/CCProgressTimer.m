@@ -64,7 +64,7 @@ const char kCCProgressTextureCoords = 0x4b;
 
 +(id)progressWithSprite:(CCSprite*) sprite
 {
-	return [[[self alloc]initWithSprite:sprite] autorelease];
+	return [[self alloc]initWithSprite:sprite];
 }
 
 -(id) init
@@ -97,8 +97,6 @@ const char kCCProgressTextureCoords = 0x4b;
 	if(_vertexData){
 		free(_vertexData);
 	}
-	[_sprite release];
-	[super dealloc];
 }
 
 -(void)setPercentage:(float) percentage
@@ -112,8 +110,7 @@ const char kCCProgressTextureCoords = 0x4b;
 -(void)setSprite:(CCSprite *)newSprite
 {
 	if(_sprite != newSprite){
-		[_sprite release];
-		_sprite = [newSprite retain];
+		_sprite = newSprite;
 		self.contentSize = _sprite.contentSize;
     
 		//	Everytime we set a new sprite, we free the current vertex data

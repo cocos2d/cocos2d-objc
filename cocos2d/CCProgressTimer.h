@@ -83,7 +83,7 @@ typedef enum {
 @property (nonatomic, readwrite) float percentage;
 
 /** The image to show the progress percentage */
-@property (nonatomic, readwrite, retain) CCSprite *sprite;
+@property (nonatomic, readwrite, strong) CCSprite *sprite;
 
 /** Creates a progress timer with the sprite as the shape the timer goes through */
 + (id) progressWithSprite:(CCSprite*) sprite;

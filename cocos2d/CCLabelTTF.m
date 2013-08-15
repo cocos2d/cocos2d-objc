@@ -55,37 +55,37 @@
 // -
 + (id) labelWithString:(NSString*)string fontDefinition:(CCFontDefinition *)definition
 {
-    return [[[self alloc] initWithString:string fontDefinition:definition] autorelease];
+    return [[self alloc] initWithString:string fontDefinition:definition];
 }
 
 // -
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
-	return [[[self alloc] initWithString:string fontName:name fontSize:size]autorelease];
+	return [[self alloc] initWithString:string fontName:name fontSize:size];
 }
 
 // hAlignment
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment
 {
-	return [[[self alloc] initWithString:string  fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:kCCLineBreakModeWordWrap]autorelease];
+	return [[self alloc] initWithString:string  fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:kCCLineBreakModeWordWrap];
 }
 
 // hAlignment, vAlignment
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment
 {
-	return [[[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment]autorelease];
+	return [[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment];
 }
 
 // hAlignment, lineBreakMode
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode
 {
-	return [[[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:lineBreakMode]autorelease];
+	return [[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:lineBreakMode];
 }
 
 // hAlignment, vAlignment, lineBreakMode
 + (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode
 {
-	return [[[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:lineBreakMode]autorelease];
+	return [[self alloc] initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:lineBreakMode];
 }
 
 - (id) init
@@ -141,7 +141,6 @@
 	NSAssert( str, @"Invalid string" );
 
 	if( _string.hash != str.hash ) {
-		[_string release];
 		_string = [str copy];
 		
 		[self updateTexture];
@@ -174,7 +173,6 @@
     fontName = [self getFontName:fontName];
     
 	if( fontName.hash != _fontName.hash ) {
-		[_fontName release];
 		_fontName = [fontName copy];
 		
 		// Force update
@@ -256,13 +254,6 @@
     return _vAlignment;
 }
 
-- (void) dealloc
-{
-	[_string release];
-	[_fontName release];
-
-	[super dealloc];
-}
 
 - (NSString*) description
 {
@@ -320,7 +311,6 @@
 #endif
 	
 	[self setTexture:tex];
-	[tex release];
 	
 	CGRect rect = CGRectZero;
 	rect.size = [_texture contentSize];
@@ -495,7 +485,7 @@
     else
        tempFontSize       =  _fontSize;
     
-    CCFontDefinition *retDefinition = [[[CCFontDefinition alloc]initWithFontName:_fontName fontSize:tempFontSize] autorelease];
+    CCFontDefinition *retDefinition = [[CCFontDefinition alloc]initWithFontName:_fontName fontSize:tempFontSize];
     
     if (retDefinition)
     {
@@ -554,10 +544,6 @@
 
 - (void) setFontDefinition: (CCFontDefinition *) fontDef
 {
-    if(_fontName)
-    {
-        [_fontName release];
-    }
     
     _dimensions     = fontDef.dimensions;
     _hAlignment     = fontDef.alignment;

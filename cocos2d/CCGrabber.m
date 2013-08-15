@@ -93,7 +93,6 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 	glDeleteFramebuffers(1, &_FBO);
-	[super dealloc];
 }
 
 @end

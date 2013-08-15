@@ -66,14 +66,11 @@
 {
 	CCLOGINFO(@"cocos2d: deallocing %@",self);
 
-	[_name release];
-	[_properties release];
 
 	if( _ownTiles && _tiles ) {
 		free( _tiles );
 		_tiles = NULL;
 	}
-	[super dealloc];
 }
 
 @end
@@ -104,9 +101,6 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[_sourceImage release];
-	[_name release];
-	[super dealloc];
 }
 
 -(CGRect) rectForGID:(unsigned int)gid
@@ -146,12 +140,12 @@
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
-	return [[[self alloc] initWithTMXFile:tmxFile] autorelease];
+	return [[self alloc] initWithTMXFile:tmxFile];
 }
 
 +(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
 {
-	return [[[self alloc] initWithXML:tmxString resourcePath:resourcePath] autorelease];
+	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }
 
 - (void) internalInit:(NSString*)tmxFileName resourcePath:(NSString*)resourcePath
@@ -193,20 +187,11 @@
 - (void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-	[_tilesets release];
-	[_layers release];
-	[_filename release];
-	[_resources release];
-	[_currentString release];
-	[_objectGroups release];
-	[_properties release];
-	[_tileProperties release];
-	[super dealloc];
 }
 
 - (void) parseXMLData:(NSData*)data
 {
-	NSXMLParser *parser = [[[NSXMLParser alloc] initWithData:data] autorelease];
+	NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
 
 	// we'll do the parsing
 	[parser setDelegate:self];
@@ -287,7 +272,6 @@
 			tileset.tileOffset = CGPointZero; //default offset (0,0)
 
 			[_tilesets addObject:tileset];
-			[tileset release];
 		}
 
 	}
@@ -327,7 +311,6 @@
 		layer.offset = ccp(x,y);
 
 		[_layers addObject:layer];
-		[layer release];
 
 		// The parent element is now "layer"
 		_parentElement = TMXPropertyLayer;
@@ -342,7 +325,6 @@
 		objectGroup.positionOffset = positionOffset;
 
 		[_objectGroups addObject:objectGroup];
-		[objectGroup release];
 
 		// The parent element is now "objectgroup"
 		_parentElement = TMXPropertyObjectGroup;
@@ -413,7 +395,6 @@
 		
 		// Add the object to the objectGroup
 		[[objectGroup objects] addObject:dict];
-		[dict release];
 
 		// The parent element is now "object"
 		_parentElement = TMXPropertyObject;

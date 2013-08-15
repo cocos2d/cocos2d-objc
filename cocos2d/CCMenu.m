@@ -51,7 +51,7 @@ enum {
 
 +(id) menuWithArray:(NSArray *)arrayOfItems
 {
-	return [[[self alloc] initWithArray:arrayOfItems] autorelease];
+	return [[self alloc] initWithArray:arrayOfItems];
 }
 
 +(id) menuWithItems: (CCMenuItem*) item, ...
@@ -78,7 +78,7 @@ enum {
 		}
 	}
 	
-	return [[[self alloc] initWithArray:array] autorelease];
+	return [[self alloc] initWithArray:array];
 }
 
 -(id) init
@@ -137,10 +137,6 @@ enum {
 	return self;
 }
 
--(void) dealloc
-{
-	[super dealloc];
-}
 
 /*
  * override add:
@@ -391,7 +387,6 @@ enum {
 
 	[self alignItemsInColumnsWithArray:rows];
 	
-	[rows release];
 }
 
 -(void) alignItemsInColumnsWithArray:(NSArray*) rows
@@ -469,7 +464,6 @@ enum {
 
 	[self alignItemsInRowsWithArray:columns];
 	
-	[columns release];
 }
 
 -(void) alignItemsInRowsWithArray:(NSArray*) columns
@@ -532,7 +526,5 @@ enum {
 		}
 	}
 
-	[columnWidths release];
-	[columnHeights release];
 }
 @end

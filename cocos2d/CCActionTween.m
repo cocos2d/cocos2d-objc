@@ -30,7 +30,7 @@
 
 + (id)actionWithDuration:(ccTime)aDuration key:(NSString *)aKey from:(float)aFrom to:(float)aTo {
 
-	return [[[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo] autorelease];
+	return [[[self class] alloc] initWithDuration:aDuration key:aKey from:aFrom to:aTo];
 }
 
 - (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to {
@@ -46,11 +46,6 @@
 	return self;
 }
 
-- (void) dealloc
-{
-	[_key release];
-	[super dealloc];
-}
 
 - (void)startWithTarget:aTarget
 {

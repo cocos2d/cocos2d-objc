@@ -141,10 +141,6 @@ typedef struct _listAddedEntry
 	return self;
 }
 
-- (void) dealloc
-{
-	[super dealloc];
-}
 
 #pragma mark CCEventDispatcher - add / remove delegates
 
@@ -156,7 +152,7 @@ typedef struct _listAddedEntry
 	// And the only way to update the priority is by deleting, re-adding the delegate with a new priority
 	tListAddedEntry *listElement = malloc( sizeof(*listElement) );
 	
-	listElement->delegate = [delegate retain];
+	listElement->delegate = delegate;
 	listElement->priority = priority;
 	listElement->flags = flags;
 	listElement->listToBeAdded = list;
@@ -169,7 +165,7 @@ typedef struct _listAddedEntry
 {
 	tListEntry *listElement = malloc( sizeof(*listElement) );
 
-	listElement->delegate = [delegate retain];
+	listElement->delegate = delegate;
 	listElement->priority = priority;
 	listElement->flags = flags;
 	listElement->next = listElement->prev = NULL;
@@ -212,7 +208,7 @@ typedef struct _listAddedEntry
 
 		tListDeletedEntry *listElement = malloc( sizeof(*listElement) );
 		
-		listElement->delegate = [delegate retain];
+		listElement->delegate = delegate;
 		listElement->listToBeDeleted = list;
 		listElement->next = listElement->prev = NULL;
 		
@@ -227,7 +223,6 @@ typedef struct _listAddedEntry
 	DL_FOREACH_SAFE( *list, entry, tmp ) {
 		if( entry->delegate == delegate ) {
 			DL_DELETE( *list, entry );
-			[delegate release];
 			free(entry);
 			return YES;
 			break;
@@ -817,7 +812,6 @@ typedef struct _listAddedEntry
 		}
 		
 		
-		[event release];
 		
 		// FIRST: Remove possible delegates
 		tListDeletedEntry *dEntry, *tTmp;

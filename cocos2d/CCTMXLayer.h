@@ -85,7 +85,7 @@
 	NSMutableArray		*_atlasIndexArray;
 }
 /** name of the layer */
-@property (nonatomic,readwrite,retain) NSString *layerName;
+@property (nonatomic,readwrite,strong) NSString *layerName;
 /** size of the layer in tiles */
 @property (nonatomic,readwrite) CGSize layerSize;
 /** size of the map's tile (could be different from the tile's size) */
@@ -93,11 +93,11 @@
 /** pointer to the map of tiles */
 @property (nonatomic,readwrite) uint32_t *tiles;
 /** Tileset information for the layer */
-@property (nonatomic,readwrite,retain) CCTMXTilesetInfo *tileset;
+@property (nonatomic,readwrite,strong) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) NSUInteger layerOrientation;
 /** properties from the layer. They can be added using Tiled */
-@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
 /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;

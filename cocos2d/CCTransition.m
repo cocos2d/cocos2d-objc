@@ -60,7 +60,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionScene
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s
 {
-	return [[[self alloc] initWithDuration:t scene:s] autorelease];
+	return [[self alloc] initWithDuration:t scene:s];
 }
 
 -(id) initWithDuration:(ccTime) t scene:(CCScene*)s
@@ -72,9 +72,8 @@ const NSInteger kSceneFade = 0xFADEFADE;
 		_duration = t;
 
 		// retain
-		_inScene = [s retain];
+		_inScene = s;
 		_outScene = [[CCDirector sharedDirector] runningScene];
-		[_outScene retain];
 
 		NSAssert( _inScene != _outScene, @"Incoming scene must be different from the outgoing scene" );
 
@@ -190,12 +189,6 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	   [_outScene cleanup];
 }
 
--(void) dealloc
-{
-	[_inScene release];
-	[_outScene release];
-	[super dealloc];
-}
 @end
 
 //
@@ -204,7 +197,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionSceneOriented
 +(id) transitionWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
 {
-	return [[[self alloc] initWithDuration:t scene:s orientation:o] autorelease];
+	return [[self alloc] initWithDuration:t scene:s orientation:o];
 }
 
 -(id) initWithDuration:(ccTime) t scene:(CCScene*)s orientation:(tOrientation)o
@@ -809,7 +802,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 @implementation CCTransitionFade
 +(id) transitionWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)color
 {
-	return [[[self alloc] initWithDuration:d scene:s withColor:color] autorelease];
+	return [[self alloc] initWithDuration:d scene:s withColor:color];
 }
 
 -(id) initWithDuration:(ccTime)d scene:(CCScene*)s withColor:(ccColor3B)aColor

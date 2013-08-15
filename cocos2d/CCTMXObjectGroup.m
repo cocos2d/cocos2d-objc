@@ -61,10 +61,6 @@
 {
 	CCLOGINFO( @"cocos2d: deallocing %@", self );
 
-	[_groupName release];
-	[_objects release];
-	[_properties release];
-	[super dealloc];
 }
 
 -(NSMutableDictionary*) objectNamed:(NSString *)objectName
