@@ -801,8 +801,8 @@ typedef struct _listAddedEntry
 {
 	@synchronized(self)
 	{
-		NSEvent *event = e->event;
-		SEL selector = e->selector;
+		NSEvent *event = e.event;
+		SEL selector = e.selector;
 
 		// Dispatch events
 		if( _dispatchEvents ) {

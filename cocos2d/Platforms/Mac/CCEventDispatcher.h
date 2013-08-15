@@ -231,10 +231,15 @@
 
 @interface CCEventObject : NSObject
 {
+    /*
 @public
 	NSEvent		*event;
 	SEL			selector;
+     */
 }
+
+@property (nonatomic) NSEvent* event;
+@property (nonatomic) SEL selector;
 @end
 
 #pragma mark - CCEventDispatcher

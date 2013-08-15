@@ -165,7 +165,7 @@
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 }
-
+/*
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = _eventDelegate;																\
 	CCEventObject *event = [[CCEventObject alloc] init];									\
@@ -179,63 +179,87 @@
 	   waitUntilDone:NO];																	\
 	void* e2 = (__bridge void*)event;                                                       \
     CFRelease(e2);
-
+*/
 #pragma mark CCGLView - Mouse events
+
+- (void) dispatchEvent:(NSEvent*)evt selector:(SEL)selector
+{
+    id obj = _eventDelegate;
+    CCEventObject* event = [[CCEventObject alloc] init];
+    
+    event.event = evt;
+    event.selector = selector;
+    
+    [obj performSelector:@selector(dispatchEvent:) onThread:[[CCDirector sharedDirector] runningThread] withObject:event waitUntilDone:NO];
+}
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+    [self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseEntered:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)mouseExited:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 -(void) scrollWheel:(NSEvent *)theEvent {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 #pragma mark CCGLView - Key events
@@ -257,69 +281,82 @@
 
 - (void)keyDown:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)keyUp:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)flagsChanged:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 #pragma mark CCGLView - Touch events
 - (void)touchesBeganWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)touchesMovedWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)touchesEndedWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 #pragma mark CCGLView - Gesture events
 - (void)beginGestureWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)magnifyWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)smartMagnifyWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)rotateWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)swipeWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 - (void)endGestureWithEvent:(NSEvent *)theEvent
 {
-	DISPATCH_EVENT(theEvent, _cmd);
+	[self dispatchEvent:theEvent selector:_cmd];
+	//DISPATCH_EVENT(theEvent, _cmd);
 }
 
 @end
