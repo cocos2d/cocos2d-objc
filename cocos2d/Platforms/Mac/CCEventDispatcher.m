@@ -72,7 +72,7 @@ typedef struct _listEntry
 {
 	// XXX do no change the order of these 3 fields. Needed for "subclassing"
 	struct	_listEntry	*prev, *next;
-	id					delegate;
+	__unsafe_unretained id					delegate;
 	// (end)
 
 	NSInteger			priority;
@@ -83,7 +83,7 @@ typedef struct _listDeletedEntry
 {
 	// XXX do no change the order of these 3 fields. Needed for "subclassing"
 	struct	_listDeletedEntry	*prev, *next;
-	id							delegate;
+	__unsafe_unretained id							delegate;
 	// (end)
 	
 	struct	_listEntry			**listToBeDeleted;
@@ -94,7 +94,7 @@ typedef struct _listAddedEntry
 {
 	// XXX do no change the order of these 3 fields. Needed for "subclassing"
 	struct	_listAddedEntry *prev, *next;
-	id						delegate;
+	__unsafe_unretained id						delegate;
 	// (end)
 
 	NSInteger				priority;
@@ -245,7 +245,8 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( *list, entry, tmp ) {
 			DL_DELETE( *list, entry );
-			[entry->delegate release];
+            void* d = (__bridge void*) entry->delegate;
+            CFRelease(d);
 			free(entry);
 		}
 	}
@@ -394,7 +395,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseDown ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseDown:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseDown:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -409,7 +410,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseMoved ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseMoved:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseMoved:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -424,7 +425,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseDragged ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseDragged:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseDragged:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -440,7 +441,7 @@ typedef struct _listAddedEntry
 
 			DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 				if ( entry->flags & kCCImplementsMouseUp ) {
-					void *swallows = [entry->delegate performSelector:@selector(ccMouseUp:) withObject:event];
+					void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseUp:) withObject:event]);
 					if( swallows )
 						break;
 				}
@@ -459,7 +460,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsRightMouseDown ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseDown:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccRightMouseDown:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -474,7 +475,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsRightMouseDragged ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseDragged:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccRightMouseDragged:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -489,7 +490,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsRightMouseUp ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccRightMouseUp:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccRightMouseUp:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -507,7 +508,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsOtherMouseDown ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseDown:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccOtherMouseDown:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -522,7 +523,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsOtherMouseDragged ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseDragged:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccOtherMouseDragged:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -537,7 +538,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsOtherMouseUp ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccOtherMouseUp:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccOtherMouseUp:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -555,7 +556,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsScrollWheel ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccScrollWheel:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccScrollWheel:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -572,7 +573,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags &  kCCImplementsMouseExited) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseExited:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseExited:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -587,7 +588,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _mouseDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMouseEntered) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMouseEntered:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMouseEntered:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -606,7 +607,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _keyboardDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsKeyDown ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccKeyDown:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccKeyDown:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -621,7 +622,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _keyboardDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsKeyUp ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccKeyUp:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccKeyUp:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -636,7 +637,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _keyboardDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsFlagsChanged ) {
-				void *swallows = [entry->delegate performSelector:@selector(ccFlagsChanged:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccFlagsChanged:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -654,7 +655,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _touchDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsTouchesBegan) {
-				void *swallows = [entry->delegate performSelector:@selector(ccTouchesBeganWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccTouchesBeganWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -669,7 +670,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _touchDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsTouchesMoved) {
-				void *swallows = [entry->delegate performSelector:@selector(ccTouchesMovedWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccTouchesMovedWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -684,7 +685,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _touchDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsTouchesEnded) {
-				void *swallows = [entry->delegate performSelector:@selector(ccTouchesEndedWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccTouchesEndedWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -699,7 +700,7 @@ typedef struct _listAddedEntry
 
 		DL_FOREACH_SAFE( _touchDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsTouchesCancelled) {
-				void *swallows = [entry->delegate performSelector:@selector(ccTouchesCancelledWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccTouchesCancelledWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -716,7 +717,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsBeginGestureWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccBeginGestureWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccBeginGestureWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -731,7 +732,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsMagnifyWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccMagnifyWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccMagnifyWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -746,7 +747,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsSmartMagnifyWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccSmartMagnifyWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccSmartMagnifyWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -761,7 +762,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsRotateWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccRotateWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccRotateWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -776,7 +777,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsSwipeWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccSwipeWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccSwipeWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -791,7 +792,7 @@ typedef struct _listAddedEntry
         
 		DL_FOREACH_SAFE( _gestureDelegates, entry, tmp ) {
 			if ( entry->flags & kCCImplementsEndGestureWithEvent) {
-				void *swallows = [entry->delegate performSelector:@selector(ccEndGestureWithEvent:) withObject:event];
+				void *swallows = (__bridge void *)([entry->delegate performSelector:@selector(ccEndGestureWithEvent:) withObject:event]);
 				if( swallows )
 					break;
 			}
@@ -825,7 +826,8 @@ typedef struct _listAddedEntry
 			[self removeDelegate:dEntry->delegate fromList:dEntry->listToBeDeleted];
 			
 			DL_DELETE( _delegatesToBeRemoved, dEntry );
-			[dEntry->delegate release];
+            void* d = (__bridge void*) dEntry->delegate;
+            CFRelease(d);
 			free(dEntry);
 		}
 		
@@ -837,7 +839,8 @@ typedef struct _listAddedEntry
 			[self addDelegate:entry->delegate priority:entry->priority flags:entry->flags list:entry->listToBeAdded];
 			
 			DL_DELETE( _delegatesToBeAdded, entry );
-			[entry->delegate release];
+            void* d = (__bridge void*) entry->delegate;
+            CFRelease(d);
 			free(entry);
 		}
 		

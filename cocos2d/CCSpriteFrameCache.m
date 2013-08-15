@@ -318,6 +318,8 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 -(void) removeUnusedSpriteFrames
 {
+#warning Not implemented with ARC
+    /*
 	BOOL removed_ = NO;
 	NSArray *keys = [_spriteFrames allKeys];
 	for( id key in keys ) {
@@ -332,6 +334,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	// XXX. Since we don't know the .plist file that originated the frame, we must remove all .plist from the cache
 	if( removed_ )
 		[_loadedFilenames removeAllObjects];
+     */
 }
 
 -(void) removeSpriteFrameByName:(NSString*)name

@@ -661,7 +661,7 @@ static CCDirector *_sharedDirector = nil;
 	[self getFPSImageData:&data length:&data_len];
 	
 	NSData *nsdata = [NSData dataWithBytes:data length:data_len];
-	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (CFDataRef) nsdata);
+	CGDataProviderRef imgDataProvider = CGDataProviderCreateWithCFData( (__bridge CFDataRef) nsdata);
 	CGImageRef imageRef = CGImageCreateWithPNGDataProvider(imgDataProvider, NULL, true, kCGRenderingIntentDefault);
 	texture = [textureCache addCGImage:imageRef forKey:@"cc_fps_images"];
 	CGDataProviderRelease(imgDataProvider);

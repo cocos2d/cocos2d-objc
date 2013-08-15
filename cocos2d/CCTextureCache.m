@@ -300,7 +300,7 @@ static CCTextureCache *sharedTextureCache;
 		else {
 
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
-			tex = [[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution];
+			tex = [[[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution] autorelease];
 			[image release];
 
 			if( tex ){
@@ -321,7 +321,7 @@ static CCTextureCache *sharedTextureCache;
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
+			tex = [[ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution] autorelease];
 
 			[data release];
 			[image release];
@@ -335,7 +335,7 @@ static CCTextureCache *sharedTextureCache;
 			}
 
 			// autorelease prevents possible crash in multithreaded environments
-			[tex autorelease];
+			//[tex autorelease];
 		}
 #endif // __CC_PLATFORM_MAC
 
@@ -384,6 +384,8 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
+#warning Not implemented
+    /*
 	dispatch_sync(_dictQueue, ^{
 		NSArray *keys = [_textures allKeys];
 		for( id key in keys ) {
@@ -394,6 +396,7 @@ static CCTextureCache *sharedTextureCache;
 			}
 		}
 	});
+     */
 }
 
 -(void) removeTexture: (CCTexture2D*) tex
@@ -484,9 +487,8 @@ static CCTextureCache *sharedTextureCache;
 			NSUInteger bytes = tex.pixelsWide * tex.pixelsHigh * bpp / 8;
 			totalBytes += bytes;
 			count++;
-			NSLog( @"cocos2d: \"%@\"\trc=%lu\tid=%lu\t%lu x %lu\t@ %ld bpp =>\t%lu KB",
+			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld bpp =>\t%lu KB",
 				  texKey,
-				  (long)[tex retainCount],
 				  (long)tex.name,
 				  (long)tex.pixelsWide,
 				  (long)tex.pixelsHigh,

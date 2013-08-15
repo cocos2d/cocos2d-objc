@@ -170,13 +170,16 @@
 #define DISPATCH_EVENT(__event__, __selector__)												\
 	id obj = _eventDelegate;																\
 	CCEventObject *event = [[CCEventObject alloc] init];									\
-	event->event = [__event__ retain];														\
+    void* e = (__bridge void*) __event__;                                                   \
+    CFRetain(e);                                                                            \
+	event->event = (__bridge NSEvent*)e;               														\
 	event->selector = __selector__;															\
 	[obj performSelector:@selector(dispatchEvent:)											\
 			onThread:[[CCDirector sharedDirector] runningThread]							\
 		  withObject:event																	\
 	   waitUntilDone:NO];																	\
-	[event release];
+	void* e2 = (__bridge void*)event;                                                       \
+    CFRelease(e2);
 
 #pragma mark CCGLView - Mouse events
 
