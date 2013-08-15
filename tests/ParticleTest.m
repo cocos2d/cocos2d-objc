@@ -1795,9 +1795,9 @@ Class restartAction()
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 	
-	uint count = 0; 
-	CCNode* item;
-	CCARRAY_FOREACH(self.children, item)
+	uint count = 0;
+    
+    for (CCNode* item in self.children)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{
@@ -1844,10 +1844,9 @@ Class restartAction()
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 	
-	uint count = 0; 
-	CCNode* item;
+	uint count = 0;
 	CCNode* batchNode = [self getChildByTag:2];
-	CCARRAY_FOREACH(batchNode.children, item)
+    for (CCNode* item in batchNode.children)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{
@@ -1931,10 +1930,9 @@ Class restartAction()
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 	
-	uint count = 0; 
-	CCNode* item;
+	uint count = 0;
 	CCNode* batchNode = [self getChildByTag:2];
-	CCARRAY_FOREACH(batchNode.children, item)
+    for (CCNode* item in batchNode.children)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{
@@ -2066,10 +2064,9 @@ Class restartAction()
 {
 	CCLabelAtlas *atlas = (CCLabelAtlas*) [self getChildByTag:kTagParticleCount];
 	
-	uint count = 0; 
-	CCNode* item;
+	uint count = 0;
 	CCNode* batchNode = [self getChildByTag:2];
-	CCARRAY_FOREACH(batchNode.children, item)
+    for (CCNode* item in batchNode.children)
 	{
 		if ([item isKindOfClass:[CCParticleSystem class]])
 		{

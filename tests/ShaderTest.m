@@ -662,7 +662,7 @@ enum {
 
 	accum_ += dt;
 
-	CCArray *array = [label_ children];
+	NSArray *array = [label_ children];
 	
 	int i=0;
 	for( CCSprite *sprite in array ) {
