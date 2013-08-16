@@ -27,6 +27,8 @@
 
 #import "CCSprite9Slice.h"
 
+#warning This class is not tested and may or may not work!
+
 // ---------------------------------------------------------------------
 
 const float CCSprite9SliceMarginDefault         = 0.1f;
