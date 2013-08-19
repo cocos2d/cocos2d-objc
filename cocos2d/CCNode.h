@@ -591,6 +591,9 @@ enum {
  */
 - (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
 #endif // __CC_PLATFORM_IOS
+
+/** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
+- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
 @end
 
 
