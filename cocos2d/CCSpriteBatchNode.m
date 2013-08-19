@@ -230,12 +230,9 @@ const NSUInteger defaultCapacity = 29;
 {
 	if (_isReorderChildDirty)
 	{
-#warning This may need to be done more efficiently (old solution not too good but saved for reference)
-#warning Also fails sprite test when reordering
-        [_children sortUsingDescriptors:[NSArray arrayWithObjects:
-                                         [NSSortDescriptor sortDescriptorWithKey:@"zOrder" ascending:YES],
-                                         [NSSortDescriptor sortDescriptorWithKey:@"orderOfArrival" ascending:YES],
-                                         NULL]];
+#warning Fails sprite test when reordering batched sprites (old code provided below)
+        [_children sortUsingSelector:@selector(compareZOrderToNode:)];
+        
         /*
 		NSInteger i,j,length = _children->data->num;
 		CCNode ** x = _children->data->arr;
