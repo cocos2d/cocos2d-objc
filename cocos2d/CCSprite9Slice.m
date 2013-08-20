@@ -27,20 +27,22 @@
 
 #import "CCSprite9Slice.h"
 
-#warning This class is not tested and may or may not work!
-
 // ---------------------------------------------------------------------
 
 const float CCSprite9SliceMarginDefault         = 0.1f;
-const int CCSprite9SliceStrips                  = 3;
-#define CCSprite9SliceVerticesX 4
-#define CCSprite9SliceVerticesY 4
-const int CCSprite9SliceVertices                = 8;
+
+typedef enum {
+    CCSprite9SliceStrips                        = 3,
+    CCSprite9SliceVerticesX                     = 4,
+    CCSprite9SliceVerticesY                     = 4,
+    CCSprite9SliceVertices                      = 8,
+} CCSprite9SliceSizes;
 
 // ---------------------------------------------------------------------
 
 @implementation CCSprite9Slice {
-    
+    CGSize              _originalContentSize;
+    CGPoint             _contentScale;
 }
 
 // ---------------------------------------------------------------------
@@ -61,6 +63,14 @@ const int CCSprite9SliceVertices                = 8;
 }
 
 // ---------------------------------------------------------------------
+// override to set original contentSize when a texture is assigned
+
+-( void )setTextureRect:( CGRect )rect rotated:( BOOL )rotated untrimmedSize:( CGSize )untrimmedSize {
+    [ super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize ];
+    _originalContentSize = self.contentSize;
+}
+
+// ---------------------------------------------------------------------
 #pragma mark - draw
 // ---------------------------------------------------------------------
 
@@ -70,8 +80,8 @@ const int CCSprite9SliceVertices                = 8;
     CGPoint invTexMult = ccp( 1 - texMult.x, 1 - texMult.y );
     
     // calculate vertices, color and texture coordinates
-    result.vertices.x = ( _quad.bl.vertices.x * invMult.x ) + ( _quad.br.vertices.x * mult.x );
-    result.vertices.y = ( _quad.bl.vertices.y * invMult.y ) + ( _quad.tl.vertices.y * mult.y );
+    result.vertices.x = _contentScale.x * ( ( _quad.bl.vertices.x * invMult.x ) + ( _quad.br.vertices.x * mult.x ) );
+    result.vertices.y = _contentScale.y * ( ( _quad.bl.vertices.y * invMult.y ) + ( _quad.tl.vertices.y * mult.y ) );
     result.vertices.z = _quad.bl.vertices.z;
     result.colors = _quad.bl.colors;
     result.texCoords.u = ( _quad.bl.texCoords.u * invTexMult.x ) + ( _quad.br.texCoords.u * texMult.x );
@@ -88,8 +98,12 @@ const int CCSprite9SliceVertices                = 8;
 
 -( void )draw {
     
-    // draw nothing if one of the scales are zero
-    if ( ( self.scaleX == 0 ) || ( self.scaleY == 0 ) ) return;
+    // create a clamped content size
+    CGSize clampedSize = self.contentSize;
+    if ( clampedSize.width < ( _originalContentSize.width * ( _marginLeft + _marginRight ) ) ) clampedSize.width = _originalContentSize.width * ( _marginLeft + _marginRight );
+    if ( clampedSize.height < ( _originalContentSize.height * ( _marginTop + _marginBottom ) ) ) clampedSize.height = _originalContentSize.height * ( _marginTop + _marginBottom );
+    
+    _contentScale = CGPointMake( clampedSize.width / _originalContentSize.width, clampedSize.height / _originalContentSize.height );
     
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
     
@@ -97,7 +111,7 @@ const int CCSprite9SliceVertices                = 8;
     
 	ccGLBlendFunc( _blendFunc.src, _blendFunc.dst );
     
-	ccGLBindTexture2D( [_texture name] );
+	ccGLBindTexture2D( [ _texture name] );
     
 	// enable buffers
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_PosColorTex );
@@ -114,8 +128,8 @@ const int CCSprite9SliceVertices                = 8;
 	glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof( ccV3F_C4B_T2F ), ( void* )&vertice[ 0 ].colors );
     
     // create some helper vars
-    float multX[ CCSprite9SliceVerticesX ] = { 0, _marginLeft / fabs( self.scaleX ), 1 - ( _marginRight / fabs( self.scaleX ) ), 1 };
-    float multY[ CCSprite9SliceVerticesY ] = { 0, _marginBottom / fabs( self.scaleY ), 1 - ( _marginTop / fabs( self.scaleY ) ), 1 };
+    float multX[ CCSprite9SliceVerticesX ] = { 0, _marginLeft / _contentScale.x, 1 - ( _marginRight / _contentScale.x ), 1 };
+    float multY[ CCSprite9SliceVerticesY ] = { 0, _marginBottom / _contentScale.y, 1 - ( _marginTop / _contentScale.y ), 1 };
 
     float texMultX[ CCSprite9SliceVerticesX ] = { 0, _marginLeft, 1 - _marginRight, 1 };
     float texMultY[ CCSprite9SliceVerticesY ] = { 0, _marginBottom, 1 - _marginTop, 1 };
