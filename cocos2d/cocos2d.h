@@ -69,6 +69,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
+#import "CCSprite9Slice.h"
 
 #import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
