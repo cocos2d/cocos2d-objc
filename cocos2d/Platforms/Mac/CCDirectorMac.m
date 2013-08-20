@@ -388,11 +388,11 @@
 
 - (CVReturn) getFrameForTime:(const CVTimeStamp*)outputTime
 {
+    @autoreleasepool
+    {
 #if (CC_DIRECTOR_MAC_THREAD == CC_MAC_USE_DISPLAY_LINK_THREAD)
-	if( ! _runningThread )
-		_runningThread = [NSThread currentThread];
-
-	@autoreleasepool {
+        if( ! _runningThread )
+            _runningThread = [NSThread currentThread];
 
 		[self drawScene];
 
@@ -404,7 +404,7 @@
 		[self performSelector:@selector(drawScene) onThread:_runningThread withObject:nil waitUntilDone:YES];
 #endif
 
-    return kCVReturnSuccess;
+        return kCVReturnSuccess;
     }
 }
 
