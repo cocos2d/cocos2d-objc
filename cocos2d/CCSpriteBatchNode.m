@@ -336,6 +336,8 @@ const NSUInteger defaultCapacity = 29;
 
 - (void) swap:(NSInteger) oldIndex withNewIndex:(NSInteger) newIndex
 {
+    //update the index of other swapped item
+	( ( CCSprite* )[ _descendants objectAtIndex:newIndex ] ).atlasIndex = oldIndex;
     [_descendants exchangeObjectAtIndex:oldIndex withObjectAtIndex:newIndex];
 }
 
