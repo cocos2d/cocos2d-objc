@@ -230,7 +230,6 @@ const NSUInteger defaultCapacity = 29;
 {
 	if (_isReorderChildDirty)
 	{
-#warning Fails sprite test when reordering batched sprites (old code provided below)
         [_children sortUsingSelector:@selector(compareZOrderToNode:)];
         
         /*
