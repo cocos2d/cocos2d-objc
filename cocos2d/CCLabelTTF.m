@@ -100,11 +100,13 @@
 	if( POTSize.height == 0)
 		POTSize.height = 2;
     
-    yOffset = (POTSize.height - dimensions.height) - yOffset;
-	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
 
 #ifdef __CC_PLATFORM_IOS
+    yOffset = (POTSize.height - dimensions.height) + yOffset;
+	
+	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    
+    
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
@@ -121,12 +123,15 @@
     CGContextConcatCTM(context, flipVertical);
     
 	UIGraphicsPushContext(context);
-    
     [attributedString drawInRect:drawArea];
     
     UIGraphicsPopContext();
 
 #elif defined(__CC_PLATFORM_MAC)
+    yOffset = (POTSize.height - dimensions.height) - yOffset;
+	
+	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    
 	//Disable antialias
 	[[NSGraphicsContext currentContext] setShouldAntialias:YES];
 	
@@ -390,6 +395,25 @@
     {
         [formattedAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:_fontName size:_fontSize] range:fullRange];
     }
+    
+    // Shadow
+    if (![presetAttributes objectForKey:NSShadowAttributeName])
+    {
+        if (_shadowColor.a > 0)
+        {
+            float r = ((float)_shadowColor.r)/255;
+            float g = ((float)_shadowColor.g)/255;
+            float b = ((float)_shadowColor.b)/255;
+            float a = ((float)_shadowColor.a)/255;
+            
+            NSShadow* shadow = [[NSShadow alloc] init];
+            shadow.shadowOffset = CGSizeMake(_shadowOffset.x, _shadowOffset.y);
+            shadow.shadowBlurRadius = _shadowBlurRadius;
+            shadow.shadowColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
+            
+            [formattedAttributedString addAttribute:NSShadowAttributeName value:shadow range:fullRange];
+        }
+    }
 #elif defined(__CC_PLATFORM_MAC)
     // Font color
     if (![presetAttributes objectForKey:NSForegroundColorAttributeName])
@@ -422,7 +446,7 @@
         }
     }
 #endif
-    
+
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
     
