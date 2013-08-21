@@ -1524,20 +1524,6 @@ static float menuItemPaddingCenter = 50;
         CCLabelTTF *plainLabel =[CCLabelTTF labelWithString:@"Plain" fontName:@"Helvetica" fontSize:32];
 		plainLabel.position = ccp(s.width/2 + 50,s.height/2 );
 		[self addChild:plainLabel];
-        
-        /*
-        [tempDefinition enableStroke:true];
-        [tempDefinition enableShadow:false];
-        CCLabelTTF *strokeLabel =[CCLabelTTF labelWithString:@"Test Stroke" fontDefinition:tempDefinition];
-		strokeLabel.position = ccp(s.width/2,s.height/2 +50);
-		[self addChild:strokeLabel];
-        
-        [tempDefinition enableStroke:true];
-        [tempDefinition enableShadow:true];
-        CCLabelTTF *strokeAndShadowLable =[CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
-		strokeAndShadowLable.position = ccp(s.width/2,s.height/2 -50);
-		[self addChild:strokeAndShadowLable];
-         */
 	}
     
 	return self;
@@ -1715,7 +1701,7 @@ static float menuItemPaddingCenter = 50;
 		[self addChild:label];
 
 #ifdef __CC_PLATFORM_IOS
-
+/*
 		CCLabelTTF *charwrap = [CCLabelTTF labelWithString:@"Testing line character wrap mode mode mode mode"
 												  fontName:@"Marker Felt"
 												  fontSize:16
@@ -1741,7 +1727,7 @@ static float menuItemPaddingCenter = 50;
 
 		[self addChild:clip];
 
-
+*/
 #endif // __CC_PLATFORM_IOS
 	}
 
