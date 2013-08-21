@@ -61,8 +61,7 @@
 	CGFloat                      _fontSize;
 	CCLineBreakMode              _lineBreakMode;
     
-    /** font fill color */
-    ccColor3B   _textFillColor;
+    BOOL _isTextureDirty;
 }
 /** changes the string to render
  * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
