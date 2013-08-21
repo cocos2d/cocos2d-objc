@@ -863,7 +863,7 @@
     {
         _attributedString = [attributedString copy];
         
-        [self updateTexture];
+        [self setTextureDirty];
     }
 }
 
@@ -885,7 +885,7 @@
 		_fontName = [fontName copy];
 		
 		// Force update
-		[self updateTexture];
+		[self setTextureDirty];
 	}
 }
 
@@ -900,7 +900,7 @@
 		_fontSize = fontSize;
 		
 		// Force update
-		[self updateTexture];
+		[self setTextureDirty];
 	}
 }
 
@@ -916,7 +916,7 @@
         _dimensions = dim;
         
 		// Force update
-		[self updateTexture];
+		[self setTextureDirty];
     }
 }
 
@@ -932,7 +932,7 @@
         _hAlignment = alignment;
         
         // Force update
-		[self updateTexture];
+		[self setTextureDirty];
 
     }
 }
@@ -949,7 +949,7 @@
         _vAlignment = verticalAlignment;
         
 		// Force update
-		[self updateTexture];
+		[self setTextureDirty];
     }
 }
 
@@ -963,7 +963,7 @@
     if (!ccc4BEqual(_shadowColor, shadowColor))
     {
         _shadowColor = shadowColor;
-        [self updateTexture];
+        [self setTextureDirty];
     }
 }
 
@@ -972,7 +972,7 @@
     if (!CGPointEqualToPoint(_shadowOffset, shadowOffset))
     {
         _shadowOffset = shadowOffset;
-        [self updateTexture];
+        [self setTextureDirty];
     }
 }
 
@@ -981,7 +981,7 @@
     if (_shadowBlurRadius != shadowBlurRadius)
     {
         _shadowBlurRadius = shadowBlurRadius;
-        [self updateTexture];
+        [self setTextureDirty];
     }
 }
 
@@ -993,9 +993,17 @@
 }
 
 // Helper
+- (void) setTextureDirty
+{
+    _isTextureDirty = YES;
+}
+
 - (BOOL) updateTexture
 {
     if (!_attributedString) return NO;
+    if (!_isTextureDirty) return NO;
+    
+    _isTextureDirty = NO;
     
     // Set default values for font attributes if they are not set in the attributed string
     NSDictionary* presetAttributes = [_attributedString attributesAtIndex:0 effectiveRange:NULL];
@@ -1301,6 +1309,16 @@
     return retDefinition;
 }
  */
+
+- (void) visit
+{
+    if (_isTextureDirty)
+    {
+        [self updateTexture];
+    }
+    
+    [super visit];
+}
 
 + (void) registerCustomTTF:(NSString *)fontFile
 {
