@@ -64,7 +64,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "ccTypes.h"
 #import "ccMacros.h"
-#import "CCFontDefinition.h"
 
 #import "Platforms/CCGL.h" // OpenGL stuff
 #import "Platforms/CCNS.h" // Next-Step stuff
@@ -193,28 +192,6 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 /** Initializes a texture from a CGImage object */
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
 @end
-
-/**
-Extensions to make it easy to create a CCTexture2D object from a string of text.
-Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-*/
-@interface CCTexture2D (Text)
-/** Initializes a texture from a string with dimensions, alignment, line break mode, font name and font size
- Supported lineBreakModes:
-	- iOS: all UILineBreakMode supported modes
-	- Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
-/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment) vertAlignment;
-/** Initializes a texture from a string with font name and font size */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
-/** Initializes a texture from a string with font definition */
-- (id) initWithString:(NSString*)string fontDef:(CCFontDefinition *)definition;
-
-@end
-
 
 /**
  Extensions to make it easy to create a CCTexture2D object from a PVRTC file
