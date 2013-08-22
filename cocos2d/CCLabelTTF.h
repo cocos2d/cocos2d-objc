@@ -54,35 +54,58 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
-	CGSize                       _dimensions;
-	CCTextAlignment              _hAlignment;
-    CCVerticalTextAlignment      _vAlignment;
-	NSString                    *_fontName;
-	CGFloat                      _fontSize;
-	CCLineBreakMode              _lineBreakMode;
+	//CCLineBreakMode _lineBreakMode;
     
     BOOL _isTextureDirty;
 }
-/** changes the string to render
+
+#pragma mark String and font
+
+/** Changes the text of the label.
  * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
  */
 @property (nonatomic,copy) NSString* string;
 
+/** Changes text of the label, draws the string with given attributes. The attributes used will override the alignment, color and shadow as set by the properties of the label.
+ * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
+ */
 @property (nonatomic,copy) NSAttributedString* attributedString;
+
 /** Font name used in the label */
 @property (nonatomic,strong) NSString* fontName;
+
 /** Font size used in the label */
 @property (nonatomic,assign) float fontSize;
+
+
+#pragma mark Dimensions
+
 /** Dimensions of the label in Points */
 @property (nonatomic,assign) CGSize dimensions;
+
+
+#pragma mark Alignment
+
 /** The alignment of the label */
 @property (nonatomic,assign) CCTextAlignment horizontalAlignment;
+
 /** The vertical alignment of the label */
 @property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
 
+
+#pragma mark Shadow
+
+/** The color of a text shadow. If the color is transparent, no shadow will be used. */
 @property (nonatomic,assign) ccColor4B shadowColor;
+
+/** The offset of the shadow (in points), default is (0,0). */
 @property (nonatomic,assign) CGPoint shadowOffset;
+
+/** The blur radius of the shadow, default is 0. */
 @property (nonatomic,assign) float shadowBlurRadius;
+
+
+#pragma mark Font adjustments
 
 @property (nonatomic,assign) BOOL adjustsFontSizeToFitWidth;
 @property (nonatomic,assign) BOOL adjustsLetterSpacingToFitWidth;
