@@ -40,7 +40,7 @@
  - Mac: Only NSLineBreakByWordWrapping is supported.
  @since v1.0
  */
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions;
+- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor;
 
 @end
 
@@ -106,11 +106,13 @@
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 
-- (id) initWithWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
+- (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString fontName:(NSString*)fontName fontSize:(float)fontSize dimensions:(CGSize)dimensions;
 
+#ifdef __CC_PLATFORM_MAC
 - (void) setHTML:(NSString*) html;
+#endif
 
 + (void) registerCustomTTF:(NSString*)fontFile;
 
