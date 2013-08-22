@@ -110,6 +110,8 @@
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString fontName:(NSString*)fontName fontSize:(float)fontSize dimensions:(CGSize)dimensions;
 
+- (void) setHTML:(NSString*) html;
+
 + (void) registerCustomTTF:(NSString*)fontFile;
 
 @end
