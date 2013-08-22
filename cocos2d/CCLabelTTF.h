@@ -29,22 +29,6 @@
 #import "CCSprite.h"
 #import "Platforms/CCNS.h"
 
-/**
- Extensions to make it easy to create a CCTexture2D object from a string of text.
- Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
- */
-@interface CCTexture2D (Text)
-/** Initializes a texture from a string with dimensions, alignment, line break mode, font name and font size
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor;
-
-@end
-
-
 /** CCLabel is a subclass of CCTextureNode that knows how to render text labels
  *
  * All features from CCTextureNode are valid in CCLabel
