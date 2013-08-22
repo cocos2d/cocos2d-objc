@@ -966,6 +966,9 @@ static NSUInteger globalOrderOfArrival = 1;
 // this is called in visit, so the touch list in the scene, is recreated for each frame
 
 -( void )registerAsTouchTarget {
+    // check if node has been attached to a scene, since it was added
+    if ( _scene == nil ) _scene = [ self scene ];
+    // if it's a sprite, and is attached to a scene, register the node as a touch responder
     if ( ( [ self isKindOfClass:[ CCSprite class ] ] == YES ) && ( _scene != nil ) )
         [ _scene registerTouchTargetForNode:self ];
 }
