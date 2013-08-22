@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +38,8 @@
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
+#import "CCScene.h"
+#import "CCSprite.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -65,7 +68,9 @@
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
 @end
 
-@implementation CCNode
+@implementation CCNode {
+    __weak CCScene*             _scene;                         // scene of the node.
+}
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
@@ -151,6 +156,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCDirector *director = [CCDirector sharedDirector];
 		self.actionManager = [director actionManager];
 		self.scheduler = [director scheduler];
+        
+        // set default touch handling
+        self.userInteractionEnabled = NO;
+        _scene = nil;
+        
 	}
 
 	return self;
@@ -358,6 +368,10 @@ static NSUInteger globalOrderOfArrival = 1;
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
+    
+    // find scene for node
+    _scene = [ self scene ];
+    
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -544,6 +558,9 @@ static NSUInteger globalOrderOfArrival = 1;
 	// quick return if not visible. children won't be drawn.
 	if (!_visible)
 		return;
+    
+    // register the node as a touch target if enabled for user interaction
+    if ( self.isUserInteractionEnabled == YES ) [ self registerAsTouchTarget ];
 
 	kmGLPushMatrix();
 
@@ -929,6 +946,32 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #endif // __CC_PLATFORM_IOS
 
+// -----------------------------------------------------------------
+#pragma mark - touch interface
+// -----------------------------------------------------------------
+// finds the scene ( first node having no parent, and being a CCScene class )
+
+-( CCScene* )scene {
+    CCNode* result = self;
+    
+    // trace back through parents
+    while ( result.parent != nil ) result = result.parent;
+    // check if top node is a scene
+    if ( [ result isMemberOfClass:[ CCScene class ] ] == YES ) return( ( CCScene* )result );
+    return( nil );
+}
+
+// -----------------------------------------------------------------
+// registers the node as a touch target if it is attached to a scene and is at least a CCSprite
+// this is called in visit, so the touch list in the scene, is recreated for each frame
+
+-( void )registerAsTouchTarget {
+    if ( ( [ self isKindOfClass:[ CCSprite class ] ] == YES ) && ( _scene != nil ) )
+        [ _scene registerTouchTargetForNode:self ];
+}
+
+// -----------------------------------------------------------------
+
 @end
 
 
@@ -1023,3 +1066,63 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
