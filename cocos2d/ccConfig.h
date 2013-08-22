@@ -231,19 +231,6 @@
 #endif
 
 
-/** @def CC_USE_LA88_LABELS
- If enabled, it will use LA88 (Luminance Alpha 16-bit textures) for CCLabelTTF objects.
- If it is disabled, it will use A8 (Alpha 8-bit textures).
- LA88 textures are 6% faster than A8 textures, but they will consume 2x memory.
-
- This feature is enabled by default.
-
- @since v0.99.5
- */
-#ifndef CC_USE_LA88_LABELS
-#define CC_USE_LA88_LABELS 1
-#endif
-
 /** @def CC_SPRITE_DEBUG_DRAW
  If enabled, all subclasses of CCSprite will draw a bounding box.
  Useful for debugging purposes only. It is recommended to leave it disabled.
