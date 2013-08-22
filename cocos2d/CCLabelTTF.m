@@ -44,6 +44,18 @@
 #pragma mark -
 #pragma mark CCTexture2D - Text
 
+/**
+ Extensions to make it easy to create a CCTexture2D object from a string of text.
+ Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
+ */
+@interface CCTexture2D (Text)
+/** Initializes a texture from an attributed string with dimensions and a full color option.
+ @since v2.5
+ */
+- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor;
+
+@end
+
 @implementation CCTexture2D (Text)
 
 - (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor
