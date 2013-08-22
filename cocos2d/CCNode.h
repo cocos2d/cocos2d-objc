@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -99,7 +100,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */
-@interface CCNode : NSObject
+@interface CCNode : UIResponder
 {
 	// rotation angle
 	float _rotationX, _rotationY;
@@ -285,6 +286,9 @@ enum {
  @since v2.0
  */
 @property (nonatomic, readwrite, strong) CCScheduler *scheduler;
+
+//
+@property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
 
 // initializators
 /** allocates and initializes a node.
@@ -548,32 +552,39 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
+
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
+
 /** Returns the world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
+
 /** Returns the inverse world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)worldToNodeTransform;
+
 /** Converts a Point to node (local) space coordinates. The result is in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
+
 /** Converts a Point to world space coordinates. The result is in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
+
 /** Converts a Point to node (local) space coordinates. The result is in Points.
  treating the returned/received node point as anchor relative.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
+
 /** Converts a local Point to world space coordinates.The result is in Points.
  treating the returned/received node point as anchor relative.
  @since v0.7.1
@@ -581,6 +592,7 @@ enum {
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
 #ifdef __CC_PLATFORM_IOS
+
 /** Converts a UITouch to node (local) space coordinates. The result is in Points.
  @since v0.7.1
  */
@@ -594,6 +606,10 @@ enum {
 
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
+
+// registers a node as a touch target
+-( void )registerAsTouchTarget;
+
 @end
 
 
