@@ -3330,6 +3330,8 @@ Class restartAction()
 
 #pragma mark - Example Sprite9Slice
 
+#warning Does not work in OSX, as button.png is not found
+
 @implementation Sprite9Slice {
     CCSprite9Slice*     _sprite;
     NSTimeInterval      _ellapsed;
