@@ -58,7 +58,7 @@
 
 @implementation CCTexture2D (Text)
 
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions
+- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor
 {
 	NSAssert(attributedString, @"Invalid attributedString");
     
@@ -105,7 +105,8 @@
 	if( POTSize.height == 0)
 		POTSize.height = 2;
     
-
+    // Render the label - different code for Mac / iOS
+    
 #ifdef __CC_PLATFORM_IOS
     yOffset = (POTSize.height - dimensions.height) + yOffset;
 	
@@ -137,7 +138,6 @@
 	
 	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
     
-	//Disable antialias
 	[[NSGraphicsContext currentContext] setShouldAntialias:YES];
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
@@ -152,7 +152,26 @@
 	unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 #endif
     
-    self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+    // Initialize the texture
+    if (fullColor)
+    {
+        // RGBA8888 format
+        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        
+        _hasPremultipliedAlpha = YES;
+    }
+    else
+    {
+        NSUInteger textureSize = POTSize.width * POTSize.height;
+        
+        // A8 format (alpha channel only)
+        unsigned char* dst = data;
+        for(int i = 0; i<textureSize; i++)
+            dst[i] = data[i*4+3];
+        
+        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
 
 #ifdef __CC_PLATFORM_IOS
     free(data);
@@ -208,7 +227,7 @@
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
-- (id) initWithWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
+- (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
@@ -396,11 +415,17 @@
     NSMutableAttributedString* formattedAttributedString = [_attributedString mutableCopy];
     NSRange fullRange = NSMakeRange(0, formattedAttributedString.length);
     
+    BOOL useFullColor = NO;
+    
 #ifdef __CC_PLATFORM_IOS
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:fullRange];
+    }
+    else
+    {
+        useFullColor = YES;
     }
     
     // Font
@@ -425,13 +450,23 @@
             shadow.shadowColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
             
             [formattedAttributedString addAttribute:NSShadowAttributeName value:shadow range:fullRange];
+            
+            useFullColor = YES;
         }
+    }
+    else
+    {
+        useFullColor = YES;
     }
 #elif defined(__CC_PLATFORM_MAC)
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:fullRange];
+    }
+    else
+    {
+        useFullColor = YES;
     }
     
     // Font
@@ -456,17 +491,28 @@
             shadow.shadowColor = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
             [formattedAttributedString addAttribute:NSShadowAttributeName value:shadow range:fullRange];
+            
+            useFullColor = YES;
         }
+    }
+    else
+    {
+        useFullColor = YES;
     }
 #endif
 
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
     
-    tex = [[CCTexture2D alloc] initWithAttributedString:formattedAttributedString dimensions:_dimensions];
+    tex = [[CCTexture2D alloc] initWithAttributedString:formattedAttributedString dimensions:_dimensions useFullColor:useFullColor];
 
 	if( !tex )
 		return NO;
+    
+    if (!useFullColor)
+    {
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
 
 #ifdef __CC_PLATFORM_IOS
 	// iPad ?
@@ -506,12 +552,14 @@
     [super visit];
 }
 
+#ifdef __CC_PLATFORM_MAC
 - (void) setHTML:(NSString *)html
 {
     NSData* data = [html dataUsingEncoding:NSUTF8StringEncoding];
     
-    //self.attributedString = [[NSAttributedString alloc] initWithHTML:data documentAttributes:NULL];
+    self.attributedString = [[NSAttributedString alloc] initWithHTML:data documentAttributes:NULL];
 }
+#endif
 
 + (void) registerCustomTTF:(NSString *)fontFile
 {
