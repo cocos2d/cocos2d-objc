@@ -50,10 +50,6 @@
 {
 	NSAssert(attributedString, @"Invalid attributedString");
     
-#ifdef __CC_PLATFORM_IOS
-    attributedString = [attributedString copyAdjustedForContentScaleFactor];
-#endif
-    
     float xOffset = 0;
     float yOffset = 0;
     
@@ -99,7 +95,6 @@
     yOffset = (POTSize.height - dimensions.height) + yOffset;
 	
 	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
-    
     
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
@@ -169,7 +164,8 @@
 }
 @end
 
-
+#pragma mark -
+#pragma mark CCLabelTTF
 
 
 @implementation CCLabelTTF
@@ -227,9 +223,6 @@
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
         
-        // shader program
-		//self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
-        
         _blendFunc.src = GL_ONE;
         _blendFunc.dst = GL_ONE;
         
@@ -241,6 +234,10 @@
     }
     return self;
 }
+
+
+
+#pragma mark Properties
 
 - (void) setAttributedString:(NSAttributedString *)attributedString
 {
@@ -276,11 +273,6 @@
 	}
 }
 
-- (NSString*)fontName
-{
-    return _fontName;
-}
-
 - (void) setFontSize:(float)fontSize
 {
 	if( fontSize != _fontSize ) {
@@ -289,11 +281,6 @@
 		// Force update
 		[self setTextureDirty];
 	}
-}
-
-- (float) fontSize
-{
-    return _fontSize;
 }
 
 -(void) setDimensions:(CGSize) dim
@@ -307,22 +294,17 @@
     }
 }
 
--(CGSize) dimensions
-{
-    return _dimensions;
-}
-
 - (CGSize) contentSize
 {
     [self updateTexture];
-    return _dimensions;
+    return _contentSize;
 }
 
 -(void) setHorizontalAlignment:(CCTextAlignment)alignment
 {
-    if (alignment != _hAlignment)
+    if (alignment != _horizontalAlignment)
     {
-        _hAlignment = alignment;
+        _horizontalAlignment = alignment;
         
         // Force update
 		[self setTextureDirty];
@@ -330,26 +312,17 @@
     }
 }
 
-- (CCTextAlignment) horizontalAlignment
-{
-    return _hAlignment;
-}
-
 -(void) setVerticalAlignment:(CCVerticalTextAlignment)verticalAlignment
 {
-    if (_vAlignment != verticalAlignment)
+    if (_verticalAlignment != verticalAlignment)
     {
-        _vAlignment = verticalAlignment;
+        _verticalAlignment = verticalAlignment;
         
 		// Force update
 		[self setTextureDirty];
     }
 }
 
-- (CCVerticalTextAlignment) verticalAlignment
-{
-    return _vAlignment;
-}
 
 - (void) setShadowColor:(ccColor4B)shadowColor
 {
@@ -385,7 +358,10 @@
 	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, _fontSize];
 }
 
-// Helper
+
+
+#pragma mark Helpers
+
 - (void) setTextureDirty
 {
     _isTextureDirty = YES;
@@ -404,6 +380,7 @@
     NSRange fullRange = NSMakeRange(0, formattedAttributedString.length);
     
     BOOL useFullColor = NO;
+    CGSize dimensions = _dimensions;
     
 #ifdef __CC_PLATFORM_IOS
     // Font color
@@ -446,6 +423,11 @@
     {
         useFullColor = YES;
     }
+    
+    // Dimensions adjusted for content scale
+    dimensions.width *= CC_CONTENT_SCALE_FACTOR();
+    dimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    
 #elif defined(__CC_PLATFORM_MAC)
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
@@ -488,11 +470,22 @@
         useFullColor = YES;
     }
 #endif
+    // Text alignment
+    if (![formattedAttributedString hasAttribute:NSParagraphStyleAttributeName])
+    {
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        
+        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = kCTLeftTextAlignment;
+        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = kCTCenterTextAlignment;
+        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = kCTRightTextAlignment;
+        
+        [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
+    }
 
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
     
-    tex = [[CCTexture2D alloc] initWithAttributedString:formattedAttributedString dimensions:_dimensions useFullColor:useFullColor];
+    tex = [[CCTexture2D alloc] initWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] dimensions:dimensions useFullColor:useFullColor];
 
 	if( !tex )
 		return NO;
@@ -540,6 +533,10 @@
     [super visit];
 }
 
+
+
+#pragma mark Handle HTML
+
 #ifdef __CC_PLATFORM_MAC
 - (void) setHTML:(NSString *)html
 {
@@ -548,6 +545,10 @@
     self.attributedString = [[NSAttributedString alloc] initWithHTML:data documentAttributes:NULL];
 }
 #endif
+
+
+
+#pragma mark Class functions
 
 + (void) registerCustomTTF:(NSString *)fontFile
 {
