@@ -41,18 +41,6 @@
 #import <CoreText/CoreText.h>
 #endif
 
-#if CC_USE_LA88_LABELS
-#define SHADER_PROGRAM kCCShader_PositionTextureColor
-#else
-#define SHADER_PROGRAM kCCShader_PositionTextureA8Color
-#endif
-
-#if CC_USE_LA88_LABELS
-#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_AI88
-#else
-#define LABEL_PIXEL_FORMAT kCCTexture2DPixelFormat_A8
-#endif
-
 #pragma mark -
 #pragma mark CCTexture2D - Text
 
@@ -174,7 +162,7 @@
     }
 
 #ifdef __CC_PLATFORM_IOS
-    free(data);
+    free(data); // On Mac data is freed by NSBitmapImageRep
 #endif
     
 	return self;
