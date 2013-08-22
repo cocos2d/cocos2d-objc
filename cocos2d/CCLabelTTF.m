@@ -34,6 +34,7 @@
 #import "ccDeprecated.h"
 #import "ccMacros.h"
 #import "ccUtils.h"
+#import "NSAttributedString+CCAdditions.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -60,6 +61,10 @@
 - (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions
 {
 	NSAssert(attributedString, @"Invalid attributedString");
+    
+#ifdef __CC_PLATFORM_IOS
+    attributedString = [attributedString copyAdjustedForContentScaleFactor];
+#endif
     
     float xOffset = 0;
     float yOffset = 0;
@@ -216,7 +221,10 @@
         if (!fontSize) fontSize = 12;
         
         // shader program
-		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+		//self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:SHADER_PROGRAM];
+        
+        _blendFunc.src = GL_ONE;
+        _blendFunc.dst = GL_ONE;
         
         // other properties
         self.fontName = fontName;
@@ -294,6 +302,12 @@
 
 -(CGSize) dimensions
 {
+    return _dimensions;
+}
+
+- (CGSize) contentSize
+{
+    [self updateTexture];
     return _dimensions;
 }
 
@@ -378,26 +392,25 @@
     _isTextureDirty = NO;
     
     // Set default values for font attributes if they are not set in the attributed string
-    NSDictionary* presetAttributes = [_attributedString attributesAtIndex:0 effectiveRange:NULL];
     
     NSMutableAttributedString* formattedAttributedString = [_attributedString mutableCopy];
     NSRange fullRange = NSMakeRange(0, formattedAttributedString.length);
     
 #ifdef __CC_PLATFORM_IOS
     // Font color
-    if (![presetAttributes objectForKey:NSForegroundColorAttributeName])
+    if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:fullRange];
     }
     
     // Font
-    if (![presetAttributes objectForKey:NSFontAttributeName])
+    if (![formattedAttributedString hasAttribute:NSFontAttributeName])
     {
         [formattedAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:_fontName size:_fontSize] range:fullRange];
     }
     
     // Shadow
-    if (![presetAttributes objectForKey:NSShadowAttributeName])
+    if (![formattedAttributedString hasAttribute:NSShadowAttributeName])
     {
         if (_shadowColor.a > 0)
         {
@@ -416,19 +429,19 @@
     }
 #elif defined(__CC_PLATFORM_MAC)
     // Font color
-    if (![presetAttributes objectForKey:NSForegroundColorAttributeName])
+    if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
         [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:fullRange];
     }
     
     // Font
-    if (![presetAttributes objectForKey:NSFontAttributeName])
+    if (![formattedAttributedString hasAttribute:NSFontAttributeName])
     {
         [formattedAttributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:_fontName size:_fontSize] range:fullRange];
     }
     
     // Shadow
-    if (![presetAttributes objectForKey:NSShadowAttributeName])
+    if (![formattedAttributedString hasAttribute:NSShadowAttributeName])
     {
         if (_shadowColor.a > 0)
         {
@@ -491,6 +504,13 @@
     }
     
     [super visit];
+}
+
+- (void) setHTML:(NSString *)html
+{
+    NSData* data = [html dataUsingEncoding:NSUTF8StringEncoding];
+    
+    //self.attributedString = [[NSAttributedString alloc] initWithHTML:data documentAttributes:NULL];
 }
 
 + (void) registerCustomTTF:(NSString *)fontFile
