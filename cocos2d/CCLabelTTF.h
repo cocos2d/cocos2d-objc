@@ -59,6 +59,7 @@
 /** Font size used in the label */
 @property (nonatomic,assign) float fontSize;
 
+/** Font color. If not using shadow or outline, it is more efficient to use the color property. */
 @property (nonatomic,assign) ccColor4B fontColor;
 
 #pragma mark Dimensions
@@ -90,34 +91,47 @@
 
 #pragma mark Outline
 
+/** The color of the label's outline. Default is transparent/no outline. */
 @property (nonatomic,assign) ccColor4B outlineColor;
 
+/** The width of the label's outline. Default is 0/no outline. */
 @property (nonatomic,assign) float outlineWidth;
 
 
 #pragma mark Font adjustments
 
+/** If set, the label will be scaled down to fit into the size provided by the dimensions property. Only has an effect if dimensions are set. */
 @property (nonatomic,assign) BOOL adjustsFontSizeToFit;
-@property (nonatomic,assign) float baselineAdjustment;
+
+/** Used together with adjustsFontSizeToFit. Fonts will not be scaled down below this size (the label will instead be clipped). */
 @property (nonatomic,assign) float minimumFontSize;
 
-/** creates a CCLabelTTF with a font name and font size in points*/
+/** Adjusts the fonts baseline, the value is set in points. */
+@property (nonatomic,assign) float baselineAdjustment;
+
+/** Creates a CCLabelTTF with a font name and font size in points */
 + (id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
 
+/** Creates a CCLabelTTF with a font name, font size in points and the desired dimensions. */
 + (id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
+/** Creates a CCLabelTTF with an attributed string. Only supported on Mac and iOS 6 or later. */
 + (id) labelWithAttributedString:(NSAttributedString *)attrString;
 
+/** Creates a CCLabelTTF with an attributed string and the desired dimensions. Only supported on Mac and iOS 6 or later. */
 + (id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 
-/** initializes the CCLabelTTF with a font name and font size in points */
+/** Initializes the CCLabelTTF with a font name and font size in points. */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 
+/** Initializes the CCLabelTTF with a font name, font size in points and the desired dimensions. */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
+/** Initializes the CCLabelTTF with an attributed string. Only supported on Mac and iOS 6 or later. */
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 
+/** Initializes the CCLabelTTF with an attributed string and the desired dimensions. Only supported on Mac and iOS 6 or later. */
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
 #ifdef __CC_PLATFORM_MAC
