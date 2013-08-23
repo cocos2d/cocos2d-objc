@@ -43,8 +43,6 @@
         }
     }];
     
-    if (hasAttribute) NSLog(@"hasAttribute: %@",attr);
-    
     return hasAttribute;
 }
 
@@ -79,6 +77,56 @@
         }
     }];
 #endif
+    
+    return copy;
+}
+
+- (float) singleFontSize
+{
+    NSRange fullRange = NSMakeRange(0, self.length);
+    __block BOOL foundValue = NO;
+    __block BOOL singleValue = YES;
+    __block float fontSize = 0;
+    [self enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+        if (value)
+        {
+#ifdef __CC_PLATFORM_IOS
+            UIFont* font = value;
+#elif defined(__CC_PLATFORM_MAC)
+            NSFont* font = value;
+#endif
+            
+            if (foundValue)
+            {
+                singleValue = NO;
+                *stop = YES;
+            }
+            foundValue = YES;
+            fontSize = font.pointSize;
+            if (!NSEqualRanges(fullRange, range)) singleValue = NO;
+        }
+    }];
+    
+    if (foundValue && singleValue) return fontSize;
+    return 0;
+}
+
+- (NSAttributedString*) copyWithNewFontSize:(float) size
+{
+#ifdef __CC_PLATFORM_IOS
+    UIFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+#elif defined(__CC_PLATFORM_MAC)
+    NSFont* font = [self attribute:NSFontAttributeName atIndex:0 effectiveRange:NULL];
+#endif
+    if (!font) return NULL;
+
+#ifdef __CC_PLATFORM_IOS
+    UIFont* newFont = [UIFont fontWithName:font.fontName size:size];
+#elif defined(__CC_PLATFORM_MAC)
+    NSFont* newFont = [NSFont fontWithName:font.fontName size:size];
+#endif
+    NSMutableAttributedString* copy = [self mutableCopy];
+    [copy addAttribute:NSFontAttributeName value:newFont range:NSMakeRange(0, copy.length)];
     
     return copy;
 }
