@@ -115,8 +115,6 @@
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
-- (id) initWithAttributedString:(NSAttributedString *)attrString fontName:(NSString*)fontName fontSize:(float)fontSize dimensions:(CGSize)dimensions;
-
 #ifdef __CC_PLATFORM_MAC
 - (void) setHTML:(NSString*) html;
 #endif
