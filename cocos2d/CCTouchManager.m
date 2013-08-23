@@ -115,7 +115,7 @@
                 [ _touchList addObject:touchObject ];
                 
                 // begin the touch
-                NSLog( @"Began with <%d> touch receivers", _touchList.count );
+                NSLog( @"Began with <%d> touch receiver(s)", _touchList.count );
                 if ( [ touchObject.target respondsToSelector:@selector( touchesBegan:withEvent: ) ] == YES )
                     [ touchObject.target performSelector:@selector( touchesBegan:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
 
@@ -141,7 +141,7 @@
             if ( touchObject.target.isTouchLocked == YES ) {
                 
                 // move the touch
-                NSLog( @"Moved with <%d> touch receivers", _touchList.count );
+                NSLog( @"Moved with <%d> touch receiver(s)", _touchList.count );
                 if ( [ touchObject.target respondsToSelector:@selector( touchesMoved:withEvent: ) ] == YES )
                     [ touchObject.target performSelector:@selector( touchesMoved:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
                 
@@ -151,7 +151,7 @@
                 if ( [ touchObject.target hitTestWithTouch:touch ] == NO ) {
                 
                     // cancel the touch
-                    NSLog( @"Cancelled with <%d> touch receivers", _touchList.count );
+                    NSLog( @"Cancelled with <%d> touch receiver(s)", _touchList.count );
                     if ( [ touchObject.target respondsToSelector:@selector( touchesCancelled:withEvent: ) ] == YES )
                         [ touchObject.target performSelector:@selector( touchesCancelled:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
                     // remove from list
@@ -160,7 +160,7 @@
                 } else {
                 
                     // move the touch
-                    NSLog( @"Moved with <%d> touch receivers", _touchList.count );
+                    NSLog( @"Moved with <%d> touch receiver(s)", _touchList.count );
                     if ( [ touchObject.target respondsToSelector:@selector( touchesMoved:withEvent: ) ] == YES )
                         [ touchObject.target performSelector:@selector( touchesMoved:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
                 }
@@ -170,7 +170,7 @@
             // scan backwards through touch receivers
             for ( int index = _touchBufferCount - 1; index >= 0; index -- ) {
             
-                // if the touch receives does not lock touch, it will receive a touchesBegan is a touch is moved inside
+                // if the touch receives does not lock touch, it will receive a touchesBegan if a touch is moved inside
                 if ( ( _touchBuffer[ index ].isTouchLocked == NO ) && ( [ _touchBuffer[ index ] hitTestWithTouch:touch ] == YES ) ) {
                 
                     // create a new touch entry
@@ -180,7 +180,7 @@
                     [ _touchList addObject:touchObject ];
                     
                     // begin the touch
-                    NSLog( @"Began with <%d> touch receivers", _touchList.count );
+                    NSLog( @"Began with <%d> touch receiver(s)", _touchList.count );
                     if ( [ touchObject.target respondsToSelector:@selector( touchesBegan:withEvent: ) ] == YES )
                         [ touchObject.target performSelector:@selector( touchesBegan:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
                     
@@ -203,7 +203,7 @@
         if ( touchObject != nil ) {
         
             // end the touch
-            NSLog( @"Ended with <%d> touch receivers", _touchList.count );
+            NSLog( @"Ended with <%d> touch receiver(s)", _touchList.count );
             if ( [ touchObject.target respondsToSelector:@selector( touchesEnded:withEvent: ) ] == YES )
                 [ touchObject.target performSelector:@selector( touchesEnded:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
             // remove from list
@@ -223,7 +223,7 @@
         if ( touchObject != nil ) {
             
             // cancel the touch
-            NSLog( @"Cancelled with <%d> touch receivers", _touchList.count );
+            NSLog( @"Cancelled with <%d> touch receiver(s)", _touchList.count );
             if ( [ touchObject.target respondsToSelector:@selector( touchesCancelled:withEvent: ) ] == YES )
                 [ touchObject.target performSelector:@selector( touchesCancelled:withEvent: ) withObject:[ NSSet setWithObject:touch ] withObject:event ];
             // remove from list
