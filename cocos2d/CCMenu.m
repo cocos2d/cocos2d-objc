@@ -158,6 +158,16 @@ enum {
 	[super onExit];
 }
 
+-( void )menuItemPressed:( CCMenuItem* )item {
+    // TODO: Implement content
+    
+}
+
+-( void )menuItemReleased:( CCMenuItem* )item {
+    // TODO: Implement content
+
+}
+
 #pragma mark Menu - Events
 
 -(void) setHandlerPriority:(NSInteger)newPriority
