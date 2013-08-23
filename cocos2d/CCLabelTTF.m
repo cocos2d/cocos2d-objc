@@ -120,6 +120,7 @@
         self.fontName = fontName;
         self.fontSize = fontSize;
         self.dimensions = dimensions;
+        self.fontColor = ccc4(255, 255, 255, 255);
         [self _setAttributedString:attrString];
     }
     return self;
@@ -300,7 +301,19 @@
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
-        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[UIColor whiteColor] range:fullRange];
+        if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255)))
+        {
+            useFullColor = YES;
+        }
+        
+        float r = ((float)_fontColor.r)/255;
+        float g = ((float)_fontColor.g)/255;
+        float b = ((float)_fontColor.b)/255;
+        float a = ((float)_fontColor.a)/255;
+        
+        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        
+        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
     }
     else
     {
@@ -356,7 +369,19 @@
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
-        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:fullRange];
+        if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255)))
+        {
+            useFullColor = YES;
+        }
+        
+        float r = ((float)_fontColor.r)/255;
+        float g = ((float)_fontColor.g)/255;
+        float b = ((float)_fontColor.b)/255;
+        float a = ((float)_fontColor.a)/255;
+        
+        NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+        
+        [formattedAttributedString addAttribute:NSForegroundColorAttributeName value:color range:fullRange];
     }
     else
     {
@@ -480,8 +505,8 @@
         NSShadow* shadow = [attributedString attribute:NSShadowAttributeName atIndex:0 effectiveRange:NULL];
         if (shadow)
         {
-            xOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.width))*2;
-            yOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.height))*2;
+            xOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.width)); //*2;
+            yOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.height)); //*2;
             
             dimensions.width += xOffset * 2;
             dimensions.height += yOffset * 2;
@@ -646,6 +671,7 @@
     
     BOOL useFullColor = NO;
     if (_shadowColor.a > 0) useFullColor = YES;
+    if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255))) useFullColor = YES;
     
     CCTexture2D* tex = [self createTextureWithString:string useFullColor:useFullColor];
     if (!tex) return NO;
@@ -715,8 +741,8 @@
         // Outset the dimensions with regards to shadow
         if (hasShadow)
         {
-            xOffset = (shadowBlurRadius + fabs(shadowOffset.x)) * 2;
-            yOffset = (shadowBlurRadius + fabs(shadowOffset.y)) * 2;
+            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
+            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
             
             dimensions.width += xOffset * 2;
             dimensions.height += yOffset * 2;
@@ -804,6 +830,28 @@
     CGContextConcatCTM(context, flipVertical);
 
     UIGraphicsPushContext(context);
+    
+    // Handle shadows
+    if (hasShadow)
+    {
+        float r = ((float)_shadowColor.r)/255;
+        float g = ((float)_shadowColor.g)/255;
+        float b = ((float)_shadowColor.b)/255;
+        float a = ((float)_shadowColor.a)/255;
+        
+        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+    }
+    
+    // Handle font color
+    float r = ((float)_fontColor.r)/255;
+    float g = ((float)_fontColor.g)/255;
+    float b = ((float)_fontColor.b)/255;
+    float a = ((float)_fontColor.a)/255;
+    
+    UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+    [color set];
     
     [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];
 

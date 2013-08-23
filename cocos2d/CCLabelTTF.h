@@ -59,6 +59,7 @@
 /** Font size used in the label */
 @property (nonatomic,assign) float fontSize;
 
+@property (nonatomic,assign) ccColor4B fontColor;
 
 #pragma mark Dimensions
 
