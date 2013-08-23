@@ -33,6 +33,7 @@
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
 #import "CCResponder.h"
+#import "CCTouchManager.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -102,8 +103,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */
-@interface CCNode : CCResponder
-{
+@interface CCNode : CCResponder < CCTouchProtocol > {
 	// rotation angle
 	float _rotationX, _rotationY;
 
@@ -622,7 +622,7 @@ enum {
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
 
-/** registers the node as a touch receiver
+/** registers the node as a touch receiver. Must be done each frame
  @since v2.5
  */
 -( void )registerAsTouchReceiver;
