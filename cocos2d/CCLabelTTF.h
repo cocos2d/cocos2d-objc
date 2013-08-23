@@ -91,8 +91,7 @@
 
 #pragma mark Font adjustments
 
-@property (nonatomic,assign) BOOL adjustsFontSizeToFitWidth;
-@property (nonatomic,assign) BOOL adjustsLetterSpacingToFitWidth;
+@property (nonatomic,assign) BOOL adjustsFontSizeToFit;
 @property (nonatomic,assign) float baselineAdjustment;
 @property (nonatomic,assign) float minimumFontSize;
 

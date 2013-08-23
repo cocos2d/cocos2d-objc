@@ -41,152 +41,7 @@
 #import <CoreText/CoreText.h>
 #endif
 
-#pragma mark -
-#pragma mark CCTexture2D - Text
 
-/**
- Extension to make it easy to create a CCTexture2D object from a string of text.
- Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
- */
-@implementation CCTexture2D (Text)
-
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions verticalAlignment:(CCVerticalTextAlignment)vAlign useFullColor:(BOOL) fullColor
-{
-	NSAssert(attributedString, @"Invalid attributedString");
-    
-    CGSize originalDimensions = dimensions;
-    
-    float xOffset = 0;
-    float yOffset = 0;
-    
-	// Get actual rendered dimensions
-    if (dimensions.height == 0)
-    {
-        // Get dimensions for string
-#ifdef __CC_PLATFORM_IOS
-        dimensions = [attributedString boundingRectWithSize:dimensions options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
-#elif defined(__CC_PLATFORM_MAC)
-        dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
-#endif
-        
-        // Outset the dimensions with regards to shadow
-        NSShadow* shadow = [attributedString attribute:NSShadowAttributeName atIndex:0 effectiveRange:NULL];
-        if (shadow)
-        {
-            xOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.width))*2;
-            yOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.height))*2;
-            
-            dimensions.width += xOffset * 2;
-            dimensions.height += yOffset * 2;
-        }
-    }
-    else if (dimensions.width > 0 && dimensions.height > 0)
-    {
-#ifdef __CC_PLATFORM_IOS
-        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
-#elif defined(__CC_PLATFORM_MAC)
-        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
-#endif
-        if (vAlign == kCCVerticalTextAlignmentBottom)
-        {
-            yOffset = originalDimensions.height - actualSize.height;
-        }
-        else if (vAlign == kCCVerticalTextAlignmentCenter)
-        {
-            yOffset = (originalDimensions.height - actualSize.height)/2;
-        }
-    }
-    
-    // Round dimensions to nearest number that is dividable by 2
-    dimensions.width = ceilf(dimensions.width/2)*2;
-    dimensions.height = ceilf(dimensions.height/2)*2;
-    
-    // get nearest power of two
-    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
-    
-	// Mac crashes if the width or height is 0
-	if( POTSize.width == 0 )
-		POTSize.width = 2;
-    
-	if( POTSize.height == 0)
-		POTSize.height = 2;
-    
-    // Render the label - different code for Mac / iOS
-    
-#ifdef __CC_PLATFORM_IOS
-    yOffset = (POTSize.height - dimensions.height) + yOffset;
-	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
-    
-    unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
-    
-    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
-    CGColorSpaceRelease(colorSpace);
-    
-    if (!context)
-    {
-        free(data);
-        return NULL;
-    }
-    
-    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, POTSize.height * 2 - dimensions.height);
-    CGContextConcatCTM(context, flipVertical);
-    
-	UIGraphicsPushContext(context);
-    [attributedString drawInRect:drawArea];
-    
-    UIGraphicsPopContext();
-
-#elif defined(__CC_PLATFORM_MAC)
-    yOffset = (POTSize.height - dimensions.height) - yOffset;
-	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
-    
-	[[NSGraphicsContext currentContext] setShouldAntialias:YES];
-	
-	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
-	[image lockFocus];
-	[[NSAffineTransform transform] set];
-	
-	[attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
-	
-	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
-	[image unlockFocus];
-    
-	unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
-#endif
-    
-    // Initialize the texture
-    if (fullColor)
-    {
-        // RGBA8888 format
-        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
-        
-        _hasPremultipliedAlpha = YES;
-    }
-    else
-    {
-        NSUInteger textureSize = POTSize.width * POTSize.height;
-        
-        // A8 format (alpha channel only)
-        unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
-            dst[i] = data[i*4+3];
-        
-        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
-        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
-    }
-
-#ifdef __CC_PLATFORM_IOS
-    free(data); // On Mac data is freed by NSBitmapImageRep
-#endif
-    
-	return self;
-}
-@end
-
-#pragma mark -
 #pragma mark CCLabelTTF
 
 
@@ -509,7 +364,7 @@
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
     
-    tex = [[CCTexture2D alloc] initWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] dimensions:dimensions verticalAlignment:_verticalAlignment useFullColor:useFullColor];
+    tex = [self createTextureWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] useFullColor:useFullColor];
 
 	if( !tex )
 		return NO;
@@ -545,6 +400,144 @@
 	[self setTextureRect: rect];
 	
 	return YES;
+}
+
+- (CCTexture2D*) createTextureWithAttributedString:(NSAttributedString*)attributedString useFullColor:(BOOL) fullColor
+{
+	NSAssert(attributedString, @"Invalid attributedString");
+    
+    CGSize originalDimensions = _dimensions;
+    CGSize dimensions = _dimensions;
+    
+    float xOffset = 0;
+    float yOffset = 0;
+    
+	// Get actual rendered dimensions
+    if (dimensions.height == 0)
+    {
+        // Get dimensions for string
+#ifdef __CC_PLATFORM_IOS
+        dimensions = [attributedString boundingRectWithSize:dimensions options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+#elif defined(__CC_PLATFORM_MAC)
+        dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
+#endif
+        
+        // Outset the dimensions with regards to shadow
+        NSShadow* shadow = [attributedString attribute:NSShadowAttributeName atIndex:0 effectiveRange:NULL];
+        if (shadow)
+        {
+            xOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.width))*2;
+            yOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.height))*2;
+            
+            dimensions.width += xOffset * 2;
+            dimensions.height += yOffset * 2;
+        }
+    }
+    else if (dimensions.width > 0 && dimensions.height > 0)
+    {
+#ifdef __CC_PLATFORM_IOS
+        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+#elif defined(__CC_PLATFORM_MAC)
+        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
+#endif
+        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        {
+            yOffset = originalDimensions.height - actualSize.height;
+        }
+        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        {
+            yOffset = (originalDimensions.height - actualSize.height)/2;
+        }
+    }
+    
+    // Round dimensions to nearest number that is dividable by 2
+    dimensions.width = ceilf(dimensions.width/2)*2;
+    dimensions.height = ceilf(dimensions.height/2)*2;
+    
+    // get nearest power of two
+    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+    
+	// Mac crashes if the width or height is 0
+	if( POTSize.width == 0 )
+		POTSize.width = 2;
+    
+	if( POTSize.height == 0)
+		POTSize.height = 2;
+    
+    // Render the label - different code for Mac / iOS
+    
+#ifdef __CC_PLATFORM_IOS
+    yOffset = (POTSize.height - dimensions.height) + yOffset;
+	
+	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    
+    unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
+    
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+    
+    if (!context)
+    {
+        free(data);
+        return NULL;
+    }
+    
+    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, POTSize.height * 2 - dimensions.height);
+    CGContextConcatCTM(context, flipVertical);
+    
+	UIGraphicsPushContext(context);
+    [attributedString drawInRect:drawArea];
+    
+    UIGraphicsPopContext();
+    
+#elif defined(__CC_PLATFORM_MAC)
+    yOffset = (POTSize.height - dimensions.height) - yOffset;
+	
+	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    
+	[[NSGraphicsContext currentContext] setShouldAntialias:YES];
+	
+	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
+	[image lockFocus];
+	[[NSAffineTransform transform] set];
+	
+	[attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
+	
+	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
+	[image unlockFocus];
+    
+	unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+#endif
+    
+    CCTexture2D* texture = NULL;
+    
+    // Initialize the texture
+    if (fullColor)
+    {
+        // RGBA8888 format
+        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+#warning FIX!
+        //texture.hasPremultipliedAlpha = YES;
+    }
+    else
+    {
+        NSUInteger textureSize = POTSize.width * POTSize.height;
+        
+        // A8 format (alpha channel only)
+        unsigned char* dst = data;
+        for(int i = 0; i<textureSize; i++)
+            dst[i] = data[i*4+3];
+        
+        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
+    
+#ifdef __CC_PLATFORM_IOS
+    free(data); // On Mac data is freed by NSBitmapImageRep
+#endif
+    
+	return texture;
 }
 
 - (void) visit
