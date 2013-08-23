@@ -436,6 +436,7 @@
     
     float xOffset = 0;
     float yOffset = 0;
+    float scaleFactor = 1;
     
 	// Get actual rendered dimensions
     if (dimensions.height == 0)
@@ -484,7 +485,6 @@
                     hScaleFactor = dimensions.height/wantedSize.height;
                 }
                 
-                float scaleFactor = 1;
                 if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
                 else scaleFactor = hScaleFactor;
             
@@ -497,6 +497,9 @@
                 }
             }
         }
+        
+        // Handle baseline adjustments
+        yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
 
         // Handle vertical alignment
 #ifdef __CC_PLATFORM_IOS
