@@ -1514,17 +1514,28 @@ static float menuItemPaddingCenter = 50;
         CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(0,190,0,255) width:s.width height:s.height];
         [self addChild:layer];
         
-        CCLabelTTF *shadowLabel =[CCLabelTTF labelWithString:@":P" fontName:@"Helvetica" fontSize:32];
+        CCLabelTTF *shadowLabel =[CCLabelTTF labelWithString:@"Shadow" fontName:@"Helvetica" fontSize:32];
         shadowLabel.shadowColor = ccc4(0, 0, 0, 255);
         shadowLabel.shadowBlurRadius = 3;
         shadowLabel.shadowOffset = ccp(0, -3);
-		shadowLabel.position = ccp(s.width/2 - 50,s.height/2 );
-        //[shadowLabel setHTML:@"<span style='color:#000000;font-family:Helvetica;font-size:32px;'>Shadow</span>"];
+		shadowLabel.position = ccp(s.width/2,s.height/2 + 50);
 		[self addChild:shadowLabel];
         
-        CCLabelTTF *plainLabel =[CCLabelTTF labelWithString:@"Plain" fontName:@"Helvetica" fontSize:32];
-		plainLabel.position = ccp(s.width/2 + 50,s.height/2 );
-		[self addChild:plainLabel];
+        CCLabelTTF *strokeLabel =[CCLabelTTF labelWithString:@"Stroke" fontName:@"Helvetica" fontSize:32];
+		strokeLabel.position = ccp(s.width/2,s.height/2 );
+        strokeLabel.outlineColor = ccc4(255, 0, 0, 255);
+        strokeLabel.outlineWidth = 2;
+		[self addChild:strokeLabel];
+        
+        CCLabelTTF *strokeShadowLabel =[CCLabelTTF labelWithString:@"Shadow & Stroke" fontName:@"Helvetica" fontSize:32];
+		strokeShadowLabel.position = ccp(s.width/2,s.height/2 - 50);
+        strokeShadowLabel.outlineColor = ccc4(255, 0, 0, 255);
+        strokeShadowLabel.outlineWidth = 3;
+        strokeShadowLabel.shadowColor = ccc4(0, 0, 0, 255);
+        strokeShadowLabel.shadowBlurRadius = 3;
+        strokeShadowLabel.shadowOffset = ccp(0, -3);
+        strokeShadowLabel.fontColor = ccc4(255, 255, 0, 255);
+		[self addChild:strokeShadowLabel];
 	}
     
 	return self;
