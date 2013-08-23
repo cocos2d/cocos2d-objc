@@ -38,8 +38,6 @@
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
-#import "CCScene.h"
-#import "CCSprite.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -69,7 +67,7 @@
 @end
 
 @implementation CCNode {
-    __weak CCScene*             _scene;                         // scene of the node.
+
 }
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
@@ -159,7 +157,8 @@ static NSUInteger globalOrderOfArrival = 1;
         
         // set default touch handling
         self.userInteractionEnabled = NO;
-        _scene = nil;
+        self.touchLocked = YES;
+        _touchManager = [ director touchManager ];
         
 	}
 
@@ -368,10 +367,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
-    
-    // find scene for node
-    _scene = [ self scene ];
-    
+        
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -560,7 +556,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		return;
     
     // register the node as a touch target if enabled for user interaction
-    if ( self.isUserInteractionEnabled == YES ) [ self registerAsTouchTarget ];
+    if ( self.isUserInteractionEnabled == YES ) [ self registerAsTouchReceiver ];
 
 	kmGLPushMatrix();
 
@@ -949,34 +945,30 @@ static NSUInteger globalOrderOfArrival = 1;
 // -----------------------------------------------------------------
 #pragma mark - touch interface
 // -----------------------------------------------------------------
-// finds the scene ( first node having no parent, and being a CCScene class )
-
--( CCScene* )scene {
-    CCNode* result = self;
-    
-    // trace back through parents
-    while ( result.parent != nil ) result = result.parent;
-    // check if top node is a scene
-    if ( [ result isMemberOfClass:[ CCScene class ] ] == YES ) return( ( CCScene* )result );
-    return( nil );
-}
-
-// -----------------------------------------------------------------
-// registers the node as a touch target if it is attached to a scene and is at least a CCSprite
+// registers the node as a touch receiver if it is attached to a scene and is at least a CCSprite
 // this is called in visit, so the touch list in the scene, is recreated for each frame
 
--( void )registerAsTouchTarget {
-    // check if node has been attached to a scene, since it was added
-    if ( _scene == nil ) _scene = [ self scene ];
-    // if it's a sprite, and is attached to a scene, register the node as a touch responder
-    if ( ( [ self isKindOfClass:[ CCSprite class ] ] == YES ) && ( _scene != nil ) )
-        [ _scene registerTouchTargetForNode:self ];
+-( void )registerAsTouchReceiver {
+    [ _touchManager addTouchReceiver:self ];
 }
+
+/** Returns YES, if touch is inside sprite
+ @since v2.5
+ */
+-( BOOL )hitTestWithTouch:( UITouch* )touch {
+    CCDirector* director = [ CCDirector sharedDirector ];
+    
+    CGPoint pos = [ director convertToGL:[ touch locationInView:[ CCDirector sharedDirector ].view ] ];
+    pos = [ self convertToNodeSpace:pos ];
+    
+    if ( ( pos.y < 0 ) || ( pos.y > self.contentSize.height ) || ( pos.x < 0 ) || ( pos.x > self.contentSize.width ) ) return( NO );
+    return( YES );
+}
+
 
 // -----------------------------------------------------------------
 
 @end
-
 
 #pragma mark - NodeRGBA
 

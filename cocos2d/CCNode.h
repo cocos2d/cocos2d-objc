@@ -32,6 +32,7 @@
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
+#import "CCResponder.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -42,6 +43,7 @@ enum {
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
+@class CCTouchManager;
 @class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
@@ -100,7 +102,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */
-@interface CCNode : UIResponder
+@interface CCNode : CCResponder
 {
 	// rotation angle
 	float _rotationX, _rotationY;
@@ -287,8 +289,21 @@ enum {
  */
 @property (nonatomic, readwrite, strong) CCScheduler *scheduler;
 
-//
+/** Enabled user interaction on a node, like touch
+ @since v2.5
+ */
 @property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
+
+/** Locks the touch to the node if touch started outside
+ If a touch is moved inside a non locked node, a touchesBegan will be generated
+ @since v2.5
+ */
+@property ( nonatomic, assign, getter = isTouchLocked ) BOOL touchLocked;
+
+/** Holds the touch manager
+ @since v2.5
+ */
+@property ( nonatomic, weak ) CCTouchManager* touchManager;
 
 // initializators
 /** allocates and initializes a node.
@@ -607,8 +622,15 @@ enum {
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
 
-// registers a node as a touch target
--( void )registerAsTouchTarget;
+/** registers the node as a touch receiver
+ @since v2.5
+ */
+-( void )registerAsTouchReceiver;
+
+/** check if a touch is inside the node
+ @since v2.5
+ */
+-( BOOL )hitTestWithTouch:( UITouch* )touch;
 
 @end
 

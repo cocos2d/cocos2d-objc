@@ -38,10 +38,10 @@
  It is a good practice to use and CCScene as the parent of all your nodes.
 */
 @interface CCScene : CCNode
-{
-}
+
 /** initializes a node.
  The node will be created as "autorelease".
  */
 -(id) init;
+
 @end
