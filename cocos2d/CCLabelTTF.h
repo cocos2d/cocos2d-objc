@@ -27,9 +27,7 @@
 
 #import "CCTexture2D.h"
 #import "CCSprite.h"
-#import "CCFontDefinition.h"
 #import "Platforms/CCNS.h"
-
 
 /** CCLabel is a subclass of CCTextureNode that knows how to render text labels
  *
@@ -40,141 +38,106 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
-	CGSize                       _dimensions;
-	CCTextAlignment              _hAlignment;
-    CCVerticalTextAlignment      _vAlignment;
-	NSString                    *_fontName;
-	CGFloat                      _fontSize;
-	CCLineBreakMode              _lineBreakMode;
-	NSString	*_string;
-    
-    /** font shadow */
-    bool    _shadowEnabled;
-    float   _shadowOpacity;
-    float   _shadowBlur;
-    CGSize  _shadowOffset;
-    
-    /** font stroke */
-    bool        _strokeEnabled;
-    ccColor3B   _strokeColor;
-    float       _strokeSize;
-    
-    /** font fill color */
-    ccColor3B   _textFillColor;
+    BOOL _isTextureDirty;
 }
+
+#pragma mark String and font
+
+/** Changes the text of the label.
+ * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
+ */
+@property (nonatomic,copy) NSString* string;
+
+/** Changes text of the label, draws the string with given attributes. The attributes used will override the alignment, color and shadow as set by the properties of the label. Attributed strings are only available on Mac and iOS 6 or later.
+ * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
+ */
+@property (nonatomic,copy) NSAttributedString* attributedString;
 
 /** Font name used in the label */
 @property (nonatomic,strong) NSString* fontName;
-/** Font size of the label */
+
+/** Font size used in the label */
 @property (nonatomic,assign) float fontSize;
+
+/** Font color. If not using shadow or outline, it is more efficient to use the color property. */
+@property (nonatomic,assign) ccColor4B fontColor;
+
+#pragma mark Dimensions
+
 /** Dimensions of the label in Points */
 @property (nonatomic,assign) CGSize dimensions;
+
+
+#pragma mark Alignment
+
 /** The alignment of the label */
 @property (nonatomic,assign) CCTextAlignment horizontalAlignment;
+
 /** The vertical alignment of the label */
 @property (nonatomic,assign) CCVerticalTextAlignment verticalAlignment;
 
 
+#pragma mark Shadow
 
-/** creates a CCLabelTTF with a string and a font definition */
-+ (id) labelWithString:(NSString*)string fontDefinition:(CCFontDefinition *)definition;
+/** The color of a text shadow. If the color is transparent, no shadow will be used. */
+@property (nonatomic,assign) ccColor4B shadowColor;
 
-/** creates a CCLabelTTF with a font name and font size in points*/
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
+/** The offset of the shadow (in points), default is (0,0). */
+@property (nonatomic,assign) CGPoint shadowOffset;
 
-/** creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points,  and font size in points.
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment;
-
-/** creates a CCLabelTTF from a fontname, horizontal alignment, dimension in points, line break mode, and font size in points.
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode;
-
-/** creates a CCLabelTTF from a fontname, horizontal alignment, vertical alignment, dimension in points, line break mode, and font size in points.
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
-
-/** creates a CCLabel from a fontname, alignment, dimension in points and font size in points*/
-+ (id) labelWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment;
+/** The blur radius of the shadow, default is 0. */
+@property (nonatomic,assign) float shadowBlurRadius;
 
 
-/** initializes the CCLabelTTF with a font name and font size in points */
+#pragma mark Outline
+
+/** The color of the label's outline. Default is transparent/no outline. */
+@property (nonatomic,assign) ccColor4B outlineColor;
+
+/** The width of the label's outline. Default is 0/no outline. */
+@property (nonatomic,assign) float outlineWidth;
+
+
+#pragma mark Font adjustments
+
+/** If set, the label will be scaled down to fit into the size provided by the dimensions property. Only has an effect if dimensions are set. */
+@property (nonatomic,assign) BOOL adjustsFontSizeToFit;
+
+/** Used together with adjustsFontSizeToFit. Fonts will not be scaled down below this size (the label will instead be clipped). */
+@property (nonatomic,assign) float minimumFontSize;
+
+/** Adjusts the fonts baseline, the value is set in points. */
+@property (nonatomic,assign) float baselineAdjustment;
+
+/** Creates a CCLabelTTF with a font name and font size in points */
++ (id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
+
+/** Creates a CCLabelTTF with a font name, font size in points and the desired dimensions. */
++ (id) labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
+
+/** Creates a CCLabelTTF with an attributed string. Only supported on Mac and iOS 6 or later. */
++ (id) labelWithAttributedString:(NSAttributedString *)attrString;
+
+/** Creates a CCLabelTTF with an attributed string and the desired dimensions. Only supported on Mac and iOS 6 or later. */
++ (id) labelWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
+
+
+/** Initializes the CCLabelTTF with a font name and font size in points. */
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 
-/** initializes the CCLabelTTF with a font name, horizontal alignment, dimension in points, and font size in points.
- Default verticalAlignment: kCCVerticalTextAlignmentTop 
- Default lineBreakMode: CCLineBreakModeWordWrap
- @since v1.0
- */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment;
+/** Initializes the CCLabelTTF with a font name, font size in points and the desired dimensions. */
+- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions;
 
-/** initializes the CCLabelTTF with a font name, horizontal alignment, dimension in points, line break mode and font size in points.
- Default verticalAlignment: kCCVerticalTextAlignmentTop 
+/** Initializes the CCLabelTTF with an attributed string. Only supported on Mac and iOS 6 or later. */
+- (id) initWithAttributedString:(NSAttributedString *)attrString;
 
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v1.0
- */
-- (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode;
+/** Initializes the CCLabelTTF with an attributed string and the desired dimensions. Only supported on Mac and iOS 6 or later. */
+- (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions;
 
-/** initializes the CCLabelTTF with a font name, horizontal alignment, vertical alignment,  dimension in points and font size in points. 
- Default lineBreakMode: CCLineBreakModeWordWrap
- */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment;
+#ifdef __CC_PLATFORM_MAC
+- (void) setHTML:(NSString*) html;
+#endif
 
-/** initializes the CCLabelTTF with a font name, horizontal alignment, vertical alignment, dimension in points, line break mode and font size in points.
- Supported lineBreakModes:
- - iOS: all UILineBreakMode supported modes
- - Mac: Only NSLineBreakByWordWrapping is supported.
- @since v2.0
- */
-- (id) initWithString:(NSString*)str fontName:(NSString*)name fontSize:(CGFloat)size dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode ;
-
-/** changes the string to render
- * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
- */
-- (void) setString:(NSString*)str;
-
-
-/** enable or disable shadow for the label */
-- (void) enableShadowWithOffset:(CGSize)shadowOffset opacity:(float)shadowOpacity blur:(float)shadowBlur updateImage:(Boolean) mustUpdate;
-
-/** disable shadow rendering */
-- (void) disableShadowAndUpdateImage:(Boolean)mustUpdate;
-
-/** enable or disable stroke */
-- (void) enableStrokeWithColor:(ccColor3B)strokeColor size:(float)strokeSize updateImage:(Boolean) mustUpdate;
-
-/** disable stroke */
-- (void) disableStrokeAndUpdateImage:(Boolean) mustUpdate;
-
-/** set text tinting */
-- (void) setFontFillColor:(ccColor3B) tintColor updateImage:(Boolean) mustUpdate;
-
-/** init the label with string and text definition*/
-- (id) initWithString:(NSString *) string fontDefinition:(CCFontDefinition *)definition;
-
-/** get and set the font definition */
-- (CCFontDefinition*) getFontDefinition;
-
-/** get and set the font definition */
-- (void) setFontDefinition: (CCFontDefinition *) fontDef;
-
-
-
-
++ (void) registerCustomTTF:(NSString*)fontFile;
 
 @end

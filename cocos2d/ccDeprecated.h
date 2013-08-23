@@ -323,6 +323,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 
 
 @interface CCLabelTTF (Deprecated)
+/*
 // new: + (id) labelWithString:(NSString*)string dimensions:hAlignment:fontName:fontSize:
 + (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 // new: + (id) labelWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:
@@ -337,11 +338,14 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 // new: + (id) initWithString:(NSString*)string dimensions:hAlignment:lineBreakMode:fontName:fontSize:
 - (id) initWithString:(NSString*)str dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+ */
 @end
 
 @interface CCTexture2D (Deprecated)
+/*
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
+ */
 @end
 
 // Effects

@@ -99,6 +99,14 @@ ccc4(const GLubyte r, const GLubyte g, const GLubyte b, const GLubyte o)
 	return c;
 }
 
+/** returns YES if both ccColor4F are equal. Otherwise it returns NO.
+ @since v0.99.1
+ */
+static inline BOOL ccc4BEqual(ccColor4B a, ccColor4B b)
+{
+    return a.r == b.r && a.g == b.g && a.b == b.b && a.a == b.a;
+}
+
 /** RGBA color composed of 4 floats
 @since v0.8
 */

@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01813A5A176A705D00A9D861 /* CCFontDefinition.h in Headers */ = {isa = PBXBuildFile; fileRef = 01813A58176A705D00A9D861 /* CCFontDefinition.h */; };
-		01813A5B176A705D00A9D861 /* CCFontDefinition.m in Sources */ = {isa = PBXBuildFile; fileRef = 01813A59176A705D00A9D861 /* CCFontDefinition.m */; };
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
 		2B192835163361B10049A044 /* CCClippingNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 2B192833163361B10049A044 /* CCClippingNode.h */; };
@@ -209,6 +207,8 @@
 		A0DA0BDF15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BDD15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h */; };
 		B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */ = {isa = PBXBuildFile; fileRef = B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */; };
 		B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */ = {isa = PBXBuildFile; fileRef = B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */; };
+		B75C2E7C17C5908B002B0E0D /* NSAttributedString+CCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */; };
+		B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */; };
 		E0112F53120CB406006667F8 /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E0112F4F120CB406006667F8 /* CCTransitionPageTurn.h */; };
 		E0112F54120CB406006667F8 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
@@ -269,8 +269,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		01813A58176A705D00A9D861 /* CCFontDefinition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCFontDefinition.h; sourceTree = "<group>"; };
-		01813A59176A705D00A9D861 /* CCFontDefinition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCFontDefinition.m; sourceTree = "<group>"; };
 		0529445911098D6F00E500F3 /* CCProfiling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProfiling.h; sourceTree = "<group>"; };
 		0529445A11098D6F00E500F3 /* CCProfiling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProfiling.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -532,6 +530,8 @@
 		A0DA0BDD15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_vert.h; sourceTree = "<group>"; };
 		B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
+		B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CCAdditions.h"; sourceTree = "<group>"; };
+		B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CCAdditions.m"; sourceTree = "<group>"; };
 		E0112F4F120CB406006667F8 /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
 		E0112F50120CB406006667F8 /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
@@ -741,6 +741,8 @@
 				50F2A102102094550046CA73 /* ZipUtils.m */,
 				A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */,
 				A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */,
+				B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */,
+				B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -860,8 +862,6 @@
 		506414C50F9C67C0007A7B24 /* Label Nodes */ = {
 			isa = PBXGroup;
 			children = (
-				01813A58176A705D00A9D861 /* CCFontDefinition.h */,
-				01813A59176A705D00A9D861 /* CCFontDefinition.m */,
 				E01E6D8A121F130E001A484F /* CCLabelBMFont.h */,
 				E01E6D8B121F130E001A484F /* CCLabelBMFont.m */,
 				5018F25C0DFDEAFF00C013A5 /* CCLabelTTF.h */,
@@ -1329,8 +1329,8 @@
 				A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
-				01813A5A176A705D00A9D861 /* CCFontDefinition.h in Headers */,
 				B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */,
+				B75C2E7C17C5908B002B0E0D /* NSAttributedString+CCAdditions.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1584,8 +1584,8 @@
 				A0D7D9D215E2E730000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				2B192836163361B10049A044 /* CCClippingNode.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
-				01813A5B176A705D00A9D861 /* CCFontDefinition.m in Sources */,
 				B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */,
+				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1653,6 +1653,12 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					"CD_DEBUG=1",
+					DEBUG,
+					"COCOS2D_DEBUG=1",
+				);
 				GCC_THUMB_SUPPORT = NO;
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = YES;
