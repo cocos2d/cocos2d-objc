@@ -525,9 +525,6 @@
                 }
             }
         }
-        
-        // Handle baseline adjustments
-        yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
 
         // Handle vertical alignment
 #ifdef __CC_PLATFORM_IOS
@@ -544,6 +541,9 @@
             yOffset = (originalDimensions.height - actualSize.height)/2;
         }
     }
+    
+    // Handle baseline adjustments
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
     
     // Round dimensions to nearest number that is dividable by 2
     dimensions.width = ceilf(dimensions.width/2)*2;
@@ -641,8 +641,201 @@
 #ifdef __CC_PLATFORM_IOS
 - (BOOL) updateTextureOld
 {
-    return YES;
+    NSString* string = [self string];
+    if (!string) return NO;
+    
+    BOOL useFullColor = NO;
+    if (_shadowColor.a > 0) useFullColor = YES;
+    
+    CCTexture2D* tex = [self createTextureWithString:string useFullColor:useFullColor];
+    if (!tex) return NO;
+    
+    if (!useFullColor)
+    {
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
+    
+    if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+		else
+			[tex setResolutionType:kCCResolutioniPad];
+	}
+	// iPhone ?
+	else
+	{
+		if( CC_CONTENT_SCALE_FACTOR() == 2 )
+			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+		else
+			[tex setResolutionType:kCCResolutioniPhone];
+	}
+    
+    // Update texture and content size
+	[self setTexture:tex];
+	
+	CGRect rect = CGRectZero;
+	rect.size = [_texture contentSize];
+	[self setTextureRect: rect];
+	
+	return YES;
 }
+
+- (CCTexture2D*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
+{
+    // Scale everything up by content scale
+    UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * CC_CONTENT_SCALE_FACTOR()];
+    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
+    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
+    BOOL hasShadow = (_shadowColor.a > 0);
+    
+    float xOffset = 0;
+    float yOffset = 0;
+    float scaleFactor = 1;
+    
+    CGSize originalDimensions = _dimensions;
+    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
+    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    
+    CGSize dimensions = originalDimensions;
+    
+    // Get actual rendered dimensions
+    if (dimensions.height == 0)
+    {
+        // Get dimensions for string without dimensions of string with variable height
+        if (dimensions.width > 0)
+        {
+            dimensions = [string sizeWithFont:font forWidth:dimensions.width lineBreakMode:0];
+        }
+        else
+        {
+            CGSize firstLineSize = [string sizeWithFont:font];
+            dimensions = [string sizeWithFont:font constrainedToSize:CGSizeMake(firstLineSize.width,1024) lineBreakMode:0];
+        }
+        
+        // Outset the dimensions with regards to shadow
+        if (hasShadow)
+        {
+            xOffset = (shadowBlurRadius + fabs(shadowOffset.x)) * 2;
+            yOffset = (shadowBlurRadius + fabs(shadowOffset.y)) * 2;
+            
+            dimensions.width += xOffset * 2;
+            dimensions.height += yOffset * 2;
+        }
+    }
+    else if (dimensions.width > 0 && dimensions.height > 0)
+    {
+        // Handle strings with fixed dimensions
+        if (_adjustsFontSizeToFit)
+        {
+            float fontSize = font.pointSize;
+            CGSize wantedSizeFirstLine = [string sizeWithFont:font];
+            CGSize wantedSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(wantedSizeFirstLine.width, 1024) lineBreakMode:0];
+            
+            float wScaleFactor = 1;
+            float hScaleFactor = 1;
+            if (wantedSize.width > dimensions.width)
+            {
+                wScaleFactor = dimensions.width/wantedSize.width;
+            }
+            if (wantedSize.height > dimensions.height)
+            {
+                hScaleFactor = dimensions.height/wantedSize.height;
+            }
+            
+            if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
+            else scaleFactor = hScaleFactor;
+            
+            if (scaleFactor != 1)
+            {
+                float newFontSize = fontSize * scaleFactor;
+                float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
+                font = [UIFont fontWithName:font.fontName size:newFontSize];
+            }
+        }
+        
+        // Handle vertical alignment
+        CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(dimensions.width, 1024) lineBreakMode:0];
+    
+        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        {
+            yOffset = originalDimensions.height - actualSize.height;
+        }
+        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        {
+            yOffset = (originalDimensions.height - actualSize.height)/2;
+        }
+    }
+    
+    // Handle baseline adjustments
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
+
+    // Round dimensions to nearest number that is dividable by 2
+    dimensions.width = ceilf(dimensions.width/2)*2;
+    dimensions.height = ceilf(dimensions.height/2)*2;
+
+    // get nearest power of two
+    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+
+    // Mac crashes if the width or height is 0
+    if( POTSize.width == 0 )
+    POTSize.width = 2;
+
+    if( POTSize.height == 0)
+    POTSize.height = 2;
+
+    yOffset = (POTSize.height - dimensions.height) + yOffset;
+
+    CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+
+    unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
+
+    CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGColorSpaceRelease(colorSpace);
+
+    if (!context)
+    {
+        free(data);
+        return NULL;
+    }
+
+    CGAffineTransform flipVertical = CGAffineTransformMake(1, 0, 0, -1, 0, POTSize.height * 2 - dimensions.height);
+    CGContextConcatCTM(context, flipVertical);
+
+    UIGraphicsPushContext(context);
+    
+    [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];
+
+    UIGraphicsPopContext();
+
+    CCTexture2D* texture = NULL;
+
+    // Initialize the texture
+    if (useFullColor)
+    {
+        // RGBA8888 format
+        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        [texture setPremultipliedAlpha:YES];
+    }
+    else
+    {
+        NSUInteger textureSize = POTSize.width * POTSize.height;
+        
+        // A8 format (alpha channel only)
+        unsigned char* dst = data;
+        for(int i = 0; i<textureSize; i++)
+            dst[i] = data[i*4+3];
+        
+        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
+
+    free(data);
+
+    return texture;
+}
+
 #endif
 
 #pragma mark -
