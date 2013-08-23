@@ -31,5 +31,6 @@
 
 - (BOOL) hasAttribute:(NSString*)attr;
 - (NSAttributedString*) copyAdjustedForContentScaleFactor;
-
+- (float) singleFontSize;
+- (NSAttributedString*) copyWithNewFontSize:(float) size;
 @end
