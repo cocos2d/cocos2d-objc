@@ -42,6 +42,15 @@
 #endif
 
 
+@implementation CCTexture2D (CCLabelTTF)
+
+- (void) setPremultipliedAlpha:(BOOL)flag
+{
+    _hasPremultipliedAlpha = flag;
+}
+
+@end
+
 #pragma mark CCLabelTTF
 
 
@@ -257,9 +266,9 @@
     NSRange fullRange = NSMakeRange(0, formattedAttributedString.length);
     
     BOOL useFullColor = NO;
-    //CGSize dimensions = _dimensions;
     
 #ifdef __CC_PLATFORM_IOS
+    
     // Font color
     if (![formattedAttributedString hasAttribute:NSForegroundColorAttributeName])
     {
@@ -314,10 +323,6 @@
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
-    
-    // Dimensions adjusted for content scale
-    dimensions.width *= CC_CONTENT_SCALE_FACTOR();
-    dimensions.height *= CC_CONTENT_SCALE_FACTOR();
     
 #elif defined(__CC_PLATFORM_MAC)
     // Font color
@@ -576,8 +581,7 @@
     {
         // RGBA8888 format
         texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
-#warning FIX!
-        //texture.hasPremultipliedAlpha = YES;
+        [texture setPremultipliedAlpha:YES];
     }
     else
     {
