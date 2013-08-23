@@ -38,8 +38,6 @@
 
 @interface CCLabelTTF : CCSprite <CCLabelProtocol>
 {
-	//CCLineBreakMode _lineBreakMode;
-    
     BOOL _isTextureDirty;
 }
 
