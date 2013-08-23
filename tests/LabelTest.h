@@ -135,7 +135,7 @@
 }
 @end
 
-@interface LabelTTFLineBreak : AtlasDemo
+@interface LabelTTFScaleToFit : AtlasDemo
 {
 }
 @end
