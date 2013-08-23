@@ -48,7 +48,7 @@
  */
 @property (nonatomic,copy) NSString* string;
 
-/** Changes text of the label, draws the string with given attributes. The attributes used will override the alignment, color and shadow as set by the properties of the label.
+/** Changes text of the label, draws the string with given attributes. The attributes used will override the alignment, color and shadow as set by the properties of the label. Attributed strings are only available on Mac and iOS 6 or later.
  * @warning Changing the string is as expensive as creating a new CCLabelTTF. To obtain better performance use CCLabelAtlas or CCLabelBMFont.
  */
 @property (nonatomic,copy) NSAttributedString* attributedString;
