@@ -296,6 +296,9 @@
     
     BOOL useFullColor = NO;
     
+    if (_shadowColor.a > 0) useFullColor = YES;
+    if (_outlineColor.a > 0 && _outlineWidth > 0) useFullColor = YES;
+    
 #ifdef __CC_PLATFORM_IOS
     
     // Font color
@@ -329,26 +332,7 @@
     }
     
     // Shadow
-    if (![formattedAttributedString hasAttribute:NSShadowAttributeName])
-    {
-        if (_shadowColor.a > 0)
-        {
-            float r = ((float)_shadowColor.r)/255;
-            float g = ((float)_shadowColor.g)/255;
-            float b = ((float)_shadowColor.b)/255;
-            float a = ((float)_shadowColor.a)/255;
-            
-            NSShadow* shadow = [[NSShadow alloc] init];
-            shadow.shadowOffset = CGSizeMake(_shadowOffset.x, _shadowOffset.y);
-            shadow.shadowBlurRadius = _shadowBlurRadius;
-            shadow.shadowColor = [UIColor colorWithRed:r green:g blue:b alpha:a];
-            
-            [formattedAttributedString addAttribute:NSShadowAttributeName value:shadow range:fullRange];
-            
-            useFullColor = YES;
-        }
-    }
-    else
+    if ([formattedAttributedString hasAttribute:NSShadowAttributeName])
     {
         useFullColor = YES;
     }
@@ -395,26 +379,7 @@
     }
     
     // Shadow
-    if (![formattedAttributedString hasAttribute:NSShadowAttributeName])
-    {
-        if (_shadowColor.a > 0)
-        {
-            float r = ((float)_shadowColor.r)/255;
-            float g = ((float)_shadowColor.g)/255;
-            float b = ((float)_shadowColor.b)/255;
-            float a = ((float)_shadowColor.a)/255;
-            
-            NSShadow* shadow = [[NSShadow alloc] init];
-            shadow.shadowOffset = NSMakeSize(_shadowOffset.x, _shadowOffset.y);
-            shadow.shadowBlurRadius = _shadowBlurRadius;
-            shadow.shadowColor = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
-            
-            [formattedAttributedString addAttribute:NSShadowAttributeName value:shadow range:fullRange];
-            
-            useFullColor = YES;
-        }
-    }
-    else
+    if ([formattedAttributedString hasAttribute:NSShadowAttributeName])
     {
         useFullColor = YES;
     }
@@ -487,6 +452,13 @@
     
     CGSize dimensions = originalDimensions;
     
+    float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
+    CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
+    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+    
+    BOOL hasShadow = (_shadowColor.a > 0);
+    BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
+    
     float xOffset = 0;
     float yOffset = 0;
     float scaleFactor = 1;
@@ -502,15 +474,18 @@
 #endif
         
         // Outset the dimensions with regards to shadow
-        NSShadow* shadow = [attributedString attribute:NSShadowAttributeName atIndex:0 effectiveRange:NULL];
-        if (shadow)
+        if (hasShadow)
         {
-            xOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.width)); //*2;
-            yOffset = (shadow.shadowBlurRadius + fabs(shadow.shadowOffset.height)); //*2;
-            
-            dimensions.width += xOffset * 2;
-            dimensions.height += yOffset * 2;
+            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
+            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
         }
+        if (hasOutline)
+        {
+            xOffset += outlineWidth;
+            yOffset += outlineWidth;
+        }
+        dimensions.width += xOffset * 2;
+        dimensions.height += yOffset * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
@@ -607,6 +582,46 @@
     CGContextConcatCTM(context, flipVertical);
     
 	UIGraphicsPushContext(context);
+    
+    // Handle shadow
+    if (hasShadow)
+    {
+        float r = ((float)_shadowColor.r)/255;
+        float g = ((float)_shadowColor.g)/255;
+        float b = ((float)_shadowColor.b)/255;
+        float a = ((float)_shadowColor.a)/255;
+        
+        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        
+        CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+    }
+    
+    // Handle outline
+    if (hasOutline)
+    {
+        float r = ((float)_outlineColor.r)/255;
+        float g = ((float)_outlineColor.g)/255;
+        float b = ((float)_outlineColor.b)/255;
+        float a = ((float)_outlineColor.a)/255;
+        
+        CGContextSetLineJoin(context, kCGLineJoinRound);
+        
+        NSMutableAttributedString* outlineString = [attributedString mutableCopy];
+        [outlineString addAttribute:NSStrokeColorAttributeName value:[UIColor colorWithRed:r green:g blue:b alpha:a] range:NSMakeRange(0, outlineString.length)];
+        [outlineString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:outlineWidth*2] range:NSMakeRange(0, outlineString.length)];
+        
+        [outlineString drawInRect:drawArea];
+        
+        // Don't draw shadow for main font
+        CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+        
+        if (hasShadow)
+        {
+            // Draw outline again because shadow overlap
+            [outlineString drawInRect:drawArea];
+        }
+    }
+    
     [attributedString drawInRect:drawArea];
     
     UIGraphicsPopContext();
@@ -621,8 +636,45 @@
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
 	[[NSAffineTransform transform] set];
+    
+    // Handle shadow
+    if (hasShadow || hasOutline)
+    {
+        NSMutableAttributedString* effectsString = [attributedString mutableCopy];
+        NSRange fullRange = NSMakeRange(0, effectsString.length);
+        
+        if (hasShadow)
+        {
+            float r = ((float)_shadowColor.r)/255;
+            float g = ((float)_shadowColor.g)/255;
+            float b = ((float)_shadowColor.b)/255;
+            float a = ((float)_shadowColor.a)/255;
+            NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+            
+            NSShadow* shadow = [[NSShadow alloc] init];
+            shadow.shadowOffset = CGSizeMake(shadowOffset.x, shadowOffset.y);
+            shadow.shadowColor = color;
+            shadow.shadowBlurRadius = shadowBlurRadius;
+            
+            [effectsString addAttribute:NSShadowAttributeName value: shadow range:fullRange];
+        }
+        
+        if (hasOutline)
+        {
+            float r = ((float)_outlineColor.r)/255;
+            float g = ((float)_outlineColor.g)/255;
+            float b = ((float)_outlineColor.b)/255;
+            float a = ((float)_outlineColor.a)/255;
+            NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
+            
+            [effectsString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:-outlineWidth] range:fullRange];
+            [effectsString addAttribute:NSStrokeColorAttributeName value:color range:fullRange];
+        }
+        
+        attributedString = effectsString;
+    }
 	
-	[attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
+    [attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
 	
 	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
 	[image unlockFocus];
@@ -672,6 +724,7 @@
     BOOL useFullColor = NO;
     if (_shadowColor.a > 0) useFullColor = YES;
     if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255))) useFullColor = YES;
+    if (_outlineColor.a > 0 && _outlineWidth > 0) useFullColor = YES;
     
     CCTexture2D* tex = [self createTextureWithString:string useFullColor:useFullColor];
     if (!tex) return NO;
@@ -712,7 +765,10 @@
     UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * CC_CONTENT_SCALE_FACTOR()];
     float shadowBlurRadius = _shadowBlurRadius * CC_CONTENT_SCALE_FACTOR();
     CGPoint shadowOffset = ccpMult(_shadowOffset, CC_CONTENT_SCALE_FACTOR());
+    float outlineWidth = _outlineWidth * CC_CONTENT_SCALE_FACTOR();
+    
     BOOL hasShadow = (_shadowColor.a > 0);
+    BOOL hasOutline = (_outlineColor.a > 0 && _outlineWidth > 0);
     
     float xOffset = 0;
     float yOffset = 0;
@@ -743,10 +799,14 @@
         {
             xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
             yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
-            
-            dimensions.width += xOffset * 2;
-            dimensions.height += yOffset * 2;
         }
+        if (hasOutline)
+        {
+            xOffset += outlineWidth;
+            yOffset += outlineWidth;
+        }
+        dimensions.width += xOffset * 2;
+        dimensions.height += yOffset * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
@@ -831,7 +891,7 @@
 
     UIGraphicsPushContext(context);
     
-    // Handle shadows
+    // Handle shadow
     if (hasShadow)
     {
         float r = ((float)_shadowColor.r)/255;
@@ -842,6 +902,34 @@
         UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
         
         CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+    }
+    
+    // Handle outline
+    if (hasOutline)
+    {
+        float r = ((float)_outlineColor.r)/255;
+        float g = ((float)_outlineColor.g)/255;
+        float b = ((float)_outlineColor.b)/255;
+        float a = ((float)_outlineColor.a)/255;
+        
+        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+        CGContextSetRGBStrokeColor(context, r, g, b, a);
+        CGContextSetRGBFillColor(context, r, g, b, a);
+        CGContextSetLineWidth(context, outlineWidth * 2);
+        CGContextSetLineJoin(context, kCGLineJoinRound);
+        
+        [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];
+        
+        // Don't draw shadow for main font
+        CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+        
+        if (hasShadow)
+        {
+            // Draw again, because shadows overlap
+            [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];
+        }
+        
+        CGContextSetTextDrawingMode(context, kCGTextFill);
     }
     
     // Handle font color

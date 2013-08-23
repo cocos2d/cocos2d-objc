@@ -88,6 +88,13 @@
 @property (nonatomic,assign) float shadowBlurRadius;
 
 
+#pragma mark Outline
+
+@property (nonatomic,assign) ccColor4B outlineColor;
+
+@property (nonatomic,assign) float outlineWidth;
+
+
 #pragma mark Font adjustments
 
 @property (nonatomic,assign) BOOL adjustsFontSizeToFit;
