@@ -257,7 +257,7 @@
     NSRange fullRange = NSMakeRange(0, formattedAttributedString.length);
     
     BOOL useFullColor = NO;
-    CGSize dimensions = _dimensions;
+    //CGSize dimensions = _dimensions;
     
 #ifdef __CC_PLATFORM_IOS
     // Font color
@@ -301,6 +301,18 @@
     else
     {
         useFullColor = YES;
+    }
+    
+    // Text alignment
+    if (![formattedAttributedString hasAttribute:NSParagraphStyleAttributeName])
+    {
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        
+        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSTextAlignmentLeft;
+        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSTextAlignmentCenter;
+        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSTextAlignmentRight;
+        
+        [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
     
     // Dimensions adjusted for content scale
@@ -348,18 +360,20 @@
     {
         useFullColor = YES;
     }
-#endif
+    
     // Text alignment
     if (![formattedAttributedString hasAttribute:NSParagraphStyleAttributeName])
     {
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
         
-        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = kCTLeftTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = kCTCenterTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = kCTRightTextAlignment;
+        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSLeftTextAlignment;
+        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSCenterTextAlignment;
+        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSRightTextAlignment;
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
+#endif
+    
 
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
@@ -407,7 +421,13 @@
 	NSAssert(attributedString, @"Invalid attributedString");
     
     CGSize originalDimensions = _dimensions;
-    CGSize dimensions = _dimensions;
+    
+#ifdef __CC_PLATFORM_IOS
+    originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
+    originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+#endif
+    
+    CGSize dimensions = originalDimensions;
     
     float xOffset = 0;
     float yOffset = 0;
@@ -415,7 +435,7 @@
 	// Get actual rendered dimensions
     if (dimensions.height == 0)
     {
-        // Get dimensions for string
+        // Get dimensions for string without dimensions of string with variable height
 #ifdef __CC_PLATFORM_IOS
         dimensions = [attributedString boundingRectWithSize:dimensions options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
 #elif defined(__CC_PLATFORM_MAC)
@@ -435,6 +455,45 @@
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
+        // Handle strings with fixed dimensions
+        if (_adjustsFontSizeToFit)
+        {
+            float fontSize = [attributedString singleFontSize];
+            if (fontSize)
+            {
+                // This is a string that can be resized (it only uses one font and size)
+#ifdef __CC_PLATFORM_IOS
+                CGSize wantedSize = [attributedString boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+#elif defined(__CC_PLATFORM_MAC)
+                CGSize wantedSize = [attributedString boundingRectWithSize:CGSizeZero options:NSStringDrawingUsesLineFragmentOrigin].size;
+#endif
+                
+                float wScaleFactor = 1;
+                float hScaleFactor = 1;
+                if (wantedSize.width > dimensions.width)
+                {
+                    wScaleFactor = dimensions.width/wantedSize.width;
+                }
+                if (wantedSize.height > dimensions.height)
+                {
+                    hScaleFactor = dimensions.height/wantedSize.height;
+                }
+                
+                float scaleFactor = 1;
+                if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
+                else scaleFactor = hScaleFactor;
+            
+                if (scaleFactor != 1)
+                {
+                    float newFontSize = fontSize * scaleFactor;
+                    float minFontSize = _minimumFontSize * CC_CONTENT_SCALE_FACTOR();
+                    if (minFontSize && newFontSize < minFontSize) newFontSize = minFontSize;
+                    attributedString = [attributedString copyWithNewFontSize:newFontSize];
+                }
+            }
+        }
+
+        // Handle vertical alignment
 #ifdef __CC_PLATFORM_IOS
         CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
 #elif defined(__CC_PLATFORM_MAC)
