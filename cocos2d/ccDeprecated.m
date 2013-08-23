@@ -499,58 +499,13 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 #pragma mark - LabelTTF
 
 @implementation CCLabelTTF (Deprecated)
-#warning fix deprecations for CCLabelTTF
-/*
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment];
-}
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment lineBreakMode:lineBreakMode];
-}
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment];
-}
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment lineBreakMode:lineBreakMode];	
-}
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment lineBreakMode:lineBreakMode];
-}
 
-+ (id) labelWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)alignment vAlignment:(CCVerticalTextAlignment)vertAlignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self labelWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:vertAlignment];
-}
-
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment];
-}
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment lineBreakMode:lineBreakMode];
-}*/
 @end
 
 #pragma mark - Texture2D
 
 @implementation CCTexture2D (Deprecated)
-#warning Fix deprecations for texture
-/*
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return  [self initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop lineBreakMode:lineBreakMode ];
-}
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size
-{
-	return [self initWithString:string fontName:name fontSize:size dimensions:dimensions hAlignment:alignment vAlignment:kCCVerticalTextAlignmentTop ];
-}
- */
+
 @end
 
 #pragma mark - Effects
