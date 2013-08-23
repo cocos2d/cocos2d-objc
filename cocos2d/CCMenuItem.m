@@ -77,22 +77,26 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 
 // Designated initializer
--(id) initWithBlock:(void (^)(id))block
-{
-	if((self=[super init]) ) {
+-(id) initWithBlock:(void (^)(id))block {
+    
+    self = [ super init ];
+    NSAssert( self != nil, @"Unable to create class" );
+    
+    if( block )
+        _block = [block copy];
+    
+    self.anchorPoint = ccp(0.5f, 0.5f);
+    _isEnabled = YES;
+    _isSelected = NO;
+    
+    // enable touch handling for all menu items
+    self.userInteractionEnabled = YES;
+    
+    // WARNING: Will be disabled in v2.2
+    _releaseBlockAtCleanup = YES;
 
-		if( block )
-			_block = [block copy];
-
-		self.anchorPoint = ccp(0.5f, 0.5f);
-		_isEnabled = YES;
-		_isSelected = NO;
-		
-		// WARNING: Will be disabled in v2.2
-		_releaseBlockAtCleanup = YES;
-
-	}
-	return self;
+	
+	return( self );
 }
 
 -(void) setContentSize:(CGSize)contentSize {

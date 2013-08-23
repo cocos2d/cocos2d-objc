@@ -142,6 +142,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
+        label.userInteractionEnabled = YES;
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 

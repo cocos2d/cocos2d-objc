@@ -117,6 +117,8 @@ CGFloat	__ccContentScaleFactor = 1;
 		_isContentScaleSupported = NO;
 
 		_touchDispatcher = [[CCTouchDispatcher alloc] init];
+        
+        
 
 		// running thread is main thread on iOS
 		_runningThread = [NSThread currentThread];

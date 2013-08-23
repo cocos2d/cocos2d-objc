@@ -78,7 +78,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
 #import "../../Support/OpenGL_Internal.h"
-
+#import "CCScene.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -322,37 +322,30 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 // Pass the touches to the superview
 #pragma mark CCGLView - Touch Delegate
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesBegan:touches withEvent:event];
-	}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to touch manager
+    [ [ CCDirector sharedDirector ].touchManager touchesBegan:touches withEvent:event ];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesMoved:touches withEvent:event];
-	}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to touch manager
+    [ [ CCDirector sharedDirector ].touchManager touchesMoved:touches withEvent:event ];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesEnded:touches withEvent:event];
-	}
-}
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesCancelled:touches withEvent:event];
-	}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to touch manager
+    [ [ CCDirector sharedDirector ].touchManager touchesEnded:touches withEvent:event ];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to touch manager
+    [ [ CCDirector sharedDirector ].touchManager touchesCancelled:touches withEvent:event ];
+}
+ 
 @end
 
 
