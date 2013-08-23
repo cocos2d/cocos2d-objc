@@ -35,6 +35,7 @@
 #import "ccMacros.h"
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
+#import "CCConfiguration.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -94,14 +95,17 @@
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 {
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
 
+// This is a private initializer
 - (id) initWithAttributedString:(NSAttributedString *)attrString fontName:(NSString*)fontName fontSize:(float)fontSize dimensions:(CGSize)dimensions
 {
     if ( (self = [super init]) )
@@ -109,14 +113,14 @@
         if (!fontName) fontName = @"Helvetica";
         if (!fontSize) fontSize = 12;
         
-        _blendFunc.src = GL_ONE;
-        _blendFunc.dst = GL_ONE;
+        _blendFunc.src = CC_BLEND_SRC;
+        _blendFunc.dst = CC_BLEND_DST;
         
         // other properties
         self.fontName = fontName;
         self.fontSize = fontSize;
         self.dimensions = dimensions;
-        self.attributedString = attrString;
+        [self _setAttributedString:attrString];
     }
     return self;
 }
@@ -125,7 +129,7 @@
 
 #pragma mark Properties
 
-- (void) setAttributedString:(NSAttributedString *)attributedString
+- (void) _setAttributedString:(NSAttributedString *)attributedString
 {
     NSAssert(attributedString, @"Invalid attributedString");
     
@@ -137,10 +141,16 @@
     }
 }
 
+- (void) setAttributedString:(NSAttributedString *)attributedString
+{
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
+    [self _setAttributedString:attributedString];
+}
+
 - (void) setString:(NSString*)str
 {
 	NSAssert( str, @"Invalid string" );
-    self.attributedString = [[NSAttributedString alloc] initWithString:str];
+    [self _setAttributedString:[[NSAttributedString alloc] initWithString:str]];
 }
 
 -(NSString*) string
@@ -244,14 +254,24 @@
 	return [NSString stringWithFormat:@"<%@ = %p | FontSize = %.1f>", [self class], self, _fontSize];
 }
 
-
-
-#pragma mark Helpers
+- (void) visit
+{
+    if (_isTextureDirty)
+    {
+        [self updateTexture];
+    }
+    
+    [super visit];
+}
 
 - (void) setTextureDirty
 {
     _isTextureDirty = YES;
 }
+
+
+#pragma mark -
+#pragma mark Render Font Mac & iOS 6
 
 - (BOOL) updateTexture
 {
@@ -259,6 +279,14 @@
     if (!_isTextureDirty) return NO;
     
     _isTextureDirty = NO;
+    
+#ifdef __CC_PLATFORM_IOS
+    // Handle fonts on iOS 5
+    if ([CCConfiguration sharedConfiguration].OSVersion < kCCiOSVersion_6_0_0)
+    {
+        return [self updateTextureOld];
+    }
+#endif
     
     // Set default values for font attributes if they are not set in the attributed string
     
@@ -606,18 +634,18 @@
 	return texture;
 }
 
-- (void) visit
+
+#pragma mark -
+#pragma mark Render Font iOS 5
+
+#ifdef __CC_PLATFORM_IOS
+- (BOOL) updateTextureOld
 {
-    if (_isTextureDirty)
-    {
-        [self updateTexture];
-    }
-    
-    [super visit];
+    return YES;
 }
+#endif
 
-
-
+#pragma mark -
 #pragma mark Handle HTML
 
 #ifdef __CC_PLATFORM_MAC
