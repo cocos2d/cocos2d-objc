@@ -45,28 +45,22 @@
 #pragma mark CCTexture2D - Text
 
 /**
- Extensions to make it easy to create a CCTexture2D object from a string of text.
+ Extension to make it easy to create a CCTexture2D object from a string of text.
  Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
  */
-@interface CCTexture2D (Text)
-/** Initializes a texture from an attributed string with dimensions and a full color option.
- @since v2.5
- */
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor;
-
-@end
-
 @implementation CCTexture2D (Text)
 
-- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions useFullColor:(BOOL) fullColor
+- (id) initWithAttributedString:(NSAttributedString*)attributedString dimensions:(CGSize)dimensions verticalAlignment:(CCVerticalTextAlignment)vAlign useFullColor:(BOOL) fullColor
 {
 	NSAssert(attributedString, @"Invalid attributedString");
+    
+    CGSize originalDimensions = dimensions;
     
     float xOffset = 0;
     float yOffset = 0;
     
 	// Get actual rendered dimensions
-    if (dimensions.width == 0 || dimensions.height == 0)
+    if (dimensions.height == 0)
     {
         // Get dimensions for string
 #ifdef __CC_PLATFORM_IOS
@@ -84,6 +78,22 @@
             
             dimensions.width += xOffset * 2;
             dimensions.height += yOffset * 2;
+        }
+    }
+    else if (dimensions.width > 0 && dimensions.height > 0)
+    {
+#ifdef __CC_PLATFORM_IOS
+        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+#elif defined(__CC_PLATFORM_MAC)
+        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
+#endif
+        if (vAlign == kCCVerticalTextAlignmentBottom)
+        {
+            yOffset = originalDimensions.height - actualSize.height;
+        }
+        else if (vAlign == kCCVerticalTextAlignmentCenter)
+        {
+            yOffset = (originalDimensions.height - actualSize.height)/2;
         }
     }
     
@@ -408,7 +418,9 @@
     // Font
     if (![formattedAttributedString hasAttribute:NSFontAttributeName])
     {
-        [formattedAttributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:_fontName size:_fontSize] range:fullRange];
+        UIFont* font = [UIFont fontWithName:_fontName size:_fontSize];
+        if (!font) font = [UIFont fontWithName:@"Helvetica" size:_fontSize];
+        [formattedAttributedString addAttribute:NSFontAttributeName value:font range:fullRange];
     }
     
     // Shadow
@@ -497,7 +509,7 @@
     // Generate a new texture from the attributed string
 	CCTexture2D *tex;
     
-    tex = [[CCTexture2D alloc] initWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] dimensions:dimensions useFullColor:useFullColor];
+    tex = [[CCTexture2D alloc] initWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] dimensions:dimensions verticalAlignment:_verticalAlignment useFullColor:useFullColor];
 
 	if( !tex )
 		return NO;
