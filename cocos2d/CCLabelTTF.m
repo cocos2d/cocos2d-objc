@@ -121,6 +121,7 @@
         self.fontSize = fontSize;
         self.dimensions = dimensions;
         self.fontColor = ccc4(255, 255, 255, 255);
+        self.outlineWidth = 1;
         [self _setAttributedString:attrString];
     }
     return self;
@@ -178,6 +179,17 @@
 		// Force update
 		[self setTextureDirty];
 	}
+}
+
+- (void) setFontColor:(ccColor4B)fontColor
+{
+    if (!ccc4BEqual(_fontColor, fontColor))
+    {
+        _fontColor = fontColor;
+        
+        // Force update
+        [self setTextureDirty];
+    }
 }
 
 -(void) setDimensions:(CGSize) dim
@@ -244,6 +256,24 @@
     if (_shadowBlurRadius != shadowBlurRadius)
     {
         _shadowBlurRadius = shadowBlurRadius;
+        [self setTextureDirty];
+    }
+}
+
+- (void) setOutlineColor:(ccColor4B)outlineColor
+{
+    if (!ccc4BEqual(outlineColor, _outlineColor))
+    {
+        _outlineColor = outlineColor;
+        [self setTextureDirty];
+    }
+}
+
+- (void) setOutlineWidth:(float)outlineWidth
+{
+    if (outlineWidth != _outlineWidth)
+    {
+        _outlineWidth = outlineWidth;
         [self setTextureDirty];
     }
 }
