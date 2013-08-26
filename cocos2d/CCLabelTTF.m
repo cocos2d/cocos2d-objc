@@ -630,18 +630,17 @@
     yOffset = (POTSize.height - dimensions.height) - yOffset;
 	
 	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
-    
-	[[NSGraphicsContext currentContext] setShouldAntialias:YES];
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
 	[[NSAffineTransform transform] set];
     
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    
     // Handle shadow
     if (hasShadow || hasOutline)
     {
         NSMutableAttributedString* effectsString = [attributedString mutableCopy];
-        NSRange fullRange = NSMakeRange(0, effectsString.length);
         
         if (hasShadow)
         {
@@ -651,27 +650,33 @@
             float a = ((float)_shadowColor.a)/255;
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
-            NSShadow* shadow = [[NSShadow alloc] init];
-            shadow.shadowOffset = CGSizeMake(shadowOffset.x, shadowOffset.y);
-            shadow.shadowColor = color;
-            shadow.shadowBlurRadius = shadowBlurRadius;
-            
-            [effectsString addAttribute:NSShadowAttributeName value: shadow range:fullRange];
+            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
         }
         
         if (hasOutline)
         {
+            
+            CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+            CGContextSetLineWidth(context, outlineWidth * 2);
+            CGContextSetLineJoin(context, kCGLineJoinRound);
+            
             float r = ((float)_outlineColor.r)/255;
             float g = ((float)_outlineColor.g)/255;
             float b = ((float)_outlineColor.b)/255;
             float a = ((float)_outlineColor.a)/255;
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
-            [effectsString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:-outlineWidth] range:fullRange];
-            [effectsString addAttribute:NSStrokeColorAttributeName value:color range:fullRange];
+            [effectsString addAttribute:NSForegroundColorAttributeName value:color range:NSMakeRange(0, effectsString.length)];
+            
+            [effectsString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
+            
+            if (hasShadow)
+            {
+                CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
+                [effectsString drawInRect:drawArea];
+            }
+            CGContextSetTextDrawingMode(context, kCGTextFill);
         }
-        
-        attributedString = effectsString;
     }
 	
     [attributedString drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
