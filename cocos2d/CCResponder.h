@@ -28,12 +28,19 @@
  */
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
+#import "CCTouchManager.h"
 
 // -----------------------------------------------------------------
 
 @interface CCResponder : NSObject
 
 // -----------------------------------------------------------------
+
+/** Holds the touch manager
+ @since v2.5
+ */
+@property ( nonatomic, weak ) CCTouchManager* touchManager;
 
 +( id )responder;
 -( id )init;

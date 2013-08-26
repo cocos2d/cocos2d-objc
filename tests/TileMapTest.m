@@ -133,9 +133,8 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void) ccTouchesMoved:(NSSet*)set withEvent:(UIEvent *)event
+-(void) touchMoved:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [set anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
 

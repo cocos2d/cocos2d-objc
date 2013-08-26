@@ -42,7 +42,6 @@
 #import "CCTexture2D.h"
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
-#import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #import "CCActionTiledGrid.h"
 #import "CCActionGrid3D.h"
@@ -132,10 +131,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 #if __CC_PLATFORM_IOS
-@interface CCTouchDispatcher (Deprecated)
-// new: [director touchDispatcher]
-+(CCTouchDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
-@end
+
 #elif __CC_PLATFORM_MAC
 @interface CCEventDispatcher (Deprecated)
 // new: [director eventDispatcher]
@@ -161,8 +157,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 
 @interface CCLayer (Deprecated)
 #if __CC_PLATFORM_IOS
-// new: setTouchEnabled:
--(void) setIsTouchEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
 // new: setAccelerometerEnabled:
 -(void) setIsAccelerometerEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
 #elif __CC_PLATFORM_MAC

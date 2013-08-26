@@ -33,14 +33,9 @@
 #import "../../CCDirector.h"
 #import "kazmath/mat4.h"
 
-@class CCTouchDispatcher;
-
 /** CCDirector extensions for iPhone
  */
 @interface CCDirector (iOSExtension)
-
-/** sets the CCTouchDispatcher (iOS only) */
-@property (nonatomic,readwrite,retain) CCTouchDispatcher * touchDispatcher;
 
 /** The size in pixels of the surface. It could be different than the screen size.
  High-res devices might have a higher surface size than the screen size.
@@ -79,7 +74,6 @@
 	/* contentScaleFactor could be simulated */
 	BOOL	_isContentScaleSupported;
 	
-	CCTouchDispatcher	*_touchDispatcher;
 }
 
 // XXX: At least one method is needed for BridgeSupport

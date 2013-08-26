@@ -103,6 +103,7 @@ Class restartAction()
 //        CCMenu *testMenu = [CCMenu menuWithItems:test, nil];
 //        testMenu.position = ccp(testMenu.contentSize.width/2, testMenu.contentSize.height/2);
 //        [self addChild:testMenu z:1 tag:10];
+        
 	}
 	
 	return self;

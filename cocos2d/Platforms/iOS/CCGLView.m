@@ -91,7 +91,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @synthesize surfaceSize=_size;
 @synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
-@synthesize touchDelegate=_touchDelegate;
 @synthesize context=_context;
 @synthesize multiSampling=_multiSampling;
 
@@ -143,6 +142,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;
 		}
+        
+        /** Multiple touch default enabled
+         @since v2.5
+         */
+        self.multipleTouchEnabled = YES;
 
 		CHECK_GL_ERROR_DEBUG();
 	}

@@ -39,7 +39,6 @@
 #import "Support/CGPointExtension.h"
 
 #ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCEventDispatcher.h"
@@ -53,9 +52,7 @@
 #pragma mark Layer
 
 #if __CC_PLATFORM_IOS
-@interface CCLayer ()
--(void) registerWithTouchDispatcher;
-@end
+
 #endif // __CC_PLATFORM_IOS
 
 @implementation CCLayer
@@ -69,11 +66,12 @@
 		_anchorPoint = ccp(0.5f, 0.5f);
 		[self setContentSize:s];
 		self.ignoreAnchorPointForPosition = YES;
-
-		_touchEnabled = NO;
-		_touchPriority = 0;
-		_touchMode = kCCTouchesAllAtOnce;
-        _touchSwallow = YES;
+        
+        /** Layers default accept user intercation and multiple touches
+         @since v2.5
+         */
+        self.userInteractionEnabled = YES;
+        self.multipleTouchEnabled = YES;
 
 #ifdef __CC_PLATFORM_IOS
 		_accelerometerEnabled = NO;
@@ -91,15 +89,6 @@
 #pragma mark Layer - iOS - Touch and Accelerometer related
 
 #ifdef __CC_PLATFORM_IOS
--(void) registerWithTouchDispatcher
-{
-	CCDirector *director = [CCDirector sharedDirector];
-	
-	if( _touchMode == kCCTouchesAllAtOnce )
-		[[director touchDispatcher] addStandardDelegate:self priority:_touchPriority];
-	else /* one by one */
-		[[director touchDispatcher] addTargetedDelegate:self priority:_touchPriority swallowsTouches:_touchSwallow];
-}
 
 -(BOOL) isAccelerometerEnabled
 {
@@ -124,71 +113,6 @@
 	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
 }
 
--(BOOL) isTouchEnabled
-{
-	return _touchEnabled;
-}
-
--(void) setTouchEnabled:(BOOL)enabled
-{	
-	if( _touchEnabled != enabled ) {
-		_touchEnabled = enabled;
-		if( _isRunning) {
-			if( enabled )
-				[self registerWithTouchDispatcher];
-			else {
-				CCDirector *director = [CCDirector sharedDirector];
-				[[director touchDispatcher] removeDelegate:self];
-			}
-		}
-	}
-}
-
--(NSInteger) touchPriority
-{
-	return _touchPriority;
-}
--(void) setTouchPriority:(NSInteger)touchPriority
-{
-	if( _touchPriority != touchPriority ) {
-		_touchPriority = touchPriority;
-		
-		if( _touchEnabled) {
-			[self setTouchEnabled:NO];
-			[self setTouchEnabled:YES];
-		}
-	}
-}
-
--(ccTouchesMode) touchMode
-{
-	return _touchMode;
-}
--(void) setTouchMode:(ccTouchesMode)touchMode
-{
-	if( _touchMode != touchMode ) {
-		_touchMode = touchMode;
-		if( _touchEnabled) {
-			[self setTouchEnabled:NO];
-			[self setTouchEnabled:YES];
-		}
-	}
-}
-
--(BOOL) touchSwallow
-{
-	return _touchSwallow;
-}
--(void) setTouchSwallow:(BOOL)touchSwallow
-{
-	if( _touchSwallow != touchSwallow ) {
-		_touchSwallow = touchSwallow;
-		if( _touchEnabled) {
-			[self setTouchEnabled:NO];
-			[self setTouchEnabled:YES];
-		}
-	}
-}
 
 #elif defined(__CC_PLATFORM_MAC)
 
@@ -345,10 +269,6 @@
 -(void) onEnter
 {
 #ifdef __CC_PLATFORM_IOS
-	// register 'parent' nodes first
-	// since events are propagated in reverse order
-	if (_touchEnabled)
-		[self registerWithTouchDispatcher];
 
 #elif defined(__CC_PLATFORM_MAC)
 	CCDirector *director = [CCDirector sharedDirector];
@@ -387,11 +307,8 @@
 
 -(void) onExit
 {
-	CCDirector *director = [CCDirector sharedDirector];
 
 #ifdef __CC_PLATFORM_IOS
-	if( _touchEnabled )
-		[[director touchDispatcher] removeDelegate:self];
 
 	if( _accelerometerEnabled )
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];

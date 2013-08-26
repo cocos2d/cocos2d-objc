@@ -148,9 +148,6 @@
 #import "Platforms/CCNS.h"
 
 #ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCTouchDispatcher.h"
-#import "Platforms/iOS/CCTouchDelegateProtocol.h"
-#import "Platforms/iOS/CCTouchHandler.h"
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 

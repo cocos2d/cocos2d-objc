@@ -30,7 +30,6 @@
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
-#import "Platforms/iOS/CCTouchDelegateProtocol.h"		// Touches only supported on iOS
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCEventDispatcher.h"
 #endif
@@ -39,11 +38,6 @@
 #import "CCNode.h"
 
 #pragma mark - CCLayer
-
-typedef enum {
-	kCCTouchesAllAtOnce,
-	kCCTouchesOneByOne,
-} ccTouchesMode;
 
 /** CCLayer is a subclass of CCNode that implements the CCTouchEventsDelegate protocol.
 
@@ -54,13 +48,8 @@ typedef enum {
  - It can receive Mouse events on Mac
 */
 #ifdef __CC_PLATFORM_IOS
-@interface CCLayer : CCNode <CCAccelerometerDelegate, CCTouchAllAtOnceDelegate, CCTouchOneByOneDelegate>
+@interface CCLayer : CCNode < CCAccelerometerDelegate >
 {
-	BOOL _touchEnabled;
-	NSInteger _touchPriority;
-	BOOL _touchMode;
-    BOOL _touchSwallow;
-	
 	BOOL _accelerometerEnabled;
 }
 
@@ -72,21 +61,6 @@ typedef enum {
  @since v0.8.1
  */
 @property(nonatomic, assign, getter = isAccelerometerEnabled) BOOL accelerometerEnabled;
-
-/** whether or not it will receive Touch events
- @since v0.8.1
- */
-@property(nonatomic, assign, getter = isTouchEnabled) BOOL touchEnabled;
-/** priority of the touch events. Default is 0 */
-@property(nonatomic, assign) NSInteger touchPriority;
-/** Touch modes.
-	- kCCTouchesAllAtOnce: Receives all the available touches at once.
-	- kCCTouchesOneByOne: Receives one touch at the time.
- */
-@property(nonatomic, assign) ccTouchesMode touchMode;
-
-/** whether touch events are swallowed (in kCCTouchesOneByOne mode) */
-@property(nonatomic, assign) BOOL touchSwallow;
 
 /** sets the accelerometer's update frequency. A value of 1/2 means that the callback is going to be called twice per second.
  @since v2.1

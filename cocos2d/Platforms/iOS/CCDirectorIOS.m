@@ -33,8 +33,6 @@
 
 // cocos2d imports
 #import "CCDirectorIOS.h"
-#import "CCTouchDelegateProtocol.h"
-#import "CCTouchDispatcher.h"
 #import "../../CCScheduler.h"
 #import "../../CCActionManager.h"
 #import "../../CCTextureCache.h"
@@ -87,15 +85,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	// override me
 }
 
--(CCTouchDispatcher*) touchDispatcher
-{
-	return nil;
-}
-
--(void) setTouchDispatcher:(CCTouchDispatcher*)touchDispatcher
-{
-	//
-}
 @end
 
 
@@ -116,7 +105,6 @@ CGFloat	__ccContentScaleFactor = 1;
 		__ccContentScaleFactor = 1;
 		_isContentScaleSupported = NO;
 
-		_touchDispatcher = [[CCTouchDispatcher alloc] init];
         
         
 
@@ -253,20 +241,6 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self performSelector:@selector(drawScene) onThread:thread withObject:nil waitUntilDone:YES];
 }
 
-#pragma mark Director - TouchDispatcher
-
--(CCTouchDispatcher*) touchDispatcher
-{
-	return _touchDispatcher;
-}
-
--(void) setTouchDispatcher:(CCTouchDispatcher*)touchDispatcher
-{
-	if( touchDispatcher != _touchDispatcher ) {
-		_touchDispatcher = touchDispatcher;
-	}
-}
-
 #pragma mark Director - Retina Display
 
 -(CGFloat) contentScaleFactor
@@ -395,9 +369,6 @@ GLToClipTransform(kmMat4 *transformOut)
 
 -(void) end
 {
-	// don't release the event handlers
-	// They are needed in case the director is run again
-	[_touchDispatcher removeAllDelegates];
 
 	[super end];
 }
@@ -417,8 +388,6 @@ GLToClipTransform(kmMat4 *transformOut)
 			if( __ccContentScaleFactor != 1 )
 				[self updateContentScaleFactor];
 
-			[view setTouchDelegate: _touchDispatcher];
-			[_touchDispatcher setDispatchEvents: YES];
 		}
 	}
 }

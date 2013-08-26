@@ -520,24 +520,24 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent *)event
+-(BOOL) touchBegan:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	[self ccTouchesMoved:touches withEvent:event];
+	[self touchMoved:touch withEvent:event];
+    return( YES );
 }
 
--(void) ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
+-(void) touchEnded:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	[self ccTouchesMoved:touches withEvent:event];
+	[self touchMoved:touch withEvent:event];
 }
 
--(void) ccTouchesCancelled:(NSSet*)touches withEvent:(UIEvent *)event
+-(void) touchCancelled:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	[self ccTouchesMoved:touches withEvent:event];
+	[self touchMoved:touch withEvent:event];
 }
 
--(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+-(void) touchMoved:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
@@ -691,11 +691,10 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
-	UITouch *touch = [touches anyObject];
 	CGPoint start = [touch locationInView: [touch view]];
 	start = [[CCDirector sharedDirector] convertToGL: start];
 

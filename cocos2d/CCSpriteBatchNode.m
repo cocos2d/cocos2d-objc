@@ -142,7 +142,8 @@ const NSUInteger defaultCapacity = 29;
     
     // loop through all attached nodes, and register as a touch target if user interaction enabled
     for ( CCNode* node in _descendants ) {
-        if ( node.isUserInteractionEnabled == YES ) [ node registerAsTouchReceiver ];
+        if ( node.isUserInteractionEnabled == YES ) [ self.touchManager addTouchReceiver:node ];
+
     }
     
     // -------------------------------------------------

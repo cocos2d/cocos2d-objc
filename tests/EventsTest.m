@@ -364,14 +364,14 @@ Class restartAction()
 
 -(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event
 {
-    NSLog(@"touchesBegan: %@", event);
+    NSLog(@"touchBegan: %@", event);
     [self resetToTouchesMatchingPhaseTouchingWithEvent:event];
     return YES;
 }
 
 -(BOOL) ccTouchesMovedWithEvent:(NSEvent *)event
 {
-    NSLog(@"touchesMoved: %@", event);
+    NSLog(@"touchMoved: %@", event);
     NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:[CCDirector sharedDirector].view];
     for (NSTouch *touch in touches) {
         for(int i = 0; i < nuSprites_; i++) {

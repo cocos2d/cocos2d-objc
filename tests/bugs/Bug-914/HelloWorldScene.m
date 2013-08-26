@@ -71,14 +71,15 @@
 	return self;
 }
 
-- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	NSLog(@"Number of touches: %d", [touches count]);
 }
 
-- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	[self ccTouchesMoved:touches withEvent:event];
+	[self touchMoved:touch withEvent:event];
+    return( YES );
 }
 
 -(void) restart:(id)sender

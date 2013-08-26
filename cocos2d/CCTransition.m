@@ -42,7 +42,6 @@
 #import "Support/CGPointExtension.h"
 
 #ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCTouchDispatcher.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
@@ -144,10 +143,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	[super onEnter];
 	
 	// disable events while transitions
-	CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-	[[director touchDispatcher] setDispatchEvents: NO];
+
 #elif defined(__CC_PLATFORM_MAC)
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director eventDispatcher] setDispatchEvents: NO];
 #endif
 	
@@ -165,10 +164,10 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	[super onExit];
 	
 	// enable events while transitions
-	CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-	[[director touchDispatcher] setDispatchEvents: YES];
+
 #elif defined(__CC_PLATFORM_MAC)
+	CCDirector *director = [CCDirector sharedDirector];
 	[[director eventDispatcher] setDispatchEvents: YES];
 #endif
 	
