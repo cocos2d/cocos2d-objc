@@ -114,7 +114,7 @@ Class restartAction()
 	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -153,7 +153,7 @@ Class restartAction()
 		item4.anchorPoint = ccp(0,0);
 
 		[self addChild: menu z:100];
-
+         
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0000" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 		[self addChild:labelAtlas z:100 tag:kTagParticleCount];
 		labelAtlas.position = ccp(s.width-66,50);
@@ -167,8 +167,7 @@ Class restartAction()
 		id move_back = [move reverse];
 		id seq = [CCSequence actions: move, move_back, nil];
 		[background runAction:[CCRepeatForever actionWithAction:seq]];
-
-
+        
 		[self scheduleUpdate];
 	}
 
@@ -183,19 +182,19 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void) ccTouchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+-(BOOL) touchBegan:(UITouch*)touch withEvent:(UIEvent*)event
 {
-	[self ccTouchesEnded:touches withEvent:event];
+	[self touchEnded:touch withEvent:event];
+    return( YES );
 }
 
-- (void)ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+- (void)touchMoved:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	[self ccTouchesEnded:touches withEvent:event];
+	[self touchEnded:touch withEvent:event];
 }
 
-- (void)ccTouchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch*)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];

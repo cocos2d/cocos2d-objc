@@ -90,9 +90,6 @@ enum {
 -(void) alignItemsInRows: (NSNumber *) rows vaList: (va_list) args;
 -(void) alignItemsInRowsWithArray: (NSArray*) arrayOfNumbers;
 
-/** set event handler priority. By default it is: kCCMenuTouchPriority */
--(void) setHandlerPriority:(NSInteger)newPriority;
-
 /** Menu item in the menu has been pressed
  @since v2.5
  */

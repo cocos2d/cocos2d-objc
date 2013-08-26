@@ -529,12 +529,12 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 	CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
+    return( YES );
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -604,19 +604,18 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
 	CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
     lastPoint_ = point;
+    return( YES );
 }
 
--(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+-(void) touchMoved:(UITouch*)touches withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
-	UITouch *touch = [touches anyObject];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
     CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
 	CGPoint diff = ccpSub(point, lastPoint_);
@@ -625,7 +624,7 @@ Class restartAction()
     lastPoint_ = point;
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
     scrolling_ = NO;

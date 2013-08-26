@@ -36,7 +36,6 @@
 {
 	CCDirector *director =  [CCDirector sharedDirector];
 
-	[[director touchDispatcher] addTargetedDelegate:self priority:0 swallowsTouches:YES];
 	[super onEnter];
 }
 
@@ -44,7 +43,6 @@
 {
 	CCDirector *director = [CCDirector sharedDirector];
 
-	[[director touchDispatcher] removeDelegate:self];
 	[super onExit];
 }
 
@@ -64,7 +62,7 @@
 	return YES;
 }
 
-- (void)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (BOOL)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	// If it weren't for the TouchDispatcher, you would need to keep a reference
 	// to the touch from touchBegan and check that the current touch is the same
@@ -79,6 +77,7 @@
 	touchPoint = [[CCDirector sharedDirector] convertToGL:touchPoint];
 
 	self.position = CGPointMake(touchPoint.x, self.position.y);
+    return( YES );
 }
 
 - (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event

@@ -37,7 +37,6 @@
 // -----------------------------------------------------------------
 
 enum {
-    CCTouchManagerMaxTouches            = 5,
     CCTouchManagerTouchBufferSize       = 128,
 };
 
@@ -46,10 +45,10 @@ enum {
 @protocol CCTouchProtocol < NSObject >
 
 @optional
--( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event;
--( void )touchesMoved:( NSSet* )touches withEvent:( UIEvent* )event;
--( void )touchesEnded:( NSSet* )touches withEvent:( UIEvent* )event;
--( void )touchesCancelled:( NSSet* )touches withEvent:( UIEvent* )event;
+-( BOOL )touchBegan:( UITouch* )touch withEvent:( UIEvent* )event;
+-( void )touchMoved:( UITouch* )touch withEvent:( UIEvent* )event;
+-( void )touchEnded:( UITouch* )touch withEvent:( UIEvent* )event;
+-( void )touchCancelled:( UITouch* )touch withEvent:( UIEvent* )event;
 
 @end
 
@@ -57,8 +56,8 @@ enum {
 
 @interface CCTouchObject : NSObject
 
-@property ( nonatomic, weak ) UIEvent* event;                       // the current event ( should not be retained )
 @property ( nonatomic, strong ) CCNode* target;                     // the target associated with the touch
+@property ( nonatomic, weak ) UIEvent* event;                       // the current event ( should not be retained )
 
 @end
 
@@ -73,17 +72,12 @@ enum {
 
 /**
  * CCNodes are added as touch targets for each frame, in the order they are rendered
- * This way, the scene can maintain a list of nodes responding to touches
+ * This way, the touch manager at any time maintains a list of nodes responding to touches
  * The list is reset for each frame, before anything is rendered
- @since v2.5
  */
-
 -( void )addTouchReceiver:( CCNode* )receiver;
 
-/** Is called prior to rendering the scene
- @since v2.5
- */
- 
+// Is called prior to rendering the scene 
 -( void )removeAllTouchReceivers;
 
 // -----------------------------------------------------------------

@@ -239,15 +239,13 @@ enum {
 	[sprite setPosition: pos];
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteAtPosition: location];
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration

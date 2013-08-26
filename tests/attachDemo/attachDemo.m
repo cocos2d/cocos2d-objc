@@ -67,9 +67,8 @@ enum {
 	NSLog(@"total frames:%d", [[CCDirector sharedDirector] totalFrames] );
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];

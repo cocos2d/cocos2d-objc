@@ -237,9 +237,8 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 

@@ -173,6 +173,7 @@ static CCDirector *_sharedDirector = nil;
         _touchManager = [ CCTouchManager touchManager ];
 
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
+                
 	}
 
 	return self;

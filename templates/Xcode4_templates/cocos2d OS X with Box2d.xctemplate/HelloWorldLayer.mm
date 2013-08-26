@@ -238,16 +238,14 @@ enum {
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	//Add a new body/atlas sprite at the touched location
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteAtPosition: location];
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)

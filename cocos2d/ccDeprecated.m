@@ -70,14 +70,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #if __CC_PLATFORM_IOS
 
-#pragma mark - TouchDispatcher
-
-@implementation CCTouchDispatcher (Deprecated)
-+(CCTouchDispatcher*) sharedDispatcher
-{
-	return [[CCDirector sharedDirector] touchDispatcher];
-}
-@end
 #elif __CC_PLATFORM_MAC
 
 #pragma mark - EventDispatcher
@@ -130,10 +122,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 @implementation CCLayer (Deprecated)
 #if __CC_PLATFORM_IOS
--(void) setIsTouchEnabled:(BOOL)enabled
-{
-	[self setTouchEnabled:enabled];
-}
+
 -(void) setIsAccelerometerEnabled:(BOOL)enabled
 {
 	[self setAccelerometerEnabled:enabled];

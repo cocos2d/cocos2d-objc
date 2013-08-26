@@ -158,7 +158,8 @@ static NSUInteger globalOrderOfArrival = 1;
         // set default touch handling
         self.userInteractionEnabled = NO;
         self.touchLocked = YES;
-        _touchManager = [ director touchManager ];
+        self.multipleTouchEnabled = NO;
+        self.touchManager = [ director touchManager ];
         
 	}
 
@@ -556,7 +557,8 @@ static NSUInteger globalOrderOfArrival = 1;
 		return;
     
     // register the node as a touch target if enabled for user interaction
-    if ( self.isUserInteractionEnabled == YES ) [ self registerAsTouchReceiver ];
+    if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchReceiver:self ];
+
 
 	kmGLPushMatrix();
 
@@ -945,12 +947,6 @@ static NSUInteger globalOrderOfArrival = 1;
 // -----------------------------------------------------------------
 #pragma mark - touch interface
 // -----------------------------------------------------------------
-// registers the node as a touch receiver if it is attached to a scene and is at least a CCSprite
-// this is called in visit, so the touch list in the scene, is recreated for each frame
-
--( void )registerAsTouchReceiver {
-    [ _touchManager addTouchReceiver:self ];
-}
 
 /** Returns YES, if touch is inside sprite
  @since v2.5

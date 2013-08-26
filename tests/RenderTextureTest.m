@@ -280,9 +280,8 @@ Class restartAction()
 	[[controller navController] popViewControllerAnimated:YES];
 }
 
--(void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
 	CGPoint start = [touch locationInView: [touch view]];
 	start = [[CCDirector sharedDirector] convertToGL: start];
 	CGPoint end = [touch previousLocationInView:[touch view]];
@@ -575,41 +574,39 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
-- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+- (BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		sp1.position = location;
-		sp2.position = location;
-		sp3.position = location;
-		sp4.position = location;
-		sp5.position = location;
-		sp6.position = location;
-		sp7.position = location;
-		sp8.position = location;
-		sp9.position = location;
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    sp1.position = location;
+    sp2.position = location;
+    sp3.position = location;
+    sp4.position = location;
+    sp5.position = location;
+    sp6.position = location;
+    sp7.position = location;
+    sp8.position = location;
+    sp9.position = location;
+    return( YES );
 }
-- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+
+- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		sp1.position = location;
-		sp2.position = location;
-		sp3.position = location;
-		sp4.position = location;
-		sp5.position = location;
-		sp6.position = location;
-		sp7.position = location;
-		sp8.position = location;
-		sp9.position = location;
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    sp1.position = location;
+    sp2.position = location;
+    sp3.position = location;
+    sp4.position = location;
+    sp5.position = location;
+    sp6.position = location;
+    sp7.position = location;
+    sp8.position = location;
+    sp9.position = location;
 }
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
 	[self renderScreenShot];
 }
@@ -936,13 +933,11 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		[self addNewSpriteWithCoords: location];
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
 -(BOOL) ccMouseUp:(NSEvent *)event

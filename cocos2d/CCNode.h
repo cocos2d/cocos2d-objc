@@ -294,16 +294,16 @@ enum {
  */
 @property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
 
+/** Enabled multiple touches inside a single node
+ @since v2.5
+ */
+@property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
+
 /** Locks the touch to the node if touch started outside
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
 @property ( nonatomic, assign, getter = isTouchLocked ) BOOL touchLocked;
-
-/** Holds the touch manager
- @since v2.5
- */
-@property ( nonatomic, weak ) CCTouchManager* touchManager;
 
 // initializators
 /** allocates and initializes a node.
@@ -622,12 +622,8 @@ enum {
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
 
-/** registers the node as a touch receiver. Must be done each frame
- @since v2.5
- */
--( void )registerAsTouchReceiver;
-
 /** check if a touch is inside the node
+ to expand or shrink the touch area of a node, override this method
  @since v2.5
  */
 -( BOOL )hitTestWithTouch:( UITouch* )touch;
