@@ -507,8 +507,8 @@
     // Calculate padding
     if (hasShadow)
     {
-        xPadding = (shadowBlurRadius + fabs(shadowOffset.x)) * 2;
-        yPadding = (shadowBlurRadius + fabs(shadowOffset.y)) * 2;
+        xPadding = (shadowBlurRadius + fabs(shadowOffset.x));
+        yPadding = (shadowBlurRadius + fabs(shadowOffset.y));
     }
     if (hasOutline)
     {
@@ -690,9 +690,14 @@
 	[image lockFocus];
 	[[NSAffineTransform transform] set];
     
-    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    // XXX: The shadows are for some reason scaled on OS X if a retina display is connected
+    float retinaFix = 1;
+    for (NSScreen* screen in [NSScreen screens])
+    {
+        if (screen.backingScaleFactor > retinaFix) retinaFix = screen.backingScaleFactor;
+    }
     
-    CGAffineTransform trans = CGContextGetCTM(context);
+    CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
     // Handle shadow
     if (hasShadow || hasOutline)
@@ -707,7 +712,7 @@
             float a = ((float)_shadowColor.a)/255;
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
-            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
         }
         
         if (hasOutline)
