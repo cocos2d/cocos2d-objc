@@ -7,7 +7,7 @@ typedef enum tagPaddleState {
 	kPaddleStateUngrabbed
 } PaddleState;
 
-@interface Paddle : CCSprite <CCTouchOneByOneDelegate> {
+@interface Paddle : CCSprite {
 @private
 	PaddleState state;
 }

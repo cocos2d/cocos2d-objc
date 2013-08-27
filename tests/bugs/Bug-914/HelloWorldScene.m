@@ -35,7 +35,6 @@
 	if( (self=[super init] )) {
 
 
-		self.touchEnabled = YES;
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
@@ -71,15 +70,14 @@
 	return self;
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	NSLog(@"Number of touches: %d", [touches count]);
 }
 
-- (BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self touchMoved:touch withEvent:event];
-    return( YES );
+	[self touchesMoved:touch withEvent:event];
 }
 
 -(void) restart:(id)sender

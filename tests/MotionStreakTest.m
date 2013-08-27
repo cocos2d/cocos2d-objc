@@ -222,7 +222,7 @@ Class restartAction()
 	[super onEnter];
 
 #ifdef __CC_PLATFORM_IOS
-	self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 	self.mouseEnabled = YES;
 #endif
@@ -237,8 +237,9 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 

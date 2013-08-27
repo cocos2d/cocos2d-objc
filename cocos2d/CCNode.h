@@ -228,7 +228,7 @@ enum {
 /** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,strong) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */
-@property(nonatomic,readwrite,assign) BOOL visible;
+@property( nonatomic,readwrite,assign) BOOL visible;
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
@@ -627,6 +627,11 @@ enum {
  @since v2.5
  */
 -( BOOL )hitTestWithTouch:( UITouch* )touch;
+
+/** builds a list of touch receivers
+ @since v2.5
+ */
+-( void )buildTouchResponderList;
 
 @end
 

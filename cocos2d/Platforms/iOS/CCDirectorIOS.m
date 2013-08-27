@@ -123,8 +123,8 @@ CGFloat	__ccContentScaleFactor = 1;
 // Draw the Scene
 //
 - (void) drawScene
-{
-	/* calculate "global" dt */
+{	
+    /* calculate "global" dt */
 	[self calculateDeltaTime];
 
 	CCGLView *openGLview = (CCGLView*)[self view];
@@ -159,6 +159,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	if( _displayStats )
 		[self calculateMPF];
+    
 }
 
 -(void) setViewport

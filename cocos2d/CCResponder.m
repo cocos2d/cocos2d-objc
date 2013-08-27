@@ -54,6 +54,31 @@
 }
 
 // -----------------------------------------------------------------
+/** touchesBegan will be called if touch handler passed touch on to super ( next in chain )
+ @since v2.5
+ */
+
+-( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
+    
+    _touchManager.touchProcessed = NO;
+}
+
+-( void )touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+
+    _touchManager.touchProcessed = NO;
+}
+
+-( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+
+    _touchManager.touchProcessed = NO;
+}
+
+-( void )touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+
+    _touchManager.touchProcessed = NO;
+}
+
+// -----------------------------------------------------------------
 
 @end
 

@@ -27,23 +27,11 @@
 	if ((self = [super initWithTexture:aTexture]) ) {
 
 		state = kPaddleStateUngrabbed;
+        
+        self.userInteractionEnabled = YES;
 	}
 
 	return self;
-}
-
-- (void)onEnter
-{
-	CCDirector *director =  [CCDirector sharedDirector];
-
-	[super onEnter];
-}
-
-- (void)onExit
-{
-	CCDirector *director = [CCDirector sharedDirector];
-
-	[super onExit];
 }
 
 - (BOOL)containsTouchLocation:(UITouch *)touch
@@ -53,19 +41,18 @@
 	return CGRectContainsPoint(r, p);
 }
 
-- (BOOL)ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	if (state != kPaddleStateUngrabbed) return NO;
-	if ( ![self containsTouchLocation:touch] ) return NO;
+	if (state != kPaddleStateUngrabbed) return;
+	if ( ![self containsTouchLocation:touch] ) return;
 
 	state = kPaddleStateGrabbed;
-	return YES;
 }
 
-- (BOOL)ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	// If it weren't for the TouchDispatcher, you would need to keep a reference
-	// to the touch from touchBegan and check that the current touch is the same
+	// to the touch from touchesBegan and check that the current touch is the same
 	// as that one.
 	// Actually, it would be even more complicated since in the Cocos dispatcher
 	// you get NSSets instead of 1 UITouch, so you'd need to loop through the set
@@ -73,14 +60,14 @@
 
 	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");
 
+    UITouch* touch = [ touches anyObject ];
 	CGPoint touchPoint = [touch locationInView:[touch view]];
 	touchPoint = [[CCDirector sharedDirector] convertToGL:touchPoint];
 
 	self.position = CGPointMake(touchPoint.x, self.position.y);
-    return( YES );
 }
 
-- (void)ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	NSAssert(state == kPaddleStateGrabbed, @"Paddle - Unexpected state!");
 

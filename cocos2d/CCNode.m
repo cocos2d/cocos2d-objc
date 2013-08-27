@@ -556,10 +556,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	if (!_visible)
 		return;
     
-    // register the node as a touch target if enabled for user interaction
-    if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchReceiver:self ];
-
-
 	kmGLPushMatrix();
 
 	if ( _grid && _grid.active)
@@ -961,6 +957,34 @@ static NSUInteger globalOrderOfArrival = 1;
     return( YES );
 }
 
+-( void )buildTouchResponderList {
+    
+    if ( _children != nil ) {
+        
+        // add children with zOrder < 0
+		int i = 0;
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [ _children objectAtIndex:i ];
+			if ( [child zOrder] < 0 )
+				[ child buildTouchResponderList ];
+			else
+				break;
+		}
+
+        // add self
+        if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchResponder:self ];
+        
+        // add children with zOrder >= 0
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
+			[ child buildTouchResponderList ];
+		}
+    } else {
+        
+        // only add self
+        if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchResponder:self ];
+    }
+}
 
 // -----------------------------------------------------------------
 

@@ -33,7 +33,7 @@
 
 // -----------------------------------------------------------------
 
-@interface CCResponder : NSObject
+@interface CCResponder : NSObject < CCTouchProtocol >
 
 // -----------------------------------------------------------------
 

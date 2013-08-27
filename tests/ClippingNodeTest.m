@@ -498,7 +498,7 @@ Class restartAction()
     [self addChild:outerClipper_];
         
 #ifdef __CC_PLATFORM_IOS
-    self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
     self.mouseEnabled = YES;
 #endif
@@ -529,12 +529,12 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
-    return( YES );
 }
 
 #elif defined(__CC_PLATFORM_MAC)
@@ -596,7 +596,7 @@ Class restartAction()
     
     scrolling_ = NO;
 #ifdef __CC_PLATFORM_IOS
-    self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
     self.mouseEnabled = YES;
 #endif
@@ -604,18 +604,19 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(BOOL)touchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
 	CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
     lastPoint_ = point;
-    return( YES );
 }
 
--(void) touchMoved:(UITouch*)touches withEvent:(UIEvent *)event
+-(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
+    UITouch* touch = [ touches anyObject ];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
     CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
 	CGPoint diff = ccpSub(point, lastPoint_);
@@ -624,7 +625,7 @@ Class restartAction()
     lastPoint_ = point;
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
     scrolling_ = NO;

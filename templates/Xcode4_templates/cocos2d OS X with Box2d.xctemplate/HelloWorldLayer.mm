@@ -40,7 +40,6 @@ enum {
 		// enable events
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.mouseEnabled = YES;
@@ -238,8 +237,9 @@ enum {
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	//Add a new body/atlas sprite at the touched location
     CGPoint location = [touch locationInView: [touch view]];
     

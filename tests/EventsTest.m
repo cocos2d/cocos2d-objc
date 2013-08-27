@@ -298,7 +298,7 @@ Class restartAction()
 			[batch_ addChild:sprites_[i]];
 		}
 
-		self.touchEnabled = YES;
+
         self.gestureEnabled = YES;
 	}
 
@@ -364,14 +364,14 @@ Class restartAction()
 
 -(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event
 {
-    NSLog(@"touchBegan: %@", event);
+    NSLog(@"touchesBegan: %@", event);
     [self resetToTouchesMatchingPhaseTouchingWithEvent:event];
     return YES;
 }
 
 -(BOOL) ccTouchesMovedWithEvent:(NSEvent *)event
 {
-    NSLog(@"touchMoved: %@", event);
+    NSLog(@"touchesMoved: %@", event);
     NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseMoved inView:[CCDirector sharedDirector].view];
     for (NSTouch *touch in touches) {
         for(int i = 0; i < nuSprites_; i++) {

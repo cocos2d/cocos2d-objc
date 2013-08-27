@@ -49,7 +49,6 @@ enum {
 		
 		// enable events
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
@@ -239,8 +238,11 @@ enum {
 	[sprite setPosition: pos];
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView: [touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL: location];
