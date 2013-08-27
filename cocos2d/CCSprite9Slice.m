@@ -164,10 +164,10 @@ typedef enum {
 #if CC_SPRITE_DEBUG_DRAW == 1
 	// draw bounding box
 	CGPoint vertices[4]={
-		ccp(quad_.tl.vertices.x,quad_.tl.vertices.y),
-		ccp(quad_.bl.vertices.x,quad_.bl.vertices.y),
-		ccp(quad_.br.vertices.x,quad_.br.vertices.y),
-		ccp(quad_.tr.vertices.x,quad_.tr.vertices.y),
+		ccp(_quad.tl.vertices.x,_quad.tl.vertices.y),
+		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
+		ccp(_quad.br.vertices.x,_quad.br.vertices.y),
+		ccp(_quad.tr.vertices.x,_quad.tr.vertices.y),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2

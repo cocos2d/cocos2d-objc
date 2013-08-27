@@ -611,7 +611,7 @@
     // Render the label - different code for Mac / iOS
     
 #ifdef __CC_PLATFORM_IOS
-    yOffset = (POTSize.height - hDrawArea) + yOffset;
+    yOffset = (POTSize.height - dimensions.height) + yOffset;
 	
 	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
     
@@ -653,13 +653,19 @@
         float b = ((float)_outlineColor.b)/255;
         float a = ((float)_outlineColor.a)/255;
         
+        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        
+        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+        CGContextSetLineWidth(context, outlineWidth * 2);
         CGContextSetLineJoin(context, kCGLineJoinRound);
+        CGContextSetStrokeColorWithColor(context, [color CGColor]);
         
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
-        [outlineString addAttribute:NSStrokeColorAttributeName value:[UIColor colorWithRed:r green:g blue:b alpha:a] range:NSMakeRange(0, outlineString.length)];
-        [outlineString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:outlineWidth*2] range:NSMakeRange(0, outlineString.length)];
+        [outlineString removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, outlineString.length)];
         
         [outlineString drawInRect:drawArea];
+        
+        CGContextSetTextDrawingMode(context, kCGTextFill);
         
         // Don't draw shadow for main font
         CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
