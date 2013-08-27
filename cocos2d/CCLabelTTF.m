@@ -165,8 +165,6 @@
     
 	if( fontName.hash != _fontName.hash ) {
 		_fontName = [fontName copy];
-		
-		// Force update
 		[self setTextureDirty];
 	}
 }
@@ -175,10 +173,17 @@
 {
 	if( fontSize != _fontSize ) {
 		_fontSize = fontSize;
-		
-		// Force update
 		[self setTextureDirty];
 	}
+}
+
+- (void) setAdjustsFontSizeToFit:(BOOL)adjustsFontSizeToFit
+{
+    if (adjustsFontSizeToFit != _adjustsFontSizeToFit)
+    {
+        _adjustsFontSizeToFit = adjustsFontSizeToFit;
+        [self setTextureDirty];
+    }
 }
 
 - (void) setFontColor:(ccColor4B)fontColor
@@ -186,8 +191,15 @@
     if (!ccc4BEqual(_fontColor, fontColor))
     {
         _fontColor = fontColor;
-        
-        // Force update
+        [self setTextureDirty];
+    }
+}
+
+- (void) setMinimumFontSize:(float)minimumFontSize
+{
+    if (minimumFontSize != _minimumFontSize)
+    {
+        _minimumFontSize = minimumFontSize;
         [self setTextureDirty];
     }
 }
@@ -197,8 +209,6 @@
     if( dim.width != _dimensions.width || dim.height != _dimensions.height)
 	{
         _dimensions = dim;
-        
-		// Force update
 		[self setTextureDirty];
     }
 }
@@ -214,8 +224,6 @@
     if (alignment != _horizontalAlignment)
     {
         _horizontalAlignment = alignment;
-        
-        // Force update
 		[self setTextureDirty];
 
     }
@@ -226,8 +234,6 @@
     if (_verticalAlignment != verticalAlignment)
     {
         _verticalAlignment = verticalAlignment;
-        
-		// Force update
 		[self setTextureDirty];
     }
 }
@@ -493,6 +499,23 @@
     float yOffset = 0;
     float scaleFactor = 1;
     
+    float xPadding = 0;
+    float yPadding = 0;
+    float wDrawArea = 0;
+    float hDrawArea = 0;
+    
+    // Calculate padding
+    if (hasShadow)
+    {
+        xPadding = (shadowBlurRadius + fabs(shadowOffset.x)) * 2;
+        yPadding = (shadowBlurRadius + fabs(shadowOffset.y)) * 2;
+    }
+    if (hasOutline)
+    {
+        xPadding += outlineWidth;
+        yPadding += outlineWidth;
+    }
+    
 	// Get actual rendered dimensions
     if (dimensions.height == 0)
     {
@@ -503,22 +526,17 @@
         dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
 #endif
         
-        // Outset the dimensions with regards to shadow
-        if (hasShadow)
-        {
-            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
-            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
-        }
-        if (hasOutline)
-        {
-            xOffset += outlineWidth;
-            yOffset += outlineWidth;
-        }
-        dimensions.width += xOffset * 2;
-        dimensions.height += yOffset * 2;
+        wDrawArea = dimensions.width;
+        hDrawArea = dimensions.height;
+        
+        dimensions.width += xPadding * 2;
+        dimensions.height += yPadding * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
+        wDrawArea = dimensions.width - xPadding * 2;
+        hDrawArea = dimensions.height - yPadding * 2;
+        
         // Handle strings with fixed dimensions
         if (_adjustsFontSizeToFit)
         {
@@ -534,13 +552,13 @@
                 
                 float wScaleFactor = 1;
                 float hScaleFactor = 1;
-                if (wantedSize.width > dimensions.width)
+                if (wantedSize.width > wDrawArea)
                 {
-                    wScaleFactor = dimensions.width/wantedSize.width;
+                    wScaleFactor = wDrawArea/wantedSize.width;
                 }
-                if (wantedSize.height > dimensions.height)
+                if (wantedSize.height > hDrawArea)
                 {
-                    hScaleFactor = dimensions.height/wantedSize.height;
+                    hScaleFactor = hDrawArea/wantedSize.height;
                 }
                 
                 if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
@@ -558,22 +576,23 @@
 
         // Handle vertical alignment
 #ifdef __CC_PLATFORM_IOS
-        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
 #elif defined(__CC_PLATFORM_MAC)
-        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
+        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
 #endif
         if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
         {
-            yOffset = originalDimensions.height - actualSize.height;
+            yOffset = hDrawArea - actualSize.height;
         }
         else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
         {
-            yOffset = (originalDimensions.height - actualSize.height)/2;
+            yOffset = (hDrawArea - actualSize.height)/2;
         }
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2
     dimensions.width = ceilf(dimensions.width/2)*2;
@@ -592,9 +611,9 @@
     // Render the label - different code for Mac / iOS
     
 #ifdef __CC_PLATFORM_IOS
-    yOffset = (POTSize.height - dimensions.height) + yOffset;
+    yOffset = (POTSize.height - hDrawArea) + yOffset;
 	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
     
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
@@ -657,15 +676,17 @@
     UIGraphicsPopContext();
     
 #elif defined(__CC_PLATFORM_MAC)
-    yOffset = (POTSize.height - dimensions.height) - yOffset;
+    yOffset = (POTSize.height - hDrawArea) - yOffset;
 	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
 	[[NSAffineTransform transform] set];
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
+    
+    CGAffineTransform trans = CGContextGetCTM(context);
     
     // Handle shadow
     if (hasShadow || hasOutline)
