@@ -162,22 +162,23 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
  @since v2.5
  */
 
--( BOOL )touchBegan:( UITouch* )touch withEvent:( UIEvent* )event {
+-( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
     
     // if menu item is child of a menu, notify the menu that a child has been pressed
     if ( [ self.parent isMemberOfClass:[ CCMenu class ] ] == YES ) [ ( ( CCMenu* )self.parent ) menuItemPressed:self ];
   
     // perform pressed selector
+    [ self selected ];
     
-    return( YES );
 }
 
--( void )touchEnded:( UITouch* )touch withEvent:( UIEvent* )event {
+-( void )touchesEnded:( NSSet* )touches withEvent:( UIEvent* )event {
 
     // if menu item is child of a menu, notify the menu that a child has been released
     if ( [ self.parent isMemberOfClass:[ CCMenu class ] ] == YES ) [ ( ( CCMenu* )self.parent ) menuItemReleased:self ];
 
     // perform released selector
+    [ self unselected ];
     [ self activate ];
 }
 

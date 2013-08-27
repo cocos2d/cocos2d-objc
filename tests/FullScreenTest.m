@@ -136,8 +136,8 @@ Class restartAction()
 		[director setResizeMode:kCCDirectorResize_AutoScale];
 
 		self.mouseEnabled = YES;
-        self.touchEnabled = YES;
 
+        
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
 
@@ -189,8 +189,9 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView: [touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL: location];
@@ -305,8 +306,9 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView: [touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL: location];

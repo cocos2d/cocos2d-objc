@@ -488,7 +488,7 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #if defined(__CC_PLATFORM_IOS)
-		[self setTouchEnabled:YES];
+
 #elif defined(__CC_PLATFORM_MAC)
 		[self setMouseEnabled: YES];
 #endif
@@ -520,24 +520,24 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(BOOL) touchBegan:(UITouch*)touch withEvent:(UIEvent *)event
+-(void) touchesBegan:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	[self touchMoved:touch withEvent:event];
-    return( YES );
+	[self touchesMoved:touches withEvent:event];
 }
 
--(void) touchEnded:(UITouch*)touch withEvent:(UIEvent *)event
+-(void) touchesEnded:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	[self touchMoved:touch withEvent:event];
+	[self touchesMoved:touches withEvent:event];
 }
 
--(void) touchCancelled:(UITouch*)touch withEvent:(UIEvent *)event
+-(void) touchesCancelled:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	[self touchMoved:touch withEvent:event];
+	[self touchesMoved:touches withEvent:event];
 }
 
--(void) touchMoved:(UITouch*)touch withEvent:(UIEvent *)event
+-(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
 	
@@ -665,7 +665,7 @@ Class restartAction()
 		[self addChild:layer1 z:0 tag:kTagLayer];
 
 #if defined(__CC_PLATFORM_IOS)
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -691,9 +691,10 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+-(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
+    UITouch* touch = [ touches anyObject ];
 
 	CGPoint start = [touch locationInView: [touch view]];
 	start = [[CCDirector sharedDirector] convertToGL: start];

@@ -1013,25 +1013,27 @@ static float menuItemPaddingCenter = 50;
 #pragma mark Touch Methods
 
 #ifdef __CC_PLATFORM_IOS
-- (BOOL)touchBegan:( UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchesBegan:( NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView:[touch view]];
 
     if (CGRectContainsPoint([self.arrows boundingBox], location)) {
         drag_ = YES;
         self.arrowsBar.visible = YES;
     }
-    return( YES );
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     drag_ = NO;
     [self snapArrowsToEdge];
 
     self.arrowsBar.visible = NO;
 }
 
-- (void)touchMoved:(UITouch *)touch withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     if (!drag_) return;
+
+    UITouch* touch = [ touches anyObject ];
 
     CGPoint location = [touch locationInView:[touch view]];
 

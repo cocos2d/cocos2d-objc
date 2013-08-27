@@ -52,7 +52,6 @@ enum {
 		
 		// enable events
 		
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
@@ -278,8 +277,11 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	//Add a new body/atlas sprite at the touched location
     CGPoint location = [touch locationInView: [touch view]];
     

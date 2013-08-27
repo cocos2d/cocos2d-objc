@@ -321,6 +321,7 @@ enum {
 #endif // Mac Mouse support
 
 #pragma mark Menu - Alignment
+
 -(void) alignItemsVertically
 {
 	[self alignItemsVerticallyWithPadding:kDefaultPadding];

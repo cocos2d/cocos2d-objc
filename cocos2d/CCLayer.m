@@ -332,15 +332,7 @@
 	[super onExit];
 }
 
-#ifdef __CC_PLATFORM_IOS
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(NO, @"Layer#ccTouchBegan override me");
-	return YES;
-}
-#endif
 @end
-
 
 #pragma mark - LayerRGBA
 

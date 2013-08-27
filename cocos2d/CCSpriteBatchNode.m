@@ -137,17 +137,6 @@ const NSUInteger defaultCapacity = 29;
 
 	NSAssert(_parent != nil, @"CCSpriteBatchNode should NOT be root node");
     
-    // -------------------------------------------------
-    // touch handling
-    
-    // loop through all attached nodes, and register as a touch target if user interaction enabled
-    for ( CCNode* node in _descendants ) {
-        if ( node.isUserInteractionEnabled == YES ) [ self.touchManager addTouchReceiver:node ];
-
-    }
-    
-    // -------------------------------------------------
-
 	// CAREFUL:
 	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on its children

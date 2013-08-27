@@ -30,12 +30,13 @@
 #import "CCTouchManager.h"
 #import "CCNode.h"
 #import "CCDirector.h"
+#import "CCScene.h"
 
 // -----------------------------------------------------------------
 #pragma mark -
 // -----------------------------------------------------------------
 
-@implementation CCTouchObject
+@implementation CCTouch
 
 @end
 
@@ -44,9 +45,9 @@
 // -----------------------------------------------------------------
 
 @implementation CCTouchManager {
-    __weak CCNode*          _touchBuffer[ CCTouchManagerTouchBufferSize ];
-    int                     _touchBufferCount;
-    NSMutableArray*         _touchList;
+    __weak CCNode*          _responderList[ CCTouchManagerTouchBufferSize ];
+    int                     _responderCount;
+    NSMutableArray*         _touchList;                             // list of running touches
 }
 
 // -----------------------------------------------------------------
@@ -65,66 +66,69 @@
     _touchList = [ NSMutableArray array ];
         
     // reset touch handling
-    [ self removeAllTouchReceivers ];
+    [ self removeAllTouchResponders ];
     
     // done
     return( self );
 }
 
 // -----------------------------------------------------------------
-#pragma mark - add and remove touch receivers
+#pragma mark - add and remove touch responders
 // -----------------------------------------------------------------
 
--( void )addTouchReceiver:( CCNode* )receiver {
-    _touchBuffer[ _touchBufferCount ] = receiver;
-    _touchBufferCount ++;
-    NSAssert( _touchBufferCount < CCTouchManagerTouchBufferSize, @"Number of touchable nodes pr. scene can not exceed <%d>", CCTouchManagerTouchBufferSize );
+-( void )addTouchResponder:( CCNode* )responder {
+    
+    _responderList[ _responderCount ] = responder;
+    _responderCount ++;
+    NSAssert( _responderCount < CCTouchManagerTouchBufferSize, @"Number of touchable nodes pr. scene can not exceed <%d>", CCTouchManagerTouchBufferSize );
 }
 
--( void )removeAllTouchReceivers {
-    _touchBufferCount = 0;
+-( void )removeAllTouchResponders {
+    
+    _responderCount = 0;
 }
 
 // -----------------------------------------------------------------
-#pragma mark - internal
+#pragma mark - touch handling
 // -----------------------------------------------------------------
 
 -( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
-    BOOL receiverCanNotAcceptTouch;
-    BOOL receiverProcessedTouch;
+    BOOL responderCanNotAcceptTouch;
+    
+    [ self buildTouchResponderList ];
     
     // go through all touches
     for ( UITouch* touch in touches ) {
         
-        // scan backwards through touch receivers
-        for ( int index = _touchBufferCount - 1; index >= 0; index -- ) {
-            CCNode* node = _touchBuffer[ index ];
+        // scan backwards through touch responders
+        for ( int index = _responderCount - 1; index >= 0; index -- ) {
+            CCNode* node = _responderList[ index ];
             
             // check for hit test
             if ( [ node hitTestWithTouch:touch ] == YES ) {
                 
                 // if not a multi touch node, check if node already is being touched
-                receiverCanNotAcceptTouch = NO;
+                responderCanNotAcceptTouch = NO;
                 if ( node.isMultipleTouchEnabled == NO ) {
                 
                     // scan current touch objects, and break if object already has a touch
-                    for ( CCTouchObject* touchObject in _touchList ) if ( touchObject.target == node ) {
-                        receiverCanNotAcceptTouch = YES;
+                    for ( CCTouch* touchEntry in _touchList ) if ( touchEntry.node == node ) {
+                        responderCanNotAcceptTouch = YES;
                         break;
                     }
                 }                
-                if ( receiverCanNotAcceptTouch == YES ) break;
+                if ( responderCanNotAcceptTouch == YES ) break;
                 
                 // begin the touch
-                receiverProcessedTouch = YES;
-                NSLog( @"Began with <%d> touch receiver(s)", _touchList.count );
-                if ( [ node respondsToSelector:@selector( touchBegan:withEvent: ) ] == YES )
-                    receiverProcessedTouch = [ node touchBegan:touch withEvent:event ];
+                self.touchProcessed = YES;
+                NSLog( @"Began with <%d> touch responder(s)", _touchList.count );
+                if ( [ node respondsToSelector:@selector( touchesBegan:withEvent: ) ] == YES )
+                    [ node touchesBegan:[ NSSet setWithObject:touch ] withEvent:event ];
  
-                // if touch was accepted, add it and break
-                if ( receiverProcessedTouch == YES ) {
+                // if touch was processed, add it and break
+                if ( self.touchProcessed == YES ) {
                     
-                    [ self addTouchObject:node withEvent:event ];
+                    [ self addtouchResponder:node withTouch:touch andEvent:event ];
                     break;
                 }
             }
@@ -135,64 +139,65 @@
 // -----------------------------------------------------------------
 
 -( void )touchesMoved:( NSSet* )touches withEvent:( UIEvent* )event {
-    BOOL receiverProcessedTouch;
     
+    [ self buildTouchResponderList ];
+
     // go through all touches
     for ( UITouch* touch in touches ) {
         
         // get touch object
-        CCTouchObject* touchObject = [ self touchObjectForEvent:event ];
+        CCTouch* touchEntry = [ self touchResponderForEvent:event ];
         
         // if a touch object was found
-        if ( touchObject != nil ) {
+        if ( touchEntry != nil ) {
             
             // check if it locks touches
-            if ( touchObject.target.isTouchLocked == YES ) {
+            if ( touchEntry.node.isTouchLocked == YES ) {
                 
                 // move the touch
-                NSLog( @"Moved with <%d> touch receiver(s)", _touchList.count );
-                if ( [ touchObject.target respondsToSelector:@selector( touchMoved:withEvent: ) ] == YES )
-                    [ touchObject.target touchMoved:touch withEvent:event ];
+                NSLog( @"Moved with <%d> touch responder(s)", _touchList.count );
+                if ( [ touchEntry.node respondsToSelector:@selector( touchesMoved:withEvent: ) ] == YES )
+                    [ touchEntry.node touchesMoved:[ NSSet setWithObject:touch ] withEvent:event ];
                 
             } else {
             
                 // as node does not lock touch, check if it was moved outside
-                if ( [ touchObject.target hitTestWithTouch:touch ] == NO ) {
+                if ( [ touchEntry.node hitTestWithTouch:touch ] == NO ) {
                 
                     // cancel the touch
-                    NSLog( @"Cancelled with <%d> touch receiver(s)", _touchList.count );
-                    if ( [ touchObject.target respondsToSelector:@selector( touchCancelled:withEvent: ) ] == YES )
-                        [ touchObject.target touchCancelled:touch withEvent:event ];
+                    NSLog( @"Cancelled with <%d> touch responder(s)", _touchList.count );
+                    if ( [ touchEntry.node respondsToSelector:@selector( touchesCancelled:withEvent: ) ] == YES )
+                        [ touchEntry.node touchesCancelled:[ NSSet setWithObject:touch ] withEvent:event ];
                     // remove from list
-                    [ _touchList removeObject:touchObject ];
+                    [ _touchList removeObject:touchEntry ];
                 
                 } else {
                 
                     // move the touch
-                    NSLog( @"Moved with <%d> touch receiver(s)", _touchList.count );
-                    if ( [ touchObject.target respondsToSelector:@selector( touchMoved:withEvent: ) ] == YES )
-                        [ touchObject.target touchMoved:touch withEvent:event ];
+                    NSLog( @"Moved with <%d> touch responder(s)", _touchList.count );
+                    if ( [ touchEntry.node respondsToSelector:@selector( touchesMoved:withEvent: ) ] == YES )
+                        [ touchEntry.node touchesMoved:[ NSSet setWithObject:touch ] withEvent:event ];
                 }
             }
         } else {
         
-            // scan backwards through touch receivers
-            for ( int index = _touchBufferCount - 1; index >= 0; index -- ) {
-                CCNode* node = _touchBuffer[ index ];
+            // scan backwards through touch responders
+            for ( int index = _responderCount - 1; index >= 0; index -- ) {
+                CCNode* node = _responderList[ index ];
             
-                // if the touch receives does not lock touch, it will receive a touchBegan if a touch is moved inside
+                // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
                 if ( ( node.isTouchLocked == NO ) && ( [ node hitTestWithTouch:touch ] == YES ) ) {
                     
                     // begin the touch
-                    receiverProcessedTouch = YES;
-                    NSLog( @"Began with <%d> touch receiver(s)", _touchList.count );
-                    if ( [ node respondsToSelector:@selector( touchBegan:withEvent: ) ] == YES )
-                        receiverProcessedTouch = [ node touchBegan:touch withEvent:event ];
+                    self.touchProcessed = YES;
+                    NSLog( @"Began with <%d> touch responder(s)", _touchList.count );
+                    if ( [ node respondsToSelector:@selector( touchesBegan:withEvent: ) ] == YES )
+                        [ node touchesBegan:[ NSSet setWithObject:touch ] withEvent:event ];
                     
                     // if touch was accepted, add it and break
-                    if ( receiverProcessedTouch == YES ) {
+                    if ( self.touchProcessed == YES ) {
 
-                        [ self addTouchObject:node withEvent:event ];
+                        [ self addtouchResponder:node withTouch:touch andEvent:event ];
                         break;
                     }
                 }
@@ -205,20 +210,22 @@
 
 -( void )touchesEnded:( NSSet* )touches withEvent:( UIEvent* )event {
     
+    [ self buildTouchResponderList ];
+
     // go through all touches
     for ( UITouch* touch in touches ) {
         
         // get touch object
-        CCTouchObject* touchObject = [ self touchObjectForEvent:event ];
+        CCTouch* touchEntry = [ self touchResponderForEvent:event ];
         
-        if ( touchObject != nil ) {
+        if ( touchEntry != nil ) {
         
             // end the touch
-            NSLog( @"Ended with <%d> touch receiver(s)", _touchList.count );
-            if ( [ touchObject.target respondsToSelector:@selector( touchEnded:withEvent: ) ] == YES )
-                [ touchObject.target touchEnded:touch withEvent:event ];
+            NSLog( @"Ended with <%d> touch responder(s)", _touchList.count );
+            if ( [ touchEntry.node respondsToSelector:@selector( touchesEnded:withEvent: ) ] == YES )
+                [ touchEntry.node touchesEnded:[ NSSet setWithObject:touch ] withEvent:event ];
             // remove from list
-            [ _touchList removeObject:touchObject ];
+            [ _touchList removeObject:touchEntry ];
         }
     }
 }
@@ -227,47 +234,71 @@
 
 -( void )touchesCancelled:( NSSet* )touches withEvent:( UIEvent* )event {
     
+    [ self buildTouchResponderList ];
+
     // go through all touches
     for ( UITouch* touch in touches ) {
         
         // get touch object
-        CCTouchObject* touchObject = [ self touchObjectForEvent:event ];
+        CCTouch* touchEntry = [ self touchResponderForEvent:event ];
         
-        if ( touchObject != nil ) {
+        if ( touchEntry != nil ) {
             
             // cancel the touch
-            NSLog( @"Cancelled with <%d> touch receiver(s)", _touchList.count );
-            if ( [ touchObject.target respondsToSelector:@selector( touchCancelled:withEvent: ) ] == YES )
-                [ touchObject.target touchCancelled:touch withEvent:event ];
+            NSLog( @"Cancelled with <%d> touch responder(s)", _touchList.count );
+            if ( [ touchEntry.node respondsToSelector:@selector( touchesCancelled:withEvent: ) ] == YES )
+                [ touchEntry.node touchesCancelled:[ NSSet setWithObject:touch ] withEvent:event ];
             // remove from list
-            [ _touchList removeObject:touchObject ];
+            [ _touchList removeObject:touchEntry ];
         }
     }
 }
 
 // -----------------------------------------------------------------
-#pragma mark - internal helper functions
+#pragma mark - helper functions
 // -----------------------------------------------------------------
 // finds a touch object for an event
 
--( CCTouchObject* )touchObjectForEvent:( UIEvent* )event {
-    for ( CCTouchObject* touchObject in _touchList ) {
-        if ( touchObject.event == event ) return( touchObject );
+-( CCTouch* )touchResponderForEvent:( UIEvent* )event {
+    for ( CCTouch* touchEntry in _touchList ) {
+        if ( touchEntry.event == event ) return( touchEntry );
     }
     return( nil );
 }
 
 // -----------------------------------------------------------------
+// finds a touch object for a node
+
+-( NSSet* )touchSetForNode:( CCNode* )node {
+    NSMutableSet* result = [ NSMutableSet set ];
+    for ( CCTouch* touchEntry in _touchList ) {
+        if ( touchEntry.node == node ) [ result addObject:touchEntry.touch ];
+    }
+    return( result );
+}
+
+// -----------------------------------------------------------------
 // adds a touch object ( running touch ) to the touch object list
 
--( void )addTouchObject:( CCNode* )node withEvent:( UIEvent* )event {
-    CCTouchObject* touchObject;
+-( void )addtouchResponder:( CCNode* )node withTouch:( UITouch* )touch andEvent:( UIEvent* )event {
+    CCTouch* touchEntry;
     
     // create a new touch object
-    touchObject = [ [ CCTouchObject alloc ] init ];
-    touchObject.target = node;
-    touchObject.event = event;
-    [ _touchList addObject:touchObject ];
+    touchEntry = [ [ CCTouch alloc ] init ];
+    touchEntry.node = node;
+    touchEntry.touch = touch;
+    touchEntry.event = event;
+    [ _touchList addObject:touchEntry ];
+}
+
+// -----------------------------------------------------------------
+
+-( void )buildTouchResponderList {
+    
+    // rebuild touch list
+    // TODO: only rebuild if dirty
+    [ self removeAllTouchResponders ];
+    [ [ CCDirector sharedDirector ].runningScene buildTouchResponderList ];
 }
 
 // -----------------------------------------------------------------

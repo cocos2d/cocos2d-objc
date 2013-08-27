@@ -50,15 +50,6 @@
 
 // -----------------------------------------------------------------
 
--( void )visit {
-    // clear touch receivers
-    [ [ CCDirector sharedDirector ].touchManager removeAllTouchReceivers ];
-    // draw the scene
-    [ super visit ];
-}
-
-// -----------------------------------------------------------------
-
 @end
 
 

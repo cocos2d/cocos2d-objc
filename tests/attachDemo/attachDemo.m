@@ -34,7 +34,6 @@ enum {
 {
 	if( (self=[super init] ) )
 	{
-		self.touchEnabled = YES;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
@@ -67,9 +66,11 @@ enum {
 	NSLog(@"total frames:%d", [[CCDirector sharedDirector] totalFrames] );
 }
 
-- (void)touchEnded:(UITouch *)touch withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 
+    UITouch* touch = [ touches anyObject ];
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];
 
