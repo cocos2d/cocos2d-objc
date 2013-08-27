@@ -851,9 +851,26 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     float yOffset = 0;
     float scaleFactor = 1;
     
+    float xPadding = 0;
+    float yPadding = 0;
+    float wDrawArea = 0;
+    float hDrawArea = 0;
+    
     CGSize originalDimensions = _dimensions;
     originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
     originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    
+    // Calculate padding
+    if (hasShadow)
+    {
+        xPadding = (shadowBlurRadius + fabs(shadowOffset.x));
+        yPadding = (shadowBlurRadius + fabs(shadowOffset.y));
+    }
+    if (hasOutline)
+    {
+        xPadding += outlineWidth;
+        yPadding += outlineWidth;
+    }
     
     CGSize dimensions = originalDimensions;
     
@@ -871,22 +888,17 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             dimensions = [string sizeWithFont:font constrainedToSize:CGSizeMake(firstLineSize.width,1024) lineBreakMode:0];
         }
         
-        // Outset the dimensions with regards to shadow
-        if (hasShadow)
-        {
-            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
-            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
-        }
-        if (hasOutline)
-        {
-            xOffset += outlineWidth;
-            yOffset += outlineWidth;
-        }
-        dimensions.width += xOffset * 2;
-        dimensions.height += yOffset * 2;
+        wDrawArea = dimensions.width;
+        hDrawArea = dimensions.height;
+        
+        dimensions.width += xPadding * 2;
+        dimensions.height += yPadding * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
+        wDrawArea = dimensions.width - xPadding * 2;
+        hDrawArea = dimensions.height - yPadding * 2;
+        
         // Handle strings with fixed dimensions
         if (_adjustsFontSizeToFit)
         {
@@ -896,13 +908,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
             
             float wScaleFactor = 1;
             float hScaleFactor = 1;
-            if (wantedSize.width > dimensions.width)
+            if (wantedSize.width > wDrawArea)
             {
-                wScaleFactor = dimensions.width/wantedSize.width;
+                wScaleFactor = wDrawArea/wantedSize.width;
             }
-            if (wantedSize.height > dimensions.height)
+            if (wantedSize.height > hDrawArea)
             {
-                hScaleFactor = dimensions.height/wantedSize.height;
+                hScaleFactor = hDrawArea/wantedSize.height;
             }
             
             if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
@@ -918,21 +930,22 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         }
         
         // Handle vertical alignment
-        CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(dimensions.width, 1024) lineBreakMode:0];
+        CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(wDrawArea, 1024) lineBreakMode:0];
     
         if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
         {
-            yOffset = originalDimensions.height - actualSize.height;
+            yOffset = hDrawArea - actualSize.height;
         }
         else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
         {
-            yOffset = (originalDimensions.height - actualSize.height)/2;
+            yOffset = (hDrawArea - actualSize.height)/2;
         }
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
-
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    xOffset += xPadding;
+    
     // Round dimensions to nearest number that is dividable by 2
     dimensions.width = ceilf(dimensions.width/2)*2;
     dimensions.height = ceilf(dimensions.height/2)*2;
@@ -949,7 +962,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
     yOffset = (POTSize.height - dimensions.height) + yOffset;
 
-    CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
 
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
 
