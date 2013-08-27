@@ -42,6 +42,8 @@
 #import <CoreText/CoreText.h>
 #endif
 
+static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
+
 
 @implementation CCTexture2D (CCLabelTTF)
 
@@ -162,6 +164,12 @@
 
 - (void)setFontName:(NSString*)fontName
 {
+    // Handle passing of complete file paths
+    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"]);
+    {
+        [CCLabelTTF registerCustomTTF:fontName];
+        fontName = [[fontName lastPathComponent] stringByDeletingPathExtension];
+    }
     
 	if( fontName.hash != _fontName.hash ) {
 		_fontName = [fontName copy];
@@ -411,7 +419,9 @@
     // Font
     if (![formattedAttributedString hasAttribute:NSFontAttributeName])
     {
-        [formattedAttributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:_fontName size:_fontSize] range:fullRange];
+        NSFont* font = [NSFont fontWithName:_fontName size:_fontSize];
+        if (!font) font = [NSFont fontWithName:@"Helvetica" size:_fontSize];
+        [formattedAttributedString addAttribute:NSFontAttributeName value:font range:fullRange];
     }
     
     // Shadow
@@ -1059,6 +1069,16 @@
 
 + (void) registerCustomTTF:(NSString *)fontFile
 {
+    // Do not register a font if it has already been registered
+    if (!ccLabelTTF_registeredFonts)
+    {
+        ccLabelTTF_registeredFonts = [[NSMutableDictionary alloc] init];
+    }
+    
+    if ([ccLabelTTF_registeredFonts objectForKey:fontFile]) return;
+    [ccLabelTTF_registeredFonts setObject:[NSNumber numberWithBool:YES] forKey:fontFile];
+    
+    // Register with font manager
     if ([[fontFile lowercaseString] hasSuffix:@".ttf"])
     {
         // This is a file, register font with font manager
