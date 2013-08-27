@@ -42,6 +42,8 @@
 #import <CoreText/CoreText.h>
 #endif
 
+static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
+
 
 @implementation CCTexture2D (CCLabelTTF)
 
@@ -162,11 +164,15 @@
 
 - (void)setFontName:(NSString*)fontName
 {
+    // Handle passing of complete file paths
+    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"]);
+    {
+        [CCLabelTTF registerCustomTTF:fontName];
+        fontName = [[fontName lastPathComponent] stringByDeletingPathExtension];
+    }
     
 	if( fontName.hash != _fontName.hash ) {
 		_fontName = [fontName copy];
-		
-		// Force update
 		[self setTextureDirty];
 	}
 }
@@ -175,10 +181,17 @@
 {
 	if( fontSize != _fontSize ) {
 		_fontSize = fontSize;
-		
-		// Force update
 		[self setTextureDirty];
 	}
+}
+
+- (void) setAdjustsFontSizeToFit:(BOOL)adjustsFontSizeToFit
+{
+    if (adjustsFontSizeToFit != _adjustsFontSizeToFit)
+    {
+        _adjustsFontSizeToFit = adjustsFontSizeToFit;
+        [self setTextureDirty];
+    }
 }
 
 - (void) setFontColor:(ccColor4B)fontColor
@@ -186,8 +199,15 @@
     if (!ccc4BEqual(_fontColor, fontColor))
     {
         _fontColor = fontColor;
-        
-        // Force update
+        [self setTextureDirty];
+    }
+}
+
+- (void) setMinimumFontSize:(float)minimumFontSize
+{
+    if (minimumFontSize != _minimumFontSize)
+    {
+        _minimumFontSize = minimumFontSize;
         [self setTextureDirty];
     }
 }
@@ -197,8 +217,6 @@
     if( dim.width != _dimensions.width || dim.height != _dimensions.height)
 	{
         _dimensions = dim;
-        
-		// Force update
 		[self setTextureDirty];
     }
 }
@@ -214,8 +232,6 @@
     if (alignment != _horizontalAlignment)
     {
         _horizontalAlignment = alignment;
-        
-        // Force update
 		[self setTextureDirty];
 
     }
@@ -226,8 +242,6 @@
     if (_verticalAlignment != verticalAlignment)
     {
         _verticalAlignment = verticalAlignment;
-        
-		// Force update
 		[self setTextureDirty];
     }
 }
@@ -405,7 +419,9 @@
     // Font
     if (![formattedAttributedString hasAttribute:NSFontAttributeName])
     {
-        [formattedAttributedString addAttribute:NSFontAttributeName value:[NSFont fontWithName:_fontName size:_fontSize] range:fullRange];
+        NSFont* font = [NSFont fontWithName:_fontName size:_fontSize];
+        if (!font) font = [NSFont fontWithName:@"Helvetica" size:_fontSize];
+        [formattedAttributedString addAttribute:NSFontAttributeName value:font range:fullRange];
     }
     
     // Shadow
@@ -493,6 +509,23 @@
     float yOffset = 0;
     float scaleFactor = 1;
     
+    float xPadding = 0;
+    float yPadding = 0;
+    float wDrawArea = 0;
+    float hDrawArea = 0;
+    
+    // Calculate padding
+    if (hasShadow)
+    {
+        xPadding = (shadowBlurRadius + fabs(shadowOffset.x));
+        yPadding = (shadowBlurRadius + fabs(shadowOffset.y));
+    }
+    if (hasOutline)
+    {
+        xPadding += outlineWidth;
+        yPadding += outlineWidth;
+    }
+    
 	// Get actual rendered dimensions
     if (dimensions.height == 0)
     {
@@ -503,22 +536,17 @@
         dimensions = [attributedString boundingRectWithSize:NSSizeFromCGSize(dimensions) options:NSStringDrawingUsesLineFragmentOrigin].size;
 #endif
         
-        // Outset the dimensions with regards to shadow
-        if (hasShadow)
-        {
-            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
-            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
-        }
-        if (hasOutline)
-        {
-            xOffset += outlineWidth;
-            yOffset += outlineWidth;
-        }
-        dimensions.width += xOffset * 2;
-        dimensions.height += yOffset * 2;
+        wDrawArea = dimensions.width;
+        hDrawArea = dimensions.height;
+        
+        dimensions.width += xPadding * 2;
+        dimensions.height += yPadding * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
+        wDrawArea = dimensions.width - xPadding * 2;
+        hDrawArea = dimensions.height - yPadding * 2;
+        
         // Handle strings with fixed dimensions
         if (_adjustsFontSizeToFit)
         {
@@ -534,13 +562,13 @@
                 
                 float wScaleFactor = 1;
                 float hScaleFactor = 1;
-                if (wantedSize.width > dimensions.width)
+                if (wantedSize.width > wDrawArea)
                 {
-                    wScaleFactor = dimensions.width/wantedSize.width;
+                    wScaleFactor = wDrawArea/wantedSize.width;
                 }
-                if (wantedSize.height > dimensions.height)
+                if (wantedSize.height > hDrawArea)
                 {
-                    hScaleFactor = dimensions.height/wantedSize.height;
+                    hScaleFactor = hDrawArea/wantedSize.height;
                 }
                 
                 if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
@@ -558,22 +586,23 @@
 
         // Handle vertical alignment
 #ifdef __CC_PLATFORM_IOS
-        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
+        CGSize actualSize = [attributedString boundingRectWithSize:CGSizeMake(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin context:NULL].size;
 #elif defined(__CC_PLATFORM_MAC)
-        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(originalDimensions.width, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
+        CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
 #endif
         if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
         {
-            yOffset = originalDimensions.height - actualSize.height;
+            yOffset = hDrawArea - actualSize.height;
         }
         else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
         {
-            yOffset = (originalDimensions.height - actualSize.height)/2;
+            yOffset = (hDrawArea - actualSize.height)/2;
         }
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    xOffset += xPadding;
     
     // Round dimensions to nearest number that is dividable by 2
     dimensions.width = ceilf(dimensions.width/2)*2;
@@ -594,7 +623,7 @@
 #ifdef __CC_PLATFORM_IOS
     yOffset = (POTSize.height - dimensions.height) + yOffset;
 	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
     
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
@@ -634,13 +663,19 @@
         float b = ((float)_outlineColor.b)/255;
         float a = ((float)_outlineColor.a)/255;
         
+        UIColor* color = [UIColor colorWithRed:r green:g blue:b alpha:a];
+        
+        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+        CGContextSetLineWidth(context, outlineWidth * 2);
         CGContextSetLineJoin(context, kCGLineJoinRound);
+        CGContextSetStrokeColorWithColor(context, [color CGColor]);
         
         NSMutableAttributedString* outlineString = [attributedString mutableCopy];
-        [outlineString addAttribute:NSStrokeColorAttributeName value:[UIColor colorWithRed:r green:g blue:b alpha:a] range:NSMakeRange(0, outlineString.length)];
-        [outlineString addAttribute:NSStrokeWidthAttributeName value:[NSNumber numberWithFloat:outlineWidth*2] range:NSMakeRange(0, outlineString.length)];
+        [outlineString removeAttribute:NSForegroundColorAttributeName range:NSMakeRange(0, outlineString.length)];
         
         [outlineString drawInRect:drawArea];
+        
+        CGContextSetTextDrawingMode(context, kCGTextFill);
         
         // Don't draw shadow for main font
         CGContextSetShadowWithColor(context, CGSizeZero, 0, NULL);
@@ -657,13 +692,20 @@
     UIGraphicsPopContext();
     
 #elif defined(__CC_PLATFORM_MAC)
-    yOffset = (POTSize.height - dimensions.height) - yOffset;
+    yOffset = (POTSize.height - hDrawArea) - yOffset;
 	
-	CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+	CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
 	
 	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
 	[image lockFocus];
 	[[NSAffineTransform transform] set];
+    
+    // XXX: The shadows are for some reason scaled on OS X if a retina display is connected
+    float retinaFix = 1;
+    for (NSScreen* screen in [NSScreen screens])
+    {
+        if (screen.backingScaleFactor > retinaFix) retinaFix = screen.backingScaleFactor;
+    }
     
     CGContextRef context = [[NSGraphicsContext currentContext] graphicsPort];
     
@@ -680,7 +722,7 @@
             float a = ((float)_shadowColor.a)/255;
             NSColor* color = [NSColor colorWithCalibratedRed:r green:g blue:b alpha:a];
             
-            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x, shadowOffset.y), shadowBlurRadius, [color CGColor]);
+            CGContextSetShadowWithColor(context, CGSizeMake(shadowOffset.x/retinaFix, shadowOffset.y/retinaFix), shadowBlurRadius/retinaFix, [color CGColor]);
         }
         
         if (hasOutline)
@@ -809,9 +851,26 @@
     float yOffset = 0;
     float scaleFactor = 1;
     
+    float xPadding = 0;
+    float yPadding = 0;
+    float wDrawArea = 0;
+    float hDrawArea = 0;
+    
     CGSize originalDimensions = _dimensions;
     originalDimensions.width *= CC_CONTENT_SCALE_FACTOR();
     originalDimensions.height *= CC_CONTENT_SCALE_FACTOR();
+    
+    // Calculate padding
+    if (hasShadow)
+    {
+        xPadding = (shadowBlurRadius + fabs(shadowOffset.x));
+        yPadding = (shadowBlurRadius + fabs(shadowOffset.y));
+    }
+    if (hasOutline)
+    {
+        xPadding += outlineWidth;
+        yPadding += outlineWidth;
+    }
     
     CGSize dimensions = originalDimensions;
     
@@ -829,22 +888,17 @@
             dimensions = [string sizeWithFont:font constrainedToSize:CGSizeMake(firstLineSize.width,1024) lineBreakMode:0];
         }
         
-        // Outset the dimensions with regards to shadow
-        if (hasShadow)
-        {
-            xOffset = (shadowBlurRadius + fabs(shadowOffset.x));// * 2;
-            yOffset = (shadowBlurRadius + fabs(shadowOffset.y));// * 2;
-        }
-        if (hasOutline)
-        {
-            xOffset += outlineWidth;
-            yOffset += outlineWidth;
-        }
-        dimensions.width += xOffset * 2;
-        dimensions.height += yOffset * 2;
+        wDrawArea = dimensions.width;
+        hDrawArea = dimensions.height;
+        
+        dimensions.width += xPadding * 2;
+        dimensions.height += yPadding * 2;
     }
     else if (dimensions.width > 0 && dimensions.height > 0)
     {
+        wDrawArea = dimensions.width - xPadding * 2;
+        hDrawArea = dimensions.height - yPadding * 2;
+        
         // Handle strings with fixed dimensions
         if (_adjustsFontSizeToFit)
         {
@@ -854,13 +908,13 @@
             
             float wScaleFactor = 1;
             float hScaleFactor = 1;
-            if (wantedSize.width > dimensions.width)
+            if (wantedSize.width > wDrawArea)
             {
-                wScaleFactor = dimensions.width/wantedSize.width;
+                wScaleFactor = wDrawArea/wantedSize.width;
             }
-            if (wantedSize.height > dimensions.height)
+            if (wantedSize.height > hDrawArea)
             {
-                hScaleFactor = dimensions.height/wantedSize.height;
+                hScaleFactor = hDrawArea/wantedSize.height;
             }
             
             if (wScaleFactor < hScaleFactor) scaleFactor = wScaleFactor;
@@ -876,21 +930,22 @@
         }
         
         // Handle vertical alignment
-        CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(dimensions.width, 1024) lineBreakMode:0];
+        CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(wDrawArea, 1024) lineBreakMode:0];
     
         if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
         {
-            yOffset = originalDimensions.height - actualSize.height;
+            yOffset = hDrawArea - actualSize.height;
         }
         else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
         {
-            yOffset = (originalDimensions.height - actualSize.height)/2;
+            yOffset = (hDrawArea - actualSize.height)/2;
         }
     }
     
     // Handle baseline adjustments
-    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR();
-
+    yOffset += _baselineAdjustment * scaleFactor * CC_CONTENT_SCALE_FACTOR() + yPadding;
+    xOffset += xPadding;
+    
     // Round dimensions to nearest number that is dividable by 2
     dimensions.width = ceilf(dimensions.width/2)*2;
     dimensions.height = ceilf(dimensions.height/2)*2;
@@ -907,7 +962,7 @@
 
     yOffset = (POTSize.height - dimensions.height) + yOffset;
 
-    CGRect drawArea = CGRectMake(xOffset, yOffset, dimensions.width, dimensions.height);
+    CGRect drawArea = CGRectMake(xOffset, yOffset, wDrawArea, hDrawArea);
 
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
 
@@ -1027,6 +1082,16 @@
 
 + (void) registerCustomTTF:(NSString *)fontFile
 {
+    // Do not register a font if it has already been registered
+    if (!ccLabelTTF_registeredFonts)
+    {
+        ccLabelTTF_registeredFonts = [[NSMutableDictionary alloc] init];
+    }
+    
+    if ([ccLabelTTF_registeredFonts objectForKey:fontFile]) return;
+    [ccLabelTTF_registeredFonts setObject:[NSNumber numberWithBool:YES] forKey:fontFile];
+    
+    // Register with font manager
     if ([[fontFile lowercaseString] hasSuffix:@".ttf"])
     {
         // This is a file, register font with font manager
