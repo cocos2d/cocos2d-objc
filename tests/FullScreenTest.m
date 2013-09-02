@@ -199,6 +199,11 @@ Class restartAction()
     [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:( NSEvent *)theEvent
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
@@ -286,6 +291,7 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch* touch = [ touches anyObject ];
@@ -296,6 +302,11 @@ Class restartAction()
     [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];

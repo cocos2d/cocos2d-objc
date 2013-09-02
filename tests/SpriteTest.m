@@ -277,6 +277,11 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	[self addNewSpriteWithCoords: theEvent.locationInWindow];
@@ -357,6 +362,10 @@ Class restartAction()
     [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
@@ -1757,6 +1766,10 @@ Class restartAction()
 
 -( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 #elif defined(__CC_PLATFORM_MAC)
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:(NSEvent *)theEvent {
 #endif
 	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
@@ -1850,6 +1863,10 @@ Class restartAction()
     
 -( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 #elif defined(__CC_PLATFORM_MAC)
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+    
 - (void)mouseUp:(NSEvent *)theEvent {
 #endif
 

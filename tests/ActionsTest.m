@@ -1517,8 +1517,11 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
 
-- (BOOL)mouseUp:(NSEvent *)theEvent
+- (void)mouseUp:(NSEvent *)theEvent
 {
 	[self addNewSpriteWithCoords:theEvent.locationInWindow];
 }

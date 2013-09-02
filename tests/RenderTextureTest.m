@@ -929,6 +929,10 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch* touch = [ touches anyObject ];
@@ -936,7 +940,13 @@ Class restartAction()
     location = [[CCDirector sharedDirector] convertToGL: location];
     [self addNewSpriteWithCoords: location];
 }
+
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
