@@ -99,7 +99,7 @@ typedef enum
 
 @interface CCRunningResponder : NSObject
 
-@property (nonatomic, strong) id target;                            // the target associated with the touch
+@property (nonatomic, strong) id target;                            // the target associated with the mouse event
 @property (nonatomic, weak) NSEvent *event;                         // the current event ( should not be retained )
 
 @end

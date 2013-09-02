@@ -886,7 +886,13 @@ Class restartAction()
         NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
     }
 }
+
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
 - (void)mouseUp:(NSEvent *)theEvent
 {
 	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
