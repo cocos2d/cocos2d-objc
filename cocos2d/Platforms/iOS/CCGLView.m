@@ -323,31 +323,30 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
 }
 
-// Pass the touches to the superview
 #pragma mark CCGLView - Touch Delegate
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    // dispatch touch to touch manager
-    [ [ CCDirector sharedDirector ].touchManager touchesBegan:touches withEvent:event ];
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesBegan:touches withEvent:event ];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    // dispatch touch to touch manager
-    [ [ CCDirector sharedDirector ].touchManager touchesMoved:touches withEvent:event ];
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesMoved:touches withEvent:event ];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    // dispatch touch to touch manager
-    [ [ CCDirector sharedDirector ].touchManager touchesEnded:touches withEvent:event ];
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesEnded:touches withEvent:event ];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
     
-    // dispatch touch to touch manager
-    [ [ CCDirector sharedDirector ].touchManager touchesCancelled:touches withEvent:event ];
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesCancelled:touches withEvent:event ];
 }
  
 @end

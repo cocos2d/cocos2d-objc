@@ -33,7 +33,7 @@
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
 #import "CCResponder.h"
-#import "CCTouchManager.h"
+#import "CCResponderManager.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -44,7 +44,7 @@ enum {
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
-@class CCTouchManager;
+@class CCResponderManager;
 @class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
@@ -103,7 +103,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */
-@interface CCNode : CCResponder < CCTouchProtocol > {
+@interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
 	float _rotationX, _rotationY;
 
@@ -626,12 +626,12 @@ enum {
  to expand or shrink the touch area of a node, override this method
  @since v2.5
  */
--( BOOL )hitTestWithTouch:( UITouch* )touch;
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
 /** builds a list of touch receivers
  @since v2.5
  */
--( void )buildTouchResponderList;
+-( void )buildResponderList;
 
 @end
 

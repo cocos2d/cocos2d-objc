@@ -45,7 +45,6 @@
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCDirectorMac.h"
-#import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
 const NSInteger kSceneFade = 0xFADEFADE;
@@ -146,8 +145,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 #ifdef __CC_PLATFORM_IOS
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director eventDispatcher] setDispatchEvents: NO];
+
 #endif
 	
 	
@@ -167,8 +165,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 #ifdef __CC_PLATFORM_IOS
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCDirector *director = [CCDirector sharedDirector];
-	[[director eventDispatcher] setDispatchEvents: YES];
+
 #endif
 	
 

@@ -31,52 +31,65 @@
 
 // -----------------------------------------------------------------
 
-@implementation CCResponder {
+@implementation CCResponder
+{
     
 }
 
 // -----------------------------------------------------------------
 
-+( id )responder {
-    return( [ [ self alloc ] init ] );
++ (id)responder
+{
+    return([[self alloc] init]);
 }
 
 // -----------------------------------------------------------------
 
--( id )init {
-    self = [ super init ];
-    NSAssert( self != nil, @"Unable to create class" );
+- (id)init
+{
+    self = [super init];
+    NSAssert(self != nil, @"Unable to create class");
 
     // initialize
     
     // done
-    return( self );
+    return(self);
 }
 
 // -----------------------------------------------------------------
+
+#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
+
 /** touchesBegan will be called if touch handler passed touch on to super ( next in chain )
  @since v2.5
  */
 
--( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
-    
-    _touchManager.touchProcessed = NO;
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{    
+    _responderManager.eventProcessed = NO;
 }
 
--( void )touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    _touchManager.touchProcessed = NO;
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    _responderManager.eventProcessed = NO;
 }
 
--( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    _touchManager.touchProcessed = NO;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    _responderManager.eventProcessed = NO;
 }
 
--( void )touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
-
-    _touchManager.touchProcessed = NO;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    _responderManager.eventProcessed = NO;
 }
+
+// -----------------------------------------------------------------
+
+#else
+
+
+#endif
 
 // -----------------------------------------------------------------
 

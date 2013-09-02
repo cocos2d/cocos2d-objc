@@ -170,7 +170,7 @@ static CCDirector *_sharedDirector = nil;
 		[_scheduler scheduleUpdateForTarget:_actionManager priority:kCCPrioritySystem paused:NO];
         
         // touch manager
-        _touchManager = [ CCTouchManager touchManager ];
+        _responderManager = [ CCResponderManager responderManager ];
 
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
                 

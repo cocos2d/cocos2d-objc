@@ -31,7 +31,7 @@
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "kazmath/mat4.h"
-#import "CCTouchManager.h"
+#import "CCResponderManager.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -183,7 +183,7 @@ and when to execute the Scenes.
 /** Sets the touch manager
  @since v2.5
  */
-@property ( nonatomic, strong ) CCTouchManager* touchManager;
+@property ( nonatomic, strong ) CCResponderManager* responderManager;
 
 
 /** Whether or not the replaced scene will receive the cleanup message.
