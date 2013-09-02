@@ -1048,34 +1048,30 @@ static float menuItemPaddingCenter = 50;
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
     if (CGRectContainsPoint([self.arrows boundingBox], location)) {
         drag_ = YES;
         self.arrowsBar.visible = YES;
 
-		return YES;
     }
-	return  NO;
 }
 
-- (BOOL)ccMouseUp:(NSEvent*)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
     drag_ = NO;
     [self snapArrowsToEdge];
 
     self.arrowsBar.visible = NO;
-
-	return NO;
 }
 
-- (BOOL)ccMouseDragged:(NSEvent*)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
     if ( drag_) {
 
-		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 		CGSize winSize = [CCDirector sharedDirector].winSize;
 
@@ -1085,10 +1081,7 @@ static float menuItemPaddingCenter = 50;
 
 		[self.label setWidth:labelWidth];
 
-		return YES;
 	}
-
-	return NO;
 }
 
 #endif // __CC_PLATFORM_MAC

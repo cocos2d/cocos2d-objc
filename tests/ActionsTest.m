@@ -1515,15 +1515,14 @@ Class restartAction()
     
     [self addNewSpriteWithCoords: location];
 }
+
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (BOOL)mouseUp:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-	
-	return YES;
-	
+	[self addNewSpriteWithCoords:theEvent.locationInWindow];
 }
+
 #endif
 
 -(NSString *) title

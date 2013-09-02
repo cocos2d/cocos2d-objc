@@ -88,6 +88,51 @@
 
 #else
 
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)mouseDragged:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)rightMouseDragged:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)rightMouseUp:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)otherMouseDown:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)otherMouseDragged:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
+- (void)otherMouseUp:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
 
 #endif
 

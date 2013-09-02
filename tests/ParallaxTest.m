@@ -272,13 +272,11 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
 	CCNode *node = [self getChildByTag:kTagNode];
 	CGPoint currentPos = [node position];
-	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
-
-	return YES;
+	[node setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
 }
 
 #endif

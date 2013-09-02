@@ -277,14 +277,11 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-
-	return YES;
-
+	[self addNewSpriteWithCoords: theEvent.locationInWindow];
 }
+
 #endif
 
 -(NSString *) title
@@ -360,13 +357,10 @@ Class restartAction()
     [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseUp:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-
-	return YES;
-
+	[self addNewSpriteWithCoords:theEvent.locationInWindow];
 }
 #endif
 
@@ -1763,10 +1757,8 @@ Class restartAction()
 
 -( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event {
+- (void)mouseUp:(NSEvent *)theEvent {
 #endif
-
-
 	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
 	if( usingTexture1 ) {
 		for( CCSprite* sprite in node.children)
@@ -1777,11 +1769,6 @@ Class restartAction()
 			[sprite setTexture:texture1];
 		usingTexture1 = YES;
 	}
-
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
-	return YES;
-#endif
 }
 
 -(NSString *) title
@@ -1863,7 +1850,7 @@ Class restartAction()
     
 -( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event {
+- (void)mouseUp:(NSEvent *)theEvent {
 #endif
 
 	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
@@ -1872,11 +1859,6 @@ Class restartAction()
 		[batch setTexture:texture2];
 	else
 		[batch setTexture:texture1];
-
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
-	return YES;
-#endif
 }
 
 -(NSString *) title

@@ -545,11 +545,10 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	[self updateSize:location];
-	return YES;
 }
 #endif
 
@@ -707,11 +706,11 @@ Class restartAction()
 	[gradient setVector:diff];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	
-	CGPoint	start = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint	start = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	
 	CGPoint diff = ccpSub( ccp(s.width/2,s.height/2), start);
 	diff = ccpNormalize(diff);
@@ -719,8 +718,6 @@ Class restartAction()
 	CCLayerGradient *gradient = (CCLayerGradient*) [self getChildByTag:1];
 	
 	[gradient setVector:diff];
-	
-	return YES;
 }
 #endif
 

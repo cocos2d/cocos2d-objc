@@ -158,6 +158,8 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 }
 
 // -----------------------------------------------------------------
+#pragma mark - iOS touch functionality -
+// -----------------------------------------------------------------
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
@@ -185,6 +187,10 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 }
 
 #else
+
+// -----------------------------------------------------------------
+#pragma mark - Mac mouse functionality -
+// -----------------------------------------------------------------
 
 /** mouse protocol implementation
  @since v2.5
