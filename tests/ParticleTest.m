@@ -208,17 +208,15 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint convertedLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint convertedLocation = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 	CGPoint pos = CGPointZero;
 
 	if( background )
 		pos = [background convertToWorldSpace:CGPointZero];
 	emitter_.position = ccpSub(convertedLocation, pos);
-	// swallow the event. Don't propagate it
-	return YES;
 }
 #endif // __CC_PLATFORM_MAC
 

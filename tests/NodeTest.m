@@ -887,9 +887,9 @@ Class restartAction()
     }
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
-	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 		
 	for( int i=0; i<3; i++) {
 		CCNode *node = [self getChildByTag:100+i];
@@ -901,7 +901,6 @@ Class restartAction()
 		
 		NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
 	}
-	return YES;
 }
 #endif
 

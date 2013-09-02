@@ -82,8 +82,8 @@ typedef enum
 - (void)mouseDown:(NSEvent *)theEvent;
 - (void)mouseDragged:(NSEvent *)theEvent;
 - (void)mouseUp:(NSEvent *)theEvent;
-- (void)rigthMouseDown:(NSEvent *)theEvent;
-- (void)rigthMouseDragged:(NSEvent *)theEvent;
+- (void)rightMouseDown:(NSEvent *)theEvent;
+- (void)rightMouseDragged:(NSEvent *)theEvent;
 - (void)rightMouseUp:(NSEvent *)theEvent;
 - (void)otherMouseDown:(NSEvent *)theEvent;
 - (void)otherMouseDragged:(NSEvent *)theEvent;

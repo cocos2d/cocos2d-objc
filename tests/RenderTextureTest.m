@@ -321,15 +321,14 @@ Class restartAction()
 {
 	// ignore
 }
--(BOOL) ccMouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	lastLocation = [[CCDirector sharedDirector] convertEventToGL:event];
-	return YES;
+	lastLocation = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 }
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint currentLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint currentLocation = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 	CGPoint start = currentLocation;
 	CGPoint end = lastLocation;
@@ -363,7 +362,6 @@ Class restartAction()
 	lastLocation = currentLocation;
 
 	// swallow the event. Don't propagate it
-	return YES;
 
 }
 #endif // __CC_PLATFORM_MAC
@@ -577,6 +575,7 @@ Class restartAction()
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView: [touch view]];
     
     location = [[CCDirector sharedDirector] convertToGL: location];
@@ -614,9 +613,9 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL) ccMouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 	sp1.position = location;
 	sp2.position = location;
@@ -627,13 +626,11 @@ Class restartAction()
 	sp7.position = location;
 	sp8.position = location;
 	sp9.position = location;
-	
-	return YES;
 }
 
-- (BOOL)ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 	sp1.position = location;
 	sp2.position = location;
@@ -644,14 +641,11 @@ Class restartAction()
 	sp7.position = location;
 	sp8.position = location;
 	sp9.position = location;
-	
-	return YES;
 }
 
-- (BOOL)ccMouseUp:(NSEvent*)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
 	[self renderScreenShot];
-	return YES;
 }
 #endif // __CC_PLATFORM_IOS
 
@@ -943,12 +937,10 @@ Class restartAction()
     [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	[self addNewSpriteWithCoords: location];
-
-	return YES;
 }
 #endif
 

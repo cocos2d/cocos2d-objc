@@ -539,12 +539,11 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return NO;
+    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
-    return YES;
 }
 
 #endif
@@ -633,32 +632,29 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
-    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
     scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
     lastPoint_ = point;
-    return scrolling_;
 }
 
-- (BOOL)ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-    if (!scrolling_) return NO;
+    if (!scrolling_) return;
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
-    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
 	CGPoint diff = ccpSub(point, lastPoint_);
     CCNode *content = [clipper getChildByTag:kTagContentNode];
     content.position = ccpAdd(content.position, diff);
     lastPoint_ = point;
-	return YES;
 }
 
-- (BOOL)ccMouseUp:(NSEvent*)event
+- (void)mouseUp:(NSEvent*)theEvent
 {
-    if (!scrolling_) return NO;
+    if (!scrolling_) return;
     scrolling_ = NO;
-    return YES;
 }
 
 #endif

@@ -250,12 +250,9 @@ enum {
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-- (BOOL) ccMouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteAtPosition: location];
-	
-	return YES;
+	[self addNewSpriteAtPosition:theEvent.locationInView];
 }
 #endif
 

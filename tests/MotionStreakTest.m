@@ -248,11 +248,10 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-	CGPoint touchLocation = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint touchLocation = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	[streak_ setPosition:touchLocation];
-	return YES;
 }
 #endif
 

@@ -347,8 +347,12 @@
         {
             // begin the mouse down
             self.eventProcessed = YES;
-            if ([node respondsToSelector:@selector(mouseDown:)] != NO)
-                [node mouseDown:theEvent];
+            switch (button)
+            {
+                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)] != NO) [node mouseDown:theEvent]; break;
+                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)] != NO) [node rightMouseDown:theEvent]; break;
+                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)] != NO) [node otherMouseDown:theEvent]; break;
+            }
             
             // if mouse was processed, remember it and break
             if (self.eventProcessed != NO)
@@ -372,8 +376,12 @@
         if (node.isTouchLocked != NO)
         {
             // move the mouse
-            if ([node respondsToSelector:@selector(mouseDragged:)] != NO)
-                [node mouseDragged:theEvent];
+            switch (button)
+            {
+                case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)] != NO) [node mouseDragged:theEvent]; break;
+                case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)] != NO) [node rightMouseDragged:theEvent]; break;
+                case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)] != NO) [node otherMouseDragged:theEvent]; break;
+            }
         }
         else
         {
@@ -385,8 +393,12 @@
             else
             {
                 // move the mouse
-                if ([node respondsToSelector:@selector(mouseDragged:)] != NO)
-                    [node mouseDragged:theEvent];
+                switch (button)
+                {
+                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDragged:)] != NO) [node mouseDragged:theEvent]; break;
+                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDragged:)] != NO) [node rightMouseDragged:theEvent]; break;
+                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDragged:)] != NO) [node otherMouseDragged:theEvent]; break;
+                }
             }
         }
     }
@@ -402,8 +414,12 @@
             {
                 // begin the mouse down
                 self.eventProcessed = YES;
-                if ([node respondsToSelector:@selector(mouseDown:)] != NO)
-                    [node mouseDown:theEvent];
+                switch (button)
+                {
+                    case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)] != NO) [node mouseDown:theEvent]; break;
+                    case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseDown:)] != NO) [node rightMouseDown:theEvent]; break;
+                    case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseDown:)] != NO) [node otherMouseDown:theEvent]; break;
+                }
                 
                 // if mouse was accepted, add it and break
                 if (self.eventProcessed != NO)
@@ -425,9 +441,13 @@
         CCNode* node = (CCNode*)_runningResponder;
         
         // end the mouse
-        if ([node respondsToSelector:@selector(mouseUp:)] != NO)
-            [node mouseUp:theEvent];
-        // remove 
+        switch (button)
+        {
+            case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseUp:)] != NO) [node mouseUp:theEvent]; break;
+            case CCMouseButtonRight: if ([node respondsToSelector:@selector(rightMouseUp:)] != NO) [node rightMouseUp:theEvent]; break;
+            case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseUp:)] != NO) [node otherMouseUp:theEvent]; break;
+        }
+        // remove
         _runningResponder = nil;
     }
 }

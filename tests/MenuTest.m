@@ -164,23 +164,7 @@ enum {
 }
 
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseDown:(NSEvent *)event
-{
-	return YES;
-}
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	return YES;
-}
 
--(BOOL) ccMouseMoved:(NSEvent *)event
-{
-	return YES;
-}
--(BOOL) ccMouseDragged:(NSEvent *)event
-{
-	return YES;
-}
 #endif // __CC_PLATFORM_MAC
 
 -(void) dealloc
