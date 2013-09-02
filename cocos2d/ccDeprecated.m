@@ -72,14 +72,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #elif __CC_PLATFORM_MAC
 
-#pragma mark - EventDispatcher
-
-@implementation CCEventDispatcher (Deprecated)
-+(CCEventDispatcher*) sharedDispatcher
-{
-	return [[CCDirector sharedDirector] eventDispatcher];
-}
-@end
 #endif // __CC_PLATFORM_MAC
 
 #pragma mark - Director

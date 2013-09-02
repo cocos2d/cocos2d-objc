@@ -31,7 +31,7 @@
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>									// Needed for UIAccelerometerDelegate
 #elif defined(__CC_PLATFORM_MAC)
-#import "Platforms/Mac/CCEventDispatcher.h"
+
 #endif
 
 #import "CCProtocols.h"
@@ -71,7 +71,7 @@
 #elif defined(__CC_PLATFORM_MAC)
 
 
-@interface CCLayer : CCNode <CCKeyboardEventDelegate, CCMouseEventDelegate, CCTouchEventDelegate, CCGestureEventDelegate>
+@interface CCLayer : CCNode
 {
 	BOOL		_mouseEnabled;
 	NSInteger	_mousePriority;

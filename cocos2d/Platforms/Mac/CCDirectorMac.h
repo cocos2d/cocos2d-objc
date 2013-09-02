@@ -32,8 +32,6 @@
 #import <QuartzCore/CVDisplayLink.h>
 #import "../../CCDirector.h"
 
-@class CCEventDispatcher;
-
 enum  {
 	/// If the window is resized, it won't be autoscaled
 	kCCDirectorResize_NoScale,
@@ -42,8 +40,6 @@ enum  {
 };
 
 @interface CCDirector (MacExtension)
-/** sets the CCEventDispatcher (Mac only) */
-@property (nonatomic, readwrite, retain) CCEventDispatcher* eventDispatcher;
 
 /** converts an NSEvent to GL coordinates (Mac only) */
 -(CGPoint) convertEventToGL:(NSEvent*)event;
@@ -60,9 +56,6 @@ enum  {
     CGSize			_originalWinSize;
 
 	NSWindow		*_fullScreenWindow;
-
-	// Event Dispatcher
-	CCEventDispatcher	*_eventDispatcher;
 
 	// cache
 	NSWindow		*_windowGLView;

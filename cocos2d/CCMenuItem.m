@@ -158,29 +158,58 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 }
 
 // -----------------------------------------------------------------
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+
 /** touch protocol implementation
  @since v2.5
  */
 
--( void )touchesBegan:( NSSet* )touches withEvent:( UIEvent* )event {
-    
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // if menu item is child of a menu, notify the menu that a child has been pressed
-    if ( [ self.parent isMemberOfClass:[ CCMenu class ] ] == YES ) [ ( ( CCMenu* )self.parent ) menuItemPressed:self ];
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemPressed:self];
   
     // perform pressed selector
-    [ self selected ];
-    
+    [self selected];
 }
 
--( void )touchesEnded:( NSSet* )touches withEvent:( UIEvent* )event {
-
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
     // if menu item is child of a menu, notify the menu that a child has been released
-    if ( [ self.parent isMemberOfClass:[ CCMenu class ] ] == YES ) [ ( ( CCMenu* )self.parent ) menuItemReleased:self ];
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemReleased:self];
 
     // perform released selector
-    [ self unselected ];
-    [ self activate ];
+    [self unselected];
+    [self activate];
 }
+
+#else
+
+/** mouse protocol implementation
+ @since v2.5
+ */
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    // if menu item is child of a menu, notify the menu that a child has been pressed
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemPressed:self];
+    
+    // perform pressed selector
+    [self selected];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    // if menu item is child of a menu, notify the menu that a child has been released
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemReleased:self];
+    
+    // perform released selector
+    [self unselected];
+    [self activate];
+}
+
+#endif
 
 // -----------------------------------------------------------------
 

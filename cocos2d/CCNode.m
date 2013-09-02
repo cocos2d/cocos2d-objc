@@ -159,7 +159,7 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.touchLocked = YES;
         self.multipleTouchEnabled = NO;
-        self.touchManager = [ director touchManager ];
+        self.responderManager = [ director responderManager ];
         
 	}
 
@@ -947,17 +947,13 @@ static NSUInteger globalOrderOfArrival = 1;
 /** Returns YES, if touch is inside sprite
  @since v2.5
  */
--( BOOL )hitTestWithTouch:( UITouch* )touch {
-    CCDirector* director = [ CCDirector sharedDirector ];
-    
-    CGPoint pos = [ director convertToGL:[ touch locationInView:[ CCDirector sharedDirector ].view ] ];
-    pos = [ self convertToNodeSpace:pos ];
-    
-    if ( ( pos.y < 0 ) || ( pos.y > self.contentSize.height ) || ( pos.x < 0 ) || ( pos.x > self.contentSize.width ) ) return( NO );
-    return( YES );
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos {
+    pos = [self convertToNodeSpace:pos];
+    if ((pos.y < 0) || (pos.y > self.contentSize.height) || (pos.x < 0) || (pos.x > self.contentSize.width)) return(NO);
+    return(YES);
 }
 
--( void )buildTouchResponderList {
+-( void )buildResponderList {
     
     if ( _children != nil ) {
         
@@ -966,23 +962,23 @@ static NSUInteger globalOrderOfArrival = 1;
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [ _children objectAtIndex:i ];
 			if ( [child zOrder] < 0 )
-				[ child buildTouchResponderList ];
+				[ child buildResponderList ];
 			else
 				break;
 		}
 
         // add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchResponder:self ];
+        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
         
         // add children with zOrder >= 0
 		for( ; i < _children.count; i++ ) {
 			CCNode *child = [_children objectAtIndex:i];
-			[ child buildTouchResponderList ];
+			[ child buildResponderList ];
 		}
     } else {
         
         // only add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.touchManager addTouchResponder:self ];
+        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
     }
 }
 

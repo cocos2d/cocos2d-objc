@@ -133,10 +133,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 #if __CC_PLATFORM_IOS
 
 #elif __CC_PLATFORM_MAC
-@interface CCEventDispatcher (Deprecated)
-// new: [director eventDispatcher]
-+(CCEventDispatcher*) sharedDispatcher DEPRECATED_ATTRIBUTE;
-@end
+
 #endif // __CC_PLATFORM_MAC
 
 @interface CCDirector (Deprecated)

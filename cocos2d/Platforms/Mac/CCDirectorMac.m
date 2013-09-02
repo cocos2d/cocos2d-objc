@@ -31,7 +31,6 @@
 #import <sys/time.h>
 
 #import "CCDirectorMac.h"
-#import "CCEventDispatcher.h"
 #import "CCGLView.h"
 #import "CCWindow.h"
 
@@ -66,16 +65,6 @@
 	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
 
--(void) setEventDispatcher:(CCEventDispatcher *)dispatcher
-{
-	NSAssert(NO, @"override me");
-}
-
--(CCEventDispatcher *) eventDispatcher
-{
-	NSAssert(NO, @"override me");
-	return nil;
-}
 @end
 
 #pragma mark -
@@ -97,7 +86,6 @@
 		_windowGLView = nil;
 		_winOffset = CGPointZero;
 
-		_eventDispatcher = [[CCEventDispatcher alloc] init];
 	}
 
 	return self;
@@ -366,17 +354,6 @@
 	return ret;
 }
 
--(void) setEventDispatcher:(CCEventDispatcher *)dispatcher
-{
-	if( dispatcher != _eventDispatcher ) {
-		_eventDispatcher = dispatcher;
-	}
-}
-
--(CCEventDispatcher *) eventDispatcher
-{
-	return _eventDispatcher;
-}
 @end
 
 
@@ -553,17 +530,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink, const CVTime
 -(void) setView:(CCGLView *)view
 {
 	[super setView:view];
-
-	[view setEventDelegate:_eventDispatcher];
-	[_eventDispatcher setDispatchEvents: YES];
-
-	// Enable Touches. Default no.
-	// Only available on OS X 10.6+
-#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_5
-	[view setAcceptsTouchEvents:NO];
-//		[view setAcceptsTouchEvents:YES];
-#endif
-
 
 	// Synchronize buffer swaps with vertical refresh rate
 	[[view openGLContext] makeCurrentContext];

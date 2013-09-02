@@ -41,7 +41,6 @@
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
 #elif defined(__CC_PLATFORM_MAC)
-#import "Platforms/Mac/CCEventDispatcher.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
@@ -116,152 +115,6 @@
 
 #elif defined(__CC_PLATFORM_MAC)
 
-#pragma mark CCLayer - OS X - Mouse, Keyboard & Touch events
-
-
--(BOOL) isMouseEnabled
-{
-	return _mouseEnabled;
-}
-
--(void) setMouseEnabled:(BOOL)enabled
-{
-	if( _mouseEnabled != enabled ) {
-		_mouseEnabled = enabled;
-		
-		if( _isRunning ) {
-			CCDirector *director = [CCDirector sharedDirector];
-			if( enabled )
-				[[director eventDispatcher] addMouseDelegate:self priority:_mousePriority];
-			else
-				[[director eventDispatcher] removeMouseDelegate:self];
-		}
-	}	
-}
-
--(NSInteger) mousePriority
-{
-	return _mousePriority;
-}
-
--(void) setMousePriority:(NSInteger)mousePriority
-{
-	if( _mousePriority != mousePriority ) {
-		_mousePriority = mousePriority;
-		if( _mouseEnabled ) {
-			[self setMouseEnabled:NO];
-			[self setMouseEnabled:YES];
-		}
-	}
-}
-
--(BOOL) isKeyboardEnabled
-{
-	return _keyboardEnabled;
-}
-
--(void) setKeyboardEnabled:(BOOL)enabled
-{
-	if( _keyboardEnabled != enabled ) {
-		_keyboardEnabled = enabled;
-
-		if( _isRunning ) {
-			CCDirector *director = [CCDirector sharedDirector];
-			if( enabled )
-				[[director eventDispatcher] addKeyboardDelegate:self priority:_keyboardPriority ];
-			else
-				[[director eventDispatcher] removeKeyboardDelegate:self];
-		}
-	}
-}
-
--(NSInteger) keyboardPriority
-{
-	return _keyboardPriority;
-}
-
--(void) setKeyboardPriority:(NSInteger)keyboardPriority
-{
-	if( _keyboardPriority != keyboardPriority ) {
-		_keyboardPriority = keyboardPriority;
-		if( _keyboardEnabled ) {
-			[self setKeyboardEnabled:NO];
-			[self setKeyboardEnabled:YES];
-		}
-	}
-}
-
--(BOOL) isTouchEnabled
-{
-	return _touchEnabled;
-}
-
--(void) setTouchEnabled:(BOOL)enabled
-{
-	if( _touchEnabled != enabled ) {
-		_touchEnabled = enabled;
-		if( _isRunning ) {
-			CCDirector *director = [CCDirector sharedDirector];
-			if( enabled )
-				[[director eventDispatcher] addTouchDelegate:self priority:_touchPriority];
-			else
-				[[director eventDispatcher] removeTouchDelegate:self];
-		}
-	}
-}
-
--(NSInteger) touchPriority
-{
-	return _touchPriority;
-}
--(void) setTouchPriority:(NSInteger)touchPriority
-{
-	if( _touchPriority != touchPriority ) {
-		_touchPriority = touchPriority;
-		
-		if( _touchEnabled) {
-			[self setTouchEnabled:NO];
-			[self setTouchEnabled:YES];
-		}
-	}
-}
-
--(BOOL) isGestureEnabled
-{
-	return _gestureEnabled;
-}
-
--(void) setGestureEnabled:(BOOL)enabled
-{
-	if( _gestureEnabled != enabled ) {
-		_gestureEnabled = enabled;
-		if( _isRunning ) {
-			CCDirector *director = [CCDirector sharedDirector];
-			if( enabled )
-				[[director eventDispatcher] addGestureDelegate:self priority:_gesturePriority];
-			else
-				[[director eventDispatcher] removeGestureDelegate:self];
-		}
-	}
-}
-
--(NSInteger) gesturePriority
-{
-	return _gesturePriority;
-}
-
--(void) setGesturePriority:(NSInteger)gesturePriority
-{
-	if( _gesturePriority != gesturePriority ) {
-		_gesturePriority = gesturePriority;
-		
-		if( _gestureEnabled) {
-			[self setGestureEnabled:NO];
-			[self setGestureEnabled:YES];
-		}
-	}
-}
-
 #endif // Mac
 
 
@@ -271,21 +124,7 @@
 #ifdef __CC_PLATFORM_IOS
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCDirector *director = [CCDirector sharedDirector];
-	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
 
-	if( _mouseEnabled )
-		[eventDispatcher addMouseDelegate:self priority:_mousePriority];
-
-	if( _keyboardEnabled)
-		[eventDispatcher addKeyboardDelegate:self priority:_keyboardPriority];
-
-	if( _touchEnabled)
-		[eventDispatcher addTouchDelegate:self priority:_touchPriority];
-    
-	if( _gestureEnabled)
-		[eventDispatcher addGestureDelegate:self priority:_gesturePriority];
-    
 #endif
 
 	// then iterate over all the children
@@ -314,19 +153,7 @@
 		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
 
 #elif defined(__CC_PLATFORM_MAC)
-	CCEventDispatcher *eventDispatcher = [director eventDispatcher];
-	if( _mouseEnabled )
-		[eventDispatcher removeMouseDelegate:self];
 
-	if( _keyboardEnabled )
-		[eventDispatcher removeKeyboardDelegate:self];
-
-	if( _touchEnabled )
-		[eventDispatcher removeTouchDelegate:self];
-    
-	if( _gestureEnabled )
-		[eventDispatcher removeGestureDelegate:self];
-    
 #endif
 
 	[super onExit];
