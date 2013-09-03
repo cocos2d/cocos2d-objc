@@ -87,14 +87,14 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 {
 	void (^_block)(ccTime delta);
 	NSString	*_key;
-	id			_target;
+	id			__unsafe_unretained _target;
 }
 
 /** unique identifier of the block */
 @property (nonatomic, readonly) NSString *key;
 
 /** owner of the timer */
-@property (nonatomic, readonly, assign) id target;
+@property (nonatomic, readonly, unsafe_unretained) id target;
 
 /** Allocates a timer with a target, interval in seconds, a key and a block */
 +(id) timerWithTarget:(id)owner interval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block;

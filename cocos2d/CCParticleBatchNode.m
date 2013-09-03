@@ -71,12 +71,12 @@
  */
 +(id)batchNodeWithTexture:(CCTexture2D *)tex
 {
-	return [[[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity];
 }
 
 +(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity
 {
-	return [[[self alloc] initWithTexture:tex capacity:capacity] autorelease];
+	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
 
 /*
@@ -84,12 +84,12 @@
  */
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity
 {
-	return [[[self alloc] initWithFile:fileImage capacity:capacity] autorelease];
+	return [[self alloc] initWithFile:fileImage capacity:capacity];
 }
 
 +(id)batchNodeWithFile:(NSString*) imageFile
 {
-	return [[[self alloc] initWithFile:imageFile capacity:kCCParticleDefaultCapacity] autorelease];
+	return [[self alloc] initWithFile:imageFile capacity:kCCParticleDefaultCapacity];
 }
 
 /*
@@ -102,7 +102,7 @@
 		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
 		// no lazy alloc in this node
-		_children = [[CCArray alloc] initWithCapacity:capacity];
+		_children = [[NSMutableArray alloc] initWithCapacity:capacity];
 
 		_blendFunc.src = CC_BLEND_SRC;
 		_blendFunc.dst = CC_BLEND_DST;
@@ -127,11 +127,6 @@
 	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
 }
 
--(void)dealloc
-{
-	[_textureAtlas release];
-	[super dealloc];
-}
 
 #pragma mark CCParticleBatchNode - composition
 
@@ -206,7 +201,7 @@
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
 
 	if( ! _children )
-		_children = [[CCArray alloc] initWithCapacity:4];
+		_children = [[NSMutableArray alloc] initWithCapacity:4];
 
 	//don't use a lazy insert
 	NSUInteger pos = [self searchNewPositionInChildrenForZ:z];
@@ -244,10 +239,8 @@
 		if( oldIndex != newIndex ) {
 
 			// reorder _children array
-			[child retain];
 			[_children removeObjectAtIndex:oldIndex];
 			[_children insertObject:child atIndex:newIndex];
-			[child release];
 
 			// save old altasIndex
 			NSUInteger oldAtlasIndex = child.atlasIndex;
@@ -433,10 +426,9 @@
 //rebuild atlas indexes
 -(void) updateAllAtlasIndexes
 {
-	CCParticleSystem *child;
 	NSUInteger index = 0;
 
-	CCARRAY_FOREACH(_children,child)
+    for (CCParticleSystem *child in _children)
 	{
 		child.atlasIndex = index;
 		index += child.totalParticles;

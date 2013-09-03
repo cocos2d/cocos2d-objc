@@ -44,7 +44,7 @@
 #pragma mark CCTileMapAtlas - Creation & Init
 +(id) tileMapAtlasWithTileFile:(NSString*)tile mapFile:(NSString*)map tileWidth:(int)w tileHeight:(int)h
 {
-	return [[[self alloc] initWithTileFile:tile mapFile:map tileWidth:w tileHeight:h] autorelease];
+	return [[self alloc] initWithTileFile:tile mapFile:map tileWidth:w tileHeight:h];
 }
 
 
@@ -55,7 +55,7 @@
 
 	if( (self=[super initWithTileFile:tile tileWidth:w tileHeight:h itemsToRender: _itemsToRender]) ) {
 
-		_posToAtlasIndex = [[NSMutableDictionary dictionaryWithCapacity:_itemsToRender] retain];
+		_posToAtlasIndex = [NSMutableDictionary dictionaryWithCapacity:_itemsToRender];
 
 		[self updateAtlasValues];
 
@@ -70,9 +70,7 @@
 	if( _tgaInfo )
 		tgaDestroy(_tgaInfo);
 
-	[_posToAtlasIndex release];
 
-	[super dealloc];
 }
 
 -(void) releaseMap
@@ -82,7 +80,6 @@
 
 	_tgaInfo = nil;
 
-	[_posToAtlasIndex release];
 	_posToAtlasIndex = nil;
 }
 

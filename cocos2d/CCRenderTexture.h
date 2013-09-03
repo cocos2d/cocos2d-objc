@@ -74,7 +74,7 @@ typedef enum
  The blending function can be changed in runtime by calling:
 	- [[renderTexture sprite] setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
 */
-@property (nonatomic,readwrite, retain) CCSprite* sprite;
+@property (nonatomic,readwrite, strong) CCSprite* sprite;
 
 /** Valid flags: GL_COLOR_BUFFER_BIT, GL_DEPTH_BUFFER_BIT, GL_STENCIL_BUFFER_BIT. They can be OR'ed. Valid when "autoDraw is YES. */
 @property (nonatomic, readwrite) GLbitfield clearFlags;

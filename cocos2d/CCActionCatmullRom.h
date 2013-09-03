@@ -44,7 +44,7 @@
 }
 
 /** Array that contains the control points */
-@property (nonatomic,readwrite,retain) NSMutableArray *controlPoints;
+@property (nonatomic,readwrite,strong) NSMutableArray *controlPoints;
 
 /** creates and initializes a Points array with capacity */
  +(id) arrayWithCapacity:(NSUInteger)capacity;
@@ -90,7 +90,7 @@
 }
 
 /** Array of control points */
- @property (nonatomic,readwrite,retain) CCPointArray *points;
+ @property (nonatomic,readwrite,strong) CCPointArray *points;
 
 /** creates an action with a Cardinal Spline array of points and tension */
 +(id) actionWithDuration:(ccTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;

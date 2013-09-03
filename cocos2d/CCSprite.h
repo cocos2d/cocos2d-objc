@@ -66,7 +66,7 @@
 	//
 	// Data used when the sprite is rendered using a CCSpriteBatchNode
 	//
-	CCTextureAtlas			*_textureAtlas;			// Sprite Sheet texture atlas (weak reference)
+	CCTextureAtlas			*__unsafe_unretained _textureAtlas;			// Sprite Sheet texture atlas (weak reference)
 	NSUInteger				_atlasIndex;			// Absolute (real) Index on the batch node
 	CCSpriteBatchNode		*_batchNode;			// Used batch node (weak reference)
 	CGAffineTransform		_transformToBatch;		//
@@ -133,9 +133,9 @@
  */
 @property (nonatomic,readwrite) BOOL flipY;
 /** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */
-@property (nonatomic,readwrite,assign) CCTextureAtlas *textureAtlas;
+@property (nonatomic,readwrite,unsafe_unretained) CCTextureAtlas *textureAtlas;
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
-@property (nonatomic,readwrite,assign) CCSpriteBatchNode *batchNode;
+@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode;
 /** offset position in points of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */

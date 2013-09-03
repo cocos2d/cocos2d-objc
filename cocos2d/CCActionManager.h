@@ -29,19 +29,18 @@
 
 #import "CCAction.h"
 #import "ccMacros.h"
-#import "Support/ccCArray.h"
 #import "Support/uthash.h"
 
 typedef struct _hashElement
 {
-	struct ccArray	*actions;
+    __unsafe_unretained NSMutableArray	*actions;
 	NSUInteger		actionIndex;
 	BOOL			currentActionSalvaged;
 	BOOL			paused;
 	UT_hash_handle	hh;
 
-	CC_ARC_UNSAFE_RETAINED	id				target;
-	CC_ARC_UNSAFE_RETAINED	CCAction		*currentAction;
+	__unsafe_unretained	id				target;
+	__unsafe_unretained	CCAction		*currentAction;
 } tHashElement;
 
 
@@ -56,8 +55,8 @@ typedef struct _hashElement
  */
 @interface CCActionManager : NSObject
 {
-	tHashElement	*targets;
-	tHashElement	*currentTarget;
+    tHashElement	*targets;
+    tHashElement	*currentTarget;
 	BOOL			currentTargetSalvaged;
 }
 

@@ -50,15 +50,12 @@
 {    
 	CCLOGINFO( @"cocos2d: deallocing %@", self);
 
-	[_spriteFrame release];
-	[_userInfo release];
 
-    [super dealloc];
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAnimationFrame *copy = [[[self class] allocWithZone: zone] initWithSpriteFrame:[[_spriteFrame copy] autorelease] delayUnits:_delayUnits userInfo:[[_userInfo copy] autorelease] ];
+	CCAnimationFrame *copy = [[[self class] allocWithZone: zone] initWithSpriteFrame:[_spriteFrame copy] delayUnits:_delayUnits userInfo:[_userInfo copy] ];
 	return copy;
 }
 
@@ -76,22 +73,22 @@
 
 +(id) animation
 {
-	return [[[self alloc] init] autorelease];
+	return [[self alloc] init];
 }
 
 +(id) animationWithSpriteFrames:(NSArray*)frames
 {
-	return [[[self alloc] initWithSpriteFrames:frames] autorelease];
+	return [[self alloc] initWithSpriteFrames:frames];
 }
 
 +(id) animationWithSpriteFrames:(NSArray*)frames delay:(float)delay
 {
-	return [[[self alloc] initWithSpriteFrames:frames delay:delay] autorelease];
+	return [[self alloc] initWithSpriteFrames:frames delay:delay];
 }
 
 +(id) animationWithAnimationFrames:(NSArray*)arrayOfAnimationFrames delayPerUnit:(float)delayPerUnit loops:(NSUInteger)loops
 {
-	return [[[self alloc] initWithAnimationFrames:arrayOfAnimationFrames delayPerUnit:delayPerUnit loops:loops] autorelease];
+	return [[self alloc] initWithAnimationFrames:arrayOfAnimationFrames delayPerUnit:delayPerUnit loops:loops];
 }
 
 -(id) init
@@ -117,7 +114,6 @@
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 			
 			[self.frames addObject:animFrame];
-			[animFrame release];
 			_totalDelayUnits++;
 		}
 		
@@ -167,15 +163,12 @@
 {
 	CCLOGINFO( @"cocos2d: deallocing %@",self);
 
-	[_frames release];
-	[super dealloc];
 }
 
 -(void) addSpriteFrame:(CCSpriteFrame*)frame
 {
 	CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:frame delayUnits:1 userInfo:nil];
 	[_frames addObject:animFrame];
-	[animFrame release];
 	
 	// update duration
 	_totalDelayUnits++;

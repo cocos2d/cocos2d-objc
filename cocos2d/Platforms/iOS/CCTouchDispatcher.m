@@ -32,6 +32,8 @@
 #import "CCTouchDispatcher.h"
 #import "CCTouchHandler.h"
 
+#import <objc/message.h>
+
 @implementation CCTouchDispatcher
 
 @synthesize dispatchEvents;
@@ -62,14 +64,6 @@
 	return self;
 }
 
--(void) dealloc
-{
-	[targetedHandlers release];
-	[standardHandlers release];
-	[handlersToAdd release];
-	[handlersToRemove release];
-	[super dealloc];
-}
 
 //
 // handlers management
@@ -289,7 +283,7 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 				else if( [handler.claimedTouches containsObject:touch] ) {
 					claimed = YES;
 					if( handler.enabledSelectors & helper.type )
-						[handler.delegate performSelector:helper.touchSel withObject:touch withObject:event];
+                        objc_msgSend(handler.delegate, helper.touchSel, touch, event);
 
 					if( helper.type & (kCCTouchSelectorCancelledBit | kCCTouchSelectorEndedBit) )
 						[handler.claimedTouches removeObject:touch];
@@ -310,11 +304,9 @@ NSComparisonResult sortByPriority(id first, id second, void *context)
 	if( standardHandlersCount > 0 && [mutableTouches count]>0 ) {
 		for( CCTouchHandler *handler in standardHandlers ) {
 			if( handler.enabledSelectors & helper.type )
-				[handler.delegate performSelector:helper.touchesSel withObject:mutableTouches withObject:event];
+                objc_msgSend(handler.delegate, helper.touchesSel, mutableTouches, event);
 		}
 	}
-	if( needsMutableSet )
-		[mutableTouches release];
 
 	//
 	// Optimization. To prevent a [handlers copy] which is expensive

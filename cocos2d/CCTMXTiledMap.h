@@ -114,9 +114,9 @@ enum
 /** map orientation */
 @property (nonatomic,readonly) int mapOrientation;
 /** object groups */
-@property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
+@property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
 /** properties */
-@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
 /** creates a TMX Tiled Map with a TMX file.*/
 +(id) tiledMapWithTMXFile:(NSString*)tmxFile;

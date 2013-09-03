@@ -45,13 +45,12 @@
 -(id) init
 {
 	NSAssert(NO, @"IntervalActionInit: Init not supported. Use InitWithDuration");
-	[self release];
 	return nil;
 }
 
 +(id) actionWithDuration: (ccTime) d
 {
-	return [[[self alloc] initWithDuration:d ] autorelease];
+	return [[self alloc] initWithDuration:d ];
 }
 
 -(id) initWithDuration: (ccTime) d
@@ -158,7 +157,7 @@
 
 +(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {
-	return [[[self alloc] initOne:one two:two ] autorelease];
+	return [[self alloc] initOne:one two:two ];
 }
 
 -(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
@@ -172,11 +171,9 @@
 	if( (self=[super initWithDuration: d]) ) {
 		
 		// XXX: Supports re-init without leaking. Fails if one==_one || two==_two
-		[_actions[0] release];
-		[_actions[1] release];
 		
-		_actions[0] = [one retain];
-		_actions[1] = [two retain];
+		_actions[0] = one;
+		_actions[1] = two;
 	}
 	
 	return self;
@@ -184,16 +181,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[[_actions[0] copy] autorelease] two:[[_actions[1] copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone:zone] initOne:[_actions[0] copy] two:[_actions[1] copy] ];
 	return copy;
 }
 
--(void) dealloc
-{
-	[_actions[0] release];
-	[_actions[1] release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -287,7 +278,7 @@
 
 +(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
 {
-	return [[[self alloc] initWithAction:action times:times] autorelease];
+	return [[self alloc] initWithAction:action times:times];
 }
 
 -(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
@@ -308,15 +299,10 @@
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[[_innerAction copy] autorelease] times:_times];
+	CCAction *copy = [[[self class] allocWithZone:zone] initWithAction:[_innerAction copy] times:_times];
 	return copy;
 }
 
--(void) dealloc
-{
-	[_innerAction release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -434,7 +420,7 @@
 
 +(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
 {
-	return [[[self alloc] initOne:one two:two ] autorelease];
+	return [[self alloc] initOne:one two:two ];
 }
 
 -(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
@@ -449,8 +435,6 @@
 	if( (self=[super initWithDuration: MAX(d1,d2)] ) ) {
 
 		// XXX: Supports re-init without leaking. Fails if one==_one || two==_two
-		[_one release];
-		[_two release];
 
 		_one = one;
 		_two = two;
@@ -460,24 +444,16 @@
 		else if( d1 < d2)
 			_one = [CCSequence actionOne:one two: [CCDelayTime actionWithDuration: (d2-d1)] ];
 
-		[_one retain];
-		[_two retain];
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [[[self class] allocWithZone: zone] initOne: [[_one copy] autorelease] two: [[_two copy] autorelease] ];
+	CCAction *copy = [[[self class] allocWithZone: zone] initOne: [_one copy] two: [_two copy] ];
 	return copy;
 }
 
--(void) dealloc
-{
-	[_one release];
-	[_two release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -513,7 +489,7 @@
 @implementation CCRotateTo
 +(id) actionWithDuration: (ccTime) t angle:(float) a
 {
-	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
+	return [[self alloc] initWithDuration:t angle:a ];
 }
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
@@ -526,7 +502,7 @@
 
 +(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
 {
-	return [[[self alloc] initWithDuration:t angleX:aX angleY:aY ] autorelease];
+	return [[self alloc] initWithDuration:t angleX:aX angleY:aY ];
 }
 
 -(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
@@ -591,7 +567,7 @@
 @implementation CCRotateBy
 +(id) actionWithDuration: (ccTime) t angle:(float) a
 {
-	return [[[self alloc] initWithDuration:t angle:a ] autorelease];
+	return [[self alloc] initWithDuration:t angle:a ];
 }
 
 -(id) initWithDuration: (ccTime) t angle:(float) a
@@ -604,7 +580,7 @@
 
 +(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
 {
-	return [[[self alloc] initWithDuration:t angleX:aX angleY:aY ] autorelease];
+	return [[self alloc] initWithDuration:t angleX:aX angleY:aY ];
 }
 
 -(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
@@ -651,7 +627,7 @@
 @implementation CCMoveBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {
-	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+	return [[self alloc] initWithDuration:t position:p ];
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
@@ -704,7 +680,7 @@
 @implementation CCMoveTo
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) p
 {
-	return [[[self alloc] initWithDuration:t position:p ] autorelease];
+	return [[self alloc] initWithDuration:t position:p ];
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) p
@@ -738,7 +714,7 @@
 @implementation CCSkewTo
 +(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
 {
-	return [[[self alloc] initWithDuration: t skewX:sx skewY:sy] autorelease];
+	return [[self alloc] initWithDuration: t skewX:sx skewY:sy];
 }
 
 -(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
@@ -841,7 +817,7 @@
 @implementation CCJumpBy
 +(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
 {
-	return [[[self alloc] initWithDuration: t position: pos height: h jumps:j] autorelease];
+	return [[self alloc] initWithDuration: t position: pos height: h jumps:j];
 }
 
 -(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
@@ -936,7 +912,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCBezierBy
 +(id) actionWithDuration: (ccTime) t bezier:(ccBezierConfig) c
 {
-	return [[[self alloc] initWithDuration:t bezier:c ] autorelease];
+	return [[self alloc] initWithDuration:t bezier:c ];
 }
 
 -(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
@@ -1038,7 +1014,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCScaleTo
 +(id) actionWithDuration: (ccTime) t scale:(float) s
 {
-	return [[[self alloc] initWithDuration: t scale:s] autorelease];
+	return [[self alloc] initWithDuration: t scale:s];
 }
 
 -(id) initWithDuration: (ccTime) t scale:(float) s
@@ -1052,7 +1028,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
 {
-	return [[[self alloc] initWithDuration: t scaleX:sx scaleY:sy] autorelease];
+	return [[self alloc] initWithDuration: t scaleX:sx scaleY:sy];
 }
 
 -(id) initWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
@@ -1111,7 +1087,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCBlink
 +(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
 {
-	return [[[ self alloc] initWithDuration: t blinks: b] autorelease];
+	return [[ self alloc] initWithDuration: t blinks: b];
 }
 
 -(id) initWithDuration: (ccTime) t blinks: (NSUInteger) b
@@ -1195,7 +1171,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCFadeTo
 +(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o
 {
-	return [[[ self alloc] initWithDuration: t opacity: o] autorelease];
+	return [[ self alloc] initWithDuration: t opacity: o];
 }
 
 -(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
@@ -1231,7 +1207,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCTintTo
 +(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
-	return [[(CCTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
+	return [(CCTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b];
 }
 
 -(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
@@ -1270,7 +1246,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 @implementation CCTintBy
 +(id) actionWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
 {
-	return [[(CCTintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b] autorelease];
+	return [(CCTintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b];
 }
 
 -(id) initWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
@@ -1336,7 +1312,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 {
 	// casting to prevent warnings
 	CCReverseTime *a = [self alloc];
-	return [[a initWithAction:action] autorelease];
+	return [a initWithAction:action];
 }
 
 -(id) initWithAction: (CCFiniteTimeAction*) action
@@ -1346,8 +1322,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 	if( (self=[super initWithDuration: [action duration]]) ) {
 		// Don't leak if action is reused
-		[_other release];
-		_other = [action retain];
+		_other = action;
 	}
 
 	return self;
@@ -1355,14 +1330,9 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAction:[[_other copy] autorelease] ];
+	return [[[self class] allocWithZone: zone] initWithAction:[_other copy] ];
 }
 
--(void) dealloc
-{
-	[_other release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
@@ -1383,7 +1353,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(CCActionInterval*) reverse
 {
-	return [[_other copy] autorelease];
+	return [_other copy];
 }
 @end
 
@@ -1398,7 +1368,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 +(id) actionWithAnimation: (CCAnimation*)anim
 {
-	return [[[self alloc] initWithAnimation:anim] autorelease];
+	return [[self alloc] initWithAnimation:anim];
 }
 
 // delegate initializer
@@ -1434,26 +1404,18 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	return [[[self class] allocWithZone: zone] initWithAnimation:[[_animation copy]autorelease] ];
+	return [[[self class] allocWithZone: zone] initWithAnimation:[_animation copy] ];
 }
 
--(void) dealloc
-{
-	[_splitTimes release];
-	[_animation release];
-	[_origFrame release];
-	[super dealloc];
-}
 
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	CCSprite *sprite = _target;
 
-	[_origFrame release];
 
 	if( _animation.restoreOriginalFrame )
-		_origFrame = [[sprite displayFrame] retain];
+		_origFrame = [sprite displayFrame];
 	
 	_nextFrame = 0;
 	_executedLoops = 0;
@@ -1517,7 +1479,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	NSMutableArray *newArray = [NSMutableArray arrayWithCapacity:[oldArray count]];
     NSEnumerator *enumerator = [oldArray reverseObjectEnumerator];
     for (id element in enumerator)
-        [newArray addObject:[[element copy] autorelease]];
+        [newArray addObject:[element copy]];
 
 	CCAnimation *newAnim = [CCAnimation animationWithAnimationFrames:newArray delayPerUnit:_animation.delayPerUnit loops:_animation.loops];
 	newAnim.restoreOriginalFrame = _animation.restoreOriginalFrame;
@@ -1534,31 +1496,25 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 + (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
 {
-	return [[ (CCTargetedAction*)[self alloc] initWithTarget:target action:action] autorelease];
+	return [ (CCTargetedAction*)[self alloc] initWithTarget:target action:action];
 }
 
 - (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
 {
 	if((self = [super initWithDuration:actionIn.duration]))
 	{
-		_forcedTarget = [targetIn retain];
-		_action = [actionIn retain];
+		_forcedTarget = targetIn;
+		_action = actionIn;
 	}
 	return self;
 }
 
 -(id) copyWithZone: (NSZone*) zone
 {
-	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:_forcedTarget action:[[_action copy] autorelease]];
+	CCAction *copy = [ (CCTargetedAction*) [[self class] allocWithZone: zone] initWithTarget:_forcedTarget action:[_action copy]];
 	return copy;
 }
 
-- (void) dealloc
-{
-	[_forcedTarget release];
-	[_action release];
-	[super dealloc];
-}
 
 //- (void) updateDuration:(id)aTarget
 //{

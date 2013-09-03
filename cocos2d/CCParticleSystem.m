@@ -88,12 +88,12 @@
 
 +(id) particleWithFile:(NSString*) plistFile
 {
-	return [[[self alloc] initWithFile:plistFile] autorelease];
+	return [[self alloc] initWithFile:plistFile];
 }
 
 +(id) particleWithTotalParticles:(NSUInteger) numberOfParticles
 {
-	return [[[self alloc] initWithTotalParticles:numberOfParticles] autorelease];
+	return [[self alloc] initWithTotalParticles:numberOfParticles];
 }
 
 -(id) init {
@@ -278,8 +278,6 @@
 				free(deflated); deflated = NULL;
 
 				[self setTexture:  [ [CCTextureCache sharedTextureCache] addCGImage:[image CGImage] forKey:textureName]];
-				[data release];
-				[image release];
 			}
 
 			NSAssert( [self texture] != NULL, @"CCParticleSystem: error loading the texture");
@@ -299,7 +297,6 @@
 
 		if( ! _particles ) {
 			CCLOG(@"Particle system: not enough memory");
-			[self release];
 			return nil;
 		}
         _allocatedParticles = numberOfParticles;
@@ -347,9 +344,7 @@
 
 	free( _particles );
 
-	[_texture release];
 
-	[super dealloc];
 }
 
 -(void) initParticle: (tCCParticle*) particle
@@ -655,8 +650,7 @@
 -(void) setTexture:(CCTexture2D*) texture
 {
 	if( _texture != texture ) {
-		[_texture release];
-		_texture = [texture retain];
+		_texture = texture;
 
 		[self updateBlendFunc];
 	}

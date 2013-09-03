@@ -68,7 +68,6 @@
 
 		// allocating data space
 		if( ! [self allocMemory] ) {
-			[self release];
 			return nil;
 		}
 
@@ -229,7 +228,6 @@
 		glDeleteVertexArrays(1, &_VAOname);
 	}
 
-	[super dealloc];
 }
 
 // pointRect is in Points coordinates.

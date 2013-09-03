@@ -75,27 +75,27 @@
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
-	return [[[self alloc] initWithTexture:texture] autorelease];
+	return [[self alloc] initWithTexture:texture];
 }
 
 +(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {
-	return [[[self alloc] initWithTexture:texture rect:rect] autorelease];
+	return [[self alloc] initWithTexture:texture rect:rect];
 }
 
 +(id)spriteWithFile:(NSString*)filename
 {
-	return [[[self alloc] initWithFile:filename] autorelease];
+	return [[self alloc] initWithFile:filename];
 }
 
 +(id)spriteWithFile:(NSString*)filename rect:(CGRect)rect
 {
-	return [[[self alloc] initWithFile:filename rect:rect] autorelease];
+	return [[self alloc] initWithFile:filename rect:rect];
 }
 
 +(id)spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame
 {
-	return [[[self alloc] initWithSpriteFrame:spriteFrame] autorelease];
+	return [[self alloc] initWithSpriteFrame:spriteFrame];
 }
 
 +(id)spriteWithSpriteFrameName:(NSString*)spriteFrameName
@@ -108,7 +108,7 @@
 
 +(id)spriteWithCGImage:(CGImageRef)image key:(NSString*)key
 {
-	return [[[self alloc] initWithCGImage:image key:key] autorelease];
+	return [[self alloc] initWithCGImage:image key:key];
 }
 
 -(id) init
@@ -189,7 +189,6 @@
 		return [self initWithTexture:texture rect:rect];
 	}
 
-	[self release];
 	return nil;
 }
 
@@ -201,7 +200,6 @@
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
 
-	[self release];
 	return nil;
 }
 
@@ -244,11 +242,6 @@
 	];
 }
 
-- (void) dealloc
-{
-	[_texture release];
-	[super dealloc];
-}
 
 -(CCSpriteBatchNode*) batchNode
 {
@@ -608,8 +601,7 @@
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
 	if( _batchNode ) {
-		CCSprite *child;
-		CCARRAY_FOREACH(_children, child)
+        for (CCSprite *child in _children)
 			[_batchNode removeSpriteFromAtlas:child];
 	}
 
@@ -622,24 +614,7 @@
 {
 	if (_isReorderChildDirty)
 	{
-		NSInteger i,j,length = _children->data->num;
-		CCNode** x = _children->data->arr;
-		CCNode *tempItem;
-
-		// insertion sort
-		for(i=1; i<length; i++)
-		{
-			tempItem = x[i];
-			j = i-1;
-
-			//continue moving element downwards while zOrder is smaller or when zOrder is the same but orderOfArrival is smaller
-			while(j>=0 && ( tempItem.zOrder < x[j].zOrder || ( tempItem.zOrder == x[j].zOrder && tempItem.orderOfArrival < x[j].orderOfArrival ) ) )
-			{
-				x[j+1] = x[j];
-				j = j-1;
-			}
-			x[j+1] = tempItem;
-		}
+        [_children sortUsingSelector:@selector(compareZOrderToNode:)];
 
 		if ( _batchNode)
 			[_children makeObjectsPerformSelector:@selector(sortAllChildren)];
@@ -675,8 +650,7 @@
 	_dirty = _recursiveDirty = b;
 	// recursively set dirty
 	if( _hasChildren ) {
-		CCSprite *child;
-		CCARRAY_FOREACH(_children, child)
+        for (CCSprite *child in _children)
 			[child setDirtyRecursively:YES];
 	}
 }
@@ -944,8 +918,7 @@
 	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
 	if( ! _batchNode && _texture != texture ) {
-		[_texture release];
-		_texture = [texture retain];
+		_texture = texture;
 
 		[self updateBlendFunc];
 	}

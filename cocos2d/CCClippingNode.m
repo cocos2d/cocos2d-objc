@@ -42,9 +42,7 @@ static GLint _stencilBits = -1;
 static void setProgram(CCNode *n, CCGLProgram *p) {
     n.shaderProgram = p;
     if (!n.children) return;
-    CCNode *c;
-    CCARRAY_FOREACH(n.children, c) setProgram(c, p);
-    
+    for (CCNode* c in n.children) setProgram(c,p);
 }
 
 @implementation CCClippingNode
@@ -53,11 +51,6 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 @synthesize alphaThreshold = _alphaThreshold;
 @synthesize inverted = _inverted;
 
-- (void)dealloc
-{
-    [_stencil release];
-    [super dealloc];
-}
 
 + (id)clippingNode
 {
@@ -66,7 +59,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
 + (id)clippingNodeWithStencil:(CCNode *)stencil
 {
-    return [[[self alloc] initWithStencil:stencil] autorelease];
+    return [[self alloc] initWithStencil:stencil];
 }
 
 - (id)init

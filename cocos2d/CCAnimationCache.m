@@ -57,7 +57,6 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 
 +(void)purgeSharedAnimationCache
 {
-	[_sharedAnimationCache release];
 	_sharedAnimationCache = nil;
 }
 
@@ -79,8 +78,6 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
-	[_animations release];
-	[super dealloc];
 }
 
 #pragma mark CCAnimationCache - load/get/del
@@ -134,7 +131,6 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 			
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:1 userInfo:nil];
 			[frames addObject:animFrame];
-			[animFrame release];
 		}
 		
 		if ( [frames count] == 0 ) {
@@ -188,17 +184,14 @@ static CCAnimationCache *_sharedAnimationCache=nil;
 			CCAnimationFrame *animFrame = [[CCAnimationFrame alloc] initWithSpriteFrame:spriteFrame delayUnits:delayUnits userInfo:userInfo];
 			
 			[array addObject:animFrame];
-			[animFrame release];
 		}
 		
 		float delayPerUnit = [[animationDict objectForKey:@"delayPerUnit"] floatValue];
 		CCAnimation *animation = [[CCAnimation alloc] initWithAnimationFrames:array delayPerUnit:delayPerUnit loops:(loops?[loops intValue]:1)];
-		[array release];
 		
 		[animation setRestoreOriginalFrame:restoreOriginalFrame];
 				
 		[[CCAnimationCache sharedAnimationCache] addAnimation:animation name:name];
-		[animation release];
 	}
 }
 

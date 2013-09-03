@@ -157,14 +157,14 @@ do {                                                                            
 } while(0)
 
 #define HASH_ADD(hh,head,fieldname,keylen_in,add)                                \
-        HASH_ADD_KEYPTR(hh,head,&((add)->fieldname),keylen_in,add)
+        HASH_ADD_KEYPTR(hh,head,(void*)(&((add)->fieldname)),keylen_in,add)
  
 #define HASH_ADD_KEYPTR(hh,head,keyptr,keylen_in,add)                            \
 do {                                                                             \
  unsigned _ha_bkt;                                                               \
  (add)->hh.next = NULL;                                                          \
  (add)->hh.key = (char*)keyptr;                                                  \
- (add)->hh.keylen = (unsigned)keylen_in;                                                   \
+ (add)->hh.keylen = (unsigned)keylen_in;                                         \
  if (!(head)) {                                                                  \
     head = (add);                                                                \
     (head)->hh.prev = NULL;                                                      \

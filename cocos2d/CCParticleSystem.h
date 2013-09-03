@@ -379,7 +379,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** maximum particles of the system */
 @property (nonatomic,readwrite,assign) NSUInteger totalParticles;
 /** conforms to CocosNodeTexture protocol */
-@property (nonatomic,readwrite, retain) CCTexture2D * texture;
+@property (nonatomic,readwrite, strong) CCTexture2D * texture;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 /** does the alpha value modify color */
@@ -408,7 +408,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 @property (nonatomic,readwrite) NSInteger emitterMode;
 
 /** weak reference to the CCSpriteBatchNode that renders the CCSprite */
-@property (nonatomic,readwrite,assign) CCParticleBatchNode *batchNode;
+@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
 
 @property (nonatomic,readwrite) NSUInteger atlasIndex;
 

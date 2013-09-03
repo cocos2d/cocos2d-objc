@@ -64,10 +64,6 @@
 {}
 @end
 
-@interface CCArrayTest : TestDemo
-{}
-@end
-
 @interface NodeOpaqueTest : TestDemo
 {}
 @end

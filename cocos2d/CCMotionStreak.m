@@ -41,12 +41,12 @@
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
 {
-    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color textureFilename:path] autorelease];
+    return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color textureFilename:path];
 }
 
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
 {
-    return [[[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture] autorelease];
+    return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
 - (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path
@@ -266,7 +266,6 @@
 
 - (void)dealloc
 {
-    [_texture release];
 
     free(_pointState);
     free(_pointVertexes);
@@ -274,7 +273,6 @@
     free(_colorPointer);
     free(_texCoords);
 
-    [super dealloc];
 }
 
 @end

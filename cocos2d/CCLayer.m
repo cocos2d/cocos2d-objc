@@ -493,8 +493,7 @@
 	_displayedOpacity = _realOpacity * parentOpacity/255.0;
 
     if (_cascadeOpacityEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
+        for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
                 [item updateDisplayedOpacity:_displayedOpacity];
             }
@@ -509,8 +508,7 @@
 	_displayedColor.b = _realColor.b * parentColor.b/255.0;
 
     if (_cascadeColorEnabled) {
-        id<CCRGBAProtocol> item;
-        CCARRAY_FOREACH(_children, item) {
+        for (id<CCRGBAProtocol> item in _children) {
             if ([item conformsToProtocol:@protocol(CCRGBAProtocol)]) {
                 [item updateDisplayedColor:_displayedColor];
             }
@@ -536,12 +534,12 @@
 
 + (id) layerWithColor:(ccColor4B)color width:(GLfloat)w  height:(GLfloat) h
 {
-	return [[[self alloc] initWithColor:color width:w height:h] autorelease];
+	return [[self alloc] initWithColor:color width:w height:h];
 }
 
 + (id) layerWithColor:(ccColor4B)color
 {
-	return [[(CCLayerColor*)[self alloc] initWithColor:color] autorelease];
+	return [(CCLayerColor*)[self alloc] initWithColor:color];
 }
 
 -(id) init
@@ -667,12 +665,12 @@
 
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end
 {
-    return [[[self alloc] initWithColor:start fadingTo:end] autorelease];
+    return [[self alloc] initWithColor:start fadingTo:end];
 }
 
 + (id) layerWithColor: (ccColor4B) start fadingTo: (ccColor4B) end alongVector: (CGPoint) v
 {
-    return [[[self alloc] initWithColor:start fadingTo:end alongVector:v] autorelease];
+    return [[self alloc] initWithColor:start fadingTo:end alongVector:v];
 }
 
 - (id) init
@@ -809,7 +807,7 @@
 @implementation CCLayerMultiplex
 +(id) layerWithArray:(NSArray *)arrayOfLayers
 {
-	return [[[self alloc] initWithArray:arrayOfLayers] autorelease];
+	return [[self alloc] initWithArray:arrayOfLayers];
 }
 
 +(id) layerWithLayers: (CCLayer*) layer, ...
@@ -817,7 +815,7 @@
 	va_list args;
 	va_start(args,layer);
 
-	id s = [[[self alloc] initWithLayers: layer vaList:args] autorelease];
+	id s = [[self alloc] initWithLayers: layer vaList:args];
 
 	va_end(args);
 	return s;
@@ -841,7 +839,7 @@
 {
 	if( (self=[super init]) ) {
 
-		_layers = [[NSMutableArray arrayWithCapacity:5] retain];
+		_layers = [NSMutableArray arrayWithCapacity:5];
 
 		[_layers addObject: layer];
 
@@ -858,11 +856,6 @@
 	return self;
 }
 
--(void) dealloc
-{
-	[_layers release];
-	[super dealloc];
-}
 
 -(void) switchTo: (unsigned int) n
 {

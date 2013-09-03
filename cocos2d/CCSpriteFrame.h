@@ -72,10 +72,10 @@
 @property (nonatomic,readwrite) CGSize originalSizeInPixels;
 
 /** texture of the frame */
-@property (nonatomic, retain, readwrite) CCTexture2D *texture;
+@property (nonatomic, strong, readwrite) CCTexture2D *texture;
 
 /** texture file name of the frame */
-@property (nonatomic, retain, readonly) NSString *textureFilename;
+@property (nonatomic, strong, readonly) NSString *textureFilename;
 
 /** Create a CCSpriteFrame with a texture, rect in points.
  It is assumed that the frame was not trimmed.

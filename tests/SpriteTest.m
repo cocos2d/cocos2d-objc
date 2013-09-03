@@ -74,6 +74,7 @@ static NSString *transitions[] = {
 	@"SpriteBatchBug1217",
 	@"AnimationCache",
 	@"AnimationCacheFile",
+    @"Sprite9Slice",
 };
 
 enum {
@@ -766,8 +767,7 @@ Class restartAction()
 	[self unschedule:_cmd];
 
 	NSLog(@"Before reorder--");
-	CCSprite *child;
-	CCARRAY_FOREACH(node.children,child)
+    for (CCSprite* child in node.children)
 		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 
 
@@ -779,7 +779,7 @@ Class restartAction()
 	[node sortAllChildren];
 
 	NSLog(@"After reorder--");
-	CCARRAY_FOREACH(node.children,child)
+	for (CCSprite* child in node.children)
 		NSLog(@"tag %i z %i",(int)child.tag,(int)child.zOrder);
 
 }
@@ -844,9 +844,7 @@ Class restartAction()
 	[batchNode reorderChild:sprite1 z:4];
 
 	[batchNode sortAllChildren];
-	CCSprite* child;
-	CCARRAY_FOREACH(batchNode.descendants,child) NSLog(@"tag %i",(int)child.tag);
-
+    for (CCSprite* child in batchNode.descendants) NSLog(@"tag %i",(int)child.tag);
 }
 
 // on "init" you need to initialize your instance
@@ -3329,6 +3327,51 @@ Class restartAction()
 	return @"Sprite: Animation + flip";
 }
 @end
+
+#pragma mark - Example Sprite9Slice
+
+@implementation Sprite9Slice {
+    CCSprite9Slice*     _sprite;
+    NSTimeInterval      _ellapsed;
+}
+
+-( id )init {
+    self = [ super init ];
+    
+    _sprite = [ CCSprite9Slice spriteWithFile:@"button.png" ];
+    
+    _sprite.position = ccp( [ CCDirector sharedDirector ].winSize.width / 2, [ CCDirector sharedDirector ].winSize.height / 2 );
+    
+    _sprite.marginLeft = _sprite.marginRight = 0.10f;
+    _sprite.marginTop = _sprite.marginBottom = 0.15f;
+    
+    [ self addChild:_sprite ];
+    
+    [ self scheduleUpdate ];
+    
+    return( self );
+}
+
+-( void )dealloc {
+    [ self unscheduleUpdate ];
+    [ super dealloc ];
+}
+
+-( void )update:(ccTime)delta {
+    _ellapsed += delta;
+    _sprite.contentSize = CGSizeMake( 250 + ( sinf( _ellapsed ) * 150 ), 90 + ( cosf( _ellapsed * 1.33 ) * 20 ) );
+}
+
+-( NSString* )title {
+    return( @"Sprite 9 slice" );
+}
+
+-( NSString* )subtitle {
+    return( @"" );
+}
+
+@end
+
 
 #pragma mark -
 #pragma mark Sprite Hybrid

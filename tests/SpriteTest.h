@@ -308,3 +308,8 @@
 @interface SpriteBatchBug1217 : SpriteDemo
 {}
 @end
+
+@interface Sprite9Slice : SpriteDemo
+
+@end
+

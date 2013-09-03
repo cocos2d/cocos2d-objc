@@ -90,7 +90,7 @@ typedef enum ccTMXTileFlags_ {
 	CGPoint				_offset;
 }
 
-@property (nonatomic,readwrite,retain)	NSString *name;
+@property (nonatomic,readwrite,strong)	NSString *name;
 @property (nonatomic,readwrite)			CGSize layerSize;
 @property (nonatomic,readwrite)			unsigned int *tiles;
 @property (nonatomic,readwrite)			BOOL visible;
@@ -98,7 +98,7 @@ typedef enum ccTMXTileFlags_ {
 @property (nonatomic,readwrite)			BOOL ownTiles;
 @property (nonatomic,readwrite)			unsigned int minGID;
 @property (nonatomic,readwrite)			unsigned int maxGID;
-@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 @property (nonatomic,readwrite)			CGPoint offset;
 @end
 
@@ -135,12 +135,12 @@ typedef enum ccTMXTileFlags_ {
 	// size in pixels of the image
 	CGSize		_imageSize;
 }
-@property (nonatomic,readwrite,retain) NSString *name;
+@property (nonatomic,readwrite,strong) NSString *name;
 @property (nonatomic,readwrite,assign) unsigned int firstGid;
 @property (nonatomic,readwrite,assign) CGSize tileSize;
 @property (nonatomic,readwrite,assign) unsigned int spacing;
 @property (nonatomic,readwrite,assign) unsigned int margin;
-@property (nonatomic,readwrite,retain) NSString *sourceImage;
+@property (nonatomic,readwrite,strong) NSString *sourceImage;
 @property (nonatomic,readwrite,assign) CGSize imageSize;
 @property (nonatomic,readwrite,assign) CGPoint tileOffset; //setter has a custom implementation
 @property (nonatomic,readonly,assign) CGPoint tileAnchorPoint; //set automatically when tileOffset changes
@@ -204,13 +204,13 @@ typedef enum ccTMXTileFlags_ {
 @property (nonatomic,readwrite,assign) int orientation;
 @property (nonatomic,readwrite,assign) CGSize mapSize;
 @property (nonatomic,readwrite,assign) CGSize tileSize;
-@property (nonatomic,readwrite,retain) NSMutableArray *layers;
-@property (nonatomic,readwrite,retain) NSMutableArray *tilesets;
-@property (nonatomic,readwrite,retain) NSString *filename;
-@property (nonatomic,readwrite,retain) NSString *resources;
-@property (nonatomic,readwrite,retain) NSMutableArray *objectGroups;
-@property (nonatomic,readwrite,retain) NSMutableDictionary *properties;
-@property (nonatomic,readwrite,retain) NSMutableDictionary *tileProperties;
+@property (nonatomic,readwrite,strong) NSMutableArray *layers;
+@property (nonatomic,readwrite,strong) NSMutableArray *tilesets;
+@property (nonatomic,readwrite,strong) NSString *filename;
+@property (nonatomic,readwrite,strong) NSString *resources;
+@property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
+@property (nonatomic,readwrite,strong) NSMutableDictionary *tileProperties;
 
 /** creates a TMX Format with a tmx file */
 +(id) formatWithTMXFile:(NSString*)tmxFile;

@@ -36,7 +36,7 @@
 
 +(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize;
 {
-	return [[[self alloc] initWithDuration:duration size:gridSize] autorelease];
+	return [[self alloc] initWithDuration:duration size:gridSize];
 }
 
 -(id) initWithDuration:(ccTime)duration size:(CGSize)gridSize;
@@ -187,7 +187,7 @@
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
-	return [[[self alloc] initWithAction:action duration:d ] autorelease];
+	return [[self alloc] initWithAction:action duration:d ];
 }
 
 -(id)initWithAction:(CCAction *)action duration:(ccTime)d
@@ -195,17 +195,12 @@
 	if ( (self = [super initWithDuration:d]) )
 	{
 		_rate = 1.0f;
-		_other = (CCActionInterval*)[action retain];
+		_other = (CCActionInterval*)action;
 	}
 
 	return self;
 }
 
--(void)dealloc
-{
-	[_other release];
-	[super dealloc];
-}
 
 -(void)startWithTarget:(id)aTarget
 {
@@ -245,7 +240,7 @@
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
-	return [[[self alloc] initWithAction:action duration:d ] autorelease];
+	return [[self alloc] initWithAction:action duration:d ];
 }
 
 -(id)initWithAction:(CCAction *)action duration:(ccTime)d
@@ -253,17 +248,12 @@
 	if ( (self = [super initWithDuration:d]) )
 	{
 		_rate = 1.0f;
-		_other = (CCActionInterval*)[action retain];
+		_other = (CCActionInterval*)action;
 	}
 
 	return self;
 }
 
--(void)dealloc
-{
-	[_other release];
-	[super dealloc];
-}
 
 -(void)startWithTarget:(id)aTarget
 {
@@ -295,7 +285,7 @@
 
 +(id)actionWithAction:(CCAction*)action duration:(ccTime)d
 {
-	return [[[self alloc] initWithAction:action duration:d ] autorelease];
+	return [[self alloc] initWithAction:action duration:d ];
 }
 
 -(id)initWithAction:(CCAction *)action duration:(ccTime)d
@@ -303,17 +293,12 @@
 	if ( (self = [super initWithDuration:d]) )
 	{
 		_rate = 1.0f;
-		_other = (CCActionInterval*)[action retain];
+		_other = (CCActionInterval*)action;
 	}
 
 	return self;
 }
 
--(void)dealloc
-{
-	[_other release];
-	[super dealloc];
-}
 
 -(void)startWithTarget:(id)aTarget
 {
@@ -363,7 +348,7 @@
 
 +(id)actionWithTimes:(int)times
 {
-	return [[[self alloc] initWithTimes:times ] autorelease];
+	return [[self alloc] initWithTimes:times ];
 }
 
 -(id)initWithTimes:(int)times

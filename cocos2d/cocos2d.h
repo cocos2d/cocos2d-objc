@@ -69,6 +69,7 @@
 #import "CCSpriteFrame.h"
 #import "CCSpriteBatchNode.h"
 #import "CCSpriteFrameCache.h"
+#import "CCSprite9Slice.h"
 
 #import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
@@ -166,8 +167,6 @@
 #import "Support/OpenGL_Internal.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "Support/ccCArray.h"
-#import "Support/CCArray.h"
 #import "Support/ccUtils.h"
 #import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
