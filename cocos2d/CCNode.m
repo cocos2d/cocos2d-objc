@@ -368,7 +368,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
-        
+    
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [self.responderManager markAsDirty];
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -453,6 +457,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		// set parent nil at the end (issue #476)
 		[c setParent:nil];
+        
+        /** mark responder manager as dirty
+         @since v2.5
+         */
+        [self.responderManager markAsDirty];
+
 	}
 
 	[_children removeAllObjects];
@@ -476,6 +486,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
+
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [self.responderManager markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -541,6 +556,12 @@ static NSUInteger globalOrderOfArrival = 1;
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
+        
+        /** mark responder manager as dirty
+         @since v2.5
+         */
+        [self.responderManager markAsDirty];
+
 	}
 }
 

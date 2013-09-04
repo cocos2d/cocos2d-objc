@@ -132,7 +132,12 @@
 {
     _responderManager.eventProcessed = NO;
 }
- 
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    _responderManager.eventProcessed = NO;
+}
+
 #endif
 
 // -----------------------------------------------------------------

@@ -47,12 +47,9 @@
 @implementation CCResponderManager
 {
     __weak CCNode           *_responderList[CCResponderManagerBufferSize];
-    int                     _responderCount;
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
-    NSMutableArray          *_runningResponderList;                 // list of running touches
-#else
-    __weak id               _runningResponder;
-#endif
+    int                     _responderListCount;
+    BOOL                    _dirty;                                 // list of responders should be rebuild
+    NSMutableArray          *_runningResponderList;                 // list of running responders
 }
 
 // -----------------------------------------------------------------
@@ -70,13 +67,10 @@
     NSAssert(self != nil, @"Unable to create class");
     
     // initalize
-#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
     _runningResponderList = [NSMutableArray array];
-#else
-    _runningResponder = nil;
-#endif
     // reset touch handling
     [self removeAllResponders];
+    _dirty = YES;
     
     // done
     return(self);
@@ -92,21 +86,32 @@
     // TODO: only rebuild if dirty
     [self removeAllResponders];
     [[CCDirector sharedDirector].runningScene buildResponderList];
+    _dirty = NO;
 }
 
 // -----------------------------------------------------------------
 
 - (void)addResponder:(CCNode *)responder
 {
-    _responderList[_responderCount] = responder;
-    _responderCount ++;
-    NSAssert(_responderCount < CCResponderManagerBufferSize, @"Number of touchable nodes pr. scene can not exceed <%d>", CCResponderManagerBufferSize);
+    _responderList[_responderListCount] = responder;
+    _responderListCount ++;
+    NSAssert(_responderListCount < CCResponderManagerBufferSize, @"Number of touchable nodes pr. scene can not exceed <%d>", CCResponderManagerBufferSize);
 }
 
 - (void)removeAllResponders
 {    
-    _responderCount = 0;
+    _responderListCount = 0;
 }
+
+// -----------------------------------------------------------------
+#pragma mark - dirty
+// -----------------------------------------------------------------
+
+- (void)markAsDirty
+{
+    _dirty = YES;
+}
+
 
 // -----------------------------------------------------------------
 #pragma mark - iOS touch handling -
@@ -118,13 +123,13 @@
 {
     BOOL responderCanAcceptTouch;
     
-    [self buildResponderList];
+    if (self.dirty != NO) [self buildResponderList];
     
     // go through all touches
     for (UITouch *touch in touches)
     {
         // scan backwards through touch responders
-        for (int index = _responderCount - 1; index >= 0; index --)
+        for (int index = _responderListCount - 1; index >= 0; index --)
         {
             CCNode *node = _responderList[index];
             
@@ -152,7 +157,7 @@
                 // if touch was processed, add it and break
                 if (self.eventProcessed != NO)
                 {
-                    [self addtouchResponder:node withTouch:touch andEvent:event];
+                    [self addResponder:node withTouch:touch andEvent:event];
                     break;
                 }
             }
@@ -164,18 +169,18 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self buildResponderList];
+    if (self.dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self touchResponderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForEvent:event];
         
         // if a touch object was found
         if (touchEntry != nil)
         {
-            CCNode* node = (CCNode*)touchEntry.target;
+            CCNode *node = (CCNode *)touchEntry.target;
             
             // check if it locks touches
             if (node.isTouchLocked != NO)
@@ -206,7 +211,7 @@
         else
         {
             // scan backwards through touch responders
-            for (int index = _responderCount - 1; index >= 0; index --)
+            for (int index = _responderListCount - 1; index >= 0; index --)
             {
                 CCNode *node = _responderList[index];
             
@@ -221,7 +226,7 @@
                     // if touch was accepted, add it and break
                     if (self.eventProcessed != NO)
                     {
-                        [self addtouchResponder:node withTouch:touch andEvent:event];
+                        [self addResponder:node withTouch:touch andEvent:event];
                         break;
                     }
                 }
@@ -234,17 +239,17 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self buildResponderList];
+    if (self.dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self touchResponderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForEvent:event];
         
         if (touchEntry != nil)
         {
-            CCNode* node = (CCNode*)touchEntry.target;
+            CCNode *node = (CCNode *)touchEntry.target;
             
             // end the touch
             if ([node respondsToSelector:@selector(touchesEnded:withEvent:)] != NO)
@@ -259,17 +264,17 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [self buildResponderList];
+    if (self.dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self touchResponderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForEvent:event];
         
         if (touchEntry != nil)
         {
-            CCNode* node = (CCNode*)touchEntry.target;
+            CCNode *node = (CCNode *)touchEntry.target;
 
             // cancel the touch
             NSLog(@"Cancelled with <%d> touch responder(s)", _runningResponderList.count);
@@ -282,11 +287,11 @@
 }
 
 // -----------------------------------------------------------------
-#pragma mark - helper functions
+#pragma mark - iOS helper functions
 // -----------------------------------------------------------------
-// finds a touch object for an event
+// finds a responder object for an event
 
-- (CCRunningResponder *)touchResponderForEvent:(UIEvent *)event
+- (CCRunningResponder *)responderForEvent:(UIEvent *)event
 {
     for (CCRunningResponder *touchEntry in _runningResponderList)
     {
@@ -296,22 +301,9 @@
 }
 
 // -----------------------------------------------------------------
-// finds a touch object for a node
+// adds a responder object ( running responder ) to the responder object list
 
-- (NSSet *)touchSetForNode:(CCNode *)node
-{
-    NSMutableSet *result = [NSMutableSet set];
-    for (CCRunningResponder *touchEntry in _runningResponderList)
-    {
-        if (touchEntry.target == node) [result addObject:touchEntry.touch];
-    }
-    return(result);
-}
-
-// -----------------------------------------------------------------
-// adds a touch object ( running touch ) to the touch object list
-
-- (void)addtouchResponder:(CCNode *)node withTouch:(UITouch *)touch andEvent:(UIEvent *)event
+- (void)addResponder:(CCNode *)node withTouch:(UITouch *)touch andEvent:(UIEvent *)event
 {
     CCRunningResponder *touchEntry;
     
@@ -333,12 +325,12 @@
 
 - (void)mouseDown:(NSEvent *)theEvent button:(CCMouseButton)button
 {
-    NSAssert(_runningResponder == nil, @"Unexpected Mouse State");
+    NSAssert([self responderForButton:button] == nil, @"Unexpected Mouse State");
     
-    [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
     
     // scan backwards through mouse responders
-    for (int index = _responderCount - 1; index >= 0; index --)
+    for (int index = _responderListCount - 1; index >= 0; index --)
     {
         CCNode *node = _responderList[index];
         
@@ -357,20 +349,25 @@
             // if mouse was processed, remember it and break
             if (self.eventProcessed != NO)
             {
-                _runningResponder = node;
+                [self addResponder:node withButton:button];
                 break;
             }
         }
     }
 }
 
+// TODO: Should all mouse buttons call mouseDragged?
+// As it is now, only mouseDragged gets called if several buttons are pressed
+
 - (void)mouseDragged:(NSEvent *)theEvent button:(CCMouseButton)button
 {
-    [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
     
-    if (_runningResponder != nil)
+    CCRunningResponder *responder = [self responderForButton:button];
+    
+    if (responder != nil)
     {
-        CCNode* node = (CCNode*)_runningResponder;
+        CCNode *node = (CCNode *)responder.target;
         
         // check if it locks mouse
         if (node.isTouchLocked != NO)
@@ -388,7 +385,7 @@
             // as node does not lock mouse, check if it was moved outside
             if ([node hitTestWithWorldPos:theEvent.locationInWindow] == NO)
             {
-                _runningResponder = nil;
+                [_runningResponderList removeObject:responder];
             }
             else
             {
@@ -405,7 +402,7 @@
     else
     {
         // scan backwards through mouse responders
-        for (int index = _responderCount - 1; index >= 0; index --)
+        for (int index = _responderListCount - 1; index >= 0; index --)
         {
             CCNode *node = _responderList[index];
             
@@ -424,7 +421,7 @@
                 // if mouse was accepted, add it and break
                 if (self.eventProcessed != NO)
                 {
-                    _runningResponder = node;
+                    [self addResponder:node withButton:button];
                     break;
                 }
             }
@@ -434,11 +431,12 @@
 
 - (void)mouseUp:(NSEvent *)theEvent button:(CCMouseButton)button
 {
-    [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
     
-    if (_runningResponder != nil)
+    CCRunningResponder *responder = [self responderForButton:button];
+    if (responder != nil)
     {
-        CCNode* node = (CCNode*)_runningResponder;
+        CCNode *node = (CCNode *)responder.target;
         
         // end the mouse
         switch (button)
@@ -448,7 +446,7 @@
             case CCMouseButtonOther: if ([node respondsToSelector:@selector(otherMouseUp:)] != NO) [node otherMouseUp:theEvent]; break;
         }
         // remove
-        _runningResponder = nil;
+        [_runningResponderList removeObject:responder];
     }
 }
 
@@ -499,6 +497,42 @@
     [self mouseUp:theEvent button:CCMouseButtonOther];
 }
 
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    if (_dirty != NO) [self buildResponderList];
+
+    // if otherMouse is active, scrollWheel goes to that node
+    // otherwise, scrollWheel goes to the node under the cursor
+    CCRunningResponder *responder = [self responderForButton:CCMouseButtonOther];
+    
+    if (responder != nil)
+    {
+        CCNode *node = (CCNode *)responder.target;
+        
+        self.eventProcessed = YES;
+        if ([node respondsToSelector:@selector(scrollWheel:)] != NO) [node scrollWheel:theEvent];
+    
+        // if mouse was accepted, return
+        if (self.eventProcessed != NO) return;
+    }
+    
+    // scan through responders, and find first one
+    for (int index = _responderListCount - 1; index >= 0; index --)
+    {
+        CCNode *node = _responderList[index];
+        
+        // check for hit test
+        if ([node hitTestWithWorldPos:theEvent.locationInWindow] != NO)
+        {
+            self.eventProcessed = YES;
+            if ([node respondsToSelector:@selector(scrollWheel:)] != NO) [node scrollWheel:theEvent];
+        
+            // if mouse was accepted, break
+            if (self.eventProcessed != NO) break;
+        }
+    }
+}
+
 /** Moved, Entered and Exited is not supported
  @since v2.5
  */
@@ -519,8 +553,39 @@
 }
 
 // -----------------------------------------------------------------
+#pragma mark - Mac helper functions
+// -----------------------------------------------------------------
+// finds a responder object for an event
+
+- (CCRunningResponder *)responderForButton:(CCMouseButton)button
+{
+    for (CCRunningResponder *touchEntry in _runningResponderList)
+    {
+        if (touchEntry.button == button) return(touchEntry);
+    }
+    return(nil);
+}
+
+// -----------------------------------------------------------------
+// adds a responder object ( running responder ) to the responder object list
+
+- (void)addResponder:(CCNode *)node withButton:(CCMouseButton)button
+{
+    CCRunningResponder *touchEntry;
+    
+    // create a new touch object
+    touchEntry = [[CCRunningResponder alloc] init];
+    touchEntry.target = node;
+    touchEntry.button = button;
+    [_runningResponderList addObject:touchEntry];
+    NSLog(@"responders %ld", _runningResponderList.count);
+}
+
+// -----------------------------------------------------------------
 
 #endif
+
+// -----------------------------------------------------------------
 
 @end
 

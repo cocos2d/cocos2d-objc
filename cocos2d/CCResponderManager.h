@@ -88,6 +88,7 @@ typedef enum
 - (void)otherMouseDown:(NSEvent *)theEvent;
 - (void)otherMouseDragged:(NSEvent *)theEvent;
 - (void)otherMouseUp:(NSEvent *)theEvent;
+- (void)scrollWheel:(NSEvent *)theEvent;
 
 - (void)mouseMoved:(NSEvent *)theEvent;
 - (void)mouseEntered:(NSEvent *)theEvent;
@@ -100,7 +101,7 @@ typedef enum
 @interface CCRunningResponder : NSObject
 
 @property (nonatomic, strong) id target;                            // the target associated with the mouse event
-@property (nonatomic, weak) NSEvent *event;                         // the current event ( should not be retained )
+@property (nonatomic, assign) CCMouseButton button;                 // button of the current event
 
 @end
 
@@ -125,7 +126,7 @@ enum
 
 // -----------------------------------------------------------------
 
-@property (nonatomic) BOOL eventProcessed;                        // event was processed
+@property (nonatomic) BOOL eventProcessed;                          // event was processed
 
 // -----------------------------------------------------------------
 
@@ -134,6 +135,7 @@ enum
 
 - (void)addResponder:(CCNode *)responder;
 - (void)removeAllResponders;
+- (void)markAsDirty;
 
 // -----------------------------------------------------------------
 
