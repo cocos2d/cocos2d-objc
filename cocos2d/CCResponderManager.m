@@ -82,8 +82,7 @@
 
 - (void)buildResponderList
 {
-    // rebuild touch list
-    // TODO: only rebuild if dirty
+    // rebuild responder list
     [self removeAllResponders];
     [[CCDirector sharedDirector].runningScene buildResponderList];
     _dirty = NO;
@@ -123,7 +122,7 @@
 {
     BOOL responderCanAcceptTouch;
     
-    if (self.dirty != NO) [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
     
     // go through all touches
     for (UITouch *touch in touches)
@@ -169,7 +168,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.dirty != NO) [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
@@ -239,7 +238,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.dirty != NO) [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
@@ -264,7 +263,7 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    if (self.dirty != NO) [self buildResponderList];
+    if (_dirty != NO) [self buildResponderList];
 
     // go through all touches
     for (UITouch *touch in touches)
