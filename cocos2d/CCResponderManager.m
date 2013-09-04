@@ -30,6 +30,7 @@
 #import "CCResponderManager.h"
 #import "CCNode.h"
 #import "CCDirector.h"
+#import "CCDirectorMac.h"
 #import "CCScene.h"
 
 // -----------------------------------------------------------------
@@ -276,7 +277,6 @@
             CCNode *node = (CCNode *)touchEntry.target;
 
             // cancel the touch
-            NSLog(@"Cancelled with <%d> touch responder(s)", _runningResponderList.count);
             if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)] != NO)
                 [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
             // remove from list
@@ -334,7 +334,7 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node hitTestWithWorldPos:theEvent.locationInWindow] != NO)
+        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] != NO)
         {
             // begin the mouse down
             self.eventProcessed = YES;
@@ -382,7 +382,7 @@
         else
         {
             // as node does not lock mouse, check if it was moved outside
-            if ([node hitTestWithWorldPos:theEvent.locationInWindow] == NO)
+            if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] == NO)
             {
                 [_runningResponderList removeObject:responder];
             }
@@ -406,7 +406,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if ((node.isTouchLocked == NO) && ([node hitTestWithWorldPos:theEvent.locationInWindow] != NO))
+            if ((node.isTouchLocked == NO) && ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] != NO))
             {
                 // begin the mouse down
                 self.eventProcessed = YES;
@@ -521,7 +521,7 @@
         CCNode *node = _responderList[index];
         
         // check for hit test
-        if ([node hitTestWithWorldPos:theEvent.locationInWindow] != NO)
+        if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] != NO)
         {
             self.eventProcessed = YES;
             if ([node respondsToSelector:@selector(scrollWheel:)] != NO) [node scrollWheel:theEvent];
@@ -577,7 +577,6 @@
     touchEntry.target = node;
     touchEntry.button = button;
     [_runningResponderList addObject:touchEntry];
-    NSLog(@"responders %ld", _runningResponderList.count);
 }
 
 // -----------------------------------------------------------------
