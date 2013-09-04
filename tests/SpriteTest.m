@@ -287,6 +287,10 @@ Class restartAction()
 	[self addNewSpriteWithCoords: theEvent.locationInWindow];
 }
 
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+}
+
 #endif
 
 -(NSString *) title

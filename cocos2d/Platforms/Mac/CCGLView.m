@@ -202,7 +202,7 @@
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
     // dispatch mouse to responder manager
-    [[CCDirector sharedDirector].responderManager mouseDown:theEvent];
+    [[CCDirector sharedDirector].responderManager rightMouseDown:theEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
@@ -233,6 +233,12 @@
 {
     // dispatch mouse to responder manager
     [[CCDirector sharedDirector].responderManager otherMouseUp:theEvent];
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    // dispatch mouse to responder manager
+    [[CCDirector sharedDirector].responderManager scrollWheel:theEvent];
 }
 
 @end
