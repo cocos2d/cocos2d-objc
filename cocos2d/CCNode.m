@@ -288,6 +288,14 @@ static NSUInteger globalOrderOfArrival = 1;
 	_vertexZ = vertexZ;
 }
 
+- (void)setVisible:(BOOL)visible
+{
+    if (visible == _visible) return;
+    
+    [self.responderManager markAsDirty];
+    _visible = visible;
+}
+
 -(float) scale
 {
 	NSAssert( _scaleX == _scaleY, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
@@ -975,6 +983,9 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 -( void )buildResponderList {
+    
+    // dont add invisible nodes
+    if (self.visible == NO) return;
     
     if ( _children != nil ) {
         
