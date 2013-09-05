@@ -44,7 +44,7 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 	if (state != kPaddleStateUngrabbed) return;
-	if ( ![self containsTouchLocation:touch] ) return;
+	if ( ![self containsTouchLocation:[touches anyObject]] ) return;
 
 	state = kPaddleStateGrabbed;
 }

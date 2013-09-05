@@ -1835,6 +1835,25 @@
 		A0F841F6151D5E4700EBBFCB /* font-issue1343-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F2151D5E4600EBBFCB /* font-issue1343-hd.png */; };
 		A0F841F7151D5E4700EBBFCB /* font-issue1343.fnt in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */; };
 		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
+		A67E114117D89F5E00F07EC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A67E114017D89F5E00F07EC5 /* Default-568h@2x.png */; };
+		A6A3480617D8B2E6000445D8 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = A60913E217C38D9D00A22658 /* button.png */; };
+		A6ED000E17D893DB002B4973 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		A6ED000F17D893DB002B4973 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		A6ED001017D893DB002B4973 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		A6ED002817D89460002B4973 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		A6ED002917D89471002B4973 /* TouchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FF608917D88ED600E9D725 /* TouchTest.m */; };
+		A6ED002A17D89471002B4973 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		A6ED002B17D89598002B4973 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		A6ED002C17D895CD002B4973 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		A6ED002D17D895D3002B4973 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		A6ED002E17D895E2002B4973 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
+		A6ED002F17D895E2002B4973 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		A6ED003017D8961A002B4973 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02E260C16A4EE00007F064C /* libcocos2d.a */; };
+		A6ED003117D896FD002B4973 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		A6ED003217D896FD002B4973 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		A6ED003317D896FD002B4973 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		A6FF608A17D88ED600E9D725 /* TouchTest.h in Headers */ = {isa = PBXBuildFile; fileRef = A6FF608817D88ED600E9D725 /* TouchTest.h */; };
+		A6FF608B17D88ED600E9D725 /* TouchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FF608917D88ED600E9D725 /* TouchTest.m */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -3081,6 +3100,13 @@
 			remoteGlobalIDString = A00942C515180C730029A5C6;
 			remoteInfo = MultithreadTest;
 		};
+		A6ED002617D8944B002B4973 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3642,6 +3668,11 @@
 		A0F841F3151D5E4600EBBFCB /* font-issue1343.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "font-issue1343.fnt"; sourceTree = "<group>"; };
 		A0F841F4151D5E4600EBBFCB /* font-issue1343.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "font-issue1343.png"; sourceTree = "<group>"; };
 		A60913E217C38D9D00A22658 /* button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = button.png; sourceTree = "<group>"; };
+		A67E114017D89F5E00F07EC5 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A6B08A9517D79B9600796047 /* TouchTest.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = TouchTest.m; path = tests/TouchTest.m; sourceTree = "<group>"; };
+		A6ED000D17D893DB002B4973 /* TouchTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TouchTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6FF608817D88ED600E9D725 /* TouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchTest.h; path = tests/TouchTest.h; sourceTree = "<group>"; };
+		A6FF608917D88ED600E9D725 /* TouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchTest.m; path = tests/TouchTest.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
@@ -4316,6 +4347,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6ED000A17D893DB002B4973 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6ED003017D8961A002B4973 /* libcocos2d.a in Frameworks */,
+				A6ED002E17D895E2002B4973 /* CoreMotion.framework in Frameworks */,
+				A6ED002F17D895E2002B4973 /* CoreText.framework in Frameworks */,
+				A6ED002D17D895D3002B4973 /* QuartzCore.framework in Frameworks */,
+				A6ED002C17D895CD002B4973 /* libz.dylib in Frameworks */,
+				A6ED002B17D89598002B4973 /* OpenGLES.framework in Frameworks */,
+				A6ED000E17D893DB002B4973 /* UIKit.framework in Frameworks */,
+				A6ED000F17D893DB002B4973 /* Foundation.framework in Frameworks */,
+				A6ED001017D893DB002B4973 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EDA0FFE96D400C7C82E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4489,6 +4536,7 @@
 				A009431115180C730029A5C6 /* MultithreadTest.app */,
 				A0F8418D151D3B3000EBBFCB /* FileUtilsTest.app */,
 				2B44E494163383A0000492D8 /* ClippingNodeTest.app */,
+				A6ED000D17D893DB002B4973 /* TouchTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4496,6 +4544,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				A67E114017D89F5E00F07EC5 /* Default-568h@2x.png */,
+				A6B08A9517D79B9600796047 /* TouchTest.m */,
 				A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */,
 				501756090F335CE900624901 /* external */,
 				50B130FC0DFE0923003BAB56 /* tests */,
@@ -4950,6 +5000,8 @@
 				505B62DF0F2E6A66001B4104 /* Texture2dTest.m */,
 				503F5CD0101FE9A9002A37E5 /* TileMapTest.h */,
 				503F5CCF101FE9A9002A37E5 /* TileMapTest.m */,
+				A6FF608817D88ED600E9D725 /* TouchTest.h */,
+				A6FF608917D88ED600E9D725 /* TouchTest.m */,
 				50C938E30E0A9E1100517B01 /* TransitionsTest.h */,
 				50C938E40E0A9E1100517B01 /* TransitionsTest.m */,
 				E0C5588911FE493B00B9E4CB /* ZwoptexTest.h */,
@@ -5346,6 +5398,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FF608A17D88ED600E9D725 /* TouchTest.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6074,6 +6127,24 @@
 			productReference = A0F8418D151D3B3000EBBFCB /* FileUtilsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A6ED000C17D893DB002B4973 /* TouchTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6ED002317D893DB002B4973 /* Build configuration list for PBXNativeTarget "TouchTest" */;
+			buildPhases = (
+				A6ED000917D893DB002B4973 /* Sources */,
+				A6ED000A17D893DB002B4973 /* Frameworks */,
+				A6ED000B17D893DB002B4973 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A6ED002717D8944B002B4973 /* PBXTargetDependency */,
+			);
+			name = TouchTest;
+			productName = TouchTest;
+			productReference = A6ED000D17D893DB002B4973 /* TouchTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		DA5F0EC10FFE96D400C7C82E /* Bug422 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */;
@@ -6259,7 +6330,9 @@
 				501C7C6D0F91EFFF0024A296 /* SpriteTest */,
 				505B62AB0F2E6A0F001B4104 /* Texture2dTest */,
 				503F5C96101FE930002A37E5 /* TileMapTest */,
+				E0EA5673134B9CA800F212C8 /* Bug1159 */,
 				5012DD180FE2994300D6DDD1 /* TouchesTest */,
+				A6ED000C17D893DB002B4973 /* TouchTest */,
 				50C938C60E0A9DBB00517B01 /* TransitionsTest */,
 				E0C5586211FE48E600B9E4CB /* ZwoptexTest */,
 				507FF8CE116D16F600B6FAB2 /* Bug350 */,
@@ -6269,7 +6342,6 @@
 				50CBA46311CBD6FB007B009D /* Bug886 */,
 				507C0EE611D609290075E747 /* Bug899 */,
 				502BF54411E39CC30030C477 /* Bug914 */,
-				E0EA5673134B9CA800F212C8 /* Bug1159 */,
 			);
 		};
 /* End PBXProject section */
@@ -6644,6 +6716,7 @@
 				A0A1C27615CAEA170058D96F /* Default-Landscape.png in Resources */,
 				A0579BAD1601975E00AF8A12 /* Default-568h@2x.png in Resources */,
 				A0579BE216019C6000AF8A12 /* Default@2x.png in Resources */,
+				A6A3480617D8B2E6000445D8 /* button.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8269,6 +8342,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6ED000B17D893DB002B4973 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6ED003117D896FD002B4973 /* grossini.png in Resources */,
+				A6ED003217D896FD002B4973 /* grossinis_sister1.png in Resources */,
+				A6ED003317D896FD002B4973 /* grossinis_sister2.png in Resources */,
+				A67E114117D89F5E00F07EC5 /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EC40FFE96D400C7C82E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -8896,6 +8980,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FF608B17D88ED600E9D725 /* TouchTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9006,6 +9091,16 @@
 				A0F8417F151D3B3000EBBFCB /* main.m in Sources */,
 				A0F84181151D3B3000EBBFCB /* BaseAppController.m in Sources */,
 				A0F84193151D3C0000EBBFCB /* FileUtilsTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6ED000917D893DB002B4973 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6ED002917D89471002B4973 /* TouchTest.m in Sources */,
+				A6ED002A17D89471002B4973 /* main.m in Sources */,
+				A6ED002817D89460002B4973 /* BaseAppController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9437,6 +9532,11 @@
 			isa = PBXTargetDependency;
 			target = A00942C515180C730029A5C6 /* MultithreadTest */;
 			targetProxy = A0BCD28A157C1ABE00CCE291 /* PBXContainerItemProxy */;
+		};
+		A6ED002717D8944B002B4973 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2d;
+			targetProxy = A6ED002617D8944B002B4973 /* PBXContainerItemProxy */;
 		};
 		E03A50EC135525C200D4B515 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -10880,6 +10980,50 @@
 			};
 			name = Release;
 		};
+		A6ED002417D893DB002B4973 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6ED002517D893DB002B4973 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11547,6 +11691,15 @@
 			buildConfigurations = (
 				A0F8418B151D3B3000EBBFCB /* Debug */,
 				A0F8418C151D3B3000EBBFCB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A6ED002317D893DB002B4973 /* Build configuration list for PBXNativeTarget "TouchTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6ED002417D893DB002B4973 /* Debug */,
+				A6ED002517D893DB002B4973 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
