@@ -78,7 +78,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../ccMacros.h"
 #import "../../CCConfiguration.h"
 #import "../../Support/OpenGL_Internal.h"
-
+#import "CCScene.h"
 
 //CLASS IMPLEMENTATIONS:
 
@@ -91,7 +91,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @synthesize surfaceSize=_size;
 @synthesize pixelFormat=_pixelformat, depthFormat=_depthFormat;
-@synthesize touchDelegate=_touchDelegate;
 @synthesize context=_context;
 @synthesize multiSampling=_multiSampling;
 
@@ -143,6 +142,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		if( ! [self setupSurfaceWithSharegroup:sharegroup] ) {
 			return nil;
 		}
+        
+        /** Multiple touch default enabled
+         @since v2.5
+         */
+        self.multipleTouchEnabled = YES;
 
 		CHECK_GL_ERROR_DEBUG();
 	}
@@ -319,40 +323,32 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * _size.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * _size.height, rect.size.width / bounds.size.width * _size.width, rect.size.height / bounds.size.height * _size.height);
 }
 
-// Pass the touches to the superview
 #pragma mark CCGLView - Touch Delegate
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesBegan:touches withEvent:event];
-	}
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesBegan:touches withEvent:event ];
 }
 
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesMoved:touches withEvent:event];
-	}
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesMoved:touches withEvent:event ];
 }
 
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesEnded:touches withEvent:event];
-	}
-}
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	if(_touchDelegate)
-	{
-		[_touchDelegate touchesCancelled:touches withEvent:event];
-	}
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesEnded:touches withEvent:event ];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event {
+    
+    // dispatch touch to responder manager
+    [ [ CCDirector sharedDirector ].responderManager touchesCancelled:touches withEvent:event ];
+}
+ 
 @end
 
 

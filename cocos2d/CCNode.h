@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,6 +32,8 @@
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
+#import "CCResponder.h"
+#import "CCResponderManager.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -41,6 +44,7 @@ enum {
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
+@class CCResponderManager;
 @class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
@@ -99,8 +103,7 @@ enum {
  Camera:
  - Each node has a camera. By default it points to the center of the CCNode.
  */
-@interface CCNode : NSObject
-{
+@interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
 	float _rotationX, _rotationY;
 
@@ -225,7 +228,7 @@ enum {
 /** A CCGrid object that is used when applying effects */
 @property(nonatomic,readwrite,strong) CCGridBase* grid;
 /** Whether of not the node is visible. Default is YES */
-@property(nonatomic,readwrite,assign) BOOL visible;
+@property( nonatomic,readwrite,assign) BOOL visible;
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
@@ -285,6 +288,22 @@ enum {
  @since v2.0
  */
 @property (nonatomic, readwrite, strong) CCScheduler *scheduler;
+
+/** Enabled user interaction on a node, like touch
+ @since v2.5
+ */
+@property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
+
+/** Enabled multiple touches inside a single node
+ @since v2.5
+ */
+@property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
+
+/** Locks the touch to the node if touch started outside
+ If a touch is moved inside a non locked node, a touchesBegan will be generated
+ @since v2.5
+ */
+@property ( nonatomic, assign, getter = isTouchLocked ) BOOL touchLocked;
 
 // initializators
 /** allocates and initializes a node.
@@ -548,32 +567,39 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
+
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)parentToNodeTransform;
+
 /** Returns the world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToWorldTransform;
+
 /** Returns the inverse world affine transform matrix. The matrix is in Pixels.
  @since v0.7.1
  */
 - (CGAffineTransform)worldToNodeTransform;
+
 /** Converts a Point to node (local) space coordinates. The result is in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpace:(CGPoint)worldPoint;
+
 /** Converts a Point to world space coordinates. The result is in Points.
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpace:(CGPoint)nodePoint;
+
 /** Converts a Point to node (local) space coordinates. The result is in Points.
  treating the returned/received node point as anchor relative.
  @since v0.7.1
  */
 - (CGPoint)convertToNodeSpaceAR:(CGPoint)worldPoint;
+
 /** Converts a local Point to world space coordinates.The result is in Points.
  treating the returned/received node point as anchor relative.
  @since v0.7.1
@@ -581,6 +607,7 @@ enum {
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
 #ifdef __CC_PLATFORM_IOS
+
 /** Converts a UITouch to node (local) space coordinates. The result is in Points.
  @since v0.7.1
  */
@@ -594,6 +621,18 @@ enum {
 
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
+
+/** check if a touch is inside the node
+ to expand or shrink the touch area of a node, override this method
+ @since v2.5
+ */
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
+
+/** builds a list of touch receivers
+ @since v2.5
+ */
+-( void )buildResponderList;
+
 @end
 
 

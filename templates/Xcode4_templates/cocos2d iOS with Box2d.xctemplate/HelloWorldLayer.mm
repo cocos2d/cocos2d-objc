@@ -52,7 +52,6 @@ enum {
 		
 		// enable events
 		
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 		CGSize s = [CCDirector sharedDirector].winSize;
 		
@@ -278,16 +277,17 @@ enum {
 	world->Step(dt, velocityIterations, positionIterations);	
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	//Add a new body/atlas sprite at the touched location
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteAtPosition: location];
 }
 
 #pragma mark GameKit delegate

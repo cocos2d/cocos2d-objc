@@ -92,7 +92,7 @@ Class restartAction()
 	if( (self=[super init] )) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -133,9 +133,9 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void) ccTouchesMoved:(NSSet*)set withEvent:(UIEvent *)event
+-(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [set anyObject];
+    UITouch* touch = [ touches anyObject ];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
 	CGPoint prevLocation = [touch previousLocationInView: [touch view]];
 
@@ -150,13 +150,11 @@ Class restartAction()
 }
 #elif defined(__CC_PLATFORM_MAC)
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
 	CCNode *node = [self getChildByTag:kTagTileMap];
 	CGPoint currentPos = [node position];
-	[node setPosition: ccpAdd(currentPos, CGPointMake( event.deltaX, -event.deltaY) )];
-
-	return YES;
+	[node setPosition: ccpAdd(currentPos, CGPointMake( theEvent.deltaX, -theEvent.deltaY) )];
 }
 #endif
 

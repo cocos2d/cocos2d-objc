@@ -39,8 +39,8 @@
  */
 
 // 0x00 HI ME LO
-// 00   02 01 00
-#define COCOS2D_VERSION 0x00020100
+// 00   02 05 00
+#define COCOS2D_VERSION 0x00020500
 
 
 //
@@ -148,9 +148,6 @@
 #import "Platforms/CCNS.h"
 
 #ifdef __CC_PLATFORM_IOS
-#import "Platforms/iOS/CCTouchDispatcher.h"
-#import "Platforms/iOS/CCTouchDelegateProtocol.h"
-#import "Platforms/iOS/CCTouchHandler.h"
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
 
@@ -158,7 +155,6 @@
 #import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
-#import "Platforms/Mac/CCEventDispatcher.h"
 #endif
 
 //

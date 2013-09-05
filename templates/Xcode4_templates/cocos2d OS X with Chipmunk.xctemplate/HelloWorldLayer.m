@@ -49,7 +49,6 @@ enum {
 		
 		// enable events
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
@@ -247,15 +246,16 @@ enum {
 #pragma mark iOS only
 
 #if __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
-	}
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteAtPosition: location];
 }
 
 - (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
@@ -298,12 +298,9 @@ enum {
 
 #elif __CC_PLATFORM_MAC
 
--(BOOL) ccMouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteAtPosition:location];
-	
-	return YES;
+	[self addNewSpriteAtPosition:theEvent.locationInView];
 }
 
 #endif

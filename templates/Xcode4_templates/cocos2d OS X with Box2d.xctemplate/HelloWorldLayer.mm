@@ -40,7 +40,6 @@ enum {
 		// enable events
 		
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		self.touchEnabled = YES;
 		self.accelerometerEnabled = YES;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 		self.mouseEnabled = YES;
@@ -238,26 +237,22 @@ enum {
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    UITouch* touch = [ touches anyObject ];
 	//Add a new body/atlas sprite at the touched location
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-		
-		location = [[CCDirector sharedDirector] convertToGL: location];
-		
-		[self addNewSpriteAtPosition: location];
-	}
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteAtPosition: location];
 }
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
-- (BOOL) ccMouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [(CCDirectorMac*)[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteAtPosition: location];
-	
-	return YES;
+	[self addNewSpriteAtPosition:theEvent.locationInView];
 }
 #endif
 

@@ -78,15 +78,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @class CCGLView;
 
-//PROTOCOLS:
-
-@protocol CCTouchDelegate <NSObject>
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
-@end
-
 //CLASS INTERFACE:
 
 /** CCGLView Class.
@@ -120,7 +111,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	CGSize					_size;
 	BOOL					_discardFramebufferSupported;
-	id<CCTouchDelegate>		__unsafe_unretained _touchDelegate;
 
 	//fsaa addition
 	BOOL					_multisampling;
@@ -155,9 +145,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(unsafe_unretained, nonatomic,readonly) EAGLContext *context;
 
 @property(nonatomic,readwrite) BOOL multiSampling;
-
-/** touch delegate */
-@property(nonatomic,readwrite,unsafe_unretained) id<CCTouchDelegate> touchDelegate;
 
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;

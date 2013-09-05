@@ -215,58 +215,39 @@ Class restartAction()
 }
 
 
--(BOOL) ccMouseDown:(NSEvent *)event
+-(void)mouseDown:(NSEvent *)event
 {
 	NSLog(@"mouseDown: %@", event);
-	return YES;
 }
 
--(BOOL) ccMouseDragged:(NSEvent *)event
+-(void)mouseDragged:(NSEvent *)event
 {
 	NSLog(@"mouseDragged: %@", event);
-	return YES;
 }
 
--(BOOL) ccMouseUp:(NSEvent *)event
+-(void)mouseUp:(NSEvent *)event
 {
 	NSLog(@"mouseUp: %@", event);
-	return YES;
 }
 
--(BOOL) ccMouseMoved:(NSEvent *)event
+-(void)mouseMoved:(NSEvent *)event
 {
 	NSLog(@"mouseMoved: %@", event);
-	return YES;
 }
 
--(BOOL) ccRightMouseDown:(NSEvent *)event
+-(void)rightMouseDown:(NSEvent *)event
 {
 	NSLog(@"rightMouseDown: %@", event);
-	return YES;
 }
 
--(BOOL) ccRightMouseDragged:(NSEvent *)event
+-(void)rightMouseDragged:(NSEvent *)event
 {
 	NSLog(@"rightMouseDragged: %@", event);
-	return YES;
 }
 
--(BOOL) ccRightMouseUp:(NSEvent *)event
+-(void)rightMouseUp:(NSEvent *)event
 {
 	NSLog(@"rightMouseUp: %@", event);
-	return YES;
-}
-
--(BOOL) ccRightMouseMoved:(NSEvent *)event
-{
-	NSLog(@"rightMouseMoved: %@", event);
-	return YES;
-}
-
-- (BOOL)ccScrollWheel:(NSEvent *)event
-{
-	NSLog(@"scrollWheel: %@", event);
-	return YES;
 }
 
 @end
@@ -298,7 +279,7 @@ Class restartAction()
 			[batch_ addChild:sprites_[i]];
 		}
 
-		self.touchEnabled = YES;
+
         self.gestureEnabled = YES;
 	}
 

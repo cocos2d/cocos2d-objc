@@ -498,7 +498,7 @@ Class restartAction()
     [self addChild:outerClipper_];
         
 #ifdef __CC_PLATFORM_IOS
-    self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
     self.mouseEnabled = YES;
 #endif
@@ -529,9 +529,9 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
+    UITouch* touch = [ touches anyObject ];
 	CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
@@ -539,12 +539,11 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
-    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return NO;
+    CGPoint point = [outerClipper_ convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
+    if (!CGRectContainsPoint(CGRectMake(0, 0, outerClipper_.contentSize.width, outerClipper_.contentSize.height), point)) return;
     [self pokeHoleAtPoint:point];
-    return YES;
 }
 
 #endif
@@ -596,7 +595,7 @@ Class restartAction()
     
     scrolling_ = NO;
 #ifdef __CC_PLATFORM_IOS
-    self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
     self.mouseEnabled = YES;
 #endif
@@ -604,19 +603,19 @@ Class restartAction()
 
 #ifdef __CC_PLATFORM_IOS
 
--(void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
+    UITouch* touch = [ touches anyObject ];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
 	CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
     scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
     lastPoint_ = point;
 }
 
--(void) ccTouchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
+-(void) touchesMoved:(NSSet*)touches withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
-	UITouch *touch = [touches anyObject];
+    UITouch* touch = [ touches anyObject ];
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
     CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[touch view]]]];
 	CGPoint diff = ccpSub(point, lastPoint_);
@@ -625,7 +624,7 @@ Class restartAction()
     lastPoint_ = point;
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     if (!scrolling_) return;
     scrolling_ = NO;
@@ -633,32 +632,29 @@ Class restartAction()
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
-    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
     scrolling_ = CGRectContainsPoint(CGRectMake(0, 0, clipper.contentSize.width, clipper.contentSize.height), point);
     lastPoint_ = point;
-    return scrolling_;
 }
 
-- (BOOL)ccMouseDragged:(NSEvent *)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
-    if (!scrolling_) return NO;
+    if (!scrolling_) return;
     CCNode *clipper = [self getChildByTag:kTagClipperNode];
-    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:event]];
+    CGPoint point = [clipper convertToNodeSpace:[[CCDirector sharedDirector] convertEventToGL:theEvent]];
 	CGPoint diff = ccpSub(point, lastPoint_);
     CCNode *content = [clipper getChildByTag:kTagContentNode];
     content.position = ccpAdd(content.position, diff);
     lastPoint_ = point;
-	return YES;
 }
 
-- (BOOL)ccMouseUp:(NSEvent*)event
+- (void)mouseUp:(NSEvent*)theEvent
 {
-    if (!scrolling_) return NO;
+    if (!scrolling_) return;
     scrolling_ = NO;
-    return YES;
 }
 
 #endif
