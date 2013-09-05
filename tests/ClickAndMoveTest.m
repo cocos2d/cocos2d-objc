@@ -16,15 +16,16 @@ enum
 {
 	if( ( self=[super init] ))
 	{
-		self.touchEnabled = YES;
+		CCLayerColor* layer = [CCLayerColor layerWithColor: ccc4(255,255,0,255)];
+        layer.userInteractionEnabled = NO;
+		[self addChild: layer z:-1];
 
 		CCSprite *sprite = [CCSprite spriteWithFile: @"grossini.png"];
 
-		id layer = [CCLayerColor layerWithColor: ccc4(255,255,0,255)];
-		[self addChild: layer z:-1];
-
 		[self addChild: sprite z:0 tag:kTagSprite];
 		[sprite setPosition: ccp(20,150)];
+        
+        
 
 		[sprite runAction: [CCJumpTo actionWithDuration:4 position:ccp(300,48) height:100 jumps:4] ];
 
@@ -43,9 +44,17 @@ enum
 	[super dealloc];
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+
+    // to send touch to next responder in chain, call super
+    // [ super touchesBegan:touches withEvent:event ];
+    
+}
+
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	UITouch *touch = [touches anyObject];
+    UITouch* touch = [ touches anyObject ];
 
 	CGPoint location = [touch locationInView: [touch view]];
 	CGPoint convertedLocation = [[CCDirector sharedDirector] convertToGL:location];

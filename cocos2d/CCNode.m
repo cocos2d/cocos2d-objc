@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Lars Birkemose
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -65,7 +66,9 @@
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
 @end
 
-@implementation CCNode
+@implementation CCNode {
+
+}
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
@@ -151,6 +154,13 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCDirector *director = [CCDirector sharedDirector];
 		self.actionManager = [director actionManager];
 		self.scheduler = [director scheduler];
+        
+        // set default touch handling
+        self.userInteractionEnabled = NO;
+        self.touchLocked = YES;
+        self.multipleTouchEnabled = NO;
+        self.responderManager = [ director responderManager ];
+        
 	}
 
 	return self;
@@ -278,6 +288,14 @@ static NSUInteger globalOrderOfArrival = 1;
 	_vertexZ = vertexZ;
 }
 
+- (void)setVisible:(BOOL)visible
+{
+    if (visible == _visible) return;
+    
+    [self.responderManager markAsDirty];
+    _visible = visible;
+}
+
 -(float) scale
 {
 	NSAssert( _scaleX == _scaleY, @"CCNode#scale. ScaleX != ScaleY. Don't know which one to return");
@@ -358,6 +376,11 @@ static NSUInteger globalOrderOfArrival = 1;
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
+    
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [self.responderManager markAsDirty];
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -442,6 +465,12 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		// set parent nil at the end (issue #476)
 		[c setParent:nil];
+        
+        /** mark responder manager as dirty
+         @since v2.5
+         */
+        [self.responderManager markAsDirty];
+
 	}
 
 	[_children removeAllObjects];
@@ -465,6 +494,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 	// set parent nil at the end (issue #476)
 	[child setParent:nil];
+
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [self.responderManager markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -530,6 +564,12 @@ static NSUInteger globalOrderOfArrival = 1;
 		//don't need to check children recursively, that's done in visit of each child
         
 		_isReorderChildDirty = NO;
+        
+        /** mark responder manager as dirty
+         @since v2.5
+         */
+        [self.responderManager markAsDirty];
+
 	}
 }
 
@@ -544,7 +584,7 @@ static NSUInteger globalOrderOfArrival = 1;
 	// quick return if not visible. children won't be drawn.
 	if (!_visible)
 		return;
-
+    
 	kmGLPushMatrix();
 
 	if ( _grid && _grid.active)
@@ -929,8 +969,54 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #endif // __CC_PLATFORM_IOS
 
-@end
+// -----------------------------------------------------------------
+#pragma mark - touch interface
+// -----------------------------------------------------------------
 
+/** Returns YES, if touch is inside sprite
+ @since v2.5
+ */
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos {
+    pos = [self convertToNodeSpace:pos];
+    if ((pos.y < 0) || (pos.y > self.contentSize.height) || (pos.x < 0) || (pos.x > self.contentSize.width)) return(NO);
+    return(YES);
+}
+
+-( void )buildResponderList {
+    
+    // dont add invisible nodes
+    if (self.visible == NO) return;
+    
+    if ( _children != nil ) {
+        
+        // add children with zOrder < 0
+		int i = 0;
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [ _children objectAtIndex:i ];
+			if ( [child zOrder] < 0 )
+				[ child buildResponderList ];
+			else
+				break;
+		}
+
+        // add self
+        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
+        
+        // add children with zOrder >= 0
+		for( ; i < _children.count; i++ ) {
+			CCNode *child = [_children objectAtIndex:i];
+			[ child buildResponderList ];
+		}
+    } else {
+        
+        // only add self
+        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
+    }
+}
+
+// -----------------------------------------------------------------
+
+@end
 
 #pragma mark - NodeRGBA
 
@@ -1023,3 +1109,63 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -21,9 +21,7 @@ enum {
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-		[self setTouchEnabled:YES];
-		[self setTouchPriority:kCCMenuHandlerPriority+1];
-		[self setTouchMode:kCCTouchesOneByOne];
+
 #endif
 		// Font Item
 
@@ -47,11 +45,10 @@ enum {
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
 			// hijack all touch events for 5 seconds
-			CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-			[[director touchDispatcher] setPriority:kCCMenuHandlerPriority-1 forDelegate:self];
 			[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
 #elif defined(__CC_PLATFORM_MAC)
+			CCDirector *director = [CCDirector sharedDirector];
 			[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuHandlerPriority-1];
 			[self schedule:@selector(allowTouches) interval:5.0f];
 #endif
@@ -149,41 +146,25 @@ enum {
 
 #ifdef __CC_PLATFORM_IOS
 
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	return YES;
+
 }
 
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 }
 
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
+-(void) touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+}
+
+-(void) touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 }
 
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseDown:(NSEvent *)event
-{
-	return YES;
-}
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	return YES;
-}
 
--(BOOL) ccMouseMoved:(NSEvent *)event
-{
-	return YES;
-}
--(BOOL) ccMouseDragged:(NSEvent *)event
-{
-	return YES;
-}
 #endif // __CC_PLATFORM_MAC
 
 -(void) dealloc
@@ -194,12 +175,11 @@ enum {
 
 -(void) allowTouches
 {
-	CCDirector *director = [CCDirector sharedDirector];
 #ifdef __CC_PLATFORM_IOS
-    [[director touchDispatcher] setPriority:kCCMenuHandlerPriority+1 forDelegate:self];
     [self unscheduleAllSelectors];
 
 #elif defined(__CC_PLATFORM_MAC)
+	CCDirector *director = [CCDirector sharedDirector];
     [[director eventDispatcher] removeMouseDelegate:self];
 #endif
 
@@ -510,7 +490,11 @@ enum {
 
 #pragma mark - LayerPriorityTest
 
-@implementation LayerPriorityTest
+@implementation LayerPriorityTest {
+    CCMenuItemFont* toggleItem;
+}
+
+
 -(id) init
 {
 	if( (self = [super init] ) ) {
@@ -547,19 +531,14 @@ enum {
 		
 		
 		// Menu 2
-		static BOOL priority = 1;
 		[CCMenuItemFont setFontSize:48];
-		item1 = [CCMenuItemFont itemWithString:@"Toggle priority" block:^(id sender) {
-			if( priority == 1) {
-				[menu2 setHandlerPriority:kCCMenuHandlerPriority + 20];
-				priority = 0;
-			} else {
-				[menu2 setHandlerPriority:kCCMenuHandlerPriority - 20];
-				priority = 1;
-			}
+		toggleItem = [CCMenuItemFont itemWithString:@"Toggle touch" block:^(id sender) {
+            
+            toggleItem.userInteractionEnabled = !toggleItem.userInteractionEnabled;
+
 		}];
 		[item1 setColor:ccc3(0,0,255)];
-		[menu2 addChild:item1];
+		[menu2 addChild:toggleItem];
 		[self addChild:menu2];
 	}
 	
@@ -582,11 +561,10 @@ enum {
 	if( (self = [super init] ) ) {
 	
 		CCMenuItemFont *issue1410 = [CCMenuItemFont itemWithString:@"Issue 1410" block:^(id sender){
-			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 #if __CC_PLATFORM_IOS
-			menu.touchEnabled=NO;
-			menu.touchEnabled=YES;
+
 #elif __CC_PLATFORM_MAC
+			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 			menu.mouseEnabled=NO;
 			menu.mouseEnabled=YES;
 #endif
@@ -594,11 +572,10 @@ enum {
 		}];
 
 		CCMenuItemFont *issue1410_2 = [CCMenuItemFont itemWithString:@"Issue 1410 #2" block:^(id sender){
-			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 #if __CC_PLATFORM_IOS
-			menu.touchEnabled=YES;
-			menu.touchEnabled=NO;
+
 #elif __CC_PLATFORM_MAC
+			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
 			menu.mouseEnabled=YES;
 			menu.mouseEnabled=NO;
 #endif

@@ -136,8 +136,8 @@ Class restartAction()
 		[director setResizeMode:kCCDirectorResize_AutoScale];
 
 		self.mouseEnabled = YES;
-        self.touchEnabled = YES;
 
+        
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
 
@@ -189,43 +189,27 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-
-		location = [[CCDirector sharedDirector] convertToGL: location];
-
-		[self addNewSpriteWithCoords: location];
-	}
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+}
+
+- (void)mouseUp:( NSEvent *)theEvent
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	[self addNewSpriteWithCoords: location];
-
-	return YES;
 }
 
--(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event {
-    // get touches began
-    NSView *view = [[CCDirector sharedDirector] view];
-    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseBegan inView:view];
-    
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
-    
-    for (NSTouch *touch in touches) {
-        // convert touch to window location
-        CGPoint location = CCNSPointToCGPoint(touch.normalizedPosition);
-        location = ccpCompMult(location, ccp(winSize.width, winSize.height));
-        
-        CCLOG(@"touch began: %.2f,%.2f", location.x, location.y);
-        [self addNewSpriteWithCoords: location];
-    }
-    
-    return YES;
-}
 #endif
 
 -(NSString *) title
@@ -307,24 +291,26 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-
-		location = [[CCDirector sharedDirector] convertToGL: location];
-
-		[self addNewSpriteWithCoords: location];
-	}
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 	[self addNewSpriteWithCoords: location];
-
-	return YES;
-
 }
 
 -(BOOL) ccTouchesBeganWithEvent:(NSEvent *)event {

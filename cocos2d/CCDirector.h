@@ -31,6 +31,7 @@
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
 #import "kazmath/mat4.h"
+#import "CCResponderManager.h"
 
 /** @typedef ccDirectorProjection
  Possible OpenGL projections used by director
@@ -178,6 +179,12 @@ and when to execute the Scenes.
 @property (nonatomic,readonly) NSUInteger	totalFrames;
 /** seconds per frame */
 @property (nonatomic, readonly) ccTime secondsPerFrame;
+
+/** Sets the touch manager
+ @since v2.5
+ */
+@property ( nonatomic, strong ) CCResponderManager* responderManager;
+
 
 /** Whether or not the replaced scene will receive the cleanup message.
  If the new scene is pushed, then the old scene won't receive the "cleanup" message.

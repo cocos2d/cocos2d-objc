@@ -136,7 +136,7 @@ const NSUInteger defaultCapacity = 29;
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryBatchSprite, @"CCSpriteBatchNode - visit");
 
 	NSAssert(_parent != nil, @"CCSpriteBatchNode should NOT be root node");
-
+    
 	// CAREFUL:
 	// This visit is almost identical to CCNode#visit
 	// with the exception that it doesn't call visit on its children

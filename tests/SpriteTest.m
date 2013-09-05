@@ -142,6 +142,7 @@ Class restartAction()
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:26];
+        label.userInteractionEnabled = YES;
 		[self addChild: label z:1];
 		[label setPosition: ccp(s.width/2, s.height-50)];
 
@@ -163,7 +164,8 @@ Class restartAction()
 		item2.position = ccp( s.width/2, item2.contentSize.height/2);
 		item3.position = ccp( s.width/2 + item2.contentSize.width*2, item2.contentSize.height/2);
 		[self addChild: menu z:1];
-	}
+        
+    }
 	return self;
 }
 
@@ -216,13 +218,16 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
+        
+        self.userInteractionEnabled = YES;
+        
 	}
 	return self;
 }
@@ -259,25 +264,33 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
-		location = [[CCDirector sharedDirector] convertToGL: location];
-
-		[self addNewSpriteWithCoords: location];
-	}
+-( void )touchesEnded:( NSSet* )touches withEvent:(UIEvent *)event {
+    
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteWithCoords: location];
 }
+
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
-
-	return YES;
-
 }
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[self addNewSpriteWithCoords: theEvent.locationInWindow];
+}
+
+- (void)rightMouseDown:(NSEvent *)theEvent
+{
+}
+
 #endif
 
 -(NSString *) title
@@ -293,7 +306,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -341,24 +354,26 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
-		location = [[CCDirector sharedDirector] convertToGL: location];
+-( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 
-		[self addNewSpriteWithCoords: location];
-	}
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    [self addNewSpriteWithCoords: location];
 }
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-	[self addNewSpriteWithCoords: location];
+}
 
-	return YES;
-
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	[self addNewSpriteWithCoords:theEvent.locationInWindow];
 }
 #endif
 
@@ -1687,7 +1702,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -1751,12 +1766,16 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-#elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
-#endif
-{
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
 
+-( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+#elif defined(__CC_PLATFORM_MAC)
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
+
+- (void)mouseUp:(NSEvent *)theEvent {
+#endif
 	CCNode *node = [self getChildByTag:kTagSpriteBatchNode];
 	if( usingTexture1 ) {
 		for( CCSprite* sprite in node.children)
@@ -1767,11 +1786,6 @@ Class restartAction()
 			[sprite setTexture:texture1];
 		usingTexture1 = YES;
 	}
-
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
-	return YES;
-#endif
 }
 
 -(NSString *) title
@@ -1786,7 +1800,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 
 #ifdef __CC_PLATFORM_IOS
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -1849,22 +1863,23 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+    
+-( void )touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
-#endif
+- (void)mouseDown:(NSEvent *)theEvent
 {
+}
+    
+- (void)mouseUp:(NSEvent *)theEvent {
+#endif
+
 	CCSpriteBatchNode *batch = (CCSpriteBatchNode*) [self getChildByTag:kTagSpriteBatchNode];
 
 	if( [batch texture] == texture1 )
 		[batch setTexture:texture2];
 	else
 		[batch setTexture:texture1];
-
-#ifdef __CC_PLATFORM_IOS
-#elif defined(__CC_PLATFORM_MAC)
-	return YES;
-#endif
 }
 
 -(NSString *) title
@@ -3329,6 +3344,8 @@ Class restartAction()
 @end
 
 #pragma mark - Example Sprite9Slice
+
+#warning Does not work in OSX, as button.png is not found
 
 @implementation Sprite9Slice {
     CCSprite9Slice*     _sprite;

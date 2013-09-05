@@ -824,7 +824,7 @@ Class restartAction()
 	if( ( self=[super init]) ) {
 
 #if defined(__CC_PLATFORM_IOS)
-		self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -866,29 +866,36 @@ Class restartAction()
 }
 
 #if defined(__CC_PLATFORM_IOS)
--(void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+-( void )touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event { }
+
+-(void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	for( UITouch *touch in touches ) {
-		CGPoint location = [touch locationInView: [touch view]];
-
-		location = [[CCDirector sharedDirector] convertToGL: location];
-
-		for( int i=0; i<3; i++) {
-			CCNode *node = [self getChildByTag:100+i];
-
-			CGPoint p1, p2;
-
-			p1 = [node convertToNodeSpaceAR:location];
-			p2 = [node convertToNodeSpace:location];
-
-			NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
-		}
-	}
+    UITouch* touch = [ touches anyObject ];
+    CGPoint location = [touch locationInView: [touch view]];
+    
+    location = [[CCDirector sharedDirector] convertToGL: location];
+    
+    for( int i=0; i<3; i++) {
+        CCNode *node = [self getChildByTag:100+i];
+        
+        CGPoint p1, p2;
+        
+        p1 = [node convertToNodeSpaceAR:location];
+        p2 = [node convertToNodeSpace:location];
+        
+        NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
+    }
 }
+
 #elif defined(__CC_PLATFORM_MAC)
--(BOOL) ccMouseUp:(NSEvent *)event
+
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:event];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+	CGPoint	location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 		
 	for( int i=0; i<3; i++) {
 		CCNode *node = [self getChildByTag:100+i];
@@ -900,7 +907,6 @@ Class restartAction()
 		
 		NSLog(@"AR: x=%.2f, y=%.2f -- Not AR: x=%.2f, y=%.2f", p1.x, p1.y, p2.x, p2.y);
 	}
-	return YES;
 }
 #endif
 

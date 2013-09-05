@@ -168,8 +168,12 @@ static CCDirector *_sharedDirector = nil;
 		// action manager
 		_actionManager = [[CCActionManager alloc] init];
 		[_scheduler scheduleUpdateForTarget:_actionManager priority:kCCPrioritySystem paused:NO];
+        
+        // touch manager
+        _responderManager = [ CCResponderManager responderManager ];
 
 		_winSizeInPixels = _winSizeInPoints = CGSizeZero;
+                
 	}
 
 	return self;

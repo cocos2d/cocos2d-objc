@@ -31,6 +31,7 @@
 #import "CCSprite.h"
 #import "Support/CGPointExtension.h"
 #import <objc/message.h>
+#import "CCMenu.h"
 
 static NSUInteger _globalFontSize = kCCItemSize;
 static NSString *_globalFontName = @"Marker Felt";
@@ -77,22 +78,26 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 
 // Designated initializer
--(id) initWithBlock:(void (^)(id))block
-{
-	if((self=[super init]) ) {
+-(id) initWithBlock:(void (^)(id))block {
+    
+    self = [ super init ];
+    NSAssert( self != nil, @"Unable to create class" );
+    
+    if( block )
+        _block = [block copy];
+    
+    self.anchorPoint = ccp(0.5f, 0.5f);
+    _isEnabled = YES;
+    _isSelected = NO;
+    
+    // enable touch handling for all menu items
+    self.userInteractionEnabled = YES;
+    
+    // WARNING: Will be disabled in v2.2
+    _releaseBlockAtCleanup = YES;
 
-		if( block )
-			_block = [block copy];
-
-		self.anchorPoint = ccp(0.5f, 0.5f);
-		_isEnabled = YES;
-		_isSelected = NO;
-		
-		// WARNING: Will be disabled in v2.2
-		_releaseBlockAtCleanup = YES;
-
-	}
-	return self;
+	
+	return( self );
 }
 
 -(void) setContentSize:(CGSize)contentSize {
@@ -151,6 +156,68 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
        objc_msgSend(weakTarget, selector, sender);
 	}];
 }
+
+// -----------------------------------------------------------------
+#pragma mark - iOS touch functionality -
+// -----------------------------------------------------------------
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+
+/** touch protocol implementation
+ @since v2.5
+ */
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // if menu item is child of a menu, notify the menu that a child has been pressed
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemPressed:self];
+  
+    // perform pressed selector
+    [self selected];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // if menu item is child of a menu, notify the menu that a child has been released
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemReleased:self];
+
+    // perform released selector
+    [self unselected];
+    [self activate];
+}
+
+#else
+
+// -----------------------------------------------------------------
+#pragma mark - Mac mouse functionality -
+// -----------------------------------------------------------------
+
+/** mouse protocol implementation
+ @since v2.5
+ */
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    // if menu item is child of a menu, notify the menu that a child has been pressed
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemPressed:self];
+    
+    // perform pressed selector
+    [self selected];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    // if menu item is child of a menu, notify the menu that a child has been released
+    if ([self.parent isMemberOfClass:[CCMenu class]] == YES) [((CCMenu*)self.parent) menuItemReleased:self];
+    
+    // perform released selector
+    [self unselected];
+    [self activate];
+}
+
+#endif
+
+// -----------------------------------------------------------------
 
 @end
 

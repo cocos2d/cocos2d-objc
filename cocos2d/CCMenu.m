@@ -33,7 +33,6 @@
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
-#import "Platforms/iOS/CCTouchDispatcher.h"
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
@@ -91,9 +90,6 @@ enum {
 {
 	if( (self=[super init]) ) {
 #ifdef __CC_PLATFORM_IOS
-		[self setTouchPriority:kCCMenuHandlerPriority];
-		[self setTouchMode:kCCTouchesOneByOne];
-		[self setTouchEnabled:YES];
 
 #elif defined(__CC_PLATFORM_MAC)
 		[self setMousePriority:kCCMenuHandlerPriority+1];
@@ -132,6 +128,11 @@ enum {
 		// enable cascade color and opacity on menus
 		self.cascadeColorEnabled = YES;
 		self.cascadeOpacityEnabled = YES;
+        
+        /** a menu does not respond to touches, only its children does
+         @since v2.5
+         */
+        self.userInteractionEnabled = NO;
 	}
 	
 	return self;
@@ -158,19 +159,14 @@ enum {
 	[super onExit];
 }
 
-#pragma mark Menu - Events
+-( void )menuItemPressed:( CCMenuItem* )item {
+    // TODO: Implement content
+    
+}
 
--(void) setHandlerPriority:(NSInteger)newPriority
-{
-#ifdef __CC_PLATFORM_IOS
-	CCTouchDispatcher *dispatcher = [[CCDirector sharedDirector] touchDispatcher];
-	[dispatcher setPriority:newPriority forDelegate:self];
+-( void )menuItemReleased:( CCMenuItem* )item {
+    // TODO: Implement content
 
-#elif defined(__CC_PLATFORM_MAC)
-	CCEventDispatcher *dispatcher = [[CCDirector sharedDirector] eventDispatcher];
-	[dispatcher removeMouseDelegate:self];
-	[dispatcher addMouseDelegate:self priority:newPriority];
-#endif
 }
 
 #pragma mark Menu - Events Touches
@@ -325,6 +321,7 @@ enum {
 #endif // Mac Mouse support
 
 #pragma mark Menu - Alignment
+
 -(void) alignItemsVertically
 {
 	[self alignItemsVerticallyWithPadding:kDefaultPadding];

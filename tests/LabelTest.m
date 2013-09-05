@@ -884,7 +884,7 @@ static float menuItemPaddingCenter = 50;
 	if( (self=[super init])) {
 
 #ifdef __CC_PLATFORM_IOS
-        self.touchEnabled = YES;
+
 #elif defined(__CC_PLATFORM_MAC)
 		self.mouseEnabled = YES;
 #endif
@@ -1013,8 +1013,8 @@ static float menuItemPaddingCenter = 50;
 #pragma mark Touch Methods
 
 #ifdef __CC_PLATFORM_IOS
-- (void)ccTouchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touch = [touches anyObject];
+- (void)touchesBegan:( NSSet *)touches withEvent:(UIEvent *)event {
+    UITouch* touch = [ touches anyObject ];
     CGPoint location = [touch locationInView:[touch view]];
 
     if (CGRectContainsPoint([self.arrows boundingBox], location)) {
@@ -1023,17 +1023,18 @@ static float menuItemPaddingCenter = 50;
     }
 }
 
-- (void)ccTouchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
     drag_ = NO;
     [self snapArrowsToEdge];
 
     self.arrowsBar.visible = NO;
 }
 
-- (void)ccTouchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
     if (!drag_) return;
 
-    UITouch *touch = [touches anyObject];
+    UITouch* touch = [ touches anyObject ];
+
     CGPoint location = [touch locationInView:[touch view]];
 
     CGSize winSize = [CCDirector sharedDirector].winSize;
@@ -1047,34 +1048,30 @@ static float menuItemPaddingCenter = 50;
 
 #elif defined(__CC_PLATFORM_MAC)
 
-- (BOOL)ccMouseDown:(NSEvent*)event
+- (void)mouseDown:(NSEvent *)theEvent
 {
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
     if (CGRectContainsPoint([self.arrows boundingBox], location)) {
         drag_ = YES;
         self.arrowsBar.visible = YES;
 
-		return YES;
     }
-	return  NO;
 }
 
-- (BOOL)ccMouseUp:(NSEvent*)event
+- (void)mouseUp:(NSEvent *)theEvent
 {
     drag_ = NO;
     [self snapArrowsToEdge];
 
     self.arrowsBar.visible = NO;
-
-	return NO;
 }
 
-- (BOOL)ccMouseDragged:(NSEvent*)event
+- (void)mouseDragged:(NSEvent *)theEvent
 {
     if ( drag_) {
 
-		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
+		CGPoint location = [[CCDirector sharedDirector] convertEventToGL:theEvent];
 
 		CGSize winSize = [CCDirector sharedDirector].winSize;
 
@@ -1084,10 +1081,7 @@ static float menuItemPaddingCenter = 50;
 
 		[self.label setWidth:labelWidth];
 
-		return YES;
 	}
-
-	return NO;
 }
 
 #endif // __CC_PLATFORM_MAC
