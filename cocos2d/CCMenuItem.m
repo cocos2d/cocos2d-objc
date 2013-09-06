@@ -176,6 +176,12 @@ const NSInteger	kCCZoomActionTag = 0xc0c05002;
     [self selected];
 }
 
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    // perform cancelled selector
+    [self unselected];    
+}
+
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     // if menu item is child of a menu, notify the menu that a child has been released

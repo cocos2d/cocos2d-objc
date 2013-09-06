@@ -91,12 +91,6 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		CGSize s = [[CCDirector sharedDirector] winSize];
 
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];

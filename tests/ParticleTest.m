@@ -113,13 +113,6 @@ Class restartAction()
 {
 	if( (self=[super initWithColor:ccc4(127,127,127,255)] )) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
-
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:[self title] fontName:@"Arial" fontSize:32];
 		[self addChild:label z:100];
@@ -207,6 +200,10 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {

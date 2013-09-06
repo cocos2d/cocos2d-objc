@@ -112,11 +112,11 @@ NSString* restartAction()
 	[self removeChildByTag:kTagLabel3 cleanup:YES];
 	[self removeChildByTag:kTagLabel4 cleanup:YES];
 
-
+    // TODO: Align labels with new CCLabelTTF 
 	CCLabelTTF *top = [CCLabelTTF labelWithString:aFont fontName:aFont fontSize:24];
-	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentLeft vAlignment:verticalAlignment[vAlignIdx] ];
-	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentCenter vAlignment:verticalAlignment[vAlignIdx] ];
-	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" fontName:aFont fontSize:fontSize dimensions:blockSize hAlignment:kCCTextAlignmentRight vAlignment:verticalAlignment[vAlignIdx] ];
+	CCLabelTTF *left = [CCLabelTTF labelWithString:@"alignment left" fontName:aFont fontSize:fontSize dimensions:blockSize];
+	CCLabelTTF *center = [CCLabelTTF labelWithString:@"alignment center" fontName:aFont fontSize:fontSize dimensions:blockSize];
+	CCLabelTTF *right = [CCLabelTTF labelWithString:@"alignment right" fontName:aFont fontSize:fontSize dimensions:blockSize];
 
     CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];

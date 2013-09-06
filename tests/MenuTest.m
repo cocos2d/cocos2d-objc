@@ -45,14 +45,9 @@ enum {
 		CCLabelAtlas *labelAtlas = [CCLabelAtlas labelWithString:@"0123456789" charMapFile:@"fps_images.png" itemWidth:12 itemHeight:32 startCharMap:'.'];
 		CCMenuItemLabel *item3 = [CCMenuItemLabel itemWithLabel:labelAtlas block:^(id sender) {
 			// hijack all touch events for 5 seconds
-#ifdef __CC_PLATFORM_IOS
-			[self schedule:@selector(allowTouches) interval:5.0f repeat:0 delay:0];
-#elif defined(__CC_PLATFORM_MAC)
-			CCDirector *director = [CCDirector sharedDirector];
-			[[director eventDispatcher] addMouseDelegate:self priority:kCCMenuHandlerPriority-1];
-			[self schedule:@selector(allowTouches) interval:5.0f];
-#endif
-				NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
+            self.userInteractionEnabled = NO;
+			[self scheduleOnce:@selector(allowTouches) delay:5];
+            NSLog(@"TOUCHES DISABLED FOR 5 SECONDS");
 		}];
 
 		item3.disabledColor = ccc3(32,32,64);
@@ -175,14 +170,8 @@ enum {
 
 -(void) allowTouches
 {
-#ifdef __CC_PLATFORM_IOS
     [self unscheduleAllSelectors];
-
-#elif defined(__CC_PLATFORM_MAC)
-	CCDirector *director = [CCDirector sharedDirector];
-    [[director eventDispatcher] removeMouseDelegate:self];
-#endif
-
+    self.userInteractionEnabled = YES;
 	NSLog(@"TOUCHES ALLOWED AGAIN");
 }
 @end
@@ -534,11 +523,11 @@ enum {
 		[CCMenuItemFont setFontSize:48];
 		toggleItem = [CCMenuItemFont itemWithString:@"Toggle touch" block:^(id sender) {
             
-            toggleItem.userInteractionEnabled = !toggleItem.userInteractionEnabled;
+            [self reorderChild:toggleItem z:-10];
 
 		}];
 		[item1 setColor:ccc3(0,0,255)];
-		[menu2 addChild:toggleItem];
+		[menu2 addChild:toggleItem z:10];
 		[self addChild:menu2];
 	}
 	
@@ -561,25 +550,13 @@ enum {
 	if( (self = [super init] ) ) {
 	
 		CCMenuItemFont *issue1410 = [CCMenuItemFont itemWithString:@"Issue 1410" block:^(id sender){
-#if __CC_PLATFORM_IOS
-
-#elif __CC_PLATFORM_MAC
 			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
-			menu.mouseEnabled=NO;
-			menu.mouseEnabled=YES;
-#endif
-			NSLog(@"NO CRASHES");
+			NSAssert([menu isKindOfClass:[CCMenu class]],@"CRASH");
 		}];
 
 		CCMenuItemFont *issue1410_2 = [CCMenuItemFont itemWithString:@"Issue 1410 #2" block:^(id sender){
-#if __CC_PLATFORM_IOS
-
-#elif __CC_PLATFORM_MAC
 			CCMenu *menu=(CCMenu*)((CCMenuItem*)sender).parent;
-			menu.mouseEnabled=YES;
-			menu.mouseEnabled=NO;
-#endif
-			NSLog(@"NO CRASHES. AND MENU SHOULD STOP WORKING");
+			NSAssert([menu isKindOfClass:[CCMenu class]],@"CRASH");
 		}];
 
 		

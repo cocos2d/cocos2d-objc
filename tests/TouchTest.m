@@ -84,11 +84,17 @@
 
 #endif
 
+// -----------------------------------------------------------------
+
 @implementation TouchSprite
 
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
     MainLayer* layer = (MainLayer *)self.parent;
     [layer nextStep];
@@ -98,6 +104,10 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
     MainLayer* layer = (MainLayer *)self.parent;
     [layer nextStep];
 }
@@ -105,6 +115,44 @@
 #endif
 
 @end
+
+// -----------------------------------------------------------------
+
+@implementation SlideSprite
+
+#if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    self.scale = 1.2;
+    [self runAction:[CCScaleTo actionWithDuration:0.5 scale:1]];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    MainLayer* layer = (MainLayer *)self.parent;
+    [layer nextStep];
+}
+
+#else
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+    self.scale = 1.2;
+    [self runAction:[CCScaleTo actionWithDuration:0.5 scale:1]];
+}
+
+- (void)mouseUp:(NSEvent *)theEvent
+{
+    MainLayer* layer = (MainLayer *)self.parent;
+    [layer nextStep];
+}
+
+#endif
+
+@end
+
+// -----------------------------------------------------------------
 
 @implementation CrashSprite
 
@@ -126,7 +174,7 @@
 
 @end
 
-
+// -----------------------------------------------------------------
 
 @implementation MainLayer
 {
@@ -156,13 +204,13 @@
     {
         case 0:
             // check that simple click works
-            label.string = @"Click on Grossini";
+            label.string = @"#1 Click on Grossini";
             [self newTouchSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
             break;
             
         case 1:
             // check that sorted nodes are clicked correctly
-            label.string = @"Click on Grossoni's sister";
+            label.string = @"#2 Click on Grossoni's sister";
             sprite = [self newTouchSprite:@"grossinis_sister1.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:1 user:YES];
             [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3 angle:-360]]];
             [self newCrashSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:NO];
@@ -170,7 +218,7 @@
             
         case 2:
             // check that touch goes to responders only
-            label.string = @"Click on Grossoni behind his sister";
+            label.string = @"#3 Click on Grossoni behind his sister";
             sprite = [self newCrashSprite:@"grossinis_sister1.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:1 user:NO];
             [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3 angle:360]]];
             [self newTouchSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
@@ -178,11 +226,19 @@
             
         case 3:
             // check that invisible strites arent clicked
-            label.string = @"Click on Grossoni's sister";
+            label.string = @"#4 Click on Grossoni's sister";
             sprite = [self newTouchSprite:@"grossinis_sister1.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
             [sprite runAction:[CCRepeatForever actionWithAction:[CCRotateBy actionWithDuration:3 angle:360]]];
             sprite = [self newCrashSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:1 user:YES];
             sprite.visible = NO;
+            break;
+            
+        case 4:
+            // check userInteractionClaimed
+            label.string = @"#5 Slide over Grossini and his sisters";
+            sprite = [self newSlideSprite:@"grossini.png" pos:ccp(win.x * 0.25, win.y * 0.5) z:0 user:YES];
+            sprite = [self newSlideSprite:@"grossinis_sister1.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
+            sprite = [self newSlideSprite:@"grossinis_sister2.png" pos:ccp(win.x * 0.75, win.y * 0.5) z:0 user:YES];
             break;
             
         default:
@@ -207,6 +263,16 @@
     sprite.position = pos;
     [self addChild:sprite z:z];
     sprite.userInteractionEnabled = user;
+    return(sprite);
+}
+
+- (SlideSprite *)newSlideSprite:(NSString *)file pos:(CGPoint)pos z:(float)z user:(BOOL)user
+{
+    SlideSprite *sprite = [SlideSprite spriteWithFile:file];
+    sprite.position = pos;
+    [self addChild:sprite z:z];
+    sprite.userInteractionEnabled = user;
+    sprite.userInteractionClaimed = NO;
     return(sprite);
 }
 
