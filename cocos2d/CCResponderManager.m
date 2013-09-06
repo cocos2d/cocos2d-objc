@@ -47,10 +47,11 @@
 
 @implementation CCResponderManager
 {
-    __weak CCNode           *_responderList[CCResponderManagerBufferSize];
-    int                     _responderListCount;
-    BOOL                    _dirty;                                 // list of responders should be rebuild
-    NSMutableArray          *_runningResponderList;                 // list of running responders
+    __weak CCNode *_responderList[CCResponderManagerBufferSize];    // list of active responders
+    int _responderListCount;                                        // number of active responders
+    BOOL _dirty;                                                    // list of responders should be rebuild
+    
+    NSMutableArray *_runningResponderList;                          // list of running responders
 }
 
 // -----------------------------------------------------------------
@@ -183,7 +184,7 @@
             CCNode *node = (CCNode *)touchEntry.target;
             
             // check if it locks touches
-            if (node.isTouchLocked != NO)
+            if (node.isUserInteractionClaimed != NO)
             {
                 // move the touch
                 if ([node respondsToSelector:@selector(touchesMoved:withEvent:)] != NO)
@@ -216,7 +217,7 @@
                 CCNode *node = _responderList[index];
             
                 // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
-                if ((node.isTouchLocked == NO) && ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]] != NO))
+                if ((node.isUserInteractionClaimed == NO) && ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]] != NO))
                 {
                     // begin the touch
                     self.eventProcessed = YES;
@@ -369,7 +370,7 @@
         CCNode *node = (CCNode *)responder.target;
         
         // check if it locks mouse
-        if (node.isTouchLocked != NO)
+        if (node.isUserInteractionClaimed != NO)
         {
             // move the mouse
             switch (button)
@@ -406,7 +407,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if ((node.isTouchLocked == NO) && ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] != NO))
+            if ((node.isUserInteractionClaimed == NO) && ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]] != NO))
             {
                 // begin the mouse down
                 self.eventProcessed = YES;

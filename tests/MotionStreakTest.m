@@ -221,12 +221,6 @@ Class restartAction()
 {
 	[super onEnter];
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-	self.mouseEnabled = YES;
-#endif
-
 	CGSize s = [[CCDirector sharedDirector] winSize];
 
 	// create the streak object and add it to the scene
@@ -237,7 +231,12 @@ Class restartAction()
 }
 
 #ifdef __CC_PLATFORM_IOS
--(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch* touch = [ touches anyObject ];
 	CGPoint touchLocation = [touch locationInView: [touch view]];
@@ -247,6 +246,10 @@ Class restartAction()
 }
 
 #elif defined(__CC_PLATFORM_MAC)
+
+- (void)mouseDown:(NSEvent *)theEvent
+{
+}
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {

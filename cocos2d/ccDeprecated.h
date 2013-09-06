@@ -152,24 +152,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(BOOL) isRelativeAnchorPoint DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCLayer (Deprecated)
-#if __CC_PLATFORM_IOS
-// new: setAccelerometerEnabled:
--(void) setIsAccelerometerEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
-#elif __CC_PLATFORM_MAC
--(void) setIsTouchEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
--(void) setIsKeyboardEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
--(void) setIsMouseEnabled:(BOOL)enabled DEPRECATED_ATTRIBUTE;
-// new: setMouseEnabled:priority:
--(NSInteger) mouseDelegatePriority DEPRECATED_ATTRIBUTE;
-// new: setKeyboardEnabled:priority:
--(NSInteger) keyboardDelegatePriority DEPRECATED_ATTRIBUTE;
-// new: setTouchEnabled:priority:
--(NSInteger) touchDelegatePriority DEPRECATED_ATTRIBUTE;
-#endif // __CC_PLATFORM_MAC
-@end
-
-
 @interface CCSprite (Deprecated)
 // new: spriteWithTexture:rect:
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;

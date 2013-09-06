@@ -486,12 +486,6 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init] )) {
-
-#if defined(__CC_PLATFORM_IOS)
-
-#elif defined(__CC_PLATFORM_MAC)
-		[self setMouseEnabled: YES];
-#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		CCLayerColor* layer = [CCLayerColor layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
@@ -662,12 +656,6 @@ Class restartAction()
 		CCLayerGradient* layer1 = [CCLayerGradient layerWithColor:ccc4(255,0,0,255) fadingTo:ccc4(0,255,0,255) alongVector:ccp(0.9f, 0.9f)];
 
 		[self addChild:layer1 z:0 tag:kTagLayer];
-
-#if defined(__CC_PLATFORM_IOS)
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
 
 		CCLabelTTF *label1 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Enabled" fontName:@"Marker Felt" fontSize:26];
 		CCLabelTTF *label2 = [CCLabelTTF labelWithString:@"Compressed Interpolation: Disabled" fontName:@"Marker Felt" fontSize:26];

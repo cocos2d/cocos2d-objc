@@ -77,7 +77,7 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-	[self touchesMoved:touch withEvent:event];
+	[self touchesMoved:[touches anyObject] withEvent:event];
 }
 
 -(void) restart:(id)sender

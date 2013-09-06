@@ -822,12 +822,6 @@ Class restartAction()
 -(id) init
 {
 	if( ( self=[super init]) ) {
-
-#if defined(__CC_PLATFORM_IOS)
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
 		
 		CGSize s = [[CCDirector sharedDirector] winSize];
 

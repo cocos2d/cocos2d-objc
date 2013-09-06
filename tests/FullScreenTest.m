@@ -134,9 +134,6 @@ Class restartAction()
 
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_AutoScale];
-
-		self.mouseEnabled = YES;
-
         
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
@@ -236,9 +233,6 @@ Class restartAction()
 
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
-
-		self.mouseEnabled = YES;
-        self.touchEnabled = YES;
 
 		CGSize s = [director winSize];
 		[self addNewSpriteWithCoords:ccp(50,50)];
@@ -356,9 +350,6 @@ Class restartAction()
 
 		CCDirectorMac *director = (CCDirectorMac*) [CCDirector sharedDirector];
 		[director setResizeMode:kCCDirectorResize_NoScale];
-
-		self.mouseEnabled = YES;
-        self.touchEnabled = YES;
 
 		CGSize s = [director winSize];
 

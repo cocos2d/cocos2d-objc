@@ -18,8 +18,6 @@
 		label.position = ccp(size.width/2, size.height/2);
 		[self addChild:label];
 
-		self.accelerometerEnabled = YES;
-
 		[self schedule:@selector(switchLayer:) interval:5];
 
 	}
@@ -54,8 +52,6 @@
 
 		label.position = ccp(size.width/2, size.height/2);
 		[self addChild:label];
-
-		self.accelerometerEnabled = YES;
 
 		[self schedule:@selector(switchLayer:) interval:5];
 

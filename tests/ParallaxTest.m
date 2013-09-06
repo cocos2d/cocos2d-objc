@@ -198,12 +198,6 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		// Top Layer, a simple image
 		CCSprite *cocosImage = [CCSprite spriteWithFile:@"powered.png"];
 		// scale the image (optional)
