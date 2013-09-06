@@ -71,92 +71,9 @@
          */
         self.userInteractionEnabled = YES;
         self.multipleTouchEnabled = YES;
-
-#ifdef __CC_PLATFORM_IOS
-		_accelerometerEnabled = NO;
-#elif defined(__CC_PLATFORM_MAC)
-        _gestureEnabled = NO;
-        _gesturePriority = 0;
-		_mouseEnabled = NO;
-		_keyboardEnabled = NO;
-#endif
 	}
 
 	return self;
-}
-
-#pragma mark Layer - iOS - Touch and Accelerometer related
-
-#ifdef __CC_PLATFORM_IOS
-
--(BOOL) isAccelerometerEnabled
-{
-	return _accelerometerEnabled;
-}
-
--(void) setAccelerometerEnabled:(BOOL)enabled
-{
-	if( enabled != _accelerometerEnabled ) {
-		_accelerometerEnabled = enabled;
-		if( _isRunning ) {
-			if( enabled )
-				[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
-			else
-				[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-		}
-	}
-}
-
--(void) setAccelerometerInterval:(float)interval
-{
-	[[UIAccelerometer sharedAccelerometer] setUpdateInterval:interval];
-}
-
-
-#elif defined(__CC_PLATFORM_MAC)
-
-#endif // Mac
-
-
-#pragma mark Layer - Callbacks
--(void) onEnter
-{
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-
-#endif
-
-	// then iterate over all the children
-	[super onEnter];
-}
-
-// issue #624.
-// Can't register mouse, touches here because of #issue #1018, and #1021
--(void) onEnterTransitionDidFinish
-{
-#ifdef __CC_PLATFORM_IOS
-	if( _accelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:(id<UIAccelerometerDelegate>)self];
-#endif
-
-	[super onEnterTransitionDidFinish];
-}
-
-
--(void) onExit
-{
-
-#ifdef __CC_PLATFORM_IOS
-
-	if( _accelerometerEnabled )
-		[[UIAccelerometer sharedAccelerometer] setDelegate:nil];
-
-#elif defined(__CC_PLATFORM_MAC)
-
-#endif
-
-	[super onExit];
 }
 
 @end

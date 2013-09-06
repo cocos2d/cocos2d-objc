@@ -89,13 +89,6 @@ enum {
 -(id) initWithArray:(NSArray *)arrayOfItems
 {
 	if( (self=[super init]) ) {
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		[self setMousePriority:kCCMenuHandlerPriority+1];
-		[self setMouseEnabled:YES];
-		
-#endif
 		_enabled = YES;
 		
 		// by default, menu in the center of the screen
@@ -123,7 +116,6 @@ enum {
 //		[self alignItemsVertically];
 		
 		_selectedItem = nil;
-		_state = kCCMenuStateWaiting;
 		
 		// enable cascade color and opacity on menus
 		self.cascadeColorEnabled = YES;
@@ -148,17 +140,6 @@ enum {
 	[super addChild:child z:z tag:aTag];
 }
 
-- (void) onExit
-{
-	if(_state == kCCMenuStateTrackingTouch)
-	{
-		[_selectedItem unselected];
-		_state = kCCMenuStateWaiting;
-		_selectedItem = nil;
-	}
-	[super onExit];
-}
-
 -( void )menuItemPressed:( CCMenuItem* )item {
     // TODO: Implement content
     
@@ -168,157 +149,6 @@ enum {
     // TODO: Implement content
 
 }
-
-#pragma mark Menu - Events Touches
-
-#ifdef __CC_PLATFORM_IOS
-
--(CCMenuItem *) itemForTouch: (UITouch *) touch
-{
-	CGPoint touchLocation = [touch locationInView: [touch view]];
-	touchLocation = [[CCDirector sharedDirector] convertToGL: touchLocation];
-
-    for (CCMenuItem* item in _children) {
-		// ignore invisible and disabled items: issue #779, #866
-		if ( [item visible] && [item isEnabled] ) {
-
-			CGPoint local = [item convertToNodeSpace:touchLocation];
-			CGRect r = [item activeArea];
-
-			if( CGRectContainsPoint( r, local ) )
-				return item;
-		}
-	}
-	return nil;
-}
-
--(BOOL) ccTouchBegan:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	if( _state != kCCMenuStateWaiting || !_visible || ! _enabled)
-		return NO;
-
-	for( CCNode *c = self.parent; c != nil; c = c.parent )
-		if( c.visible == NO )
-			return NO;
-
-	_selectedItem = [self itemForTouch:touch];
-	[_selectedItem selected];
-
-	if( _selectedItem ) {
-		_state = kCCMenuStateTrackingTouch;
-		return YES;
-	}
-	return NO;
-}
-
--(void) ccTouchEnded:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchEnded] -- invalid state");
-
-	[_selectedItem unselected];
-	[_selectedItem activate];
-
-	_state = kCCMenuStateWaiting;
-}
-
--(void) ccTouchCancelled:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchCancelled] -- invalid state");
-
-	[_selectedItem unselected];
-
-	_state = kCCMenuStateWaiting;
-}
-
--(void) ccTouchMoved:(UITouch *)touch withEvent:(UIEvent *)event
-{
-	NSAssert(_state == kCCMenuStateTrackingTouch, @"[Menu ccTouchMoved] -- invalid state");
-
-	CCMenuItem *currentItem = [self itemForTouch:touch];
-
-	if (currentItem != _selectedItem) {
-		[_selectedItem unselected];
-		_selectedItem = currentItem;
-		[_selectedItem selected];
-	}
-}
-
-#pragma mark Menu - Events Mouse
-
-#elif defined(__CC_PLATFORM_MAC)
-
--(CCMenuItem *) itemForMouseEvent: (NSEvent *) event
-{
-	CGPoint location = [[CCDirector sharedDirector] convertEventToGL:event];
-
-	for (CCMenuItem* item in _children) {
-		// ignore invisible and disabled items: issue #779, #866
-		if ( [item visible] && [item isEnabled] ) {
-
-			CGPoint local = [item convertToNodeSpace:location];
-
-			CGRect r = [item activeArea];
-
-			if( CGRectContainsPoint( r, local ) )
-				return item;
-		}
-	}
-	return nil;
-}
-
--(BOOL) ccMouseUp:(NSEvent *)event
-{
-	if( ! _visible || ! _enabled)
-		return NO;
-
-	if(_state == kCCMenuStateTrackingTouch) {
-		if( _selectedItem ) {
-			[_selectedItem unselected];
-			[_selectedItem activate];
-		}
-		_state = kCCMenuStateWaiting;
-
-		return YES;
-	}
-	return NO;
-}
-
--(BOOL) ccMouseDown:(NSEvent *)event
-{
-	if( ! _visible || ! _enabled)
-		return NO;
-
-	_selectedItem = [self itemForMouseEvent:event];
-	[_selectedItem selected];
-
-	if( _selectedItem ) {
-		_state = kCCMenuStateTrackingTouch;
-		return YES;
-	}
-
-	return NO;
-}
-
--(BOOL) ccMouseDragged:(NSEvent *)event
-{
-	if( ! _visible || ! _enabled)
-		return NO;
-
-	if(_state == kCCMenuStateTrackingTouch) {
-		CCMenuItem *currentItem = [self itemForMouseEvent:event];
-
-		if (currentItem != _selectedItem) {
-			[_selectedItem unselected];
-			_selectedItem = currentItem;
-			[_selectedItem selected];
-		}
-
-		return YES;
-	}
-	return NO;
-}
-
-#endif // Mac Mouse support
 
 #pragma mark Menu - Alignment
 

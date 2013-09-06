@@ -129,7 +129,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.keyboardEnabled = YES;
 	}
 
 	return self;
@@ -178,7 +177,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-		self.mouseEnabled = YES;
 	}
 
 	return self;
@@ -280,7 +278,6 @@ Class restartAction()
 		}
 
 
-        self.gestureEnabled = YES;
 	}
 
 	return self;

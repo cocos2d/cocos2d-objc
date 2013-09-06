@@ -16,6 +16,10 @@
 
 @end
 
+@interface SlideSprite : CCSprite
+
+@end
+
 @interface CrashSprite : CCSprite
 
 @end

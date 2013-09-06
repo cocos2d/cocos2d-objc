@@ -303,7 +303,7 @@ enum {
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
-@property ( nonatomic, assign, getter = isTouchLocked ) BOOL touchLocked;
+@property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
 
 // initializators
 /** allocates and initializes a node.
