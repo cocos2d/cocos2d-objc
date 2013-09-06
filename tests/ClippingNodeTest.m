@@ -497,11 +497,6 @@ Class restartAction()
     
     [self addChild:outerClipper_];
         
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-    self.mouseEnabled = YES;
-#endif
 }
 
 - (void)pokeHoleAtPoint:(CGPoint)point
@@ -594,11 +589,6 @@ Class restartAction()
     [clipper addChild:content];
     
     scrolling_ = NO;
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-    self.mouseEnabled = YES;
-#endif
 }
 
 #ifdef __CC_PLATFORM_IOS

@@ -28,11 +28,6 @@
 #import "CCMenuItem.h"
 #import "CCLayer.h"
 
-typedef enum  {
-	kCCMenuStateWaiting,
-	kCCMenuStateTrackingTouch
-} tCCMenuState;
-
 enum {
 	//* priority used by the menu for the event handler
 	kCCMenuHandlerPriority = -128,
@@ -46,7 +41,6 @@ enum {
  */
 @interface CCMenu : CCLayerRGBA
 {
-	tCCMenuState _state;
 	CCMenuItem	*_selectedItem;
 	BOOL		_enabled;
 }

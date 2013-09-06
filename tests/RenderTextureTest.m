@@ -165,12 +165,6 @@ Class restartAction()
 		brush = [[CCSprite spriteWithFile:@"fire.png"] retain];
 		[brush setColor:ccRED];
 		[brush setOpacity:20];
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-		lastLocation = CGPointMake( s.width/2, s.height/2);
-#endif
 
 		// Save Image menu
 		[CCMenuItemFont setFontSize:16];
@@ -278,6 +272,10 @@ Class restartAction()
 {
 	AppController *controller = (AppController*) [[UIApplication sharedApplication] delegate];	
 	[[controller navController] popViewControllerAnimated:YES];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
 }
 
 -(void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
@@ -499,12 +497,6 @@ Class restartAction()
 {
 	if( (self=[super init] )) {
 		
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		CGSize size = [[CCDirector sharedDirector] winSize];
 		CCLabelTTF *label = [CCLabelTTF labelWithString:@"vertexZ = 50" fontName:@"Marker Felt" fontSize:64];
 		label.position =  ccp( size.width /2 , size.height*0.25f );
@@ -882,11 +874,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 		
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
 

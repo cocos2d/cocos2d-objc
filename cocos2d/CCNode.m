@@ -157,7 +157,7 @@ static NSUInteger globalOrderOfArrival = 1;
         
         // set default touch handling
         self.userInteractionEnabled = NO;
-        self.touchLocked = YES;
+        self.userInteractionClaimed = YES;
         self.multipleTouchEnabled = NO;
         self.responderManager = [ director responderManager ];
         
@@ -1012,6 +1012,13 @@ static NSUInteger globalOrderOfArrival = 1;
         // only add self
         if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
     }
+}
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    if (_userInteractionEnabled == userInteractionEnabled) return;
+    _userInteractionEnabled = userInteractionEnabled;
+    [self.responderManager markAsDirty];
 }
 
 // -----------------------------------------------------------------

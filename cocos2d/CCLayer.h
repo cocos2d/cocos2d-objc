@@ -39,86 +39,9 @@
 
 #pragma mark - CCLayer
 
-/** CCLayer is a subclass of CCNode that implements the CCTouchEventsDelegate protocol.
-
- All features from CCNode are valid, plus the following new features:
- - It can receive Touches both on iOS and Mac
- - It can receive Accelerometer input on iOS
- - It can receive Keyboard events on Mac
- - It can receive Mouse events on Mac
-*/
-#ifdef __CC_PLATFORM_IOS
-@interface CCLayer : CCNode < CCAccelerometerDelegate >
-{
-	BOOL _accelerometerEnabled;
-}
-
-/** whether or not it will receive Accelerometer events
- You can enable / disable accelerometer events with this property.
-
- Valid only on iOS. Not valid on Mac.
-
- @since v0.8.1
- */
-@property(nonatomic, assign, getter = isAccelerometerEnabled) BOOL accelerometerEnabled;
-
-/** sets the accelerometer's update frequency. A value of 1/2 means that the callback is going to be called twice per second.
- @since v2.1
- */
--(void) setAccelerometerInterval:(float)interval;
-
-
-#elif defined(__CC_PLATFORM_MAC)
-
-
 @interface CCLayer : CCNode
-{
-	BOOL		_mouseEnabled;
-	NSInteger	_mousePriority;
-
-	BOOL		_keyboardEnabled;
-	NSInteger	_keyboardPriority;
-
-	BOOL		_touchEnabled;
-	NSInteger	_touchPriority;
-	NSInteger	_touchMode;
-    BOOL        _touchSwallow;
-
-	BOOL		_gestureEnabled;
-	NSInteger	_gesturePriority;
-}
-
-/** whether or not it will receive touche events. */
-@property (nonatomic, readwrite, getter=isTouchEnabled) BOOL touchEnabled;
-/** priority of the touch events. Default is 0 */
-@property(nonatomic, assign) NSInteger touchPriority;
-
-/** whether or not it will receive gesture events. */
-@property (nonatomic, readwrite, getter=isGestureEnabled) BOOL gestureEnabled;
-/** priority of the gesture events. Default is 0 */
-@property(nonatomic, assign) NSInteger gesturePriority;
-
-
-/** whether or not it will receive mouse events.
-
- Valid only on OS X. Not valid on iOS
- */
-@property (nonatomic, readwrite, getter=isMouseEnabled) BOOL mouseEnabled;
-/** priority of the mouse events. Default is 0 */
-@property (nonatomic, assign) NSInteger mousePriority;
-
-/** whether or not it will receive keyboard events.
-
- Valid only on OS X. Not valid on iOS
- */
-@property (nonatomic, readwrite, getter = isKeyboardEnabled) BOOL keyboardEnabled;
-/** Priority of keyboard events. Default is 0 */
-@property (nonatomic, assign) NSInteger keyboardPriority;
-
-#endif // mac
 
 @end
-
 
 #pragma mark -
 #pragma mark CCLayerRGBA

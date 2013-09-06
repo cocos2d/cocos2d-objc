@@ -883,12 +883,6 @@ static float menuItemPaddingCenter = 50;
 	// Apple recommends to re-assign "self" with the "super" return value
 	if( (self=[super init])) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		// ask director the the window size
 		CGSize size = [[CCDirector sharedDirector] winSize];
 
