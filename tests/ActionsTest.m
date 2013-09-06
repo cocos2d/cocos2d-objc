@@ -1470,13 +1470,7 @@ Class restartAction()
 	if( (self=[super init]) ) {
 		
 		[self centerSprites:0];
-		
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-		
+				
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
 	}

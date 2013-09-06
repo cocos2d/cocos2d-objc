@@ -217,12 +217,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		CGSize s = [[CCDirector sharedDirector] winSize];
 		[self addNewSpriteWithCoords:ccp(s.width/2, s.height/2)];
         
@@ -304,12 +298,6 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
 
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
@@ -1701,12 +1689,6 @@ Class restartAction()
 {
 	if( (self=[super init]) ) {
 
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
-
 		CCNode *node = [CCNode node];
 		[self addChild:node z:0 tag:kTagSpriteBatchNode];
 
@@ -1798,12 +1780,6 @@ Class restartAction()
 -(id) init
 {
 	if( (self=[super init]) ) {
-
-#ifdef __CC_PLATFORM_IOS
-
-#elif defined(__CC_PLATFORM_MAC)
-		self.mouseEnabled = YES;
-#endif
 
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:50];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
@@ -3344,8 +3320,6 @@ Class restartAction()
 @end
 
 #pragma mark - Example Sprite9Slice
-
-#warning Does not work in OSX, as button.png is not found
 
 @implementation Sprite9Slice {
     CCSprite9Slice*     _sprite;

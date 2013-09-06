@@ -110,51 +110,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
-#pragma mark - Layer
-
-@implementation CCLayer (Deprecated)
-#if __CC_PLATFORM_IOS
-
--(void) setIsAccelerometerEnabled:(BOOL)enabled
-{
-	[self setAccelerometerEnabled:enabled];
-}
-#elif __CC_PLATFORM_MAC
--(void) setIsTouchEnabled:(BOOL)enabled
-{
-	[self setTouchEnabled:enabled];
-}
--(void) setIsKeyboardEnabled:(BOOL)enabled
-{
-	[self setKeyboardEnabled:enabled];	
-}
--(void) setIsMouseEnabled:(BOOL)enabled
-{
-	[self setMouseEnabled:enabled];
-}
--(NSInteger) mouseDelegatePriority
-{
-	// new: setKeyboardEnabled:priority:
-	NSAssert(NO, @"deprecated method");
-	return 0;
-}
--(NSInteger) keyboardDelegatePriority
-{
-	// new: setTouchEnabled:priority:
-	NSAssert(NO, @"deprecated method");
-	return 0;
-}
--(NSInteger) touchDelegatePriority
-{
-	// new: setTouchEnabled:priority:
-	NSAssert(NO, @"deprecated method");
-	return 0;
-}
-
-#endif // __CC_PLATFORM_IOS
-@end
-
-
 #pragma mark - Sprite
 
 @implementation CCSprite (Deprecated)
