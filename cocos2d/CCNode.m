@@ -64,6 +64,10 @@
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(NSInteger) z;
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
+/** builds a list of responders
+ @since v2.5
+ */
+-( void )buildResponderList;
 @end
 
 @implementation CCNode {
@@ -976,41 +980,45 @@ static NSUInteger globalOrderOfArrival = 1;
 /** Returns YES, if touch is inside sprite
  @since v2.5
  */
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos {
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
     pos = [self convertToNodeSpace:pos];
     if ((pos.y < 0) || (pos.y > self.contentSize.height) || (pos.x < 0) || (pos.x > self.contentSize.width)) return(NO);
     return(YES);
 }
 
--( void )buildResponderList {
-    
+-( void )buildResponderList
+{
     // dont add invisible nodes
     if (self.visible == NO) return;
     
-    if ( _children != nil ) {
-        
+    if (_children != nil)
+    {
         // add children with zOrder < 0
 		int i = 0;
-		for( ; i < _children.count; i++ ) {
-			CCNode *child = [ _children objectAtIndex:i ];
-			if ( [child zOrder] < 0 )
-				[ child buildResponderList ];
+		for(; i < _children.count; i++)
+        {
+			CCNode *child = [_children objectAtIndex:i];
+			if ([child zOrder] < 0)
+                [child buildResponderList];
 			else
 				break;
 		}
 
         // add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
+        if (self.isUserInteractionEnabled != NO) [self.responderManager addResponder:self];
         
         // add children with zOrder >= 0
-		for( ; i < _children.count; i++ ) {
+		for(; i < _children.count; i++)
+        {
 			CCNode *child = [_children objectAtIndex:i];
-			[ child buildResponderList ];
+			[child buildResponderList];
 		}
-    } else {
-        
+    }
+    else
+    {
         // only add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
+        if (self.isUserInteractionEnabled != NO) [self.responderManager addResponder:self];
     }
 }
 

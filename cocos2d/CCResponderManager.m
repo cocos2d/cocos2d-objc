@@ -86,7 +86,7 @@
 {
     // rebuild responder list
     [self removeAllResponders];
-    [[CCDirector sharedDirector].runningScene buildResponderList];
+    [[CCDirector sharedDirector].runningScene performSelector:@selector(buildResponderList)];
     _dirty = NO;
 }
 
