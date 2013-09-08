@@ -628,11 +628,6 @@ enum {
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
-/** builds a list of touch receivers
- @since v2.5
- */
--( void )buildResponderList;
-
 @end
 
 
