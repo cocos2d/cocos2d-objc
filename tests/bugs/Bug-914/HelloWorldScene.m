@@ -45,7 +45,6 @@
 			[layer setContentSize:CGSizeMake(i*100, i*100)];
 			[layer setPosition:ccp(size.width/2, size.height/2)];
 			[layer setAnchorPoint:ccp(0.5f, 0.5f)];
-			[layer setIgnoreAnchorPointForPosition:NO];
 			[self addChild:layer z:-1-i];
 		}
 

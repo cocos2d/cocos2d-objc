@@ -116,7 +116,7 @@
 
 		[white setScale: 0.5f];
 //		[white setPosition: ccp(x/4,y/4)];		
-		white.ignoreAnchorPointForPosition = NO;
+		white.anchorPoint = ccp(0.5f, 0.5f);
 		[white setPosition: ccp(x/4*3,y/4*3)];
 
 		[self addChild: blue z:-1];
