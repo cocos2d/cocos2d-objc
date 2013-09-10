@@ -730,12 +730,6 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void) setIgnoreAnchorPointForPosition:(BOOL)value
-{
-	NSAssert( ! _batchNode, @"ignoreAnchorPointForPosition is invalid in CCSprite");
-	[super setIgnoreAnchorPointForPosition:value];
-}
-
 -(void)setVisible:(BOOL)v
 {
 	[super setVisible:v];

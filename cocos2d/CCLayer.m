@@ -62,9 +62,8 @@
 	if( (self=[super init]) ) {
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
-		_anchorPoint = ccp(0.5f, 0.5f);
+		_anchorPoint = ccp(0.0f, 0.0f);
 		[self setContentSize:s];
-		self.ignoreAnchorPointForPosition = YES;
         
         /** Layers default accept user intercation and multiple touches
          @since v2.5

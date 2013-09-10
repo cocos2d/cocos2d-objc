@@ -41,8 +41,7 @@
     NSAssert( self != nil, @"Unable to create class" );
     
     CGSize s = [[CCDirector sharedDirector] winSize];
-    self.ignoreAnchorPointForPosition = YES;
-    _anchorPoint = ccp(0.5f, 0.5f);
+    _anchorPoint = ccp(0.0f, 0.0f);
     [self setContentSize:s];
         
 	return( self );
