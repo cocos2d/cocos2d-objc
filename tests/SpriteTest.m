@@ -1439,7 +1439,7 @@ Class restartAction()
 		// Don't use capacity=1 in your real game. It is expensive to resize the capacity
 		CCSpriteBatchNode *batch = [CCSpriteBatchNode batchNodeWithFile:@"grossini_dance_atlas.png" capacity:1];
 		[self addChild:batch z:0 tag:kTagSpriteBatchNode];
-		batch.ignoreAnchorPointForPosition = YES;
+        batch.anchorPoint = CGPointZero;
 
 		CGSize s = [[CCDirector sharedDirector] winSize];
 

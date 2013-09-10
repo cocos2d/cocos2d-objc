@@ -491,7 +491,7 @@ Class restartAction()
 		CCLayerColor* layer = [CCLayerColor layerWithColor: ccc4(0xFF, 0x00, 0x00, 0x80)
 												 width: 200
 												height: 200];
-		layer.ignoreAnchorPointForPosition =  NO;
+		layer.anchorPoint = ccp(0.5, 0.5);
 		layer.position = ccp(s.width/2, s.height/2);
 		[self addChild: layer z:1 tag:kTagLayer];
 	}
@@ -566,14 +566,14 @@ Class restartAction()
 												 width: 100
 												height: 300];
 		layer1.position = ccp(s.width/3, s.height/2);
-		layer1.ignoreAnchorPointForPosition = NO;
+		layer1.anchorPoint = ccp(0.5, 0.5);
 		[self addChild: layer1 z:1];
 
 		CCLayerColor* layer2 = [CCLayerColor layerWithColor: ccc4(0, 0, 255, 255)
 												 width: 100
 												height: 300];
 		layer2.position = ccp((s.width/3)*2, s.height/2);
-		layer2.ignoreAnchorPointForPosition = NO;
+		layer2.anchorPoint = ccp(0.5, 0.5);
 		[self addChild: layer2 z:1];
 
 		id actionTint = [CCTintBy actionWithDuration:2 red:-255 green:-127 blue:0];
