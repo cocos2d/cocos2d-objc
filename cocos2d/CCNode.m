@@ -264,6 +264,29 @@ static NSUInteger globalOrderOfArrival = 1;
 	}
 }
 
+- (CGSize) contentSizeInPoints
+{
+    CGSize size = CGSizeZero;
+    CCDirector* director = [CCDirector sharedDirector];
+    
+    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
+    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    
+    if (widthUnit == kCCContentSizeUnitPoints) size.width = _contentSize.width;
+    else if (widthUnit == kCCContentSizeUnitScaled) size.width = director.positionScaleFactor * _contentSize.width;
+    else if (widthUnit == kCCContentSizeUnitNormalized) size.width = _contentSize.width * _parent.contentSizeInPoints.width;
+    else if (widthUnit == kCCContentSizeUnitInsetPoints) size.width = _parent.contentSizeInPoints.width - _contentSize.width;
+    else if (widthUnit == kCCContentSizeUnitInsetScaled) size.width = _parent.contentSizeInPoints.width - _contentSize.width * director.positionScaleFactor;
+    
+    if (heightUnit == kCCContentSizeUnitPoints) size.height = _contentSize.height;
+    else if (heightUnit == kCCContentSizeUnitScaled) size.height = director.positionScaleFactor * _contentSize.height;
+    else if (heightUnit == kCCContentSizeUnitNormalized) size.height = _contentSize.height * _parent.contentSizeInPoints.height;
+    else if (heightUnit == kCCContentSizeUnitInsetPoints) size.height = _parent.contentSizeInPoints.height - _contentSize.height;
+    else if (heightUnit == kCCContentSizeUnitInsetScaled) size.height = _parent.contentSizeInPoints.height - _contentSize.height * director.positionScaleFactor;
+    
+    return size;
+}
+
 - (CGRect) boundingBox
 {
 	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
@@ -822,11 +845,47 @@ static NSUInteger globalOrderOfArrival = 1;
 - (CGAffineTransform)nodeToParentTransform
 {
 	if ( _isTransformDirty ) {
+        
+        CCDirector* director = [CCDirector sharedDirector];
 
 		// Translate values
-		float x = _position.x;
-		float y = _position.y;
-    
+		float x = 0;
+		float y = 0;
+        
+        // Convert position to points
+        CCPositionUnit xUnit = _positionType.xUnit;
+        if (xUnit == kCCPositionUnitPoints) x = _position.x;
+        else if (xUnit == kCCPositionUnitScaled) x = _position.x * director.positionScaleFactor;
+        else if (xUnit == kCCPositionUnitNormalized) x = _position.x * self.contentSizeInPoints.width;
+        
+        CCPositionUnit yUnit = _positionType.yUnit;
+        if (yUnit == kCCPositionUnitPoints) y = _position.y;
+        else if (yUnit == kCCPositionUnitScaled) y = _position.y * director.positionScaleFactor;
+        else if (yUnit == kCCPositionUnitNormalized) y = _position.y * self.contentSizeInPoints.height;
+        
+        // Account for reference corner
+        CCPositionReferenceCorner corner = _positionType.corner;
+        if (corner == kCCPositionReferenceCornerBottomLeft)
+        {
+            // Nothing needs to be done
+        }
+        else if (corner == kCCPositionReferenceCornerTopLeft)
+        {
+            // Reverse y-axis
+            y = self.contentSizeInPoints.height - y;
+        }
+        else if (corner == kCCPositionReferenceCornerTopRight)
+        {
+            // Reverse x-axis and y-axis
+            x = self.contentSizeInPoints.width - x;
+            y = self.contentSizeInPoints.height - y;
+        }
+        else if (corner == kCCPositionReferenceCornerBottomRight)
+        {
+            // Reverse x-axis
+            x = self.contentSizeInPoints.width - x;
+        }
+        
 		// Rotation values
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
