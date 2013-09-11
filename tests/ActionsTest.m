@@ -407,7 +407,6 @@ Class restartAction()
 	CCLayerColor *box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
 	box.anchorPoint = ccp(0.5,0.5);
 	box.contentSize = boxSize;
-	box.ignoreAnchorPointForPosition = NO;
 	box.position = ccp(s.width/2, s.height - 100 - box.contentSize.height/2);
 	[self addChild:box];
 	CCLabelTTF *label = [CCLabelTTF labelWithString:@"Standard cocos2d Skew" fontName:@"Marker Felt" fontSize:16];
@@ -421,7 +420,6 @@ Class restartAction()
 	box = [CCLayerColor layerWithColor:ccc4(255,255,0,255)];
 	box.anchorPoint = ccp(0.5,0.5);
 	box.contentSize = boxSize;
-	box.ignoreAnchorPointForPosition = NO;
 	box.position = ccp(s.width/2, s.height - 250 - box.contentSize.height/2);
 	[self addChild:box];
 	label = [CCLabelTTF labelWithString:@"Rotational Skew" fontName:@"Marker Felt" fontSize:16];
