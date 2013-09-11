@@ -102,11 +102,21 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @implementation CCNode (Deprecated)
 -(void) setIsRelativeAnchorPoint:(BOOL)value
 {
-	[self setIgnoreAnchorPointForPosition:!value];
+	NSAssert(NO, @"Set anchorPoint to 0, 0 instead of changing this property");
 }
 -(BOOL) isRelativeAnchorPoint
 {
-	return ! self.ignoreAnchorPointForPosition;
+	NSAssert(NO, @"Set anchorPoint to 0, 0 instead of changing this property");
+	return YES;
+}
+- (void) setIgnoreAnchorPointForPosition:(BOOL)value
+{
+    NSAssert(NO, @"Set anchorPoint to 0, 0 instead of changing this property");
+}
+- (BOOL) ignoreAnchorPointForPosition:(BOOL)value
+{
+    NSAssert(NO, @"Set anchorPoint to 0, 0 instead of changing this property");
+    return NO;
 }
 @end
 

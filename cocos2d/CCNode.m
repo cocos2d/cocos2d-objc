@@ -92,7 +92,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize position = _position;
 @synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
 @synthesize contentSize = _contentSize;
-@synthesize ignoreAnchorPointForPosition = _ignoreAnchorPointForPosition;
 @synthesize skewX = _skewX, skewY = _skewY;
 
 #pragma mark CCNode - Init & cleanup
@@ -114,10 +113,6 @@ static NSUInteger globalOrderOfArrival = 1;
         _position = CGPointZero;
         _contentSize = CGSizeZero;
 		_anchorPointInPoints = _anchorPoint = CGPointZero;
-
-
-		// "whole screen" objects. like Scenes and Layers, should set ignoreAnchorPointForPosition to YES
-		_ignoreAnchorPointForPosition = NO;
 
 		_isTransformDirty = _isInverseDirty = YES;
 
@@ -248,14 +243,6 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	_position = newPosition;
 	_isTransformDirty = _isInverseDirty = YES;
-}
-
--(void) setIgnoreAnchorPointForPosition: (BOOL)newValue
-{
-	if( newValue != _ignoreAnchorPointForPosition ) {
-		_ignoreAnchorPointForPosition = newValue;
-		_isTransformDirty = _isInverseDirty = YES;
-	}
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -839,11 +826,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		// Translate values
 		float x = _position.x;
 		float y = _position.y;
-
-		if ( _ignoreAnchorPointForPosition ) {
-			x += _anchorPointInPoints.x;
-			y += _anchorPointInPoints.y;
-		}
     
 		// Rotation values
 		// Change rotation code to handle X and Y

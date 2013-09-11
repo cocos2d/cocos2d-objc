@@ -121,11 +121,6 @@ NSString* restartAction()
     CCLayerColor *leftColor = [CCLayerColor layerWithColor:ccc4(100, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *centerColor = [CCLayerColor layerWithColor:ccc4(200, 100, 100, 255) width:blockSize.width height:blockSize.height];
     CCLayerColor *rightColor = [CCLayerColor layerWithColor:ccc4(100, 100, 200, 255) width:blockSize.width height:blockSize.height];
-	
-	leftColor.ignoreAnchorPointForPosition = NO;
-	centerColor.ignoreAnchorPointForPosition = NO;
-	rightColor.ignoreAnchorPointForPosition = NO;
-	
     
     top.anchorPoint = ccp(0.5, 1);
     left.anchorPoint = leftColor.anchorPoint = ccp(0,0.5);

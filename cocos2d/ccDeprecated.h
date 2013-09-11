@@ -150,6 +150,8 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @interface CCNode (Deprecated)
 -(void) setIsRelativeAnchorPoint:(BOOL)value DEPRECATED_ATTRIBUTE;
 -(BOOL) isRelativeAnchorPoint DEPRECATED_ATTRIBUTE;
+- (void) setIgnoreAnchorPointForPosition:(BOOL)value DEPRECATED_ATTRIBUTE;
+- (BOOL) ignoreAnchorPointForPosition:(BOOL)value DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCSprite (Deprecated)

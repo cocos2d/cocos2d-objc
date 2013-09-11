@@ -174,9 +174,6 @@ enum {
 
 	// is visible
 	BOOL _visible;
-	// If YES, the Anchor Point will be (0,0) when you position the CCNode.
-	// Used by CCLayer and CCScene
-	BOOL _ignoreAnchorPointForPosition;
 
 	BOOL _isReorderChildDirty;
 }
@@ -253,10 +250,6 @@ enum {
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
-/**  If YES, the Anchor Point will be (0,0) when you position the CCNode.
- Used by CCLayer and CCScene.
- */
-@property(nonatomic,readwrite,assign) BOOL ignoreAnchorPointForPosition;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
 /** A custom user data pointer */
