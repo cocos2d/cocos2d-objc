@@ -216,8 +216,12 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
-/** Position (x,y) of the node in points. (0,0) is the left-bottom corner. */
+/** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
+/** Position (x,y) of the node in points from the bottom left corner */
+@property(nonatomic,readonly) CGPoint positionInPoints;
+/** Defines the position type used for the X component of the position property */
+@property(nonatomic,readwrite,assign) CCPositionType positionType;
 /** A CCCamera object that lets you move the node using a gluLookAt */
 @property(unsafe_unretained, nonatomic,readonly) CCCamera* camera;
 /** Array of children */
@@ -239,12 +243,14 @@ enum {
  */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
 
-/** The untransformed size of the node in Points
- The contentSize remains the same no matter the node is scaled or rotated.
- All nodes has a size. Layer and Scene has the same size of the screen.
+/** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated.
  @since v0.8
  */
-@property (nonatomic,readwrite) CGSize contentSize;
+@property (nonatomic,readwrite,assign) CGSize contentSize;
+/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. */
+@property (nonatomic,readonly) CGSize contentSizeInPoints;
+/** Defines the contentSize type used for the widht and height component of the contentSize property. */
+@property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
 
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;
@@ -560,6 +566,12 @@ enum {
  @since v0.7.1
  */
 - (CGAffineTransform)nodeToParentTransform;
+
+- (CGPoint) convertPositionToPoints:(CGPoint)position;
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints;
+
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize;
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
