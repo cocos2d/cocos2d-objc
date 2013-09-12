@@ -31,14 +31,19 @@
 #import "CCResponderManager.h"
 
 // -----------------------------------------------------------------
-
+/**
+ *  CCResponder is the base class for all nodes.
+ *  It exposes the touch and mouse protocol to any node, which enables user interaction
+ */
 @interface CCResponder : NSObject <CCResponderProtocol>
 
 // -----------------------------------------------------------------
 
+/** Sets the responder manager used by the system */
 @property (nonatomic, weak) CCResponderManager *responderManager;
 
-+ (id)responder;
+// -----------------------------------------------------------------
+
 - (id)init;
 
 // -----------------------------------------------------------------

@@ -154,7 +154,6 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.userInteractionClaimed = YES;
         self.multipleTouchEnabled = NO;
-        self.responderManager = [ director responderManager ];
         
 	}
 
@@ -424,7 +423,10 @@ static NSUInteger globalOrderOfArrival = 1;
 {
     if (visible == _visible) return;
     
-    [self.responderManager markAsDirty];
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
     _visible = visible;
 }
 
@@ -512,7 +514,7 @@ static NSUInteger globalOrderOfArrival = 1;
     /** mark responder manager as dirty
      @since v2.5
      */
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -601,7 +603,7 @@ static NSUInteger globalOrderOfArrival = 1;
         /** mark responder manager as dirty
          @since v2.5
          */
-        [self.responderManager markAsDirty];
+        [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	}
 
@@ -630,7 +632,7 @@ static NSUInteger globalOrderOfArrival = 1;
     /** mark responder manager as dirty
      @since v2.5
      */
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -700,7 +702,7 @@ static NSUInteger globalOrderOfArrival = 1;
         /** mark responder manager as dirty
          @since v2.5
          */
-        [self.responderManager markAsDirty];
+        [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	}
 }
@@ -1212,49 +1214,18 @@ static NSUInteger globalOrderOfArrival = 1;
 /** Returns YES, if touch is inside sprite
  @since v2.5
  */
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos {
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos
+{
     pos = [self convertToNodeSpace:pos];
     if ((pos.y < 0) || (pos.y > self.contentSizeInPoints.height) || (pos.x < 0) || (pos.x > self.contentSizeInPoints.width)) return(NO);
     return(YES);
-}
-
--( void )buildResponderList {
-    
-    // dont add invisible nodes
-    if (self.visible == NO) return;
-    
-    if ( _children != nil ) {
-        
-        // add children with zOrder < 0
-		int i = 0;
-		for( ; i < _children.count; i++ ) {
-			CCNode *child = [ _children objectAtIndex:i ];
-			if ( [child zOrder] < 0 )
-				[ child buildResponderList ];
-			else
-				break;
-		}
-
-        // add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
-        
-        // add children with zOrder >= 0
-		for( ; i < _children.count; i++ ) {
-			CCNode *child = [_children objectAtIndex:i];
-			[ child buildResponderList ];
-		}
-    } else {
-        
-        // only add self
-        if ( self.isUserInteractionEnabled == YES ) [ self.responderManager addResponder:self ];
-    }
 }
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
     if (_userInteractionEnabled == userInteractionEnabled) return;
     _userInteractionEnabled = userInteractionEnabled;
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------

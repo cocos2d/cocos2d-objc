@@ -86,8 +86,35 @@
 {
     // rebuild responder list
     [self removeAllResponders];
-    [[CCDirector sharedDirector].runningScene buildResponderList];
+    [self buildResponderList:[CCDirector sharedDirector].runningScene];
     _dirty = NO;
+}
+
+-( void )buildResponderList:(CCNode *)node
+{
+    BOOL nodeAdded = NO;
+    
+    // dont add invisible nodes
+    if (!node.visible) return;
+    
+    if (node.children)
+    {
+        // scan through children, and build responderlist
+        for (CCNode *child in node.children)
+        {
+            if ((child.zOrder >= 0) && (!nodeAdded) && (node.isUserInteractionEnabled))
+            {
+                [self addResponder:node];
+                nodeAdded = YES;
+            }
+            [self buildResponderList:child];
+        }
+    }
+    else
+    {
+        // only add self
+        if (node.isUserInteractionEnabled) [self addResponder:node];
+    }
 }
 
 // -----------------------------------------------------------------

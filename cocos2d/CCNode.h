@@ -33,7 +33,6 @@
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
 #import "CCResponder.h"
-#import "CCResponderManager.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -44,7 +43,6 @@ enum {
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
-@class CCResponderManager;
 @class CCAction;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
@@ -632,11 +630,6 @@ enum {
  @since v2.5
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
-
-/** builds a list of touch receivers
- @since v2.5
- */
--( void )buildResponderList;
 
 @end
 
