@@ -394,7 +394,7 @@ typedef CGFloat ccTime;
 
 typedef float ccMat4[16];
     
-    
+/*
 typedef struct _ccFontShadow
 {
     // true if shadow enabled
@@ -418,6 +418,7 @@ typedef struct _ccFontStroke
     float       m_strokeSize;
     
 } ccFontStroke;
+ */
     
 /*
 typedef struct _ccFontDefinition
@@ -443,6 +444,95 @@ typedef struct _ccFontDefinition
     
 } ccFontDefinition;
 */
+    
+enum
+{
+    //! Position is set in points (this is the default)
+    kCCPositionUnitPoints,
+    
+    //! Position is scaled by the global positionScaleFactor (as defined by CCDirector)
+    kCCPositionUnitScaled,
+    
+    //! Position is a normalized value multiplied by the content size of the parent's container
+    kCCPositionUnitNormalized,
+    
+};
+typedef unsigned char CCPositionUnit;
+
+enum
+{
+    //! Content size is set in points (this is the default)
+    kCCContentSizeUnitPoints,
+    
+    //! Content size is scaled by the global positionScaleFactor (as defined by CCDirector)
+    kCCContentSizeUnitScaled,
+    
+    //! Content size is a normalized value multiplied by the content size of the parent's container
+    kCCContentSizeUnitNormalized,
+    
+    //! Content size is the size of the parents container inset by the supplied value
+    kCCContentSizeUnitInsetPoints,
+    
+    //! Content size is the size of the parents container inset by the supplied value multiplied by the positionScaleFactor (as defined by CCDirector)
+    kCCContentSizeUnitInsetScaled,
+    
+};
+typedef unsigned char CCContentSizeUnit;
+    
+enum
+{
+    //! Position is relative to the bottom left corner of the parent container (this is the default)
+    kCCPositionReferenceCornerBottomLeft,
+    
+    //! Position is relative to the top left corner of the parent container
+    kCCPositionReferenceCornerTopLeft,
+    
+    //! Position is relative to the top right corner of the parent container
+    kCCPositionReferenceCornerTopRight,
+    
+    //! Position is relative to the bottom right corner of the parent container
+    kCCPositionReferenceCornerBottomRight,
+    
+};
+typedef unsigned char CCPositionReferenceCorner;
+
+typedef struct _CCPositionType
+{
+    CCPositionUnit xUnit;
+    CCPositionUnit yUnit;
+    CCPositionReferenceCorner corner;
+} CCPositionType;
+
+typedef struct _CCContentSizeType
+{
+    CCContentSizeUnit widthUnit;
+    CCContentSizeUnit heightUnit;
+} CCContentSizeType;
+
+//! helper that creates a CCPositionType type
+static inline CCPositionType CCPositionTypeMake(CCPositionUnit xUnit, CCPositionUnit yUnit, CCPositionReferenceCorner corner)
+{
+    CCPositionType pt;
+    pt.xUnit = xUnit;
+    pt.yUnit = yUnit;
+    pt.corner = corner;
+    return pt;
+}
+
+//! helper that creates a CCContentSizeType type
+static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUnit, CCContentSizeUnit heightUnit)
+{
+    CCContentSizeType cst;
+    cst.widthUnit = widthUnit;
+    cst.heightUnit = heightUnit;
+    return cst;
+}
+
+#define kCCPositionTypePoints CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft)
+
+#define kCCPositionTypeScaled CCPositionTypeMake(kCCPositionUnitScaled, kCCPositionUnitScaled, kCCPositionReferenceCornerBottomLeft)
+
+#define kCCPositionTypeNormalized CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft)
     
 #ifdef __cplusplus
 }
