@@ -64,10 +64,6 @@
 // used internally to alter the zOrder variable. DON'T call this method manually
 -(void) _setZOrder:(NSInteger) z;
 -(void) detachChild:(CCNode *)child cleanup:(BOOL)doCleanup;
-/** builds a list of responders
- @since v2.5
- */
--( void )buildResponderList;
 @end
 
 @implementation CCNode {
@@ -163,7 +159,6 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.userInteractionClaimed = YES;
         self.multipleTouchEnabled = NO;
-        self.responderManager = [ director responderManager ];
         
 	}
 
@@ -296,7 +291,10 @@ static NSUInteger globalOrderOfArrival = 1;
 {
     if (visible == _visible) return;
     
-    [self.responderManager markAsDirty];
+    /** mark responder manager as dirty
+     @since v2.5
+     */
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
     _visible = visible;
 }
 
@@ -384,7 +382,7 @@ static NSUInteger globalOrderOfArrival = 1;
     /** mark responder manager as dirty
      @since v2.5
      */
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 -(void) addChild: (CCNode*) child z:(NSInteger)z
@@ -473,7 +471,7 @@ static NSUInteger globalOrderOfArrival = 1;
         /** mark responder manager as dirty
          @since v2.5
          */
-        [self.responderManager markAsDirty];
+        [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	}
 
@@ -502,7 +500,7 @@ static NSUInteger globalOrderOfArrival = 1;
     /** mark responder manager as dirty
      @since v2.5
      */
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	[_children removeObject:child];
 }
@@ -572,7 +570,7 @@ static NSUInteger globalOrderOfArrival = 1;
         /** mark responder manager as dirty
          @since v2.5
          */
-        [self.responderManager markAsDirty];
+        [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
 	}
 }
@@ -987,46 +985,11 @@ static NSUInteger globalOrderOfArrival = 1;
     return(YES);
 }
 
--( void )buildResponderList
-{
-    // dont add invisible nodes
-    if (self.visible == NO) return;
-    
-    if (_children != nil)
-    {
-        // add children with zOrder < 0
-		int i = 0;
-		for(; i < _children.count; i++)
-        {
-			CCNode *child = [_children objectAtIndex:i];
-			if ([child zOrder] < 0)
-                [child buildResponderList];
-			else
-				break;
-		}
-
-        // add self
-        if (self.isUserInteractionEnabled != NO) [self.responderManager addResponder:self];
-        
-        // add children with zOrder >= 0
-		for(; i < _children.count; i++)
-        {
-			CCNode *child = [_children objectAtIndex:i];
-			[child buildResponderList];
-		}
-    }
-    else
-    {
-        // only add self
-        if (self.isUserInteractionEnabled != NO) [self.responderManager addResponder:self];
-    }
-}
-
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
     if (_userInteractionEnabled == userInteractionEnabled) return;
     _userInteractionEnabled = userInteractionEnabled;
-    [self.responderManager markAsDirty];
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
