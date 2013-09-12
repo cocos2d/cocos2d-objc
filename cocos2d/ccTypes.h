@@ -508,6 +508,31 @@ typedef struct _CCContentSizeType
     CCContentSizeUnit widthUnit;
     CCContentSizeUnit heightUnit;
 } CCContentSizeType;
+
+//! helper that creates a CCPositionType type
+static inline CCPositionType CCPositionTypeMake(CCPositionUnit xUnit, CCPositionUnit yUnit, CCPositionReferenceCorner corner)
+{
+    CCPositionType pt;
+    pt.xUnit = xUnit;
+    pt.yUnit = yUnit;
+    pt.corner = corner;
+    return pt;
+}
+
+//! helper that creates a CCContentSizeType type
+static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUnit, CCContentSizeUnit heightUnit)
+{
+    CCContentSizeType cst;
+    cst.widthUnit = widthUnit;
+    cst.heightUnit = heightUnit;
+    return cst;
+}
+
+#define kCCPositionTypePoints CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft)
+
+#define kCCPositionTypeScaled CCPositionTypeMake(kCCPositionUnitScaled, kCCPositionUnitScaled, kCCPositionReferenceCornerBottomLeft)
+
+#define kCCPositionTypeNormalized CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft)
     
 #ifdef __cplusplus
 }
