@@ -36,18 +36,19 @@
 
 // ---------------------------------------------------------------------
 
-@interface CCSprite9Slice : CCSprite {
+@interface CCSprite9Slice : CCSprite
+{
     
 }
 
 // ---------------------------------------------------------------------
 
-@property ( nonatomic, assign ) float margin;                           // normalized unstretched margin
+@property (nonatomic, assign) float margin;                           // normalized unstretched margin
 
-@property ( nonatomic, assign ) float marginLeft;
-@property ( nonatomic, assign ) float marginRight;
-@property ( nonatomic, assign ) float marginTop;
-@property ( nonatomic, assign ) float marginBottom;
+@property (nonatomic, assign) float marginLeft;
+@property (nonatomic, assign) float marginRight;
+@property (nonatomic, assign) float marginTop;
+@property (nonatomic, assign) float marginBottom;
 
 // ---------------------------------------------------------------------
 
