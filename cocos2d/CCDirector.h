@@ -215,6 +215,11 @@ and when to execute the Scenes.
  */
 @property (nonatomic,readwrite,strong) CCActionManager *actionManager;
 
+/** Position scaling factor, default is 2 for tablets and 1 for phones. Positions and content sizes are scale by this factor if the position type is set to scale.
+ @since v2.5
+ */
+@property (nonatomic,readwrite,assign) float positionScaleFactor;
+
 /** returns a shared instance of the director */
 +(CCDirector*)sharedDirector;
 
