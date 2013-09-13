@@ -994,18 +994,18 @@ static NSUInteger globalOrderOfArrival = 1;
     else if (corner == kCCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
-        y = self.contentSizeInPoints.height - y;
+        y = _parent.contentSizeInPoints.height - y;
     }
     else if (corner == kCCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
-        x = self.contentSizeInPoints.width - x;
-        y = self.contentSizeInPoints.height - y;
+        x = _parent.contentSizeInPoints.width - x;
+        y = _parent.contentSizeInPoints.height - y;
     }
     else if (corner == kCCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
-        x = self.contentSizeInPoints.width - x;
+        x = _parent.contentSizeInPoints.width - x;
     }
     
     positionInPoints.x = x;
@@ -1032,18 +1032,18 @@ static NSUInteger globalOrderOfArrival = 1;
     else if (corner == kCCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
-        y = self.contentSizeInPoints.height - y;
+        y = _parent.contentSizeInPoints.height - y;
     }
     else if (corner == kCCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
-        x = self.contentSizeInPoints.width - x;
-        y = self.contentSizeInPoints.height - y;
+        x = _parent.contentSizeInPoints.width - x;
+        y = _parent.contentSizeInPoints.height - y;
     }
     else if (corner == kCCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
-        x = self.contentSizeInPoints.width - x;
+        x = _parent.contentSizeInPoints.width - x;
     }
     
     // Convert position from points
@@ -1072,6 +1072,11 @@ static NSUInteger globalOrderOfArrival = 1;
     }
     
     return position;
+}
+
+- (CGPoint) positionInPoints
+{
+    return [self convertPositionToPoints:_position];
 }
 
 - (CGAffineTransform)nodeToParentTransform
