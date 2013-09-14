@@ -232,18 +232,6 @@
 	return [self initWithColor:color width:s.width height:s.height];
 }
 
-
-// override contentSize
--(void) setContentSize: (CGSize) size
-{
-	_squareVertices[1].x = size.width;
-	_squareVertices[2].y = size.height;
-	_squareVertices[3].x = size.width;
-	_squareVertices[3].y = size.height;
-
-	[super setContentSize:size];
-}
-
 - (void) changeWidth: (GLfloat) w height:(GLfloat) h
 {
 	[self setContentSize:CGSizeMake(w, h)];
@@ -272,6 +260,13 @@
 
 - (void) draw
 {
+    CGSize size = self.contentSizeInPoints;
+    
+    _squareVertices[1].x = size.width;
+	_squareVertices[2].y = size.height;
+	_squareVertices[3].x = size.width;
+	_squareVertices[3].y = size.height;
+    
 	CC_NODE_DRAW_SETUP();
 
 	ccGLEnableVertexAttribs( kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color );

@@ -533,6 +533,11 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
 #define kCCPositionTypeScaled CCPositionTypeMake(kCCPositionUnitScaled, kCCPositionUnitScaled, kCCPositionReferenceCornerBottomLeft)
 
 #define kCCPositionTypeNormalized CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft)
+
+
+#define kCCContentSizeTypePoints CCContentSizeTypeMake(kCCContentSizeUnitPoints, kCCContentSizeUnitPoints)
+#define kCCContentSizeTypeScaled CCContentSizeTypeMake(kCCContentSizeUnitScaled, kCCContentSizeUnitScaled)
+#define kCCContentSizeTypeNormalized CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitNormalized)
     
 #ifdef __cplusplus
 }
