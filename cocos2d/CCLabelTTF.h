@@ -67,6 +67,8 @@
 /** Dimensions of the label in Points */
 @property (nonatomic,assign) CGSize dimensions;
 
+@property (nonatomic,assign) CCContentSizeType dimensionsType;
+
 
 #pragma mark Alignment
 
@@ -82,8 +84,11 @@
 /** The color of a text shadow. If the color is transparent, no shadow will be used. */
 @property (nonatomic,assign) ccColor4B shadowColor;
 
-/** The offset of the shadow (in points), default is (0,0). */
+/** The offset of the shadow (in the type specified by shadowOffsetType), default is (0,0). */
 @property (nonatomic,assign) CGPoint shadowOffset;
+
+
+@property (nonatomic,assign) CCPositionType shadowOffsetType;
 
 /** The blur radius of the shadow, default is 0. */
 @property (nonatomic,assign) float shadowBlurRadius;

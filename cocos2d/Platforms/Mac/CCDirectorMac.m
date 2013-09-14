@@ -86,6 +86,7 @@
 		_windowGLView = nil;
 		_winOffset = CGPointZero;
 
+        self.positionScaleFactor = 1;
 	}
 
 	return self;
