@@ -405,13 +405,14 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGSize) contentSizeInPoints
 {
-    return [self convertContentSizeToPoints:_contentSize];
+    return [self convertContentSizeToPoints:self.contentSize];
 }
 
 - (CGRect) boundingBox
 {
-	CGRect rect = CGRectMake(0, 0, _contentSize.width, _contentSize.height);
-	return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
+    CGSize contentSize = self.contentSizeInPoints;
+    CGRect rect = CGRectMake(0, 0, contentSize.width, contentSize.height);
+    return CGRectApplyAffineTransform(rect, [self nodeToParentTransform]);
 }
 
 -(void) setVertexZ:(float)vertexZ
