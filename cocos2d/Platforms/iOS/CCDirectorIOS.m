@@ -113,6 +113,15 @@ CGFloat	__ccContentScaleFactor = 1;
 		
 		// Apparently it comes with a default view, and we don't want it
 //		[self setView:nil];
+        
+        if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+        {
+            self.positionScaleFactor = 2;
+        }
+        else
+        {
+            self.positionScaleFactor = 1;
+        }
 	}
 
 	return self;
