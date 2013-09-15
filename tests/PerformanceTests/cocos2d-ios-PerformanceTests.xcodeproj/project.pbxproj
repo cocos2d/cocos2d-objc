@@ -410,6 +410,20 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		E61CF08717E65DD600BDD9F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E61CF03C17E656BA00BDD9F5;
+			remoteInfo = libpng;
+		};
+		E61CF08917E65DD600BDD9F5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A0EC8C99169CE58A0052B666 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E61CF04917E656BA00BDD9F5;
+			remoteInfo = libpngTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -908,6 +922,8 @@
 				A0EC8D1E169CE58E0052B666 /* libcocos2d.a */,
 				A0EC8D24169CE58E0052B666 /* libcocos2d-documentation.a */,
 				A0EC8D2C169CE58E0052B666 /* libkazmath.a */,
+				E61CF08817E65DD600BDD9F5 /* liblibpng.a */,
+				E61CF08A17E65DD600BDD9F5 /* libpngTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1080,6 +1096,20 @@
 			fileType = archive.ar;
 			path = libkazmath.a;
 			remoteRef = A0EC8D2B169CE58E0052B666 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61CF08817E65DD600BDD9F5 /* liblibpng.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = liblibpng.a;
+			remoteRef = E61CF08717E65DD600BDD9F5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E61CF08A17E65DD600BDD9F5 /* libpngTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = libpngTests.xctest;
+			remoteRef = E61CF08917E65DD600BDD9F5 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -1710,7 +1740,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include cocos2d/include";
 			};
 			name = Debug;
 		};
@@ -1736,7 +1766,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include cocos2d/include";
 			};
 			name = Release;
 		};

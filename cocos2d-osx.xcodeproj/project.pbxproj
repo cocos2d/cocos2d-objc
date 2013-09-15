@@ -2094,6 +2094,14 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-pedantic",
+					"-Wno-documentation",
+					"-Wno-objc-interface-ivars",
+					"-Wno-direct-ivar-access",
+					"-Wno-vla",
+				);
 				PRODUCT_NAME = cocos2d;
 			};
 			name = Debug;
@@ -2107,6 +2115,14 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				OTHER_CFLAGS = (
+					"-Wno-objc-missing-property-synthesis",
+					"-Wno-pedantic",
+					"-Wno-documentation",
+					"-Wno-objc-interface-ivars",
+					"-Wno-direct-ivar-access",
+					"-Wno-vla",
+				);
 				PRODUCT_NAME = cocos2d;
 				ZERO_LINK = NO;
 			};
