@@ -80,7 +80,7 @@
 @synthesize endSize = _endSize, endSizeVar = _endSizeVar;
 @synthesize opacityModifyRGB = _opacityModifyRGB;
 @synthesize blendFunc = _blendFunc;
-@synthesize positionType = _positionType;
+@synthesize particlePositionType = _particlePositionType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize emitterMode = _emitterMode;
 @synthesize atlasIndex = _atlasIndex;
@@ -316,7 +316,7 @@
 		_blendFunc = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 
 		// default movement type;
-		_positionType = kCCPositionTypeFree;
+		_particlePositionType = kCCParticlePositionTypeFree;
 
 		// by default be in mode A:
 		_emitterMode = kCCParticleModeGravity;
@@ -398,10 +398,10 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 	// position
-	if( _positionType == kCCPositionTypeFree )
+	if( _particlePositionType == kCCParticlePositionTypeFree )
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 
-	else if( _positionType == kCCPositionTypeRelative )
+	else if( _particlePositionType == kCCParticlePositionTypeRelative )
 		particle->startPos = _position;
 
 
@@ -504,10 +504,10 @@
 	_particleIdx = 0;
 
 	CGPoint currentPosition = CGPointZero;
-	if( _positionType == kCCPositionTypeFree )
+	if( _particlePositionType == kCCParticlePositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
 
-	else if( _positionType == kCCPositionTypeRelative )
+	else if( _particlePositionType == kCCParticlePositionTypeRelative )
 		currentPosition = _position;
 
 	if (_visible)
@@ -576,7 +576,7 @@
 
 				CGPoint	newPos;
 
-				if( _positionType == kCCPositionTypeFree || _positionType == kCCPositionTypeRelative )
+				if( _particlePositionType == kCCParticlePositionTypeFree || _particlePositionType == kCCParticlePositionTypeRelative )
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
 					newPos = ccpSub(p->pos, diff);
