@@ -342,8 +342,12 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 			info = kCGImageAlphaOnly;
 			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, (CGBitmapInfo)info);
 			break;
-		default:
+		case kCCTexture2DPixelFormat_AI88:
+        case kCCTexture2DPixelFormat_I8:
+        case kCCTexture2DPixelFormat_PVRTC2:
+        case kCCTexture2DPixelFormat_PVRTC4:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
+            break;
 	}
 
 
