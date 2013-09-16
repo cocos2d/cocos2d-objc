@@ -32,7 +32,7 @@ typedef void (^BlockWithParam)(id param);
 
 @implementation NSThread (sendBlockToBackground)
 
-- (void) performBlock: (void (^)(void))block;
+- (void) performBlock: (void (^)(void))block
 {
 	return [self performBlock:block waitUntilDone:NO];
 }
@@ -57,7 +57,7 @@ typedef void (^BlockWithParam)(id param);
 			waitUntilDone:wait];	
 }
 
-- (void) executeBlock: (void (^)(void))block;
+- (void) executeBlock: (void (^)(void))block
 {
 	block();
 }

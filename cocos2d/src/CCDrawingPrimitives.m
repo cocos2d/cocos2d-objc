@@ -120,18 +120,26 @@ void ccDrawPoints( const CGPoint *points, NSUInteger numberOfPoints )
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
 	ccVertex2F newPoints[numberOfPoints];
 
+    //TODO: Fix -Wunreachable-code
 	// iPhone and 32-bit machines optimization
+    
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wunreachable-code"
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
+    {
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, points);
-
+    }
 	else
     {
 		// Mac on 64-bit
-		for( NSUInteger i=0; i<numberOfPoints;i++)
+		for( NSUInteger i = 0; i<numberOfPoints; i++)
+        {
 			newPoints[i] = (ccVertex2F) { points[i].x, points[i].y };
+        }
 
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoints);
 	}
+#pragma clang diagnostic pop COCOS2D
 
     glDrawArrays(GL_POINTS, 0, (GLsizei) numberOfPoints);
 	
@@ -192,6 +200,8 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
 	ccVertex2F newPoli[numberOfPoints];
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wunreachable-code"
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
@@ -204,11 +214,16 @@ void ccDrawPoly( const CGPoint *poli, NSUInteger numberOfPoints, BOOL closePolyg
 
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
 	}
+#pragma clang diagnostic pop COCOS2D
 
 	if( closePolygon )
+    {
 		glDrawArrays(GL_LINE_LOOP, 0, (GLsizei) numberOfPoints);
+    }
 	else
+    {
 		glDrawArrays(GL_LINE_STRIP, 0, (GLsizei) numberOfPoints);
+    }
 	
 	CC_INCREMENT_GL_DRAWS(1);
 }
@@ -226,6 +241,8 @@ void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F 
 	// XXX: Mac OpenGL error. arrays can't go out of scope before draw is executed
 	ccVertex2F newPoli[numberOfPoints];
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wunreachable-code"
 	// iPhone and 32-bit machines optimization
 	if( sizeof(CGPoint) == sizeof(ccVertex2F) )
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, poli);
@@ -238,7 +255,8 @@ void ccDrawSolidPoly( const CGPoint *poli, NSUInteger numberOfPoints, ccColor4F 
 		
 		glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, newPoli);
 	}    
-    
+#pragma clang diagnostic pop COCOS2D
+
 	glDrawArrays(GL_TRIANGLE_FAN, 0, (GLsizei) numberOfPoints);
 }
 

@@ -570,6 +570,8 @@ GLToClipTransform(kmMat4 *transformOut)
     _isAnimating = NO;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 // Overriden in order to use a more stable delta time
 -(void) calculateDeltaTime
 {
@@ -594,6 +596,7 @@ GLToClipTransform(kmMat4 *transformOut)
 		_dt = 1/60.0f;
 #endif
 }
+#pragma clang diagnostic pop COCOS2D
 
 
 #pragma mark Director Thread

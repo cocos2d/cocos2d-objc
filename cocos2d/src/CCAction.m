@@ -264,6 +264,8 @@
 	return self;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(id) initWithTarget:(CCNode *)fNode worldBoundary:(CGRect)rect
 {
 	if( (self=[super init]) ) {
@@ -300,6 +302,7 @@
 
 	return self;
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(id) copyWithZone: (NSZone*) zone
 {

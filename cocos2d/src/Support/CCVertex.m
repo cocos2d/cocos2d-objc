@@ -26,6 +26,9 @@
 #import "CGPointExtension.h"
 #import "ccMacros.h"
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
+
 void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints)
 {
     nuPoints += offset;
@@ -132,3 +135,5 @@ BOOL ccVertexLineIntersect(float Ax, float Ay,
     // Success.
     return YES;
 }
+
+#pragma clang diagnostic pop COCOS2D

@@ -262,9 +262,9 @@ typedef struct
 
 	_tilesCount = _gridSize.width * _gridSize.height;
 	_tilesOrder = (NSUInteger*)malloc(_tilesCount*sizeof(NSUInteger));
-	int i, j;
+	NSUInteger i, j;
 
-	for( i = 0; i < _tilesCount; i++ )
+	for(i = 0; i < _tilesCount; i++ )
 		_tilesOrder[i] = i;
 
 	[self shuffle:_tilesOrder count:_tilesCount];

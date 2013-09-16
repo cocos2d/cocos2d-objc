@@ -62,23 +62,27 @@
  */
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{    
-    _responderManager.eventProcessed = NO;
+{
+    CCResponderManager *strongResponderManager = _responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = _responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = _responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = _responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 // -----------------------------------------------------------------

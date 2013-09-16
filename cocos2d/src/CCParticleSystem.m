@@ -80,7 +80,7 @@
 @synthesize endSize = _endSize, endSizeVar = _endSizeVar;
 @synthesize opacityModifyRGB = _opacityModifyRGB;
 @synthesize blendFunc = _blendFunc;
-@synthesize positionType = _positionType;
+@synthesize positionMovementType = _positionMovementType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
 @synthesize emitterMode = _emitterMode;
 @synthesize atlasIndex = _atlasIndex;
@@ -303,7 +303,7 @@
 
 		if (_batchNode)
 		{
-			for (int i = 0; i < _totalParticles; i++)
+			for (NSUInteger i = 0; i < _totalParticles; i++)
 			{
 				_particles[i].atlasIndex=i;
 			}
@@ -316,7 +316,7 @@
 		_blendFunc = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 
 		// default movement type;
-		_positionType = kCCPositionTypeFree;
+		_positionMovementType = kCCPositionTypeFree;
 
 		// by default be in mode A:
 		_emitterMode = kCCParticleModeGravity;
@@ -400,10 +400,10 @@
 	particle->deltaRotation = (endA - startA) / particle->timeToLive;
 
 	// position
-	if( _positionType == kCCPositionTypeFree )
+	if( _positionMovementType == kCCPositionTypeFree )
 		particle->startPos = [self convertToWorldSpace:CGPointZero];
 
-	else if( _positionType == kCCPositionTypeRelative )
+	else if( _positionMovementType == kCCPositionTypeRelative )
 		particle->startPos = _position;
 
 
@@ -509,10 +509,10 @@
 	_particleIdx = 0;
 
 	CGPoint currentPosition = CGPointZero;
-	if( _positionType == kCCPositionTypeFree )
+	if( _positionMovementType == kCCPositionTypeFree )
 		currentPosition = [self convertToWorldSpace:CGPointZero];
 
-	else if( _positionType == kCCPositionTypeRelative )
+	else if( _positionMovementType == kCCPositionTypeRelative )
 		currentPosition = _position;
 
 	if (_visible)
@@ -581,7 +581,7 @@
 
 				CGPoint	newPos;
 
-				if( _positionType == kCCPositionTypeFree || _positionType == kCCPositionTypeRelative )
+				if( _positionMovementType == kCCPositionTypeFree || _positionMovementType == kCCPositionTypeRelative )
 				{
 					CGPoint diff = ccpSub( currentPosition, p->startPos );
 					newPos = ccpSub(p->pos, diff);

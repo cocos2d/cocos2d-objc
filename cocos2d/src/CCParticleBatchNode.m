@@ -47,7 +47,7 @@
 
 #import "kazmath/GL/matrix.h"
 
-#define kCCParticleDefaultCapacity 500
+#define kCCParticleDefaultCapacity (500)
 
 @interface CCNode()
 -(void) _setZOrder:(NSInteger)z;
@@ -97,7 +97,7 @@
  */
 -(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
 {
-	if (self = [super init])
+	if ((self = [super init]))
 	{
 		_textureAtlas = [[CCTextureAtlas alloc] initWithTexture:tex capacity:capacity];
 
@@ -162,8 +162,10 @@
 }
 
 // override addChild:
--(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCNode*)childNode z:(NSInteger)z tag:(NSInteger) aTag
 {
+    CCParticleSystem *child = (CCParticleSystem*)childNode;
+    
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCParticleSystem class]], @"CCParticleBatchNode only supports CCQuadParticleSystems as children");
 	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCParticleSystem is not using the same texture id");
@@ -221,8 +223,10 @@
 }
 
 // Reorder will be done in this function, no "lazy" reorder to particles
--(void) reorderChild:(CCParticleSystem*)child z:(NSInteger)z
+-(void) reorderChild:(CCNode*)childNode z:(NSInteger)z
 {
+    CCParticleSystem *child = (CCParticleSystem *)childNode;
+    NSAssert([child isKindOfClass:[CCParticleSystem class]], @"childNode must be a CCParticleNode.");
 	NSAssert( child != nil, @"Child must be non-nil");
 	NSAssert( [_children containsObject:child], @"Child doesn't belong to batch" );
 
@@ -323,11 +327,16 @@
 }
 
 // override removeChild:
--(void)removeChild: (CCParticleSystem*) child cleanup:(BOOL)doCleanup
+-(void)removeChild: (CCNode*) childNode cleanup:(BOOL)doCleanup
 {
+    CCParticleSystem *child = (CCParticleSystem *)childNode;
+    NSAssert([child isKindOfClass:[CCParticleSystem class]], @"childNode must be a CCParticleNode.");
+    
 	// explicit nil handling
 	if (child == nil)
+    {
 		return;
+    }
 
 	NSAssert([_children containsObject:child], @"CCParticleBatchNode doesn't contain the sprite. Can't remove it");
 
@@ -401,8 +410,9 @@
 #pragma mark CCParticleBatchNode - add / remove / reorder helper methods
 
 // add child helper
--(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index
+-(void) insertChild:(CCNode *)childPSystem inAtlasAtIndex:(NSUInteger)index
 {
+    CCParticleSystem *pSystem = (CCParticleSystem*)childPSystem;
 	pSystem.atlasIndex = index;
 
 	if(_textureAtlas.totalQuads + pSystem.totalParticles > _textureAtlas.capacity)

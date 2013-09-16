@@ -281,7 +281,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	BOOL _opacityModifyRGB;
 
 	// movment type: free or grouped
-	tCCPositionType	_positionType;
+	tCCPositionType	_positionMovementType;
 
 	// Whether or not the node will be auto-removed when there are not particles
 	BOOL	_autoRemoveOnFinish;
@@ -395,7 +395,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** particles movement type: Free or Grouped
  @since v0.8
  */
-@property (nonatomic,readwrite) tCCPositionType positionType;
+@property (nonatomic,readwrite) tCCPositionType positionMovementType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8

@@ -236,12 +236,12 @@ Class restartAction()
 
 -(void) toggleCallback: (id) sender
 {
-	if( emitter_.positionType == kCCPositionTypeGrouped )
-		emitter_.positionType = kCCPositionTypeFree;
-	else if( emitter_.positionType == kCCPositionTypeFree )
-		emitter_.positionType = kCCPositionTypeRelative;
-	else if( emitter_.positionType == kCCPositionTypeRelative )
-		emitter_.positionType = kCCPositionTypeGrouped;
+	if( emitter_.positionMovementType == kCCPositionTypeGrouped )
+		emitter_.positionMovementType = kCCPositionTypeFree;
+	else if( emitter_.positionMovementType == kCCPositionTypeFree )
+		emitter_.positionMovementType = kCCPositionTypeRelative;
+	else if( emitter_.positionMovementType == kCCPositionTypeRelative )
+		emitter_.positionMovementType = kCCPositionTypeGrouped;
 }
 
 -(void) restartCallback: (id) sender

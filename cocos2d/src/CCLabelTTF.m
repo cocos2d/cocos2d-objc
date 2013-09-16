@@ -44,6 +44,8 @@
 
 static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 
 @implementation CCTexture2D (CCLabelTTF)
 
@@ -1103,5 +1105,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
     }
 }
+
+#pragma clang diagnostic pop COCOS2D
 
 @end

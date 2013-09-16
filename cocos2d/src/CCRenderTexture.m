@@ -34,7 +34,7 @@
 #import "Support/CGPointExtension.h"
 #import "CCGrid.h"
 
-#if __CC_PLATFORM_MAC
+#if defined (__CC_PLATFORM_MAC)
 #import <ApplicationServices/ApplicationServices.h>
 #endif
 
@@ -208,8 +208,8 @@
 	
 	// save clear color
 	GLfloat	clearColor[4];
-	GLfloat depthClearValue;
-	int stencilClearValue;
+	GLfloat depthClearValue = 0.0;
+	int stencilClearValue = 0;
 	
 	if(flags & GL_COLOR_BUFFER_BIT) {
 		glGetFloatv(GL_COLOR_CLEAR_VALUE,clearColor);
@@ -337,8 +337,8 @@
 		if (_clearFlags) {
 			
 			GLfloat oldClearColor[4];
-			GLfloat oldDepthClearValue;
-			GLint oldStencilClearValue;
+			GLfloat oldDepthClearValue = 0.0;
+			GLint oldStencilClearValue = 0;
 			
 			// backup and set
 			if( _clearFlags & GL_COLOR_BUFFER_BIT ) {
@@ -419,7 +419,7 @@
 	
 	// make data provider with data.
 	
-	CGBitmapInfo bitmapInfo	= kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault;
+	CGBitmapInfo bitmapInfo	= (CGBitmapInfo)(kCGImageAlphaPremultipliedLast | kCGBitmapByteOrderDefault);
 	CGDataProviderRef provider = CGDataProviderCreateWithData(NULL, buffer, myDataLength, NULL);
 	CGColorSpaceRef colorSpaceRef = CGColorSpaceCreateDeviceRGB();
 	CGImageRef iref	= CGImageCreate(tx, ty,

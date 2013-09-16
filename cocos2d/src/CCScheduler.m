@@ -111,6 +111,8 @@ typedef struct _hashSelectorEntry
 	// override me
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) update: (ccTime) dt
 {
 	if( _elapsed == - 1)
@@ -160,6 +162,7 @@ typedef struct _hashSelectorEntry
 		}
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 @end
 
 #pragma mark CCTimerTargetSelector

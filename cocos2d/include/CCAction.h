@@ -49,13 +49,13 @@ enum {
  When the 'stop' method is called, target will be set to nil.
  The target is 'assigned', it is not 'retained'.
  */
-@property (nonatomic,readonly,unsafe_unretained) id target;
+@property (nonatomic,readonly) id target;
 
 /** The original target, since target can be nil.
  Is the target that were used to run the action. Unless you are doing something complex, like CCActionManager, you should NOT call this method.
  @since v0.8.2
 */
-@property (nonatomic,readonly,unsafe_unretained) id originalTarget;
+@property (nonatomic,readonly) id originalTarget;
 
 
 /** The action tag. An identifier of the action */

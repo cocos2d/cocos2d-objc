@@ -47,7 +47,7 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
-const NSInteger kSceneFade = 0xFADEFADE;
+static const NSInteger kSceneFade = 0xFADEFADE;
 
 
 @interface CCTransitionScene (Private)

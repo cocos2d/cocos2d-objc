@@ -150,7 +150,7 @@
         // Init particles
         if (_batchNode)
 		{
-			for (int i = 0; i < _totalParticles; i++)
+			for (NSUInteger i = 0; i < _totalParticles; i++)
 			{
 				_particles[i].atlasIndex=i;
 			}
@@ -178,15 +178,15 @@
 	// https://devforums.apple.com/thread/145566?tstart=0
 	
 	void (^createVAO)(void) = ^ {
-		glGenVertexArrays(1, &_VAOname);
-		ccGLBindVAO(_VAOname);
+		glGenVertexArrays(1, &self->_VAOname);
+		ccGLBindVAO(self->_VAOname);
 
-	#define kQuadSize sizeof(_quads[0].bl)
+	#define kQuadSize sizeof(self->_quads[0].bl)
 
-		glGenBuffers(2, &_buffersVBO[0]);
+		glGenBuffers(2, &self->_buffersVBO[0]);
 
-		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _totalParticles, _quads, GL_DYNAMIC_DRAW);
+		glBindBuffer(GL_ARRAY_BUFFER, self->_buffersVBO[0]);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(self->_quads[0]) * self->_totalParticles, self->_quads, GL_DYNAMIC_DRAW);
 
 		// vertices
 		glEnableVertexAttribArray(kCCVertexAttrib_Position);
@@ -200,8 +200,8 @@
 		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _totalParticles * 6, _indices, GL_STATIC_DRAW);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self->_buffersVBO[1]);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(self->_indices[0]) * self->_totalParticles * 6, self->_indices, GL_STATIC_DRAW);
 
 		// Must unbind the VAO before changing the element buffer.
 		ccGLBindVAO(0);
@@ -414,13 +414,13 @@
 	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0] );
 
 	// Option 1: Sub Data
-#if __CC_PLATFORM_MAC
+#if defined (__CC_PLATFORM_MAC)
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(_quads[0])*_particleCount, _quads);
 
 	// Option 2: Data
 //	glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _particleCount, _quads, GL_STREAM_DRAW);
 
-#elif __CC_PLATFORM_IOS
+#elif defined (__CC_PLATFORM_IOS)
 	// Option 3: Orphaning + glMapBuffer
 	glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0])*_totalParticles, nil, GL_STREAM_DRAW);
 	void *buf = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);

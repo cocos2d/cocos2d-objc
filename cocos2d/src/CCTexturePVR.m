@@ -201,7 +201,7 @@ static struct _pixel_formathash v2_pixel_formathash[] = {
 #define PVR2_MAX_TABLE_ELEMENTS (sizeof(v2_pixel_formathash) / sizeof(v2_pixel_formathash[0]))
 
 // v3
-struct _pixel_formathash v3_pixel_formathash[] = {
+static struct _pixel_formathash v3_pixel_formathash[] = {
 	
 	{kPVR3TexturePixelFormat_BGRA_8888,	&PVRTableFormats[0] },
 	{kPVR3TexturePixelFormat_RGBA_8888,	&PVRTableFormats[1] },
@@ -223,6 +223,8 @@ struct _pixel_formathash v3_pixel_formathash[] = {
 
 #define PVR3_MAX_TABLE_ELEMENTS (sizeof(v3_pixel_formathash) / sizeof(v3_pixel_formathash[0]))
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wpacked"
 typedef struct _PVRTexHeader
 {
 	uint32_t headerLength;
@@ -238,7 +240,7 @@ typedef struct _PVRTexHeader
 	uint32_t bitmaskAlpha;
 	uint32_t pvrTag;
 	uint32_t numSurfs;
-} ccPVRv2TexHeader;
+} __attribute__((packed)) ccPVRv2TexHeader;
 
 typedef struct {
 	uint32_t version;
@@ -254,6 +256,8 @@ typedef struct {
 	uint32_t numberOfMipmaps;
 	uint32_t metadataLength;
 } __attribute__((packed)) ccPVRv3TexHeader ;
+
+#pragma clang diagnostic pop COCOS2D
 
 @implementation CCTexturePVR
 @synthesize name = _name;
@@ -273,6 +277,7 @@ typedef struct {
 {
 	BOOL success = NO;
 	ccPVRv2TexHeader *header = NULL;
+    
 	uint32_t flags, pvrTag;
 	uint32_t dataLength = 0, dataOffset = 0, dataSize = 0;
 	uint32_t blockSize = 0, widthBlocks = 0, heightBlocks = 0;
@@ -280,6 +285,8 @@ typedef struct {
 	uint8_t *bytes = NULL;
 	uint32_t formatFlags;
 
+    header = malloc(len * sizeof(ccPVRv2TexHeader));
+    memcpy(header, data, len * sizeof(unsigned char));
 	header = (ccPVRv2TexHeader *)data;
 
 	pvrTag = CFSwapInt32LittleToHost(header->pvrTag);
@@ -404,7 +411,7 @@ typedef struct {
 	
 	BOOL infoValid = NO;
 	
-	for(int i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
+	for(unsigned long i = 0; i < PVR3_MAX_TABLE_ELEMENTS; i++) {
 		if( v3_pixel_formathash[i].pixelFormat == pixelFormat ) {
 			_pixelFormatInfo = v3_pixel_formathash[i].pixelFormatInfo;
 			_hasAlpha = _pixelFormatInfo->alpha;
@@ -443,7 +450,7 @@ typedef struct {
 	_numberOfMipmaps = header->numberOfMipmaps;
 	NSAssert( _numberOfMipmaps < CC_PVRMIPMAP_MAX, @"TexturePVR: Maximum number of mimpaps reached. Increate the CC_PVRMIPMAP_MAX value");
 
-	for(int i = 0; i < _numberOfMipmaps; i++) {
+	for(NSUInteger i = 0; i < _numberOfMipmaps; i++) {
 		
 		switch(pixelFormat) {
 			case kPVR3TexturePixelFormat_PVRTC_2BPP_RGB :

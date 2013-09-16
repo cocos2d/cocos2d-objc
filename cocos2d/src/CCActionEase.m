@@ -245,7 +245,7 @@
 {
     NSAssert( action!=nil, @"Ease: arguments must be non-nil");
     
-    if (self = [super initWithAction: action]) {
+    if ((self = [super initWithAction: action])) {
 		_polynomialOrder = kDefaultPolynomial;
         _hasInflection = FALSE;
         _intersetValue = 1.78179743628068f;
