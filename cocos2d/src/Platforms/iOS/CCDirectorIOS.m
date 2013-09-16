@@ -234,9 +234,9 @@ CGFloat	__ccContentScaleFactor = 1;
 				[_delegate updateProjection];
 			break;
 
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
+		//default:
+		//	CCLOG(@"cocos2d: Director: unrecognized projection");
+		//	break;
 	}
 
 	_projection = projection;
@@ -391,7 +391,7 @@ GLToClipTransform(kmMat4 *transformOut)
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(CCGLView *)view
+-(void) setView:(UIView *)view
 {
 	if( view != __view) {
 		[super setView:view];
@@ -531,7 +531,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(_animationInterval * 60.0f);
+	int frameInterval = (int) (floor(_animationInterval * 60.0f));
 
 	CCLOG(@"cocos2d: animation started with frame interval: %.2f", 60.0f/frameInterval);
 

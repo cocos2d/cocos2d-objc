@@ -641,7 +641,9 @@ typedef struct _hashSelectorEntry
 		
 		// target#release should be the last one to prevent
 		// a possible double-free. eg: If the [target dealloc] might want to remove it itself from there
-#warning There may be a memory leak here (but cannot verify with instruments)!
+        
+        //TODO: There may be a memory leak here (but cannot verify with instruments)!
+//#warning There may be a memory leak here (but cannot verify with instruments)!
         //CFRelease(t);
 	}
 }

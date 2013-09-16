@@ -327,7 +327,7 @@ enum {
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
 	
 	column = 0; columnWidth = 0; columnRows = 0;
-	float x = -width / 2, y;
+	float x = -width / 2, y = 0.0;
 	
 	for (CCMenuItem* item in _children){
 		if(columnRows == 0) {

@@ -626,7 +626,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 
 +(NSUInteger) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format
 {
-	NSUInteger ret=0;
+	NSUInteger ret=UINT_MAX;
 	
 	switch (format) {
 		case kCCTexture2DPixelFormat_RGBA8888:
@@ -660,12 +660,17 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 		case kCCTexture2DPixelFormat_PVRTC2:
 			ret = 2;
 			break;
-		default:
-			ret = -1;
-			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
-			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
-			break;
+//		default:
+//			ret = -1;
+//			NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
+//			CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
+//			break;
 	}
+    if (ret == UINT_MAX)
+    {
+        NSAssert1(NO , @"bitsPerPixelForFormat: %ld, unrecognised pixel format", (long)format);
+        CCLOG(@"bitsPerPixelForFormat: %ld, cannot give useful result", (long)format);
+    }
 	return ret;
 }
 
