@@ -1,3 +1,4 @@
+
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
@@ -22,6 +23,8 @@
  * THE SOFTWARE.
  */
 
+#ifdef __CC_PLATFORM_IOS
+
 #import "cocos2d.h"
 #import <UIKit/UIKit.h>
 
@@ -30,3 +33,5 @@
 - (CGPoint) locationInNode:(CCNode*) node;
 - (CGPoint) locationInWorld;
 @end
+
+#endif

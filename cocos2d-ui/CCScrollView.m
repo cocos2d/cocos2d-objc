@@ -24,10 +24,20 @@
 
 #import "CCScrollView.h"
 #import "CCDirector.h"
-#import "UITouch+CC.h"
 #import "CGPointExtension.h"
+#import "CCActionInterval.h"
+#import "CCActionEase.h"
 
+#ifdef __CC_PLATFORM_IOS
+
+// Includes for iOS
+#import "UITouch+CC.h"
 #import <UIKit/UIGestureRecognizerSubclass.h>
+
+// Includes for Mac
+#elif defined(__CC_PLATFORM_MAC)
+
+#endif
 
 #pragma mark Constants
 
@@ -44,6 +54,8 @@
 #pragma mark -
 #pragma mark Helper classes
 
+
+#ifdef __CC_PLATFORM_IOS
 @interface CCTapDownGestureRecognizer : UIGestureRecognizer
 @end
 
@@ -67,7 +79,7 @@
     self.state = UIGestureRecognizerStateFailed;
 }
 @end
-
+#endif
 
 
 @interface CCMoveToX : CCActionInterval
@@ -168,12 +180,21 @@
     _verticalScrollEnabled = YES;
     _bounces = YES;
     
+#ifdef __CC_PLATFORM_IOS
+    
     // Create gesture recognizers
     _panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
     _tapRecognizer = [[CCTapDownGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     
     _panRecognizer.delegate = self;
     _tapRecognizer.delegate = self;
+    
+#elif defined(__CC_PLATFORM_MAC)
+    
+    // Use scroll wheel
+    self.userInteractionEnabled = YES;
+    
+#endif
     
     [self scheduleUpdate];
     
@@ -450,6 +471,8 @@
 
 #pragma mark Gesture recognizer
 
+#ifdef __CC_PLATFORM_IOS
+
 - (void)handlePan:(UIGestureRecognizer *)gestureRecognizer
 {
     CCDirector* dir = [CCDirector sharedDirector];
@@ -607,5 +630,14 @@
     
     view.gestureRecognizers = recognizers;
 }
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (void)scrollWheel:(NSEvent *)theEvent
+{
+    NSLog(@"Scroll wheel");
+}
+
+#endif
 
 @end

@@ -22,28 +22,19 @@
  * THE SOFTWARE.
  */
 
-#ifdef __CC_PLATFORM_IOS
+#import "ccMacros.h"
 
-#import "UITouch+CC.h"
+#ifdef __CC_PLATFORM_MAC
 
-@implementation UITouch (CC)
+#import <Cocoa/Cocoa.h>
 
-- (CGPoint) locationInNode:(CCNode*) node
-{
-    CCDirector* dir = [CCDirector sharedDirector];
-    
-    CGPoint touchLocation = [self locationInView: [self view]];
-	touchLocation = [dir convertToGL: touchLocation];
-    return [node convertToNodeSpace:touchLocation];
-}
+@class CCNode;
 
-- (CGPoint) locationInWorld
-{
-    CCDirector* dir = [CCDirector sharedDirector];
-    
-    CGPoint touchLocation = [self locationInView: [self view]];
-	return [dir convertToGL: touchLocation];
-}
+@interface NSEvent (CC)
+
+- (CGPoint) locationInNode:(CCNode*) node;
+
+- (CGPoint) locationInWorld;
 
 @end
 

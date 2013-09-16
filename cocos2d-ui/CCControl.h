@@ -61,9 +61,15 @@ typedef NSUInteger CCControlState;
 - (void) needsLayout;
 - (void) layout;
 
+#ifdef __CC_PLATFORM_IOS
 - (void) touchEntered:(UITouch*) touch withEvent:(UIEvent*)event;
 - (void) touchExited:(UITouch*) touch withEvent:(UIEvent*) event;
 - (void) touchUpInside:(UITouch*) touch withEvent:(UIEvent*) event;
 - (void) touchUpOutside:(UITouch*) touch withEvent:(UIEvent*) event;
-
+#elif defined (__CC_PLATFORM_MAC)
+- (void) mouseDownEntered:(NSEvent*) event;
+- (void) mouseDownExited:(NSEvent*) event;
+- (void) mouseUpInside:(NSEvent*) event;
+- (void) mouseUpOutside:(NSEvent*) event;
+#endif
 @end
