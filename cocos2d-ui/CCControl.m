@@ -23,8 +23,20 @@
  */
 
 #import "CCControl.h"
-#import "UITouch+CC.h"
 #import <objc/message.h>
+
+#ifdef __CC_PLATFORM_IOS
+
+// iOS headers
+#import "UITouch+CC.h"
+
+#elif defined (__CC_PLATFORM_MAC)
+
+// Mac headers
+#import "NSEvent+CC.h"
+
+#endif
+
 
 @implementation CCControl
 
@@ -59,6 +71,8 @@
 }
 
 #pragma mark Touch handling
+
+#ifdef __CC_PLATFORM_IOS
 
 - (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
@@ -133,6 +147,65 @@
 
 - (void) touchUpOutside:(UITouch*) touch withEvent:(UIEvent*) event
 {}
+
+#elif defined (__CC_PLATFORM_MAC)
+
+- (void) mouseDown:(NSEvent *)event
+{
+    _tracking = YES;
+    _touchInside = YES;
+    
+    [self mouseDownEntered:event];
+}
+
+- (void) mouseDragged:(NSEvent *)event
+{
+    if ([self hitTestWithWorldPos:[event locationInWorld]])
+    {
+        if (!_touchInside)
+        {
+            [self mouseDownEntered:event];
+            _touchInside = YES;
+        }
+    }
+    else
+    {
+        if (_touchInside)
+        {
+            [self mouseDownExited:event];
+            _touchInside = NO;
+        }
+    }
+}
+
+- (void) mouseUp:(NSEvent *)event
+{
+    if (_touchInside)
+    {
+        [self mouseUpInside:event];
+    }
+    else
+    {
+        [self mouseUpOutside:event];
+    }
+    
+    _touchInside = NO;
+    _tracking = NO;
+}
+
+- (void) mouseDownEntered:(NSEvent*) event
+{}
+
+- (void) mouseDownExited:(NSEvent*) event
+{}
+
+- (void) mouseUpInside:(NSEvent*) event
+{}
+
+- (void) mouseUpOutside:(NSEvent*) event
+{}
+
+#endif
 
 
 #pragma mark State properties

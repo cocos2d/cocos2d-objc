@@ -88,6 +88,8 @@
     self = [super init];
     if (!self) return NULL;
     
+    self.anchorPoint = ccp(0.5f, 0.5f);
+    
     if (!title) title = @"";
     
     // Setup holders for properties
@@ -169,6 +171,7 @@
     
     [super layout];
 }
+#ifdef __CC_PLATFORM_IOS
 
 - (void) touchEntered:(UITouch *)touch withEvent:(UIEvent *)event
 {
@@ -190,6 +193,31 @@
 {
     self.highlighted = NO;
 }
+
+#elif __CC_PLATFORM_MAC
+
+- (void) mouseDownEntered:(NSEvent *)event
+{
+    self.highlighted = YES;
+}
+
+- (void) mouseDownExited:(NSEvent *)event
+{
+    self.highlighted = NO;
+}
+
+- (void) mouseUpInside:(NSEvent *)event
+{
+    [self triggerAction];
+    self.highlighted = NO;
+}
+
+- (void) mouseUpOutside:(NSEvent *)event
+{
+    self.highlighted = NO;
+}
+
+#endif
 
 - (void) updatePropertiesForState:(NSUInteger)state
 {
