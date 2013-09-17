@@ -143,7 +143,7 @@ typedef enum ccTMXTileFlags_ {
 @property (nonatomic,readwrite,strong) NSString *sourceImage;
 @property (nonatomic,readwrite,assign) CGSize imageSize;
 @property (nonatomic,readwrite,assign) CGPoint tileOffset; //setter has a custom implementation
-@property (nonatomic,readonly,assign) CGPoint tileAnchorPoint; //set automatically when tileOffset changes
+@property (nonatomic,assign) CGPoint tileAnchorPoint; //set automatically when tileOffset changes
 
 -(CGRect) rectForGID:(unsigned int)gid;
 @end

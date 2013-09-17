@@ -35,6 +35,8 @@
 #pragma mark - iOS
 // -----------------------------------------------------------------
 
+@class CCNode;
+
 #import <UIKit/UIKit.h>
 
 #define RESPONDER UIResponder
@@ -79,40 +81,6 @@
 
 
 #endif
-
-// -----------------------------------------------------------------
-#pragma mark - Both
-// -----------------------------------------------------------------
-
-@class CCNode;
-
-// -----------------------------------------------------------------
-
-enum
-{
-    CCResponderManagerBufferSize        = 128,
-};
-
-// -----------------------------------------------------------------
-
-@interface CCResponderManager : RESPONDER
-
-// -----------------------------------------------------------------
-
-@property (nonatomic) BOOL eventProcessed;                        // event was processed
-
-// -----------------------------------------------------------------
-
-+ (id)responderManager;
-- (id)init;
-
-- (void)addResponder:(CCNode *)responder;
-- (void)removeAllResponders;
-
-// -----------------------------------------------------------------
-
-@end
-
 
 
 

@@ -550,9 +550,10 @@
 
 #pragma mark CCSprite - CCNode overrides
 
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCNode *)childNode z:(NSInteger)z tag:(NSInteger) aTag
 {
-	NSAssert( child != nil, @"Argument must be non-nil");
+	NSAssert( childNode != nil, @"Argument must be non-nil");
+    CCSprite *child = (CCSprite *) childNode;
 
 	if( _batchNode ) {
 		NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSprite only supports CCSprites as children when using CCSpriteBatchNode");
@@ -571,9 +572,11 @@
 	_hasChildren = YES;
 }
 
--(void) reorderChild:(CCSprite*)child z:(NSInteger)z
+-(void) reorderChild:(CCNode *)childNode z:(NSInteger)z
 {
-	NSAssert( child != nil, @"Child must be non-nil");
+	NSAssert( childNode != nil, @"Argument must be non-nil");
+    CCSprite *child = (CCSprite *) childNode;
+    
 	NSAssert( [_children containsObject:child], @"Child doesn't belong to Sprite" );
 
 	if( z == child.zOrder )
@@ -588,10 +591,15 @@
 	[super reorderChild:child z:z];
 }
 
--(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
+-(void)removeChild: (CCNode *)spriteNode cleanup:(BOOL)doCleanup
 {
+    NSAssert( spriteNode != nil, @"Argument must be non-nil");
+    CCSprite *sprite = (CCSprite *) spriteNode;
+    
 	if( _batchNode )
+    {
 		[_batchNode removeSpriteFromAtlas:sprite];
+    }
 
 	[super removeChild:sprite cleanup:doCleanup];
 
@@ -600,7 +608,8 @@
 
 -(void)removeAllChildrenWithCleanup:(BOOL)doCleanup
 {
-	if( _batchNode ) {
+	if( _batchNode )
+    {
         for (CCSprite *child in _children)
 			[_batchNode removeSpriteFromAtlas:child];
 	}

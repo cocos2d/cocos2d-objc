@@ -150,8 +150,10 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 			case kCCTexture2DPixelFormat_A8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
-			default:
-				[NSException raise:NSInternalInconsistencyException format:@""];
+			case kCCTexture2DPixelFormat_PVRTC4:
+            case kCCTexture2DPixelFormat_PVRTC2:
+            case kCCTexture2DPixelFormat_I8:
+                [NSException raise:NSInternalInconsistencyException format:@""];
 
 		}
 
@@ -716,12 +718,10 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 			
 		case kCCTexture2DPixelFormat_PVRTC2:
 			return  @"PVRTC2";
-
-		default:
-			NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)_format);
-			CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)_format);
-			break;
 	}
+    
+    NSAssert1(NO , @"stringForFormat: %ld, unrecognised pixel format", (long)_format);
+    CCLOG(@"stringForFormat: %ld, cannot give useful result", (long)_format);
 	
 	return  nil;
 }

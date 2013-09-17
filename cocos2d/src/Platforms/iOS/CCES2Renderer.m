@@ -79,7 +79,7 @@
 		{
 			GLint maxSamplesAllowed;
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
-			_samplesToUse = MIN(maxSamplesAllowed,requestedSamples);
+			_samplesToUse = MIN((unsigned int)maxSamplesAllowed,requestedSamples);
 			
 			/* Create the MSAA framebuffer (offscreen) */
 			glGenFramebuffers(1, &_msaaFramebuffer);
