@@ -22,8 +22,11 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
 #import "CCControl.h"
+
+@class CCSprite9Slice;
+@class CCLabelTTF;
+@class CCSpriteFrame;
 
 @interface CCButton : CCControl
 {

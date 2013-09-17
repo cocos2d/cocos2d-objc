@@ -54,6 +54,8 @@
 
 @property (nonatomic,strong) CCNode* contentNode;
 
+@property (nonatomic,assign) BOOL flipYCoordinates;
+
 @property (nonatomic,assign) BOOL horizontalScrollEnabled;
 @property (nonatomic,assign) BOOL verticalScrollEnabled;
 

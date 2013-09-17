@@ -24,6 +24,8 @@
 
 #import "CCButton.h"
 
+#import "cocos2d.h"
+
 @implementation CCButton
 
 - (id) init
