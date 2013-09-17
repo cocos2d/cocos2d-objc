@@ -7,7 +7,6 @@
 //
 
 #import "MainMenu.h"
-#import "CCButton.h"
 
 #define kCCTestMenuItemHeight 32
 
@@ -16,7 +15,24 @@
 - (NSArray*) testClassNames
 {
     return [NSArray arrayWithObjects:
-            @"TestButton",
+            @"TestButton0",
+            @"TestButton1",
+            @"TestButton2",
+            @"TestButton3",
+            @"TestButton4",
+            @"TestButton5",
+            @"TestButton6",
+            @"TestButton7",
+            @"TestButton8",
+            @"TestButton9",
+            @"TestButton10",
+            @"TestButton11",
+            @"TestButton12",
+            @"TestButton13",
+            @"TestButton14",
+            @"TestButton15",
+            @"TestButton16",
+            @"TestButton17",
             nil];
 }
 
@@ -49,22 +65,30 @@
     NSArray* testClassNames = [self testClassNames];
     
     // Create the content layer, make it fill the width of the scroll view and each menu item have a height of 32 px * positionScaleFactor
-    CCNode* contentLayer = [CCNode node];
-    contentLayer.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitScaled);
-    contentLayer.contentSize = CGSizeMake(1, testClassNames.count * kCCTestMenuItemHeight);
+    CCNode* contentNode = [CCNode node];
+    contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitScaled);
+    contentNode.contentSize = CGSizeMake(1, testClassNames.count * kCCTestMenuItemHeight);
     
-    CCButton* btn = [CCButton buttonWithTitle:@"Hello"];
-    btn.positionType = kCCPositionTypeNormalized;
-    btn.position = ccp(0.5f, 0.5f);
-    
-    [self addChild:btn];
-    
-    /*
     // Add buttons to the scroll view content view
+    int num = 0;
     for (NSString* testClassName in testClassNames)
     {
-        CCButton* 
-    }*/
+        CCButton* btn = [CCButton buttonWithTitle:testClassName fontName:@"Marker Felt" fontSize:24];
+        [contentNode addChild:btn];
+        btn.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitScaled, kCCPositionReferenceCornerTopLeft);
+        btn.position = ccp(0.5, kCCTestMenuItemHeight * 0.5f + kCCTestMenuItemHeight * num);
+        
+        num++;
+    }
+    
+    CCScrollView* scrollView = [[CCScrollView alloc] init];
+    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
+    scrollView.contentSize = CGSizeMake(1, 1);
+    scrollView.flipYCoordinates = YES;
+    scrollView.contentNode = contentNode;
+    scrollView.horizontalScrollEnabled = NO;
+    
+    [self addChild:scrollView];
     
     return self;
 }

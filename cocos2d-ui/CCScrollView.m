@@ -161,19 +161,23 @@
 
 #pragma mark Initializers
 
+- (id) init
+{
+    self = [self initWithContentNode:[CCNode node] contentSize:CGSizeMake(1, 1)];
+    self.contentSizeType = kCCContentSizeTypeNormalized;
+    return self;
+}
+
 - (id) initWithContentNode:(CCNode*)contentNode contentSize:(CGSize) contentSize
 {
     self = [super init];
     if (!self) return NULL;
     
+    _flipYCoordinates = YES;
+    
     // Setup content node
     self.contentSize = contentSize;
     self.contentNode = contentNode;
-    
-    if (contentNode)
-    {
-        [self addChild:contentNode];
-    }
     
     // Default properties
     _horizontalScrollEnabled = YES;
@@ -201,6 +205,39 @@
     return self;
 }
 
+#pragma mark Setting content node
+- (void) setContentNode:(CCNode *)contentNode
+{
+    if (_contentNode == contentNode) return;
+    
+    // Replace content node
+    if (_contentNode) [self removeChild:_contentNode];
+    _contentNode = contentNode;
+    if (contentNode)
+    {
+        [self addChild:contentNode];
+        
+        // Update coordinate flipping
+        self.flipYCoordinates = self.flipYCoordinates;
+    }
+}
+
+- (void) setFlipYCoordinates:(BOOL)flipYCoordinates
+{
+    if (flipYCoordinates)
+    {
+        _contentNode.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+        _contentNode.anchorPoint = ccp(0,1);
+    }
+    else
+    {
+        _contentNode.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+        _contentNode.anchorPoint = ccp(0,0);
+    }
+    
+    _flipYCoordinates = flipYCoordinates;
+}
+
 #pragma mark Min/Max size
 
 - (float) minScrollX
@@ -212,7 +249,7 @@
 {
     if (!_contentNode) return 0;
     
-    float maxScroll = _contentNode.contentSize.width - self.contentSize.width;
+    float maxScroll = _contentNode.contentSizeInPoints.width - self.contentSizeInPoints.width;
     if (maxScroll < 0) maxScroll = 0;
     
     return maxScroll;
@@ -227,7 +264,7 @@
 {
     if (!_contentNode) return 0;
     
-    float maxScroll = _contentNode.contentSize.height - self.contentSize.height;
+    float maxScroll = _contentNode.contentSizeInPoints.height - self.contentSizeInPoints.height;
     if (maxScroll < 0) maxScroll = 0;
     
     return maxScroll;
@@ -245,7 +282,7 @@
     NSAssert(horizontalPage >= 0 && horizontalPage < self.numHorizontalPages, @"Setting invalid horizontal page");
     
     CGPoint pos = self.scrollPosition;
-    pos.x = horizontalPage * _contentNode.contentSize.width;
+    pos.x = horizontalPage * _contentNode.contentSizeInPoints.width;
     
     [self setScrollPosition:pos animated:animated];
     _horizontalPage = horizontalPage;
@@ -261,7 +298,7 @@
     NSAssert(verticalPage >= 0 && verticalPage < self.numVerticalPages, @"Setting invalid vertical page");
     
     CGPoint pos = self.scrollPosition;
-    pos.y = verticalPage * _contentNode.contentSize.height;
+    pos.y = verticalPage * _contentNode.contentSizeInPoints.height;
     
     [self setScrollPosition:pos animated:animated];
     _verticalPage = verticalPage;
@@ -270,17 +307,17 @@
 - (int) numHorizontalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSize.width || !_contentNode.contentSize.width) return 0;
+    if (!self.contentSizeInPoints.width || !_contentNode.contentSizeInPoints.width) return 0;
     
-    return _contentNode.contentSize.width / self.contentSize.width;
+    return _contentNode.contentSizeInPoints.width / self.contentSizeInPoints.width;
 }
 
 - (int) numVerticalPages
 {
     if (!_pagingEnabled) return 0;
-    if (!self.contentSize.height || !_contentNode.contentSize.height) return 0;
+    if (!self.contentSizeInPoints.height || !_contentNode.contentSizeInPoints.height) return 0;
     
-    return _contentNode.contentSize.height / self.contentSize.height;
+    return _contentNode.contentSizeInPoints.height / self.contentSizeInPoints.height;
 }
 
 #pragma mark Panning and setting position
@@ -488,6 +525,7 @@
         _animatingY = NO;
         _rawTranslationStart = rawTranslation;
         _startScrollPos = self.scrollPosition;
+        
         _isPanning = YES;
         [_contentNode stopAllActions];
     }
@@ -499,6 +537,8 @@
         // Check if scroll directions has been disabled
         if (!_horizontalScrollEnabled) translation.x = 0;
         if (!_verticalScrollEnabled) translation.y = 0;
+        
+        if (_flipYCoordinates) translation.y = -translation.y;
         
         // Check bounds
         CGPoint newPos = ccpAdd(_startScrollPos, translation);
@@ -517,6 +557,7 @@
         velocityRaw = [self convertToNodeSpace:velocityRaw];
         
         _velocity = ccpSub(velocityRaw, ref);
+        if (_flipYCoordinates) _velocity.y = -_velocity.y;
         
         // Check if scroll directions has been disabled
         if (!_horizontalScrollEnabled) _velocity.x = 0;
@@ -528,7 +569,7 @@
             CGPoint posTarget = CGPointZero;
             
             // Calculate new horizontal page
-            int pageX = roundf(self.scrollPosition.x/self.contentSize.width);
+            int pageX = roundf(self.scrollPosition.x/self.contentSizeInPoints.width);
             
             if (fabs(_velocity.x) >= kCCScrollViewAutoPageSpeed && _horizontalPage == pageX)
             {
@@ -539,10 +580,10 @@
             pageX = clampf(pageX, 0, self.numHorizontalPages -1);
             _horizontalPage = pageX;
             
-            posTarget.x = pageX * self.contentSize.width;
+            posTarget.x = pageX * self.contentSizeInPoints.width;
             
             // Calculate new vertical page
-            int pageY = roundf(self.scrollPosition.y/self.contentSize.height);
+            int pageY = roundf(self.scrollPosition.y/self.contentSizeInPoints.height);
             
             if (fabs(_velocity.y) >= kCCScrollViewAutoPageSpeed && _verticalPage == pageY)
             {
@@ -553,7 +594,7 @@
             pageY = clampf(pageY, 0, self.numVerticalPages -1);
             _verticalPage = pageY;
             
-            posTarget.y = pageY * self.contentSize.height;
+            posTarget.y = pageY * self.contentSizeInPoints.height;
             
             [self setScrollPosition:posTarget animated:YES];
             
