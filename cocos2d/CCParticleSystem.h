@@ -58,26 +58,26 @@ enum {
 };
 
 
-/** @typedef tCCPositionType
+/** @typedef tCCParticlePositionType
  possible types of particle positions
  */
 typedef enum {
 	/** Living particles are attached to the world and are unaffected by emitter repositioning. */
-	kCCPositionTypeFree,
+	kCCParticlePositionTypeFree,
 
 	/** Living particles are attached to the world but will follow the emitter repositioning.
 	 Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
 	 */
-	kCCPositionTypeRelative,
+	kCCParticlePositionTypeRelative,
 
 	/** Living particles are attached to the emitter and are translated along with it. */
-	kCCPositionTypeGrouped,
-}tCCPositionType;
+	kCCParticlePositionTypeGrouped,
+}tCCParticlePositionType;
 
 // backward compatible
 enum {
-	kPositionTypeFree = kCCPositionTypeFree,
-	kPositionTypeGrouped = kCCPositionTypeGrouped,
+	kParticlePositionTypeFree = kCCParticlePositionTypeFree,
+	kParticlePositionTypeGrouped = kCCParticlePositionTypeGrouped,
 };
 
 /** @struct tCCParticle
@@ -281,7 +281,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	BOOL _opacityModifyRGB;
 
 	// movment type: free or grouped
-	tCCPositionType	_positionType;
+	tCCParticlePositionType	_particlePositionType;
 
 	// Whether or not the node will be auto-removed when there are not particles
 	BOOL	_autoRemoveOnFinish;
@@ -395,7 +395,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** particles movement type: Free or Grouped
  @since v0.8
  */
-@property (nonatomic,readwrite) tCCPositionType positionType;
+@property (nonatomic,readwrite) tCCParticlePositionType particlePositionType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8
