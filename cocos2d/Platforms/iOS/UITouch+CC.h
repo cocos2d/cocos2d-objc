@@ -23,6 +23,8 @@
  * THE SOFTWARE.
  */
 
+#import "ccMacros.h"
+
 #ifdef __CC_PLATFORM_IOS
 
 #import "cocos2d.h"
