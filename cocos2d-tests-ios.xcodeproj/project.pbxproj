@@ -1837,6 +1837,7 @@
 		A0F841F8151D5E4700EBBFCB /* font-issue1343.png in Resources */ = {isa = PBXBuildFile; fileRef = A0F841F4151D5E4600EBBFCB /* font-issue1343.png */; };
 		A67E114117D89F5E00F07EC5 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A67E114017D89F5E00F07EC5 /* Default-568h@2x.png */; };
 		A6A3480617D8B2E6000445D8 /* button.png in Resources */ = {isa = PBXBuildFile; fileRef = A60913E217C38D9D00A22658 /* button.png */; };
+		A6B0E20017EB5910006C4683 /* zwoptex in Resources */ = {isa = PBXBuildFile; fileRef = E0C5588E11FE4CF100B9E4CB /* zwoptex */; };
 		A6ED000E17D893DB002B4973 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		A6ED000F17D893DB002B4973 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		A6ED001017D893DB002B4973 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
@@ -6674,6 +6675,7 @@
 				E04C642312382F9400A4B3E6 /* b2-hd.png in Resources */,
 				E062F9971247FC5400DE3932 /* grossini_dance_atlas-hd.png in Resources */,
 				E062F9BD124801A300DE3932 /* grossini-hd.png in Resources */,
+				A6B0E20017EB5910006C4683 /* zwoptex in Resources */,
 				E062F9BE124801A300DE3932 /* grossinis_sister1-hd.png in Resources */,
 				E062F9BF124801A300DE3932 /* grossinis_sister2-hd.png in Resources */,
 				E02BB601126CA73F006E46A2 /* iTunesArtwork in Resources */,
