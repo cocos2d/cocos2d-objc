@@ -81,17 +81,22 @@ typedef enum {
 - (ccV3F_C4B_T2F)calculateVertice:(CGPoint)mult andTexture:(CGPoint)texMult
 {
     ccV3F_C4B_T2F result;
-    CGPoint invMult = ccp(1 - mult.x, 1 - mult.y);
-    CGPoint invTexMult = ccp(1 - texMult.x, 1 - texMult.y);
-    
+   
     // calculate vertices, color and texture coordinates
-    result.vertices.x = _contentScale.x * ((_quad.bl.vertices.x * invMult.x) + (_quad.br.vertices.x * mult.x));
-    result.vertices.y = _contentScale.y * ((_quad.bl.vertices.y * invMult.y) + (_quad.tl.vertices.y * mult.y));
+    result.vertices.x = _contentScale.x * ((_quad.bl.vertices.x * (1 - mult.x)) + (_quad.br.vertices.x * mult.x));
+    result.vertices.y = _contentScale.y * ((_quad.bl.vertices.y * (1 - mult.y)) + (_quad.tl.vertices.y * mult.y));
     result.vertices.z = _quad.bl.vertices.z;
     result.colors = _quad.bl.colors;
-    result.texCoords.u = (_quad.bl.texCoords.u * invTexMult.x) + (_quad.br.texCoords.u * texMult.x);
-    result.texCoords.v = (_quad.bl.texCoords.v * invTexMult.y) + (_quad.tl.texCoords.v * texMult.y);
-    
+    if (_rectRotated)
+    {
+        result.texCoords.u = (_quad.bl.texCoords.u * (1 - texMult.y)) + (_quad.tr.texCoords.u * texMult.y);
+        result.texCoords.v = (_quad.bl.texCoords.v * (1 - texMult.x)) + (_quad.br.texCoords.v * texMult.x);
+    }
+    else
+    {
+        result.texCoords.u = (_quad.bl.texCoords.u * (1 - texMult.x)) + (_quad.br.texCoords.u * texMult.x);
+        result.texCoords.v = (_quad.bl.texCoords.v * (1 - texMult.y)) + (_quad.tl.texCoords.v * texMult.y);
+    }
     // done
     return(result);
 }
@@ -173,10 +178,10 @@ typedef enum {
 	// draw bounding box
 	CGPoint vertices[4] =
     {
-		ccp(_quad.tl.vertices.x,_quad.tl.vertices.y),
 		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y),
-		ccp(_quad.br.vertices.x,_quad.br.vertices.y),
-		ccp(_quad.tr.vertices.x,_quad.tr.vertices.y),
+		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y),
+		ccp(_quad.bl.vertices.x + _contentSize.width,_quad.bl.vertices.y + _contentSize.height),
+		ccp(_quad.bl.vertices.x,_quad.bl.vertices.y + _contentSize.height),
 	};
 	ccDrawPoly(vertices, 4, YES);
 #elif CC_SPRITE_DEBUG_DRAW == 2
