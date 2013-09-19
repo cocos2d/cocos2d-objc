@@ -7,9 +7,10 @@
 //
 
 #import "cocos2d.h"
+#import "cocos2d-ui.h"
 
 @interface MainMenu : CCNode
 
-+(CCScene *) scene;
++ (CCScene *) scene;
 
 @end
