@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B73C129A17EA48CC0029B6AC /* TestBase.m */; };
 		B78AE47C17E7B13C0028BE0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */; };
 		B78AE47E17E7B13C0028BE0B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47D17E7B13C0028BE0B /* OpenGL.framework */; };
 		B78AE48017E7B13C0028BE0B /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47F17E7B13C0028BE0B /* OpenAL.framework */; };
@@ -54,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B73C129917EA48CC0029B6AC /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
+		B73C129A17EA48CC0029B6AC /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B78AE47817E7B13C0028BE0B /* cocos2d-ui-tests-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-ui-tests-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B78AE47D17E7B13C0028BE0B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -184,6 +187,8 @@
 		B78AE63A17E7B6DB0028BE0B /* Testbed */ = {
 			isa = PBXGroup;
 			children = (
+				B73C129917EA48CC0029B6AC /* TestBase.h */,
+				B73C129A17EA48CC0029B6AC /* TestBase.m */,
 				B78AE63B17E7B7690028BE0B /* MainMenu.h */,
 				B78AE63C17E7B7690028BE0B /* MainMenu.m */,
 			);
@@ -283,6 +288,7 @@
 				B78AE61A17E7B2190028BE0B /* AppDelegate.m in Sources */,
 				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
+				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,6 +373,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -393,6 +400,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/osx/Prefix.pch";
