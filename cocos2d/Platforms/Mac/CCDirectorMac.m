@@ -355,6 +355,14 @@
 	return ret;
 }
 
+-(CGPoint)convertToGL:(CGPoint)uiPoint
+{
+    NSPoint point = [[self view] convertPoint:uiPoint fromView:nil];
+	CGPoint p = NSPointToCGPoint(point);
+    
+	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
+}
+
 @end
 
 

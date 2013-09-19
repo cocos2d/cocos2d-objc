@@ -10,12 +10,12 @@
 
 @interface cocos2d_ui_tests_osxAppDelegate : NSObject <NSApplicationDelegate>
 {
-	NSWindow	*window_;
-	CCGLView	*glView_;
+	NSWindow	*__weak window_;
+	CCGLView	*__weak glView_;
 }
 
-@property (assign) IBOutlet NSWindow	*window;
-@property (assign) IBOutlet CCGLView	*glView;
+@property (weak) IBOutlet NSWindow	*window;
+@property (weak) IBOutlet CCGLView	*glView;
 
 - (IBAction)toggleFullScreen:(id)sender;
 

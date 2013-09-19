@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
+		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
+		B7C6237617EA695100928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		B7E2604C17E7D278007067F0 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604B17E7D278007067F0 /* QuartzCore.framework */; };
 		B7E2604E17E7D278007067F0 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604D17E7D278007067F0 /* OpenGLES.framework */; };
 		B7E2605017E7D278007067F0 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2604F17E7D278007067F0 /* OpenAL.framework */; };
@@ -80,6 +83,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
+		B71B087B17EA5B490082EBC0 /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
+		B71B088017EA5B6A0082EBC0 /* CCScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewTest.h; path = "cocos2d-ui-tests/tests/CCScrollViewTest.h"; sourceTree = SOURCE_ROOT; };
+		B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollViewTest.m; path = "cocos2d-ui-tests/tests/CCScrollViewTest.m"; sourceTree = SOURCE_ROOT; };
+		B7C6237517EA695100928F91 /* Resources-shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Resources-shared"; path = "cocos2d-ui-tests/Resources-shared"; sourceTree = SOURCE_ROOT; };
 		B7E2604817E7D278007067F0 /* cocos2d-ui-tests-ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-ui-tests-ios.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7E2604B17E7D278007067F0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B7E2604D17E7D278007067F0 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
@@ -133,6 +141,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B71B087F17EA5B500082EBC0 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B71B088017EA5B6A0082EBC0 /* CCScrollViewTest.h */,
+				B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */,
+			);
+			name = Tests;
+			sourceTree = "<group>";
+		};
 		B7E2603F17E7D278007067F0 = {
 			isa = PBXGroup;
 			children = (
@@ -172,7 +189,9 @@
 			children = (
 				B7E2621D17E7D38D007067F0 /* AppDelegate */,
 				B7E2621E17E7D398007067F0 /* Testbed */,
-				B7E2620117E7D34D007067F0 /* Resources */,
+				B71B087F17EA5B500082EBC0 /* Tests */,
+				B7C6237517EA695100928F91 /* Resources-shared */,
+				B7E2620117E7D34D007067F0 /* Resources-iOS */,
 				B7E2622217E7D3CA007067F0 /* libs */,
 				B7E261EC17E7D27A007067F0 /* Supporting Files */,
 			);
@@ -188,7 +207,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B7E2620117E7D34D007067F0 /* Resources */ = {
+		B7E2620117E7D34D007067F0 /* Resources-iOS */ = {
 			isa = PBXGroup;
 			children = (
 				B7E2620217E7D34D007067F0 /* Default-568h@2x.png */,
@@ -203,7 +222,7 @@
 				B7E2620B17E7D34D007067F0 /* Icon@2x.png */,
 				B7E2620D17E7D34D007067F0 /* iTunesArtwork */,
 			);
-			name = Resources;
+			name = "Resources-iOS";
 			path = "cocos2d-ui-tests/ios/Resources";
 			sourceTree = SOURCE_ROOT;
 		};
@@ -221,6 +240,8 @@
 			children = (
 				B7E2621F17E7D3B2007067F0 /* MainMenu.h */,
 				B7E2622017E7D3B2007067F0 /* MainMenu.m */,
+				B71B087A17EA5B490082EBC0 /* TestBase.h */,
+				B71B087B17EA5B490082EBC0 /* TestBase.m */,
 			);
 			name = Testbed;
 			sourceTree = "<group>";
@@ -274,6 +295,11 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Cocos2d;
+				TargetAttributes = {
+					B7E2604717E7D278007067F0 = {
+						DevelopmentTeam = SBVP8ED765;
+					};
+				};
 			};
 			buildConfigurationList = B7E2604317E7D278007067F0 /* Build configuration list for PBXProject "cocos2d-ui-tests-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -341,6 +367,7 @@
 				B7E2621217E7D34D007067F0 /* Icon-72.png in Resources */,
 				B7E2621317E7D34D007067F0 /* Icon-Small-50.png in Resources */,
 				B7E2621417E7D34D007067F0 /* Icon-Small.png in Resources */,
+				B7C6237617EA695100928F91 /* Resources-shared in Resources */,
 				B7E2621517E7D34D007067F0 /* Icon-Small@2x.png in Resources */,
 				B7E2621617E7D34D007067F0 /* Icon.png in Resources */,
 				B7E2621717E7D34D007067F0 /* Icon@2x.png in Resources */,
@@ -355,6 +382,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
+				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
@@ -421,6 +450,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -429,7 +461,7 @@
 					external/kazmath/include,
 					"cocos2d/**",
 					"cocos2d-ui/**",
-					"cocos2d-ui-tests",
+					"cocos2d-ui-tests/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -439,6 +471,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -447,6 +480,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-ui-tests/ios/Prefix.pch";
@@ -454,7 +490,7 @@
 					external/kazmath/include,
 					"cocos2d/**",
 					"cocos2d-ui/**",
-					"cocos2d-ui-tests",
+					"cocos2d-ui-tests/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -464,6 +500,7 @@
 					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
 			};
