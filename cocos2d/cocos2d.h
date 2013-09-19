@@ -118,11 +118,6 @@
 
 #import "ccFPSImages.h"
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
-#import "CCScrollView.h"
-
 // Shaders
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"

@@ -71,7 +71,7 @@ typedef enum {
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
     [super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
-    _originalContentSize = self.contentSize;
+    _originalContentSize = self.contentSizeInPoints;
 }
 
 // ---------------------------------------------------------------------
@@ -104,7 +104,7 @@ typedef enum {
 -( void )draw
 {
     // create a clamped content size
-    CGSize clampedSize = self.contentSize;
+    CGSize clampedSize = self.contentSizeInPoints;
     if (clampedSize.width < (_originalContentSize.width * (_marginLeft + _marginRight))) clampedSize.width = _originalContentSize.width * (_marginLeft + _marginRight);
     if (clampedSize.height < (_originalContentSize.height * (_marginTop + _marginBottom))) clampedSize.height = _originalContentSize.height * (_marginTop + _marginBottom);
     

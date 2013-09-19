@@ -114,11 +114,33 @@
 	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
 	// On iPad     : "-ipad", "-hd"
 	// On iPhone HD: "-hd"
-	CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
-	[sharedFileUtils setEnableFallbackSuffixes:NO];				// Default: NO. No fallback suffixes are going to be used
-	[sharedFileUtils setiPhoneRetinaDisplaySuffix:@"-hd"];		// Default on iPhone RetinaDisplay is "-hd"
-	[sharedFileUtils setiPadSuffix:@"-ipad"];					// Default on iPad is "ipad"
-	[sharedFileUtils setiPadRetinaDisplaySuffix:@"-ipadhd"];	// Default on iPad RetinaDisplay is "-ipadhd"
+    CCFileUtils *sharedFileUtils = [CCFileUtils sharedFileUtils];
+    
+    // Setup file utils for use with SpriteBuilder
+    [sharedFileUtils setEnableFallbackSuffixes:NO];
+    
+    sharedFileUtils.directoriesDict =
+    [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+     @"resources-tablet", kCCFileUtilsiPad,
+     @"resources-tablethd", kCCFileUtilsiPadHD,
+     @"resources-phone", kCCFileUtilsiPhone,
+     @"resources-phonehd", kCCFileUtilsiPhoneHD,
+     @"resources-phone", kCCFileUtilsiPhone5,
+     @"resources-phonehd", kCCFileUtilsiPhone5HD,
+     @"", kCCFileUtilsDefault,
+     nil];
+    
+    sharedFileUtils.searchPath =
+    [NSArray arrayWithObjects:
+     [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
+     [[NSBundle mainBundle] resourcePath],
+     nil];
+    
+	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
+    sharedFileUtils.searchMode = kCCFileUtilsSearchDirectoryMode;
+    [sharedFileUtils buildSearchResolutionsOrder];
+    
+    [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
 	
 	// Assume that PVR images have premultiplied alpha
 	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
@@ -184,11 +206,4 @@
 	[[CCDirector sharedDirector] setNextDeltaTimeZero:YES];
 }
 
-- (void) dealloc
-{
-	[window_ release];
-	[navController_ release];
-	
-	[super dealloc];
-}
 @end
