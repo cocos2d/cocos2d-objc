@@ -7,6 +7,7 @@
 //
 
 #import "MainMenu.h"
+#import "TestBase.h"
 
 #define kCCTestMenuItemHeight 32
 
@@ -15,7 +16,7 @@
 - (NSArray*) testClassNames
 {
     return [NSArray arrayWithObjects:
-            @"TestButton0",
+            @"CCScrollViewTest",
             @"TestButton1",
             @"TestButton2",
             @"TestButton3",
@@ -36,7 +37,7 @@
             nil];
 }
 
-+(CCScene *) scene
++ (CCScene *) scene
 {
 	// 'scene' is an autorelease object.
 	CCScene *scene = [CCScene node];
@@ -55,6 +56,9 @@
 {
     self = [super init];
     if (!self) return NULL;
+    
+    // Load resources
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Interface.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = kCCContentSizeTypeNormalized;
@@ -78,6 +82,8 @@
         btn.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitScaled, kCCPositionReferenceCornerTopLeft);
         btn.position = ccp(0.5, kCCTestMenuItemHeight * 0.5f + kCCTestMenuItemHeight * num);
         
+        [btn setTarget:self selector:@selector(pressedButton:)];
+        
         num++;
     }
     
@@ -91,6 +97,14 @@
     [self addChild:scrollView];
     
     return self;
+}
+
+- (void) pressedButton:(id)sender
+{
+    CCButton* btn = sender;
+    
+    CCScene* test = [TestBase sceneWithTestName:btn.label.string];
+    [[CCDirector sharedDirector] replaceScene:test];
 }
 
 @end

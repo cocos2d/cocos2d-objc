@@ -27,6 +27,7 @@
 #import "CGPointExtension.h"
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
+#import "CCActionInstant.h"
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -143,6 +144,7 @@
 
 -(void) update: (ccTime) t
 {
+#ifdef __CC_PLATFORM_IOS
     CCNode *node = (CCNode*)_target;
     
     float positionDelta = _endPosition - _startPos;
@@ -150,6 +152,7 @@
     float x = node.position.x;
     
 	node.position = ccp(x,y);
+#endif
 }
 @end
 
@@ -282,7 +285,7 @@
     NSAssert(horizontalPage >= 0 && horizontalPage < self.numHorizontalPages, @"Setting invalid horizontal page");
     
     CGPoint pos = self.scrollPosition;
-    pos.x = horizontalPage * _contentNode.contentSizeInPoints.width;
+    pos.x = horizontalPage * self.contentSizeInPoints.width;
     
     [self setScrollPosition:pos animated:animated];
     _horizontalPage = horizontalPage;
@@ -298,7 +301,7 @@
     NSAssert(verticalPage >= 0 && verticalPage < self.numVerticalPages, @"Setting invalid vertical page");
     
     CGPoint pos = self.scrollPosition;
-    pos.y = verticalPage * _contentNode.contentSizeInPoints.height;
+    pos.y = verticalPage * self.contentSizeInPoints.height;
     
     [self setScrollPosition:pos animated:animated];
     _verticalPage = verticalPage;
@@ -332,6 +335,8 @@
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
     
+    NSLog(@"setScrollPosition: (%f, %f)", newPos.x, newPos.y);
+    
     // Check bounds
     if (newPos.x > self.maxScrollX)
     {
@@ -363,17 +368,30 @@
         
         if (xMoved)
         {
+            // Animate horizontally
+            
             _velocity.x = 0;
-            CCAction* action = [CCEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
-            [_contentNode runAction:action];
             _animatingX = YES;
+            
+            // Create animation action
+            CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
+            CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
+            action = [CCSequence actions:action, callFunc, nil];
+            [_contentNode runAction:action];
         }
         if (yMoved)
         {
+            // Animate vertically
+            
             _velocity.y = 0;
-            CCAction* action = [CCEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
-            [_contentNode runAction:action];
             _animatingY = YES;
+            
+            // Create animation action
+            CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
+            CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
+            action = [CCSequence actions:action, callFunc, nil];
+            [_contentNode runAction:action];
+            
         }
     }
     else
@@ -381,6 +399,17 @@
         [_contentNode stopAllActions];
         _contentNode.position = ccpMult(newPos, -1);
     }
+}
+
+- (void) xAnimationDone
+{
+    NSLog(@"xAnimationDone");
+    _animatingX = NO;
+}
+
+- (void) yAnimationDone
+{
+    _animatingY = NO;
 }
 
 - (CGPoint) scrollPosition
@@ -674,9 +703,81 @@
 
 #elif defined(__CC_PLATFORM_MAC)
 
+#define kCCScrollViewMinPagingDelta 7
+
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    NSLog(@"Scroll wheel");
+    CCDirector* dir = [CCDirector sharedDirector];
+    
+    float deltaX = theEvent.deltaX;
+    float deltaY = theEvent.deltaY;
+    
+    // Calculate the delta in node space
+    CGPoint ref = [dir convertToGL:CGPointZero];
+    ref = [self convertToNodeSpace:ref];
+    
+    CGPoint deltaRaw = ccp(deltaX, deltaY);
+    deltaRaw = [dir convertToGL:deltaRaw];
+    
+    deltaRaw = [self convertToNodeSpace:deltaRaw];
+    
+    CGPoint delta = ccpSub(deltaRaw, ref);
+    
+    // Flip coordinates
+    if (_flipYCoordinates) delta.y = -delta.y;
+    delta.x = -delta.x;
+    
+    if (_pagingEnabled)
+    {
+        //NSLog(@"animating x: %d animating y: %d", _animatingX, _animatingY);
+        
+        if (!_animatingX && _horizontalScrollEnabled)
+        {
+            // Update horizontal page
+            int xPage = self.horizontalPage;
+            int xOldPage = xPage;
+            
+            if (fabs(delta.x) >= kCCScrollViewMinPagingDelta)
+            {
+                if (delta.x > 0) xPage += 1;
+                else xPage -= 1;
+            }
+            xPage = clampf(xPage, 0, self.numHorizontalPages - 1);
+            
+            if (xPage != xOldPage)
+            {
+                NSLog(@"setHorizontalPage: %d", xPage);
+                [self setHorizontalPage:xPage animated:YES];
+            }
+        }
+        
+        if (!_animatingY && _verticalScrollEnabled)
+        {
+            // Update horizontal page
+            int yPage = self.verticalPage;
+            int yOldPage = yPage;
+            
+            if (fabs(delta.y) >= kCCScrollViewMinPagingDelta)
+            {
+                if (delta.y > 0) yPage += 1;
+                else yPage -= 1;
+            }
+            yPage = clampf(yPage, 0, self.numHorizontalPages - 1);
+            
+            if (yPage != yOldPage)
+            {
+                NSLog(@"setHorizontalPage: %d", yPage);
+                [self setHorizontalPage:yPage animated:YES];
+            }
+        }
+    }
+    else
+    {
+        // Update scroll position
+        CGPoint scrollPos = self.scrollPosition;
+        scrollPos = ccpAdd(delta, scrollPos);
+        self.scrollPosition = scrollPos;
+    }
 }
 
 #endif
