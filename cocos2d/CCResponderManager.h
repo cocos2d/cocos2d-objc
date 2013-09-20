@@ -130,11 +130,12 @@ enum
 
 // -----------------------------------------------------------------
 
+@property (nonatomic,readonly) NSArray* responders;
 @property (nonatomic) BOOL eventProcessed;                          // event was processed
 
 // -----------------------------------------------------------------
 
-+ (id)responderManager;
++ (CCResponderManager*)responderManager;
 - (id)init;
 
 - (void)addResponder:(CCNode *)responder;

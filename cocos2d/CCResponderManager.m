@@ -58,7 +58,7 @@
 #pragma mark - create and destroy
 // -----------------------------------------------------------------
 
-+ (id)responderManager
++ (CCResponderManager*)responderManager
 {
     return([[self alloc] init]);
 }
@@ -138,6 +138,22 @@
 - (void)markAsDirty
 {
     _dirty = YES;
+}
+
+#pragma mark - Getting responder list
+
+- (NSArray*) responders
+{
+    if (_dirty) [self buildResponderList];
+    
+    NSMutableArray* responders = [NSMutableArray arrayWithCapacity:_responderListCount];
+    
+    for (int i = 0; i < _responderListCount; i++)
+    {
+        [responders addObject:_responderList[i]];
+    }
+    
+    return responders;
 }
 
 
