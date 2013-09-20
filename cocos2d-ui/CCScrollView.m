@@ -144,7 +144,6 @@
 
 -(void) update: (ccTime) t
 {
-#ifdef __CC_PLATFORM_IOS
     CCNode *node = (CCNode*)_target;
     
     float positionDelta = _endPosition - _startPos;
@@ -152,7 +151,6 @@
     float x = node.position.x;
     
 	node.position = ccp(x,y);
-#endif
 }
 @end
 
@@ -335,8 +333,6 @@
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
     
-    NSLog(@"setScrollPosition: (%f, %f)", newPos.x, newPos.y);
-    
     // Check bounds
     if (newPos.x > self.maxScrollX)
     {
@@ -403,7 +399,6 @@
 
 - (void) xAnimationDone
 {
-    NSLog(@"xAnimationDone");
     _animatingX = NO;
 }
 
@@ -727,10 +722,12 @@
     if (_flipYCoordinates) delta.y = -delta.y;
     delta.x = -delta.x;
     
+    // Handle disabled x/y axis
+    if (!_horizontalScrollEnabled) delta.x = 0;
+    if (!_verticalScrollEnabled) delta.y = 0;
+    
     if (_pagingEnabled)
     {
-        //NSLog(@"animating x: %d animating y: %d", _animatingX, _animatingY);
-        
         if (!_animatingX && _horizontalScrollEnabled)
         {
             // Update horizontal page
@@ -746,7 +743,6 @@
             
             if (xPage != xOldPage)
             {
-                NSLog(@"setHorizontalPage: %d", xPage);
                 [self setHorizontalPage:xPage animated:YES];
             }
         }
@@ -762,12 +758,11 @@
                 if (delta.y > 0) yPage += 1;
                 else yPage -= 1;
             }
-            yPage = clampf(yPage, 0, self.numHorizontalPages - 1);
+            yPage = clampf(yPage, 0, self.numVerticalPages - 1);
             
             if (yPage != yOldPage)
             {
-                NSLog(@"setHorizontalPage: %d", yPage);
-                [self setHorizontalPage:yPage animated:YES];
+                [self setVerticalPage:yPage animated:YES];
             }
         }
     }

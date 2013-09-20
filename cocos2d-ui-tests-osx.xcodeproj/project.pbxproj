@@ -21,6 +21,8 @@
 		B78AE62817E7B2A50028BE0B /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = B78AE62417E7B2A50028BE0B /* icon.icns */; };
 		B78AE63817E7B2FC0028BE0B /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE63117E7B2DE0028BE0B /* libcocos2d.a */; };
 		B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE63C17E7B7690028BE0B /* MainMenu.m */; };
+		B7C6238117EBC76900928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6238017EBC76900928F91 /* Resources-shared */; };
+		B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,9 @@
 		B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-osx.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		B78AE63B17E7B7690028BE0B /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = "cocos2d-ui-tests/MainMenu.h"; sourceTree = SOURCE_ROOT; };
 		B78AE63C17E7B7690028BE0B /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = "cocos2d-ui-tests/MainMenu.m"; sourceTree = SOURCE_ROOT; };
+		B7C6238017EBC76900928F91 /* Resources-shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Resources-shared"; path = "cocos2d-ui-tests/Resources-shared"; sourceTree = SOURCE_ROOT; };
+		B7C6238317EBC7C200928F91 /* CCScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewTest.h; path = "cocos2d-ui-tests/tests/CCScrollViewTest.h"; sourceTree = SOURCE_ROOT; };
+		B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollViewTest.m; path = "cocos2d-ui-tests/tests/CCScrollViewTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +135,9 @@
 			children = (
 				B78AE63917E7B6D00028BE0B /* AppDelegate */,
 				B78AE63A17E7B6DB0028BE0B /* Testbed */,
-				B78AE61F17E7B2A50028BE0B /* Resources */,
+				B7C6238217EBC7A600928F91 /* Tests */,
+				B7C6238017EBC76900928F91 /* Resources-shared */,
+				B78AE61F17E7B2A50028BE0B /* Resources-Mac */,
 				B78AE49317E7B13C0028BE0B /* libs */,
 				B78AE60717E7B13E0028BE0B /* Supporting Files */,
 			);
@@ -154,7 +161,7 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		B78AE61F17E7B2A50028BE0B /* Resources */ = {
+		B78AE61F17E7B2A50028BE0B /* Resources-Mac */ = {
 			isa = PBXGroup;
 			children = (
 				B78AE62017E7B2A50028BE0B /* InfoPlist.strings */,
@@ -162,7 +169,7 @@
 				B78AE62417E7B2A50028BE0B /* icon.icns */,
 				B78AE62517E7B2A50028BE0B /* Info.plist */,
 			);
-			name = Resources;
+			name = "Resources-Mac";
 			path = "cocos2d-ui-tests/osx/Resources";
 			sourceTree = SOURCE_ROOT;
 		};
@@ -187,12 +194,21 @@
 		B78AE63A17E7B6DB0028BE0B /* Testbed */ = {
 			isa = PBXGroup;
 			children = (
-				B73C129917EA48CC0029B6AC /* TestBase.h */,
-				B73C129A17EA48CC0029B6AC /* TestBase.m */,
 				B78AE63B17E7B7690028BE0B /* MainMenu.h */,
 				B78AE63C17E7B7690028BE0B /* MainMenu.m */,
+				B73C129917EA48CC0029B6AC /* TestBase.h */,
+				B73C129A17EA48CC0029B6AC /* TestBase.m */,
 			);
 			name = Testbed;
+			sourceTree = "<group>";
+		};
+		B7C6238217EBC7A600928F91 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B7C6238317EBC7C200928F91 /* CCScrollViewTest.h */,
+				B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +291,7 @@
 				B78AE62617E7B2A50028BE0B /* InfoPlist.strings in Resources */,
 				B78AE62717E7B2A50028BE0B /* MainMenu.xib in Resources */,
 				B78AE62817E7B2A50028BE0B /* icon.icns in Resources */,
+				B7C6238117EBC76900928F91 /* Resources-shared in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +303,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B78AE61A17E7B2190028BE0B /* AppDelegate.m in Sources */,
+				B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */,
 				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
