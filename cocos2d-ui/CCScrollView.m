@@ -666,6 +666,7 @@
 {
     if (!_contentNode) return NO;
     if (!self.visible) return NO;
+    if (!self.userInteractionEnabled) return NO;
     
     // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
     CGPoint touchWorldPos = [touch locationInWorld];
