@@ -1084,6 +1084,10 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	if ( _isTransformDirty ) {
         
+        // TODO: Make this more efficient
+        CGSize contentSizeInPoints = self.contentSizeInPoints;
+        _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
+        
         // Convert position to points
         CGPoint positionInPoints = [self convertPositionToPoints:_position];
 		float x = positionInPoints.x;
