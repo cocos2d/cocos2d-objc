@@ -28,6 +28,7 @@
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
 #import "CCActionInstant.h"
+#import "CCResponderManager.h"
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -202,6 +203,7 @@
 #endif
     
     [self scheduleUpdate];
+    self.userInteractionEnabled = YES;
     
     return self;
 }
@@ -650,11 +652,43 @@
     _contentNode.position = pos;
 }
 
+- (BOOL) isAncestor:(CCNode*) ancestor toNode:(CCNode*)node
+{
+    for (CCNode* child in node.children)
+    {
+        if (child == ancestor) return YES;
+        if ([self isAncestor:ancestor toNode:child]) return YES;
+    }
+    return NO;
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if (!_contentNode) return NO;
     if (!self.visible) return NO;
     
+    // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
+    CGPoint touchWorldPos = [touch locationInWorld];
+    
+    NSArray* responders = [CCDirector sharedDirector].responderManager.responders;
+    BOOL foundSelf = NO;
+    for (CCNode* responder in responders)
+    {
+        if (foundSelf)
+        {
+            if ([responder hitTestWithWorldPos:touchWorldPos] &&
+                ![self isAncestor:responder toNode:self])
+            {
+                return NO;
+            }
+        }
+        else if (responder == self)
+        {
+            foundSelf = YES;
+        }
+    }
+    
+    // Allow touches to children if view is moving slowly
     BOOL slowMove = (fabs(_velocity.x) < kCCScrollViewAllowInteractionBelowVelocity &&
                      fabs(_velocity.y) < kCCScrollViewAllowInteractionBelowVelocity);
     
@@ -663,6 +697,7 @@
         return NO;
     }
     
+    // Check that the gesture is in the scroll view
     return [self hitTestWithWorldPos:[touch locationInWorld]];
 }
 
