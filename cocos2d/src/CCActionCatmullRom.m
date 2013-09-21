@@ -96,9 +96,9 @@
 	
 }
 
--(CGPoint) getControlPointAtIndex:(NSInteger)index
+-(CGPoint) getControlPointAtIndex:(NSUInteger)index
 {
-	index = MIN([_controlPoints count]-1, MAX(index, 0));
+	index = MIN([_controlPoints count]-1, MAX(index, (NSUInteger)0));
 
 	NSValue *value = [_controlPoints objectAtIndex:index];
 

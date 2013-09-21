@@ -1767,7 +1767,7 @@ Class restartAction()
 		
 		particleSystem.position = ccp(i*50 ,i*50);
 		
-		particleSystem.positionType = kCCPositionTypeGrouped;
+		particleSystem.positionMovementType = kCCPositionTypeGrouped;
 		[self addChild:particleSystem];
 	}
 	
@@ -1822,7 +1822,7 @@ Class restartAction()
 		
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/SpinningPeas.plist"];
 		
-		particleSystem.positionType = kCCPositionTypeGrouped;		 
+		particleSystem.positionMovementType = kCCPositionTypeGrouped;
 		particleSystem.position = ccp(i*50 ,i*50);
 		
 		[batchNode setTexture:particleSystem.texture];
@@ -1882,7 +1882,7 @@ Class restartAction()
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
 		[batchNode_ setTexture:particleSystem.texture];
 		
-		particleSystem.positionType = kCCPositionTypeGrouped;		 
+		particleSystem.positionMovementType = kCCPositionTypeGrouped;
 		particleSystem.totalParticles = 200;
 		
 		particleSystem.position = ccp(i*15 +100,i*15+100);
@@ -1909,7 +1909,7 @@ Class restartAction()
 		CCParticleSystemQuad *particleSystem = [CCParticleSystemQuad particleWithFile:@"Particles/Spiral.plist"];
 		//add new
 		
-		particleSystem.positionType = kCCPositionTypeGrouped;		 
+		particleSystem.positionMovementType = kCCPositionTypeGrouped;
 		particleSystem.totalParticles = 200;
 		
 		particleSystem.position = ccp(arc4random() % 300 ,arc4random() % 400);
@@ -2034,7 +2034,7 @@ Class restartAction()
 		
 		
 		[batchNode_ addChild:particleSystem];
-		[particleSystem setPositionType:kCCPositionTypeFree];
+		[particleSystem setPositionMovementType:kCCPositionTypeFree];
 		
 		[particleSystem release];
 		

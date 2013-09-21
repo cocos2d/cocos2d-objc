@@ -452,7 +452,7 @@
 	bzero( &quad, sizeof(quad) );
 
 	NSUInteger to = index + amount;
-	for (NSInteger i = index ; i < to ; i++)
+	for (NSUInteger i = index ; i < to ; i++)
 	{
 		_quads[i] = quad;
 	}

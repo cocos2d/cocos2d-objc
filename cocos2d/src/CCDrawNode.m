@@ -318,7 +318,7 @@ static inline ccTex2F __t(ccVertex2F v )
 	}
 	
 	for(NSUInteger i=0; i<count; i++){
-		int j = (i+1)%count;
+		NSInteger j = (i+1)%count;
 		ccVertex2F v0 = __v2f( verts[i] );
 		ccVertex2F v1 = __v2f( verts[j] );
 		

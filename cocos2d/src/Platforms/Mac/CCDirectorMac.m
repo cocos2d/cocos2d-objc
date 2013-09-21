@@ -256,12 +256,15 @@
     if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSize, CGSizeZero ) ) {
 		size = _originalWinSize;
     }
+    
+    BOOL isProjectionValid = NO;
 
 	[self setViewport];
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-
+        {
+            isProjectionValid = YES;
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
@@ -272,11 +275,11 @@
 			kmGLMatrixMode(KM_GL_MODELVIEW);
 			kmGLLoadIdentity();
 			break;
-
+        }
 
 		case kCCDirectorProjection3D:
 		{
-
+            isProjectionValid = YES;
 			float zeye = [self getZEye];
 
 			kmGLMatrixMode(KM_GL_PROJECTION);
@@ -307,14 +310,18 @@
 		}
 
 		case kCCDirectorProjectionCustom:
+        {
+            isProjectionValid = YES;
 			if( [_delegate respondsToSelector:@selector(updateProjection)] )
 				[_delegate updateProjection];
 			break;
-
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
+        }
 	}
+    
+    if (isProjectionValid == NO)
+    {
+        CCLOG(@"cocos2d: Director: unrecognized projection");
+    }
 
 	_projection = projection;
 

@@ -376,8 +376,8 @@ typedef struct {
 
 				dataOffset += packetLength;
 
-				width = MAX(width >> 1, 1);
-				height = MAX(height >> 1, 1);
+				width = MAX(width >> 1, (uint32_t)1);
+				height = MAX(height >> 1, (uint32_t)1);
 			}
 
 			success = YES;
@@ -494,8 +494,8 @@ typedef struct {
 		NSAssert( dataOffset <= dataLength, @"CCTexurePVR: Invalid length");
 		
 		
-		width = MAX(width >> 1, 1);
-		height = MAX(height >> 1, 1);
+		width = MAX(width >> 1, (uint32_t)1);
+		height = MAX(height >> 1, (uint32_t)1);
 	}
 	
 	return YES;
@@ -537,7 +537,7 @@ typedef struct {
 	GLenum type = _pixelFormatInfo->type;
 	BOOL compressed = _pixelFormatInfo->compressed;
 
-    NSAssert(_numberOfMipmaps > INT_MAX, @"Invalid int");
+    NSAssert(_numberOfMipmaps < INT_MAX, @"Invalid int");
 	// Generate textures with mipmaps
 	for (GLint i=0; i < (GLint)_numberOfMipmaps; i++)
 	{

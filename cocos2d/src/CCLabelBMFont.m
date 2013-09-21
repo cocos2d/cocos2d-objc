@@ -48,7 +48,7 @@
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
 
-NSMutableDictionary *configurations = nil;
+static NSMutableDictionary *configurations = nil;
 CCBMFontConfiguration* FNTConfigLoadFile( NSString *fntFile)
 {
 	CCBMFontConfiguration *ret = nil;
@@ -534,27 +534,35 @@ void FNTConfigRemoveCache( void )
 {	
     [self setString:_initialString updateLabel:NO];
 	
-    if (_width > 0){
+    if (_width > 0)
+    {
         //Step 1: Make multiline
 		
         NSString *multilineString = @"", *lastWord = @"";
-        int line = 1, i = 0;
-        NSUInteger stringLength = [self.string length];
+        NSInteger line = 1, i = 0;
+        NSInteger stringLength = [self.string length];
         float startOfLine = -1, startOfWord = -1;
         int skip = 0;
         //Go through each character and insert line breaks as necessary
-        for (int j = 0; j < [_children count]; j++) {
+        for (NSUInteger j = 0; j < [_children count]; j++)
+        {
             CCSprite *characterSprite;
             int justSkipped = 0;
             while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip+justSkipped]))
+            {
                 justSkipped++;
+            }
             skip += justSkipped;
 			
             if (!characterSprite.visible)
+            {
 				continue;
+            }
 			
             if (i >= stringLength || i < 0)
+            {
                 break;
+            }
 			
             unichar character = [self.string characterAtIndex:i];
 			
@@ -566,7 +574,8 @@ void FNTConfigRemoveCache( void )
             //Character is a line break
             //Put lastWord on the current line and start a new line
             //Reset lastWord
-            if ([[NSCharacterSet newlineCharacterSet] characterIsMember:character]) {
+            if ([[NSCharacterSet newlineCharacterSet] characterIsMember:character])
+            {
                 lastWord = [lastWord stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 lastWord = [lastWord stringByPaddingToLength:[lastWord length] + justSkipped withString:[NSString stringWithFormat:@"%C", character] startingAtIndex:0];
                 multilineString = [multilineString stringByAppendingString:lastWord];
@@ -578,19 +587,26 @@ void FNTConfigRemoveCache( void )
 				
                 //CCLabelBMFont do not have a character for new lines, so do NOT "continue;" in the for loop. Process the next character
                 if (i >= stringLength || i < 0)
+                {
                     break;
+                }
                 character = [self.string characterAtIndex:i];
 				
                 if (startOfWord == -1)
+                {
                     startOfWord = characterSprite.position.x - characterSprite.contentSize.width/2;
+                }
                 if (startOfLine == -1)
+                {
                     startOfLine = startOfWord;
+                }
             }
 			
             //Character is a whitespace
             //Put lastWord on current line and continue on current line
             //Reset lastWord
-            if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:character]) {
+            if ([[NSCharacterSet whitespaceCharacterSet] characterIsMember:character])
+            {
                 lastWord = [lastWord stringByAppendingFormat:@"%C", character];
                 multilineString = [multilineString stringByAppendingString:lastWord];
                 lastWord = @"";
@@ -602,7 +618,8 @@ void FNTConfigRemoveCache( void )
             //Character is out of bounds
             //Do not put lastWord on current line. Add "\n" to current line to start a new line
             //Append to lastWord
-            if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  _width) {
+            if (characterSprite.position.x + characterSprite.contentSize.width/2 - startOfLine >  _width)
+            {
                 lastWord = [lastWord stringByAppendingFormat:@"%C", character];
                 NSString *trimmedString = [multilineString stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 multilineString = [trimmedString stringByAppendingString:@"\n"];
@@ -610,7 +627,9 @@ void FNTConfigRemoveCache( void )
                 startOfLine = -1;
                 i++;
                 continue;
-            } else {
+            }
+            else
+            {
                 //Character is normal
                 //Append to lastWord
                 lastWord = [lastWord stringByAppendingFormat:@"%C", character];
@@ -626,20 +645,22 @@ void FNTConfigRemoveCache( void )
 	
     //Step 2: Make alignment
 	
-    if (self.alignment != kCCTextAlignmentLeft) {
-		
+    if (self.alignment != kCCTextAlignmentLeft)
+    {
         int i = 0;
         //Number of spaces skipped
         int lineNumber = 0;
         //Go through line by line
-        for (NSString *lineString in [_string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]]) {
+        for (NSString *lineString in [_string componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]])
+        {
             int lineWidth = 0;
 			
             //Find index of last character in this line
             NSInteger index = i + [lineString length] - 1 + lineNumber;
             if (index < 0)
+            {
                 continue;
-			
+			}
             //Find position of last character on the line
             CCSprite *lastChar = (CCSprite *)[self getChildByTag:index];
 			
@@ -647,20 +668,23 @@ void FNTConfigRemoveCache( void )
 			
             //Figure out how much to shift each character in this line horizontally
             float shift = 0;
-            switch (self.alignment) {
+            switch (self.alignment)
+            {
                 case kCCTextAlignmentCenter:
                     shift = self.contentSize.width/2 - lineWidth/2;
                     break;
                 case kCCTextAlignmentRight:
                     shift = self.contentSize.width - lineWidth;
-                default:
+                case kCCTextAlignmentLeft:
                     break;
             }
 			
-            if (shift != 0) {
-                int j = 0;
+            if (shift != 0)
+            {
+                NSUInteger j = 0;
                 //For each character, shift it so that the line is center aligned
-                for (j = 0; j < [lineString length]; j++) {
+                for (j = 0; j < [lineString length]; j++)
+                {
                     index = i + j + lineNumber;
                     if (index < 0)
                         continue;
@@ -776,9 +800,11 @@ void FNTConfigRemoveCache( void )
 				 But this code is super fast. It doesn't create any sprite.
 				 Ideal for big labels.
 				 */
-				fontChar = _reusedChar;
-				fontChar.batchNode = nil;
-				hasSprite = NO;
+                
+                //TODO: Super fast because it does not get executed... ever... "if( 0 )"
+//				fontChar = _reusedChar;
+//				fontChar.batchNode = nil;
+//				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
 				[self addChild:fontChar z:i tag:i];

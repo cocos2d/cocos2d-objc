@@ -633,7 +633,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, (CGBitmapInfo)(kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big));
     CGColorSpaceRelease(colorSpace);
     
     if (!context)
@@ -779,7 +779,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         // A8 format (alpha channel only)
         unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
+        for(NSUInteger i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
@@ -972,7 +972,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, (CGBitmapInfo)(kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big));
     CGColorSpaceRelease(colorSpace);
 
     if (!context)
@@ -1055,7 +1055,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         // A8 format (alpha channel only)
         unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
+        for(NSUInteger i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];

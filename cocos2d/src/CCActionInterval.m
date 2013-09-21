@@ -650,8 +650,9 @@
 
 -(void) startWithTarget:(id)target
 {
-	[super startWithTarget:target];
-	_previousPos = _startPos = [target position];
+    CCNode *targetNode = (CCNode *)target;
+	[super startWithTarget:targetNode];
+	_previousPos = _startPos = targetNode.position;
 }
 
 -(CCActionInterval*) reverse

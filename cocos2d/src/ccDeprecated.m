@@ -68,7 +68,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 }
 @end
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 
 #elif __CC_PLATFORM_MAC
 
@@ -382,7 +382,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	
 	return nil;
 }
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 -(UIImage *)getUIImageFromBuffer
 {
 	return [self getUIImage];
@@ -403,7 +403,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:resolutionType];
 }
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 +(void) setRetinaDisplaySuffix:(NSString*)suffix
 {
 	return [[self sharedFileUtils] setiPhoneRetinaDisplaySuffix:suffix];
@@ -633,7 +633,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 @end
 
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 @implementation EAGLView
 @end
 

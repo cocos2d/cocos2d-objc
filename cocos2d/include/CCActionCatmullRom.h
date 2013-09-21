@@ -62,7 +62,7 @@
 -(void) replaceControlPoint:(CGPoint)controlPoint atIndex:(NSUInteger)index;
 
 /** get the value of a controlPoint at a given index */
--(CGPoint) getControlPointAtIndex:(NSInteger)index;
+-(CGPoint) getControlPointAtIndex:(NSUInteger)index;
 
 /** deletes a control point at a given index */
 -(void) removeControlPointAtIndex:(NSUInteger)index;

@@ -50,7 +50,7 @@
 #pragma mark -
 #pragma mark Layer
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 
 #endif // __CC_PLATFORM_IOS
 

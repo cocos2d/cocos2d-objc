@@ -470,7 +470,7 @@
 		return NO;
 	}
 	
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 	
 	UIImage* image	= [[UIImage alloc] initWithCGImage:imageRef scale:CC_CONTENT_SCALE_FACTOR() orientation:UIImageOrientationUp];
 	NSData *imageData = nil;
@@ -488,7 +488,7 @@
 	success = [imageData writeToFile:fullPath atomically:YES];
 
 	
-#elif __CC_PLATFORM_MAC
+#elif defined(__CC_PLATFORM_MAC)
 	
 	CFURLRef url = (__bridge CFURLRef)[NSURL fileURLWithPath:fullPath];
 	
@@ -519,7 +519,7 @@
 }
 
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 
 -(UIImage *) getUIImage
 {

@@ -320,7 +320,7 @@ static CCTextureCache *sharedTextureCache;
 
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
-					[_textures setObject: tex forKey:path];
+					[self->_textures setObject: tex forKey:path];
 				});
 			}else{
 				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);

@@ -872,7 +872,7 @@
 
 		if( batchNode ) {
 			//each particle needs a unique index
-			for (int i = 0; i < _totalParticles; i++)
+			for (NSUInteger i = 0; i < _totalParticles; i++)
 			{
 				_particles[i].atlasIndex=i;
 			}
