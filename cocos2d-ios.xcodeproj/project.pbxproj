@@ -251,6 +251,12 @@
 		E61CF02717E655B300BDD9F5 /* CDXPropertyModifierAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E61CEE7C17E655B300BDD9F5 /* CDXPropertyModifierAction.h */; };
 		E61CF02917E655B300BDD9F5 /* CocosDenshion.h in Headers */ = {isa = PBXBuildFile; fileRef = E61CEE7D17E655B300BDD9F5 /* CocosDenshion.h */; };
 		E61CF02B17E655B300BDD9F5 /* SimpleAudioEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = E61CEE7F17E655B300BDD9F5 /* SimpleAudioEngine.h */; };
+		E61FF2BF17EE65A500D1857B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		E61FF2C617EE65A500D1857B /* CocosLib.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FF2C517EE65A500D1857B /* CocosLib.m */; };
+		E61FF2EB17EE669900D1857B /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		E61FF2EC17EE669900D1857B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */; };
+		E61FF2ED17EE669900D1857B /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
+		E61FF2EE17EE669900D1857B /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E61CF03C17E656BA00BDD9F5 /* liblibpng.a */; };
 		E6E7CBBB17E7AD3F002C5FD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		E6E7CBDC17E7ADA6002C5FD3 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CEE8117E655B300BDD9F5 /* CDAudioManager.m */; };
 		E6E7CBDD17E7ADA6002C5FD3 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CEE8217E655B300BDD9F5 /* CDOpenALSupport.m */; };
@@ -300,6 +306,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
+		};
+		E61FF2E217EE65D700D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
+		E61FF2E417EE65D700D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
+			remoteInfo = kazmath;
+		};
+		E61FF2E617EE65D700D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E61CF03B17E656BA00BDD9F5;
+			remoteInfo = libpng;
+		};
+		E61FF2E817EE65D700D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6E7CBB917E7AD3F002C5FD3;
+			remoteInfo = CocosDenshion;
 		};
 		E67064F217E8FBCA0084FA92 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -651,6 +685,14 @@
 		E61CEE8717E655B300BDD9F5 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		E61CF03C17E656BA00BDD9F5 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61CF04A17E656BA00BDD9F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		E61FF2BE17EE65A500D1857B /* libCocosLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF2C217EE65A500D1857B /* CocosLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosLib-Prefix.pch"; sourceTree = "<group>"; };
+		E61FF2C317EE65A500D1857B /* CocosLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosLib.h; sourceTree = "<group>"; };
+		E61FF2C517EE65A500D1857B /* CocosLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosLib.m; sourceTree = "<group>"; };
+		E61FF2F317EE66A900D1857B /* libCocosLibScript.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLibScript.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF2F717EE66A900D1857B /* CocosLibScript-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosLibScript-Prefix.pch"; sourceTree = "<group>"; };
+		E61FF2F817EE66A900D1857B /* CocosLibScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosLibScript.h; sourceTree = "<group>"; };
+		E61FF2FA17EE66A900D1857B /* CocosLibScript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosLibScript.m; sourceTree = "<group>"; };
 		E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -687,6 +729,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E61FF2BB17EE65A500D1857B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E61FF2EB17EE669900D1857B /* libcocos2d.a in Frameworks */,
+				E61FF2EC17EE669900D1857B /* libCocosDenshion.a in Frameworks */,
+				E61FF2ED17EE669900D1857B /* libkazmath.a in Frameworks */,
+				E61FF2EE17EE669900D1857B /* liblibpng.a in Frameworks */,
+				E61FF2BF17EE65A500D1857B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6E7CBB717E7AD3F002C5FD3 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -707,6 +761,8 @@
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
 				E61CF03C17E656BA00BDD9F5 /* liblibpng.a */,
 				E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */,
+				E61FF2BE17EE65A500D1857B /* libCocosLib.a */,
+				E61FF2F317EE66A900D1857B /* libCocosLibScript.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -733,6 +789,8 @@
 				E61CEDA017E655B300BDD9F5 /* cocos2d */,
 				E61CEE7617E655B300BDD9F5 /* CocosDenshion */,
 				501756090F335CE900624901 /* external */,
+				E61FF2C017EE65A500D1857B /* CocosLib */,
+				E61FF2F517EE66A900D1857B /* CocosLibScript */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -1222,6 +1280,42 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		E61FF2C017EE65A500D1857B /* CocosLib */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF2C317EE65A500D1857B /* CocosLib.h */,
+				E61FF2C517EE65A500D1857B /* CocosLib.m */,
+				E61FF2C117EE65A500D1857B /* Supporting Files */,
+			);
+			path = CocosLib;
+			sourceTree = "<group>";
+		};
+		E61FF2C117EE65A500D1857B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF2C217EE65A500D1857B /* CocosLib-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E61FF2F517EE66A900D1857B /* CocosLibScript */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF2F817EE66A900D1857B /* CocosLibScript.h */,
+				E61FF2FA17EE66A900D1857B /* CocosLibScript.m */,
+				E61FF2F617EE66A900D1857B /* Supporting Files */,
+			);
+			path = CocosLibScript;
+			sourceTree = "<group>";
+		};
+		E61FF2F617EE66A900D1857B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF2F717EE66A900D1857B /* CocosLibScript-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -1473,6 +1567,41 @@
 			productReference = E61CF03C17E656BA00BDD9F5 /* liblibpng.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		E61FF2BD17EE65A500D1857B /* Cocos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E61FF2DE17EE65A600D1857B /* Build configuration list for PBXNativeTarget "Cocos" */;
+			buildPhases = (
+				E61FF2BA17EE65A500D1857B /* Sources */,
+				E61FF2BB17EE65A500D1857B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E61FF2E317EE65D700D1857B /* PBXTargetDependency */,
+				E61FF2E517EE65D700D1857B /* PBXTargetDependency */,
+				E61FF2E717EE65D700D1857B /* PBXTargetDependency */,
+				E61FF2E917EE65D700D1857B /* PBXTargetDependency */,
+			);
+			name = Cocos;
+			productName = CocosLib;
+			productReference = E61FF2BE17EE65A500D1857B /* libCocosLib.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E61FF2F217EE66A900D1857B /* CocosLib_Script */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E61FF30F17EE66A900D1857B /* Build configuration list for PBXNativeTarget "CocosLib_Script" */;
+			buildPhases = (
+				E61FF31517EE66C800D1857B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocosLib_Script;
+			productName = CocosLibScript;
+			productReference = E61FF2F317EE66A900D1857B /* libCocosLibScript.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 		E6E7CBB917E7AD3F002C5FD3 /* CocosDenshion */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E6E7CBDA17E7AD3F002C5FD3 /* Build configuration list for PBXNativeTarget "CocosDenshion" */;
@@ -1519,6 +1648,8 @@
 				A04A1FEA13B826B300ABAFB7 /* kazmath */,
 				E61CF03B17E656BA00BDD9F5 /* libpng */,
 				E6E7CBB917E7AD3F002C5FD3 /* CocosDenshion */,
+				E61FF2BD17EE65A500D1857B /* Cocos */,
+				E61FF2F217EE66A900D1857B /* CocosLib_Script */,
 			);
 		};
 /* End PBXProject section */
@@ -1538,6 +1669,19 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/sh\n#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\n# Make sure TEMP_DIR is set to something usable.do\nTEMP_DIR=${TEMP_DIR:-$TMPDIR}\nTEMP_DIR=${TEMP_DIR:-/tmp}\n\nif ! [ -f \"$SOURCE_ROOT\"/doxygen.config ] \nthen \n  echo \"doxygen config file does not exist\"\n  \"$DOXYGEN_PATH\" -g \"$SOURCE_ROOT/doxygen.config\"\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp \"$SOURCE_ROOT/doxygen.config\" \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for source code files in current project directory under 'cocos2d\necho \"INPUT = \\\"$SOURCE_ROOT/cocos2d\\\" \\\"$SOURCE_ROOT/cocoslive\\\" \\\"$SOURCE_ROOT/CocosDenshion\\\"\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Doxygen will generate all the HTML files (which will later be packaged into\n# the doc set) into the standard 'build' directory, specifically, into a folder\n# called 'doxygen_output'.\necho \"OUTPUT_DIRECTORY = $TEMP_DIR/doxygen_output\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for image files in current project directory under 'Resources'\necho \"IMAGE_PATH = $SOURCE_ROOT/Resources\" >> \"$TEMP_DIR/doxygen.config\"\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n\"$DOXYGEN_PATH\" \"$TEMP_DIR/doxygen.config\"\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C \"$TEMP_DIR/doxygen_output/html\" install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f \"$TEMP_DIR/loadDocSet.scpt\"\n\necho \"tell application \\\"Xcode\\\"\" >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"end tell\" >> \"$TEMP_DIR/loadDocSet.scpt\"\n\n#  Run the load-docset applescript command.\n\nosascript \"$TEMP_DIR/loadDocSet.scpt\"\n";
 			showEnvVarsInLog = 0;
+		};
+		E61FF31517EE66C800D1857B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nTARGET=\"Cocos\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\nSCRIPT_OPTIONS=\"MOVE_FILE\"\n#DEST_DIR=\"${PROJECT_DIR}/../SharedLibs\"\nDEST_DIR=~/Programming/SharedLibs\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibs\n\nGIT_REVISION=$(git describe --always)\nif [ ! -z $GIT_REVISION ]; then\nLIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\nLIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK_DEVICE=$(xcodebuild -showsdks | grep iphoneos | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\nLATEST_SDK_SIMULATOR=$(xcodebuild -showsdks | grep iphonesimulator | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\nfor current_style in $build_styles; do\nLIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\nif [ $current_style = \"Debug\" ]; then\nLIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\nelse\nLIBRARY_ARCHIVE=\"$TARGET.zip\"\nfi\n\n# remove existing output file\nrm -rf ${PROJECT_DIR}/lib\nmkdir -p ${PROJECT_DIR}/lib\n\n# Build library for simulator\nxcodebuild clean -target $TARGET -project cocos2d-ios.xcodeproj -configuration $current_style -sdk $LATEST_SDK_SIMULATOR\nxcodebuild -target $TARGET -project cocos2d-ios.xcodeproj -configuration $current_style -sdk $LATEST_SDK_SIMULATOR build\n\n# Build library for device\nxcodebuild clean -target $TARGET -project cocos2d-ios.xcodeproj -configuration $current_style -sdk $LATEST_SDK_DEVICE\nxcodebuild -target $TARGET -project cocos2d-ios.xcodeproj -configuration $current_style -sdk $LATEST_SDK_DEVICE build\n\n# Glue together libraries\nlipo \"${local_build_root}/${current_style}-iphoneos/$LIBRARY_NAME\" -arch i386 \"${local_build_root}/${current_style}-iphonesimulator/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n# Create symlink\ncd lib\nln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\ncd ..\n\nif [ $? -eq 0 ]; then\nzip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\nzip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n#zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\nfi\n\nif [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\nBUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\nNEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\nif [ $current_style = \"Debug\" ]; then\nOLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\nelse\nOLD_FOLDER=\"$DEST_DIR/$TARGET\"\nfi\nrm -rf $OLD_FOLDER\nmv $BUILT_ZIP \"$DEST_DIR/\"\nunzip -o $NEW_ZIP -d $OLD_FOLDER/\nrm -f $NEW_ZIP\nfi\n\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1687,6 +1831,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E61FF2BA17EE65A500D1857B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E61FF2C617EE65A500D1857B /* CocosLib.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6E7CBB617E7AD3F002C5FD3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1717,6 +1869,26 @@
 			isa = PBXTargetDependency;
 			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
 			targetProxy = A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */;
+		};
+		E61FF2E317EE65D700D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = E61FF2E217EE65D700D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF2E517EE65D700D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
+			targetProxy = E61FF2E417EE65D700D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF2E717EE65D700D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E61CF03B17E656BA00BDD9F5 /* libpng */;
+			targetProxy = E61FF2E617EE65D700D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF2E917EE65D700D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6E7CBB917E7AD3F002C5FD3 /* CocosDenshion */;
+			targetProxy = E61FF2E817EE65D700D1857B /* PBXContainerItemProxy */;
 		};
 		E67064F317E8FBCA0084FA92 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2071,6 +2243,114 @@
 			};
 			name = Release;
 		};
+		E61FF2DA17EE65A600D1857B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/CocosLib.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosLib/CocosLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E61FF2DB17EE65A600D1857B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/CocosLib.dst;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosLib/CocosLib-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		E61FF31017EE66A900D1857B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/CocosLibScript.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosLibScript/CocosLibScript-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		E61FF31117EE66A900D1857B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/CocosLibScript.dst;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosLibScript/CocosLibScript-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		E6E7CBD617E7AD3F002C5FD3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2181,6 +2461,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E61FF2DE17EE65A600D1857B /* Build configuration list for PBXNativeTarget "Cocos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E61FF2DA17EE65A600D1857B /* Debug */,
+				E61FF2DB17EE65A600D1857B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E61FF30F17EE66A900D1857B /* Build configuration list for PBXNativeTarget "CocosLib_Script" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E61FF31017EE66A900D1857B /* Debug */,
+				E61FF31117EE66A900D1857B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		E6E7CBDA17E7AD3F002C5FD3 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;
