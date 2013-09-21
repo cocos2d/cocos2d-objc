@@ -149,8 +149,6 @@
 		E6745F9517EDBB4F00C1277B /* CCES2Renderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC317EDBB4F00C1277B /* CCES2Renderer.h */; };
 		E6745F9617EDBB4F00C1277B /* CCESRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC417EDBB4F00C1277B /* CCESRenderer.h */; };
 		E6745F9717EDBB4F00C1277B /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC517EDBB4F00C1277B /* CCGLView.h */; };
-		E6745F9817EDBB4F00C1277B /* CCResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC617EDBB4F00C1277B /* CCResponder.h */; };
-		E6745F9917EDBB4F00C1277B /* CCResponderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC717EDBB4F00C1277B /* CCResponderManager.h */; };
 		E6745F9A17EDBB4F00C1277B /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745EC917EDBB4F00C1277B /* CCDirectorMac.h */; };
 		E6745F9B17EDBB4F00C1277B /* CCGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745ECA17EDBB4F00C1277B /* CCGLView.h */; };
 		E6745F9C17EDBB4F00C1277B /* CCWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745ECB17EDBB4F00C1277B /* CCWindow.h */; };
@@ -1871,7 +1869,6 @@
 				E6745F6917EDBB4F00C1277B /* CCRenderTexture.h in Headers */,
 				E6745F5D17EDBB4F00C1277B /* CCMotionStreak.h in Headers */,
 				E6745F4417EDBB4F00C1277B /* CCActionTiledGrid.h in Headers */,
-				E6745F9817EDBB4F00C1277B /* CCResponder.h in Headers */,
 				E6745FA917EDBB4F00C1277B /* utlist.h in Headers */,
 				E6745F3A17EDBB4F00C1277B /* CCActionCamera.h in Headers */,
 				E6745FA217EDBB4F00C1277B /* CGPointExtension.h in Headers */,
@@ -1908,7 +1905,6 @@
 				E6745F4117EDBB4F00C1277B /* CCActionManager.h in Headers */,
 				E6745F3C17EDBB4F00C1277B /* CCActionEase.h in Headers */,
 				E6745F8917EDBB4F00C1277B /* CCTMXLayer.h in Headers */,
-				E6745F9917EDBB4F00C1277B /* CCResponderManager.h in Headers */,
 				E6745F8317EDBB4F00C1277B /* CCSpriteFrameCache.h in Headers */,
 				E6745F4C17EDBB4F00C1277B /* CCConfiguration.h in Headers */,
 				E6745F4B17EDBB4F00C1277B /* ccConfig.h in Headers */,
@@ -2580,6 +2576,7 @@
 				E6745E5F17EDBAFF00C1277B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E674604017EDBB8F00C1277B /* Build configuration list for PBXNativeTarget "libpng" */ = {
 			isa = XCConfigurationList;
@@ -2588,6 +2585,7 @@
 				E674604217EDBB8F00C1277B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
