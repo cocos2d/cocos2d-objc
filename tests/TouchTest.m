@@ -204,8 +204,9 @@
     {
         case 0:
             // check that simple click works
-            label.string = @"#1 Click on Grossini";
-            [self newTouchSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
+            label.string = @"#1 Click on Grossini (2x touch area)";
+            sprite = [self newTouchSprite:@"grossini.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
+            sprite.hitAreaExpansion = 2.0;
             break;
             
         case 1:
@@ -235,7 +236,7 @@
             
         case 4:
             // check userInteractionClaimed
-            label.string = @"#5 Slide over Grossini and his sisters";
+            label.string = @"#5 Slide over Grossini and his sisters (1.5x touch area)";
             sprite = [self newSlideSprite:@"grossini.png" pos:ccp(win.x * 0.25, win.y * 0.5) z:0 user:YES];
             sprite = [self newSlideSprite:@"grossinis_sister1.png" pos:ccp(win.x * 0.5, win.y * 0.5) z:0 user:YES];
             sprite = [self newSlideSprite:@"grossinis_sister2.png" pos:ccp(win.x * 0.75, win.y * 0.5) z:0 user:YES];
@@ -273,6 +274,7 @@
     [self addChild:sprite z:z];
     sprite.userInteractionEnabled = user;
     sprite.userInteractionClaimed = NO;
+    sprite.hitAreaExpansion = 1.5;
     return(sprite);
 }
 
