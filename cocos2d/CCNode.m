@@ -154,6 +154,7 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.userInteractionClaimed = YES;
         self.multipleTouchEnabled = NO;
+        self.hitAreaExpansion = 1.0f;
         
 	}
 
@@ -1222,12 +1223,16 @@ static NSUInteger globalOrderOfArrival = 1;
 // -----------------------------------------------------------------
 
 /** Returns YES, if touch is inside sprite
+ Added hit area expansion / contraction
  @since v2.5
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
     pos = [self convertToNodeSpace:pos];
-    if ((pos.y < 0) || (pos.y > self.contentSizeInPoints.height) || (pos.x < 0) || (pos.x > self.contentSizeInPoints.width)) return(NO);
+    CGPoint offset = CGPointMake(self.contentSizeInPoints.width * (1 - _hitAreaExpansion) / 2, self.contentSizeInPoints.height * (1 - _hitAreaExpansion) / 2 );
+    CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
+    if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
+    
     return(YES);
 }
 
