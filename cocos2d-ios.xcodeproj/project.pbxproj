@@ -2259,8 +2259,8 @@
 				DSTROOT = /tmp/CocosLib.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosLib/CocosLib-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2288,8 +2288,8 @@
 				DSTROOT = /tmp/CocosLib.dst;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosLib/CocosLib-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					NS_BLOCK_ASSERTIONS,
@@ -2320,8 +2320,7 @@
 				DSTROOT = /tmp/CocosLibScript.dst;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosLibScript/CocosLibScript-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2349,8 +2348,7 @@
 				DSTROOT = /tmp/CocosLibScript.dst;
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosLibScript/CocosLibScript-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					NS_BLOCK_ASSERTIONS,
@@ -2485,6 +2483,7 @@
 				E61FF2DB17EE65A600D1857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E61FF30F17EE66A900D1857B /* Build configuration list for PBXNativeTarget "CocosLib_Script" */ = {
 			isa = XCConfigurationList;
@@ -2493,6 +2492,7 @@
 				E61FF31117EE66A900D1857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6E7CBDA17E7AD3F002C5FD3 /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;

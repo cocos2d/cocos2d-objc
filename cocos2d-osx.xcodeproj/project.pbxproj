@@ -2197,7 +2197,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\nSCRIPT_OPTIONS=\"MOVE_FILE\"\n#DEST_DIR=\"${PROJECT_DIR}/../SharedLibs\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --tags `git rev-list --tags --max-count=1`)\nif [ ! -z $GIT_REVISION ]; then\nLIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\nLIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\nfor current_style in $build_styles; do\nLIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\nif [ $current_style = \"Debug\" ]; then\nLIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\nelse\nLIBRARY_ARCHIVE=\"$TARGET.zip\"\nfi\n\n# remove existing output file\nrm -rf ${PROJECT_DIR}/lib\nmkdir -p ${PROJECT_DIR}/lib\n\n# Build library for MacOS X\nxcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\nxcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n# Glue together libraries\nlipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n# Create symlink\ncd lib\nln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\ncd ..\n\nif [ $? -eq 0 ]; then\nzip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\nzip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n#zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\nfi\n\nif [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\nBUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\nNEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\nif [ $current_style = \"Debug\" ]; then\nOLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\nelse\nOLD_FOLDER=\"$DEST_DIR/$TARGET\"\nfi\nrm -rf $OLD_FOLDER\nmv $BUILT_ZIP \"$DEST_DIR/\"\nunzip -o $NEW_ZIP -d $OLD_FOLDER/\nrm -f $NEW_ZIP\nfi\n\ndone";
+			shellScript = "#!/bin/sh\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\nSCRIPT_OPTIONS=\"MOVE_FILE\"\n#DEST_DIR=\"${PROJECT_DIR}/../SharedLibs\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --tags `git rev-list --tags --max-count=1`)\nif [ ! -z $GIT_REVISION ]; then\nLIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\nLIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\n\n# remove existing include dir\nrm -rf ${PROJECT_DIR}/include\nmkdir -p ${PROJECT_DIR}/include\n\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\nfor current_style in $build_styles; do\nLIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\nif [ $current_style = \"Debug\" ]; then\nLIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\nelse\nLIBRARY_ARCHIVE=\"$TARGET.zip\"\nfi\n\n# remove existing output file\nrm -rf ${PROJECT_DIR}/lib\nmkdir -p ${PROJECT_DIR}/lib\n\n# Build library for MacOS X\nxcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\nxcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n# Glue together libraries\nlipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n# Create symlink\ncd ${PROJECT_DIR}/lib\nln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\ncd ${PROJECT_DIR}\n\ncd ${PROJECT_DIR}/include\nmkdir -p cocos2d\nmkdir -p CocosDenshion\nmkdir -p kazmath\nmkdir -p libpng\ncd ${PROJECT_DIR}\n\nrsync -r ${PROJECT_DIR}/cocos2d/include/ ${PROJECT_DIR}/include/cocos2d/\nrsync -r ${PROJECT_DIR}/CocosDenshion/include/ ${PROJECT_DIR}/include/CocosDenshion/\nrsync -r ${PROJECT_DIR}/external/kazmath/include/kazmath/ ${PROJECT_DIR}/include/kazmath/\nrsync -r ${PROJECT_DIR}/external/libpng/include/ ${PROJECT_DIR}/include/libpng/\n\nif [ $? -eq 0 ]; then\nzip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\nzip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n#zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\nfi\n\nif [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\nBUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\nNEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\nif [ $current_style = \"Debug\" ]; then\nOLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\nelse\nOLD_FOLDER=\"$DEST_DIR/$TARGET\"\nfi\nrm -rf $OLD_FOLDER\nmv $BUILT_ZIP \"$DEST_DIR/\"\nunzip -o $NEW_ZIP -d $OLD_FOLDER/\nrm -f $NEW_ZIP\nfi\n\nrm -rf ${PROJECT_DIR}/include\n\ndone";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2609,8 +2609,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosMac/CocosMac-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2643,8 +2643,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosMac/CocosMac-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -2671,8 +2671,8 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosMac_Script/CocosMac_Script-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -2705,8 +2705,8 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "CocosMac_Script/CocosMac_Script-Prefix.pch";
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
@@ -2885,6 +2885,7 @@
 				E61FF33517EE6B1400D1857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E61FF35817EE6B2800D1857B /* Build configuration list for PBXNativeTarget "CocosMac_Script" */ = {
 			isa = XCConfigurationList;
@@ -2893,6 +2894,7 @@
 				E61FF35A17EE6B2800D1857B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		E6745E5D17EDBAFF00C1277B /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;
