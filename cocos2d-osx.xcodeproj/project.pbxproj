@@ -290,6 +290,8 @@
 		E674608417EDBBE200C1277B /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606C17EDBBE200C1277B /* pngwrite.c */; };
 		E674608517EDBBE200C1277B /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606D17EDBBE200C1277B /* pngwtran.c */; };
 		E674608617EDBBE200C1277B /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606E17EDBBE200C1277B /* pngwutil.c */; };
+		E6E352BA17EF4FA80026E90C /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352B917EF4FA80026E90C /* NSEvent+CC.h */; };
+		E6E352BC17EF4FB60026E90C /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352BB17EF4FB60026E90C /* NSEvent+CC.m */; };
 		E6E838C917EEF3C400613665 /* CocosLibMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E838C717EEF3C400613665 /* CocosLibMac.h */; };
 		E6E838CE17EEF44E00613665 /* CocosLibMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E838C817EEF3C400613665 /* CocosLibMac.m */; };
 /* End PBXBuildFile section */
@@ -800,6 +802,8 @@
 		E674606F17EDBBE200C1277B /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		E674607017EDBBE200C1277B /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		E674607117EDBBE200C1277B /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
+		E6E352B917EF4FA80026E90C /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
+		E6E352BB17EF4FB60026E90C /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		E6E838C717EEF3C400613665 /* CocosLibMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosLibMac.h; sourceTree = "<group>"; };
 		E6E838C817EEF3C400613665 /* CocosLibMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosLibMac.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1573,6 +1577,7 @@
 		E6745EC817EDBB4F00C1277B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
+				E6E352B917EF4FA80026E90C /* NSEvent+CC.h */,
 				E6745EC917EDBB4F00C1277B /* CCDirectorMac.h */,
 				E6745ECA17EDBB4F00C1277B /* CCGLView.h */,
 				E6745ECB17EDBB4F00C1277B /* CCWindow.h */,
@@ -1704,6 +1709,7 @@
 		E6745F2917EDBB4F00C1277B /* Mac */ = {
 			isa = PBXGroup;
 			children = (
+				E6E352BB17EF4FB60026E90C /* NSEvent+CC.m */,
 				E6745F2A17EDBB4F00C1277B /* CCDirectorMac.m */,
 				E6745F2B17EDBB4F00C1277B /* CCGLView.m */,
 				E6745F2C17EDBB4F00C1277B /* CCWindow.m */,
@@ -1979,6 +1985,7 @@
 				E6745F3B17EDBB4F00C1277B /* CCActionCatmullRom.h in Headers */,
 				E6745F6017EDBB4F00C1277B /* CCParallaxNode.h in Headers */,
 				E6745FA417EDBB4F00C1277B /* NSThread+performBlock.h in Headers */,
+				E6E352BA17EF4FA80026E90C /* NSEvent+CC.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2238,6 +2245,7 @@
 				E6745FAF17EDBB4F00C1277B /* CCActionGrid.m in Sources */,
 				E6745FE017EDBB4F00C1277B /* CCSprite9Slice.m in Sources */,
 				E6745FB517EDBB4F00C1277B /* CCActionProgressTimer.m in Sources */,
+				E6E352BC17EF4FB60026E90C /* NSEvent+CC.m in Sources */,
 				E6745FAB17EDBB4F00C1277B /* CCAction.m in Sources */,
 				E6745FD417EDBB4F00C1277B /* CCParticleSystemQuad.m in Sources */,
 				E6745FDD17EDBB4F00C1277B /* CCShaderCache.m in Sources */,

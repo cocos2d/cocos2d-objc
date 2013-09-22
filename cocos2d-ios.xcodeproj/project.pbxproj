@@ -256,6 +256,8 @@
 		E61FF2EC17EE669900D1857B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */; };
 		E61FF2ED17EE669900D1857B /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */; };
 		E61FF2EE17EE669900D1857B /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E61CF03C17E656BA00BDD9F5 /* liblibpng.a */; };
+		E6E352BE17EF4FCF0026E90C /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352BD17EF4FCF0026E90C /* UITouch+CC.h */; };
+		E6E352C017EF4FE20026E90C /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352BF17EF4FE20026E90C /* UITouch+CC.m */; };
 		E6E7CBBB17E7AD3F002C5FD3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		E6E7CBDC17E7ADA6002C5FD3 /* CDAudioManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CEE8117E655B300BDD9F5 /* CDAudioManager.m */; };
 		E6E7CBDD17E7ADA6002C5FD3 /* CDOpenALSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = E61CEE8217E655B300BDD9F5 /* CDOpenALSupport.m */; };
@@ -687,6 +689,8 @@
 		E61CF04A17E656BA00BDD9F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		E61FF2BE17EE65A500D1857B /* libCocos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61FF2F317EE66A900D1857B /* libCocosLib_Script.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLib_Script.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E6E352BD17EF4FCF0026E90C /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
+		E6E352BF17EF4FE20026E90C /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
 		E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6E838C117EEF2D300613665 /* CocosLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosLib.h; sourceTree = "<group>"; };
 		E6E838C217EEF2D300613665 /* CocosLib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosLib.m; sourceTree = "<group>"; };
@@ -1069,6 +1073,7 @@
 		E61CEDFE17E655B300BDD9F5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E6E352BD17EF4FCF0026E90C /* UITouch+CC.h */,
 				E61CEDFF17E655B300BDD9F5 /* CCDirectorIOS.h */,
 				E61CEE0017E655B300BDD9F5 /* CCES2Renderer.h */,
 				E61CEE0117E655B300BDD9F5 /* CCESRenderer.h */,
@@ -1201,6 +1206,7 @@
 		E61CEE6017E655B300BDD9F5 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				E6E352BF17EF4FE20026E90C /* UITouch+CC.m */,
 				E61CEE6117E655B300BDD9F5 /* CCDirectorIOS.m */,
 				E61CEE6217E655B300BDD9F5 /* CCES2Renderer.m */,
 				E61CEE6317E655B300BDD9F5 /* CCGLView.m */,
@@ -1379,6 +1385,7 @@
 				E61CEEAF17E655B300BDD9F5 /* CCConfiguration.h in Headers */,
 				E61CEF0317E655B300BDD9F5 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				E61CEEA517E655B300BDD9F5 /* CCAnimationCache.h in Headers */,
+				E6E352BE17EF4FCF0026E90C /* UITouch+CC.h in Headers */,
 				E61CF02517E655B300BDD9F5 /* CDXMacOSXSupport.h in Headers */,
 				E61CEEDB17E655B300BDD9F5 /* CCParticleExamples.h in Headers */,
 				E61CEEED17E655B300BDD9F5 /* CCResponderManager.h in Headers */,
@@ -1683,6 +1690,7 @@
 				E61CEFDD17E655B300BDD9F5 /* CCSpriteFrameCache.m in Sources */,
 				E61CEFCD17E655B300BDD9F5 /* CCScene.m in Sources */,
 				E61CEFB917E655B300BDD9F5 /* CCParticleBatchNode.m in Sources */,
+				E6E352C017EF4FE20026E90C /* UITouch+CC.m in Sources */,
 				E61CEF8B17E655B300BDD9F5 /* CCAtlasNode.m in Sources */,
 				E61CEF8517E655B300BDD9F5 /* CCActionTween.m in Sources */,
 				E61CEFB317E655B300BDD9F5 /* CCNode+Debug.m in Sources */,
