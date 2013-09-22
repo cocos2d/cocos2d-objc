@@ -47,3 +47,5 @@ Backup[ ]of[ ]*.numbers/
 /include/
 CocosMac-Debug.zip
 CocosMac.zip
+/Cocos-Debug.zip
+/Cocos.zip
