@@ -43,3 +43,7 @@ Backup[ ]of[ ]*.pages/
 Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
+
+/include/
+CocosMac-Debug.zip
+CocosMac.zip

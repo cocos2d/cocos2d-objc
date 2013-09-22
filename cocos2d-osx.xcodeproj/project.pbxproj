@@ -54,7 +54,6 @@
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
 		E61FF31B17EE6B1400D1857B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6745E4217EDBAFE00C1277B /* Cocoa.framework */; };
-		E61FF32117EE6B1400D1857B /* CocosMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FF32017EE6B1400D1857B /* CocosMac.m */; };
 		E61FF36717EE6B6D00D1857B /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E663D121CA00A001A484F /* libcocos2d.a */; };
 		E61FF36817EE6B6D00D1857B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6745E4117EDBAFE00C1277B /* libCocosDenshion.a */; };
 		E61FF36917EE6B6D00D1857B /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
@@ -291,6 +290,8 @@
 		E674608417EDBBE200C1277B /* pngwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606C17EDBBE200C1277B /* pngwrite.c */; };
 		E674608517EDBBE200C1277B /* pngwtran.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606D17EDBBE200C1277B /* pngwtran.c */; };
 		E674608617EDBBE200C1277B /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606E17EDBBE200C1277B /* pngwutil.c */; };
+		E6E838C917EEF3C400613665 /* CocosLibMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E838C717EEF3C400613665 /* CocosLibMac.h */; };
+		E6E838CE17EEF44E00613665 /* CocosLibMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E838C817EEF3C400613665 /* CocosLibMac.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -536,13 +537,7 @@
 		E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		E61FF31A17EE6B1300D1857B /* libCocosMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E61FF31E17EE6B1400D1857B /* CocosMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosMac-Prefix.pch"; sourceTree = "<group>"; };
-		E61FF31F17EE6B1400D1857B /* CocosMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosMac.h; sourceTree = "<group>"; };
-		E61FF32017EE6B1400D1857B /* CocosMac.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosMac.m; sourceTree = "<group>"; };
 		E61FF33E17EE6B2800D1857B /* libCocosMac_Script.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosMac_Script.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		E61FF34217EE6B2800D1857B /* CocosMac_Script-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosMac_Script-Prefix.pch"; sourceTree = "<group>"; };
-		E61FF34317EE6B2800D1857B /* CocosMac_Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosMac_Script.h; sourceTree = "<group>"; };
-		E61FF34417EE6B2800D1857B /* CocosMac_Script.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosMac_Script.m; sourceTree = "<group>"; };
 		E6745E4117EDBAFE00C1277B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6745E4217EDBAFE00C1277B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E6745E4F17EDBAFF00C1277B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -805,6 +800,8 @@
 		E674606F17EDBBE200C1277B /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		E674607017EDBBE200C1277B /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		E674607117EDBBE200C1277B /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
+		E6E838C717EEF3C400613665 /* CocosLibMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosLibMac.h; sourceTree = "<group>"; };
+		E6E838C817EEF3C400613665 /* CocosLibMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosLibMac.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -914,11 +911,10 @@
 				A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */,
 				A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */,
 				E6745E6317EDBB4E00C1277B /* cocos2d */,
+				E6E838C617EEF3C400613665 /* CocosLibMac */,
 				E674600417EDBB6400C1277B /* CocosDenshion */,
 				E076EF801225FF3E00DE0DA2 /* external */,
 				A0DAF85316950AC700CD5494 /* templates */,
-				E61FF31C17EE6B1400D1857B /* CocosMac */,
-				E61FF34017EE6B2800D1857B /* CocosMac_Script */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -1443,42 +1439,6 @@
 			name = external;
 			sourceTree = "<group>";
 		};
-		E61FF31C17EE6B1400D1857B /* CocosMac */ = {
-			isa = PBXGroup;
-			children = (
-				E61FF31F17EE6B1400D1857B /* CocosMac.h */,
-				E61FF32017EE6B1400D1857B /* CocosMac.m */,
-				E61FF31D17EE6B1400D1857B /* Supporting Files */,
-			);
-			path = CocosMac;
-			sourceTree = "<group>";
-		};
-		E61FF31D17EE6B1400D1857B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E61FF31E17EE6B1400D1857B /* CocosMac-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		E61FF34017EE6B2800D1857B /* CocosMac_Script */ = {
-			isa = PBXGroup;
-			children = (
-				E61FF34317EE6B2800D1857B /* CocosMac_Script.h */,
-				E61FF34417EE6B2800D1857B /* CocosMac_Script.m */,
-				E61FF34117EE6B2800D1857B /* Supporting Files */,
-			);
-			path = CocosMac_Script;
-			sourceTree = "<group>";
-		};
-		E61FF34117EE6B2800D1857B /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				E61FF34217EE6B2800D1857B /* CocosMac_Script-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		E6745E6317EDBB4E00C1277B /* cocos2d */ = {
 			isa = PBXGroup;
 			children = (
@@ -1871,6 +1831,15 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		E6E838C617EEF3C400613665 /* CocosLibMac */ = {
+			isa = PBXGroup;
+			children = (
+				E6E838C717EEF3C400613665 /* CocosLibMac.h */,
+				E6E838C817EEF3C400613665 /* CocosLibMac.m */,
+			);
+			path = CocosLibMac;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -2017,6 +1986,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E6E838C917EEF3C400613665 /* CocosLibMac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2085,7 +2055,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E61FF33817EE6B1400D1857B /* Build configuration list for PBXNativeTarget "CocosMac" */;
 			buildPhases = (
-				E61FF31617EE6B1300D1857B /* Sources */,
+				E6E838CD17EEF43E00613665 /* Sources */,
 				E61FF31717EE6B1300D1857B /* Frameworks */,
 				E61FF31817EE6B1300D1857B /* Headers */,
 			);
@@ -2197,7 +2167,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\nSCRIPT_OPTIONS=\"MOVE_FILE\"\n#DEST_DIR=\"${PROJECT_DIR}/../SharedLibs\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --always)\nif [ ! -z $GIT_REVISION ]; then\n    LIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\n    LIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\n\n# remove existing include dir\nrm -rf ${PROJECT_DIR}/include\nmkdir -p ${PROJECT_DIR}/include\n\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\nfor current_style in $build_styles; do\n    LIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\n    if [ $current_style = \"Debug\" ]; then\n        LIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\n    else\n        LIBRARY_ARCHIVE=\"$TARGET.zip\"\n    fi\n\n    # remove existing output file\n    rm -rf ${PROJECT_DIR}/lib\n    mkdir -p ${PROJECT_DIR}/lib\n\n    # Build library for MacOS X\n    xcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\n    xcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n    # Glue together libraries\n    lipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n    # Create symlink\n    cd ${PROJECT_DIR}/lib\n    ln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\n    cd ${PROJECT_DIR}\n\n    cd ${PROJECT_DIR}/include\n    mkdir -p cocos2d\n    mkdir -p CocosDenshion\n    mkdir -p kazmath\n    mkdir -p libpng\n    cd ${PROJECT_DIR}\n\n    rsync -r ${PROJECT_DIR}/cocos2d/include/ ${PROJECT_DIR}/include/cocos2d/\n    rsync -r ${PROJECT_DIR}/CocosDenshion/include/ ${PROJECT_DIR}/include/CocosDenshion/\n    rsync -r ${PROJECT_DIR}/external/kazmath/include/kazmath/ ${PROJECT_DIR}/include/kazmath/\n    rsync -r ${PROJECT_DIR}/external/libpng/include/ ${PROJECT_DIR}/include/libpng/\n    #TODO: deal with either Chipmunk or Box2D\n    #unless they are not going to be packaged with this library any longer\n\n    if [ $? -eq 0 ]; then\n        zip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\n        zip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n        #zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\n    fi\n\n    if [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\n        BUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\n        NEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\n        if [ $current_style = \"Debug\" ]; then\n            OLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\n        else\n            OLD_FOLDER=\"$DEST_DIR/$TARGET\"\n        fi\n        rm -rf $OLD_FOLDER\n        mv $BUILT_ZIP \"$DEST_DIR/\"\n        unzip -o $NEW_ZIP -d $OLD_FOLDER/\n        rm -f $NEW_ZIP\n    fi\n\n    rm -rf ${PROJECT_DIR}/include\n\ndone";
+			shellScript = "#!/bin/sh\n\nset -e\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\n#SCRIPT_OPTIONS=\"MOVE_FILE\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --always)\nif [ ! -z $GIT_REVISION ]; then\n    LIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\n    LIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\n\n# remove existing include dir\nrm -rf ${PROJECT_DIR}/include\nmkdir -p ${PROJECT_DIR}/include\n\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\n# Copy headers\ncd ${PROJECT_DIR}/include\nmkdir -p cocos2d\nmkdir -p CocosDenshion\nmkdir -p external\nmkdir -p external/kazmath\nmkdir -p external/libpng\ncd ${PROJECT_DIR}\n\nrsync -r ${PROJECT_DIR}/cocos2d/include/ ${PROJECT_DIR}/include/cocos2d/\nrsync -r ${PROJECT_DIR}/CocosDenshion/include/ ${PROJECT_DIR}/include/CocosDenshion/\nrsync -r ${PROJECT_DIR}/external/kazmath/include/kazmath/ ${PROJECT_DIR}/include/external/kazmath/\nrsync -r ${PROJECT_DIR}/external/libpng/include/ ${PROJECT_DIR}/include/external/libpng/\n# Build libraries\nfor current_style in $build_styles; do\n    LIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\n    if [ $current_style = \"Debug\" ]; then\n        LIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\n    else\n        LIBRARY_ARCHIVE=\"$TARGET.zip\"\n    fi\n\n    # remove existing output file\n    rm -rf ${PROJECT_DIR}/lib\n    mkdir -p ${PROJECT_DIR}/lib\n\n    # Build library for MacOS X\n    xcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\n    xcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n    # Glue together libraries\n    lipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n    # Create symlink\n    cd lib\n    ln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\n    cd ..\n\n    #TODO: deal with either Chipmunk or Box2D\n    #unless they are not going to be packaged with this library any longer\n\n    if [ $? -eq 0 ]; then\n        zip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\n        zip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n        #zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\n    fi\n\n    if [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\n        BUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\n        NEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\n        if [ $current_style = \"Debug\" ]; then\n            OLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\n        else\n            OLD_FOLDER=\"$DEST_DIR/$TARGET\"\n        fi\n        rm -rf $OLD_FOLDER\n        mv $BUILT_ZIP \"$DEST_DIR/\"\n        unzip -o $NEW_ZIP -d $OLD_FOLDER/\n        rm -f $NEW_ZIP\n    fi\ndone\n\nrm -rf ${PROJECT_DIR}/include\nrm -rf ${PROJECT_DIR}/build\n#rm -rf ${PROJECT_DIR}/lib\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2312,14 +2282,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E61FF31617EE6B1300D1857B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E61FF32117EE6B1400D1857B /* CocosMac.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E6745E3D17EDBAFE00C1277B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2356,6 +2318,14 @@
 				E674608317EDBBE200C1277B /* pngwio.c in Sources */,
 				E674608017EDBBE200C1277B /* pngtest.c in Sources */,
 				E674607817EDBBE200C1277B /* pngget.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E6E838CD17EEF43E00613665 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E6E838CE17EEF44E00613665 /* CocosLibMac.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
