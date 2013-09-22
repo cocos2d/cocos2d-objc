@@ -53,6 +53,12 @@
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
+		E61FF31B17EE6B1400D1857B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6745E4217EDBAFE00C1277B /* Cocoa.framework */; };
+		E61FF32117EE6B1400D1857B /* CocosMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E61FF32017EE6B1400D1857B /* CocosMac.m */; };
+		E61FF36717EE6B6D00D1857B /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E663D121CA00A001A484F /* libcocos2d.a */; };
+		E61FF36817EE6B6D00D1857B /* libCocosDenshion.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E6745E4117EDBAFE00C1277B /* libCocosDenshion.a */; };
+		E61FF36917EE6B6D00D1857B /* libkazmath.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A06430E713C1414300CC5554 /* libkazmath.a */; };
+		E61FF36A17EE6B6D00D1857B /* liblibpng.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E674602617EDBB8E00C1277B /* liblibpng.a */; };
 		E6745E4317EDBAFE00C1277B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6745E4217EDBAFE00C1277B /* Cocoa.framework */; };
 		E6745F3917EDBB4F00C1277B /* CCAction.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745E6517EDBB4E00C1277B /* CCAction.h */; };
 		E6745F3A17EDBB4F00C1277B /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = E6745E6617EDBB4E00C1277B /* CCActionCamera.h */; };
@@ -295,6 +301,34 @@
 			remoteGlobalIDString = A06430E613C1414300CC5554;
 			remoteInfo = kazmath;
 		};
+		E61FF35F17EE6B6200D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E01E663C121CA00A001A484F;
+			remoteInfo = cocos2d;
+		};
+		E61FF36117EE6B6200D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A06430E613C1414300CC5554;
+			remoteInfo = kazmath;
+		};
+		E61FF36317EE6B6200D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6745E4017EDBAFE00C1277B;
+			remoteInfo = CocosDenshion;
+		};
+		E61FF36517EE6B6200D1857B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E674602517EDBB8E00C1277B;
+			remoteInfo = libpng;
+		};
 		E674609017EDC10200C1277B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -501,6 +535,14 @@
 		E0D5D6DF1343FAEF00A7B1B9 /* LICENSE_CocosDenshion.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_CocosDenshion.txt; sourceTree = "<group>"; };
 		E0D5D6E11343FAEF00A7B1B9 /* LICENSE_libpng.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE_libpng.txt; sourceTree = "<group>"; };
 		E0F9256D1224207200EF2362 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		E61FF31A17EE6B1300D1857B /* libCocosMac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosMac.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF31E17EE6B1400D1857B /* CocosMac-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosMac-Prefix.pch"; sourceTree = "<group>"; };
+		E61FF31F17EE6B1400D1857B /* CocosMac.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosMac.h; sourceTree = "<group>"; };
+		E61FF32017EE6B1400D1857B /* CocosMac.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosMac.m; sourceTree = "<group>"; };
+		E61FF33E17EE6B2800D1857B /* libCocosMac_Script.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosMac_Script.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF34217EE6B2800D1857B /* CocosMac_Script-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosMac_Script-Prefix.pch"; sourceTree = "<group>"; };
+		E61FF34317EE6B2800D1857B /* CocosMac_Script.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosMac_Script.h; sourceTree = "<group>"; };
+		E61FF34417EE6B2800D1857B /* CocosMac_Script.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosMac_Script.m; sourceTree = "<group>"; };
 		E6745E4117EDBAFE00C1277B /* libCocosDenshion.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosDenshion.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6745E4217EDBAFE00C1277B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		E6745E4F17EDBAFF00C1277B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -784,6 +826,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E61FF31717EE6B1300D1857B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E61FF36717EE6B6D00D1857B /* libcocos2d.a in Frameworks */,
+				E61FF36817EE6B6D00D1857B /* libCocosDenshion.a in Frameworks */,
+				E61FF36917EE6B6D00D1857B /* libkazmath.a in Frameworks */,
+				E61FF36A17EE6B6D00D1857B /* liblibpng.a in Frameworks */,
+				E61FF31B17EE6B1400D1857B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6745E3E17EDBAFE00C1277B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -834,6 +888,8 @@
 				A06430E713C1414300CC5554 /* libkazmath.a */,
 				E6745E4117EDBAFE00C1277B /* libCocosDenshion.a */,
 				E674602617EDBB8E00C1277B /* liblibpng.a */,
+				E61FF31A17EE6B1300D1857B /* libCocosMac.a */,
+				E61FF33E17EE6B2800D1857B /* libCocosMac_Script.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -861,6 +917,8 @@
 				E674600417EDBB6400C1277B /* CocosDenshion */,
 				E076EF801225FF3E00DE0DA2 /* external */,
 				A0DAF85316950AC700CD5494 /* templates */,
+				E61FF31C17EE6B1400D1857B /* CocosMac */,
+				E61FF34017EE6B2800D1857B /* CocosMac_Script */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -1383,6 +1441,42 @@
 				A0B5329713C141FF0072EDA4 /* kazmath */,
 			);
 			name = external;
+			sourceTree = "<group>";
+		};
+		E61FF31C17EE6B1400D1857B /* CocosMac */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF31F17EE6B1400D1857B /* CocosMac.h */,
+				E61FF32017EE6B1400D1857B /* CocosMac.m */,
+				E61FF31D17EE6B1400D1857B /* Supporting Files */,
+			);
+			path = CocosMac;
+			sourceTree = "<group>";
+		};
+		E61FF31D17EE6B1400D1857B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF31E17EE6B1400D1857B /* CocosMac-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E61FF34017EE6B2800D1857B /* CocosMac_Script */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF34317EE6B2800D1857B /* CocosMac_Script.h */,
+				E61FF34417EE6B2800D1857B /* CocosMac_Script.m */,
+				E61FF34117EE6B2800D1857B /* Supporting Files */,
+			);
+			path = CocosMac_Script;
+			sourceTree = "<group>";
+		};
+		E61FF34117EE6B2800D1857B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E61FF34217EE6B2800D1857B /* CocosMac_Script-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		E6745E6317EDBB4E00C1277B /* cocos2d */ = {
@@ -1919,6 +2013,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E61FF31817EE6B1300D1857B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6745E3F17EDBAFE00C1277B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1978,6 +2079,42 @@
 			name = cocos2d;
 			productName = cocos2d;
 			productReference = E01E663D121CA00A001A484F /* libcocos2d.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E61FF31917EE6B1300D1857B /* CocosMac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E61FF33817EE6B1400D1857B /* Build configuration list for PBXNativeTarget "CocosMac" */;
+			buildPhases = (
+				E61FF31617EE6B1300D1857B /* Sources */,
+				E61FF31717EE6B1300D1857B /* Frameworks */,
+				E61FF31817EE6B1300D1857B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				E61FF36017EE6B6200D1857B /* PBXTargetDependency */,
+				E61FF36217EE6B6200D1857B /* PBXTargetDependency */,
+				E61FF36417EE6B6200D1857B /* PBXTargetDependency */,
+				E61FF36617EE6B6200D1857B /* PBXTargetDependency */,
+			);
+			name = CocosMac;
+			productName = CocosMac;
+			productReference = E61FF31A17EE6B1300D1857B /* libCocosMac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		E61FF33D17EE6B2800D1857B /* CocosMac_Script */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E61FF35817EE6B2800D1857B /* Build configuration list for PBXNativeTarget "CocosMac_Script" */;
+			buildPhases = (
+				E61FF35E17EE6B4B00D1857B /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocosMac_Script;
+			productName = CocosMac_Script;
+			productReference = E61FF33E17EE6B2800D1857B /* libCocosMac_Script.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E6745E4017EDBAFE00C1277B /* CocosDenshion */ = {
@@ -2042,9 +2179,27 @@
 				A06430E613C1414300CC5554 /* kazmath */,
 				E6745E4017EDBAFE00C1277B /* CocosDenshion */,
 				E674602517EDBB8E00C1277B /* libpng */,
+				E61FF31917EE6B1300D1857B /* CocosMac */,
+				E61FF33D17EE6B2800D1857B /* CocosMac_Script */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		E61FF35E17EE6B4B00D1857B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/sh\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\nSCRIPT_OPTIONS=\"MOVE_FILE\"\n#DEST_DIR=\"${PROJECT_DIR}/../SharedLibs\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --tags `git rev-list --tags --max-count=1`)\nif [ ! -z $GIT_REVISION ]; then\nLIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\nLIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\nfor current_style in $build_styles; do\nLIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\nif [ $current_style = \"Debug\" ]; then\nLIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\nelse\nLIBRARY_ARCHIVE=\"$TARGET.zip\"\nfi\n\n# remove existing output file\nrm -rf ${PROJECT_DIR}/lib\nmkdir -p ${PROJECT_DIR}/lib\n\n# Build library for MacOS X\nxcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\nxcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n# Glue together libraries\nlipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n# Create symlink\ncd lib\nln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\ncd ..\n\nif [ $? -eq 0 ]; then\nzip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\nzip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n#zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\nfi\n\nif [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\nBUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\nNEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\nif [ $current_style = \"Debug\" ]; then\nOLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\nelse\nOLD_FOLDER=\"$DEST_DIR/$TARGET\"\nfi\nrm -rf $OLD_FOLDER\nmv $BUILT_ZIP \"$DEST_DIR/\"\nunzip -o $NEW_ZIP -d $OLD_FOLDER/\nrm -f $NEW_ZIP\nfi\n\ndone";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A06430E413C1414300CC5554 /* Sources */ = {
@@ -2157,6 +2312,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E61FF31617EE6B1300D1857B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E61FF32117EE6B1400D1857B /* CocosMac.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E6745E3D17EDBAFE00C1277B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2203,6 +2366,26 @@
 			isa = PBXTargetDependency;
 			target = A06430E613C1414300CC5554 /* kazmath */;
 			targetProxy = A064312813C1418600CC5554 /* PBXContainerItemProxy */;
+		};
+		E61FF36017EE6B6200D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E01E663C121CA00A001A484F /* cocos2d */;
+			targetProxy = E61FF35F17EE6B6200D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF36217EE6B6200D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A06430E613C1414300CC5554 /* kazmath */;
+			targetProxy = E61FF36117EE6B6200D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF36417EE6B6200D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6745E4017EDBAFE00C1277B /* CocosDenshion */;
+			targetProxy = E61FF36317EE6B6200D1857B /* PBXContainerItemProxy */;
+		};
+		E61FF36617EE6B6200D1857B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E674602517EDBB8E00C1277B /* libpng */;
+			targetProxy = E61FF36517EE6B6200D1857B /* PBXContainerItemProxy */;
 		};
 		E674609117EDC10200C1277B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2277,7 +2460,7 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
-					DEBUG,
+					"DEBUG=1",
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"COCOS2D_DEBUG=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
@@ -2312,6 +2495,8 @@
 					NS_BLOCK_ASSERTIONS,
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					"CC_DIRECTOR_MAC_THREAD=2",
+					"DEBUG=0",
+					"COCOS2D_DEBUG=0",
 				);
 				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -2403,6 +2588,130 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				PRODUCT_NAME = "build all libs";
 				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		E61FF33417EE6B1400D1857B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosMac/CocosMac-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E61FF33517EE6B1400D1857B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosMac/CocosMac-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		E61FF35917EE6B2800D1857B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosMac_Script/CocosMac_Script-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		E61FF35A17EE6B2800D1857B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CocosMac_Script/CocosMac_Script-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -2568,6 +2877,22 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		E61FF33817EE6B1400D1857B /* Build configuration list for PBXNativeTarget "CocosMac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E61FF33417EE6B1400D1857B /* Debug */,
+				E61FF33517EE6B1400D1857B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		E61FF35817EE6B2800D1857B /* Build configuration list for PBXNativeTarget "CocosMac_Script" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E61FF35917EE6B2800D1857B /* Debug */,
+				E61FF35A17EE6B2800D1857B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		E6745E5D17EDBAFF00C1277B /* Build configuration list for PBXNativeTarget "CocosDenshion" */ = {
 			isa = XCConfigurationList;

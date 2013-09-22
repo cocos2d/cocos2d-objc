@@ -1,0 +1,11 @@
+\*.DS_Store
+*.settings
+*.project
+*/*.svn/*
+*.class
+*.jdb
+*.id
+*.lck
+*.jar
+Utilities/*
+Utilities-Debug/*

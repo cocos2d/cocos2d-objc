@@ -685,11 +685,11 @@
 		E61CEE8717E655B300BDD9F5 /* SimpleAudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleAudioEngine.m; sourceTree = "<group>"; };
 		E61CF03C17E656BA00BDD9F5 /* liblibpng.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = liblibpng.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61CF04A17E656BA00BDD9F5 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		E61FF2BE17EE65A500D1857B /* libCocosLib.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLib.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF2BE17EE65A500D1857B /* libCocos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocos.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61FF2C217EE65A500D1857B /* CocosLib-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosLib-Prefix.pch"; sourceTree = "<group>"; };
 		E61FF2C317EE65A500D1857B /* CocosLib.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosLib.h; sourceTree = "<group>"; };
 		E61FF2C517EE65A500D1857B /* CocosLib.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosLib.m; sourceTree = "<group>"; };
-		E61FF2F317EE66A900D1857B /* libCocosLibScript.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLibScript.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		E61FF2F317EE66A900D1857B /* libCocosLib_Script.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocosLib_Script.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E61FF2F717EE66A900D1857B /* CocosLibScript-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CocosLibScript-Prefix.pch"; sourceTree = "<group>"; };
 		E61FF2F817EE66A900D1857B /* CocosLibScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CocosLibScript.h; sourceTree = "<group>"; };
 		E61FF2FA17EE66A900D1857B /* CocosLibScript.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CocosLibScript.m; sourceTree = "<group>"; };
@@ -761,8 +761,8 @@
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
 				E61CF03C17E656BA00BDD9F5 /* liblibpng.a */,
 				E6E7CBBA17E7AD3F002C5FD3 /* libCocosDenshion.a */,
-				E61FF2BE17EE65A500D1857B /* libCocosLib.a */,
-				E61FF2F317EE66A900D1857B /* libCocosLibScript.a */,
+				E61FF2BE17EE65A500D1857B /* libCocos.a */,
+				E61FF2F317EE66A900D1857B /* libCocosLib_Script.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1584,7 +1584,7 @@
 			);
 			name = Cocos;
 			productName = CocosLib;
-			productReference = E61FF2BE17EE65A500D1857B /* libCocosLib.a */;
+			productReference = E61FF2BE17EE65A500D1857B /* libCocos.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E61FF2F217EE66A900D1857B /* CocosLib_Script */ = {
@@ -1599,7 +1599,7 @@
 			);
 			name = CocosLib_Script;
 			productName = CocosLibScript;
-			productReference = E61FF2F317EE66A900D1857B /* libCocosLibScript.a */;
+			productReference = E61FF2F317EE66A900D1857B /* libCocosLib_Script.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		E6E7CBB917E7AD3F002C5FD3 /* CocosDenshion */ = {
@@ -2157,6 +2157,8 @@
 					"CC_ENABLE_GL_STATE_CACHE=1",
 					NS_BLOCK_ASSERTIONS,
 					NDEBUG,
+					"DEBUG=0",
+					"COCOS2D_DEBUG=0",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				GCC_THUMB_SUPPORT = NO;
@@ -2246,7 +2248,7 @@
 		E61FF2DA17EE65A600D1857B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2275,7 +2277,7 @@
 		E61FF2DB17EE65A600D1857B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -2288,6 +2290,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocosLib/CocosLib-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					NS_BLOCK_ASSERTIONS,
+					NDEBUG,
+					"DEBUG=0",
+					"COCOS2D_DEBUG=0",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2342,6 +2351,13 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "CocosLibScript/CocosLibScript-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"CC_ENABLE_GL_STATE_CACHE=1",
+					NS_BLOCK_ASSERTIONS,
+					NDEBUG,
+					"DEBUG=0",
+					"COCOS2D_DEBUG=0",
+				);
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				OTHER_LDFLAGS = "-ObjC";
