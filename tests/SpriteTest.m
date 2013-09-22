@@ -3340,6 +3340,17 @@ Class restartAction()
     
     [ self scheduleUpdate ];
     
+    // test for atlas + rotated texture
+    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"zwoptex/grossini.plist"];
+
+    CCSprite9Slice *rotatedSprite = [CCSprite9Slice spriteWithSpriteFrameName:@"grossini_dance_01.png"];
+    rotatedSprite.position = ccp([CCDirector sharedDirector].winSize.width * 0.1, [CCDirector sharedDirector].winSize.height * 0.5);
+    [self addChild:rotatedSprite];
+    
+    CCSprite9Slice *normalSprite = [CCSprite9Slice spriteWithSpriteFrameName:@"grossini_dance_02.png"];
+    normalSprite.position = ccp([CCDirector sharedDirector].winSize.width * 0.9, [CCDirector sharedDirector].winSize.height * 0.5);
+    [self addChild:normalSprite];
+    
     return( self );
 }
 

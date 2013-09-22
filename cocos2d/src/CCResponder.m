@@ -28,6 +28,7 @@
  */
 
 #import "CCResponder.h"
+#import "CCDirector.h"
 
 // -----------------------------------------------------------------
 
@@ -46,7 +47,7 @@
 - (id)init
 {
     self = [super init];
-    NSAssert(self != nil, @"Unable to create class");
+    NSAssert(self, @"Unable to create class");
 
     // initialize
     
@@ -68,25 +69,25 @@
  */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CCResponderManager *strongResponderManager = _responderManager;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
     strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CCResponderManager *strongResponderManager = _responderManager;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
     strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CCResponderManager *strongResponderManager = _responderManager;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
     strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    CCResponderManager *strongResponderManager = _responderManager;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
     strongResponderManager.eventProcessed = NO;
 }
 
@@ -102,52 +103,52 @@
  */
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    _responderManager.eventProcessed = NO;
+    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
 }
 
 #endif
@@ -155,45 +156,3 @@
 // -----------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

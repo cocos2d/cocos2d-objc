@@ -1,0 +1,207 @@
+/*
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2013 Apportable Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#import "TestBase.h"
+#import "MainMenu.h"
+#import <objc/message.h>
+
+@implementation TestBase
+
+- (id) init
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSize = CGSizeMake(1, 1);
+    
+    // Create test content
+    self.contentNode = [CCNode node];
+    self.contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    self.contentNode.contentSize = CGSizeMake(1, 44);
+	
+    [self addChild:self.contentNode];
+    
+    // Create interface
+    
+    // Header background
+    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithSpriteFrameName:@"Interface/header.png"];
+    headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    headerBg.position = ccp(0,0);
+    headerBg.anchorPoint = ccp(0,1);
+    headerBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    headerBg.contentSize = CGSizeMake(1, 44);
+    
+    [self addChild:headerBg];
+    
+    // Header label
+    _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17];
+    _lblTitle.positionType = kCCPositionTypeNormalized;
+    _lblTitle.position = ccp(0.5f,0.5f);
+    
+    [headerBg addChild:_lblTitle];
+    
+    _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
+    _lblSubTitle.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    _lblSubTitle.position = ccp(0.5, 64);
+    
+    [self addChild:_lblSubTitle];
+    
+    // Back button
+    CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-back.png"];
+    
+    _btnBack = [CCButton buttonWithTitle:NULL spriteFrame:frame];
+    _btnBack.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    _btnBack.position = ccp(22, 22);
+    _btnBack.background.opacity = 0;
+    
+    [_btnBack setTarget:self selector:@selector(pressedBack:)];
+    [self addChild:_btnBack];
+    
+    // Prev button
+    _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-prev.png"]];
+    _btnPrev.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+    _btnPrev.position = ccp(22, 22);
+    _btnPrev.background.opacity = 0;
+    
+    [_btnPrev setTarget:self selector:@selector(pressedPrev:)];
+    [self addChild:_btnPrev];
+    
+    // Next button
+    _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-next.png"]];
+    _btnNext.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomRight);
+    _btnNext.position = ccp(22, 22);
+    _btnNext.background.opacity = 0;
+    
+    [_btnNext setTarget:self selector:@selector(pressedNext:)];
+    [self addChild:_btnNext];
+    
+    // Reload button
+    _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-reload.png"]];
+    _btnReload.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+    _btnReload.position = ccp(0.5, 22);
+    _btnReload.background.opacity = 0;
+    
+    [_btnReload setTarget:self selector:@selector(pressedReset:)];
+    [self addChild:_btnReload];
+    
+    [self setupTestWithIndex:0];
+    
+    return self;
+}
+
++ (CCScene *) sceneWithTestName:(NSString*)testName
+{
+	// 'scene' is an autorelease object.
+	CCScene *scene = [CCScene node];
+	
+	// 'layer' is an autorelease object.
+    TestBase *node = [[NSClassFromString(testName) alloc] init];
+	
+	// add layer as a child to scene
+	[scene addChild: node];
+    
+	// return the scene
+	return scene;
+}
+
+- (void) onEnterTransitionDidFinish
+{
+    // Fade buttons in
+    [_btnBack.background runAction:[CCFadeIn actionWithDuration:0.3f]];
+    [_btnPrev.background runAction:[CCFadeIn actionWithDuration:0.3f]];
+    [_btnNext.background runAction:[CCFadeIn actionWithDuration:0.3f]];
+    [_btnReload.background runAction:[CCFadeIn actionWithDuration:0.3f]];
+    
+    [super onEnterTransitionDidFinish];
+}
+
+- (void) onExitTransitionDidStart
+{
+    // Fade buttons out
+    [_btnBack.background runAction:[CCFadeOut actionWithDuration:0.1f]];
+    [_btnPrev.background runAction:[CCFadeOut actionWithDuration:0.1f]];
+    [_btnNext.background runAction:[CCFadeOut actionWithDuration:0.1f]];
+    [_btnReload.background runAction:[CCFadeOut actionWithDuration:0.1f]];
+    
+    [super onExitTransitionDidStart];
+}
+
+- (void) pressedBack:(id)sender
+{
+    [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInL transitionWithDuration:0.3 scene:[MainMenu scene]]];
+}
+
+- (void) pressedReset:(id)sender
+{
+    [self setupTestWithIndex:_currentTest];
+}
+
+- (void) pressedNext:(id) sender
+{
+    int newTest = _currentTest + 1;
+    if (newTest >= self.testConstructors.count) newTest = 0;
+    
+    [self setupTestWithIndex:newTest];
+}
+
+- (void) pressedPrev:(id) sender
+{
+    int newTest = _currentTest - 1;
+    if (newTest < 0) newTest = self.testConstructors.count - 1;
+    
+    [self setupTestWithIndex:newTest];
+}
+
+- (void) setupTestWithIndex:(int)testNum
+{
+    // Remove current test
+    [self.contentNode removeAllChildrenWithCleanup:YES];
+    
+    // Find the new test
+    NSString* constructorName = [[self testConstructors] objectAtIndex:testNum];
+    
+    // Setup the new test
+    SEL constructor = NSSelectorFromString(constructorName);
+    if ([self respondsToSelector:constructor])
+    {
+        objc_msgSend(self, constructor);
+    }
+    
+    _currentTest = testNum;
+}
+
+- (void) setSubTitle:(NSString *)subTitle
+{
+    _subTitle = subTitle;
+    _lblSubTitle.string = subTitle;
+}
+
+- (NSArray*) testConstructors
+{
+    NSAssert(NO, @"You must override testConstructors in your test");
+    return NULL;
+}
+
+@end
