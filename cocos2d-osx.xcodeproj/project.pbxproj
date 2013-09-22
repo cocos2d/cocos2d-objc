@@ -292,6 +292,15 @@
 		E674608617EDBBE200C1277B /* pngwutil.c in Sources */ = {isa = PBXBuildFile; fileRef = E674606E17EDBBE200C1277B /* pngwutil.c */; };
 		E6E352BA17EF4FA80026E90C /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352B917EF4FA80026E90C /* NSEvent+CC.h */; };
 		E6E352BC17EF4FB60026E90C /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352BB17EF4FB60026E90C /* NSEvent+CC.m */; };
+		E6E352FC17EF7E980026E90C /* CCButton.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352F217EF7E980026E90C /* CCButton.h */; };
+		E6E352FD17EF7E980026E90C /* CCControl.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352F317EF7E980026E90C /* CCControl.h */; };
+		E6E352FE17EF7E980026E90C /* CCControlTextureFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352F417EF7E980026E90C /* CCControlTextureFactory.h */; };
+		E6E352FF17EF7E980026E90C /* CCScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352F517EF7E980026E90C /* CCScrollView.h */; };
+		E6E3530017EF7E980026E90C /* cocos2d-ui.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E352F617EF7E980026E90C /* cocos2d-ui.h */; };
+		E6E3530117EF7E980026E90C /* CCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352F817EF7E980026E90C /* CCButton.m */; };
+		E6E3530217EF7E980026E90C /* CCControl.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352F917EF7E980026E90C /* CCControl.m */; };
+		E6E3530317EF7E980026E90C /* CCControlTextureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352FA17EF7E980026E90C /* CCControlTextureFactory.m */; };
+		E6E3530417EF7E980026E90C /* CCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E352FB17EF7E980026E90C /* CCScrollView.m */; };
 		E6E838C917EEF3C400613665 /* CocosLibMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E6E838C717EEF3C400613665 /* CocosLibMac.h */; };
 		E6E838CE17EEF44E00613665 /* CocosLibMac.m in Sources */ = {isa = PBXBuildFile; fileRef = E6E838C817EEF3C400613665 /* CocosLibMac.m */; };
 /* End PBXBuildFile section */
@@ -804,6 +813,15 @@
 		E674607117EDBBE200C1277B /* Y2KINFO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Y2KINFO; sourceTree = "<group>"; };
 		E6E352B917EF4FA80026E90C /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
 		E6E352BB17EF4FB60026E90C /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
+		E6E352F217EF7E980026E90C /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCButton.h; sourceTree = "<group>"; };
+		E6E352F317EF7E980026E90C /* CCControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControl.h; sourceTree = "<group>"; };
+		E6E352F417EF7E980026E90C /* CCControlTextureFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCControlTextureFactory.h; sourceTree = "<group>"; };
+		E6E352F517EF7E980026E90C /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCScrollView.h; sourceTree = "<group>"; };
+		E6E352F617EF7E980026E90C /* cocos2d-ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "cocos2d-ui.h"; sourceTree = "<group>"; };
+		E6E352F817EF7E980026E90C /* CCButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCButton.m; sourceTree = "<group>"; };
+		E6E352F917EF7E980026E90C /* CCControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCControl.m; sourceTree = "<group>"; };
+		E6E352FA17EF7E980026E90C /* CCControlTextureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCControlTextureFactory.m; sourceTree = "<group>"; };
+		E6E352FB17EF7E980026E90C /* CCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCScrollView.m; sourceTree = "<group>"; };
 		E6E838C717EEF3C400613665 /* CocosLibMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocosLibMac.h; sourceTree = "<group>"; };
 		E6E838C817EEF3C400613665 /* CocosLibMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CocosLibMac.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -915,6 +933,7 @@
 				A0707F7715F94815001C1263 /* LICENSE_jsbindings.txt */,
 				A0707F7815F94815001C1263 /* LICENSE_SpiderMonkey.txt */,
 				E6745E6317EDBB4E00C1277B /* cocos2d */,
+				E6E352F017EF7E980026E90C /* cocos2d-ui */,
 				E6E838C617EEF3C400613665 /* CocosLibMac */,
 				E674600417EDBB6400C1277B /* CocosDenshion */,
 				E076EF801225FF3E00DE0DA2 /* external */,
@@ -1837,6 +1856,38 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		E6E352F017EF7E980026E90C /* cocos2d-ui */ = {
+			isa = PBXGroup;
+			children = (
+				E6E352F117EF7E980026E90C /* include */,
+				E6E352F717EF7E980026E90C /* src */,
+			);
+			path = "cocos2d-ui";
+			sourceTree = "<group>";
+		};
+		E6E352F117EF7E980026E90C /* include */ = {
+			isa = PBXGroup;
+			children = (
+				E6E352F217EF7E980026E90C /* CCButton.h */,
+				E6E352F317EF7E980026E90C /* CCControl.h */,
+				E6E352F417EF7E980026E90C /* CCControlTextureFactory.h */,
+				E6E352F517EF7E980026E90C /* CCScrollView.h */,
+				E6E352F617EF7E980026E90C /* cocos2d-ui.h */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		E6E352F717EF7E980026E90C /* src */ = {
+			isa = PBXGroup;
+			children = (
+				E6E352F817EF7E980026E90C /* CCButton.m */,
+				E6E352F917EF7E980026E90C /* CCControl.m */,
+				E6E352FA17EF7E980026E90C /* CCControlTextureFactory.m */,
+				E6E352FB17EF7E980026E90C /* CCScrollView.m */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		E6E838C617EEF3C400613665 /* CocosLibMac */ = {
 			isa = PBXGroup;
 			children = (
@@ -1903,6 +1954,7 @@
 				E6745F4F17EDBB4F00C1277B /* CCDrawingPrimitives.h in Headers */,
 				E6745F9517EDBB4F00C1277B /* CCES2Renderer.h in Headers */,
 				E6745F4D17EDBB4F00C1277B /* ccDeprecated.h in Headers */,
+				E6E352FC17EF7E980026E90C /* CCButton.h in Headers */,
 				E6745F5917EDBB4F00C1277B /* CCLayer.h in Headers */,
 				E6745F9E17EDBB4F00C1277B /* CCFileUtils.h in Headers */,
 				E6745F6817EDBB4F00C1277B /* CCProtocols.h in Headers */,
@@ -1924,6 +1976,7 @@
 				E6745F5B17EDBB4F00C1277B /* CCMenu.h in Headers */,
 				E6745F4917EDBB4F00C1277B /* CCCamera.h in Headers */,
 				E6745F6D17EDBB4F00C1277B /* CCScheduler.h in Headers */,
+				E6E3530017EF7E980026E90C /* cocos2d-ui.h in Headers */,
 				E6745F6E17EDBB4F00C1277B /* ccShader_Position_uColor_frag.h in Headers */,
 				E6745F8D17EDBB4F00C1277B /* CCTransition.h in Headers */,
 				E6745F6F17EDBB4F00C1277B /* ccShader_Position_uColor_vert.h in Headers */,
@@ -1943,6 +1996,7 @@
 				E6745FA217EDBB4F00C1277B /* CGPointExtension.h in Headers */,
 				E6745F8517EDBB4F00C1277B /* CCTextureAtlas.h in Headers */,
 				E6745F4517EDBB4F00C1277B /* CCActionTween.h in Headers */,
+				E6E352FD17EF7E980026E90C /* CCControl.h in Headers */,
 				E6745F8217EDBB4F00C1277B /* CCSpriteFrame.h in Headers */,
 				E6745F7917EDBB4F00C1277B /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				E6745F8F17EDBB4F00C1277B /* CCTransitionProgress.h in Headers */,
@@ -1962,6 +2016,7 @@
 				E6745F9417EDBB4F00C1277B /* CCDirectorIOS.h in Headers */,
 				E6745FA317EDBB4F00C1277B /* NSAttributedString+CCAdditions.h in Headers */,
 				E6745F8E17EDBB4F00C1277B /* CCTransitionPageTurn.h in Headers */,
+				E6E352FF17EF7E980026E90C /* CCScrollView.h in Headers */,
 				E6745F5F17EDBB4F00C1277B /* CCNode.h in Headers */,
 				E6745F8617EDBB4F00C1277B /* CCTextureCache.h in Headers */,
 				E6745F3E17EDBB4F00C1277B /* CCActionGrid3D.h in Headers */,
@@ -1974,6 +2029,7 @@
 				E6745F4117EDBB4F00C1277B /* CCActionManager.h in Headers */,
 				E6745F3C17EDBB4F00C1277B /* CCActionEase.h in Headers */,
 				E6745F8917EDBB4F00C1277B /* CCTMXLayer.h in Headers */,
+				E6E352FE17EF7E980026E90C /* CCControlTextureFactory.h in Headers */,
 				E6745F8317EDBB4F00C1277B /* CCSpriteFrameCache.h in Headers */,
 				E6745F4C17EDBB4F00C1277B /* CCConfiguration.h in Headers */,
 				E6745F4B17EDBB4F00C1277B /* ccConfig.h in Headers */,
@@ -2174,7 +2230,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n\nset -e\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\n#SCRIPT_OPTIONS=\"MOVE_FILE\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --always)\nif [ ! -z $GIT_REVISION ]; then\n    LIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\n    LIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\n\n# remove existing include dir\nrm -rf ${PROJECT_DIR}/include\nmkdir -p ${PROJECT_DIR}/include\n\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\n# Copy headers\ncd ${PROJECT_DIR}/include\nmkdir -p cocos2d\nmkdir -p CocosDenshion\nmkdir -p external\nmkdir -p external/kazmath\nmkdir -p external/libpng\ncd ${PROJECT_DIR}\n\nrsync -r ${PROJECT_DIR}/cocos2d/include/ ${PROJECT_DIR}/include/cocos2d/\nrsync -r ${PROJECT_DIR}/CocosDenshion/include/ ${PROJECT_DIR}/include/CocosDenshion/\nrsync -r ${PROJECT_DIR}/external/kazmath/include/kazmath/ ${PROJECT_DIR}/include/external/kazmath/\nrsync -r ${PROJECT_DIR}/external/libpng/include/ ${PROJECT_DIR}/include/external/libpng/\n# Build libraries\nfor current_style in $build_styles; do\n    LIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\n    if [ $current_style = \"Debug\" ]; then\n        LIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\n    else\n        LIBRARY_ARCHIVE=\"$TARGET.zip\"\n    fi\n\n    # remove existing output file\n    rm -rf ${PROJECT_DIR}/lib\n    mkdir -p ${PROJECT_DIR}/lib\n\n    # Build library for MacOS X\n    xcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\n    xcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n    # Glue together libraries\n    lipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n    # Create symlink\n    cd lib\n    ln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\n    cd ..\n\n    #TODO: deal with either Chipmunk or Box2D\n    #unless they are not going to be packaged with this library any longer\n\n    if [ $? -eq 0 ]; then\n        zip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\n        zip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n        #zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\n    fi\n\n    if [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\n        BUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\n        NEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\n        if [ $current_style = \"Debug\" ]; then\n            OLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\n        else\n            OLD_FOLDER=\"$DEST_DIR/$TARGET\"\n        fi\n        rm -rf $OLD_FOLDER\n        mv $BUILT_ZIP \"$DEST_DIR/\"\n        unzip -o $NEW_ZIP -d $OLD_FOLDER/\n        rm -f $NEW_ZIP\n    fi\ndone\n\nrm -rf ${PROJECT_DIR}/include\nrm -rf ${PROJECT_DIR}/build\nrm -rf ${PROJECT_DIR}/lib\n";
+			shellScript = "#!/bin/sh\n\nset -e\n\nTARGET=\"CocosMac\"\n#undefine the following line if you want to move and properly unpack the .zip files into the destination folder specified with DEST_DIR\n#SCRIPT_OPTIONS=\"MOVE_FILE\"\nDEST_DIR=~/Programming/SharedLibsMac\n\nmkdir -p ~/Programming\nmkdir -p ~/Programming/SharedLibsMac\n\nGIT_REVISION=$(git describe --always)\nif [ ! -z $GIT_REVISION ]; then\n    LIB_VERSION=\"-Tag-$GIT_REVISION\"\nelse\n    LIB_VERSION=\"-unversioned\"\nfi\n\nLIBRARY_NAME=\"lib$TARGET.a\"\nLIBRARY_OUT_NAME_RELATIVE=\"lib$TARGET${LIB_VERSION}.a\"\nLIBRARY_OUT_NAME=\"lib/$LIBRARY_OUT_NAME_RELATIVE\"\nLATEST_SDK=$(xcodebuild -showsdks | grep macosx | awk 'BEGIN{FS=\"\\t\";}{print $3}' | cut -d ' ' -f 2 | tail -n 1)\n\n# remove existing build dir\nrm -rf ${PROJECT_DIR}/build\nmkdir -p ${PROJECT_DIR}/build\n\n# remove existing include dir\nrm -rf ${PROJECT_DIR}/include\nmkdir -p ${PROJECT_DIR}/include\n\nlocal_build_root=\"${PROJECT_DIR}/build\"\nbuild_styles=\"Debug Release\"\n\n# Copy headers\ncd ${PROJECT_DIR}/include\nmkdir -p cocos2d\nmkdir -p cocos2d-ui\nmkdir -p CocosDenshion\nmkdir -p external\nmkdir -p external/kazmath\nmkdir -p external/libpng\ncd ${PROJECT_DIR}\n\nrsync -r ${PROJECT_DIR}/cocos2d/include/ ${PROJECT_DIR}/include/cocos2d/\nrsync -r ${PROJECT_DIR}/cocos2d-ui/include/ ${PROJECT_DIR}/include/cocos2d-ui/\nrsync -r ${PROJECT_DIR}/CocosDenshion/include/ ${PROJECT_DIR}/include/CocosDenshion/\nrsync -r ${PROJECT_DIR}/external/kazmath/include/kazmath/ ${PROJECT_DIR}/include/external/kazmath/\nrsync -r ${PROJECT_DIR}/external/libpng/include/ ${PROJECT_DIR}/include/external/libpng/\n\n# Build libraries\nfor current_style in $build_styles; do\n    LIBRARY_ARCHIVE=\"$TARGET${LIB_VERSION}-${current_style}.zip\"\n\n    if [ $current_style = \"Debug\" ]; then\n        LIBRARY_ARCHIVE=\"$TARGET-${current_style}.zip\"\n    else\n        LIBRARY_ARCHIVE=\"$TARGET.zip\"\n    fi\n\n    # remove existing output file\n    rm -rf ${PROJECT_DIR}/lib\n    mkdir -p ${PROJECT_DIR}/lib\n\n    # Build library for MacOS X\n    xcodebuild clean -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK\n    xcodebuild -target $TARGET -project cocos2d-osx.xcodeproj -configuration $current_style -sdk $LATEST_SDK build\n\n    # Glue together libraries\n    lipo \"${local_build_root}/${current_style}/$LIBRARY_NAME\" -create -output \"${PROJECT_DIR}/$LIBRARY_OUT_NAME\"\n\n    # Create symlink\n    cd lib\n    ln -s \"$LIBRARY_OUT_NAME_RELATIVE\" \"$LIBRARY_NAME\"\n    cd ..\n\n    #TODO: deal with either Chipmunk or Box2D\n    #unless they are not going to be packaged with this library any longer\n\n    if [ $? -eq 0 ]; then\n        zip -R -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"lib/*.a\"\n        zip -r -y \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" \"resources\" \"include\" -x@zip_exclude.lst\n        #zip \"${PROJECT_DIR}/$LIBRARY_ARCHIVE\" .packageid\n    fi\n\n    if [ $SCRIPT_OPTIONS = \"MOVE_FILE\" ]; then\n        BUILT_ZIP=\"${PROJECT_DIR}/$LIBRARY_ARCHIVE\"\n        NEW_ZIP=\"$DEST_DIR/$LIBRARY_ARCHIVE\"\n\n        if [ $current_style = \"Debug\" ]; then\n            OLD_FOLDER=\"$DEST_DIR/$TARGET-${current_style}\"\n        else\n            OLD_FOLDER=\"$DEST_DIR/$TARGET\"\n        fi\n        rm -rf $OLD_FOLDER\n        mv $BUILT_ZIP \"$DEST_DIR/\"\n        unzip -o $NEW_ZIP -d $OLD_FOLDER/\n        rm -f $NEW_ZIP\n    fi\ndone\n\nrm -rf ${PROJECT_DIR}/include\nrm -rf ${PROJECT_DIR}/build\nrm -rf ${PROJECT_DIR}/lib\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -2215,6 +2271,7 @@
 				E6745FB717EDBB4F00C1277B /* CCActionTween.m in Sources */,
 				E6745FC317EDBB4F00C1277B /* CCGLProgram.m in Sources */,
 				E6745FB317EDBB4F00C1277B /* CCActionManager.m in Sources */,
+				E6E3530117EF7E980026E90C /* CCButton.m in Sources */,
 				E6745FC117EDBB4F00C1277B /* CCDrawNode.m in Sources */,
 				E674600317EDBB4F00C1277B /* ZipUtils.m in Sources */,
 				E6745FF017EDBB4F00C1277B /* cocos2d.m in Sources */,
@@ -2246,7 +2303,9 @@
 				E6745FE017EDBB4F00C1277B /* CCSprite9Slice.m in Sources */,
 				E6745FB517EDBB4F00C1277B /* CCActionProgressTimer.m in Sources */,
 				E6E352BC17EF4FB60026E90C /* NSEvent+CC.m in Sources */,
+				E6E3530417EF7E980026E90C /* CCScrollView.m in Sources */,
 				E6745FAB17EDBB4F00C1277B /* CCAction.m in Sources */,
+				E6E3530217EF7E980026E90C /* CCControl.m in Sources */,
 				E6745FD417EDBB4F00C1277B /* CCParticleSystemQuad.m in Sources */,
 				E6745FDD17EDBB4F00C1277B /* CCShaderCache.m in Sources */,
 				E6745FB017EDBB4F00C1277B /* CCActionGrid3D.m in Sources */,
@@ -2268,6 +2327,7 @@
 				E6745FD817EDBB4F00C1277B /* CCRenderTexture.m in Sources */,
 				E6745FBC17EDBB4F00C1277B /* CCClippingNode.m in Sources */,
 				E6745FFC17EDBB4F00C1277B /* ccUtils.c in Sources */,
+				E6E3530317EF7E980026E90C /* CCControlTextureFactory.m in Sources */,
 				E6745FFA17EDBB4F00C1277B /* CCFileUtils.m in Sources */,
 				E6745FD617EDBB4F00C1277B /* CCPhysicsSprite.mm in Sources */,
 				E6745FB217EDBB4F00C1277B /* CCActionInterval.m in Sources */,
