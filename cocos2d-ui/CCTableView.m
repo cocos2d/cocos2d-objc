@@ -294,7 +294,7 @@
     if (!_dataSource) return;
     
     // Resize the content node
-    int numRows = [_dataSource tableViewNumberOfRows:self];
+    NSUInteger numRows = [_dataSource tableViewNumberOfRows:self];
     float layerHeight = 0;
     
     if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])

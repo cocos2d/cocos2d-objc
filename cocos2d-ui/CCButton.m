@@ -220,7 +220,7 @@
 
 #endif
 
-- (void) updatePropertiesForState:(NSUInteger)state
+- (void) updatePropertiesForState:(CCControlState)state
 {
     // Update background
     _background.color = [self backgroundColorForState:state];
