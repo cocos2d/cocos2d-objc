@@ -83,10 +83,6 @@
 		A0BE62FC140552BD00DAA336 /* CCVertex.h in Headers */ = {isa = PBXBuildFile; fileRef = A0BE62FA140552BD00DAA336 /* CCVertex.h */; };
 		A0BE62FD140552BD00DAA336 /* CCVertex.m in Sources */ = {isa = PBXBuildFile; fileRef = A0BE62FB140552BD00DAA336 /* CCVertex.m */; };
 		A0C879AD14F98F1C00C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C879AC14F98F1C00C0E8B2 /* NSThread+performBlock.m */; };
-		A0D7D68115E2BC9E000CA0C4 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF338215E2A4CB008707BD /* CCPhysicsDebugNode.h */; };
-		A0D7D68215E2BC9E000CA0C4 /* CCPhysicsDebugNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FF338315E2A4CB008707BD /* CCPhysicsDebugNode.m */; };
-		A0D7D68315E2BC9E000CA0C4 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = A0FF338415E2A4CB008707BD /* CCPhysicsSprite.h */; };
-		A0D7D68415E2BC9E000CA0C4 /* CCPhysicsSprite.mm in Sources */ = {isa = PBXBuildFile; fileRef = A0FF338515E2A4CB008707BD /* CCPhysicsSprite.mm */; };
 		A0D7D68B15E2D2CC000CA0C4 /* cocos2d.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69D1225EC7400DE0DA2 /* cocos2d.h */; };
 		A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69E1225EC7400DE0DA2 /* cocos2d.m */; };
 		A0D7D68D15E2D2CC000CA0C4 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6491225EC7400DE0DA2 /* ccConfig.h */; };
@@ -475,10 +471,6 @@
 		A0DAF8EF16950AC800CD5494 /* .TemplateInfo.plist.swp */ = {isa = PBXFileReference; lastKnownFileType = file; path = .TemplateInfo.plist.swp; sourceTree = "<group>"; };
 		A0DAF8F016950AC800CD5494 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		A0E55417141EAEEE003F1E5A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		A0FF338215E2A4CB008707BD /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
-		A0FF338315E2A4CB008707BD /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
-		A0FF338415E2A4CB008707BD /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
-		A0FF338515E2A4CB008707BD /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
 		A66680BF17D4D73000ECDE6F /* CCResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResponder.h; sourceTree = "<group>"; };
 		A66680C017D4D73000ECDE6F /* CCResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponder.m; sourceTree = "<group>"; };
 		A66680C117D4D73000ECDE6F /* CCResponderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResponderManager.h; sourceTree = "<group>"; };
@@ -1288,17 +1280,6 @@
 			path = lib_spidermonkey_osx.xctemplate;
 			sourceTree = "<group>";
 		};
-		A0FF338A15E2A4D4008707BD /* Physics Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				A0FF338215E2A4CB008707BD /* CCPhysicsDebugNode.h */,
-				A0FF338315E2A4CB008707BD /* CCPhysicsDebugNode.m */,
-				A0FF338415E2A4CB008707BD /* CCPhysicsSprite.h */,
-				A0FF338515E2A4CB008707BD /* CCPhysicsSprite.mm */,
-			);
-			name = "Physics Nodes";
-			sourceTree = "<group>";
-		};
 		A66680BE17D4D70E00ECDE6F /* Touch & Mouse Handling */ = {
 			isa = PBXGroup;
 			children = (
@@ -1370,7 +1351,6 @@
 				A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */,
 				E076E7771225ECBF00DE0DA2 /* TiledMap & Parallax Nodes */,
 				E076E7781225ECC900DE0DA2 /* Layer, Scene & Transition Nodes */,
-				A0FF338A15E2A4D4008707BD /* Physics Nodes */,
 				E076E7791225ECF700DE0DA2 /* Misc Nodes */,
 				E076E7711225EC8100DE0DA2 /* Actions */,
 				E076E77A1225ED0200DE0DA2 /* Effects */,
@@ -1819,8 +1799,6 @@
 				A0DA0BBE15BCD93700E80A92 /* CCDrawNode.h in Headers */,
 				A0DA0BDA15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
 				A0DA0BDB15BCEB0B00E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
-				A0D7D68115E2BC9E000CA0C4 /* CCPhysicsDebugNode.h in Headers */,
-				A0D7D68315E2BC9E000CA0C4 /* CCPhysicsSprite.h in Headers */,
 				A0D7D68B15E2D2CC000CA0C4 /* cocos2d.h in Headers */,
 				A0D7D68D15E2D2CC000CA0C4 /* ccConfig.h in Headers */,
 				A0D7D68E15E2D2CC000CA0C4 /* ccDeprecated.h in Headers */,
@@ -2006,8 +1984,6 @@
 				A0A7A506151416A000C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A03714D8154F1D9300081CBA /* CCNode+Debug.m in Sources */,
 				A0DA0BBF15BCD93700E80A92 /* CCDrawNode.m in Sources */,
-				A0D7D68215E2BC9E000CA0C4 /* CCPhysicsDebugNode.m in Sources */,
-				A0D7D68415E2BC9E000CA0C4 /* CCPhysicsSprite.mm in Sources */,
 				A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */,
 				A0D7D68F15E2D2CC000CA0C4 /* ccDeprecated.m in Sources */,
 				A0D7D69315E2D2CC000CA0C4 /* CCCamera.m in Sources */,
