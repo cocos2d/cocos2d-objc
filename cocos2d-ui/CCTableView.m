@@ -23,14 +23,17 @@
  */
 
 #import "CCTableView.h"
+#import "CCButton.h"
 #import "CCDirector.h"
 #import "CGPointExtension.h"
+#import <objc/message.h>
 
 #pragma mark Helper classes
 
 @interface CCTableView (Helper)
 - (void) updateVisibleRows;
 - (void) markVisibleRowsDirty;
+- (void) selectedRow:(NSUInteger) row;
 @end
 
 @interface CCTableViewCellHolder : NSObject
@@ -62,8 +65,43 @@
 
 #pragma mark CCTableViewCell
 
+@interface CCTableViewCell (Helper)
+
+@property (nonatomic,assign) NSUInteger index;
+
+@end
+
 @implementation CCTableViewCell
 
+- (id) init
+{
+    self = [super init];
+    if (!self) return NULL;
+    
+    _button = [CCButton buttonWithTitle:NULL];
+    _button.contentSizeType = kCCContentSizeTypeNormalized;
+    _button.preferredSize = CGSizeMake(1, 1);
+    _button.anchorPoint = ccp(0, 0);
+    [_button setTarget:self selector:@selector(pressedCell:)];
+    [self addChild:_button z:-1];
+    
+    return self;
+}
+
+- (void) pressedCell:(id)sender
+{
+    [(CCTableView*)(self.parent.parent) selectedRow:self.index];
+}
+
+- (void) setIndex:(NSUInteger)index
+{
+    _index = index;
+}
+
+- (NSUInteger) index
+{
+    return _index;
+}
 
 @end
 
@@ -219,6 +257,7 @@
             if (!holder.cell)
             {
                 holder.cell = [_dataSource tableView:self nodeForRowAtIndex:newIdx];
+                holder.cell.index = newIdx;
                 holder.cell.position = CGPointMake(0, [self locationForCellWithIndex:newIdx]);
                 holder.cell.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
                 holder.cell.anchorPoint = CGPointMake(0, 1);
@@ -333,6 +372,30 @@
 {
     [super onEnter];
     [self markVisibleRowsDirty];
+}
+
+#pragma mark Action handling
+
+- (void) setTarget:(id)target selector:(SEL)selector
+{
+    __unsafe_unretained id weakTarget = target; // avoid retain cycle
+    [self setBlock:^(id sender) {
+        objc_msgSend(weakTarget, selector, sender);
+	}];
+}
+
+- (void) selectedRow:(NSUInteger) row
+{
+    self.selectedRow = row;
+    [self triggerAction];
+}
+
+- (void) triggerAction
+{
+    if (self.userInteractionEnabled && _block)
+    {
+        _block(self);
+    }
 }
 
 @end

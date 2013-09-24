@@ -24,13 +24,17 @@
 
 #import "CCScrollView.h"
 
+@class CCButton;
 @class CCTableView;
 
 #pragma mark CCTableViewCell
 
 @interface CCTableViewCell : CCNode
+{
+    NSUInteger _index;
+}
 
-@property (nonatomic,assign) BOOL selected;
+@property (nonatomic,readonly) CCButton* button;
 
 @end
 
@@ -59,6 +63,10 @@
 @property (nonatomic,assign) float rowHeight;
 @property (nonatomic,assign) CCContentSizeUnit rowHeightUnit;
 @property (nonatomic,readonly) float rowHeightInPoints;
+@property (nonatomic,assign) NSUInteger selectedRow;
+
+@property (nonatomic,copy) void(^block)(id sender);
+-(void) setTarget:(id)target selector:(SEL)selector;
 
 - (void) reloadData;
 
