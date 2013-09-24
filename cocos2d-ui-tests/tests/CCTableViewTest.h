@@ -22,8 +22,9 @@
  * THE SOFTWARE.
  */
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
-#import "CCScrollView.h"
-#import "CCTableView.h"
+#import "TestBase.h"
+#import "cocos2d-ui.h"
+
+@interface CCTableViewTest : TestBase
+
+@end

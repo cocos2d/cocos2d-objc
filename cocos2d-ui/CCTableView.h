@@ -22,8 +22,44 @@
  * THE SOFTWARE.
  */
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
 #import "CCScrollView.h"
-#import "CCTableView.h"
+
+@class CCTableView;
+
+#pragma mark CCTableViewCell
+
+@interface CCTableViewCell : CCNode
+
+@property (nonatomic,assign) BOOL selected;
+
+@end
+
+#pragma mark CCTableViewDataSource
+
+@protocol CCTableViewDataSource <NSObject>
+
+- (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index;
+- (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView;
+@optional
+- (float) tableView:(CCTableView*)tableView heightForRowAtIndex:(NSUInteger) index;
+
+@end
+
+
+#pragma mark CCTableView
+
+@interface CCTableView : CCScrollView
+{
+    BOOL _visibleRowsDirty;
+    NSMutableArray* _rows;
+    NSRange _currentlyVisibleRange;
+}
+
+@property (nonatomic,strong) id <CCTableViewDataSource> dataSource;
+@property (nonatomic,assign) float rowHeight;
+@property (nonatomic,assign) CCContentSizeUnit rowHeightUnit;
+@property (nonatomic,readonly) float rowHeightInPoints;
+
+- (void) reloadData;
+
+@end

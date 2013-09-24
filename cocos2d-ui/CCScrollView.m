@@ -165,12 +165,12 @@
 
 - (id) init
 {
-    self = [self initWithContentNode:[CCNode node] contentSize:CGSizeMake(1, 1)];
+    self = [self initWithContentNode:[CCNode node]];
     self.contentSizeType = kCCContentSizeTypeNormalized;
     return self;
 }
 
-- (id) initWithContentNode:(CCNode*)contentNode contentSize:(CGSize) contentSize
+- (id) initWithContentNode:(CCNode*)contentNode
 {
     self = [super init];
     if (!self) return NULL;
@@ -178,7 +178,8 @@
     _flipYCoordinates = YES;
     
     // Setup content node
-    self.contentSize = contentSize;
+    self.contentSize = CGSizeMake(1, 1);
+    self.contentSizeType = kCCContentSizeTypeNormalized;
     self.contentNode = contentNode;
     
     // Default properties
