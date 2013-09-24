@@ -50,7 +50,7 @@
     [cell addChild:bg];
     
     // Create a label with the row number
-    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", index] fontName:@"HelveticaNeue" fontSize:18];
+    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18];
     lbl.positionType = kCCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
@@ -92,7 +92,7 @@
     [cell addChild:bg];
     
     // Create a label with the row number
-    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
+    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
     lbl.positionType = kCCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
@@ -136,7 +136,7 @@
     [cell addChild:bg];
     
     // Create a label with the row number
-    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
+    CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
     lbl.positionType = kCCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
