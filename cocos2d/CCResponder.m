@@ -47,7 +47,7 @@
 - (id)init
 {
     self = [super init];
-    NSAssert(self != nil, @"Unable to create class");
+    NSAssert(self, @"Unable to create class");
 
     // initialize
     

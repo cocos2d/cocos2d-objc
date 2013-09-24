@@ -302,6 +302,14 @@ enum {
  */
 @property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
 
+/** Expands ( or contracts ) the hit area of the node
+ hitAreaExpansion = 0 => hit area has no size
+ hitAreaExpansion = 1 => hit area has same size as sprite (default)
+ hitAreaExpansion = 2 => hit area has double width and double height
+ @since v2.5
+ */
+@property (nonatomic,assign) float hitAreaExpansion;
+ 
 // initializators
 /** allocates and initializes a node.
  The node will be created as "autorelease".
