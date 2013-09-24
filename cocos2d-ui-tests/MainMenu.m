@@ -33,9 +33,7 @@
 {
     return [NSArray arrayWithObjects:
             @"CCScrollViewTest",
-            @"CCButtonTest",
-            @"More Tests to Come",
-            @"Only CCScrollViewTest currently works",
+            @"CCTableViewTest",
             nil];
 }
 

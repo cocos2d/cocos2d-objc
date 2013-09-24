@@ -119,6 +119,9 @@
 		B78AE64817E7BCA30028BE0B /* CCControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64217E7BA800028BE0B /* CCControl.m */; };
 		B78AE64917E7BCA60028BE0B /* CCControlTextureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */; };
 		B78AE64A17E7BCAA0028BE0B /* CCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64617E7BA800028BE0B /* CCScrollView.m */; };
+		B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239817F10F3600928F91 /* CCTableView.h */; };
+		B7C6239C17F10F3600928F91 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6239917F10F3600928F91 /* CCTableView.m */; };
+		B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239A17F10F3600928F91 /* cocos2d-ui.h */; };
 		B7E2603517E7C774007067F0 /* NSEvent+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603317E7C774007067F0 /* NSEvent+CC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603417E7C774007067F0 /* NSEvent+CC.m */; };
 		B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603717E7C786007067F0 /* UITouch+CC.h */; };
@@ -492,6 +495,9 @@
 		B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCControlTextureFactory.m; path = "cocos2d-ui/CCControlTextureFactory.m"; sourceTree = "<group>"; };
 		B78AE64517E7BA800028BE0B /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollView.h; path = "cocos2d-ui/CCScrollView.h"; sourceTree = "<group>"; };
 		B78AE64617E7BA800028BE0B /* CCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollView.m; path = "cocos2d-ui/CCScrollView.m"; sourceTree = "<group>"; };
+		B7C6239817F10F3600928F91 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
+		B7C6239917F10F3600928F91 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
+		B7C6239A17F10F3600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
 		B7E2603317E7C774007067F0 /* NSEvent+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+CC.h"; sourceTree = "<group>"; };
 		B7E2603417E7C774007067F0 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		B7E2603717E7C786007067F0 /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
@@ -1307,6 +1313,7 @@
 		B78AE63E17E7BA690028BE0B /* cocos2d-ui */ = {
 			isa = PBXGroup;
 			children = (
+				B7C6239A17F10F3600928F91 /* cocos2d-ui.h */,
 				B78AE63F17E7BA800028BE0B /* CCButton.h */,
 				B78AE64017E7BA800028BE0B /* CCButton.m */,
 				B78AE64117E7BA800028BE0B /* CCControl.h */,
@@ -1315,6 +1322,8 @@
 				B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */,
 				B78AE64517E7BA800028BE0B /* CCScrollView.h */,
 				B78AE64617E7BA800028BE0B /* CCScrollView.m */,
+				B7C6239817F10F3600928F91 /* CCTableView.h */,
+				B7C6239917F10F3600928F91 /* CCTableView.m */,
 			);
 			name = "cocos2d-ui";
 			sourceTree = "<group>";
@@ -1773,6 +1782,7 @@
 				E076E7661225EC7400DE0DA2 /* CGPointExtension.h in Headers */,
 				E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */,
 				E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */,
+				B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */,
 				E076E76B1225EC7400DE0DA2 /* TransformUtils.h in Headers */,
 				E076E76D1225EC7400DE0DA2 /* uthash.h in Headers */,
 				E076E76E1225EC7400DE0DA2 /* utlist.h in Headers */,
@@ -1791,6 +1801,7 @@
 				A046E2C014C1E5480005BBF2 /* CCGLProgram.h in Headers */,
 				A009FB83150EC87500897349 /* ccShader_Position_uColor_frag.h in Headers */,
 				A009FB84150EC87500897349 /* ccShader_Position_uColor_vert.h in Headers */,
+				B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */,
 				A009FB85150EC87500897349 /* ccShader_PositionColor_frag.h in Headers */,
 				A009FB86150EC87500897349 /* ccShader_PositionColor_vert.h in Headers */,
 				A009FB87150EC87500897349 /* ccShader_PositionTexture_frag.h in Headers */,
@@ -2015,6 +2026,7 @@
 				B78AE64A17E7BCAA0028BE0B /* CCScrollView.m in Sources */,
 				B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */,
 				B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */,
+				B7C6239C17F10F3600928F91 /* CCTableView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
