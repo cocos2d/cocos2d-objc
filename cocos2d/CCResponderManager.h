@@ -130,7 +130,6 @@ enum
 
 // -----------------------------------------------------------------
 
-@property (nonatomic,readonly) NSArray* responders;
 @property (nonatomic) BOOL eventProcessed;                          // event was processed
 
 // -----------------------------------------------------------------
