@@ -152,7 +152,7 @@ static NSUInteger globalOrderOfArrival = 1;
         
         // set default touch handling
         self.userInteractionEnabled = NO;
-        self.userInteractionClaimed = YES;
+        self.claimsUserInteraction = YES;
         self.multipleTouchEnabled = NO;
         self.hitAreaExpansion = 1.0f;
         
