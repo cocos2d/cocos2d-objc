@@ -158,7 +158,6 @@
     
     if (shrunkSize)
     {
-        // TODO: Shrink Label
         _label.contentSize = size;
     }
     
