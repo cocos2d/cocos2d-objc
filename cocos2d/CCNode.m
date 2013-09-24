@@ -88,7 +88,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode - Transform related properties
 
-@synthesize rotationX = _rotationX, rotationY = _rotationY, scaleX = _scaleX, scaleY = _scaleY;
+@synthesize rotationalSkewX = _rotationalSkewX, rotationalSkewY = _rotationalSkewY, scaleX = _scaleX, scaleY = _scaleY;
 @synthesize position = _position;
 @synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
 @synthesize contentSize = _contentSize;
@@ -108,7 +108,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_isRunning = NO;
 
 		_skewX = _skewY = 0.0f;
-		_rotationX = _rotationY = 0.0f;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
 		_scaleX = _scaleY = 1.0f;
         _position = CGPointZero;
         _contentSize = CGSizeZero;
@@ -193,25 +193,25 @@ static NSUInteger globalOrderOfArrival = 1;
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
 {
-	_rotationX = _rotationY = newRotation;
+	_rotationalSkewX = _rotationalSkewY = newRotation;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
 -(float) rotation
 {
-	NSAssert( _rotationX == _rotationY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
-	return _rotationX;
+	NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+	return _rotationalSkewX;
 }
 
--(void) setRotationX: (float)newX
+-(void) setRotationalSkewX: (float)newX
 {
-	_rotationX = newX;
+	_rotationalSkewX = newX;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
--(void) setRotationY: (float)newY
+-(void) setRotationalSkewY: (float)newY
 {
-	_rotationY = newY;
+	_rotationalSkewY = newY;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
@@ -1098,9 +1098,9 @@ static NSUInteger globalOrderOfArrival = 1;
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
 		float cx = 1, sx = 0, cy = 1, sy = 0;
-		if( _rotationX || _rotationY ) {
-			float radiansX = -CC_DEGREES_TO_RADIANS(_rotationX);
-			float radiansY = -CC_DEGREES_TO_RADIANS(_rotationY);
+		if( _rotationalSkewX || _rotationalSkewY ) {
+			float radiansX = -CC_DEGREES_TO_RADIANS(_rotationalSkewX);
+			float radiansY = -CC_DEGREES_TO_RADIANS(_rotationalSkewY);
 			cx = cosf(radiansX);
 			sx = sinf(radiansX);
 			cy = cosf(radiansY);
