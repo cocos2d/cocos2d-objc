@@ -142,6 +142,9 @@ enum
 - (void)removeAllResponders;
 - (void)markAsDirty;
 
+- (CCNode *)nodeAtPoint:(CGPoint)pos;
+- (NSArray *)nodesAtPoint:(CGPoint)pos;
+
 // -----------------------------------------------------------------
 
 @end
