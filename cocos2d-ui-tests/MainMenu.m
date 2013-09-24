@@ -25,7 +25,7 @@
 #import "MainMenu.h"
 #import "TestBase.h"
 
-#define kCCTestMenuItemHeight 32
+#define kCCTestMenuItemHeight 44
 
 @implementation MainMenu
 
@@ -81,6 +81,7 @@
     
     [headerBg addChild:lblTitle];
     
+    /*
     // Setup a scroll view containing menu with tests
     
     NSArray* testClassNames = [self testClassNames];
@@ -112,17 +113,56 @@
     scrollView.contentNode = contentNode;
     scrollView.horizontalScrollEnabled = NO;
     
-    [self addChild:scrollView z:-1];
+    [self addChild:scrollView z:-1];*/
+    
+    CCTableView* tableView = [[CCTableView alloc] init];
+    tableView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    tableView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
+    tableView.rowHeight = kCCTestMenuItemHeight;
+    tableView.dataSource = self;
+    
+    [self addChild:tableView z:-1];
+    
+    [tableView setTarget:self selector:@selector(selectedRow:)];
     
     return self;
 }
 
-- (void) pressedButton:(id)sender
+- (void) selectedRow:(id)sender
 {
-    CCButton* btn = sender;
+    CCTableView* tableView = sender;
     
-    CCScene* test = [TestBase sceneWithTestName:btn.label.string];
+    NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
+    
+    CCScene* test = [TestBase sceneWithTestName:className];
     [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInR transitionWithDuration:0.3 scene:test]];
+}
+
+- (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
+{
+    CCTableViewCell* cell = [[CCTableViewCell alloc] init];
+    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
+    
+    CCSpriteFrame* frameNormal = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Interface/table-bg-normal.png"];
+    CCSpriteFrame* frameHilite = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Interface/table-bg-hilite.png"];
+    
+    [cell.button setBackgroundSpriteFrame:frameNormal forState:CCControlStateNormal];
+    [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];
+    
+    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17];
+    label.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft);
+    label.position = ccp(20, 0.5f);
+    label.anchorPoint = ccp(0, 0.5f);
+    
+    [cell addChild:label];
+    
+    return cell;
+}
+
+- (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView
+{
+    return [self testClassNames].count;
 }
 
 @end
