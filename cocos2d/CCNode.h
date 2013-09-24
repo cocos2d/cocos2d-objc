@@ -300,7 +300,7 @@ enum {
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
-@property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
+@property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node
  hitAreaExpansion = 0 => hit area has no size
