@@ -7,7 +7,7 @@
 		<key>Interface/btn-back.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{22, 1}, {13, 21}}</string>
+			<string>{{19, 1}, {13, 21}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -20,7 +20,7 @@
 		<key>Interface/btn-next.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{1, 47}, {15, 19}}</string>
+			<string>{{19, 16}, {15, 19}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -33,11 +33,11 @@
 		<key>Interface/btn-prev.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{45, 1}, {14, 19}}</string>
+			<string>{{40, 23}, {14, 19}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
-			<false/>
+			<true/>
 			<key>sourceColorRect</key>
 			<string>{{9, 7}, {14, 19}}</string>
 			<key>sourceSize</key>
@@ -46,7 +46,7 @@
 		<key>Interface/btn-reload.png</key>
 		<dict>
 			<key>frame</key>
-			<string>{{22, 16}, {20, 20}}</string>
+			<string>{{42, 1}, {20, 20}}</string>
 			<key>offset</key>
 			<string>{0, 0}</string>
 			<key>rotated</key>
@@ -68,6 +68,32 @@
 			<string>{{0, 0}, {16, 44}}</string>
 			<key>sourceSize</key>
 			<string>{16, 44}</string>
+		</dict>
+		<key>Interface/table-bg-hilite.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{19, 33}, {16, 16}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {16, 16}}</string>
+			<key>sourceSize</key>
+			<string>{16, 16}</string>
+		</dict>
+		<key>Interface/table-bg-normal.png</key>
+		<dict>
+			<key>frame</key>
+			<string>{{1, 47}, {16, 16}}</string>
+			<key>offset</key>
+			<string>{0, 0}</string>
+			<key>rotated</key>
+			<false/>
+			<key>sourceColorRect</key>
+			<string>{{0, 0}, {16, 16}}</string>
+			<key>sourceSize</key>
+			<string>{16, 16}</string>
 		</dict>
 	</dict>
 	<key>metadata</key>
