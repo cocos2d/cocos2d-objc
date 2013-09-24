@@ -165,7 +165,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (void)setFontName:(NSString*)fontName
 {
     // Handle passing of complete file paths
-    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"]);
+    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"])
     {
         [CCLabelTTF registerCustomTTF:fontName];
         fontName = [[fontName lastPathComponent] stringByDeletingPathExtension];
