@@ -81,40 +81,7 @@
     
     [headerBg addChild:lblTitle];
     
-    /*
-    // Setup a scroll view containing menu with tests
-    
-    NSArray* testClassNames = [self testClassNames];
-    
-    // Create the content layer, make it fill the width of the scroll view and each menu item have a height of 32 px * positionScaleFactor
-    CCNode* contentNode = [CCNode node];
-    contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
-    contentNode.contentSize = CGSizeMake(1, testClassNames.count * kCCTestMenuItemHeight);
-    
-    // Add buttons to the scroll view content view
-    int num = 0;
-    for (NSString* testClassName in testClassNames)
-    {
-        CCButton* btn = [CCButton buttonWithTitle:testClassName fontName:@"HelveticaNeue-Medium" fontSize:17];
-        [contentNode addChild:btn];
-        btn.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
-        btn.anchorPoint = ccp(0, 0.5f);
-        btn.position = ccp(20, kCCTestMenuItemHeight * 0.5f + kCCTestMenuItemHeight * num);
-        
-        [btn setTarget:self selector:@selector(pressedButton:)];
-        
-        num++;
-    }
-    
-    CCScrollView* scrollView = [[CCScrollView alloc] init];
-    scrollView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
-    scrollView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
-    scrollView.flipYCoordinates = YES;
-    scrollView.contentNode = contentNode;
-    scrollView.horizontalScrollEnabled = NO;
-    
-    [self addChild:scrollView z:-1];*/
-    
+    // Table view
     CCTableView* tableView = [[CCTableView alloc] init];
     tableView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
     tableView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
