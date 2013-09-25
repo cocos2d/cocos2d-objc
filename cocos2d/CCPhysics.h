@@ -24,6 +24,8 @@
 
 #import "CCNode.h"
 #import "CCScene.h"
+
+// TODO Should be removed eventually.
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 // For comparison:
@@ -49,7 +51,7 @@
 /// Create a circular body.
 +(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGFloat)center;
 /// Create a box shaped body with rounded corners.
-+(CCPhysicsBody *)bodyWithRectangle:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
++(CCPhysicsBody *)bodyWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
 /// Create a pill shaped body with rounded corners that stretches from 'start' to 'end'.
 +(CCPhysicsBody *)bodyWithPillWithStart:(CGPoint)start end:(CGPoint)end cornerRadius:(CGFloat)cornerRadius;
 /// Create a convex polygon shaped body with rounded corners.
@@ -112,7 +114,7 @@
 /// An array of NSStrings of category names this physics body will collide with.
 /// The default value is nil, which means the physics body collides with all categories.
 // TODO this is a bad, low level name.
-@property(nonatomic, copy) NSArray *collisionBitmask;
+@property(nonatomic, copy) NSArray *collisionMask;
 
 /// Iterate over all of the CCPhysicsCollisionPairs this body is currently in contact with.
 /// NOTE: The CCPhysicsCollisionPair object is shared and you should not store a reference to it.
@@ -133,28 +135,28 @@
 /// Torque applied to the body this fixed timestep.
 @property(nonatomic, assign) CGFloat torque;
 
-/// Accumulate a torque on the body.
--(void)applyTorque:(CGPoint)force;
-
-/// Accumulate a force on the body.
--(void)applyForce:(CGPoint)force;
-/// Accumulate force and torque on the body from a force applied at point in the parent CCNode's coordinates.
-/// The force will be rotated by, but not scaled by the CCNode's transform.
--(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point;
-/// Accumulate force and torque on the body from a force applied at point in absolute coordinates.
--(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point;
-
 // Impulses immediately change the velocity and angular velocity of a physics body as if a very sudden force happened.
 // This works well for applying recoil from firing a projectile, applying custom collision forces, or jumping a character.
 
+/// Accumulate a torque on the body.
+-(void)applyTorque:(CGFloat)torque;
 /// Apply an angular impulse
 -(void)applyAngularImpulse:(CGFloat)impulse;
 
+/// Accumulate a force on the body.
+-(void)applyForce:(CGPoint)force;
 /// Accumulate an impulse on the body.
 -(void)applyImpulse:(CGPoint)impulse;
+
+/// Accumulate force and torque on the body from a force applied at point in the parent CCNode's coordinates.
+/// The force will be rotated by, but not scaled by the CCNode's transform.
+-(void)applyForce:(CGPoint)force atLocalPoint:(CGPoint)point;
 /// Accumulate an impulse and angular impulse on the body from an impulse applied at point in the parent CCNode's coordinates.
 /// The impulse will be rotated by, but not scaled by the CCNode's transform.
 -(void)applyImpulse:(CGPoint)impulse atLocalPoint:(CGPoint)point;
+
+/// Accumulate force and torque on the body from a force applied at point in absolute coordinates.
+-(void)applyForce:(CGPoint)force atWorldPoint:(CGPoint)point;
 /// Accumulate an impulse and angular impulse on the body from an impulse applied at point in absolute coordinates.
 -(void)applyImpulse:(CGPoint)impulse atWorldPoint:(CGPoint)point;
 
@@ -201,6 +203,8 @@
 
 @end
 
+// TODO Joint subclasses.
+
 
 /// Contains information about colliding physics bodies.
 /// NOTE: There is only one CCPhysicsCollisionPair object per scene and it's reused.
@@ -226,7 +230,7 @@
 /// The relative surface velocities of the two colliding shapes.
 /// The default value is TODO
 /// Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
-@property(nonatomic, assign) CGFloat surfaceVelocity;
+@property(nonatomic, assign) CGPoint surfaceVelocity;
 
 // NOTE: The following two methods return the value from the previous collision.
 // They are intended to be called from a CCPhysicsCollisionPairDelegate post-solve method or from a [CCPhysicsBody eachContactPair:] block.
@@ -273,22 +277,25 @@
 
 @interface CCPhysicsSpace : NSObject
 
+/// The CCScene this space is associated with.
+@property(nonatomic, readonly) CCScene *scene;
+
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
 @property(nonatomic, assign) CGPoint gravity;
-
-/// The delegate that is called when two physics bodies collide.
-@property(nonatomic, assign) id<CCPhysicsCollisionPairDelegate> delegate;
 
 /// Physics bodies fall asleep when a group of them move slowly for longer than the threshold.
 /// Sleeping bodies use minimal CPU resources and wake automatically when a collision happens.
 /// Defaults to 0.5 seconds.
 @property(nonatomic, assign) ccTime sleepTimeThreshold;
 
+/// The delegate that is called when two physics bodies collide.
+@property(nonatomic, assign) id<CCPhysicsCollisionPairDelegate> delegate;
+
 // TODO think about these more.
 // More variations? Filtering? thickness?
--(CCPhysicsBody *)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsBody *body, CGPoint point, CGPoint normal, CGFloat distance))block;
 -(CCPhysicsBody *)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsBody *body, CGPoint nearest, CGFloat distance))block;
+-(CCPhysicsBody *)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsBody *body, CGPoint point, CGPoint normal, CGFloat distance))block;
 -(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *body))block;
 // Unsure about this one.
 //-(BOOL)bodyQuery:(CCPhysicsBody *)body withPosition:(CGPoint)position rotation:(CGFloat)rotation block:(BOOL (^)(ChipmunkBody *bodyB, cpContactPointSet))block;
@@ -296,36 +303,18 @@
 @end
 
 
-//MARK: Extention categories:
-
-@interface CCNode(CCPhysics)
-
-/// The scene this node is attached to.
-@property(nonatomic, readonly) CCScene *scene;
-
-/// The CCPhysicsBody (if any) that is attached to this CCNode.
-@property(nonatomic, strong) CCPhysicsBody *physicsBody;
-
-@end
-
-
-@interface CCScene(CCPhysics)
-
-/// The CCPhysicsSpace associated with this scene.
-@property(nonatomic, readonly) CCPhysicsSpace *physicsWorld;
-
-@end
-
-
 //MARK: Extended APIs.
 // Will move these to a separate header eventually.
-// For writing code that interoperats with Objective-Chipmunk.
+// For writing code that interoperates with Objective-Chipmunk.
 
-@interface CCPhysicsSpace(Extended)
+@interface CCPhysicsSpace(ObjectiveChipmunk)
 
-/// Intern and retain a string to ensure it can be checked by reference
+/// Access to the underlying Objective-Chipmunk object.
+@property(nonatomic, readonly) ChipmunkSpace *space;
+
+/// Intern and copy a string to ensure it can be checked by reference
 /// Used for collision type identifiers by CCPhysics.
--(NSString *)internString:(NSString *)internString;
+-(NSString *)internString:(NSString *)string;
 
 /// Retain and track a category identifier and return it's index.
 /// Up to 32 categories can be tracked for a space.
@@ -334,6 +323,6 @@
 /// Convert an array of NSStrings for collision category identifiers into a category bitmask.
 /// The categories are retained and assigned indexes.
 /// Up to 32 categories can be tracked for a space.
--(cpBitmask)bitmaskForCategories:(NSArray *)array;
+-(cpBitmask)bitmaskForCategories:(NSArray *)categories;
 
 @end
