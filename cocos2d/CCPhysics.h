@@ -315,3 +315,25 @@
 @property(nonatomic, readonly) CCPhysicsSpace *physicsWorld;
 
 @end
+
+
+//MARK: Extended APIs.
+// Will move these to a separate header eventually.
+// For writing code that interoperats with Objective-Chipmunk.
+
+@interface CCPhysicsSpace(Extended)
+
+/// Intern and retain a string to ensure it can be checked by reference
+/// Used for collision type identifiers by CCPhysics.
+-(NSString *)internString:(NSString *)internString;
+
+/// Retain and track a category identifier and return it's index.
+/// Up to 32 categories can be tracked for a space.
+-(NSUInteger)indexForCategory:(NSString *)category;
+
+/// Convert an array of NSStrings for collision category identifiers into a category bitmask.
+/// The categories are retained and assigned indexes.
+/// Up to 32 categories can be tracked for a space.
+-(cpBitmask)bitmaskForCategories:(NSArray *)array;
+
+@end
