@@ -253,7 +253,7 @@
             CCNode *node = (CCNode *)touchEntry.target;
             
             // check if it locks touches
-            if (node.isUserInteractionClaimed)
+            if (node.claimsUserInteraction)
             {
                 // move the touch
                 if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
@@ -286,7 +286,7 @@
                 CCNode *node = _responderList[index];
             
                 // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
-                if (!node.isUserInteractionClaimed  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
+                if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                 {
                     // begin the touch
                     self.eventProcessed = YES;
@@ -439,7 +439,7 @@
         CCNode *node = (CCNode *)responder.target;
         
         // check if it locks mouse
-        if (node.isUserInteractionClaimed)
+        if (node.claimsUserInteraction)
         {
             // move the mouse
             switch (button)
@@ -476,7 +476,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if (!node.isUserInteractionClaimed && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
             {
                 // begin the mouse down
                 self.eventProcessed = YES;

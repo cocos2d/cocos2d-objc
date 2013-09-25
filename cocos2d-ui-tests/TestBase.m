@@ -160,7 +160,7 @@
 
 - (void) pressedNext:(id) sender
 {
-    int newTest = _currentTest + 1;
+    NSInteger newTest = _currentTest + 1;
     if (newTest >= self.testConstructors.count) newTest = 0;
     
     [self setupTestWithIndex:newTest];
@@ -168,13 +168,13 @@
 
 - (void) pressedPrev:(id) sender
 {
-    int newTest = _currentTest - 1;
+    NSInteger newTest = _currentTest - 1;
     if (newTest < 0) newTest = self.testConstructors.count - 1;
     
     [self setupTestWithIndex:newTest];
 }
 
-- (void) setupTestWithIndex:(int)testNum
+- (void) setupTestWithIndex:(NSInteger)testNum
 {
     // Remove current test
     [self.contentNode removeAllChildrenWithCleanup:YES];

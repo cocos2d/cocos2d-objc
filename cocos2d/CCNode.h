@@ -103,7 +103,7 @@ enum {
  */
 @interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
-	float _rotationX, _rotationY;
+	float _rotationalSkewX, _rotationalSkewY;
 
 	// scaling factors
 	float _scaleX, _scaleY;
@@ -204,9 +204,9 @@ enum {
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationX;
+@property(nonatomic,readwrite,assign) float rotationalSkewX;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationY;
+@property(nonatomic,readwrite,assign) float rotationalSkewY;
 
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
@@ -300,7 +300,7 @@ enum {
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
-@property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
+@property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node
  hitAreaExpansion = 0 => hit area has no size

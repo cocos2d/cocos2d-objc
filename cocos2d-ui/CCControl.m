@@ -307,4 +307,10 @@
     return [super contentSize];
 }
 
+- (void) onEnter
+{
+    [self needsLayout];
+    [super onEnter];
+}
+
 @end

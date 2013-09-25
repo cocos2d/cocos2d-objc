@@ -32,7 +32,7 @@ enum
     CCControlStateDisabled     = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
     CCControlStateSelected     = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
 };
-typedef NSUInteger CCControlState;
+typedef int CCControlState;
 
 @interface CCControl : CCNode
 {
