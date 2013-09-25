@@ -22,13 +22,52 @@
  * THE SOFTWARE.
  */
 
-#import "cocos2d.h"
-#import "cocos2d-ui.h"
+#import "CCScrollView.h"
 
-#define kCCUITestHeaderHeight 44
+@class CCButton;
+@class CCTableView;
 
-@interface MainMenu : CCNode <CCTableViewDataSource>
+#pragma mark CCTableViewCell
 
-+ (CCScene *) scene;
+@interface CCTableViewCell : CCNode
+{
+    NSUInteger _index;
+}
+
+@property (nonatomic,readonly) CCButton* button;
+
+@end
+
+#pragma mark CCTableViewDataSource
+
+@protocol CCTableViewDataSource <NSObject>
+
+- (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index;
+- (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView;
+@optional
+- (float) tableView:(CCTableView*)tableView heightForRowAtIndex:(NSUInteger) index;
+
+@end
+
+
+#pragma mark CCTableView
+
+@interface CCTableView : CCScrollView
+{
+    BOOL _visibleRowsDirty;
+    NSMutableArray* _rows;
+    NSRange _currentlyVisibleRange;
+}
+
+@property (nonatomic,strong) id <CCTableViewDataSource> dataSource;
+@property (nonatomic,assign) float rowHeight;
+@property (nonatomic,assign) CCContentSizeUnit rowHeightUnit;
+@property (nonatomic,readonly) float rowHeightInPoints;
+@property (nonatomic,assign) NSUInteger selectedRow;
+
+@property (nonatomic,copy) void(^block)(id sender);
+-(void) setTarget:(id)target selector:(SEL)selector;
+
+- (void) reloadData;
 
 @end
