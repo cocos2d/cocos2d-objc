@@ -23,10 +23,19 @@
  */
 
 #import "CCNode.h"
+#import "CCScene.h"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 // For comparison:
 // https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
+
+// TODO and consider:
+// * Collision only mode
+// * Sensors
+// * Interpolation?
+// * Post-step callbacks?
+// * Projectile bodies?
+// * Body queries?
 
 
 @class CCPhysicsCollisionPair;
@@ -198,11 +207,6 @@
 /// Only use the CCPhysicsCollisionPair object in the method or block it was given to you in.
 @interface CCPhysicsCollisionPair : NSObject
 
-/// The first body involved in the collision.
-@property(nonatomic, readonly) CCPhysicsBody *bodyA;
-/// The second body involved in the collision.
-@property(nonatomic, readonly) CCPhysicsBody *bodyB;
-
 /// The contact information from the two colliding bodies.
 @property(nonatomic, readonly) cpContactPointSet contacts;
 
@@ -240,10 +244,30 @@
 // TODO Possible to add a default to release it automatically?
 @property(nonatomic, assign) id userData;
 
+
+
 @end
 
 /// Delegate type called when two physics bodies collide.
+/// The final two parameter names should be replaced with strings used with CCPhysicsBody.collisionType.
+/// If both final parameter names are "default" then the method is called when a more specific method isn't found.
+/// "wildcard" can be used as the final parameter name to mean "collides with anything".
 @protocol CCPhysicsCollisionPairDelegate
+
+@optional
+/// Begin methods are called on the first fixed time step when two bodies begin colliding.
+/// If you return NO from a begin method, the collision between the two bodies will be ignored.
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
+/// Pre-solve methods are called every fixed time step when two bodies are in contact before the physics solver runs.
+/// You can call use properties such as friction, restitution, surfaceVelocity on CCPhysicsCollisionPair from a post-solve method.
+/// If you return NO from a pre-solve method, the collision will be ignored for the current time step.
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair player:(CCPhysicsBody *)bodyA monster:(CCPhysicsBody *)bodyB;
+/// Post-solve methods are called every fixed time step when two bodies are in contact after the physics solver runs.
+/// You can call use properties such as totalKineticEnergy and totalImpulse on CCPhysicsCollisionPair from a post-solve method.
+-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair player:(CCPhysicsBody *)bodyA wildcard:(CCPhysicsBody *)bodyB;
+/// Separate methods are called the first fixed time step after two bodies stop colliding.
+-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair default:(CCPhysicsBody *)bodyA default:(CCPhysicsBody *)bodyB;
+
 @end
 
 
@@ -256,14 +280,28 @@
 /// The delegate that is called when two physics bodies collide.
 @property(nonatomic, assign) id<CCPhysicsCollisionPairDelegate> delegate;
 
+/// Physics bodies fall asleep when a group of them move slowly for longer than the threshold.
+/// Sleeping bodies use minimal CPU resources and wake automatically when a collision happens.
+/// Defaults to 0.5 seconds.
+@property(nonatomic, assign) ccTime sleepTimeThreshold;
 
-// TODO point, ray, rect, shape query methods.
+// TODO think about these more.
+// More variations? Filtering? thickness?
+-(CCPhysicsBody *)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsBody *body, CGPoint point, CGPoint normal, CGFloat distance))block;
+-(CCPhysicsBody *)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsBody *body, CGPoint nearest, CGFloat distance))block;
+-(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *body))block;
+// Unsure about this one.
+//-(BOOL)bodyQuery:(CCPhysicsBody *)body withPosition:(CGPoint)position rotation:(CGFloat)rotation block:(BOOL (^)(ChipmunkBody *bodyB, cpContactPointSet))block;
 
 @end
 
 
 //MARK: Extention categories:
+
 @interface CCNode(CCPhysics)
+
+/// The scene this node is attached to.
+@property(nonatomic, readonly) CCScene *scene;
 
 /// The CCPhysicsBody (if any) that is attached to this CCNode.
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
@@ -271,3 +309,9 @@
 @end
 
 
+@interface CCScene(CCPhysics)
+
+/// The CCPhysicsSpace associated with this scene.
+@property(nonatomic, readonly) CCPhysicsSpace *physicsWorld;
+
+@end
