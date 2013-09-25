@@ -134,7 +134,7 @@ enum
 
 // -----------------------------------------------------------------
 
-+ (id)responderManager;
++ (CCResponderManager*)responderManager;
 - (id)init;
 
 - (void)addResponder:(CCNode *)responder;

@@ -67,4 +67,7 @@
 - (ccColor3B) labelColorForState:(CCControlState) state;
 - (GLubyte) labelOpacityForState:(CCControlState) state;
 
+- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
+- (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state;
+
 @end
