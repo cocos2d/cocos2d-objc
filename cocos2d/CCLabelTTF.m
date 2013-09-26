@@ -456,6 +456,10 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
+    else
+    {
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
+    }
 
 #ifdef __CC_PLATFORM_IOS
 	// iPad ?
