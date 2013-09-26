@@ -29,7 +29,7 @@
 
 // ---------------------------------------------------------------------
 
-const float CCSprite9SliceMarginDefault         = 0.1f;
+const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 
 typedef enum {
     CCSprite9SliceStrips                        = 3,
