@@ -44,7 +44,9 @@
 
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index;
 - (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView;
+
 @optional
+
 - (float) tableView:(CCTableView*)tableView heightForRowAtIndex:(NSUInteger) index;
 
 @end
@@ -57,12 +59,16 @@
     BOOL _visibleRowsDirty;
     NSMutableArray* _rows;
     NSRange _currentlyVisibleRange;
+    struct {
+        int heightForRowAtIndex:1;
+        // reserved for future dataSource delegation
+    } _dataSourceFlags;
 }
 
 @property (nonatomic,strong) id <CCTableViewDataSource> dataSource;
-@property (nonatomic,assign) float rowHeight;
+@property (nonatomic,assign) CGFloat rowHeight;
 @property (nonatomic,assign) CCContentSizeUnit rowHeightUnit;
-@property (nonatomic,readonly) float rowHeightInPoints;
+@property (nonatomic,readonly) CGFloat rowHeightInPoints;
 @property (nonatomic,assign) NSUInteger selectedRow;
 
 @property (nonatomic,copy) void(^block)(id sender);
