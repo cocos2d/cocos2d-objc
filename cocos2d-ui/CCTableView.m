@@ -135,16 +135,16 @@
     return NULL;
 }*/
 
-- (NSRange) visibleRangeForScrollPosition:(float) scrollPosition
+- (NSRange) visibleRangeForScrollPosition:(CGFloat) scrollPosition
 {
-    float positionScale = [CCDirector sharedDirector].positionScaleFactor;
+    CGFloat positionScale = [CCDirector sharedDirector].positionScaleFactor;
     
     if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])
     {
         // Rows may have different heights
         
         NSUInteger startRow = 0;
-        float currentRowPos = 0;
+        CGFloat currentRowPos = 0;
         
         NSUInteger numRows = [_dataSource tableViewNumberOfRows:self];
         
@@ -152,7 +152,7 @@
         for (NSUInteger currentRow = 0; currentRow < numRows; currentRow++)
         {
             // Increase row position
-            float rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow];
+            CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow];
             if (_rowHeightUnit == kCCContentSizeUnitScaled) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
@@ -166,7 +166,7 @@
         
         // Find end row
         NSUInteger numVisibleRows = 1;
-        float tableHeight = self.contentSizeInPoints.height;
+        CGFloat tableHeight = self.contentSizeInPoints.height;
         for (NSUInteger currentRow = startRow; currentRow < numRows; currentRow++)
         {
             // Check if we are out of visible range
@@ -176,7 +176,7 @@
             }
             
             // Increase row position
-            float rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow + 1];
+            CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow + 1];
             if (_rowHeightUnit == kCCContentSizeUnitScaled) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
@@ -206,11 +206,11 @@
     }
 }
 
-- (float) locationForCellWithIndex:(NSUInteger)idx
+- (CGFloat) locationForCellWithIndex:(NSUInteger)idx
 {
     if (!_dataSource) return 0;
     
-    float location = 0;
+    CGFloat location = 0;
     
     if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])
     {
@@ -295,9 +295,9 @@
     
     // Resize the content node
     NSUInteger numRows = [_dataSource tableViewNumberOfRows:self];
-    float layerHeight = 0;
+    CGFloat layerHeight = 0;
     
-    if ([_dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)])
+    if (_dataSourceFlags.heightForRowAtIndex)
     {
         for (int i = 0; i < numRows; i++)
         {
@@ -328,11 +328,15 @@
 
 - (void) setDataSource:(id<CCTableViewDataSource>)dataSource
 {
-    _dataSource = dataSource;
-    [self reloadData];
+    if (_dataSource != dataSource)
+    {
+        _dataSourceFlags.heightForRowAtIndex = [dataSource respondsToSelector:@selector(tableView:heightForRowAtIndex:)];
+        _dataSource = dataSource;
+        [self reloadData];
+    }
 }
 
-- (float) rowHeightInPoints
+- (CGFloat) rowHeightInPoints
 {
     if (_rowHeightUnit == kCCContentSizeUnitPoints) return _rowHeight;
     else if (_rowHeightUnit == kCCContentSizeUnitScaled)
@@ -350,10 +354,13 @@
     [super visit];
 }
 
-- (void) setRowHeight:(float)rowHeight
+- (void) setRowHeight:(CGFloat)rowHeight
 {
-    _rowHeight = rowHeight;
-    [self reloadData];
+    if (_rowHeight != rowHeight)
+    {
+        _rowHeight = rowHeight;
+        [self reloadData];        
+    }
 }
 
 - (void) setContentSize:(CGSize)contentSize
