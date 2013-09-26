@@ -289,7 +289,7 @@ CGFloat	__ccContentScaleFactor = 1;
 
 	// Already disabled
 	if( ! enabled && __ccContentScaleFactor == 1 )
-		return YES;
+		return NO;
 
 	// setContentScaleFactor is not supported
 	if (! [__view respondsToSelector:@selector(setContentScaleFactor:)])
