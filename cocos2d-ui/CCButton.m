@@ -432,4 +432,60 @@
     return [super valueForKey:key];
 }
 
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"labelOpacity"])
+    {
+        [self setLabelOpacity:[value intValue] forState:state];
+    }
+    else if ([key isEqualToString:@"labelColor"])
+    {
+        ccColor3B c;
+        [value getValue:&c];
+        [self setLabelColor:c forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundOpacity"])
+    {
+        [self setBackgroundOpacity:[value intValue] forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundColor"])
+    {
+        ccColor3B c;
+        [value getValue:&c];
+        [self setBackgroundColor:c forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        [self setBackgroundSpriteFrame:value forState:state];
+    }
+}
+
+- (id) valueForKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"labelOpacity"])
+    {
+        return [NSNumber numberWithUnsignedChar:[self labelOpacityForState:state]];
+    }
+    else if ([key isEqualToString:@"labelColor"])
+    {
+        ccColor3B c = [self labelColorForState:state];
+        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+    }
+    else if ([key isEqualToString:@"backgroundOpacity"])
+    {
+        return [NSNumber numberWithUnsignedChar:[self backgroundOpacityForState:state]];
+    }
+    else if ([key isEqualToString:@"backgroundColor"])
+    {
+        ccColor3B c = [self backgroundColorForState:state];
+        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+    }
+    else if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        return [self backgroundSpriteFrameForState:state];
+    }
+    
+    return NULL;
+}
+
 @end

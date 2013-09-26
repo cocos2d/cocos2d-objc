@@ -63,6 +63,9 @@ typedef int CCControlState;
 - (void) needsLayout;
 - (void) layout;
 
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState) state;
+- (id) valueForKey:(NSString *)key state:(CCControlState)state;
+
 #ifdef __CC_PLATFORM_IOS
 - (void) touchEntered:(UITouch*) touch withEvent:(UIEvent*)event;
 - (void) touchExited:(UITouch*) touch withEvent:(UIEvent*) event;

@@ -368,20 +368,11 @@
 
 - (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState) state
 {
-    NSString* methodName = [NSString stringWithFormat:@"set%@:forState:", [key capitalizedString]];
-    
-    SEL sel = NSSelectorFromString(methodName);
-    
-    objc_msgSend(self, sel, value, state);
 }
 
 - (id) valueForKey:(NSString *)key state:(CCControlState)state
 {
-    NSString* methodName = [NSString stringWithFormat:@"%@ForState:", key];
-    
-    SEL sel = NSSelectorFromString(methodName);
-    
-    return objc_msgSend(self, sel, state);
+    return NULL;
 }
 
 - (void) setValue:(id)value forKey:(NSString *)key
