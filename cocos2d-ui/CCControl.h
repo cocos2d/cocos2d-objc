@@ -40,7 +40,9 @@ typedef int CCControlState;
 }
 
 @property (nonatomic,assign) CGSize preferredSize;
+@property (nonatomic,assign) CCContentSizeType preferredSizeType;
 @property (nonatomic,assign) CGSize maxSize;
+@property (nonatomic,assign) CCContentSizeType maxSizeType;
 
 @property (nonatomic,assign) CCControlState state;
 @property (nonatomic,assign) BOOL enabled;

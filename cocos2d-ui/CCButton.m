@@ -25,6 +25,7 @@
 #import "CCButton.h"
 
 #import "cocos2d.h"
+#import <objc/runtime.h>
 
 @implementation CCButton
 
@@ -68,6 +69,7 @@
     self = [self initWithTitle:title];
     self.label.fontName = fontName;
     self.label.fontSize = size;
+    
     return self;
 }
 
@@ -119,6 +121,8 @@
     // Setup label
     _label = [CCLabelTTF labelWithString:title fontName:@"Helvetica" fontSize:14];
     _label.adjustsFontSizeToFit = YES;
+    _label.horizontalAlignment = kCCTextAlignmentCenter;
+    _label.verticalAlignment = kCCVerticalTextAlignmentCenter;
     
     [self addChild:_label z:1];
     
@@ -133,7 +137,9 @@
 
 - (void) layout
 {
-    CGSize paddedLabelSize = _label.contentSize;
+    _label.dimensions = CGSizeZero;
+    CGSize originalLabelSize = _label.contentSize;
+    CGSize paddedLabelSize = originalLabelSize;
     paddedLabelSize.width += _horizontalPadding * 2;
     paddedLabelSize.height += _verticalPadding * 2;
     
@@ -158,7 +164,9 @@
     
     if (shrunkSize)
     {
-        _label.contentSize = size;
+        CGSize labelSize = CGSizeMake(clampf(size.width - _horizontalPadding * 2, 0, originalLabelSize.width),
+                                      clampf(size.height - _verticalPadding * 2, 0, originalLabelSize.height));
+        _label.dimensions = labelSize;
     }
     
     _background.contentSize = size;
@@ -362,6 +370,66 @@
 - (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state
 {
     return [_backgroundSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
+}
+
+- (void) setTitle:(NSString *)title
+{
+    _label.string = title;
+    [self needsLayout];
+}
+
+- (NSString*) title
+{
+    return _label.string;
+}
+
+- (void) setHorizontalPadding:(float)horizontalPadding
+{
+    _horizontalPadding = horizontalPadding;
+    [self needsLayout];
+}
+
+- (void) setVerticalPadding:(float)verticalPadding
+{
+    _verticalPadding = verticalPadding;
+    [self needsLayout];
+}
+
+- (NSArray*) keysForwardedToLabel
+{
+    return [NSArray arrayWithObjects:
+            @"fontName",
+            @"fontSize",
+            @"opacity",
+            @"color",
+            @"fontColor",
+            @"outlineColor",
+            @"outlineWidth",
+            @"shadowColor",
+            @"shadowBlurRadius",
+            @"shadowOffset",
+            @"shadowOffsetType",
+            nil];
+}
+
+- (void) setValue:(id)value forKey:(NSString *)key
+{
+    if ([[self keysForwardedToLabel] containsObject:key])
+    {
+        [_label setValue:value forKey:key];
+        [self needsLayout];
+        return;
+    }
+    [super setValue:value forKey:key];
+}
+
+- (id) valueForKey:(NSString *)key
+{
+    if ([[self keysForwardedToLabel] containsObject:key])
+    {
+        return [_label valueForKey:key];
+    }
+    return [super valueForKey:key];
 }
 
 @end

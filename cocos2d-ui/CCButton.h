@@ -44,6 +44,7 @@
 @property (nonatomic,assign) BOOL zoomWhenHighlighted;
 @property (nonatomic,assign) float horizontalPadding;
 @property (nonatomic,assign) float verticalPadding;
+@property (nonatomic,strong) NSString* title;
 
 + (id) buttonWithTitle:(NSString*) title;
 + (id) buttonWithTitle:(NSString*) title fontName:(NSString*)fontName fontSize:(float)size;

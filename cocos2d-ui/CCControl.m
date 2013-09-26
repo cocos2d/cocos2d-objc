@@ -24,6 +24,7 @@
 
 #import "CCControl.h"
 #import <objc/message.h>
+#import <objc/runtime.h>
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -311,6 +312,113 @@
 {
     [self needsLayout];
     [super onEnter];
+}
+
+- (void) setContentSizeType:(CCContentSizeType)contentSizeType
+{
+    [super setContentSizeType:contentSizeType];
+    [self needsLayout];
+}
+
+- (void) setPreferredSize:(CGSize)preferredSize
+{
+    _preferredSize = preferredSize;
+    [self needsLayout];
+}
+
+- (void) setMaxSize:(CGSize)maxSize
+{
+    _maxSize = maxSize;
+    [self needsLayout];
+}
+
+- (void) setPreferredSizeType:(CCContentSizeType)preferredSizeType
+{
+    self.contentSizeType = preferredSizeType;
+}
+
+- (CCContentSizeType) preferredSizeType
+{
+    return self.contentSizeType;
+}
+
+- (void) setMaxSizeType:(CCContentSizeType)maxSizeType
+{
+    self.contentSizeType = maxSizeType;
+}
+
+- (CCContentSizeType) maxSizeType
+{
+    return self.contentSizeType;
+}
+
+
+#pragma mark Setting properties for control states by name
+
+- (CCControlState) controlStateFromString:(NSString*)stateName
+{
+    CCControlState state = 0;
+    if ([stateName isEqualToString:@"Normal"]) state = CCControlStateNormal;
+    else if ([stateName isEqualToString:@"Highlighted"]) state = CCControlStateHighlighted;
+    else if ([stateName isEqualToString:@"Disabled"]) state = CCControlStateDisabled;
+    else if ([stateName isEqualToString:@"Selected"]) state = CCControlStateSelected;
+    
+    return state;
+}
+
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState) state
+{
+    NSString* methodName = [NSString stringWithFormat:@"set%@:forState:", [key capitalizedString]];
+    
+    SEL sel = NSSelectorFromString(methodName);
+    
+    objc_msgSend(self, sel, value, state);
+}
+
+- (id) valueForKey:(NSString *)key state:(CCControlState)state
+{
+    NSString* methodName = [NSString stringWithFormat:@"%@ForState:", key];
+    
+    SEL sel = NSSelectorFromString(methodName);
+    
+    return objc_msgSend(self, sel, state);
+}
+
+- (void) setValue:(id)value forKey:(NSString *)key
+{
+    NSRange separatorRange = [key rangeOfString:@"|"];
+    NSUInteger separatorLoc = separatorRange.location;
+    
+    if (separatorLoc == NSNotFound)
+    {
+        [super setValue:value forKey:key];
+        return;
+    }
+    
+    NSString* propName = [key substringToIndex:separatorLoc];
+    NSString* stateName = [key substringFromIndex:separatorLoc+1];
+    
+    CCControlState state = [self controlStateFromString:stateName];
+    
+    [self setValue:value forKey:propName state:state];
+}
+
+- (id) valueForKey:(NSString *)key
+{
+    NSRange separatorRange = [key rangeOfString:@"|"];
+    NSUInteger separatorLoc = separatorRange.location;
+    
+    if (separatorLoc == NSNotFound)
+    {
+        return [super valueForKey:key];
+    }
+    
+    NSString* propName = [key substringToIndex:separatorLoc];
+    NSString* stateName = [key substringFromIndex:separatorLoc+1];
+    
+    CCControlState state = [self controlStateFromString:stateName];
+    
+    return [self valueForKey:propName state:state];
 }
 
 @end
