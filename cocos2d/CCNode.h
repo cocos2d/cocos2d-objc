@@ -38,12 +38,14 @@ enum {
 	kCCNodeTagInvalid = -1,
 };
 
+@class CCScene;
 @class CCCamera;
 @class CCGridBase;
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
 @class CCAction;
+@class CCPhysicsBody;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -249,6 +251,12 @@ enum {
 @property (nonatomic,readonly) CGSize contentSizeInPoints;
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
 @property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
+
+/** The scene this node is added to, or nil if it's not part of a scene. */
+@property(nonatomic, readonly) CCScene *scene;
+
+/** The physics body (if any) that this node is attached to. */
+@property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;

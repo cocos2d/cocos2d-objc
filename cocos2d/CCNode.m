@@ -805,6 +805,13 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode SceneManagement
 
+-(BOOL)isScene {return NO;}
+
+-(CCScene *)scene
+{
+	return (self.isScene ? (CCScene *)self : self.parent.scene);
+}
+
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
@@ -1244,6 +1251,14 @@ static NSUInteger globalOrderOfArrival = 1;
 }
 
 // -----------------------------------------------------------------
+
+#pragma mark - Physics
+
+-(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
+{
+	// TODO 
+	@throw @"Not Yet Implemented.";
+}
 
 @end
 

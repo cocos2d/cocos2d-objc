@@ -275,10 +275,7 @@
 @end
 
 
-@interface CCPhysicsSpace : NSObject
-
-/// The CCScene this space is associated with.
-@property(nonatomic, readonly) CCScene *scene;
+@interface CCPhysicsNode : CCNode
 
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
@@ -307,7 +304,7 @@
 // Will move these to a separate header eventually.
 // For writing code that interoperates with Objective-Chipmunk.
 
-@interface CCPhysicsSpace(ObjectiveChipmunk)
+@interface CCPhysicsNode(ObjectiveChipmunk)
 
 /// Access to the underlying Objective-Chipmunk object.
 @property(nonatomic, readonly) ChipmunkSpace *space;
