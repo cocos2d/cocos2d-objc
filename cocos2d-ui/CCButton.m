@@ -148,17 +148,19 @@
     BOOL shrunkSize = NO;
     size = [self convertContentSizeToPoints: self.preferredSize];
     
+    CGSize maxSize = [self convertContentSizeToPoints:self.maxSize];
+    
     if (size.width < paddedLabelSize.width) size.width = paddedLabelSize.width;
     if (size.height < paddedLabelSize.height) size.height = paddedLabelSize.height;
     
-    if (self.maxSize.width > 0 && self.maxSize.width < size.width)
+    if (maxSize.width > 0 && maxSize.width < size.width)
     {
-        size.width = self.maxSize.width;
+        size.width = maxSize.width;
         shrunkSize = YES;
     }
-    if (self.maxSize.height > 0 && self.maxSize.height < size.height)
+    if (maxSize.height > 0 && maxSize.height < size.height)
     {
-        size.height = self.maxSize.height;
+        size.height = maxSize.height;
         shrunkSize = YES;
     }
     
