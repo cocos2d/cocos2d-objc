@@ -29,6 +29,7 @@ project.xcworkspace/
 VersionX-revision.h
 # build products
 build/
+DerivedData/
 *.[oa]
 # Other source repository archive directories (protects when importing)
 .hg

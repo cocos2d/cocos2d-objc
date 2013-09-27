@@ -254,20 +254,18 @@ static void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
-@implementation CCPhysicsSpace {
+@implementation CCPhysicsNode {
 	ChipmunkSpace *_space;
 	
 	NSMutableDictionary *_internedStrings;
 	NSMutableArray *_categories;
 }
 
--(id)initWithScene:(CCScene *)scene
+-(id)init
 {
 	if((self = [super init])){
 		_space = [[ChipmunkSpace alloc] init];
 		_space.gravity = cpvzero;
-		
-		_scene = scene;
 		
 		_internedStrings = [NSMutableDictionary dictionary];
 		_categories = [NSMutableArray array];

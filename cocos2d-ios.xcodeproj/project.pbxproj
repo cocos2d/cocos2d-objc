@@ -221,6 +221,7 @@
 		B78AE46917E7AF1C0028BE0B /* CCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE46117E7AF1C0028BE0B /* CCScrollView.m */; };
 		B78AE46C17E7AF6C0028BE0B /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B78AE46A17E7AF6C0028BE0B /* UITouch+CC.h */; };
 		B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */; };
+		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */; };
 		D39A31E917F228AF00E94B3B /* CCPhysics.h in Headers */ = {isa = PBXBuildFile; fileRef = D39A31E717F228AF00E94B3B /* CCPhysics.h */; };
 		D39A31EA17F228AF00E94B3B /* CCPhysics.m in Sources */ = {isa = PBXBuildFile; fileRef = D39A31E817F228AF00E94B3B /* CCPhysics.m */; };
 		E0112F53120CB406006667F8 /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E0112F4F120CB406006667F8 /* CCTransitionPageTurn.h */; };
@@ -648,6 +649,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */,
 				A06D9C141728D5F600704732 /* CoreText.framework in Frameworks */,
 				A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */,
 				A015BFF913B829E100C73E76 /* libkazmath.a in Frameworks */,

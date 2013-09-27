@@ -1855,6 +1855,50 @@
 		A6ED003317D896FD002B4973 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
 		A6FF608A17D88ED600E9D725 /* TouchTest.h in Headers */ = {isa = PBXBuildFile; fileRef = A6FF608817D88ED600E9D725 /* TouchTest.h */; };
 		A6FF608B17D88ED600E9D725 /* TouchTest.m in Sources */ = {isa = PBXBuildFile; fileRef = A6FF608917D88ED600E9D725 /* TouchTest.m */; };
+		D30B5D8B17F5E4D30058C11C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */; };
+		D30B5D9C17F5E8750058C11C /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
+		D30B5D9D17F5E8750058C11C /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
+		D355243917F5E42500096CA3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
+		D355243A17F5E42500096CA3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
+		D355243B17F5E42500096CA3 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
+		D355243C17F5E42500096CA3 /* grossinis_sister1.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB290E10EE4A00AE9530 /* grossinis_sister1.png */; };
+		D355243D17F5E42500096CA3 /* grossinis_sister2.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB2A0E10EE4A00AE9530 /* grossinis_sister2.png */; };
+		D355243E17F5E42500096CA3 /* fire.pvr in Resources */ = {isa = PBXBuildFile; fileRef = 502AACF20F79715D001E3F87 /* fire.pvr */; };
+		D355243F17F5E42500096CA3 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = 505464301062886600AB7C52 /* fps_images.png */; };
+		D355244017F5E42500096CA3 /* f1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632012382F6100A4B3E6 /* f1-hd.png */; };
+		D355244117F5E42500096CA3 /* f2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632112382F6100A4B3E6 /* f2-hd.png */; };
+		D355244217F5E42500096CA3 /* r1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632212382F6100A4B3E6 /* r1-hd.png */; };
+		D355244317F5E42500096CA3 /* r2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C632312382F6100A4B3E6 /* r2-hd.png */; };
+		D355244417F5E42500096CA3 /* b1-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640412382F9300A4B3E6 /* b1-hd.png */; };
+		D355244517F5E42500096CA3 /* b2-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E04C640512382F9300A4B3E6 /* b2-hd.png */; };
+		D355244617F5E42500096CA3 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57D126CA73F006E46A2 /* iTunesArtwork */; };
+		D355244717F5E42500096CA3 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57E126CA73F006E46A2 /* Icon@2x.png */; };
+		D355244817F5E42500096CA3 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB57F126CA73F006E46A2 /* Icon-Small@2x.png */; };
+		D355244917F5E42500096CA3 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB580126CA73F006E46A2 /* Icon-Small.png */; };
+		D355244A17F5E42500096CA3 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB581126CA73F006E46A2 /* Icon-Small-50.png */; };
+		D355244B17F5E42500096CA3 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = E02BB582126CA73F006E46A2 /* Icon-72.png */; };
+		D355244C17F5E42500096CA3 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E087B34E12785BB60076F6FF /* fps_images-hd.png */; };
+		D355244D17F5E42500096CA3 /* b1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376D13EA1FDB0073E59A /* b1-ipad.png */; };
+		D355244E17F5E42500096CA3 /* b2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376E13EA1FDB0073E59A /* b2-ipad.png */; };
+		D355244F17F5E42500096CA3 /* f1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0376F13EA1FDB0073E59A /* f1-ipad.png */; };
+		D355245017F5E42500096CA3 /* f2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377013EA1FDB0073E59A /* f2-ipad.png */; };
+		D355245117F5E42500096CA3 /* r1-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377113EA1FDB0073E59A /* r1-ipad.png */; };
+		D355245217F5E42500096CA3 /* r2-ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B0377213EA1FDB0073E59A /* r2-ipad.png */; };
+		D355245317F5E42500096CA3 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = A093FC24150D0ED40039327A /* fps_images-ipadhd.png */; };
+		D355245417F5E42500096CA3 /* Default-Landscape.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A1C25015CAE9C40058D96F /* Default-Landscape.png */; };
+		D355245517F5E42500096CA3 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0579B861601975E00AF8A12 /* Default-568h@2x.png */; };
+		D355245617F5E42500096CA3 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0579BBB16019C6000AF8A12 /* Default@2x.png */; };
+		D355245917F5E42500096CA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CB170E10EE0800AE9530 /* main.m */; };
+		D355245A17F5E42500096CA3 /* BaseAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = A0D3A8FE149D2FA40077CD93 /* BaseAppController.m */; };
+		D355245C17F5E42500096CA3 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A02E260C16A4EE00007F064C /* libcocos2d.a */; };
+		D355245D17F5E42500096CA3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D355245E17F5E42500096CA3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D355245F17F5E42500096CA3 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D3623EB0D0F72F000981E51 /* CoreGraphics.framework */; };
+		D355246017F5E42500096CA3 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B920D5A79C200DBA0E3 /* OpenGLES.framework */; };
+		D355246117F5E42500096CA3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2D500B990D5A79CF00DBA0E3 /* QuartzCore.framework */; };
+		D355246217F5E42500096CA3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		D355246317F5E42500096CA3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
+		D355246417F5E42500096CA3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -3108,6 +3152,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		D355243717F5E42500096CA3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
+		};
 		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3671,6 +3722,9 @@
 		A6FF608817D88ED600E9D725 /* TouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchTest.h; path = tests/TouchTest.h; sourceTree = "<group>"; };
 		A6FF608917D88ED600E9D725 /* TouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchTest.m; path = tests/TouchTest.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
+		D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = tests/CCPhysicsTest.m; sourceTree = "<group>"; };
+		D355246817F5E42500096CA3 /* CCPhysicsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCPhysicsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ClickAndMoveTest copy-Info.plist"; path = "/Users/slembcke/Development/cocos2d-iphone/ClickAndMoveTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4360,6 +4414,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D355245B17F5E42500096CA3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D355245C17F5E42500096CA3 /* libcocos2d.a in Frameworks */,
+				D355245D17F5E42500096CA3 /* Foundation.framework in Frameworks */,
+				D355245E17F5E42500096CA3 /* UIKit.framework in Frameworks */,
+				D355245F17F5E42500096CA3 /* CoreGraphics.framework in Frameworks */,
+				D355246017F5E42500096CA3 /* OpenGLES.framework in Frameworks */,
+				D355246117F5E42500096CA3 /* QuartzCore.framework in Frameworks */,
+				D355246217F5E42500096CA3 /* libz.dylib in Frameworks */,
+				D355246317F5E42500096CA3 /* CoreMotion.framework in Frameworks */,
+				D355246417F5E42500096CA3 /* CoreText.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EDA0FFE96D400C7C82E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4534,6 +4604,7 @@
 				A0F8418D151D3B3000EBBFCB /* FileUtilsTest.app */,
 				2B44E494163383A0000492D8 /* ClippingNodeTest.app */,
 				A6ED000D17D893DB002B4973 /* TouchTest.app */,
+				D355246817F5E42500096CA3 /* CCPhysicsTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4550,6 +4621,7 @@
 				50671C1211B99FC8006C0061 /* Resources-iPad */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
+				D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -5001,6 +5073,7 @@
 				E0C5588A11FE493B00B9E4CB /* ZwoptexTest.m */,
 				50B2CB170E10EE0800AE9530 /* main.m */,
 				50B2CB180E10EE0800AE9530 /* Prefix.pch */,
+				D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */,
 			);
 			name = tests;
 			sourceTree = "<group>";
@@ -6138,6 +6211,24 @@
 			productReference = A6ED000D17D893DB002B4973 /* TouchTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D355243517F5E42500096CA3 /* CCPhysicsTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D355246517F5E42500096CA3 /* Build configuration list for PBXNativeTarget "CCPhysicsTest" */;
+			buildPhases = (
+				D355243817F5E42500096CA3 /* Resources */,
+				D355245717F5E42500096CA3 /* Sources */,
+				D355245B17F5E42500096CA3 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D355243617F5E42500096CA3 /* PBXTargetDependency */,
+			);
+			name = CCPhysicsTest;
+			productName = ClickAndMoveTest;
+			productReference = D355246817F5E42500096CA3 /* CCPhysicsTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		DA5F0EC10FFE96D400C7C82E /* Bug422 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */;
@@ -6335,6 +6426,7 @@
 				50CBA46311CBD6FB007B009D /* Bug886 */,
 				507C0EE611D609290075E747 /* Bug899 */,
 				502BF54411E39CC30030C477 /* Bug914 */,
+				D355243517F5E42500096CA3 /* CCPhysicsTest */,
 			);
 		};
 /* End PBXProject section */
@@ -8347,6 +8439,45 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D355243817F5E42500096CA3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D355243917F5E42500096CA3 /* Default.png in Resources */,
+				D355243A17F5E42500096CA3 /* Icon.png in Resources */,
+				D355243B17F5E42500096CA3 /* grossini.png in Resources */,
+				D355243C17F5E42500096CA3 /* grossinis_sister1.png in Resources */,
+				D355243D17F5E42500096CA3 /* grossinis_sister2.png in Resources */,
+				D355243E17F5E42500096CA3 /* fire.pvr in Resources */,
+				D355243F17F5E42500096CA3 /* fps_images.png in Resources */,
+				D355244017F5E42500096CA3 /* f1-hd.png in Resources */,
+				D355244117F5E42500096CA3 /* f2-hd.png in Resources */,
+				D355244217F5E42500096CA3 /* r1-hd.png in Resources */,
+				D355244317F5E42500096CA3 /* r2-hd.png in Resources */,
+				D355244417F5E42500096CA3 /* b1-hd.png in Resources */,
+				D355244517F5E42500096CA3 /* b2-hd.png in Resources */,
+				D355244617F5E42500096CA3 /* iTunesArtwork in Resources */,
+				D355244717F5E42500096CA3 /* Icon@2x.png in Resources */,
+				D355244817F5E42500096CA3 /* Icon-Small@2x.png in Resources */,
+				D355244917F5E42500096CA3 /* Icon-Small.png in Resources */,
+				D355244A17F5E42500096CA3 /* Icon-Small-50.png in Resources */,
+				D355244B17F5E42500096CA3 /* Icon-72.png in Resources */,
+				D355244C17F5E42500096CA3 /* fps_images-hd.png in Resources */,
+				D355244D17F5E42500096CA3 /* b1-ipad.png in Resources */,
+				D355244E17F5E42500096CA3 /* b2-ipad.png in Resources */,
+				D355244F17F5E42500096CA3 /* f1-ipad.png in Resources */,
+				D355245017F5E42500096CA3 /* f2-ipad.png in Resources */,
+				D355245117F5E42500096CA3 /* r1-ipad.png in Resources */,
+				D30B5D9C17F5E8750058C11C /* blocks.png in Resources */,
+				D30B5D9D17F5E8750058C11C /* blocks-hd.png in Resources */,
+				D355245217F5E42500096CA3 /* r2-ipad.png in Resources */,
+				D355245317F5E42500096CA3 /* fps_images-ipadhd.png in Resources */,
+				D355245417F5E42500096CA3 /* Default-Landscape.png in Resources */,
+				D355245517F5E42500096CA3 /* Default-568h@2x.png in Resources */,
+				D355245617F5E42500096CA3 /* Default@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EC40FFE96D400C7C82E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9098,6 +9229,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D355245717F5E42500096CA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D355245917F5E42500096CA3 /* main.m in Sources */,
+				D355245A17F5E42500096CA3 /* BaseAppController.m in Sources */,
+				D30B5D8B17F5E4D30058C11C /* CCPhysicsTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0ED70FFE96D400C7C82E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9531,6 +9672,11 @@
 			isa = PBXTargetDependency;
 			name = cocos2d;
 			targetProxy = A6ED002617D8944B002B4973 /* PBXContainerItemProxy */;
+		};
+		D355243617F5E42500096CA3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = cocos2d;
+			targetProxy = D355243717F5E42500096CA3 /* PBXContainerItemProxy */;
 		};
 		E03A50EC135525C200D4B515 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -11054,6 +11200,8 @@
 					external/Chipmunk/include/chipmunk,
 					cocos2d,
 					CocosDenshion,
+					external/Chipmunk/objectivec/include,
+					external/Chipmunk/include/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
@@ -11099,12 +11247,48 @@
 					external/Chipmunk/include/chipmunk,
 					cocos2d,
 					CocosDenshion,
+					external/Chipmunk/objectivec/include,
+					external/Chipmunk/include/,
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		D355246617F5E42500096CA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = CCPhysicsTest;
+			};
+			name = Debug;
+		};
+		D355246717F5E42500096CA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				GCC_THUMB_SUPPORT = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				PRODUCT_NAME = CCPhysicsTest;
+				ZERO_LINK = NO;
 			};
 			name = Release;
 		};
@@ -11703,6 +11887,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D355246517F5E42500096CA3 /* Build configuration list for PBXNativeTarget "CCPhysicsTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D355246617F5E42500096CA3 /* Debug */,
+				D355246717F5E42500096CA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
