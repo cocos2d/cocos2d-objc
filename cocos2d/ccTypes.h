@@ -538,6 +538,11 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
 #define kCCContentSizeTypePoints CCContentSizeTypeMake(kCCContentSizeUnitPoints, kCCContentSizeUnitPoints)
 #define kCCContentSizeTypeScaled CCContentSizeTypeMake(kCCContentSizeUnitScaled, kCCContentSizeUnitScaled)
 #define kCCContentSizeTypeNormalized CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitNormalized)
+
+typedef enum {
+    kCCScaleTypePoints,
+    kCCScaleTypeScaled,
+} CCScaleType;
     
 #ifdef __cplusplus
 }

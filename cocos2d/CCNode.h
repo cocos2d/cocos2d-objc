@@ -214,6 +214,13 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
+
+@property (nonatomic,readonly) float scaleInPoints;
+@property (nonatomic,readonly) float scaleXInPoints;
+@property (nonatomic,readonly) float scaleYInPoints;
+
+@property (nonatomic,assign) CCScaleType scaleType;
+
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** Position (x,y) of the node in points from the bottom left corner */
