@@ -1156,8 +1156,8 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		// Build Transform Matrix
 		// Adjusted transfor m calculation for rotational skew
-		_transform = CGAffineTransformMake( cy * _scaleX, sy * _scaleX,
-										   -sx * _scaleY, cx * _scaleY,
+		_transform = CGAffineTransformMake( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor,
+										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor,
 										   x, y );
 
 		// XXX: Try to inline skew
