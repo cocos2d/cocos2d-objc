@@ -1415,7 +1415,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 
 	if( _animation.restoreOriginalFrame )
-		_origFrame = [sprite displayFrame];
+		_origFrame = sprite.spriteFrame;
 	
 	_nextFrame = 0;
 	_executedLoops = 0;
@@ -1425,7 +1425,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 {
 	if( _animation.restoreOriginalFrame ) {
 		CCSprite *sprite = _target;
-		[sprite setDisplayFrame:_origFrame];
+        sprite.spriteFrame = _origFrame;
 	}
 
 	[super stop];
@@ -1459,7 +1459,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		if( [splitTime floatValue] <= t ) {
 			CCAnimationFrame *frame = [frames objectAtIndex:i];
 			frameToDisplay = [frame spriteFrame];
-			[(CCSprite*)_target setDisplayFrame: frameToDisplay];
+			[(CCSprite*)_target setSpriteFrame: frameToDisplay];
 			
 			NSDictionary *dict = [frame userInfo];
 			if( dict )
