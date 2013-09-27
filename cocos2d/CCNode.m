@@ -409,6 +409,39 @@ static NSUInteger globalOrderOfArrival = 1;
     return [self convertContentSizeToPoints:self.contentSize];
 }
 
+- (float) scaleInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return self.scale * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return self.scale;
+}
+
+- (float) scaleXInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleX * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleX;
+}
+
+- (float) scaleYInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleY * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleY;
+}
+
+- (void) setScaleType:(CCScaleType)scaleType
+{
+    _scaleType = scaleType;
+    _isTransformDirty = _isInverseDirty = YES;
+}
+
 - (CGRect) boundingBox
 {
     CGSize contentSize = self.contentSizeInPoints;
@@ -1108,13 +1141,16 @@ static NSUInteger globalOrderOfArrival = 1;
 		}
 
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
+        
+        float scaleFactor = 1;
+        if (_scaleType == kCCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
 		// Adjusted transform calculation for rotational skew
 		if( !needsSkewMatrix && !CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) ) {
-			x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-			y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+			x += cy * -_anchorPointInPoints.x * _scaleX * scaleFactor + -sx * -_anchorPointInPoints.y * _scaleY;
+			y += sy * -_anchorPointInPoints.x * _scaleX * scaleFactor +  cx * -_anchorPointInPoints.y * _scaleY;
 		}
 
 
