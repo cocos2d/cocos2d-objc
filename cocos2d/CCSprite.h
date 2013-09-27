@@ -116,6 +116,12 @@
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
+
+/**
+ *  The currently displayed spriteFrame.
+ */
+@property (nonatomic,strong) CCSpriteFrame* spriteFrame;
+
 /** whether or not the sprite is flipped horizontally.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
@@ -257,18 +263,6 @@
  Do not call it manually. Use setTextureRect instead.
  */
 -(void)setVertexRect:(CGRect)rect;
-
-
-#pragma mark CCSprite - Frames
-
-/** sets a new display frame to the CCSprite. */
--(void) setDisplayFrame:(CCSpriteFrame*)newFrame;
-
-/** returns whether or not a CCSpriteFrame is being displayed */
--(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
-
-/** returns the current displayed frame. */
--(CCSpriteFrame*) displayFrame;
 
 #pragma mark CCSprite - Animation
 

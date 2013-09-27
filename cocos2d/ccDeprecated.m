@@ -142,6 +142,23 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
 	return [self displayFrame];
 }
+
+- (CCSpriteFrame*) displayFrame
+{
+    return [self spriteFrame];
+}
+
+- (void) setDisplayFrame:(CCSpriteFrame *)newFrame
+{
+    self.spriteFrame = newFrame;
+}
+
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame
+{
+    return NO;
+}
+
+
 @end
 
 @implementation CCMenuItem (Deprecated)

@@ -238,7 +238,7 @@
     
     CCSpriteFrame* spriteFrame = [self backgroundSpriteFrameForState:state];
     if (!spriteFrame) spriteFrame = [self backgroundSpriteFrameForState:CCControlStateNormal];
-    [_background setDisplayFrame:spriteFrame];
+    _background.spriteFrame = spriteFrame;
     
     // Update label
     _label.color = [self labelColorForState:state];
