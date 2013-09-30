@@ -70,8 +70,17 @@ typedef enum {
 
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
+    NSSize oldContentSize = self.contentSize;
+    CCContentSizeType oldContentSizeType = self.contentSizeType;
+    
     [super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
     _originalContentSize = self.contentSizeInPoints;
+    
+    if (!NSEqualSizes(oldContentSize, CGSizeZero))
+    {
+        self.contentSizeType = oldContentSizeType;
+        self.contentSize = oldContentSize;
+    }
 }
 
 // ---------------------------------------------------------------------

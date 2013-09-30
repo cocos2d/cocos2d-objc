@@ -284,6 +284,7 @@
 {
 	_rectRotated = rotated;
 
+    self.contentSizeType = kCCContentSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	[self setVertexRect:rect];
 	[self setTextureCoords:rect];
