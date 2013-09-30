@@ -580,11 +580,11 @@ enum {
  */
 - (CGAffineTransform)nodeToParentTransform;
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position;
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints;
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize;
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize;
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType) type;
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.
