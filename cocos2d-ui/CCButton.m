@@ -146,9 +146,9 @@
     CGSize size = paddedLabelSize;
     
     BOOL shrunkSize = NO;
-    size = [self convertContentSizeToPoints: self.preferredSize];
+    size = [self convertContentSizeToPoints: self.preferredSize type:self.contentSizeType];
     
-    CGSize maxSize = [self convertContentSizeToPoints:self.maxSize];
+    CGSize maxSize = [self convertContentSizeToPoints:self.maxSize type:self.contentSizeType];
     
     if (size.width < paddedLabelSize.width) size.width = paddedLabelSize.width;
     if (size.height < paddedLabelSize.height) size.height = paddedLabelSize.height;
@@ -178,7 +178,7 @@
     _label.positionType = kCCPositionTypeNormalized;
     _label.position = ccp(0.5f, 0.5f);
     
-    self.contentSize = [self convertContentSizeFromPoints: size];
+    self.contentSize = [self convertContentSizeFromPoints: size type:self.contentSizeType];
     
     [super layout];
 }

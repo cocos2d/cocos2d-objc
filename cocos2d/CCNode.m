@@ -275,13 +275,13 @@ static NSUInteger globalOrderOfArrival = 1;
     _isTransformDirty = _isInverseDirty = YES;
 }
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -330,14 +330,14 @@ static NSUInteger globalOrderOfArrival = 1;
     return size;
 }
 
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -406,7 +406,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGSize) contentSizeInPoints
 {
-    return [self convertContentSizeToPoints:self.contentSize];
+    return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
 }
 
 - (float) scaleInPoints
@@ -1001,7 +1001,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode Transform
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -1010,12 +1010,12 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = 0;
     
     // Convert position to points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) x = position.x;
     else if (xUnit == kCCPositionUnitScaled) x = position.x * director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) y = position.y;
     else if (yUnit == kCCPositionUnitScaled) y = position.y * director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
@@ -1049,7 +1049,7 @@ static NSUInteger globalOrderOfArrival = 1;
     return positionInPoints;
 }
 
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -1059,7 +1059,7 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = positionInPoints.y;
     
     // Account for reference corner
-    CCPositionReferenceCorner corner = _positionType.corner;
+    CCPositionReferenceCorner corner = type.corner;
     if (corner == kCCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
@@ -1082,7 +1082,7 @@ static NSUInteger globalOrderOfArrival = 1;
     }
     
     // Convert position from points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) position.x = x;
     else if (xUnit == kCCPositionUnitScaled) position.x = x / director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized)
@@ -1094,7 +1094,7 @@ static NSUInteger globalOrderOfArrival = 1;
         }
     }
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) position.y = y;
     else if (yUnit == kCCPositionUnitScaled) position.y = y / director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized)
@@ -1111,7 +1111,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGPoint) positionInPoints
 {
-    return [self convertPositionToPoints:_position];
+    return [self convertPositionToPoints:_position type:_positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
@@ -1123,7 +1123,7 @@ static NSUInteger globalOrderOfArrival = 1;
         _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
         
         // Convert position to points
-        CGPoint positionInPoints = [self convertPositionToPoints:_position];
+        CGPoint positionInPoints = [self convertPositionToPoints:_position type:_positionType];
 		float x = positionInPoints.x;
 		float y = positionInPoints.y;
         
