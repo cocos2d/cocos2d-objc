@@ -33,27 +33,18 @@ static void NYI(){@throw @"Not Yet Implemented";}
 @property(nonatomic, assign) cpArbiter *arbiter;
 @end
 
-@interface CCPhysicsBody(Private)
-@property(nonatomic, strong) CCNode *node;
-@end
-
 
 @implementation CCPhysicsBody
 {
+	CCNode *_node;
+	
 	ChipmunkBody *_body;
 	ChipmunkShape *_shape;
+	
+	NSArray *_chipmunkObjects;
 }
 
 //MARK: Constructors:
-
--(id)init
-{
-	if((self = [super init])){
-		NYI();
-	}
-	
-	return self;
-}
 
 +(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGFloat)center
 {
@@ -62,7 +53,17 @@ static void NYI(){@throw @"Not Yet Implemented";}
 
 +(CCPhysicsBody *)bodyWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
 {
-	NYI(); return nil;
+	// TODO temporary code.
+	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
+	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	
+	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
+	body->_shape = [ChipmunkPolyShape boxWithBody:body->_body bb:bb radius:cornerRadius];
+	body->_shape.mass = 1.0;
+	
+	body->_chipmunkObjects = @[body->_body, body->_shape];
+	
+	return body;
 }
 
 +(CCPhysicsBody *)bodyWithPillWithStart:(CGPoint)start end:(CGPoint)end cornerRadius:(CGFloat)cornerRadius
@@ -110,8 +111,11 @@ static void NYI(){@throw @"Not Yet Implemented";}
 -(BOOL)allowsRotation {NYI(); return YES;}
 -(void)setAllowsRotation:(BOOL)allowsRotation {NYI();}
 
--(BOOL)dynamic {NYI(); return YES;}
--(void)setDynamic:(BOOL)dynamic {NYI();}
+static ccPhysicsBodyType ToCocosBodyType[] = {kCCPhysicsBodyTypeDynamic, kCCPhysicsBodyTypeKinematic, kCCPhysicsBodyTypeStatic};
+static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
+
+-(ccPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
+-(void)setType:(ccPhysicsBodyType)type {_body.type = ToChipmunkBodyType[type];}
 
 //MARK: Collision and Contact:
 
@@ -183,8 +187,26 @@ static void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
-@interface CCPhysicsJoint(Private)
+@implementation CCPhysicsBody(ObjectiveChipmunk)
+
+-(CGPoint)absolutePosition {return _body.position;}
+-(void)setAbsolutePosition:(CGPoint)absolutePosition {_body.position = absolutePosition;}
+
+-(float)absoluteRadians {return _body.angle;}
+-(void)setAbsoluteRadians:(float)absoluteRadians {_body.angle = absoluteRadians;}
+
+-(CCNode *)node {return _node;}
+-(void)setNode:(CCNode *)node {_node = node;}
+
+-(NSArray *)chipmunkObjects {return _chipmunkObjects;}
+
+@end
+
+
+@interface CCPhysicsJoint(ObjectiveChipmunk)
+
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
+
 @end
 
 
@@ -261,11 +283,15 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	NSMutableArray *_categories;
 }
 
+// Used by CCNode.physicsNode
+-(BOOL)isPhysicsNode {return YES;}
+
 -(id)init
 {
 	if((self = [super init])){
 		_space = [[ChipmunkSpace alloc] init];
 		_space.gravity = cpvzero;
+		_space.sleepTimeThreshold = 0.5f;
 		
 		_internedStrings = [NSMutableDictionary dictionary];
 		_categories = [NSMutableArray array];
@@ -337,6 +363,31 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	}
 	
 	return bitmask;
+}
+
+//MARK: Lifecycle and Scheduling
+
+-(void)onEnter
+{
+	[super onEnter];
+	[self scheduleUpdate];
+}
+
+-(void)onExit
+{
+	[super onExit];
+	[self unscheduleUpdate];
+}
+
+-(void)fixedUpdate:(ccTime)delta
+{
+	[_space step:1.0f/60.0f];
+}
+
+-(void)update:(ccTime)delta
+{
+	// TODO need a real fixed time step here.
+	[self fixedUpdate:1.0/60.0];
 }
 
 @end

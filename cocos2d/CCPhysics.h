@@ -31,16 +31,30 @@
 // For comparison:
 // https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
 
-// TODO and consider:
-// * Collision only mode
-// * Sensors
-// * Interpolation?
-// * Post-step callbacks?
-// * Projectile bodies?
-// * Body queries?
-
+/* TODO and consider:
+ * Collision only mode
+ * Sensors
+ * Interpolation?
+ * Post-step callbacks?
+ * Projectile bodies?
+ * Body queries?
+ * Currently body must be set before adding to a parent node.
+ * Currently nodes must have rigid transforms.
+ * Currently a parent's absolute transform must be identity.
+ * Currently nodes with a physics body are always considered to have dirty transforms.
+ * Fixed timesteps are a hack.
+ * What to do about kinematic bodies?
+ * What to do about CCActions?
+ * What to do about transform changes?
+ */
 
 @class CCPhysicsCollisionPair;
+
+typedef enum ccPhysicsBodyType {
+	kCCPhysicsBodyTypeDynamic,
+	kCCPhysicsBodyTypeKinematic,
+	kCCPhysicsBodyTypeStatic,
+} ccPhysicsBodyType;
 
 
 /// Basic rigid body type.
@@ -84,28 +98,34 @@
 /// Surface friction of the physics body.
 /// When two objects collide, their elaticity is multiplied together.
 /// The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
+/// Defaults to 0.0.
 @property(nonatomic, assign) CGFloat elasticity;
 /// Velocity of the surface of the object relative to it's normal velocity.
 /// This is useful for modeling conveyor belts or the feet of a player character.
 /// The calculated surface velocity of two colliding shapes by default only affects their friction.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
+/// Defaults to 0.0.
 @property(nonatomic, assign) CGPoint surfaceVelocity;
 
 //MARK: Simulation Properties:
 
 /// Whether or not the physics body is affected by gravity.
+/// Defaults to YES.
 @property(nonatomic, assign) BOOL affectedByGravity;
 /// Whether or not the physics body should be allowed to rotate.
+/// Defaults to YES.
 @property(nonatomic, assign) BOOL allowsRotation;
-/// Whether or not the physics body is dynamic or static.
-/// Static physics bodies are immovable. (Like the ground or a wall).
-@property(nonatomic, assign) BOOL dynamic;
+/// Whether the physics body is dynamic, kinematic or static.
+/// Defaults to CP_BODY_TYPE_DYNAMIC.
+@property(nonatomic, assign) ccPhysicsBodyType type;
 
 //MARK: Collision and Contact:
 
 /// If two physics bodies share the same group object, then they don't collide.
+/// Defaults to nil.
 @property(nonatomic, assign) id collisionGroup;
 /// A string that identifies which collision pair delegate method should be called.
+/// Defaults to @"default".
 @property(nonatomic, copy) NSString *collisionType;
 /// An array of NSStrings of category names this physics body is a member of.
 /// Up to 32 categories can be used in a single scene.
@@ -113,7 +133,6 @@
 @property(nonatomic, copy) NSArray *collisionCategories;
 /// An array of NSStrings of category names this physics body will collide with.
 /// The default value is nil, which means the physics body collides with all categories.
-// TODO this is a bad, low level name.
 @property(nonatomic, copy) NSArray *collisionMask;
 
 /// Iterate over all of the CCPhysicsCollisionPairs this body is currently in contact with.
@@ -303,6 +322,25 @@
 //MARK: Extended APIs.
 // Will move these to a separate header eventually.
 // For writing code that interoperates with Objective-Chipmunk.
+
+@interface CCNode(CCPhysics)
+
+/// Nearest CCPhysicsNode ancestor of this node, or nil if none.
+-(CCPhysicsNode *)physicsNode;
+
+@end
+
+
+@interface CCPhysicsBody(ObjectiveChipmunk)<ChipmunkObject>
+
+@property(nonatomic, strong) CCNode *node;
+@property(nonatomic, assign) CGPoint absolutePosition;
+@property(nonatomic, assign) float absoluteRadians;
+
+@property(nonatomic, readonly) NSArray *chipmunkObjects;
+
+@end
+
 
 @interface CCPhysicsNode(ObjectiveChipmunk)
 
