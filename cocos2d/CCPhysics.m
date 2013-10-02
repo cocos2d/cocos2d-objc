@@ -149,7 +149,10 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 //MARK: Velocity
 
 -(CGPoint)velocity {return _body.velocity;}
+-(void)setVelocity:(CGPoint)velocity {_body.velocity = velocity;}
+
 -(CGFloat)angularVelocity {return _body.angularVelocity;}
+-(void)setAngularVelocity:(CGFloat)angularVelocity {_body.angularVelocity = angularVelocity;}
 
 //MARK: Forces, Torques and Impulses:
 
