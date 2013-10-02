@@ -26,6 +26,7 @@
 		{
 			CCSprite *dynamicSprite = [CCSprite spriteWithFile: @"blocks.png"];
 			dynamicSprite.position = ccp(240, 160);
+			dynamicSprite.rotation = 10;
 			
 			CGSize size = dynamicSprite.contentSize;
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);

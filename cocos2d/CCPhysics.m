@@ -23,11 +23,15 @@
  */
 
 #import "CCPhysics.h"
+#import "CCDrawNode.h"
 
 static void NYI(){@throw @"Not Yet Implemented";}
 
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.
 #define MAX_CATEGORIES 32
+
+#define DEFAULT_FRICTION 0.7
+#define DEFAULT_ELASTICITY 0.2
 
 @interface CCPhysicsCollisionPair(Private)
 @property(nonatomic, assign) cpArbiter *arbiter;
@@ -60,6 +64,8 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
 	body->_shape = [ChipmunkPolyShape boxWithBody:body->_body bb:bb radius:cornerRadius];
 	body->_shape.mass = 1.0;
+	body->_shape.friction = DEFAULT_FRICTION;
+	body->_shape.elasticity = DEFAULT_ELASTICITY;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -281,6 +287,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	
 	NSMutableDictionary *_internedStrings;
 	NSMutableArray *_categories;
+	
+	CCDrawNode *_debug;
 }
 
 // Used by CCNode.physicsNode
@@ -295,6 +303,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		
 		_internedStrings = [NSMutableDictionary dictionary];
 		_categories = [NSMutableArray array];
+		
+		_debug = [CCDrawNode node];
+		[self addChild:_debug z:1000]; // TODO magic z-order
 	}
 	
 	return self;
@@ -388,6 +399,56 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 {
 	// TODO need a real fixed time step here.
 	[self fixedUpdate:1.0/60.0];
+}
+
+//MARK: Debug Drawing:
+
+static inline ccColor4F ToCCColor4f(cpSpaceDebugColor c){return (ccColor4F){c.r, c.g, c.b, c.a};}
+
+static void
+DrawCircle(cpVect p, cpFloat a, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
+{[draw drawDot:p radius:r color:ToCCColor4f(fill)];}
+
+static void
+DrawSegment(cpVect a, cpVect b, cpSpaceDebugColor color, CCDrawNode *draw)
+{[draw drawSegmentFrom:a to:b radius:1.0 color:ToCCColor4f(color)];}
+
+static void
+DrawFatSegment(cpVect a, cpVect b, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
+{[draw drawSegmentFrom:a to:b radius:r color:ToCCColor4f(fill)];}
+
+static void
+DrawPolygon(int count, const cpVect *verts, cpFloat r, cpSpaceDebugColor outline, cpSpaceDebugColor fill, CCDrawNode *draw)
+{[draw drawPolyWithVerts:verts count:count fillColor:ToCCColor4f(fill) borderWidth:1.0 borderColor:ToCCColor4f(outline)];}
+
+static void
+DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
+{[draw drawDot:pos radius:size/2.0 color:ToCCColor4f(color)];}
+
+static cpSpaceDebugColor
+ColorForShape(cpShape *shape, CCDrawNode *draw)
+{return (cpSpaceDebugColor){0.8, 0.8, 0.8, 0.1};}
+
+-(void)draw
+{
+	cpSpaceDebugDrawOptions drawOptions = {
+		(cpSpaceDebugDrawCircleImpl)DrawCircle,
+		(cpSpaceDebugDrawSegmentImpl)DrawSegment,
+		(cpSpaceDebugDrawFatSegmentImpl)DrawFatSegment,
+		(cpSpaceDebugDrawPolygonImpl)DrawPolygon,
+		(cpSpaceDebugDrawDotImpl)DrawDot,
+		
+		CP_SPACE_DEBUG_DRAW_SHAPES | CP_SPACE_DEBUG_DRAW_CONSTRAINTS | CP_SPACE_DEBUG_DRAW_COLLISION_POINTS,
+		
+		{1.0, 1.0, 1.0, 1.0},
+		(cpSpaceDebugDrawColorForShapeImpl)ColorForShape,
+		{0.0, 1.0, 0.0, 1.0},
+		{1.0, 0.0, 0.0, 1.0},
+		_debug,
+	};
+	
+	[_debug clear];
+	cpSpaceDebugDraw(_space.space, &drawOptions);
 }
 
 @end

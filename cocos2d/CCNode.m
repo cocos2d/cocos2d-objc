@@ -100,14 +100,14 @@ static inline float
 GetRotationX(CCNode *self)
 {
 	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationX);
+	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationX);
 }
 
 static inline float
 GetRotationY(CCNode *self)
 {
 	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationY);
+	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationY);
 }
 
 static inline void
@@ -116,7 +116,7 @@ SetRotationX(CCNode *self, float rotation)
 	CCPhysicsBody *body = self->_physicsBody;
 	if(body){
 		// TODO convert coordinate systems.
-		body.absoluteRadians = CC_DEGREES_TO_RADIANS(rotation);
+		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(rotation);
 	} else {
 		self->_rotationX = rotation;
 	}

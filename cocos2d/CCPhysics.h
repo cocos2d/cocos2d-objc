@@ -94,17 +94,18 @@ typedef enum ccPhysicsBodyType {
 /// Surface friction of the physics body.
 /// When two objects collide, their friction is multiplied together.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
+/// Defaults to 0.7.
 @property(nonatomic, assign) CGFloat friction;
 /// Surface friction of the physics body.
 /// When two objects collide, their elaticity is multiplied together.
 /// The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
-/// Defaults to 0.0.
+/// Defaults to 0.2.
 @property(nonatomic, assign) CGFloat elasticity;
 /// Velocity of the surface of the object relative to it's normal velocity.
 /// This is useful for modeling conveyor belts or the feet of a player character.
 /// The calculated surface velocity of two colliding shapes by default only affects their friction.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
-/// Defaults to 0.0.
+/// Defaults to CGPointZero.
 @property(nonatomic, assign) CGPoint surfaceVelocity;
 
 //MARK: Simulation Properties:

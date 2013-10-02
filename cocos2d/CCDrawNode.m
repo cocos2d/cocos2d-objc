@@ -277,7 +277,7 @@ static inline ccTex2F __t(ccVertex2F v )
 	_dirty = YES;
 }
 
--(void)drawPolyWithVerts:(CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
 {
 	struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts extrude[count];

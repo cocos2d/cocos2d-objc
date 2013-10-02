@@ -24,6 +24,7 @@
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
+#define CP_ALLOW_PRIVATE_ACCESS 1
 #import "CCPhysicsDebugNode.h"
 
 #import "ccTypes.h"
@@ -46,7 +47,7 @@
 
 static ccColor4F ColorForBody(cpBody *body)
 {
-	if(cpBodyIsRogue(body) || cpBodyIsSleeping(body)){
+	if(cpBodyIsSleeping(body)){
 		return ccc4f(0.5, 0.5, 0.5 ,0.5);
 	} else if(body->CP_PRIVATE(node).idleTime > body->CP_PRIVATE(space)->sleepTimeThreshold) {
 		return ccc4f(0.33, 0.33, 0.33, 0.5);
@@ -67,7 +68,7 @@ DrawShape(cpShape *shape, CCDrawNode *renderer)
 				cpVect center = circle->tc;
 				cpFloat radius = circle->r;
 				[renderer drawDot:center radius:cpfmax(radius, 1.0) color:color];
-				[renderer drawSegmentFrom:center to:cpvadd(center, cpvmult(body->rot, radius)) radius:1.0 color:color];
+				[renderer drawSegmentFrom:center to:cpvadd(center, cpvmult(cpBodyGetRotation(body), radius)) radius:1.0 color:color];
 			} break;
 		case CP_SEGMENT_SHAPE: {
 				cpSegmentShape *seg = (cpSegmentShape *)shape;
@@ -78,7 +79,13 @@ DrawShape(cpShape *shape, CCDrawNode *renderer)
 				ccColor4F line = color;
 				line.a = cpflerp(color.a, 1.0, 0.5);
 				
-				[renderer drawPolyWithVerts:poly->tVerts count:poly->numVerts fillColor:color borderWidth:1.0 borderColor:line];
+				int count = poly->count;
+				cpSplittingPlane *planes = poly->planes;
+				cpVect *verts = (cpVect *)alloca(count*sizeof(cpVect));
+				
+				for(int i=0; i<count; i++) verts[i] = planes[i].v0;
+				
+				[renderer drawPolyWithVerts:verts count:count fillColor:color borderWidth:1.0 borderColor:line];
 			}break;
 		default:
 			cpAssertHard(FALSE, "Bad assertion in DrawShape()");
@@ -97,8 +104,8 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	if(klass == cpPinJointGetClass()){
 		cpPinJoint *joint = (cpPinJoint *)constraint;
 		
-		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
-		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
+		cpVect a = cpBodyLocalToWorld(body_a, joint->anchr1);
+		cpVect b = cpBodyLocalToWorld(body_b, joint->anchr2);
 		
 		[renderer drawDot:a radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawDot:b radius:3.0 color:CONSTRAINT_COLOR];
@@ -106,8 +113,8 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	} else if(klass == cpSlideJointGetClass()){
 		cpSlideJoint *joint = (cpSlideJoint *)constraint;
 
-		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
-		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
+		cpVect a = cpBodyLocalToWorld(body_a, joint->anchr1);
+		cpVect b = cpBodyLocalToWorld(body_b, joint->anchr2);
 
 		[renderer drawDot:a radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawDot:b radius:3.0 color:CONSTRAINT_COLOR];
@@ -115,17 +122,17 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	} else if(klass == cpPivotJointGetClass()){
 		cpPivotJoint *joint = (cpPivotJoint *)constraint;
 
-		cpVect a = cpBodyLocal2World(body_a, joint->anchr1);
-		cpVect b = cpBodyLocal2World(body_b, joint->anchr2);
+		cpVect a = cpBodyLocalToWorld(body_a, joint->anchr1);
+		cpVect b = cpBodyLocalToWorld(body_b, joint->anchr2);
 
 		[renderer drawDot:a radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawDot:b radius:3.0 color:CONSTRAINT_COLOR];
 	} else if(klass == cpGrooveJointGetClass()){
 		cpGrooveJoint *joint = (cpGrooveJoint *)constraint;
 
-		cpVect a = cpBodyLocal2World(body_a, joint->grv_a);
-		cpVect b = cpBodyLocal2World(body_a, joint->grv_b);
-		cpVect c = cpBodyLocal2World(body_b, joint->anchr2);
+		cpVect a = cpBodyLocalToWorld(body_a, joint->grv_a);
+		cpVect b = cpBodyLocalToWorld(body_a, joint->grv_b);
+		cpVect c = cpBodyLocalToWorld(body_b, joint->anchr2);
 
 		[renderer drawDot:c radius:3.0 color:CONSTRAINT_COLOR];
 		[renderer drawSegmentFrom:a to:b radius:1.0 color:CONSTRAINT_COLOR];
@@ -150,8 +157,8 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	if( ! _spacePtr )
 		return;
 
-	cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, self);
-	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, self);
+	cpSpaceEachShape(_spacePtr, (cpSpaceShapeIteratorFunc)DrawShape, (__bridge void *)self);
+	cpSpaceEachConstraint(_spacePtr, (cpSpaceConstraintIteratorFunc)DrawConstraint, (__bridge void *)self);
 	
 	[super draw];
 	[super clear];
@@ -160,10 +167,10 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 + debugNodeForChipmunkSpace:(ChipmunkSpace *)space;
 {
 	CCPhysicsDebugNode *node = [[CCPhysicsDebugNode alloc] init];
-	node->_spaceObj = [space retain];
+	node->_spaceObj = space;
 	node->_spacePtr = space.space;
 
-	return [node autorelease];
+	return node;
 }
 
 + debugNodeForCPSpace:(cpSpace *)space;
@@ -171,13 +178,7 @@ DrawConstraint(cpConstraint *constraint, CCDrawNode *renderer)
 	CCPhysicsDebugNode *node = [[CCPhysicsDebugNode alloc] init];
 	node->_spacePtr = space;
 
-	return [node autorelease];
-}
-
-- (void) dealloc
-{
-	[_spaceObj release];
-	[super dealloc];
+	return node;
 }
 
 @end
