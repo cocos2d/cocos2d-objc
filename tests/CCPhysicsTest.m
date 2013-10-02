@@ -23,14 +23,26 @@
 		physicsNode.gravity = ccp(0.0, -100.0);
 		[self addChild:physicsNode];
 		
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-
-		[physicsNode addChild:sprite];
-		sprite.position = ccp(240, 160);
-		
-		CGSize size = sprite.contentSize;
-		CGRect rect = CGRectMake(0, 0, size.width, size.height);
-		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		{
+			CCSprite *dynamicSprite = [CCSprite spriteWithFile: @"blocks.png"];
+			dynamicSprite.position = ccp(240, 160);
+			
+			CGSize size = dynamicSprite.contentSize;
+			CGRect rect = CGRectMake(0, 0, size.width, size.height);
+			dynamicSprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			
+			[physicsNode addChild:dynamicSprite];
+		} {
+			CCSprite *staticSprite = [CCSprite spriteWithFile: @"blocks.png"];
+			staticSprite.position = ccp(240, 0);
+			
+			CGSize size = staticSprite.contentSize;
+			CGRect rect = CGRectMake(0, 0, size.width, size.height);
+			staticSprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			staticSprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+			
+			[physicsNode addChild:staticSprite];
+		}
 	}
 	
 	return self;
