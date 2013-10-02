@@ -57,7 +57,7 @@
 -(void)drawSegmentFrom:(CGPoint)a to:(CGPoint)b radius:(CGFloat)radius color:(ccColor4F)color;
 
 /** draw a polygon with a fill color and line color */
--(void)drawPolyWithVerts:(CGPoint*)verts count:(NSUInteger)count fillColor:(ccColor4F)fill borderWidth:(CGFloat)width  borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(const CGPoint*)verts count:(NSUInteger)count fillColor:(ccColor4F)fill borderWidth:(CGFloat)width  borderColor:(ccColor4F)line;
 
 /** Clear the geometry in the node's buffer. */
 -(void)clear;

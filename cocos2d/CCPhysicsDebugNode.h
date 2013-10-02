@@ -23,7 +23,7 @@
 
 #if CC_ENABLE_CHIPMUNK_INTEGRATION
 
-#import "chipmunk.h"
+#import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 #import "CCDrawNode.h"
 
