@@ -24,25 +24,27 @@
 		[self addChild:physicsNode];
 		
 		{
-			CCSprite *dynamicSprite = [CCSprite spriteWithFile: @"blocks.png"];
-			dynamicSprite.position = ccp(240, 160);
-			dynamicSprite.rotation = 10;
+			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+			sprite.anchorPoint = CGPointZero;
+			sprite.position = ccp(240, 160);
 			
-			CGSize size = dynamicSprite.contentSize;
+			CGSize size = sprite.contentSize;
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);
-			dynamicSprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			sprite.physicsBody.angularVelocity = 1;
 			
-			[physicsNode addChild:dynamicSprite];
+			[physicsNode addChild:sprite];
 		} {
-			CCSprite *staticSprite = [CCSprite spriteWithFile: @"blocks.png"];
-			staticSprite.position = ccp(240, 0);
+			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+			sprite.anchorPoint = CGPointZero;
+			sprite.position = ccp(240, 0);
 			
-			CGSize size = staticSprite.contentSize;
+			CGSize size = sprite.contentSize;
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);
-			staticSprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-			staticSprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
 			
-			[physicsNode addChild:staticSprite];
+			[physicsNode addChild:sprite];
 		}
 	}
 	
