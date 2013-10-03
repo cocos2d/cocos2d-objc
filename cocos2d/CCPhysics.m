@@ -50,9 +50,20 @@ static void NYI(){@throw @"Not Yet Implemented";}
 
 //MARK: Constructors:
 
-+(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGFloat)center
++(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGPoint)center
 {
-	NYI(); return nil;
+	// TODO temporary code.
+	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
+	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	
+	body->_shape = [ChipmunkCircleShape circleWithBody:body->_body radius:radius offset:center];
+	body->_shape.mass = 1.0;
+	body->_shape.friction = DEFAULT_FRICTION;
+	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	
+	body->_chipmunkObjects = @[body->_body, body->_shape];
+	
+	return body;
 }
 
 +(CCPhysicsBody *)bodyWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
@@ -72,14 +83,36 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	return body;
 }
 
-+(CCPhysicsBody *)bodyWithPillWithStart:(CGPoint)start end:(CGPoint)end cornerRadius:(CGFloat)cornerRadius
++(CCPhysicsBody *)bodyWithPillFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
 {
-	NYI(); return nil;
+	// TODO temporary code.
+	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
+	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	
+	body->_shape = [ChipmunkSegmentShape segmentWithBody:body->_body from:from to:to radius:cornerRadius];
+	body->_shape.mass = 1.0;
+	body->_shape.friction = DEFAULT_FRICTION;
+	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	
+	body->_chipmunkObjects = @[body->_body, body->_shape];
+	
+	return body;
 }
 
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
-	NYI(); return nil;
+	// TODO temporary code.
+	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
+	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	
+	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
+	body->_shape.mass = 1.0;
+	body->_shape.friction = DEFAULT_FRICTION;
+	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	
+	body->_chipmunkObjects = @[body->_body, body->_shape];
+	
+	return body;
 }
 
 +(CCPhysicsBody *)bodyWithSegmentLoopFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
@@ -434,7 +467,7 @@ DrawDot(cpFloat size, cpVect pos, cpSpaceDebugColor color, CCDrawNode *draw)
 
 static cpSpaceDebugColor
 ColorForShape(cpShape *shape, CCDrawNode *draw)
-{return (cpSpaceDebugColor){0.8, 0.8, 0.8, 0.1};}
+{return (cpSpaceDebugColor){0.8, 0.0, 0.0, 0.75};}
 
 -(void)draw
 {
@@ -457,15 +490,15 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	[_debug clear];
 	cpSpaceDebugDraw(_space.space, &drawOptions);
 	
-//	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
-//		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
-//			[_debug drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
-//			
-//			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-//			[_debug drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
+	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
+		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
+			[_debug drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
+			
+			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
+			[_debug drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
 //			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
-//		}
-//	});
+		}
+	});
 }
 
 @end

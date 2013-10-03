@@ -63,11 +63,11 @@ typedef enum ccPhysicsBodyType {
 //MARK: Constructors:
 
 /// Create a circular body.
-+(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGFloat)center;
++(CCPhysicsBody *)bodyWithCircleOfRadius:(CGFloat)radius andCenter:(CGPoint)center;
 /// Create a box shaped body with rounded corners.
 +(CCPhysicsBody *)bodyWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
 /// Create a pill shaped body with rounded corners that stretches from 'start' to 'end'.
-+(CCPhysicsBody *)bodyWithPillWithStart:(CGPoint)start end:(CGPoint)end cornerRadius:(CGFloat)cornerRadius;
++(CCPhysicsBody *)bodyWithPillFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
 /// Create a convex polygon shaped body with rounded corners.
 /// If the points do not form a convex polygon, then a convex hull will be created for them automatically.
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
