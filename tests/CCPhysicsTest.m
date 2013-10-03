@@ -25,18 +25,19 @@
 		
 		{
 			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-			sprite.anchorPoint = CGPointZero;
 			sprite.position = ccp(240, 160);
+			sprite.rotation = 45;
+//			sprite.scale = 0.5;
 			
 			CGSize size = sprite.contentSize;
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);
 			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
 			sprite.physicsBody.angularVelocity = 1;
 			
+			sprite.position = ccp(240, 160);
 			[physicsNode addChild:sprite];
 		} {
 			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-			sprite.anchorPoint = CGPointZero;
 			sprite.position = ccp(240, 0);
 			
 			CGSize size = sprite.contentSize;

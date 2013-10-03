@@ -198,11 +198,15 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 @implementation CCPhysicsBody(ObjectiveChipmunk)
 
--(CGPoint)absolutePosition {return _body.position;}
--(void)setAbsolutePosition:(CGPoint)absolutePosition {_body.position = absolutePosition;}
+-(cpVect)absolutePosition {return _body.position;}
+-(void)setAbsolutePosition:(cpVect)absolutePosition {_body.position = absolutePosition;}
 
--(float)absoluteRadians {return _body.angle;}
--(void)setAbsoluteRadians:(float)absoluteRadians {_body.angle = absoluteRadians;}
+-(cpFloat)absoluteRadians {return _body.angle;}
+-(void)setAbsoluteRadians:(cpFloat)absoluteRadians {_body.angle = absoluteRadians;}
+
+-(cpTransform)absoluteTransform {return _body.transform;}
+
+//-(cpVect)
 
 -(CCNode *)node {return _node;}
 -(void)setNode:(CCNode *)node {_node = node;}
@@ -452,6 +456,16 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	
 	[_debug clear];
 	cpSpaceDebugDraw(_space.space, &drawOptions);
+	
+//	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
+//		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
+//			[_debug drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
+//			
+//			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
+//			[_debug drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
+//			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
+//		}
+//	});
 }
 
 @end

@@ -335,8 +335,9 @@ typedef enum ccPhysicsBodyType {
 @interface CCPhysicsBody(ObjectiveChipmunk)<ChipmunkObject>
 
 @property(nonatomic, strong) CCNode *node;
-@property(nonatomic, assign) CGPoint absolutePosition;
-@property(nonatomic, assign) float absoluteRadians;
+@property(nonatomic, assign) cpVect absolutePosition;
+@property(nonatomic, assign) cpFloat absoluteRadians;
+@property(nonatomic, readonly) cpTransform absoluteTransform;
 
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
