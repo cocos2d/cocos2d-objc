@@ -32,7 +32,7 @@ enum
     CCControlStateDisabled     = 1 << 2, // Disabled state of a control. This state indicates that the control is currently disabled. You can retrieve and set this value through the enabled property.
     CCControlStateSelected     = 1 << 3  // Selected state of a control. This state indicates that the control is currently selected. You can retrieve and set this value through the selected property.
 };
-typedef NSUInteger CCControlState;
+typedef int CCControlState;
 
 @interface CCControl : CCNode
 {
@@ -40,7 +40,9 @@ typedef NSUInteger CCControlState;
 }
 
 @property (nonatomic,assign) CGSize preferredSize;
+@property (nonatomic,assign) CCContentSizeType preferredSizeType;
 @property (nonatomic,assign) CGSize maxSize;
+@property (nonatomic,assign) CCContentSizeType maxSizeType;
 
 @property (nonatomic,assign) CCControlState state;
 @property (nonatomic,assign) BOOL enabled;
@@ -60,6 +62,9 @@ typedef NSUInteger CCControlState;
 
 - (void) needsLayout;
 - (void) layout;
+
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState) state;
+- (id) valueForKey:(NSString *)key state:(CCControlState)state;
 
 #ifdef __CC_PLATFORM_IOS
 - (void) touchEntered:(UITouch*) touch withEvent:(UIEvent*)event;

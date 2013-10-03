@@ -74,7 +74,7 @@
 
 @property (nonatomic,assign) BOOL bounces;
 
-- (id) initWithContentNode:(CCNode*)contentNode contentSize:(CGSize) contentSize;
+- (id) initWithContentNode:(CCNode*)contentNode;
 
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated;
 

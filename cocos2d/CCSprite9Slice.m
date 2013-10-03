@@ -29,7 +29,7 @@
 
 // ---------------------------------------------------------------------
 
-const float CCSprite9SliceMarginDefault         = 0.1f;
+const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 
 typedef enum {
     CCSprite9SliceStrips                        = 3,
@@ -70,8 +70,17 @@ typedef enum {
 
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
+    CGSize oldContentSize = self.contentSize;
+    CCContentSizeType oldContentSizeType = self.contentSizeType;
+    
     [super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
     _originalContentSize = self.contentSizeInPoints;
+    
+    if (!CGSizeEqualToSize(oldContentSize, CGSizeZero))
+    {
+        self.contentSizeType = oldContentSizeType;
+        self.contentSize = oldContentSize;
+    }
 }
 
 // ---------------------------------------------------------------------

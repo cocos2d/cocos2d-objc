@@ -525,7 +525,7 @@
 	[super startWithTarget:aTarget];
 
   //Calculate X
-	_startAngleX = [_target rotationX];
+	_startAngleX = [_target rotationalSkewX];
 	if (_startAngleX > 0)
 		_startAngleX = fmodf(_startAngleX, 360.0f);
 	else
@@ -539,7 +539,7 @@
   
 	
   //Calculate Y: It's duplicated from calculating X since the rotation wrap should be the same
-	_startAngleY = [_target rotationY];
+	_startAngleY = [_target rotationalSkewY];
 	if (_startAngleY > 0)
 		_startAngleY = fmodf(_startAngleY, 360.0f);
 	else
@@ -553,8 +553,8 @@
 }
 -(void) update: (ccTime) t
 {
-	[_target setRotationX: _startAngleX + _diffAngleX * t];
-	[_target setRotationY: _startAngleY + _diffAngleY * t];
+	[_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
+	[_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
 }
 @end
 
@@ -601,15 +601,15 @@
 -(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
-	_startAngleX = [_target rotationX];
-	_startAngleY = [_target rotationY];
+	_startAngleX = [_target rotationalSkewX];
+	_startAngleY = [_target rotationalSkewY];
 }
 
 -(void) update: (ccTime) t
 {
 	// XXX: shall I add % 360
-	[_target setRotationX: (_startAngleX + _angleX * t )];
-	[_target setRotationY: (_startAngleY + _angleY * t )];
+	[_target setRotationalSkewX: (_startAngleX + _angleX * t )];
+	[_target setRotationalSkewY: (_startAngleY + _angleY * t )];
 }
 
 -(CCActionInterval*) reverse
@@ -1415,7 +1415,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 
 	if( _animation.restoreOriginalFrame )
-		_origFrame = [sprite displayFrame];
+		_origFrame = sprite.spriteFrame;
 	
 	_nextFrame = 0;
 	_executedLoops = 0;
@@ -1425,7 +1425,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 {
 	if( _animation.restoreOriginalFrame ) {
 		CCSprite *sprite = _target;
-		[sprite setDisplayFrame:_origFrame];
+        sprite.spriteFrame = _origFrame;
 	}
 
 	[super stop];
@@ -1459,7 +1459,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 		if( [splitTime floatValue] <= t ) {
 			CCAnimationFrame *frame = [frames objectAtIndex:i];
 			frameToDisplay = [frame spriteFrame];
-			[(CCSprite*)_target setDisplayFrame: frameToDisplay];
+			[(CCSprite*)_target setSpriteFrame: frameToDisplay];
 			
 			NSDictionary *dict = [frame userInfo];
 			if( dict )

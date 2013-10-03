@@ -25,6 +25,7 @@
 #import "CCButton.h"
 
 #import "cocos2d.h"
+#import <objc/runtime.h>
 
 @implementation CCButton
 
@@ -68,6 +69,7 @@
     self = [self initWithTitle:title];
     self.label.fontName = fontName;
     self.label.fontSize = size;
+    
     return self;
 }
 
@@ -119,6 +121,8 @@
     // Setup label
     _label = [CCLabelTTF labelWithString:title fontName:@"Helvetica" fontSize:14];
     _label.adjustsFontSizeToFit = YES;
+    _label.horizontalAlignment = kCCTextAlignmentCenter;
+    _label.verticalAlignment = kCCVerticalTextAlignmentCenter;
     
     [self addChild:_label z:1];
     
@@ -133,33 +137,38 @@
 
 - (void) layout
 {
-    CGSize paddedLabelSize = _label.contentSize;
+    _label.dimensions = CGSizeZero;
+    CGSize originalLabelSize = _label.contentSize;
+    CGSize paddedLabelSize = originalLabelSize;
     paddedLabelSize.width += _horizontalPadding * 2;
     paddedLabelSize.height += _verticalPadding * 2;
     
     CGSize size = paddedLabelSize;
     
     BOOL shrunkSize = NO;
-    size = [self convertContentSizeToPoints: self.preferredSize];
+    size = [self convertContentSizeToPoints: self.preferredSize type:self.contentSizeType];
+    
+    CGSize maxSize = [self convertContentSizeToPoints:self.maxSize type:self.contentSizeType];
     
     if (size.width < paddedLabelSize.width) size.width = paddedLabelSize.width;
     if (size.height < paddedLabelSize.height) size.height = paddedLabelSize.height;
     
-    if (self.maxSize.width > 0 && self.maxSize.width < size.width)
+    if (maxSize.width > 0 && maxSize.width < size.width)
     {
-        size.width = self.maxSize.width;
+        size.width = maxSize.width;
         shrunkSize = YES;
     }
-    if (self.maxSize.height > 0 && self.maxSize.height < size.height)
+    if (maxSize.height > 0 && maxSize.height < size.height)
     {
-        size.height = self.maxSize.height;
+        size.height = maxSize.height;
         shrunkSize = YES;
     }
     
     if (shrunkSize)
     {
-        // TODO: Shrink Label
-        _label.contentSize = size;
+        CGSize labelSize = CGSizeMake(clampf(size.width - _horizontalPadding * 2, 0, originalLabelSize.width),
+                                      clampf(size.height - _verticalPadding * 2, 0, originalLabelSize.height));
+        _label.dimensions = labelSize;
     }
     
     _background.contentSize = size;
@@ -169,7 +178,7 @@
     _label.positionType = kCCPositionTypeNormalized;
     _label.position = ccp(0.5f, 0.5f);
     
-    self.contentSize = [self convertContentSizeFromPoints: size];
+    self.contentSize = [self convertContentSizeFromPoints: size type:self.contentSizeType];
     
     [super layout];
 }
@@ -221,7 +230,7 @@
 
 #endif
 
-- (void) updatePropertiesForState:(NSUInteger)state
+- (void) updatePropertiesForState:(CCControlState)state
 {
     // Update background
     _background.color = [self backgroundColorForState:state];
@@ -229,7 +238,7 @@
     
     CCSpriteFrame* spriteFrame = [self backgroundSpriteFrameForState:state];
     if (!spriteFrame) spriteFrame = [self backgroundSpriteFrameForState:CCControlStateNormal];
-    [_background setDisplayFrame:spriteFrame];
+    _background.spriteFrame = spriteFrame;
     
     // Update label
     _label.color = [self labelColorForState:state];
@@ -363,6 +372,122 @@
 - (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state
 {
     return [_backgroundSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
+}
+
+- (void) setTitle:(NSString *)title
+{
+    _label.string = title;
+    [self needsLayout];
+}
+
+- (NSString*) title
+{
+    return _label.string;
+}
+
+- (void) setHorizontalPadding:(float)horizontalPadding
+{
+    _horizontalPadding = horizontalPadding;
+    [self needsLayout];
+}
+
+- (void) setVerticalPadding:(float)verticalPadding
+{
+    _verticalPadding = verticalPadding;
+    [self needsLayout];
+}
+
+- (NSArray*) keysForwardedToLabel
+{
+    return [NSArray arrayWithObjects:
+            @"fontName",
+            @"fontSize",
+            @"opacity",
+            @"color",
+            @"fontColor",
+            @"outlineColor",
+            @"outlineWidth",
+            @"shadowColor",
+            @"shadowBlurRadius",
+            @"shadowOffset",
+            @"shadowOffsetType",
+            nil];
+}
+
+- (void) setValue:(id)value forKey:(NSString *)key
+{
+    if ([[self keysForwardedToLabel] containsObject:key])
+    {
+        [_label setValue:value forKey:key];
+        [self needsLayout];
+        return;
+    }
+    [super setValue:value forKey:key];
+}
+
+- (id) valueForKey:(NSString *)key
+{
+    if ([[self keysForwardedToLabel] containsObject:key])
+    {
+        return [_label valueForKey:key];
+    }
+    return [super valueForKey:key];
+}
+
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"labelOpacity"])
+    {
+        [self setLabelOpacity:[value intValue] forState:state];
+    }
+    else if ([key isEqualToString:@"labelColor"])
+    {
+        ccColor3B c;
+        [value getValue:&c];
+        [self setLabelColor:c forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundOpacity"])
+    {
+        [self setBackgroundOpacity:[value intValue] forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundColor"])
+    {
+        ccColor3B c;
+        [value getValue:&c];
+        [self setBackgroundColor:c forState:state];
+    }
+    else if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        [self setBackgroundSpriteFrame:value forState:state];
+    }
+}
+
+- (id) valueForKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"labelOpacity"])
+    {
+        return [NSNumber numberWithUnsignedChar:[self labelOpacityForState:state]];
+    }
+    else if ([key isEqualToString:@"labelColor"])
+    {
+        ccColor3B c = [self labelColorForState:state];
+        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+    }
+    else if ([key isEqualToString:@"backgroundOpacity"])
+    {
+        return [NSNumber numberWithUnsignedChar:[self backgroundOpacityForState:state]];
+    }
+    else if ([key isEqualToString:@"backgroundColor"])
+    {
+        ccColor3B c = [self backgroundColorForState:state];
+        return [NSValue value:&c withObjCType:@encode(ccColor3B)];
+    }
+    else if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        return [self backgroundSpriteFrameForState:state];
+    }
+    
+    return NULL;
 }
 
 @end

@@ -44,6 +44,7 @@
 @property (nonatomic,assign) BOOL zoomWhenHighlighted;
 @property (nonatomic,assign) float horizontalPadding;
 @property (nonatomic,assign) float verticalPadding;
+@property (nonatomic,strong) NSString* title;
 
 + (id) buttonWithTitle:(NSString*) title;
 + (id) buttonWithTitle:(NSString*) title fontName:(NSString*)fontName fontSize:(float)size;
@@ -66,5 +67,8 @@
 
 - (ccColor3B) labelColorForState:(CCControlState) state;
 - (GLubyte) labelOpacityForState:(CCControlState) state;
+
+- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
+- (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state;
 
 @end
