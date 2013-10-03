@@ -2081,8 +2081,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
-					external/Chipmunk/include/chipmunk,
+					external/Chipmunk/include,
 					external/kazmath/include,
+					external/Chipmunk/objectivec/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -2111,8 +2112,9 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
-					external/Chipmunk/include/chipmunk,
+					external/Chipmunk/include,
 					external/kazmath/include,
+					external/Chipmunk/objectivec/include,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";
@@ -2129,12 +2131,6 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include/chipmunk,
-					external/kazmath/include,
-					"cocos2d-ui/**",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = cocos2d;
 			};
@@ -2148,12 +2144,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				HEADER_SEARCH_PATHS = (
-					external/Box2d,
-					external/Chipmunk/include/chipmunk,
-					external/kazmath/include,
-					"cocos2d-ui/**",
-				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				PRODUCT_NAME = cocos2d;
 				ZERO_LINK = NO;
