@@ -77,13 +77,42 @@
 }
 
 static inline
+CCPhysicsBody *
+GetBodyIfRunning(CCNode *self)
+{
+	return (self->_isRunning ? self->_physicsBody : nil);
+}
+
+static inline CGAffineTransform
+NodeToPhysicsTransform(CCNode *node)
+{
+	CGAffineTransform transform = CGAffineTransformIdentity;
+	for(; node; node = node.parent){
+		if(node.isPhysicsNode){
+			return transform;
+		} else {
+			transform = cpTransformMult(node.nodeToParentTransform, transform);
+		}
+	}
+	
+	@throw @"Node is not added to a CCPhysicsNode";
+}
+
+static inline CGAffineTransform
+RigidBodyToParentTransform(CCNode *self, CCPhysicsBody *body)
+{
+	return cpTransformMult(cpTransformInverse(NodeToPhysicsTransform(self.parent)), body.absoluteTransform);
+}
+
+static inline
 CGPoint GetPosition(CCNode *self)
 {
 	// TODO convert coordinate systems.
-	CCPhysicsBody *body = self->_physicsBody;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
+		// Return the position of the anchor point
 		CGPoint anchor = self->_anchorPointInPoints;
-		return cpTransformPoint(body.absoluteTransform, cpv(anchor.x*self->_scaleX, anchor.y*self->_scaleY));
+		return cpTransformPoint(RigidBodyToParentTransform(self, body), cpv(anchor.x*self->_scaleX, anchor.y*self->_scaleY));
 	} else {
 		return self->_position;
 	}
@@ -92,13 +121,9 @@ CGPoint GetPosition(CCNode *self)
 static inline void
 SetPosition(CCNode *self, CGPoint position)
 {
-	CCPhysicsBody *body = self->_physicsBody;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		// TODO convert coordinate systems.
-		//body.absolutePosition = position;
-		CGPoint anchor = self->_anchorPointInPoints;
-		body.absolutePosition = cpvsub(position, cpTransformVect(body.absoluteTransform, cpv(anchor.x*self->_scaleX, anchor.y*self->_scaleY)));
-		//(cpTransformRigidInverse(body.absoluteTransform), self->_anchorPointInPoints);
+		@throw @"Not yet implemented";
 	} else {
 		self->_position = position;
 	}
@@ -107,24 +132,33 @@ SetPosition(CCNode *self, CGPoint position)
 static inline float
 GetRotationX(CCNode *self)
 {
-	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationalSkewX);
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		CGAffineTransform transform = RigidBodyToParentTransform(self, body);
+		return -CC_RADIANS_TO_DEGREES(atan2f(transform.b, transform.a));
+	} else {
+		return self->_rotationalSkewX;
+	}
 }
 
 static inline float
 GetRotationY(CCNode *self)
 {
-	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationalSkewY);
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		CGAffineTransform transform = RigidBodyToParentTransform(self, body);
+		return 90.0f - CC_RADIANS_TO_DEGREES(atan2f(transform.d, transform.c));
+	} else {
+		return self->_rotationalSkewX;
+	}
 }
 
 static inline void
 SetRotationX(CCNode *self, float rotation)
 {
-	CCPhysicsBody *body = self->_physicsBody;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		// TODO convert coordinate systems.
-		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(rotation);
+		@throw @"Not yet implemented";
 	} else {
 		self->_rotationalSkewX = rotation;
 	}
@@ -133,9 +167,9 @@ SetRotationX(CCNode *self, float rotation)
 static inline void
 SetRotationY(CCNode *self, float rotation)
 {
-	CCPhysicsBody *body = self->_physicsBody;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		// TODO ??? really just need to move the weird rotation skew to a generic transform property.
+		@throw @"Not yet implemented";
 	} else {
 		self->_rotationalSkewY = rotation;
 	}
@@ -929,26 +963,30 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
-	// Copy the node's rotation first.
-	// Otherwise it will cause the position to rotate around the center of gravity.
-	physicsBody.absoluteRadians = -CC_DEGREES_TO_RADIANS(_rotationalSkewX);
-	
-	// Grab the position of the node's origin (not it's anchor point position!) from it's transform matrix.
-	// TODO need to use a "nodeToSpace" transform here.
-	CGAffineTransform transform = [self nodeToParentTransform];
-	physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
-	
-	_physicsBody = physicsBody;
-	
-	// TODO needs to be more magic here for handling node already added to a scene.
-	// TODO only handles going from nil -> some value.
+	if(physicsBody != _physicsBody){
+		// Copy the old body position and rotation over
+		physicsBody.absolutePosition = _physicsBody.absolutePosition;
+		physicsBody.absoluteRadians = _physicsBody.absoluteRadians;
+		
+		_physicsBody = physicsBody;
+	}
 }
 
 -(void)setupPhysics
 {
-	if(_physicsBody){
+	CCPhysicsBody *physicsBody = _physicsBody;
+	if(physicsBody){
 		CCPhysicsNode *physics = self.physicsNode;
 		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
+		
+		// Grab the origin position and approximate rotation of the node from it's transform.
+		// The transform may not be a rigid transform, so we'll need to approximate one.
+		CGAffineTransform transform = NodeToPhysicsTransform(self);
+		
+		// Copy the node's rotation first.
+		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
+		physicsBody.absoluteRadians = atan2(transform.b, transform.a);
+		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
 		[physics.space add:_physicsBody];
 	}
@@ -956,7 +994,9 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void)teardownPhysics
 {
-	@throw @"Not yet implemented.";
+	if(_physicsBody){
+		
+	}
 }
 
 #pragma mark CCNode SceneManagement
@@ -989,6 +1029,8 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	[self pauseSchedulerAndActions];
 	_isRunning = NO;
+	
+	[self teardownPhysics];
 
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }

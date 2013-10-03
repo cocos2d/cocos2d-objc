@@ -49,6 +49,7 @@
  */
 
 @class CCPhysicsCollisionPair;
+@class CCPhysicsNode;
 
 typedef enum ccPhysicsBodyType {
 	kCCPhysicsBodyTypeDynamic,
@@ -110,6 +111,8 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Simulation Properties:
 
+/// The CCPhysicsNode this body is added to.
+@property(nonatomic, readonly) CCPhysicsNode *physicsNode;
 /// Whether or not the physics body is affected by gravity.
 /// Defaults to YES.
 @property(nonatomic, assign) BOOL affectedByGravity;
