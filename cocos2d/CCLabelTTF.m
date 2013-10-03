@@ -165,7 +165,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 - (void)setFontName:(NSString*)fontName
 {
     // Handle passing of complete file paths
-    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"]);
+    if ([[[fontName pathExtension] lowercaseString] isEqualToString:@"ttf"])
     {
         [CCLabelTTF registerCustomTTF:fontName];
         fontName = [[fontName lastPathComponent] stringByDeletingPathExtension];
@@ -455,6 +455,10 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (!useFullColor)
     {
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
+    }
+    else
+    {
+        self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
     }
 
 #ifdef __CC_PLATFORM_IOS

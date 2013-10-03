@@ -208,7 +208,7 @@
 	NSAssert(spriteFrame!=nil, @"Invalid spriteFrame for sprite");
 
 	id ret = [self initWithTexture:spriteFrame.texture rect:spriteFrame.rect];
-	[self setDisplayFrame:spriteFrame];
+    self.spriteFrame = spriteFrame;
 	return ret;
 }
 
@@ -284,6 +284,7 @@
 {
 	_rectRotated = rotated;
 
+    self.contentSizeType = kCCContentSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	[self setVertexRect:rect];
 	[self setTextureCoords:rect];
@@ -676,15 +677,15 @@
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setRotationX:(float)rot
+-(void)setRotationalSkewX:(float)rot
 {
-	[super setRotationX:rot];
+	[super setRotationalSkewX:rot];
 	SET_DIRTY_RECURSIVELY();
 }
 
--(void)setRotationY:(float)rot
+-(void)setRotationalSkewY:(float)rot
 {
-	[super setRotationY:rot];
+	[super setRotationalSkewY:rot];
 	SET_DIRTY_RECURSIVELY();
 }
 
@@ -837,7 +838,7 @@
 //
 #pragma mark CCSprite - Frames
 
--(void) setDisplayFrame:(CCSpriteFrame*)frame
+-(void) setSpriteFrame:(CCSpriteFrame*)frame
 {
 	_unflippedOffsetPositionFromCenter = frame.offset;
 
@@ -850,6 +851,8 @@
 	_rectRotated = frame.rotated;
 
 	[self setTextureRect:frame.rect rotated:_rectRotated untrimmedSize:frame.originalSize];
+    
+    _spriteFrame = frame;
 }
 
 -(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
@@ -863,26 +866,8 @@
 	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
 
 	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
-
-	[self setDisplayFrame:frame.spriteFrame];
-}
-
-
--(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame
-{
-	CGRect r = [frame rect];
-	return ( CGRectEqualToRect(r, _rect) &&
-			frame.texture.name == self.texture.name &&
-			CGPointEqualToPoint( frame.offset, _unflippedOffsetPositionFromCenter ) );
-}
-
--(CCSpriteFrame*) displayFrame
-{
-	return [CCSpriteFrame frameWithTexture:_texture
-							  rectInPixels:CC_RECT_POINTS_TO_PIXELS(_rect)
-								   rotated:_rectRotated
-									offset:CC_POINT_POINTS_TO_PIXELS(_unflippedOffsetPositionFromCenter)
-							  originalSize:CC_SIZE_POINTS_TO_PIXELS(_contentSize)];
+    
+    self.spriteFrame = frame.spriteFrame;
 }
 
 #pragma mark CCSprite - CocosNodeTexture protocol

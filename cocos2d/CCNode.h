@@ -105,7 +105,7 @@ enum {
  */
 @interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
-	float _rotationX, _rotationY;
+	float _rotationalSkewX, _rotationalSkewY;
 
 	// scaling factors
 	float _scaleX, _scaleY;
@@ -206,9 +206,9 @@ enum {
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationX;
+@property(nonatomic,readwrite,assign) float rotationalSkewX;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationY;
+@property(nonatomic,readwrite,assign) float rotationalSkewY;
 
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
@@ -216,6 +216,13 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
+
+@property (nonatomic,readonly) float scaleInPoints;
+@property (nonatomic,readonly) float scaleXInPoints;
+@property (nonatomic,readonly) float scaleYInPoints;
+
+@property (nonatomic,assign) CCScaleType scaleType;
+
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** Position (x,y) of the node in points from the bottom left corner */
@@ -308,7 +315,7 @@ enum {
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
-@property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
+@property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node
  hitAreaExpansion = 0 => hit area has no size
@@ -581,11 +588,11 @@ enum {
  */
 - (CGAffineTransform)nodeToParentTransform;
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position;
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints;
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize;
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize;
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType) type;
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.

@@ -208,6 +208,12 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	return ret;
 }
 
+-(CCSpriteFrame*) createSpriteFrame
+{
+    CCSpriteFrame* spriteFrame = [[CCSpriteFrame alloc] initWithTexture:self rect:CGRectMake(0, 0, _size.width, _size.height)];
+    return spriteFrame;
+}
+
 @end
 
 #pragma mark -

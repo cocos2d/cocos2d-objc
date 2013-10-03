@@ -39,7 +39,6 @@
 
 @interface CCTextureAtlas ()
 -(void) setupIndices;
--(void) mapBuffers;
 
 #if CC_TEXTURE_ATLAS_USE_VAO
 -(void) setupVBOandVAO;
@@ -184,7 +183,6 @@
 		glGenBuffers(2, &_buffersVBO[0]);
 
 		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-		glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
 
 		// vertices
 		glEnableVertexAttribArray(kCCVertexAttrib_Position);
@@ -199,7 +197,6 @@
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
 
 		// Must unbind the VAO before changing the element buffer.
 		ccGLBindVAO(0);
@@ -219,27 +216,8 @@
 -(void) setupVBO
 {
 	glGenBuffers(2, &_buffersVBO[0]);
-	
-	[self mapBuffers];
 }
 #endif // ! // CC_TEXTURE_ATLAS_USE_VAO
-
-
--(void) mapBuffers
-{
-	// Avoid changing the element buffer for whatever VAO might be bound.
-	ccGLBindVAO(0);
-	
-	glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(_quads[0]) * _capacity, _quads, GL_DYNAMIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-	CHECK_GL_ERROR_DEBUG();
-}
 
 #pragma mark TextureAtlas - Update, Insert, Move & Remove
 
@@ -436,7 +414,6 @@
 
 	// Update Indices
 	[self setupIndices];
-	[self mapBuffers];
 
 	_dirty = YES;
 
@@ -492,6 +469,14 @@
 	//
 	// XXX: update is done in draw... perhaps it should be done in a timer
 	if (_dirty) {
+
+        ccGLBindVAO(0);
+        
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _buffersVBO[1]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(_indices[0]) * _capacity * 6, _indices, GL_STATIC_DRAW);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        
+        
 		glBindBuffer(GL_ARRAY_BUFFER, _buffersVBO[0]);
 		// option 1: subdata
 //		glBufferSubData(GL_ARRAY_BUFFER, sizeof(_quads[0])*start, sizeof(_quads[0]) * n , &_quads[start] );

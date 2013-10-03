@@ -108,14 +108,14 @@ static inline float
 GetRotationX(CCNode *self)
 {
 	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationX);
+	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationalSkewX);
 }
 
 static inline float
 GetRotationY(CCNode *self)
 {
 	CCPhysicsBody *body = self->_physicsBody;
-	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationY);
+	return (body ? -CC_RADIANS_TO_DEGREES(body.absoluteRadians) : self->_rotationalSkewY);
 }
 
 static inline void
@@ -126,7 +126,7 @@ SetRotationX(CCNode *self, float rotation)
 		// TODO convert coordinate systems.
 		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(rotation);
 	} else {
-		self->_rotationX = rotation;
+		self->_rotationalSkewX = rotation;
 	}
 }
 
@@ -137,7 +137,7 @@ SetRotationY(CCNode *self, float rotation)
 	if(body){
 		// TODO ??? really just need to move the weird rotation skew to a generic transform property.
 	} else {
-		self->_rotationY = rotation;
+		self->_rotationalSkewY = rotation;
 	}
 }
 
@@ -178,7 +178,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_isRunning = NO;
 
 		_skewX = _skewY = 0.0f;
-		_rotationX = _rotationY = 0.0f;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
 		_scaleX = _scaleY = 1.0f;
         _position = CGPointZero;
         _contentSize = CGSizeZero;
@@ -222,7 +222,7 @@ static NSUInteger globalOrderOfArrival = 1;
         
         // set default touch handling
         self.userInteractionEnabled = NO;
-        self.userInteractionClaimed = YES;
+        self.claimsUserInteraction = YES;
         self.multipleTouchEnabled = NO;
         self.hitAreaExpansion = 1.0f;
         
@@ -270,26 +270,26 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(float) rotation
 {
-	NSAssert( _rotationX == _rotationY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+	NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
 	return GetRotationX(self);
 }
 
--(float)rotationX {
+-(float)rotationalSkewX {
 	return GetRotationX(self);
 }
 
--(void) setRotationX: (float)newX
+-(void) setRotationalSkewX: (float)newX
 {
 	SetRotationX(self, newX);
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
--(float)rotationY
+-(float)rotationalSkewY
 {
 	return GetRotationY(self);
 }
 
--(void) setRotationY: (float)newY
+-(void) setRotationalSkewY: (float)newY
 {
 	SetRotationY(self, newY);
 	_isTransformDirty = _isInverseDirty = YES;
@@ -360,13 +360,13 @@ static NSUInteger globalOrderOfArrival = 1;
     _isTransformDirty = _isInverseDirty = YES;
 }
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -415,14 +415,14 @@ static NSUInteger globalOrderOfArrival = 1;
     return size;
 }
 
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -491,7 +491,40 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGSize) contentSizeInPoints
 {
-    return [self convertContentSizeToPoints:self.contentSize];
+    return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
+}
+
+- (float) scaleInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return self.scale * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return self.scale;
+}
+
+- (float) scaleXInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleX * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleX;
+}
+
+- (float) scaleYInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleY * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleY;
+}
+
+- (void) setScaleType:(CCScaleType)scaleType
+{
+    _scaleType = scaleType;
+    _isTransformDirty = _isInverseDirty = YES;
 }
 
 - (CGRect) boundingBox
@@ -898,7 +931,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	// Copy the node's rotation first.
 	// Otherwise it will cause the position to rotate around the center of gravity.
-	physicsBody.absoluteRadians = -CC_DEGREES_TO_RADIANS(_rotationX);
+	physicsBody.absoluteRadians = -CC_DEGREES_TO_RADIANS(_rotationalSkewX);
 	
 	// Grab the position of the node's origin (not it's anchor point position!) from it's transform matrix.
 	// TODO need to use a "nodeToSpace" transform here.
@@ -1097,7 +1130,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode Transform
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -1106,12 +1139,12 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = 0;
     
     // Convert position to points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) x = position.x;
     else if (xUnit == kCCPositionUnitScaled) x = position.x * director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) y = position.y;
     else if (yUnit == kCCPositionUnitScaled) y = position.y * director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
@@ -1145,7 +1178,7 @@ static NSUInteger globalOrderOfArrival = 1;
     return positionInPoints;
 }
 
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -1155,7 +1188,7 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = positionInPoints.y;
     
     // Account for reference corner
-    CCPositionReferenceCorner corner = _positionType.corner;
+    CCPositionReferenceCorner corner = type.corner;
     if (corner == kCCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
@@ -1178,7 +1211,7 @@ static NSUInteger globalOrderOfArrival = 1;
     }
     
     // Convert position from points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) position.x = x;
     else if (xUnit == kCCPositionUnitScaled) position.x = x / director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized)
@@ -1190,7 +1223,7 @@ static NSUInteger globalOrderOfArrival = 1;
         }
     }
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) position.y = y;
     else if (yUnit == kCCPositionUnitScaled) position.y = y / director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized)
@@ -1207,7 +1240,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGPoint) positionInPoints
 {
-    return [self convertPositionToPoints:GetPosition(self)];
+    return [self convertPositionToPoints:GetPosition(self) type:_positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
@@ -1220,7 +1253,7 @@ static NSUInteger globalOrderOfArrival = 1;
         _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
         
         // Convert position to points
-        CGPoint positionInPoints = [self convertPositionToPoints:GetPosition(self)];
+        CGPoint positionInPoints = [self convertPositionToPoints:GetPosition(self) type:_positionType];
 		float x = positionInPoints.x;
 		float y = positionInPoints.y;
         
@@ -1238,20 +1271,23 @@ static NSUInteger globalOrderOfArrival = 1;
 //		}
 
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
+        
+        float scaleFactor = 1;
+        if (_scaleType == kCCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
 		// Adjusted transform calculation for rotational skew
 		if( !needsSkewMatrix && !CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) ) {
-			x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-			y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+			x += cy * -_anchorPointInPoints.x * _scaleX * scaleFactor + -sx * -_anchorPointInPoints.y * _scaleY;
+			y += sy * -_anchorPointInPoints.x * _scaleX * scaleFactor +  cx * -_anchorPointInPoints.y * _scaleY;
 		}
 
 
 		// Build Transform Matrix
 		// Adjusted transfor m calculation for rotational skew
-		_transform = CGAffineTransformMake( cy * _scaleX, sy * _scaleX,
-										   -sx * _scaleY, cx * _scaleY,
+		_transform = CGAffineTransformMake( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor,
+										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor,
 										   x, y );
 
 		// XXX: Try to inline skew

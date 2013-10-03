@@ -68,6 +68,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/CCGL.h" // OpenGL stuff
 #import "Platforms/CCNS.h" // Next-Step stuff
 
+@class CCSpriteFrame;
+
 //CONSTANTS:
 
 /** @typedef CCTexture2DPixelFormat
@@ -169,6 +171,15 @@ typedef enum {
 
 /** returns the content size of the texture in points */
 -(CGSize) contentSize;
+
+
+/**
+ *  Creates a sprite frame from the texture.
+ *
+ *  @return A new sprite frame.
+ *  @since v2.5
+ */
+-(CCSpriteFrame*) createSpriteFrame;
 
 
 @end

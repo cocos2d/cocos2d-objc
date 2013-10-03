@@ -127,9 +127,7 @@ static CCTextureCache *sharedTextureCache;
 -(void) dealloc
 {
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
-
-	dispatch_sync(_dictQueue, ^{
-	});
+    
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
 	dispatch_release(_loadingQueue);

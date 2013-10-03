@@ -36,7 +36,7 @@
     CCButton* _btnNext;
     CCButton* _btnReload;
     
-    int _currentTest;
+    NSInteger _currentTest;
 }
 
 @property (nonatomic,strong) CCNode* contentNode;
