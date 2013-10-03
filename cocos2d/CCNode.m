@@ -107,7 +107,6 @@ RigidBodyToParentTransform(CCNode *self, CCPhysicsBody *body)
 static inline
 CGPoint GetPosition(CCNode *self)
 {
-	// TODO convert coordinate systems.
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		// Return the position of the anchor point
