@@ -55,11 +55,13 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	body->_body.userData = self;
 	
 	body->_shape = [ChipmunkCircleShape circleWithBody:body->_body radius:radius offset:center];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	body->_shape.userData = self;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -71,12 +73,14 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	body->_body.userData = self;
 	
 	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
 	body->_shape = [ChipmunkPolyShape boxWithBody:body->_body bb:bb radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	body->_shape.userData = self;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -88,11 +92,13 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	body->_body.userData = self;
 	
 	body->_shape = [ChipmunkSegmentShape segmentWithBody:body->_body from:from to:to radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	body->_shape.userData = self;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -104,11 +110,13 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
+	body->_body.userData = self;
 	
 	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
+	body->_shape.userData = self;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -143,6 +151,11 @@ static void NYI(){@throw @"Not Yet Implemented";}
 
 -(CGPoint)surfaceVelocity {return _shape.surfaceVelocity;}
 -(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {_shape.surfaceVelocity = surfaceVelocity;}
+
+
+//MARK: Simulation Properties:
+
+-(CCPhysicsNode *)physicsNode {return _body.space.userData;}
 
 -(BOOL)affectedByGravity {NYI(); return YES;}
 -(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
@@ -340,6 +353,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		_space = [[ChipmunkSpace alloc] init];
 		_space.gravity = cpvzero;
 		_space.sleepTimeThreshold = 0.5f;
+		_space.userData = self;
 		
 		_internedStrings = [NSMutableDictionary dictionary];
 		_categories = [NSMutableArray array];

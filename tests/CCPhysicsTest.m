@@ -16,41 +16,48 @@
 @end
 
 @implementation MainLayer
--(id) init
+
+-(void)onEnter
 {
-	if((self = [super init])){
-		CCPhysicsNode *physicsNode = [CCPhysicsNode node];
-		physicsNode.gravity = ccp(0.0, -100.0);
-		[self addChild:physicsNode];
+	[super onEnter];
+	
+	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
+	physicsNode.gravity = ccp(0.0, -100.0);
+	[self addChild:physicsNode];
+	
+	CCNode *node = [CCNode node];
+//	node.position = ccp(32, -63);
+	node.rotation = 20;
+	[physicsNode addChild:node];
+	
+	{
+		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		sprite.position = ccp(240, 160);
+//		sprite.rotation = 45;
+//		sprite.scale = 0.5;
 		
-		{
-			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-			sprite.position = ccp(240, 160);
-			sprite.rotation = 45;
-//			sprite.scale = 0.5;
-			
-			CGSize size = sprite.contentSize;
-			CGRect rect = CGRectMake(0, 0, size.width, size.height);
-			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-			sprite.physicsBody.angularVelocity = 1;
-			
-			sprite.position = ccp(240, 160);
-			[physicsNode addChild:sprite];
-		} {
-			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-			sprite.position = ccp(240, 0);
-			
-			CGSize size = sprite.contentSize;
-			CGRect rect = CGRectMake(0, 0, size.width, size.height);
-			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-			sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
-			
-			[physicsNode addChild:sprite];
-		}
+		CGSize size = sprite.contentSize;
+		CGRect rect = CGRectMake(0, 0, size.width, size.height);
+		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+//		sprite.physicsBody.angularVelocity = 1;
+		
+//		sprite.position = ccp(240, 160);
+		[node addChild:sprite];
 	}
 	
-	return self;
+	{
+		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+		sprite.position = ccp(240, 0);
+		
+		CGSize size = sprite.contentSize;
+		CGRect rect = CGRectMake(0, 0, size.width, size.height);
+		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		
+		[physicsNode addChild:sprite];
+	}
 }
+
 @end
 
 // CLASS IMPLEMENTATIONS
