@@ -111,8 +111,6 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Simulation Properties:
 
-/// The CCPhysicsNode this body is added to.
-@property(nonatomic, readonly) CCPhysicsNode *physicsNode;
 /// Whether or not the physics body is affected by gravity.
 /// Defaults to YES.
 @property(nonatomic, assign) BOOL affectedByGravity;
@@ -125,7 +123,7 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Collision and Contact:
 
-/// If two physics bodies share the same group object, then they don't collide.
+/// If two physics bodies share the same group identifier, then they don't collide.
 /// Defaults to nil.
 @property(nonatomic, assign) id collisionGroup;
 /// A string that identifies which collision pair delegate method should be called.
@@ -330,6 +328,7 @@ typedef enum ccPhysicsBodyType {
 @interface CCNode(CCPhysics)
 
 /// Nearest CCPhysicsNode ancestor of this node, or nil if none.
+/// Unlike CCPhysicsBody.physicsNode, this will return a value before onEnter is called on the node.
 -(CCPhysicsNode *)physicsNode;
 
 @end
@@ -337,12 +336,27 @@ typedef enum ccPhysicsBodyType {
 
 @interface CCPhysicsBody(ObjectiveChipmunk)<ChipmunkObject>
 
+/// The CCNode this physics body is attached to.
 @property(nonatomic, strong) CCNode *node;
+/// The CCPhysicsNode this body is added to.
+@property(nonatomic, readonly) CCPhysicsNode *physicsNode;
+/// Returns YES if the body is currently added to a physicsNode.
+@property(nonatomic, readonly) BOOL isRunning;
+
+// TODO should probably rename these.
+/// The position of the body relative to the space.
 @property(nonatomic, assign) cpVect absolutePosition;
+/// The rotation of the body relative to the space.
 @property(nonatomic, assign) cpFloat absoluteRadians;
+/// The transform of the body relative to the space.
 @property(nonatomic, readonly) cpTransform absoluteTransform;
 
+/// Implements the ChipmunkObject protocol.
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
+
+// Used for deferring collision type setup until there is access to the physics node.
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
 
@@ -364,5 +378,9 @@ typedef enum ccPhysicsBodyType {
 /// The categories are retained and assigned indexes.
 /// Up to 32 categories can be tracked for a space.
 -(cpBitmask)bitmaskForCategories:(NSArray *)categories;
+
+/// Convert a cpBitmask value to an array of collision category strings.
+/// Ignores any bits that don't have a collision category assigned in the physics node.
+-(NSArray *)categoriesForBitmask:(cpBitmask)categories;
 
 @end
