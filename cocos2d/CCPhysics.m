@@ -46,6 +46,10 @@ static void NYI(){@throw @"Not Yet Implemented";}
 	ChipmunkShape *_shape;
 	
 	NSArray *_chipmunkObjects;
+	
+	NSString *_collisionType;
+	NSArray *_collisionCategories;
+	NSArray *_collisionMask;
 }
 
 //MARK: Constructors:
@@ -156,6 +160,7 @@ static void NYI(){@throw @"Not Yet Implemented";}
 //MARK: Simulation Properties:
 
 -(CCPhysicsNode *)physicsNode {return _body.space.userData;}
+-(BOOL)isRunning {return self.physicsNode != nil;}
 
 -(BOOL)affectedByGravity {NYI(); return YES;}
 -(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
@@ -176,14 +181,50 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 // TODO these need a reference to the space to intern the strings
 // Needs to be deferred?
--(NSString *)collisionType {NYI(); return (NSString *)_shape.collisionType;}
--(void)setCollisionType:(NSString *)collisionType {NYI();}
+-(NSString *)collisionType {return _collisionType;}
+-(void)setCollisionType:(NSString *)collisionType {_collisionType = [collisionType copy];}
 
--(NSArray *)collisionCategories {NYI(); return @[];}
--(void)setCollisionCategories:(NSArray *)collisionCategories {NYI();}
+-(NSArray *)collisionCategories {
+	if(_collisionCategories){
+		return _collisionCategories;
+	} else {
+		// This will correctly return nil if not added to a physics node.
+		return [self.physicsNode categoriesForBitmask:_shape.filter.categories];
+	}
+}
+-(void)setCollisionCategories:(NSArray *)collisionCategories
+{
+	CCPhysicsNode *physics = self.physicsNode;
+	if(physics){
+		cpShapeFilter filter = _shape.filter;
+		filter.categories = [physics bitmaskForCategories:collisionCategories];
+		_shape.filter = filter;
+	} else {
+		_collisionCategories = collisionCategories;
+	}
+}
 
--(NSArray *)collisionMask {NYI(); return @[];}
--(void)setCollisionMask:(NSArray *)collisionMask {NYI();}
+-(NSArray *)collisionMask
+{
+	if(_collisionMask){
+		return _collisionMask;
+	} else {
+		// This will correctly return nil if not added to a physics node.
+		return [self.physicsNode categoriesForBitmask:_shape.filter.mask];
+	}
+}
+
+-(void)setCollisionMask:(NSArray *)collisionMask
+{
+	CCPhysicsNode *physics = self.physicsNode;
+	if(physics){
+		cpShapeFilter filter = _shape.filter;
+		filter.mask = [physics bitmaskForCategories:collisionMask];
+		_shape.filter = filter;
+	} else {
+		_collisionMask = collisionMask;
+	}
+}
 
 -(void)eachContactPair:(void (^)(CCPhysicsCollisionPair *))block
 {
@@ -252,12 +293,36 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(cpTransform)absoluteTransform {return _body.transform;}
 
-//-(cpVect)
-
 -(CCNode *)node {return _node;}
 -(void)setNode:(CCNode *)node {_node = node;}
 
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	// Intern the collision type to ensure it's not a unique object reference.
+	_collisionType = [physics internString:_collisionType];
+	_shape.collisionType = _collisionType;
+	
+	// Set up the collision bitmasks.
+	cpShapeFilter filter = _shape.filter;
+	filter.categories = [physics bitmaskForCategories:_collisionCategories];
+	filter.mask = [physics bitmaskForCategories:_collisionMask];
+	_shape.filter = filter;
+	
+	// nil the array references to allow them to be released.
+	_collisionCategories = nil;
+	_collisionType = nil;
+}
+
+-(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
+{
+	cpShapeFilter filter = _shape.filter;
+	
+	// Read the collision categories back just in case they are read later.
+	_collisionCategories = [physics categoriesForBitmask:filter.categories];
+	_collisionMask = [physics categoriesForBitmask:filter.mask];
+}
 
 @end
 
@@ -365,8 +430,6 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	return self;
 }
 
--(ChipmunkSpace *)space {return _space;}
-
 -(CGPoint)gravity {return _space.gravity;}
 -(void)setGravity:(CGPoint)gravity {_space.gravity = gravity;}
 
@@ -393,41 +456,6 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 {
 	NYI();
 	return NO;
-}
-
-//MARK: Interned Strings and Categories:
-
--(NSString *)internString:(NSString *)string
-{
-	NSString *interned = [_internedStrings objectForKey:string];
-	if(interned == nil){
-		interned = [string copy];
-		[_internedStrings setObject:interned forKey:interned];
-	}
-	
-	return interned;
-}
-
--(NSUInteger)indexForCategory:(NSString *)category
-{
-	// Add the category if it doesn't exist yet.
-	if(![_categories containsObject:category]){
-		NSAssert(_categories.count <= MAX_CATEGORIES, @"A space can only track up to %d categories.", MAX_CATEGORIES);
-		[_categories addObject:category];
-	}
-	
-	return [_categories indexOfObject:category];
-}
-
--(cpBitmask)bitmaskForCategories:(NSArray *)categories
-{
-	cpBitmask bitmask = 0;
-	
-	for(NSString *category in categories){
-		bitmask |= (1 << [self indexForCategory:category]);
-	}
-	
-	return bitmask;
 }
 
 //MARK: Lifecycle and Scheduling
@@ -513,6 +541,57 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 //			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
 		}
 	});
+}
+
+@end
+
+@implementation CCPhysicsNode(ObjectiveChipmunk)
+
+-(ChipmunkSpace *)space {return _space;}
+
+//MARK: Interned Strings and Categories:
+
+-(NSString *)internString:(NSString *)string
+{
+	NSString *interned = [_internedStrings objectForKey:string];
+	if(interned == nil){
+		interned = [string copy];
+		[_internedStrings setObject:interned forKey:interned];
+	}
+	
+	return interned;
+}
+
+-(NSUInteger)indexForCategory:(NSString *)category
+{
+	// Add the category if it doesn't exist yet.
+	if(![_categories containsObject:category]){
+		NSAssert(_categories.count <= MAX_CATEGORIES, @"A space can only track up to %d categories.", MAX_CATEGORIES);
+		[_categories addObject:category];
+	}
+	
+	return [_categories indexOfObject:category];
+}
+
+-(cpBitmask)bitmaskForCategories:(NSArray *)categories
+{
+	if(categories){
+		cpBitmask bitmask = 0;
+		
+		for(NSString *category in categories){
+			bitmask |= (1 << [self indexForCategory:category]);
+		}
+		
+		return bitmask;
+	} else {
+		return CP_ALL_CATEGORIES;
+	}
+}
+
+-(NSArray *)categoriesForBitmask:(cpBitmask)categories
+{
+	NYI();
+	return nil;
 }
 
 @end
