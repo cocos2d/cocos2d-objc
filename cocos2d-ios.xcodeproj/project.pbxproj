@@ -195,8 +195,6 @@
 		A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */; };
 		A0C87D1B14F9A3A100C0E8B2 /* NSThread+performBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */; };
 		A0CFE61E15BE3D0E00264229 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
-		A0D7D9CF15E2E730000CA0C4 /* CCPhysicsDebugNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */; };
-		A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */; };
 		A0DA0BC315BCDCA200E80A92 /* CCDrawNode.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BC115BCDCA200E80A92 /* CCDrawNode.h */; };
 		A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */; };
 		A0DA0BDE15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */ = {isa = PBXBuildFile; fileRef = A0DA0BDC15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */; };
@@ -577,10 +575,6 @@
 		A0C87D1814F9A3A100C0E8B2 /* NSThread+performBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSThread+performBlock.h"; sourceTree = "<group>"; };
 		A0C87D1914F9A3A100C0E8B2 /* NSThread+performBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSThread+performBlock.m"; sourceTree = "<group>"; };
 		A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
-		A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsDebugNode.h; sourceTree = "<group>"; };
-		A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsDebugNode.m; sourceTree = "<group>"; };
-		A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsSprite.h; sourceTree = "<group>"; };
-		A0D7D9CE15E2E730000CA0C4 /* CCPhysicsSprite.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = CCPhysicsSprite.mm; sourceTree = "<group>"; };
 		A0DA0BC115BCDCA200E80A92 /* CCDrawNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawNode.h; sourceTree = "<group>"; };
 		A0DA0BC215BCDCA200E80A92 /* CCDrawNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawNode.m; sourceTree = "<group>"; };
 		A0DA0BDC15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccShader_PositionColorLengthTexture_frag.h; sourceTree = "<group>"; };
@@ -1179,7 +1173,6 @@
 			children = (
 				D39A31E717F228AF00E94B3B /* CCPhysics.h */,
 				D39A31E817F228AF00E94B3B /* CCPhysics.m */,
-				D39A31EB17F228C200E94B3B /* v2 Physics Nodes */,
 			);
 			name = Physics;
 			sourceTree = "<group>";
@@ -1244,17 +1237,6 @@
 				D39A31E417F2284700E94B3B /* ObjectiveChipmunkTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		D39A31EB17F228C200E94B3B /* v2 Physics Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				A0D7D9CB15E2E730000CA0C4 /* CCPhysicsDebugNode.h */,
-				A0D7D9CC15E2E730000CA0C4 /* CCPhysicsDebugNode.m */,
-				A0D7D9CD15E2E730000CA0C4 /* CCPhysicsSprite.h */,
-				A0D7D9CE15E2E730000CA0C4 /* CCPhysicsSprite.mm */,
-			);
-			name = "v2 Physics Nodes";
 			sourceTree = "<group>";
 		};
 		E0BC7DA11342CE83001B4DCC /* Shaders */ = {
@@ -1448,8 +1430,6 @@
 				A0DA0BC315BCDCA200E80A92 /* CCDrawNode.h in Headers */,
 				A0DA0BDE15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
 				A0DA0BDF15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
-				A0D7D9CF15E2E730000CA0C4 /* CCPhysicsDebugNode.h in Headers */,
-				A0D7D9D115E2E730000CA0C4 /* CCPhysicsSprite.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
 				B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */,
