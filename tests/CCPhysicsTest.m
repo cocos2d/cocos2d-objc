@@ -5,7 +5,6 @@
 //
 
 #import "cocos2d.h"
-#import "CCPhysics.h"
 #import "BaseAppController.h"
 
 //CLASS INTERFACE

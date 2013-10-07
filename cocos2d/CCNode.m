@@ -38,7 +38,7 @@
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
-#import "CCPhysics.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -54,11 +54,6 @@
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-
-@interface CCPhysicsBody(Absolute)
-@property(nonatomic, assign) CGPoint absolutePosition;
-@property(nonatomic, assign) float absoluteRadians;
-@end
 
 #pragma mark - Node
 
