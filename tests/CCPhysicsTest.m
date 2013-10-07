@@ -24,7 +24,7 @@
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	physicsNode.gravity = ccp(0.0, -100.0);
 	[self addChild:physicsNode];
-//	physicsNode.debugDraw = YES;
+	physicsNode.debugDraw = YES;
 	
 	CCNode *node = [CCNode node];
 //	node.position = ccp(32, -63);
@@ -40,6 +40,7 @@
 		CGSize size = sprite.contentSize;
 		CGRect rect = CGRectMake(0, 0, size.width, size.height);
 		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+		sprite.physicsBody.collisionCategories = @[];
 //		sprite.physicsBody.angularVelocity = 1;
 		
 //		sprite.position = ccp(240, 160);

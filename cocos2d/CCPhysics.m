@@ -428,6 +428,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		
 		_internedStrings = [NSMutableDictionary dictionary];
 		_categories = [NSMutableArray array];
+		_cachedCategories = [NSMutableDictionary dictionary];
 		
 		_debug = [CCDrawNode node];
 		[self addChild:_debug z:1000]; // TODO magic z-order
@@ -561,6 +562,8 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 
 -(NSString *)internString:(NSString *)string
 {
+	if(string == nil) return nil;
+	
 	NSString *interned = [_internedStrings objectForKey:string];
 	if(interned == nil){
 		interned = [string copy];

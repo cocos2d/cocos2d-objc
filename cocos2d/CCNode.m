@@ -987,6 +987,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		physicsBody.absoluteRadians = atan2(transform.b, transform.a);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
+		[_physicsBody willAddToPhysicsNode:physics];
 		[physics.space add:_physicsBody];
 	}
 }
@@ -994,7 +995,13 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void)teardownPhysics
 {
 	if(_physicsBody){
+		CCPhysicsNode *physics = self.physicsNode;
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be a descendent of a CCPhysicsNode.");
 		
+		// TODO need to reset the node's position info.
+		
+		[_physicsBody didRemoveFromPhysicsNode:physics];
+		[physics.space remove:_physicsBody];
 	}
 }
 
