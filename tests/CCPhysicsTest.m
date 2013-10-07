@@ -24,10 +24,11 @@
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	physicsNode.gravity = ccp(0.0, -100.0);
 	[self addChild:physicsNode];
+//	physicsNode.debugDraw = YES;
 	
 	CCNode *node = [CCNode node];
 //	node.position = ccp(32, -63);
-	node.rotation = 20;
+//	node.rotation = 20;
 	[physicsNode addChild:node];
 	
 	{

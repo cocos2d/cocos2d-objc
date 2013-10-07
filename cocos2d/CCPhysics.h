@@ -298,6 +298,10 @@ typedef enum ccPhysicsBodyType {
 
 @interface CCPhysicsNode : CCNode
 
+/// Should the node draw a debug overlay of the joints and collision shapes?
+/// Defaults to NO
+@property(nonatomic, assign) BOOL debugDraw;
+
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
 @property(nonatomic, assign) CGPoint gravity;
