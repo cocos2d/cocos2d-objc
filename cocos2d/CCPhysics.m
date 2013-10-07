@@ -30,6 +30,10 @@ static void NYI(){@throw @"Not Yet Implemented";}
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.
 #define MAX_CATEGORIES 32
 
+// Maximum number of categories to cache
+// There are usually few unique categories in a given simulation.
+#define MAX_CACHED_CATEGORIES 64
+
 #define DEFAULT_FRICTION 0.7
 #define DEFAULT_ELASTICITY 0.2
 
@@ -188,7 +192,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	if(_collisionCategories){
 		return _collisionCategories;
 	} else {
-		// This will correctly return nil if not added to a physics node.
+		// This will still correctly return nil if not added to a physics node.
 		return [self.physicsNode categoriesForBitmask:_shape.filter.categories];
 	}
 }
@@ -209,7 +213,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	if(_collisionMask){
 		return _collisionMask;
 	} else {
-		// This will correctly return nil if not added to a physics node.
+		// This will still correctly return nil if not added to a physics node.
 		return [self.physicsNode categoriesForBitmask:_shape.filter.mask];
 	}
 }
@@ -310,7 +314,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	filter.mask = [physics bitmaskForCategories:_collisionMask];
 	_shape.filter = filter;
 	
-	// nil the array references to allow them to be released.
+	// nil the array references to save on memory.
+	// They will rarely be read back and we can easily reconstruct the array.
 	_collisionCategories = nil;
 	_collisionType = nil;
 }
@@ -405,6 +410,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	
 	NSMutableDictionary *_internedStrings;
 	NSMutableArray *_categories;
+	NSMutableDictionary *_cachedCategories;
 	
 	CCDrawNode *_debug;
 }
@@ -513,6 +519,8 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 
 -(void)draw
 {
+	if(!_debugDraw) return;
+	
 	cpSpaceDebugDrawOptions drawOptions = {
 		(cpSpaceDebugDrawCircleImpl)DrawCircle,
 		(cpSpaceDebugDrawSegmentImpl)DrawSegment,
@@ -582,16 +590,36 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 			bitmask |= (1 << [self indexForCategory:category]);
 		}
 		
+		if(_cachedCategories.count < MAX_CACHED_CATEGORIES){
+			[_cachedCategories setObject:[categories copy] forKey:@(bitmask)];
+		}
+		
 		return bitmask;
 	} else {
+		// nil (the default value) is equivalent to all categories.
 		return CP_ALL_CATEGORIES;
 	}
 }
 
--(NSArray *)categoriesForBitmask:(cpBitmask)categories
+-(NSArray *)categoriesForBitmask:(cpBitmask)bitmask
 {
-	NYI();
-	return nil;
+	// nil (the default value) is equivalent to all categories.
+	if(bitmask == CP_ALL_CATEGORIES) return nil;
+	
+	// First check if it has been cached.
+	NSArray *cached = [_cachedCategories objectForKey:@(bitmask)];
+	if(cached) return cached;
+	
+	NSString *arr[MAX_CATEGORIES] = {};
+	NSUInteger count = 0;
+	
+	for(int i=0; i<_categories.count; i++){
+		if(bitmask & (1<<i)){
+			arr[i] = [_categories objectAtIndex:i];
+		}
+	}
+	
+	return [NSArray arrayWithObjects:arr count:count];
 }
 
 @end
