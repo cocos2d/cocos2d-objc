@@ -16,29 +16,31 @@
 
 @implementation MainLayer
 
--(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
-{
-	NSLog(@"Begin!");
-	
-	return YES;
-}
+//-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
+//{
+//	NSLog(@"theDynamicBlock!");
+//	
+//	return YES;
+//}
 
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a wildcard:(CCPhysicsBody *)b
 {
 	NSLog(@"PreSolve!");
 	
+	pair.restitution = 1.0;
+	
 	return YES;
 }
 
--(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
-{
-	NSLog(@"PostSolve!");
-}
-
--(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
-{
-	NSLog(@"Separate!");
-}
+//-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
+//{
+//	NSLog(@"PostSolve!");
+//}
+//
+//-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
+//{
+//	NSLog(@"Separate!");
+//}
 
 -(void)onEnter
 {
@@ -83,7 +85,7 @@
 		sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
 		sprite.physicsBody.collisionCategories = @[@"bar"];
 		sprite.physicsBody.collisionMask = @[@"foo", @"bar"];
-		sprite.physicsBody.collisionType = @"theStaticBlock";
+		sprite.physicsBody.collisionType = @"default";
 		
 		[physicsNode addChild:sprite];
 	}
