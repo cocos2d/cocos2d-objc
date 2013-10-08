@@ -243,7 +243,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	CCPhysicsCollisionPair *_collisionPairSingleton;
 	
 	// Interned copies of the two reserved types.
-	NSString *_defaultType, *_wildcardType;
+	NSString *_wildcardType;
 	
 	// Need a way to retain the CCPhysicsCollisionHandler objects.
 	NSMutableSet *_handlers;
@@ -268,8 +268,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		_categories = [NSMutableArray array];
 		_cachedCategories = [NSMutableDictionary dictionary];
 		
-		// Intern the reserved strings @"default" and @"wildcard"
-		_defaultType = [self internString:@"default"];
+		// Intern the reserved string @"wildcard"
 		_wildcardType = [self internString:@"wildcard"];
 		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
@@ -294,10 +293,6 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(CCPhysicsCollisionHandler *)handlerForTypeA:(NSString *)typeA typeB:(NSString *)typeB
 {
-	// Transform @"default" -> nil.
-	typeA = (typeA == _defaultType ? nil : typeA);
-	typeB = (typeB == _defaultType ? nil : typeB);
-	
 	NSAssert(typeA != _wildcardType, @"'wildcard' is only allowed as the second type identifier.");
 	
 	BOOL wildcard = (typeB == _wildcardType);
@@ -487,7 +482,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 
 -(NSString *)internString:(NSString *)string
 {
-	if(string == nil) return nil;
+	if(string == nil || [string isEqualToString:@"default"]) return nil;
 	
 	NSString *interned = [_internedStrings objectForKey:string];
 	if(interned == nil){

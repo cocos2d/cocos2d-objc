@@ -76,6 +76,7 @@
 
 /// Intern and copy a string to ensure it can be checked by reference
 /// Used for collision type identifiers by CCPhysics.
+/// nil and @"default" both return the value nil.
 -(NSString *)internString:(NSString *)string;
 
 /// Retain and track a category identifier and return it's index.
