@@ -53,6 +53,9 @@
 #define kCCScrollViewMaxOuterDistBeforeBounceBack 50.0
 #define kCCScrollViewMinVelocityBeforeBounceBack 100.0
 
+#define kCCScrollViewActionXTag 8080
+#define kCCScrollViewActionYTag 8081
+
 #pragma mark -
 #pragma mark Helper classes
 
@@ -376,6 +379,7 @@
             CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
             CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
             action = [CCSequence actions:action, callFunc, nil];
+            action.tag = kCCScrollViewActionXTag;
             [_contentNode runAction:action];
         }
         if (yMoved)
@@ -389,13 +393,15 @@
             CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
             CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
             action = [CCSequence actions:action, callFunc, nil];
+            action.tag = kCCScrollViewActionYTag;
             [_contentNode runAction:action];
             
         }
     }
     else
     {
-        [_contentNode stopAllActions];
+        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
+        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
         _contentNode.position = ccpMult(newPos, -1);
     }
 }
@@ -554,7 +560,8 @@
         _startScrollPos = self.scrollPosition;
         
         _isPanning = YES;
-        [_contentNode stopAllActions];
+        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
+        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
     }
     else if (pgr.state == UIGestureRecognizerStateChanged)
     {
