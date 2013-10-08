@@ -198,25 +198,30 @@
     // go through all touches
     for (UITouch *touch in touches)
     {
+        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]];
+        
         // scan backwards through touch responders
         for (int index = _responderListCount - 1; index >= 0; index --)
         {
             CCNode *node = _responderList[index];
             
             // check for hit test
-            if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]]])
+            if ([node hitTestWithWorldPos:worldTouchLocation])
             {
                 // if not a multi touch node, check if node already is being touched
                 responderCanAcceptTouch = YES;
                 if (!node.isMultipleTouchEnabled)
                 {
                     // scan current touch objects, and break if object already has a touch
-                    for (CCRunningResponder *responderEntry in _runningResponderList) if (responderEntry.target == node)
+                    for (CCRunningResponder *responderEntry in _runningResponderList)
                     {
-                        responderCanAcceptTouch = NO;
-                        break;
+                        if (responderEntry.target == node)
+                        {
+                            responderCanAcceptTouch = NO;
+                            break;
+                        }
                     }
-                }                
+                }
                 if (!responderCanAcceptTouch) break;
                 
                 // begin the touch
