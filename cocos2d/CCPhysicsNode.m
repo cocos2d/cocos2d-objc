@@ -38,12 +38,19 @@
 static inline void NYI(){@throw @"Not Yet Implemented";}
 
 
+@interface CCPhysicsNode(Private)
+
+@property(nonatomic, readonly) CCPhysicsCollisionPair *collisionPairSingleton;
+
+@end
+
+
 @implementation CCPhysicsCollisionPair {
+	@public
 	cpArbiter *_arbiter;
 }
 
 -(cpArbiter *)arbiter {return _arbiter;}
--(void)setArbiter:(cpArbiter *)arbiter {_arbiter = arbiter;}
 
 // Check that the arbiter is set and return it.
 -(cpArbiter *)arb
@@ -102,36 +109,11 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 @implementation CCPhysicsCollisionHandler
 
-static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
-	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_beginImp;
-	return imp(handler->_delegate, handler->_beginSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
-}
-
-static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
-	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_preSolveImp;
-	return imp(handler->_delegate, handler->_preSolveSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
-}
-
-static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
-	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_postSolveImp;
-	imp(handler->_delegate, handler->_postSolveSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
-}
-
-static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
-	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_separateImp;
-	imp(handler->_delegate, handler->_separateSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
-}
-
 +(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode
 {
 	CCPhysicsCollisionHandler *handler = [[self alloc] init];
 	handler->_delegate = physicsNode.collisionDelegate;
-#warning Finish me!
-	handler->_collisionPairSingleton = nil;
+	handler->_collisionPairSingleton = physicsNode.collisionPairSingleton;
 	
 	handler->_handler = cpHandler;
 	cpHandler->userData = handler;
@@ -139,7 +121,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return handler;
 }
 
-// TODO Not very DRY, should check method types?
+static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
+	pair->_arbiter = arb;
+	
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_beginImp;
+	return imp(handler->_delegate, handler->_beginSel, pair, bodyA.userData, bodyB.userData);
+}
+
 -(void)setBegin:(Method)m
 {
 	NSAssert(m, @"Internal Error: Method is NULL.");
@@ -147,6 +137,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	_beginImp = method_getImplementation(m);
 	_beginSel = method_getName(m);
 	_handler->beginFunc = PhysicsBegin;
+}
+
+static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
+	pair->_arbiter = arb;
+	
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_preSolveImp;
+	return imp(handler->_delegate, handler->_preSolveSel, pair, bodyA.userData, bodyB.userData);
 }
 
 -(void)setPreSolve:(Method)m
@@ -158,6 +157,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	_handler->preSolveFunc = PhysicsPreSolve;
 }
 
+static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
+	pair->_arbiter = arb;
+	
+	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_postSolveImp;
+	imp(handler->_delegate, handler->_postSolveSel, pair, bodyA.userData, bodyB.userData);
+}
+
 -(void)setPostSolve:(Method)m
 {
 	NSAssert(m, @"Internal Error: Method is NULL.");
@@ -165,6 +173,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	_postSolveImp = method_getImplementation(m);
 	_postSolveSel = method_getName(m);
 	_handler->postSolveFunc = PhysicsPostSolve;
+}
+
+static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
+	pair->_arbiter = arb;
+	
+	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_separateImp;
+	imp(handler->_delegate, handler->_separateSel, pair, bodyA.userData, bodyB.userData);
 }
 
 -(void)setSeparate:(Method)m
@@ -193,6 +210,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// Limited to MAX_CACHED_CATEGORIES in size.
 	NSMutableDictionary *_cachedCategories;
 	
+	// All collisions in a CCPhysicsNode share the same CCPhysicsCollisionPair.
+	// The cpArbiter it wraps is simply changed each time.
+	// That's one of the reasons you aren't allowed to keep references to CCPhysicsCollisionPair objects.
+	CCPhysicsCollisionPair *_collisionPairSingleton;
+	
 	// Need a way to retain the CCPhysicsCollisionHandler objects.
 	NSMutableSet *_handlers;
 	
@@ -216,6 +238,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		_categories = [NSMutableArray array];
 		_cachedCategories = [NSMutableDictionary dictionary];
 		
+		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
 		
 		_debug = [CCDrawNode node];
@@ -230,6 +253,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(ccTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
 -(void)setSleepTimeThreshold:(ccTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
+
+// Collision Delegates
+
+-(CCPhysicsCollisionPair *)collisionPairSingleton {return _collisionPairSingleton;}
 
 -(CCPhysicsCollisionHandler *)handlerForTypeA:(NSString *)typeA typeB:(NSString *)typeB
 {
