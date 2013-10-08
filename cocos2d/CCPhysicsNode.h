@@ -107,12 +107,12 @@
 /// Pre-solve methods are called every fixed time step when two bodies are in contact before the physics solver runs.
 /// You can call use properties such as friction, restitution, surfaceVelocity on CCPhysicsCollisionPair from a post-solve method.
 /// If you return NO from a pre-solve method, the collision will be ignored for the current time step.
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair player:(CCPhysicsBody *)bodyA monster:(CCPhysicsBody *)bodyB;
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
 /// Post-solve methods are called every fixed time step when two bodies are in contact after the physics solver runs.
 /// You can call use properties such as totalKineticEnergy and totalImpulse on CCPhysicsCollisionPair from a post-solve method.
--(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair player:(CCPhysicsBody *)bodyA wildcard:(CCPhysicsBody *)bodyB;
+-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
 /// Separate methods are called the first fixed time step after two bodies stop colliding.
--(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair default:(CCPhysicsBody *)bodyA default:(CCPhysicsBody *)bodyB;
+-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
 
 @end
 
