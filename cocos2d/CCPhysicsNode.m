@@ -85,19 +85,21 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 /// Internal class used to wrap cpCollisionHandlers
 @interface CCPhysicsCollisionHandler : NSObject {
 	cpCollisionHandler *_handler;
-	
 	id _delegate;
+	
+	// Cache the CCPhysicsNode's collision pair singleton.
 	CCPhysicsCollisionPair *_collisionPairSingleton;
 	
-	// Cache the physics node's pair singleton.
-	CCPhysicsCollisionPair *_pair;
+	// Is this handler for a wildcard or not.
+	BOOL _wildcard;
 	
+	// Cache all the methods, imps and selectors.
 	Method _begin, _preSolve, _postSolve, _separate;
 	IMP _beginImp, _preSolveImp, _postSolveImp, _separateImp;
 	SEL _beginSel, _preSolveSel, _postSolveSel, _separateSel;
 }
 
-+(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode;
++(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode wildcard:(BOOL)wildcard;
 
 @property(nonatomic, assign) Method begin;
 @property(nonatomic, assign) Method preSolve;
@@ -109,16 +111,17 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 @implementation CCPhysicsCollisionHandler
 
-+(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode
++(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode wildcard:(BOOL)wildcard
 {
-	CCPhysicsCollisionHandler *handler = [[self alloc] init];
-	handler->_delegate = physicsNode.collisionDelegate;
-	handler->_collisionPairSingleton = physicsNode.collisionPairSingleton;
+	CCPhysicsCollisionHandler *ccHandler = [[self alloc] init];
+	ccHandler->_delegate = physicsNode.collisionDelegate;
+	ccHandler->_collisionPairSingleton = physicsNode.collisionPairSingleton;
+	ccHandler->_wildcard = wildcard;
 	
-	handler->_handler = cpHandler;
-	cpHandler->userData = handler;
+	ccHandler->_handler = cpHandler;
+	cpHandler->userData = ccHandler;
 	
-	return handler;
+	return ccHandler;
 }
 
 static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
@@ -127,7 +130,14 @@ static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHan
 	pair->_arbiter = arb;
 	
 	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_beginImp;
-	return imp(handler->_delegate, handler->_beginSel, pair, bodyA.userData, bodyB.userData);
+	BOOL retval = imp(handler->_delegate, handler->_beginSel, pair, bodyA.userData, bodyB.userData);
+	
+	if(!handler->_wildcard){
+		retval = cpArbiterCallWildcardBeginA(arb, space) && retval;
+		retval = cpArbiterCallWildcardBeginB(arb, space) && retval;
+	}
+	
+	return retval;
 }
 
 -(void)setBegin:(Method)m
@@ -145,7 +155,14 @@ static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollision
 	pair->_arbiter = arb;
 	
 	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_preSolveImp;
-	return imp(handler->_delegate, handler->_preSolveSel, pair, bodyA.userData, bodyB.userData);
+	BOOL retval = imp(handler->_delegate, handler->_preSolveSel, pair, bodyA.userData, bodyB.userData);
+	
+	if(!handler->_wildcard){
+		retval = cpArbiterCallWildcardPreSolveA(arb, space) && retval;
+		retval = cpArbiterCallWildcardPreSolveB(arb, space) && retval;
+	}
+	
+	return retval;
 }
 
 -(void)setPreSolve:(Method)m
@@ -164,6 +181,11 @@ static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionH
 	
 	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_postSolveImp;
 	imp(handler->_delegate, handler->_postSolveSel, pair, bodyA.userData, bodyB.userData);
+	
+	if(!handler->_wildcard){
+		cpArbiterCallWildcardPostSolveA(arb, space);
+		cpArbiterCallWildcardPostSolveB(arb, space);
+	}
 }
 
 -(void)setPostSolve:(Method)m
@@ -182,6 +204,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	
 	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_separateImp;
 	imp(handler->_delegate, handler->_separateSel, pair, bodyA.userData, bodyB.userData);
+	
+	if(!handler->_wildcard){
+		cpArbiterCallWildcardSeparateA(arb, space);
+		cpArbiterCallWildcardSeparateB(arb, space);
+	}
 }
 
 -(void)setSeparate:(Method)m
@@ -215,6 +242,9 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// That's one of the reasons you aren't allowed to keep references to CCPhysicsCollisionPair objects.
 	CCPhysicsCollisionPair *_collisionPairSingleton;
 	
+	// Interned copies of the two reserved types.
+	NSString *_defaultType, *_wildcardType;
+	
 	// Need a way to retain the CCPhysicsCollisionHandler objects.
 	NSMutableSet *_handlers;
 	
@@ -238,11 +268,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		_categories = [NSMutableArray array];
 		_cachedCategories = [NSMutableDictionary dictionary];
 		
+		// Intern the reserved strings @"default" and @"wildcard"
+		_defaultType = [self internString:@"default"];
+		_wildcardType = [self internString:@"wildcard"];
+		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
 		
 		_debug = [CCDrawNode node];
-		[self addChild:_debug z:1000]; // TODO magic z-order
+		[self addChild:_debug z:NSIntegerMax];
 	}
 	
 	return self;
@@ -260,13 +294,22 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(CCPhysicsCollisionHandler *)handlerForTypeA:(NSString *)typeA typeB:(NSString *)typeB
 {
-	cpCollisionHandler *cpHandler = cpSpaceAddCollisionHandler(_space.space, typeA, typeB);
+	// Transform @"default" -> nil.
+	typeA = (typeA == _defaultType ? nil : typeA);
+	typeB = (typeB == _defaultType ? nil : typeB);
+	
+	NSAssert(typeA != _wildcardType, @"'wildcard' is only allowed as the second type identifier.");
+	
+	BOOL wildcard = (typeB == _wildcardType);
+	cpCollisionHandler *cpHandler = (wildcard ?
+		cpSpaceAddWildcardHandler(_space.space, typeA) : cpSpaceAddCollisionHandler(_space.space, typeA, typeB)
+	);
 	
 	// Assume that the userData pointer is a CCPhysicsCollisionHandler.
 	// Dangerous, so be careful about mixing vanilla Chipmunk and Objective-Chipmunk handlers here.
 	if(cpHandler->userData == nil){
 		// Retain the handler in the _handlers set.
-		[_handlers addObject:[CCPhysicsCollisionHandler wrapCPHandler:cpHandler ForPhysicsNode:self]];
+		[_handlers addObject:[CCPhysicsCollisionHandler wrapCPHandler:cpHandler ForPhysicsNode:self wildcard:wildcard]];
 	}
 	
 	return cpHandler->userData;
@@ -361,6 +404,9 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 -(void)fixedUpdate:(ccTime)delta
 {
 	[_space step:1.0f/60.0f];
+	
+	// Null out the arbiter just in case somebody retained a pair.
+	_collisionPairSingleton->_arbiter = NULL;
 }
 
 -(void)update:(ccTime)delta
