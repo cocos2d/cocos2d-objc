@@ -98,7 +98,7 @@
 /// The final two parameter names should be replaced with strings used with CCPhysicsBody.collisionType.
 /// If both final parameter names are "default" then the method is called when a more specific method isn't found.
 /// "wildcard" can be used as the final parameter name to mean "collides with anything".
-@protocol CCPhysicsCollisionPairDelegate
+@protocol CCPhysicsCollisionDelegate
 
 @optional
 /// Begin methods are called on the first fixed time step when two bodies begin colliding.
@@ -133,7 +133,7 @@
 @property(nonatomic, assign) ccTime sleepTimeThreshold;
 
 /// The delegate that is called when two physics bodies collide.
-@property(nonatomic, assign) id<CCPhysicsCollisionPairDelegate> delegate;
+@property(nonatomic, assign) NSObject<CCPhysicsCollisionDelegate> *collisionDelegate;
 
 // TODO think about these more.
 // More variations? Filtering? thickness?
