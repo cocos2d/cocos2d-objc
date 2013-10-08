@@ -25,6 +25,8 @@
 #import "CCPhysicsNode.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 
+#import <objc/runtime.h>
+
 // Do not change this value unless you redefine the cpBitmask type to have more than 32 bits.
 #define MAX_CATEGORIES 32
 
@@ -73,13 +75,129 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
+/// Internal class used to wrap cpCollisionHandlers
+@interface CCPhysicsCollisionHandler : NSObject {
+	cpCollisionHandler *_handler;
+	
+	id _delegate;
+	CCPhysicsCollisionPair *_collisionPairSingleton;
+	
+	// Cache the physics node's pair singleton.
+	CCPhysicsCollisionPair *_pair;
+	
+	Method _begin, _preSolve, _postSolve, _separate;
+	IMP _beginImp, _preSolveImp, _postSolveImp, _separateImp;
+	SEL _beginSel, _preSolveSel, _postSolveSel, _separateSel;
+}
+
++(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode;
+
+@property(nonatomic, assign) Method begin;
+@property(nonatomic, assign) Method preSolve;
+@property(nonatomic, assign) Method postSolve;
+@property(nonatomic, assign) Method separate;
+
+@end
+
+
+@implementation CCPhysicsCollisionHandler
+
+static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_beginImp;
+	return imp(handler->_delegate, handler->_beginSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
+}
+
+static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_preSolveImp;
+	return imp(handler->_delegate, handler->_preSolveSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
+}
+
+static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_postSolveImp;
+	imp(handler->_delegate, handler->_postSolveSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
+}
+
+static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
+	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_separateImp;
+	imp(handler->_delegate, handler->_separateSel, handler->_collisionPairSingleton, bodyA.userData, bodyB.userData);
+}
+
++(CCPhysicsCollisionHandler *)wrapCPHandler:(cpCollisionHandler *)cpHandler ForPhysicsNode:(CCPhysicsNode *)physicsNode
+{
+	CCPhysicsCollisionHandler *handler = [[self alloc] init];
+	handler->_delegate = physicsNode.collisionDelegate;
+#warning Finish me!
+	handler->_collisionPairSingleton = nil;
+	
+	handler->_handler = cpHandler;
+	cpHandler->userData = handler;
+	
+	return handler;
+}
+
+// TODO Not very DRY, should check method types?
+-(void)setBegin:(Method)m
+{
+	NSAssert(m, @"Internal Error: Method is NULL.");
+	_begin = m;
+	_beginImp = method_getImplementation(m);
+	_beginSel = method_getName(m);
+	_handler->beginFunc = PhysicsBegin;
+}
+
+-(void)setPreSolve:(Method)m
+{
+	NSAssert(m, @"Internal Error: Method is NULL.");
+	_preSolve = m;
+	_preSolveImp = method_getImplementation(m);
+	_preSolveSel = method_getName(m);
+	_handler->preSolveFunc = PhysicsPreSolve;
+}
+
+-(void)setPostSolve:(Method)m
+{
+	NSAssert(m, @"Internal Error: Method is NULL.");
+	_postSolve = m;
+	_postSolveImp = method_getImplementation(m);
+	_postSolveSel = method_getName(m);
+	_handler->postSolveFunc = PhysicsPostSolve;
+}
+
+-(void)setSeparate:(Method)m
+{
+	NSAssert(m, @"Internal Error: Method is NULL.");
+	_separate = m;
+	_separateImp = method_getImplementation(m);
+	_separateSel = method_getName(m);
+	_handler->separateFunc = PhysicsSeparate;
+}
+
+@end
+
+
 @implementation CCPhysicsNode {
 	ChipmunkSpace *_space;
 	
+	// Interned strings for collision and category types.
 	NSMutableDictionary *_internedStrings;
+	
+	// List of category strings used in this space.
 	NSMutableArray *_categories;
+	
+	// Cached category arrays for category bitmasks.
+	// Used for fast lookup when possible.
+	// Limited to MAX_CACHED_CATEGORIES in size.
 	NSMutableDictionary *_cachedCategories;
 	
+	// Need a way to retain the CCPhysicsCollisionHandler objects.
+	NSMutableSet *_handlers;
+	
+	// CCDrawNode used for drawing the debug overlay.
+	// Only allocated if CCPhysicsNode.debugDraw is YES.
 	CCDrawNode *_debug;
 }
 
@@ -98,6 +216,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		_categories = [NSMutableArray array];
 		_cachedCategories = [NSMutableDictionary dictionary];
 		
+		_handlers = [NSMutableSet set];
+		
 		_debug = [CCDrawNode node];
 		[self addChild:_debug z:1000]; // TODO magic z-order
 	}
@@ -111,7 +231,71 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(ccTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
 -(void)setSleepTimeThreshold:(ccTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
 
--(void)setDelegate:(id<CCPhysicsCollisionPairDelegate>)delegate {NYI();}
+-(CCPhysicsCollisionHandler *)handlerForTypeA:(NSString *)typeA typeB:(NSString *)typeB
+{
+	cpCollisionHandler *cpHandler = cpSpaceAddCollisionHandler(_space.space, typeA, typeB);
+	
+	// Assume that the userData pointer is a CCPhysicsCollisionHandler.
+	// Dangerous, so be careful about mixing vanilla Chipmunk and Objective-Chipmunk handlers here.
+	if(cpHandler->userData == nil){
+		// Retain the handler in the _handlers set.
+		[_handlers addObject:[CCPhysicsCollisionHandler wrapCPHandler:cpHandler ForPhysicsNode:self]];
+	}
+	
+	return cpHandler->userData;
+}
+
+-(void)registerDelegateMethodsForClass:(Class)class
+{
+	if(class == nil) return;
+	
+	// Search for superclass delegate methods first.
+	[self registerDelegateMethodsForClass:class_getSuperclass(class)];
+	
+	unsigned int count;
+	Method *methods = class_copyMethodList(class, &count);
+	for(int i=0; i<count; i++){
+		NSString *name = NSStringFromSelector(method_getName(methods[i]));
+		
+		if([name hasPrefix:@"ccPhysicsCollision"]){
+			// self, _cmd, pair, typeA, typeB
+			if(method_getNumberOfArguments(methods[i]) != 5) continue;
+			
+			NSArray *components = [name componentsSeparatedByString:@":"];
+			NSString *phase = components[0];
+			NSString *typeA = [self internString:components[1]];
+			NSString *typeB = [self internString:components[2]];
+			
+			// TODO check return and argument types in the handler setters?
+			char returnType[2];
+			method_getReturnType(methods[i], returnType, 2);
+			
+			if([phase isEqualToString:@"ccPhysicsCollisionBegin"]){
+				NSAssert(strcmp(returnType, "c") == 0, @"CCPhysicsCollisionBegin delegate methods must return a BOOL.");
+				[self handlerForTypeA:typeA typeB:typeB].begin = methods[i];
+			} else if([phase isEqualToString:@"ccPhysicsCollisionPreSolve"]){
+				NSAssert(strcmp(returnType, "c") == 0, @"CCPhysicsCollisionPreSolve delegate methods must return a BOOL.");
+				[self handlerForTypeA:typeA typeB:typeB].preSolve = methods[i];
+			} else if([phase isEqualToString:@"ccPhysicsCollisionPostSolve"]){
+				// TODO check for no return value?
+				[self handlerForTypeA:typeA typeB:typeB].postSolve = methods[i];
+			} else if([phase isEqualToString:@"ccPhysicsCollisionSeparate"]){
+				[self handlerForTypeA:typeA typeB:typeB].separate = methods[i];
+			}
+		}
+	}
+	
+	free(methods);
+}
+
+-(void)setCollisionDelegate:(NSObject<CCPhysicsCollisionDelegate> *)collisionDelegate
+{
+	NSAssert(_collisionDelegate == nil, @"The collision delegate can only be set once per CCPhysicsNode.");
+	_collisionDelegate = collisionDelegate;
+	
+	// Recurse the inheritance tree to find all the matching collision delegate methods.
+	[self registerDelegateMethodsForClass:collisionDelegate.class];
+}
 
 //MARK: Queries:
 

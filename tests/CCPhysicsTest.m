@@ -11,10 +11,34 @@
 @interface AppController : BaseAppController
 @end
 
-@interface MainLayer : CCLayer
+@interface MainLayer : CCLayer<CCPhysicsCollisionDelegate>
 @end
 
 @implementation MainLayer
+
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
+{
+	NSLog(@"Begin!");
+	
+	return TRUE;
+}
+
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
+{
+	NSLog(@"PreSolve!");
+	
+	return TRUE;
+}
+
+-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
+{
+	NSLog(@"PostSolve!");
+}
+
+-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
+{
+	NSLog(@"Separate!");
+}
 
 -(void)onEnter
 {
@@ -22,8 +46,9 @@
 	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 	physicsNode.gravity = ccp(0.0, -100.0);
-	[self addChild:physicsNode];
+	physicsNode.collisionDelegate = self;
 	physicsNode.debugDraw = YES;
+	[self addChild:physicsNode];
 	
 	CCNode *node = [CCNode node];
 //	node.position = ccp(32, -63);
@@ -39,7 +64,9 @@
 		CGSize size = sprite.contentSize;
 		CGRect rect = CGRectMake(0, 0, size.width, size.height);
 		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-		sprite.physicsBody.collisionCategories = @[];
+		sprite.physicsBody.collisionCategories = @[@"foo"];
+		sprite.physicsBody.collisionMask = @[@"foo", @"bar"];
+		sprite.physicsBody.collisionType = @"theDynamicBlock";
 //		sprite.physicsBody.angularVelocity = 1;
 		
 //		sprite.position = ccp(240, 160);
@@ -54,6 +81,9 @@
 		CGRect rect = CGRectMake(0, 0, size.width, size.height);
 		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
 		sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		sprite.physicsBody.collisionCategories = @[@"bar"];
+		sprite.physicsBody.collisionMask = @[@"foo", @"bar"];
+		sprite.physicsBody.collisionType = @"theStaticBlock";
 		
 		[physicsNode addChild:sprite];
 	}
