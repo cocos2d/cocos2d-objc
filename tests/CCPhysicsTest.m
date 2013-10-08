@@ -20,14 +20,14 @@
 {
 	NSLog(@"Begin!");
 	
-	return TRUE;
+	return YES;
 }
 
 -(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
 {
 	NSLog(@"PreSolve!");
 	
-	return TRUE;
+	return YES;
 }
 
 -(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair theStaticBlock:(CCPhysicsBody *)a theDynamicBlock:(CCPhysicsBody *)b
