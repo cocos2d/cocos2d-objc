@@ -24,7 +24,7 @@
  */
 
 
-#import "CCTransition.h"
+#import "CCTransitionScene.h"
 
 /** CCTransitionPageTurn transition.
  * A transition which peels back the bottom right hand corner of a scene
