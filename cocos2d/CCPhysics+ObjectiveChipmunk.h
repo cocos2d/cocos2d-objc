@@ -64,7 +64,7 @@
 @interface CCPhysicsCollisionPair(ObjectiveChipmunk)
 
 /// Access to the underlying Objective-Chipmunk object.
-@property(nonatomic, readonly) cpArbiter *arbiter;
+@property(nonatomic, assign) cpArbiter *arbiter;
 
 @end
 

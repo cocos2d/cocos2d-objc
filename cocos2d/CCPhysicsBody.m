@@ -219,11 +219,15 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 	}
 }
 
--(void)eachContactPair:(void (^)(CCPhysicsCollisionPair *))block
+-(void)eachCollisionPair:(void (^)(CCPhysicsCollisionPair *))block
 {
-	// TODO Need to implement the CCPhysicsCollisionPair type first.
-	NYI();
-	cpBodyEachArbiter_b(_body.body, ^(cpArbiter *arbiter){});
+	CCPhysicsCollisionPair *pair = [[CCPhysicsCollisionPair alloc] init];
+	cpBodyEachArbiter_b(_body.body, ^(cpArbiter *arbiter){
+		pair.arbiter = arbiter;
+		block(pair);
+	});
+	
+	pair.arbiter = NULL;
 }
 
 //MARK: Velocity
