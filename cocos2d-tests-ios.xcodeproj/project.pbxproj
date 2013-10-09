@@ -1858,6 +1858,7 @@
 		D30B5D8B17F5E4D30058C11C /* CCPhysicsTest.m in Sources */ = {isa = PBXBuildFile; fileRef = D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */; };
 		D30B5D9C17F5E8750058C11C /* blocks.png in Resources */ = {isa = PBXBuildFile; fileRef = AAEA834A0FD5704400F08728 /* blocks.png */; };
 		D30B5D9D17F5E8750058C11C /* blocks-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = E0CC4F7C12677DB400691051 /* blocks-hd.png */; };
+		D31FB29F18050499007DEEDD /* r1.png in Resources */ = {isa = PBXBuildFile; fileRef = 500165990E72DB0E0085673F /* r1.png */; };
 		D355243917F5E42500096CA3 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		D355243A17F5E42500096CA3 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		D355243B17F5E42500096CA3 /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -8455,6 +8456,7 @@
 				D355244217F5E42500096CA3 /* r1-hd.png in Resources */,
 				D355244317F5E42500096CA3 /* r2-hd.png in Resources */,
 				D355244417F5E42500096CA3 /* b1-hd.png in Resources */,
+				D31FB29F18050499007DEEDD /* r1.png in Resources */,
 				D355244517F5E42500096CA3 /* b2-hd.png in Resources */,
 				D355244617F5E42500096CA3 /* iTunesArtwork in Resources */,
 				D355244717F5E42500096CA3 /* Icon@2x.png in Resources */,

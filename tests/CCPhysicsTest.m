@@ -16,78 +16,88 @@
 
 @implementation MainLayer
 
-//-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
-//{
-//	NSLog(@"theDynamicBlock!");
-//	
-//	return YES;
-//}
-
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a wildcard:(CCPhysicsBody *)b
+// This method is called anytime the ball collides with something.
+// The argument names in collision delegate methods correspond to the collisionType strings set on the CCPhysicsBody objects.
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCPhysicsBody *)ballBody wildcard:(CCPhysicsBody *)otherBody
 {
-	NSLog(@"PreSolve!");
-	
+	// Ball collisions should always be perfectly bouncy and frictionless.
+	pair.friction = 0.0;
 	pair.restitution = 1.0;
 	
 	return YES;
 }
 
-//-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
-//{
-//	NSLog(@"PostSolve!");
-//}
-//
-//-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair theDynamicBlock:(CCPhysicsBody *)a default:(CCPhysicsBody *)b
-//{
-//	NSLog(@"Separate!");
-//}
+// This is called when the ball collides with a block.
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCPhysicsBody *)ballBody block:(CCPhysicsBody *)blockBody
+{
+	[blockBody.node removeFromParent];
+	
+	return YES;
+}
 
 -(void)onEnter
 {
 	[super onEnter];
 	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
-	physicsNode.gravity = ccp(0.0, -100.0);
+//	physicsNode.gravity = ccp(0.0, -100.0);
 	physicsNode.collisionDelegate = self;
-	physicsNode.debugDraw = YES;
+	physicsNode.debugDraw = NO;
 	[self addChild:physicsNode];
 	
-	CCNode *node = [CCNode node];
-//	node.position = ccp(32, -63);
-//	node.rotation = 20;
-	[physicsNode addChild:node];
-	
+	// Add the ball
 	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-		sprite.position = ccp(240, 160);
-//		sprite.rotation = 45;
-//		sprite.scale = 0.5;
+		CCSprite *sprite = [CCSprite spriteWithFile: @"r1.png"];
+		sprite.position = ccp(240, 50);
 		
 		CGSize size = sprite.contentSize;
-		CGRect rect = CGRectMake(0, 0, size.width, size.height);
-		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-		sprite.physicsBody.collisionCategories = @[@"foo"];
-		sprite.physicsBody.collisionMask = @[@"foo", @"bar"];
-		sprite.physicsBody.collisionType = @"theDynamicBlock";
-//		sprite.physicsBody.angularVelocity = 1;
-		
-//		sprite.position = ccp(240, 160);
-		[node addChild:sprite];
-	}
-	
-	{
-		CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
-		sprite.position = ccp(240, 0);
-		
-		CGSize size = sprite.contentSize;
-		CGRect rect = CGRectMake(0, 0, size.width, size.height);
-		sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-		sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
-		sprite.physicsBody.collisionCategories = @[@"bar"];
-		sprite.physicsBody.collisionMask = @[@"foo", @"bar"];
-		sprite.physicsBody.collisionType = @"default";
+		CGFloat radius = (size.width + size.height)/4.0;
+		sprite.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:radius andCenter:sprite.anchorPointInPoints];
+		sprite.physicsBody.collisionType = @"ball";
+		sprite.physicsBody.velocity = ccpMult(ccp(CCRANDOM_MINUS1_1(), CCRANDOM_MINUS1_1()), 600.0);
 		
 		[physicsNode addChild:sprite];
+	}
+	
+	// Add some blocks.
+	for(int j=0; j<3; j++){
+		for(int i=0; i<8; i++){
+			CCSprite *sprite = [CCSprite spriteWithFile: @"blocks.png"];
+			
+			CGSize size = sprite.contentSize;
+			sprite.position = ccp(size.width*(i + 0.5), 320 - size.height*(j + 0.5));
+			
+			CGRect rect = CGRectMake(0, 0, size.width, size.height);
+			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
+			sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+			sprite.physicsBody.collisionType = @"block";
+			
+			[physicsNode addChild:sprite];
+		}
+	}
+	
+	// Add the screen edges.
+	// This is a little goofy without loops.
+	{
+		CCNode *edge = [CCNode node];
+		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(  0,   0) to:ccp(480,   0) cornerRadius:0.0];
+		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		[physicsNode addChild:edge];
+	}{
+		CCNode *edge = [CCNode node];
+		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(480,   0) to:ccp(480, 320) cornerRadius:0.0];
+		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		[physicsNode addChild:edge];
+	}{
+		CCNode *edge = [CCNode node];
+		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(480, 320) to:ccp(  0, 320) cornerRadius:0.0];
+		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		[physicsNode addChild:edge];
+	}{
+		CCNode *edge = [CCNode node];
+		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(  0, 320) to:ccp(  0,   0) cornerRadius:0.0];
+		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
+		[physicsNode addChild:edge];
 	}
 }
 
