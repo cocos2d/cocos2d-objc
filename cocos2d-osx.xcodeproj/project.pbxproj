@@ -2157,6 +2157,13 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				HEADER_SEARCH_PATHS = (
+					external/Box2d,
+					external/Chipmunk/include,
+					external/kazmath/include,
+					external/Chipmunk/objectivec/include,
+					external/Chipmunk/objectivec/include,
+				);
 				PRODUCT_NAME = "build all libs";
 			};
 			name = Debug;
@@ -2167,6 +2174,13 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				HEADER_SEARCH_PATHS = (
+					external/Box2d,
+					external/Chipmunk/include,
+					external/kazmath/include,
+					external/Chipmunk/objectivec/include,
+					external/Chipmunk/objectivec/include,
+				);
 				PRODUCT_NAME = "build all libs";
 				ZERO_LINK = NO;
 			};
