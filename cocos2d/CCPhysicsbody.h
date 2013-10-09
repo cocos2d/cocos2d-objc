@@ -114,7 +114,7 @@ typedef enum ccPhysicsBodyType {
 
 /// Iterate over all of the CCPhysicsCollisionPairs this body is currently in contact with.
 /// NOTE: The CCPhysicsCollisionPair object is shared and you should not store a reference to it.
--(void)eachContactPair:(void (^)(CCPhysicsCollisionPair *pair))block;
+-(void)eachCollisionPair:(void (^)(CCPhysicsCollisionPair *pair))block;
 
 //MARK: Velocity:
 
