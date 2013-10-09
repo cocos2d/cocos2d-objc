@@ -58,14 +58,14 @@
     if (!self) return NULL;
     
     // Load resources
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = kCCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Header background
-    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithSpriteFrameName:@"Interface/header.png"];
+    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
     headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
@@ -111,8 +111,8 @@
     cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
     cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
     
-    CCSpriteFrame* frameNormal = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Interface/table-bg-normal.png"];
-    CCSpriteFrame* frameHilite = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:@"Interface/table-bg-hilite.png"];
+    CCSpriteFrame* frameNormal = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-normal.png"];
+    CCSpriteFrame* frameHilite = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-hilite.png"];
     
     [cell.button setBackgroundSpriteFrame:frameNormal forState:CCControlStateNormal];
     [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];

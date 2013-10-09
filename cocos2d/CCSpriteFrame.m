@@ -29,12 +29,25 @@
 #import "CCSpriteFrame.h"
 #import "CCTexture2D.h"
 #import "ccMacros.h"
+#import "CCSpriteFrameCache.h"
 
 @implementation CCSpriteFrame
 @synthesize offsetInPixels = _offsetInPixels, offset = _offset;
 @synthesize originalSize = _originalSize, originalSizeInPixels = _originalSizeInPixels;
 @synthesize textureFilename = _textureFilename;
 @synthesize rotated = _rotated;
+
++(id) frameWithImageNamed:(NSString*)imageName
+{
+    CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
+    if (!frame)
+    {
+        CCTexture2D* texture = [[CCTextureCache sharedTextureCache] addImage:imageName];
+        frame = [texture createSpriteFrame];
+    }
+    
+    return frame;
+}
 
 +(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
 {

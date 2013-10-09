@@ -151,6 +151,15 @@
 
 #pragma mark CCSprite - Initializers
 
+/**
+ *  Creates a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
+ *
+ *  @param imageName name of the image to load
+ *
+ *  @return a sprite
+ */
++(id)spriteWithImageNamed:(NSString*)imageName;
+
 /** Creates an sprite with a texture.
  The rect used will be the size of the texture.
  The offset will be (0,0).

@@ -51,6 +51,8 @@
 	NSMutableDictionary *_spriteFrames;
 	NSMutableDictionary *_spriteFramesAliases;
 	NSMutableSet		*_loadedFilenames;
+    
+    NSMutableDictionary *_spriteFrameFileLookup;
 }
 
 /** Retruns ths shared instance of the Sprite Frame cache */
@@ -60,6 +62,7 @@
  */
 +(void)purgeSharedSpriteFrameCache;
 
+- (void) registerSpriteFramesFile:(NSString*)plist;
 
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
