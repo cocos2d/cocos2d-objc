@@ -64,6 +64,8 @@
 
 - (void) registerSpriteFramesFile:(NSString*)plist;
 
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename;
+
 /** Adds multiple Sprite Frames from a plist file.
  * A texture will be loaded automatically. The texture name will composed by replacing the .plist suffix with .png .
  * If you want to use another texture, you should use the addSpriteFramesWithFile:texture method.
