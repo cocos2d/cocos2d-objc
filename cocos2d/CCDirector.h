@@ -56,7 +56,7 @@ typedef enum {
 @class CCScene;
 @class CCScheduler;
 @class CCActionManager;
-
+@class CCTransition;
 
 #ifdef __CC_PLATFORM_IOS
 #define CC_VIEWCONTROLLER UIViewController
@@ -294,6 +294,10 @@ and when to execute the Scenes.
  * ONLY call it if there is a running scene.
  */
 -(void) replaceScene: (CCScene*) scene;
+
+- (void)presentScene:(CCScene *)scene;
+
+- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
 /** Ends the execution, releases the running scene.
  It doesn't remove the OpenGL view from its parent. You have to do it manually.

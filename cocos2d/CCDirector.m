@@ -37,7 +37,7 @@
 #import "CCAnimationCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
-#import "CCTransition.h"
+#import "CCTransitionScene.h"
 #import "CCScene.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
@@ -48,6 +48,7 @@
 #import "ccFPSImages.h"
 #import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
+#import "CCTransition.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -448,6 +449,28 @@ static CCDirector *_sharedDirector = nil;
 	_sendCleanupToScene = NO;
 }
 
+// -----------------------------------------------------------------
+
+- (void)presentScene:(CCScene *)scene
+{
+    if (_runningScene)
+    {
+        [self replaceScene:scene];
+    }
+    else
+    {
+        [self runWithScene:scene];
+    }
+}
+
+- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
+{
+    // the transition gets to become the running scene
+    [transition performSelector:@selector(presentScene:) withObject:scene];
+}
+
+// -----------------------------------------------------------------
+
 -(void) end
 {
 	[_runningScene onExitTransitionDidStart];
@@ -495,6 +518,37 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setNextScene
 {
+    // -----------------------------------------------------------------
+    // v2.5 functionality
+    
+    // If next scene is a transition, the transition has just started
+    // Make transition the running scene.
+    // Outgoing scene will continue to run
+    // Incoming scene was started by transition
+    if ([_nextScene isKindOfClass:[CCTransition class]])
+    {
+        _runningScene = nil;
+        _runningScene = _nextScene;
+        _nextScene = nil;
+        [_runningScene onEnter];
+        return;
+    }
+    
+    // If running scene is a transition class, the transition has ended
+    // Make new scene, the running scene
+    // Clean up transition
+    // Outgoing scene was stopped by transition
+    if ([_runningScene isKindOfClass:[CCTransition class]])
+    {
+        [_runningScene onExit];
+		if( _sendCleanupToScene) [_runningScene cleanup];
+        _runningScene = nil;
+        _runningScene = _nextScene;
+        _nextScene = nil;
+        return;
+    }
+    // -----------------------------------------------------------------
+
 	Class transClass = [CCTransitionScene class];
 	BOOL runningIsTransition = [_runningScene isKindOfClass:transClass];
 	BOOL newIsTransition = [_nextScene isKindOfClass:transClass];
