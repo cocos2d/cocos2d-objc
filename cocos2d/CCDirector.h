@@ -243,7 +243,7 @@ and when to execute the Scenes.
 
 #pragma mark Director - Scene Management
 
-/**Enters the Director's main loop with the given Scene.
+/** Enters the Director's main loop with the given Scene.
  * Call it to run only your FIRST scene.
  * Don't call it if there is already a running scene.
  *
@@ -251,14 +251,14 @@ and when to execute the Scenes.
  */
 - (void) runWithScene:(CCScene*) scene;
 
-/**Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
+/** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
  * Try to avoid big stacks of pushed scenes to reduce memory allocation.
  * ONLY call it if there is a running scene.
  */
 - (void) pushScene:(CCScene*) scene;
 
-/**Pops out a scene from the queue.
+/** Pops out a scene from the queue.
  * This scene will replace the running one.
  * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
  * ONLY call it if there is a running scene.
@@ -267,10 +267,16 @@ and when to execute the Scenes.
 
 /**Pops out all scenes from the queue until the root scene in the queue.
  * This scene will replace the running one.
- * The running scene will be deleted. If there are no more scenes in the stack the execution is terminated.
- * ONLY call it if there is a running scene.
+ * Internally it will call `popToSceneStackLevel:1`
  */
 - (void) popToRootScene;
+
+/** Pops out all scenes from the queue until it reaches `level`.
+ If level is 0, it will end the director.
+ If level is 1, it will pop all scenes until it reaches to root scene.
+ If level is <= than the current stack level, it won't do anything.
+ */
+-(void) popToSceneStackLevel:(NSUInteger)level;
 
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.

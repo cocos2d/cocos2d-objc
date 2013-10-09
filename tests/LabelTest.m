@@ -7,6 +7,9 @@
 // cocos import
 #import "cocos2d.h"
 
+
+#import "CCFontDefinition.h"
+
 // local import
 #import "LabelTest.h"
 static int sceneIdx=-1;
@@ -32,6 +35,7 @@ static NSString *transitions[] = {
 	@"LabelTTFMultiline2",
 	@"LabelTTFA8Test",
 	@"LabelTTFLineBreak",
+    @"LabelTTFShadowStroke",
 	@"BMFontOneAtlas",
 	@"BMFontUnicode",
     @"BMFontInit",
@@ -1494,6 +1498,91 @@ static float menuItemPaddingCenter = 50;
 }
 
 @end
+
+
+
+#pragma mark -
+#pragma mark LabelTTFShadowStroke
+
+@implementation LabelTTFShadowStroke
+-(id) init
+{
+	if( (self=[super init]) ) {
+        
+        CGSize s = [[CCDirector sharedDirector] winSize];
+        
+        CCLayerColor *layer = [CCLayerColor layerWithColor:ccc4(0,190,0,255) width:s.width height:s.height];
+        [self addChild:layer];
+        
+        CCFontDefinition *tempDefinition = [[CCFontDefinition alloc]initWithFontName:@"Helvetica" fontSize:32];
+        
+        tempDefinition.dimensions    = CGSizeMake(0,0);
+		tempDefinition.alignment     = kCCTextAlignmentRight;
+        tempDefinition.vertAlignment = kCCVerticalTextAlignmentTop;
+        tempDefinition.lineBreakMode = kCCLineBreakModeWordWrap;
+        
+        // shadow
+        CGSize shadowOffset;
+        shadowOffset.width  = 7;
+        shadowOffset.height = 7;
+        [tempDefinition enableShadow:true];
+        [tempDefinition setShadowBlur: 1.0];
+        [tempDefinition setShadowOffset:shadowOffset];
+        
+        // stroke
+        ccColor3B strokeColor;
+        strokeColor.r = 0;
+        strokeColor.g = 0;
+        strokeColor.b = 255;
+        [tempDefinition enableStroke:true];
+        [tempDefinition setStrokeColor:strokeColor];
+        [tempDefinition setStrokeSize:1];
+       
+        // fill color
+        ccColor3B fillColor;
+        fillColor.r = 255;
+        fillColor.g = 0;
+        fillColor.b = 0;
+        tempDefinition.fontFillColor = fillColor;
+        
+        [tempDefinition enableStroke:false];
+        
+        CCLabelTTF *shadowLabel =[CCLabelTTF labelWithString:@"Test Shadow" fontDefinition:tempDefinition];
+		shadowLabel.position = ccp(s.width/2,s.height/2 );
+		[self addChild:shadowLabel];
+        
+        [tempDefinition enableStroke:true];
+        [tempDefinition enableShadow:false];
+        CCLabelTTF *strokeLabel =[CCLabelTTF labelWithString:@"Test Stroke" fontDefinition:tempDefinition];
+		strokeLabel.position = ccp(s.width/2,s.height/2 +50);
+		[self addChild:strokeLabel];
+        
+        [tempDefinition enableStroke:true];
+        [tempDefinition enableShadow:true];
+        CCLabelTTF *strokeAndShadowLable =[CCLabelTTF labelWithString:@"Test shadow + stroke" fontDefinition:tempDefinition];
+		strokeAndShadowLable.position = ccp(s.width/2,s.height/2 -50);
+		[self addChild:strokeAndShadowLable];
+        
+        // we don't need this anymore
+        [tempDefinition release];
+	}
+    
+	return self;
+}
+
+-(NSString*) title
+{
+	return @"Testing CCLabelTTF Shadow Stroke";
+}
+
+-(NSString *) subtitle
+{
+	return @"";
+}
+@end
+
+
+
 
 #pragma mark -
 #pragma mark LabelTTFMultiline

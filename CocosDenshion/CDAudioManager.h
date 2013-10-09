@@ -142,7 +142,7 @@ typedef enum {
  - Frameworks: OpenAL, AudioToolbox, AVFoundation
  @since v0.8
  */
-@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol, AVAudioSessionDelegate> {
+@interface CDAudioManager : NSObject <CDLongAudioSourceDelegate, CDAudioInterruptProtocol> {
 	CDSoundEngine		*soundEngine;
 	CDLongAudioSource	*backgroundMusic;
 	NSMutableArray		*audioSourceChannels;
@@ -220,6 +220,11 @@ typedef enum {
 -(void) setBackgroundMusicCompletionListener:(id) listener selector:(SEL) selector;
 
 @end
+
+#if __IPHONE_OS_VERSION_MIN_REQUIRED < __IPHONE_6_0
+@interface CDAudioManager (DeprecatedProtocol) <AVAudioSessionDelegate>
+@end
+#endif
 
 /** Fader for long audio source objects */
 @interface CDLongAudioSourceFader : CDPropertyModifier{}

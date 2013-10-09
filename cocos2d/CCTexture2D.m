@@ -162,7 +162,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 		}
 
-		_size = size;
+		_size  = size;
 		_width = width;
 		_height = height;
 		_format = pixelFormat;
@@ -351,7 +351,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		case kCCTexture2DPixelFormat_A8:
 			data = malloc(textureHeight * textureWidth);
 			info = kCGImageAlphaOnly;
-			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, info);
+			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, (CGBitmapInfo)info);
 			break;
 		default:
 			[NSException raise:NSInternalInconsistencyException format:@"Invalid pixel format"];
@@ -458,6 +458,210 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 #ifdef __CC_PLATFORM_IOS
 
+- (id) initWithString:(NSString*)string fontDef:(CCFontDefinition *)definition
+{
+	// MUST have the same order declared on ccTypes
+	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
+
+    
+    
+    UIFont *uifont = [UIFont fontWithName:definition.fontName size:definition.fontSize];
+	if( ! uifont )
+    {
+		CCLOG(@"cocos2d: Texture2d: Invalid Font: %@. Verify the .ttf name", definition.fontName);
+		[self release];
+		return nil;
+	}
+
+	// width and height
+	NSUInteger textureWidth   = 0;
+	NSUInteger textureHeight  = 0;
+
+    
+    // the final dimension
+    CGSize computedDimension;
+    
+    if (definition.dimensions.width == 0 || definition.dimensions.height == 0)
+    {
+        CGSize boundingSize = CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX);
+        CGSize dim = [string sizeWithFont:uifont
+                 constrainedToSize:boundingSize
+                     lineBreakMode:NSLineBreakByWordWrapping];
+        
+        if(dim.width == 0)
+            dim.width = 1;
+        if(dim.height == 0)
+            dim.height = 1;
+        
+        textureWidth  = dim.width;
+        textureHeight = dim.height;
+        
+        computedDimension = dim;
+    }
+    else
+    {
+        textureWidth        = ccNextPOT(definition.dimensions.width);
+        textureHeight       = ccNextPOT(definition.dimensions.height);
+        computedDimension   = definition.dimensions;
+    }
+
+	unsigned char*			data;
+	CGContextRef			context;
+	CGColorSpaceRef			colorSpace;
+
+    // check if stroke or shadows are enabled
+    bool effectsEnabled = (([definition shadowEnabled]) || ([definition strokeEnabled]));
+    
+    // compute the padding needed by shadow and stroke
+    float shadowStrokePaddingX = 0.0f;
+    float shadowStrokePaddingY = 0.0f;
+    
+    
+    if ( [definition strokeEnabled] )
+    {
+        shadowStrokePaddingY = shadowStrokePaddingX = ceilf([definition strokeSize]);
+    }
+    
+    if ( [definition shadowEnabled] )
+    {
+        shadowStrokePaddingX = max(shadowStrokePaddingX, (float)abs([definition shadowOffset].width));
+        shadowStrokePaddingY = max(shadowStrokePaddingY, (float)abs([definition shadowOffset].height));
+    }
+    
+    // add the padding (this could be 0 if no shadow and no stroke)
+    textureWidth  += shadowStrokePaddingX;
+    textureHeight += shadowStrokePaddingY;
+    
+    
+
+#if CC_USE_LA88_LABELS
+
+	if (effectsEnabled)
+	{
+		data = calloc(textureHeight, textureWidth * 4);
+	}
+	else
+	{
+		data = calloc(textureHeight, textureWidth * 2);
+	}
+	
+#else
+
+	data = calloc(textureHeight, textureWidth);
+
+#endif
+    
+    if (effectsEnabled)
+    {
+        colorSpace = CGColorSpaceCreateDeviceRGB();
+        context    = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+        CGContextSetRGBFillColor(context, ((float)definition.fontFillColor.r) /255.0, ((float)definition.fontFillColor.g/255.0), ((float)definition.fontFillColor.b/255.0), 1.0);
+    }
+    else
+    {
+        colorSpace = CGColorSpaceCreateDeviceGray();
+		// XXX ios7
+        context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
+        CGContextSetGrayFillColor(context, 1.0f, 1.0f);
+    }
+
+	
+	CGColorSpaceRelease(colorSpace);
+	
+	if( ! context ) {
+		free(data);
+		[self release];
+		return nil;
+	}
+	
+	
+	CGContextTranslateCTM(context, 0.0f, textureHeight - shadowStrokePaddingY);
+	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
+	UIGraphicsPushContext(context);
+    
+    // take care of stroke if needed
+    if ( [definition strokeEnabled] )
+    {
+        CGContextSetTextDrawingMode(context, kCGTextFillStroke);
+        CGContextSetRGBStrokeColor(context, [definition strokeColor].r, [definition strokeColor].g, [definition strokeColor].b, 1);
+        CGContextSetLineWidth(context, [definition strokeSize]);
+    }
+    
+    // take care of shadow if needed
+    if ( [definition shadowEnabled] )
+    {
+        CGSize offset;
+        offset.height = [definition shadowOffset].height;
+        offset.width  = [definition shadowOffset].width;
+        CGContextSetShadow(context, offset, [definition shadowBlur]);
+    }
+    
+    float textOriginX  = 0.0;
+    float textOriginY  = 0.0;
+    
+    if ( [definition shadowOffset].width < 0 )
+    {
+        textOriginX = shadowStrokePaddingX;
+    }
+    
+    if ( [definition shadowOffset].height < 0 )
+    {
+       textOriginY = (-shadowStrokePaddingY);
+    }
+    
+    CGRect drawArea;
+    
+    if(definition.vertAlignment == kCCVerticalTextAlignmentTop)
+    {
+        drawArea = CGRectMake(textOriginX, textOriginY, computedDimension.width, computedDimension.height);
+    }
+    else
+    {
+        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:computedDimension lineBreakMode:linebreaks[definition.lineBreakMode] ];
+        
+        if(definition.vertAlignment == kCCVerticalTextAlignmentBottom)
+        {
+            drawArea = CGRectMake(textOriginX, (computedDimension.height - drawSize.height) + textOriginY, computedDimension.width, drawSize.height);
+        }
+        else // kCCVerticalTextAlignmentCenter
+        {
+            drawArea = CGRectMake(textOriginX, ((computedDimension.height - drawSize.height) / 2) + textOriginY, computedDimension.width, drawSize.height);
+        }
+    }
+    
+	// must follow the same order of CCTextureAligment
+	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
+	
+	[string drawInRect:drawArea withFont:uifont lineBreakMode:linebreaks[definition.lineBreakMode] alignment:alignments[definition.alignment]];
+    
+
+	UIGraphicsPopContext();
+	
+	if (effectsEnabled)
+	{
+		CGSize finalSize;
+		finalSize.width  = textureWidth;
+		finalSize.height = textureHeight;
+		self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:finalSize];
+	}
+	else
+	{
+	#if CC_USE_LA88_LABELS
+		NSUInteger textureSize = textureWidth*textureHeight;
+		unsigned short *la88_data = (unsigned short*)data;
+		for(int i = textureSize-1; i>=0; i--) //Convert A8 to AI88
+		la88_data[i] = (data[i] << 8) | 0xff;
+	#endif
+		 self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:computedDimension];
+	}
+	
+	CGContextRelease(context);
+	[self releaseData:data];
+	
+	return self;
+
+}
+
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions hAlignment:(CCTextAlignment)hAlignment vAlignment:(CCVerticalTextAlignment) vAlignment lineBreakMode:(CCLineBreakMode)lineBreakMode font:(UIFont*)uifont
 {
 	NSAssert( uifont, @"Invalid font");
@@ -465,7 +669,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	// MUST have the same order declared on ccTypes
 	NSInteger linebreaks[] = {NSLineBreakByWordWrapping, NSLineBreakByCharWrapping, NSLineBreakByClipping, NSLineBreakByTruncatingHead, NSLineBreakByTruncatingTail, NSLineBreakByTruncatingMiddle};
 
-	NSUInteger textureWidth = ccNextPOT(dimensions.width);
+	NSUInteger textureWidth  = ccNextPOT(dimensions.width);
 	NSUInteger textureHeight = ccNextPOT(dimensions.height);
 	unsigned char*			data;
 
@@ -479,7 +683,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 #endif
 
 	colorSpace = CGColorSpaceCreateDeviceGray();
-	context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, kCGImageAlphaNone);
+	context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, colorSpace, (CGBitmapInfo)kCGImageAlphaNone);
 	CGColorSpaceRelease(colorSpace);
 
 	if( ! context ) {
@@ -494,24 +698,24 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	UIGraphicsPushContext(context);
 
-    CGRect drawArea;
-    if(vAlignment == kCCVerticalTextAlignmentTop)
-    {
-        drawArea = CGRectMake(0, 0, dimensions.width, dimensions.height);
-    }
-    else
-    {
-        CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:linebreaks[lineBreakMode] ];
-        
-        if(vAlignment == kCCVerticalTextAlignmentBottom)
-        {
-            drawArea = CGRectMake(0, dimensions.height - drawSize.height, dimensions.width, drawSize.height);
-        }
-        else // kCCVerticalTextAlignmentCenter
-        {
-            drawArea = CGRectMake(0, (dimensions.height - drawSize.height) / 2, dimensions.width, drawSize.height);
-        }
-    }
+	CGRect drawArea;
+	if(vAlignment == kCCVerticalTextAlignmentTop)
+	{
+		drawArea = CGRectMake(0, 0, dimensions.width, dimensions.height);
+	}
+	else
+	{
+		CGSize drawSize = [string sizeWithFont:uifont constrainedToSize:dimensions lineBreakMode:linebreaks[lineBreakMode] ];
+		
+		if(vAlignment == kCCVerticalTextAlignmentBottom)
+		{
+			drawArea = CGRectMake(0, dimensions.height - drawSize.height, dimensions.width, drawSize.height);
+		}
+		else // kCCVerticalTextAlignmentCenter
+		{
+			drawArea = CGRectMake(0, (dimensions.height - drawSize.height) / 2, dimensions.width, drawSize.height);
+		}
+	}
 
 	// must follow the same order of CCTextureAligment
 	NSUInteger alignments[] = { NSTextAlignmentLeft, NSTextAlignmentCenter, NSTextAlignmentRight };
@@ -607,6 +811,260 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	return self;
 }
+
+- (id) initWithString:(NSString*)string fontDef:(CCFontDefinition *)definition
+{
+    bool useAdvancedAttributes  = false;
+    bool mustAllign             = true;
+    
+    NSFont* font = [NSFont fontWithName:definition.fontName size:definition.fontSize];
+    if( ! font ) {
+        CCLOGWARN(@"cocos2d: WARNING: Unable to load font %@", definition.fontName);
+        [self release];
+        return nil;
+    }
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+    
+    
+    if ([definition shadowEnabled])
+    {
+        CGFloat shadowC[4]          = {0.5, 0.5, 0.5, 0.5};
+        NSShadow *textShadow        = [[NSShadow alloc] init];
+        
+        NSColorSpace *colorSpace = [NSColorSpace sRGBColorSpace];
+        NSColor *shadowColor     = [NSColor colorWithColorSpace:colorSpace components:shadowC count:4];
+        
+        textShadow.shadowColor      = shadowColor;
+        textShadow.shadowBlurRadius = [definition shadowBlur];
+        
+        NSSize tempSize;
+        tempSize.width  = [definition shadowOffset].width;
+        tempSize.height = [definition shadowOffset].height;
+        textShadow.shadowOffset     = tempSize;
+        
+        [dict setObject:textShadow forKey:NSShadowAttributeName];
+        
+        // need rgba
+        useAdvancedAttributes = true;
+        
+        // release it
+        [textShadow release];
+    }
+    
+    if ([definition strokeEnabled])
+    {
+        static const int COLOR_COMPONENTS = 4;
+        CGFloat strokeC[COLOR_COMPONENTS];
+        strokeC[0] = ((float)[definition strokeColor].r)/255.0f;
+        strokeC[1] = ((float)[definition strokeColor].g)/255.0f;
+        strokeC[2] = ((float)[definition strokeColor].b)/255.0f;
+        strokeC[3] = 1.0f;
+        
+        NSColorSpace *colorSpace = [NSColorSpace sRGBColorSpace];
+        NSColor *strokeColor     = [NSColor colorWithColorSpace:colorSpace components:strokeC count:COLOR_COMPONENTS];
+        
+        [dict setObject:strokeColor forKey:NSStrokeColorAttributeName];
+        NSNumber *strokeSize = [NSNumber numberWithFloat:(-[definition strokeSize] * 3)];
+        [dict setObject:strokeSize forKey:NSStrokeWidthAttributeName];
+        
+        // need rgba
+        useAdvancedAttributes = true;
+    }
+    
+    if (useAdvancedAttributes)
+    {
+        static const int COLOR_COMPONENTS = 4;
+        CGFloat fillC[COLOR_COMPONENTS];
+        fillC[0] = ((float)definition.fontFillColor.r)/255.0f;
+        fillC[1] = ((float)definition.fontFillColor.g)/255.0f;
+        fillC[2] = ((float)definition.fontFillColor.b)/255.0f;
+        fillC[3] = 1.0f;
+        
+        NSColorSpace *colorSpace    = [NSColorSpace sRGBColorSpace];
+        NSColor *fillColor          = [NSColor colorWithColorSpace:colorSpace components:fillC count:COLOR_COMPONENTS];
+        [dict setObject:fillColor forKey:NSForegroundColorAttributeName];
+    }
+    
+    
+    
+    
+    NSAttributedString *stringWithAttributes = [[[NSAttributedString alloc] initWithString:string attributes:dict] autorelease];
+    
+    CGSize dim;
+    if (definition.dimensions.width == 0 || definition.dimensions.height == 0)
+    {
+        dim         = NSSizeToCGSize( [stringWithAttributes size] );
+        mustAllign  = false;
+    }
+    else
+    {
+        dim = definition.dimensions;
+        mustAllign = true;
+    }
+    
+    // compute the padding needed by shadow and stroke
+    float shadowStrokePaddingX = 0.0f;
+    float shadowStrokePaddingY = 0.0f;
+    float translationX = 0.0;
+    float translationY = 0.0;
+    
+    if ([definition strokeEnabled])
+    {
+        shadowStrokePaddingY = shadowStrokePaddingX = ceilf([definition strokeSize]);
+    }
+    
+    if ( [definition shadowEnabled] )
+    {
+        shadowStrokePaddingX = max(shadowStrokePaddingX, (float)abs([definition shadowOffset].width));
+        shadowStrokePaddingY = max(shadowStrokePaddingY, (float)abs([definition shadowOffset].height));
+        
+        if ([definition shadowOffset].width != 0 )
+        {
+            if (mustAllign)
+            {
+                switch ( definition.alignment )
+                {
+                    case kCCTextAlignmentLeft:
+                        if ([definition shadowOffset].width < 0 )
+                            translationX = shadowStrokePaddingX;
+                        break;
+                    case kCCTextAlignmentCenter:
+                        break;
+                    case kCCTextAlignmentRight:
+                        if ([definition shadowOffset].width > 0 )
+                            translationX = -shadowStrokePaddingX;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                if ([definition shadowOffset].width < 0 )
+                    translationX = shadowStrokePaddingX;
+            }
+        }
+        
+        if ([definition shadowOffset].height != 0 )
+        {
+            if (mustAllign)
+            {
+                switch (definition.vertAlignment)
+                {
+                    case kCCVerticalTextAlignmentTop:
+                        if ([definition shadowOffset].height > 0 )
+                            translationY = (-shadowStrokePaddingY);
+                        break;
+                        
+                    case kCCVerticalTextAlignmentCenter:
+                        break;
+                        
+                    case kCCVerticalTextAlignmentBottom:
+                        if ([definition shadowOffset].height < 0 )
+                            translationY = shadowStrokePaddingY;
+                        break;
+                        
+                    default:
+                        break;
+                }
+                
+            }
+            else
+            {
+                if ([definition shadowOffset].height < 0 )
+                    translationY = shadowStrokePaddingY;
+            }
+        }
+    }
+    
+    dim.height +=shadowStrokePaddingY;
+    dim.width  +=shadowStrokePaddingX;
+    
+    
+    NSAssert(stringWithAttributes, @"Invalid stringWithAttributes");
+    
+    // get nearest power of two
+    NSSize POTSize = NSMakeSize(ccNextPOT(dim.width), ccNextPOT(dim.height));
+    
+
+	// Get actual rendered dimensions
+	NSRect boundingRect = [stringWithAttributes boundingRectWithSize:NSSizeFromCGSize(dim) options:NSStringDrawingUsesLineFragmentOrigin];
+
+	// Mac crashes if the width or height is 0
+	if( POTSize.width == 0 )
+		POTSize.width = 2;
+
+	if( POTSize.height == 0)
+		POTSize.height = 2;
+
+	CGSize offset = CGSizeMake(0, POTSize.height - dim.height);
+
+	//Alignment
+    if (mustAllign)
+    {
+        switch (definition.alignment) {
+            case kCCTextAlignmentLeft: break;
+            case kCCTextAlignmentCenter: offset.width = (dim.width-boundingRect.size.width)/2.0f; break;
+            case kCCTextAlignmentRight: offset.width  = dim.width-boundingRect.size.width; break;
+            default: break;
+        }
+        switch (definition.vertAlignment) {
+            case kCCVerticalTextAlignmentTop: offset.height += dim.height  - boundingRect.size.height; break;
+            case kCCVerticalTextAlignmentCenter: offset.height += (dim.height - boundingRect.size.height) / 2; break;
+            case kCCVerticalTextAlignmentBottom: break;
+            default: break;
+        }
+    }
+	
+
+	CGRect drawArea = CGRectMake((offset.width + translationX), (offset.height + translationY), boundingRect.size.width, boundingRect.size.height);
+
+	//Disable antialias
+	[[NSGraphicsContext currentContext] setShouldAntialias:NO];
+
+	NSImage *image = [[NSImage alloc] initWithSize:POTSize];
+	[image lockFocus];
+	[[NSAffineTransform transform] set];
+
+	[stringWithAttributes drawWithRect:NSRectFromCGRect(drawArea) options:NSStringDrawingUsesLineFragmentOrigin];
+
+	NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTSize.width, POTSize.height)];
+	[image unlockFocus];
+
+	unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
+
+	NSUInteger textureSize = POTSize.width * POTSize.height;
+  
+    
+    if (useAdvancedAttributes)
+    {
+        self = [self initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dim];
+    }
+    else
+    {
+#if CC_USE_LA88_LABELS
+        unsigned short *dst = (unsigned short*)data;
+        for(int i = 0; i<textureSize; i++)
+            dst[i] = (data[i*4+3] << 8) | 0xff;		//Convert RGBA8888 to LA88
+#else
+        unsigned char *dst = (unsigned char*)data;
+        for(int i = 0; i<textureSize; i++)
+            dst[i] = data[i*4+3];					//Convert RGBA8888 to A8
+#endif // ! CC_USE_LA88_LABELS
+        data = [self keepData:dst length:textureSize];
+        self = [self initWithData:data pixelFormat:LABEL_PIXEL_FORMAT pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dim];
+	}
+
+	[bitmap release];
+	[image release];
+
+	return self;
+    
+}
+
+
+
 #endif // __CC_PLATFORM_MAC
 
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size

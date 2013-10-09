@@ -12,6 +12,8 @@ static NSString *transitions[] = {
 				@"SpriteEaseInOut",
 				@"SpriteEaseExponential",
 				@"SpriteEaseExponentialInOut",
+                @"SpriteEasePolynomial",
+                @"SpriteEasePolynomialInOut",
 				@"SpriteEaseSine",
 				@"SpriteEaseSineInOut",
 				@"SpriteEaseElastic",
@@ -380,6 +382,78 @@ Class restartAction()
 -(NSString *) title
 {
 	return @"EaseExponentialInOut action";
+}
+@end
+
+#pragma mark SpriteEasePolynomial
+
+@implementation SpriteEasePolynomial
+-(void) onEnter
+{
+	[super onEnter];
+    
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
+
+	CCEasePolynomialIn *move_ease_in_order_3 = [CCEasePolynomialIn actionWithAction:[[move copy] autorelease]];
+    move_ease_in_order_3.polynomialOrder = 3;
+	id move_ease_in_back_order_3 = [move_ease_in_order_3 reverse];
+    
+	id move_ease_in_order_6 = [CCEasePolynomialIn actionWithAction:[[move copy] autorelease]];
+	id move_ease_in_back_order_6 = [move_ease_in_order_6 reverse];
+    
+	CCEasePolynomialIn *move_ease_in_order_9 = [CCEasePolynomialIn actionWithAction:[[move copy] autorelease]];
+    move_ease_in_order_9.polynomialOrder = 9;
+	id move_ease_in_back_order_9 = [move_ease_in_order_9 reverse];
+    
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+    
+	id seq1 = [CCSequence actions: move_ease_in_order_3, CCCA(delay), move_ease_in_back_order_9, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease_in_order_6, CCCA(delay), move_ease_in_back_order_6, CCCA(delay), nil];
+	id seq3 = [CCSequence actions: move_ease_in_order_9, CCCA(delay), move_ease_in_back_order_3, CCCA(delay), nil];
+    
+    
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+	[kathia runAction: [CCRepeatForever actionWithAction:seq3]];
+}
+-(NSString *) title
+{
+	return @"PolyIn - PolyOut actions with orders 3, 6 and 9";
+}
+@end
+
+#pragma mark SpriteEasePolynomialInOut
+
+@implementation SpriteEasePolynomialInOut
+-(void) onEnter
+{
+	[super onEnter];
+    
+	CGSize s = [[CCDirector sharedDirector] winSize];
+    
+	id move = [CCMoveBy actionWithDuration:3 position:ccp(s.width-130,0)];
+	id move_back = [move reverse];
+    
+	CCEasePolynomialInOut *move_ease = [CCEasePolynomialInOut actionWithAction:[[move copy] autorelease]];
+    move_ease.polynomialOrder = 4;
+	id move_ease_back = [move_ease reverse];
+    
+	id delay = [CCDelayTime actionWithDuration:0.25f];
+    
+	id seq1 = [CCSequence actions: move, delay, move_back, CCCA(delay), nil];
+	id seq2 = [CCSequence actions: move_ease, CCCA(delay), move_ease_back, CCCA(delay), nil];
+    
+    
+	[self positionForTwo];
+    
+	[grossini runAction: [CCRepeatForever actionWithAction:seq1]];
+	[tamara runAction: [CCRepeatForever actionWithAction:seq2]];
+}
+-(NSString *) title
+{
+	return @"PolynomialInOut action with order 4";
 }
 @end
 

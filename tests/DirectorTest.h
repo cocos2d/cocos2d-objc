@@ -32,3 +32,11 @@
 {}
 @end
 
+@interface DirectorRootToLevel : DirectorTest
+{
+	NSUInteger	 _level;
+}
+@property (nonatomic, readwrite) NSUInteger level;
+-(id) initWithLevel:(NSUInteger)level;
+@end
+
