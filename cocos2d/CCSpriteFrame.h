@@ -77,6 +77,9 @@
 /** texture file name of the frame */
 @property (nonatomic, strong, readonly) NSString *textureFilename;
 
+/** Retrieves a sprite frame from the sprite frame cache, or if no such sprite frame is know, attempts to create a sprite frame from an image of the same name. */
++(id) frameWithImageNamed:(NSString*)imageName;
+
 /** Create a CCSpriteFrame with a texture, rect in points.
  It is assumed that the frame was not trimmed.
  */
