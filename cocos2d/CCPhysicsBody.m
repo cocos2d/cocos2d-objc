@@ -34,8 +34,6 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 @implementation CCPhysicsBody
 {
-	CCNode *_node;
-	
 	ChipmunkBody *_body;
 	ChipmunkShape *_shape;
 	
@@ -53,13 +51,13 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-	body->_body.userData = self;
+	body->_body.userData = body;
 	
 	body->_shape = [ChipmunkCircleShape circleWithBody:body->_body radius:radius offset:center];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
-	body->_shape.userData = self;
+	body->_shape.userData = body;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -71,14 +69,14 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-	body->_body.userData = self;
+	body->_body.userData = body;
 	
 	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
 	body->_shape = [ChipmunkPolyShape boxWithBody:body->_body bb:bb radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
-	body->_shape.userData = self;
+	body->_shape.userData = body;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -90,13 +88,13 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-	body->_body.userData = self;
+	body->_body.userData = body;
 	
 	body->_shape = [ChipmunkSegmentShape segmentWithBody:body->_body from:from to:to radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
-	body->_shape.userData = self;
+	body->_shape.userData = body;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -108,13 +106,13 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	// TODO temporary code.
 	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-	body->_body.userData = self;
+	body->_body.userData = body;
 	
 	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
-	body->_shape.userData = self;
+	body->_shape.userData = body;
 	
 	body->_chipmunkObjects = @[body->_body, body->_shape];
 	
@@ -281,6 +279,8 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 @implementation CCPhysicsBody(ObjectiveChipmunk)
 
+-(void)setNode:(CCNode *)node {_node = node;}
+
 -(cpVect)absolutePosition {return _body.position;}
 -(void)setAbsolutePosition:(cpVect)absolutePosition {_body.position = absolutePosition;}
 
@@ -288,9 +288,6 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)setAbsoluteRadians:(cpFloat)absoluteRadians {_body.angle = absoluteRadians;}
 
 -(cpTransform)absoluteTransform {return _body.transform;}
-
--(CCNode *)node {return _node;}
--(void)setNode:(CCNode *)node {_node = node;}
 
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
 
