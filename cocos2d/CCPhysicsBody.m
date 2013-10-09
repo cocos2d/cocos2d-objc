@@ -31,6 +31,7 @@
 // TODO temporary
 static inline void NYI(){@throw @"Not Yet Implemented";}
 
+
 @implementation CCPhysicsBody
 {
 	CCNode *_node;
@@ -172,8 +173,6 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(id)collisionGroup {return _shape.group;};
 -(void)setCollisionGroup:(id)collisionGroup {_shape.group = collisionGroup;}
 
-// TODO these need a reference to the space to intern the strings
-// Needs to be deferred?
 -(NSString *)collisionType {return _collisionType;}
 -(void)setCollisionType:(NSString *)collisionType {_collisionType = [collisionType copy];}
 
