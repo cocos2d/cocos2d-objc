@@ -101,6 +101,27 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 #pragma mark CCSpriteFrameCache - registering sprite sheets
 
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename
+{
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:filename];
+	if( fullpath ) {
+		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullpath];
+        
+		NSDictionary *metadata = [dict objectForKey:@"metadata"];
+		NSInteger version = [[metadata objectForKey:@"version"] integerValue];
+		if( version != 1) {
+			CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, filename);
+			return;
+		}
+		
+		NSArray *spriteFrameFiles = [dict objectForKey:@"spriteFrameFiles"];
+		for (NSString* spriteFrameFile in spriteFrameFiles)
+        {
+            [self registerSpriteFramesFile:spriteFrameFile];
+        }
+	}
+}
+
 - (void) registerSpriteFramesFile:(NSString*)plist
 {
 	NSAssert(plist, @"plist filename should not be nil");
