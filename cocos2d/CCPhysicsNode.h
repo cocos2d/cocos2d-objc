@@ -28,27 +28,6 @@
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 
-// For comparison:
-// https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
-
-/* TODO and consider:
- * Collision only mode
- * Sensors
- * Interpolation?
- * Post-step callbacks?
- * Projectile bodies?
- * Body queries?
- * Currently body must be set before adding to a parent node.
- * Currently nodes must have rigid transforms.
- * Currently a parent's absolute transform must be identity.
- * Currently nodes with a physics body are always considered to have dirty transforms.
- * Fixed timesteps are a hack.
- * What to do about kinematic bodies?
- * What to do about CCActions?
- * What to do about transform changes?
- */
-
-
 /// Contains information about colliding physics bodies.
 /// NOTE: There is only one CCPhysicsCollisionPair object per scene and it's reused.
 /// Only use the CCPhysicsCollisionPair object in the method or block it was given to you in.
@@ -71,7 +50,7 @@
 /// Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
 @property(nonatomic, assign) CGFloat restitution;
 /// The relative surface velocities of the two colliding shapes.
-/// The default value is TODO
+/// The default value is CGPointZero.
 /// Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
 @property(nonatomic, assign) CGPoint surfaceVelocity;
 

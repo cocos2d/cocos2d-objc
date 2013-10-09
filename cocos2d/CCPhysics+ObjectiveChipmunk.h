@@ -26,6 +26,43 @@
 #import "CCPhysicsJoint.h"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
+
+// For comparison:
+// https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
+
+/*
+	TODO:
+	* Sensors
+	* Collision only mode. (Are sensors good enough?)
+	* Projectile bodies?
+	* Fixed timesteps are a hack.
+	* Currently body must be set before adding to a parent node.
+	* Currently nodes must have rigid transforms.
+	* Currently a parent's absolute transform must be identity.
+	* Currently nodes with a physics body are always considered to have dirty transforms.
+	* Body constructors are still a little temporary.
+	* Objective-Chipmunk interop.
+	* affectedByGravity and allowsRotation properties not implemented.
+	* Joints.
+	* Queries.
+	* Need to rename the CCPhysicsBody.absolute* properties. (not really absolute anymore)
+	
+	Consider:
+	* Interpolation?
+	* Post-step callbacks?
+	* What to do about CCActions?
+	* What to do about transform changes?
+	* Chain/loop body types have multiple ChipmunkShapes and thus will get multiple callbacks.
+	* Check argument types for delegate callbacks?
+	* Angular velocity in degrees?
+	* Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
+	* Should CCPhysicsCollisionPair.userData retain?
+	
+	Probably Definitely Not:
+	* Body queries?
+*/
+
+
 @interface CCPhysicsBody(ObjectiveChipmunk)<ChipmunkObject>
 
 /// The CCNode this physics body is attached to.
