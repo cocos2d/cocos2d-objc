@@ -117,7 +117,10 @@ SetPosition(CCNode *self, CGPoint position)
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		@throw @"Not yet implemented";
+		// This is *ridiculously* inefficient, but works for now.
+		CGPoint currentPosition = GetPosition(self);
+		CGPoint delta = ccpSub(position, currentPosition);
+		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
 	} else {
 		self->_position = position;
 	}
