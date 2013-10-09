@@ -124,13 +124,10 @@
 #import "CCShaderCache.h"
 #import "ccShaders.h"
 
-// Physics integration
-// Box2d integration should include these 2 files manually
-#if CC_ENABLE_CHIPMUNK_INTEGRATION
-#import CC_CHIPMUNK_IMPORT
-#import "CCPhysicsSprite.h"
-#import "CCPhysicsDebugNode.h"
-#endif
+// Physics
+#import "CCPhysicsBody.h"
+#import "CCPhysicsJoint.h"
+#import "CCPhysicsNode.h"
 
 //
 // cocos2d macros

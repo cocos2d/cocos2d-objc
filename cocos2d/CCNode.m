@@ -38,7 +38,7 @@
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
-#import "CCPhysics.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -54,11 +54,6 @@
 #define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
 #endif
 
-
-@interface CCPhysicsBody(Absolute)
-@property(nonatomic, assign) CGPoint absolutePosition;
-@property(nonatomic, assign) float absoluteRadians;
-@end
 
 #pragma mark - Node
 
@@ -963,11 +958,15 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody != _physicsBody){
+		// nil out the old body's node reference.
+		_physicsBody.node = nil;
+		
 		// Copy the old body position and rotation over
 		physicsBody.absolutePosition = _physicsBody.absolutePosition;
 		physicsBody.absoluteRadians = _physicsBody.absoluteRadians;
 		
 		_physicsBody = physicsBody;
+		_physicsBody.node = self;
 	}
 }
 
@@ -988,7 +987,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
 		[_physicsBody willAddToPhysicsNode:physics];
-		[physics.space add:_physicsBody];
+		[physics.space smartAdd:_physicsBody];
 	}
 }
 
@@ -1001,7 +1000,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		// TODO need to reset the node's position info.
 		
 		[_physicsBody didRemoveFromPhysicsNode:physics];
-		[physics.space remove:_physicsBody];
+		[physics.space smartRemove:_physicsBody];
 	}
 }
 
