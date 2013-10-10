@@ -261,7 +261,7 @@ and when to execute the Scenes.
  *
  * It will call pushScene: and then it will call startAnimation
  */
-- (void) runWithScene:(CCScene*) scene;
+- (void) runWithScene:(CCScene*) scene __attribute((deprecated("Use presentScene in stead of runWithScene")));
 
 /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
@@ -293,11 +293,42 @@ and when to execute the Scenes.
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.
  */
--(void) replaceScene: (CCScene*) scene;
+-(void) replaceScene: (CCScene*) scene __attribute((deprecated("Use presentScene in stead of replaceScene")));
 
+/**
+ *  Presents a new scene by either starting first scene, or replacing the running
+ *
+ *  @param scene The scene to present
+ *  @since v2.5
+ */
 - (void)presentScene:(CCScene *)scene;
 
+/**
+ *  Presents a new scene by either starting first scene, or replacing the running
+ *  Performs a transition between the outgoing and the incoming scene
+ *
+ *  @param scene      The incoming scene
+ *  @param transition The transition to perform
+ *  @since v2.5
+ */
 - (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
+
+/**
+ *  Pushes the running scene onto the scene stack, and presents the incoming scene, using a transition
+ *
+ *  @param scene      The scene to present
+ *  @param transition The transition to use
+ *  @since v2.5
+ */
+- (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition;
+
+/**
+ *  Replaces the running scene, with the last scene pushed to the stack, using a transition
+ *
+ *  @param transition The transition to use
+ *  @since v2.5
+ */
+- (void)popScenewithTransition:(CCTransition *)transition;
 
 /** Ends the execution, releases the running scene.
  It doesn't remove the OpenGL view from its parent. You have to do it manually.
