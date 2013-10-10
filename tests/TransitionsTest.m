@@ -291,11 +291,16 @@ Class restartTransition()
 -(void) nextCallback:(id) sender
 {
 	Class transition = nextTransition();
-//	CCScene *s2 = [CCScene node];
-//	[s2 addChild: [TextLayer2 node]];
 	CCScene *s2 = [TextLayer2 node];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
-
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+    
+    // v2.5 transitions
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition crossFadeWithDuration:1]];
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition revealWithDirection:CCTransitionDirectionLeft duration:1]];
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition moveInWithDirection:CCTransitionDirectionLeft duration:1]];
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition pushWithDirection:CCTransitionDirectionRight duration:1]];
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition fadeWithColor:ccRED duration:2]];
+    // [[CCDirector sharedDirector] presentScene:[TextLayer2 node] withTransition:[CCTransition fadeWithDuration:2]];
 }
 
 -(void) backCallback:(id) sender
