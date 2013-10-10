@@ -30,6 +30,17 @@
 
 // -----------------------------------------------------------------
 
+typedef NS_ENUM(NSInteger, CCTransitionDirection)
+{
+    CCTransitionDirectionUp,
+    CCTransitionDirectionDown,
+    CCTransitionDirectionRight,
+    CCTransitionDirectionLeft,
+    CCTransitionDirectionInvalid = -1,
+};
+
+// -----------------------------------------------------------------
+
 @interface CCTransition : CCScene
 
 // -----------------------------------------------------------------
@@ -44,7 +55,7 @@
 
 /**
  *  Transition will be performed in retina resolution
- *  Will force outgoingDownScale and incomingDownScale to 1.0 on non retina devices, and 2.0 on retina devices
+ *  Will force outgoingDownScale and incomingDownScale to 1.0 on non retina devices, and 2.0 on retina devices if not set
  *  Default YES
  */
 @property (nonatomic, getter = isRetinaTransition) BOOL retinaTransition;
@@ -81,6 +92,16 @@
  *  @return A CCTransition
  */
 + (CCTransition *)crossFadeWithDuration:(NSTimeInterval)duration;
+
++ (CCTransition *)fadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration;
+
++ (CCTransition *)fadeWithDuration:(NSTimeInterval)duration;
+
++ (CCTransition *)moveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
+
++ (CCTransition *)pushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
+
++ (CCTransition *)revealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
 // -----------------------------------------------------------------
 
