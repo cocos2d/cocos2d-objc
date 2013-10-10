@@ -124,7 +124,7 @@ const NSInteger kSceneFade = 0xFADEFADE;
 	// Before replacing, save the "send cleanup to scene"
 	_sendCleanupToScene = [director sendCleanupToScene];
 
-	[director replaceScene: _inScene];
+	[director presentScene: _inScene];
 
 	// issue #267
 	[_outScene setVisible:YES];
