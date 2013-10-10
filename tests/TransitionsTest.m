@@ -7,6 +7,7 @@
 // local import
 #import "cocos2d.h"
 #import "TransitionsTest.h"
+#import "CCTransition.h"
 
 #define TRANSITION_DURATION (1.2f)
 
@@ -303,7 +304,7 @@ Class restartTransition()
 //	CCScene *s2 = [CCScene node];
 //	[s2 addChild: [TextLayer2 node]];
 	CCScene *s2 = [TextLayer2 node];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 
 -(void) restartCallback:(id) sender
@@ -312,7 +313,7 @@ Class restartTransition()
 //	CCScene *s2 = [CCScene node];
 //	[s2 addChild: [TextLayer2 node]];
 	CCScene *s2 = [TextLayer2 node];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 -(void) onEnter
 {
@@ -396,7 +397,7 @@ Class restartTransition()
 	Class transition = nextTransition();
 	CCScene *s2 = [CCScene node];
 	[s2 addChild: [TextLayer node]];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 
 -(void) backCallback:(id) sender
@@ -404,7 +405,7 @@ Class restartTransition()
 	Class transition = backTransition();
 	CCScene *s2 = [CCScene node];
 	[s2 addChild: [TextLayer node]];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 
 -(void) restartCallback:(id) sender
@@ -412,7 +413,7 @@ Class restartTransition()
 	Class transition = restartTransition();
 	CCScene *s2 = [CCScene node];
 	[s2 addChild: [TextLayer node]];
-	[[CCDirector sharedDirector] replaceScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
+	[[CCDirector sharedDirector] presentScene: [transition transitionWithDuration:TRANSITION_DURATION scene:s2]];
 }
 -(void) step:(ccTime)dt
 {
@@ -495,7 +496,7 @@ Class restartTransition()
 		// Add the first scene to the stack. The director will draw it immediately into the framebuffer. (Animation is started automatically when the view is displayed.)
 		CCScene *scene = [CCScene node];
 		[scene addChild: [TextLayer node]];
-		[director runWithScene:scene];
+		[director presentScene:scene];
 	}
 }
 
