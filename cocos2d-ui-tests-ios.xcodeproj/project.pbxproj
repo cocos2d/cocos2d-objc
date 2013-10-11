@@ -468,6 +468,8 @@
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -498,6 +500,8 @@
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

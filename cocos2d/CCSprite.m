@@ -72,6 +72,10 @@
 @synthesize textureAtlas = _textureAtlas;
 @synthesize offsetPosition = _offsetPosition;
 
++(id)spriteWithImageNamed:(NSString*)imageName
+{
+    return [[self alloc] initWithSpriteFrame:[CCSpriteFrame frameWithImageNamed:imageName]];
+}
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
 {
