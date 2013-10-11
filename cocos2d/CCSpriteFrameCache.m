@@ -81,6 +81,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		_spriteFrames = [[NSMutableDictionary alloc] initWithCapacity: 100];
 		_spriteFramesAliases = [[NSMutableDictionary alloc] initWithCapacity:10];
 		_loadedFilenames = [[NSMutableSet alloc] initWithCapacity:30];
+        _spriteFrameFileLookup = [[NSMutableDictionary alloc] init];
 	}
 
 	return self;
@@ -96,6 +97,54 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	CCLOGINFO(@"cocos2d: deallocing %@", self);
 
 	 
+}
+
+#pragma mark CCSpriteFrameCache - registering sprite sheets
+
+-(void) loadSpriteFrameLookupDictionaryFromFile:(NSString*)filename
+{
+	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:filename];
+	if( fullpath ) {
+		NSDictionary *dict = [NSDictionary dictionaryWithContentsOfFile:fullpath];
+        
+		NSDictionary *metadata = [dict objectForKey:@"metadata"];
+		NSInteger version = [[metadata objectForKey:@"version"] integerValue];
+		if( version != 1) {
+			CCLOG(@"cocos2d: ERROR: Invalid filenameLookup dictionary version: %ld. Filename: %@", (long)version, filename);
+			return;
+		}
+		
+		NSArray *spriteFrameFiles = [dict objectForKey:@"spriteFrameFiles"];
+		for (NSString* spriteFrameFile in spriteFrameFiles)
+        {
+            [self registerSpriteFramesFile:spriteFrameFile];
+        }
+	}
+}
+
+- (void) registerSpriteFramesFile:(NSString*)plist
+{
+	NSAssert(plist, @"plist filename should not be nil");
+    
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathForFilename:plist];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithContentsOfFile:path];
+    
+    NSDictionary *metadataDict = [dictionary objectForKey:@"metadata"];
+	NSDictionary *framesDict = [dictionary objectForKey:@"frames"];
+    
+	int format = 0;
+    
+	// get the format
+	if(metadataDict != nil)
+		format = [[metadataDict objectForKey:@"format"] intValue];
+    
+	// check the format
+	NSAssert( format >= 0 && format <= 3, @"format is not supported for CCSpriteFrameCache addSpriteFramesWithDictionary:textureFilename:");
+    
+    for(NSString *frameDictKey in framesDict)
+    {
+        [_spriteFrameFileLookup setObject:plist forKey:frameDictKey];
+    }
 }
 
 #pragma mark CCSpriteFrameCache - loading sprite frames
@@ -395,6 +444,17 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 -(CCSpriteFrame*) spriteFrameByName:(NSString*)name
 {
 	CCSpriteFrame *frame = [_spriteFrames objectForKey:name];
+    
+    if (!frame)
+    {
+        // Try finding the frame in one of the registered sprite sheets
+        NSString* spriteFrameFile = [_spriteFrameFileLookup objectForKey:name];
+        if (spriteFrameFile) [self addSpriteFramesWithFile:spriteFrameFile];
+        
+        // Attempt to load the frame again
+        frame = [_spriteFrames objectForKey:name];
+    }
+    
 	if( ! frame ) {
 		// try alias dictionary
 		NSString *key = [_spriteFramesAliases objectForKey:name];

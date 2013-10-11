@@ -129,6 +129,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
 @synthesize glServerState = _glServerState;
+@synthesize physicsBody = _physicsBody;
 
 #pragma mark CCNode - Transform related properties
 
