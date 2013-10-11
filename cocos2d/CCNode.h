@@ -176,6 +176,8 @@ enum {
 	BOOL _visible;
 
 	BOOL _isReorderChildDirty;
+    
+    CCPhysicsBody* _physicsBody;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -222,6 +224,7 @@ enum {
 @property (nonatomic,readonly) float scaleYInPoints;
 
 @property (nonatomic,assign) CCScaleType scaleType;
+@property (nonatomic,readonly) BOOL isPhysicsNode;
 
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
