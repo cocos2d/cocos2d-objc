@@ -36,7 +36,7 @@
  You can modify the frame of a CCSprite by doing:
 
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect offset:offset];
-	[sprite setDisplayFrame:frame];
+	[sprite setSpriteFrame:frame];
  */
 @interface CCSpriteFrame : NSObject <NSCopying>
 {
