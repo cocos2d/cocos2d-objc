@@ -421,6 +421,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -428,6 +429,7 @@
 				HEADER_SEARCH_PATHS = (
 					"\"cocos2d-v3-testbed/libs/kazmath/include\"",
 					cocos2d,
+					"cocos2d-ui",
 					external/kazmath/include,
 					external/Chipmunk/objectivec/include,
 					external/Chipmunk/include,
@@ -448,12 +450,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "cocos2d-v3-testbed/Prefix.pch";
 				HEADER_SEARCH_PATHS = (
 					"\"cocos2d-v3-testbed/libs/kazmath/include\"",
 					cocos2d,
+					"cocos2d-ui",
 					external/kazmath/include,
 					external/Chipmunk/objectivec/include,
 					external/Chipmunk/include,

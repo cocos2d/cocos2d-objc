@@ -26,6 +26,7 @@
 
 #import <GameKit/GameKit.h>
 #import "cocos2d.h"
+#import "CCButton.h"
 
 // -----------------------------------------------------------------
 

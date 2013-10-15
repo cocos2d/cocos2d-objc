@@ -27,8 +27,22 @@
 #import "TestBedMainScene.h"
 
 // -----------------------------------------------------------------
-
-
+/**
+ *  Defines an entry for a test
+ *  To add a test, insert three string constants where you want the test to show up
+ *  1) group is the name listed in the start scene of the test
+ *     all tests with identical group names are accessed through the group
+ *  2) title is the title of the individual test
+ *  3) className is the name if the class to execute. It it executed through [[ClassName alloc]init]
+ */
+NSString *testSceneData[ ] = {
+    @"group1",              @"title1",                              @"classNameA",
+    @"group1",              @"title2",                              @"classNameB",
+    @"group2",              @"title1",                              @"classNameC",
+    @"group2",              @"title2",                              @"classNameD",
+    @"group2",              @"title3",                              @"classNameD",
+    nil
+};
 
 // -----------------------------------------------------------------
 
@@ -47,18 +61,99 @@
 {
     self = [super init];
     
+    CGSize size = [CCDirector sharedDirector].winSize;
+    
+    // **********
+    //TODO:  Replace this rough menu with CCTableView when I figure out how it works
     // create the top testbed scene
+    CCLabelTTF *caption = [CCLabelTTF labelWithString:@"Tests" fontName:@"Arial" fontSize:32];
+    caption.position = ccp(size.width * 0.5, size.height * 0.9);
+    [self addChild:caption];
+    
+    CCMenu *menu = [CCMenu menuWithItems:nil];
+    menu.anchorPoint = CGPointZero;
+    menu.position = CGPointZero;
+    [self addChild:menu];
+    
+    float pos = 0.8f;
+    for (NSString* group in [self groupList])
+    {
+        CCMenuItemLabel* item = [CCMenuItemLabel itemWithLabel:[CCLabelTTF labelWithString:group fontName:@"Arial" fontSize:24] target:self selector:@selector(runTest:)];
+        item.position = ccp(size.width * 0.5, size.height * pos);
+        [menu addChild:item];
+        pos -= 0.1;
+    }
+    // **********
+    
+
     
     
     
-    CCLabelTTF *label = [CCLabelTTF labelWithString:@"mainscene" fontName:@"Arial" fontSize:32];
-    label.position = ccp([CCDirector sharedDirector].winSize.width * 0.5, [CCDirector sharedDirector].winSize.height * 0.5);
-    [self addChild:label];
     
+
     
     
     // done
     return(self);
+}
+
+// -----------------------------------------------------------------
+
+- (void)runTest:(id)sender
+{
+    CCMenuItemLabel* item = (CCMenuItemLabel *)sender;
+    
+    NSArray *titles = [self titleList:item.label.string];
+
+
+    
+    
+    
+
+
+}
+
+// -----------------------------------------------------------------
+
+- (NSArray *)groupList
+{
+    int index = 0;
+    NSMutableArray *result = [NSMutableArray array];
+    while (testSceneData[index])
+    {
+        NSString *group = testSceneData[index];
+        if (![result containsObject:group]) [result addObject:group];
+        index += 3;
+    }
+    return(result);
+}
+
+// -----------------------------------------------------------------
+
+- (NSArray *)titleList:(NSString *)group
+{
+    int index = 0;
+    NSMutableArray *result = [NSMutableArray array];
+    while (testSceneData[index])
+    {
+        if ([group isEqualToString:testSceneData[index]]) [result addObject:testSceneData[index + 1]];
+        index += 3;
+    }
+    return(result);
+}
+
+// -----------------------------------------------------------------
+
+- (NSString *)className:(NSString *)group title:(NSString *)title
+{
+    int index = 0;
+    while (testSceneData[index])
+    {
+        if (([group isEqualToString:testSceneData[index]]) && ([title isEqualToString:testSceneData[index + 1]])) return(testSceneData[index + 2]);
+        index += 3;
+    }
+    NSAssert(NO, @"No title found for that group");
+    return(nil);
 }
 
 // -----------------------------------------------------------------
