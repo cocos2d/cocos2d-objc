@@ -31,12 +31,12 @@
 /**
  *  TestScene is the baseclass for all test scenes created for the test bed
  *
- *  Creating a new test scene, takes two steps
+ *  Creating a new test scene, takes three steps
  *  1) create a class, based on TestScene
  *  2) add the name of the class, to the list of test classes on TestBedMainScene.m
+ *  3) override the methods needed
  *
- *
- *
+ *  From there, you can build the scene as you like.
  */
 @interface TestScene : CCScene
 

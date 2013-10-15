@@ -1928,6 +1928,12 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					external/Box2d,
+					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
+					"\"$(SRCROOT)/external/Chipmunk/include\"",
+				);
 				PRODUCT_NAME = "build all libs";
 			};
 			name = Debug;
@@ -1939,6 +1945,12 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					external/Box2d,
+					"\"$(SRCROOT)/external/Chipmunk/objectivec/include\"",
+					"\"$(SRCROOT)/external/Chipmunk/include\"",
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "build all libs";
 				ZERO_LINK = NO;
