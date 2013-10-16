@@ -62,7 +62,7 @@
  WARNING: this method is experimental. Use setTexture:withRect instead.
  @since v0.99.4
  */
--(void)setDisplayFrame:(CCSpriteFrame*)spriteFrame;
+-(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
 
 /** Sets a new texture with a rect. The rect is in Points.
  @since v0.99.4

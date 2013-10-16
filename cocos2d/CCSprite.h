@@ -279,6 +279,6 @@
  The animation name will be get from the CCAnimationCache
  @since v0.99.5
  */
--(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
+-(void) setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
 
 @end
