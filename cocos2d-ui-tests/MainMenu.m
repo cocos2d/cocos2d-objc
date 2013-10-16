@@ -115,7 +115,7 @@
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
 {
     CCTableViewCell* cell = [[CCTableViewCell alloc] init];
-    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
     cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
     
     CCSpriteFrame* frameNormal = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-normal.png"];
@@ -144,6 +144,7 @@
     return [self testClassNames].count;
 }
 
+/*
 - (void) onEnter
 {
     NSLog(@"onEnter");
@@ -155,5 +156,6 @@
     NSLog(@"onEnterTransitionDidFinish");
     [super onEnterTransitionDidFinish];
 }
+ */
 
 @end

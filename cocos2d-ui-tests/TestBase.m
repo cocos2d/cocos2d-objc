@@ -128,6 +128,8 @@
 
 - (void) onEnterTransitionDidFinish
 {
+    NSLog(@"onEnterTransitionDidFinish");
+    
     // Fade buttons in
     [_btnBack.background runAction:[CCFadeIn actionWithDuration:0.3f]];
     [_btnPrev.background runAction:[CCFadeIn actionWithDuration:0.3f]];
@@ -139,6 +141,9 @@
 
 - (void) onExitTransitionDidStart
 {
+    
+    NSLog(@"onExitTransitionDidStart");
+    
     // Fade buttons out
     [_btnBack.background runAction:[CCFadeOut actionWithDuration:0.1f]];
     [_btnPrev.background runAction:[CCFadeOut actionWithDuration:0.1f]];
@@ -146,6 +151,18 @@
     [_btnReload.background runAction:[CCFadeOut actionWithDuration:0.1f]];
     
     [super onExitTransitionDidStart];
+}
+
+- (void) onEnter
+{
+    NSLog(@"onEnter");
+    [super onEnter];
+}
+
+- (void) onExit
+{
+    NSLog(@"onExit");
+    [super onExit];
 }
 
 - (void) pressedBack:(id)sender
