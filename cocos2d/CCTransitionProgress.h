@@ -25,7 +25,7 @@
  *
  */
 
-#import "CCTransition.h"
+#import "CCTransitionScene.h"
 
 @class CCProgressTimer;
 

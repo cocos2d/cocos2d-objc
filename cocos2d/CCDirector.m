@@ -37,7 +37,7 @@
 #import "CCAnimationCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
-#import "CCTransition.h"
+#import "CCTransitionScene.h"
 #import "CCScene.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
@@ -48,6 +48,7 @@
 #import "ccFPSImages.h"
 #import "CCDrawingPrimitives.h"
 #import "CCConfiguration.h"
+#import "CCTransition.h"
 
 // support imports
 #import "Platforms/CCGL.h"
@@ -397,6 +398,15 @@ static CCDirector *_sharedDirector = nil;
 	_nextScene = scene;	// _nextScene is a weak ref
 }
 
+- (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition
+{
+	NSAssert(scene, @"Scene must be non-nil");
+    
+    [_scenesStack addObject:scene];
+    _sendCleanupToScene = NO;
+    [transition performSelector:@selector(presentScene:) withObject:scene];
+}
+
 -(void) popScene
 {
 	NSAssert( _runningScene != nil, @"A running Scene is needed");
@@ -410,6 +420,23 @@ static CCDirector *_sharedDirector = nil;
 		_sendCleanupToScene = YES;
 		_nextScene = [_scenesStack objectAtIndex:c-1];
 	}
+}
+
+- (void)popScenewithTransition:(CCTransition *)transition
+{
+	NSAssert( _runningScene != nil, @"A running Scene is needed");
+    
+    if (_scenesStack.count < 2)
+    {
+        [self end];
+    }
+    else
+    {
+        [_scenesStack removeLastObject];
+        CCScene * incomingScene = [_scenesStack lastObject];
+        _sendCleanupToScene = YES;
+        [transition performSelector:@selector(presentScene:) withObject:incomingScene];
+    }
 }
 
 -(void) popToRootScene
@@ -447,6 +474,35 @@ static CCDirector *_sharedDirector = nil;
 	_nextScene = [_scenesStack lastObject];
 	_sendCleanupToScene = NO;
 }
+
+// -----------------------------------------------------------------
+
+- (void)presentScene:(CCScene *)scene
+{
+	NSAssert( scene != nil, @"Argument must be non-nil");
+
+    if (_runningScene)
+    {
+        _sendCleanupToScene = YES;
+        [_scenesStack removeLastObject];
+        [_scenesStack addObject:scene];
+        _nextScene = scene;	// _nextScene is a weak ref
+    }
+    else
+    {
+        [self pushScene:scene];
+        [self startAnimation];
+    }
+}
+
+- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
+{
+    // the transition gets to become the running scene
+    _sendCleanupToScene = YES;
+    [transition performSelector:@selector(presentScene:) withObject:scene];
+}
+
+// -----------------------------------------------------------------
 
 -(void) end
 {
@@ -495,6 +551,37 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) setNextScene
 {
+    // -----------------------------------------------------------------
+    // v2.5 functionality
+    
+    // If next scene is a transition, the transition has just started
+    // Make transition the running scene.
+    // Outgoing scene will continue to run
+    // Incoming scene was started by transition
+    if ([_nextScene isKindOfClass:[CCTransition class]])
+    {
+        _runningScene = nil;
+        _runningScene = _nextScene;
+        _nextScene = nil;
+        [_runningScene onEnter];
+        return;
+    }
+    
+    // If running scene is a transition class, the transition has ended
+    // Make new scene, the running scene
+    // Clean up transition
+    // Outgoing scene was stopped by transition
+    if ([_runningScene isKindOfClass:[CCTransition class]])
+    {
+        [_runningScene onExit];
+		if( _sendCleanupToScene) [_runningScene cleanup];
+        _runningScene = nil;
+        _runningScene = _nextScene;
+        _nextScene = nil;
+        return;
+    }
+    // -----------------------------------------------------------------
+
 	Class transClass = [CCTransitionScene class];
 	BOOL runningIsTransition = [_runningScene isKindOfClass:transClass];
 	BOOL newIsTransition = [_nextScene isKindOfClass:transClass];
