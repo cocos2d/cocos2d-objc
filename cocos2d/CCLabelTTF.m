@@ -694,6 +694,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     [attributedString drawInRect:drawArea];
     
     UIGraphicsPopContext();
+    CGContextRelease(context);
     
 #elif defined(__CC_PLATFORM_MAC)
     yOffset = (POTSize.height - hDrawArea) - yOffset;
@@ -1038,6 +1039,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     [string drawInRect:drawArea withFont:font lineBreakMode:0 alignment:(int)_horizontalAlignment];
 
     UIGraphicsPopContext();
+    CGContextRelease(context);
 
     CCTexture2D* texture = NULL;
 
