@@ -177,6 +177,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _incomingScene = scene;
     [_incomingScene onEnter];
     _outgoingScene = [CCDirector sharedDirector].runningScene;
+    [_outgoingScene onExitTransitionDidStart];
 
     // create render textures
     // get viewport size
@@ -244,6 +245,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         // exit out scene, and start new scene
         [_outgoingScene onExit];
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
+        [_incomingScene onEnterTransitionDidFinish];
         
         // release scenes
         _incomingScene = nil;
