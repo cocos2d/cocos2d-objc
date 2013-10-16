@@ -859,17 +859,17 @@
     _spriteFrame = frame;
 }
 
--(void) setDisplayFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
+-(void) setSpriteFrameWithAnimationName: (NSString*) animationName index:(int) frameIndex
 {
-	NSAssert( animationName, @"CCSprite#setDisplayFrameWithAnimationName. animationName must not be nil");
+	NSAssert( animationName, @"CCSprite#setSpriteFrameWithAnimationName. animationName must not be nil");
 
 	CCAnimation *a = [[CCAnimationCache sharedAnimationCache] animationByName:animationName];
 
-	NSAssert( a, @"CCSprite#setDisplayFrameWithAnimationName: Frame not found");
+	NSAssert( a, @"CCSprite#setSpriteFrameWithAnimationName: Frame not found");
 
 	CCAnimationFrame *frame = [[a frames] objectAtIndex:frameIndex];
 
-	NSAssert( frame, @"CCSprite#setDisplayFrame. Invalid frame");
+	NSAssert( frame, @"CCSprite#setSpriteFrame. Invalid frame");
     
     self.spriteFrame = frame.spriteFrame;
 }

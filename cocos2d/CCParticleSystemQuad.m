@@ -306,7 +306,7 @@
 	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];
 }
 
--(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
+-(void) setSpriteFrame:(CCSpriteFrame *)spriteFrame
 {
 
 	NSAssert( CGPointEqualToPoint( spriteFrame.offsetInPixels , CGPointZero ), @"QuadParticle only supports SpriteFrames with no offsets");
