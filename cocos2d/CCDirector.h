@@ -261,7 +261,7 @@ and when to execute the Scenes.
  *
  * It will call pushScene: and then it will call startAnimation
  */
-- (void) runWithScene:(CCScene*) scene __attribute((deprecated("Use presentScene in stead of runWithScene")));
+- (void) runWithScene:(CCScene*) scene;
 
 /** Suspends the execution of the running scene, pushing it on the stack of suspended scenes.
  * The new scene will be executed.
@@ -293,7 +293,7 @@ and when to execute the Scenes.
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.
  */
--(void) replaceScene: (CCScene*) scene __attribute((deprecated("Use presentScene in stead of replaceScene")));
+-(void) replaceScene: (CCScene*) scene;
 
 /**
  *  Presents a new scene by either starting first scene, or replacing the running
@@ -301,7 +301,7 @@ and when to execute the Scenes.
  *  @param scene The scene to present
  *  @since v2.5
  */
-- (void)presentScene:(CCScene *)scene;
+//- (void)presentScene:(CCScene *)scene;
 
 /**
  *  Presents a new scene by either starting first scene, or replacing the running
@@ -311,7 +311,7 @@ and when to execute the Scenes.
  *  @param transition The transition to perform
  *  @since v2.5
  */
-- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition;
+- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
 /**
  *  Pushes the running scene onto the scene stack, and presents the incoming scene, using a transition

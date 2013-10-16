@@ -85,6 +85,7 @@
 #import "CCTextureCache.h"
 #import "CCTextureAtlas.h"
 
+#import "CCTransition.h"
 #import "CCTransitionScene.h"
 #import "CCTransitionPageTurn.h"
 #import "CCTransitionProgress.h"

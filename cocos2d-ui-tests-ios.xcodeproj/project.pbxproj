@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
 		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
 		B7C6237617EA695100928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
@@ -84,6 +85,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B70AFC2E180F2D7400516435 /* CCTransitionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTransitionTest.h; path = "cocos2d-ui-tests/tests/CCTransitionTest.h"; sourceTree = SOURCE_ROOT; };
+		B70AFC2F180F2D7400516435 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
 		B71B087A17EA5B490082EBC0 /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B71B087B17EA5B490082EBC0 /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B71B088017EA5B6A0082EBC0 /* CCScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewTest.h; path = "cocos2d-ui-tests/tests/CCScrollViewTest.h"; sourceTree = SOURCE_ROOT; };
@@ -151,6 +154,8 @@
 				B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */,
 				B7C6238A17ECDF6A00928F91 /* CCTableViewTest.h */,
 				B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */,
+				B70AFC2E180F2D7400516435 /* CCTransitionTest.h */,
+				B70AFC2F180F2D7400516435 /* CCTransitionTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -392,6 +397,7 @@
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
+				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

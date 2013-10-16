@@ -150,7 +150,8 @@
 
 - (void) pressedBack:(id)sender
 {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInL transitionWithDuration:0.3 scene:[MainMenu scene]]];
+    CCTransition* transition = [CCTransition moveInWithDirection:CCTransitionDirectionRight duration:0.3];
+    [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
 }
 
 - (void) pressedReset:(id)sender
