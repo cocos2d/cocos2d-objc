@@ -9,5 +9,9 @@
 #import "TestBase.h"
 
 @interface CCTransitionTest : TestBase
+{
+    CCTransition* _nextTransition;
+}
+
 
 @end

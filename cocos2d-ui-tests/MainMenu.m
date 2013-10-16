@@ -35,10 +35,7 @@
     return [NSArray arrayWithObjects:
             @"CCScrollViewTest",
             @"CCTableViewTest",
-            //@"CCTransitionTest",
-            //@"Foo",
-            //@"Bar",
-            //@"sldifj",
+            @"CCTransitionTest",
             nil];
 }
 
@@ -143,19 +140,5 @@
 {
     return [self testClassNames].count;
 }
-
-/*
-- (void) onEnter
-{
-    NSLog(@"onEnter");
-    [super onEnter];
-}
-
-- (void) onEnterTransitionDidFinish
-{
-    NSLog(@"onEnterTransitionDidFinish");
-    [super onEnterTransitionDidFinish];
-}
- */
 
 @end
