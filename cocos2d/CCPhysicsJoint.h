@@ -38,6 +38,10 @@
 /// Defaults to INFINITY.
 @property(nonatomic, assign) CGFloat maxBias;
 
+/// Whether not the connected bodies are allowed to collide with one another.
+/// Defaults to YES.
+@property(nonatomic, assign) BOOL collideBodies;
+
 /// Depending on the joint, either the magnitude of the linear or angular impulse that this joint applied on the previous fixed time step.
 @property(nonatomic, readonly) CGFloat impulse;
 
