@@ -102,6 +102,22 @@
 /// Defaults to NO
 @property(nonatomic, assign) BOOL debugDraw;
 
+
+// TODO Would *really* like to push this to CCScheduler.
+// Will be a lot of work and testing, so it's here for now.
+
+/// How often the physics is updated.
+/// This is run independently of the framerate.
+/// Defaults to 60hz.
+@property(nonatomic, assign) ccTime fixedRate;
+
+/// Maximum delta time to process in a single update call.
+/// Defaults to 1/15.
+@property(nonatomic, assign) ccTime maxDeltaTime;
+
+/// Previous fixed update time.
+@property(nonatomic, readonly) ccTime fixedTime;
+
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
 @property(nonatomic, assign) CGPoint gravity;
