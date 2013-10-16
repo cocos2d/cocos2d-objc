@@ -24,6 +24,7 @@
 
 #import "MainMenu.h"
 #import "TestBase.h"
+#import "CCTransition.h"
 
 #define kCCTestMenuItemHeight 44
 
@@ -34,6 +35,10 @@
     return [NSArray arrayWithObjects:
             @"CCScrollViewTest",
             @"CCTableViewTest",
+            //@"CCTransitionTest",
+            //@"Foo",
+            //@"Bar",
+            //@"sldifj",
             nil];
 }
 
@@ -102,7 +107,9 @@
     NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
     
     CCScene* test = [TestBase sceneWithTestName:className];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInR transitionWithDuration:0.3 scene:test]];
+    CCTransition* transition = [CCTransition moveInWithDirection:CCTransitionDirectionLeft duration:0.3];
+    
+    [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
 }
 
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
@@ -127,9 +134,26 @@
     return cell;
 }
 
+- (CGFloat) tableView:(CCTableView *)tableView heightForRowAtIndex:(NSUInteger)index
+{
+    return kCCTestMenuItemHeight;
+}
+
 - (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView
 {
     return [self testClassNames].count;
+}
+
+- (void) onEnter
+{
+    NSLog(@"onEnter");
+    [super onEnter];
+}
+
+- (void) onEnterTransitionDidFinish
+{
+    NSLog(@"onEnterTransitionDidFinish");
+    [super onEnterTransitionDidFinish];
 }
 
 @end

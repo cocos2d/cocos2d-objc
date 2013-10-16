@@ -376,6 +376,7 @@ static CCDirector *_sharedDirector = nil;
 	[self startAnimation];
 }
 
+/*
 -(void) replaceScene: (CCScene*) scene
 {
 	NSAssert( _runningScene, @"Use runWithScene: instead to start the director");
@@ -386,7 +387,7 @@ static CCDirector *_sharedDirector = nil;
 	_sendCleanupToScene = YES;
 	[_scenesStack replaceObjectAtIndex:index-1 withObject:scene];
 	_nextScene = scene;	// _nextScene is a weak ref
-}
+}*/
 
 - (void) pushScene: (CCScene*) scene
 {
@@ -404,7 +405,7 @@ static CCDirector *_sharedDirector = nil;
     
     [_scenesStack addObject:scene];
     _sendCleanupToScene = NO;
-    [transition performSelector:@selector(presentScene:) withObject:scene];
+    [transition performSelector:@selector(replaceScene:) withObject:scene];
 }
 
 -(void) popScene
@@ -435,7 +436,7 @@ static CCDirector *_sharedDirector = nil;
         [_scenesStack removeLastObject];
         CCScene * incomingScene = [_scenesStack lastObject];
         _sendCleanupToScene = YES;
-        [transition performSelector:@selector(presentScene:) withObject:incomingScene];
+        [transition performSelector:@selector(replaceScene:) withObject:incomingScene];
     }
 }
 
@@ -477,7 +478,7 @@ static CCDirector *_sharedDirector = nil;
 
 // -----------------------------------------------------------------
 
-- (void)presentScene:(CCScene *)scene
+- (void)replaceScene:(CCScene *)scene
 {
 	NSAssert( scene != nil, @"Argument must be non-nil");
 
@@ -495,11 +496,11 @@ static CCDirector *_sharedDirector = nil;
     }
 }
 
-- (void)presentScene:(CCScene *)scene withTransition:(CCTransition *)transition
+- (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition
 {
     // the transition gets to become the running scene
     _sendCleanupToScene = YES;
-    [transition performSelector:@selector(presentScene:) withObject:scene];
+    [transition performSelector:@selector(replaceScene:) withObject:scene];
 }
 
 // -----------------------------------------------------------------

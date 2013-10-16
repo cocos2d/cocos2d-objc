@@ -172,7 +172,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)presentScene:(CCScene *)scene
+- (void)replaceScene:(CCScene *)scene
 {
     _incomingScene = scene;
     [_incomingScene onEnter];
@@ -203,7 +203,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [self renderIncoming:0];
     
     // switch to transition scene
-    [[CCDirector sharedDirector] presentScene:self];
+    [[CCDirector sharedDirector] replaceScene:self];
 }
 
 // -----------------------------------------------------------------
@@ -243,7 +243,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     {
         // exit out scene, and start new scene
         [_outgoingScene onExit];
-        [[CCDirector sharedDirector] presentScene:_incomingScene];
+        [[CCDirector sharedDirector] replaceScene:_incomingScene];
         
         // release scenes
         _incomingScene = nil;
