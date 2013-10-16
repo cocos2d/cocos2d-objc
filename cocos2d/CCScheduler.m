@@ -30,6 +30,7 @@
 #import "CCDirector.h"
 #import "Support/uthash.h"
 #import "Support/utlist.h"
+#import <objc/message.h>
 
 //
 // Data structures
@@ -861,22 +862,27 @@ typedef struct _hashSelectorEntry
 
 	// updates with priority < 0
 	DL_FOREACH_SAFE( updatesNeg, entry, tmp ) {
-		if( ! entry->paused && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
+		if( ! entry->paused && !entry->markedForDeletion ) {
+//			entry->impMethod( entry->target, updateSelector, dt );
+            ((void (*)(id,SEL, ccTime))objc_msgSend)(entry->target, updateSelector, dt);
+        }
 	}
 
 	// updates with priority == 0
 	DL_FOREACH_SAFE( updates0, entry, tmp ) {
 		if( ! entry->paused && !entry->markedForDeletion )
         {
-			entry->impMethod( entry->target, updateSelector, dt );
+//			entry->impMethod( entry->target, updateSelector, dt );
+            ((void (*)(id,SEL, ccTime))objc_msgSend)(entry->target, updateSelector, dt);
         }
 	}
 
 	// updates with priority > 0
 	DL_FOREACH_SAFE( updatesPos, entry, tmp ) {
-		if( ! entry->paused  && !entry->markedForDeletion )
-			entry->impMethod( entry->target, updateSelector, dt );
+		if( ! entry->paused  && !entry->markedForDeletion ) {
+//			entry->impMethod( entry->target, updateSelector, dt );
+            ((void (*)(id,SEL, ccTime))objc_msgSend)(entry->target, updateSelector, dt);
+        }
 	}
 
 	// Iterate all over the custom selectors (CCTimers)
@@ -892,7 +898,8 @@ typedef struct _hashSelectorEntry
 				elt->currentTimer = [elt->timers objectAtIndex: elt->timerIndex];
 				elt->currentTimerSalvaged = NO;
 
-				impMethod( elt->currentTimer, updateSelector, dt);
+//				impMethod( elt->currentTimer, updateSelector, dt);
+                ((void (*)(id,SEL, ccTime))objc_msgSend)(elt->currentTimer, updateSelector, dt);
 
 				if( elt->currentTimerSalvaged ) {
 					// The currentTimer told the remove itself. To prevent the timer from
