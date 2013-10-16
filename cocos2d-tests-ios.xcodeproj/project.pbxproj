@@ -12095,6 +12095,7 @@
 				D35C0C031808637D0071B674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */ = {
 			isa = XCConfigurationList;

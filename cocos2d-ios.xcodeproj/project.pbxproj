@@ -1854,7 +1854,6 @@
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
 			};
@@ -1879,7 +1878,6 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/build/Debug-iphonesimulator\"",
 				);
-				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
@@ -2007,7 +2005,6 @@
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
-				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2054,7 +2051,6 @@
 					"\"$(SRCROOT)/external/Chipmunk/include\"",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				OTHER_LDFLAGS = "-ObjC";
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

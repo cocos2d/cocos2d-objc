@@ -263,7 +263,6 @@
 		A0A3CF0314BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
 		A0A3CF0414BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
 		A0A3CF0514BBFCDC0079CD11 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A3CF0114BBFCDC0079CD11 /* fps_images-hd.png */; };
-		A0EC8D9E169CE5D20052B666 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC8D1E169CE58E0052B666 /* libcocos2d.a */; };
 		A0EC8DA1169CE5E60052B666 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC8D1E169CE58E0052B666 /* libcocos2d.a */; };
 		A0EC8DA4169CE5F30052B666 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC8D1E169CE58E0052B666 /* libcocos2d.a */; };
 		A0EC8DA7169CE6000052B666 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC8D1E169CE58E0052B666 /* libcocos2d.a */; };
@@ -292,6 +291,8 @@
 		A0F6EAA114152322008F01A1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
 		A0F6EAA214152323008F01A1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
 		A0F6EAA314152323008F01A1 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0C1045AD2F00755CFB /* Icon.png */; };
+		D36EDBAF180A05E6003F0089 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D36EDBAE180A05E6003F0089 /* CoreText.framework */; };
+		D36EDBB2180A0808003F0089 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC8D1E169CE58E0052B666 /* libcocos2d.a */; };
 		E037D9AA1280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz in Resources */ = {isa = PBXBuildFile; fileRef = E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */; };
 		E0B0E63211F8C3BB00414246 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50F48B0B1045AD2F00755CFB /* Default.png */; };
 		E0B0E63311F8C3BB00414246 /* fire-grayscale.png in Resources */ = {isa = PBXBuildFile; fileRef = 501F0DE311527BC6002BB7F1 /* fire-grayscale.png */; };
@@ -546,6 +547,7 @@
 		A0F6EA8A14152314008F01A1 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "../../Resources/Icon-Small.png"; sourceTree = "<group>"; };
 		A0F6EA8B14152314008F01A1 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "../../Resources/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		A0F6EA8C14152314008F01A1 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "../../Resources/Icon@2x.png"; sourceTree = "<group>"; };
+		D36EDBAE180A05E6003F0089 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		E037D9A81280E402003D39D7 /* texture1024x1024_rgba4444.pvr.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = texture1024x1024_rgba4444.pvr.gz; path = ../../Resources/Images/texture1024x1024_rgba4444.pvr.gz; sourceTree = SOURCE_ROOT; };
 		E054558C135475A0003F7F4C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../../Resources/Info.plist; sourceTree = "<group>"; };
 		E0B0E64E11F8C3BB00414246 /* PerformanceTest-Texture.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PerformanceTest-Texture.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -603,7 +605,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0EC8D9E169CE5D20052B666 /* libcocos2d.a in Frameworks */,
+				D36EDBB2180A0808003F0089 /* libcocos2d.a in Frameworks */,
+				D36EDBAF180A05E6003F0089 /* CoreText.framework in Frameworks */,
 				50671B5311B95977006C0061 /* CoreGraphics.framework in Frameworks */,
 				50671B5411B95977006C0061 /* OpenGLES.framework in Frameworks */,
 				50671B5511B95977006C0061 /* QuartzCore.framework in Frameworks */,
@@ -776,6 +779,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D36EDBAE180A05E6003F0089 /* CoreText.framework */,
 				50671AB611B9596B006C0061 /* CoreGraphics.framework */,
 				50671AB811B9596B006C0061 /* OpenGLES.framework */,
 				50671ABA11B9596B006C0061 /* QuartzCore.framework */,
@@ -1570,6 +1574,7 @@
 					Foundation,
 					"-framework",
 					UIKit,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "PerformanceTest-Sprite";
 			};
@@ -1592,6 +1597,7 @@
 					Foundation,
 					"-framework",
 					UIKit,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "PerformanceTest-Sprite";
 				ZERO_LINK = NO;
@@ -1708,9 +1714,10 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "-lobjc";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/ ../../external/Chipmunk/include ../../external/Chipmunk/objectivec/include";
 			};
 			name = Debug;
 		};
@@ -1734,9 +1741,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_LDFLAGS = "-lobjc";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/";
+				USER_HEADER_SEARCH_PATHS = "../../external/kazmath/include ../../cocos2d/ ../../external/Chipmunk/include ../../external/Chipmunk/objectivec/include";
 			};
 			name = Release;
 		};
