@@ -27,7 +27,6 @@
 #import <Foundation/Foundation.h>
 
 #import "CCNode.h"
-#import "CCCamera.h"
 #import "ccTypes.h"
 #import "CCDirector.h"
 #import "kazmath/mat4.h"

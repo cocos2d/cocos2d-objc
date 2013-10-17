@@ -30,7 +30,6 @@
 #import "CCGrid.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
-#import "CCCamera.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -227,9 +226,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_tag = kCCNodeTagInvalid;
 
 		_zOrder = 0;
-
-		// lazy alloc
-		_camera = nil;
 
 		// children (lazy allocs)
 		_children = nil;
@@ -609,23 +605,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	_children = [[NSMutableArray alloc] init];
 }
 
-// camera: lazy alloc
--(CCCamera*) camera
-{
-	if( ! _camera ) {
-		_camera = [[CCCamera alloc] init];
-
-		// by default, center camera at the Sprite's anchor point
-//		[_camera setCenterX:_anchorPointInPoints.x centerY:_anchorPointInPoints.y centerZ:0];
-//		[_camera setEyeX:_anchorPointInPoints.x eyeY:_anchorPointInPoints.y eyeZ:1];
-
-//		[_camera setCenterX:0 centerY:0 centerZ:0];
-//		[_camera setEyeX:0 eyeY:0 eyeZ:1];
-	}
-
-	return _camera;
-}
-
 -(CCNode*) getChildByTag:(NSInteger) aTag
 {
 	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
@@ -936,21 +915,6 @@ static NSUInteger globalOrderOfArrival = 1;
 	transfrom4x4.mat[14] = _vertexZ;
 
 	kmGLMultMatrix( &transfrom4x4 );
-
-
-	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( _camera && !(_grid && _grid.active) )
-	{
-		BOOL translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
-
-		if( translate )
-			kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
-
-		[_camera locate];
-
-		if( translate )
-			kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
-	}
 }
 
 #pragma mark CCPhysics support.
