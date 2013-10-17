@@ -39,7 +39,7 @@ enum {
  *  - You can add MenuItem objects in runtime using addChild:
  *  - But the only accecpted children are MenuItem objects
  */
-@interface CCMenu : CCLayerRGBA
+@interface CCMenu : CCNodeRGBA
 {
 	CCMenuItem	*_selectedItem;
 	BOOL		_enabled;
