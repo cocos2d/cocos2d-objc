@@ -44,29 +44,6 @@
 @end
 
 #pragma mark -
-#pragma mark CCLayerRGBA
-
-/** CCLayerRGBA is a subclass of CCLayer that implements the CCRGBAProtocol protocol using a solid color as the background.
-
- All features from CCLayer are valid, plus the following new features that propagate into children that conform to the CCRGBAProtocol:
- - opacity
- - RGB colors
- @since 2.1
- */
-@interface CCLayerRGBA : CCLayer <CCRGBAProtocol>
-{
-	GLubyte		_displayedOpacity, _realOpacity;
-	ccColor3B	_displayedColor, _realColor;
-	BOOL		_cascadeOpacityEnabled, _cascadeColorEnabled;
-}
-
-// XXX: To make BridgeSupport happy
--(GLubyte) opacity;
-@end
-
-
-
-#pragma mark -
 #pragma mark CCLayerColor
 
 /** CCLayerColor is a subclass of CCLayer that implements the CCRGBAProtocol protocol.
@@ -75,7 +52,7 @@
  - opacity
  - RGB colors
  */
-@interface CCLayerColor : CCLayerRGBA <CCBlendProtocol>
+@interface CCLayerColor : CCNodeRGBA <CCBlendProtocol>
 {
 	ccVertex2F	_squareVertices[4];
 	ccColor4F	_squareColors[4];
