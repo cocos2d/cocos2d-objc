@@ -86,9 +86,6 @@
 #import "CCTextureAtlas.h"
 
 #import "CCTransition.h"
-#import "CCTransitionScene.h"
-#import "CCTransitionPageTurn.h"
-#import "CCTransitionProgress.h"
 
 #import "CCTMXTiledMap.h"
 #import "CCTMXLayer.h"

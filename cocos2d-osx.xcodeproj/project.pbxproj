@@ -223,10 +223,6 @@
 		E076E73B1225EC7400DE0DA2 /* CCTMXXMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6951225EC7400DE0DA2 /* CCTMXXMLParser.m */; };
 		E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6961225EC7400DE0DA2 /* CCTransition.h */; };
 		E076E73D1225EC7400DE0DA2 /* CCTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6971225EC7400DE0DA2 /* CCTransition.m */; };
-		E076E73E1225EC7400DE0DA2 /* CCTransitionPageTurn.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */; };
-		E076E73F1225EC7400DE0DA2 /* CCTransitionPageTurn.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */; };
-		E076E7401225EC7400DE0DA2 /* CCTransitionProgress.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */; };
-		E076E7411225EC7400DE0DA2 /* CCTransitionProgress.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */; };
 		E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6A01225EC7400DE0DA2 /* CCGL.h */; };
 		E076E7461225EC7400DE0DA2 /* CCNS.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6A11225EC7400DE0DA2 /* CCNS.h */; };
 		E076E7551225EC7400DE0DA2 /* CCDirectorMac.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6B21225EC7400DE0DA2 /* CCDirectorMac.h */; };
@@ -610,10 +606,6 @@
 		E076E6951225EC7400DE0DA2 /* CCTMXXMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXXMLParser.m; sourceTree = "<group>"; };
 		E076E6961225EC7400DE0DA2 /* CCTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransition.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E076E6971225EC7400DE0DA2 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
-		E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionPageTurn.h; sourceTree = "<group>"; };
-		E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionPageTurn.m; sourceTree = "<group>"; };
-		E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTransitionProgress.h; sourceTree = "<group>"; };
-		E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransitionProgress.m; sourceTree = "<group>"; };
 		E076E69C1225EC7400DE0DA2 /* ccTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccTypes.h; sourceTree = "<group>"; };
 		E076E69D1225EC7400DE0DA2 /* cocos2d.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cocos2d.h; sourceTree = "<group>"; };
 		E076E69E1225EC7400DE0DA2 /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
@@ -1574,10 +1566,6 @@
 				E076E6771225EC7400DE0DA2 /* CCScene.m */,
 				E076E6961225EC7400DE0DA2 /* CCTransition.h */,
 				E076E6971225EC7400DE0DA2 /* CCTransition.m */,
-				E076E6981225EC7400DE0DA2 /* CCTransitionPageTurn.h */,
-				E076E6991225EC7400DE0DA2 /* CCTransitionPageTurn.m */,
-				E076E69A1225EC7400DE0DA2 /* CCTransitionProgress.h */,
-				E076E69B1225EC7400DE0DA2 /* CCTransitionProgress.m */,
 			);
 			name = "Layer, Scene & Transition Nodes";
 			sourceTree = "<group>";
@@ -1749,8 +1737,6 @@
 				E076E7381225EC7400DE0DA2 /* CCTMXTiledMap.h in Headers */,
 				E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */,
 				E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */,
-				E076E73E1225EC7400DE0DA2 /* CCTransitionPageTurn.h in Headers */,
-				E076E7401225EC7400DE0DA2 /* CCTransitionProgress.h in Headers */,
 				E076E7451225EC7400DE0DA2 /* CCGL.h in Headers */,
 				E076E7461225EC7400DE0DA2 /* CCNS.h in Headers */,
 				E076E7551225EC7400DE0DA2 /* CCDirectorMac.h in Headers */,
@@ -1956,8 +1942,6 @@
 				E076E7391225EC7400DE0DA2 /* CCTMXTiledMap.m in Sources */,
 				E076E73B1225EC7400DE0DA2 /* CCTMXXMLParser.m in Sources */,
 				E076E73D1225EC7400DE0DA2 /* CCTransition.m in Sources */,
-				E076E73F1225EC7400DE0DA2 /* CCTransitionPageTurn.m in Sources */,
-				E076E7411225EC7400DE0DA2 /* CCTransitionProgress.m in Sources */,
 				E076E7561225EC7400DE0DA2 /* CCDirectorMac.m in Sources */,
 				E076E75A1225EC7400DE0DA2 /* CCGLView.m in Sources */,
 				E076E75B1225EC7400DE0DA2 /* base64.c in Sources */,

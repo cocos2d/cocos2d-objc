@@ -37,7 +37,6 @@
 #import "CCAnimationCache.h"
 #import "CCLabelAtlas.h"
 #import "ccMacros.h"
-#import "CCTransitionScene.h"
 #import "CCScene.h"
 #import "CCSpriteFrameCache.h"
 #import "CCTexture2D.h"
@@ -583,7 +582,7 @@ static CCDirector *_sharedDirector = nil;
     }
     // -----------------------------------------------------------------
 
-	Class transClass = [CCTransitionScene class];
+	Class transClass = [CCTransition class];
 	BOOL runningIsTransition = [_runningScene isKindOfClass:transClass];
 	BOOL newIsTransition = [_nextScene isKindOfClass:transClass];
 
