@@ -131,11 +131,6 @@
     return cell;
 }
 
-- (CGFloat) tableView:(CCTableView *)tableView heightForRowAtIndex:(NSUInteger)index
-{
-    return kCCTestMenuItemHeight;
-}
-
 - (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView
 {
     return [self testClassNames].count;
