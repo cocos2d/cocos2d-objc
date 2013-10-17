@@ -950,6 +950,46 @@ CGPoint GetPosition(CCNode *node)
 -(BOOL)isPhysicsNode {return NO;}
 -(CCPhysicsNode *)physicsNode {return (self.isPhysicsNode ? (CCPhysicsNode *)self : self.parent.physicsNode);}
 
+-(void)setupPhysicsBody:(CCPhysicsBody *)physicsBody
+{
+	if(physicsBody){
+		CCPhysicsNode *physics = self.physicsNode;
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
+		
+		// Copy the node's rotation first.
+		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
+		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
+		
+		// Grab the origin position of the node from it's transform.
+		CGAffineTransform transform = NodeToPhysicsTransform(self);
+		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
+		
+		[_physicsBody willAddToPhysicsNode:physics];
+		[physics.space smartAdd:physicsBody];
+		
+#ifndef NDEBUG
+		// Reset these to zero since they shouldn't be read anyway.
+		_position = CGPointZero;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
+#endif
+	}
+}
+
+-(void)teardownPhysics
+{
+	if(_physicsBody){
+		CCPhysicsNode *physics = self.physicsNode;
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be a descendent of a CCPhysicsNode.");
+		
+		// Copy the positional data back to the ivars.
+		_position = self.position;
+		_rotationalSkewX = _rotationalSkewY = self.rotation;
+		
+		[_physicsBody didRemoveFromPhysicsNode:physics];
+		[physics.space smartRemove:_physicsBody];
+	}
+}
+
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody){
@@ -961,50 +1001,16 @@ CGPoint GetPosition(CCNode *node)
 	}
 	
 	if(physicsBody != _physicsBody){
+		if(_isRunning){
+			[self teardownPhysics];
+			[self setupPhysicsBody:physicsBody];
+		}
+		
 		// nil out the old body's node reference.
 		_physicsBody.node = nil;
 		
-		// Copy the old body position and rotation over
-		physicsBody.absolutePosition = _physicsBody.absolutePosition;
-		physicsBody.absoluteRadians = _physicsBody.absoluteRadians;
-		
 		_physicsBody = physicsBody;
 		_physicsBody.node = self;
-	}
-}
-
--(void)setupPhysics
-{
-	CCPhysicsBody *physicsBody = _physicsBody;
-	if(physicsBody){
-		CCPhysicsNode *physics = self.physicsNode;
-		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
-		
-		// Grab the origin position of the node from it's transform.
-		CGAffineTransform transform = NodeToPhysicsTransform(self);
-		
-		// Copy the node's rotation first.
-		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
-		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
-//		physicsBody.absoluteRadians = atan2f(transform.b, transform.a);
-		
-		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
-		
-		[_physicsBody willAddToPhysicsNode:physics];
-		[physics.space smartAdd:_physicsBody];
-	}
-}
-
--(void)teardownPhysics
-{
-	if(_physicsBody){
-		CCPhysicsNode *physics = self.physicsNode;
-		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be a descendent of a CCPhysicsNode.");
-		
-		// TODO need to reset the node's position info.
-		
-		[_physicsBody didRemoveFromPhysicsNode:physics];
-		[physics.space smartRemove:_physicsBody];
 	}
 }
 
@@ -1017,10 +1023,10 @@ CGPoint GetPosition(CCNode *node)
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
+	
+	[self setupPhysicsBody:_physicsBody];
+	
 	[self resumeSchedulerAndActions];
-	
-	[self setupPhysics];
-	
 	_isRunning = YES;
 }
 
@@ -1036,11 +1042,11 @@ CGPoint GetPosition(CCNode *node)
 
 -(void) onExit
 {
+	[self teardownPhysics];
+	
 	[self pauseSchedulerAndActions];
 	_isRunning = NO;
 	
-	[self teardownPhysics];
-
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }
 

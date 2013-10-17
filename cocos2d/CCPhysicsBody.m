@@ -185,6 +185,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		return [self.physicsNode categoriesForBitmask:_shape.filter.categories];
 	}
 }
+
 -(void)setCollisionCategories:(NSArray *)collisionCategories
 {
 	CCPhysicsNode *physics = self.physicsNode;
