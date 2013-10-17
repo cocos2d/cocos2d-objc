@@ -39,7 +39,6 @@ enum {
 };
 
 @class CCScene;
-@class CCCamera;
 @class CCGridBase;
 @class CCGLProgram;
 @class CCScheduler;
@@ -66,7 +65,6 @@ enum {
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - CCCamera (an interface to gluLookAt )
  - CCGridBase (to do mesh transformations)
  - anchor point
  - size
@@ -131,9 +129,6 @@ enum {
 	CGAffineTransform _transform, _inverse;
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
-
-	// a Camera
-	CCCamera *_camera;
 
 	// a Grid
 	CCGridBase *_grid;
@@ -232,8 +227,6 @@ enum {
 @property(nonatomic,readonly) CGPoint positionInPoints;
 /** Defines the position type used for the X component of the position property */
 @property(nonatomic,readwrite,assign) CCPositionType positionType;
-/** A CCCamera object that lets you move the node using a gluLookAt */
-@property(unsafe_unretained, nonatomic,readonly) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) NSArray *children;
 /** A CCGrid object that is used when applying effects */
