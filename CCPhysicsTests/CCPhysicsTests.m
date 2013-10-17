@@ -110,6 +110,47 @@ TestBasicSequenceHelper(id self, CCPhysicsNode *physicsNode, CCNode *parent, CCN
 	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
 	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
 	
+	// Try switching the physics body.
+	node.physicsBody = [CCPhysicsBody bodyWithCircleOfRadius:1 andCenter:ccp(1,1)];
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Check that setting the position works in this state.
+	node.position = position;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Test setting the body to nil.
+	node.physicsBody = nil;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Check that setting the position works in this state.
+	node.position = position;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Set back to the original body
+	node.physicsBody = body;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Check that setting the position works in this state.
+	node.position = position;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Try setting the body when not added to a scene anymore.
+	[node removeFromParent];
+	node.physicsBody = nil;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
+	// Check that setting the position works in this state.
+	node.position = position;
+	XCTAssertTrue(ccpDistance(node.position, position) < accuracy, @"");
+	XCTAssertEqualWithAccuracy(node.rotation, rotation, accuracy, @"");
+	
 	// Terrible things happen when you don't call this due to Cocos2D global variables.
 	[scene onExit];
 }
