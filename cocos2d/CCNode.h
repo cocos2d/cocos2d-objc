@@ -97,9 +97,6 @@ enum {
  -# The grid will capture the screen
  -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
-
- Camera:
- - Each node has a camera. By default it points to the center of the CCNode.
  */
 @interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
@@ -146,7 +143,6 @@ enum {
 	NSInteger _tag;
 
 	// user data field
-	void *_userData;
 	id _userObject;
 
 	// Shader
@@ -267,8 +263,6 @@ enum {
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
-/** A custom user data pointer */
-@property(nonatomic,readwrite,assign) void* userData;
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 

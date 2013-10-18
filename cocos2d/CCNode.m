@@ -182,7 +182,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
 @synthesize isRunning = _isRunning;
-@synthesize userData = _userData, userObject = _userObject;
+@synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
 @synthesize glServerState = _glServerState;
@@ -230,8 +230,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		// children (lazy allocs)
 		_children = nil;
 
-		// userData is always inited as nil
-		_userData = NULL;
+		// userObject is always inited as nil
 		_userObject = nil;
 
 		//initialize parent to nil
