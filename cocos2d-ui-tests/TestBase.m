@@ -65,6 +65,7 @@
     _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
     _lblSubTitle.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     _lblSubTitle.position = ccp(0.5, 64);
+    _lblSubTitle.horizontalAlignment = kCCTextAlignmentCenter;
     
     [self addChild:_lblSubTitle];
     
@@ -118,6 +119,7 @@
 	
 	// 'layer' is an autorelease object.
     TestBase *node = [[NSClassFromString(testName) alloc] init];
+    node.testName = testName;
 	
 	// add layer as a child to scene
 	[scene addChild: node];
@@ -150,7 +152,8 @@
 
 - (void) pressedBack:(id)sender
 {
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInL transitionWithDuration:0.3 scene:[MainMenu scene]]];
+    CCTransition* transition = [CCTransition moveInWithDirection:CCTransitionDirectionRight duration:0.3];
+    [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
 }
 
 - (void) pressedReset:(id)sender

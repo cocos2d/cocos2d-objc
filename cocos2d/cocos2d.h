@@ -53,7 +53,6 @@
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
-#import "CCActionCamera.h"
 #import "CCActionTween.h"
 #import "CCActionEase.h"
 #import "CCActionTiledGrid.h"
@@ -86,8 +85,6 @@
 #import "CCTextureAtlas.h"
 
 #import "CCTransition.h"
-#import "CCTransitionPageTurn.h"
-#import "CCTransitionProgress.h"
 
 #import "CCTMXTiledMap.h"
 #import "CCTMXLayer.h"
@@ -101,7 +98,6 @@
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 #import "CCScheduler.h"
-#import "CCCamera.h"
 #import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCNode+Debug.h"
@@ -147,6 +143,7 @@
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
+#import "Platforms/iOS/UITouch+CC.h"
 
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCGLView.h"

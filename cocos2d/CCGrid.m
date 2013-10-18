@@ -218,18 +218,6 @@
 	CCDirector *director = [CCDirector sharedDirector];
 	[director setProjection: _directorProjection];
 
-	if( target.camera.dirty ) {
-
-		CGPoint offset = [target anchorPointInPoints];
-
-		//
-		// XXX: Camera should be applied in the AnchorPoint
-		//
-		kmGLTranslatef(offset.x, offset.y, 0);
-		[target.camera locate];
-		kmGLTranslatef(-offset.x, -offset.y, 0);
-	}
-
 	ccGLBindTexture2D( _texture.name );
 
 	[self blit];

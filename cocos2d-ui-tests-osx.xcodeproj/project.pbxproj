@@ -21,6 +21,7 @@
 		B78AE62817E7B2A50028BE0B /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = B78AE62417E7B2A50028BE0B /* icon.icns */; };
 		B78AE63817E7B2FC0028BE0B /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE63117E7B2DE0028BE0B /* libcocos2d.a */; };
 		B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE63C17E7B7690028BE0B /* MainMenu.m */; };
+		B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B79DEE1618105B7C00A653C9 /* CCTransitionTest.m */; };
 		B7C6238117EBC76900928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6238017EBC76900928F91 /* Resources-shared */; };
 		B7C6238517EBC7C200928F91 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */; };
 		B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6239517F10F0600928F91 /* CCTableViewTest.m */; };
@@ -78,6 +79,8 @@
 		B78AE62A17E7B2DE0028BE0B /* cocos2d-osx.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-osx.xcodeproj"; sourceTree = SOURCE_ROOT; };
 		B78AE63B17E7B7690028BE0B /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = "cocos2d-ui-tests/MainMenu.h"; sourceTree = SOURCE_ROOT; };
 		B78AE63C17E7B7690028BE0B /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = "cocos2d-ui-tests/MainMenu.m"; sourceTree = SOURCE_ROOT; };
+		B79DEE1518105B7C00A653C9 /* CCTransitionTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTransitionTest.h; path = "cocos2d-ui-tests/tests/CCTransitionTest.h"; sourceTree = SOURCE_ROOT; };
+		B79DEE1618105B7C00A653C9 /* CCTransitionTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTransitionTest.m; path = "cocos2d-ui-tests/tests/CCTransitionTest.m"; sourceTree = SOURCE_ROOT; };
 		B7C6238017EBC76900928F91 /* Resources-shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Resources-shared"; path = "cocos2d-ui-tests/Resources-shared"; sourceTree = SOURCE_ROOT; };
 		B7C6238317EBC7C200928F91 /* CCScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewTest.h; path = "cocos2d-ui-tests/tests/CCScrollViewTest.h"; sourceTree = SOURCE_ROOT; };
 		B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollViewTest.m; path = "cocos2d-ui-tests/tests/CCScrollViewTest.m"; sourceTree = SOURCE_ROOT; };
@@ -208,6 +211,8 @@
 		B7C6238217EBC7A600928F91 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				B79DEE1518105B7C00A653C9 /* CCTransitionTest.h */,
+				B79DEE1618105B7C00A653C9 /* CCTransitionTest.m */,
 				B7C6238317EBC7C200928F91 /* CCScrollViewTest.h */,
 				B7C6238417EBC7C200928F91 /* CCScrollViewTest.m */,
 				B7C6239417F10F0600928F91 /* CCTableViewTest.h */,
@@ -312,6 +317,7 @@
 				B78AE61E17E7B23B0028BE0B /* main.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
+				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
 				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +413,8 @@
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
@@ -433,6 +441,8 @@
 					"cocos2d/**",
 					"cocos2d-ui/**",
 					"cocos2d-ui-tests/**",
+					external/Chipmunk/include,
+					external/Chipmunk/objectivec/include,
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
