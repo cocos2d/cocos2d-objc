@@ -75,10 +75,6 @@
 		509A79980F6188420032F449 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* CCSprite.m */; };
 		509D0818101E4FCE007E1749 /* CCTMXTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */; };
 		509D0819101E4FCE007E1749 /* CCTMXTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* CCTMXTiledMap.m */; };
-		509E665E0E06CD940050992C /* CCCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E665C0E06CD940050992C /* CCCamera.h */; };
-		509E665F0E06CD940050992C /* CCCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E665D0E06CD940050992C /* CCCamera.m */; };
-		509E66F00E06E1360050992C /* CCActionCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = 509E66EE0E06E1360050992C /* CCActionCamera.h */; };
-		509E66F10E06E1360050992C /* CCActionCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = 509E66EF0E06E1360050992C /* CCActionCamera.m */; };
 		50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
 		50A24E110F377E8E007CAEB0 /* CCGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E090F377E8E007CAEB0 /* CCGrabber.h */; };
 		50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */; };
@@ -399,10 +395,6 @@
 		509A79960F6188420032F449 /* CCSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCSprite.m; sourceTree = "<group>"; };
 		509D0816101E4FCE007E1749 /* CCTMXTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXTiledMap.h; sourceTree = "<group>"; };
 		509D0817101E4FCE007E1749 /* CCTMXTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXTiledMap.m; sourceTree = "<group>"; };
-		509E665C0E06CD940050992C /* CCCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCamera.h; sourceTree = "<group>"; };
-		509E665D0E06CD940050992C /* CCCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCCamera.m; sourceTree = "<group>"; };
-		509E66EE0E06E1360050992C /* CCActionCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionCamera.h; sourceTree = "<group>"; };
-		509E66EF0E06E1360050992C /* CCActionCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionCamera.m; sourceTree = "<group>"; };
 		50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
 		50A24E090F377E8E007CAEB0 /* CCGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGrabber.h; sourceTree = "<group>"; };
 		50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGrabber.m; sourceTree = "<group>"; };
@@ -782,8 +774,6 @@
 				5018F2570DFDEAFF00C013A5 /* CCDirector.m */,
 				50BAF3970F33CCD8003F654C /* ccMacros.h */,
 				50F9E8160E1AA34E000E7616 /* ccTypes.h */,
-				509E665C0E06CD940050992C /* CCCamera.h */,
-				509E665D0E06CD940050992C /* CCCamera.m */,
 				E0EAD1F0121F522A00B0C81C /* CCConfiguration.h */,
 				503862D911007181005D2C92 /* CCConfiguration.m */,
 				50E2A25110A46CC600D894CE /* CCProtocols.h */,
@@ -965,8 +955,6 @@
 			children = (
 				50CB3B0C100AC43A00B7A750 /* CCActionManager.h */,
 				50CB3B0D100AC43A00B7A750 /* CCActionManager.m */,
-				509E66EE0E06E1360050992C /* CCActionCamera.h */,
-				509E66EF0E06E1360050992C /* CCActionCamera.m */,
 				5018F2520DFDEAFF00C013A5 /* CCAction.h */,
 				5018F2530DFDEAFF00C013A5 /* CCAction.m */,
 				5018F2580DFDEAFF00C013A5 /* CCActionInstant.h */,
@@ -1337,8 +1325,6 @@
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
 				506C78A70E016A7300B48100 /* CCMenu.h in Headers */,
 				506C78EC0E0178FD00B48100 /* CCMenuItem.h in Headers */,
-				509E665E0E06CD940050992C /* CCCamera.h in Headers */,
-				509E66F00E06E1360050992C /* CCActionCamera.h in Headers */,
 				50B2CCCE0E119B8E00AE9530 /* CCDrawingPrimitives.h in Headers */,
 				5038B6B20E196CD8009A621E /* CCParticleSystem.h in Headers */,
 				50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */,
@@ -1671,8 +1657,6 @@
 				5018F27E0DFDEAFF00C013A5 /* CCTextureCache.m in Sources */,
 				506C78A80E016A7300B48100 /* CCMenu.m in Sources */,
 				506C78ED0E0178FD00B48100 /* CCMenuItem.m in Sources */,
-				509E665F0E06CD940050992C /* CCCamera.m in Sources */,
-				509E66F10E06E1360050992C /* CCActionCamera.m in Sources */,
 				50B2CCCF0E119B8E00AE9530 /* CCDrawingPrimitives.m in Sources */,
 				5038B6B30E196CD8009A621E /* CCParticleSystem.m in Sources */,
 				504055B10E3230BD00213FEF /* CCParticleExamples.m in Sources */,
