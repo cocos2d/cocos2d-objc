@@ -125,11 +125,19 @@
 		</dict>
 		<key>Interface/table-bg-hilite.png</key>
 		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
 		<key>Interface/table-bg-normal.png</key>
 		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
