@@ -232,7 +232,8 @@
 	// no reordering if only 1 child
 	if( [_children count] > 1)
 	{
-		NSUInteger newIndex, oldIndex;
+		NSUInteger newIndex = 0;
+        NSUInteger oldIndex = 0;
 
 		[self getCurrentIndex:&oldIndex newIndex:&newIndex forChild:child z:z];
 

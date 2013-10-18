@@ -41,9 +41,18 @@
 
 @property (nonatomic,strong) CCNode* contentNode;
 @property (nonatomic,strong) NSString* subTitle;
+@property (nonatomic,strong) NSString* testName;
 
 + (CCScene *) sceneWithTestName:(NSString*)testName;
 
 - (NSArray*) testConstructors;
+
+// Only if you need to do fancy overrides
+- (void) pressedNext:(id) sender;
+- (void) pressedPrev:(id) sender;
+- (void) pressedReset:(id)sender;
+- (void) pressedBack:(id)sender;
+- (void) setupTestWithIndex:(NSInteger)testNum;
+
 
 @end
