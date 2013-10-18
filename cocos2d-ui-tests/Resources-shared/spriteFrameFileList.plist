@@ -9,6 +9,7 @@
 	</dict>
 	<key>spriteFrameFiles</key>
 	<array>
+		<string>Sprites.plist</string>
 		<string>Interface.plist</string>
 	</array>
 </dict>

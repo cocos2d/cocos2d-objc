@@ -125,8 +125,6 @@
 		</dict>
 		<key>Interface/table-bg-hilite.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -134,10 +132,18 @@
 		</dict>
 		<key>Interface/table-bg-normal.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>Sprites</key>
+		<dict>
+			<key>isSmartSpriteSheet</key>
+			<true/>
+		</dict>
+		<key>Sprites/circle.png</key>
+		<dict>
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
@@ -180,8 +186,8 @@
 	<key>tabletPositionScaleFactorType</key>
 	<integer>0</integer>
 	<key>versionStr</key>
-	<string>Version: 0.6b1
-GitHub: e6cadfe29f
+	<string>Version: 0.6b2
+GitHub: bbe1f0c90c
 </string>
 </dict>
 </plist>

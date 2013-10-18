@@ -36,6 +36,9 @@
             @"CCScrollViewTest",
             @"CCTableViewTest",
             @"CCTransitionTest",
+#ifdef __CC_PLATFORM_IOS
+            @"CCResponderTest",
+#endif
             nil];
 }
 
@@ -61,6 +64,7 @@
     
     // Load resources
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = kCCContentSizeTypeNormalized;
@@ -77,7 +81,7 @@
     [self addChild:headerBg];
     
     // Header label
-    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d-UI Tests" fontName:@"HelveticaNeue-Medium" fontSize:17];
+    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17];
     lblTitle.positionType = kCCPositionTypeNormalized;
     lblTitle.position = ccp(0.5, 0.5);
     

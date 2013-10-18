@@ -65,6 +65,7 @@
     _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
     _lblSubTitle.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     _lblSubTitle.position = ccp(0.5, 64);
+    _lblSubTitle.horizontalAlignment = kCCTextAlignmentCenter;
     
     [self addChild:_lblSubTitle];
     
