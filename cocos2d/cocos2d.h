@@ -143,6 +143,7 @@
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCGLView.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
+#import "UITouch+CC.h"
 
 #elif defined(__CC_PLATFORM_MAC)
 #import "Platforms/Mac/CCGLView.h"
