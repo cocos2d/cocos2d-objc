@@ -37,6 +37,7 @@
 
 -(void)onEnter
 {
+	return;
 	[super onEnter];
 	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
