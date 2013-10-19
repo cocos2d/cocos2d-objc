@@ -28,6 +28,7 @@
  */
 
 #import "CCResponder.h"
+#import "Platforms/iOS/../../CCResponderManager.h"
 
 // -----------------------------------------------------------------
 

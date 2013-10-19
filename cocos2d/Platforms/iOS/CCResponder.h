@@ -28,7 +28,9 @@
  */
 
 #import <Foundation/Foundation.h>
-#import "CCResponderManager.h"
+#import "Platforms/iOS/CCResponderManager.h"
+
+@class CCResponderManager;
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
 
