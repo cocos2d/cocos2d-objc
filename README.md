@@ -108,6 +108,6 @@ Download from Github
 [3]: http://www.cocos2d-iphone.org/wiki/doku.php/faq#i_found_a_bug_i_have_an_enhancement_proposal_what_should_i_do "contributing to cocos2d"
 [4]: http://www.cocos2d-iphone.org/forum "cocos2d for iPhone forum"
 [5]: http://www.cocos2d-iphone.org/download
-[6]: https://github.com/cocos2d/cocos2d-iphone/tree/gles20
+[6]: https://github.com/cocos2d/cocos2d-iphone
 [7]: http://www.box2d.org
 [8]: http://www.chipmunk-physics.net
