@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		B772F6B118120CC9005C069B /* appledoc */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B772F6B218120CC9005C069B /* Build configuration list for PBXAggregateTarget "appledoc" */;
+			buildPhases = (
+				B772F6B518120CDF005C069B /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = appledoc;
+			productName = appledoc;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
@@ -355,7 +369,6 @@
 		501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
-		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
@@ -648,13 +661,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		502C65EC0DFEF3DD00E4107D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		509807061175041800EA7266 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -676,7 +682,6 @@
 			isa = PBXGroup;
 			children = (
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
-				502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */,
 				509807081175041800EA7266 /* libbuild all libs.a */,
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
 			);
@@ -1426,13 +1431,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		502C65EA0DFEF3DD00E4107D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		509807041175041800EA7266 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -1481,24 +1479,6 @@
 			name = cocos2d;
 			productName = cocos2d;
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */;
-			buildPhases = (
-				502C65EA0DFEF3DD00E4107D /* Headers */,
-				502C65EB0DFEF3DD00E4107D /* Sources */,
-				502C65EC0DFEF3DD00E4107D /* Frameworks */,
-				502C65F30DFEF44900E4107D /* Run Script: doxygen */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "cocos2d-documentation";
-			productName = "cocos2d-documentation";
-			productReference = 502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		509807071175041800EA7266 /* build all libs */ = {
@@ -1568,8 +1548,8 @@
 			targets = (
 				509807071175041800EA7266 /* build all libs */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
-				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
 				A04A1FEA13B826B300ABAFB7 /* kazmath */,
+				B772F6B118120CC9005C069B /* appledoc */,
 			);
 		};
 /* End PBXProject section */
@@ -1620,20 +1600,18 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		502C65F30DFEF44900E4107D /* Run Script: doxygen */ = {
+		B772F6B518120CDF005C069B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Run Script: doxygen";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\n# Make sure TEMP_DIR is set to something usable.do\nTEMP_DIR=${TEMP_DIR:-$TMPDIR}\nTEMP_DIR=${TEMP_DIR:-/tmp}\n\nif ! [ -f \"$SOURCE_ROOT\"/doxygen.config ] \nthen \n  echo \"doxygen config file does not exist\"\n  \"$DOXYGEN_PATH\" -g \"$SOURCE_ROOT/doxygen.config\"\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp \"$SOURCE_ROOT/doxygen.config\" \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for source code files in current project directory under 'cocos2d\necho \"INPUT = \\\"$SOURCE_ROOT/cocos2d\\\" \\\"$SOURCE_ROOT/cocoslive\\\" \\\"$SOURCE_ROOT/CocosDenshion\\\"\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Doxygen will generate all the HTML files (which will later be packaged into\n# the doc set) into the standard 'build' directory, specifically, into a folder\n# called 'doxygen_output'.\necho \"OUTPUT_DIRECTORY = $TEMP_DIR/doxygen_output\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for image files in current project directory under 'Resources'\necho \"IMAGE_PATH = $SOURCE_ROOT/Resources\" >> \"$TEMP_DIR/doxygen.config\"\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n\"$DOXYGEN_PATH\" \"$TEMP_DIR/doxygen.config\"\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C \"$TEMP_DIR/doxygen_output/html\" install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f \"$TEMP_DIR/loadDocSet.scpt\"\n\necho \"tell application \\\"Xcode\\\"\" >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"end tell\" >> \"$TEMP_DIR/loadDocSet.scpt\"\n\n#  Run the load-docset applescript command.\n\nosascript \"$TEMP_DIR/loadDocSet.scpt\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2d-iPhone.org\";\ncompanyID=\"org.cocos2d\";\ncompanyURL=\"http://cocos2d-iphone.org\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"Cocos2d\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\ncocos2d cocos2d-ui";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1732,13 +1710,6 @@
 				B78AE46917E7AF1C0028BE0B /* CCScrollView.m in Sources */,
 				B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */,
 				D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		502C65EB0DFEF3DD00E4107D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1854,32 +1825,6 @@
 			};
 			name = Release;
 		};
-		502C65EF0DFEF3DE00E4107D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_THUMB_SUPPORT = NO;
-				PRODUCT_NAME = "cocos2d-documentation";
-			};
-			name = Debug;
-		};
-		502C65F00DFEF3DE00E4107D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
-				GCC_THUMB_SUPPORT = NO;
-				PRODUCT_NAME = "cocos2d-documentation";
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
 		509807091175041B00EA7266 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1942,6 +1887,20 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		B772F6B318120CC9005C069B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B772F6B418120CC9005C069B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -2053,15 +2012,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				502C65EF0DFEF3DE00E4107D /* Debug */,
-				502C65F00DFEF3DE00E4107D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -2076,6 +2026,15 @@
 			buildConfigurations = (
 				A04A1FEC13B826B400ABAFB7 /* Debug */,
 				A04A1FED13B826B400ABAFB7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B772F6B218120CC9005C069B /* Build configuration list for PBXAggregateTarget "appledoc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B772F6B318120CC9005C069B /* Debug */,
+				B772F6B418120CC9005C069B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
