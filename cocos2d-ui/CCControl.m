@@ -23,6 +23,7 @@
  */
 
 #import "CCControl.h"
+#import "CCControlSubclass.h"
 #import <objc/message.h>
 #import <objc/runtime.h>
 

@@ -23,6 +23,7 @@
  */
 
 #import "CCButton.h"
+#import "CCControlSubclass.h"
 
 #import "cocos2d.h"
 #import <objc/runtime.h>

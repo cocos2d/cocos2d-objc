@@ -28,6 +28,11 @@
 @class CCLabelTTF;
 @class CCSpriteFrame;
 
+/**
+ The CCButton represents a button on the screen. The button is presented with a stretchable background image and/or a title label. Different images, colors and opacity can be set for each of the buttons different states.
+ 
+ Methods for setting callbacks for the button is inherited from CCControl through the setTarget:selector: method or the block property.
+ */
 @interface CCButton : CCControl
 {
     NSMutableDictionary* _backgroundSpriteFrames;
@@ -46,8 +51,38 @@
 @property (nonatomic,assign) float verticalPadding;
 @property (nonatomic,strong) NSString* title;
 
+/// -----------------------------------------------------------------------
+/// @name Creating Buttons
+/// -----------------------------------------------------------------------
+
+/**
+ *  Creates a new button with a title and no background. Uses default font and font size.
+ *
+ *  @param title The title text of the button.
+ *
+ *  @return A new button.
+ */
 + (id) buttonWithTitle:(NSString*) title;
+
+/**
+ *  Creates a new button with a title and no background.
+ *
+ *  @param title    The title text of the button.
+ *  @param fontName Name of the TTF font to use for the title label.
+ *  @param size     Font size for the title label.
+ *
+ *  @return A new button.
+ */
 + (id) buttonWithTitle:(NSString*) title fontName:(NSString*)fontName fontSize:(float)size;
+
+/**
+ *  Creates a new button with the specified title for the label and sprite frame for its background.
+ *
+ *  @param title       The title text of the button.
+ *  @param spriteFrame Stretchable background image.
+ *
+ *  @return A new button.
+ */
 + (id) buttonWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame;
 + (id) buttonWithTitle:(NSString*) title spriteFrame:(CCSpriteFrame*) spriteFrame highlightedSpriteFrame:(CCSpriteFrame*) highlighted disabledSpriteFrame:(CCSpriteFrame*) disabled;
 
