@@ -116,6 +116,12 @@
 @property (nonatomic,readonly) CGRect textureRect;
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
+
+/**
+ *  The currently displayed spriteFrame.
+ */
+@property (nonatomic,strong) CCSpriteFrame* spriteFrame;
+
 /** whether or not the sprite is flipped horizontally.
  It only flips the texture of the sprite, and not the texture of the sprite's children.
  Also, flipping the texture doesn't alter the anchorPoint.
@@ -144,6 +150,15 @@
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
 #pragma mark CCSprite - Initializers
+
+/**
+ *  Creates a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
+ *
+ *  @param imageName name of the image to load
+ *
+ *  @return a sprite
+ */
++(id)spriteWithImageNamed:(NSString*)imageName;
 
 /** Creates an sprite with a texture.
  The rect used will be the size of the texture.
@@ -258,24 +273,12 @@
  */
 -(void)setVertexRect:(CGRect)rect;
 
-
-#pragma mark CCSprite - Frames
-
-/** sets a new display frame to the CCSprite. */
--(void) setDisplayFrame:(CCSpriteFrame*)newFrame;
-
-/** returns whether or not a CCSpriteFrame is being displayed */
--(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame;
-
-/** returns the current displayed frame. */
--(CCSpriteFrame*) displayFrame;
-
 #pragma mark CCSprite - Animation
 
 /** changes the display frame with animation name and index.
  The animation name will be get from the CCAnimationCache
  @since v0.99.5
  */
--(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
+-(void) setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
 
 @end

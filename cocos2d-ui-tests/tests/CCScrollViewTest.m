@@ -42,8 +42,7 @@
 {
     self.subTitle = @"Basic Scrolling - Pan the content layer by dragging it around.";
     
-    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent] contentSize:CGSizeMake(1, 1)];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
+    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
     scrollView.flipYCoordinates = NO;
     
     [self.contentNode addChild:scrollView];
@@ -53,8 +52,7 @@
 {
     self.subTitle = @"Paging - Pan the content layer it should snap into a 3 x 3 grid.";
     
-    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent] contentSize:CGSizeMake(1, 1)];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
+    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
     scrollView.flipYCoordinates = NO;
     scrollView.pagingEnabled = YES;
     
@@ -65,7 +63,7 @@
 {
     self.subTitle = @"Horizontal Scrolling - Layer should only scroll horizontally.";
     
-    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent] contentSize:CGSizeMake(1, 1)];
+    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
     scrollView.contentSizeType = kCCContentSizeTypeNormalized;
     scrollView.flipYCoordinates = NO;
     scrollView.verticalScrollEnabled = NO;
@@ -77,8 +75,7 @@
 {
     self.subTitle = @"Vertical Scrolling - Layer should only scroll vertically.";
     
-    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent] contentSize:CGSizeMake(1, 1)];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
+    CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
     scrollView.flipYCoordinates = NO;
     scrollView.horizontalScrollEnabled = NO;
     
@@ -92,8 +89,6 @@
     CCNode* node = [self createScrollContent];
     
     CCScrollView* scrollView = [[CCScrollView alloc] init];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
-    scrollView.contentSize = CGSizeMake(1, 1);
     scrollView.contentNode = node;
     
     [self.contentNode addChild:scrollView];
@@ -106,8 +101,6 @@
     CCNode* node = [self createScrollContent];
     
     CCScrollView* scrollView = [[CCScrollView alloc] init];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
-    scrollView.contentSize = CGSizeMake(1, 1);
     scrollView.contentNode = node;
     scrollView.bounces = NO;
     

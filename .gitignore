@@ -29,6 +29,7 @@ project.xcworkspace/
 VersionX-revision.h
 # build products
 build/
+DerivedData/
 *.[oa]
 # Other source repository archive directories (protects when importing)
 .hg
@@ -48,4 +49,4 @@ Backup[ ]of[ ]*.numbers/
 CocosMac-Debug.zip
 CocosMac.zip
 /Cocos-Debug.zip
-/Cocos.zip
+/Cocos.zipapi-docs

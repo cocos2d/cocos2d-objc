@@ -28,6 +28,7 @@
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
 #import "CCActionInstant.h"
+#import "CCResponderManager.h"
 
 #ifdef __CC_PLATFORM_IOS
 
@@ -54,6 +55,9 @@
 #define kCCScrollViewAutoPageSpeed 500.0
 #define kCCScrollViewMaxOuterDistBeforeBounceBack 50.0
 #define kCCScrollViewMinVelocityBeforeBounceBack 100.0
+
+#define kCCScrollViewActionXTag 8080
+#define kCCScrollViewActionYTag 8081
 
 #pragma clang diagnostic pop COCOS2D
 
@@ -171,12 +175,12 @@
 
 - (id) init
 {
-    self = [self initWithContentNode:[CCNode node] contentSize:CGSizeMake(1, 1)];
+    self = [self initWithContentNode:[CCNode node]];
     self.contentSizeType = kCCContentSizeTypeNormalized;
     return self;
 }
 
-- (id) initWithContentNode:(CCNode*)contentNode contentSize:(CGSize) contentSize
+- (id) initWithContentNode:(CCNode*)contentNode
 {
     self = [super init];
     if (!self) return NULL;
@@ -184,7 +188,8 @@
     _flipYCoordinates = YES;
     
     // Setup content node
-    self.contentSize = contentSize;
+    self.contentSize = CGSizeMake(1, 1);
+    self.contentSizeType = kCCContentSizeTypeNormalized;
     self.contentNode = contentNode;
     
     // Default properties
@@ -209,6 +214,7 @@
 #endif
     
     [self scheduleUpdate];
+    self.userInteractionEnabled = YES;
     
     return self;
 }
@@ -383,6 +389,7 @@
             CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
             CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
             action = [CCSequence actions:action, callFunc, nil];
+            action.tag = kCCScrollViewActionXTag;
             [_contentNode runAction:action];
         }
         if (yMoved)
@@ -396,13 +403,15 @@
             CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
             CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
             action = [CCSequence actions:action, callFunc, nil];
+            action.tag = kCCScrollViewActionYTag;
             [_contentNode runAction:action];
             
         }
     }
     else
     {
-        [_contentNode stopAllActions];
+        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
+        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
         _contentNode.position = ccpMult(newPos, -1);
     }
 }
@@ -564,7 +573,8 @@
         _startScrollPos = self.scrollPosition;
         
         _isPanning = YES;
-        [_contentNode stopAllActions];
+        [_contentNode stopActionByTag:kCCScrollViewActionXTag];
+        [_contentNode stopActionByTag:kCCScrollViewActionYTag];
     }
     else if (pgr.state == UIGestureRecognizerStateChanged)
     {
@@ -663,11 +673,44 @@
     _contentNode.position = pos;
 }
 
+- (BOOL) isAncestor:(CCNode*) ancestor toNode:(CCNode*)node
+{
+    for (CCNode* child in node.children)
+    {
+        if (child == ancestor) return YES;
+        if ([self isAncestor:ancestor toNode:child]) return YES;
+    }
+    return NO;
+}
+
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
 {
     if (!_contentNode) return NO;
     if (!self.visible) return NO;
+    if (!self.userInteractionEnabled) return NO;
     
+    // Check for responders above this scroll view (and not within it). If there are responders above touch should go to them instead.
+    CGPoint touchWorldPos = [touch locationInWorld];
+    
+    NSArray* responders = [[CCDirector sharedDirector].responderManager nodesAtPoint:touchWorldPos];
+    BOOL foundSelf = NO;
+    for (int i = responders.count - 1; i >= 0; i--)
+    {
+        CCNode* responder = [responders objectAtIndex:i];
+        if (foundSelf)
+        {
+            if (![self isAncestor:responder toNode:self])
+            {
+                return NO;
+            }
+        }
+        else if (responder == self)
+        {
+            foundSelf = YES;
+        }
+    }
+    
+    // Allow touches to children if view is moving slowly
     BOOL slowMove = (fabs(_velocity.x) < kCCScrollViewAllowInteractionBelowVelocity &&
                      fabs(_velocity.y) < kCCScrollViewAllowInteractionBelowVelocity);
     
@@ -676,6 +719,7 @@
         return NO;
     }
     
+    // Check that the gesture is in the scroll view
     return [self hitTestWithWorldPos:[touch locationInWorld]];
 }
 

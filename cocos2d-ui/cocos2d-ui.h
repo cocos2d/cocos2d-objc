@@ -26,3 +26,4 @@
 #import "CCControl.h"
 #import "CCButton.h"
 #import "CCScrollView.h"
+#import "CCTableView.h"

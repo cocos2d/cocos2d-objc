@@ -31,6 +31,7 @@
 #import "CCMenu.h"
 #import "CCDirector.h"
 #import "CCSprite.h"
+#import "CCParticleSystemQuad.h"
 #import "CCGLProgram.h"
 #import "CCAnimation.h"
 #import "CCScheduler.h"
@@ -159,8 +160,20 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 +(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 // new: initWithTexture:rect:
 -(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-// displayFrame
+// new: spriteFrame
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
+// new: spriteFrame
+- (CCSpriteFrame*) displayFrame DEPRECATED_ATTRIBUTE;
+// new: spriteFrame
+- (void) setDisplayFrame:(CCSpriteFrame *)newFrame DEPRECATED_ATTRIBUTE;
+// don't use
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
+// new: setSpriteFrameWithAnimationName:index:
+-(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
+@end
+
+@interface CCParticleSystemQuad (Deprecated)
+-(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCMenuItem (Deprecated)

@@ -115,7 +115,6 @@
 -(NSString*) string;
 @optional
 /** sets a new label using a CString.
- It is faster than setString since it doesn't require to alloc/retain/release an NString object.
  @since v0.99.0
  */
 -(void) setCString:(char*)label;

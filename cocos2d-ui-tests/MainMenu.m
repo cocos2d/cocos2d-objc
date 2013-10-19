@@ -24,8 +24,9 @@
 
 #import "MainMenu.h"
 #import "TestBase.h"
+#import "CCTransition.h"
 
-#define kCCTestMenuItemHeight 32
+#define kCCTestMenuItemHeight 44
 
 @implementation MainMenu
 
@@ -33,9 +34,11 @@
 {
     return [NSArray arrayWithObjects:
             @"CCScrollViewTest",
-            @"CCButtonTest",
-            @"More Tests to Come",
-            @"Only CCScrollViewTest currently works",
+            @"CCTableViewTest",
+            @"CCTransitionTest",
+#ifdef __CC_PLATFORM_IOS
+            @"CCResponderTest",
+#endif
             nil];
 }
 
@@ -60,14 +63,15 @@
     if (!self) return NULL;
     
     // Load resources
-    [[CCSpriteFrameCache sharedSpriteFrameCache] addSpriteFramesWithFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Interface.plist"];
+    [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
     self.contentSizeType = kCCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Header background
-    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithSpriteFrameName:@"Interface/header.png"];
+    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
     headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
@@ -77,54 +81,63 @@
     [self addChild:headerBg];
     
     // Header label
-    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d-UI Tests" fontName:@"HelveticaNeue-Medium" fontSize:17];
+    CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17];
     lblTitle.positionType = kCCPositionTypeNormalized;
     lblTitle.position = ccp(0.5, 0.5);
     
     [headerBg addChild:lblTitle];
     
-    // Setup a scroll view containing menu with tests
+    // Table view
+    CCTableView* tableView = [[CCTableView alloc] init];
+    tableView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    tableView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
+    tableView.rowHeight = kCCTestMenuItemHeight;
+    tableView.dataSource = self;
     
-    NSArray* testClassNames = [self testClassNames];
+    [self addChild:tableView z:-1];
     
-    // Create the content layer, make it fill the width of the scroll view and each menu item have a height of 32 px * positionScaleFactor
-    CCNode* contentNode = [CCNode node];
-    contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
-    contentNode.contentSize = CGSizeMake(1, testClassNames.count * kCCTestMenuItemHeight);
-    
-    // Add buttons to the scroll view content view
-    int num = 0;
-    for (NSString* testClassName in testClassNames)
-    {
-        CCButton* btn = [CCButton buttonWithTitle:testClassName fontName:@"HelveticaNeue-Medium" fontSize:17];
-        [contentNode addChild:btn];
-        btn.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
-        btn.anchorPoint = ccp(0, 0.5f);
-        btn.position = ccp(20, kCCTestMenuItemHeight * 0.5f + kCCTestMenuItemHeight * num);
-        
-        [btn setTarget:self selector:@selector(pressedButton:)];
-        
-        num++;
-    }
-    
-    CCScrollView* scrollView = [[CCScrollView alloc] init];
-    scrollView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
-    scrollView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
-    scrollView.flipYCoordinates = YES;
-    scrollView.contentNode = contentNode;
-    scrollView.horizontalScrollEnabled = NO;
-    
-    [self addChild:scrollView z:-1];
+    [tableView setTarget:self selector:@selector(selectedRow:)];
     
     return self;
 }
 
-- (void) pressedButton:(id)sender
+- (void) selectedRow:(id)sender
 {
-    CCButton* btn = sender;
+    CCTableView* tableView = sender;
     
-    CCScene* test = [TestBase sceneWithTestName:btn.label.string];
-    [[CCDirector sharedDirector] replaceScene:[CCTransitionSlideInR transitionWithDuration:0.3 scene:test]];
+    NSString* className = [[self testClassNames] objectAtIndex:tableView.selectedRow];
+    
+    CCScene* test = [TestBase sceneWithTestName:className];
+    CCTransition* transition = [CCTransition moveInWithDirection:CCTransitionDirectionLeft duration:0.3];
+    
+    [[CCDirector sharedDirector] replaceScene:test withTransition:transition];
+}
+
+- (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
+{
+    CCTableViewCell* cell = [[CCTableViewCell alloc] init];
+    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
+    
+    CCSpriteFrame* frameNormal = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-normal.png"];
+    CCSpriteFrame* frameHilite = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-hilite.png"];
+    
+    [cell.button setBackgroundSpriteFrame:frameNormal forState:CCControlStateNormal];
+    [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];
+    
+    CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17];
+    label.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft);
+    label.position = ccp(20, 0.5f);
+    label.anchorPoint = ccp(0, 0.5f);
+    
+    [cell addChild:label];
+    
+    return cell;
+}
+
+- (NSUInteger) tableViewNumberOfRows:(CCTableView*) tableView
+{
+    return [self testClassNames].count;
 }
 
 @end

@@ -47,6 +47,7 @@
 typedef struct _hashUniformEntry
 {
 	GLvoid			*value;		// value
+    size_t          length;
 	NSUInteger		location;	// Key
 	UT_hash_handle  hh;			// hash entry
 } tHashUniformEntry;
@@ -328,16 +329,30 @@ typedef void (*GLLogFunction) (GLuint program,
 
 		// value
 		element->value = malloc( bytes );
+        element->length = bytes;
 		memcpy(element->value, data, bytes );
 		
 		HASH_ADD_INT(_hashForUniforms, location, element);
 	}
 	else
 	{
-		if( memcmp( element->value, data, bytes) == 0 )
-			updated = NO;
-		else
-			memcpy( element->value, data, bytes );
+        if (element->length != bytes)
+        {
+            element->value = realloc(element->value, bytes);
+            memcpy(element->value, data, bytes);
+            element->length = bytes;
+        }
+        else
+        {
+            if( memcmp( element->value, data, bytes) == 0 )
+            {
+                updated = NO;
+            }
+            else
+            {
+                memcpy( element->value, data, bytes );
+            }
+        }
 	}
 
 	return updated;

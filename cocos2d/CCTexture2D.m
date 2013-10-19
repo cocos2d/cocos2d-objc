@@ -210,6 +210,12 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	return ret;
 }
 
+-(CCSpriteFrame*) createSpriteFrame
+{
+    CGRect bounds = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
+    return [CCSpriteFrame frameWithTexture:self rect:bounds];
+}
+
 @end
 
 #pragma mark -

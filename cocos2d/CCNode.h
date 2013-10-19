@@ -43,12 +43,13 @@ enum {
 	kCCNodeTagInvalid = -1,
 };
 
-@class CCCamera;
+@class CCScene;
 @class CCGridBase;
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
 @class CCAction;
+@class CCPhysicsBody;
 
 /** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
  The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
@@ -69,7 +70,6 @@ enum {
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - CCCamera (an interface to gluLookAt )
  - CCGridBase (to do mesh transformations)
  - anchor point
  - size
@@ -102,13 +102,10 @@ enum {
  -# The grid will capture the screen
  -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
-
- Camera:
- - Each node has a camera. By default it points to the center of the CCNode.
  */
 @interface CCNode : CCResponder < CCResponderProtocol > {
 	// rotation angle
-	float _rotationX, _rotationY;
+	float _rotationalSkewX, _rotationalSkewY;
 
 	// scaling factors
 	float _scaleX, _scaleY;
@@ -135,9 +132,6 @@ enum {
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
 
-	// a Camera
-	CCCamera *_camera;
-
 	// a Grid
 	CCGridBase *_grid;
 
@@ -154,7 +148,6 @@ enum {
 	NSInteger _tag;
 
 	// user data field
-	void *_userData;
 	id _userObject;
 
 	// Shader
@@ -179,6 +172,8 @@ enum {
 	BOOL _visible;
 
 	BOOL _isReorderChildDirty;
+    
+    CCPhysicsBody* _physicsBody;
 }
 
 /** The z order of the node relative to its "siblings": children of the same parent */
@@ -209,9 +204,9 @@ enum {
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationX;
+@property(nonatomic,readwrite,assign) float rotationalSkewX;
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
-@property(nonatomic,readwrite,assign) float rotationY;
+@property(nonatomic,readwrite,assign) float rotationalSkewY;
 
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
@@ -219,14 +214,20 @@ enum {
 @property(nonatomic,readwrite,assign) float scaleX;
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
+
+@property (nonatomic,readonly) float scaleInPoints;
+@property (nonatomic,readonly) float scaleXInPoints;
+@property (nonatomic,readonly) float scaleYInPoints;
+
+@property (nonatomic,assign) CCScaleType scaleType;
+@property (nonatomic,readonly) BOOL isPhysicsNode;
+
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
 /** Position (x,y) of the node in points from the bottom left corner */
 @property(nonatomic,readonly) CGPoint positionInPoints;
 /** Defines the position type used for the X component of the position property */
 @property(nonatomic,readwrite,assign) CCPositionType positionType;
-/** A CCCamera object that lets you move the node using a gluLookAt */
-@property(unsafe_unretained, nonatomic,readonly) CCCamera* camera;
 /** Array of children */
 @property(nonatomic,readonly) NSArray *children;
 /** A CCGrid object that is used when applying effects */
@@ -255,14 +256,18 @@ enum {
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
 @property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
 
+/** The scene this node is added to, or nil if it's not part of a scene. */
+@property(nonatomic, readonly) CCScene *scene;
+
+/** The physics body (if any) that this node is attached to. */
+@property(nonatomic, strong) CCPhysicsBody *physicsBody;
+
 /** whether or not the node is running */
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
-/** A custom user data pointer */
-@property(nonatomic,readwrite,assign) void* userData;
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
@@ -305,7 +310,7 @@ enum {
  If a touch is moved inside a non locked node, a touchesBegan will be generated
  @since v2.5
  */
-@property ( nonatomic, assign, getter = isUserInteractionClaimed ) BOOL userInteractionClaimed;
+@property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node
  hitAreaExpansion = 0 => hit area has no size
@@ -578,11 +583,11 @@ enum {
  */
 - (CGAffineTransform)nodeToParentTransform;
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position;
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints;
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type;
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType) type;
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize;
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize;
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType) type;
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType) type;
 
 /** Returns the matrix that transform parent's space coordinates to the node's (local) space coordinates.
  The matrix is in Pixels.

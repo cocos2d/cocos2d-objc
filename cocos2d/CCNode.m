@@ -30,7 +30,6 @@
 #import "CCGrid.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
-#import "CCCamera.h"
 #import "CCScheduler.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
@@ -38,6 +37,7 @@
 #import "Support/TransformUtils.h"
 #import "ccMacros.h"
 #import "CCGLProgram.h"
+#import "CCPhysics+ObjectiveChipmunk.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -70,6 +70,49 @@
 
 }
 
+static inline
+CCPhysicsBody *
+GetBodyIfRunning(CCNode *node)
+{
+	return (node->_isRunning ? node->_physicsBody : nil);
+}
+
+static inline CGAffineTransform
+NodeToPhysicsTransform(CCNode *node)
+{
+	CGAffineTransform transform = CGAffineTransformIdentity;
+	for(; node; node = node.parent){
+		if(node.isPhysicsNode){
+			return transform;
+		} else {
+			transform = cpTransformMult(node.nodeToParentTransform, transform);
+		}
+	}
+	
+	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
+}
+
+static inline float
+NodeToPhysicsRotation(CCNode *node)
+{
+	float rotation = 0.0;
+	for(; node; node = node.parent){
+		if(node.isPhysicsNode){
+			return rotation;
+		} else {
+			rotation -= node.rotation;
+		}
+	}
+	
+	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
+}
+
+static inline CGAffineTransform
+RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
+{
+	return cpTransformMult(cpTransformInverse(NodeToPhysicsTransform(node.parent)), body.absoluteTransform);
+}
+
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
 static NSUInteger globalOrderOfArrival = 1;
 
@@ -81,15 +124,15 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
 @synthesize isRunning = _isRunning;
-@synthesize userData = _userData, userObject = _userObject;
+@synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
 @synthesize glServerState = _glServerState;
+@synthesize physicsBody = _physicsBody;
 
 #pragma mark CCNode - Transform related properties
 
-@synthesize rotationX = _rotationX, rotationY = _rotationY, scaleX = _scaleX, scaleY = _scaleY;
-@synthesize position = _position;
+@synthesize scaleX = _scaleX, scaleY = _scaleY;
 @synthesize anchorPoint = _anchorPoint, anchorPointInPoints = _anchorPointInPoints;
 @synthesize contentSize = _contentSize;
 @synthesize skewX = _skewX, skewY = _skewY;
@@ -108,7 +151,7 @@ static NSUInteger globalOrderOfArrival = 1;
 		_isRunning = NO;
 
 		_skewX = _skewY = 0.0f;
-		_rotationX = _rotationY = 0.0f;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
 		_scaleX = _scaleY = 1.0f;
         _position = CGPointZero;
         _contentSize = CGSizeZero;
@@ -126,14 +169,10 @@ static NSUInteger globalOrderOfArrival = 1;
 
 		_zOrder = 0;
 
-		// lazy alloc
-		_camera = nil;
-
 		// children (lazy allocs)
 		_children = nil;
 
-		// userData is always inited as nil
-		_userData = NULL;
+		// userObject is always inited as nil
 		_userObject = nil;
 
 		//initialize parent to nil
@@ -152,7 +191,7 @@ static NSUInteger globalOrderOfArrival = 1;
         
         // set default touch handling
         self.userInteractionEnabled = NO;
-        self.userInteractionClaimed = YES;
+        self.claimsUserInteraction = YES;
         self.multipleTouchEnabled = NO;
         self.hitAreaExpansion = 1.0f;
         
@@ -193,28 +232,52 @@ static NSUInteger globalOrderOfArrival = 1;
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
 {
-	_rotationX = _rotationY = newRotation;
-	_isTransformDirty = _isInverseDirty = YES;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation + NodeToPhysicsRotation(self.parent));
+	} else {
+		_rotationalSkewX = newRotation;
+		_rotationalSkewY = newRotation;
+		_isTransformDirty = _isInverseDirty = YES;
+	}
 }
 
 #pragma clang diagnostic push COCOS2D
 #pragma clang diagnostic ignored "-Wfloat-equal"
 -(float) rotation
 {
-	NSAssert( _rotationX == _rotationY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
-	return _rotationX;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
+	} else {
+		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+		return _rotationalSkewX;
+	}
 }
 #pragma clang diagnostic pop COCOS2D
 
--(void) setRotationX: (float)newX
+-(float)rotationalSkewX {
+	return _rotationalSkewX;
+}
+
+-(void) setRotationalSkewX: (float)newX
 {
-	_rotationX = newX;
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
+	_rotationalSkewX = newX;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
--(void) setRotationY: (float)newY
+-(float)rotationalSkewY
 {
-	_rotationY = newY;
+	return _rotationalSkewY;
+}
+
+-(void) setRotationalSkewY: (float)newY
+{
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
+	_rotationalSkewY = newY;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
@@ -232,20 +295,60 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) setSkewX:(float)newSkewX
 {
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
 	_skewX = newSkewX;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
 -(void) setSkewY:(float)newSkewY
 {
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
 	_skewY = newSkewY;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
+static inline
+CGPoint GetPosition(CCNode *node)
+{
+	CCPhysicsBody *body = GetBodyIfRunning(node);
+	if(body){
+		// Return the position of the anchor point
+//		CGPoint anchor = node->_anchorPointInPoints;
+//		return cpTransformPoint(RigidBodyToParentTransform(node, body), cpv(anchor.x*node->_scaleX, anchor.y*node->_scaleY));
+		return cpTransformPoint([node nodeToParentTransform], node->_anchorPointInPoints);
+	} else {
+		return node->_position;
+	}
+}
+
+-(CGPoint)position
+{
+	return GetPosition(self);
+}
+
 -(void) setPosition: (CGPoint)newPosition
 {
-	_position = newPosition;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		#warning This is *ridiculously* inefficient, but works for now.
+		CGPoint currentPosition = GetPosition(self);
+		CGPoint delta = ccpSub(newPosition, currentPosition);
+		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
+	} else {
+		_position = newPosition;
+		_isTransformDirty = _isInverseDirty = YES;
+	}
+}
+
+-(void)setPositionType:(CCPositionType)positionType
+{
+	NSAssert(_physicsBody == nil, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+	_positionType = positionType;
 	_isTransformDirty = _isInverseDirty = YES;
+	
+	#warning Position is not preserved when changing position type.
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -278,13 +381,13 @@ static NSUInteger globalOrderOfArrival = 1;
     _isTransformDirty = _isInverseDirty = YES;
 }
 
-- (CGSize) convertContentSizeToPoints:(CGSize)contentSize
+- (CGSize) convertContentSizeToPoints:(CGSize)contentSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -333,14 +436,14 @@ static NSUInteger globalOrderOfArrival = 1;
     return size;
 }
 
-- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize
+- (CGSize) convertContentSizeFromPoints:(CGSize)pointSize type:(CCContentSizeType)type
 {
     CGSize size = CGSizeZero;
     
     CCDirector* director = [CCDirector sharedDirector];
     
-    CCContentSizeUnit widthUnit = _contentSizeType.widthUnit;
-    CCContentSizeUnit heightUnit = _contentSizeType.heightUnit;
+    CCContentSizeUnit widthUnit = type.widthUnit;
+    CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
     if (widthUnit == kCCContentSizeUnitPoints)
@@ -409,7 +512,40 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGSize) contentSizeInPoints
 {
-    return [self convertContentSizeToPoints:self.contentSize];
+    return [self convertContentSizeToPoints:self.contentSize type:_contentSizeType];
+}
+
+- (float) scaleInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return self.scale * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return self.scale;
+}
+
+- (float) scaleXInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleX * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleX;
+}
+
+- (float) scaleYInPoints
+{
+    if (_scaleType == kCCScaleTypeScaled)
+    {
+        return _scaleY * [CCDirector sharedDirector].positionScaleFactor;
+    }
+    return _scaleY;
+}
+
+- (void) setScaleType:(CCScaleType)scaleType
+{
+    _scaleType = scaleType;
+    _isTransformDirty = _isInverseDirty = YES;
 }
 
 - (CGRect) boundingBox
@@ -463,23 +599,6 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void) childrenAlloc
 {
 	_children = [[NSMutableArray alloc] init];
-}
-
-// camera: lazy alloc
--(CCCamera*) camera
-{
-	if( ! _camera ) {
-		_camera = [[CCCamera alloc] init];
-
-		// by default, center camera at the Sprite's anchor point
-//		[_camera setCenterX:_anchorPointInPoints.x centerY:_anchorPointInPoints.y centerZ:0];
-//		[_camera setEyeX:_anchorPointInPoints.x eyeY:_anchorPointInPoints.y eyeZ:1];
-
-//		[_camera setCenterX:0 centerY:0 centerZ:0];
-//		[_camera setEyeX:0 eyeY:0 eyeZ:1];
-	}
-
-	return _camera;
 }
 
 -(CCNode*) getChildByTag:(NSInteger) aTag
@@ -792,30 +911,91 @@ static NSUInteger globalOrderOfArrival = 1;
 	transfrom4x4.mat[14] = _vertexZ;
 
 	kmGLMultMatrix( &transfrom4x4 );
+}
 
+#pragma mark CCPhysics support.
 
-	// XXX: Expensive calls. Camera should be integrated into the cached affine matrix
-	if ( _camera && !(_grid && _grid.active) )
-	{
-		BOOL translate = (_anchorPointInPoints.x != 0.0f || _anchorPointInPoints.y != 0.0f);
+// Overriden by CCPhysicsNode to return YES.
+-(BOOL)isPhysicsNode {return NO;}
+-(CCPhysicsNode *)physicsNode {return (self.isPhysicsNode ? (CCPhysicsNode *)self : self.parent.physicsNode);}
 
-		if( translate )
-			kmGLTranslatef(RENDER_IN_SUBPIXEL(_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(_anchorPointInPoints.y), 0 );
+-(void)setupPhysicsBody:(CCPhysicsBody *)physicsBody
+{
+	if(physicsBody){
+		CCPhysicsNode *physics = self.physicsNode;
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
+		
+		// Copy the node's rotation first.
+		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
+		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
+		
+		// Grab the origin position of the node from it's transform.
+		CGAffineTransform transform = NodeToPhysicsTransform(self);
+		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
+		
+		[_physicsBody willAddToPhysicsNode:physics];
+		[physics.space smartAdd:physicsBody];
+		
+#ifndef NDEBUG
+		// Reset these to zero since they shouldn't be read anyway.
+		_position = CGPointZero;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
+#endif
+	}
+}
 
-		[_camera locate];
+-(void)teardownPhysics
+{
+	if(_physicsBody){
+		CCPhysicsNode *physics = self.physicsNode;
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be a descendent of a CCPhysicsNode.");
+		
+		// Copy the positional data back to the ivars.
+		_position = self.position;
+		_rotationalSkewX = _rotationalSkewY = self.rotation;
+		
+		[_physicsBody didRemoveFromPhysicsNode:physics];
+		[physics.space smartRemove:_physicsBody];
+	}
+}
 
-		if( translate )
-			kmGLTranslatef(RENDER_IN_SUBPIXEL(-_anchorPointInPoints.x), RENDER_IN_SUBPIXEL(-_anchorPointInPoints.y), 0 );
+-(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
+{
+	if(physicsBody){
+		NSAssert(_positionType.xUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+		NSAssert(_positionType.yUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+		NSAssert(_scaleType == kCCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
+		NSAssert(_rotationalSkewX == _rotationalSkewY, @"Currently physics nodes don't support skewing.");
+		NSAssert(_skewX == 0.0 && _skewY == 0.0, @"Currently physics nodes don't support skewing.");
+	}
+	
+	if(physicsBody != _physicsBody){
+		if(_isRunning){
+			[self teardownPhysics];
+			[self setupPhysicsBody:physicsBody];
+		}
+		
+		// nil out the old body's node reference.
+		_physicsBody.node = nil;
+		
+		_physicsBody = physicsBody;
+		_physicsBody.node = self;
 	}
 }
 
 #pragma mark CCNode SceneManagement
 
+// Overriden by CCScene to return YES.
+-(BOOL)isScene {return NO;}
+-(CCScene *)scene {return (self.isScene ? (CCScene *)self : self.parent.scene);}
+
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
+	
+	[self setupPhysicsBody:_physicsBody];
+	
 	[self resumeSchedulerAndActions];
-
 	_isRunning = YES;
 }
 
@@ -831,9 +1011,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) onExit
 {
+	[self teardownPhysics];
+	
 	[self pauseSchedulerAndActions];
 	_isRunning = NO;
-
+	
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }
 
@@ -974,7 +1156,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 #pragma mark CCNode Transform
 
-- (CGPoint) convertPositionToPoints:(CGPoint)position
+- (CGPoint) convertPositionToPoints:(CGPoint)position type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -983,12 +1165,12 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = 0;
     
     // Convert position to points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) x = position.x;
     else if (xUnit == kCCPositionUnitScaled) x = position.x * director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) y = position.y;
     else if (yUnit == kCCPositionUnitScaled) y = position.y * director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
@@ -1022,7 +1204,7 @@ static NSUInteger globalOrderOfArrival = 1;
     return positionInPoints;
 }
 
-- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints
+- (CGPoint) convertPositionFromPoints:(CGPoint)positionInPoints type:(CCPositionType)type
 {
     CCDirector* director = [CCDirector sharedDirector];
     
@@ -1032,7 +1214,7 @@ static NSUInteger globalOrderOfArrival = 1;
     float y = positionInPoints.y;
     
     // Account for reference corner
-    CCPositionReferenceCorner corner = _positionType.corner;
+    CCPositionReferenceCorner corner = type.corner;
     if (corner == kCCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
@@ -1055,7 +1237,7 @@ static NSUInteger globalOrderOfArrival = 1;
     }
     
     // Convert position from points
-    CCPositionUnit xUnit = _positionType.xUnit;
+    CCPositionUnit xUnit = type.xUnit;
     if (xUnit == kCCPositionUnitPoints) position.x = x;
     else if (xUnit == kCCPositionUnitScaled) position.x = x / director.positionScaleFactor;
     else if (xUnit == kCCPositionUnitNormalized)
@@ -1067,7 +1249,7 @@ static NSUInteger globalOrderOfArrival = 1;
         }
     }
     
-    CCPositionUnit yUnit = _positionType.yUnit;
+    CCPositionUnit yUnit = type.yUnit;
     if (yUnit == kCCPositionUnitPoints) position.y = y;
     else if (yUnit == kCCPositionUnitScaled) position.y = y / director.positionScaleFactor;
     else if (yUnit == kCCPositionUnitNormalized)
@@ -1084,19 +1266,23 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGPoint) positionInPoints
 {
-    return [self convertPositionToPoints:_position];
+    return [self convertPositionToPoints:GetPosition(self) type:_positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
 {
-	if ( _isTransformDirty ) {
+	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
+	if(physicsBody){
+		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
+		return cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
+	} else if ( _isTransformDirty ) {
         
         // TODO: Make this more efficient
         CGSize contentSizeInPoints = self.contentSizeInPoints;
         _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
         
         // Convert position to points
-        CGPoint positionInPoints = [self convertPositionToPoints:_position];
+        CGPoint positionInPoints = [self convertPositionToPoints:_position type:_positionType];
 		float x = positionInPoints.x;
 		float y = positionInPoints.y;
         
@@ -1104,9 +1290,9 @@ static NSUInteger globalOrderOfArrival = 1;
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
 		float cx = 1, sx = 0, cy = 1, sy = 0;
-		if( _rotationX || _rotationY ) {
-			float radiansX = -CC_DEGREES_TO_RADIANS(_rotationX);
-			float radiansY = -CC_DEGREES_TO_RADIANS(_rotationY);
+		if( _rotationalSkewX || _rotationalSkewY ) {
+			float radiansX = -CC_DEGREES_TO_RADIANS(_rotationalSkewX);
+			float radiansY = -CC_DEGREES_TO_RADIANS(_rotationalSkewY);
 			cx = cosf(radiansX);
 			sx = sinf(radiansX);
 			cy = cosf(radiansY);
@@ -1114,20 +1300,23 @@ static NSUInteger globalOrderOfArrival = 1;
 		}
 
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
+        
+        float scaleFactor = 1;
+        if (_scaleType == kCCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed
 		// Adjusted transform calculation for rotational skew
 		if( !needsSkewMatrix && !CGPointEqualToPoint(_anchorPointInPoints, CGPointZero) ) {
-			x += cy * -_anchorPointInPoints.x * _scaleX + -sx * -_anchorPointInPoints.y * _scaleY;
-			y += sy * -_anchorPointInPoints.x * _scaleX +  cx * -_anchorPointInPoints.y * _scaleY;
+			x += cy * -_anchorPointInPoints.x * _scaleX * scaleFactor + -sx * -_anchorPointInPoints.y * _scaleY;
+			y += sy * -_anchorPointInPoints.x * _scaleX * scaleFactor +  cx * -_anchorPointInPoints.y * _scaleY;
 		}
 
 
 		// Build Transform Matrix
 		// Adjusted transfor m calculation for rotational skew
-		_transform = CGAffineTransformMake( cy * _scaleX, sy * _scaleX,
-										   -sx * _scaleY, cx * _scaleY,
+		_transform = CGAffineTransformMake( cy * _scaleX * scaleFactor, sy * _scaleX * scaleFactor,
+										   -sx * _scaleY * scaleFactor, cx * _scaleY * scaleFactor,
 										   x, y );
 
 		// XXX: Try to inline skew
@@ -1151,7 +1340,8 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGAffineTransform)parentToNodeTransform
 {
-	if ( _isInverseDirty ) {
+	// TODO Need to find a better way to mark physics transforms as dirty
+	if ( _isInverseDirty || GetBodyIfRunning(self) ) {
 		_inverse = CGAffineTransformInvert([self nodeToParentTransform]);
 		_isInverseDirty = NO;
 	}

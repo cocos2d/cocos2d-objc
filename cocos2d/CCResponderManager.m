@@ -198,25 +198,30 @@
     // go through all touches
     for (UITouch *touch in touches)
     {
+        CGPoint worldTouchLocation = [[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]];
+        
         // scan backwards through touch responders
         for (int index = _responderListCount - 1; index >= 0; index --)
         {
             CCNode *node = _responderList[index];
             
             // check for hit test
-            if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view]]])
+            if ([node hitTestWithWorldPos:worldTouchLocation])
             {
                 // if not a multi touch node, check if node already is being touched
                 responderCanAcceptTouch = YES;
                 if (!node.isMultipleTouchEnabled)
                 {
                     // scan current touch objects, and break if object already has a touch
-                    for (CCRunningResponder *responderEntry in _runningResponderList) if (responderEntry.target == node)
+                    for (CCRunningResponder *responderEntry in _runningResponderList)
                     {
-                        responderCanAcceptTouch = NO;
-                        break;
+                        if (responderEntry.target == node)
+                        {
+                            responderCanAcceptTouch = NO;
+                            break;
+                        }
                     }
-                }                
+                }
                 if (!responderCanAcceptTouch) break;
                 
                 // begin the touch
@@ -245,7 +250,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         // if a touch object was found
         if (touchEntry)
@@ -253,7 +258,7 @@
             CCNode *node = (CCNode *)touchEntry.target;
             
             // check if it locks touches
-            if (node.isUserInteractionClaimed)
+            if (node.claimsUserInteraction)
             {
                 // move the touch
                 if ([node respondsToSelector:@selector(touchesMoved:withEvent:)])
@@ -286,7 +291,7 @@
                 CCNode *node = _responderList[index];
             
                 // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
-                if (!node.isUserInteractionClaimed  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
+                if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                 {
                     // begin the touch
                     self.eventProcessed = YES;
@@ -315,7 +320,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         if (touchEntry)
         {
@@ -340,7 +345,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         if (touchEntry)
         {
@@ -358,13 +363,13 @@
 // -----------------------------------------------------------------
 #pragma mark - iOS helper functions
 // -----------------------------------------------------------------
-// finds a responder object for an event
+// finds a responder object for a touch
 
-- (CCRunningResponder *)responderForEvent:(UIEvent *)event
+- (CCRunningResponder *)responderForTouch:(UITouch *)touch
 {
     for (CCRunningResponder *touchEntry in _runningResponderList)
     {
-        if (touchEntry.event == event) return(touchEntry);
+        if (touchEntry.touch == touch) return(touchEntry);
     }
     return(nil);
 }
@@ -439,7 +444,7 @@
         CCNode *node = (CCNode *)responder.target;
         
         // check if it locks mouse
-        if (node.isUserInteractionClaimed)
+        if (node.claimsUserInteraction)
         {
             // move the mouse
             switch (button)
@@ -476,7 +481,7 @@
             CCNode *node = _responderList[index];
             
             // if the mouse responder does not lock mouse, it will receive a mouseDown if mouse is moved inside
-            if (!node.isUserInteractionClaimed && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
+            if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
             {
                 // begin the mouse down
                 self.eventProcessed = YES;

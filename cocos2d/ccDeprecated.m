@@ -142,6 +142,38 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
 	return [self displayFrame];
 }
+
+- (CCSpriteFrame*) displayFrame
+{
+    return [self spriteFrame];
+}
+
+- (void) setDisplayFrame:(CCSpriteFrame *)newFrame
+{
+    self.spriteFrame = newFrame;
+}
+
+-(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame
+{
+    return NO;
+}
+
+-(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex
+{
+    [self setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex];
+}
+
+@end
+
+#pragma mark - Particle syste
+
+@implementation CCParticleSystemQuad (Deprecated)
+
+-(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
+{
+    [self setSpriteFrame:spriteFrame];
+}
+
 @end
 
 @implementation CCMenuItem (Deprecated)
