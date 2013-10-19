@@ -250,7 +250,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         // if a touch object was found
         if (touchEntry)
@@ -320,7 +320,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         if (touchEntry)
         {
@@ -345,7 +345,7 @@
     for (UITouch *touch in touches)
     {
         // get touch object
-        CCRunningResponder *touchEntry = [self responderForEvent:event];
+        CCRunningResponder *touchEntry = [self responderForTouch:touch];
         
         if (touchEntry)
         {
@@ -363,13 +363,13 @@
 // -----------------------------------------------------------------
 #pragma mark - iOS helper functions
 // -----------------------------------------------------------------
-// finds a responder object for an event
+// finds a responder object for a touch
 
-- (CCRunningResponder *)responderForEvent:(UIEvent *)event
+- (CCRunningResponder *)responderForTouch:(UITouch *)touch
 {
     for (CCRunningResponder *touchEntry in _runningResponderList)
     {
-        if (touchEntry.event == event) return(touchEntry);
+        if (touchEntry.touch == touch) return(touchEntry);
     }
     return(nil);
 }
