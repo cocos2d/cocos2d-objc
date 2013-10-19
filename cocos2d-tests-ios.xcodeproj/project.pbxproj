@@ -1900,6 +1900,11 @@
 		D355246217F5E42500096CA3 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
 		D355246317F5E42500096CA3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0CFE61D15BE3D0E00264229 /* CoreMotion.framework */; };
 		D355246417F5E42500096CA3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A06D9C151728D63D00704732 /* CoreText.framework */; };
+		D35C0BF41808637C0071B674 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D35C0BF31808637C0071B674 /* XCTest.framework */; };
+		D35C0BF51808637C0071B674 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D35C0BF61808637C0071B674 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D35C0BFC1808637C0071B674 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D35C0BFA1808637C0071B674 /* InfoPlist.strings */; };
+		D35C0BFE1808637D0071B674 /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -3160,6 +3165,13 @@
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
+		D35C0C001808637D0071B674 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D355243517F5E42500096CA3;
+			remoteInfo = CCPhysicsTest;
+		};
 		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
@@ -3726,6 +3738,12 @@
 		D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = tests/CCPhysicsTest.m; sourceTree = "<group>"; };
 		D355246817F5E42500096CA3 /* CCPhysicsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCPhysicsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ClickAndMoveTest copy-Info.plist"; path = "/Users/slembcke/Development/cocos2d-iphone/ClickAndMoveTest copy-Info.plist"; sourceTree = "<absolute>"; };
+		D35C0BF21808637C0071B674 /* CCPhysicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D35C0BF31808637C0071B674 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		D35C0BF91808637C0071B674 /* CCPhysicsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCPhysicsTests-Info.plist"; sourceTree = "<group>"; };
+		D35C0BFB1808637C0071B674 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
+		D35C0BFF1808637D0071B674 /* CCPhysicsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsTests-Prefix.pch"; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4431,6 +4449,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D35C0BEF1808637C0071B674 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D35C0BF41808637C0071B674 /* XCTest.framework in Frameworks */,
+				D35C0BF61808637C0071B674 /* UIKit.framework in Frameworks */,
+				D35C0BF51808637C0071B674 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EDA0FFE96D400C7C82E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -4606,6 +4634,7 @@
 				2B44E494163383A0000492D8 /* ClippingNodeTest.app */,
 				A6ED000D17D893DB002B4973 /* TouchTest.app */,
 				D355246817F5E42500096CA3 /* CCPhysicsTest.app */,
+				D35C0BF21808637C0071B674 /* CCPhysicsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -4620,6 +4649,7 @@
 				50B130FC0DFE0923003BAB56 /* tests */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				50671C1211B99FC8006C0061 /* Resources-iPad */,
+				D35C0C08180863A70071B674 /* unit tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */,
@@ -4674,6 +4704,7 @@
 				A034FF85149DC993009F11AA /* GameKit.framework */,
 				503092B210447296005F7AFC /* libz.dylib */,
 				A06BF84C168109170018A802 /* libsqlite3.dylib */,
+				D35C0BF31808637C0071B674 /* XCTest.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -5387,6 +5418,33 @@
 			);
 			name = Misc;
 			path = Resources/Misc;
+			sourceTree = "<group>";
+		};
+		D35C0BF71808637C0071B674 /* CCPhysicsTests */ = {
+			isa = PBXGroup;
+			children = (
+				D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */,
+				D35C0BF81808637C0071B674 /* Supporting Files */,
+			);
+			path = CCPhysicsTests;
+			sourceTree = "<group>";
+		};
+		D35C0BF81808637C0071B674 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D35C0BF91808637C0071B674 /* CCPhysicsTests-Info.plist */,
+				D35C0BFA1808637C0071B674 /* InfoPlist.strings */,
+				D35C0BFF1808637D0071B674 /* CCPhysicsTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D35C0C08180863A70071B674 /* unit tests */ = {
+			isa = PBXGroup;
+			children = (
+				D35C0BF71808637C0071B674 /* CCPhysicsTests */,
+			);
+			name = "unit tests";
 			sourceTree = "<group>";
 		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
@@ -6230,6 +6288,24 @@
 			productReference = D355246817F5E42500096CA3 /* CCPhysicsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D35C0BF11808637C0071B674 /* CCPhysicsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D35C0C071808637D0071B674 /* Build configuration list for PBXNativeTarget "CCPhysicsTests" */;
+			buildPhases = (
+				D35C0BEE1808637C0071B674 /* Sources */,
+				D35C0BEF1808637C0071B674 /* Frameworks */,
+				D35C0BF01808637C0071B674 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D35C0C011808637D0071B674 /* PBXTargetDependency */,
+			);
+			name = CCPhysicsTests;
+			productName = CCPhysicsTests;
+			productReference = D35C0BF21808637C0071B674 /* CCPhysicsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DA5F0EC10FFE96D400C7C82E /* Bug422 */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA5F0EE10FFE96D400C7C82E /* Build configuration list for PBXNativeTarget "Bug422" */;
@@ -6359,6 +6435,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0460;
+				TargetAttributes = {
+					D35C0BF11808637C0071B674 = {
+						TestTargetID = D355243517F5E42500096CA3;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-tests-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -6428,6 +6509,7 @@
 				507C0EE611D609290075E747 /* Bug899 */,
 				502BF54411E39CC30030C477 /* Bug914 */,
 				D355243517F5E42500096CA3 /* CCPhysicsTest */,
+				D35C0BF11808637C0071B674 /* CCPhysicsTests */,
 			);
 		};
 /* End PBXProject section */
@@ -8480,6 +8562,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D35C0BF01808637C0071B674 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D35C0BFC1808637C0071B674 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0EC40FFE96D400C7C82E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9241,6 +9331,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D35C0BEE1808637C0071B674 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D35C0BFE1808637D0071B674 /* CCPhysicsTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA5F0ED70FFE96D400C7C82E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -9680,6 +9778,11 @@
 			name = cocos2d;
 			targetProxy = D355243717F5E42500096CA3 /* PBXContainerItemProxy */;
 		};
+		D35C0C011808637D0071B674 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D355243517F5E42500096CA3 /* CCPhysicsTest */;
+			targetProxy = D35C0C001808637D0071B674 /* PBXContainerItemProxy */;
+		};
 		E03A50EC135525C200D4B515 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = E03A4F331355041F00D4B515 /* ShaderTest */;
@@ -9721,6 +9824,17 @@
 			targetProxy = E0D44E1A129198750094708A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D35C0BFA1808637C0071B674 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D35C0BFB1808637C0071B674 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		05CA7B0210ED674700F12774 /* Debug */ = {
@@ -11294,6 +11408,78 @@
 			};
 			name = Release;
 		};
+		D35C0C021808637D0071B674 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CCPhysicsTest.app/CCPhysicsTest";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsTests/CCPhysicsTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "CCPhysicsTests/CCPhysicsTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D35C0C031808637D0071B674 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/CCPhysicsTest.app/CCPhysicsTest";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "CCPhysicsTests/CCPhysicsTests-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "CCPhysicsTests/CCPhysicsTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 		DA5F0EE20FFE96D400C7C82E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -11898,6 +12084,15 @@
 			buildConfigurations = (
 				D355246617F5E42500096CA3 /* Debug */,
 				D355246717F5E42500096CA3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D35C0C071808637D0071B674 /* Build configuration list for PBXNativeTarget "CCPhysicsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D35C0C021808637D0071B674 /* Debug */,
+				D35C0C031808637D0071B674 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

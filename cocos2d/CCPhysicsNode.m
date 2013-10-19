@@ -251,6 +251,12 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// CCDrawNode used for drawing the debug overlay.
 	// Only allocated if CCPhysicsNode.debugDraw is YES.
 	CCDrawNode *_debug;
+	
+	// How much time passes per fixedUpdate.
+	ccTime _fixedTimestep;
+	
+	// "left-over" time from the last update.
+	ccTime _accumulator;
 }
 
 // Used by CCNode.physicsNode
@@ -276,9 +282,18 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		
 		_debug = [CCDrawNode node];
 		[self addChild:_debug z:NSIntegerMax];
+		
+		self.fixedRate = 60;
+		self.maxDeltaTime = 1.0/15.0;
 	}
 	
 	return self;
+}
+
+-(void)setFixedRate:(ccTime)fixedRate
+{
+	_fixedRate = fixedRate;
+	_fixedTimestep = 1.0/fixedRate;
 }
 
 -(CGPoint)gravity {return _space.gravity;}
@@ -406,8 +421,15 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(void)update:(ccTime)delta
 {
-	// TODO need a real fixed time step here.
-	[self fixedUpdate:1.0/60.0];
+	// Add the current dynamic timestep to the accumulator.
+	_accumulator += MIN(delta, _maxDeltaTime);
+	
+	// Subtract off fixed-sized chunks of time from the accumulator and step
+	while(_accumulator > _fixedTimestep){
+		[self fixedUpdate:_fixedTimestep];
+		_accumulator -= _fixedTimestep;
+		_fixedTime += _fixedTimestep;
+	}
 }
 
 //MARK: Debug Drawing:

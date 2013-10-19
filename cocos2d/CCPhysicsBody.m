@@ -168,6 +168,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 //MARK: Collision and Contact:
 
+-(BOOL)sensor {return _shape.sensor;}
+-(void)setSensor:(BOOL)sensor {_shape.sensor = sensor;}
+
 -(id)collisionGroup {return _shape.group;};
 -(void)setCollisionGroup:(id)collisionGroup {_shape.group = collisionGroup;}
 
@@ -182,6 +185,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 		return [self.physicsNode categoriesForBitmask:_shape.filter.categories];
 	}
 }
+
 -(void)setCollisionCategories:(NSArray *)collisionCategories
 {
 	CCPhysicsNode *physics = self.physicsNode;

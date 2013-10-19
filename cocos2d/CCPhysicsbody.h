@@ -98,6 +98,9 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Collision and Contact:
 
+/// Sensors call collision delegate methods, but don't cause collisions between bodies.
+/// Defaults to NO.
+@property(nonatomic, assign) BOOL sensor;
 /// If two physics bodies share the same group identifier, then they don't collide.
 /// Defaults to nil.
 @property(nonatomic, assign) id collisionGroup;

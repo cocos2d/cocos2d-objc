@@ -72,9 +72,9 @@
 
 static inline
 CCPhysicsBody *
-GetBodyIfRunning(CCNode *self)
+GetBodyIfRunning(CCNode *node)
 {
-	return (self->_isRunning ? self->_physicsBody : nil);
+	return (node->_isRunning ? node->_physicsBody : nil);
 }
 
 static inline CGAffineTransform
@@ -89,86 +89,28 @@ NodeToPhysicsTransform(CCNode *node)
 		}
 	}
 	
-	@throw @"Node is not added to a CCPhysicsNode";
+	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
+}
+
+static inline float
+NodeToPhysicsRotation(CCNode *node)
+{
+	float rotation = 0.0;
+	for(; node; node = node.parent){
+		if(node.isPhysicsNode){
+			return rotation;
+		} else {
+			rotation -= node.rotation;
+		}
+	}
+	
+	@throw [NSException exceptionWithName:@"CCPhysics Error" reason:@"Node is not added to a CCPhysicsNode" userInfo:nil];
 }
 
 static inline CGAffineTransform
-RigidBodyToParentTransform(CCNode *self, CCPhysicsBody *body)
+RigidBodyToParentTransform(CCNode *node, CCPhysicsBody *body)
 {
-	return cpTransformMult(cpTransformInverse(NodeToPhysicsTransform(self.parent)), body.absoluteTransform);
-}
-
-static inline
-CGPoint GetPosition(CCNode *self)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		// Return the position of the anchor point
-		CGPoint anchor = self->_anchorPointInPoints;
-		return cpTransformPoint(RigidBodyToParentTransform(self, body), cpv(anchor.x*self->_scaleX, anchor.y*self->_scaleY));
-	} else {
-		return self->_position;
-	}
-}
-
-static inline void
-SetPosition(CCNode *self, CGPoint position)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		// This is *ridiculously* inefficient, but works for now.
-		CGPoint currentPosition = GetPosition(self);
-		CGPoint delta = ccpSub(position, currentPosition);
-		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
-	} else {
-		self->_position = position;
-	}
-}
-
-static inline float
-GetRotationX(CCNode *self)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		CGAffineTransform transform = RigidBodyToParentTransform(self, body);
-		return -CC_RADIANS_TO_DEGREES(atan2f(transform.b, transform.a));
-	} else {
-		return self->_rotationalSkewX;
-	}
-}
-
-static inline float
-GetRotationY(CCNode *self)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		CGAffineTransform transform = RigidBodyToParentTransform(self, body);
-		return 90.0f - CC_RADIANS_TO_DEGREES(atan2f(transform.d, transform.c));
-	} else {
-		return self->_rotationalSkewX;
-	}
-}
-
-static inline void
-SetRotationX(CCNode *self, float rotation)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		@throw @"Not yet implemented";
-	} else {
-		self->_rotationalSkewX = rotation;
-	}
-}
-
-static inline void
-SetRotationY(CCNode *self, float rotation)
-{
-	CCPhysicsBody *body = GetBodyIfRunning(self);
-	if(body){
-		@throw @"Not yet implemented";
-	} else {
-		self->_rotationalSkewY = rotation;
-	}
+	return cpTransformMult(cpTransformInverse(NodeToPhysicsTransform(node.parent)), body.absoluteTransform);
 }
 
 // XXX: Yes, nodes might have a sort problem once every 15 days if the game runs at 60 FPS and each frame sprites are reordered.
@@ -290,35 +232,49 @@ static NSUInteger globalOrderOfArrival = 1;
 // getters synthesized, setters explicit
 -(void) setRotation: (float)newRotation
 {
-	SetRotationX(self, newRotation);
-	SetRotationY(self, newRotation);
-	_isTransformDirty = _isInverseDirty = YES;
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		body.absoluteRadians = -CC_DEGREES_TO_RADIANS(newRotation + NodeToPhysicsRotation(self.parent));
+	} else {
+		_rotationalSkewX = newRotation;
+		_rotationalSkewY = newRotation;
+		_isTransformDirty = _isInverseDirty = YES;
+	}
 }
 
 -(float) rotation
 {
-	NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
-	return GetRotationX(self);
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return -CC_RADIANS_TO_DEGREES(body.absoluteRadians) + NodeToPhysicsRotation(self.parent);
+	} else {
+		NSAssert( _rotationalSkewX == _rotationalSkewY, @"CCNode#rotation. RotationX != RotationY. Don't know which one to return");
+		return _rotationalSkewX;
+	}
 }
 
 -(float)rotationalSkewX {
-	return GetRotationX(self);
+	return _rotationalSkewX;
 }
 
 -(void) setRotationalSkewX: (float)newX
 {
-	SetRotationX(self, newX);
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
+	_rotationalSkewX = newX;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
 -(float)rotationalSkewY
 {
-	return GetRotationY(self);
+	return _rotationalSkewY;
 }
 
 -(void) setRotationalSkewY: (float)newY
 {
-	SetRotationY(self, newY);
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
+	_rotationalSkewY = newY;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
@@ -336,14 +292,32 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) setSkewX:(float)newSkewX
 {
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
 	_skewX = newSkewX;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
 -(void) setSkewY:(float)newSkewY
 {
+	NSAssert(_physicsBody == nil, @"Currently physics nodes don't support skewing.");
+	
 	_skewY = newSkewY;
 	_isTransformDirty = _isInverseDirty = YES;
+}
+
+static inline
+CGPoint GetPosition(CCNode *node)
+{
+	CCPhysicsBody *body = GetBodyIfRunning(node);
+	if(body){
+		// Return the position of the anchor point
+//		CGPoint anchor = node->_anchorPointInPoints;
+//		return cpTransformPoint(RigidBodyToParentTransform(node, body), cpv(anchor.x*node->_scaleX, anchor.y*node->_scaleY));
+		return cpTransformPoint([node nodeToParentTransform], node->_anchorPointInPoints);
+	} else {
+		return node->_position;
+	}
 }
 
 -(CGPoint)position
@@ -353,8 +327,25 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) setPosition: (CGPoint)newPosition
 {
-	SetPosition(self, newPosition);
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		#warning This is *ridiculously* inefficient, but works for now.
+		CGPoint currentPosition = GetPosition(self);
+		CGPoint delta = ccpSub(newPosition, currentPosition);
+		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
+	} else {
+		_position = newPosition;
+		_isTransformDirty = _isInverseDirty = YES;
+	}
+}
+
+-(void)setPositionType:(CCPositionType)positionType
+{
+	NSAssert(_physicsBody == nil, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+	_positionType = positionType;
 	_isTransformDirty = _isInverseDirty = YES;
+	
+	#warning Position is not preserved when changing position type.
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -922,39 +913,28 @@ static NSUInteger globalOrderOfArrival = 1;
 -(BOOL)isPhysicsNode {return NO;}
 -(CCPhysicsNode *)physicsNode {return (self.isPhysicsNode ? (CCPhysicsNode *)self : self.parent.physicsNode);}
 
--(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
+-(void)setupPhysicsBody:(CCPhysicsBody *)physicsBody
 {
-	if(physicsBody != _physicsBody){
-		// nil out the old body's node reference.
-		_physicsBody.node = nil;
-		
-		// Copy the old body position and rotation over
-		physicsBody.absolutePosition = _physicsBody.absolutePosition;
-		physicsBody.absoluteRadians = _physicsBody.absoluteRadians;
-		
-		_physicsBody = physicsBody;
-		_physicsBody.node = self;
-	}
-}
-
--(void)setupPhysics
-{
-	CCPhysicsBody *physicsBody = _physicsBody;
 	if(physicsBody){
 		CCPhysicsNode *physics = self.physicsNode;
 		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
 		
-		// Grab the origin position and approximate rotation of the node from it's transform.
-		// The transform may not be a rigid transform, so we'll need to approximate one.
-		CGAffineTransform transform = NodeToPhysicsTransform(self);
-		
 		// Copy the node's rotation first.
 		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
-		physicsBody.absoluteRadians = atan2(transform.b, transform.a);
+		physicsBody.absoluteRadians = CC_DEGREES_TO_RADIANS(NodeToPhysicsRotation(self));
+		
+		// Grab the origin position of the node from it's transform.
+		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
 		[_physicsBody willAddToPhysicsNode:physics];
-		[physics.space smartAdd:_physicsBody];
+		[physics.space smartAdd:physicsBody];
+		
+#ifndef NDEBUG
+		// Reset these to zero since they shouldn't be read anyway.
+		_position = CGPointZero;
+		_rotationalSkewX = _rotationalSkewY = 0.0f;
+#endif
 	}
 }
 
@@ -964,10 +944,36 @@ static NSUInteger globalOrderOfArrival = 1;
 		CCPhysicsNode *physics = self.physicsNode;
 		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be a descendent of a CCPhysicsNode.");
 		
-		// TODO need to reset the node's position info.
+		// Copy the positional data back to the ivars.
+		_position = self.position;
+		_rotationalSkewX = _rotationalSkewY = self.rotation;
 		
 		[_physicsBody didRemoveFromPhysicsNode:physics];
 		[physics.space smartRemove:_physicsBody];
+	}
+}
+
+-(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
+{
+	if(physicsBody){
+		NSAssert(_positionType.xUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+		NSAssert(_positionType.yUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
+		NSAssert(_scaleType == kCCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
+		NSAssert(_rotationalSkewX == _rotationalSkewY, @"Currently physics nodes don't support skewing.");
+		NSAssert(_skewX == 0.0 && _skewY == 0.0, @"Currently physics nodes don't support skewing.");
+	}
+	
+	if(physicsBody != _physicsBody){
+		if(_isRunning){
+			[self teardownPhysics];
+			[self setupPhysicsBody:physicsBody];
+		}
+		
+		// nil out the old body's node reference.
+		_physicsBody.node = nil;
+		
+		_physicsBody = physicsBody;
+		_physicsBody.node = self;
 	}
 }
 
@@ -980,10 +986,10 @@ static NSUInteger globalOrderOfArrival = 1;
 -(void) onEnter
 {
 	[_children makeObjectsPerformSelector:@selector(onEnter)];
+	
+	[self setupPhysicsBody:_physicsBody];
+	
 	[self resumeSchedulerAndActions];
-	
-	[self setupPhysics];
-	
 	_isRunning = YES;
 }
 
@@ -999,11 +1005,11 @@ static NSUInteger globalOrderOfArrival = 1;
 
 -(void) onExit
 {
+	[self teardownPhysics];
+	
 	[self pauseSchedulerAndActions];
 	_isRunning = NO;
 	
-	[self teardownPhysics];
-
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }
 
@@ -1259,30 +1265,33 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (CGAffineTransform)nodeToParentTransform
 {
-	// TODO need to find a better way to mark physics transforms as dirty.
-	if ( _isTransformDirty || _physicsBody ) {
+	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
+	if(physicsBody){
+		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
+		return cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
+	} else if ( _isTransformDirty ) {
         
         // TODO: Make this more efficient
         CGSize contentSizeInPoints = self.contentSizeInPoints;
         _anchorPointInPoints = ccp( contentSizeInPoints.width * _anchorPoint.x, contentSizeInPoints.height * _anchorPoint.y );
         
         // Convert position to points
-        CGPoint positionInPoints = [self convertPositionToPoints:GetPosition(self) type:_positionType];
+        CGPoint positionInPoints = [self convertPositionToPoints:_position type:_positionType];
 		float x = positionInPoints.x;
 		float y = positionInPoints.y;
         
 		// Rotation values
 		// Change rotation code to handle X and Y
 		// If we skew with the exact same value for both x and y then we're simply just rotating
-//		float cx = 1, sx = 0, cy = 1, sy = 0;
-//		if( _rotationX || _rotationY ) {
-			float radiansX = -CC_DEGREES_TO_RADIANS(GetRotationX(self));
-			float radiansY = -CC_DEGREES_TO_RADIANS(GetRotationY(self));
-			float cx = cosf(radiansX);
-			float sx = sinf(radiansX);
-			float cy = cosf(radiansY);
-			float sy = sinf(radiansY);
-//		}
+		float cx = 1, sx = 0, cy = 1, sy = 0;
+		if( _rotationalSkewX || _rotationalSkewY ) {
+			float radiansX = -CC_DEGREES_TO_RADIANS(_rotationalSkewX);
+			float radiansY = -CC_DEGREES_TO_RADIANS(_rotationalSkewY);
+			cx = cosf(radiansX);
+			sx = sinf(radiansX);
+			cy = cosf(radiansY);
+			sy = sinf(radiansY);
+		}
 
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
         
@@ -1326,7 +1335,7 @@ static NSUInteger globalOrderOfArrival = 1;
 - (CGAffineTransform)parentToNodeTransform
 {
 	// TODO Need to find a better way to mark physics transforms as dirty
-	if ( _isInverseDirty || _physicsBody ) {
+	if ( _isInverseDirty || GetBodyIfRunning(self) ) {
 		_inverse = CGAffineTransformInvert([self nodeToParentTransform]);
 		_isInverseDirty = NO;
 	}
