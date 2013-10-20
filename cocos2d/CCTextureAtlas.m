@@ -182,7 +182,7 @@
 
 		glGenBuffers(2, &self->_buffersVBO[0]);
 
-		glBindBuffer(GL_ARRAY_BUFFER, self->__buffersVBO[0]);
+		glBindBuffer(GL_ARRAY_BUFFER, self->_buffersVBO[0]);
 
 		// vertices
 		glEnableVertexAttribArray(kCCVertexAttrib_Position);
@@ -196,7 +196,7 @@
 		glEnableVertexAttribArray(kCCVertexAttrib_TexCoords);
 		glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (GLvoid*) offsetof( ccV3F_C4B_T2F, texCoords));
 
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self->__buffersVBO[1]);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, self->_buffersVBO[1]);
 
 		// Must unbind the VAO before changing the element buffer.
 		ccGLBindVAO(0);

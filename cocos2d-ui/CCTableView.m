@@ -299,7 +299,7 @@
     
     if (_dataSourceFlags.heightForRowAtIndex)
     {
-        for (int i = 0; i < numRows; i++)
+        for (NSUInteger i = 0; i < numRows; i++)
         {
             layerHeight += [_dataSource tableView:self heightForRowAtIndex:i];
         }
@@ -314,7 +314,7 @@
     
     // Create empty placeholders for all rows
     _rows = [NSMutableArray arrayWithCapacity:numRows];
-    for (int i = 0; i < numRows; i++)
+    for (NSUInteger i = 0; i < numRows; i++)
     {
         [_rows addObject:[[CCTableViewCellHolder alloc] init]];
     }
@@ -356,7 +356,7 @@
 
 - (void) setRowHeight:(CGFloat)rowHeight
 {
-    if (_rowHeight != rowHeight)
+    if ((int)_rowHeight != (int)rowHeight)
     {
         _rowHeight = rowHeight;
         [self reloadData];        

@@ -10550,7 +10550,13 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					external/Box2d,
+					CocosDenshion,
+				);
 				PRODUCT_NAME = "build all tests";
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 			};
 			name = Debug;
 		};
@@ -10561,8 +10567,14 @@
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_THUMB_SUPPORT = NO;
+				HEADER_SEARCH_PATHS = (
+					external/kazmath/include,
+					external/Box2d,
+					CocosDenshion,
+				);
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_NAME = "build all tests";
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -11069,7 +11081,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = cocos2d;
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 			};
 			name = Debug;
 		};
@@ -11113,7 +11125,7 @@
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				USER_HEADER_SEARCH_PATHS = cocos2d;
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 			};
 			name = Release;
 		};

@@ -47,13 +47,6 @@
 #endif
 
 
-#if CC_NODE_RENDER_SUBPIXEL
-#define RENDER_IN_SUBPIXEL
-#else
-#define RENDER_IN_SUBPIXEL(__ARGS__) (ceil(__ARGS__))
-#endif
-
-
 #pragma mark - Node
 
 @interface CCNode ()
@@ -332,7 +325,7 @@ CGPoint GetPosition(CCNode *node)
 {
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
-		#warning This is *ridiculously* inefficient, but works for now.
+		//TODO: This is "ridiculously" inefficient, but works for now.
 		CGPoint currentPosition = GetPosition(self);
 		CGPoint delta = ccpSub(newPosition, currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
@@ -348,7 +341,7 @@ CGPoint GetPosition(CCNode *node)
 	_positionType = positionType;
 	_isTransformDirty = _isInverseDirty = YES;
 	
-	#warning Position is not preserved when changing position type.
+	//TODO: Position is not preserved when changing position type.
 }
 
 -(void) setAnchorPoint:(CGPoint)point
@@ -962,11 +955,16 @@ CGPoint GetPosition(CCNode *node)
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody){
+        
+        BOOL rotationalSkewPresent = (ABS(_rotationalSkewX - _rotationalSkewY)) > 0.00001f;
+        
 		NSAssert(_positionType.xUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
 		NSAssert(_positionType.yUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
 		NSAssert(_scaleType == kCCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
-		NSAssert(_rotationalSkewX == _rotationalSkewY, @"Currently physics nodes don't support skewing.");
+		NSAssert(rotationalSkewPresent == NO, @"Currently physics nodes don't support skewing.");
 		NSAssert(_skewX == 0.0 && _skewY == 0.0, @"Currently physics nodes don't support skewing.");
+        
+        (void)rotationalSkewPresent;
 	}
 	
 	if(physicsBody != _physicsBody){

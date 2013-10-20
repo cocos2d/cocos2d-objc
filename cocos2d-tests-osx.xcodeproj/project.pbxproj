@@ -4937,6 +4937,20 @@
 			remoteGlobalIDString = E674602517EDBB8E00C1277B;
 			remoteInfo = libpng;
 		};
+		E6B7665D1813EABC00C6B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E28A516A5EB5B007F064C /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E61FF31A17EE6B1300D1857B;
+			remoteInfo = CocosMac;
+		};
+		E6B7665F1813EABC00C6B09B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E28A516A5EB5B007F064C /* cocos2d-osx.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E61FF33E17EE6B2800D1857B;
+			remoteInfo = CocosMac_Script;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -5842,6 +5856,8 @@
 				A02E28C616A5EB5C007F064C /* libkazmath.a */,
 				E674608B17EDBFDC00C1277B /* libCocosDenshion.a */,
 				E674608D17EDBFDC00C1277B /* liblibpng.a */,
+				E6B7665E1813EABC00C6B09B /* libCocosMac.a */,
+				E6B766601813EABC00C6B09B /* libCocosMac_Script.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6888,6 +6904,20 @@
 			fileType = archive.ar;
 			path = liblibpng.a;
 			remoteRef = E674608C17EDBFDC00C1277B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E6B7665E1813EABC00C6B09B /* libCocosMac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocosMac.a;
+			remoteRef = E6B7665D1813EABC00C6B09B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		E6B766601813EABC00C6B09B /* libCocosMac_Script.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libCocosMac_Script.a;
+			remoteRef = E6B7665F1813EABC00C6B09B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -12311,9 +12341,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
-					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
-					cocos2d,
 					CocosDenshion,
 					"external/JavaScript/jsbindings/src/**",
 					external/CCBReader/CCBReader,
@@ -12323,7 +12351,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = cocos2d/include/;
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 			};
 			name = Debug;
 		};
@@ -12345,9 +12373,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					external/Box2d,
-					external/Chipmunk/include/chipmunk,
 					external/kazmath/include,
-					cocos2d,
 					CocosDenshion,
 					"external/JavaScript/jsbindings/src/**",
 					external/CCBReader/CCBReader,
@@ -12356,7 +12382,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				OTHER_LDFLAGS = "-ObjC";
 				SDKROOT = macosx;
-				USER_HEADER_SEARCH_PATHS = cocos2d/include/;
+				USER_HEADER_SEARCH_PATHS = "cocos2d external/Chipmunk/objectivec/include external/Chipmunk/include";
 			};
 			name = Release;
 		};

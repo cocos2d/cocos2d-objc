@@ -25,7 +25,10 @@
 #import "CCNode.h"
 #import "CCPhysicsbody.h"
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
+#pragma clang diagnostic pop COCOS2D
 
 
 /// Contains information about colliding physics bodies.

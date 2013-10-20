@@ -26,7 +26,10 @@
 #import "CCPhysics+ObjectiveChipmunk.h"
 
 // TODO temporary
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 static inline void NYI(){@throw @"Not Yet Implemented";}
+#pragma clang diagnostic pop COCOS2D
 
 @implementation CCPhysicsJoint
 

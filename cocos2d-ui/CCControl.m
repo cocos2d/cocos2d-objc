@@ -230,7 +230,7 @@
     }
     else
     {
-        _state &= ~CCControlStateDisabled;
+        _state = (CCControlState)(_state & (~CCControlStateDisabled));
     }
     
     [self stateChanged];
@@ -252,7 +252,7 @@
     }
     else
     {
-        _state &= ~CCControlStateSelected;
+        _state = (CCControlState)(_state & (~CCControlStateSelected));
     }
     
     [self stateChanged];
@@ -274,7 +274,7 @@
     }
     else
     {
-        _state &= ~CCControlStateHighlighted;
+        _state = (CCControlState)(_state & (~CCControlStateHighlighted));
     }
     
     [self stateChanged];
@@ -358,7 +358,8 @@
 
 - (CCControlState) controlStateFromString:(NSString*)stateName
 {
-    CCControlState state = 0;
+    CCControlState state = CCControlStateNormal;
+    
     if ([stateName isEqualToString:@"Normal"]) state = CCControlStateNormal;
     else if ([stateName isEqualToString:@"Highlighted"]) state = CCControlStateHighlighted;
     else if ([stateName isEqualToString:@"Disabled"]) state = CCControlStateDisabled;

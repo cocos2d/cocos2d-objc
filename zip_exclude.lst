@@ -9,3 +9,8 @@
 *.jar
 Utilities/*
 Utilities-Debug/*
+external/*
+external/Chipmunk/xcode/libGLEW/lib/*
+external/Chipmunk/xcode/libglfw/lib/*
+libglfw.a
+libGLEW.a

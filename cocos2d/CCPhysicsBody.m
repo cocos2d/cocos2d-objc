@@ -29,7 +29,10 @@
 #define DEFAULT_ELASTICITY 0.2
 
 // TODO temporary
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 static inline void NYI(){@throw @"Not Yet Implemented";}
+#pragma clang diagnostic pop COCOS2D
 
 
 @implementation CCPhysicsBody
@@ -108,7 +111,10 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
 	body->_body.userData = body;
 	
-	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
+    int countInt = (int)count;
+    NSAssert (countInt < 0, @"Precision issue with count parameter, CCPhysicsBody");
+    
+	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:countInt verts:points transform:cpTransformIdentity radius:cornerRadius];
 	body->_shape.mass = 1.0;
 	body->_shape.friction = DEFAULT_FRICTION;
 	body->_shape.elasticity = DEFAULT_ELASTICITY;
