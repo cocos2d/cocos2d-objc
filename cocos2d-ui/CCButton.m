@@ -231,6 +231,17 @@
 
 #endif
 
+- (void) triggerAction
+{
+    // Handle toggle buttons
+    if (self.togglesSelectedState)
+    {
+        self.selected = !self.selected;
+    }
+    
+    [super triggerAction];
+}
+
 - (void) updatePropertiesForState:(CCControlState)state
 {
     // Update background
@@ -264,7 +275,14 @@
         }
         else
         {
-            [self updatePropertiesForState:CCControlStateNormal];
+            if (self.selected)
+            {
+                [self updatePropertiesForState:CCControlStateSelected];
+            }
+            else
+            {
+                [self updatePropertiesForState:CCControlStateNormal];
+            }
             
             [_label stopAllActions];
             if (_zoomWhenHighlighted)

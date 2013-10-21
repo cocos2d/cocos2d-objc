@@ -50,6 +50,7 @@
 @property (nonatomic,assign) float horizontalPadding;
 @property (nonatomic,assign) float verticalPadding;
 @property (nonatomic,strong) NSString* title;
+@property (nonatomic,assign) BOOL togglesSelectedState;
 
 /// -----------------------------------------------------------------------
 /// @name Creating Buttons
