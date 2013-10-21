@@ -234,6 +234,7 @@
 		D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
 		D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */; };
 		D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3547A73181588D500FBE6FB /* CCSchedulerTests.m */; };
 		D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31BB17F227F500E94B3B /* XCTest.framework */; };
 		D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
@@ -622,6 +623,7 @@
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
 		D33803E9180331A90072D8FE /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
+		D3547A73181588D500FBE6FB /* CCSchedulerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSchedulerTests.m; sourceTree = "<group>"; };
 		D36F7E35181580A000E94F72 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36F7E3B181580A000E94F72 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
 		D36F7E3D181580A000E94F72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1257,6 +1259,7 @@
 			isa = PBXGroup;
 			children = (
 				D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */,
+				D3547A73181588D500FBE6FB /* CCSchedulerTests.m */,
 				D36F7E3A181580A000E94F72 /* Supporting Files */,
 			);
 			path = UnitTests;
@@ -1834,6 +1837,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */,
+				D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
