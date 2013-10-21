@@ -250,7 +250,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	
 	// CCDrawNode used for drawing the debug overlay.
 	// Only allocated if CCPhysicsNode.debugDraw is YES.
-	CCDrawNode *_debug;
+	CCDrawNode *_debugDraw;
 	
 	// How much time passes per fixedUpdate.
 	ccTime _fixedTimestep;
@@ -279,9 +279,6 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
-		
-		_debug = [CCDrawNode node];
-		[self addChild:_debug z:NSIntegerMax];
 		
 		self.fixedRate = 60;
 		self.maxDeltaTime = 1.0/15.0;
@@ -434,6 +431,17 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 //MARK: Debug Drawing:
 
+-(BOOL)debugDraw {return (_debugDraw != nil);}
+-(void)setDebugDraw:(BOOL)debugDraw
+{
+	if(debugDraw){
+		_debugDraw = [CCDrawNode node];
+		[self addChild:_debugDraw z:NSIntegerMax];
+	} else {
+		[_debugDraw removeFromParent];
+	}
+}
+
 static inline ccColor4F ToCCColor4f(cpSpaceDebugColor c){return (ccColor4F){c.r, c.g, c.b, c.a};}
 
 static void
@@ -477,18 +485,18 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 		(cpSpaceDebugDrawColorForShapeImpl)ColorForShape,
 		{0.0, 1.0, 0.0, 1.0},
 		{1.0, 0.0, 0.0, 1.0},
-		_debug,
+		_debugDraw,
 	};
 	
-	[_debug clear];
+	[_debugDraw clear];
 	cpSpaceDebugDraw(_space.space, &drawOptions);
 	
 	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
 		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
-			[_debug drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
+			[_debugDraw drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
 			
 			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-			[_debug drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
+			[_debugDraw drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
 //			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
 		}
 	});
