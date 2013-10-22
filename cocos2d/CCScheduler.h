@@ -28,9 +28,12 @@
 #import "Support/uthash.h"
 #import "ccTypes.h"
 
-
+/// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
+/// Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
 @protocol CCSchedulerTarget<NSObject>
 
+/// Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
+/// Targets are sorted by priority so lower priorities are called first.
 @property(nonatomic, readonly) NSInteger priority;
 
 @optional
@@ -44,11 +47,6 @@
 @end
 
 
-@class CCTimer;
-
-/// Block type to use with CCScheduler.
-typedef void (^CCTimerBlock)(CCTimer *timer);
-
 /// Wraps a block scheduled with a CCScheduler.
 @interface CCTimer : NSObject
 
@@ -59,15 +57,28 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 /// Defaults to the initial delay value.
 @property(nonatomic, assign) ccTime repeatInterval;
 
-
+/// Is the timer paused or not.
 @property(nonatomic, assign) BOOL paused;
+
+/// Elapsed time since the last invocation.
 @property(nonatomic, readonly) ccTime deltaTime;
+
+/// Absolute time the timer will invoke at.
 @property(nonatomic, readonly) ccTime invokeTime;
 
--(void)reschedule:(ccTime)delay;
+/// Set the timer to repeat once with the given interval.
+/// Can be used from a timer block to make the timer run again.
+-(void)repeatOnceWithInterval:(ccTime)interval;
+
+/// Cancel the timer.
 -(void)invalidate;
 
 @end
+
+
+/// Block type to use with CCScheduler.
+typedef void (^CCTimerBlock)(CCTimer *timer);
+
 
 #define CCTimerRepeatForever NSUIntegerMax
 
@@ -110,10 +121,20 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 @property (nonatomic, assign) BOOL paused;
 
+/// Current time the scheduler is calling a block for.
 @property(nonatomic, readonly) ccTime currentTime;
+
+/// Time of the most recent update: calls.
 @property(nonatomic, readonly) ccTime lastUpdateTime;
+
+/// Time of the most recent fixedUpdate: calls.
 @property(nonatomic, readonly) ccTime lastFixedUpdateTime;
+
+/// Maximum allowed time step.
+/// If the CPU can't keep up with the game, time will slow down.
 @property(nonatomic, assign) ccTime maxTimeStep;
+
+/// The time between fixedUpdate: calls.
 @property(nonatomic, assign) ccTime fixedTimeStep;
 
 /** 'update' the scheduler.
