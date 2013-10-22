@@ -204,7 +204,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	// actions
 	[self stopAllActions];
-	[self unscheduleAllSelectors];
+	[self.scheduler unscheduleTarget:self];
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
@@ -989,7 +989,7 @@ CGPoint GetPosition(CCNode *node)
 	
 	[self setupPhysicsBody:_physicsBody];
 	
-	[self resumeSchedulerAndActions];
+	self.paused = NO;
 	_isRunning = YES;
 }
 
@@ -1007,7 +1007,7 @@ CGPoint GetPosition(CCNode *node)
 {
 	[self teardownPhysics];
 	
-	[self pauseSchedulerAndActions];
+	self.paused = YES;
 	_isRunning = NO;
 	
 	[_children makeObjectsPerformSelector:@selector(onExit)];
@@ -1066,10 +1066,16 @@ CGPoint GetPosition(CCNode *node)
 
 #pragma mark CCNode - Scheduler
 
+-(NSUInteger)priority
+{
+	return 0;
+}
+
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
-		[self unscheduleAllSelectors];
+		#warning TODO needs to be recursive.
+		[_scheduler unscheduleTarget:self];
 
 		_scheduler = scheduler;
 	}
@@ -1077,7 +1083,7 @@ CGPoint GetPosition(CCNode *node)
 
 -(CCScheduler*) scheduler
 {
-	return _scheduler;
+	return (_scheduler ?: self.parent.scheduler);
 }
 
 -(void) scheduleUpdate
@@ -1087,12 +1093,7 @@ CGPoint GetPosition(CCNode *node)
 
 -(void) scheduleUpdateWithPriority:(NSInteger)priority
 {
-	[_scheduler scheduleUpdateForTarget:self priority:priority paused:!_isRunning];
-}
-
--(void) unscheduleUpdate
-{
-	[_scheduler unscheduleUpdateForTarget:self];
+	[self.scheduler scheduleUpdateForTarget:self priority:priority paused:!_isRunning];
 }
 
 -(void) schedule:(SEL)selector
@@ -1110,7 +1111,7 @@ CGPoint GetPosition(CCNode *node)
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 
-	[_scheduler scheduleSelector:selector forTarget:self interval:interval repeat:repeat delay:delay paused:!_isRunning];
+	[self.scheduler scheduleSelector:selector forTarget:self interval:interval repeat:repeat delay:delay paused:!_isRunning];
 }
 
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
@@ -1118,34 +1119,17 @@ CGPoint GetPosition(CCNode *node)
 	[self schedule:selector interval:0.f repeat:0 delay:delay];
 }
 
--(void) unschedule:(SEL)selector
+-(void)setPaused:(BOOL)paused
 {
-	// explicit nil handling
-	if (selector == nil)
-		return;
-
-	[_scheduler unscheduleSelector:selector forTarget:self];
-}
-
--(void) unscheduleAllSelectors
-{
-	[_scheduler unscheduleAllForTarget:self];
-}
-- (void) resumeSchedulerAndActions
-{
-	[_scheduler resumeTarget:self];
-	[_actionManager resumeTarget:self];
-}
-
-- (void) pauseSchedulerAndActions
-{
-	[_scheduler pauseTarget:self];
-	[_actionManager pauseTarget:self];
-}
-
-/* override me */
--(void) update:(ccTime)delta
-{
+	if(paused){
+		[self.scheduler pauseTarget:self];
+		[_actionManager pauseTarget:self];
+	} else {
+		[self.scheduler resumeTarget:self];
+		[_actionManager resumeTarget:self];
+	}
+	
+	_paused = paused;
 }
 
 #pragma mark CCNode Transform

@@ -104,6 +104,21 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 @end
 
 
+@protocol CCSchedulerTarget
+
+@property(nonatomic, readonly) NSUInteger priority;
+@property(nonatomic, readonly) BOOL paused;
+
+@optional
+
+/// update: will be called automatically every frame if implemented, and the node is "live".
+-(void) update:(ccTime)delta;
+
+/// fixedUpdate: will be called automatically every tick if implemented, and the node is "live".
+-(void) fixedUpdate:(ccTime)delta;
+
+@end
+
 //
 // CCScheduler
 //
@@ -229,7 +244,7 @@ struct _hashUpdateEntry;
  This also includes the "update" selector.
  @since v0.99.3
  */
--(void) unscheduleAllForTarget:(id)target;
+-(void) unscheduleTarget:(id)target;
 
 /** Unschedules all selectors and blocks from all targets.
  You should NEVER call this method, unless you know what you are doing.

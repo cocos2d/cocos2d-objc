@@ -33,6 +33,7 @@
 #import "ccGLStateCache.h"
 #import "kazmath/kazmath.h"
 #import "CCResponder.h"
+#import "CCScheduler.h"
 
 enum {
 	kCCNodeTagInvalid = -1,
@@ -98,7 +99,7 @@ enum {
  -# The node will be moved according to the camera values (camera)
  -# The grid will render the captured screen
  */
-@interface CCNode : CCResponder < CCResponderProtocol > {
+@interface CCNode : CCResponder < CCResponderProtocol, CCSchedulerTarget > {
 	// rotation angle
 	float _rotationalSkewX, _rotationalSkewY;
 
@@ -501,35 +502,6 @@ enum {
 
 // timers
 
-/** check whether a selector is scheduled. */
-//-(BOOL) isScheduled: (SEL) selector;
-
-/** schedules the "update" method. It will use the order number 0. This method will be called every frame.
- Scheduled methods with a lower order value will be called before the ones that have a higher order value.
- Only one "update" method could be scheduled per node.
-
- @since v0.99.3
- */
--(void) scheduleUpdate;
-
-/** schedules the "update" selector with a custom priority. This selector will be called every frame.
- Scheduled selectors with a lower priority will be called before the ones that have a higher value.
- Only one "update" selector could be scheduled per node (You can't have 2 'update' selectors).
-
- @since v0.99.3
- */
--(void) scheduleUpdateWithPriority:(NSInteger)priority;
-
-/* unschedules the "update" method.
-
- @since v0.99.3
- */
--(void) unscheduleUpdate;
-
-/** schedules a selector.
- The scheduled selector will be ticked every frame
- */
--(void) schedule: (SEL) s;
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  If time is 0, it is recommended to use 'scheduleUpdate' instead.
@@ -548,27 +520,7 @@ enum {
 */
 - (void) scheduleOnce:(SEL) selector delay:(ccTime) delay;
 
-/** unschedules a custom selector.*/
--(void) unschedule: (SEL) s;
-
-/** unschedule all scheduled selectors: custom selectors, and the 'update' selector.
- Actions are not affected by this method.
-@since v0.99.3
- */
--(void) unscheduleAllSelectors;
-
-/** resumes all scheduled selectors and actions.
- Called internally by onEnter
- */
--(void) resumeSchedulerAndActions;
-/** pauses all scheduled selectors and actions.
- Called internally by onExit
- */
--(void) pauseSchedulerAndActions;
-
-/* Update will be called automatically every frame if "scheduleUpdate" is called, and the node is "live"
- */
--(void) update:(ccTime)delta;
+@property(nonatomic, assign) BOOL paused;
 
 // transformation methods
 
