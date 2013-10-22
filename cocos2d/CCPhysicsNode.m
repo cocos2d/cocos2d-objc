@@ -394,19 +394,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return NO;
 }
 
-//MARK: Lifecycle and Scheduling
-
--(void)onEnter
-{
-	[super onEnter];
-	[self scheduleUpdate];
-}
-
--(void)onExit
-{
-	[super onExit];
-	[self unscheduleUpdate];
-}
+//MARK: Time Stepping
 
 -(void)fixedUpdate:(ccTime)delta
 {

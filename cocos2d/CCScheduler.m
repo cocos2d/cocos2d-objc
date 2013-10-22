@@ -682,7 +682,7 @@ typedef struct _hashSelectorEntry
 	for(tHashTimerEntry *element=hashForTimers; element != NULL; ) {
 		id target = element->target;
 		element=element->hh.next;
-		[self unscheduleAllForTarget:target];
+		[self unscheduleTarget:target];
 	}
 
 	// Updates selectors
@@ -707,7 +707,7 @@ typedef struct _hashSelectorEntry
 
 }
 
--(void) unscheduleAllForTarget:(id)target
+-(void) unscheduleTarget:(id)target
 {
 	// explicit nil handling
 	if( target == nil )

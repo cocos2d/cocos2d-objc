@@ -92,8 +92,6 @@
 
         [self setTexture:texture];
         [self setColor:color];
-        [self scheduleUpdate];
-		
     }
     return self;
 }
