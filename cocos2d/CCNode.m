@@ -1066,7 +1066,7 @@ CGPoint GetPosition(CCNode *node)
 
 #pragma mark CCNode - Scheduler
 
--(NSUInteger)priority
+-(NSInteger)priority
 {
 	return 0;
 }
@@ -1086,37 +1086,30 @@ CGPoint GetPosition(CCNode *node)
 	return (_scheduler ?: self.parent.scheduler);
 }
 
--(void) scheduleUpdate
+-(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval
 {
-	[self scheduleUpdateWithPriority:0];
+	return [self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
 }
 
--(void) scheduleUpdateWithPriority:(NSInteger)priority
-{
-	[self.scheduler scheduleUpdateForTarget:self priority:priority paused:!_isRunning];
-}
-
--(void) schedule:(SEL)selector
-{
-	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
-}
-
--(void) schedule:(SEL)selector interval:(ccTime)interval
-{
-	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
-}
-
--(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+-(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
-
-	[self.scheduler scheduleSelector:selector forTarget:self interval:interval repeat:repeat delay:delay paused:!_isRunning];
+	
+	void (*imp)(id, SEL, ccTime) = (__typeof(imp))[self methodForSelector:selector];
+	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
+		imp(self, selector, t.deltaTime);
+	} forTarget:self withDelay:delay];
+	
+	timer.repeatCount = CCTimerRepeatForever;
+	timer.repeatInterval = interval;
+	
+	return timer;
 }
 
-- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
+- (CCTimer *) scheduleOnce:(SEL) selector delay:(ccTime) delay
 {
-	[self schedule:selector interval:0.f repeat:0 delay:delay];
+	return [self schedule:selector interval:0.f repeat:0 delay:delay];
 }
 
 -(void)setPaused:(BOOL)paused
@@ -1125,7 +1118,7 @@ CGPoint GetPosition(CCNode *node)
 		[self.scheduler pauseTarget:self];
 		[_actionManager pauseTarget:self];
 	} else {
-		[self.scheduler resumeTarget:self];
+		[self.scheduler scheduleTarget:self];
 		[_actionManager resumeTarget:self];
 	}
 	

@@ -48,6 +48,11 @@
 	return self;
 }
 
+-(NSInteger)priority
+{
+	return NSIntegerMin;
+}
+
 - (NSString*) description
 {
 	return [NSString stringWithFormat:@"<%@ = %p>", [self class], self];
