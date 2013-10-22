@@ -61,9 +61,6 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 
 
 @interface CCScheduler (Private) <CCSchedulerTarget>
-
--(void)insertTimer:(CCTimer *)timer;
-
 @end
 
 
@@ -164,6 +161,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 {
 	_block = INVALIDATED_BLOCK;
 	_scheduledTarget = nil;
+	_repeatCount = 0;
 }
 
 @end
@@ -174,6 +172,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 -(id)initWithDelay:(ccTime)delay scheduler:(CCScheduler *)scheduler scheduledTarget:(CCScheduledTarget *)scheduledTarget block:(CCTimerBlock)block;
 {
 	if((self = [super init])){
+		_deltaTime = delay;
 		_invokeTime = scheduler.currentTime + delay;
 		_repeatInterval = delay;
 		_scheduler = scheduler;
@@ -218,16 +217,16 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 		_updates = [NSMutableArray array];
 		NSArray *fixedUpdates = _fixedUpdates = [NSMutableArray array];
 		
-//		// Schedule a timer to run the fixedUpdate: methods.
-//		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
-//			for(int i=0, count=fixedUpdates.count; i<count; i++){
-//				CCScheduledTarget *scheduledTarget = fixedUpdates[i];
-//				scheduledTarget->_fixedUpdate_IMP(scheduledTarget->_target, FIXED_UPDATE_SELECTOR, timer.deltaTime);
-//			}
-//		 } forTarget:self withDelay:_fixedTimeStep];
-//		 
-//		 _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-//		 _fixedUpdateTimer.repeatInterval = _fixedTimeStep;
+		// Schedule a timer to run the fixedUpdate: methods.
+		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
+			for(int i=0, count=fixedUpdates.count; i<count; i++){
+				CCScheduledTarget *scheduledTarget = fixedUpdates[i];
+				scheduledTarget->_fixedUpdate_IMP(scheduledTarget->_target, FIXED_UPDATE_SELECTOR, timer.repeatInterval);
+			}
+		 } forTarget:self withDelay:0];
+		 
+		 _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
+		 _fixedUpdateTimer.repeatInterval = 1.0/60.0;
 	}
 	
 	return self;
@@ -237,6 +236,9 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 {
 	return NSIntegerMax;
 }
+
+-(ccTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
+-(void)setFixedTimeStep:(ccTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
 static void
 Swap(NSMutableArray *heap, NSUInteger a, NSUInteger b)
@@ -301,7 +303,8 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
 	
 	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
-	[self insertTimer:timer];
+	[_heap addObject:timer];
+	HeapMoveUp(_heap, _heap.count - 1);
 	
 	timer.next = scheduledTarget.timers;
 	scheduledTarget.timers = timer;
@@ -325,7 +328,9 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 		#warning TODO doesn't really handle rescheduling timers.
 		if(timer.repeatCount > 0){
 			if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
-			timer.invokeTime += timer.repeatInterval;
+			
+			ccTime delay = timer.deltaTime = timer.repeatInterval;
+			timer.invokeTime += delay;
 			
 			HeapMoveDown(_heap, 0);
 		} else {
@@ -410,15 +415,3 @@ PrioritySearch(NSArray *array, NSInteger priority)
 }
 
 @end
-
-
-@implementation CCScheduler(Private)
-
--(void)insertTimer:(CCTimer *)timer
-{
-	[_heap addObject:timer];
-	HeapMoveUp(_heap, _heap.count - 1);
-}
-
-@end
-
