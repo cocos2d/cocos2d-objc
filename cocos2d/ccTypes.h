@@ -139,6 +139,8 @@ static inline ccColor4F ccc4FFromccc4B(ccColor4B c)
 	return (ccColor4F){c.r/255.f, c.g/255.f, c.b/255.f, c.a/255.f};
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 /** returns YES if both ccColor4F are equal. Otherwise it returns NO.
  @since v0.99.1
  */
@@ -151,7 +153,7 @@ static inline ccColor4B ccc4BFromccc4F(ccColor4F c)
 {
 	return (ccColor4B){(GLubyte)(c.r*255), (GLubyte)(c.g*255), (GLubyte)(c.b*255), (GLubyte)(c.a*255)};
 }
-
+#pragma clang diagnostic pop COCOS2D
 
 /** A vertex composed of 2 GLfloats: x, y
  @since v0.8

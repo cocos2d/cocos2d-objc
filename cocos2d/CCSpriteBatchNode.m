@@ -44,7 +44,7 @@
 // external
 #import "kazmath/GL/matrix.h"
 
-const NSUInteger defaultCapacity = 29;
+static const NSUInteger defaultCapacity = 29;
 
 #pragma mark -
 #pragma mark CCSpriteBatchNode
@@ -169,8 +169,9 @@ const NSUInteger defaultCapacity = 29;
 }
 
 // override addChild:
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCNode *)childNode z:(NSInteger)z tag:(NSInteger) aTag
 {
+    CCSprite *child = (CCSprite *)childNode;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
@@ -181,8 +182,9 @@ const NSUInteger defaultCapacity = 29;
 }
 
 // override reorderChild
--(void) reorderChild:(CCSprite*)child z:(NSInteger)z
+-(void) reorderChild:(CCNode *)childNode z:(NSInteger)z
 {
+    CCSprite *child = (CCSprite *)childNode;
 	NSAssert( child != nil, @"Child must be non-nil");
 	NSAssert( [_children containsObject:child], @"Child doesn't belong to Sprite" );
 
@@ -194,8 +196,9 @@ const NSUInteger defaultCapacity = 29;
 }
 
 // override removeChild:
--(void)removeChild: (CCSprite *)sprite cleanup:(BOOL)doCleanup
+-(void)removeChild: (CCNode *)spriteNode cleanup:(BOOL)doCleanup
 {
+    CCSprite *sprite = (CCSprite *)spriteNode;
 	// explicit nil handling
 	if (sprite == nil)
 		return;
@@ -632,8 +635,9 @@ const NSUInteger defaultCapacity = 29;
 }
 
 
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag
+-(id) addSpriteWithoutQuad:(CCNode *)childNode z:(NSUInteger)z tag:(NSInteger)aTag
 {
+    CCSprite *child = (CCSprite *)childNode;
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	

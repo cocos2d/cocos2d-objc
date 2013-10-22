@@ -40,20 +40,7 @@
 // -----------------------------------------------------------------
 
 #import <UIKit/UIKit.h>
-
-#define RESPONDER UIResponder
-
-@protocol CCResponderProtocol <NSObject>
-
-@optional
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
-
-@end
-
-// -----------------------------------------------------------------
+#import "Platforms/iOS/CCResponderManager.h"
 
 @interface CCRunningResponder : NSObject
 
@@ -130,7 +117,7 @@ enum
 
 // -----------------------------------------------------------------
 
-@property (nonatomic) BOOL eventProcessed;                          // event was processed
+@property (nonatomic) BOOL eventProcessed;                        // event was processed
 
 // -----------------------------------------------------------------
 
@@ -147,13 +134,6 @@ enum
 // -----------------------------------------------------------------
 
 @end
-
-
-
-
-
-
-
 
 
 

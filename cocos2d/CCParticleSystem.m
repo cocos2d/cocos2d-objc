@@ -303,7 +303,7 @@
 
 		if (_batchNode)
 		{
-			for (int i = 0; i < _totalParticles; i++)
+			for (NSUInteger i = 0; i < _totalParticles; i++)
 			{
 				_particles[i].atlasIndex=i;
 			}
@@ -347,6 +347,8 @@
 
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) initParticle: (tCCParticle*) particle
 {
 	//CGPoint currentPosition = _position;
@@ -441,6 +443,7 @@
 		particle->mode.B.degreesPerSecond = CC_DEGREES_TO_RADIANS(_mode.B.rotatePerSecond + _mode.B.rotatePerSecondVar * CCRANDOM_MINUS1_1());
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(BOOL) addParticle
 {
@@ -479,6 +482,8 @@
 }
 
 #pragma mark ParticleSystem - MainLoop
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) update: (ccTime) dt
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
@@ -629,13 +634,14 @@
 
 	CC_PROFILER_STOP_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void) updateWithNoTime
 {
 	[self update:0.0f];
 }
 
--(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;
+-(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos
 {
 	// should be overriden
 }
@@ -866,7 +872,7 @@
 
 		if( batchNode ) {
 			//each particle needs a unique index
-			for (int i = 0; i < _totalParticles; i++)
+			for (NSUInteger i = 0; i < _totalParticles; i++)
 			{
 				_particles[i].atlasIndex=i;
 			}

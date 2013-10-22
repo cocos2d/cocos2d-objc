@@ -53,6 +53,8 @@
 	return [[self alloc] initWithDuration:d ];
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(id) initWithDuration: (ccTime) d
 {
 	if( (self=[super init]) ) {
@@ -68,6 +70,7 @@
 	}
 	return self;
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(id) copyWithZone: (NSZone*) zone
 {
@@ -202,6 +205,8 @@
 	[super stop];
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) update: (ccTime) t
 {
 
@@ -262,6 +267,7 @@
 	[_actions[found] update: new_t];
 	_last = found;
 }
+#pragma clang diagnostic pop COCOS2D
 
 - (CCActionInterval *) reverse
 {
@@ -520,7 +526,7 @@
 	return copy;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 
@@ -642,10 +648,11 @@
 	return [[[self class] allocWithZone: zone] initWithDuration:[self duration] position:_positionDelta];
 }
 
--(void) startWithTarget:(CCNode *)target
+-(void) startWithTarget:(id)target
 {
-	[super startWithTarget:target];
-	_previousPos = _startPos = [target position];
+    CCNode *targetNode = (CCNode *)target;
+	[super startWithTarget:targetNode];
+	_previousPos = _startPos = targetNode.position;
 }
 
 -(CCActionInterval*) reverse
@@ -698,7 +705,7 @@
 	return copy;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_positionDelta = ccpSub( _endPosition, [(CCNode*)_target position] );
@@ -732,7 +739,7 @@
 	return copy;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 
@@ -793,7 +800,7 @@
 	return self;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_deltaX = _skewX;
@@ -884,7 +891,7 @@
 #pragma mark - CCJumpTo
 
 @implementation CCJumpTo
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_delta = ccp( _delta.x - _startPosition.x, _delta.y - _startPosition.y );
@@ -1046,7 +1053,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	return copy;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_startScaleX = [_target scaleX];
@@ -1067,7 +1074,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCScaleBy
 @implementation CCScaleBy
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_deltaX = _startScaleX * _endScaleX - _startScaleX;
@@ -1188,7 +1195,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	return copy;
 }
 
--(void) startWithTarget:(CCNode *)aTarget
+-(void) startWithTarget:(id)aTarget
 {
 	[super startWithTarget:aTarget];
 	_fromOpacity = [(id<CCRGBAProtocol>)_target opacity];

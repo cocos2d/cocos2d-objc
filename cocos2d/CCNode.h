@@ -31,7 +31,12 @@
 #import "CCProtocols.h"
 #import "ccConfig.h"
 #import "ccGLStateCache.h"
+
+#pragma clang diagnostic pop COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/kazmath.h"
+#pragma clang diagnostic push COCOS2D
+
 #import "CCResponder.h"
 
 enum {

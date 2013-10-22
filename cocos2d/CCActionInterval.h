@@ -256,7 +256,7 @@ Example:
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
+-(void) startWithTarget:(id)aTarget;
 @end
 
 /** bezier configuration structure
@@ -294,7 +294,7 @@ typedef struct _ccBezierConfig {
 	ccBezierConfig _toConfig;
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
+-(void) startWithTarget:(id)aTarget;
 @end
 
 /** Scales a CCNode object to a zoom factor by modifying its scale attribute.
@@ -327,7 +327,7 @@ typedef struct _ccBezierConfig {
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) startWithTarget:(CCNode *)aTarget;
+-(void) startWithTarget:(id)aTarget;
 @end
 
 /** Blinks a CCNode object by modifying its visible attribute

@@ -116,7 +116,7 @@ typedef struct _KerningHashElement
 }
 
 // Character set
-@property (nonatomic, strong, readonly) NSCharacterSet *characterSet;
+@property (nonatomic, readonly) NSCharacterSet *characterSet;
 
 // atlasName
 @property (nonatomic, readwrite, strong) NSString *atlasName;
@@ -196,7 +196,7 @@ typedef struct _KerningHashElement
 +(void) purgeCachedData;
 
 /** alignment used for the label */
-@property (nonatomic,assign,readonly) CCTextAlignment alignment;
+@property (nonatomic,readonly) CCTextAlignment alignment;
 /** fntFile used for the font */
 @property (nonatomic,strong) NSString* fntFile;
 /** conforms to CCRGBAProtocol protocol */

@@ -133,6 +133,8 @@ static BOOL _mixerRateSet = NO;
 	_mixerSampleRate = sampleRate;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 - (void) _testGetGain {
 	float testValue = 0.7f;
 	ALuint testSourceId = _sources[0].sourceId;
@@ -142,6 +144,7 @@ static BOOL _mixerRateSet = NO;
 	alGetSourcef(testSourceId, AL_GAIN, &gainVal);
 	getGainWorks_ = (gainVal == testValue);
 }
+#pragma clang diagnostic pop COCOS2D
 
 //Generate sources one at a time until we fail
 -(void) _generateSources {

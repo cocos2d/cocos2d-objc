@@ -463,11 +463,15 @@ int compareInts (const void * a, const void * b)
 
 -(NSUInteger) atlasIndexForExistantZ:(NSUInteger)z
 {
-#warning Needs to be improved (old solution below)
+    //TODO: Improve old solution
+//#warning Needs to be improved (old solution below)
     NSUInteger idx = 0;
     for (NSNumber* zValue in _atlasIndexArray)
     {
-        if ([zValue intValue] == z) return idx;
+        if ([zValue unsignedIntValue] == z)
+        {
+            return idx;
+        }
         idx++;
     }
     /*
@@ -499,7 +503,8 @@ int compareInts (const void * a, const void * b)
 #pragma mark CCTMXLayer - adding / remove tiles
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos
 {
-	[self setTileGID:gid at:pos withFlags:NO];	
+    //TODO: Should we really cast here?
+	[self setTileGID:gid at:pos withFlags:(ccTMXTileFlags)NO];
 }
 
 -(void) setTileGID:(uint32_t)gid at:(CGPoint)pos withFlags:(ccTMXTileFlags)flags
@@ -549,8 +554,11 @@ int compareInts (const void * a, const void * b)
 	NSAssert(NO, @"addChild: is not supported on CCTMXLayer. Instead use setTileGID:at:/tileAt:");
 }
 
--(void) removeChild:(CCSprite*)sprite cleanup:(BOOL)cleanup
+-(void) removeChild:(CCNode*)spriteChild cleanup:(BOOL)cleanup
 {
+    CCSprite *sprite = (CCSprite *)spriteChild;
+    NSAssert([sprite isKindOfClass:[CCSprite class]],@"sprite must be a CCSprite object or subclass");
+    
 	// allows removing nil objects
 	if( ! sprite )
 		return;

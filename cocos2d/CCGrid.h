@@ -29,7 +29,11 @@
 #import "CCNode.h"
 #import "ccTypes.h"
 #import "CCDirector.h"
+
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/mat4.h"
+#pragma clang diagnostic pop COCOS2D
 
 @class CCTexture2D;
 @class CCGrabber;

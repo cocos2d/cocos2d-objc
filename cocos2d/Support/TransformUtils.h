@@ -23,7 +23,7 @@
  *
  */
 
-#import "../ccMacros.h"
+#import "ccMacros.h"
 #import "../Platforms/CCGL.h"
 
 #ifdef __CC_PLATFORM_IOS

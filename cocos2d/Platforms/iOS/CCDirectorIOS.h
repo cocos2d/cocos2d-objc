@@ -26,12 +26,16 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 
 #ifdef __CC_PLATFORM_IOS
 
-#import "../../CCDirector.h"
+#import "CCDirector.h"
+
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/mat4.h"
+#pragma clang diagnostic pop COCOS2D
 
 /** CCDirector extensions for iPhone
  */

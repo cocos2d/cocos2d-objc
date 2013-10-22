@@ -133,8 +133,9 @@ enum {
 /*
  * override add:
  */
--(void) addChild:(CCMenuItem*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCNode*)childItem z:(NSInteger)z tag:(NSInteger) aTag
 {
+    CCMenuItem *child = (CCMenuItem *)childItem;
 	NSAssert( [child isKindOfClass:[CCMenuItem class]], @"Menu only supports MenuItem objects as children");
 	[super addChild:child z:z tag:aTag];
 }
@@ -242,7 +243,7 @@ enum {
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
 	
 	row = 0; rowHeight = 0; rowColumns = 0;
-	float w, x, y = height / 2;
+	float w = 0.0, x = 0.0, y = height / 2;
 	for (CCMenuItem* item in _children) {
 		if(rowColumns == 0) {
 			rowColumns = [(NSNumber *) [rows objectAtIndex:row] unsignedIntegerValue];
@@ -326,7 +327,7 @@ enum {
 	CGSize winSize = [[CCDirector sharedDirector] winSize];
 	
 	column = 0; columnWidth = 0; columnRows = 0;
-	float x = -width / 2, y;
+	float x = -width / 2, y = 0.0;
 	
 	for (CCMenuItem* item in _children){
 		if(columnRows == 0) {

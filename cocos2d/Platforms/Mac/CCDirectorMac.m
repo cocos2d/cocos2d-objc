@@ -25,7 +25,7 @@
 
 // Only compile this code on Mac. These files should not be included on your iOS project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #ifdef __CC_PLATFORM_MAC
 
 #import <sys/time.h>
@@ -34,16 +34,19 @@
 #import "CCGLView.h"
 #import "CCWindow.h"
 
-#import "../../CCNode.h"
-#import "../../CCScene.h"
-#import "../../CCScheduler.h"
-#import "../../ccMacros.h"
-#import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
+#import "CCNode.h"
+#import "CCScene.h"
+#import "CCScheduler.h"
+#import "ccMacros.h"
+#import "CCGLProgram.h"
+#import "ccGLStateCache.h"
 
 // external
-#import "kazmath/kazmath.h"
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/GL/matrix.h"
+#import "kazmath/kazmath.h"
+#pragma clang diagnostic pop COCOS2D
 
 #pragma mark -
 #pragma mark Director Mac extensions
@@ -253,12 +256,15 @@
     if( _resizeMode == kCCDirectorResize_AutoScale && ! CGSizeEqualToSize(_originalWinSize, CGSizeZero ) ) {
 		size = _originalWinSize;
     }
+    
+    BOOL isProjectionValid = NO;
 
 	[self setViewport];
 
 	switch (projection) {
 		case kCCDirectorProjection2D:
-
+        {
+            isProjectionValid = YES;
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
 
@@ -269,11 +275,11 @@
 			kmGLMatrixMode(KM_GL_MODELVIEW);
 			kmGLLoadIdentity();
 			break;
-
+        }
 
 		case kCCDirectorProjection3D:
 		{
-
+            isProjectionValid = YES;
 			float zeye = [self getZEye];
 
 			kmGLMatrixMode(KM_GL_PROJECTION);
@@ -304,14 +310,18 @@
 		}
 
 		case kCCDirectorProjectionCustom:
+        {
+            isProjectionValid = YES;
 			if( [_delegate respondsToSelector:@selector(updateProjection)] )
 				[_delegate updateProjection];
 			break;
-
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
+        }
 	}
+    
+    if (isProjectionValid == NO)
+    {
+        CCLOG(@"cocos2d: Director: unrecognized projection");
+    }
 
 	_projection = projection;
 

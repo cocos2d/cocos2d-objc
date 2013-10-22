@@ -475,6 +475,8 @@
 			return;
 		}
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wcast-align"
 		if( _layerAttribs & (TMXLayerAttribGzip | TMXLayerAttribZlib) ) {
 			unsigned char *deflated;
 			CGSize s = [layer layerSize];
@@ -494,8 +496,11 @@
 
 			layer.tiles = (unsigned int*) deflated;
 		} else
+        {
 			layer.tiles = (unsigned int*) buffer;
-
+        }
+#pragma clang diagnostic pop COCOS2D
+        
 		[_currentString setString:@""];
 
 	} else if ([elementName isEqualToString:@"map"]) {

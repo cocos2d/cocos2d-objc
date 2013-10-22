@@ -48,7 +48,9 @@
 	return copy;
 }
 
--(void) startWithTarget:(id) aTarget;
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
+-(void) startWithTarget:(id) aTarget
 {
 	[super startWithTarget:aTarget];
 	_from = [(kProgressTimerCast)_target percentage];
@@ -58,6 +60,7 @@
 	if( _from == 100)
 		_from = 0;
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void) update: (ccTime) t
 {
@@ -91,7 +94,7 @@
 	return [[self class] actionWithDuration:_duration from:_to to:_from];
 }
 
--(void) startWithTarget:(id) aTarget;
+-(void) startWithTarget:(id) aTarget
 {
 	[super startWithTarget:aTarget];
 }

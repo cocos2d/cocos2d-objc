@@ -69,7 +69,7 @@ static void setProgram(CCNode *n, CCGLProgram *p) {
 
 - (id)initWithStencil:(CCNode *)stencil
 {
-    if (self = [super init]) {
+    if ((self = [super init])) {
         self.stencil = stencil;
         self.alphaThreshold = 1;
         self.inverted = NO;

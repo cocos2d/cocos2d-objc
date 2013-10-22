@@ -35,7 +35,10 @@
 #define MAX_CACHED_CATEGORIES 64
 
 // TODO temporary
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wmissing-noreturn"
 static inline void NYI(){@throw @"Not Yet Implemented";}
+#pragma clang diagnostic pop COCOS2D
 
 
 @interface CCPhysicsNode(Private)
@@ -331,7 +334,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	
 	unsigned int count;
 	Method *methods = class_copyMethodList(class, &count);
-	for(int i=0; i<count; i++){
+	for(unsigned int i=0; i<count; i++){
 		NSString *name = NSStringFromSelector(method_getName(methods[i]));
 		
 		if([name hasPrefix:@"ccPhysicsCollision"]){
@@ -479,7 +482,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 		(cpSpaceDebugDrawPolygonImpl)DrawPolygon,
 		(cpSpaceDebugDrawDotImpl)DrawDot,
 		
-		CP_SPACE_DEBUG_DRAW_SHAPES | CP_SPACE_DEBUG_DRAW_CONSTRAINTS | CP_SPACE_DEBUG_DRAW_COLLISION_POINTS,
+		((cpSpaceDebugDrawFlags)(CP_SPACE_DEBUG_DRAW_SHAPES | CP_SPACE_DEBUG_DRAW_CONSTRAINTS | CP_SPACE_DEBUG_DRAW_COLLISION_POINTS)),
 		
 		{1.0, 1.0, 1.0, 1.0},
 		(cpSpaceDebugDrawColorForShapeImpl)ColorForShape,
@@ -493,10 +496,10 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	
 	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
 		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
-			[_debugDraw drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
+			[self->_debugDraw drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
 			
 			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-			[_debugDraw drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
+			[self->_debugDraw drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
 //			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
 		}
 	});
@@ -566,7 +569,7 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	NSString *arr[MAX_CATEGORIES] = {};
 	NSUInteger count = 0;
 	
-	for(int i=0; i<_categories.count; i++){
+	for(NSUInteger i=0; i<_categories.count; i++){
 		if(bitmask & (1<<i)){
 			arr[i] = [_categories objectAtIndex:i];
 		}

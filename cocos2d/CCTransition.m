@@ -29,9 +29,9 @@
 
 // -----------------------------------------------------------------
 
-const float CCTransitionDownScaleMin = 1.0f;                        // range for transition downscales
-const float CCTransitionDownScaleRetina = 2.0f;
-const float CCTransitionDownScaleMax = 128.0f;
+static const float CCTransitionDownScaleMin = 1.0f;                        // range for transition downscales
+static const float CCTransitionDownScaleRetina = 2.0f;
+static const float CCTransitionDownScaleMax = 128.0f;
 
 typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 {
@@ -100,7 +100,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
                  color:(ccColor3B)color
 {
     self = [self initWithDuration:duration];
-
+    
     // set up fixed function transition
     _fixedFunction = function;
     _direction = direction;
@@ -111,12 +111,31 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     // find out where the outgoing scene will end (if it is a transition with movement)
     CGSize size = [CCDirector sharedDirector].winSize;
     switch (direction) {
-        case CCTransitionDirectionDown: _outgoingDestination = CGPointMake(0, -size.height); break;
-        case CCTransitionDirectionLeft: _outgoingDestination = CGPointMake(-size.width, 0); break;
-        case CCTransitionDirectionRight: _outgoingDestination = CGPointMake(size.width, 0); break;
-        case CCTransitionDirectionUp: _outgoingDestination = CGPointMake(0, size.height); break;
-        case CCTransitionDirectionInvalid: _outgoingDestination = CGPointZero; break;
-        default: NSAssert(NO, @"Unknown fixed transition");
+        case CCTransitionDirectionDown:
+        {
+            _outgoingDestination = CGPointMake(0, -size.height);
+            break;
+        }
+        case CCTransitionDirectionLeft:
+        {
+            _outgoingDestination = CGPointMake(-size.width, 0);
+            break;
+        }
+        case CCTransitionDirectionRight:
+        {
+            _outgoingDestination = CGPointMake(size.width, 0);
+            break;
+        }
+        case CCTransitionDirectionUp:
+        {
+            _outgoingDestination = CGPointMake(0, size.height);
+            break;
+        }
+        case CCTransitionDirectionInvalid:
+        {
+            _outgoingDestination = CGPointZero;
+            break;
+        }
     }
     
     // start actions to move sprites into position (will not start until scene is started by director)
@@ -130,7 +149,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         case CCTransitionFixedFunctionMoveIn:
         case CCTransitionFixedFunctionPush:
             break;
-        default: NSAssert(NO, @"Unknown fixed transition");
     }
     
     // done
@@ -178,11 +196,11 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     [_incomingScene onEnter];
     _outgoingScene = [CCDirector sharedDirector].runningScene;
     [_outgoingScene onExitTransitionDidStart];
-
+    
     // create render textures
     // get viewport size
     CGSize size = [CCDirector sharedDirector].winSize;
-
+    
     // create texture for outgoing scene
     _outgoingTexture = [CCRenderTexture renderTextureWithWidth:size.width / _outgoingDownScale
                                                         height:size.height / _outgoingDownScale
@@ -264,7 +282,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 - (void)renderOutgoing:(float)progress
 {
     float oldScale;
-
+    
     // scale the out scene to fit render texture
     oldScale = _outgoingScene.scale;
     _outgoingScene.scale = oldScale / _outgoingDownScale;
@@ -299,12 +317,14 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _retinaTransition = retinaTransition;
     _incomingDownScale = CCTransitionDownScaleMin;
     _outgoingDownScale = CCTransitionDownScaleMin;
+#ifdef __CC_PLATFORM_IOS
     if (!_retinaTransition && (CC_CONTENT_SCALE_FACTOR() > 1.0))
     {
+
         _incomingDownScale = CCTransitionDownScaleRetina;
         _outgoingDownScale = CCTransitionDownScaleRetina;
-        
     }
+#endif
 }
 
 - (void)setIncomingDownScale:(float)incomingDownScale
@@ -335,26 +355,34 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     switch (_fixedFunction)
     {
         case CCTransitionFixedFunctionCrossFade:
+        {
             _incomingTexture.sprite.opacity = 255 * _progress;
             _outgoingTexture.sprite.opacity = 255 * (1 - _progress);
             break;
+        }
         case CCTransitionFixedFunctionFadeWithColor:
+        {
             glClearColor(_color.r, _color.g, _color.b, _color.a);
             _incomingTexture.sprite.opacity = clampf(512 * (_progress - 0.5), 0, 255);
             _outgoingTexture.sprite.opacity = clampf(255 * (1 - (2 * _progress)), 0, 255);
             break;
+        }
         case CCTransitionFixedFunctionReveal:
+        {
             _outgoingTexture.sprite.position = ccpMult(_outgoingDestination, _progress);
             break;
+        }
         case CCTransitionFixedFunctionMoveIn:
+        {
             _incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + _progress);
             break;
+        }
         case CCTransitionFixedFunctionPush:
+        {
             _outgoingTexture.sprite.position = ccpMult(_outgoingDestination, _progress);
             _incomingTexture.sprite.position = ccpMult(_outgoingDestination, -1 + _progress);
             break;
-        default:
-            break;
+        }
     }
 }
 

@@ -43,6 +43,9 @@
 
 #pragma mark Constants
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wunused-macros"
+
 #define kCCScrollViewBoundsSlowDown 0.5
 #define kCCScrollViewDeacceleration 0.95
 #define kCCScrollViewVelocityLowerCap 20.0
@@ -55,6 +58,8 @@
 
 #define kCCScrollViewActionXTag 8080
 #define kCCScrollViewActionYTag 8081
+
+#pragma clang diagnostic pop COCOS2D
 
 #pragma mark -
 #pragma mark Helper classes
@@ -104,10 +109,11 @@
 }
 
 
--(void) startWithTarget:(CCNode *)target
+-(void) startWithTarget:(id)target
 {
-	[super startWithTarget:target];
-	_startPos = target.position.x;
+    CCNode *targetNode = (CCNode *)target;
+	[super startWithTarget:targetNode];
+	_startPos = targetNode.position.x;
 }
 
 -(void) update: (ccTime) t
@@ -140,10 +146,11 @@
 }
 
 
--(void) startWithTarget:(CCNode *)target
+-(void) startWithTarget:(id)target
 {
-	[super startWithTarget:target];
-	_startPos = target.position.y;
+    CCNode *targetNode = (CCNode *)target;
+	[super startWithTarget:targetNode];
+	_startPos = targetNode.position.y;
 }
 
 -(void) update: (ccTime) t
@@ -336,8 +343,11 @@
 
 - (void) setScrollPosition:(CGPoint)newPos animated:(BOOL)animated
 {
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
     BOOL xMoved = (newPos.x != self.scrollPosition.x);
     BOOL yMoved = (newPos.y != self.scrollPosition.y);
+#pragma clang diagnostic pop COCOS2D
     
     // Check bounds
     if (newPos.x > self.maxScrollX)
@@ -465,8 +475,11 @@
     
     if (!_isPanning)
     {
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
         if (_velocity.x != 0 || _velocity.y != 0)
         {
+#pragma clang diagnostic pop COCOS2D
             CGPoint delta = ccpMult(_velocity, df);
             
             _contentNode.position = ccpAdd(_contentNode.position, delta);

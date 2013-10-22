@@ -210,7 +210,7 @@ do {															\
 
 
 
-#if __CC_PLATFORM_IOS
+#if defined (__CC_PLATFORM_IOS)
 
 /****************************/
 /** RETINA DISPLAY ENABLED **/

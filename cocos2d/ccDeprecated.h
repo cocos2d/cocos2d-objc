@@ -131,9 +131,9 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 +(CCActionManager*) sharedManager DEPRECATED_ATTRIBUTE;
 @end
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 
-#elif __CC_PLATFORM_MAC
+#elif defined(__CC_PLATFORM_MAC)
 
 #endif // __CC_PLATFORM_MAC
 
@@ -276,7 +276,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(BOOL)saveBuffer:(NSString*)name format:(int)format DEPRECATED_ATTRIBUTE;
 // new: -- not implemented on v2.0
 -(NSData*)getUIImageAsDataFromBuffer:(int) format UNAVAILABLE_ATTRIBUTE;
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 // new: getUIImage
 -(UIImage *)getUIImageFromBuffer DEPRECATED_ATTRIBUTE;
 #endif

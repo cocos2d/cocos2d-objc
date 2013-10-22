@@ -34,12 +34,12 @@
 
 @synthesize gridSize = _gridSize;
 
-+(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize;
++(id) actionWithDuration:(ccTime)duration size:(CGSize)gridSize
 {
 	return [[self alloc] initWithDuration:duration size:gridSize];
 }
 
--(id) initWithDuration:(ccTime)duration size:(CGSize)gridSize;
+-(id) initWithDuration:(ccTime)duration size:(CGSize)gridSize
 {
 	if ( (self = [super initWithDuration:duration]) )
 	{
@@ -49,6 +49,8 @@
 	return self;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void)startWithTarget:(id)target
 {
 	[super startWithTarget:target];
@@ -74,6 +76,7 @@
 		t.grid.active = YES;
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(CCGridBase *)grid
 {

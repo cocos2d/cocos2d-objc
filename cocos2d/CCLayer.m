@@ -50,7 +50,7 @@
 #pragma mark -
 #pragma mark Layer
 
-#if __CC_PLATFORM_IOS
+#if defined(__CC_PLATFORM_IOS)
 
 #endif // __CC_PLATFORM_IOS
 
@@ -245,6 +245,8 @@
 	return [super initWithColor:start];
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 - (void) updateColor
 {
     [super updateColor];
@@ -300,6 +302,7 @@
 	_squareColors[3].b = E.b + (S.b - E.b) * ((c - u.x - u.y) / (2.0f * c));
 	_squareColors[3].a = E.a + (S.a - E.a) * ((c - u.x - u.y) / (2.0f * c));
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(ccColor3B) startColor
 {

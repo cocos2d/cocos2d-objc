@@ -39,8 +39,11 @@
 #import "Support/TransformUtils.h"
 #import "Support/OpenGL_Internal.h"
 
-#import "kazmath/kazmath.h"
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/GL/matrix.h"
+#import "kazmath/kazmath.h"
+#pragma clang diagnostic pop COCOS2D
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -351,6 +354,8 @@
 	memcpy(_originalVertices, _vertices, (_gridSize.width+1)*(_gridSize.height+1)*sizeof(ccVertex3F));
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(ccVertex3F)vertex:(CGPoint)pos
 {
 	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
@@ -385,6 +390,7 @@
 	vertArray[index+1] = vertex.y;
 	vertArray[index+2] = vertex.z;
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void)reuse
 {
@@ -515,6 +521,8 @@
 	memcpy(_originalVertices, _vertices, numQuads*12*sizeof(GLfloat));
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void)setTile:(CGPoint)pos coords:(ccQuad3)coords
 {
 	NSAssert( pos.x == (NSUInteger)pos.x && pos.y == (NSUInteger) pos.y , @"Numbers must be integers");
@@ -549,6 +557,7 @@
 
 	return ret;
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void)reuse
 {

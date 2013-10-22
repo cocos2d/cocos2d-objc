@@ -117,8 +117,8 @@ static CCTextureCache *sharedTextureCache;
 		desc = [NSString stringWithFormat:@"<%@ = %p | num of textures =  %lu | keys: %@>",
 			[self class],
 			self,
-			(unsigned long)[_textures count],
-			[_textures allKeys]
+			(unsigned long)[self->_textures count],
+			[self->_textures allKeys]
 			];
 	});
 	return desc;
@@ -151,7 +151,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex;
 		
 	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey:path];
+		tex = [self->_textures objectForKey:path];
 	});
 
 	if(tex) {
@@ -211,7 +211,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex;
 
 	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey:path];
+		tex = [self->_textures objectForKey:path];
 	});
 
 	if(tex) {
@@ -272,7 +272,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey: path];
+		tex = [self->_textures objectForKey: path];
 	});
 
 	if( ! tex ) {
@@ -300,7 +300,7 @@ static CCTextureCache *sharedTextureCache;
             
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
-					[_textures setObject: tex forKey:path];
+					[self->_textures setObject: tex forKey:path];
 				});
 			}else{
 				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
@@ -318,7 +318,7 @@ static CCTextureCache *sharedTextureCache;
 
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
-					[_textures setObject: tex forKey:path];
+					[self->_textures setObject: tex forKey:path];
 				});
 			}else{
 				CCLOG(@"cocos2d: Couldn't create texture for file:%@ in CCTextureCache", path);
@@ -344,7 +344,7 @@ static CCTextureCache *sharedTextureCache;
 	// If key is nil, then create a new texture each time
 	if( key ) {
 		dispatch_sync(_dictQueue, ^{
-			tex = [_textures objectForKey:key];
+			tex = [self->_textures objectForKey:key];
 		});
 		if(tex)
 			return tex;
@@ -354,7 +354,7 @@ static CCTextureCache *sharedTextureCache;
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{
-			[_textures setObject: tex forKey:key];
+			[self->_textures setObject: tex forKey:key];
 		});
 	}else{
 		CCLOG(@"cocos2d: Couldn't add CGImage in CCTextureCache");
@@ -368,13 +368,14 @@ static CCTextureCache *sharedTextureCache;
 -(void) removeAllTextures
 {
 	dispatch_sync(_dictQueue, ^{
-		[_textures removeAllObjects];
+		[self->_textures removeAllObjects];
 	});
 }
 
 -(void) removeUnusedTextures
 {
-#warning Not implemented with ARC
+    //TODO: remove method not implemented with ARC
+//#warning Not implemented with ARC
     /*
 	dispatch_sync(_dictQueue, ^{
 		NSArray *keys = [_textures allKeys];
@@ -395,10 +396,10 @@ static CCTextureCache *sharedTextureCache;
 		return;
 
 	dispatch_sync(_dictQueue, ^{
-		NSArray *keys = [_textures allKeysForObject:tex];
+		NSArray *keys = [self->_textures allKeysForObject:tex];
 
 		for( NSUInteger i = 0; i < [keys count]; i++ )
-			[_textures removeObjectForKey:[keys objectAtIndex:i]];
+			[self->_textures removeObjectForKey:[keys objectAtIndex:i]];
 	});
 }
 
@@ -408,7 +409,7 @@ static CCTextureCache *sharedTextureCache;
 		return;
 
 	dispatch_sync(_dictQueue, ^{
-		[_textures removeObjectForKey:name];
+		[self->_textures removeObjectForKey:name];
 	});
 }
 
@@ -418,7 +419,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D *tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey:key];
+		tex = [self->_textures objectForKey:key];
 	});
 
 	return tex;
@@ -440,7 +441,7 @@ static CCTextureCache *sharedTextureCache;
 	__block CCTexture2D * tex;
 	
 	dispatch_sync(_dictQueue, ^{
-		tex = [_textures objectForKey:path];
+		tex = [self->_textures objectForKey:path];
 	});
 
 	if(tex) {
@@ -450,7 +451,7 @@ static CCTextureCache *sharedTextureCache;
 	tex = [[CCTexture2D alloc] initWithPVRFile: path];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
-			[_textures setObject: tex forKey:path];
+			[self->_textures setObject: tex forKey:path];
 		});
 	}else{
 		CCLOG(@"cocos2d: Couldn't add PVRImage:%@ in CCTextureCache",path);
@@ -470,8 +471,8 @@ static CCTextureCache *sharedTextureCache;
 	__block NSUInteger totalBytes = 0;
 
 	dispatch_sync(_dictQueue, ^{
-		for (NSString* texKey in _textures) {
-			CCTexture2D* tex = [_textures objectForKey:texKey];
+		for (NSString* texKey in self->_textures) {
+			CCTexture2D* tex = [self->_textures objectForKey:texKey];
 			NSUInteger bpp = [tex bitsPerPixelForFormat];
 			// Each texture takes up width * height * bytesPerPixel bytes.
 			NSUInteger bytes = tex.pixelsWide * tex.pixelsHigh * bpp / 8;

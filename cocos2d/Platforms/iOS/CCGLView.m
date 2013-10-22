@@ -67,17 +67,17 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
 #import <QuartzCore/QuartzCore.h>
 
 #import "CCGLView.h"
 #import "CCES2Renderer.h"
-#import "../../CCDirector.h"
-#import "../../ccMacros.h"
-#import "../../CCConfiguration.h"
-#import "../../Support/OpenGL_Internal.h"
+#import "CCDirector.h"
+#import "ccMacros.h"
+#import "CCConfiguration.h"
+#import "Support/OpenGL_Internal.h"
 #import "CCScene.h"
 
 //CLASS IMPLEMENTATIONS:

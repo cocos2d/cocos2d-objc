@@ -26,35 +26,38 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
 #import <unistd.h>
 
 // cocos2d imports
 #import "CCDirectorIOS.h"
-#import "../../CCScheduler.h"
-#import "../../CCActionManager.h"
-#import "../../CCTextureCache.h"
-#import "../../ccMacros.h"
-#import "../../CCScene.h"
-#import "../../CCGLProgram.h"
-#import "../../ccGLStateCache.h"
-#import "../../CCLayer.h"
-#import "../../ccFPSImages.h"
-#import "../../CCConfiguration.h"
+#import "CCScheduler.h"
+#import "CCActionManager.h"
+#import "CCTextureCache.h"
+#import "ccMacros.h"
+#import "CCScene.h"
+#import "CCGLProgram.h"
+#import "ccGLStateCache.h"
+#import "CCLayer.h"
+#import "ccFPSImages.h"
+#import "CCConfiguration.h"
 
 // support imports
-#import "../../Support/OpenGL_Internal.h"
-#import "../../Support/CGPointExtension.h"
-#import "../../Support/TransformUtils.h"
-#import "../../Support/CCFileUtils.h"
+#import "Support/OpenGL_Internal.h"
+#import "Support/CGPointExtension.h"
+#import "Support/TransformUtils.h"
+#import "Support/CCFileUtils.h"
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
+#pragma clang diagnostic pop COCOS2D
 
 #if CC_ENABLE_PROFILERS
-#import "../../Support/CCProfiling.h"
+#import "Support/CCProfiling.h"
 #endif
 
 
@@ -177,6 +180,8 @@ CGFloat	__ccContentScaleFactor = 1;
 	glViewport(0, 0, size.width, size.height );
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) setProjection:(ccDirectorProjection)projection
 {
 	CGSize size = _winSizeInPixels;
@@ -229,9 +234,9 @@ CGFloat	__ccContentScaleFactor = 1;
 				[_delegate updateProjection];
 			break;
 
-		default:
-			CCLOG(@"cocos2d: Director: unrecognized projection");
-			break;
+		//default:
+		//	CCLOG(@"cocos2d: Director: unrecognized projection");
+		//	break;
 	}
 
 	_projection = projection;
@@ -386,7 +391,7 @@ GLToClipTransform(kmMat4 *transformOut)
 #pragma mark Director - UIViewController delegate
 
 
--(void) setView:(CCGLView *)view
+-(void) setView:(UIView *)view
 {
 	if( view != __view) {
 		[super setView:view];
@@ -526,7 +531,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 	// approximate frame rate
 	// assumes device refreshes at 60 fps
-	int frameInterval = (int) floor(_animationInterval * 60.0f);
+	int frameInterval = (int) (floor(_animationInterval * 60.0f));
 
 	CCLOG(@"cocos2d: animation started with frame interval: %.2f", 60.0f/frameInterval);
 
@@ -545,6 +550,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
     _isAnimating = YES;
 }
+#pragma clang diagnostic pop COCOS2D
 
 - (void) stopAnimation
 {
@@ -564,6 +570,8 @@ GLToClipTransform(kmMat4 *transformOut)
     _isAnimating = NO;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 // Overriden in order to use a more stable delta time
 -(void) calculateDeltaTime
 {
@@ -588,6 +596,7 @@ GLToClipTransform(kmMat4 *transformOut)
 		_dt = 1/60.0f;
 #endif
 }
+#pragma clang diagnostic pop COCOS2D
 
 
 #pragma mark Director Thread

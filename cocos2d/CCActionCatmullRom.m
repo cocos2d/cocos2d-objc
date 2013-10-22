@@ -96,9 +96,9 @@
 	
 }
 
--(CGPoint) getControlPointAtIndex:(NSInteger)index
+-(CGPoint) getControlPointAtIndex:(NSUInteger)index
 {
-	index = MIN([_controlPoints count]-1, MAX(index, 0));
+	index = MIN([_controlPoints count]-1, MAX(index, (NSUInteger)0));
 
 	NSValue *value = [_controlPoints objectAtIndex:index];
 
@@ -225,6 +225,8 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
     return copy;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) update:(ccTime)dt
 {
 	NSUInteger p;
@@ -261,6 +263,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 	[self updatePosition:newPos];	
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void) updatePosition:(CGPoint)newPos
 {

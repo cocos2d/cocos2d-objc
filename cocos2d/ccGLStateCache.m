@@ -29,8 +29,11 @@
 #import "ccConfig.h"
 
 // extern
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/GL/matrix.h"
 #import "kazmath/kazmath.h"
+#pragma clang diagnostic pop COCOS2D
 
 static GLuint	_ccCurrentProjectionMatrix = -1;
 static BOOL		_vertexAttribPosition = NO;

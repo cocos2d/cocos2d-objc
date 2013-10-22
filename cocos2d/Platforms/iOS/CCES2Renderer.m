@@ -28,13 +28,13 @@
 
 // Only compile this code on iOS. These files should NOT be included on your Mac project.
 // But in case they are included, it won't be compiled.
-#import "../../ccMacros.h"
+#import "ccMacros.h"
 #ifdef __CC_PLATFORM_IOS
 
 #import "CCES2Renderer.h"
 
-#import "../../Support/OpenGL_Internal.h"
-#import "../../ccMacros.h"
+#import "Support/OpenGL_Internal.h"
+#import "ccMacros.h"
 
 @implementation CCES2Renderer
 
@@ -79,7 +79,7 @@
 		{
 			GLint maxSamplesAllowed;
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed);
-			_samplesToUse = MIN(maxSamplesAllowed,requestedSamples);
+			_samplesToUse = MIN((unsigned int)maxSamplesAllowed,requestedSamples);
 			
 			/* Create the MSAA framebuffer (offscreen) */
 			glGenFramebuffers(1, &_msaaFramebuffer);

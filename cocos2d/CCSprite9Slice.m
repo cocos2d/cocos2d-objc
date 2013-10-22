@@ -29,7 +29,7 @@
 
 // ---------------------------------------------------------------------
 
-const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
+static const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 
 typedef enum {
     CCSprite9SliceStrips                        = 3,
@@ -214,6 +214,8 @@ typedef enum {
 #pragma mark - properties
 // ---------------------------------------------------------------------
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 - (float)margin
 {
     // if margins are not the same, a unified margin can nort be read
@@ -260,6 +262,7 @@ typedef enum {
     // sum of top and bottom margin, can not exceed 1
     NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
 }
+#pragma clang diagnostic pop COCOS2D
 
 // ---------------------------------------------------------------------
 

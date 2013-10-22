@@ -44,6 +44,8 @@
 
 static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 
 @implementation CCTexture2D (CCLabelTTF)
 
@@ -95,7 +97,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     return [self initWithAttributedString:[[NSAttributedString alloc] initWithString:str] fontName:name fontSize:size dimensions:dimensions];
 }
 
-- (id) initWithAttributedString:(NSAttributedString *)attrString;
+- (id) initWithAttributedString:(NSAttributedString *)attrString
 {
     NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
@@ -177,6 +179,8 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	}
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 - (void) setFontSize:(float)fontSize
 {
 	if( fontSize != _fontSize ) {
@@ -184,6 +188,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 		[self setTextureDirty];
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 
 - (void) setAdjustsFontSizeToFit:(BOOL)adjustsFontSizeToFit
 {
@@ -632,7 +637,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
     
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, (CGBitmapInfo)(kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big));
     CGColorSpaceRelease(colorSpace);
     
     if (!context)
@@ -779,7 +784,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         // A8 format (alpha channel only)
         unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
+        for(NSUInteger i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
@@ -972,7 +977,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     unsigned char* data = calloc(POTSize.width, POTSize.height * 4);
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
+    CGContextRef context = CGBitmapContextCreate(data, POTSize.width, POTSize.height, 8, POTSize.width * 4, colorSpace, (CGBitmapInfo)(kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big));
     CGColorSpaceRelease(colorSpace);
 
     if (!context)
@@ -1056,7 +1061,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         
         // A8 format (alpha channel only)
         unsigned char* dst = data;
-        for(int i = 0; i<textureSize; i++)
+        for(NSUInteger i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
         texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
@@ -1106,5 +1111,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         CTFontManagerRegisterFontsForURL((__bridge CFURLRef)fontURL, kCTFontManagerScopeProcess, NULL);
     }
 }
+
+#pragma clang diagnostic pop COCOS2D
 
 @end

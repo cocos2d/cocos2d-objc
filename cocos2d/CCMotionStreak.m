@@ -57,6 +57,8 @@
     return [self initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 - (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
 {
     self = [super init];
@@ -97,6 +99,7 @@
     }
     return self;
 }
+#pragma clang diagnostic pop COCOS2D
 
 #pragma mark -
 
@@ -111,7 +114,7 @@
     [self setColor:colors];
 
     // Fast assignation
-    for(int i = 0; i<_nuPoints*2; i++)
+    for(unsigned int i = 0; i<_nuPoints*2; i++)
         *((ccColor3B*) (_colorPointer+i*4)) = colors;
 }
 

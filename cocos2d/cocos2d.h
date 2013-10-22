@@ -167,9 +167,11 @@
 //
 // external
 //
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
-
+#pragma clang diagnostic pop COCOS2D
 
 
 #ifdef __cplusplus

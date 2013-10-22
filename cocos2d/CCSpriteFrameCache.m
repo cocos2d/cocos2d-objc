@@ -172,7 +172,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 	// SpriteFrame info
 	CGRect rectInPixels;
-	BOOL isRotated;
+	BOOL isRotated = NO;
 	CGPoint frameOffset;
 	CGSize originalSize;
 
@@ -361,7 +361,8 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 
 -(void) removeUnusedSpriteFrames
 {
-#warning Not implemented with ARC
+    //TODO: Check... not implemented with ARC...
+//#warning Not implemented with ARC
     /*
 	BOOL removed_ = NO;
 	NSArray *keys = [_spriteFrames allKeys];

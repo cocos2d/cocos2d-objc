@@ -78,6 +78,8 @@ NSUInteger	__ccNumberOfDraws = 0;
 extern NSString * cocos2dVersion(void);
 
 @interface CCDirector (Private)
+
+@property (readwrite, unsafe_unretained, nonatomic ) NSThread *runningThread;
 -(void) setNextScene;
 // shows the statistics
 -(void) showStats;
@@ -301,7 +303,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director Integration with a UIKit view
 
--(void) setView:(CCGLView*)view
+-(void) setView:(id)view
 {
 //	NSAssert( view, @"OpenGLView must be non-nil");
 
@@ -310,7 +312,7 @@ static CCDirector *_sharedDirector = nil;
 #ifdef __CC_PLATFORM_IOS
 		[super setView:view];
 #endif
-		__view = view;
+		__view = (CCGLView *)view;
 
 		// set size
 		_winSizeInPixels = _winSizeInPoints = CCNSSizeToCGSize( [__view bounds].size );

@@ -29,7 +29,11 @@
 #import "CCNode.h"
 #import "CCSprite.h"
 #import "Support/OpenGL_Internal.h"
+
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/mat4.h"
+#pragma clang diagnostic pop COCOS2D
 
 #ifdef __CC_PLATFORM_IOS
 #import <UIKit/UIKit.h>

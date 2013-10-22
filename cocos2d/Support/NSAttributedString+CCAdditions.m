@@ -35,7 +35,10 @@
 {
     NSRange fullRange = NSMakeRange(0, self.length);
     __block BOOL hasAttribute = NO;
-    [self enumerateAttribute:attr inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [self enumerateAttribute:attr
+                     inRange:fullRange
+                     options:NSAttributedStringEnumerationReverse
+                  usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
             hasAttribute = YES;
@@ -54,7 +57,10 @@
     NSRange fullRange = NSMakeRange(0, copy.length);
     
     // Update font size
-    [copy enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [copy enumerateAttribute:NSFontAttributeName
+                     inRange:fullRange
+                     options:(NSAttributedStringEnumerationOptions)0
+                  usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
             UIFont* font = value;
@@ -65,7 +71,10 @@
     }];
     
     // Update shadows
-    [copy enumerateAttribute:NSShadowAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [copy enumerateAttribute:NSShadowAttributeName
+                     inRange:fullRange
+                     options:(NSAttributedStringEnumerationOptions)0
+                  usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
             NSShadow* shadow = value;
@@ -87,7 +96,10 @@
     __block BOOL foundValue = NO;
     __block BOOL singleValue = YES;
     __block float fontSize = 0;
-    [self enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id value, NSRange range, BOOL* stop){
+    [self enumerateAttribute:NSFontAttributeName
+                     inRange:fullRange
+                     options:(NSAttributedStringEnumerationOptions)0
+                  usingBlock:^(id value, NSRange range, BOOL* stop){
         if (value)
         {
 #ifdef __CC_PLATFORM_IOS

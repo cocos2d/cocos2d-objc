@@ -75,7 +75,7 @@
 @property (nonatomic, strong, readwrite) CCTexture2D *texture;
 
 /** texture file name of the frame */
-@property (nonatomic, strong, readonly) NSString *textureFilename;
+@property (nonatomic, readonly) NSString *textureFilename;
 
 /** Retrieves a sprite frame from the sprite frame cache, or if no such sprite frame is know, attempts to create a sprite frame from an image of the same name. */
 +(id) frameWithImageNamed:(NSString*)imageName;

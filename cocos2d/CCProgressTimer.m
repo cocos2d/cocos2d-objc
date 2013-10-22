@@ -40,7 +40,7 @@
 
 #define kProgressTextureCoordsCount 4
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
-const char kCCProgressTextureCoords = 0x4b;
+static const char kCCProgressTextureCoords = 0x4b;
 
 @interface CCProgressTimer ()
 
@@ -99,6 +99,8 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void)setPercentage:(float) percentage
 {
 	if(_percentage != percentage) {
@@ -106,6 +108,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		[self updateProgress];
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(void)setSprite:(CCSprite *)newSprite
 {
@@ -225,8 +228,6 @@ const char kCCProgressTextureCoords = 0x4b;
 			break;
 		case kCCProgressTimerTypeBar:
 			[self updateBar];
-			break;
-		default:
 			break;
 	}
 }

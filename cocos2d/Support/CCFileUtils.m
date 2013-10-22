@@ -26,10 +26,10 @@
 
 
 #import "CCFileUtils.h"
-#import "../CCConfiguration.h"
-#import "../ccMacros.h"
-#import "../ccConfig.h"
-#import "../ccTypes.h"
+#import "CCConfiguration.h"
+#import "ccMacros.h"
+#import "ccConfig.h"
+#import "ccTypes.h"
 
 NSString *kCCFileUtilsDefault = @"default";
 

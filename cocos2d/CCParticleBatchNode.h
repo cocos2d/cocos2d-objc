@@ -86,13 +86,13 @@
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity;
 
 /** Add a child into the CCParticleBatchNode */
--(void) addChild:(CCParticleSystem*)child z:(NSInteger)z tag:(NSInteger) aTag;
+-(void) addChild:(CCNode*)child z:(NSInteger)z tag:(NSInteger) aTag;
 
 /** Inserts a child into the CCParticleBatchNode */
--(void) insertChild:(CCParticleSystem*) pSystem inAtlasAtIndex:(NSUInteger)index;
+-(void) insertChild:(CCNode*) pSystem inAtlasAtIndex:(NSUInteger)index;
 
 /** remove child from the CCParticleBatchNode */
--(void) removeChild:(CCParticleSystem*) pSystem cleanup:(BOOL)doCleanUp;
+-(void) removeChild:(CCNode*) pSystem cleanup:(BOOL)doCleanUp;
 
 /** disables a particle by inserting a 0'd quad into the texture atlas */
 -(void) disableParticle:(NSUInteger) particleIndex;

@@ -194,7 +194,7 @@ static inline ccTex2F __t(ccVertex2F v )
 
 #pragma mark Immediate Mode
 
--(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawDot:(CGPoint)pos radius:(CGFloat)radius color:(ccColor4F)color
 {
 	NSUInteger vertex_count = 2*3;
 	[self ensureCapacity:vertex_count];
@@ -213,7 +213,7 @@ static inline ccTex2F __t(ccVertex2F v )
 	_dirty = YES;
 }
 
--(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(ccColor4F)color;
+-(void)drawSegmentFrom:(CGPoint)_a to:(CGPoint)_b radius:(CGFloat)radius color:(ccColor4F)color
 {
 	NSUInteger vertex_count = 6*3;
 	[self ensureCapacity:vertex_count];
@@ -277,13 +277,13 @@ static inline ccTex2F __t(ccVertex2F v )
 	_dirty = YES;
 }
 
--(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line;
+-(void)drawPolyWithVerts:(const CGPoint *)verts count:(NSUInteger)count fillColor:(ccColor4F)fill  borderWidth:(CGFloat)width borderColor:(ccColor4F)line
 {
 	struct ExtrudeVerts {ccVertex2F offset, n;};
 	struct ExtrudeVerts extrude[count];
 	bzero(extrude, sizeof(extrude) );
 	
-	for(int i=0; i<count; i++){
+	for(NSUInteger i=0; i<count; i++){
 		ccVertex2F v0 = __v2f( verts[(i-1+count)%count] );
 		ccVertex2F v1 = __v2f( verts[i] );
 		ccVertex2F v2 = __v2f( verts[(i+1)%count] );
@@ -305,7 +305,7 @@ static inline ccTex2F __t(ccVertex2F v )
 	ccV2F_C4B_T2F_Triangle *cursor = triangles;
 	
 	CGFloat inset = (outline == 0.0 ? 0.5 : 0.0);
-	for(int i=0; i<count-2; i++){
+	for(NSUInteger i=0; i<count-2; i++){
 		ccVertex2F v0 = v2fsub( __v2f(verts[0  ]), v2fmult(extrude[0  ].offset, inset));
 		ccVertex2F v1 = v2fsub( __v2f(verts[i+1]), v2fmult(extrude[i+1].offset, inset));
 		ccVertex2F v2 = v2fsub( __v2f(verts[i+2]), v2fmult(extrude[i+2].offset, inset));
@@ -317,8 +317,8 @@ static inline ccTex2F __t(ccVertex2F v )
 		};
 	}
 	
-	for(int i=0; i<count; i++){
-		int j = (i+1)%count;
+	for(NSUInteger i=0; i<count; i++){
+		NSInteger j = (i+1)%count;
 		ccVertex2F v0 = __v2f( verts[i] );
 		ccVertex2F v1 = __v2f( verts[j] );
 		

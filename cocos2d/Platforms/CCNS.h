@@ -27,7 +27,7 @@
 // Common layer for NS (Next-Step) stuff
 //
 
-#import "../ccMacros.h"
+#import "ccMacros.h"
 
 #import <Foundation/Foundation.h> //	for NSObject
 

@@ -44,4 +44,11 @@ Backup[ ]of[ ]*.pages/
 Backup[ ]of[ ]*.key/
 Backup[ ]of[ ]*.numbers/
 
-api-docs
+
+/include/
+CocosMac-Debug.zip
+CocosMac.zip
+/Cocos-Debug.zip
+/Cocos.zipapi-docs
+Cocos.zip
+Cocos-Debug.zip

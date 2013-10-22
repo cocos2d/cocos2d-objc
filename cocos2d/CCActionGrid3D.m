@@ -92,6 +92,8 @@
 	return [super initWithDuration:d size:CGSizeMake(1,1)];
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(id)initWithSize:(CGSize)gSize duration:(ccTime)d
 {
 	if ( gSize.width != 1 || gSize.height != 1 )
@@ -101,6 +103,7 @@
 
 	return [super initWithDuration:d size:gSize];
 }
+#pragma clang diagnostic pop COCOS2D
 
 -(id) copyWithZone: (NSZone*) zone
 {
@@ -295,6 +298,8 @@
 	return _position;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void)update:(ccTime)time
 {
 	if ( _dirty )
@@ -332,6 +337,7 @@
 		_dirty = NO;
 	}
 }
+#pragma clang diagnostic pop COCOS2D
 
 @end
 

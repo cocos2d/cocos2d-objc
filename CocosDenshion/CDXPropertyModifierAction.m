@@ -26,12 +26,12 @@
 
 @implementation CDXPropertyModifierAction
 
-+(id) actionWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
++(id) actionWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier
 {
 	return [[[self alloc] initWithDuration:t modifier:aModifier] autorelease];
 }
 
--(id) initWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
+-(id) initWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier
 {
 	if( (self=[super initWithDuration: t]) ) {
 		//Release the previous modifier
@@ -65,6 +65,8 @@
 	return copy;
 }
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(void) update: (ccTime) t
 {
 	//Check if modified property has been externally modified and if so bail out
@@ -76,6 +78,7 @@
 	[modifier modify:t];
 	lastSetValue = [modifier _getTargetProperty];
 }
+#pragma clang diagnostic pop COCOS2D
 
 +(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop {
 	CDSoundEngine* se = [CDAudioManager sharedManager].soundEngine;

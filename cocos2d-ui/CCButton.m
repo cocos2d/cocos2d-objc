@@ -321,13 +321,13 @@
 
 - (void) setLabelColor:(ccColor3B)color forState:(CCControlState)state
 {
-    [_labelColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:[NSNumber numberWithInt:state]];
+    [_labelColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:@(state)];
     [self stateChanged];
 }
 
 - (ccColor3B) labelColorForState:(CCControlState)state
 {
-    NSValue* val = [_labelColors objectForKey:[NSNumber numberWithInt:state]];
+    NSValue* val = [_labelColors objectForKey:@(state)];
     if (!val) return ccc3(255, 255, 255);
     ccColor3B color;
     [val getValue:&color];
@@ -336,26 +336,26 @@
 
 - (void) setLabelOpacity:(GLubyte)opacity forState:(CCControlState)state
 {
-    [_labelOpacities setObject:[NSNumber numberWithInt:opacity] forKey:[NSNumber numberWithInt:state]];
+    [_labelOpacities setObject:[NSNumber numberWithInt:opacity] forKey:@(state)];
     [self stateChanged];
 }
 
 - (GLubyte) labelOpacityForState:(CCControlState)state
 {
-    NSNumber* val = [_labelOpacities objectForKey:[NSNumber numberWithInt:state]];
+    NSNumber* val = [_labelOpacities objectForKey:@(state)];
     if (!val) return 255;
     return [val intValue];
 }
 
 - (void) setBackgroundColor:(ccColor3B)color forState:(CCControlState)state
 {
-    [_backgroundColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:[NSNumber numberWithInt:state]];
+    [_backgroundColors setObject:[NSValue value:&color withObjCType:@encode(ccColor3B)] forKey:@(state)];
     [self stateChanged];
 }
 
 - (ccColor3B) backgroundColorForState:(CCControlState)state
 {
-    NSValue* val = [_backgroundColors objectForKey:[NSNumber numberWithInt:state]];
+    NSValue* val = [_backgroundColors objectForKey:@(state)];
     if (!val) return ccc3(255, 255, 255);
     ccColor3B color;
     [val getValue:&color];
@@ -364,13 +364,13 @@
 
 - (void) setBackgroundOpacity:(GLubyte)opacity forState:(CCControlState)state
 {
-    [_backgroundOpacities setObject:[NSNumber numberWithInt:opacity] forKey:[NSNumber numberWithInt:state]];
+    [_backgroundOpacities setObject:[NSNumber numberWithInt:opacity] forKey:@(state)];
     [self stateChanged];
 }
 
 - (GLubyte) backgroundOpacityForState:(CCControlState)state
 {
-    NSNumber* val = [_backgroundOpacities objectForKey:[NSNumber numberWithInt:state]];
+    NSNumber* val = _backgroundOpacities [@(state)];
     if (!val) return 255;
     return [val intValue];
 }
@@ -379,18 +379,18 @@
 {
     if (spriteFrame)
     {
-        [_backgroundSpriteFrames setObject:spriteFrame forKey:[NSNumber numberWithInt:state]];
+        [_backgroundSpriteFrames setObject:spriteFrame forKey:@(state)];
     }
     else
     {
-        [_backgroundSpriteFrames removeObjectForKey:[NSNumber numberWithInt:state]];
+        [_backgroundSpriteFrames removeObjectForKey:@(state)];
     }
     [self stateChanged];
 }
 
 - (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state
 {
-    return [_backgroundSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
+    return _backgroundSpriteFrames[@(state)];
 }
 
 - (void) setTitle:(NSString *)title

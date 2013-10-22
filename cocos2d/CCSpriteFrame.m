@@ -31,6 +31,13 @@
 #import "ccMacros.h"
 #import "CCSpriteFrameCache.h"
 
+@interface CCSpriteFrame ()
+
+/** texture file name of the frame */
+@property (nonatomic, copy,readwrite) NSString *textureFilename;
+
+@end
+
 @implementation CCSpriteFrame
 @synthesize offsetInPixels = _offsetInPixels, offset = _offset;
 @synthesize originalSize = _originalSize, originalSizeInPixels = _originalSizeInPixels;

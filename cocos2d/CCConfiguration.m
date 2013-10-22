@@ -126,6 +126,8 @@ static char * glExtensions;
 }
 
 // XXX: Optimization: This should be called only once
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 -(NSInteger) runningDevice
 {
 	NSInteger ret=-1;
@@ -156,6 +158,7 @@ static char * glExtensions;
 	
 	return ret;
 }
+#pragma clang diagnostic pop COCOS2D
 
 #pragma mark OpenGL getters
 

@@ -27,10 +27,8 @@
 #include "stdio.h"
 #include "math.h"
 
-#import "../ccMacros.h"		// CC_SWAP
+#import "ccMacros.h"		// CC_SWAP
 #include "CGPointExtension.h"
-
-#define kCGPointEpsilon FLT_EPSILON
 
 CGFloat
 ccpLength(const CGPoint v)
@@ -108,7 +106,7 @@ float ccpAngleSigned(CGPoint a, CGPoint b)
 	CGPoint a2 = ccpNormalize(a);
 	CGPoint b2 = ccpNormalize(b);
 	float angle = atan2f(a2.x * b2.y - a2.y * b2.x, ccpDot(a2, b2));
-	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
+	if( fabs(angle) < FLT_EPSILON ) return 0.f;
 	return angle;
 }
 
@@ -149,6 +147,9 @@ CGPoint ccpIntersectPoint(CGPoint A, CGPoint B, CGPoint C, CGPoint D)
 	return CGPointZero;
 }
 
+
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 BOOL ccpLineIntersect(CGPoint A, CGPoint B,
 					  CGPoint C, CGPoint D,
 					  float *S, float *T)
@@ -187,10 +188,11 @@ BOOL ccpLineIntersect(CGPoint A, CGPoint B,
 
 	return YES;
 }
+#pragma clang diagnostic pop COCOS2D
 
 float ccpAngle(CGPoint a, CGPoint b)
 {
 	float angle = acosf(ccpDot(ccpNormalize(a), ccpNormalize(b)));
-	if( fabs(angle) < kCGPointEpsilon ) return 0.f;
+	if( fabs(angle) < FLT_EPSILON ) return 0.f;
 	return angle;
 }

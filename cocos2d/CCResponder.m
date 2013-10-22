@@ -68,23 +68,27 @@
  *  @param event   The event associated with the callback
  */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{    
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+{
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    CCResponderManager *strongResponderManager = [CCDirector sharedDirector].responderManager;
+    strongResponderManager.eventProcessed = NO;
 }
 
 // -----------------------------------------------------------------

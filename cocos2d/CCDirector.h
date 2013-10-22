@@ -30,7 +30,12 @@
 
 #import "CCProtocols.h"
 #import "Platforms/CCGL.h"
+
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wignored-qualifiers"
 #import "kazmath/mat4.h"
+#pragma clang diagnostic pop COCOS2D
+
 #import "CCResponderManager.h"
 
 /** @typedef ccDirectorProjection
@@ -160,7 +165,7 @@ and when to execute the Scenes.
  On iOS usually it is the main thread.
  @since v0.99.5
  */
-@property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
+@property (readonly, nonatomic ) NSThread *runningThread;
 /** The current running Scene. Director can only run one Scene at the time */
 @property (nonatomic,readonly) CCScene* runningScene;
 /** The FPS value */

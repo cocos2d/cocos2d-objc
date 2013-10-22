@@ -173,6 +173,8 @@
 #pragma mark -
 #pragma mark EaseExponential
 
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wfloat-equal"
 //
 // EaseExponentialIn
 //
@@ -243,7 +245,7 @@
 {
     NSAssert( action!=nil, @"Ease: arguments must be non-nil");
     
-    if (self = [super initWithAction: action]) {
+    if ((self = [super initWithAction: action])) {
 		_polynomialOrder = kDefaultPolynomial;
         _hasInflection = FALSE;
         _intersetValue = 1.78179743628068f;
@@ -588,6 +590,7 @@
 	[_inner update:newT];
 }
 @end
+#pragma clang diagnostic pop COCOS2D
 
 #pragma mark -
 #pragma mark Ease Back actions

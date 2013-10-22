@@ -24,13 +24,15 @@ extern "C" {
 	/* XXX: pragma pack ??? */
 	/** @struct CCZHeader
 	 */
+#pragma clang diagnostic push COCOS2D
+#pragma clang diagnostic ignored "-Wpacked"
 	struct CCZHeader {
 		uint8_t			sig[4];				// signature. Should be 'CCZ!' 4 bytes
 		uint16_t		compression_type;	// should 0
 		uint16_t		version;			// should be 2 (although version type==1 is also supported)
 		uint32_t		reserved;			// Reserved for users.
 		uint32_t		len;				// size of the uncompressed file
-	};
+	}__attribute__((packed));
 
 	enum {
 		CCZ_COMPRESSION_ZLIB,				// zlib format.
@@ -38,6 +40,7 @@ extern "C" {
 		CCZ_COMPRESSION_GZIP,				// gzip format (not supported yet)
 		CCZ_COMPRESSION_NONE,				// plain (not supported yet)
 	};
+#pragma clang diagnostic pop COCOS2D
 
 /** @file
  * Zip helper functions

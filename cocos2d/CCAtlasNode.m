@@ -67,7 +67,7 @@
 	return [self initWithTexture:texture tileWidth:w tileHeight:h itemsToRender:c];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
+-(id) initWithTexture:(CCTexture2D*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
 {
 	if( (self=[super init]) ) {
 		

@@ -38,8 +38,8 @@ static NSString *_globalFontName = @"Marker Felt";
 static BOOL _globalFontNameRelease = NO;
 
 
-const NSInteger	kCCCurrentItemTag = 0xc0c05001;
-const NSInteger	kCCZoomActionTag = 0xc0c05002;
+static const NSInteger	kCCCurrentItemTag = 0xc0c05001;
+static const NSInteger	kCCZoomActionTag = 0xc0c05002;
 
 
 #pragma mark -
