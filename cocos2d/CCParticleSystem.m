@@ -333,7 +333,7 @@
 	return self;
 }
 
--(NSUInteger)priority
+-(NSInteger)priority
 {
 	// update after action in run!
 	return 1;

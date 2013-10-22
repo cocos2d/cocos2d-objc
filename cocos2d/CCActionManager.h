@@ -30,6 +30,7 @@
 #import "CCAction.h"
 #import "ccMacros.h"
 #import "Support/uthash.h"
+#import "CCScheduler.h"
 
 typedef struct _hashElement
 {
@@ -53,7 +54,7 @@ typedef struct _hashElement
 
  @since v0.8
  */
-@interface CCActionManager : NSObject
+@interface CCActionManager : NSObject<CCSchedulerTarget>
 {
     tHashElement	*targets;
     tHashElement	*currentTarget;
