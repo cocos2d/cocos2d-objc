@@ -48,8 +48,6 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 @property(nonatomic, assign) BOOL paused;
 @property(nonatomic, assign) BOOL enableUpdates;
 
--(id)initWithTarget:(NSObject<CCSchedulerTarget> *)target;
-
 @end
 
 
@@ -58,15 +56,14 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 @property(nonatomic, readonly) CCTimerBlock block;
 @property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
 @property(nonatomic, strong) CCTimer *next;
-
--(id)initWithDelay:(ccTime)delay scheduler:(CCScheduler *)scheduler scheduledTarget:(CCScheduledTarget *)scheduledTarget block:(CCTimerBlock)block;
+@property(nonatomic, readwrite) ccTime deltaTime;
 
 @end
 
 
 @interface CCScheduler (Private) <CCSchedulerTarget>
 
--(void)scheduleTimer:(CCTimer *)timer withDelay:(ccTime)delay;
+-(void)insertTimer:(CCTimer *)timer;
 
 @end
 
@@ -101,9 +98,15 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 	}
 }
 
+-(void)invalidateTimers
+{
+	for(CCTimer *timer = _timers; timer; timer = timer.next) [timer invalidate];
+}
+
+
 -(BOOL)empty
 {
-	return (_timers == nil);
+	return (_timers == nil && !_enableUpdates);
 }
 
 -(void)setPaused:(BOOL)paused
@@ -140,13 +143,15 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 -(void)reschedule:(ccTime)delay
 {
 	NSAssert(_block != INVALIDATED_BLOCK, @"Timer has already been invalidated");
-	[_scheduler scheduleTimer:self withDelay:(ccTime)delay];
+	#warning doesn't set time values or check if already inserted
+	[_scheduler insertTimer:self];
 }
 
 -(void)invalidate
 {
 	_invokeTime = 0.0;
 	_block = INVALIDATED_BLOCK;
+	_scheduledTarget = nil;
 }
 
 @end
@@ -172,6 +177,8 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 -(CCTimer *)next {return _next;}
 -(void)setNext:(CCTimer *)next {_next = next;}
+
+-(void)setDeltaTime:(ccTime)deltaTime {_deltaTime = deltaTime;}
 
 @end
 
@@ -274,7 +281,7 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
 	
 	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
-	[self scheduleTimer:timer withDelay:delay];
+	[self insertTimer:timer];
 	
 	timer.next = scheduledTarget.timers;
 	scheduledTarget.timers = timer;
@@ -315,16 +322,45 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 	_currentTime = targetTime;
 }
 
+static NSUInteger
+PrioritySearch(NSArray *array, NSInteger priority)
+{
+	#warning TODO binary search.
+	for(int i=0, count=array.count; i<count; i++){
+		CCScheduledTarget *scheduledTarget = array[i];
+		if(scheduledTarget.target.priority > priority) return i;
+	}
+	
+	return array.count;
+}
+
 -(void)scheduleTarget:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
-	#warning TODO schedule updates
+	
+	scheduledTarget.enableUpdates = YES;
+	NSInteger priority = target.priority;
+	
+	if(scheduledTarget->_update_IMP){
+		[_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
+	}
+	
+	if(scheduledTarget->_fixedUpdate_IMP){
+		[_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
+	}
 }
 
 -(void)unscheduleTarget:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
-	#warning TODO unschedule updates and timers
+	
+	// Remove the update methods if they are scheduled
+	if(scheduledTarget.enableUpdates){
+		[_fixedUpdates removeObject:scheduledTarget];
+		[_updates removeObject:scheduledTarget];
+	}
+	
+	[scheduledTarget invalidateTimers];
 }
 
 -(void)pauseTarget:(NSObject<CCSchedulerTarget> *)target
@@ -356,10 +392,8 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 
 @implementation CCScheduler(Private)
 
--(void)scheduleTimer:(CCTimer *)timer withDelay:(ccTime)delay
+-(void)insertTimer:(CCTimer *)timer
 {
-	NSAssert(delay > 0.0, @"Delay must be positive.");
-	
 	[_heap addObject:timer];
 	HeapMoveUp(_heap, _heap.count);
 }
