@@ -2789,13 +2789,6 @@
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		A02E261116A4EE00007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 502C65EE0DFEF3DD00E4107D;
-			remoteInfo = "cocos2d-documentation";
-		};
 		A02E261916A4EE00007F064C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
@@ -3075,6 +3068,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
+		};
+		D35C0C001808637D0071B674 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D355243517F5E42500096CA3;
+			remoteInfo = CCPhysicsTest;
+		};
+		D36F7E4B1815812000E94F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D36F7E35181580A000E94F72;
+			remoteInfo = "cocos2d Tests";
 		};
 		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3708,6 +3715,11 @@
 		A6FF608817D88ED600E9D725 /* TouchTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TouchTest.h; path = tests/TouchTest.h; sourceTree = "<group>"; };
 		A6FF608917D88ED600E9D725 /* TouchTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TouchTest.m; path = tests/TouchTest.m; sourceTree = "<group>"; };
 		AAEA834A0FD5704400F08728 /* blocks.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blocks.png; sourceTree = "<group>"; };
+		D30B5D8A17F5E4D30058C11C /* CCPhysicsTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCPhysicsTest.m; path = tests/CCPhysicsTest.m; sourceTree = "<group>"; };
+		D355246817F5E42500096CA3 /* CCPhysicsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CCPhysicsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ClickAndMoveTest copy-Info.plist"; path = "/Users/slembcke/Development/cocos2d-iphone/ClickAndMoveTest copy-Info.plist"; sourceTree = "<absolute>"; };
+		D35C0BF21808637C0071B674 /* CCPhysicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D35C0BF31808637C0071B674 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -5276,12 +5288,12 @@
 			children = (
 				A02E260616A4EE00007F064C /* libbuild all libs.a */,
 				A02E260C16A4EE00007F064C /* libcocos2d.a */,
-				A02E261216A4EE00007F064C /* libcocos2d-documentation.a */,
 				A02E261A16A4EE00007F064C /* libkazmath.a */,
 				E6F06D0117E8FACE0015524C /* liblibpng.a */,
 				E6F06D0517E8FACE0015524C /* libCocosDenshion.a */,
 				E6B762A018129E5300C6B09B /* libCocos.a */,
 				E6B762A218129E5300C6B09B /* libCocosLib_Script.a */,
+				D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -6365,13 +6377,6 @@
 			remoteRef = A02E260B16A4EE00007F064C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A02E261216A4EE00007F064C /* libcocos2d-documentation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2d-documentation.a";
-			remoteRef = A02E261116A4EE00007F064C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		A02E261A16A4EE00007F064C /* libkazmath.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -6405,6 +6410,13 @@
 			fileType = archive.ar;
 			path = libCocosDenshion.a;
 			remoteRef = E6F06D0417E8FACE0015524C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "cocos2d Tests.xctest";
+			remoteRef = D36F7E4B1815812000E94F72 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -9110,6 +9122,23 @@
 				A6ED002917D89471002B4973 /* TouchTest.m in Sources */,
 				A6ED002A17D89471002B4973 /* main.m in Sources */,
 				A6ED002817D89460002B4973 /* BaseAppController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D355245717F5E42500096CA3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D355245917F5E42500096CA3 /* main.m in Sources */,
+				D355245A17F5E42500096CA3 /* BaseAppController.m in Sources */,
+				D30B5D8B17F5E4D30058C11C /* CCPhysicsTest.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D35C0BEE1808637C0071B674 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
