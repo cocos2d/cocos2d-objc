@@ -989,6 +989,9 @@ CGPoint GetPosition(CCNode *node)
 	
 	[self setupPhysicsBody:_physicsBody];
 	
+	CCScheduler *scheduler = self.scheduler;
+	if(![scheduler isTargetScheduled:self]) [scheduler scheduleTarget:self];
+	
 	self.paused = NO;
 	_isRunning = YES;
 }
@@ -1096,6 +1099,8 @@ CGPoint GetPosition(CCNode *node)
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
 	
+	[self unschedule:selector];
+	
 	void (*imp)(id, SEL, ccTime) = (__typeof(imp))[self methodForSelector:selector];
 	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
 		imp(self, selector, t.deltaTime);
@@ -1103,6 +1108,7 @@ CGPoint GetPosition(CCNode *node)
 	
 	timer.repeatCount = CCTimerRepeatForever;
 	timer.repeatInterval = interval;
+	timer.userData = NSStringFromSelector(selector);
 	
 	return timer;
 }
@@ -1112,17 +1118,35 @@ CGPoint GetPosition(CCNode *node)
 	return [self schedule:selector interval:0.f repeat:0 delay:delay];
 }
 
+-(void)unschedule:(SEL)selector
+{
+	NSString *selectorName = NSStringFromSelector(selector);
+	
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+		if([selectorName isEqual:timer.userData]) [timer invalidate];
+	}
+}
+
+-(void)unscheduleAllSelectors
+{
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+		if([timer.userData isKindOfClass:[NSString class]]) [timer invalidate];
+	}
+}
+
 -(void)setPaused:(BOOL)paused
 {
-	if(paused){
-		[self.scheduler pauseTarget:self];
-		[_actionManager pauseTarget:self];
-	} else {
-		[self.scheduler scheduleTarget:self];
-		[_actionManager resumeTarget:self];
+	if(_paused != paused){
+		if(paused){
+			[self.scheduler pauseTarget:self];
+			[_actionManager pauseTarget:self];
+		} else {
+			[self.scheduler resumeTarget:self];
+			[_actionManager resumeTarget:self];
+		}
+		
+		_paused = paused;
 	}
-	
-	_paused = paused;
 }
 
 #pragma mark CCNode Transform

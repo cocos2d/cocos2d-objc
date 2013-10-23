@@ -520,6 +520,10 @@ enum {
 */
 - (CCTimer *) scheduleOnce:(SEL) selector delay:(ccTime) delay;
 
+-(void)unschedule:(SEL)selector;
+
+-(void)unscheduleAllSelectors;
+
 @property(nonatomic, assign) BOOL paused;
 
 // transformation methods

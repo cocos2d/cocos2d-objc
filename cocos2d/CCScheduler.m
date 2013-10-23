@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Scott Lembcke.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,18 +27,9 @@
 
 // cocos2d imports
 #import "CCScheduler.h"
-#import "ccMacros.h"
-#import "CCDirector.h"
-#import "Support/uthash.h"
-#import "Support/utlist.h"
-#import <objc/message.h>
-
-static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 
 @interface CCScheduledTarget : NSObject {
 	@public
-	void (*_update_IMP)(id, SEL, ccTime);
-	void (*_fixedUpdate_IMP)(id, SEL, ccTime);
 	__weak NSObject<CCSchedulerTarget> *_target;
 }
 
@@ -45,7 +37,7 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 
 @property(nonatomic, strong) CCTimer *timers;
 @property(nonatomic, readonly) BOOL empty;
-@property(nonatomic, assign) BOOL paused;
+@property(nonatomic, assign) NSUInteger pauseCount;
 @property(nonatomic, assign) BOOL enableUpdates;
 
 @end
@@ -66,12 +58,6 @@ static SEL UPDATE_SELECTOR, FIXED_UPDATE_SELECTOR;
 
 @implementation CCScheduledTarget {
 	CCTimer *_timers;
-}
-
-+(void)initialize
-{
-	UPDATE_SELECTOR = @selector(update:);
-	FIXED_UPDATE_SELECTOR = @selector(fixedUpdate:);
 }
 
 -(id)initWithTarget:(NSObject<CCSchedulerTarget> *)target
@@ -110,22 +96,9 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	return (_timers == nil && !_enableUpdates);
 }
 
--(void)setPaused:(BOOL)paused
+-(void)setPauseCount:(NSUInteger)pauseCount
 {
 	#warning needs to disable things
-}
-
--(void)setEnableUpdates:(BOOL)enableUpdates
-{
-	_enableUpdates = enableUpdates;
-	
-	if([_target respondsToSelector:UPDATE_SELECTOR]){
-		_update_IMP = (__typeof(_update_IMP))[_target methodForSelector:UPDATE_SELECTOR];
-	}
-	
-	if([_target respondsToSelector:FIXED_UPDATE_SELECTOR]){
-		_fixedUpdate_IMP = (__typeof(_update_IMP))[_target methodForSelector:FIXED_UPDATE_SELECTOR];
-	}
 }
 
 @end
@@ -240,6 +213,7 @@ CompareTimers(const void *a, const void *b, void *context)
 -(id)init
 {
 	if((self = [super init])){
+		_timeScale = 1.0;
 		_maxTimeStep = 1.0/10.0;
 		
 		CFBinaryHeapCallBacks callbacks = {
@@ -261,7 +235,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
 			for(int i=0, count=fixedUpdates.count; i<count; i++){
 				CCScheduledTarget *scheduledTarget = fixedUpdates[i];
-				scheduledTarget->_fixedUpdate_IMP(scheduledTarget->_target, FIXED_UPDATE_SELECTOR, timer.repeatInterval);
+				[scheduledTarget->_target fixedUpdate:timer.repeatInterval];
 			}
 		 } forTarget:self withDelay:0];
 		 
@@ -286,13 +260,13 @@ CompareTimers(const void *a, const void *b, void *context)
 -(ccTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
 -(void)setFixedTimeStep:(ccTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
--(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target
+-(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target insert:(BOOL)insert
 {
 	// Need to transform nil -> NSNulls.
 	target = (target == nil ? [NSNull null] : target);
 	
 	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, (__bridge CFTypeRef)target);
-	if(scheduledTarget == nil){
+	if(scheduledTarget == nil && insert){
 		scheduledTarget = [[CCScheduledTarget alloc] initWithTarget:target];
 		CFDictionarySetValue(_scheduledTargets, (__bridge CFTypeRef)target, (__bridge CFTypeRef)scheduledTarget);
 	}
@@ -302,7 +276,7 @@ CompareTimers(const void *a, const void *b, void *context)
 
 -(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(ccTime)delay
 {
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
 	
 	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
 	CFBinaryHeapAddValue(_heap, CFRetain((__bridge CFTypeRef)timer));
@@ -365,54 +339,90 @@ PrioritySearch(NSArray *array, NSInteger priority)
 
 -(void)scheduleTarget:(NSObject<CCSchedulerTarget> *)target
 {
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
+	BOOL update = [target respondsToSelector:@selector(update:)];
+	BOOL fixedUpdate = [target respondsToSelector:@selector(fixedUpdate:)];
 	
-	scheduledTarget.enableUpdates = YES;
-	NSInteger priority = target.priority;
-	
-	if(scheduledTarget->_update_IMP){
-		[_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
-	}
-	
-	if(scheduledTarget->_fixedUpdate_IMP){
-		[_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
+	// Don't bother scheduling anything if it doesn't implement any methods.
+	if(update || fixedUpdate){
+		CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
+		
+		// Don't schedule something more than once.
+		if(!scheduledTarget.enableUpdates){
+			scheduledTarget.enableUpdates = YES;
+			NSInteger priority = target.priority;
+			
+			if(update) [_updates insertObject:scheduledTarget atIndex:PrioritySearch(_updates, priority)];
+			if(fixedUpdate) [_fixedUpdates insertObject:scheduledTarget atIndex:PrioritySearch(_fixedUpdates, priority)];
+		}
 	}
 }
 
 -(void)unscheduleTarget:(NSObject<CCSchedulerTarget> *)target
 {
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	
-	// Remove the update methods if they are scheduled
-	if(scheduledTarget.enableUpdates){
-		[_fixedUpdates removeObject:scheduledTarget];
-		[_updates removeObject:scheduledTarget];
+	if(scheduledTarget){
+		// Remove the update methods if they are scheduled
+		if(scheduledTarget.enableUpdates){
+			if([scheduledTarget.target respondsToSelector:@selector(update:)]){
+				[_updates removeObject:scheduledTarget];
+			}
+			
+			if([scheduledTarget.target respondsToSelector:@selector(fixedUpdate:)]){
+				[_fixedUpdates removeObject:scheduledTarget];
+			}
+		}
+		
+		[scheduledTarget invalidateTimers];
+		
+		CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)target);
 	}
-	
-	[scheduledTarget invalidateTimers];
+}
+
+-(BOOL)isTargetScheduled:(NSObject<CCSchedulerTarget> *)target
+{
+	return ([self scheduledTargetForTarget:target insert:NO] != nil);
 }
 
 -(void)pauseTarget:(NSObject<CCSchedulerTarget> *)target
 {
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
-	scheduledTarget.paused = YES;
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	scheduledTarget.pauseCount++;
+}
+
+-(void)resumeTarget:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	scheduledTarget.pauseCount--;
 }
 
 -(BOOL)isTargetPaused:(NSObject<CCSchedulerTarget> *)target
 {
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
-	return scheduledTarget.paused;
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	return (scheduledTarget.pauseCount > 0);
+}
+
+-(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target
+{
+	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
+	
+	NSMutableArray *arr = [NSMutableArray array];
+	for(CCTimer *timer = scheduledTarget.timers; timer; timer = timer.next){
+		[arr addObject:timer];
+	}
+	
+	return arr;
 }
 
 -(void)update:(ccTime)dt
 {
-	ccTime clampedDelta = MIN(dt, _maxTimeStep);
+	ccTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
 	[self updateTo:_currentTime + clampedDelta];
 	
 	// Run the update: methods
 	for(int i=0, count=_updates.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = _updates[i];
-		scheduledTarget->_update_IMP(scheduledTarget->_target, UPDATE_SELECTOR, clampedDelta);
+		[scheduledTarget->_target update:clampedDelta];
 	}
 }
 
