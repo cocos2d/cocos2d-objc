@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Scott Lembcke.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +26,6 @@
 
 
 
-#import "Support/uthash.h"
 #import "ccTypes.h"
 
 /// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
@@ -65,6 +65,10 @@
 
 /// Absolute time the timer will invoke at.
 @property(nonatomic, readonly) ccTime invokeTime;
+
+/// Track an object along with the timer.
+/// [CCNode schedule:] methods use this to store the selector name.
+@property(nonatomic, strong) NSString *userData;
 
 /// Set the timer to repeat once with the given interval.
 /// Can be used from a timer block to make the timer run again.
@@ -152,6 +156,8 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 -(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
+-(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
+
 /** Pauses the target.
  All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
  If the target is not present, nothing happens.
@@ -159,9 +165,14 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  */
 -(void) pauseTarget:(NSObject<CCSchedulerTarget> *)target;
 
+
+-(void) resumeTarget:(NSObject<CCSchedulerTarget> *)target;
+
 /** Returns whether or not the target is paused
  @since v1.0.0
  */
 -(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
+
+-(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target;
 
 @end

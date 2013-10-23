@@ -396,6 +396,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 //MARK: Time Stepping
 
+-(NSInteger)priority
+{
+	return NSIntegerMax;
+}
+
 -(void)fixedUpdate:(ccTime)delta
 {
 	[_space step:1.0f/60.0f];
