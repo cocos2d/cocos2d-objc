@@ -197,7 +197,8 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 
 @implementation CCScheduler {
-	NSMutableArray *_heap;
+//	NSMutableArray *_heap;
+	CFBinaryHeapRef _heap;
 	CFMutableDictionaryRef _scheduledTargets;
 	
 	NSMutableArray *_updates;
@@ -206,11 +207,50 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	CCTimer *_fixedUpdateTimer;
 }
 
+static CFComparisonResult
+ComparePriorities(const void *a, const void *b)
+{
+	NSInteger priority_a = [(__bridge CCTimer *)a scheduledTarget].target.priority;
+	NSInteger priority_b = [(__bridge CCTimer *)b scheduledTarget].target.priority;
+	
+	if(priority_a < priority_b){
+		return kCFCompareLessThan;
+	} else if(priority_b < priority_a){
+		return kCFCompareGreaterThan;
+	} else {
+		return kCFCompareEqualTo;
+	}
+}
+
+static CFComparisonResult
+CompareTimers(const void *a, const void *b, void *context)
+{
+	ccTime time_a = [(__bridge CCTimer *)a invokeTime];
+	ccTime time_b = [(__bridge CCTimer *)b invokeTime];
+	
+	if(time_a < time_b){
+		return kCFCompareLessThan;
+	} else if(time_b < time_a){
+		return kCFCompareGreaterThan;
+	} else {
+		return ComparePriorities(a, b);
+	}
+}
+
 -(id)init
 {
 	if((self = [super init])){
 		_maxTimeStep = 1.0/10.0;
-		_heap = [NSMutableArray array];
+		
+		CFBinaryHeapCallBacks callbacks = {
+			.version = 0,
+			.retain = NULL,
+			.release = NULL,
+			.copyDescription = NULL,
+			.compare = CompareTimers,
+		};
+		
+		_heap = CFBinaryHeapCreate(NULL, 0, &callbacks, NULL);
 		
 		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 		
@@ -232,6 +272,12 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	return self;
 }
 
+-(void)dealloc
+{
+	CFRelease(_heap);
+	CFRelease(_scheduledTargets);
+}
+
 -(NSInteger)priority
 {
 	return NSIntegerMax;
@@ -240,59 +286,15 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 -(ccTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
 -(void)setFixedTimeStep:(ccTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
-static void
-Swap(NSMutableArray *heap, NSUInteger a, NSUInteger b)
-{
-	CCTimer *temp = heap[a];
-	heap[a] = heap[b];
-	heap[b] = temp;
-}
-
-static void
-HeapMoveUp(NSMutableArray *heap, NSUInteger index)
-{
-	NSUInteger parentIndex = (index - 1)/2;
-	
-	if(index > 1 && [heap[index] invokeTime] < [heap[parentIndex] invokeTime]){
-		Swap(heap, index, parentIndex);
-		HeapMoveUp(heap, parentIndex);
-	}
-}
-
-static NSUInteger
-HeapMoveDownChildIndex(NSMutableArray *heap, NSUInteger index, NSUInteger count)
-{
-	NSUInteger left = 2*index + 1;
-	NSUInteger right = 2*index + 2;
-	
-	if(right < count){
-		return ([heap[left] invokeTime] < [heap[right] invokeTime] ? left : right);
-	} else {
-		return left;
-	}
-}
-
-static void
-HeapMoveDown(NSMutableArray *heap, NSUInteger index)
-{
-	NSUInteger count = heap.count;
-	NSUInteger childIndex = HeapMoveDownChildIndex(heap, index, count);
-	
-	if(childIndex < count && [heap[childIndex] invokeTime] < [heap[index] invokeTime]){
-		Swap(heap, index, childIndex);
-		HeapMoveDown(heap, childIndex);
-	}
-}
-
 -(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target
 {
 	// Need to transform nil -> NSNulls.
 	target = (target == nil ? [NSNull null] : target);
 	
-	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, (__bridge void *)target);
+	CCScheduledTarget *scheduledTarget = CFDictionaryGetValue(_scheduledTargets, (__bridge CFTypeRef)target);
 	if(scheduledTarget == nil){
 		scheduledTarget = [[CCScheduledTarget alloc] initWithTarget:target];
-		CFDictionarySetValue(_scheduledTargets, (__bridge void *)target, (__bridge void *)scheduledTarget);
+		CFDictionarySetValue(_scheduledTargets, (__bridge CFTypeRef)target, (__bridge CFTypeRef)scheduledTarget);
 	}
 	
 	return scheduledTarget;
@@ -303,8 +305,7 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target];
 	
 	CCTimer *timer = [[CCTimer alloc] initWithDelay:delay scheduler:self scheduledTarget:scheduledTarget block:block];
-	[_heap addObject:timer];
-	HeapMoveUp(_heap, _heap.count - 1);
+	CFBinaryHeapAddValue(_heap, CFRetain((__bridge CFTypeRef)timer));
 	
 	timer.next = scheduledTarget.timers;
 	scheduledTarget.timers = timer;
@@ -316,32 +317,33 @@ HeapMoveDown(NSMutableArray *heap, NSUInteger index)
 {
 	NSAssert(targetTime >= _currentTime, @"Cannot step to a time in the past.");
 	
-	while(_heap.count > 0){
-		CCTimer *timer = _heap[0];
+	while(CFBinaryHeapGetCount(_heap) > 0){
+		CCTimer *timer = CFBinaryHeapGetMinimum(_heap);
 		ccTime invokeTime = timer.invokeTime;
 		
-		if(invokeTime > targetTime) break;
+		if(invokeTime > targetTime){
+			break;
+		} else {
+			CFBinaryHeapRemoveMinimumValue(_heap);
+		}
 		
 		_currentTime = invokeTime;
 		timer.block(timer);
 		
-		#warning TODO doesn't really handle rescheduling timers.
 		if(timer.repeatCount > 0){
 			if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
 			
 			ccTime delay = timer.deltaTime = timer.repeatInterval;
 			timer.invokeTime += delay;
 			
-			HeapMoveDown(_heap, 0);
+			CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
 		} else {
-			_heap[0] = _heap.lastObject;
-			[_heap removeLastObject];
-			if(_heap.count > 0) HeapMoveDown(_heap, 0);
+			CFRelease((__bridge CFTypeRef)timer);
 			
 			CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
 			[scheduledTarget removeTimer:timer];
 			if(scheduledTarget.empty){
-				CFDictionaryRemoveValue(_scheduledTargets, (__bridge void *)scheduledTarget.target);
+				CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)scheduledTarget.target);
 			}
 		}
 	}
