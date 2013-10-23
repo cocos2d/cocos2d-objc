@@ -36,6 +36,8 @@
             @"CCScrollViewTest",
             @"CCTableViewTest",
             @"CCTransitionTest",
+            @"CCSprite9SliceTest",
+            @"CCTextFieldTest",
 #ifdef __CC_PLATFORM_IOS
             @"CCResponderTest",
 #endif

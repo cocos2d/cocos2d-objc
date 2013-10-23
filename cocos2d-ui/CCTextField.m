@@ -24,8 +24,10 @@
     _background = [[CCSprite9Slice alloc] initWithSpriteFrame:frame];
     [self addChild:_background];
     
+#ifdef __CC_PLATFORM_IOS
     _textField = [[UITextField alloc] initWithFrame:CGRectZero];
     _textField.delegate = self;
+#endif
     
     _padding = 4;
     
@@ -34,6 +36,7 @@
 
 - (void) positionTextField
 {
+#ifdef __CC_PLATFORM_IOS
     CGPoint worldPos = [self convertToWorldSpace:CGPointZero];
     CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
     viewPos.x += _padding;
@@ -49,21 +52,26 @@
     frame.size = size;
     
     _textField.frame = frame;
+#endif
 }
 
 - (void) addUITextView
 {
+#ifdef __CC_PLATFORM_IOS
     _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [[[CCDirector sharedDirector] view] addSubview:_textField];
     [self positionTextField];
+#endif
 }
 
 - (void) removeUITextView
 {
+#ifdef __CC_PLATFORM_IOS
     if (_textField)
     {
         [_textField removeFromSuperview];
     }
+#endif
 }
 
 - (void) onEnter
@@ -94,7 +102,7 @@
 
 - (void) layout
 {
-    CGSize sizeInPoints = [self convertContentSizeToPoints: self.preferredSize type:self.contentSizeType];
+    CGSize sizeInPoints = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
     
     [_background setContentSize:sizeInPoints];
     _background.anchorPoint = ccp(0,0);
@@ -107,6 +115,7 @@
 
 #pragma mark Text Field Delegate Methods
 
+#ifdef __CC_PLATFORM_IOS
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
     if (_keyboardIsShown)
@@ -128,10 +137,13 @@
     return YES;
 }
 
+#endif
+
 #pragma mark Keyboard Notifications
 
 - (void)registerForKeyboardNotifications
 {
+#ifdef __CC_PLATFORM_IOS
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWasShown:)
                                                  name:UIKeyboardDidShowNotification object:nil];
@@ -139,13 +151,17 @@
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillBeHidden:)
                                                  name:UIKeyboardWillHideNotification object:nil];
+#endif
 }
 
 - (void) unregisterForKeyboardNotifications
 {
+#ifdef __CC_PLATFORM_IOS
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+#endif
 }
 
+#ifdef __CC_PLATFORM_IOS
 - (void)keyboardWasShown:(NSNotification*)notification
 {
     _keyboardIsShown = YES;
@@ -172,7 +188,11 @@
     _keyboardIsShown = NO;
 }
 
+#endif
+
 #pragma mark Focusing on Text Field
+
+#ifdef __CC_PLATFORM_IOS
 
 - (void) focusOnTextField
 {
@@ -225,7 +245,11 @@
     [UIView commitAnimations];
 }
 
+#endif
+
 #pragma mark Properties
+
+#ifdef __CC_PLATFORM_IOS
 
 - (void) setString:(NSString *)string
 {
@@ -236,6 +260,8 @@
 {
     return _textField.text;
 }
+
+#endif
 
 
 @end
