@@ -49,11 +49,19 @@
 
 
 @interface CCTimer (Private)
-@property(nonatomic, readwrite) ccTime invokeTime;
+
+@property(nonatomic, readwrite) ccTime deltaTime;
 @property(nonatomic, readonly) CCTimerBlock block;
 @property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
+
+// May differ from invoke time due to pausing.
+@property(nonatomic, assign) ccTime invokeTimeInternal;
+// Timers form a linked list per target.
 @property(nonatomic, strong) CCTimer *next;
-@property(nonatomic, readwrite) ccTime deltaTime;
+// Positive value when timer is paused or completing a pause,
+// The minim amount of time remaining on the timer after the next invocation.
+@property(nonatomic, readonly) ccTime pauseDelay;
+
 @end
 
 
@@ -141,17 +149,25 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	CCTimerBlock _block;
 	CCTimer *_next;
 	
+	ccTime _invokeTimeInternal;
+	ccTime _pauseDelay;
+	
 	__weak CCScheduler *_scheduler;
 	__weak CCScheduledTarget *_scheduledTarget;
 }
 
+-(ccTime)invokeTime
+{
+	return (self.paused ? INFINITY : _invokeTimeInternal + _pauseDelay);
+}
+
 -(void)setPaused:(BOOL)paused
 {
-	#warning TODO
 	if(paused){
-		//
+		_pauseDelay = self.invokeTime - _scheduler.currentTime;
 	} else {
-		// Restore 
+		// Subtract off the delay to the next invoke time.
+		_pauseDelay -= MAX(_invokeTimeInternal - _scheduler.currentTime, 0.0);
 	}
 	
 	_paused = paused;
@@ -173,6 +189,8 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	_repeatCount = 0;
 }
 
+-(BOOL)invalid {return (_block == INVALIDATED_BLOCK);}
+
 @end
 
 
@@ -182,7 +200,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 {
 	if((self = [super init])){
 		_deltaTime = delay;
-		_invokeTime = scheduler.currentTime + delay;
+		_invokeTimeInternal = scheduler.currentTime + delay;
 		_repeatInterval = delay;
 		_scheduler = scheduler;
 		_scheduledTarget = scheduledTarget;
@@ -192,7 +210,10 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	return self;
 }
 
--(void)setInvokeTime:(ccTime)invokeTime {_invokeTime = invokeTime;}
+-(ccTime)pauseDelay {return _pauseDelay;}
+
+-(ccTime)invokeTimeInternal {return _invokeTimeInternal;}
+-(void)setInvokeTimeInternal:(ccTime)invokeTimeInternal {_invokeTimeInternal = invokeTimeInternal;}
 
 -(CCTimerBlock)block {return _block;}
 -(CCScheduledTarget *)scheduledTarget {return _scheduledTarget;}
@@ -234,8 +255,8 @@ ComparePriorities(const void *a, const void *b)
 static CFComparisonResult
 CompareTimers(const void *a, const void *b, void *context)
 {
-	ccTime time_a = [(__bridge CCTimer *)a invokeTime];
-	ccTime time_b = [(__bridge CCTimer *)b invokeTime];
+	ccTime time_a = [(__bridge CCTimer *)a invokeTimeInternal];
+	ccTime time_b = [(__bridge CCTimer *)b invokeTimeInternal];
 	
 	if(time_a < time_b){
 		return kCFCompareLessThan;
@@ -265,11 +286,16 @@ CompareTimers(const void *a, const void *b, void *context)
 		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 		
 		_updates = [NSMutableArray array];
-		NSArray *fixedUpdates = _fixedUpdates = [NSMutableArray array];
+		_fixedUpdates = [NSMutableArray array];
+		
+		// Annoyance to avoid a retain cycle.
+		__block __weak __typeof(self) _self = self;
 		
 		// Schedule a timer to run the fixedUpdate: methods.
 		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
-			InvokeMethods(fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+			CCScheduler *sceduler = _self;
+			InvokeMethods(sceduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+			sceduler->_lastFixedUpdateTime = timer.invokeTime;
 		} forTarget:self withDelay:0];
 
 		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
@@ -326,7 +352,7 @@ CompareTimers(const void *a, const void *b, void *context)
 	
 	while(CFBinaryHeapGetCount(_heap) > 0){
 		CCTimer *timer = CFBinaryHeapGetMinimum(_heap);
-		ccTime invokeTime = timer.invokeTime;
+		ccTime invokeTime = timer.invokeTimeInternal;
 		
 		if(invokeTime > targetTime){
 			break;
@@ -335,22 +361,33 @@ CompareTimers(const void *a, const void *b, void *context)
 		}
 		
 		_currentTime = invokeTime;
-		timer.block(timer);
 		
-		if(timer.repeatCount > 0){
-			if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
-			
-			ccTime delay = timer.deltaTime = timer.repeatInterval;
-			timer.invokeTime += delay;
-			
+		ccTime pauseDelay = timer.pauseDelay;
+		if(pauseDelay > 0.0){
+			// Rschedule the timer with the minimum remaining delay due to the timer being paused.
+			timer.invokeTimeInternal += pauseDelay;
 			CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
 		} else {
-			CFRelease((__bridge CFTypeRef)timer);
+			timer.block(timer);
 			
-			CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
-			[scheduledTarget removeTimer:timer];
-			if(scheduledTarget.empty){
-				CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)scheduledTarget.target);
+			if(timer.repeatCount > 0){
+				if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
+				
+				ccTime delay = timer.deltaTime = timer.repeatInterval;
+				timer.invokeTimeInternal += delay;
+				
+				CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
+			} else {
+				CCScheduledTarget *scheduledTarget = timer.scheduledTarget;
+				[scheduledTarget removeTimer:timer];
+				if(scheduledTarget.empty){
+					CFDictionaryRemoveValue(_scheduledTargets, (__bridge CFTypeRef)scheduledTarget.target);
+				}
+				
+				[timer invalidate];
+				
+				// Timer was removed from the heap permanently.
+				CFRelease((__bridge CFTypeRef)timer);
 			}
 		}
 	}
@@ -416,13 +453,13 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	return ([self scheduledTargetForTarget:target insert:NO] != nil);
 }
 
--(void)pauseTarget:(NSObject<CCSchedulerTarget> *)target
+-(void)pauseCountIncrement:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	scheduledTarget.pauseCount++;
 }
 
--(void)resumeTarget:(NSObject<CCSchedulerTarget> *)target
+-(void)pauseCountDecrement:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
 	scheduledTarget.pauseCount--;
@@ -452,6 +489,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
+	_lastUpdateTime = _currentTime;
 }
 
 @end

@@ -1136,12 +1136,13 @@ CGPoint GetPosition(CCNode *node)
 
 -(void)setPaused:(BOOL)paused
 {
+	#warning TODO needs to be recursive.
 	if(_paused != paused){
 		if(paused){
-			[self.scheduler pauseTarget:self];
+			[self.scheduler pauseCountIncrement:self];
 			[_actionManager pauseTarget:self];
 		} else {
-			[self.scheduler resumeTarget:self];
+			[self.scheduler pauseCountDecrement:self];
 			[_actionManager resumeTarget:self];
 		}
 		
