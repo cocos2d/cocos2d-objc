@@ -161,16 +161,21 @@
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 			counter++;
 	} forTarget:nil withDelay:0];
+	XCTAssertFalse(timer.invalid, @"");
 	
 	timer.repeatCount = CCTimerRepeatForever;
 	timer.repeatInterval = 1.0;
 	
 	[scheduler update:10.0];
 	XCTAssertEqual(counter, 11, @"");
+	XCTAssertFalse(timer.invalid, @"");
 	
 	[timer invalidate];
+	XCTAssertTrue(timer.invalid, @"");
+	
 	[scheduler update:10.0];
 	XCTAssertEqual(counter, 11, @"");
+	XCTAssertTrue(timer.invalid, @"");
 }
 
 - (void)testUpdate
@@ -184,7 +189,10 @@
 	target.sequence = seq;
 	target.name = @"foo";
 	
+	XCTAssertFalse([scheduler isTargetScheduled:target], @"");
+	
 	[scheduler scheduleTarget:target];
+	XCTAssertTrue([scheduler isTargetScheduled:target], @"");
 	
 	[scheduler update:3.0];
 	XCTAssertEqualObjects(seq, (@[
@@ -202,6 +210,49 @@
 		@"fixedUpdate(foo):1.0",
 		@"update(foo):2.0",
 	]), @"");
+	
+	XCTAssertFalse([scheduler isTargetPaused:target], @"");
+	
+	// Pause the target twice.
+	[scheduler pauseCountIncrement:target];
+	[scheduler pauseCountIncrement:target];
+	XCTAssertTrue([scheduler isTargetPaused:target], @"");
+	
+	[seq removeAllObjects];
+	[scheduler update:2.0];
+	XCTAssertEqualObjects(seq, (@[
+	]), @"");
+	
+	// Must unpause twice to resume
+	[scheduler pauseCountDecrement:target];
+	XCTAssertTrue([scheduler isTargetPaused:target], @"");
+	
+	[seq removeAllObjects];
+	[scheduler update:2.0];
+	XCTAssertEqualObjects(seq, (@[
+	]), @"");
+	
+	// Unpause the second time.
+	[scheduler pauseCountDecrement:target];
+	XCTAssertFalse([scheduler isTargetPaused:target], @"");
+	
+	[seq removeAllObjects];
+	[scheduler update:2.0];
+	XCTAssertEqualObjects(seq, (@[
+		@"fixedUpdate(foo):1.0",
+		@"fixedUpdate(foo):1.0",
+		@"update(foo):2.0",
+	]), @"");
+	
+	// Remove the target.
+	[scheduler unscheduleTarget:target];
+	XCTAssertFalse([scheduler isTargetScheduled:target], @"");
+	
+	[seq removeAllObjects];
+	[scheduler update:2.0];
+	XCTAssertEqualObjects(seq, (@[
+	]), @"");
+	
 }
 
 - (void)testLotsOfTimers
@@ -274,6 +325,75 @@
 	}
 	
 	XCTAssertEqualObjects(invocations, expectedInvocations, @"");
+}
+
+- (void)testPauseTimer
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	[scheduler update:1.0];
+	XCTAssertEqual(scheduler.currentTime, 1.0, @"");
+	
+	__block ccTime invokedTime = -1.0;
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+		invokedTime = timer.invokeTime;
+		
+		// deltaTime should not include paused time.
+		XCTAssertEqual(timer.deltaTime, 1.0, @"");
+	} forTarget:nil withDelay:1.0];
+	timer.paused = YES;
+	
+	// XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.
+	ccTime inf = INFINITY;
+	XCTAssertEqual(timer.invokeTime, inf, @"");
+	
+	[scheduler update:10.0];
+	XCTAssertEqual(invokedTime, -1.0, @"");
+	XCTAssertEqual(scheduler.currentTime, 11.0, @"");
+	
+	timer.paused = NO;
+	XCTAssertEqual(timer.invokeTime, 12.0, @"");
+	
+	timer.paused = YES;
+	XCTAssertEqual(timer.invokeTime, inf, @"");
+	
+	timer.paused = NO;
+	XCTAssertEqual(timer.invokeTime, 12.0, @"");
+	
+	[scheduler update:10.0];
+	XCTAssertEqual(timer.invokeTime, 12.0, @"");
+	XCTAssertEqual(invokedTime, 12.0, @"");
+}
+
+-(void)testTimerIncrement
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	__block int invocations = 0;
+	__block ccTime delay = 1.0;
+	__block ccTime expectedInvokeTime = delay;
+	
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+		XCTAssertEqual(timer.invokeTime, expectedInvokeTime, @"");
+		
+		invocations++;
+		if(invocations == 3){
+			invocations = 0;
+			delay += 1.0;
+		}
+		
+		if(delay < 10){
+			expectedInvokeTime += delay;
+			[timer repeatOnceWithInterval:delay];
+		}
+	} forTarget:nil withDelay:delay];
+	
+	[scheduler update:1000.0];
+	XCTAssertTrue(timer.invalid, @"");
 }
 
 @end

@@ -38,10 +38,8 @@
 
 @optional
 
-/// update: will be called automatically every frame if implemented, and the node is "live".
 -(void) update:(ccTime)delta;
 
-/// fixedUpdate: will be called automatically every tick if implemented, and the node is "live".
 -(void) fixedUpdate:(ccTime)delta;
 
 @end
@@ -65,6 +63,9 @@
 
 /// Absolute time the timer will invoke at.
 @property(nonatomic, readonly) ccTime invokeTime;
+
+/// Returns YES if the timer is no longer scheduled.
+@property(nonatomic, readonly) BOOL invalid;
 
 /// Track an object along with the timer.
 /// [CCNode schedule:] methods use this to store the selector name.
@@ -158,19 +159,10 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 
 -(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
-/** Pauses the target.
- All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
- If the target is not present, nothing happens.
- @since v0.99.3
- */
--(void) pauseTarget:(NSObject<CCSchedulerTarget> *)target;
+-(void) pauseCountIncrement:(NSObject<CCSchedulerTarget> *)target;
 
+-(void) pauseCountDecrement:(NSObject<CCSchedulerTarget> *)target;
 
--(void) resumeTarget:(NSObject<CCSchedulerTarget> *)target;
-
-/** Returns whether or not the target is paused
- @since v1.0.0
- */
 -(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
 
 -(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target;
