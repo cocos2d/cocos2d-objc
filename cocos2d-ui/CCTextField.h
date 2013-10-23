@@ -13,12 +13,12 @@
 @interface CCTextField : CCControl <UITextFieldDelegate>
 #elif defined(__CC_PLATFORM_MAC)
 @interface CCTextField : CCControl
-
+#endif
 {
     BOOL _keyboardIsShown;
     float _keyboardHeight;
 }
-#endif
+
 
 - (id) initWithSpriteFrame:(CCSpriteFrame*)frame;
 
