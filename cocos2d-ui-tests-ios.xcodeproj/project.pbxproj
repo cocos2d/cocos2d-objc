@@ -38,6 +38,8 @@
 		B7E2621C17E7D370007067F0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2621A17E7D370007067F0 /* main.m */; };
 		B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2622017E7D3B2007067F0 /* MainMenu.m */; };
 		B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
+		B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
+		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,13 +56,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
-		};
-		B7E2622E17E7D3D8007067F0 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 502C65EE0DFEF3DD00E4107D;
-			remoteInfo = "cocos2d-documentation";
 		};
 		B7E2623017E7D3D8007067F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -82,6 +77,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
+		};
+		B7EE697D18186D5200B983FE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D36F7E35181580A000E94F72;
+			remoteInfo = UnitTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -126,6 +128,10 @@
 		B7E2621F17E7D3B2007067F0 /* MainMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainMenu.h; path = "cocos2d-ui-tests/MainMenu.h"; sourceTree = SOURCE_ROOT; };
 		B7E2622017E7D3B2007067F0 /* MainMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainMenu.m; path = "cocos2d-ui-tests/MainMenu.m"; sourceTree = SOURCE_ROOT; };
 		B7E2622317E7D3D8007067F0 /* cocos2d-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "cocos2d-ios.xcodeproj"; sourceTree = SOURCE_ROOT; };
+		B7EE697718186D5200B983FE /* CCTextFieldTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextFieldTest.h; path = "cocos2d-ui-tests/tests/CCTextFieldTest.h"; sourceTree = SOURCE_ROOT; };
+		B7EE697818186D5200B983FE /* CCTextFieldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextFieldTest.m; path = "cocos2d-ui-tests/tests/CCTextFieldTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE697F1818760700B983FE /* CCSprite9SliceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite9SliceTest.h; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.h"; sourceTree = SOURCE_ROOT; };
+		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +167,10 @@
 				B70AFC2F180F2D7400516435 /* CCTransitionTest.m */,
 				B772F69D1811C8D9005C069B /* CCResponderTest.h */,
 				B772F69E1811C8D9005C069B /* CCResponderTest.m */,
+				B7EE697F1818760700B983FE /* CCSprite9SliceTest.h */,
+				B7EE69801818760700B983FE /* CCSprite9SliceTest.m */,
+				B7EE697718186D5200B983FE /* CCTextFieldTest.h */,
+				B7EE697818186D5200B983FE /* CCTextFieldTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -274,8 +284,8 @@
 			children = (
 				B7E2622B17E7D3D8007067F0 /* libbuild all libs.a */,
 				B7E2622D17E7D3D8007067F0 /* libcocos2d.a */,
-				B7E2622F17E7D3D8007067F0 /* libcocos2d-documentation.a */,
 				B7E2623117E7D3D8007067F0 /* libkazmath.a */,
+				B7EE697E18186D5200B983FE /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -354,18 +364,18 @@
 			remoteRef = B7E2622C17E7D3D8007067F0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		B7E2622F17E7D3D8007067F0 /* libcocos2d-documentation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2d-documentation.a";
-			remoteRef = B7E2622E17E7D3D8007067F0 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		B7E2623117E7D3D8007067F0 /* libkazmath.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libkazmath.a;
 			remoteRef = B7E2623017E7D3D8007067F0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B7EE697E18186D5200B983FE /* UnitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTests.xctest;
+			remoteRef = B7EE697D18186D5200B983FE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -399,8 +409,10 @@
 			files = (
 				B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */,
 				B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */,
+				B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */,
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
+				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,

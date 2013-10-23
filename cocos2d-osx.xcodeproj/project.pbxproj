@@ -121,6 +121,7 @@
 		B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603417E7C774007067F0 /* NSEvent+CC.m */; };
 		B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603717E7C786007067F0 /* UITouch+CC.h */; };
 		B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603817E7C786007067F0 /* UITouch+CC.m */; };
+		B7EE698918187F7200B983FE /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698818187C0900B983FE /* CCTextField.m */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -488,6 +489,8 @@
 		B7E2603417E7C774007067F0 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		B7E2603717E7C786007067F0 /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
 		B7E2603817E7C786007067F0 /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
+		B7EE698718187C0900B983FE /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
+		B7EE698818187C0900B983FE /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02BBC79126CD870006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
@@ -1292,6 +1295,8 @@
 				B78AE64617E7BA800028BE0B /* CCScrollView.m */,
 				B7C6239817F10F3600928F91 /* CCTableView.h */,
 				B7C6239917F10F3600928F91 /* CCTableView.m */,
+				B7EE698718187C0900B983FE /* CCTextField.h */,
+				B7EE698818187C0900B983FE /* CCTextField.m */,
 			);
 			name = "cocos2d-ui";
 			sourceTree = "<group>";
@@ -1960,6 +1965,7 @@
 				A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */,
 				A0D7D68F15E2D2CC000CA0C4 /* ccDeprecated.m in Sources */,
 				A0D7D69515E2D2CC000CA0C4 /* CCConfiguration.m in Sources */,
+				B7EE698918187F7200B983FE /* CCTextField.m in Sources */,
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,
