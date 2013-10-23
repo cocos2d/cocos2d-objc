@@ -32,8 +32,18 @@
 @end
 
 
-@interface CCSchedulerTests : XCTestCase
+@interface NSNumber(CCSchedulerTarget)<CCSchedulerTarget>
+@end
 
+
+@implementation NSNumber(CCSchedulerTarget)
+
+-(NSInteger)priority {return self.integerValue;}
+
+@end
+
+
+@interface CCSchedulerTests : XCTestCase
 @end
 
 @implementation CCSchedulerTests {
@@ -192,6 +202,78 @@
 		@"fixedUpdate(foo):1.0",
 		@"update(foo):2.0",
 	]), @"");
+}
+
+- (void)testLotsOfTimers
+{
+	NSMutableSet *invocations = [NSMutableSet set];
+	NSMutableSet *expectedInvocations = [NSMutableSet set];
+	
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	// Stuff 100k timers into the scheduler.
+	for(int i=0; i<100000; i++){
+		NSNumber *n = @(i);
+		
+		CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+			[invocations addObject:n];
+		} forTarget:n withDelay:CCRANDOM_0_1()*200.0];
+		
+		// Invalidate some of the timers.
+		if(CCRANDOM_0_1() > 0.5){
+			[timer invalidate];
+		} else {
+			// Only stepping to t=100, timers are scheduled to t=200
+			if(timer.invokeTime <= 100.0){
+				[expectedInvocations addObject:n];
+			}
+		}
+	}
+	
+	// 1/(power of two) just to avoid floating point issues
+	ccTime dt = 1.0/64.0;
+	for(ccTime t=0.0; t<100.0; t += dt){
+		[scheduler update:dt];
+	}
+	
+	XCTAssertEqualObjects(invocations, expectedInvocations, @"");
+}
+
+- (void)testLotsOfRepeatingTimers
+{
+	NSMutableDictionary *invocations = [NSMutableDictionary dictionary];
+	NSMutableDictionary *expectedInvocations = [NSMutableDictionary dictionary];
+	
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	int repeatCount = 1000;
+	NSNumber *expectedInvocationCount = @(repeatCount + 1);
+	
+	// Stuff 1k timers into the scheduler.
+	for(int i=0; i<1000; i++){
+		NSNumber *n = @(i);
+		
+		CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+			NSNumber *count = [invocations objectForKey:n];
+			[invocations setObject:@(count.intValue + 1) forKey:n];
+		} forTarget:n withDelay:CCRANDOM_0_1()];
+		
+		timer.repeatCount = repeatCount;
+		timer.repeatInterval = CCRANDOM_0_1();
+		
+		[expectedInvocations setObject:expectedInvocationCount forKey:n];
+	}
+	
+	ccTime dt = 1.0/60.0;
+	for(ccTime t=0.0; t<(repeatCount + 1); t += dt){
+		[scheduler update:dt];
+	}
+	
+	XCTAssertEqualObjects(invocations, expectedInvocations, @"");
 }
 
 @end
