@@ -25,13 +25,18 @@
  */
 
 
+/*
+	Possible improvements.
+	1) Binary search in PrioritySearch().
+	2) Dirty flags on the method lists, filter during the next iteration.
+*/
+
+
 // cocos2d imports
 #import "CCScheduler.h"
+#import <objc/message.h>
 
-@interface CCScheduledTarget : NSObject {
-	@public
-	__weak NSObject<CCSchedulerTarget> *_target;
-}
+@interface CCScheduledTarget : NSObject
 
 @property(nonatomic, readonly) NSObject<CCSchedulerTarget> *target;
 
@@ -57,7 +62,17 @@
 
 
 @implementation CCScheduledTarget {
+	__weak NSObject<CCSchedulerTarget> *_target;
 	CCTimer *_timers;
+}
+
+static void
+InvokeMethods(NSArray *methods, SEL selector, ccTime dt)
+{
+	for(int i=0, count=methods.count; i<count; i++){
+		CCScheduledTarget *scheduledTarget = methods[i];
+		if(scheduledTarget->_pauseCount == 0) objc_msgSend(scheduledTarget->_target, selector, dt);
+	}
 }
 
 -(id)initWithTarget:(NSObject<CCSchedulerTarget> *)target
@@ -98,7 +113,16 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 
 -(void)setPauseCount:(NSUInteger)pauseCount
 {
-	#warning needs to disable things
+	NSAssert(pauseCount >= 0, @"pauseCount must be positive. Did a target get resumed without a matching pause call?");
+	
+	_pauseCount = pauseCount;
+	if(pauseCount == 0 && _pauseCount > 0){
+		// resuming
+		for(CCTimer *timer = _timers; timer; timer = timer.next) timer.paused = NO;
+	} else if(pauseCount > 0 && _pauseCount == 0){
+		// pausing
+		for(CCTimer *timer = _timers; timer; timer = timer.next) timer.paused = YES;
+	}
 }
 
 @end
@@ -119,6 +143,18 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	
 	__weak CCScheduler *_scheduler;
 	__weak CCScheduledTarget *_scheduledTarget;
+}
+
+-(void)setPaused:(BOOL)paused
+{
+	#warning TODO
+	if(paused){
+		//
+	} else {
+		// Restore 
+	}
+	
+	_paused = paused;
 }
 
 // A valid block that does nothing.
@@ -233,14 +269,11 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		// Schedule a timer to run the fixedUpdate: methods.
 		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
-			for(int i=0, count=fixedUpdates.count; i<count; i++){
-				CCScheduledTarget *scheduledTarget = fixedUpdates[i];
-				[scheduledTarget->_target fixedUpdate:timer.repeatInterval];
-			}
-		 } forTarget:self withDelay:0];
-		 
-		 _fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
-		 _fixedUpdateTimer.repeatInterval = 1.0/60.0;
+			InvokeMethods(fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+		} forTarget:self withDelay:0];
+
+		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
+		_fixedUpdateTimer.repeatInterval = 1.0/60.0;
 	}
 	
 	return self;
@@ -328,7 +361,6 @@ CompareTimers(const void *a, const void *b, void *context)
 static NSUInteger
 PrioritySearch(NSArray *array, NSInteger priority)
 {
-	#warning TODO binary search.
 	for(int i=0, count=array.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = array[i];
 		if(scheduledTarget.target.priority > priority) return i;
@@ -419,11 +451,7 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	ccTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
 	[self updateTo:_currentTime + clampedDelta];
 	
-	// Run the update: methods
-	for(int i=0, count=_updates.count; i<count; i++){
-		CCScheduledTarget *scheduledTarget = _updates[i];
-		[scheduledTarget->_target update:clampedDelta];
-	}
+	InvokeMethods(_updates, @selector(update:), clampedDelta);
 }
 
 @end
