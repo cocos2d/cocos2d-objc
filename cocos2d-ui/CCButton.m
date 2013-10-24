@@ -28,7 +28,7 @@
 #import "cocos2d.h"
 #import <objc/runtime.h>
 
-#define kCCFatFingerExpansion 20
+#define kCCFatFingerExpansion 70
 
 @implementation CCButton
 
@@ -189,7 +189,10 @@
 
 - (void) touchEntered:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    [super setHitAreaExpansion:_originalHitAreaExpansion + kCCFatFingerExpansion];
+    if (self.claimsUserInteraction)
+    {
+        [super setHitAreaExpansion:_originalHitAreaExpansion + kCCFatFingerExpansion];
+    }
     self.highlighted = YES;
 }
 
