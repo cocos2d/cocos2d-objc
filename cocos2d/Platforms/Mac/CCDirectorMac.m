@@ -363,6 +363,32 @@
 	return  [(CCDirectorMac*)self convertToLogicalCoordinates:p];
 }
 
+- (CGPoint) unConvertFromLogicalCoordinates:(CGPoint)coords
+{
+	CGPoint ret;
+	
+	if( _resizeMode == kCCDirectorResize_NoScale )
+		ret = coords;
+	
+	else {
+		
+		float x_diff = _originalWinSize.width / (_winSizeInPixels.width - _winOffset.x * 2);
+		float y_diff = _originalWinSize.height / (_winSizeInPixels.height - _winOffset.y * 2);
+		
+		float adjust_x = (_winSizeInPixels.width * x_diff - _originalWinSize.width ) / 2;
+		float adjust_y = (_winSizeInPixels.height * y_diff - _originalWinSize.height ) / 2;
+		
+		ret = CGPointMake(  (coords.x+ adjust_x)/x_diff, (coords.y +adjust_y)/y_diff );
+	}
+	
+	return ret;
+}
+
+- (CGPoint) convertToUI:(CGPoint)glPoint
+{
+	return [self unConvertFromLogicalCoordinates:glPoint];
+}
+
 @end
 
 

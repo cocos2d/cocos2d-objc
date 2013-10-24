@@ -33,8 +33,23 @@
     [self addChild:_background];
     
 #ifdef __CC_PLATFORM_IOS
+    
+    // Create UITextField and set it up
     _textField = [[UITextField alloc] initWithFrame:CGRectZero];
     _textField.delegate = self;
+    _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
+    
+#elif defined(__CC_PLATFORM_MAC)
+    
+    // Create NSTextField and set it up
+    _textField = [[NSTextField alloc] initWithFrame: NSMakeRect(10, 10, 300, 40)];
+    _textField.delegate = self;
+    
+    [_textField setFont:[NSFont fontWithName:@"Helvetica" size:17]];
+    [_textField setBezeled:NO];
+    [_textField setBackgroundColor:[NSColor colorWithCalibratedRed:0 green:0 blue:0 alpha:0]];
+    [_textField setWantsLayer:YES];
+    
 #endif
     
     _padding = 4;
@@ -60,26 +75,35 @@
     frame.size = size;
     
     _textField.frame = frame;
+#elif defined(__CC_PLATFORM_MAC)
+    CGPoint worldPos = [self convertToWorldSpace:CGPointZero];
+    CGPoint viewPos = [[CCDirector sharedDirector] convertToUI:worldPos];
+    viewPos.x += _padding;
+    viewPos.y += _padding;
+    
+    CGSize size = self.contentSizeInPoints;
+    //viewPos.y -= size.height;
+    size.width -= _padding * 2;
+    size.height -= _padding * 2;
+    
+    CGRect frame = CGRectZero;
+    frame.origin = viewPos;
+    frame.size = size;
+    
+    _textField.frame = frame;
+    
 #endif
 }
 
 - (void) addUITextView
 {
-#ifdef __CC_PLATFORM_IOS
-    _textField.backgroundColor = [UIColor colorWithRed:0 green:0 blue:0 alpha:0];
     [[[CCDirector sharedDirector] view] addSubview:_textField];
     [self positionTextField];
-#endif
 }
 
 - (void) removeUITextView
 {
-#ifdef __CC_PLATFORM_IOS
-    if (_textField)
-    {
-        [_textField removeFromSuperview];
-    }
-#endif
+    [_textField removeFromSuperview];
 }
 
 - (void) onEnter
@@ -142,6 +166,14 @@
     [textField resignFirstResponder];
     [self triggerAction];
     
+    return YES;
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    [self triggerAction];
     return YES;
 }
 
@@ -267,6 +299,18 @@
 - (NSString*) string
 {
     return _textField.text;
+}
+
+#elif defined(__CC_PLATFORM_MAC)
+
+- (void) setString:(NSString *)string
+{
+    _textField.stringValue = string;
+}
+
+- (NSString*) string
+{
+    return _textField.stringValue;
 }
 
 #endif
