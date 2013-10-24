@@ -27,6 +27,7 @@
 #endif
 
 @property (nonatomic,readonly) CCSprite9Slice* background;
+@property (nonatomic,strong) CCSpriteFrame* backgroundSpriteFrame;
 @property (nonatomic,assign) float padding;
 @property (nonatomic,strong) NSString* string;
 

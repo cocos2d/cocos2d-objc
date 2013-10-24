@@ -21,7 +21,15 @@
     self = [super init];
     if (!self) return NULL;
     
-    _background = [[CCSprite9Slice alloc] initWithSpriteFrame:frame];
+    if (frame)
+    {
+        _background = [[CCSprite9Slice alloc] initWithSpriteFrame:frame];
+    }
+    else
+    {
+        _background = [[CCSprite9Slice alloc] init];
+    }
+    
     [self addChild:_background];
     
 #ifdef __CC_PLATFORM_IOS
@@ -263,5 +271,14 @@
 
 #endif
 
+- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame
+{
+    _background.spriteFrame = spriteFrame;
+}
+
+- (CCSpriteFrame*) backgroundSpriteFrame
+{
+    return _background.spriteFrame;
+}
 
 @end
