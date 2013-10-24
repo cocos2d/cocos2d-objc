@@ -114,6 +114,10 @@
 
 #import "ccFPSImages.h"
 
+// Layouts
+#import "CCLayout.h"
+#import "CCLayoutBox.h"
+
 // Shaders
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"

@@ -229,6 +229,10 @@
 		B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79F905917FE2A2E00908504 /* CCTableView.m */; };
 		B7E260D818171D2000A0E872 /* CCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E260D618171D2000A0E872 /* CCTextField.h */; };
 		B7E260D918171D2000A0E872 /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E260D718171D2000A0E872 /* CCTextField.m */; };
+		B7EE69E01819E75700B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DC1819E75700B983FE /* CCLayout.h */; };
+		B7EE69E11819E75700B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DD1819E75700B983FE /* CCLayout.m */; };
+		B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DE1819E75700B983FE /* CCLayoutBox.h */; };
+		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
 		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
@@ -620,6 +624,10 @@
 		B7C6237917EA7D8600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
 		B7E260D618171D2000A0E872 /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
 		B7E260D718171D2000A0E872 /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
+		B7EE69DC1819E75700B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
+		B7EE69DD1819E75700B983FE /* CCLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayout.m; sourceTree = "<group>"; };
+		B7EE69DE1819E75700B983FE /* CCLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayoutBox.h; sourceTree = "<group>"; };
+		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsbody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsbody.h; sourceTree = "<group>"; };
@@ -792,6 +800,7 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
+				B7EE69DB1819E73A00B983FE /* Layouts */,
 				A0DA0BC615BCDCAE00E80A92 /* Draw Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
@@ -1261,6 +1270,17 @@
 			name = "cocos2d-ui";
 			sourceTree = "<group>";
 		};
+		B7EE69DB1819E73A00B983FE /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				B7EE69DC1819E75700B983FE /* CCLayout.h */,
+				B7EE69DD1819E75700B983FE /* CCLayout.m */,
+				B7EE69DE1819E75700B983FE /* CCLayoutBox.h */,
+				B7EE69DF1819E75700B983FE /* CCLayoutBox.m */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
 		D36F7E39181580A000E94F72 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1414,6 +1434,7 @@
 				50D413260F9A3FE00040C3C8 /* CCParticleSystemQuad.h in Headers */,
 				502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */,
 				6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */,
+				B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */,
 				B7E260D818171D2000A0E872 /* CCTextField.h in Headers */,
 				50CB3B0E100AC43A00B7A750 /* CCActionManager.h in Headers */,
 				509D0818101E4FCE007E1749 /* CCTMXTiledMap.h in Headers */,
@@ -1460,6 +1481,7 @@
 				A046E29914C1DB7E0005BBF2 /* CCWindow.h in Headers */,
 				A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */,
 				A0A10B5714F3011F00FA38C1 /* ccGLStateCache.h in Headers */,
+				B7EE69E01819E75700B983FE /* CCLayout.h in Headers */,
 				A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */,
 				A093FF09150E9BE00039327A /* ccShaders.h in Headers */,
 				A09CEE97150EB30D001E49B8 /* ccShader_Position_uColor_frag.h in Headers */,
@@ -1796,11 +1818,13 @@
 				A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
+				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
 				2B192836163361B10049A044 /* CCClippingNode.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
 				B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */,
 				B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */,
 				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
+				B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */,
 				A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */,
 				A6A0734617C788EB004343C8 /* CCResponderManager.m in Sources */,
 				A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */,

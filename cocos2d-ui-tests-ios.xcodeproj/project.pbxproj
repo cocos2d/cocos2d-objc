@@ -40,6 +40,7 @@
 		B7E2623617E7D589007067F0 /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B7E2622D17E7D3D8007067F0 /* libcocos2d.a */; };
 		B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
+		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -132,6 +133,8 @@
 		B7EE697818186D5200B983FE /* CCTextFieldTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextFieldTest.m; path = "cocos2d-ui-tests/tests/CCTextFieldTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE697F1818760700B983FE /* CCSprite9SliceTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSprite9SliceTest.h; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.h"; sourceTree = SOURCE_ROOT; };
 		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE69CD1819D82300B983FE /* CCLayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLayoutTest.h; path = "cocos2d-ui-tests/tests/CCLayoutTest.h"; sourceTree = SOURCE_ROOT; };
+		B7EE69CE1819D82300B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -171,6 +174,8 @@
 				B7EE69801818760700B983FE /* CCSprite9SliceTest.m */,
 				B7EE697718186D5200B983FE /* CCTextFieldTest.h */,
 				B7EE697818186D5200B983FE /* CCTextFieldTest.m */,
+				B7EE69CD1819D82300B983FE /* CCLayoutTest.h */,
+				B7EE69CE1819D82300B983FE /* CCLayoutTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
+				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
 				B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */,
