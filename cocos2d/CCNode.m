@@ -193,7 +193,7 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.claimsUserInteraction = YES;
         self.multipleTouchEnabled = NO;
-        self.hitAreaExpansion = 1.0f;
+        self.hitAreaExpansion = 0.0f;
         
 	}
 
@@ -1419,7 +1419,7 @@ CGPoint GetPosition(CCNode *node)
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {
     pos = [self convertToNodeSpace:pos];
-    CGPoint offset = CGPointMake(self.contentSizeInPoints.width * (1 - _hitAreaExpansion) / 2, self.contentSizeInPoints.height * (1 - _hitAreaExpansion) / 2 );
+    CGPoint offset = ccp(-_hitAreaExpansion, -_hitAreaExpansion);
     CGSize size = CGSizeMake(self.contentSizeInPoints.width - offset.x, self.contentSizeInPoints.height - offset.y);
     if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
     
