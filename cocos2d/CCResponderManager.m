@@ -531,6 +531,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
     [self mouseDown:theEvent button:CCMouseButtonLeft];
 }
 

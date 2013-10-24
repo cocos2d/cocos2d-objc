@@ -12,11 +12,13 @@
 #ifdef __CC_PLATFORM_IOS
 @interface CCTextField : CCControl <UITextFieldDelegate>
 #elif defined(__CC_PLATFORM_MAC)
-@interface CCTextField : CCControl
+@interface CCTextField : CCControl <NSTextFieldDelegate>
 #endif
 {
+#ifdef __CC_PLATFORM_IOS
     BOOL _keyboardIsShown;
     float _keyboardHeight;
+#endif
 }
 
 
@@ -24,6 +26,8 @@
 
 #ifdef __CC_PLATFORM_IOS
 @property (nonatomic,readonly) UITextField* textField;
+#elif defined(__CC_PLATFORM_MAC)
+@property (nonatomic,readonly) NSTextField* textField;
 #endif
 
 @property (nonatomic,readonly) CCSprite9Slice* background;
