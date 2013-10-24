@@ -42,6 +42,8 @@
     NSMutableDictionary* _labelOpacities;
     float _originalScaleX;
     float _originalScaleY;
+    
+    float _originalHitAreaExpansion;
 }
 
 @property (nonatomic,readonly) CCSprite9Slice* background;
