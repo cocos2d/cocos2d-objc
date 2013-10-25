@@ -158,6 +158,33 @@
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
+		<key>Tests/slider-background.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>Tests/slider-handle.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
+		<key>Tests/textfield-bg.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
 		<key>ccbResources/ccbParticleFire.png</key>
 		<dict>
 			<key>scaleFrom</key>

@@ -469,7 +469,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 {
 	// fullpath? return it
 	if ([filename isAbsolutePath]) {
-		CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
+		//CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
 		*resolutionType = kCCResolutionUnknown;
 		return filename;
 	}
