@@ -22,6 +22,9 @@
  * THE SOFTWARE.
  */
 
+// Used to access cpBodyAccumulateMassFromShapes()
+#define CP_ALLOW_PRIVATE_ACCESS 1
+
 #import "CCPhysicsBody.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 
@@ -38,7 +41,10 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	ChipmunkBody *_body;
 	CCPhysicsShape *_shapeList;
 	
-	NSArray *_chipmunkObjects;
+	NSMutableArray *_chipmunkObjects;
+	
+	BOOL _allowsRotation;
+	BOOL _affectedByGravity;
 }
 
 //MARK: Constructors:
@@ -49,16 +55,14 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
 		_body.userData = self;
 		
-		NSMutableArray *chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
-		[chipmunkObjects addObject:_body];
+		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
+		[_chipmunkObjects addObject:_body];
 		
 		_shapeList = shapeList;
 		FOREACH_SHAPE(self, shape){
 			shape.body = self;
-			[chipmunkObjects addObject:shape.shape];
+			[_chipmunkObjects addObject:shape.shape];
 		}
-		
-		_chipmunkObjects = chipmunkObjects;
 	}
 	
 	return self;
@@ -151,8 +155,20 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(BOOL)affectedByGravity {NYI(); return YES;}
 -(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
 
--(BOOL)allowsRotation {NYI(); return YES;}
--(void)setAllowsRotation:(BOOL)allowsRotation {NYI();}
+-(BOOL)allowsRotation {return _allowsRotation;}
+-(void)setAllowsRotation:(BOOL)allowsRotation
+{
+	if(self.isRunning){
+		if(allowsRotation){
+			cpBodyAccumulateMassFromShapes(_body.body);
+		} else {
+			_body.moment = INFINITY;
+			_body.angularVelocity = 0.0;
+		}
+	}
+	
+	_allowsRotation = allowsRotation;
+}
 
 static ccPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
 static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
@@ -194,7 +210,14 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)setVelocity:(CGPoint)velocity {_body.velocity = velocity;}
 
 -(CGFloat)angularVelocity {return _body.angularVelocity;}
--(void)setAngularVelocity:(CGFloat)angularVelocity {_body.angularVelocity = angularVelocity;}
+-(void)setAngularVelocity:(CGFloat)angularVelocity
+{
+#if DEBUG
+	if(!self.allowsRotation) CCLOG(@"Did you intend to set the angular velocity on a physicsBody where allowsRotation is NO?");
+#endif
+	
+	_body.angularVelocity = angularVelocity;
+}
 
 //MARK: Forces, Torques and Impulses:
 
@@ -257,6 +280,11 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics];
+}
+
+-(void)didAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	if(!self.allowsRotation) _body.moment = INFINITY;
 }
 
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics

@@ -55,13 +55,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 // Check that the arbiter is set and return it.
 -(cpArbiter *)arb
 {
-	NSAssert(_arbiter, @"Do not store references to CCPhysicsCollisionPair objects.");
+	NSAssert(_arbiter, @"This CCPhysicsCollisionPair has been invalidated. Do not store references to CCPhysicsCollisionPair objects.");
 	return _arbiter;
-}
-
--(BOOL)ignore
-{
-	return cpArbiterIgnore(self.arb);
 }
 
 -(CGFloat)friction {return cpArbiterGetFriction(self.arb);}
@@ -78,6 +73,18 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 -(id)userData {return cpArbiterGetUserData(self.arb);}
 -(void)setUserData:(id)userData {cpArbiterSetUserData(self.arb, userData);}
+
+-(void)shapeA:(CCPhysicsShape *__autoreleasing *)shapeA shapeB:(CCPhysicsShape *__autoreleasing *)shapeB
+{
+	CHIPMUNK_ARBITER_GET_SHAPES(self.arb, a, b)
+	(*shapeA) = a.userData;
+	(*shapeB) = b.userData;
+}
+
+-(BOOL)ignore
+{
+	return cpArbiterIgnore(self.arb);
+}
 
 @end
 
@@ -125,12 +132,12 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 }
 
 static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CHIPMUNK_ARBITER_GET_BODIES(arb, bodyA, bodyB);
 	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
 	pair->_arbiter = arb;
 	
 	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_beginImp;
-	BOOL retval = imp(handler->_delegate, handler->_beginSel, pair, bodyA.userData, bodyB.userData);
+	BOOL retval = imp(handler->_delegate, handler->_beginSel, pair, [bodyA.userData node], [bodyB.userData node]);
 	
 	if(!handler->_wildcard){
 		retval = cpArbiterCallWildcardBeginA(arb, space) && retval;
@@ -150,12 +157,12 @@ static cpBool PhysicsBegin(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHan
 }
 
 static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CHIPMUNK_ARBITER_GET_BODIES(arb, bodyA, bodyB);
 	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
 	pair->_arbiter = arb;
 	
 	cpBool (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_preSolveImp;
-	BOOL retval = imp(handler->_delegate, handler->_preSolveSel, pair, bodyA.userData, bodyB.userData);
+	BOOL retval = imp(handler->_delegate, handler->_preSolveSel, pair, [bodyA.userData node], [bodyB.userData node]);
 	
 	if(!handler->_wildcard){
 		retval = cpArbiterCallWildcardPreSolveA(arb, space) && retval;
@@ -175,12 +182,12 @@ static cpBool PhysicsPreSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollision
 }
 
 static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CHIPMUNK_ARBITER_GET_BODIES(arb, bodyA, bodyB);
 	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
 	pair->_arbiter = arb;
 	
 	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_postSolveImp;
-	imp(handler->_delegate, handler->_postSolveSel, pair, bodyA.userData, bodyB.userData);
+	imp(handler->_delegate, handler->_postSolveSel, pair, [bodyA.userData node], [bodyB.userData node]);
 	
 	if(!handler->_wildcard){
 		cpArbiterCallWildcardPostSolveA(arb, space);
@@ -198,12 +205,12 @@ static void PhysicsPostSolve(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionH
 }
 
 static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHandler *handler){
-	CHIPMUNK_ARBITER_GET_SHAPES(arb, bodyA, bodyB);
+	CHIPMUNK_ARBITER_GET_BODIES(arb, bodyA, bodyB);
 	CCPhysicsCollisionPair *pair = handler->_collisionPairSingleton;
 	pair->_arbiter = arb;
 	
 	void (*imp)(id, SEL, id, id, id) = (__typeof(imp))handler->_separateImp;
-	imp(handler->_delegate, handler->_separateSel, pair, bodyA.userData, bodyB.userData);
+	imp(handler->_delegate, handler->_separateSel, pair, [bodyA.userData node], [bodyB.userData node]);
 	
 	if(!handler->_wildcard){
 		cpArbiterCallWildcardSeparateA(arb, space);
