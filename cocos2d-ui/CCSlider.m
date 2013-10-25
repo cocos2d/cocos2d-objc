@@ -21,6 +21,9 @@
     self = [super init];
     if (!self) return NULL;
     
+    _backgroundSpriteFrames = [[NSMutableDictionary alloc] init];
+    _handleSpriteFrames = [[NSMutableDictionary alloc] init];
+    
     if (background)
     {
         _background = [CCSprite9Slice spriteWithSpriteFrame:background];
@@ -35,6 +38,7 @@
     if (handle)
     {
         _handle = [CCSprite spriteWithSpriteFrame:handle];
+        [self setHandleSpriteFrame:handle forState:CCControlStateNormal];
     }
     else
     {
@@ -52,24 +56,6 @@
     return self;
 }
 
-- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state
-{
-    if (spriteFrame)
-    {
-        [_backgroundSpriteFrames setObject:spriteFrame forKey:[NSNumber numberWithInt:state]];
-    }
-    else
-    {
-        [_backgroundSpriteFrames removeObjectForKey:[NSNumber numberWithInt:state]];
-    }
-    [self stateChanged];
-}
-
-- (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state
-{
-    return [_backgroundSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
-}
-
 #ifdef __CC_PLATFORM_IOS
 
 #pragma mark Handle touches
@@ -82,6 +68,7 @@
     {
         // Touch down in slider handle
         _draggingHandle = YES;
+        self.highlighted = YES;
         _handleStartPos = _handle.position;
         _dragStartPos = [self convertToNodeSpace:worldLocation];
         _dragStartValue = _sliderValue;
@@ -91,6 +78,7 @@
 - (void) touchUpInside:(UITouch *)touch withEvent:(UIEvent *)event
 {
     _draggingHandle = NO;
+    self.highlighted = NO;
     
     if (_dragStartValue != _sliderValue)
     {
@@ -101,6 +89,7 @@
 - (void) touchUpOutside:(UITouch *)touch withEvent:(UIEvent *)event
 {
     _draggingHandle = NO;
+    self.highlighted = NO;
     
     if (_dragStartValue != _sliderValue)
     {
@@ -142,12 +131,15 @@
 
 - (void) mouseDownEntered:(NSEvent *)event
 {
+    if (!self.enabled) return;
+    
     CGPoint worldLocation = [event locationInWorld];
     
     if ([_handle hitTestWithWorldPos:worldLocation])
     {
         // Touch down in slider handle
         _draggingHandle = YES;
+        self.highlighted = YES;
         _handleStartPos = _handle.position;
         _dragStartPos = [self convertToNodeSpace:worldLocation];
         _dragStartValue = _sliderValue;
@@ -157,6 +149,7 @@
 - (void) mouseUpInside:(NSEvent *)event
 {
     _draggingHandle = NO;
+    self.highlighted = NO;
     
     if (_dragStartValue != _sliderValue)
     {
@@ -167,10 +160,11 @@
 - (void) mouseUpOutside:(NSEvent *)event
 {
     _draggingHandle = NO;
+    self.highlighted = NO;
     
     if (_dragStartValue != _sliderValue)
     {
-        [self triggerAction];
+        if (self.enabled) [self triggerAction];
     }
 }
 
@@ -193,7 +187,7 @@
         if (self.continuous && _sliderValue != _dragStartValue)
         {
             _dragStartValue = _sliderValue;
-            [self triggerAction];
+            if (self.enabled) [self triggerAction];
         }
         
         _handle.position = newPos;
@@ -213,6 +207,8 @@
     _handle.position = ccp(size.width * _sliderValue, size.height/2.0f);
 }
 
+#pragma mark Laying out Component
+
 - (void) layout
 {
     CGSize sizeInPoints = [self convertContentSizeToPoints: self.preferredSize type:self.preferredSizeType];
@@ -230,12 +226,104 @@
     [super layout];
 }
 
+- (void) updatePropertiesForState:(CCControlState)state
+{
+    // Update background
+    CCSpriteFrame* spriteFrame = [self backgroundSpriteFrameForState:state];
+    if (!spriteFrame) spriteFrame = [self backgroundSpriteFrameForState:CCControlStateNormal];
+    _background.spriteFrame = spriteFrame;
+    
+    // Update handle
+    spriteFrame = [self handleSpriteFrameForState:state];
+    if (!spriteFrame) spriteFrame = [self handleSpriteFrameForState:CCControlStateNormal];
+    _handle.spriteFrame = spriteFrame;
+    
+    [self needsLayout];
+}
+
+- (void) stateChanged
+{
+    if (self.enabled)
+    {
+        if (self.highlighted)
+        {
+            [self updatePropertiesForState:CCControlStateHighlighted];
+        }
+        else
+        {
+            [self updatePropertiesForState:CCControlStateNormal];
+        }
+    }
+    else
+    {
+        [self updatePropertiesForState:CCControlStateDisabled];
+    }
+}
+
+#pragma mark Properties
+
 - (void) setSliderValue:(float)sliderValue
 {
     NSAssert(sliderValue >= 0 && sliderValue <= 1, @"The slider value must be between 0 and 1");
     _sliderValue = sliderValue;
     
     [self updateSliderPositionFromValue];
+}
+
+- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state
+{
+    if (spriteFrame)
+    {
+        [_backgroundSpriteFrames setObject:spriteFrame forKey:[NSNumber numberWithInt:state]];
+    }
+    else
+    {
+        [_backgroundSpriteFrames removeObjectForKey:[NSNumber numberWithInt:state]];
+    }
+    [self stateChanged];
+}
+
+- (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state
+{
+    return [_backgroundSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
+}
+
+- (void) setHandleSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state
+{
+    if (spriteFrame)
+    {
+        [_handleSpriteFrames setObject:spriteFrame forKey:[NSNumber numberWithInt:state]];
+    }
+    else
+    {
+        [_handleSpriteFrames removeObjectForKey:[NSNumber numberWithInt:state]];
+    }
+    [self stateChanged];
+}
+
+- (CCSpriteFrame*) handleSpriteFrameForState:(CCControlState)state
+{
+    return [_handleSpriteFrames objectForKey:[NSNumber numberWithInt:state]];
+}
+
+#pragma mark Setting properties by name
+
+- (void) setValue:(id)value forKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        [self setBackgroundSpriteFrame:value forState:state];
+    }
+}
+
+- (id) valueForKey:(NSString *)key state:(CCControlState)state
+{
+    if ([key isEqualToString:@"backgroundSpriteFrame"])
+    {
+        return [self backgroundSpriteFrameForState:state];
+    }
+    
+    return NULL;
 }
 
 @end

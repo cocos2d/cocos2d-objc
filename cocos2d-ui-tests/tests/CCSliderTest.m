@@ -24,9 +24,11 @@
     self.subTitle = @"Tests a slider.";
     
     CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
     CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
     
     CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
     slider.positionType = kCCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     
@@ -45,9 +47,11 @@
     self.subTitle = @"Tests a rotated slider with continuous callbacks.";
     
     CCSpriteFrame* background = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background.png"];
+    CCSpriteFrame* backgroundHilite = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-background-hilite.png"];
     CCSpriteFrame* handle = [CCSpriteFrame frameWithImageNamed:@"Tests/slider-handle.png"];
     
     CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
+    [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
     slider.positionType = kCCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     

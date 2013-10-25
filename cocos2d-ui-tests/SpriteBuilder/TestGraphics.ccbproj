@@ -158,6 +158,15 @@
 			<key>tabletScale</key>
 			<integer>1</integer>
 		</dict>
+		<key>Tests/slider-background-hilite.png</key>
+		<dict>
+			<key>isDirty</key>
+			<true/>
+			<key>scaleFrom</key>
+			<integer>2</integer>
+			<key>tabletScale</key>
+			<integer>1</integer>
+		</dict>
 		<key>Tests/slider-background.png</key>
 		<dict>
 			<key>isDirty</key>
