@@ -38,6 +38,7 @@
             @"CCTransitionTest",
             @"CCSprite9SliceTest",
             @"CCTextFieldTest",
+            @"CCLayoutTest",
 #ifdef __CC_PLATFORM_IOS
             @"CCResponderTest",
 #endif
