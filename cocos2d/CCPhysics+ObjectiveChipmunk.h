@@ -75,6 +75,8 @@
 /// The transform of the body relative to the space.
 @property(nonatomic, readonly) cpTransform absoluteTransform;
 
+@property(nonatomic, readonly) ChipmunkBody *body;
+
 /// Implements the ChipmunkObject protocol.
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
@@ -96,9 +98,8 @@
 /// Body this shape is attached to.
 @property(nonatomic, weak) CCPhysicsBody *body;
 
--(id)initWithShape:(ChipmunkShape *)shape;
-
 // Used for deferring collision type setup until there is access to the physics node.
+-(void)rescaleShape;
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 

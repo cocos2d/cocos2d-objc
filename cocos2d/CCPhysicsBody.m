@@ -30,16 +30,15 @@
 static inline void NYI(){@throw @"Not Yet Implemented";}
 
 
+#define FOREACH_SHAPE(__body__, __shapeVar__) for(CCPhysicsShape *__shapeVar__ = __body__->_shapeList; __shapeVar__; __shapeVar__ = __shapeVar__.next)
+
+
 @implementation CCPhysicsBody
 {
 	ChipmunkBody *_body;
 	CCPhysicsShape *_shapeList;
 	
 	NSArray *_chipmunkObjects;
-	
-	NSString *_collisionType;
-	NSArray *_collisionCategories;
-	NSArray *_collisionMask;
 }
 
 //MARK: Constructors:
@@ -54,7 +53,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		[chipmunkObjects addObject:_body];
 		
 		_shapeList = shapeList;
-		for(CCPhysicsShape *shape = shapeList; shape; shape = shape.next){
+		FOREACH_SHAPE(self, shape){
 			shape.body = self;
 			[chipmunkObjects addObject:shape.shape];
 		}
@@ -141,22 +140,47 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 //MARK: Basic Properties:
 
--(CGFloat)mass {NYI(); return 0.0;}
--(void)setMass:(CGFloat)mass {NYI();}
+-(CGFloat)mass
+{
+	CGFloat sum = 0.0;
+	FOREACH_SHAPE(self, shape) sum += shape.mass;
+	
+	return sum;
+}
 
--(CGFloat)density {NYI(); return 0.0;}
--(void)setDensity:(CGFloat)density {NYI();}
+-(void)setMass:(CGFloat)mass
+{
+	NSAssert(_shapeList.next == nil, @"Cannot set the mass of a multi-shape body directly. Set the individual shape masses instead.");
+	_shapeList.mass = mass;
+}
 
--(CGFloat)area {NYI(); return 0.0;}
+-(CGFloat)density
+{
+	return self.mass/self.area;
+}
+
+-(void)setDensity:(CGFloat)density
+{
+	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
+	_shapeList.density = density;
+}
+
+-(CGFloat)area
+{
+	CGFloat sum = 0.0;
+	FOREACH_SHAPE(self, shape) sum += shape.area;
+	
+	return sum;
+}
 
 -(CGFloat)friction {return _shapeList.friction;}
--(void)setFriction:(CGFloat)friction {NYI();}
+-(void)setFriction:(CGFloat)friction {FOREACH_SHAPE(self, shape) shape.friction = friction;}
 
 -(CGFloat)elasticity {return _shapeList.elasticity;}
--(void)setElasticity:(CGFloat)elasticity {NYI();}
+-(void)setElasticity:(CGFloat)elasticity {FOREACH_SHAPE(self, shape) shape.elasticity = elasticity;}
 
 -(CGPoint)surfaceVelocity {return _shapeList.surfaceVelocity;}
--(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {NYI();}
+-(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {FOREACH_SHAPE(self, shape) shape.surfaceVelocity = surfaceVelocity;}
 
 
 //MARK: Simulation Properties:
@@ -170,7 +194,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(BOOL)allowsRotation {NYI(); return YES;}
 -(void)setAllowsRotation:(BOOL)allowsRotation {NYI();}
 
-static ccPhysicsBodyType ToCocosBodyType[] = {kCCPhysicsBodyTypeDynamic, kCCPhysicsBodyTypeKinematic, kCCPhysicsBodyTypeStatic};
+static ccPhysicsBodyType ToCocosBodyType[] = {CCPhysicsBodyTypeDynamic, CCPhysicsBodyTypeKinematic, CCPhysicsBodyTypeStatic};
 static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KINEMATIC, CP_BODY_TYPE_STATIC};
 
 -(ccPhysicsBodyType)type {return ToCocosBodyType[_body.type];}
@@ -179,60 +203,19 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 //MARK: Collision and Contact:
 
 -(BOOL)sensor {return _shapeList.sensor;}
--(void)setSensor:(BOOL)sensor {NYI();}
+-(void)setSensor:(BOOL)sensor {FOREACH_SHAPE(self, shape) shape.sensor = sensor;}
 
 -(id)collisionGroup {return _shapeList.collisionGroup;};
--(void)setCollisionGroup:(id)collisionGroup {NYI();}
+-(void)setCollisionGroup:(id)collisionGroup {FOREACH_SHAPE(self, shape) shape.collisionGroup = collisionGroup;}
 
--(NSString *)collisionType {return _collisionType;}
--(void)setCollisionType:(NSString *)collisionType {_collisionType = [collisionType copy];}
+-(NSString *)collisionType {return _shapeList.collisionType;}
+-(void)setCollisionType:(NSString *)collisionType {FOREACH_SHAPE(self, shape) shape.collisionType = collisionType;}
 
--(NSArray *)collisionCategories {
-	return _shapeList.collisionCategories;
-//	if(_collisionCategories){
-//		return _collisionCategories;
-//	} else {
-//		// This will still correctly return nil if not added to a physics node.
-//		return [self.physicsNode categoriesForBitmask:_shape.filter.categories];
-//	}
-}
+-(NSArray *)collisionCategories {return _shapeList.collisionCategories;}
+-(void)setCollisionCategories:(NSArray *)collisionCategories {FOREACH_SHAPE(self, shape) shape.collisionCategories = collisionCategories;}
 
--(void)setCollisionCategories:(NSArray *)collisionCategories
-{
-	NYI();
-//	CCPhysicsNode *physics = self.physicsNode;
-//	if(physics){
-//		cpShapeFilter filter = _shape.filter;
-//		filter.categories = [physics bitmaskForCategories:collisionCategories];
-//		_shape.filter = filter;
-//	} else {
-//		_collisionCategories = collisionCategories;
-//	}
-}
-
--(NSArray *)collisionMask
-{
-	return _shapeList.collisionMask;
-//	if(_collisionMask){
-//		return _collisionMask;
-//	} else {
-//		// This will still correctly return nil if not added to a physics node.
-//		return [self.physicsNode categoriesForBitmask:_shape.filter.mask];
-//	}
-}
-
--(void)setCollisionMask:(NSArray *)collisionMask
-{
-	NYI();
-//	CCPhysicsNode *physics = self.physicsNode;
-//	if(physics){
-//		cpShapeFilter filter = _shape.filter;
-//		filter.mask = [physics bitmaskForCategories:collisionMask];
-//		_shape.filter = filter;
-//	} else {
-//		_collisionMask = collisionMask;
-//	}
-}
+-(NSArray *)collisionMask {return _shapeList.collisionMask;}
+-(void)setCollisionMask:(NSArray *)collisionMask {FOREACH_SHAPE(self, shape) shape.collisionMask = collisionMask;}
 
 -(void)eachCollisionPair:(void (^)(CCPhysicsCollisionPair *))block
 {
@@ -307,37 +290,18 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(cpTransform)absoluteTransform {return _body.transform;}
 
+-(ChipmunkBody *)body {return _body;}
+
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
 
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
-	NYI();
-//	// Intern the collision type to ensure it's not a unique object reference.
-//	_collisionType = [physics internString:_collisionType];
-//	_shape.collisionType = _collisionType;
-//	
-//	// Set up the collision bitmasks.
-//	cpShapeFilter filter = _shape.filter;
-//	filter.categories = [physics bitmaskForCategories:_collisionCategories];
-//	filter.mask = [physics bitmaskForCategories:_collisionMask];
-//	_shape.filter = filter;
-//	
-//	// nil the array references to save on memory.
-//	// They will rarely be read back and we can easily reconstruct the array.
-//	_collisionCategories = nil;
-//	_collisionType = nil;
+	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics];
 }
 
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
 {
-	NYI();
-//	cpShapeFilter filter = _shape.filter;
-//	
-//	// Read the collision categories back just in case they are read later.
-//	_collisionCategories = [physics categoriesForBitmask:filter.categories];
-//	_collisionMask = [physics categoriesForBitmask:filter.mask];
+	FOREACH_SHAPE(self, shape) [shape didRemoveFromPhysicsNode:physics];
 }
 
 @end
-
-
