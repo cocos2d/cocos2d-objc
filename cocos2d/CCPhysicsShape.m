@@ -41,14 +41,14 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
-@interface CCPhysicsPolyShape : CCPhysicsShape
--(id)initWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
--(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
+@interface CCPhysicsSegmentShape : CCPhysicsShape;
+-(id)initFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
 @end
 
 
-@interface CCPhysicsSegmentShape : CCPhysicsShape;
--(id)initFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
+@interface CCPhysicsPolyShape : CCPhysicsShape
+-(id)initWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
+-(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 @end
 
 
@@ -72,7 +72,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 +(CCPhysicsShape *)pillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
 {
-	NYI(); return nil;
+	return [[CCPhysicsSegmentShape alloc] initFrom:from to:to cornerRadius:cornerRadius];
 }
 
 +(CCPhysicsShape *)polygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
@@ -238,7 +238,6 @@ Determinant(CGAffineTransform t)
 		_radius = radius;
 		_center = center;
 		
-		_shape = [ChipmunkCircleShape circleWithBody:nil radius:radius offset:center];
 		_shape.mass = 1.0;
 		_shape.friction = DEFAULT_FRICTION;
 		_shape.elasticity = DEFAULT_ELASTICITY;
@@ -258,6 +257,43 @@ Determinant(CGAffineTransform t)
 	cpShape *shape = self.shape.shape;
 	cpCircleShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
 	cpCircleShapeSetOffset(shape, cpv(_center.x*scaleX, _center.y*scaleY));
+}
+
+@end
+
+
+@implementation CCPhysicsSegmentShape {
+	ChipmunkCircleShape *_shape;
+	CGFloat _radius;
+	CGPoint _from, _to;
+}
+
+-(id)initFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
+{
+	if((self = [super init])){
+		_shape = [ChipmunkSegmentShape segmentWithBody:nil from:from to:to radius:cornerRadius];
+		_radius = cornerRadius;
+		_from = from; _to = to;
+		
+		_shape.mass = 1.0;
+		_shape.friction = DEFAULT_FRICTION;
+		_shape.elasticity = DEFAULT_ELASTICITY;
+		_shape.userData = self;
+	}
+	
+	return self;
+}
+
+-(ChipmunkShape *)shape {return _shape;}
+
+-(void)rescaleShape
+{
+	CCNode *node = self.node;
+	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
+	
+	cpShape *shape = self.shape.shape;
+	cpSegmentShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
+	cpSegmentShapeSetEndpoints(shape, _from, _to);
 }
 
 @end
