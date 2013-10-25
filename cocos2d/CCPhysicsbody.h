@@ -27,9 +27,9 @@
 @class CCPhysicsCollisionPair;
 
 typedef enum ccPhysicsBodyType {
-	kCCPhysicsBodyTypeDynamic,
-	kCCPhysicsBodyTypeKinematic,
-	kCCPhysicsBodyTypeStatic,
+	CCPhysicsBodyTypeDynamic,
+	CCPhysicsBodyTypeKinematic,
+	CCPhysicsBodyTypeStatic,
 } ccPhysicsBodyType;
 
 

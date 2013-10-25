@@ -80,4 +80,7 @@
 /// The default value is nil, which means the physics body collides with all categories.
 @property(nonatomic, copy) NSArray *collisionMask;
 
+/// The CCNode this physics shape is attached to.
+@property(nonatomic, readonly) CCNode *node;
+
 @end

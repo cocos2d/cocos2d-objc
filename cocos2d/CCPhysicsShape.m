@@ -25,9 +25,15 @@
 #import "CCPhysicsShape.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
 
+#import "chipmunk/chipmunk_unsafe.h"
+
 
 #define DEFAULT_FRICTION 0.7
 #define DEFAULT_ELASTICITY 0.2
+
+
+// TODO temporary
+static inline void NYI(){@throw @"Not Yet Implemented";}
 
 
 @interface CCPhysicsCircleShape : CCPhysicsShape
@@ -36,8 +42,11 @@
 
 
 @implementation CCPhysicsShape {
-	@protected
-	ChipmunkShape *_shape;
+	CCPhysicsShape *_next;
+	
+	NSString *_collisionType;
+	NSArray *_collisionCategories;
+	NSArray *_collisionMask;
 }
 
 +(CCPhysicsShape *)circleShapeWithRadius:(CGFloat)radius center:(CGPoint)center
@@ -45,33 +54,161 @@
 	return [[CCPhysicsCircleShape alloc] initWithRadius:radius center:center];
 }
 
+-(CGAffineTransform)shapeTransform
+{
+	// TODO Might be better to use the physics relative transform.
+	// That's not available until the scene is set up though... hrm.
+	CCNode *node = self.node;
+	if(node){
+		return CGAffineTransformMakeScale(node.scaleX, node.scaleY);
+	} else {
+		return CGAffineTransformIdentity;
+	}
+}
+
+static CGFloat
+Determinant(CGAffineTransform t)
+{
+	return (t.a*t.d - t.c*t.b);
+}
+
+-(CGFloat)mass {return self.shape.mass;}
+-(void)setMass:(CGFloat)mass {self.shape.mass = mass;}
+
+-(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
+-(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
+
+-(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
+
+-(CGFloat)friction {return self.shape.friction;}
+-(void)setFriction:(CGFloat)friction {self.shape.friction = friction;}
+
+-(CGFloat)elasticity {return self.shape.elasticity;}
+-(void)setElasticity:(CGFloat)elasticity {self.shape.elasticity = elasticity;}
+
+-(CGPoint)surfaceVelocity {return self.shape.surfaceVelocity;}
+-(void)setSurfaceVelocity:(CGPoint)surfaceVelocity {self.shape.surfaceVelocity = surfaceVelocity;}
+
+
+//MARK: Simulation Properties:
+
+-(CCPhysicsNode *)physicsNode {return self.shape.space.userData;}
+//-(BOOL)isRunning {return self.physicsNode != nil;}
+
+//MARK: Collision and Contact:
+
+-(BOOL)sensor {return self.shape.sensor;}
+-(void)setSensor:(BOOL)sensor {self.shape.sensor = sensor;}
+
+-(id)collisionGroup {return self.shape.group;};
+-(void)setCollisionGroup:(id)collisionGroup {self.shape.group = collisionGroup;}
+
+// TODO these need a reference to the space to intern the strings
+// Needs to be deferred?
+-(NSString *)collisionType {return _collisionType;}
+-(void)setCollisionType:(NSString *)collisionType {_collisionType = [collisionType copy];}
+
+-(NSArray *)collisionCategories {
+	if(_collisionCategories){
+		return _collisionCategories;
+	} else {
+		// This will still correctly return nil if not added to a physics node.
+		return [self.physicsNode categoriesForBitmask:self.shape.filter.categories];
+	}
+}
+
+-(void)setCollisionCategories:(NSArray *)collisionCategories
+{
+	CCPhysicsNode *physics = self.physicsNode;
+	if(physics){
+		cpShapeFilter filter = self.shape.filter;
+		filter.categories = [physics bitmaskForCategories:collisionCategories];
+		self.shape.filter = filter;
+	} else {
+		_collisionCategories = collisionCategories;
+	}
+}
+
+-(NSArray *)collisionMask
+{
+	if(_collisionMask){
+		return _collisionMask;
+	} else {
+		// This will still correctly return nil if not added to a physics node.
+		return [self.physicsNode categoriesForBitmask:self.shape.filter.mask];
+	}
+}
+
+-(void)setCollisionMask:(NSArray *)collisionMask
+{
+	CCPhysicsNode *physics = self.physicsNode;
+	if(physics){
+		cpShapeFilter filter = self.shape.filter;
+		filter.mask = [physics bitmaskForCategories:collisionMask];
+		self.shape.filter = filter;
+	} else {
+		_collisionMask = collisionMask;
+	}
+}
+
+-(CCNode *)node {return self.body.node;}
+
 @end
 
 
 @implementation CCPhysicsShape(ObjectiveChipmunk)
 
--(id)initWithShape:(ChipmunkShape *)shape
+-(void)rescaleShape {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
+-(ChipmunkShape *)shape {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
-	if((self = [super init])){
-		_shape = shape;
-	}
+	// Intern the collision type to ensure it's not a unique object reference.
+	_collisionType = [physics internString:_collisionType];
+	self.shape.collisionType = _collisionType;
 	
-	return self;
+	// Set up the collision bitmasks.
+	cpShapeFilter filter = self.shape.filter;
+	filter.categories = [physics bitmaskForCategories:_collisionCategories];
+	filter.mask = [physics bitmaskForCategories:_collisionMask];
+	self.shape.filter = filter;
+	
+	// nil the array references to save on memory.
+	// They will rarely be read back and we can easily reconstruct the array.
+	_collisionCategories = nil;
+	_collisionType = nil;
+	
+	[self rescaleShape];
 }
+
+-(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
+{
+	cpShapeFilter filter = self.shape.filter;
+	
+	// Read the collision categories back just in case they are read later.
+	_collisionCategories = [physics categoriesForBitmask:filter.categories];
+	_collisionMask = [physics categoriesForBitmask:filter.mask];
+}
+
+-(CCPhysicsShape *)next {return _next;}
+-(void)setNext:(CCPhysicsShape *)next {_next = next;}
+
+-(CCPhysicsBody *)body {return self.shape.body.userData;}
+-(void)setBody:(CCPhysicsBody *)body {self.shape.body = body.body;}
 
 @end
 
 
 @implementation CCPhysicsCircleShape {
+	ChipmunkCircleShape *_shape;
 	CGFloat _radius;
 	CGPoint _center;
 }
 
 -(id)initWithRadius:(CGFloat)radius center:(CGPoint)center
 {
-	ChipmunkShape *shape = [ChipmunkCircleShape circleWithBody:nil radius:radius offset:center];
-	
-	if((self = [super initWithShape:shape])){
+	if((self = [super init])){
+		_shape = [ChipmunkCircleShape circleWithBody:nil radius:radius offset:center];
 		_radius = radius;
 		_center = center;
 		
@@ -83,6 +220,18 @@
 	}
 	
 	return self;
+}
+
+-(ChipmunkShape *)shape {return _shape;}
+
+-(void)rescaleShape
+{
+	CCNode *node = self.node;
+	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
+	
+	cpShape *shape = self.shape.shape;
+	cpCircleShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
+	cpCircleShapeSetOffset(shape, cpv(_center.x*scaleX, _center.y*scaleY));
 }
 
 @end
