@@ -122,6 +122,7 @@
 
 // Physics
 #import "CCPhysicsBody.h"
+#import "CCPhysicsShape.h"
 #import "CCPhysicsJoint.h"
 #import "CCPhysicsNode.h"
 
