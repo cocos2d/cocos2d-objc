@@ -82,6 +82,7 @@
 
 // Used for deferring collision type setup until there is access to the physics node.
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)didAddToPhysicsNode:(CCPhysicsNode *)physics;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end

@@ -23,10 +23,13 @@
  */
 
 #import "CCNode.h"
-#import "CCPhysicsbody.h"
 
+
+#warning TODO Need to remove dependency on this.
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
+@class CCPhysicsBody;
+@class CCPhysicsShape;
 
 /// Contains information about colliding physics bodies.
 /// NOTE: There is only one CCPhysicsCollisionPair object per scene and it's reused.
@@ -35,11 +38,6 @@
 
 /// The contact information from the two colliding bodies.
 @property(nonatomic, readonly) cpContactPointSet contacts;
-
-/// Ignore the collision between these two physics bodies until they stop colliding.
-/// It's idomatic to write "return [pair ignore];" if using this method from a CCCollisionPairDelegate pre-solve method.
-/// Always returns false.
--(BOOL)ignore;
 
 /// The friction coefficient for this pair of colliding bodies.
 /// The default value is pair.bodyA.friction*pair.bodyB.friction.
@@ -70,6 +68,14 @@
 // TODO Possible to add a default to release it automatically?
 @property(nonatomic, assign) id userData;
 
+/// Retrive the specific physics shapes that were involved in the collision.
+-(void)shapeA:(__autoreleasing CCPhysicsShape **)shapeA shapeB:(__autoreleasing CCPhysicsShape **)shapeB;
+
+/// Ignore the collision between these two physics bodies until they stop colliding.
+/// It's idomatic to write "return [pair ignore];" if using this method from a CCCollisionPairDelegate pre-solve method.
+/// Always returns false.
+-(BOOL)ignore;
+
 @end
 
 
@@ -82,16 +88,16 @@
 @optional
 /// Begin methods are called on the first fixed time step when two bodies begin colliding.
 /// If you return NO from a begin method, the collision between the two bodies will be ignored.
--(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
+-(BOOL)ccPhysicsCollisionBegin:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 /// Pre-solve methods are called every fixed time step when two bodies are in contact before the physics solver runs.
 /// You can call use properties such as friction, restitution, surfaceVelocity on CCPhysicsCollisionPair from a post-solve method.
 /// If you return NO from a pre-solve method, the collision will be ignored for the current time step.
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 /// Post-solve methods are called every fixed time step when two bodies are in contact after the physics solver runs.
 /// You can call use properties such as totalKineticEnergy and totalImpulse on CCPhysicsCollisionPair from a post-solve method.
--(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
+-(void)ccPhysicsCollisionPostSolve:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 /// Separate methods are called the first fixed time step after two bodies stop colliding.
--(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair typeA:(CCPhysicsBody *)bodyA typeB:(CCPhysicsBody *)bodyB;
+-(void)ccPhysicsCollisionSeparate:(CCPhysicsCollisionPair *)pair typeA:(CCNode *)nodeA typeB:(CCNode *)nodeB;
 
 @end
 
