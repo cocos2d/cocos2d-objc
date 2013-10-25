@@ -131,6 +131,7 @@
     
     if (_touchInside)
     {
+        [self touchUpOutside:touch withEvent:event];
         [self touchExited:touch withEvent:event];
     }
     
