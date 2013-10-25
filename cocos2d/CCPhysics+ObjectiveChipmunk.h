@@ -22,6 +22,8 @@
  * THE SOFTWARE.
  */
 
+#import "CCPhysicsBody.h"
+#import "CCPhysicsShape.h"
 #import "CCPhysicsNode.h"
 #import "CCPhysicsJoint.h"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
@@ -32,20 +34,12 @@
 
 /*
 	TODO:
-	* Sensors
-	* Collision only mode. (Are sensors good enough?)
 	* Projectile bodies?
-	* Fixed timesteps are a hack.
-	* Currently body must be set before adding to a parent node.
-	* Currently nodes must have rigid transforms.
-	* Currently a parent's absolute transform must be identity.
-	* Currently nodes with a physics body are always considered to have dirty transforms.
 	* Body constructors are still a little temporary.
 	* Objective-Chipmunk interop.
 	* affectedByGravity and allowsRotation properties not implemented.
 	* Joints.
 	* Queries.
-	* Need to rename the CCPhysicsBody.absolute* properties. (not really absolute anymore)
 	
 	Consider:
 	* Interpolation?
@@ -60,6 +54,7 @@
 	
 	Probably Definitely Not:
 	* Body queries?
+	* Collision detection only mode.
 */
 
 
@@ -82,6 +77,26 @@
 
 /// Implements the ChipmunkObject protocol.
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
+
+// Used for deferring collision type setup until there is access to the physics node.
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
+
+@end
+
+
+@interface CCPhysicsShape(ObjectiveChipmunk)
+
+/// Access to the underlying Objective-Chipmunk object.
+@property(nonatomic, readonly) ChipmunkShape *shape;
+
+/// Next shape in the linked list.
+@property(nonatomic, strong) CCPhysicsShape *next;
+
+/// Body this shape is attached to.
+@property(nonatomic, weak) CCPhysicsBody *body;
+
+-(id)initWithShape:(ChipmunkShape *)shape;
 
 // Used for deferring collision type setup until there is access to the physics node.
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
