@@ -41,6 +41,17 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
+@interface CCPhysicsPolyShape : CCPhysicsShape
+-(id)initWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius;
+-(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
+@end
+
+
+@interface CCPhysicsSegmentShape : CCPhysicsShape;
+-(id)initFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius;
+@end
+
+
 @implementation CCPhysicsShape {
 	CCPhysicsShape *_next;
 	
@@ -52,6 +63,21 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 +(CCPhysicsShape *)circleShapeWithRadius:(CGFloat)radius center:(CGPoint)center
 {
 	return [[CCPhysicsCircleShape alloc] initWithRadius:radius center:center];
+}
+
++(CCPhysicsShape *)rectShape:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
+{
+	return [[CCPhysicsPolyShape alloc] initWithRect:rect cornerRadius:cornerRadius];
+}
+
++(CCPhysicsShape *)pillShapeFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
+{
+	NYI(); return nil;
+}
+
++(CCPhysicsShape *)polygonShapeWithPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
+{
+	return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
 }
 
 -(CGAffineTransform)shapeTransform
@@ -232,6 +258,64 @@ Determinant(CGAffineTransform t)
 	cpShape *shape = self.shape.shape;
 	cpCircleShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
 	cpCircleShapeSetOffset(shape, cpv(_center.x*scaleX, _center.y*scaleY));
+}
+
+@end
+
+
+@implementation CCPhysicsPolyShape {
+	ChipmunkPolyShape *_shape;
+	CGFloat _radius;
+	CGPoint *_points;
+	NSUInteger _count;
+}
+
+-(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
+{
+	if((self = [super init])){
+		_shape = [ChipmunkPolyShape polyWithBody:nil count:count verts:points transform:self.shapeTransform radius:cornerRadius];
+		_radius = cornerRadius;
+		_points = calloc(count, sizeof(CGPoint));
+		memcpy(_points, points, count*sizeof(CGPoint));
+		_count = count;
+		
+		_shape.mass = 1.0;
+		_shape.friction = DEFAULT_FRICTION;
+		_shape.elasticity = DEFAULT_ELASTICITY;
+		_shape.userData = self;
+	}
+	
+	return self;
+}
+
+-(id)initWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
+{
+	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
+	cpVect points[] = {
+		cpv(bb.r, bb.b),
+		cpv(bb.r, bb.t),
+		cpv(bb.l, bb.t),
+		cpv(bb.l, bb.b),
+	};
+	
+	return [self initWithPolygonFromPoints:points count:4 cornerRadius:cornerRadius];
+}
+
+-(void)dealloc
+{
+	free(_points);
+}
+
+-(ChipmunkShape *)shape {return _shape;}
+
+-(void)rescaleShape
+{
+	CCNode *node = self.node;
+	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
+	
+	cpShape *shape = self.shape.shape;
+	cpPolyShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
+	cpPolyShapeSetVerts(shape, _count, _points, self.shapeTransform);
 }
 
 @end
