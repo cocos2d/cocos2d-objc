@@ -306,23 +306,20 @@ static NSUInteger globalOrderOfArrival = 1;
 	_isTransformDirty = _isInverseDirty = YES;
 }
 
-static inline
-CGPoint GetPosition(CCNode *node)
+static inline CGPoint
+GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
-	CCPhysicsBody *body = GetBodyIfRunning(node);
-	if(body){
-		// Return the position of the anchor point
-//		CGPoint anchor = node->_anchorPointInPoints;
-//		return cpTransformPoint(RigidBodyToParentTransform(node, body), cpv(anchor.x*node->_scaleX, anchor.y*node->_scaleY));
-		return cpTransformPoint([node nodeToParentTransform], node->_anchorPointInPoints);
-	} else {
-		return node->_position;
-	}
+	return cpTransformPoint([node nodeToParentTransform], node->_anchorPointInPoints);
 }
 
 -(CGPoint)position
 {
-	return GetPosition(self);
+	CCPhysicsBody *body = GetBodyIfRunning(self);
+	if(body){
+		return [self convertPositionFromPoints:GetPositionFromBody(self, body) type:_positionType];
+	} else {
+		return _position;
+	}
 }
 
 -(void) setPosition: (CGPoint)newPosition
@@ -330,8 +327,8 @@ CGPoint GetPosition(CCNode *node)
 	CCPhysicsBody *body = GetBodyIfRunning(self);
 	if(body){
 		#warning This is *ridiculously* inefficient, but works for now.
-		CGPoint currentPosition = GetPosition(self);
-		CGPoint delta = ccpSub(newPosition, currentPosition);
+		CGPoint currentPosition = GetPositionFromBody(self, body);
+		CGPoint delta = ccpSub([self convertPositionToPoints:newPosition type:_positionType], currentPosition);
 		body.absolutePosition = ccpAdd(body.absolutePosition, cpTransformVect(NodeToPhysicsTransform(self.parent), delta));
 	} else {
 		_position = newPosition;
@@ -341,7 +338,6 @@ CGPoint GetPosition(CCNode *node)
 
 -(void)setPositionType:(CCPositionType)positionType
 {
-	NSAssert(_physicsBody == nil, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
 	_positionType = positionType;
 	_isTransformDirty = _isInverseDirty = YES;
 	
@@ -956,8 +952,6 @@ CGPoint GetPosition(CCNode *node)
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody){
-		NSAssert(_positionType.xUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
-		NSAssert(_positionType.yUnit == kCCPositionUnitPoints, @"Currently only 'Points' is supported as a position unit type for physics nodes.");
 		NSAssert(_scaleType == kCCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
 		NSAssert(_rotationalSkewX == _rotationalSkewY, @"Currently physics nodes don't support skewing.");
 		NSAssert(_skewX == 0.0 && _skewY == 0.0, @"Currently physics nodes don't support skewing.");
@@ -1260,7 +1254,7 @@ CGPoint GetPosition(CCNode *node)
 
 - (CGPoint) positionInPoints
 {
-    return [self convertPositionToPoints:GetPosition(self) type:_positionType];
+    return [self convertPositionToPoints:self.position type:_positionType];
 }
 
 - (CGAffineTransform)nodeToParentTransform
