@@ -26,4 +26,12 @@
 
 - (id) initWithBackground:(CCSpriteFrame*)background andHandleImage:(CCSpriteFrame*) handle;
 
+- (void) setBackgroundSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
+
+- (CCSpriteFrame*) backgroundSpriteFrameForState:(CCControlState)state;
+
+- (void) setHandleSpriteFrame:(CCSpriteFrame*)spriteFrame forState:(CCControlState)state;
+
+- (CCSpriteFrame*) handleSpriteFrameForState:(CCControlState)state;
+
 @end

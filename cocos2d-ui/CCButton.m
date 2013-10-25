@@ -189,6 +189,11 @@
 
 - (void) touchEntered:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    if (!self.enabled)
+    {
+        return;
+    }
+    
     if (self.claimsUserInteraction)
     {
         [super setHitAreaExpansion:_originalHitAreaExpansion + kCCFatFingerExpansion];
@@ -204,7 +209,12 @@
 - (void) touchUpInside:(UITouch *)touch withEvent:(UIEvent *)event
 {
     [super setHitAreaExpansion:_originalHitAreaExpansion];
-    [self triggerAction];
+    
+    if (self.enabled)
+    {
+        [self triggerAction];
+    }
+    
     self.highlighted = NO;
 }
 
@@ -218,6 +228,10 @@
 
 - (void) mouseDownEntered:(NSEvent *)event
 {
+    if (!self.enabled)
+    {
+        return;
+    }
     self.highlighted = YES;
 }
 
@@ -228,7 +242,10 @@
 
 - (void) mouseUpInside:(NSEvent *)event
 {
-    [self triggerAction];
+    if (self.enabled)
+    {
+        [self triggerAction];
+    }
     self.highlighted = NO;
 }
 
