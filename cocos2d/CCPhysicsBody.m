@@ -72,60 +72,20 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 +(CCPhysicsBody *)bodyWithRect:(CGRect)rect cornerRadius:(CGFloat)cornerRadius
 {
-//	// TODO temporary code.
-//	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
-//	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-//	body->_body.userData = body;
-//	
-//	cpBB bb = {CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetMaxX(rect), CGRectGetMaxY(rect)};
-//	body->_shape = [ChipmunkPolyShape boxWithBody:body->_body bb:bb radius:cornerRadius];
-//	body->_shape.mass = 1.0;
-//	body->_shape.friction = DEFAULT_FRICTION;
-//	body->_shape.elasticity = DEFAULT_ELASTICITY;
-//	body->_shape.userData = body;
-//	
-//	body->_chipmunkObjects = @[body->_body, body->_shape];
-//	
-//	return body;
-	NYI(); return nil;
+	CCPhysicsShape *shape = [CCPhysicsShape rectShape:rect cornerRadius:cornerRadius];
+	return [[self alloc] initWithShapeList:shape];
 }
 
 +(CCPhysicsBody *)bodyWithPillFrom:(CGPoint)from to:(CGPoint)to cornerRadius:(CGFloat)cornerRadius
 {
-//	// TODO temporary code.
-//	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
-//	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-//	body->_body.userData = body;
-//	
-//	body->_shape = [ChipmunkSegmentShape segmentWithBody:body->_body from:from to:to radius:cornerRadius];
-//	body->_shape.mass = 1.0;
-//	body->_shape.friction = DEFAULT_FRICTION;
-//	body->_shape.elasticity = DEFAULT_ELASTICITY;
-//	body->_shape.userData = body;
-//	
-//	body->_chipmunkObjects = @[body->_body, body->_shape];
-//	
-//	return body;
-	NYI(); return nil;
+	CCPhysicsShape *shape = [CCPhysicsShape pillShapeFrom:from to:to cornerRadius:cornerRadius];
+	return [[self alloc] initWithShapeList:shape];
 }
 
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
-//	// TODO temporary code.
-//	CCPhysicsBody *body = [[CCPhysicsBody alloc] init];
-//	body->_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
-//	body->_body.userData = body;
-//	
-//	body->_shape = [ChipmunkPolyShape polyWithBody:body->_body count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
-//	body->_shape.mass = 1.0;
-//	body->_shape.friction = DEFAULT_FRICTION;
-//	body->_shape.elasticity = DEFAULT_ELASTICITY;
-//	body->_shape.userData = body;
-//	
-//	body->_chipmunkObjects = @[body->_body, body->_shape];
-//	
-//	return body;
-	NYI(); return nil;
+	CCPhysicsShape *shape = [CCPhysicsShape polygonShapeWithPoints:points count:count cornerRadius:cornerRadius];
+	return [[self alloc] initWithShapeList:shape];
 }
 
 +(CCPhysicsBody *)bodyWithSegmentLoopFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
