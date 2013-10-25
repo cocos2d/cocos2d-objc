@@ -459,9 +459,6 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		// try alias dictionary
 		NSString *key = [_spriteFramesAliases objectForKey:name];
 		frame = [_spriteFrames objectForKey:key];
-
-		if( ! frame )
-			CCLOG(@"cocos2d: CCSpriteFrameCache: Frame '%@' not found", name);
 	}
 
 	return frame;

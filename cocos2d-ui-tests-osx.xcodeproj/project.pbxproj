@@ -28,6 +28,7 @@
 		B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697218186CFA00B983FE /* CCTextFieldTest.m */; };
 		B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */; };
+		B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A2F181B285700B983FE /* CCSliderTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +96,8 @@
 		B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69EE1819EB0E00B983FE /* CCLayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLayoutTest.h; path = "cocos2d-ui-tests/tests/CCLayoutTest.h"; sourceTree = SOURCE_ROOT; };
 		B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE6A2E181B285700B983FE /* CCSliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSliderTest.h; path = "cocos2d-ui-tests/tests/CCSliderTest.h"; sourceTree = SOURCE_ROOT; };
+		B7EE6A2F181B285700B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +235,8 @@
 				B7EE698418187BC900B983FE /* CCSprite9SliceTest.m */,
 				B7EE69EE1819EB0E00B983FE /* CCLayoutTest.h */,
 				B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */,
+				B7EE6A2E181B285700B983FE /* CCSliderTest.h */,
+				B7EE6A2F181B285700B983FE /* CCSliderTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -333,6 +338,7 @@
 				B7EE69F01819EB0E00B983FE /* CCLayoutTest.m in Sources */,
 				B7EE698518187BC900B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE697318186CFA00B983FE /* CCTextFieldTest.m in Sources */,
+				B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
 				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
