@@ -329,11 +329,14 @@
 
 		//for batchNode
 		_transformSystemDirty = NO;
-
-		// update after action in run!
-		[self scheduleUpdateWithPriority:1];
 	}
 	return self;
+}
+
+-(NSInteger)priority
+{
+	// update after action in run!
+	return 1;
 }
 
 -(void) dealloc
@@ -615,7 +618,6 @@
 				_particleCount--;
 
 				if( _particleCount == 0 && _autoRemoveOnFinish ) {
-					[self unscheduleUpdate];
 					[_parent removeChild:self cleanup:YES];
 					return;
 				}

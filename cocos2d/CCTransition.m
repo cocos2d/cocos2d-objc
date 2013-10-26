@@ -217,22 +217,6 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)onEnter
-{
-    [super onEnter];
-    // shedule update for transition
-    [self scheduleUpdate];
-}
-
-- (void)onExit
-{
-    // clean up
-    [self unscheduleUpdate];
-    [super onExit];
-}
-
-// -----------------------------------------------------------------
-
 - (void)update:(ccTime)delta
 {
     // update progress

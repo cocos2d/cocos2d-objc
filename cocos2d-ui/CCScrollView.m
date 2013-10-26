@@ -206,7 +206,6 @@
     
 #endif
     
-    [self scheduleUpdate];
     self.userInteractionEnabled = YES;
     
     return self;
