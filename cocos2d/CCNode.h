@@ -160,10 +160,15 @@ enum {
 
 	// ActionManager used to handle all the actions
 	CCActionManager	*_actionManager;
-
-	// Is running
-	BOOL _isRunning;
-
+	
+	// YES if the node is added to an active scene.
+	BOOL _isInActiveScene;
+	
+	BOOL _paused;
+	
+	// Number of paused parent or ancestor nodes.
+	int _pausedAncestors;
+	
 	// is visible
 	BOOL _visible;
 
@@ -258,7 +263,7 @@ enum {
 /** The physics body (if any) that this node is attached to. */
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
-/** whether or not the node is running */
+/** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
 @property(nonatomic,readonly) BOOL isRunning;
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;

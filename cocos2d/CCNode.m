@@ -70,11 +70,15 @@
 
 }
 
+// Suppress automatic ivar creation.
+@dynamic isRunning;
+@dynamic paused;
+
 static inline
 CCPhysicsBody *
 GetBodyIfRunning(CCNode *node)
 {
-	return (node->_isRunning ? node->_physicsBody : nil);
+	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
 static inline CGAffineTransform
@@ -123,7 +127,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize zOrder = _zOrder;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
-@synthesize isRunning = _isRunning;
 @synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
@@ -147,8 +150,7 @@ static NSUInteger globalOrderOfArrival = 1;
 -(id) init
 {
 	if ((self=[super init]) ) {
-
-		_isRunning = NO;
+		_isInActiveScene = 0;
 
 		_skewX = _skewY = 0.0f;
 		_rotationalSkewX = _rotationalSkewY = 0.0f;
@@ -607,6 +609,22 @@ CGPoint GetPosition(CCNode *node)
 	return nil;
 }
 
+// Recursively increment/decrement _pausedAncestors on the children of 'node'.
+static void
+RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
+{
+	NSArray *children = node->_children;
+	for(int i=0, count=children.count; i<count; i++){
+		CCNode *child = children[i];
+		
+		BOOL wasRunning = node.isRunning;
+		child->_pausedAncestors += increment;
+		[node wasRunning:wasRunning];
+		
+		RecursivelyIncrementPausedAncestors(child, increment);
+	}
+}
+
 /* "add" logic MUST only be on this method
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
@@ -626,8 +644,12 @@ CGPoint GetPosition(CCNode *node)
 	[child setParent: self];
 
 	[child setOrderOfArrival: globalOrderOfArrival++];
-
-	if( _isRunning ) {
+	
+	// Update pausing parameters
+	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
+	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
+	
+	if( _isInActiveScene == 0 ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -709,12 +731,15 @@ CGPoint GetPosition(CCNode *node)
 		// IMPORTANT:
 		//  -1st do onExit
 		//  -2nd cleanup
-		if (_isRunning)
+		if (_isInActiveScene)
 		{
 			[c onExitTransitionDidStart];
 			[c onExit];
 		}
-
+		
+		RecursivelyIncrementPausedAncestors(c, -c->_pausedAncestors);
+		c->_pausedAncestors = 0;
+		
 		if (cleanup)
 			[c cleanup];
 
@@ -736,12 +761,15 @@ CGPoint GetPosition(CCNode *node)
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (_isRunning)
+	if (_isInActiveScene)
 	{
 		[child onExitTransitionDidStart];
 		[child onExit];
 	}
-
+	
+	RecursivelyIncrementPausedAncestors(child, -child->_pausedAncestors);
+	child->_pausedAncestors = 0;
+	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
@@ -964,7 +992,7 @@ CGPoint GetPosition(CCNode *node)
 	}
 	
 	if(physicsBody != _physicsBody){
-		if(_isRunning){
+		if(_isInActiveScene){
 			[self teardownPhysics];
 			[self setupPhysicsBody:physicsBody];
 		}
@@ -990,10 +1018,13 @@ CGPoint GetPosition(CCNode *node)
 	[self setupPhysicsBody:_physicsBody];
 	
 	CCScheduler *scheduler = self.scheduler;
-	if(![scheduler isTargetScheduled:self]) [scheduler scheduleTarget:self];
+	if(![scheduler isTargetScheduled:self]){
+		[scheduler scheduleTarget:self];
+	}
 	
-	self.paused = NO;
-	_isRunning = YES;
+	BOOL wasRunning = self.isRunning;
+	_isInActiveScene = YES;
+	[self wasRunning:wasRunning];
 }
 
 -(void) onEnterTransitionDidFinish
@@ -1010,8 +1041,9 @@ CGPoint GetPosition(CCNode *node)
 {
 	[self teardownPhysics];
 	
-	self.paused = YES;
-	_isRunning = NO;
+	BOOL wasRunning = self.isRunning;
+	_isInActiveScene = NO;
+	[self wasRunning:wasRunning];
 	
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }
@@ -1036,7 +1068,7 @@ CGPoint GetPosition(CCNode *node)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!_isRunning];
+	[_actionManager addAction:action target:self paused:!self.isRunning];
 	return action;
 }
 
@@ -1077,8 +1109,8 @@ CGPoint GetPosition(CCNode *node)
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
-		#warning TODO needs to be recursive.
-		[_scheduler unscheduleTarget:self];
+		#warning TODO needs to be recursive? (or remove per node schedulers?)
+		[self.scheduler unscheduleTarget:self];
 
 		_scheduler = scheduler;
 	}
@@ -1134,19 +1166,33 @@ CGPoint GetPosition(CCNode *node)
 	}
 }
 
+// Used to pause/unpause a node's actions and timers when it's isRunning state changes.
+-(void)wasRunning:(BOOL)wasRunning
+{
+	BOOL isRunning = self.isRunning;
+	
+	if(isRunning && !wasRunning){
+		[self.scheduler setPaused:NO target:self];
+		[_actionManager resumeTarget:self];
+	} else if(!isRunning && wasRunning){
+		[self.scheduler setPaused:YES target:self];
+		[_actionManager pauseTarget:self];
+	}
+}
+
+-(BOOL)isRunning
+{
+	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
+}
+
 -(void)setPaused:(BOOL)paused
 {
-	#warning TODO needs to be recursive.
 	if(_paused != paused){
-		if(paused){
-			[self.scheduler pauseCountIncrement:self];
-			[_actionManager pauseTarget:self];
-		} else {
-			[self.scheduler pauseCountDecrement:self];
-			[_actionManager resumeTarget:self];
-		}
-		
+		BOOL wasRunning = self.isRunning;
 		_paused = paused;
+		[self wasRunning:wasRunning];
+		
+		RecursivelyIncrementPausedAncestors(self, (paused ? 1 : -1));
 	}
 }
 
