@@ -330,11 +330,6 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Cocos2d;
-				TargetAttributes = {
-					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = SBVP8ED765;
-					};
-				};
 			};
 			buildConfigurationList = B7E2604317E7D278007067F0 /* Build configuration list for PBXProject "cocos2d-ui-tests-ios" */;
 			compatibilityVersion = "Xcode 3.2";
