@@ -504,6 +504,8 @@ enum {
 
 // timers
 
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(ccTime)delay;
+
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  If time is 0, it is recommended to use 'scheduleUpdate' instead.

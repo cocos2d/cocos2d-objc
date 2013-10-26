@@ -55,6 +55,9 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 		_body = [ChipmunkBody bodyWithMass:0.0 andMoment:0.0];
 		_body.userData = self;
 		
+		_allowsRotation = YES;
+		_affectedByGravity = YES;
+		
 		_chipmunkObjects = [NSMutableArray arrayWithCapacity:2];
 		[_chipmunkObjects addObject:_body];
 		
