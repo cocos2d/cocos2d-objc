@@ -316,7 +316,7 @@
 		_blendFunc = (ccBlendFunc) { CC_BLEND_SRC, CC_BLEND_DST };
 
 		// default movement type;
-		_particlePositionType = kCCParticlePositionTypeFree;
+		_particlePositionType = kCCParticlePositionTypeGrouped;
 
 		// by default be in mode A:
 		_emitterMode = kCCParticleModeGravity;

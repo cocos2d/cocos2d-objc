@@ -23,9 +23,12 @@
  */
 
 #import "CCButton.h"
+#import "CCControlSubclass.h"
 
 #import "cocos2d.h"
 #import <objc/runtime.h>
+
+#define kCCFatFingerExpansion 70
 
 @implementation CCButton
 
@@ -186,6 +189,10 @@
 
 - (void) touchEntered:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    if (self.claimsUserInteraction)
+    {
+        [super setHitAreaExpansion:_originalHitAreaExpansion + kCCFatFingerExpansion];
+    }
     self.highlighted = YES;
 }
 
@@ -196,12 +203,14 @@
 
 - (void) touchUpInside:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    [super setHitAreaExpansion:_originalHitAreaExpansion];
     [self triggerAction];
     self.highlighted = NO;
 }
 
 - (void) touchUpOutside:(UITouch *)touch withEvent:(UIEvent *)event
 {
+    [super setHitAreaExpansion:_originalHitAreaExpansion];
     self.highlighted = NO;
 }
 
@@ -229,6 +238,17 @@
 }
 
 #endif
+
+- (void) triggerAction
+{
+    // Handle toggle buttons
+    if (self.togglesSelectedState)
+    {
+        self.selected = !self.selected;
+    }
+    
+    [super triggerAction];
+}
 
 - (void) updatePropertiesForState:(CCControlState)state
 {
@@ -263,7 +283,14 @@
         }
         else
         {
-            [self updatePropertiesForState:CCControlStateNormal];
+            if (self.selected)
+            {
+                [self updatePropertiesForState:CCControlStateSelected];
+            }
+            else
+            {
+                [self updatePropertiesForState:CCControlStateNormal];
+            }
             
             [_label stopAllActions];
             if (_zoomWhenHighlighted)
@@ -281,6 +308,17 @@
 }
 
 #pragma mark Properties
+
+- (void) setHitAreaExpansion:(float)hitAreaExpansion
+{
+    _originalHitAreaExpansion = hitAreaExpansion;
+    [super hitAreaExpansion];
+}
+
+- (float) hitAreaExpansion
+{
+    return _originalHitAreaExpansion;
+}
 
 - (void) setScale:(float)scale
 {

@@ -33,10 +33,10 @@
 #import "kazmath/mat4.h"
 #import "CCResponderManager.h"
 
-/** @typedef ccDirectorProjection
+/**
  Possible OpenGL projections used by director
  */
-typedef enum {
+typedef NS_ENUM(NSUInteger, ccDirectorProjection) {
 	/// sets a 2D projection (orthogonal projection).
 	kCCDirectorProjection2D,
 
@@ -49,7 +49,7 @@ typedef enum {
 	/// Detault projection is 3D projection
 	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
 
-} ccDirectorProjection;
+};
 
 
 @class CCLabelAtlas;
