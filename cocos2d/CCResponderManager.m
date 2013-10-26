@@ -191,6 +191,9 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    // End editing any text fields
+    [[CCDirector sharedDirector].view endEditing:YES];
+    
     BOOL responderCanAcceptTouch;
     
     if (_dirty) [self buildResponderList];
@@ -528,6 +531,7 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
     [self mouseDown:theEvent button:CCMouseButtonLeft];
 }
 

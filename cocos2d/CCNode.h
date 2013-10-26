@@ -307,10 +307,7 @@ enum {
  */
 @property (nonatomic, assign) BOOL claimsUserInteraction;
 
-/** Expands ( or contracts ) the hit area of the node
- hitAreaExpansion = 0 => hit area has no size
- hitAreaExpansion = 1 => hit area has same size as sprite (default)
- hitAreaExpansion = 2 => hit area has double width and double height
+/** Expands ( or contracts ) the hit area of the node, value is in points.
  @since v2.5
  */
 @property (nonatomic,assign) float hitAreaExpansion;

@@ -28,6 +28,16 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D36F7E34181580A000E94F72"
+               BuildableName = "UnitTests.xctest"
+               BlueprintName = "UnitTests"
+               ReferencedContainer = "container:cocos2d-ios.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

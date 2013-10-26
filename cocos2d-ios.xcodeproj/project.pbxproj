@@ -6,6 +6,20 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXAggregateTarget section */
+		B772F6B118120CC9005C069B /* appledoc */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = B772F6B218120CC9005C069B /* Build configuration list for PBXAggregateTarget "appledoc" */;
+			buildPhases = (
+				B772F6B518120CDF005C069B /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = appledoc;
+			productName = appledoc;
+		};
+/* End PBXAggregateTarget section */
+
 /* Begin PBXBuildFile section */
 		0529445D11098D6F00E500F3 /* CCProfiling.h in Headers */ = {isa = PBXBuildFile; fileRef = 0529445911098D6F00E500F3 /* CCProfiling.h */; };
 		0529445E11098D6F00E500F3 /* CCProfiling.m in Sources */ = {isa = PBXBuildFile; fileRef = 0529445A11098D6F00E500F3 /* CCProfiling.m */; };
@@ -213,12 +227,26 @@
 		B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE46B17E7AF6C0028BE0B /* UITouch+CC.m */; };
 		B79F905A17FE2A2E00908504 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B79F905817FE2A2E00908504 /* CCTableView.h */; };
 		B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79F905917FE2A2E00908504 /* CCTableView.m */; };
+		B7E260D818171D2000A0E872 /* CCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E260D618171D2000A0E872 /* CCTextField.h */; };
+		B7E260D918171D2000A0E872 /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E260D718171D2000A0E872 /* CCTextField.m */; };
+		B7EE69E01819E75700B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DC1819E75700B983FE /* CCLayout.h */; };
+		B7EE69E11819E75700B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DD1819E75700B983FE /* CCLayout.m */; };
+		B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DE1819E75700B983FE /* CCLayoutBox.h */; };
+		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
 		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */; };
+		D310749A181B467E0073F2CE /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3107498181B467E0073F2CE /* CCPhysicsShape.h */; };
+		D310749B181B467E0073F2CE /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3107499181B467E0073F2CE /* CCPhysicsShape.m */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
-		D3BDD40618187D770074C8D8 /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3BDD40418187D770074C8D8 /* CCPhysicsShape.h */; };
-		D3BDD40718187D770074C8D8 /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3BDD40518187D770074C8D8 /* CCPhysicsShape.m */; };
+		D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */; };
+		D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */; };
+		D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 503092B210447296005F7AFC /* libz.dylib */; };
+		D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D3547A73181588D500FBE6FB /* CCSchedulerTests.m */; };
+		D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31BB17F227F500E94B3B /* XCTest.framework */; };
+		D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D36F7E3C181580A000E94F72 /* InfoPlist.strings */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
 		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
 		E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
@@ -268,6 +296,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = A04A1FEA13B826B300ABAFB7;
 			remoteInfo = kazmath;
+		};
+		D36F7E42181580A000E94F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5018F24C0DFDEAC400C013A5;
+			remoteInfo = cocos2d;
 		};
 		D39A31D917F2284700E94B3B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -357,7 +392,6 @@
 		501CCFA80E99657C00B86F68 /* OpenGL_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenGL_Internal.h; sourceTree = "<group>"; };
 		501CCFAB0E99657C00B86F68 /* TGAlib.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TGAlib.m; sourceTree = "<group>"; };
 		501CCFAC0E99657C00B86F68 /* TGAlib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TGAlib.h; sourceTree = "<group>"; };
-		502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libcocos2d-documentation.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		502C6C6A0FB87970002BF3C2 /* CCParallaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParallaxNode.h; sourceTree = "<group>"; };
 		502C6C6B0FB87970002BF3C2 /* CCParallaxNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParallaxNode.m; sourceTree = "<group>"; };
 		502C8BDE10A661E200D137BA /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
@@ -574,6 +608,7 @@
 		A6DC4E0818055DCC00C280A6 /* CCTransition.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTransition.m; sourceTree = "<group>"; };
 		B74C2B9917BDA63A00A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B74C2B9A17BDA63A00A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
+		B750162218124B6000708A2F /* CCControlSubclass.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CCControlSubclass.h; path = "cocos2d-ui/CCControlSubclass.h"; sourceTree = "<group>"; };
 		B75C2E7A17C5908B002B0E0D /* NSAttributedString+CCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CCAdditions.h"; sourceTree = "<group>"; };
 		B75C2E7B17C5908B002B0E0D /* NSAttributedString+CCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CCAdditions.m"; sourceTree = "<group>"; };
 		B78AE45A17E7AF1C0028BE0B /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCButton.h; path = "cocos2d-ui/CCButton.h"; sourceTree = "<group>"; };
@@ -589,6 +624,14 @@
 		B79F905817FE2A2E00908504 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
 		B79F905917FE2A2E00908504 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
 		B7C6237917EA7D8600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
+		B7E260D618171D2000A0E872 /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
+		B7E260D718171D2000A0E872 /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
+		B7EE69DC1819E75700B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
+		B7EE69DD1819E75700B983FE /* CCLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayout.m; sourceTree = "<group>"; };
+		B7EE69DE1819E75700B983FE /* CCLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayoutBox.h; sourceTree = "<group>"; };
+		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
+		D3107498181B467E0073F2CE /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
+		D3107499181B467E0073F2CE /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsbody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsbody.h; sourceTree = "<group>"; };
@@ -596,10 +639,14 @@
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
 		D33803E9180331A90072D8FE /* CCPhysicsJoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsJoint.m; sourceTree = "<group>"; };
+		D3547A73181588D500FBE6FB /* CCSchedulerTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSchedulerTests.m; sourceTree = "<group>"; };
+		D36F7E35181580A000E94F72 /* UnitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D36F7E3B181580A000E94F72 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		D36F7E3D181580A000E94F72 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D36F7E41181580A000E94F72 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
 		D39A31BB17F227F500E94B3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
-		D3BDD40418187D770074C8D8 /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
-		D3BDD40518187D770074C8D8 /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -652,13 +699,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		502C65EC0DFEF3DD00E4107D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		509807061175041800EA7266 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -673,6 +713,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D36F7E32181580A000E94F72 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3547A72181583D000FBE6FB /* libz.dylib in Frameworks */,
+				D3547A70181583A300FBE6FB /* libcocos2d.a in Frameworks */,
+				D36F7E36181580A000E94F72 /* XCTest.framework in Frameworks */,
+				D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */,
+				D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -680,9 +732,9 @@
 			isa = PBXGroup;
 			children = (
 				5018F24D0DFDEAC400C013A5 /* libcocos2d.a */,
-				502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */,
 				509807081175041800EA7266 /* libbuild all libs.a */,
 				A04A1FEB13B826B300ABAFB7 /* libkazmath.a */,
+				D36F7E35181580A000E94F72 /* UnitTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -710,6 +762,7 @@
 				B78AE45917E7AF010028BE0B /* cocos2d-ui */,
 				5052213411B3D38A0061670F /* CocosDenshion */,
 				501756090F335CE900624901 /* external */,
+				D36F7E39181580A000E94F72 /* UnitTests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -751,6 +804,7 @@
 			isa = PBXGroup;
 			children = (
 				50A24F010F3788C6007CAEB0 /* Base Nodes */,
+				B7EE69DB1819E73A00B983FE /* Layouts */,
 				A0DA0BC615BCDCAE00E80A92 /* Draw Nodes */,
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
@@ -1159,8 +1213,8 @@
 			children = (
 				D33803E418032F250072D8FE /* CCPhysicsbody.h */,
 				D33803E218032ECE0072D8FE /* CCPhysicsBody.m */,
-				D3BDD40418187D770074C8D8 /* CCPhysicsShape.h */,
-				D3BDD40518187D770074C8D8 /* CCPhysicsShape.m */,
+				D3107498181B467E0073F2CE /* CCPhysicsShape.h */,
+				D3107499181B467E0073F2CE /* CCPhysicsShape.m */,
 				D33803E81803319F0072D8FE /* CCPhysicsJoint.h */,
 				D33803E9180331A90072D8FE /* CCPhysicsJoint.m */,
 				D33803E718032F4A0072D8FE /* CCPhysicsNode.h */,
@@ -1206,6 +1260,7 @@
 			children = (
 				B7C6237917EA7D8600928F91 /* cocos2d-ui.h */,
 				B78AE45C17E7AF1C0028BE0B /* CCControl.h */,
+				B750162218124B6000708A2F /* CCControlSubclass.h */,
 				B78AE45D17E7AF1C0028BE0B /* CCControl.m */,
 				B78AE45A17E7AF1C0028BE0B /* CCButton.h */,
 				B78AE45B17E7AF1C0028BE0B /* CCButton.m */,
@@ -1215,8 +1270,41 @@
 				B78AE46117E7AF1C0028BE0B /* CCScrollView.m */,
 				B78AE45E17E7AF1C0028BE0B /* CCControlTextureFactory.h */,
 				B78AE45F17E7AF1C0028BE0B /* CCControlTextureFactory.m */,
+				B7E260D618171D2000A0E872 /* CCTextField.h */,
+				B7E260D718171D2000A0E872 /* CCTextField.m */,
 			);
 			name = "cocos2d-ui";
+			sourceTree = "<group>";
+		};
+		B7EE69DB1819E73A00B983FE /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				B7EE69DC1819E75700B983FE /* CCLayout.h */,
+				B7EE69DD1819E75700B983FE /* CCLayout.m */,
+				B7EE69DE1819E75700B983FE /* CCLayoutBox.h */,
+				B7EE69DF1819E75700B983FE /* CCLayoutBox.m */,
+			);
+			name = Layouts;
+			sourceTree = "<group>";
+		};
+		D36F7E39181580A000E94F72 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */,
+				D3547A73181588D500FBE6FB /* CCSchedulerTests.m */,
+				D36F7E3A181580A000E94F72 /* Supporting Files */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		D36F7E3A181580A000E94F72 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D36F7E3B181580A000E94F72 /* UnitTests-Info.plist */,
+				D36F7E3C181580A000E94F72 /* InfoPlist.strings */,
+				D36F7E41181580A000E94F72 /* UnitTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		D39A31D117F2284600E94B3B /* Products */ = {
@@ -1352,6 +1440,8 @@
 				50D413260F9A3FE00040C3C8 /* CCParticleSystemQuad.h in Headers */,
 				502C6C6C0FB87970002BF3C2 /* CCParallaxNode.h in Headers */,
 				6F305B5F0FB9D2790052E700 /* TransformUtils.h in Headers */,
+				B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */,
+				B7E260D818171D2000A0E872 /* CCTextField.h in Headers */,
 				50CB3B0E100AC43A00B7A750 /* CCActionManager.h in Headers */,
 				509D0818101E4FCE007E1749 /* CCTMXTiledMap.h in Headers */,
 				50F29F6F102053370046CA73 /* base64.h in Headers */,
@@ -1385,6 +1475,7 @@
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
+				D310749A181B467E0073F2CE /* CCPhysicsShape.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0BC7D9D1342CE7B001B4DCC /* CCShaderCache.h in Headers */,
@@ -1397,10 +1488,10 @@
 				A046E29914C1DB7E0005BBF2 /* CCWindow.h in Headers */,
 				A09AB76914EA12F7009C8B91 /* ccDeprecated.h in Headers */,
 				A0A10B5714F3011F00FA38C1 /* ccGLStateCache.h in Headers */,
+				B7EE69E01819E75700B983FE /* CCLayout.h in Headers */,
 				A0C87D1A14F9A3A100C0E8B2 /* NSThread+performBlock.h in Headers */,
 				A093FF09150E9BE00039327A /* ccShaders.h in Headers */,
 				A09CEE97150EB30D001E49B8 /* ccShader_Position_uColor_frag.h in Headers */,
-				D3BDD40618187D770074C8D8 /* CCPhysicsShape.h in Headers */,
 				A09CEE98150EB30D001E49B8 /* ccShader_Position_uColor_vert.h in Headers */,
 				A09CEE99150EB30D001E49B8 /* ccShader_PositionColor_frag.h in Headers */,
 				A09CEE9A150EB30D001E49B8 /* ccShader_PositionColor_vert.h in Headers */,
@@ -1430,13 +1521,6 @@
 				B78AE46617E7AF1C0028BE0B /* CCControlTextureFactory.h in Headers */,
 				B78AE46817E7AF1C0028BE0B /* CCScrollView.h in Headers */,
 				B78AE46C17E7AF6C0028BE0B /* UITouch+CC.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		502C65EA0DFEF3DD00E4107D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1490,24 +1574,6 @@
 			productReference = 5018F24D0DFDEAC400C013A5 /* libcocos2d.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */;
-			buildPhases = (
-				502C65EA0DFEF3DD00E4107D /* Headers */,
-				502C65EB0DFEF3DD00E4107D /* Sources */,
-				502C65EC0DFEF3DD00E4107D /* Frameworks */,
-				502C65F30DFEF44900E4107D /* Run Script: doxygen */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "cocos2d-documentation";
-			productName = "cocos2d-documentation";
-			productReference = 502C65EE0DFEF3DD00E4107D /* libcocos2d-documentation.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		509807071175041800EA7266 /* build all libs */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 509807671175045700EA7266 /* Build configuration list for PBXNativeTarget "build all libs" */;
@@ -1544,6 +1610,24 @@
 			productReference = A04A1FEB13B826B300ABAFB7 /* libkazmath.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D36F7E34181580A000E94F72 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D36F7E46181580A000E94F72 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				D36F7E31181580A000E94F72 /* Sources */,
+				D36F7E32181580A000E94F72 /* Frameworks */,
+				D36F7E33181580A000E94F72 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D36F7E43181580A000E94F72 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = "cocos2d Tests";
+			productReference = D36F7E35181580A000E94F72 /* UnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1551,6 +1635,11 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0500;
+				TargetAttributes = {
+					D36F7E34181580A000E94F72 = {
+						TestTargetID = 5018F24C0DFDEAC400C013A5;
+					};
+				};
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1575,8 +1664,9 @@
 			targets = (
 				509807071175041800EA7266 /* build all libs */,
 				5018F24C0DFDEAC400C013A5 /* cocos2d */,
-				502C65ED0DFEF3DD00E4107D /* cocos2d-documentation */,
 				A04A1FEA13B826B300ABAFB7 /* kazmath */,
+				B772F6B118120CC9005C069B /* appledoc */,
+				D36F7E34181580A000E94F72 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -1626,21 +1716,30 @@
 		};
 /* End PBXReferenceProxy section */
 
+/* Begin PBXResourcesBuildPhase section */
+		D36F7E33181580A000E94F72 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXShellScriptBuildPhase section */
-		502C65F30DFEF44900E4107D /* Run Script: doxygen */ = {
+		B772F6B518120CDF005C069B /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Run Script: doxygen";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/sh\n#  Build the doxygen documentation for the project and load the docset into Xcode.\n\n#  Use the following to adjust the value of the $DOXYGEN_PATH User-Defined Setting:\n#    Binary install location: /Applications/Doxygen.app/Contents/Resources/doxygen\n#    Source build install location: /usr/local/bin/doxygen\n\n#  If the config file doesn't exist, run 'doxygen -g $SOURCE_ROOT/doxygen.config' to \n#   a get default file.\n\n# Make sure TEMP_DIR is set to something usable.do\nTEMP_DIR=${TEMP_DIR:-$TMPDIR}\nTEMP_DIR=${TEMP_DIR:-/tmp}\n\nif ! [ -f \"$SOURCE_ROOT\"/doxygen.config ] \nthen \n  echo \"doxygen config file does not exist\"\n  \"$DOXYGEN_PATH\" -g \"$SOURCE_ROOT/doxygen.config\"\nfi\n\n#  Append the proper input/output directories and docset info to the config file.\n#  This works even though values are assigned higher up in the file. Easier than sed.\n\ncp \"$SOURCE_ROOT/doxygen.config\" \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for source code files in current project directory under 'cocos2d\necho \"INPUT = \\\"$SOURCE_ROOT/cocos2d\\\" \\\"$SOURCE_ROOT/cocoslive\\\" \\\"$SOURCE_ROOT/CocosDenshion\\\"\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Doxygen will generate all the HTML files (which will later be packaged into\n# the doc set) into the standard 'build' directory, specifically, into a folder\n# called 'doxygen_output'.\necho \"OUTPUT_DIRECTORY = $TEMP_DIR/doxygen_output\" >> \"$TEMP_DIR/doxygen.config\"\n\n# CH: Look for image files in current project directory under 'Resources'\necho \"IMAGE_PATH = $SOURCE_ROOT/Resources\" >> \"$TEMP_DIR/doxygen.config\"\n\n#  Run doxygen on the updated config file.\n#  Note: doxygen creates a Makefile that does most of the heavy lifting.\n\n\"$DOXYGEN_PATH\" \"$TEMP_DIR/doxygen.config\"\n\n#  make will invoke docsetutil. Take a look at the Makefile to see how this is done.\n\nmake -C \"$TEMP_DIR/doxygen_output/html\" install\n\n#  Construct a temporary applescript file to tell Xcode to load a docset.\n\nrm -f \"$TEMP_DIR/loadDocSet.scpt\"\n\necho \"tell application \\\"Xcode\\\"\" >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"load documentation set with path \\\"/Users/$USER/Library/Developer/Shared/Documentation/DocSets/\\\"\" \n     >> \"$TEMP_DIR/loadDocSet.scpt\"\necho \"end tell\" >> \"$TEMP_DIR/loadDocSet.scpt\"\n\n#  Run the load-docset applescript command.\n\nosascript \"$TEMP_DIR/loadDocSet.scpt\"\n";
-			showEnvVarsInLog = 0;
+			shellScript = "#appledoc Xcode script\n# Start constants\ncompany=\"Cocos2d-iPhone.org\";\ncompanyID=\"org.cocos2d\";\ncompanyURL=\"http://cocos2d-iphone.org\";\ntarget=\"iphoneos\";\n#target=\"macosx\";\noutputPath=\"api-docs\";\n# End constants\ntools/appledoc \\\n--project-name \"Cocos2d\" \\\n--project-company \"${company}\" \\\n--company-id \"${companyID}\" \\\n--docset-atom-filename \"${company}.atom\" \\\n--docset-feed-url \"${companyURL}/${company}/%DOCSETATOMFILENAME\" \\\n--docset-package-url \"${companyURL}/${company}/%DOCSETPACKAGEFILENAME\" \\\n--docset-fallback-url \"${companyURL}/${company}\" \\\n--output \"${outputPath}\" \\\n--publish-docset \\\n--install-docset \\\n--docset-platform-family \"${target}\" \\\n--logformat xcode \\\n--no-keep-undocumented-members \\\n--no-search-undocumented-doc \\\n--keep-intermediate-files \\\n--no-repeat-first-par \\\n--no-warn-invalid-crossref \\\n--exit-threshold 2 \\\n--ignore .m \\\ncocos2d cocos2d-ui";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1670,6 +1769,7 @@
 				506602120E38A70D000B500E /* CCScheduler.m in Sources */,
 				50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */,
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
+				B7E260D918171D2000A0E872 /* CCTextField.m in Sources */,
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */,
 				50A24E140F377E8E007CAEB0 /* CCGrid.m in Sources */,
@@ -1680,7 +1780,6 @@
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
 				50D413270F9A3FE00040C3C8 /* CCParticleSystemQuad.m in Sources */,
-				D3BDD40718187D770074C8D8 /* CCPhysicsShape.m in Sources */,
 				502C6C6D0FB87970002BF3C2 /* CCParallaxNode.m in Sources */,
 				6F305B600FB9D2790052E700 /* TransformUtils.m in Sources */,
 				50CB3B0F100AC43A00B7A750 /* CCActionManager.m in Sources */,
@@ -1726,12 +1825,15 @@
 				A0A7A53D1514F27D00C8BD16 /* CCActionCatmullRom.m in Sources */,
 				A039EC00155C686B0061EE37 /* CCNode+Debug.m in Sources */,
 				A0DA0BC415BCDCA200E80A92 /* CCDrawNode.m in Sources */,
+				B7EE69E11819E75700B983FE /* CCLayout.m in Sources */,
 				2B192836163361B10049A044 /* CCClippingNode.m in Sources */,
 				A003AC8F16572D6000C7B792 /* ccFPSImages.m in Sources */,
 				B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */,
 				B74C2B9C17BDA63A00A829C0 /* CCSprite9Slice.m in Sources */,
 				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
+				B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */,
 				A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */,
+				D310749B181B467E0073F2CE /* CCPhysicsShape.m in Sources */,
 				A6A0734617C788EB004343C8 /* CCResponderManager.m in Sources */,
 				A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */,
 				B78AE46317E7AF1C0028BE0B /* CCButton.m in Sources */,
@@ -1740,13 +1842,6 @@
 				B78AE46917E7AF1C0028BE0B /* CCScrollView.m in Sources */,
 				B78AE46D17E7AF6C0028BE0B /* UITouch+CC.m in Sources */,
 				D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		502C65EB0DFEF3DD00E4107D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1777,6 +1872,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D36F7E31181580A000E94F72 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D3547A71181583A900FBE6FB /* CCPhysicsTests.m in Sources */,
+				D3547A74181588D500FBE6FB /* CCSchedulerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1795,12 +1899,28 @@
 			target = A04A1FEA13B826B300ABAFB7 /* kazmath */;
 			targetProxy = A02E25F216A4EDE8007F064C /* PBXContainerItemProxy */;
 		};
+		D36F7E43181580A000E94F72 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5018F24C0DFDEAC400C013A5 /* cocos2d */;
+			targetProxy = D36F7E42181580A000E94F72 /* PBXContainerItemProxy */;
+		};
 		D39A31E617F2285000E94B3B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ObjectiveChipmunk;
 			targetProxy = D39A31E517F2285000E94B3B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D36F7E3C181580A000E94F72 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D36F7E3D181580A000E94F72 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		5018F24E0DFDEAC500C013A5 /* Debug */ = {
@@ -1858,32 +1978,6 @@
 				OTHER_LDFLAGS = "";
 				PRODUCT_NAME = cocos2d;
 				SKIP_INSTALL = YES;
-				ZERO_LINK = NO;
-			};
-			name = Release;
-		};
-		502C65EF0DFEF3DE00E4107D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = NO;
-				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_THUMB_SUPPORT = NO;
-				PRODUCT_NAME = "cocos2d-documentation";
-			};
-			name = Debug;
-		};
-		502C65F00DFEF3DE00E4107D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DOXYGEN_PATH = /Applications/Doxygen.app/Contents/Resources/doxygen;
-				GCC_THUMB_SUPPORT = NO;
-				PRODUCT_NAME = "cocos2d-documentation";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -1950,6 +2044,20 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		B772F6B318120CC9005C069B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		B772F6B418120CC9005C069B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
 		};
@@ -2049,6 +2157,70 @@
 			};
 			name = Release;
 		};
+		D36F7E44181580A000E94F72 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		D36F7E45181580A000E94F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_TREAT_WARNINGS_AS_ERRORS = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2057,15 +2229,6 @@
 			buildConfigurations = (
 				5018F24E0DFDEAC500C013A5 /* Debug */,
 				5018F24F0DFDEAC500C013A5 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		502C65F10DFEF3FC00E4107D /* Build configuration list for PBXNativeTarget "cocos2d-documentation" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				502C65EF0DFEF3DE00E4107D /* Debug */,
-				502C65F00DFEF3DE00E4107D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -2088,11 +2251,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		B772F6B218120CC9005C069B /* Build configuration list for PBXAggregateTarget "appledoc" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B772F6B318120CC9005C069B /* Debug */,
+				B772F6B418120CC9005C069B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "cocos2d-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D36F7E46181580A000E94F72 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D36F7E44181580A000E94F72 /* Debug */,
+				D36F7E45181580A000E94F72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -726,6 +726,8 @@
     [recognizers insertObject:_tapRecognizer atIndex:0];
     
     view.gestureRecognizers = recognizers;
+    
+    [super onEnterTransitionDidFinish];
 }
 
 - (void) onExitTransitionDidStart
@@ -738,6 +740,8 @@
     [recognizers removeObject:_tapRecognizer];
     
     view.gestureRecognizers = recognizers;
+    
+    [super onExitTransitionDidStart];
 }
 
 #elif defined(__CC_PLATFORM_MAC)

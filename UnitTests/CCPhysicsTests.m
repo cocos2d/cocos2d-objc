@@ -7,7 +7,7 @@
 //
 
 #import <XCTest/XCTest.h>
-#import <cocos2d.h>
+#import "cocos2d.h"
 
 
 @interface CCPhysicsTests : XCTestCase

@@ -107,6 +107,7 @@
 		A66680C617D4D73000ECDE6F /* CCResponderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A66680C217D4D73000ECDE6F /* CCResponderManager.m */; };
 		B74C2B9617BDA54600A829C0 /* CCSprite9Slice.m in Sources */ = {isa = PBXBuildFile; fileRef = B74C2B9417BDA54600A829C0 /* CCSprite9Slice.m */; };
 		B74C2B9717BDA54600A829C0 /* CCSprite9Slice.h in Headers */ = {isa = PBXBuildFile; fileRef = B74C2B9517BDA54600A829C0 /* CCSprite9Slice.h */; };
+		B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = B750162B18125C4A00708A2F /* CCControlSubclass.h */; };
 		B75C2E7717C5857F002B0E0D /* NSAttributedString+CCAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = B75C2E7517C5857F002B0E0D /* NSAttributedString+CCAdditions.h */; };
 		B75C2E7817C5857F002B0E0D /* NSAttributedString+CCAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = B75C2E7617C5857F002B0E0D /* NSAttributedString+CCAdditions.m */; };
 		B78AE64717E7BC9F0028BE0B /* CCButton.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64017E7BA800028BE0B /* CCButton.m */; };
@@ -120,6 +121,11 @@
 		B7E2603617E7C774007067F0 /* NSEvent+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603417E7C774007067F0 /* NSEvent+CC.m */; };
 		B7E2603917E7C786007067F0 /* UITouch+CC.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E2603717E7C786007067F0 /* UITouch+CC.h */; };
 		B7E2603A17E7C786007067F0 /* UITouch+CC.m in Sources */ = {isa = PBXBuildFile; fileRef = B7E2603817E7C786007067F0 /* UITouch+CC.m */; };
+		B7EE698918187F7200B983FE /* CCTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE698818187C0900B983FE /* CCTextField.m */; };
+		B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69E61819EAAC00B983FE /* CCLayout.h */; };
+		B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E71819EAAC00B983FE /* CCLayout.m */; };
+		B7EE69EC1819EAAC00B983FE /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69E81819EAAC00B983FE /* CCLayoutBox.h */; };
+		B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */; };
 		E01E6A3E121EDCD3001A484F /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */; };
 		E01E6B36121EDCED001A484F /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79E121B5C870037C5C6 /* QuartzCore.framework */; };
 		E01E6B49121EDCF4001A484F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E036A79C121B5C720037C5C6 /* OpenGL.framework */; };
@@ -469,6 +475,7 @@
 		A66680C217D4D73000ECDE6F /* CCResponderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponderManager.m; sourceTree = "<group>"; };
 		B74C2B9417BDA54600A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
 		B74C2B9517BDA54600A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
+		B750162B18125C4A00708A2F /* CCControlSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControlSubclass.h; path = "cocos2d-ui/CCControlSubclass.h"; sourceTree = "<group>"; };
 		B75C2E7517C5857F002B0E0D /* NSAttributedString+CCAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+CCAdditions.h"; sourceTree = "<group>"; };
 		B75C2E7617C5857F002B0E0D /* NSAttributedString+CCAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+CCAdditions.m"; sourceTree = "<group>"; };
 		B78AE63F17E7BA800028BE0B /* CCButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCButton.h; path = "cocos2d-ui/CCButton.h"; sourceTree = "<group>"; };
@@ -486,6 +493,12 @@
 		B7E2603417E7C774007067F0 /* NSEvent+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+CC.m"; sourceTree = "<group>"; };
 		B7E2603717E7C786007067F0 /* UITouch+CC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITouch+CC.h"; sourceTree = "<group>"; };
 		B7E2603817E7C786007067F0 /* UITouch+CC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITouch+CC.m"; sourceTree = "<group>"; };
+		B7EE698718187C0900B983FE /* CCTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTextField.h; path = "cocos2d-ui/CCTextField.h"; sourceTree = "<group>"; };
+		B7EE698818187C0900B983FE /* CCTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTextField.m; path = "cocos2d-ui/CCTextField.m"; sourceTree = "<group>"; };
+		B7EE69E61819EAAC00B983FE /* CCLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayout.h; sourceTree = "<group>"; };
+		B7EE69E71819EAAC00B983FE /* CCLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayout.m; sourceTree = "<group>"; };
+		B7EE69E81819EAAC00B983FE /* CCLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayoutBox.h; sourceTree = "<group>"; };
+		B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
 		E01E663D121CA00A001A484F /* libcocos2d.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libcocos2d.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		E01E6A3D121EDCD3001A484F /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E02BBC79126CD870006E46A2 /* CCAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCAnimation.m; sourceTree = "<group>"; };
@@ -1282,6 +1295,7 @@
 				B78AE63F17E7BA800028BE0B /* CCButton.h */,
 				B78AE64017E7BA800028BE0B /* CCButton.m */,
 				B78AE64117E7BA800028BE0B /* CCControl.h */,
+				B750162B18125C4A00708A2F /* CCControlSubclass.h */,
 				B78AE64217E7BA800028BE0B /* CCControl.m */,
 				B78AE64317E7BA800028BE0B /* CCControlTextureFactory.h */,
 				B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */,
@@ -1289,8 +1303,21 @@
 				B78AE64617E7BA800028BE0B /* CCScrollView.m */,
 				B7C6239817F10F3600928F91 /* CCTableView.h */,
 				B7C6239917F10F3600928F91 /* CCTableView.m */,
+				B7EE698718187C0900B983FE /* CCTextField.h */,
+				B7EE698818187C0900B983FE /* CCTextField.m */,
 			);
 			name = "cocos2d-ui";
+			sourceTree = "<group>";
+		};
+		B7EE69E51819EA9600B983FE /* Layouts */ = {
+			isa = PBXGroup;
+			children = (
+				B7EE69E61819EAAC00B983FE /* CCLayout.h */,
+				B7EE69E71819EAAC00B983FE /* CCLayout.m */,
+				B7EE69E81819EAAC00B983FE /* CCLayoutBox.h */,
+				B7EE69E91819EAAC00B983FE /* CCLayoutBox.m */,
+			);
+			name = Layouts;
 			sourceTree = "<group>";
 		};
 		E0506A8413169AE100EAE33F /* Shaders */ = {
@@ -1327,6 +1354,7 @@
 			isa = PBXGroup;
 			children = (
 				E076E77B1225ED1100DE0DA2 /* Base Nodes */,
+				B7EE69E51819EA9600B983FE /* Layouts */,
 				E076E7721225EC8C00DE0DA2 /* Label Nodes */,
 				E076E7751225ECB100DE0DA2 /* Sprite Nodes */,
 				A66680BE17D4D70E00ECDE6F /* Touch & Mouse Handling */,
@@ -1712,8 +1740,10 @@
 				E076E71C1225EC7400DE0DA2 /* CCScene.h in Headers */,
 				E076E7201225EC7400DE0DA2 /* CCSprite.h in Headers */,
 				E076E7221225EC7400DE0DA2 /* CCSpriteBatchNode.h in Headers */,
+				B7EE69EC1819EAAC00B983FE /* CCLayoutBox.h in Headers */,
 				E076E7241225EC7400DE0DA2 /* CCSpriteFrame.h in Headers */,
 				E076E7261225EC7400DE0DA2 /* CCSpriteFrameCache.h in Headers */,
+				B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */,
 				E076E72A1225EC7400DE0DA2 /* CCTexture2D.h in Headers */,
 				E076E72C1225EC7400DE0DA2 /* CCTextureAtlas.h in Headers */,
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
@@ -1757,6 +1787,7 @@
 				B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */,
 				A009FB85150EC87500897349 /* ccShader_PositionColor_frag.h in Headers */,
 				A009FB86150EC87500897349 /* ccShader_PositionColor_vert.h in Headers */,
+				B7EE69EA1819EAAC00B983FE /* CCLayout.h in Headers */,
 				A009FB87150EC87500897349 /* ccShader_PositionTexture_frag.h in Headers */,
 				A009FB88150EC87500897349 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				A009FB89150EC87500897349 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
@@ -1908,6 +1939,7 @@
 				E076E70A1225EC7400DE0DA2 /* CCNode.m in Sources */,
 				E076E70C1225EC7400DE0DA2 /* CCParallaxNode.m in Sources */,
 				E076E70E1225EC7400DE0DA2 /* CCParticleExamples.m in Sources */,
+				B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */,
 				E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */,
 				E076E7141225EC7400DE0DA2 /* CCParticleSystemQuad.m in Sources */,
 				E076E7161225EC7400DE0DA2 /* CCProgressTimer.m in Sources */,
@@ -1936,6 +1968,7 @@
 				E076E7671225EC7400DE0DA2 /* CGPointExtension.m in Sources */,
 				E076E76A1225EC7400DE0DA2 /* TGAlib.m in Sources */,
 				E076E76C1225EC7400DE0DA2 /* TransformUtils.m in Sources */,
+				B7EE69ED1819EAAC00B983FE /* CCLayoutBox.m in Sources */,
 				E076E7701225EC7400DE0DA2 /* ZipUtils.m in Sources */,
 				E02BBC7D126CD870006E46A2 /* CCAnimation.m in Sources */,
 				E02BBC7F126CD870006E46A2 /* CCAnimationCache.m in Sources */,
@@ -1956,6 +1989,7 @@
 				A0D7D68C15E2D2CC000CA0C4 /* cocos2d.m in Sources */,
 				A0D7D68F15E2D2CC000CA0C4 /* ccDeprecated.m in Sources */,
 				A0D7D69515E2D2CC000CA0C4 /* CCConfiguration.m in Sources */,
+				B7EE698918187F7200B983FE /* CCTextField.m in Sources */,
 				A0D7D69715E2D2CC000CA0C4 /* CCDirector.m in Sources */,
 				A0D7D69A15E2D2CC000CA0C4 /* CCScheduler.m in Sources */,
 				2B192860163379400049A044 /* CCClippingNode.m in Sources */,

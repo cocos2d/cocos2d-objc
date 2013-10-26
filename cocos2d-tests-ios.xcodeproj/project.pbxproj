@@ -1903,8 +1903,6 @@
 		D35C0BF41808637C0071B674 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D35C0BF31808637C0071B674 /* XCTest.framework */; };
 		D35C0BF51808637C0071B674 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D35C0BF61808637C0071B674 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
-		D35C0BFC1808637C0071B674 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D35C0BFA1808637C0071B674 /* InfoPlist.strings */; };
-		D35C0BFE1808637D0071B674 /* CCPhysicsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */; };
 		DA5F0EC50FFE96D400C7C82E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB240E10EE4A00AE9530 /* Default.png */; };
 		DA5F0EC60FFE96D400C7C82E /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB250E10EE4A00AE9530 /* Icon.png */; };
 		DA5F0EC70FFE96D400C7C82E /* grossini.png in Resources */ = {isa = PBXBuildFile; fileRef = 50B2CB280E10EE4A00AE9530 /* grossini.png */; };
@@ -2864,13 +2862,6 @@
 			remoteGlobalIDString = 5018F24D0DFDEAC400C013A5;
 			remoteInfo = cocos2d;
 		};
-		A02E261116A4EE00007F064C /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 502C65EE0DFEF3DD00E4107D;
-			remoteInfo = "cocos2d-documentation";
-		};
 		A02E261916A4EE00007F064C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
@@ -3171,6 +3162,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D355243517F5E42500096CA3;
 			remoteInfo = CCPhysicsTest;
+		};
+		D36F7E4B1815812000E94F72 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A02E25F616A4EDFF007F064C /* cocos2d-ios.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D36F7E35181580A000E94F72;
+			remoteInfo = "cocos2d Tests";
 		};
 		E03A50EB135525C200D4B515 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -3740,10 +3738,6 @@
 		D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "ClickAndMoveTest copy-Info.plist"; path = "/Users/slembcke/Development/cocos2d-iphone/ClickAndMoveTest copy-Info.plist"; sourceTree = "<absolute>"; };
 		D35C0BF21808637C0071B674 /* CCPhysicsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CCPhysicsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D35C0BF31808637C0071B674 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
-		D35C0BF91808637C0071B674 /* CCPhysicsTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CCPhysicsTests-Info.plist"; sourceTree = "<group>"; };
-		D35C0BFB1808637C0071B674 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
-		D35C0BFF1808637D0071B674 /* CCPhysicsTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysicsTests-Prefix.pch"; sourceTree = "<group>"; };
 		DA90D87B1059A54D0039F26A /* FontTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = FontTest.h; path = tests/FontTest.h; sourceTree = "<group>"; };
 		DA90D87C1059A54D0039F26A /* FontTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FontTest.m; path = tests/FontTest.m; sourceTree = "<group>"; };
 		DAABAA9A1059A42E00794EB3 /* FontTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4649,7 +4643,6 @@
 				50B130FC0DFE0923003BAB56 /* tests */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
 				50671C1211B99FC8006C0061 /* Resources-iPad */,
-				D35C0C08180863A70071B674 /* unit tests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 				D355246917F5E42600096CA3 /* ClickAndMoveTest copy-Info.plist */,
@@ -5351,8 +5344,8 @@
 			children = (
 				A02E260616A4EE00007F064C /* libbuild all libs.a */,
 				A02E260C16A4EE00007F064C /* libcocos2d.a */,
-				A02E261216A4EE00007F064C /* libcocos2d-documentation.a */,
 				A02E261A16A4EE00007F064C /* libkazmath.a */,
+				D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5418,33 +5411,6 @@
 			);
 			name = Misc;
 			path = Resources/Misc;
-			sourceTree = "<group>";
-		};
-		D35C0BF71808637C0071B674 /* CCPhysicsTests */ = {
-			isa = PBXGroup;
-			children = (
-				D35C0BFD1808637C0071B674 /* CCPhysicsTests.m */,
-				D35C0BF81808637C0071B674 /* Supporting Files */,
-			);
-			path = CCPhysicsTests;
-			sourceTree = "<group>";
-		};
-		D35C0BF81808637C0071B674 /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				D35C0BF91808637C0071B674 /* CCPhysicsTests-Info.plist */,
-				D35C0BFA1808637C0071B674 /* InfoPlist.strings */,
-				D35C0BFF1808637D0071B674 /* CCPhysicsTests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
-		D35C0C08180863A70071B674 /* unit tests */ = {
-			isa = PBXGroup;
-			children = (
-				D35C0BF71808637C0071B674 /* CCPhysicsTests */,
-			);
-			name = "unit tests";
 			sourceTree = "<group>";
 		};
 		E037DA881281EFE2003D39D7 /* Bug-458 */ = {
@@ -6529,18 +6495,18 @@
 			remoteRef = A02E260B16A4EE00007F064C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		A02E261216A4EE00007F064C /* libcocos2d-documentation.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = "libcocos2d-documentation.a";
-			remoteRef = A02E261116A4EE00007F064C /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		A02E261A16A4EE00007F064C /* libkazmath.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
 			path = libkazmath.a;
 			remoteRef = A02E261916A4EE00007F064C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D36F7E4C1815812000E94F72 /* cocos2d Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "cocos2d Tests.xctest";
+			remoteRef = D36F7E4B1815812000E94F72 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -8566,7 +8532,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D35C0BFC1808637C0071B674 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9335,7 +9300,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D35C0BFE1808637D0071B674 /* CCPhysicsTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -9824,17 +9788,6 @@
 			targetProxy = E0D44E1A129198750094708A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		D35C0BFA1808637C0071B674 /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				D35C0BFB1808637C0071B674 /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		05CA7B0210ED674700F12774 /* Debug */ = {
