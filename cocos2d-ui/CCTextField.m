@@ -136,7 +136,6 @@
 {
     [self addUITextView];
     [super onEnterTransitionDidFinish];
-    [self scheduleUpdate];
     [self registerForKeyboardNotifications];
 }
 
@@ -144,7 +143,6 @@
 {
     [self removeUITextView];
     [super onExitTransitionDidStart];
-    [self unscheduleUpdate];
     [self unregisterForKeyboardNotifications];
 }
 

@@ -150,7 +150,7 @@ static NSUInteger globalOrderOfArrival = 1;
 -(id) init
 {
 	if ((self=[super init]) ) {
-		_isInActiveScene = 0;
+		_isInActiveScene = NO;
 
 		_skewX = _skewY = 0.0f;
 		_rotationalSkewX = _rotationalSkewY = 0.0f;
@@ -645,7 +645,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
 	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
 	
-	if( _isInActiveScene == 0 ) {
+	if( _isInActiveScene ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -972,8 +972,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		_position = self.position;
 		_rotationalSkewX = _rotationalSkewY = self.rotation;
 		
-		[_physicsBody didRemoveFromPhysicsNode:physics];
 		[physics.space smartRemove:_physicsBody];
+		[_physicsBody didRemoveFromPhysicsNode:physics];
 	}
 }
 
