@@ -93,7 +93,7 @@ typedef enum ccPhysicsBodyType {
 /// Defaults to YES.
 @property(nonatomic, assign) BOOL allowsRotation;
 /// Whether the physics body is dynamic, kinematic or static.
-/// Defaults to CP_BODY_TYPE_DYNAMIC.
+/// Defaults to CCPhysicsBodyTypeDynamic.
 @property(nonatomic, assign) ccPhysicsBodyType type;
 
 //MARK: Collision and Contact:

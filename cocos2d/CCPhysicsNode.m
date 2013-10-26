@@ -410,23 +410,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 -(void)fixedUpdate:(ccTime)delta
 {
-	[_space step:1.0f/60.0f];
+	[_space step:delta];
 	
 	// Null out the arbiter just in case somebody retained a pair.
 	_collisionPairSingleton->_arbiter = NULL;
-}
-
--(void)update:(ccTime)delta
-{
-	// Add the current dynamic timestep to the accumulator.
-	_accumulator += MIN(delta, _maxDeltaTime);
-	
-	// Subtract off fixed-sized chunks of time from the accumulator and step
-	while(_accumulator > _fixedTimestep){
-		[self fixedUpdate:_fixedTimestep];
-		_accumulator -= _fixedTimestep;
-		_fixedTime += _fixedTimestep;
-	}
 }
 
 //MARK: Debug Drawing:
@@ -493,11 +480,8 @@ ColorForShape(cpShape *shape, CCDrawNode *draw)
 	
 	cpSpaceEachBody_b(_space.space, ^(cpBody *body){
 		if(cpBodyGetType(body) == CP_BODY_TYPE_DYNAMIC){
-			[_debugDraw drawDot:cpBodyGetPosition(body) radius:5.0 color:ccc4f(1, 0, 0, 1)];
-			
 			cpVect cog = cpBodyLocalToWorld(body, cpBodyGetCenterOfGravity(body));
-			[_debugDraw drawDot:cog radius:5.0 color:ccc4f(1, 1, 0, 1)];
-//			CCLOG(@"%p cog: %@", body, NSStringFromCGPoint(cog));
+			[_debugDraw drawDot:cog radius:1.5 color:ccc4f(1, 1, 0, 1)];
 		}
 	});
 }

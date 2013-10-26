@@ -28,6 +28,8 @@
 
 #import "ccTypes.h"
 
+@class CCScheduler;
+
 /// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
 /// Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
 @protocol CCSchedulerTarget<NSObject>
@@ -63,6 +65,10 @@
 
 /// Absolute time the timer will invoke at.
 @property(nonatomic, readonly) ccTime invokeTime;
+
+/// Scheduler this timer was invoked from.
+/// Useful if you need to schedule more timers, or access lastUpdate times, etc.
+@property(nonatomic, readonly) CCScheduler *scheduler;
 
 /// Returns YES if the timer is no longer scheduled.
 @property(nonatomic, readonly) BOOL invalid;

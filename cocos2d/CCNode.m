@@ -1100,6 +1100,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return 0;
 }
 
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(ccTime)delay
+{
+	return [self.scheduler scheduleBlock:block forTarget:self withDelay:delay];
+}
+
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
