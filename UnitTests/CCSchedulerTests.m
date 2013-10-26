@@ -194,9 +194,21 @@
 	[scheduler scheduleTarget:target];
 	XCTAssertTrue([scheduler isTargetScheduled:target], @"");
 	
+	// Targets are initially paused.
+	XCTAssertTrue([scheduler isTargetPaused:target], @"");
+	
+	[seq removeAllObjects];
+	[scheduler update:2.0];
+	XCTAssertEqualObjects(seq, (@[
+	]), @"");
+	
+	// Unpause and try a few steps.
+	[scheduler setPaused:NO target:target];
+	XCTAssertFalse([scheduler isTargetPaused:target], @"");
+	
+	[seq removeAllObjects];
 	[scheduler update:3.0];
 	XCTAssertEqualObjects(seq, (@[
-		@"fixedUpdate(foo):1.0", // First fixedUpdate: is called at t=0
 		@"fixedUpdate(foo):1.0",
 		@"fixedUpdate(foo):1.0",
 		@"fixedUpdate(foo):1.0",
@@ -211,20 +223,8 @@
 		@"update(foo):2.0",
 	]), @"");
 	
-	XCTAssertFalse([scheduler isTargetPaused:target], @"");
-	
-	// Pause the target twice.
-	[scheduler pauseCountIncrement:target];
-	[scheduler pauseCountIncrement:target];
-	XCTAssertTrue([scheduler isTargetPaused:target], @"");
-	
-	[seq removeAllObjects];
-	[scheduler update:2.0];
-	XCTAssertEqualObjects(seq, (@[
-	]), @"");
-	
-	// Must unpause twice to resume
-	[scheduler pauseCountDecrement:target];
+	// Enable pause again.
+	[scheduler setPaused:YES target:target];
 	XCTAssertTrue([scheduler isTargetPaused:target], @"");
 	
 	[seq removeAllObjects];
@@ -233,7 +233,7 @@
 	]), @"");
 	
 	// Unpause the second time.
-	[scheduler pauseCountDecrement:target];
+	[scheduler setPaused:NO target:target];
 	XCTAssertFalse([scheduler isTargetPaused:target], @"");
 	
 	[seq removeAllObjects];
@@ -252,7 +252,6 @@
 	[scheduler update:2.0];
 	XCTAssertEqualObjects(seq, (@[
 	]), @"");
-	
 }
 
 - (void)testLotsOfTimers

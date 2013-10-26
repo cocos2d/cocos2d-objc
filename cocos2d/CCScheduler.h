@@ -159,9 +159,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 
 -(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
--(void) pauseCountIncrement:(NSObject<CCSchedulerTarget> *)target;
-
--(void) pauseCountDecrement:(NSObject<CCSchedulerTarget> *)target;
+-(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;
 
 -(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
 

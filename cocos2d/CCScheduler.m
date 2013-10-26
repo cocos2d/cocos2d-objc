@@ -26,9 +26,10 @@
 
 
 /*
-	Possible improvements.
+	Possible improvements:
 	1) Binary search in PrioritySearch().
 	2) Dirty flags on the method lists, filter during the next iteration.
+	3) Doubly link timers to avoid O(n) removal cost.
 */
 
 
@@ -36,13 +37,17 @@
 #import "CCScheduler.h"
 #import <objc/message.h>
 
+
+#define FOREACH_TIMER(__scheduledTarget__, __timerVar__) for(CCTimer *__timerVar__ = __scheduledTarget__->_timers; __timerVar__; __timerVar__ = __timerVar__.next)
+
+
 @interface CCScheduledTarget : NSObject
 
 @property(nonatomic, readonly) NSObject<CCSchedulerTarget> *target;
 
 @property(nonatomic, strong) CCTimer *timers;
 @property(nonatomic, readonly) BOOL empty;
-@property(nonatomic, assign) NSUInteger pauseCount;
+@property(nonatomic, assign) BOOL paused;
 @property(nonatomic, assign) BOOL enableUpdates;
 
 @end
@@ -79,7 +84,7 @@ InvokeMethods(NSArray *methods, SEL selector, ccTime dt)
 {
 	for(int i=0, count=methods.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = methods[i];
-		if(scheduledTarget->_pauseCount == 0) objc_msgSend(scheduledTarget->_target, selector, dt);
+		if(!scheduledTarget->_paused) objc_msgSend(scheduledTarget->_target, selector, dt);
 	}
 }
 
@@ -110,7 +115,7 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 
 -(void)invalidateTimers
 {
-	for(CCTimer *timer = _timers; timer; timer = timer.next) [timer invalidate];
+	FOREACH_TIMER(self, timer) [timer invalidate];
 }
 
 
@@ -119,17 +124,11 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	return (_timers == nil && !_enableUpdates);
 }
 
--(void)setPauseCount:(NSUInteger)pauseCount
+-(void)setPaused:(BOOL)paused
 {
-	NSAssert(pauseCount >= 0, @"pauseCount must be positive. Did a target get resumed without a matching pause call?");
-	
-	_pauseCount = pauseCount;
-	if(pauseCount == 0 && _pauseCount > 0){
-		// resuming
-		for(CCTimer *timer = _timers; timer; timer = timer.next) timer.paused = NO;
-	} else if(pauseCount > 0 && _pauseCount == 0){
-		// pausing
-		for(CCTimer *timer = _timers; timer; timer = timer.next) timer.paused = YES;
+	if(paused != _paused){
+		FOREACH_TIMER(self, timer) timer.paused = paused;
+		_paused = paused;
 	}
 }
 
@@ -285,6 +284,10 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		_scheduledTargets = CFDictionaryCreateMutable(NULL, 0, &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
 		
+		// All targets except nil should be implicitly paused initially.
+		CCScheduledTarget *nilTarget = [self scheduledTargetForTarget:[NSNull null] insert:YES];
+		nilTarget.paused = NO;
+		
 		_updates = [NSMutableArray array];
 		_fixedUpdates = [NSMutableArray array];
 		
@@ -293,9 +296,11 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		// Schedule a timer to run the fixedUpdate: methods.
 		_fixedUpdateTimer = [self scheduleBlock:^(CCTimer *timer){
-			CCScheduler *sceduler = _self;
-			InvokeMethods(sceduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
-			sceduler->_lastFixedUpdateTime = timer.invokeTime;
+			if(timer.invokeTime > 0.0){
+				CCScheduler *sceduler = _self;
+				InvokeMethods(sceduler->_fixedUpdates, @selector(fixedUpdate:), timer.repeatInterval);
+				sceduler->_lastFixedUpdateTime = timer.invokeTime;
+			}
 		} forTarget:self withDelay:0];
 
 		_fixedUpdateTimer.repeatCount = CCTimerRepeatForever;
@@ -328,6 +333,9 @@ CompareTimers(const void *a, const void *b, void *context)
 	if(scheduledTarget == nil && insert){
 		scheduledTarget = [[CCScheduledTarget alloc] initWithTarget:target];
 		CFDictionarySetValue(_scheduledTargets, (__bridge CFTypeRef)target, (__bridge CFTypeRef)scheduledTarget);
+		
+		// New targets are implicitly paused.
+		scheduledTarget.paused = YES;
 	}
 	
 	return scheduledTarget;
@@ -453,22 +461,16 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	return ([self scheduledTargetForTarget:target insert:NO] != nil);
 }
 
--(void)pauseCountIncrement:(NSObject<CCSchedulerTarget> *)target
+-(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
-	scheduledTarget.pauseCount++;
-}
-
--(void)pauseCountDecrement:(NSObject<CCSchedulerTarget> *)target
-{
-	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
-	scheduledTarget.pauseCount--;
+	scheduledTarget.paused = paused;
 }
 
 -(BOOL)isTargetPaused:(NSObject<CCSchedulerTarget> *)target
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:NO];
-	return (scheduledTarget.pauseCount > 0);
+	return scheduledTarget.paused;
 }
 
 -(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target

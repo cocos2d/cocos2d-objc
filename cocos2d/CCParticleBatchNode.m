@@ -213,7 +213,7 @@
 
 	[child setParent: self];
 
-	if( _isRunning ) {
+	if( _isInActiveScene ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
