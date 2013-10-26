@@ -401,18 +401,11 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return NO;
 }
 
-//MARK: Lifecycle and Scheduling
+//MARK: Time Stepping
 
--(void)onEnter
+-(NSInteger)priority
 {
-	[super onEnter];
-	[self scheduleUpdate];
-}
-
--(void)onExit
-{
-	[super onExit];
-	[self unscheduleUpdate];
+	return NSIntegerMax;
 }
 
 -(void)fixedUpdate:(ccTime)delta

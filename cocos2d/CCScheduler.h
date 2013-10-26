@@ -3,6 +3,7 @@
  *
  * Copyright (c) 2008-2010 Ricardo Quesada
  * Copyright (c) 2011 Zynga Inc.
+ * Copyright (c) 2013 Scott Lembcke.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -25,83 +26,66 @@
 
 
 
-#import "Support/uthash.h"
 #import "ccTypes.h"
 
-// Priority level reserved for system services.
-#define kCCPrioritySystem INT_MIN
+/// Targets are things that can have update: and fixedUpdate: methods called by the scheduler.
+/// Scheduled blocks (CCTimers) can be associated with a target to inherit their priority and paused state.
+@protocol CCSchedulerTarget<NSObject>
 
-// Minimum priority level for user scheduling.
-#define kCCPriorityNonSystemMin (kCCPrioritySystem+1)
+/// Used to break ties for scheduled blocks, updated: and fixedUpdate: methods.
+/// Targets are sorted by priority so lower priorities are called first.
+@property(nonatomic, readonly) NSInteger priority;
 
-typedef void (*TICK_IMP)(id, SEL, ccTime);
+@optional
 
-//
-// CCTimer
-//
-/** Light weight timer */
+-(void) update:(ccTime)delta;
+
+-(void) fixedUpdate:(ccTime)delta;
+
+@end
+
+
+/// Wraps a block scheduled with a CCScheduler.
 @interface CCTimer : NSObject
-{
-	ccTime		_interval;
-	ccTime		_elapsed;
-	BOOL		_runForever;
-	BOOL		_useDelay;
-	uint		_nTimesExecuted;
-	uint		_repeat; //0 = once, 1 is 2 x executed
-	ccTime		_delay;
-}
 
-/** interval in seconds */
-@property (nonatomic,readwrite,assign) ccTime interval;
+/// Number of times to repeat call the block.
+@property(nonatomic, assign) NSUInteger repeatCount;
 
+/// Amount of time to wait between calls of the block.
+/// Defaults to the initial delay value.
+@property(nonatomic, assign) ccTime repeatInterval;
 
-/** triggers the timer */
--(void) update: (ccTime) dt;
-@end
+/// Is the timer paused or not.
+@property(nonatomic, assign) BOOL paused;
 
-@interface CCTimerTargetSelector : CCTimer
-{
-	id			_target;
-	SEL			_selector;
-	TICK_IMP	_impMethod;
-}
+/// Elapsed time since the last invocation.
+@property(nonatomic, readonly) ccTime deltaTime;
 
-/** selector */
-@property (nonatomic,readonly)	SEL selector;
+/// Absolute time the timer will invoke at.
+@property(nonatomic, readonly) ccTime invokeTime;
 
-/** Allocates a timer with a target and a selector. */
-+(id) timerWithTarget:(id) t selector:(SEL)s;
+/// Returns YES if the timer is no longer scheduled.
+@property(nonatomic, readonly) BOOL invalid;
 
-/** Allocates a timer with a target, a selector and an interval in seconds. */
-+(id) timerWithTarget:(id) t selector:(SEL)s interval:(ccTime)seconds;
+/// Track an object along with the timer.
+/// [CCNode schedule:] methods use this to store the selector name.
+@property(nonatomic, strong) NSString *userData;
 
-/** Initializes a timer with a target and a selector. */
--(id) initWithTarget:(id) t selector:(SEL)s;
+/// Set the timer to repeat once with the given interval.
+/// Can be used from a timer block to make the timer run again.
+-(void)repeatOnceWithInterval:(ccTime)interval;
 
-/** Initializes a timer with a target, a selector, an interval in seconds, repeat in number of times to repeat, delay in seconds */
--(id) initWithTarget:(id)t selector:(SEL)s interval:(ccTime) seconds repeat:(uint) r delay:(ccTime) d;
+/// Cancel the timer.
+-(void)invalidate;
+
 @end
 
 
-@interface CCTimerBlock : CCTimer
-{
-	void (^_block)(ccTime delta);
-	NSString	*_key;
-	id			__unsafe_unretained _target;
-}
+/// Block type to use with CCScheduler.
+typedef void (^CCTimerBlock)(CCTimer *timer);
 
-/** unique identifier of the block */
-@property (nonatomic, readonly) NSString *key;
 
-/** owner of the timer */
-@property (nonatomic, readonly, unsafe_unretained) id target;
-
-/** Allocates a timer with a target, interval in seconds, a key and a block */
-+(id) timerWithTarget:(id)owner interval:(ccTime)seconds key:(NSString*)key block:(void(^)(ccTime delta)) block;
-
-/** Initializes a timer with a target(owner), interval in seconds, repeat in number of times to repeat, delay in seconds and a block */
--(id) initWithTarget:(id)owner interval:(ccTime) seconds repeat:(uint) r delay:(ccTime)d key:(NSString*)key block:(void(^)(ccTime delta))block;
-@end
+#define CCTimerRepeatForever NSUIntegerMax
 
 
 //
@@ -119,35 +103,7 @@ typedef void (*TICK_IMP)(id, SEL, ccTime);
 
 */
 
-struct _listEntry;
-struct _hashSelectorEntry;
-struct _hashUpdateEntry;
-
 @interface CCScheduler : NSObject
-{
-	ccTime				_timeScale;
-
-	//
-	// "updates with priority" stuff
-	//
-	struct _listEntry			*updatesNeg;	// list of priority < 0
-	struct _listEntry			*updates0;		// list priority == 0
-	struct _listEntry			*updatesPos;	// list priority > 0
-	struct _hashUpdateEntry		*hashForUpdates;	// hash used to fetch quickly the list entries for pause,delete,etc.
-
-	// Used for "selectors with interval"
-	struct _hashSelectorEntry	*hashForTimers;
-	struct _hashSelectorEntry	*currentTarget;
-	BOOL						currentTargetSalvaged;
-
-	// Optimization
-	TICK_IMP			impMethod;
-	SEL					updateSelector;
-
-    BOOL updateHashLocked; // If true unschedule will not remove anything from a hash. Elements will only be marked for deletion.
-
-	BOOL				_paused;
-}
 
 /** Modifies the time of all scheduled callbacks.
  You can use this property to create a 'slow motion' or 'fast forward' effect.
@@ -168,117 +124,45 @@ struct _hashUpdateEntry;
 
  @since v2.1.0
  */
-@property (nonatomic,readonly,getter=isPaused) BOOL paused;
+@property (nonatomic, assign) BOOL paused;
+
+/// Current time the scheduler is calling a block for.
+@property(nonatomic, readonly) ccTime currentTime;
+
+/// Time of the most recent update: calls.
+@property(nonatomic, readonly) ccTime lastUpdateTime;
+
+/// Time of the most recent fixedUpdate: calls.
+@property(nonatomic, readonly) ccTime lastFixedUpdateTime;
+
+/// Maximum allowed time step.
+/// If the CPU can't keep up with the game, time will slow down.
+@property(nonatomic, assign) ccTime maxTimeStep;
+
+/// The time between fixedUpdate: calls.
+@property(nonatomic, assign) ccTime fixedTimeStep;
 
 /** 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */
 -(void) update:(ccTime)dt;
 
-/** The scheduled method will be called every 'interval' seconds.
- If paused is YES, then it won't be called until it is resumed.
- If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
- If the selector is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- repeat lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously
- delay is the amount of time the action will wait before it'll start
+-(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(ccTime)delay;
 
- @since v0.99.3, repeat and delay added in v1.1
- */
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused;
-
-/** calls scheduleSelector with kCCRepeatForever and a 0 delay */
--(void) scheduleSelector:(SEL)selector forTarget:(id)target interval:(ccTime)interval paused:(BOOL)paused;
-
-/** Schedules the 'update' selector for a given target with a given priority.
- The 'update' selector will be called every frame.
- The lower the priority, the earlier it is called.
- @since v0.99.3
- */
--(void) scheduleUpdateForTarget:(id)target priority:(NSInteger)priority paused:(BOOL)paused;
-
-/** The scheduled block will be called every 'interval' seconds.
- 'key' is a unique identifier of the block. Needed to unschedule the block or update its interval.
- 'target' is needed for all the method related to "target" like "pause" and "unschedule"
- If 'interval' is 0, it will be called every frame, but if so, it recommended to use 'scheduleUpdateForTarget:' instead.
- 'repeat' lets the action be repeated repeat + 1 times, use kCCRepeatForever to let the action run continuously.
- 'delay' is the amount of time the action will wait before it'll start.
-  If paused is YES, then it won't be called until it is resumed.
- If the block is already scheduled, then only the interval parameter will be updated without re-scheduling it again.
- @since v2.1
- */
--(void) scheduleBlockForKey:(NSString*)key target:(id)target interval:(ccTime)interval repeat:(uint)repeat delay:(ccTime)delay paused:(BOOL)paused block:(void(^)(ccTime dt))block;
-
-/** Unshedules a selector for a given target.
- If you want to unschedule the "update", use unscheudleUpdateForTarget.
- @since v0.99.3
- */
--(void) unscheduleSelector:(SEL)selector forTarget:(id)target;
-
-/** Unshedules a block for a given key / target pair.
- If you want to unschedule the "update", use unscheudleUpdateForTarget.
- @since v2.1
- */
--(void) unscheduleBlockForKey:(NSString*)key target:(id)target;
-
-/** Unschedules the update selector for a given target
- @since v0.99.3
- */
--(void) unscheduleUpdateForTarget:(id)target;
+-(void) scheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
 /** Unschedules all selectors and blocks for a given target.
  This also includes the "update" selector.
  @since v0.99.3
  */
--(void) unscheduleAllForTarget:(id)target;
+-(void) unscheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 
-/** Unschedules all selectors and blocks from all targets.
- You should NEVER call this method, unless you know what you are doing.
+-(BOOL) isTargetScheduled:(NSObject<CCSchedulerTarget> *)target;
 
- @since v0.99.3
- */
--(void) unscheduleAll;
+-(void)setPaused:(BOOL)paused target:(NSObject<CCSchedulerTarget> *)target;
 
-/** Unschedules all selectors and blocks from all targets with a minimum priority.
-  You should only call this with kCCPriorityNonSystemMin or higher.
-  @since v2.0.0
-  */
--(void) unscheduleAllWithMinPriority:(NSInteger)minPriority;
+-(BOOL) isTargetPaused:(NSObject<CCSchedulerTarget> *)target;
 
-/** Pauses the target.
- All scheduled selectors/update for a given target won't be 'ticked' until the target is resumed.
- If the target is not present, nothing happens.
- @since v0.99.3
- */
--(void) pauseTarget:(id)target;
-
-/** Resumes the target.
- The 'target' will be unpaused, so all schedule selectors/update will be 'ticked' again.
- If the target is not present, nothing happens.
- @since v0.99.3
- */
--(void) resumeTarget:(id)target;
-
-/** Returns whether or not the target is paused
- @since v1.0.0
- */
--(BOOL) isTargetPaused:(id)target;
-
-/** Pause all selectors and blocks from all targets.
-  You should NEVER call this method, unless you know what you are doing.
- @since v2.0.0
-  */
--(NSSet*) pauseAllTargets;
-
-/** Pause all selectors and blocks from all targets with a minimum priority.
-  You should only call this with kCCPriorityNonSystemMin or higher.
-  @since v2.0.0
-  */
--(NSSet*) pauseAllTargetsWithMinPriority:(NSInteger)minPriority;
-
-/** Resume selectors on a set of targets.
- This can be useful for undoing a call to pauseAllSelectors.
- @since v2.0.0
-  */
--(void) resumeTargets:(NSSet *)targetsToResume;
+-(NSArray *)timersForTarget:(NSObject<CCSchedulerTarget> *)target;
 
 @end

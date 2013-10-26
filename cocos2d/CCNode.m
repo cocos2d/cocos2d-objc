@@ -70,11 +70,15 @@
 
 }
 
+// Suppress automatic ivar creation.
+@dynamic isRunning;
+@dynamic paused;
+
 static inline
 CCPhysicsBody *
 GetBodyIfRunning(CCNode *node)
 {
-	return (node->_isRunning ? node->_physicsBody : nil);
+	return (node->_isInActiveScene ? node->_physicsBody : nil);
 }
 
 static inline CGAffineTransform
@@ -123,7 +127,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize zOrder = _zOrder;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
-@synthesize isRunning = _isRunning;
 @synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
 @synthesize orderOfArrival = _orderOfArrival;
@@ -147,8 +150,7 @@ static NSUInteger globalOrderOfArrival = 1;
 -(id) init
 {
 	if ((self=[super init]) ) {
-
-		_isRunning = NO;
+		_isInActiveScene = 0;
 
 		_skewX = _skewY = 0.0f;
 		_rotationalSkewX = _rotationalSkewY = 0.0f;
@@ -204,7 +206,7 @@ static NSUInteger globalOrderOfArrival = 1;
 {
 	// actions
 	[self stopAllActions];
-	[self unscheduleAllSelectors];
+	[self.scheduler unscheduleTarget:self];
 
 	// timers
 	[_children makeObjectsPerformSelector:@selector(cleanup)];
@@ -603,6 +605,22 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	return nil;
 }
 
+// Recursively increment/decrement _pausedAncestors on the children of 'node'.
+static void
+RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
+{
+	NSArray *children = node->_children;
+	for(int i=0, count=children.count; i<count; i++){
+		CCNode *child = children[i];
+		
+		BOOL wasRunning = node.isRunning;
+		child->_pausedAncestors += increment;
+		[node wasRunning:wasRunning];
+		
+		RecursivelyIncrementPausedAncestors(child, increment);
+	}
+}
+
 /* "add" logic MUST only be on this method
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
@@ -622,8 +640,12 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	[child setParent: self];
 
 	[child setOrderOfArrival: globalOrderOfArrival++];
-
-	if( _isRunning ) {
+	
+	// Update pausing parameters
+	child->_pausedAncestors = _pausedAncestors + (_paused ? 1 : 0);
+	RecursivelyIncrementPausedAncestors(child, child->_pausedAncestors);
+	
+	if( _isInActiveScene == 0 ) {
 		[child onEnter];
 		[child onEnterTransitionDidFinish];
 	}
@@ -705,12 +727,15 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 		// IMPORTANT:
 		//  -1st do onExit
 		//  -2nd cleanup
-		if (_isRunning)
+		if (_isInActiveScene)
 		{
 			[c onExitTransitionDidStart];
 			[c onExit];
 		}
-
+		
+		RecursivelyIncrementPausedAncestors(c, -c->_pausedAncestors);
+		c->_pausedAncestors = 0;
+		
 		if (cleanup)
 			[c cleanup];
 
@@ -732,12 +757,15 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	// IMPORTANT:
 	//  -1st do onExit
 	//  -2nd cleanup
-	if (_isRunning)
+	if (_isInActiveScene)
 	{
 		[child onExitTransitionDidStart];
 		[child onExit];
 	}
-
+	
+	RecursivelyIncrementPausedAncestors(child, -child->_pausedAncestors);
+	child->_pausedAncestors = 0;
+	
 	// If you don't do cleanup, the child's actions will not get removed and the
 	// its scheduledSelectors_ dict will not get released!
 	if (doCleanup)
@@ -958,7 +986,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	}
 	
 	if(physicsBody != _physicsBody){
-		if(_isRunning){
+		if(_isInActiveScene){
 			[self teardownPhysics];
 			[self setupPhysicsBody:physicsBody];
 		}
@@ -983,8 +1011,14 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	
 	[self setupPhysicsBody:_physicsBody];
 	
-	[self resumeSchedulerAndActions];
-	_isRunning = YES;
+	CCScheduler *scheduler = self.scheduler;
+	if(![scheduler isTargetScheduled:self]){
+		[scheduler scheduleTarget:self];
+	}
+	
+	BOOL wasRunning = self.isRunning;
+	_isInActiveScene = YES;
+	[self wasRunning:wasRunning];
 }
 
 -(void) onEnterTransitionDidFinish
@@ -1001,8 +1035,9 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	[self teardownPhysics];
 	
-	[self pauseSchedulerAndActions];
-	_isRunning = NO;
+	BOOL wasRunning = self.isRunning;
+	_isInActiveScene = NO;
+	[self wasRunning:wasRunning];
 	
 	[_children makeObjectsPerformSelector:@selector(onExit)];
 }
@@ -1027,7 +1062,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!_isRunning];
+	[_actionManager addAction:action target:self paused:!self.isRunning];
 	return action;
 }
 
@@ -1060,10 +1095,16 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 #pragma mark CCNode - Scheduler
 
+-(NSInteger)priority
+{
+	return 0;
+}
+
 -(void) setScheduler:(CCScheduler *)scheduler
 {
 	if( scheduler != _scheduler ) {
-		[self unscheduleAllSelectors];
+		#warning TODO needs to be recursive? (or remove per node schedulers?)
+		[self.scheduler unscheduleTarget:self];
 
 		_scheduler = scheduler;
 	}
@@ -1071,75 +1112,82 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 -(CCScheduler*) scheduler
 {
-	return _scheduler;
+	return (_scheduler ?: self.parent.scheduler);
 }
 
--(void) scheduleUpdate
+-(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval
 {
-	[self scheduleUpdateWithPriority:0];
+	return [self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
 }
 
--(void) scheduleUpdateWithPriority:(NSInteger)priority
-{
-	[_scheduler scheduleUpdateForTarget:self priority:priority paused:!_isRunning];
-}
-
--(void) unscheduleUpdate
-{
-	[_scheduler unscheduleUpdateForTarget:self];
-}
-
--(void) schedule:(SEL)selector
-{
-	[self schedule:selector interval:0 repeat:kCCRepeatForever delay:0];
-}
-
--(void) schedule:(SEL)selector interval:(ccTime)interval
-{
-	[self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
-}
-
--(void) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+-(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
-
-	[_scheduler scheduleSelector:selector forTarget:self interval:interval repeat:repeat delay:delay paused:!_isRunning];
+	
+	[self unschedule:selector];
+	
+	void (*imp)(id, SEL, ccTime) = (__typeof(imp))[self methodForSelector:selector];
+	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
+		imp(self, selector, t.deltaTime);
+	} forTarget:self withDelay:delay];
+	
+	timer.repeatCount = CCTimerRepeatForever;
+	timer.repeatInterval = interval;
+	timer.userData = NSStringFromSelector(selector);
+	
+	return timer;
 }
 
-- (void) scheduleOnce:(SEL) selector delay:(ccTime) delay
+- (CCTimer *) scheduleOnce:(SEL) selector delay:(ccTime) delay
 {
-	[self schedule:selector interval:0.f repeat:0 delay:delay];
+	return [self schedule:selector interval:0.f repeat:0 delay:delay];
 }
 
--(void) unschedule:(SEL)selector
+-(void)unschedule:(SEL)selector
 {
-	// explicit nil handling
-	if (selector == nil)
-		return;
-
-	[_scheduler unscheduleSelector:selector forTarget:self];
+	NSString *selectorName = NSStringFromSelector(selector);
+	
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+		if([selectorName isEqual:timer.userData]) [timer invalidate];
+	}
 }
 
--(void) unscheduleAllSelectors
+-(void)unscheduleAllSelectors
 {
-	[_scheduler unscheduleAllForTarget:self];
-}
-- (void) resumeSchedulerAndActions
-{
-	[_scheduler resumeTarget:self];
-	[_actionManager resumeTarget:self];
+	for(CCTimer *timer in [self.scheduler timersForTarget:self]){
+		if([timer.userData isKindOfClass:[NSString class]]) [timer invalidate];
+	}
 }
 
-- (void) pauseSchedulerAndActions
+// Used to pause/unpause a node's actions and timers when it's isRunning state changes.
+-(void)wasRunning:(BOOL)wasRunning
 {
-	[_scheduler pauseTarget:self];
-	[_actionManager pauseTarget:self];
+	BOOL isRunning = self.isRunning;
+	
+	if(isRunning && !wasRunning){
+		[self.scheduler setPaused:NO target:self];
+		[_actionManager resumeTarget:self];
+	} else if(!isRunning && wasRunning){
+		[self.scheduler setPaused:YES target:self];
+		[_actionManager pauseTarget:self];
+	}
 }
 
-/* override me */
--(void) update:(ccTime)delta
+-(BOOL)isRunning
 {
+	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
+}
+
+-(void)setPaused:(BOOL)paused
+{
+	if(_paused != paused){
+		BOOL wasRunning = self.isRunning;
+		_paused = paused;
+		[self wasRunning:wasRunning];
+		
+		RecursivelyIncrementPausedAncestors(self, (paused ? 1 : -1));
+	}
 }
 
 #pragma mark CCNode Transform

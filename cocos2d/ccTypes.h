@@ -388,9 +388,7 @@ typedef enum {
 } CCLineBreakMode;
 
 //! delta time type
-//! if you want more resolution redefine it as a double
-typedef CGFloat ccTime;
-//typedef double ccTime;
+typedef double ccTime;
 
 typedef float ccMat4[16];
     
