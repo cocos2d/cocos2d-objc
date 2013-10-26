@@ -24,11 +24,13 @@
  *
  */
 
+// -----------------------------------------------------------------
 
 #import "CCScene.h"
 #import "Support/CGPointExtension.h"
 #import "CCDirector.h"
 
+// -----------------------------------------------------------------
 
 @implementation CCScene {
 
@@ -36,15 +38,16 @@
 
 // -----------------------------------------------------------------
 
--( id )init {
-    self = [ super init ];
-    NSAssert( self != nil, @"Unable to create class" );
+- (id)init
+{
+    self = [super init];
+    NSAssert(self, @"Unable to create class");
     
     CGSize s = [[CCDirector sharedDirector] winSize];
     _anchorPoint = ccp(0.0f, 0.0f);
     [self setContentSize:s];
         
-	return( self );
+	return(self);
 }
 
 // -----------------------------------------------------------------
