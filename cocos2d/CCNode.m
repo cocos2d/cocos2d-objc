@@ -27,7 +27,6 @@
  */
 
 #import "CCNode.h"
-#import "CCGrid.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #import "CCScheduler.h"
@@ -123,7 +122,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize children = _children;
 @synthesize visible = _visible;
 @synthesize parent = _parent;
-@synthesize grid = _grid;
 @synthesize zOrder = _zOrder;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
@@ -162,8 +160,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_isTransformDirty = _isInverseDirty = YES;
 
 		_vertexZ = 0;
-
-		_grid = nil;
 
 		_visible = YES;
 
@@ -866,9 +862,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
 	kmGLPushMatrix();
 
-	if ( _grid && _grid.active)
-		[_grid beforeDraw];
-
 	[self transform];
 
 	if(_children) {
@@ -900,9 +893,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	// reset for next frame
 	_orderOfArrival = 0;
-
-	if ( _grid && _grid.active)
-		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 }

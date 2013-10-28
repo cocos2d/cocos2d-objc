@@ -44,8 +44,6 @@
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
-#import "CCActionTiledGrid.h"
-#import "CCActionGrid3D.h"
 
 
 /*
@@ -326,88 +324,4 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
  */
 @end
 
-// Effects
-#pragma mark - Effects
-
-@interface CCGridAction (Deprecated)
-+(id) actionWithSize:(CGSize)size duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id) initWithSize:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWaves3D (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCLens3D (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCRipple3D (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShaky3D (Deprecated)
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCLiquid (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWaves (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCTwirl (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShakyTiles3D (Deprecated)
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShatteredTiles3D  (Deprecated)
-+(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShuffleTiles (Deprecated)
-+(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCTurnOffTiles (Deprecated)
-+(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWavesTiles3D  (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCJumpTiles3D (Deprecated)
-+(id)actionWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCSplitRows (Deprecated)
-+(id)actionWithRows:(int)rows duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
--(id)initWithRows:(int)rows duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCSplitCols  (Deprecated)
-+(id)actionWithCols:(int)cols duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
--(id)initWithCols:(int)cols duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
-@end
-
 #endif // CC_ENABLE_DEPRECATED
-
