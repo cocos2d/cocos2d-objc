@@ -137,12 +137,9 @@
 @property(nonatomic, assign) NSObject<CCPhysicsCollisionDelegate> *collisionDelegate;
 
 // TODO think about these more.
-// More variations? Filtering? thickness?
--(CCPhysicsBody *)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsBody *body, CGPoint nearest, CGFloat distance))block;
--(CCPhysicsBody *)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsBody *body, CGPoint point, CGPoint normal, CGFloat distance))block;
+-(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *shape, CGPoint nearest, CGFloat distance))block;
+-(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *shape, CGPoint point, CGPoint normal, CGFloat distance))block;
 -(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *body))block;
-// Unsure about this one.
-//-(BOOL)bodyQuery:(CCPhysicsBody *)body withPosition:(CGPoint)position rotation:(CGFloat)rotation block:(BOOL (^)(ChipmunkBody *bodyB, cpContactPointSet))block;
 
 @end
 
