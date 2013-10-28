@@ -395,4 +395,55 @@
 	XCTAssertTrue(timer.invalid, @"");
 }
 
+-(void)testTimerPriorities
+{
+	NSMutableArray *seq = [NSMutableArray array];
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	NSArray *priorities = @[@4, @5, @8, @0, @7, @2, @3, @9, @6, @1];
+	
+	for(NSNumber *priority in priorities){
+		SchedulerTarget *target = [[SchedulerTarget alloc] init];
+		target.priority = priority.integerValue;
+		
+		[scheduler scheduleBlock:^(CCTimer *timer){[seq addObject:priority];} forTarget:target withDelay:1.0];
+		[scheduler setPaused:NO target:target];
+	}
+	
+	XCTAssertEqualObjects(seq, [seq sortedArrayUsingSelector:@selector(compare:)], @"");
+}
+
+// Pausing a timer at exactly it's invokation time should still invoke the timer.
+-(void)testTimerPauseAtInvoke
+{
+	CCScheduler *scheduler = [[CCScheduler alloc] init];
+	scheduler.maxTimeStep = INFINITY;
+	scheduler.fixedTimeStep = INFINITY;
+	
+	__block bool timer1Called = false;
+	__block bool timer2Called = false;
+	
+	// This target will be paused at exactly it's invocation time.
+	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
+		timer1Called = true;
+	} forTarget:nil withDelay:1.0];
+	
+	// This is a high priority target and will be called first to pause the first timer.
+	SchedulerTarget *target = [[SchedulerTarget alloc] init];
+	target.priority = -1;
+	
+	[scheduler setPaused:NO target:target];
+	
+	[scheduler scheduleBlock:^(CCTimer *timer){
+		timer.paused = true;
+		timer2Called = true;
+	} forTarget:target withDelay:1.0];
+	
+	[scheduler update:10.0];
+	XCTAssertTrue(timer1Called, @"");
+	XCTAssertTrue(timer2Called, @"");
+}
+
 @end
