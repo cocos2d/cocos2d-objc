@@ -18,7 +18,7 @@
 
 // This method is called anytime the ball collides with something.
 // The argument names in collision delegate methods correspond to the collisionType strings set on the CCPhysicsBody objects.
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCPhysicsBody *)ballBody wildcard:(CCPhysicsBody *)otherBody
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCNode *)ball wildcard:(CCNode *)other
 {
 	// Ball collisions should always be perfectly bouncy and frictionless.
 	pair.friction = 0.0;
@@ -28,16 +28,15 @@
 }
 
 // This is called when the ball collides with a block.
--(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCPhysicsBody *)ballBody block:(CCPhysicsBody *)blockBody
+-(BOOL)ccPhysicsCollisionPreSolve:(CCPhysicsCollisionPair *)pair ball:(CCNode *)ball block:(CCNode *)block
 {
-	[blockBody.node removeFromParent];
+	[block removeFromParent];
 	
 	return YES;
 }
 
 -(void)onEnter
 {
-	return;
 	[super onEnter];
 	
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
@@ -67,39 +66,29 @@
 			
 			CGSize size = sprite.contentSize;
 			sprite.position = ccp(size.width*(i + 0.5), 320 - size.height*(j + 0.5));
+			sprite.scale = 0.5 + 0.5*CCRANDOM_0_1();
+			sprite.rotation = 30*CCRANDOM_MINUS1_1();
 			
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);
 			sprite.physicsBody = [CCPhysicsBody bodyWithRect:rect cornerRadius:0.0];
-			sprite.physicsBody.type = kCCPhysicsBodyTypeStatic;
+			sprite.physicsBody.type = CCPhysicsBodyTypeStatic;
 			sprite.physicsBody.collisionType = @"block";
 			
 			[physicsNode addChild:sprite];
 		}
 	}
 	
-	// Add the screen edges.
-	// This is a little goofy without loops.
-	{
-		CCNode *edge = [CCNode node];
-		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(  0,   0) to:ccp(480,   0) cornerRadius:0.0];
-		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
-		[physicsNode addChild:edge];
-	}{
-		CCNode *edge = [CCNode node];
-		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(480,   0) to:ccp(480, 320) cornerRadius:0.0];
-		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
-		[physicsNode addChild:edge];
-	}{
-		CCNode *edge = [CCNode node];
-		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(480, 320) to:ccp(  0, 320) cornerRadius:0.0];
-		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
-		[physicsNode addChild:edge];
-	}{
-		CCNode *edge = [CCNode node];
-		edge.physicsBody = [CCPhysicsBody bodyWithPillFrom:ccp(  0, 320) to:ccp(  0,   0) cornerRadius:0.0];
-		edge.physicsBody.type = kCCPhysicsBodyTypeStatic;
-		[physicsNode addChild:edge];
-	}
+	CGPoint points[] = {
+		CGPointMake(  0,   0),
+		CGPointMake(480,   0),
+		CGPointMake(480, 320),
+		CGPointMake(  0, 320),
+	};
+	
+	CCNode *edges = [CCNode node];
+	edges.physicsBody = [CCPhysicsBody bodyWithPolylineFromPoints:points count:4 cornerRadius:0.0 looped:true];
+	edges.physicsBody.type = CCPhysicsBodyTypeStatic;
+	[physicsNode addChild:edges];
 }
 
 @end
