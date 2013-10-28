@@ -233,9 +233,9 @@
 		B7EE69E11819E75700B983FE /* CCLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DD1819E75700B983FE /* CCLayout.m */; };
 		B7EE69E21819E75700B983FE /* CCLayoutBox.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE69DE1819E75700B983FE /* CCLayoutBox.h */; };
 		B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69DF1819E75700B983FE /* CCLayoutBox.m */; };
+		B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = B7EE6A1C181AE34600B983FE /* CCSlider.h */; };
+		B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A1D181AE34600B983FE /* CCSlider.m */; };
 		D30B5D9817F5E5410058C11C /* libObjectiveChipmunk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D39A31E217F2284700E94B3B /* libObjectiveChipmunk.a */; };
-		D310749A181B467E0073F2CE /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3107498181B467E0073F2CE /* CCPhysicsShape.h */; };
-		D310749B181B467E0073F2CE /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3107499181B467E0073F2CE /* CCPhysicsShape.m */; };
 		D33803E318032ECE0072D8FE /* CCPhysicsBody.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E218032ECE0072D8FE /* CCPhysicsBody.m */; };
 		D33803E618032F390072D8FE /* CCPhysicsNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E518032F390072D8FE /* CCPhysicsNode.m */; };
 		D33803EA180331A90072D8FE /* CCPhysicsJoint.m in Sources */ = {isa = PBXBuildFile; fileRef = D33803E9180331A90072D8FE /* CCPhysicsJoint.m */; };
@@ -247,6 +247,8 @@
 		D36F7E37181580A000E94F72 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		D36F7E38181580A000E94F72 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		D36F7E3E181580A000E94F72 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D36F7E3C181580A000E94F72 /* InfoPlist.strings */; };
+		D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */ = {isa = PBXBuildFile; fileRef = D3A2E7D0181E12750033614C /* CCPhysicsShape.h */; };
+		D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */ = {isa = PBXBuildFile; fileRef = D3A2E7D1181E12750033614C /* CCPhysicsShape.m */; };
 		E01E6D8C121F130E001A484F /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E01E6D8A121F130E001A484F /* CCLabelBMFont.h */; };
 		E01E6D8D121F130E001A484F /* CCLabelBMFont.m in Sources */ = {isa = PBXBuildFile; fileRef = E01E6D8B121F130E001A484F /* CCLabelBMFont.m */; };
 		E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */; };
@@ -630,8 +632,8 @@
 		B7EE69DD1819E75700B983FE /* CCLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayout.m; sourceTree = "<group>"; };
 		B7EE69DE1819E75700B983FE /* CCLayoutBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayoutBox.h; sourceTree = "<group>"; };
 		B7EE69DF1819E75700B983FE /* CCLayoutBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayoutBox.m; sourceTree = "<group>"; };
-		D3107498181B467E0073F2CE /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
-		D3107499181B467E0073F2CE /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
+		B7EE6A1C181AE34600B983FE /* CCSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSlider.h; path = "cocos2d-ui/CCSlider.h"; sourceTree = "<group>"; };
+		B7EE6A1D181AE34600B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
 		D33803E418032F250072D8FE /* CCPhysicsbody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsbody.h; sourceTree = "<group>"; };
@@ -647,6 +649,8 @@
 		D36F7E4D1815817E00E94F72 /* CCPhysicsTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsTests.m; sourceTree = "<group>"; };
 		D39A31BB17F227F500E94B3B /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		D39A31D017F2284600E94B3B /* Chipmunk7.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chipmunk7.xcodeproj; path = external/Chipmunk/xcode/Chipmunk7.xcodeproj; sourceTree = "<group>"; };
+		D3A2E7D0181E12750033614C /* CCPhysicsShape.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPhysicsShape.h; sourceTree = "<group>"; };
+		D3A2E7D1181E12750033614C /* CCPhysicsShape.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsShape.m; sourceTree = "<group>"; };
 		E01E6D8A121F130E001A484F /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCLabelBMFont.h; sourceTree = "<group>"; };
 		E01E6D8B121F130E001A484F /* CCLabelBMFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCLabelBMFont.m; sourceTree = "<group>"; };
 		E02BB6D4126CA93A006E46A2 /* CCAnimationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCAnimationCache.h; sourceTree = "<group>"; };
@@ -1213,8 +1217,8 @@
 			children = (
 				D33803E418032F250072D8FE /* CCPhysicsbody.h */,
 				D33803E218032ECE0072D8FE /* CCPhysicsBody.m */,
-				D3107498181B467E0073F2CE /* CCPhysicsShape.h */,
-				D3107499181B467E0073F2CE /* CCPhysicsShape.m */,
+				D3A2E7D0181E12750033614C /* CCPhysicsShape.h */,
+				D3A2E7D1181E12750033614C /* CCPhysicsShape.m */,
 				D33803E81803319F0072D8FE /* CCPhysicsJoint.h */,
 				D33803E9180331A90072D8FE /* CCPhysicsJoint.m */,
 				D33803E718032F4A0072D8FE /* CCPhysicsNode.h */,
@@ -1272,6 +1276,8 @@
 				B78AE45F17E7AF1C0028BE0B /* CCControlTextureFactory.m */,
 				B7E260D618171D2000A0E872 /* CCTextField.h */,
 				B7E260D718171D2000A0E872 /* CCTextField.m */,
+				B7EE6A1C181AE34600B983FE /* CCSlider.h */,
+				B7EE6A1D181AE34600B983FE /* CCSlider.m */,
 			);
 			name = "cocos2d-ui";
 			sourceTree = "<group>";
@@ -1422,6 +1428,7 @@
 				50B2CCCE0E119B8E00AE9530 /* CCDrawingPrimitives.h in Headers */,
 				5038B6B20E196CD8009A621E /* CCParticleSystem.h in Headers */,
 				50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */,
+				D3A2E7D2181E12750033614C /* CCPhysicsShape.h in Headers */,
 				504055B00E3230BD00213FEF /* CCParticleExamples.h in Headers */,
 				506602110E38A70D000B500E /* CCScheduler.h in Headers */,
 				50305AF40E40E33200F63373 /* cocos2d.h in Headers */,
@@ -1475,7 +1482,6 @@
 				E0EAD1F1121F522A00B0C81C /* CCConfiguration.h in Headers */,
 				E0F924711224140400EF2362 /* CCTexturePVR.h in Headers */,
 				E0F92AC41224559800EF2362 /* CCNS.h in Headers */,
-				D310749A181B467E0073F2CE /* CCPhysicsShape.h in Headers */,
 				E02BB6D6126CA93A006E46A2 /* CCAnimationCache.h in Headers */,
 				E02BB704126CADEA006E46A2 /* CCAnimation.h in Headers */,
 				E0BC7D9D1342CE7B001B4DCC /* CCShaderCache.h in Headers */,
@@ -1511,6 +1517,7 @@
 				A0DA0BDE15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_frag.h in Headers */,
 				A0DA0BDF15BCFAD700E80A92 /* ccShader_PositionColorLengthTexture_vert.h in Headers */,
 				2B192835163361B10049A044 /* CCClippingNode.h in Headers */,
+				B7EE6A1E181AE34600B983FE /* CCSlider.h in Headers */,
 				A003AC8C1657071100C7B792 /* ccFPSImages.h in Headers */,
 				B74C2B9B17BDA63A00A829C0 /* CCSprite9Slice.h in Headers */,
 				B75C2E7C17C5908B002B0E0D /* NSAttributedString+CCAdditions.h in Headers */,
@@ -1773,9 +1780,11 @@
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */,
 				50A24E140F377E8E007CAEB0 /* CCGrid.m in Sources */,
+				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
 				50A24E160F377E8E007CAEB0 /* CCActionGrid3D.m in Sources */,
 				50A24E180F377E8E007CAEB0 /* CCActionGrid.m in Sources */,
 				50A24E750F378087007CAEB0 /* CCActionTiledGrid.m in Sources */,
+				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
 				503798C70F912C2000986724 /* CGPointExtension.m in Sources */,
@@ -1833,7 +1842,6 @@
 				B75C2E7D17C5908B002B0E0D /* NSAttributedString+CCAdditions.m in Sources */,
 				B7EE69E31819E75700B983FE /* CCLayoutBox.m in Sources */,
 				A6DC4E0A18055DCC00C280A6 /* CCTransition.m in Sources */,
-				D310749B181B467E0073F2CE /* CCPhysicsShape.m in Sources */,
 				A6A0734617C788EB004343C8 /* CCResponderManager.m in Sources */,
 				A6A0734B17C78EF3004343C8 /* CCResponder.m in Sources */,
 				B78AE46317E7AF1C0028BE0B /* CCButton.m in Sources */,

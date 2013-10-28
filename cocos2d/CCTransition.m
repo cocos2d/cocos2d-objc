@@ -231,6 +231,9 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
         [[CCDirector sharedDirector] replaceScene:_incomingScene];
         [_incomingScene onEnterTransitionDidFinish];
         
+        // mark new scene as dirty, to make sure responder manager is updated
+        [[[CCDirector sharedDirector] responderManager] markAsDirty];
+        
         // release scenes
         _incomingScene = nil;
         _outgoingScene = nil;

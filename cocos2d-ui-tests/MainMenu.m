@@ -39,6 +39,7 @@
             @"CCSprite9SliceTest",
             @"CCTextFieldTest",
             @"CCLayoutTest",
+            @"CCSliderTest",
 #ifdef __CC_PLATFORM_IOS
             @"CCResponderTest",
 #endif
