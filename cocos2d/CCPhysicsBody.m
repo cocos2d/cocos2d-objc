@@ -95,14 +95,29 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return [[self alloc] initWithShapeList:shape];
 }
 
-+(CCPhysicsBody *)bodyWithSegmentLoopFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
++(CCPhysicsBody *)bodyWithPolylineFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius looped:(bool)looped;
 {
-	NYI(); return nil;
+	NSAssert(looped || count > 1, @"Non-looped polyline bodies must have at least two points.");
+	NSAssert(!looped || count > 2, @"Looped polyline bodies must have at least three points.");
+	
+	CCPhysicsShape *shapes = nil;
+	
+	int limit = (looped ? count : count - 1);
+	for(int i=0; i<limit; i++){
+		CCPhysicsShape *shape = [CCPhysicsShape pillShapeFrom:points[i] to:points[(i + 1)%count] cornerRadius:cornerRadius];
+		cpSegmentShapeSetNeighbors(shape.shape.shape, points[(i - 1 + count)%count], points[(i + 2)%count]);
+		
+		shape.next = shapes;
+		shapes = shape;
+	}
+	
+	return [[self alloc] initWithShapeList:shapes];
 }
 
-+(CCPhysicsBody *)bodyWithSegmentChainFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
++(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes
 {
-	NYI(); return nil;
+	NYI();
+	return nil;
 }
 
 //MARK: Basic Properties:

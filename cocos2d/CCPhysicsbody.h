@@ -51,10 +51,12 @@ typedef enum ccPhysicsBodyType {
 // Be careful with dynamic segment-based bodies.
 // Because the segments are allowed to be very thin, it can cause problems with collision detection.
 
-/// Create a closed segment-based body from a series of points and the given corner radius.
-+(CCPhysicsBody *)bodyWithSegmentLoopFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
-/// Create an open ended segment-based body from a series of points and the given corner radius.
-+(CCPhysicsBody *)bodyWithSegmentChainFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
+/// Create a body with many pill shapes attached. One for each sement in the polyline.
+/// Will default to being a CCPhysicsBodyTypeStatic type body.
++(CCPhysicsBody *)bodyWithPolylineFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius looped:(bool)looped;
+
+/// Create a body with a number of shapes attached to it.
++(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes;
 
 //MARK: Basic Properties:
 
