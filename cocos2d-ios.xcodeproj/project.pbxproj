@@ -72,8 +72,6 @@
 		5038B6B30E196CD8009A621E /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = 5038B6B10E196CD8009A621E /* CCParticleSystem.m */; };
 		504055B00E3230BD00213FEF /* CCParticleExamples.h in Headers */ = {isa = PBXBuildFile; fileRef = 504055AE0E3230BD00213FEF /* CCParticleExamples.h */; };
 		504055B10E3230BD00213FEF /* CCParticleExamples.m in Sources */ = {isa = PBXBuildFile; fileRef = 504055AF0E3230BD00213FEF /* CCParticleExamples.m */; };
-		50545BFF105E8D6C00AB7C52 /* CCActionPageTurn3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 50545BFD105E8D6C00AB7C52 /* CCActionPageTurn3D.h */; };
-		50545C00105E8D6C00AB7C52 /* CCActionPageTurn3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 50545BFE105E8D6C00AB7C52 /* CCActionPageTurn3D.m */; };
 		505462FC1062768000AB7C52 /* ccConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 505462FB1062768000AB7C52 /* ccConfig.h */; };
 		506602110E38A70D000B500E /* CCScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = 5066020F0E38A70D000B500E /* CCScheduler.h */; };
 		506602120E38A70D000B500E /* CCScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = 506602100E38A70D000B500E /* CCScheduler.m */; };
@@ -92,14 +90,6 @@
 		50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
 		50A24E110F377E8E007CAEB0 /* CCGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E090F377E8E007CAEB0 /* CCGrabber.h */; };
 		50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */; };
-		50A24E130F377E8E007CAEB0 /* CCGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E0B0F377E8E007CAEB0 /* CCGrid.h */; };
-		50A24E140F377E8E007CAEB0 /* CCGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E0C0F377E8E007CAEB0 /* CCGrid.m */; };
-		50A24E150F377E8E007CAEB0 /* CCActionGrid3D.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E0D0F377E8E007CAEB0 /* CCActionGrid3D.h */; };
-		50A24E160F377E8E007CAEB0 /* CCActionGrid3D.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E0E0F377E8E007CAEB0 /* CCActionGrid3D.m */; };
-		50A24E170F377E8E007CAEB0 /* CCActionGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E0F0F377E8E007CAEB0 /* CCActionGrid.h */; };
-		50A24E180F377E8E007CAEB0 /* CCActionGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E100F377E8E007CAEB0 /* CCActionGrid.m */; };
-		50A24E740F378087007CAEB0 /* CCActionTiledGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E720F378087007CAEB0 /* CCActionTiledGrid.h */; };
-		50A24E750F378087007CAEB0 /* CCActionTiledGrid.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E730F378087007CAEB0 /* CCActionTiledGrid.m */; };
 		50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = 50AB6299109B75EC0036FD11 /* CCTileMapAtlas.h */; };
 		50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50AB629A109B75EC0036FD11 /* CCTileMapAtlas.m */; };
 		50B2CCCE0E119B8E00AE9530 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */; };
@@ -411,8 +401,6 @@
 		5038B6B10E196CD8009A621E /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
 		504055AE0E3230BD00213FEF /* CCParticleExamples.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleExamples.h; sourceTree = "<group>"; };
 		504055AF0E3230BD00213FEF /* CCParticleExamples.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleExamples.m; sourceTree = "<group>"; };
-		50545BFD105E8D6C00AB7C52 /* CCActionPageTurn3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionPageTurn3D.h; sourceTree = "<group>"; };
-		50545BFE105E8D6C00AB7C52 /* CCActionPageTurn3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionPageTurn3D.m; sourceTree = "<group>"; };
 		505462FB1062768000AB7C52 /* ccConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccConfig.h; sourceTree = "<group>"; };
 		50637A150E95397A000C9182 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
 		50637A160E95397A000C9182 /* CCTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureAtlas.m; sourceTree = "<group>"; };
@@ -436,14 +424,6 @@
 		50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
 		50A24E090F377E8E007CAEB0 /* CCGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGrabber.h; sourceTree = "<group>"; };
 		50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGrabber.m; sourceTree = "<group>"; };
-		50A24E0B0F377E8E007CAEB0 /* CCGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGrid.h; sourceTree = "<group>"; };
-		50A24E0C0F377E8E007CAEB0 /* CCGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGrid.m; sourceTree = "<group>"; };
-		50A24E0D0F377E8E007CAEB0 /* CCActionGrid3D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionGrid3D.h; sourceTree = "<group>"; };
-		50A24E0E0F377E8E007CAEB0 /* CCActionGrid3D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionGrid3D.m; sourceTree = "<group>"; };
-		50A24E0F0F377E8E007CAEB0 /* CCActionGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionGrid.h; sourceTree = "<group>"; };
-		50A24E100F377E8E007CAEB0 /* CCActionGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionGrid.m; sourceTree = "<group>"; };
-		50A24E720F378087007CAEB0 /* CCActionTiledGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCActionTiledGrid.h; sourceTree = "<group>"; };
-		50A24E730F378087007CAEB0 /* CCActionTiledGrid.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCActionTiledGrid.m; sourceTree = "<group>"; };
 		50A29DEF1153D9CE00D87F08 /* ANNOUNCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ANNOUNCE; sourceTree = "<group>"; };
 		50A29DF01153D9CE00D87F08 /* CHANGES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
 		50A29DF41153D9CF00D87F08 /* INSTALL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
@@ -1006,8 +986,6 @@
 			children = (
 				50A24E090F377E8E007CAEB0 /* CCGrabber.h */,
 				50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */,
-				50A24E0B0F377E8E007CAEB0 /* CCGrid.h */,
-				50A24E0C0F377E8E007CAEB0 /* CCGrid.m */,
 			);
 			name = Effects;
 			sourceTree = "<group>";
@@ -1025,16 +1003,8 @@
 				5018F25B0DFDEAFF00C013A5 /* CCActionInterval.m */,
 				50F7B2760F28DE7C00057537 /* CCActionEase.h */,
 				50F7B2770F28DE7C00057537 /* CCActionEase.m */,
-				50A24E720F378087007CAEB0 /* CCActionTiledGrid.h */,
-				50A24E730F378087007CAEB0 /* CCActionTiledGrid.m */,
-				50A24E0D0F377E8E007CAEB0 /* CCActionGrid3D.h */,
-				50A24E0E0F377E8E007CAEB0 /* CCActionGrid3D.m */,
-				50A24E0F0F377E8E007CAEB0 /* CCActionGrid.h */,
-				50A24E100F377E8E007CAEB0 /* CCActionGrid.m */,
 				A0A7A53A1514F27D00C8BD16 /* CCActionCatmullRom.h */,
 				A0A7A53B1514F27D00C8BD16 /* CCActionCatmullRom.m */,
-				50545BFD105E8D6C00AB7C52 /* CCActionPageTurn3D.h */,
-				50545BFE105E8D6C00AB7C52 /* CCActionPageTurn3D.m */,
 				50150435113300F900A9CA65 /* CCActionProgressTimer.h */,
 				50150436113300F900A9CA65 /* CCActionProgressTimer.m */,
 				50FBB2D8117613F500150761 /* CCActionTween.h */,
@@ -1437,10 +1407,6 @@
 				50F7B2780F28DE7C00057537 /* CCActionEase.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
 				50A24E110F377E8E007CAEB0 /* CCGrabber.h in Headers */,
-				50A24E130F377E8E007CAEB0 /* CCGrid.h in Headers */,
-				50A24E150F377E8E007CAEB0 /* CCActionGrid3D.h in Headers */,
-				50A24E170F377E8E007CAEB0 /* CCActionGrid.h in Headers */,
-				50A24E740F378087007CAEB0 /* CCActionTiledGrid.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
@@ -1456,7 +1422,6 @@
 				50CFAC391023660000175934 /* CCTMXXMLParser.h in Headers */,
 				50316AA610291280003ACFE7 /* CCRenderTexture.h in Headers */,
 				50316AD41029A126003ACFE7 /* CCMotionStreak.h in Headers */,
-				50545BFF105E8D6C00AB7C52 /* CCActionPageTurn3D.h in Headers */,
 				505462FC1062768000AB7C52 /* ccConfig.h in Headers */,
 				50AB629B109B75EC0036FD11 /* CCTileMapAtlas.h in Headers */,
 				50E2A15010A45E7F00D894CE /* CCSpriteFrame.h in Headers */,
@@ -1779,11 +1744,7 @@
 				B7E260D918171D2000A0E872 /* CCTextField.m in Sources */,
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
 				50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */,
-				50A24E140F377E8E007CAEB0 /* CCGrid.m in Sources */,
 				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
-				50A24E160F377E8E007CAEB0 /* CCActionGrid3D.m in Sources */,
-				50A24E180F377E8E007CAEB0 /* CCActionGrid.m in Sources */,
-				50A24E750F378087007CAEB0 /* CCActionTiledGrid.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,
 				50C508C70F7C194400799124 /* CCFileUtils.m in Sources */,
@@ -1798,7 +1759,6 @@
 				50CFAC3A1023660000175934 /* CCTMXXMLParser.m in Sources */,
 				50316AA710291280003ACFE7 /* CCRenderTexture.m in Sources */,
 				50316AD51029A126003ACFE7 /* CCMotionStreak.m in Sources */,
-				50545C00105E8D6C00AB7C52 /* CCActionPageTurn3D.m in Sources */,
 				50AB629C109B75EC0036FD11 /* CCTileMapAtlas.m in Sources */,
 				50E2A15110A45E7F00D894CE /* CCSpriteFrame.m in Sources */,
 				502C8BE110A661E200D137BA /* CCSpriteFrameCache.m in Sources */,

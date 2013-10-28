@@ -33,7 +33,6 @@
 #import "CCTextureAtlas.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCGrid.h"
 #import "Support/CGPointExtension.h"
 #import "CCParticleSystem.h"
 #import "CCParticleSystem.h"
@@ -146,17 +145,9 @@
 
 	kmGLPushMatrix();
 
-	if ( _grid && _grid.active) {
-		[_grid beforeDraw];
-		[self transformAncestors];
-	}
-
 	[self transform];
 
 	[self draw];
-
-	if ( _grid && _grid.active)
-		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 }

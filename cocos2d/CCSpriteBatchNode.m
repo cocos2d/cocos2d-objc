@@ -30,7 +30,6 @@
 #import "ccConfig.h"
 #import "CCSprite.h"
 #import "CCSpriteBatchNode.h"
-#import "CCGrid.h"
 #import "CCDrawingPrimitives.h"
 #import "CCTextureCache.h"
 #import "CCShaderCache.h"
@@ -149,17 +148,9 @@ const NSUInteger defaultCapacity = 29;
 
 	kmGLPushMatrix();
 
-	if ( _grid && _grid.active) {
-		[_grid beforeDraw];
-		[self transformAncestors];
-	}
-
 	[self sortAllChildren];
 	[self transform];
 	[self draw];
-
-	if ( _grid && _grid.active)
-		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 

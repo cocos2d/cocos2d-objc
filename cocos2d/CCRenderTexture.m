@@ -32,7 +32,6 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "CCGrid.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -310,18 +309,10 @@
 		return;
 	
 	kmGLPushMatrix();
-	
-	if (_grid && _grid.active) {
-		[_grid beforeDraw];
-		[self transformAncestors];
-	}
 
 	[self transform];
 	[_sprite visit];
 	[self draw];
-	
-	if (_grid && _grid.active)
-		[_grid afterDraw:self];
 	
 	kmGLPopMatrix();
 	
