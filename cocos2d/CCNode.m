@@ -27,6 +27,7 @@
  */
 
 #import "CCNode.h"
+#import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #import "CCScheduler.h"

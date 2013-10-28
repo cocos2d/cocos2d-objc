@@ -114,6 +114,7 @@
 		B78AE64817E7BCA30028BE0B /* CCControl.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64217E7BA800028BE0B /* CCControl.m */; };
 		B78AE64917E7BCA60028BE0B /* CCControlTextureFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */; };
 		B78AE64A17E7BCAA0028BE0B /* CCScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = B78AE64617E7BA800028BE0B /* CCScrollView.m */; };
+		B798D13F181F2F6300E7BFCD /* CCNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D13E181F2F6300E7BFCD /* CCNode_Private.h */; };
 		B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239817F10F3600928F91 /* CCTableView.h */; };
 		B7C6239C17F10F3600928F91 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6239917F10F3600928F91 /* CCTableView.m */; };
 		B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239A17F10F3600928F91 /* cocos2d-ui.h */; };
@@ -478,6 +479,7 @@
 		B78AE64417E7BA800028BE0B /* CCControlTextureFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCControlTextureFactory.m; path = "cocos2d-ui/CCControlTextureFactory.m"; sourceTree = "<group>"; };
 		B78AE64517E7BA800028BE0B /* CCScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollView.h; path = "cocos2d-ui/CCScrollView.h"; sourceTree = "<group>"; };
 		B78AE64617E7BA800028BE0B /* CCScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollView.m; path = "cocos2d-ui/CCScrollView.m"; sourceTree = "<group>"; };
+		B798D13E181F2F6300E7BFCD /* CCNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_Private.h; sourceTree = "<group>"; };
 		B7C6239817F10F3600928F91 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
 		B7C6239917F10F3600928F91 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
 		B7C6239A17F10F3600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
@@ -1595,6 +1597,7 @@
 				E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */,
 				E076E6631225EC7400DE0DA2 /* CCNode.h */,
 				E076E6641225EC7400DE0DA2 /* CCNode.m */,
+				B798D13E181F2F6300E7BFCD /* CCNode_Private.h */,
 				A03714D5154F1D9300081CBA /* CCNode+Debug.h */,
 				A03714D6154F1D9300081CBA /* CCNode+Debug.m */,
 			);
@@ -1733,6 +1736,7 @@
 				E076E7601225EC7400DE0DA2 /* CCFileUtils.h in Headers */,
 				E076E7621225EC7400DE0DA2 /* CCProfiling.h in Headers */,
 				E076E7651225EC7400DE0DA2 /* ccUtils.h in Headers */,
+				B798D13F181F2F6300E7BFCD /* CCNode_Private.h in Headers */,
 				E076E7661225EC7400DE0DA2 /* CGPointExtension.h in Headers */,
 				E076E7681225EC7400DE0DA2 /* OpenGL_Internal.h in Headers */,
 				E076E7691225EC7400DE0DA2 /* TGAlib.h in Headers */,

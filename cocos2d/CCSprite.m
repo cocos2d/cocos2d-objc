@@ -41,6 +41,7 @@
 #import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
 #import "Support/OpenGL_Internal.h"
+#import "CCNode_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"

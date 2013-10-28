@@ -37,6 +37,7 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CGPointExtension.h"
+#import "CCNode_Private.h"
 
 
 #pragma mark -
