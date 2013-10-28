@@ -167,16 +167,6 @@ enum {
 /** The z order of the node relative to its "siblings": children of the same parent */
 @property(nonatomic,assign) NSInteger zOrder;
 
-/** The real openGL Z vertex.
- Differences between openGL Z vertex and cocos2d Z order:
-   - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
-   - OpenGL Z might require to set 2D projection
-   - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: vertexZ = 0
- @warning: Use it at your own risk since it might break the cocos2d parent-children z order
- @since v0.8
- */
-@property (nonatomic,readwrite) float vertexZ;
-
 /** The X skew angle of the node in degrees.
  This angle describes the shear distortion in the X direction.
  Thus, it is the angle between the Y axis and the left edge of the shape
