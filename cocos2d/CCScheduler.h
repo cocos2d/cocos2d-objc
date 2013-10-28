@@ -75,7 +75,7 @@
 
 /// Track an object along with the timer.
 /// [CCNode schedule:] methods use this to store the selector name.
-@property(nonatomic, strong) NSString *userData;
+@property(nonatomic, strong) id userData;
 
 /// Set the timer to repeat once with the given interval.
 /// Can be used from a timer block to make the timer run again.

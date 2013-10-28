@@ -383,16 +383,18 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 
 //MARK: Queries:
 
--(CCPhysicsBody *)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsBody *, CGPoint, CGFloat))block
+-(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGFloat))block
 {
-	NYI();
-	return nil;
+	cpSpacePointQuery_b(_space.space, point, radius, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, CGPoint p, CGFloat d, CGPoint g){
+		block([cpShapeGetUserData(shape) userData], p, d);
+	});
 }
 
--(CCPhysicsBody *)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsBody *, CGPoint, CGPoint, CGFloat))block
+-(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *, CGPoint, CGPoint, CGFloat))block
 {
-	NYI();
-	return nil;
+	cpSpaceSegmentQuery_b(_space.space, start, end, 0.0, CP_SHAPE_FILTER_ALL, ^(cpShape *shape, CGPoint p, CGPoint n, CGFloat t){
+		block([cpShapeGetUserData(shape) userData], p, n, t);
+	});
 }
 
 -(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *))block
