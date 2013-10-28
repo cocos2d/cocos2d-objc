@@ -27,21 +27,20 @@
 
 #import "CCNode.h"
 
-/** CCScene is a subclass of CCNode that is used only as an abstract concept.
-
- CCScene an CCNode are almost identical with the difference that CCScene has its
- anchor point (by default) at the center of the screen.
-
- For the moment CCScene has no other logic than that, but in future releases it might have
- additional logic.
-
- It is a good practice to use and CCScene as the parent of all your nodes.
-*/
+// -----------------------------------------------------------------
+/**
+ *  CCScene is a subclass of CCNode that must be the parent of all your nodes.
+ */
 @interface CCScene : CCNode
 
-/** initializes a node.
- The node will be created as "autorelease".
+// -----------------------------------------------------------------
+
+/**
+ *  Initialize the node
  */
--(id) init;
+- (id)init;
+
+// -----------------------------------------------------------------
+
 
 @end

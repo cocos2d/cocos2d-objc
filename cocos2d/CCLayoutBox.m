@@ -62,6 +62,11 @@ static float roundUpToEven(float f)
             width += _spacing;
         }
         
+        // Account for last added increment
+        width -= _spacing;
+        if (width < 0) width = 0;
+        
+        self.contentSizeType = kCCContentSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(width), roundUpToEven(maxHeight));
     }
     else
@@ -87,10 +92,15 @@ static float roundUpToEven(float f)
             child.position = position;
             child.positionType = kCCPositionTypePoints;
             
-            height += childSize.width;
+            height += childSize.height;
             height += _spacing;
         }
         
+        // Account for last added increment
+        height -= _spacing;
+        if (height < 0) height = 0;
+        
+        self.contentSizeType = kCCContentSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(maxWidth), roundUpToEven(height));
     }
 }

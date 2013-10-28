@@ -97,7 +97,7 @@
     // dont add invisible nodes
     if (!node.visible) return;
     
-    if (node.children)
+    if ((node.children) && (node.children.count > 0))
     {
         // scan through children, and build responderlist
         for (CCNode *child in node.children)

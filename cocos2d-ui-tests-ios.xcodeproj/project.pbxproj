@@ -41,6 +41,7 @@
 		B7EE697918186D5200B983FE /* CCTextFieldTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE697818186D5200B983FE /* CCTextFieldTest.m */; };
 		B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69801818760700B983FE /* CCSprite9SliceTest.m */; };
 		B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE69CE1819D82300B983FE /* CCLayoutTest.m */; };
+		B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7EE6A27181B075E00B983FE /* CCSliderTest.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,8 @@
 		B7EE69801818760700B983FE /* CCSprite9SliceTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSprite9SliceTest.m; path = "cocos2d-ui-tests/tests/CCSprite9SliceTest.m"; sourceTree = SOURCE_ROOT; };
 		B7EE69CD1819D82300B983FE /* CCLayoutTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCLayoutTest.h; path = "cocos2d-ui-tests/tests/CCLayoutTest.h"; sourceTree = SOURCE_ROOT; };
 		B7EE69CE1819D82300B983FE /* CCLayoutTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCLayoutTest.m; path = "cocos2d-ui-tests/tests/CCLayoutTest.m"; sourceTree = SOURCE_ROOT; };
+		B7EE6A26181B075E00B983FE /* CCSliderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCSliderTest.h; path = "cocos2d-ui-tests/tests/CCSliderTest.h"; sourceTree = SOURCE_ROOT; };
+		B7EE6A27181B075E00B983FE /* CCSliderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSliderTest.m; path = "cocos2d-ui-tests/tests/CCSliderTest.m"; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,6 +179,8 @@
 				B7EE697818186D5200B983FE /* CCTextFieldTest.m */,
 				B7EE69CD1819D82300B983FE /* CCLayoutTest.h */,
 				B7EE69CE1819D82300B983FE /* CCLayoutTest.m */,
+				B7EE6A26181B075E00B983FE /* CCSliderTest.h */,
+				B7EE6A27181B075E00B983FE /* CCSliderTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -325,11 +330,6 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = Cocos2d;
-				TargetAttributes = {
-					B7E2604717E7D278007067F0 = {
-						DevelopmentTeam = SBVP8ED765;
-					};
-				};
 			};
 			buildConfigurationList = B7E2604317E7D278007067F0 /* Build configuration list for PBXProject "cocos2d-ui-tests-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -418,6 +418,7 @@
 				B7E2620017E7D321007067F0 /* AppDelegate.m in Sources */,
 				B7E2621C17E7D370007067F0 /* main.m in Sources */,
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
+				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,

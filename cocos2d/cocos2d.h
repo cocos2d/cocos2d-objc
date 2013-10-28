@@ -154,6 +154,7 @@
 #import "Platforms/Mac/CCGLView.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/Mac/CCWindow.h"
+#import "Platforms/Mac/NSEvent+CC.h"
 #endif
 
 //
