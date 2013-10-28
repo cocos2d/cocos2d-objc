@@ -314,6 +314,10 @@
     {
         [self setBackgroundSpriteFrame:value forState:state];
     }
+    else if ([key isEqualToString:@"handleSpriteFrame"])
+    {
+        [self setHandleSpriteFrame:value forState:state];
+    }
 }
 
 - (id) valueForKey:(NSString *)key state:(CCControlState)state
@@ -321,6 +325,10 @@
     if ([key isEqualToString:@"backgroundSpriteFrame"])
     {
         return [self backgroundSpriteFrameForState:state];
+    }
+    else if ([key isEqualToString:@"handleSpriteFrame"])
+    {
+        return [self handleSpriteFrameForState:state];
     }
     
     return NULL;
