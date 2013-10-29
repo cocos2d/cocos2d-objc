@@ -29,6 +29,7 @@
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
 #import "ccMacros.h"
+#import "CCNode_Private.h"
 
 #import "Support/CCVertex.h"
 #import "Support/CGPointExtension.h"

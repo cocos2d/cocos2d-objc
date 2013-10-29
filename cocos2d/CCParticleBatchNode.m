@@ -46,6 +46,8 @@
 
 #import "kazmath/GL/matrix.h"
 
+#import "CCNode_Private.h"
+
 #define kCCParticleDefaultCapacity 500
 
 @interface CCNode()

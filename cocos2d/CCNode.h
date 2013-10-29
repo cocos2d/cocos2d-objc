@@ -263,11 +263,6 @@ enum {
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** Shader Program
- @since v2.0
- */
-@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
-
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
 

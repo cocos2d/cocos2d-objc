@@ -31,6 +31,7 @@
 #import "CCGLProgram.h"
 #import "Support/CGPointExtension.h"
 #import "Support/OpenGL_Internal.h"
+#import "CCNode_Private.h"
 
 
 // ccVertex2F == CGPoint in 32-bits, but not in 64-bits (OS X)
