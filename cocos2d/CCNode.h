@@ -263,18 +263,6 @@ enum {
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** CCActionManager used by all the actions.
- IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
- @since v2.0
- */
-@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
-
-/** CCScheduler used to schedule all "updates" and timers.
- IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
- @since v2.0
- */
-@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
-
 /** Enabled user interaction on a node, like touch
  @since v2.5
  */
