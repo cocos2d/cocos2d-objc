@@ -42,6 +42,7 @@
 #import "Support/CCProfiling.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
+#import "CCSprite_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"
@@ -75,7 +76,7 @@
 
 +(id)spriteWithImageNamed:(NSString*)imageName
 {
-    return [[self alloc] initWithSpriteFrame:[CCSpriteFrame frameWithImageNamed:imageName]];
+    return [[self alloc] initWithImageNamed:imageName];
 }
 
 +(id)spriteWithTexture:(CCTexture2D*)texture
@@ -167,6 +168,11 @@
 
 	}
 	return self;
+}
+
+- (id) initWithImageNamed:(NSString*)imageName
+{
+    return [self initWithSpriteFrame:[CCSpriteFrame frameWithImageNamed:imageName]];
 }
 
 -(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect

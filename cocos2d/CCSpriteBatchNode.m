@@ -39,6 +39,7 @@
 #import "Support/CGPointExtension.h"
 #import "Support/TransformUtils.h"
 #import "Support/CCProfiling.h"
+#import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"
 

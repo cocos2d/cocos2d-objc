@@ -58,8 +58,8 @@
 #import "CCActionProgressTimer.h"
 #import "CCActionCatmullRom.h"
 
-#import "CCAnimation.h"
-#import "CCAnimationCache.h"
+//#import "CCAnimation.h"
+//#import "CCAnimationCache.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteBatchNode.h"
