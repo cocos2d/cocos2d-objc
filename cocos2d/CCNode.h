@@ -263,11 +263,6 @@ enum {
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** GL server side state
- @since v2.0
-*/
-@property (nonatomic, readwrite) ccGLServerState glServerState;
-
 /** CCActionManager used by all the actions.
  IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
  @since v2.0
