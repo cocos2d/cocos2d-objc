@@ -104,20 +104,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 @implementation CCSprite (Deprecated)
 
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
-{
-	id ret = [self spriteWithTexture:node.texture rect:rect];
-	[ret setBatchNode:node];
-	return ret;
-}
-
--(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect
-{
-	self = [self initWithTexture:node.texture rect:rect];
-	[self setBatchNode:node];
-	return self;
-}
-
 -(CCSpriteFrame*) displayedFrame
 {
 	return [self displayFrame];
@@ -136,11 +122,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame
 {
     return NO;
-}
-
--(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex
-{
-    [self setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex];
 }
 
 @end

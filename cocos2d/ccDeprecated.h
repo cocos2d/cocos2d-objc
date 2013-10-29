@@ -142,10 +142,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 @interface CCSprite (Deprecated)
-// new: spriteWithTexture:rect:
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-// new: initWithTexture:rect:
--(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 // new: spriteFrame
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
 // new: spriteFrame
@@ -154,8 +150,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 - (void) setDisplayFrame:(CCSpriteFrame *)newFrame DEPRECATED_ATTRIBUTE;
 // don't use
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
-// new: setSpriteFrameWithAnimationName:index:
--(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCParticleSystemQuad (Deprecated)
