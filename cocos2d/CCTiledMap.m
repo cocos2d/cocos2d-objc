@@ -31,7 +31,7 @@
 #import "CCTiledMap.h"
 #import "CCTMXXMLParser.h"
 #import "CCTiledMapLayer.h"
-#import "CCTMXObjectGroup.h"
+#import "CCTiledMapObjectGroup.h"
 #import "CCSprite.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
@@ -42,9 +42,9 @@
 #pragma mark CCTMXTiledMap
 
 @interface CCTiledMap (Private)
--(id) parseLayer:(CCTMXLayerInfo*)layer map:(CCTMXMapInfo*)mapInfo;
--(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo;
--(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo;
+-(id) parseLayer:(CCTiledMapLayerInfo*)layer map:(CCTiledMapInfo*)mapInfo;
+-(CCTiledMapTilesetInfo*) tilesetForLayer:(CCTiledMapLayerInfo*)layerInfo map:(CCTiledMapInfo*)mapInfo;
+-(void) buildWithMapInfo:(CCTiledMapInfo*)mapInfo;
 @end
 
 @implementation CCTiledMap
@@ -64,7 +64,7 @@
 	return [[self alloc] initWithXML:tmxString resourcePath:resourcePath];
 }
 
--(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo
+-(void) buildWithMapInfo:(CCTiledMapInfo*)mapInfo
 {
 	_mapSize = mapInfo.mapSize;
 	_tileSize = mapInfo.tileSize;
@@ -75,7 +75,7 @@
 
 	int idx=0;
 
-	for( CCTMXLayerInfo *layerInfo in mapInfo.layers ) {
+	for( CCTiledMapLayerInfo *layerInfo in mapInfo.layers ) {
 
 		if( layerInfo.visible ) {
 			CCNode *child = [self parseLayer:layerInfo map:mapInfo];
@@ -99,7 +99,7 @@
 
 		[self setContentSize:CGSizeZero];
 
-		CCTMXMapInfo *mapInfo = [CCTMXMapInfo formatWithXML:tmxString resourcePath:resourcePath];
+		CCTiledMapInfo *mapInfo = [CCTiledMapInfo formatWithXML:tmxString resourcePath:resourcePath];
 
 		NSAssert( [mapInfo.tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
 		[self buildWithMapInfo:mapInfo];
@@ -116,7 +116,7 @@
 
 		[self setContentSize:CGSizeZero];
 
-		CCTMXMapInfo *mapInfo = [CCTMXMapInfo formatWithTMXFile:tmxFile];
+		CCTiledMapInfo *mapInfo = [CCTiledMapInfo formatWithTMXFile:tmxFile];
 
 		NSAssert( [mapInfo.tilesets count] != 0, @"TMXTiledMap: Map not found. Please check the filename.");
 		[self buildWithMapInfo:mapInfo];
@@ -127,9 +127,9 @@
 
 
 // private
--(id) parseLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo
+-(id) parseLayer:(CCTiledMapLayerInfo*)layerInfo map:(CCTiledMapInfo*)mapInfo
 {
-	CCTMXTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
+	CCTiledMapTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
 	CCTiledMapLayer *layer = [CCTiledMapLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
 
 	// tell the layerinfo to release the ownership of the tiles map.
@@ -140,12 +140,12 @@
 	return layer;
 }
 
--(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo
+-(CCTiledMapTilesetInfo*) tilesetForLayer:(CCTiledMapLayerInfo*)layerInfo map:(CCTiledMapInfo*)mapInfo
 {
 	CGSize size = layerInfo.layerSize;
 
 	id iter = [mapInfo.tilesets reverseObjectEnumerator];
-	for( CCTMXTilesetInfo* tileset in iter) {
+	for( CCTiledMapTilesetInfo* tileset in iter) {
 		for( unsigned int y = 0; y < size.height; y++ ) {
 			for( unsigned int x = 0; x < size.width; x++ ) {
 
@@ -188,9 +188,9 @@
 	return nil;
 }
 
--(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName
+-(CCTiledMapObjectGroup*) objectGroupNamed:(NSString *)groupName
 {
-	for( CCTMXObjectGroup *objectGroup in _objectGroups ) {
+	for( CCTiledMapObjectGroup *objectGroup in _objectGroups ) {
 		if( [objectGroup.groupName isEqual:groupName] )
 			return objectGroup;
 	}

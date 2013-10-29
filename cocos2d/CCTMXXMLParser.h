@@ -76,7 +76,7 @@ typedef enum ccTMXTileFlags_ {
 
  This information is obtained from the TMX file.
  */
-@interface CCTMXLayerInfo : NSObject
+@interface CCTiledMapLayerInfo : NSObject
 {
 	NSString			*_name;
 	CGSize				_layerSize;
@@ -112,7 +112,7 @@ typedef enum ccTMXTileFlags_ {
 
  This information is obtained from the TMX file.
  */
-@interface CCTMXTilesetInfo : NSObject
+@interface CCTiledMapTilesetInfo : NSObject
 {
 	NSString		*_name;
 	unsigned int	_firstGid;
@@ -161,7 +161,7 @@ typedef enum ccTMXTileFlags_ {
  This information is obtained from the TMX file.
 
  */
-@interface CCTMXMapInfo : NSObject <NSXMLParserDelegate>
+@interface CCTiledMapInfo : NSObject <NSXMLParserDelegate>
 {
 	NSMutableString		*_currentString;
     BOOL				_storingCharacters;

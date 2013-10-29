@@ -30,7 +30,7 @@
  *
  */
 
-#import "CCTMXObjectGroup.h"
+#import "CCTiledMapObjectGroup.h"
 #import "CCTMXXMLParser.h"
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
@@ -39,7 +39,7 @@
 #pragma mark -
 #pragma mark TMXObjectGroup
 
-@implementation CCTMXObjectGroup
+@implementation CCTiledMapObjectGroup
 
 @synthesize groupName = _groupName;
 @synthesize objects = _objects;
