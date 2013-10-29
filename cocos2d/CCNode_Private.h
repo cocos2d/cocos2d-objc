@@ -27,4 +27,7 @@
  */
 @property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
 
+/** used internally for zOrder sorting, don't change this manually */
+@property(nonatomic,readwrite) NSUInteger orderOfArrival;
+
 @end

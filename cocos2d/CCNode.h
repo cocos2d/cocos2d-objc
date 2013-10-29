@@ -263,9 +263,6 @@ enum {
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) NSUInteger orderOfArrival;
-
 /** GL server side state
  @since v2.0
 */
