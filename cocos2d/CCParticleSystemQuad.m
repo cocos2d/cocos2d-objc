@@ -55,6 +55,7 @@
 
 #import "CCNode_Private.h"
 #import "CCParticleSystem_Private.h"
+#import "CCParticleSystemQuad_Private.h"
 
 @interface CCParticleSystemQuad ()
 -(void) initVAO;

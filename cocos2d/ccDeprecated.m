@@ -130,11 +130,6 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 @implementation CCParticleSystemQuad (Deprecated)
 
--(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame
-{
-    [self setSpriteFrame:spriteFrame];
-}
-
 @end
 
 #pragma mark - Animation

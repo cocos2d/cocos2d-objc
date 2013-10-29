@@ -118,6 +118,8 @@
 		B798D141181F45F800E7BFCD /* CCLabelBMFont_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D140181F45F800E7BFCD /* CCLabelBMFont_Private.h */; };
 		B798D1471820384500E7BFCD /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1461820384500E7BFCD /* CCSprite_Private.h */; };
 		B798D149182047AC00E7BFCD /* CCSpriteBatchNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D148182047AC00E7BFCD /* CCSpriteBatchNode_Private.h */; };
+		B798D14F182056DD00E7BFCD /* CCParticleSystem_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */; };
+		B798D1511820593B00E7BFCD /* CCParticleSystemQuad_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */; };
 		B7C6239B17F10F3600928F91 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239817F10F3600928F91 /* CCTableView.h */; };
 		B7C6239C17F10F3600928F91 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6239917F10F3600928F91 /* CCTableView.m */; };
 		B7C6239D17F10F3600928F91 /* cocos2d-ui.h in Headers */ = {isa = PBXBuildFile; fileRef = B7C6239A17F10F3600928F91 /* cocos2d-ui.h */; };
@@ -482,6 +484,8 @@
 		B798D140181F45F800E7BFCD /* CCLabelBMFont_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont_Private.h; sourceTree = "<group>"; };
 		B798D1461820384500E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
 		B798D148182047AC00E7BFCD /* CCSpriteBatchNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode_Private.h; sourceTree = "<group>"; };
+		B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem_Private.h; sourceTree = "<group>"; };
+		B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad_Private.h; sourceTree = "<group>"; };
 		B7C6239817F10F3600928F91 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
 		B7C6239917F10F3600928F91 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
 		B7C6239A17F10F3600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
@@ -1481,6 +1485,8 @@
 				E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */,
 				E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */,
 				E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */,
+				B798D14E182056DD00E7BFCD /* CCParticleSystem_Private.h */,
+				B798D1501820593B00E7BFCD /* CCParticleSystemQuad_Private.h */,
 			);
 			name = "Particle Nodes";
 			sourceTree = "<group>";
@@ -1684,6 +1690,7 @@
 				E076E6E11225EC7400DE0DA2 /* CCActionProgressTimer.h in Headers */,
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
 				E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */,
+				B798D1511820593B00E7BFCD /* CCParticleSystemQuad_Private.h in Headers */,
 				E076E6F41225EC7400DE0DA2 /* CCDrawingPrimitives.h in Headers */,
 				E076E6F61225EC7400DE0DA2 /* CCGrabber.h in Headers */,
 				E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */,
@@ -1695,6 +1702,7 @@
 				E076E70B1225EC7400DE0DA2 /* CCParallaxNode.h in Headers */,
 				E076E70D1225EC7400DE0DA2 /* CCParticleExamples.h in Headers */,
 				E076E70F1225EC7400DE0DA2 /* CCParticleSystem.h in Headers */,
+				B798D14F182056DD00E7BFCD /* CCParticleSystem_Private.h in Headers */,
 				E076E7131225EC7400DE0DA2 /* CCParticleSystemQuad.h in Headers */,
 				E076E7151225EC7400DE0DA2 /* CCProgressTimer.h in Headers */,
 				E076E7181225EC7400DE0DA2 /* CCRenderTexture.h in Headers */,
