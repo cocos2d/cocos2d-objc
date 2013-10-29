@@ -555,9 +555,6 @@ enum {
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-/** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
-
 /** check if a touch is inside the node
  to expand or shrink the touch area of a node, override this method
  @since v2.5
