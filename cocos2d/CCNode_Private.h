@@ -30,4 +30,9 @@
 /** used internally for zOrder sorting, don't change this manually */
 @property(nonatomic,readwrite) NSUInteger orderOfArrival;
 
+/** GL server side state
+ @since v2.0
+ */
+@property (nonatomic, readwrite) ccGLServerState glServerState;
+
 @end
