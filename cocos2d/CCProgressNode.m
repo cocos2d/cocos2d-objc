@@ -23,7 +23,7 @@
  *
  */
 
-#import "CCProgressTimer.h"
+#import "CCProgressNode.h"
 
 #import "ccMacros.h"
 #import "CCTextureCache.h"
@@ -37,6 +37,7 @@
 #import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"
+#import "CCProgressNode_Private.h"
 
 // extern
 #import "kazmath/GL/matrix.h"
@@ -45,7 +46,7 @@
 //  kProgressTextureCoords holds points {0,1} {0,0} {1,0} {1,1} we can represent it as bits
 const char kCCProgressTextureCoords = 0x4b;
 
-@interface CCProgressTimer ()
+@interface CCProgressNode ()
 
 -(void)updateProgress;
 -(void)updateBar;
@@ -55,7 +56,7 @@ const char kCCProgressTextureCoords = 0x4b;
 @end
 
 
-@implementation CCProgressTimer
+@implementation CCProgressNode
 @synthesize percentage = _percentage;
 @synthesize sprite = _sprite;
 @synthesize type = _type;
@@ -83,7 +84,7 @@ const char kCCProgressTextureCoords = 0x4b;
 		_vertexData = NULL;
 		_vertexDataCount = 0;
 		self.anchorPoint = ccp(0.5f,0.5f);
-		self.type = kCCProgressTimerTypeRadial;
+		self.type = CCProgressNodeTypeRadial;
 		self.reverseDirection = NO;
 		self.midpoint = ccp(.5f, .5f);
 		self.barChangeRate = ccp(1,1);
@@ -125,7 +126,7 @@ const char kCCProgressTextureCoords = 0x4b;
 	}
 }
 
--(void)setType:(CCProgressTimerType)newType
+-(void)setType:(CCProgressNodeType)newType
 {
 	if (newType != _type) {
     
@@ -223,10 +224,10 @@ const char kCCProgressTextureCoords = 0x4b;
 -(void)updateProgress
 {
 	switch (_type) {
-		case kCCProgressTimerTypeRadial:
+		case CCProgressNodeTypeRadial:
 			[self updateRadial];
 			break;
-		case kCCProgressTimerTypeBar:
+		case CCProgressNodeTypeBar:
 			[self updateBar];
 			break;
 		default:
@@ -515,11 +516,11 @@ const char kCCProgressTextureCoords = 0x4b;
   glVertexAttribPointer( kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(_vertexData[0]), &_vertexData[0].texCoords);
   glVertexAttribPointer( kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(_vertexData[0]), &_vertexData[0].colors);
   
-	if(_type == kCCProgressTimerTypeRadial)
+	if(_type == CCProgressNodeTypeRadial)
 	{
 		glDrawArrays(GL_TRIANGLE_FAN, 0, _vertexDataCount);
 	} 
-	else if (_type == kCCProgressTimerTypeBar)
+	else if (_type == CCProgressNodeTypeBar)
 	{
 		if (!_reverseDirection)
 		{

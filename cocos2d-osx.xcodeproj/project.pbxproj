@@ -188,8 +188,8 @@
 		E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */; };
 		E076E7131225EC7400DE0DA2 /* CCParticleSystemQuad.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */; };
 		E076E7141225EC7400DE0DA2 /* CCParticleSystemQuad.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */; };
-		E076E7151225EC7400DE0DA2 /* CCProgressTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E66F1225EC7400DE0DA2 /* CCProgressTimer.h */; };
-		E076E7161225EC7400DE0DA2 /* CCProgressTimer.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6701225EC7400DE0DA2 /* CCProgressTimer.m */; };
+		E076E7151225EC7400DE0DA2 /* CCProgressNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E66F1225EC7400DE0DA2 /* CCProgressNode.h */; };
+		E076E7161225EC7400DE0DA2 /* CCProgressNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6701225EC7400DE0DA2 /* CCProgressNode.m */; };
 		E076E7181225EC7400DE0DA2 /* CCRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6721225EC7400DE0DA2 /* CCRenderTexture.h */; };
 		E076E7191225EC7400DE0DA2 /* CCRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6731225EC7400DE0DA2 /* CCRenderTexture.m */; };
 		E076E71C1225EC7400DE0DA2 /* CCScene.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6761225EC7400DE0DA2 /* CCScene.h */; };
@@ -482,6 +482,7 @@
 		B791E84C182065BD00DAE1D7 /* CCTiledMapLayer_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMapLayer_Private.h; sourceTree = "<group>"; };
 		B791E84D182065BD00DAE1D7 /* CCTiledMapLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMapLayer.h; sourceTree = "<group>"; };
 		B791E84E182065BD00DAE1D7 /* CCTiledMapLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTiledMapLayer.m; sourceTree = "<group>"; };
+		B791E852182072FA00DAE1D7 /* CCProgressNode_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCProgressNode_Private.h; sourceTree = "<group>"; };
 		B798D13E181F2F6300E7BFCD /* CCNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode_Private.h; sourceTree = "<group>"; };
 		B798D140181F45F800E7BFCD /* CCLabelBMFont_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont_Private.h; sourceTree = "<group>"; };
 		B798D1461820384500E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
@@ -564,8 +565,8 @@
 		E076E66A1225EC7400DE0DA2 /* CCParticleSystem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystem.m; sourceTree = "<group>"; };
 		E076E66D1225EC7400DE0DA2 /* CCParticleSystemQuad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystemQuad.h; sourceTree = "<group>"; };
 		E076E66E1225EC7400DE0DA2 /* CCParticleSystemQuad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCParticleSystemQuad.m; sourceTree = "<group>"; };
-		E076E66F1225EC7400DE0DA2 /* CCProgressTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressTimer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E076E6701225EC7400DE0DA2 /* CCProgressTimer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProgressTimer.m; sourceTree = "<group>"; };
+		E076E66F1225EC7400DE0DA2 /* CCProgressNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProgressNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
+		E076E6701225EC7400DE0DA2 /* CCProgressNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCProgressNode.m; sourceTree = "<group>"; };
 		E076E6711225EC7400DE0DA2 /* CCProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCProtocols.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E076E6721225EC7400DE0DA2 /* CCRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCRenderTexture.h; sourceTree = "<group>"; };
 		E076E6731225EC7400DE0DA2 /* CCRenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCRenderTexture.m; sourceTree = "<group>"; };
@@ -1565,10 +1566,11 @@
 				2B19285E163379400049A044 /* CCClippingNode.m */,
 				E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */,
 				E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */,
-				E076E66F1225EC7400DE0DA2 /* CCProgressTimer.h */,
-				E076E6701225EC7400DE0DA2 /* CCProgressTimer.m */,
+				E076E66F1225EC7400DE0DA2 /* CCProgressNode.h */,
+				E076E6701225EC7400DE0DA2 /* CCProgressNode.m */,
 				E076E6721225EC7400DE0DA2 /* CCRenderTexture.h */,
 				E076E6731225EC7400DE0DA2 /* CCRenderTexture.m */,
+				B791E852182072FA00DAE1D7 /* CCProgressNode_Private.h */,
 			);
 			name = "Misc Nodes";
 			sourceTree = "<group>";
@@ -1702,7 +1704,7 @@
 				E076E70F1225EC7400DE0DA2 /* CCParticleSystem.h in Headers */,
 				B798D14F182056DD00E7BFCD /* CCParticleSystem_Private.h in Headers */,
 				E076E7131225EC7400DE0DA2 /* CCParticleSystemQuad.h in Headers */,
-				E076E7151225EC7400DE0DA2 /* CCProgressTimer.h in Headers */,
+				E076E7151225EC7400DE0DA2 /* CCProgressNode.h in Headers */,
 				E076E7181225EC7400DE0DA2 /* CCRenderTexture.h in Headers */,
 				E076E71C1225EC7400DE0DA2 /* CCScene.h in Headers */,
 				E076E7201225EC7400DE0DA2 /* CCSprite.h in Headers */,
@@ -1907,7 +1909,7 @@
 				B7EE69EB1819EAAC00B983FE /* CCLayout.m in Sources */,
 				E076E7101225EC7400DE0DA2 /* CCParticleSystem.m in Sources */,
 				E076E7141225EC7400DE0DA2 /* CCParticleSystemQuad.m in Sources */,
-				E076E7161225EC7400DE0DA2 /* CCProgressTimer.m in Sources */,
+				E076E7161225EC7400DE0DA2 /* CCProgressNode.m in Sources */,
 				E076E7191225EC7400DE0DA2 /* CCRenderTexture.m in Sources */,
 				E076E71D1225EC7400DE0DA2 /* CCScene.m in Sources */,
 				E076E7211225EC7400DE0DA2 /* CCSprite.m in Sources */,
