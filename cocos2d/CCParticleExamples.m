@@ -44,10 +44,10 @@
 {
 	if( (self=[super initWithTotalParticles:p]) ) {
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,-90);
@@ -96,7 +96,7 @@
 		// size, in pixels
 		_startSize = 8.0f;
 		_startSizeVar = 2.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		self.texture = [[CCTextureCache sharedTextureCache] addImage: @"fire.png"];
 
@@ -122,10 +122,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -155,7 +155,7 @@
 		// size, in pixels
 		_startSize = 54.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per frame
 		_emissionRate = _totalParticles/_life;
@@ -205,10 +205,10 @@
 		self.blendAdditive = YES;
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -238,7 +238,7 @@
 		// size, in pixels
 		_startSize = 30.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per seconds
 		_emissionRate = _totalParticles/_life;
@@ -282,10 +282,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -318,7 +318,7 @@
 		// size, in pixels
 		_startSize = 37.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = _totalParticles/_life;
@@ -365,10 +365,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -401,7 +401,7 @@
 		// size, in pixels
 		_startSize = 30.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = _totalParticles/_life;
@@ -448,10 +448,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(-200,200);
@@ -484,7 +484,7 @@
 		// size, in pixels
 		_startSize = 60.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = _totalParticles/_life;
@@ -531,10 +531,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -567,7 +567,7 @@
 		// size, in pixels
 		_startSize = 20.0f;
 		_startSizeVar = 0.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = _totalParticles/_life;
@@ -616,7 +616,7 @@
 		// _duration
 		_duration = 0.1f;
 
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -649,7 +649,7 @@
 		// size, in pixels
 		_startSize = 15.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = _totalParticles/_duration;
@@ -696,10 +696,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// Emitter mode: Gravity Mode
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,0);
@@ -728,7 +728,7 @@
 		// size, in pixels
 		_startSize = 60.0f;
 		_startSizeVar = 10.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per frame
 		_emissionRate = _totalParticles/_life;
@@ -772,10 +772,10 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
 		// set gravity mode.
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(0,-1);
@@ -810,7 +810,7 @@
 		// size, in pixels
 		_startSize = 10.0f;
 		_startSizeVar = 5.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = 10;
@@ -854,9 +854,9 @@
 	if( (self=[super initWithTotalParticles:p]) ) {
 
 		// _duration
-		_duration = kCCParticleDurationInfinity;
+		_duration = CCParticleSystemDurationInfinity;
 
-		self.emitterMode = kCCParticleModeGravity;
+		self.emitterMode = CCParticleSystemModeGravity;
 
 		// Gravity Mode: gravity
 		self.gravity = ccp(10,-10);
@@ -892,7 +892,7 @@
 		// size, in pixels
 		_startSize = 4.0f;
 		_startSizeVar = 2.0f;
-		_endSize = kCCParticleStartSizeEqualToEndSize;
+		_endSize = CCParticleSystemStartSizeEqualToEndSize;
 
 		// emits per second
 		_emissionRate = 20;
