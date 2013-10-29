@@ -1426,26 +1426,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return [[CCDirector sharedDirector] convertToUI:worldPoint];
 }
 
-// convenience methods which take a UITouch instead of CGPoint
-
-#ifdef __CC_PLATFORM_IOS
-
-- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpace:point];
-}
-
-- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpaceAR:point];
-}
-
-#endif // __CC_PLATFORM_IOS
-
 // -----------------------------------------------------------------
 #pragma mark - touch interface
 // -----------------------------------------------------------------

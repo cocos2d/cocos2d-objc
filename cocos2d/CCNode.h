@@ -289,6 +289,7 @@ enum {
  The node will be created as "autorelease".
  */
 +(id) node;
+
 /** initializes the node */
 -(id) init;
 
@@ -448,19 +449,24 @@ enum {
  @return An Action pointer
  */
 -(CCAction*) runAction: (CCAction*) action;
+
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
+
 /** Removes an action from the running action list */
 -(void) stopAction: (CCAction*) action;
+
 /** Removes an action from the running action list given its tag
  @since v0.7.1
 */
 -(void) stopActionByTag:(NSInteger) tag;
+
 /** Gets an action from the running action list given its tag
  @since v0.7.1
  @return the Action the with the given tag
  */
 -(CCAction*) getActionByTag:(NSInteger) tag;
+
 /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
  * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
@@ -479,6 +485,7 @@ enum {
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(CCTimer *) schedule: (SEL) s interval:(ccTime)seconds;
+
 /**
  repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
  delay is the amount of time the action will wait before execution
@@ -547,19 +554,6 @@ enum {
  @since v0.7.1
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
-
-#ifdef __CC_PLATFORM_IOS
-
-/** Converts a UITouch to node (local) space coordinates. The result is in Points.
- @since v0.7.1
- */
-- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
-/** Converts a UITouch to node (local) space coordinates. The result is in Points.
- This method is AR (Anchor Relative)..
- @since v0.7.1
- */
-- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
-#endif // __CC_PLATFORM_IOS
 
 /** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
 - (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
