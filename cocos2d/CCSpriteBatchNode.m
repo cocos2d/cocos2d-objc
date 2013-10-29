@@ -42,11 +42,12 @@
 #import "CCSprite_Private.h"
 
 #import "CCNode_Private.h"
+#import "CCSpriteBatchNode_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"
 
-const NSUInteger defaultCapacity = 29;
+const NSUInteger defaultCapacity = 0;
 
 #pragma mark -
 #pragma mark CCSpriteBatchNode
