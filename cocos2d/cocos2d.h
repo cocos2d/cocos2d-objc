@@ -82,11 +82,10 @@
 
 #import "CCTransition.h"
 
-#import "CCTMXTiledMap.h"
-#import "CCTMXLayer.h"
+#import "CCTiledMap.h"
+#import "CCTiledMapLayer.h"
 #import "CCTMXObjectGroup.h"
 #import "CCTMXXMLParser.h"
-#import "CCTileMapAtlas.h"
 
 #import "CCLayer.h"
 #import "CCDrawingPrimitives.h"
