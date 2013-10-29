@@ -33,9 +33,9 @@
 #import "CCSpriteBatchNode.h"
 #import "CCTMXXMLParser.h"
 
-@class CCTMXMapInfo;
-@class CCTMXLayerInfo;
-@class CCTMXTilesetInfo;
+@class CCTiledMapInfo;
+@class CCTiledMapLayerInfo;
+@class CCTiledMapTilesetInfo;
 
 
 /** CCTMXLayer represents the TMX layer.
@@ -63,7 +63,7 @@
  */
 @interface CCTiledMapLayer : CCSpriteBatchNode
 {
-	CCTMXTilesetInfo	*_tileset;
+	CCTiledMapTilesetInfo	*_tileset;
 	NSString			*_layerName;
 	CGSize				_layerSize;
 	CGSize				_mapTileSize;
@@ -93,16 +93,16 @@
 /** pointer to the map of tiles */
 @property (nonatomic,readonly) uint32_t *tiles;
 /** Tileset information for the layer */
-@property (nonatomic,readwrite,strong) CCTMXTilesetInfo *tileset;
+@property (nonatomic,readwrite,strong) CCTiledMapTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
 @property (nonatomic,readwrite) NSUInteger layerOrientation;
 /** properties from the layer. They can be added using Tiled */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
 /** creates a CCTMXLayer with an tileset info, a layer info and a map info */
-+(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
++(id) layerWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo;
 /** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
--(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
+-(id) initWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo;
 
 /** returns the tile (CCSprite) at a given a tile coordinate.
  The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.

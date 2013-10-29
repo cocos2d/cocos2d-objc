@@ -33,13 +33,13 @@
 #import "CCNode.h"
 
 
-@class CCTMXObjectGroup;
+@class CCTiledMapObjectGroup;
 
 
 /** CCTMXObjectGroup represents the TMX object group.
 @since v0.99.0
 */
-@interface CCTMXObjectGroup : NSObject
+@interface CCTiledMapObjectGroup : NSObject
 {
 	NSString			*_groupName;
 	CGPoint				_positionOffset;

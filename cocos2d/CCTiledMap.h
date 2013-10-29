@@ -31,7 +31,7 @@
 #import "CCNode.h"
 
 @class CCTMXLayer;
-@class CCTMXObjectGroup;
+@class CCTiledMapObjectGroup;
 
 /** Possible oritentations of the TMX map */
 typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
@@ -134,7 +134,7 @@ typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 -(CCTMXLayer*) layerNamed:(NSString *)layerName;
 
 /** return the TMXObjectGroup for the specific group */
--(CCTMXObjectGroup*) objectGroupNamed:(NSString *)groupName;
+-(CCTiledMapObjectGroup*) objectGroupNamed:(NSString *)groupName;
 
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;

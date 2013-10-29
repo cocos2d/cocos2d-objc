@@ -210,8 +210,8 @@
 		E076E72F1225EC7400DE0DA2 /* CCTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6891225EC7400DE0DA2 /* CCTextureCache.m */; };
 		E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E68A1225EC7400DE0DA2 /* CCTexturePVR.h */; };
 		E076E7311225EC7400DE0DA2 /* CCTexturePVR.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E68B1225EC7400DE0DA2 /* CCTexturePVR.m */; };
-		E076E7361225EC7400DE0DA2 /* CCTMXObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6901225EC7400DE0DA2 /* CCTMXObjectGroup.h */; };
-		E076E7371225EC7400DE0DA2 /* CCTMXObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6911225EC7400DE0DA2 /* CCTMXObjectGroup.m */; };
+		E076E7361225EC7400DE0DA2 /* CCTiledMapObjectGroup.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6901225EC7400DE0DA2 /* CCTiledMapObjectGroup.h */; };
+		E076E7371225EC7400DE0DA2 /* CCTiledMapObjectGroup.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6911225EC7400DE0DA2 /* CCTiledMapObjectGroup.m */; };
 		E076E7381225EC7400DE0DA2 /* CCTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6921225EC7400DE0DA2 /* CCTiledMap.h */; };
 		E076E7391225EC7400DE0DA2 /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6931225EC7400DE0DA2 /* CCTiledMap.m */; };
 		E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6941225EC7400DE0DA2 /* CCTMXXMLParser.h */; };
@@ -589,8 +589,8 @@
 		E076E6891225EC7400DE0DA2 /* CCTextureCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureCache.m; sourceTree = "<group>"; };
 		E076E68A1225EC7400DE0DA2 /* CCTexturePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexturePVR.h; sourceTree = "<group>"; };
 		E076E68B1225EC7400DE0DA2 /* CCTexturePVR.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexturePVR.m; sourceTree = "<group>"; };
-		E076E6901225EC7400DE0DA2 /* CCTMXObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXObjectGroup.h; sourceTree = "<group>"; };
-		E076E6911225EC7400DE0DA2 /* CCTMXObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTMXObjectGroup.m; sourceTree = "<group>"; };
+		E076E6901225EC7400DE0DA2 /* CCTiledMapObjectGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMapObjectGroup.h; sourceTree = "<group>"; };
+		E076E6911225EC7400DE0DA2 /* CCTiledMapObjectGroup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTiledMapObjectGroup.m; sourceTree = "<group>"; };
 		E076E6921225EC7400DE0DA2 /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMap.h; sourceTree = "<group>"; };
 		E076E6931225EC7400DE0DA2 /* CCTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTiledMap.m; sourceTree = "<group>"; };
 		E076E6941225EC7400DE0DA2 /* CCTMXXMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTMXXMLParser.h; sourceTree = "<group>"; };
@@ -1536,8 +1536,8 @@
 				E076E6931225EC7400DE0DA2 /* CCTiledMap.m */,
 				B791E84D182065BD00DAE1D7 /* CCTiledMapLayer.h */,
 				B791E84E182065BD00DAE1D7 /* CCTiledMapLayer.m */,
-				E076E6901225EC7400DE0DA2 /* CCTMXObjectGroup.h */,
-				E076E6911225EC7400DE0DA2 /* CCTMXObjectGroup.m */,
+				E076E6901225EC7400DE0DA2 /* CCTiledMapObjectGroup.h */,
+				E076E6911225EC7400DE0DA2 /* CCTiledMapObjectGroup.m */,
 				E076E6941225EC7400DE0DA2 /* CCTMXXMLParser.h */,
 				E076E6951225EC7400DE0DA2 /* CCTMXXMLParser.m */,
 				B791E84C182065BD00DAE1D7 /* CCTiledMapLayer_Private.h */,
@@ -1717,7 +1717,7 @@
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
 				E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */,
 				B798D141181F45F800E7BFCD /* CCLabelBMFont_Private.h in Headers */,
-				E076E7361225EC7400DE0DA2 /* CCTMXObjectGroup.h in Headers */,
+				E076E7361225EC7400DE0DA2 /* CCTiledMapObjectGroup.h in Headers */,
 				E076E7381225EC7400DE0DA2 /* CCTiledMap.h in Headers */,
 				E076E73A1225EC7400DE0DA2 /* CCTMXXMLParser.h in Headers */,
 				E076E73C1225EC7400DE0DA2 /* CCTransition.h in Headers */,
@@ -1918,7 +1918,7 @@
 				E076E72D1225EC7400DE0DA2 /* CCTextureAtlas.m in Sources */,
 				E076E72F1225EC7400DE0DA2 /* CCTextureCache.m in Sources */,
 				E076E7311225EC7400DE0DA2 /* CCTexturePVR.m in Sources */,
-				E076E7371225EC7400DE0DA2 /* CCTMXObjectGroup.m in Sources */,
+				E076E7371225EC7400DE0DA2 /* CCTiledMapObjectGroup.m in Sources */,
 				E076E7391225EC7400DE0DA2 /* CCTiledMap.m in Sources */,
 				E076E73B1225EC7400DE0DA2 /* CCTMXXMLParser.m in Sources */,
 				E076E73D1225EC7400DE0DA2 /* CCTransition.m in Sources */,

@@ -84,7 +84,7 @@
 
 #import "CCTiledMap.h"
 #import "CCTiledMapLayer.h"
-#import "CCTMXObjectGroup.h"
+#import "CCTiledMapObjectGroup.h"
 #import "CCTMXXMLParser.h"
 
 #import "CCLayer.h"
