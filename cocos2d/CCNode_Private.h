@@ -20,4 +20,6 @@
  */
 @property (nonatomic,readwrite) float vertexZ;
 
+@property (nonatomic,readonly) BOOL isPhysicsNode;
+
 @end
