@@ -44,6 +44,7 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 #import "Support/uthash.h"
+#import "CCLabelBMFont_Private.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions
