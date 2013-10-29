@@ -153,7 +153,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 @interface CCParticleSystemQuad (Deprecated)
--(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCAnimation (Deprecated)
