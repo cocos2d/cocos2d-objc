@@ -22,4 +22,9 @@
 
 @property (nonatomic,readonly) BOOL isPhysicsNode;
 
+/** Shader Program
+ @since v2.0
+ */
+@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
+
 @end

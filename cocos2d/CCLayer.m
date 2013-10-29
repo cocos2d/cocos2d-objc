@@ -37,6 +37,7 @@
 #import "ccGLStateCache.h"
 #import "Support/TransformUtils.h"
 #import "Support/CGPointExtension.h"
+#import "CCNode_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"

@@ -36,6 +36,7 @@
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
 #import "CCConfiguration.h"
+#import "CCNode_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"

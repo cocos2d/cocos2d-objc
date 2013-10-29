@@ -53,6 +53,8 @@
 // extern
 #import "kazmath/GL/matrix.h"
 
+#import "CCNode_Private.h"
+
 @interface CCParticleSystemQuad ()
 -(void) initVAO;
 -(BOOL) allocMemory;

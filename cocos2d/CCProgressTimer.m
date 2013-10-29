@@ -35,6 +35,8 @@
 #import "Support/TransformUtils.h"
 #import "CCDrawingPrimitives.h"
 
+#import "CCNode_Private.h"
+
 // extern
 #import "kazmath/GL/matrix.h"
 

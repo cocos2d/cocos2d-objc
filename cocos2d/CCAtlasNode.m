@@ -32,6 +32,7 @@
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "Support/TransformUtils.h"
+#import "CCNode_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"
