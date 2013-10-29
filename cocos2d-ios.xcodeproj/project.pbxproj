@@ -78,10 +78,6 @@
 		506882160E95770400F943E5 /* CCTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 50637A160E95397A000C9182 /* CCTextureAtlas.m */; };
 		506884D70E96921100F943E5 /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = 506884710E96734A00F943E5 /* CCLabelAtlas.m */; };
 		506887F70E96D4F000F943E5 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 506887D80E96C90000F943E5 /* CCAtlasNode.m */; };
-		506C78A70E016A7300B48100 /* CCMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78A50E016A7300B48100 /* CCMenu.h */; };
-		506C78A80E016A7300B48100 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C78A60E016A7300B48100 /* CCMenu.m */; };
-		506C78EC0E0178FD00B48100 /* CCMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 506C78EA0E0178FD00B48100 /* CCMenuItem.h */; };
-		506C78ED0E0178FD00B48100 /* CCMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 506C78EB0E0178FD00B48100 /* CCMenuItem.m */; };
 		508EAC311193F8B0007F058D /* utlist.h in Headers */ = {isa = PBXBuildFile; fileRef = 508EAC2F1193F8B0007F058D /* utlist.h */; };
 		509A79970F6188420032F449 /* CCSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = 509A79950F6188420032F449 /* CCSprite.h */; };
 		509A79980F6188420032F449 /* CCSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = 509A79960F6188420032F449 /* CCSprite.m */; };
@@ -411,10 +407,6 @@
 		506884710E96734A00F943E5 /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
 		506887D70E96C90000F943E5 /* CCAtlasNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCAtlasNode.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		506887D80E96C90000F943E5 /* CCAtlasNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCAtlasNode.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
-		506C78A50E016A7300B48100 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCMenu.h; sourceTree = "<group>"; };
-		506C78A60E016A7300B48100 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCMenu.m; sourceTree = "<group>"; };
-		506C78EA0E0178FD00B48100 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; lineEnding = 0; path = CCMenuItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		506C78EB0E0178FD00B48100 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = CCMenuItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		508A4A2310B47A46004B9CC3 /* RELEASE_NOTES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RELEASE_NOTES; sourceTree = "<group>"; };
 		508EAC2F1193F8B0007F058D /* utlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utlist.h; sourceTree = "<group>"; };
 		509807081175041800EA7266 /* libbuild all libs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libbuild all libs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -795,7 +787,6 @@
 				506414C50F9C67C0007A7B24 /* Label Nodes */,
 				506414C40F9C6792007A7B24 /* Sprite & Animation Nodes */,
 				A6A0734717C78E55004343C8 /* Touch & Mouse Handling */,
-				506414C60F9C6A3D007A7B24 /* Menu Nodes */,
 				50A24E890F378119007CAEB0 /* Particle Nodes */,
 				50CFAC3B1023661B00175934 /* TileMap and Parallax Nodes */,
 				506414C30F9C6769007A7B24 /* Layers, Scenes, Transitions Nodes */,
@@ -970,17 +961,6 @@
 				506884710E96734A00F943E5 /* CCLabelAtlas.m */,
 			);
 			name = "Label Nodes";
-			sourceTree = "<group>";
-		};
-		506414C60F9C6A3D007A7B24 /* Menu Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				506C78A50E016A7300B48100 /* CCMenu.h */,
-				506C78A60E016A7300B48100 /* CCMenu.m */,
-				506C78EA0E0178FD00B48100 /* CCMenuItem.h */,
-				506C78EB0E0178FD00B48100 /* CCMenuItem.m */,
-			);
-			name = "Menu Nodes";
 			sourceTree = "<group>";
 		};
 		50A24E760F378092007CAEB0 /* Effects */ = {
@@ -1396,8 +1376,6 @@
 				5018F2750DFDEAFF00C013A5 /* CCLayer.h in Headers */,
 				5018F2770DFDEAFF00C013A5 /* CCScene.h in Headers */,
 				5018F27D0DFDEAFF00C013A5 /* CCTextureCache.h in Headers */,
-				506C78A70E016A7300B48100 /* CCMenu.h in Headers */,
-				506C78EC0E0178FD00B48100 /* CCMenuItem.h in Headers */,
 				50B2CCCE0E119B8E00AE9530 /* CCDrawingPrimitives.h in Headers */,
 				5038B6B20E196CD8009A621E /* CCParticleSystem.h in Headers */,
 				50F9E8170E1AA34E000E7616 /* ccTypes.h in Headers */,
@@ -1737,8 +1715,6 @@
 				5018F2760DFDEAFF00C013A5 /* CCLayer.m in Sources */,
 				5018F2780DFDEAFF00C013A5 /* CCScene.m in Sources */,
 				5018F27E0DFDEAFF00C013A5 /* CCTextureCache.m in Sources */,
-				506C78A80E016A7300B48100 /* CCMenu.m in Sources */,
-				506C78ED0E0178FD00B48100 /* CCMenuItem.m in Sources */,
 				50B2CCCF0E119B8E00AE9530 /* CCDrawingPrimitives.m in Sources */,
 				5038B6B30E196CD8009A621E /* CCParticleSystem.m in Sources */,
 				504055B10E3230BD00213FEF /* CCParticleExamples.m in Sources */,

@@ -28,7 +28,6 @@
 
 #import "ccTypes.h"
 #import "ccMacros.h"
-#import "CCMenu.h"
 #import "CCDirector.h"
 #import "CCSprite.h"
 #import "CCParticleSystemQuad.h"
@@ -61,13 +60,12 @@
 #define ccg CGSizeMake
 
 // ccTypes.h
-enum {
 #ifdef __CC_PLATFORM_IOS
+enum {
 	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
 	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = kCCResolutioniPhoneRetinaDisplay,
-#endif // __CC_PLATFORM_IOS
-	kCCMenuTouchPriority DEPRECATED_ATTRIBUTE	= kCCMenuHandlerPriority,
 };
+#endif // __CC_PLATFORM_IOS
 
 // CCRenderTexture.h
 enum {
@@ -162,67 +160,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 
 @interface CCParticleSystemQuad (Deprecated)
 -(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItem (Deprecated)
-// new: -(CGRect) activeArea;
--(CGRect) rect DEPRECATED_ATTRIBUTE;
--(void) setRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemAtlasFont (Deprecated)
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap DEPRECATED_ATTRIBUTE;
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
-// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-
-@interface CCMenuItemFont (Deprecated)
-// new: itemWithString:
-+(id) itemFromString: (NSString*) value DEPRECATED_ATTRIBUTE;
-// new: itemWithString:target:selector
-+(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithString:block:
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: initWithString:target:selector
--(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: initWithString:block:
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemSprite (Deprecated)
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemImage (Deprecated)
-// new: itemWithNormalImage:selectedImage:
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:target:selector
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:disabledImage:target:selector
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:block
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:disabledImage:block
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: initWithNormalImage:selectedImage:disabledImage:target:selector
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: initWithNormalImage:selectedImage:disabledImage:block
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCAnimation (Deprecated)

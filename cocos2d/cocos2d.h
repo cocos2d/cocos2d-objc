@@ -68,7 +68,7 @@
 
 #import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
-#import "CCLabelAtlas.h"
+//#import "CCLabelAtlas.h"
 
 #import "CCParticleSystem.h"
 #import "CCParticleSystemQuad.h"
@@ -89,8 +89,6 @@
 #import "CCTileMapAtlas.h"
 
 #import "CCLayer.h"
-#import "CCMenu.h"
-#import "CCMenuItem.h"
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 #import "CCScheduler.h"

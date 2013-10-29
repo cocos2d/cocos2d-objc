@@ -168,10 +168,6 @@
 		E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6591225EC7400DE0DA2 /* CCLabelTTF.m */; };
 		E076E7001225EC7400DE0DA2 /* CCLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E65A1225EC7400DE0DA2 /* CCLayer.h */; };
 		E076E7011225EC7400DE0DA2 /* CCLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E65B1225EC7400DE0DA2 /* CCLayer.m */; };
-		E076E7031225EC7400DE0DA2 /* CCMenu.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E65D1225EC7400DE0DA2 /* CCMenu.h */; };
-		E076E7041225EC7400DE0DA2 /* CCMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E65E1225EC7400DE0DA2 /* CCMenu.m */; };
-		E076E7051225EC7400DE0DA2 /* CCMenuItem.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E65F1225EC7400DE0DA2 /* CCMenuItem.h */; };
-		E076E7061225EC7400DE0DA2 /* CCMenuItem.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6601225EC7400DE0DA2 /* CCMenuItem.m */; };
 		E076E7071225EC7400DE0DA2 /* CCMotionStreak.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */; };
 		E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */; };
 		E076E7091225EC7400DE0DA2 /* CCNode.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6631225EC7400DE0DA2 /* CCNode.h */; };
@@ -544,10 +540,6 @@
 		E076E65A1225EC7400DE0DA2 /* CCLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLayer.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
 		E076E65B1225EC7400DE0DA2 /* CCLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLayer.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E076E65C1225EC7400DE0DA2 /* ccMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ccMacros.h; sourceTree = "<group>"; };
-		E076E65D1225EC7400DE0DA2 /* CCMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenu.h; sourceTree = "<group>"; };
-		E076E65E1225EC7400DE0DA2 /* CCMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenu.m; sourceTree = "<group>"; };
-		E076E65F1225EC7400DE0DA2 /* CCMenuItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMenuItem.h; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objcpp; };
-		E076E6601225EC7400DE0DA2 /* CCMenuItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMenuItem.m; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.objc; };
 		E076E6611225EC7400DE0DA2 /* CCMotionStreak.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCMotionStreak.h; sourceTree = "<group>"; };
 		E076E6621225EC7400DE0DA2 /* CCMotionStreak.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCMotionStreak.m; sourceTree = "<group>"; };
 		E076E6631225EC7400DE0DA2 /* CCNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCNode.h; sourceTree = "<group>"; };
@@ -1346,7 +1338,6 @@
 				E076E7721225EC8C00DE0DA2 /* Label Nodes */,
 				E076E7751225ECB100DE0DA2 /* Sprite Nodes */,
 				A66680BE17D4D70E00ECDE6F /* Touch & Mouse Handling */,
-				E076E7731225EC9400DE0DA2 /* Menu Nodes */,
 				E076E7741225EC9D00DE0DA2 /* Particle Nodes */,
 				A0DA0BC015BCDB2400E80A92 /* Drawing Nodes */,
 				E076E7771225ECBF00DE0DA2 /* TiledMap & Parallax Nodes */,
@@ -1470,17 +1461,6 @@
 				E076E6591225EC7400DE0DA2 /* CCLabelTTF.m */,
 			);
 			name = "Label Nodes";
-			sourceTree = "<group>";
-		};
-		E076E7731225EC9400DE0DA2 /* Menu Nodes */ = {
-			isa = PBXGroup;
-			children = (
-				E076E65D1225EC7400DE0DA2 /* CCMenu.h */,
-				E076E65E1225EC7400DE0DA2 /* CCMenu.m */,
-				E076E65F1225EC7400DE0DA2 /* CCMenuItem.h */,
-				E076E6601225EC7400DE0DA2 /* CCMenuItem.m */,
-			);
-			name = "Menu Nodes";
 			sourceTree = "<group>";
 		};
 		E076E7741225EC9D00DE0DA2 /* Particle Nodes */ = {
@@ -1701,8 +1681,6 @@
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
 				E076E7001225EC7400DE0DA2 /* CCLayer.h in Headers */,
-				E076E7031225EC7400DE0DA2 /* CCMenu.h in Headers */,
-				E076E7051225EC7400DE0DA2 /* CCMenuItem.h in Headers */,
 				E076E7071225EC7400DE0DA2 /* CCMotionStreak.h in Headers */,
 				E076E7091225EC7400DE0DA2 /* CCNode.h in Headers */,
 				E076E70B1225EC7400DE0DA2 /* CCParallaxNode.h in Headers */,
@@ -1904,8 +1882,6 @@
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,
 				E076E7011225EC7400DE0DA2 /* CCLayer.m in Sources */,
-				E076E7041225EC7400DE0DA2 /* CCMenu.m in Sources */,
-				E076E7061225EC7400DE0DA2 /* CCMenuItem.m in Sources */,
 				E076E7081225EC7400DE0DA2 /* CCMotionStreak.m in Sources */,
 				E076E70A1225EC7400DE0DA2 /* CCNode.m in Sources */,
 				E076E70C1225EC7400DE0DA2 /* CCParallaxNode.m in Sources */,
