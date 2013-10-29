@@ -77,9 +77,6 @@
 /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
 - (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
 
-/** color used for the tint */
-- (void) tintWithColor:(ccColor3B)colors;
-
 /** Remove all living segments of the ribbon */
 - (void) reset;
 
