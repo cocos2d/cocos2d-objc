@@ -34,16 +34,16 @@
 @class CCTMXObjectGroup;
 
 /** Possible oritentations of the TMX map */
-enum
+typedef NS_ENUM(NSUInteger, CCTiledMapOrientation)
 {
 	/** Orthogonal orientation */
-	CCTMXOrientationOrtho,
+	CCTiledMapOrientationOrtho,
 
 	/** Hexagonal orientation */
-	CCTMXOrientationHex,
+	CCTiledMapOrientationHex,
 
 	/** Isometric orientation */
-	CCTMXOrientationIso,
+	CCTiledMapOrientationIso,
 };
 
 /** CCTMXTiledMap knows how to parse and render a TMX map.
@@ -97,11 +97,11 @@ enum
 
  @since v0.8.1
  */
-@interface CCTMXTiledMap : CCNode
+@interface CCTiledMap : CCNode
 {
 	CGSize				_mapSize;
 	CGSize				_tileSize;
-	int					_mapOrientation;
+	CCTiledMapOrientation _mapOrientation;
 	NSMutableArray		*_objectGroups;
 	NSMutableDictionary	*_properties;
 	NSMutableDictionary	*_tileProperties;
@@ -112,20 +112,20 @@ enum
 /** the tiles's size property measured in pixels */
 @property (nonatomic,readonly) CGSize tileSize;
 /** map orientation */
-@property (nonatomic,readonly) int mapOrientation;
+@property (nonatomic,readonly) CCTiledMapOrientation mapOrientation;
 /** object groups */
 @property (nonatomic,readwrite,strong) NSMutableArray *objectGroups;
 /** properties */
 @property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
 
 /** creates a TMX Tiled Map with a TMX file.*/
-+(id) tiledMapWithTMXFile:(NSString*)tmxFile;
++(id) tiledMapWithFile:(NSString*)tmxFile;
 
 /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
 +(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;
 
 /** initializes a TMX Tiled Map with a TMX file */
--(id) initWithTMXFile:(NSString*)tmxFile;
+-(id) initWithFile:(NSString*)tmxFile;
 
 /** initializes a TMX Tiled Map with a TMX formatted XML string and a path to TMX resources */
 -(id) initWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath;

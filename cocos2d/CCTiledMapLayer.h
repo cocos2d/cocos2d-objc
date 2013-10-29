@@ -61,7 +61,7 @@
  
  @since 1.1
  */
-@interface CCTMXLayer : CCSpriteBatchNode
+@interface CCTiledMapLayer : CCSpriteBatchNode
 {
 	CCTMXTilesetInfo	*_tileset;
 	NSString			*_layerName;
@@ -91,7 +91,7 @@
 /** size of the map's tile (could be different from the tile's size) */
 @property (nonatomic,readwrite) CGSize mapTileSize;
 /** pointer to the map of tiles */
-@property (nonatomic,readwrite) uint32_t *tiles;
+@property (nonatomic,readonly) uint32_t *tiles;
 /** Tileset information for the layer */
 @property (nonatomic,readwrite,strong) CCTMXTilesetInfo *tileset;
 /** Layer orientation, which is the same as the map orientation */
@@ -103,12 +103,6 @@
 +(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
 /** initializes a CCTMXLayer with a tileset info, a layer info and a map info */
 -(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo;
-
-/** dealloc the map that contains the tile position from memory.
- Unless you want to know at runtime the tiles positions, you can safely call this method.
- If you are going to call [layer tileGIDAt:] then, don't release the map
- */
--(void) releaseMap;
 
 /** returns the tile (CCSprite) at a given a tile coordinate.
  The returned CCSprite will be already added to the CCTMXLayer. Don't add it again.
@@ -153,9 +147,6 @@
 
 /** return the value for the specific property name */
 -(id) propertyNamed:(NSString *)propertyName;
-
-/** Creates the tiles */
--(void) setupTiles;
 
 /** CCTMXLayer doesn't support adding a CCSprite manually.
  @warning addchild:z:tag: is not supported on CCTMXLayer. Instead of setTileGID:at:/tileAt:

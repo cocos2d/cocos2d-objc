@@ -35,7 +35,7 @@
 #import "ccMacros.h"
 #import "Support/CGPointExtension.h"
 #import "CCTMXXMLParser.h"
-#import "CCTMXTiledMap.h"
+#import "CCTiledMap.h"
 #import "CCTMXObjectGroup.h"
 #import "Support/base64.h"
 #import "Support/ZipUtils.h"
@@ -140,7 +140,7 @@
 
 +(id) formatWithTMXFile:(NSString*)tmxFile
 {
-	return [[self alloc] initWithTMXFile:tmxFile];
+	return [[self alloc] initWithFile:tmxFile];
 }
 
 +(id) formatWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
@@ -225,11 +225,11 @@
 			CCLOG(@"cocos2d: TMXFormat: Unsupported TMX version: %@", version);
 		NSString *orientationStr = [attributeDict objectForKey:@"orientation"];
 		if( [orientationStr isEqualToString:@"orthogonal"])
-			_orientation = CCTMXOrientationOrtho;
+			_orientation = CCTiledMapOrientationOrtho;
 		else if ( [orientationStr isEqualToString:@"isometric"])
-			_orientation = CCTMXOrientationIso;
+			_orientation = CCTiledMapOrientationIso;
 		else if( [orientationStr isEqualToString:@"hexagonal"])
-			_orientation = CCTMXOrientationHex;
+			_orientation = CCTiledMapOrientationHex;
 		else
 			CCLOG(@"cocos2d: TMXFomat: Unsupported orientation: %d", _orientation);
 

@@ -28,34 +28,35 @@
  *
  */
 
-#import "CCTMXTiledMap.h"
+#import "CCTiledMap.h"
 #import "CCTMXXMLParser.h"
-#import "CCTMXLayer.h"
+#import "CCTiledMapLayer.h"
 #import "CCTMXObjectGroup.h"
 #import "CCSprite.h"
 #import "CCTextureCache.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCTiledMapLayer_Private.h"
 
 #pragma mark -
 #pragma mark CCTMXTiledMap
 
-@interface CCTMXTiledMap (Private)
+@interface CCTiledMap (Private)
 -(id) parseLayer:(CCTMXLayerInfo*)layer map:(CCTMXMapInfo*)mapInfo;
 -(CCTMXTilesetInfo*) tilesetForLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo;
 -(void) buildWithMapInfo:(CCTMXMapInfo*)mapInfo;
 @end
 
-@implementation CCTMXTiledMap
+@implementation CCTiledMap
 @synthesize mapSize = _mapSize;
 @synthesize tileSize = _tileSize;
 @synthesize mapOrientation = _mapOrientation;
 @synthesize objectGroups = _objectGroups;
 @synthesize properties = _properties;
 
-+(id) tiledMapWithTMXFile:(NSString*)tmxFile
++(id) tiledMapWithFile:(NSString*)tmxFile
 {
-	return [[self alloc] initWithTMXFile:tmxFile];
+	return [[self alloc] initWithFile:tmxFile];
 }
 
 +(id) tiledMapWithXML:(NSString*)tmxString resourcePath:(NSString*)resourcePath
@@ -107,7 +108,7 @@
 	return self;
 }
 
--(id) initWithTMXFile:(NSString*)tmxFile
+-(id) initWithFile:(NSString*)tmxFile
 {
 	NSAssert(tmxFile != nil, @"TMXTiledMap: tmx file should not bi nil");
 
@@ -129,7 +130,7 @@
 -(id) parseLayer:(CCTMXLayerInfo*)layerInfo map:(CCTMXMapInfo*)mapInfo
 {
 	CCTMXTilesetInfo *tileset = [self tilesetForLayer:layerInfo map:mapInfo];
-	CCTMXLayer *layer = [CCTMXLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
+	CCTiledMapLayer *layer = [CCTiledMapLayer layerWithTilesetInfo:tileset layerInfo:layerInfo mapInfo:mapInfo];
 
 	// tell the layerinfo to release the ownership of the tiles map.
 	layerInfo.ownTiles = NO;
@@ -175,10 +176,10 @@
 
 // public
 
--(CCTMXLayer*) layerNamed:(NSString *)layerName
+-(CCTiledMapLayer*) layerNamed:(NSString *)layerName
 {
-    for (CCTMXLayer *layer in _children) {
-		if([layer isKindOfClass:[CCTMXLayer class]])
+    for (CCTiledMapLayer *layer in _children) {
+		if([layer isKindOfClass:[CCTiledMapLayer class]])
 			if([layer.layerName isEqual:layerName])
 				return layer;
 	}
