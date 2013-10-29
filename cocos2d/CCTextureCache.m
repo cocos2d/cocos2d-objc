@@ -231,12 +231,13 @@ static CCTextureCache *sharedTextureCache;
 			texture = [self addImage:path];
 
 			glFlush();
+            
+            [EAGLContext setCurrentContext:nil];
 
 			// callback should be executed in cocos2d thread
 			NSThread *thread = [[CCDirector sharedDirector] runningThread];
 			[thread performBlock:block withObject:texture waitUntilDone:NO];
-
-			[EAGLContext setCurrentContext:nil];
+        
 		} else {
 			CCLOG(@"cocos2d: ERROR: TetureCache: Could not set EAGLContext");
 		}
@@ -249,12 +250,12 @@ static CCTextureCache *sharedTextureCache;
 		texture = [self addImage:path];
 
 		glFlush();
+        
+        [NSOpenGLContext clearCurrentContext];
 
 		// callback should be executed in cocos2d thread
 		NSThread *thread = [[CCDirector sharedDirector] runningThread];
 		[thread performBlock:block withObject:texture waitUntilDone:NO];
-
-		[NSOpenGLContext clearCurrentContext];
 
 #endif // __CC_PLATFORM_MAC
 
