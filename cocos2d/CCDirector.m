@@ -463,7 +463,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( [current isRunning] ){
+		if( current.runningInActiveScene ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}

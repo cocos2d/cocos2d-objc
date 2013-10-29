@@ -253,7 +253,7 @@ enum {
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly) BOOL isRunning;
+@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
 
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
