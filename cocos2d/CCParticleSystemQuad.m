@@ -54,6 +54,7 @@
 #import "kazmath/GL/matrix.h"
 
 #import "CCNode_Private.h"
+#import "CCParticleSystem_Private.h"
 
 @interface CCParticleSystemQuad ()
 -(void) initVAO;
@@ -113,11 +114,11 @@
     if( tp > _allocatedParticles )
     {
         // Allocate new memory
-        size_t particlesSize = tp * sizeof(tCCParticle);
+        size_t particlesSize = tp * sizeof(_CCParticle);
         size_t quadsSize = sizeof(_quads[0]) * tp * 1;
         size_t indicesSize = sizeof(_indices[0]) * tp * 6 * 1;
         
-        tCCParticle* particlesNew = realloc(_particles, particlesSize);
+        _CCParticle* particlesNew = realloc(_particles, particlesSize);
         ccV3F_C4B_T2F_Quad *quadsNew = realloc(_quads, quadsSize);
         GLushort* indicesNew = realloc(_indices, indicesSize);
         
@@ -333,7 +334,7 @@
 	}
 }
 
--(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
+-(void) updateQuadWithParticle:(_CCParticle*)p newPosition:(CGPoint)newPos
 {
 	ccV3F_C4B_T2F_Quad *quad;
 

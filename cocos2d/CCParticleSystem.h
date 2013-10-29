@@ -32,74 +32,64 @@
 
 @class CCParticleBatchNode;
 
-//* @enum
-enum {
-	/** The Particle emitter lives forever */
-	kCCParticleDurationInfinity = -1,
+// Constants
 
-	/** The starting size of the particle is equal to the ending size */
-	kCCParticleStartSizeEqualToEndSize = -1,
+/** The Particle emitter lives forever */
+#define CCParticleSystemDurationInfinity -1
 
-	/** The starting radius of the particle is equal to the ending radius */
-	kCCParticleStartRadiusEqualToEndRadius = -1,
+/** The starting size of the particle is equal to the ending size */
+#define CCParticleSystemStartSizeEqualToEndSize -1
 
-	// backward compatible
-	kParticleStartSizeEqualToEndSize = kCCParticleStartSizeEqualToEndSize,
-	kParticleDurationInfinity = kCCParticleDurationInfinity,
-};
+/** The starting radius of the particle is equal to the ending radius */
+#define CCParticleSystemStartRadiusEqualToEndRadius -1
 
-//* @enum
-enum {
+
+typedef NS_ENUM(NSUInteger, CCParticleSystemMode) {
 	/** Gravity mode (A mode) */
-	kCCParticleModeGravity,
+	CCParticleSystemModeGravity,
 
 	/** Radius mode (B mode) */
-	kCCParticleModeRadius,
+	CCParticleSystemModeRadius,
 };
 
 
 /** @typedef tCCParticlePositionType
  possible types of particle positions
  */
-typedef enum {
+typedef NS_ENUM(NSUInteger, CCParticleSystemPositionType) {
 	/** Living particles are attached to the world and are unaffected by emitter repositioning. */
-	kCCParticlePositionTypeFree,
+	CCParticleSystemPositionTypeFree,
 
 	/** Living particles are attached to the world but will follow the emitter repositioning.
 	 Use case: Attach an emitter to an sprite, and you want that the emitter follows the sprite.
 	 */
-	kCCParticlePositionTypeRelative,
+	CCParticleSystemPositionTypeRelative,
 
 	/** Living particles are attached to the emitter and are translated along with it. */
-	kCCParticlePositionTypeGrouped,
-}tCCParticlePositionType;
-
-// backward compatible
-enum {
-	kParticlePositionTypeFree = kCCParticlePositionTypeFree,
-	kParticlePositionTypeGrouped = kCCParticlePositionTypeGrouped,
+	CCParticleSystemPositionTypeGrouped,
 };
+
 
 /** @struct tCCParticle
  Structure that contains the values of each particle
  */
-typedef struct sCCParticle {
+typedef struct _sCCParticle {
 	CGPoint		pos;
 	CGPoint		startPos;
-
+    
 	ccColor4F	color;
 	ccColor4F	deltaColor;
-
+    
 	float		size;
 	float		deltaSize;
-
+    
 	float		rotation;
 	float		deltaRotation;
-
+    
 	ccTime		timeToLive;
-
+    
 	NSUInteger	atlasIndex;
-
+    
 	union {
 		// Mode A: gravity, direction, radial accel, tangential accel
 		struct {
@@ -107,7 +97,7 @@ typedef struct sCCParticle {
 			float		radialAccel;
 			float		tangentialAccel;
 		} A;
-
+        
 		// Mode B: radius mode
 		struct {
 			float		angle;
@@ -116,10 +106,10 @@ typedef struct sCCParticle {
 			float		deltaRadius;
 		} B;
 	} mode;
+    
+}_CCParticle;
 
-}tCCParticle;
-
-typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
+typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
 @class CCTexture2D;
 
@@ -187,7 +177,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 
 	// Different modes
 
-	NSInteger _emitterMode;
+	CCParticleSystemMode _emitterMode;
 	union {
 		// Mode A:Gravity + Tangential Accel + Radial Accel
 		struct {
@@ -261,7 +251,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	float _endSpinVar;
 
 	// Array of particles
-	tCCParticle *_particles;
+	_CCParticle *_particles;
 	// Maximum particles
 	NSUInteger _totalParticles;
 	// Count of active particles
@@ -281,7 +271,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	BOOL _opacityModifyRGB;
 
 	// movment type: free or grouped
-	tCCParticlePositionType	_particlePositionType;
+	CCParticleSystemPositionType	_particlePositionType;
 
 	// Whether or not the node will be auto-removed when there are not particles
 	BOOL	_autoRemoveOnFinish;
@@ -290,7 +280,7 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 	NSUInteger _particleIdx;
 
 	// Optimization
-	CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
+	_CC_UPDATE_PARTICLE_IMP	_updateParticleImp;
 	SEL						_updateParticleSel;
 
 	// for batching. If nil, then it won't be batched
@@ -395,22 +385,17 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 /** particles movement type: Free or Grouped
  @since v0.8
  */
-@property (nonatomic,readwrite) tCCParticlePositionType particlePositionType;
+@property (nonatomic,readwrite) CCParticleSystemPositionType particlePositionType;
 /** whether or not the node will be auto-removed when it has no particles left.
  By default it is NO.
  @since v0.8
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
 /** Switch between different kind of emitter modes:
-   - kCCParticleModeGravity: uses gravity, speed, radial and tangential acceleration
-   - kCCParticleModeRadius: uses radius movement + rotation
+   - CCParticleSystemModeGravity: uses gravity, speed, radial and tangential acceleration
+   - CCParticleSystemModeRadius: uses radius movement + rotation
  */
-@property (nonatomic,readwrite) NSInteger emitterMode;
-
-/** weak reference to the CCSpriteBatchNode that renders the CCSprite */
-@property (nonatomic,readwrite,unsafe_unretained) CCParticleBatchNode *batchNode;
-
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
+@property (nonatomic,readwrite) CCParticleSystemMode emitterMode;
 
 /** creates an initializes a CCParticleSystem from a plist file.
  This plist files can be creted manually or with Particle Designer:
@@ -448,17 +433,5 @@ typedef void (*CC_UPDATE_PARTICLE_IMP)(id, SEL, tCCParticle*, CGPoint);
 -(void) stopSystem;
 //! Kill all living particles.
 -(void) resetSystem;
-//! whether or not the system is full
--(BOOL) isFull;
-
-//! should be overriden by subclasses
--(void) updateQuadWithParticle:(tCCParticle*)particle newPosition:(CGPoint)pos;
-//! should be overriden by subclasses
--(void) postStep;
-
-//! called in every loop.
--(void) update: (ccTime) dt;
-
--(void) updateWithNoTime;
 
 @end

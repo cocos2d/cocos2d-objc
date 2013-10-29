@@ -215,6 +215,7 @@
 		B798D143181F469100E7BFCD /* CCLabelBMFont_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */; };
 		B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D1441820305400E7BFCD /* CCSprite_Private.h */; };
 		B798D14B182048A900E7BFCD /* CCSpriteBatchNode_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D14A182048A900E7BFCD /* CCSpriteBatchNode_Private.h */; };
+		B798D14D18204BEC00E7BFCD /* CCParticleSystem_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B798D14C18204BEC00E7BFCD /* CCParticleSystem_Private.h */; };
 		B79F905A17FE2A2E00908504 /* CCTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = B79F905817FE2A2E00908504 /* CCTableView.h */; };
 		B79F905B17FE2A2E00908504 /* CCTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = B79F905917FE2A2E00908504 /* CCTableView.m */; };
 		B7E260D818171D2000A0E872 /* CCTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = B7E260D618171D2000A0E872 /* CCTextField.h */; };
@@ -603,6 +604,7 @@
 		B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont_Private.h; sourceTree = "<group>"; };
 		B798D1441820305400E7BFCD /* CCSprite_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite_Private.h; sourceTree = "<group>"; };
 		B798D14A182048A900E7BFCD /* CCSpriteBatchNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteBatchNode_Private.h; sourceTree = "<group>"; };
+		B798D14C18204BEC00E7BFCD /* CCParticleSystem_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCParticleSystem_Private.h; sourceTree = "<group>"; };
 		B79F905817FE2A2E00908504 /* CCTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCTableView.h; path = "cocos2d-ui/CCTableView.h"; sourceTree = "<group>"; };
 		B79F905917FE2A2E00908504 /* CCTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCTableView.m; path = "cocos2d-ui/CCTableView.m"; sourceTree = "<group>"; };
 		B7C6237917EA7D8600928F91 /* cocos2d-ui.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "cocos2d-ui.h"; path = "cocos2d-ui/cocos2d-ui.h"; sourceTree = "<group>"; };
@@ -1015,6 +1017,7 @@
 				A0C20AC7144FDAF700D84B47 /* CCParticleBatchNode.m */,
 				504055AE0E3230BD00213FEF /* CCParticleExamples.h */,
 				504055AF0E3230BD00213FEF /* CCParticleExamples.m */,
+				B798D14C18204BEC00E7BFCD /* CCParticleSystem_Private.h */,
 			);
 			name = "Particle Nodes";
 			sourceTree = "<group>";
@@ -1465,6 +1468,7 @@
 				A09CEE9C150EB30D001E49B8 /* ccShader_PositionTexture_uColor_frag.h in Headers */,
 				A09CEE9D150EB30D001E49B8 /* ccShader_PositionTexture_uColor_vert.h in Headers */,
 				A09CEE9E150EB30D001E49B8 /* ccShader_PositionTexture_vert.h in Headers */,
+				B798D14D18204BEC00E7BFCD /* CCParticleSystem_Private.h in Headers */,
 				A09CEE9F150EB30D001E49B8 /* ccShader_PositionTextureA8Color_frag.h in Headers */,
 				A09CEEA0150EB30D001E49B8 /* ccShader_PositionTextureA8Color_vert.h in Headers */,
 				A09CEEA1150EB30D001E49B8 /* ccShader_PositionTextureColor_frag.h in Headers */,
