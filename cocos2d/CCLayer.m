@@ -55,22 +55,6 @@
 
 #endif // __CC_PLATFORM_IOS
 
-@implementation CCLayer
-
-- (id) init
-{
-    self = [super init];
-    
-    CCLOG(@"WARNING! CCLayer is depricated, use CCNode instead");
-    
-    return self;
-}
-
-@end
-
-#pragma mark - LayerRGBA
-
-
 #pragma mark -
 #pragma mark LayerColor
 
@@ -130,21 +114,6 @@
 {
 	CGSize s = [[CCDirector sharedDirector] winSize];
 	return [self initWithColor:color width:s.width height:s.height];
-}
-
-- (void) changeWidth: (GLfloat) w height:(GLfloat) h
-{
-	[self setContentSize:CGSizeMake(w, h)];
-}
-
--(void) changeWidth: (GLfloat) w
-{
-	[self setContentSize:CGSizeMake(w, _contentSize.height)];
-}
-
--(void) changeHeight: (GLfloat) h
-{
-	[self setContentSize:CGSizeMake(_contentSize.width, h)];
 }
 
 - (void) updateColor
@@ -351,13 +320,13 @@
 #pragma mark -
 #pragma mark MultiplexLayer
 
-@implementation CCLayerMultiplex
-+(id) layerWithArray:(NSArray *)arrayOfLayers
+@implementation CCNodeMultiplex
++(id) nodeWithArray:(NSArray *)arrayOfLayers
 {
 	return [[self alloc] initWithArray:arrayOfLayers];
 }
 
-+(id) layerWithLayers: (CCLayer*) layer, ...
++(id) nodeWithNodes: (CCNode*) layer, ...
 {
 	va_list args;
 	va_start(args,layer);
@@ -382,7 +351,7 @@
 	return self;
 }
 
--(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params
+-(id) initWithLayers: (CCNode*) layer vaList:(va_list) params
 {
 	if( (self=[super init]) ) {
 
@@ -390,10 +359,10 @@
 
 		[_layers addObject: layer];
 
-		CCLayer *l = va_arg(params,CCLayer*);
+		CCNode *l = va_arg(params,CCNode*);
 		while( l ) {
 			[_layers addObject: l];
-			l = va_arg(params,CCLayer*);
+			l = va_arg(params,CCNode*);
 		}
 
 		_enabledLayer = 0;
