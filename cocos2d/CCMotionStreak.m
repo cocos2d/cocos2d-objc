@@ -92,7 +92,7 @@
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 
         [self setTexture:texture];
-        [self setColor:color];
+        [super setColor:color];
     }
     return self;
 }
@@ -105,13 +105,13 @@
     _positionR = position;
 }
 
-- (void) tintWithColor:(ccColor3B)colors
+- (void) setColor:(ccColor3B)color
 {
-    [self setColor:colors];
+    [super setColor:color];
 
     // Fast assignation
     for(int i = 0; i<_nuPoints*2; i++)
-        *((ccColor3B*) (_colorPointer+i*4)) = colors;
+        *((ccColor3B*) (_colorPointer+i*4)) = color;
 }
 
 - (void) setOpacity:(GLubyte)opacity
