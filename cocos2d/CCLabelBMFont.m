@@ -46,6 +46,7 @@
 #import "Support/uthash.h"
 #import "CCLabelBMFont_Private.h"
 #import "CCSprite_Private.h"
+#import "CCSpriteBatchNode_Private.h"
 
 #pragma mark -
 #pragma mark FNTConfig Cache - free functions

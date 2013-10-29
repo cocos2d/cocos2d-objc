@@ -43,6 +43,7 @@
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
 #import "CCSprite_Private.h"
+#import "CCSpriteBatchNode_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"

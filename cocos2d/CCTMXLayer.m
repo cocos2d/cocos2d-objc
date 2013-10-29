@@ -39,6 +39,7 @@
 #import "Support/CGPointExtension.h"
 #import "CCNode_Private.h"
 #import "CCSprite_Private.h"
+#import "CCSpriteBatchNode_Private.h"
 
 
 #pragma mark -
