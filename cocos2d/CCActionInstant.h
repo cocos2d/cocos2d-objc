@@ -30,7 +30,7 @@
 /** Instant actions are immediate actions. They don't have a duration like
  the CCIntervalAction actions.
 */
-@interface CCActionInstant : CCFiniteTimeAction <NSCopying>
+@interface CCActionInstant : CCActionFiniteTime <NSCopying>
 {
 }
 // XXX Needed for BridgeSupport

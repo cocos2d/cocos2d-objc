@@ -67,7 +67,7 @@
 	// nothing
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [self copy];
 }
@@ -84,7 +84,7 @@
 	((CCNode *)_target).visible = YES;
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [CCHide action];
 }
@@ -101,7 +101,7 @@
 	((CCNode *)_target).visible = NO;
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [CCShow action];
 }
@@ -143,7 +143,7 @@
 	[(CCSprite*)_target setFlipX:_flipX];
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [CCFlipX actionWithFlipX:!_flipX];
 }
@@ -179,7 +179,7 @@
 	[(CCSprite*)_target setFlipY:_flipY];
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [CCFlipY actionWithFlipY:!_flipY];
 }
