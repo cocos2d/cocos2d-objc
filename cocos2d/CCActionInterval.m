@@ -116,7 +116,7 @@
 //
 #pragma mark - CCSequence
 @implementation CCSequence
-+(id) actions: (CCFiniteTimeAction*) action1, ...
++(id) actions: (CCActionFiniteTime*) action1, ...
 {
 	va_list args;
 	va_start(args, action1);
@@ -128,13 +128,13 @@
 	return  ret;
 }
 
-+(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
 {
-	CCFiniteTimeAction *now;
-	CCFiniteTimeAction *prev = action1;
+	CCActionFiniteTime *now;
+	CCActionFiniteTime *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(args,CCFiniteTimeAction*);
+		now = va_arg(args,CCActionFiniteTime*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
@@ -147,7 +147,7 @@
 
 +(id) actionWithArray: (NSArray*) actions
 {
-	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	CCActionFiniteTime *prev = [actions objectAtIndex:0];
 	
 	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
@@ -155,12 +155,12 @@
 	return prev;
 }
 
-+(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
++(id) actionOne: (CCActionFiniteTime*) one two: (CCActionFiniteTime*) two
 {
 	return [[self alloc] initOne:one two:two ];
 }
 
--(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
+-(id) initOne: (CCActionFiniteTime*) one two: (CCActionFiniteTime*) two
 {
 	NSAssert( one!=nil && two!=nil, @"Sequence: arguments must be non-nil");
 	NSAssert( one!=_actions[0] && one!=_actions[1], @"Sequence: re-init using the same parameters is not supported");
@@ -276,12 +276,12 @@
 @implementation CCRepeat
 @synthesize innerAction=_innerAction;
 
-+(id) actionWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
++(id) actionWithAction:(CCActionFiniteTime*)action times:(NSUInteger)times
 {
 	return [[self alloc] initWithAction:action times:times];
 }
 
--(id) initWithAction:(CCFiniteTimeAction*)action times:(NSUInteger)times
+-(id) initWithAction:(CCActionFiniteTime*)action times:(NSUInteger)times
 {
 	ccTime d = [action duration] * times;
 
@@ -380,7 +380,7 @@
 #pragma mark - CCSpawn
 
 @implementation CCSpawn
-+(id) actions: (CCFiniteTimeAction*) action1, ...
++(id) actions: (CCActionFiniteTime*) action1, ...
 {
 	va_list args;
 	va_start(args, action1);
@@ -391,13 +391,13 @@
 	return ret;
 }
 
-+(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args
 {
-	CCFiniteTimeAction *now;
-	CCFiniteTimeAction *prev = action1;
+	CCActionFiniteTime *now;
+	CCActionFiniteTime *prev = action1;
 	
 	while( action1 ) {
-		now = va_arg(args,CCFiniteTimeAction*);
+		now = va_arg(args,CCActionFiniteTime*);
 		if ( now )
 			prev = [self actionOne: prev two: now];
 		else
@@ -410,7 +410,7 @@
 
 +(id) actionWithArray: (NSArray*) actions
 {
-	CCFiniteTimeAction *prev = [actions objectAtIndex:0];
+	CCActionFiniteTime *prev = [actions objectAtIndex:0];
 
 	for (NSUInteger i = 1; i < [actions count]; i++)
 		prev = [self actionOne:prev two:[actions objectAtIndex:i]];
@@ -418,12 +418,12 @@
 	return prev;
 }
 
-+(id) actionOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
++(id) actionOne: (CCActionFiniteTime*) one two: (CCActionFiniteTime*) two
 {
 	return [[self alloc] initOne:one two:two ];
 }
 
--(id) initOne: (CCFiniteTimeAction*) one two: (CCFiniteTimeAction*) two
+-(id) initOne: (CCActionFiniteTime*) one two: (CCActionFiniteTime*) two
 {
 	NSAssert( one!=nil && two!=nil, @"Spawn: arguments must be non-nil");
 	NSAssert( one!=_one && one!=_two, @"Spawn: reinit using same parameters is not supported");
@@ -1308,14 +1308,14 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCReverseTime
 @implementation CCReverseTime
-+(id) actionWithAction: (CCFiniteTimeAction*) action
++(id) actionWithAction: (CCActionFiniteTime*) action
 {
 	// casting to prevent warnings
 	CCReverseTime *a = [self alloc];
 	return [a initWithAction:action];
 }
 
--(id) initWithAction: (CCFiniteTimeAction*) action
+-(id) initWithAction: (CCActionFiniteTime*) action
 {
 	NSAssert(action != nil, @"CCReverseTime: action should not be nil");
 	NSAssert(action != _other, @"CCReverseTime: re-init doesn't support using the same arguments");
@@ -1494,12 +1494,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 
 @synthesize forcedTarget = _forcedTarget;
 
-+ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action
++ (id) actionWithTarget:(id) target action:(CCActionFiniteTime*) action
 {
 	return [ (CCTargetedAction*)[self alloc] initWithTarget:target action:action];
 }
 
-- (id) initWithTarget:(id) targetIn action:(CCFiniteTimeAction*) actionIn
+- (id) initWithTarget:(id) targetIn action:(CCActionFiniteTime*) actionIn
 {
 	if((self = [super initWithDuration:actionIn.duration]))
 	{

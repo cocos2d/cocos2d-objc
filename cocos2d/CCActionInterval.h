@@ -47,7 +47,7 @@ Example:
 
 	CCAction * pingPongAction = [CCSequence actions: action, [action reverse], nil];
 */
-@interface CCActionInterval: CCFiniteTimeAction <NSCopying>
+@interface CCActionInterval: CCActionFiniteTime <NSCopying>
 {
 	ccTime	_elapsed;
 	BOOL	_firstTick;
@@ -70,20 +70,20 @@ Example:
  */
 @interface CCSequence : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *_actions[2];
+	CCActionFiniteTime *_actions[2];
 	ccTime _split;
 	int _last;
 }
 /** helper constructor to create an array of sequence-able actions */
-+(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(id) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** helper constructor to create an array of sequence-able actions */
-+(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list) args;
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list) args;
 /** helper constructor to create an array of sequence-able actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the action */
-+(id) actionOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
++(id) actionOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
 /** initializes the action */
--(id) initOne:(CCFiniteTimeAction*)actionOne two:(CCFiniteTimeAction*)actionTwo;
+-(id) initOne:(CCActionFiniteTime*)actionOne two:(CCActionFiniteTime*)actionTwo;
 @end
 
 
@@ -96,36 +96,36 @@ Example:
 	NSUInteger _total;
 	ccTime _nextDt;
 	BOOL _isActionInstant;
-	CCFiniteTimeAction *_innerAction;
+	CCActionFiniteTime *_innerAction;
 }
 
 /** Inner action */
-@property (nonatomic,readwrite,strong) CCFiniteTimeAction *innerAction;
+@property (nonatomic,readwrite,strong) CCActionFiniteTime *innerAction;
 
 /** creates a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT.
  */
-+(id) actionWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
++(id) actionWithAction:(CCActionFiniteTime*)action times: (NSUInteger)times;
 /** initializes a CCRepeat action. Times is an unsigned integer between 1 and MAX_UINT */
--(id) initWithAction:(CCFiniteTimeAction*)action times: (NSUInteger)times;
+-(id) initWithAction:(CCActionFiniteTime*)action times: (NSUInteger)times;
 @end
 
 /** Spawn a new action immediately
  */
 @interface CCSpawn : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction *_one;
-	CCFiniteTimeAction *_two;
+	CCActionFiniteTime *_one;
+	CCActionFiniteTime *_two;
 }
 /** helper constructor to create an array of spawned actions */
-+(id) actions: (CCFiniteTimeAction*) action1, ... NS_REQUIRES_NIL_TERMINATION;
++(id) actions: (CCActionFiniteTime*) action1, ... NS_REQUIRES_NIL_TERMINATION;
 /** helper constructor to create an array of spawned actions */
-+(id) actions: (CCFiniteTimeAction*) action1 vaList:(va_list)args;
++(id) actions: (CCActionFiniteTime*) action1 vaList:(va_list)args;
 /** helper constructor to create an array of spawned actions given an array */
 +(id) actionWithArray: (NSArray*) arrayOfActions;
 /** creates the Spawn action */
-+(id) actionOne: (CCFiniteTimeAction*) one two:(CCFiniteTimeAction*) two;
++(id) actionOne: (CCActionFiniteTime*) one two:(CCActionFiniteTime*) two;
 /** initializes the Spawn action with the 2 actions to spawn */
--(id) initOne: (CCFiniteTimeAction*) one two:(CCFiniteTimeAction*) two;
+-(id) initOne: (CCActionFiniteTime*) one two:(CCActionFiniteTime*) two;
 @end
 
 /**  Rotates a CCNode object to a certain angle by modifying it's
@@ -424,12 +424,12 @@ typedef struct _ccBezierConfig {
 */
 @interface CCReverseTime : CCActionInterval <NSCopying>
 {
-	CCFiniteTimeAction * _other;
+	CCActionFiniteTime * _other;
 }
 /** creates the action */
-+(id) actionWithAction: (CCFiniteTimeAction*) action;
++(id) actionWithAction: (CCActionFiniteTime*) action;
 /** initializes the action */
--(id) initWithAction: (CCFiniteTimeAction*) action;
+-(id) initWithAction: (CCActionFiniteTime*) action;
 @end
 
 
@@ -459,15 +459,15 @@ typedef struct _ccBezierConfig {
 @interface CCTargetedAction : CCActionInterval <NSCopying>
 {
 	id _forcedTarget;
-	CCFiniteTimeAction* _action;
+	CCActionFiniteTime* _action;
 }
 /** This is the target that the action will be forced to run with */
 @property(readwrite,nonatomic,strong) id forcedTarget;
 
 /** Create an action with the specified action and forced target */
-+ (id) actionWithTarget:(id) target action:(CCFiniteTimeAction*) action;
++ (id) actionWithTarget:(id) target action:(CCActionFiniteTime*) action;
 
 /** Init an action with the specified action and forced target */
-- (id) initWithTarget:(id) target action:(CCFiniteTimeAction*) action;
+- (id) initWithTarget:(id) target action:(CCActionFiniteTime*) action;
 
 @end
