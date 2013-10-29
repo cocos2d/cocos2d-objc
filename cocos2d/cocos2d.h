@@ -48,7 +48,7 @@
 //
 #import "ccConfig.h"	// should be included first
 
-#import "CCActionManager.h"
+//#import "CCActionManager.h"
 #import "CCAction.h"
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
