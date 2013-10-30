@@ -38,18 +38,19 @@
 
 //MARK: Basic Properties:
 
+/// Mass of this individual shape.
 @property(nonatomic, assign) CGFloat mass;
-/// Surface friction of the physics body.
+/// Surface friction of the shape.
 /// When two objects collide, their friction is multiplied together.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
 /// Defaults to 0.7.
 @property(nonatomic, assign) CGFloat friction;
-/// Surface friction of the physics body.
+/// Surface friction of the shape.
 /// When two objects collide, their elaticity is multiplied together.
 /// The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
 /// Defaults to 0.2.
 @property(nonatomic, assign) CGFloat elasticity;
-/// Velocity of the surface of the object relative to it's normal velocity.
+/// Velocity of the surface of the shape relative to it's normal velocity.
 /// This is useful for modeling conveyor belts or the feet of a player character.
 /// The calculated surface velocity of two colliding shapes by default only affects their friction.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
@@ -61,21 +62,21 @@
 /// Sensors call collision delegate methods, but don't cause collisions between bodies.
 /// Defaults to NO.
 @property(nonatomic, assign) BOOL sensor;
-/// If two physics bodies share the same group identifier, then they don't collide.
+/// If two shapes share the same group identifier, then they don't collide.
 /// Defaults to nil.
 @property(nonatomic, assign) id collisionGroup;
-/// A string that identifies which collision pair delegate method should be called.
+/// A string that identifies which collision pair delegate method should be called when this shape collides.
 /// Defaults to @"default".
 @property(nonatomic, copy) NSString *collisionType;
-/// An array of NSStrings of category names this physics body is a member of.
+/// An array of NSStrings of category names this shape is a member of.
 /// Up to 32 categories can be used in a single scene.
-/// The default value is nil, which means the physics body exists in all categories.
+/// The default value is nil, which means the shape exists in all categories.
 @property(nonatomic, copy) NSArray *collisionCategories;
-/// An array of NSStrings of category names this physics body will collide with.
-/// The default value is nil, which means the physics body collides with all categories.
+/// An array of NSStrings of category names this shape will collide with.
+/// The default value is nil, which means the shape collides with all categories.
 @property(nonatomic, copy) NSArray *collisionMask;
 
-/// The CCNode this physics shape is attached to.
+/// The CCNode this shape is attached to.
 @property(nonatomic, readonly) CCNode *node;
 
 @end

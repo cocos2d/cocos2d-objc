@@ -27,15 +27,24 @@
 
 @interface CCPhysicsJoint : NSObject
 
-+(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor;
+/// Connect a pivot joint between the two bodies.
+/// The pivot point is specified in the coordinates of the node that bodyA is attached to.
++(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA;
 
+/// Connect a joint between the two bodies that keeps the distance of the two anchor points constant.
+/// The anchor points are specified in the coordinates of the node that the bodies are attached to.
+/// The distance is calculated when the joint becomes active.
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB;
 
+/// Connect a joint between the two bodies that keeps the distance of the two anchor points within a range.
+/// The anchor points are specified in the coordinates of the node that the bodies are attached to.
 +(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 	minDistance:(CGFloat)min maxDistance:(CGFloat)max;
 
+/// Connect a spring between the two bodies at the specified anchor points.
+/// The anchor points are specified in the coordinates of the node that the bodies are attached to.
 +(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
 	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
 	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
@@ -62,8 +71,7 @@
 ///// Defaults to INFINITY.
 //@property(nonatomic, assign) CGFloat breakingForce;
 
+/// Disable the joint and remove it from the simulation.
 -(void)invalidate;
 
 @end
-
-// TODO Joint subclasses.

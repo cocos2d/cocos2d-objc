@@ -28,6 +28,9 @@
 #import "CCPhysicsJoint.h"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
+// In the future, this header will be useful for writing your own Objective-Chipmunk
+// code to interact with CCPhysics. For now, it's not very well documented on how to do it.
+// Do ask questions on the Cocos2D forums if you are interested in learning how.
 
 /*
 	Things to consider:
