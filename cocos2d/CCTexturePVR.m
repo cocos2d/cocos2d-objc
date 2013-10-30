@@ -301,7 +301,7 @@ typedef struct {
 		CCLOGWARN(@"cocos2d: WARNING: Image is flipped. Regenerate it using PVRTexTool");
 
 	if( ! [configuration supportsNPOT] &&
-	   ( header->width != ccNextPOT(header->width) || header->height != ccNextPOT(header->height ) ) ) {
+	   ( header->width != CCNextPOT(header->width) || header->height != CCNextPOT(header->height ) ) ) {
 		CCLOGWARN(@"cocos2d: ERROR: Loding an NPOT texture (%dx%d) but is not supported on this device", header->width, header->height);
 		return NO;
 	}
@@ -546,7 +546,7 @@ typedef struct {
 		else
 			glTexImage2D(GL_TEXTURE_2D, i, internalFormat, width, height, 0, format, type, data);
 
-		if( i > 0 && (width != height || ccNextPOT(width) != width ) )
+		if( i > 0 && (width != height || CCNextPOT(width) != width ) )
 			CCLOGWARN(@"cocos2d: TexturePVR. WARNING. Mipmap level %u is not squared. Texture won't render correctly. width=%u != height=%u", i, width, height);
 
 		err = glGetError();
@@ -626,7 +626,7 @@ typedef struct {
 			}
 
 			
-			else if( _width != ccNextPOT(_width) ) {
+			else if( _width != CCNextPOT(_width) ) {
 				
 				// XXX: Is this applicable for compressed textures ?
 				// Since they are squared and POT (PVRv2) it is not an issue now. Not sure in the future.

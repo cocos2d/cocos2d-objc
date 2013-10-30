@@ -614,7 +614,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     dimensions.height = ceilf(dimensions.height/2)*2;
     
     // get nearest power of two
-    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+    CGSize POTSize = CGSizeMake(CCNextPOT(dimensions.width), CCNextPOT(dimensions.height));
     
 	// Mac crashes if the width or height is 0
 	if( POTSize.width == 0 )
@@ -957,7 +957,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     dimensions.height = ceilf(dimensions.height/2)*2;
 
     // get nearest power of two
-    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+    CGSize POTSize = CGSizeMake(CCNextPOT(dimensions.width), CCNextPOT(dimensions.height));
 
     // Mac crashes if the width or height is 0
     if( POTSize.width == 0 )
