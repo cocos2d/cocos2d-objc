@@ -29,15 +29,15 @@
 #import "../ccTypes.h"
 
 // keys used for the suffix or directory dictionaries
-extern NSString const *kCCFileUtilsDefault;
-extern NSString const *kCCFileUtilsiPad;
-extern NSString const *kCCFileUtilsiPadHD;
-extern NSString const *kCCFileUtilsiPhone;
-extern NSString const *kCCFileUtilsiPhoneHD;
-extern NSString const *kCCFileUtilsiPhone5;
-extern NSString const *kCCFileUtilsiPhone5HD;
-extern NSString const *kCCFileUtilsMac;
-extern NSString const *kCCFileUtilsMacHD;
+extern NSString const *CCFileUtilsSuffixDefault;
+extern NSString const *CCFileUtilsSuffixiPad;
+extern NSString const *CCFileUtilsSuffixiPadHD;
+extern NSString const *CCFileUtilsSuffixiPhone;
+extern NSString const *CCFileUtilsSuffixiPhoneHD;
+extern NSString const *CCFileUtilsSuffixiPhone5;
+extern NSString const *CCFileUtilsSuffixiPhone5HD;
+extern NSString const *CCFileUtilsSuffixMac;
+extern NSString const *CCFileUtilsSuffixMacHD;
 
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 
