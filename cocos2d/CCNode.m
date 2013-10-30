@@ -558,7 +558,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     if (visible == _visible) return;
     
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
     _visible = visible;
@@ -649,7 +649,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
     
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
@@ -741,7 +741,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[c setParent:nil];
         
         /** mark responder manager as dirty
-         @since v2.5
+         @since v3.0
          */
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -773,7 +773,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[child setParent:nil];
 
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -843,7 +843,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		_isReorderChildDirty = NO;
         
         /** mark responder manager as dirty
-         @since v2.5
+         @since v3.0
          */
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -1433,7 +1433,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 /** Returns YES, if touch is inside sprite
  Added hit area expansion / contraction
- @since v2.5
+ @since v3.0
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {

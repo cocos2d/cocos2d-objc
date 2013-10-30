@@ -169,7 +169,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
  *  Creates a sprite frame from the texture.
  *
  *  @return A new sprite frame.
- *  @since v2.5
+ *  @since v3.0
  */
 -(CCSpriteFrame*) createSpriteFrame;
 
