@@ -466,17 +466,17 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	// iPad ?
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPad];
+			[tex setResolutionType:CCResolutionTypeiPad];
 	}
 	// iPhone ?
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPhone];
+			[tex setResolutionType:CCResolutionTypeiPhone];
 	}
 #endif
 	
@@ -819,17 +819,17 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPad];
+			[tex setResolutionType:CCResolutionTypeiPad];
 	}
 	// iPhone ?
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPhone];
+			[tex setResolutionType:CCResolutionTypeiPhone];
 	}
     
     // Update texture and content size

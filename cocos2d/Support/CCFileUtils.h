@@ -246,7 +246,7 @@ enum {
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
  
  */
--(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
+-(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType;
 
 /** Returns the fullpath of an filename without taking into account the screen resolution suffixes or directories.
 
@@ -301,7 +301,7 @@ enum {
  
  @since v2.1
  */
--(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(ccResolutionType*)resolutionType;
+-(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(CCResolutionType*)resolutionType;
 
 /** Returns the fullpath for a given filename, without taking into account device resolution.
  

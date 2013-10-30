@@ -171,7 +171,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
         
         _antialiased = YES;
 
-		_resolutionType = kCCResolutionUnknown;
+		_resolutionType = CCResolutionTypeUnknown;
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 	}
 	return self;
@@ -233,7 +233,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture (Image)
 
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(CCResolutionType)resolution
 {
 	NSUInteger				textureWidth, textureHeight;
 	CGContextRef			context = nil;
@@ -468,7 +468,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
-	ccResolutionType resolution;
+	CCResolutionType resolution;
 	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath resolutionType:&resolution];
 
 	if( (self = [super init]) ) {

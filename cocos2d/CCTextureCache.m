@@ -280,7 +280,7 @@ static CCTextureCache *sharedTextureCache;
 
 	if( ! tex ) {
 
-		ccResolutionType resolution;
+		CCResolutionType resolution;
 		NSString *fullpath = [fileUtils fullPathForFilename:path resolutionType:&resolution];
 		if( ! fullpath ) {
 			CCLOG(@"cocos2d: Couldn't find file:%@", path);
@@ -353,7 +353,7 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 
-	tex = [[CCTexture alloc] initWithCGImage:imageref resolutionType:kCCResolutionUnknown];
+	tex = [[CCTexture alloc] initWithCGImage:imageref resolutionType:CCResolutionTypeUnknown];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{

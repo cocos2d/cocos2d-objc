@@ -333,30 +333,30 @@ static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 typedef enum
 {
 	//! Unknown resolution type
-	kCCResolutionUnknown,
+	CCResolutionTypeUnknown,
 #ifdef __CC_PLATFORM_IOS
 	//! iPhone resolution type
-	kCCResolutioniPhone,
+	CCResolutionTypeiPhone,
 	//! iPhone RetinaDisplay resolution type
-	kCCResolutioniPhoneRetinaDisplay,
+	CCResolutionTypeiPhoneRetinaDisplay,
 	//! iPhone5 resolution type
-	kCCResolutioniPhone5,
+	CCResolutionTypeiPhone5,
 	//! iPhone 5 RetinaDisplay resolution type
-	kCCResolutioniPhone5RetinaDisplay,
+	CCResolutionTypeiPhone5RetinaDisplay,
 	//! iPad resolution type
-	kCCResolutioniPad,
+	CCResolutionTypeiPad,
 	//! iPad Retina Display resolution type
-	kCCResolutioniPadRetinaDisplay,
+	CCResolutionTypeiPadRetinaDisplay,
 	
 #elif defined(__CC_PLATFORM_MAC)
 	//! Mac resolution type
-	kCCResolutionMac,
+	CCResolutionTypeMac,
 
 	//! Mac RetinaDisplay resolution type
-	kCCResolutionMacRetinaDisplay,
+	CCResolutionTypeMacRetinaDisplay,
 #endif // platform
 
-} ccResolutionType;
+} CCResolutionType;
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
