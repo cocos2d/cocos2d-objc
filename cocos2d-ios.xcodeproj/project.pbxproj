@@ -82,8 +82,6 @@
 		509D0818101E4FCE007E1749 /* CCTiledMap.h in Headers */ = {isa = PBXBuildFile; fileRef = 509D0816101E4FCE007E1749 /* CCTiledMap.h */; };
 		509D0819101E4FCE007E1749 /* CCTiledMap.m in Sources */ = {isa = PBXBuildFile; fileRef = 509D0817101E4FCE007E1749 /* CCTiledMap.m */; };
 		50A07B7B0E4CBCD300AAF0BB /* cocos2d.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */; };
-		50A24E110F377E8E007CAEB0 /* CCGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = 50A24E090F377E8E007CAEB0 /* CCGrabber.h */; };
-		50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = 50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */; };
 		50B2CCCE0E119B8E00AE9530 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = 50B2CCC20E119B8E00AE9530 /* CCDrawingPrimitives.h */; };
 		50B2CCCF0E119B8E00AE9530 /* CCDrawingPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = 50B2CCC30E119B8E00AE9530 /* CCDrawingPrimitives.m */; };
 		50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 50BAF3970F33CCD8003F654C /* ccMacros.h */; };
@@ -418,8 +416,6 @@
 		509D0816101E4FCE007E1749 /* CCTiledMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTiledMap.h; sourceTree = "<group>"; };
 		509D0817101E4FCE007E1749 /* CCTiledMap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTiledMap.m; sourceTree = "<group>"; };
 		50A07B7A0E4CBCD300AAF0BB /* cocos2d.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = cocos2d.m; sourceTree = "<group>"; };
-		50A24E090F377E8E007CAEB0 /* CCGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGrabber.h; sourceTree = "<group>"; };
-		50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGrabber.m; sourceTree = "<group>"; };
 		50A29DEF1153D9CE00D87F08 /* ANNOUNCE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ANNOUNCE; sourceTree = "<group>"; };
 		50A29DF01153D9CE00D87F08 /* CHANGES */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGES; sourceTree = "<group>"; };
 		50A29DF41153D9CF00D87F08 /* INSTALL */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = INSTALL; sourceTree = "<group>"; };
@@ -803,7 +799,6 @@
 				A0D7D9D415E2E737000CA0C4 /* Physics */,
 				50EA8DA011354A6000746D2A /* Misc Nodes */,
 				50A24E770F3780A2007CAEB0 /* Actions */,
-				50A24E760F378092007CAEB0 /* Effects */,
 				50E1355310ADEA9400C9E7FA /* Textures */,
 				501CCFA30E99657C00B86F68 /* Support */,
 				E0BC7DA11342CE83001B4DCC /* Shaders */,
@@ -974,15 +969,6 @@
 				B798D142181F469100E7BFCD /* CCLabelBMFont_Private.h */,
 			);
 			name = "Label Nodes";
-			sourceTree = "<group>";
-		};
-		50A24E760F378092007CAEB0 /* Effects */ = {
-			isa = PBXGroup;
-			children = (
-				50A24E090F377E8E007CAEB0 /* CCGrabber.h */,
-				50A24E0A0F377E8E007CAEB0 /* CCGrabber.m */,
-			);
-			name = Effects;
 			sourceTree = "<group>";
 		};
 		50A24E770F3780A2007CAEB0 /* Actions */ = {
@@ -1405,7 +1391,6 @@
 				B798D1451820305400E7BFCD /* CCSprite_Private.h in Headers */,
 				50BAF3990F33CCD8003F654C /* ccMacros.h in Headers */,
 				B798D13D181F2E4500E7BFCD /* CCNode_Private.h in Headers */,
-				50A24E110F377E8E007CAEB0 /* CCGrabber.h in Headers */,
 				509A79970F6188420032F449 /* CCSprite.h in Headers */,
 				50C508C60F7C194400799124 /* CCFileUtils.h in Headers */,
 				503798C60F912C2000986724 /* CGPointExtension.h in Headers */,
@@ -1744,7 +1729,6 @@
 				501CCFB40E99657C00B86F68 /* TGAlib.m in Sources */,
 				B7E260D918171D2000A0E872 /* CCTextField.m in Sources */,
 				50F7B2790F28DE7C00057537 /* CCActionEase.m in Sources */,
-				50A24E120F377E8E007CAEB0 /* CCGrabber.m in Sources */,
 				D3A2E7D3181E12750033614C /* CCPhysicsShape.m in Sources */,
 				B7EE6A1F181AE34600B983FE /* CCSlider.m in Sources */,
 				509A79980F6188420032F449 /* CCSprite.m in Sources */,

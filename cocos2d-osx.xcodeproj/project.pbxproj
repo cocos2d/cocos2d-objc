@@ -166,8 +166,6 @@
 		E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6421225EC7400DE0DA2 /* CCAtlasNode.m */; };
 		E076E6F41225EC7400DE0DA2 /* CCDrawingPrimitives.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E64E1225EC7400DE0DA2 /* CCDrawingPrimitives.h */; };
 		E076E6F51225EC7400DE0DA2 /* CCDrawingPrimitives.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E64F1225EC7400DE0DA2 /* CCDrawingPrimitives.m */; };
-		E076E6F61225EC7400DE0DA2 /* CCGrabber.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6501225EC7400DE0DA2 /* CCGrabber.h */; };
-		E076E6F71225EC7400DE0DA2 /* CCGrabber.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6511225EC7400DE0DA2 /* CCGrabber.m */; };
 		E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */; };
 		E076E6FB1225EC7400DE0DA2 /* CCLabelAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */; };
 		E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */; };
@@ -542,8 +540,6 @@
 		E076E64D1225EC7400DE0DA2 /* CCDirector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDirector.m; sourceTree = "<group>"; };
 		E076E64E1225EC7400DE0DA2 /* CCDrawingPrimitives.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDrawingPrimitives.h; sourceTree = "<group>"; };
 		E076E64F1225EC7400DE0DA2 /* CCDrawingPrimitives.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCDrawingPrimitives.m; sourceTree = "<group>"; };
-		E076E6501225EC7400DE0DA2 /* CCGrabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCGrabber.h; sourceTree = "<group>"; };
-		E076E6511225EC7400DE0DA2 /* CCGrabber.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCGrabber.m; sourceTree = "<group>"; };
 		E076E6541225EC7400DE0DA2 /* CCLabelAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelAtlas.h; sourceTree = "<group>"; };
 		E076E6551225EC7400DE0DA2 /* CCLabelAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCLabelAtlas.m; sourceTree = "<group>"; };
 		E076E6561225EC7400DE0DA2 /* CCLabelBMFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCLabelBMFont.h; sourceTree = "<group>"; };
@@ -1353,7 +1349,6 @@
 				E076E7781225ECC900DE0DA2 /* Layer, Scene & Transition Nodes */,
 				E076E7791225ECF700DE0DA2 /* Misc Nodes */,
 				E076E7711225EC8100DE0DA2 /* Actions */,
-				E076E77A1225ED0200DE0DA2 /* Effects */,
 				E076E7761225ECB800DE0DA2 /* Textures */,
 				E076E69F1225EC7400DE0DA2 /* Platforms */,
 				E076E6B81225EC7400DE0DA2 /* Support */,
@@ -1575,15 +1570,6 @@
 			name = "Misc Nodes";
 			sourceTree = "<group>";
 		};
-		E076E77A1225ED0200DE0DA2 /* Effects */ = {
-			isa = PBXGroup;
-			children = (
-				E076E6501225EC7400DE0DA2 /* CCGrabber.h */,
-				E076E6511225EC7400DE0DA2 /* CCGrabber.m */,
-			);
-			name = Effects;
-			sourceTree = "<group>";
-		};
 		E076E77B1225ED1100DE0DA2 /* Base Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1692,7 +1678,6 @@
 				E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */,
 				B798D1511820593B00E7BFCD /* CCParticleSystemQuad_Private.h in Headers */,
 				E076E6F41225EC7400DE0DA2 /* CCDrawingPrimitives.h in Headers */,
-				E076E6F61225EC7400DE0DA2 /* CCGrabber.h in Headers */,
 				E076E6FA1225EC7400DE0DA2 /* CCLabelAtlas.h in Headers */,
 				E076E6FC1225EC7400DE0DA2 /* CCLabelBMFont.h in Headers */,
 				E076E6FE1225EC7400DE0DA2 /* CCLabelTTF.h in Headers */,
@@ -1897,7 +1882,6 @@
 				E076E6E61225EC7400DE0DA2 /* CCActionTween.m in Sources */,
 				E076E6E81225EC7400DE0DA2 /* CCAtlasNode.m in Sources */,
 				E076E6F51225EC7400DE0DA2 /* CCDrawingPrimitives.m in Sources */,
-				E076E6F71225EC7400DE0DA2 /* CCGrabber.m in Sources */,
 				E076E6FB1225EC7400DE0DA2 /* CCLabelAtlas.m in Sources */,
 				E076E6FD1225EC7400DE0DA2 /* CCLabelBMFont.m in Sources */,
 				E076E6FF1225EC7400DE0DA2 /* CCLabelTTF.m in Sources */,
