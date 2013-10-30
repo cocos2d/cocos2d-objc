@@ -80,15 +80,15 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 @interface CCCacheValue : NSObject
 {
 	NSString			*_fullpath;
-	ccResolutionType	_resolutionType;
+	CCResolutionType	_resolutionType;
 }
 @property (nonatomic, readwrite, strong) NSString *fullpath;
-@property (nonatomic, readwrite ) ccResolutionType resolutionType;
+@property (nonatomic, readwrite ) CCResolutionType resolutionType;
 @end
 
 @implementation CCCacheValue
 @synthesize fullpath = _fullpath, resolutionType = _resolutionType;
--(id) initWithFullPath:(NSString*)path resolutionType:(ccResolutionType)resolutionType
+-(id) initWithFullPath:(NSString*)path resolutionType:(CCResolutionType)resolutionType
 {
 	if( (self=[super init]) )
 	{
@@ -368,7 +368,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return ret;
 }
 
--(ccResolutionType) resolutionTypeForKey:(NSString*)k inDictionary:dictionary
+-(CCResolutionType) resolutionTypeForKey:(NSString*)k inDictionary:dictionary
 {
 	// XXX XXX Super Slow
 	for( NSString *key in dictionary) {
@@ -378,31 +378,31 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 #ifdef __CC_PLATFORM_IOS
 			// XXX Add this in a Dictionary
 			if( [key isEqualToString:kCCFileUtilsiPad] )
-				return kCCResolutioniPad;
+				return CCResolutionTypeiPad;
 			if( [key isEqualToString:kCCFileUtilsiPadHD] )
-				return kCCResolutioniPadRetinaDisplay;
+				return CCResolutionTypeiPadRetinaDisplay;
 			if( [key isEqualToString:kCCFileUtilsiPhone] )
-				return kCCResolutioniPhone;
+				return CCResolutionTypeiPhone;
 			if( [key isEqualToString:kCCFileUtilsiPhoneHD] )
-				return kCCResolutioniPhoneRetinaDisplay;
+				return CCResolutionTypeiPhoneRetinaDisplay;
 			if( [key isEqualToString:kCCFileUtilsiPhone5HD] )
-				return kCCResolutioniPhone5RetinaDisplay;
+				return CCResolutionTypeiPhone5RetinaDisplay;
 			if( [key isEqualToString:kCCFileUtilsiPhone5] )
-				return kCCResolutioniPhone5;
+				return CCResolutionTypeiPhone5;
 			if( [key isEqualToString:kCCFileUtilsDefault] )
-				return kCCResolutionUnknown;
+				return CCResolutionTypeUnknown;
 #elif defined(__CC_PLATFORM_MAC)
 			if( [key isEqualToString:kCCFileUtilsMacHD] )
 				return kCCResolutionMacRetinaDisplay;
 			if( [key isEqualToString:kCCFileUtilsMac] )
 				return kCCResolutionMac;
 			if( [key isEqualToString:kCCFileUtilsDefault] )
-				return kCCResolutionUnknown;
+				return CCResolutionTypeUnknown;
 #endif // __CC_PLATFORM_MAC
 		}
 	}
 //	NSAssert(NO, @"Should not reach here");
-	return kCCResolutionUnknown;
+	return CCResolutionTypeUnknown;
 }
 
 
@@ -461,16 +461,16 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) fullPathForFilename:(NSString*)filename
 {
-	ccResolutionType ignore;
+	CCResolutionType ignore;
 	return [self fullPathForFilename:filename resolutionType:&ignore];
 }
 
--(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(ccResolutionType*)resolutionType
+-(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(CCResolutionType*)resolutionType
 {
 	// fullpath? return it
 	if ([filename isAbsolutePath]) {
 		//CCLOGWARN(@"cocos2d: WARNING fullPathForFilename:resolutionType: should not be called with absolute path. Instead call fullPathForFilenameIgnoringResolutions:");
-		*resolutionType = kCCResolutionUnknown;
+		*resolutionType = CCResolutionTypeUnknown;
 		return filename;
 	}
 
@@ -533,7 +533,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	return ret;
 }
 
--(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
+-(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType
 {
 	NSAssert(relPath != nil, @"CCFileUtils: Invalid path");
 
@@ -548,7 +548,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 -(NSString*) fullPathFromRelativePath:(NSString*) relPath
 {
-	ccResolutionType ignore;
+	CCResolutionType ignore;
 	return [self fullPathFromRelativePath:relPath resolutionType:&ignore];
 }
 

@@ -62,8 +62,8 @@
 // ccTypes.h
 #ifdef __CC_PLATFORM_IOS
 enum {
-	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
-	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = kCCResolutioniPhoneRetinaDisplay,
+	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= CCResolutionTypeiPhone,
+	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = CCResolutionTypeiPhoneRetinaDisplay,
 };
 #endif // __CC_PLATFORM_IOS
 
@@ -205,7 +205,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 // new: -(NSString*) fullPathFromRelativePath:  (instance method, not class method)
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath DEPRECATED_ATTRIBUTE;
 // new: -(NSString*) fullPathFromRelativePath:resolutionType  (instance method, not class method)
-+(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
 
 #ifdef __CC_PLATFORM_IOS
 // new: -(NSString*) removeSuffixFromFile:  (instance method, not class method)

@@ -255,7 +255,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath];
 }
 
-+(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType
 {
 	return [[self sharedFileUtils] fullPathFromRelativePath:relPath resolutionType:resolutionType];
 }
