@@ -102,10 +102,13 @@
 @property(nonatomic, readonly) BOOL isRunning;
 
 /// Add the joint to the physics node, but only if both connected bodies are running.
--(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform;
+-(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode;
+
+/// Remove the joint from the physics node, but only if the joint is added;
+-(void)tryRemoveFromPhysicsNode:(CCPhysicsNode *)physicsNode;
 
 /// Used for deferring collision type setup until there is access to the physics node.
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
 
