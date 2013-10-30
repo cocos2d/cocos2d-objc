@@ -165,7 +165,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCAnimate (Deprecated)
+@interface CCActionAnimate (Deprecated)
 // new: actionWithAnimation:
 +(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 // new: actiontWithAnimation:
@@ -176,12 +176,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCSequence (Deprecated)
+@interface CCActionSequence (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCSpawn (Deprecated)
+@interface CCActionSpawn (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
 @end

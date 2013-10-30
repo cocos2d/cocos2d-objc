@@ -167,7 +167,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #pragma mark - Animate
 
-@implementation CCAnimate (Deprecated)
+@implementation CCActionAnimate (Deprecated)
 +(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	CCAnimation *anim = [animation copy];
@@ -202,7 +202,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #pragma mark - Sequence
 
-@implementation CCSequence (Deprecated)
+@implementation CCActionSequence (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions
 {
@@ -212,7 +212,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #pragma mark - Spawn
 
-@implementation CCSpawn (Deprecated)
+@implementation CCActionSpawn (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions
 {
