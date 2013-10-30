@@ -90,7 +90,7 @@
 #import "CCLayer.h"
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
-#import "CCScheduler.h"
+//#import "CCScheduler.h"
 #import "CCProtocols.h"
 #import "CCNode.h"
 #import "CCNode+Debug.h"
