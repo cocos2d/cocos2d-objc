@@ -134,7 +134,7 @@
 /// nil and @"default" both return the value nil.
 -(NSString *)internString:(NSString *)string;
 
-/// Retain and track a category identifier and return it's index.
+/// Retain and track a category identifier and return its index.
 /// Up to 32 categories can be tracked for a space.
 -(NSUInteger)indexForCategory:(NSString *)category;
 

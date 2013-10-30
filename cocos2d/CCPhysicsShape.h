@@ -50,7 +50,7 @@
 /// The calculated value can be ovrriden in a CCCollisionPairDelegate pre-solve method.
 /// Defaults to 0.2.
 @property(nonatomic, assign) CGFloat elasticity;
-/// Velocity of the surface of the shape relative to it's normal velocity.
+/// Velocity of the surface of the shape relative to its normal velocity.
 /// This is useful for modeling conveyor belts or the feet of a player character.
 /// The calculated surface velocity of two colliding shapes by default only affects their friction.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
@@ -68,7 +68,7 @@
 /// A string that identifies which collision pair delegate method should be called when this shape collides.
 /// Defaults to @"default".
 @property(nonatomic, copy) NSString *collisionType;
-/// An array of NSStrings of category names this shape is a member of.
+/// An array of NSStrings of category names of which this shape is a member of.
 /// Up to 32 categories can be used in a single scene.
 /// The default value is nil, which means the shape exists in all categories.
 @property(nonatomic, copy) NSArray *collisionCategories;
