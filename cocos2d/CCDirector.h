@@ -181,7 +181,7 @@ and when to execute the Scenes.
 @property (nonatomic, readonly) ccTime secondsPerFrame;
 
 /** Sets the touch manager
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, strong ) CCResponderManager* responderManager;
 
@@ -191,7 +191,7 @@ and when to execute the Scenes.
 @property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
 
 /** Position scaling factor, default is 2 for tablets and 1 for phones. Positions and content sizes are scale by this factor if the position type is set to scale.
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic,readwrite,assign) float positionScaleFactor;
 
@@ -263,7 +263,7 @@ and when to execute the Scenes.
  *
  *  @param scene      The incoming scene
  *  @param transition The transition to perform
- *  @since v2.5
+ *  @since v3.0
  */
 - (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -272,7 +272,7 @@ and when to execute the Scenes.
  *
  *  @param scene      The scene to present
  *  @param transition The transition to use
- *  @since v2.5
+ *  @since v3.0
  */
 - (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -280,7 +280,7 @@ and when to execute the Scenes.
  *  Replaces the running scene, with the last scene pushed to the stack, using a transition
  *
  *  @param transition The transition to use
- *  @since v2.5
+ *  @since v3.0
  */
 - (void)popSceneWithTransition:(CCTransition *)transition;
 

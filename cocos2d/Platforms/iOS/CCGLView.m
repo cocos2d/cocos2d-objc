@@ -146,7 +146,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
         
         /** Multiple touch default enabled
-         @since v2.5
+         @since v3.0
          */
         self.multipleTouchEnabled = YES;
 

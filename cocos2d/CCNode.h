@@ -264,23 +264,23 @@ enum {
 @property(nonatomic,readwrite,strong) id userObject;
 
 /** Enabled user interaction on a node, like touch
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
 
 /** Enabled multiple touches inside a single node
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
 
 /** Locks the touch to the node if touch started outside
  If a touch is moved inside a non locked node, a touchesBegan will be generated
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node, value is in points.
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic,assign) float hitAreaExpansion;
  
@@ -557,7 +557,7 @@ enum {
 
 /** check if a touch is inside the node
  to expand or shrink the touch area of a node, override this method
- @since v2.5
+ @since v3.0
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
