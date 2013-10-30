@@ -56,7 +56,7 @@
 // They are intended to be called from a CCPhysicsCollisionPairDelegate post-solve method or from a [CCPhysicsBody eachContactPair:] block.
 // TODO Is it possible to make a warning for this?
 
-/// The amount of kinetic energy disappated by the last collision of the two shapes.
+/// The amount of kinetic energy dissipated by the last collision of the two shapes.
 /// This is roughly equivalent to the idea of damage.
 /// NOTE: By definition, fully elastic collisions do not lose any energy or cause any permanent damage.
 @property(nonatomic, readonly) CGFloat totalKineticEnergy;
