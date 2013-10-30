@@ -932,6 +932,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 }
 #pragma mark CCPhysics support.
 
+// Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
+// This method can only be called in very specific circumstances.
+-(CGAffineTransform)nonRigidTransform
+{
+	return cpTransformMult(cpTransformInverse(self.physicsBody.absoluteTransform), NodeToPhysicsTransform(self));
+}
+
 // Overriden by CCPhysicsNode to return YES.
 -(BOOL)isPhysicsNode {return NO;}
 -(CCPhysicsNode *)physicsNode {return (self.isPhysicsNode ? (CCPhysicsNode *)self : self.parent.physicsNode);}
@@ -950,9 +957,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
-		cpTransform nonRigid = cpTransformMult(cpTransformInverse(physicsBody.absoluteTransform), NodeToPhysicsTransform(self));
+		cpTransform nonRigid = self.nonRigidTransform;
 		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
+		
+		NSArray *joints = physicsBody.joints;
+		for(int i=0, count=joints.count; i<count; i++){
+			[joints[i] tryAddToPhysicsNode:physics transform:nonRigid];;
+		}
 		
 #ifndef NDEBUG
 		// Reset these to zero since they shouldn't be read anyway.
