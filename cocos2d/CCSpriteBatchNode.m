@@ -44,6 +44,8 @@
 #import "CCNode_Private.h"
 #import "CCSpriteBatchNode_Private.h"
 
+#import "CCTexture_Private.h"
+
 // external
 #import "kazmath/GL/matrix.h"
 

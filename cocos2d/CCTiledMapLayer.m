@@ -41,6 +41,7 @@
 #import "CCSprite_Private.h"
 #import "CCSpriteBatchNode_Private.h"
 #import "CCTiledMapLayer_Private.h"
+#import "CCTexture_Private.h"
 
 
 #pragma mark -

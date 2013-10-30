@@ -34,6 +34,8 @@
 #import "Support/CCVertex.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCTexture_Private.h"
+
 
 @implementation CCMotionStreak
 @synthesize texture = _texture;

@@ -464,6 +464,7 @@
 		A66680C017D4D73000ECDE6F /* CCResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponder.m; sourceTree = "<group>"; };
 		A66680C117D4D73000ECDE6F /* CCResponderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResponderManager.h; sourceTree = "<group>"; };
 		A66680C217D4D73000ECDE6F /* CCResponderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponderManager.m; sourceTree = "<group>"; };
+		B706B191182097A400B27A2C /* CCTexture_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCTexture_Private.h; sourceTree = "<group>"; };
 		B74C2B9417BDA54600A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
 		B74C2B9517BDA54600A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B750162B18125C4A00708A2F /* CCControlSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControlSubclass.h; path = "cocos2d-ui/CCControlSubclass.h"; sourceTree = "<group>"; };
@@ -1519,6 +1520,7 @@
 				E076E6891225EC7400DE0DA2 /* CCTextureCache.m */,
 				E076E68A1225EC7400DE0DA2 /* CCTexturePVR.h */,
 				E076E68B1225EC7400DE0DA2 /* CCTexturePVR.m */,
+				B706B191182097A400B27A2C /* CCTexture_Private.h */,
 			);
 			name = Textures;
 			sourceTree = "<group>";

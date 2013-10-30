@@ -104,8 +104,8 @@
 	const unsigned char *s = (unsigned char*) [_string UTF8String];
 
 	CCTexture *texture = [_textureAtlas texture];
-	float textureWide = [texture pixelsWide];
-	float textureHigh = [texture pixelsHigh];
+	float textureWide = [texture pixelWidth];
+	float textureHigh = [texture pixelHeight];
     float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
     float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
 

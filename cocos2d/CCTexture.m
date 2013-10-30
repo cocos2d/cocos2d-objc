@@ -87,6 +87,8 @@
 
 #import "ccDeprecated.h"
 
+#import "CCTexture_Private.h"
+
 
 //CLASS IMPLEMENTATIONS:
 
@@ -100,10 +102,11 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture
 
-@synthesize contentSizeInPixels = _size, pixelFormat = _format, pixelsWide = _width, pixelsHigh = _height, name = _name, maxS = _maxS, maxT = _maxT;
-@synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
+@synthesize contentSizeInPixels = _size, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
+@synthesize premultipliedAlpha = _premultipliedAlpha;
 @synthesize shaderProgram = _shaderProgram;
 @synthesize resolutionType = _resolutionType;
+@synthesize antialiased = _antialiased;
 
 
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
@@ -162,9 +165,11 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 		_maxS = size.width / (float)width;
 		_maxT = size.height / (float)height;
 
-		_hasPremultipliedAlpha = NO;
+		_premultipliedAlpha = NO;
 
 		_hasMipmaps = NO;
+        
+        _antialiased = YES;
 
 		_resolutionType = kCCResolutionUnknown;
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
@@ -212,6 +217,13 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 {
     CGRect bounds = CGRectMake(0, 0, self.contentSize.width, self.contentSize.height);
     return [CCSpriteFrame frameWithTexture:self rect:bounds];
+}
+
+- (void) setAntialiased:(BOOL)antialiased
+{
+    _antialiased = antialiased;
+    if (antialiased) [self setAntiAliasTexParameters];
+    else [self setAliasTexParameters];
 }
 
 @end
@@ -435,7 +447,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:imageSize];
 
 	// should be after calling super init
-	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	_premultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -451,8 +463,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture (PVRSupport)
 
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static BOOL _PVRHaveAlphaPremultiplied = NO;
+// By default PVR images are treated as if they have the alpha channel premultiplied
+static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
@@ -470,7 +482,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 			_width = pvr.width;
 			_height = pvr.height;
 			_size = CGSizeMake(_width, _height);
-			_hasPremultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
+			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
 			_format = pvr.format;
 
 			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
@@ -596,7 +608,9 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 	else
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );	
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+	
+    _antialiased = NO;
 }
 
 -(void) setAntiAliasTexParameters
@@ -608,7 +622,9 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 	else
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );	
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    
+    _antialiased = YES;
 }
 @end
 

@@ -56,6 +56,7 @@
 #import "CCNode_Private.h"
 #import "CCParticleSystem_Private.h"
 #import "CCParticleSystemQuad_Private.h"
+#import "CCTexture_Private.h"
 
 @interface CCParticleSystemQuad ()
 -(void) initVAO;
@@ -245,8 +246,8 @@
 							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
 
-	GLfloat wide = [_texture pixelsWide];
-	GLfloat high = [_texture pixelsHigh];
+	GLfloat wide = [_texture pixelWidth];
+	GLfloat high = [_texture pixelHeight];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	GLfloat left = (rect.origin.x*2+1) / (wide*2);

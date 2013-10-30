@@ -49,6 +49,8 @@
 #import "CCNode_Private.h"
 #import "CCParticleSystem_Private.h"
 
+#import "CCTexture_Private.h"
+
 #define kCCParticleDefaultCapacity 500
 
 @interface CCNode()

@@ -39,6 +39,8 @@
 #import "CCNode_Private.h"
 #import "CCProgressNode_Private.h"
 
+#import "CCTexture_Private.h"
+
 // extern
 #import "kazmath/GL/matrix.h"
 
