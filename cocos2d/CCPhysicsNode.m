@@ -258,12 +258,6 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	// CCDrawNode used for drawing the debug overlay.
 	// Only allocated if CCPhysicsNode.debugDraw is YES.
 	CCDrawNode *_debugDraw;
-	
-	// How much time passes per fixedUpdate.
-	CCTime _fixedTimestep;
-	
-	// "left-over" time from the last update.
-	CCTime _accumulator;
 }
 
 // Used by CCNode.physicsNode
@@ -286,18 +280,9 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 		
 		_collisionPairSingleton = [[CCPhysicsCollisionPair alloc] init];
 		_handlers = [NSMutableSet set];
-		
-		self.fixedRate = 60;
-		self.maxDeltaTime = 1.0/15.0;
 	}
 	
 	return self;
-}
-
--(void)setFixedRate:(CCTime)fixedRate
-{
-	_fixedRate = fixedRate;
-	_fixedTimestep = 1.0/fixedRate;
 }
 
 -(CGPoint)gravity {return _space.gravity;}
@@ -397,10 +382,18 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	});
 }
 
--(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *))block
+-(void)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsShape *shape))block
 {
-	NYI();
-	return NO;
+	cpBB bb = cpBBNew(
+		CGRectGetMinX(rect),
+		CGRectGetMinY(rect),
+		CGRectGetMaxX(rect),
+		CGRectGetMaxY(rect)
+	);
+	
+	cpSpaceBBQuery_b(_space.space, bb, CP_SHAPE_FILTER_ALL, ^(cpShape *shape){
+		block([cpShapeGetUserData(shape) userData]);
+	});
 }
 
 //MARK: Time Stepping

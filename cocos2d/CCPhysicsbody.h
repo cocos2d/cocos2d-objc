@@ -26,9 +26,17 @@
 
 @class CCPhysicsCollisionPair;
 
+// TODO Are we going to use NSENUM and such? Decided on naming conventions?
+
+/// Used to control how or if a body's position and velocity are updated.
 typedef enum ccPhysicsBodyType {
+	/// A regular rigid body that is affected by gravity, forces and collisions.
 	CCPhysicsBodyTypeDynamic,
+	
+	/// A body that is immovable by gravity, forces or collisions, but is moved using code.
 	CCPhysicsBodyTypeKinematic,
+	
+	/// A body that never moves such as a wall or the ground.
 	CCPhysicsBodyTypeStatic,
 } ccPhysicsBodyType;
 
@@ -48,11 +56,9 @@ typedef enum ccPhysicsBodyType {
 /// If the points do not form a convex polygon, then a convex hull will be created for them automatically.
 +(CCPhysicsBody *)bodyWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius;
 
-// Be careful with dynamic segment-based bodies.
-// Because the segments are allowed to be very thin, it can cause problems with collision detection.
-
-/// Create a body with many pill shapes attached. One for each sement in the polyline.
+/// Create a body with many pill shapes attached. One for each segment in the polyline.
 /// Will default to being a CCPhysicsBodyTypeStatic type body.
+/// It is not recommended, though it is possible, to make a polyline based body non-static.
 +(CCPhysicsBody *)bodyWithPolylineFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius looped:(bool)looped;
 
 /// Create a body with a number of shapes attached to it.
@@ -61,14 +67,9 @@ typedef enum ccPhysicsBodyType {
 //MARK: Basic Properties:
 
 /// Mass of the physics body.
-/// Changing this property also changes the density.
+/// If the body has multiple shapes, you cannot change the mass directly.
 /// Defaults to 1.0.
 @property(nonatomic, assign) CGFloat mass;
-/// Density of the physics body.
-/// Changing this property also changes the mass.
-@property(nonatomic, assign) CGFloat density;
-/// Surface area of the physics body.
-@property(nonatomic, readonly) CGFloat area;
 /// Surface friction of the physics body.
 /// When two objects collide, their friction is multiplied together.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
@@ -88,9 +89,11 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Simulation Properties:
 
-/// Whether or not the physics body is affected by gravity.
-/// Defaults to YES.
-@property(nonatomic, assign) BOOL affectedByGravity;
+// Not yet implemented due to time constraints.
+///// Whether or not the physics body is affected by gravity.
+///// Defaults to YES.
+//@property(nonatomic, assign) BOOL affectedByGravity;
+
 /// Whether or not the physics body should be allowed to rotate.
 /// Defaults to YES.
 @property(nonatomic, assign) BOOL allowsRotation;
@@ -109,7 +112,7 @@ typedef enum ccPhysicsBodyType {
 /// A string that identifies which collision pair delegate method should be called.
 /// Defaults to @"default".
 @property(nonatomic, copy) NSString *collisionType;
-/// An array of NSStrings of category names this physics body is a member of.
+/// An array of NSStrings of category names of which this physics body is a member.
 /// Up to 32 categories can be used in a single scene.
 /// The default value is nil, which means the physics body exists in all categories.
 @property(nonatomic, copy) NSArray *collisionCategories;
@@ -136,6 +139,7 @@ typedef enum ccPhysicsBodyType {
 /// Torque applied to the body this fixed timestep.
 @property(nonatomic, assign) CGFloat torque;
 
+// TODO: Mention this in some other documentation:
 // Impulses immediately change the velocity and angular velocity of a physics body as if a very sudden force happened.
 // This works well for applying recoil from firing a projectile, applying custom collision forces, or jumping a character.
 
@@ -170,7 +174,7 @@ typedef enum ccPhysicsBodyType {
 /// Normally bodies fall asleep automatically when they stop moving, but you can trigger sleeping explicity.
 @property(nonatomic, assign) BOOL sleeping;
 
-/// The CCNode this physics body is attached to.
+/// The CCNode to which this physics body is attached.
 @property(nonatomic, readonly) CCNode *node;
 
 @end

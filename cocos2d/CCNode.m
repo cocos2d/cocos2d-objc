@@ -922,8 +922,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	kmGLMultMatrix( &transfrom4x4 );
 }
-
 #pragma mark CCPhysics support.
+
+// Private method used to extract the non-rigid part of the node's transform relative to a CCPhysicsNode.
+// This method can only be called in very specific circumstances.
+-(CGAffineTransform)nonRigidTransform
+{
+	return cpTransformMult(cpTransformInverse(self.physicsBody.absoluteTransform), NodeToPhysicsTransform(self));
+}
 
 // Overriden by CCPhysicsNode to return YES.
 -(BOOL)isPhysicsNode {return NO;}
@@ -933,7 +939,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	if(physicsBody){
 		CCPhysicsNode *physics = self.physicsNode;
-		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendant of a CCPhysicsNode.");
 		
 		// Copy the node's rotation first.
 		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
@@ -943,8 +949,14 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
-		[_physicsBody willAddToPhysicsNode:physics];
+		cpTransform nonRigid = self.nonRigidTransform;
+		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
+		
+		NSArray *joints = physicsBody.joints;
+		for(int i=0, count=joints.count; i<count; i++){
+			[joints[i] tryAddToPhysicsNode:physics];
+		}
 		
 #ifndef NDEBUG
 		// Reset these to zero since they shouldn't be read anyway.
@@ -963,6 +975,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		// Copy the positional data back to the ivars.
 		_position = self.position;
 		_rotationalSkewX = _rotationalSkewY = self.rotation;
+		
+		NSArray *joints = _physicsBody.joints;
+		for(int i=0, count=joints.count; i<count; i++){
+			[joints[i] tryRemoveFromPhysicsNode:physics];
+		}
 		
 		[physics.space smartRemove:_physicsBody];
 		[_physicsBody didRemoveFromPhysicsNode:physics];
@@ -1307,7 +1324,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
 		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
-		return cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
+		_transform = cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
 	} else if ( _isTransformDirty ) {
         
         // TODO: Make this more efficient

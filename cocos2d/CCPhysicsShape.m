@@ -80,31 +80,33 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return [[CCPhysicsPolyShape alloc] initWithPolygonFromPoints:points count:count cornerRadius:cornerRadius];
 }
 
--(CGAffineTransform)shapeTransform
-{
-	// TODO Might be better to use the physics relative transform.
-	// That's not available until the scene is set up though... hrm.
-	CCNode *node = self.node;
-	if(node){
-		return CGAffineTransformMakeScale(node.scaleX, node.scaleY);
-	} else {
-		return CGAffineTransformIdentity;
-	}
-}
-
-static CGFloat
-Determinant(CGAffineTransform t)
-{
-	return (t.a*t.d - t.c*t.b);
-}
+// Removed since the transform cannot be calculated until after the node enters an active scene.
+//-(cpTransform)shapeTransform
+//{
+//	// TODO Might be better to use the physics relative transform.
+//	// That's not available until the scene is set up though... hrm.
+//	CCNode *node = self.node;
+//	if(node){
+//		return [node nonRigidTransform];
+//	} else {
+//		return CGAffineTransformIdentity;
+//	}
+//}
+//
+//static cpFloat
+//Determinant(cpTransform t)
+//{
+//	return (t.a*t.d - t.c*t.b);
+//}
 
 -(CGFloat)mass {return self.shape.mass;}
 -(void)setMass:(CGFloat)mass {self.shape.mass = mass;}
 
--(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
--(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
-
--(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
+// See [CCPhysicsShape shapeTransform] for why this is removed.
+//-(CGFloat)density {return self.shape.density/Determinant(self.shapeTransform);}
+//-(void)setDensity:(CGFloat)density {self.shape.density = density*Determinant(self.shapeTransform);}
+//
+//-(CGFloat)area {return self.shape.area*Determinant(self.shapeTransform);}
 
 -(CGFloat)friction {return self.shape.friction;}
 -(void)setFriction:(CGFloat)friction {self.shape.friction = friction;}
@@ -184,10 +186,10 @@ Determinant(CGAffineTransform t)
 
 @implementation CCPhysicsShape(ObjectiveChipmunk)
 
--(void)rescaleShape {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
+-(void)rescaleShape:(cpTransform)transform {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
 -(ChipmunkShape *)shape {@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];}
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 {
 	// Intern the collision type to ensure it's not a unique object reference.
 	_collisionType = [physics internString:_collisionType];
@@ -204,7 +206,7 @@ Determinant(CGAffineTransform t)
 	_collisionCategories = nil;
 	_collisionType = nil;
 	
-	[self rescaleShape];
+	[self rescaleShape:transform];
 }
 
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics
@@ -223,6 +225,14 @@ Determinant(CGAffineTransform t)
 -(void)setBody:(CCPhysicsBody *)body {self.shape.body = body.body;}
 
 @end
+
+
+static CGFloat
+RadiusForTransform(CGAffineTransform t)
+{
+	// Return the magnitude of the longest basis vector.
+	return cpfsqrt(MAX(t.a*t.a + t.b*t.b, t.c*t.c + t.d*t.d));
+}
 
 
 @implementation CCPhysicsCircleShape {
@@ -249,14 +259,11 @@ Determinant(CGAffineTransform t)
 
 -(ChipmunkShape *)shape {return _shape;}
 
--(void)rescaleShape
+-(void)rescaleShape:(cpTransform)transform
 {
-	CCNode *node = self.node;
-	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
-	
 	cpShape *shape = self.shape.shape;
-	cpCircleShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
-	cpCircleShapeSetOffset(shape, cpv(_center.x*scaleX, _center.y*scaleY));
+	cpCircleShapeSetRadius(shape, _radius*RadiusForTransform(transform));
+	cpCircleShapeSetOffset(shape, cpTransformPoint(transform, _center));
 }
 
 @end
@@ -286,14 +293,12 @@ Determinant(CGAffineTransform t)
 
 -(ChipmunkShape *)shape {return _shape;}
 
--(void)rescaleShape
+-(void)rescaleShape:(cpTransform)transform
 {
-	CCNode *node = self.node;
-	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
-	
 	cpShape *shape = self.shape.shape;
-	cpSegmentShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
-	cpSegmentShapeSetEndpoints(shape, _from, _to);
+	cpSegmentShapeSetRadius(shape, _radius*RadiusForTransform(transform));
+	cpSegmentShapeSetEndpoints(shape, cpTransformPoint(transform, _from), cpTransformPoint(transform, _to));
+	// TODO need to update neighbors.
 }
 
 @end
@@ -309,7 +314,7 @@ Determinant(CGAffineTransform t)
 -(id)initWithPolygonFromPoints:(CGPoint *)points count:(NSUInteger)count cornerRadius:(CGFloat)cornerRadius
 {
 	if((self = [super init])){
-		_shape = [ChipmunkPolyShape polyWithBody:nil count:count verts:points transform:self.shapeTransform radius:cornerRadius];
+		_shape = [ChipmunkPolyShape polyWithBody:nil count:count verts:points transform:cpTransformIdentity radius:cornerRadius];
 		_radius = cornerRadius;
 		_points = calloc(count, sizeof(CGPoint));
 		memcpy(_points, points, count*sizeof(CGPoint));
@@ -344,14 +349,11 @@ Determinant(CGAffineTransform t)
 
 -(ChipmunkShape *)shape {return _shape;}
 
--(void)rescaleShape
+-(void)rescaleShape:(cpTransform)transform
 {
-	CCNode *node = self.node;
-	CGFloat scaleX = node.scaleX, scaleY = node.scaleY;
-	
 	cpShape *shape = self.shape.shape;
-	cpPolyShapeSetRadius(shape, _radius*MAX(scaleX, scaleY));
-	cpPolyShapeSetVerts(shape, _count, _points, self.shapeTransform);
+	cpPolyShapeSetRadius(shape, _radius*RadiusForTransform(transform));
+	cpPolyShapeSetVerts(shape, _count, _points, transform);
 }
 
 @end
