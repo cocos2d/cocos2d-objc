@@ -41,6 +41,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	ChipmunkBody *_body;
 	CCPhysicsShape *_shapeList;
 	
+	NSMutableArray *_joints;
+	
 	NSMutableArray *_chipmunkObjects;
 	
 	BOOL _allowsRotation;
@@ -105,7 +107,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	int limit = (looped ? count : count - 1);
 	for(int i=0; i<limit; i++){
 		CCPhysicsShape *shape = [CCPhysicsShape pillShapeFrom:points[i] to:points[(i + 1)%count] cornerRadius:cornerRadius];
-		cpSegmentShapeSetNeighbors(shape.shape.shape, points[(i - 1 + count)%count], points[(i + 2)%count]);
+		// TODO Broken. Values may be wrong after applying a transform in onEnter.
+		//cpSegmentShapeSetNeighbors(shape.shape.shape, points[(i - 1 + count)%count], points[(i + 2)%count]);
 		
 		shape.next = shapes;
 		shapes = shape;
@@ -116,8 +119,14 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 +(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes
 {
-	NYI();
-	return nil;
+	CCPhysicsShape *shapeList = nil;
+	for(int i=0, count=shapes.count; i<count; i++){
+		CCPhysicsShape *shape = shapes[i];
+		shape.next = shapeList;
+		shapeList = shape;
+	}
+	
+	return [[self alloc] initWithShapeList:shapeList];
 }
 
 //MARK: Basic Properties:
@@ -136,24 +145,24 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	_shapeList.mass = mass;
 }
 
--(CGFloat)density
-{
-	return self.mass/self.area;
-}
-
--(void)setDensity:(CGFloat)density
-{
-	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
-	_shapeList.density = density;
-}
-
--(CGFloat)area
-{
-	CGFloat sum = 0.0;
-	FOREACH_SHAPE(self, shape) sum += shape.area;
-	
-	return sum;
-}
+//-(CGFloat)density
+//{
+//	return self.mass/self.area;
+//}
+//
+//-(void)setDensity:(CGFloat)density
+//{
+//	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
+//	_shapeList.density = density;
+//}
+//
+//-(CGFloat)area
+//{
+//	CGFloat sum = 0.0;
+//	FOREACH_SHAPE(self, shape) sum += shape.area;
+//	
+//	return sum;
+//}
 
 -(CGFloat)friction {return _shapeList.friction;}
 -(void)setFriction:(CGFloat)friction {FOREACH_SHAPE(self, shape) shape.friction = friction;}
@@ -170,8 +179,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(CCPhysicsNode *)physicsNode {return _body.space.userData;}
 -(BOOL)isRunning {return self.physicsNode != nil;}
 
--(BOOL)affectedByGravity {NYI(); return YES;}
--(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
+//-(BOOL)affectedByGravity {NYI(); return YES;}
+//-(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
 
 -(BOOL)allowsRotation {return _allowsRotation;}
 -(void)setAllowsRotation:(BOOL)allowsRotation
@@ -270,8 +279,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(NSArray *)joints
 {
-	NYI();
-	return @[];
+	return (_joints ?: [NSArray array]);
 }
 
 -(BOOL)sleeping {return _body.isSleeping;}
@@ -295,9 +303,20 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+-(void)addJoint:(CCPhysicsJoint *)joint
 {
-	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics];
+	if(_joints == nil) _joints = [NSMutableArray array];
+	[_joints addObject:joint];
+}
+
+-(void)removeJoint:(CCPhysicsJoint *)joint
+{
+	[_joints removeObject:joint];
+}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+{
+	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
 }
 
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics

@@ -28,33 +28,20 @@
 #import "CCPhysicsJoint.h"
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
-
-// For comparison:
-// https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
+// In the future, this header will be useful for writing your own Objective-Chipmunk
+// code to interact with CCPhysics. For now, it's not very well documented on how to do it.
+// Do ask questions on the Cocos2D forums if you are interested in learning how.
 
 /*
-	TODO:
+	Things to consider:
 	* Projectile bodies?
-	* Body constructors are still a little temporary.
-	* Objective-Chipmunk interop.
-	* affectedByGravity and allowsRotation properties not implemented.
-	* Joints.
-	* Queries.
-	
-	Consider:
 	* Interpolation?
 	* Post-step callbacks?
 	* What to do about CCActions?
-	* What to do about transform changes?
-	* Chain/loop body types have multiple ChipmunkShapes and thus will get multiple callbacks.
 	* Check argument types for delegate callbacks?
 	* Angular velocity in degrees?
 	* Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
 	* Should CCPhysicsCollisionPair.userData retain?
-	
-	Probably Definitely Not:
-	* Body queries?
-	* Collision detection only mode.
 */
 
 
@@ -80,8 +67,11 @@
 /// Implements the ChipmunkObject protocol.
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
+-(void)addJoint:(CCPhysicsJoint *)joint;
+-(void)removeJoint:(CCPhysicsJoint *)joint;
+
 // Used for deferring collision type setup until there is access to the physics node.
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
@@ -100,17 +90,28 @@
 @property(nonatomic, weak) CCPhysicsBody *body;
 
 // Used for deferring collision type setup until there is access to the physics node.
--(void)rescaleShape;
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
 
 
-@interface CCPhysicsJoint(ObjectiveChipmunk)
+@interface CCPhysicsJoint(ObjectiveChipmunk)<ChipmunkObject>
 
 /// Access to the underlying Objective-Chipmunk object.
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
+
+/// Returns YES if the body is currently added to a physicsNode.
+@property(nonatomic, readonly) BOOL isRunning;
+
+/// Add the joint to the physics node, but only if both connected bodies are running.
+-(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode;
+
+/// Remove the joint from the physics node, but only if the joint is added;
+-(void)tryRemoveFromPhysicsNode:(CCPhysicsNode *)physicsNode;
+
+/// Used for deferring collision type setup until there is access to the physics node.
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
 
 @end
 
@@ -133,7 +134,7 @@
 /// nil and @"default" both return the value nil.
 -(NSString *)internString:(NSString *)string;
 
-/// Retain and track a category identifier and return it's index.
+/// Retain and track a category identifier and return its index.
 /// Up to 32 categories can be tracked for a space.
 -(NSUInteger)indexForCategory:(NSString *)category;
 
