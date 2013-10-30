@@ -80,7 +80,7 @@
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  */
-@interface CCCardinalSplineTo : CCActionInterval
+@interface CCActionCardinalSplineTo : CCActionInterval
 {
 	CCPointArray	*_points;
 	CGFloat			_deltaT;
@@ -103,7 +103,7 @@
 /** Cardinal Spline path.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Cardinal_spline
  */
-@interface CCCardinalSplineBy : CCCardinalSplineTo
+@interface CCCardinalSplineBy : CCActionCardinalSplineTo
 {
 	CGPoint		_startPosition;
 }
@@ -115,7 +115,7 @@
  A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  */
-@interface CCCatmullRomTo : CCCardinalSplineTo
+@interface CCActionCatmullRomTo : CCActionCardinalSplineTo
 {
 }
 /** creates an action with a Cardinal Spline array of points and tension */
@@ -129,7 +129,7 @@
   A Catmull Rom is a Cardinal Spline with a tension of 0.5.
  http://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline
  */
-@interface CCCatmullRomBy : CCCardinalSplineBy
+@interface CCActionCatmullRomBy : CCCardinalSplineBy
 {
 }
 /** creates an action with a Cardinal Spline array of points and tension */
@@ -144,7 +144,7 @@ extern "C" {
 #endif
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );
+CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );
 
 #ifdef __cplusplus
 }
