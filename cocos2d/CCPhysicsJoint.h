@@ -29,6 +29,17 @@
 
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor;
 
++(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB;
+
++(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+	minDistance:(CGFloat)min maxDistance:(CGFloat)max;
+
++(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping;
+
 /// The first body this joint is attached to.
 @property(nonatomic, strong) CCPhysicsBody *bodyA;
 /// The second body this joint is attached to.

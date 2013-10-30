@@ -30,9 +30,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 
 @interface CCNode(Private)
-
 -(CGAffineTransform)nonRigidTransform;
-
 @end
 
 
@@ -69,6 +67,103 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 @end
 
 
+@interface CCPhysicsPinJoint : CCPhysicsJoint
+@end
+
+
+@implementation CCPhysicsPinJoint {
+	ChipmunkPinJoint *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkPinJoint pinJointWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB];
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+}
+
+@end
+
+
+@interface CCPhysicsSlideJoint : CCPhysicsJoint
+@end
+
+
+@implementation CCPhysicsSlideJoint {
+	ChipmunkSlideJoint *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB minDistance:(CGFloat)min maxDistance:(CGFloat)max;
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkSlideJoint slideJointWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB min:min max:max];
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+}
+
+@end
+
+
+@interface CCPhysicsSpringJoint : CCPhysicsJoint
+@end
+
+
+@implementation CCPhysicsSpringJoint {
+	ChipmunkDampedSpring *_constraint;
+	CGPoint _anchorA, _anchorB;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
+
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkDampedSpring dampedSpringWithBodyA:bodyA.body bodyB:bodyB.body anchr1:anchorA anchr2:anchorB restLength:restLength stiffness:stiffness damping:damping];
+		_anchorA = anchorA;
+		_anchorB = anchorB;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+{
+	CCPhysicsBody *bodyA = self.bodyA, *bodyB = self.bodyB;
+	_constraint.anchr1 = cpTransformPoint(bodyA.node.nonRigidTransform, _anchorA);
+	_constraint.anchr2 = cpTransformPoint(bodyB.node.nonRigidTransform, _anchorB);
+}
+
+@end
+
+
 @implementation CCPhysicsJoint
 
 -(id)init
@@ -91,6 +186,44 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
 {
 	CCPhysicsJoint *joint = [[CCPhysicsPivotJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchor:anchor];
+	[bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+	
+	[joint addToPhysicsNode:bodyA.physicsNode];
+	
+	return joint;
+}
+
++(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+{
+	CCPhysicsJoint *joint = [[CCPhysicsPinJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB];
+	[bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+	
+	[joint addToPhysicsNode:bodyA.physicsNode];
+	
+	return joint;
+}
+
++(CCPhysicsJoint *)connectedDistanceJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+	minDistance:(CGFloat)min maxDistance:(CGFloat)max
+{
+	CCPhysicsJoint *joint = [[CCPhysicsSlideJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB minDistance:min maxDistance:max];
+	[bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+	
+	[joint addToPhysicsNode:bodyA.physicsNode];
+	
+	return joint;
+}
+
++(CCPhysicsJoint *)connectedSpringJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB
+	anchorA:(CGPoint)anchorA anchorB:(CGPoint)anchorB
+	restLength:(CGFloat)restLength stiffness:(CGFloat)stiffness damping:(CGFloat)damping
+{
+	CCPhysicsSpringJoint *joint = [[CCPhysicsSpringJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchorA:anchorA anchorB:anchorB restLength:restLength stiffness:stiffness damping:damping];
 	[bodyA addJoint:joint];
 	[bodyB addJoint:joint];
 	
