@@ -42,8 +42,10 @@
 #import "Support/CCProfiling.h"
 #import "Support/OpenGL_Internal.h"
 #import "CCNode_Private.h"
+
 #import "CCSprite_Private.h"
 #import "CCSpriteBatchNode_Private.h"
+#import "CCTexture_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"
@@ -351,8 +353,8 @@
 	if(!tex)
 		return;
 
-	float atlasWidth = (float)tex.pixelsWide;
-	float atlasHeight = (float)tex.pixelsHigh;
+	float atlasWidth = (float)tex.pixelWidth;
+	float atlasHeight = (float)tex.pixelHeight;
 
 	float left, right ,top , bottom;
 

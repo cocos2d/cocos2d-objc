@@ -158,9 +158,6 @@
     
     [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
 	
-	// Assume that PVR images have premultiplied alpha
-	[CCTexture PVRImagesHavePremultipliedAlpha:YES];
-	
 	// Create a Navigation Controller with the Director
 	navController_ = [[MyNavigationController alloc] initWithRootViewController:director_];
 	navController_.navigationBarHidden = YES;

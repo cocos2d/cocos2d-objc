@@ -50,7 +50,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setPremultipliedAlpha:(BOOL)flag
 {
-    _hasPremultipliedAlpha = flag;
+    _premultipliedAlpha = flag;
 }
 
 @end

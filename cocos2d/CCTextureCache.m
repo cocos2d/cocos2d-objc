@@ -44,6 +44,8 @@
 #import "Platforms/Mac/CCDirectorMac.h"
 #endif
 
+#import "CCTexture_Private.h"
+
 // needed for CCCallFuncO in Mac-display_link version
 //#import "CCActionManager.h"
 //#import "CCActionInstant.h"
@@ -475,14 +477,14 @@ static CCTextureCache *sharedTextureCache;
 			CCTexture* tex = [_textures objectForKey:texKey];
 			NSUInteger bpp = [tex bitsPerPixelForFormat];
 			// Each texture takes up width * height * bytesPerPixel bytes.
-			NSUInteger bytes = tex.pixelsWide * tex.pixelsHigh * bpp / 8;
+			NSUInteger bytes = tex.pixelWidth * tex.pixelHeight * bpp / 8;
 			totalBytes += bytes;
 			count++;
 			NSLog( @"cocos2d: \"%@\"\tid=%lu\t%lu x %lu\t@ %ld bpp =>\t%lu KB",
 				  texKey,
 				  (long)tex.name,
-				  (long)tex.pixelsWide,
-				  (long)tex.pixelsHigh,
+				  (long)tex.pixelWidth,
+				  (long)tex.pixelHeight,
 				  (long)bpp,
 				  (long)bytes / 1024 );
 		}

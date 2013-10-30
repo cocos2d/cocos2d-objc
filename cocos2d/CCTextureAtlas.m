@@ -37,6 +37,8 @@
 #import "Support/NSThread+performBlock.h"
 #import "Support/OpenGL_Internal.h"
 
+#import "CCTexture_Private.h"
+
 @interface CCTextureAtlas ()
 -(void) setupIndices;
 

@@ -33,6 +33,8 @@
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
 
+#import "CCTexture_Private.h"
+
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
 #endif
