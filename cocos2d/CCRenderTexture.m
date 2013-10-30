@@ -32,7 +32,9 @@
 #import "Support/ccUtils.h"
 #import "Support/CCFileUtils.h"
 #import "Support/CGPointExtension.h"
-#import "CCGrid.h"
+
+#import "CCTexture_Private.h"
+#import "CCDirector_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -50,37 +52,37 @@
 @synthesize clearStencil=_clearStencil;
 @synthesize clearFlags=_clearFlags;
 
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
   return [[self alloc] initWithWidth:w height:h pixelFormat:format depthStencilFormat:depthStencilFormat];
 }
 
 // issue #994
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format
 {
 	return [[self alloc] initWithWidth:w height:h pixelFormat:format];
 }
 
 +(id)renderTextureWithWidth:(int)w height:(int)h
 {
-	return [[self alloc] initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888 depthStencilFormat:0];
+	return [[self alloc] initWithWidth:w height:h pixelFormat:CCTexturePixelFormat_RGBA8888 depthStencilFormat:0];
 }
 
 -(id)initWithWidth:(int)w height:(int)h
 {
-	return [self initWithWidth:w height:h pixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	return [self initWithWidth:w height:h pixelFormat:CCTexturePixelFormat_RGBA8888];
 }
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat)format
+- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format
 {
   return [self initWithWidth:w height:h pixelFormat:format depthStencilFormat:0];
 }
 
--(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat
 {
 	if ((self = [super init]))
 	{
-		NSAssert(format != kCCTexture2DPixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
+		NSAssert(format != CCTexturePixelFormat_A8,@"only RGB and RGBA formats are valid for a render texture");
 
 		CCDirector *director = [CCDirector sharedDirector];
 
@@ -110,7 +112,7 @@
 		memset(data, 0, (int)(powW * powH * 4));
 		_pixelFormat=format;
 
-		_texture = [[CCTexture2D alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
+		_texture = [[CCTexture alloc] initWithData:data pixelFormat:_pixelFormat pixelsWide:powW pixelsHigh:powH contentSize:CGSizeMake(w, h)];
 		free( data );
 
 		GLint oldRBO;
@@ -184,7 +186,7 @@
 
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [director winSizeInPixels];
+	CGSize size = [director viewSizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
@@ -310,18 +312,10 @@
 		return;
 	
 	kmGLPushMatrix();
-	
-	if (_grid && _grid.active) {
-		[_grid beforeDraw];
-		[self transformAncestors];
-	}
 
 	[self transform];
 	[_sprite visit];
 	[self draw];
-	
-	if (_grid && _grid.active)
-		[_grid afterDraw:self];
 	
 	kmGLPopMatrix();
 	
@@ -386,7 +380,7 @@
 
 -(CGImageRef) newCGImage
 {
-    NSAssert(_pixelFormat == kCCTexture2DPixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
+    NSAssert(_pixelFormat == CCTexturePixelFormat_RGBA8888,@"only RGBA8888 can be saved as image");
 	
 	
 	CGSize s = [_texture contentSizeInPixels];

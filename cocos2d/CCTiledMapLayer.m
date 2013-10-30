@@ -28,8 +28,8 @@
  *
  */
 
-#import "CCTMXLayer.h"
-#import "CCTMXTiledMap.h"
+#import "CCTiledMapLayer.h"
+#import "CCTiledMap.h"
 #import "CCTMXXMLParser.h"
 #import "CCSprite.h"
 #import "CCSpriteBatchNode.h"
@@ -37,6 +37,11 @@
 #import "CCShaderCache.h"
 #import "CCGLProgram.h"
 #import "Support/CGPointExtension.h"
+#import "CCNode_Private.h"
+#import "CCSprite_Private.h"
+#import "CCSpriteBatchNode_Private.h"
+#import "CCTiledMapLayer_Private.h"
+#import "CCTexture_Private.h"
 
 
 #pragma mark -
@@ -45,7 +50,7 @@
 int compareInts (const void * a, const void * b);
 
 
-@interface CCTMXLayer ()
+@interface CCTiledMapLayer ()
 -(CGPoint) positionForIsoAt:(CGPoint)pos;
 -(CGPoint) positionForOrthoAt:(CGPoint)pos;
 -(CGPoint) positionForHexAt:(CGPoint)pos;
@@ -68,7 +73,7 @@ int compareInts (const void * a, const void * b);
 -(NSUInteger) atlasIndexForNewZ:(NSUInteger)z;
 @end
 
-@implementation CCTMXLayer
+@implementation CCTiledMapLayer
 @synthesize layerSize = _layerSize, layerName = _layerName, tiles = _tiles;
 @synthesize tileset = _tileset;
 @synthesize layerOrientation = _layerOrientation;
@@ -77,19 +82,19 @@ int compareInts (const void * a, const void * b);
 
 #pragma mark CCTMXLayer - init & alloc & dealloc
 
-+(id) layerWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
++(id) layerWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo
 {
 	return [[self alloc] initWithTilesetInfo:tilesetInfo layerInfo:layerInfo mapInfo:mapInfo];
 }
 
--(id) initWithTilesetInfo:(CCTMXTilesetInfo*)tilesetInfo layerInfo:(CCTMXLayerInfo*)layerInfo mapInfo:(CCTMXMapInfo*)mapInfo
+-(id) initWithTilesetInfo:(CCTiledMapTilesetInfo*)tilesetInfo layerInfo:(CCTiledMapLayerInfo*)layerInfo mapInfo:(CCTiledMapInfo*)mapInfo
 {
 	// XXX: is 35% a good estimate ?
 	CGSize size = layerInfo.layerSize;
 	float totalNumberOfTiles = size.width * size.height;
 	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
-	CCTexture2D *tex = nil;
+	CCTexture *tex = nil;
 	if( tilesetInfo )
 		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
 
@@ -607,14 +612,14 @@ int compareInts (const void * a, const void * b)
 {
 	CGPoint ret = CGPointZero;
 	switch( _layerOrientation ) {
-		case CCTMXOrientationOrtho:
+		case CCTiledMapOrientationOrtho:
 			ret = ccp( pos.x * _mapTileSize.width, -pos.y *_mapTileSize.height);
 			break;
-		case CCTMXOrientationIso:
+		case CCTiledMapOrientationIso:
 			ret = ccp( (_mapTileSize.width /2) * (pos.x - pos.y),
 					  (_mapTileSize.height /2 ) * (-pos.x - pos.y) );
 			break;
-		case CCTMXOrientationHex:
+		case CCTiledMapOrientationHex:
 			NSAssert(CGPointEqualToPoint(pos, CGPointZero), @"offset for hexagonal map not implemented yet");
 			break;
 	}
@@ -625,13 +630,13 @@ int compareInts (const void * a, const void * b)
 {
 	CGPoint ret = CGPointZero;
 	switch( _layerOrientation ) {
-		case CCTMXOrientationOrtho:
+		case CCTiledMapOrientationOrtho:
 			ret = [self positionForOrthoAt:pos];
 			break;
-		case CCTMXOrientationIso:
+		case CCTiledMapOrientationIso:
 			ret = [self positionForIsoAt:pos];
 			break;
-		case CCTMXOrientationHex:
+		case CCTiledMapOrientationHex:
 			ret = [self positionForHexAt:pos];
 			break;
 	}
@@ -677,14 +682,14 @@ int compareInts (const void * a, const void * b)
 	NSUInteger maxVal = 0;
 	if( _useAutomaticVertexZ ) {
 		switch( _layerOrientation ) {
-			case CCTMXOrientationIso:
+			case CCTiledMapOrientationIso:
 				maxVal = _layerSize.width + _layerSize.height;
 				ret = -(maxVal - (pos.x + pos.y));
 				break;
-			case CCTMXOrientationOrtho:
+			case CCTiledMapOrientationOrtho:
 				ret = -(_layerSize.height-pos.y);
 				break;
-			case CCTMXOrientationHex:
+			case CCTiledMapOrientationHex:
 				NSAssert(NO,@"TMX Hexa zOrder not supported");
 				break;
 			default:

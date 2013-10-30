@@ -48,22 +48,18 @@
 //
 #import "ccConfig.h"	// should be included first
 
-#import "CCActionManager.h"
+//#import "CCActionManager.h"
 #import "CCAction.h"
 #import "CCActionInstant.h"
 #import "CCActionInterval.h"
 #import "CCActionEase.h"
 #import "CCActionTween.h"
 #import "CCActionEase.h"
-#import "CCActionTiledGrid.h"
-#import "CCActionGrid3D.h"
-#import "CCActionGrid.h"
 #import "CCActionProgressTimer.h"
-#import "CCActionPageTurn3D.h"
 #import "CCActionCatmullRom.h"
 
-#import "CCAnimation.h"
-#import "CCAnimationCache.h"
+//#import "CCAnimation.h"
+//#import "CCAnimationCache.h"
 #import "CCSprite.h"
 #import "CCSpriteFrame.h"
 #import "CCSpriteBatchNode.h"
@@ -72,29 +68,26 @@
 
 #import "CCLabelTTF.h"
 #import "CCLabelBMFont.h"
-#import "CCLabelAtlas.h"
+//#import "CCLabelAtlas.h"
 
 #import "CCParticleSystem.h"
 #import "CCParticleSystemQuad.h"
 #import "CCParticleExamples.h"
 #import "CCParticleBatchNode.h"
 
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCTexturePVR.h"
-#import "CCTextureCache.h"
-#import "CCTextureAtlas.h"
+//#import "CCTextureCache.h"
+//#import "CCTextureAtlas.h"
 
 #import "CCTransition.h"
 
-#import "CCTMXTiledMap.h"
-#import "CCTMXLayer.h"
-#import "CCTMXObjectGroup.h"
+#import "CCTiledMap.h"
+#import "CCTiledMapLayer.h"
+#import "CCTiledMapObjectGroup.h"
 #import "CCTMXXMLParser.h"
-#import "CCTileMapAtlas.h"
 
 #import "CCLayer.h"
-#import "CCMenu.h"
-#import "CCMenuItem.h"
 #import "CCDrawingPrimitives.h"
 #import "CCScene.h"
 #import "CCScheduler.h"
@@ -103,8 +96,6 @@
 #import "CCNode+Debug.h"
 #import "CCDirector.h"
 #import "CCAtlasNode.h"
-#import "CCGrabber.h"
-#import "CCGrid.h"
 #import "CCParallaxNode.h"
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
@@ -112,7 +103,7 @@
 #import "CCDrawNode.h"
 #import "CCClippingNode.h"
 
-#import "ccFPSImages.h"
+//#import "ccFPSImages.h"
 
 // Layouts
 #import "CCLayout.h"

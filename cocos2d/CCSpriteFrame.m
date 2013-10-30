@@ -27,7 +27,7 @@
 
 #import "CCTextureCache.h"
 #import "CCSpriteFrame.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "ccMacros.h"
 #import "CCSpriteFrameCache.h"
 
@@ -42,14 +42,14 @@
     CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache] spriteFrameByName:imageName];
     if (!frame)
     {
-        CCTexture2D* texture = [[CCTextureCache sharedTextureCache] addImage:imageName];
+        CCTexture* texture = [[CCTextureCache sharedTextureCache] addImage:imageName];
         frame = [texture createSpriteFrame];
     }
     
     return frame;
 }
 
-+(id) frameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
++(id) frameWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	return [[self alloc] initWithTexture:texture rect:rect];
 }
@@ -59,7 +59,7 @@
 	return [[self alloc] initWithTextureFilename:filename rect:rect];
 }
 
-+(id) frameWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
++(id) frameWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
 	return [[self alloc] initWithTexture:texture rectInPixels:rect rotated:rotated offset:offset originalSize:originalSize];
 }
@@ -69,7 +69,7 @@
 	return [[self alloc] initWithTextureFilename:filename rectInPixels:rect rotated:rotated offset:offset originalSize:originalSize];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+-(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	CGRect rectInPixels = CC_RECT_POINTS_TO_PIXELS( rect );
 	return [self initWithTexture:texture rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
@@ -81,7 +81,7 @@
 	return [self initWithTextureFilename:filename rectInPixels:rectInPixels rotated:NO offset:CGPointZero originalSize:rectInPixels.size];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
+-(id) initWithTexture:(CCTexture*)texture rectInPixels:(CGRect)rect rotated:(BOOL)rotated offset:(CGPoint)offset originalSize:(CGSize)originalSize
 {
 	if( (self=[super init]) )
     {
@@ -174,14 +174,14 @@
     _offset = CC_POINT_PIXELS_TO_POINTS( _offsetInPixels );
 }
 
--(void) setTexture:(CCTexture2D *)texture
+-(void) setTexture:(CCTexture *)texture
 {
 	if( _texture != texture ) {
 		_texture = texture;
 	}
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	if( _texture )
 		return _texture;

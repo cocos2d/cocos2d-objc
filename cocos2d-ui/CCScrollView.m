@@ -375,9 +375,9 @@
             _animatingX = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
-            CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
-            action = [CCSequence actions:action, callFunc, nil];
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToX alloc] initWithDuration:duration positionX:-newPos.x] rate:2];
+            CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(xAnimationDone)];
+            action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionXTag;
             [_contentNode runAction:action];
         }
@@ -389,9 +389,9 @@
             _animatingY = YES;
             
             // Create animation action
-            CCActionInterval* action = [CCEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
-            CCCallFunc* callFunc = [CCCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
-            action = [CCSequence actions:action, callFunc, nil];
+            CCActionInterval* action = [CCActionEaseOut actionWithAction:[[CCMoveToY alloc] initWithDuration:duration positionY:-newPos.y] rate:2];
+            CCActionCallFunc* callFunc = [CCActionCallFunc actionWithTarget:self selector:@selector(yAnimationDone)];
+            action = [CCActionSequence actions:action, callFunc, nil];
             action.tag = kCCScrollViewActionYTag;
             [_contentNode runAction:action];
             

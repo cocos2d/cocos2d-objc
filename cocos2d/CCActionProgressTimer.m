@@ -26,9 +26,7 @@
 
 #import "CCActionProgressTimer.h"
 
-#define kProgressTimerCast CCProgressTimer*
-
-@implementation CCProgressTo
+@implementation CCActionProgressTo
 +(id) actionWithDuration: (ccTime) t percent: (float) v
 {
 	return [[ self alloc] initWithDuration: t percent: v];
@@ -51,7 +49,7 @@
 -(void) startWithTarget:(id) aTarget;
 {
 	[super startWithTarget:aTarget];
-	_from = [(kProgressTimerCast)_target percentage];
+	_from = [(CCProgressNode*)_target percentage];
 
 	// XXX: Is this correct ?
 	// Adding it to support CCRepeat
@@ -61,11 +59,11 @@
 
 -(void) update: (ccTime) t
 {
-	[(kProgressTimerCast)_target setPercentage: _from + ( _to - _from ) * t];
+	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }
 @end
 
-@implementation CCProgressFromTo
+@implementation CCActionProgressFromTo
 +(id) actionWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
 {
 	return [[self alloc] initWithDuration: t from: fromPercentage to: toPercentage];
@@ -98,6 +96,6 @@
 
 -(void) update: (ccTime) t
 {
-	[(kProgressTimerCast)_target setPercentage: _from + ( _to - _from ) * t];
+	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }
 @end

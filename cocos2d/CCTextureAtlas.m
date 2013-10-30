@@ -27,7 +27,7 @@
 // cocos2d
 #import "CCTextureAtlas.h"
 #import "ccMacros.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCTextureCache.h"
 #import "CCGLProgram.h"
 #import "ccGLStateCache.h"
@@ -36,6 +36,8 @@
 
 #import "Support/NSThread+performBlock.h"
 #import "Support/OpenGL_Internal.h"
+
+#import "CCTexture_Private.h"
 
 @interface CCTextureAtlas ()
 -(void) setupIndices;
@@ -62,7 +64,7 @@
 	return [[self alloc] initWithFile:file capacity:n];
 }
 
-+(id) textureAtlasWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)n
++(id) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)n
 {
 	return [[self alloc] initWithTexture:tex capacity:n];
 }
@@ -70,7 +72,7 @@
 -(id) initWithFile:(NSString*)file capacity:(NSUInteger)n
 {
 	// retained in property
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:file];
+	CCTexture *tex = [[CCTextureCache sharedTextureCache] addImage:file];
 	if( tex )
 		return [self initWithTexture:tex capacity:n];
 
@@ -81,7 +83,7 @@
 	}
 }
 
--(id) initWithTexture:(CCTexture2D*)tex capacity:(NSUInteger)n
+-(id) initWithTexture:(CCTexture*)tex capacity:(NSUInteger)n
 {
 	if( (self=[super init]) ) {
 

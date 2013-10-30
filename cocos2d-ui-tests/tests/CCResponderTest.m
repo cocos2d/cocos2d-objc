@@ -32,9 +32,6 @@
     self.contentSizeType = kCCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
-    // XXX: This test works if we add another node to the layer
-    
-    /*
     // Setup a label that displays the number of current touches
     _lblNumTouches = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
     _lblNumTouches.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
@@ -42,10 +39,6 @@
     _lblNumTouches.horizontalAlignment = kCCTextAlignmentCenter;
     
     [self addChild:_lblNumTouches];
-     */
-    
-    // Make sure the label is updated every frame
-    [self scheduleUpdate];
     
     return self;
 }

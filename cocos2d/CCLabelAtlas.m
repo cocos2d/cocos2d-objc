@@ -77,11 +77,11 @@
 
 -(id) initWithString:(NSString*)string charMapFile: (NSString*)filename itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
 {
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	return [self initWithString:string texture:texture itemWidth:w itemHeight:h startCharMap:c];
 }
 
--(id) initWithString:(NSString*) theString texture:(CCTexture2D*)texture itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
+-(id) initWithString:(NSString*) theString texture:(CCTexture*)texture itemWidth:(NSUInteger)w itemHeight:(NSUInteger)h startCharMap:(NSUInteger)c
 {
 	if ((self=[super initWithTexture:texture tileWidth:w tileHeight:h itemsToRender:[theString length] ]) ) {
 		
@@ -103,9 +103,9 @@
 
 	const unsigned char *s = (unsigned char*) [_string UTF8String];
 
-	CCTexture2D *texture = [_textureAtlas texture];
-	float textureWide = [texture pixelsWide];
-	float textureHigh = [texture pixelsHigh];
+	CCTexture *texture = [_textureAtlas texture];
+	float textureWide = [texture pixelWidth];
+	float textureHigh = [texture pixelHeight];
     float itemWidthInPixels = _itemWidth * CC_CONTENT_SCALE_FACTOR();
     float itemHeightInPixels = _itemHeight * CC_CONTENT_SCALE_FACTOR();
 

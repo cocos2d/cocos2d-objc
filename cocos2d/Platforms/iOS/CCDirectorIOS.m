@@ -57,6 +57,7 @@
 #import "../../Support/CCProfiling.h"
 #endif
 
+#import "CCDirector_Private.h"
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
@@ -177,7 +178,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	glViewport(0, 0, size.width, size.height );
 }
 
--(void) setProjection:(ccDirectorProjection)projection
+-(void) setProjection:(CCDirectorProjection)projection
 {
 	CGSize size = _winSizeInPixels;
 	CGSize sizePoint = _winSizeInPoints;
@@ -185,7 +186,7 @@ CGFloat	__ccContentScaleFactor = 1;
 	[self setViewport];
 
 	switch (projection) {
-		case kCCDirectorProjection2D:
+		case CCDirectorProjection2D:
 
 			kmGLMatrixMode(KM_GL_PROJECTION);
 			kmGLLoadIdentity();
@@ -198,7 +199,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			kmGLLoadIdentity();
 			break;
 
-		case kCCDirectorProjection3D:
+		case CCDirectorProjection3D:
 		{
 			float zeye = [self getZEye];
 
@@ -224,7 +225,7 @@ CGFloat	__ccContentScaleFactor = 1;
 			break;
 		}
 
-		case kCCDirectorProjectionCustom:
+		case CCDirectorProjectionCustom:
 			if( [_delegate respondsToSelector:@selector(updateProjection)] )
 				[_delegate updateProjection];
 			break;
@@ -519,7 +520,7 @@ GLToClipTransform(kmMat4 *transformOut)
 {
 	[super startAnimation];
 
-    if(_isAnimating)
+    if(_animating)
         return;
 
 	gettimeofday( &_lastUpdate, NULL);
@@ -543,12 +544,12 @@ GLToClipTransform(kmMat4 *transformOut)
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
 #endif
 
-    _isAnimating = YES;
+    _animating = YES;
 }
 
 - (void) stopAnimation
 {
-    if(!_isAnimating)
+    if(!_animating)
         return;
 
 	CCLOG(@"cocos2d: animation stopped");
@@ -561,7 +562,7 @@ GLToClipTransform(kmMat4 *transformOut)
 
 	[_displayLink invalidate];
 	_displayLink = nil;
-    _isAnimating = NO;
+    _animating = NO;
 }
 
 // Overriden in order to use a more stable delta time

@@ -29,12 +29,12 @@
 /** Types of progress
  @since v0.99.1
  */
-typedef enum {
+typedef NS_ENUM(NSUInteger, CCProgressNodeType) {
 	/// Radial Counter-Clockwise
-	kCCProgressTimerTypeRadial,
+	CCProgressNodeTypeRadial,
 	/// Bar
-	kCCProgressTimerTypeBar,
-} CCProgressTimerType;
+	CCProgressNodeTypeBar,
+};
 
 /**
  CCProgresstimer is a subclass of CCNode.
@@ -42,8 +42,8 @@ typedef enum {
  The progress can be Radial, Horizontal or vertical.
  @since v0.99.1
  */
-@interface CCProgressTimer : CCNodeRGBA {
-	CCProgressTimerType	_type;
+@interface CCProgressNode : CCNodeRGBA {
+	CCProgressNodeType	_type;
 	float				_percentage;
 	CCSprite			*_sprite;
 
@@ -54,10 +54,8 @@ typedef enum {
 	BOOL				_reverseDirection;
 }
 /**	Change the percentage to change progress. */
-@property (nonatomic, readwrite) CCProgressTimerType type;
+@property (nonatomic, readwrite) CCProgressNodeType type;
 @property (nonatomic, readwrite) BOOL reverseDirection;
-@property (nonatomic, readonly) ccV2F_C4B_T2F *vertexData;
-@property (nonatomic, readonly) int vertexDataCount;
 
 /**
  *	Midpoint is used to modify the progress start position.

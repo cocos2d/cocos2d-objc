@@ -40,7 +40,7 @@
 #import "CCSpriteFrame.h"
 
 @class CCSprite;
-@class CCTexture2D;
+@class CCTexture;
 
 /** Singleton that handles the loading of the sprite frames.
  It saves in a cache the sprite frames.
@@ -78,7 +78,7 @@
 
 /** Adds multiple Sprite Frames from a plist file. The texture will be associated with the created sprite frames.
  */
--(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture;
+-(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture*)texture;
 
 /** Adds an sprite frame with a given name.
  If the name already exists, then the contents of the old name will be replaced with the new one.
@@ -115,7 +115,7 @@
  * It is convenient to call this method when a specific texture needs to be removed.
  * @since v0.995.
  */
-- (void) removeSpriteFramesFromTexture:(CCTexture2D*) texture;
+- (void) removeSpriteFramesFromTexture:(CCTexture*) texture;
 
 /** Returns an Sprite Frame that was previously added.
  If the name is not found it will return nil.

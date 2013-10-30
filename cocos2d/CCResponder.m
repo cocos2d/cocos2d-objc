@@ -29,6 +29,7 @@
 
 #import "CCResponder.h"
 #import "CCDirector.h"
+#import "CCDirector_Private.h"
 
 // -----------------------------------------------------------------
 
@@ -42,7 +43,7 @@
  *  Creates a new CCResponder instance
  *
  *  @return CCResponder
- *  @since v2.5
+ *  @since v3.0
  */
 - (id)init
 {

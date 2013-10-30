@@ -38,6 +38,7 @@
 #import "../../ccConfig.h"
 #import "../../ccMacros.h"
 
+#import "CCDirector_Private.h"
 
 @implementation CCGLView
 

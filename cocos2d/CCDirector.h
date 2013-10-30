@@ -36,18 +36,18 @@
 /**
  Possible OpenGL projections used by director
  */
-typedef NS_ENUM(NSUInteger, ccDirectorProjection) {
+typedef NS_ENUM(NSUInteger, CCDirectorProjection) {
 	/// sets a 2D projection (orthogonal projection).
-	kCCDirectorProjection2D,
+	CCDirectorProjection2D,
 
 	/// sets a 3D projection with a fovy=60, znear=0.5f and zfar=1500.
-	kCCDirectorProjection3D,
+	CCDirectorProjection3D,
 
 	/// it calls "updateProjection" on the projection delegate.
-	kCCDirectorProjectionCustom,
+	CCDirectorProjectionCustom,
 
 	/// Detault projection is 3D projection
-	kCCDirectorProjectionDefault = kCCDirectorProjection3D,
+	CCDirectorProjectionDefault = CCDirectorProjection3D,
 
 };
 
@@ -105,7 +105,7 @@ and when to execute the Scenes.
 	BOOL _isPaused;
     
     /* Is the director running */
-    BOOL _isAnimating;
+    BOOL _animating;
 
 	/* The running scene */
 	CCScene *_runningScene;
@@ -131,7 +131,7 @@ and when to execute the Scenes.
 	BOOL _nextDeltaTimeZero;
 
 	/* projection used */
-	ccDirectorProjection _projection;
+	CCDirectorProjection _projection;
 
 	/* CCDirector delegate */
 	id<CCDirectorDelegate>	__unsafe_unretained _delegate;
@@ -157,7 +157,7 @@ and when to execute the Scenes.
 
 /** returns the cocos2d thread.
  If you want to run any cocos2d task, run it in this thread.
- On iOS usually it is the main thread.
+ Typically this is the main thread.
  @since v0.99.5
  */
 @property (unsafe_unretained, readonly, nonatomic ) NSThread *runningThread;
@@ -168,55 +168,30 @@ and when to execute the Scenes.
 /** Whether or not to display director statistics */
 @property (nonatomic, readwrite, assign) BOOL displayStats;
 /** whether or not the next delta time will be zero */
-@property (nonatomic,readwrite,assign) BOOL nextDeltaTimeZero;
+@property (nonatomic,readwrite,assign,getter=isNextDeltaTimeZero) BOOL nextDeltaTimeZero;
 /** Whether or not the Director is paused */
 @property (nonatomic,readonly,getter=isPaused) BOOL paused;
 /** Whether or not the Director is active (animating) */
-@property (nonatomic,readonly) BOOL isAnimating;
+@property (nonatomic,readonly,getter=isAnimating) BOOL animating;
 /** Sets an OpenGL projection */
-@property (nonatomic,readwrite) ccDirectorProjection projection;
+@property (nonatomic,readwrite) CCDirectorProjection projection;
 /** How many frames were called since the director started */
 @property (nonatomic,readonly) NSUInteger	totalFrames;
 /** seconds per frame */
 @property (nonatomic, readonly) ccTime secondsPerFrame;
 
 /** Sets the touch manager
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, strong ) CCResponderManager* responderManager;
-
-
-/** Whether or not the replaced scene will receive the cleanup message.
- If the new scene is pushed, then the old scene won't receive the "cleanup" message.
- If the new scene replaces the old one, the it will receive the "cleanup" message.
- @since v0.99.0
- */
-@property (nonatomic, readonly) BOOL sendCleanupToScene;
-
-/** This object will be visited after the main scene is visited.
- This object MUST implement the "visit" selector.
- Useful to hook a notification object, like CCNotifications (http://github.com/manucorporat/CCNotifications)
- @since v0.99.5
- */
-@property (nonatomic, readwrite, strong) id	notificationNode;
 
 /** CCDirector delegate. It shall implement the CCDirectorDelegate protocol
  @since v0.99.5
  */
 @property (nonatomic, readwrite, unsafe_unretained) id<CCDirectorDelegate> delegate;
 
-/** CCScheduler associated with this director
- @since v2.0
- */
-@property (nonatomic,readwrite,strong) CCScheduler *scheduler;
-
-/** CCActionManager associated with this director
- @since v2.0
- */
-@property (nonatomic,readwrite,strong) CCActionManager *actionManager;
-
 /** Position scaling factor, default is 2 for tablets and 1 for phones. Positions and content sizes are scale by this factor if the position type is set to scale.
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic,readwrite,assign) float positionScaleFactor;
 
@@ -228,18 +203,15 @@ and when to execute the Scenes.
 
 #pragma mark Director - Win Size
 /** returns the size of the OpenGL view in points */
-- (CGSize) winSize;
+- (CGSize) viewSize;
 
 /** returns the size of the OpenGL view in pixels.
  On Mac winSize and winSizeInPixels return the same value.
  */
-- (CGSize) winSizeInPixels;
+- (CGSize) viewSizeInPixels;
 
 /** changes the projection size */
 -(void) reshapeProjection:(CGSize)newWindowSize;
-
-/** Sets the glViewport*/
--(void) setViewport;
 
 /** converts a UIKit coordinate to an OpenGL coordinate
  Useful to convert (multi) touch coordinates to the current layout (portrait or landscape)
@@ -249,9 +221,6 @@ and when to execute the Scenes.
  Useful to convert node points to window points for calls such as glScissor
  */
 -(CGPoint) convertToUI:(CGPoint)p;
-
-/// XXX: missing description
--(float) getZEye;
 
 #pragma mark Director - Scene Management
 
@@ -283,13 +252,6 @@ and when to execute the Scenes.
  */
 - (void) popToRootScene;
 
-/** Pops out all scenes from the queue until it reaches `level`.
- If level is 0, it will end the director.
- If level is 1, it will pop all scenes until it reaches to root scene.
- If level is <= than the current stack level, it won't do anything.
- */
--(void) popToSceneStackLevel:(NSUInteger)level;
-
 /** Replaces the running scene with a new one. The running scene is terminated.
  * ONLY call it if there is a running scene.
  */
@@ -297,19 +259,11 @@ and when to execute the Scenes.
 
 /**
  *  Presents a new scene by either starting first scene, or replacing the running
- *
- *  @param scene The scene to present
- *  @since v2.5
- */
-//- (void)presentScene:(CCScene *)scene;
-
-/**
- *  Presents a new scene by either starting first scene, or replacing the running
  *  Performs a transition between the outgoing and the incoming scene
  *
  *  @param scene      The incoming scene
  *  @param transition The transition to perform
- *  @since v2.5
+ *  @since v3.0
  */
 - (void)replaceScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -318,7 +272,7 @@ and when to execute the Scenes.
  *
  *  @param scene      The scene to present
  *  @param transition The transition to use
- *  @since v2.5
+ *  @since v3.0
  */
 - (void)pushScene:(CCScene *)scene withTransition:(CCTransition *)transition;
 
@@ -326,9 +280,9 @@ and when to execute the Scenes.
  *  Replaces the running scene, with the last scene pushed to the stack, using a transition
  *
  *  @param transition The transition to use
- *  @since v2.5
+ *  @since v3.0
  */
-- (void)popScenewithTransition:(CCTransition *)transition;
+- (void)popSceneWithTransition:(CCTransition *)transition;
 
 /** Ends the execution, releases the running scene.
  It doesn't remove the OpenGL view from its parent. You have to do it manually.
@@ -358,14 +312,9 @@ and when to execute the Scenes.
  */
 -(void) startAnimation;
 
-/** Draw the scene.
- This method is called every frame. Don't call it manually.
- */
--(void) drawScene;
 
-
-// XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
 #if defined(__CC_PLATFORM_MAC)
+// XXX: Hack. Should be placed on CCDirectorMac.h. Refactoring needed
 /** sets the openGL view */
 -(void) setView:(CCGLView*)view;
 
@@ -390,11 +339,5 @@ and when to execute the Scenes.
 - (void) setAlphaBlending: (BOOL) on;
 /** enables/disables OpenGL depth test */
 - (void) setDepthTest: (BOOL) on;
-
-// helper
-/** creates the Stats labels */
--(void) createStatsLabel;
 @end
 
-// optimization. Should only be used to read it. Never to write it.
-extern NSUInteger __ccNumberOfDraws;

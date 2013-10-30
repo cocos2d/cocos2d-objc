@@ -255,7 +255,7 @@
 
 - (void) focusOnTextField
 {
-    CGSize windowSize = [[CCDirector sharedDirector] winSize];
+    CGSize windowSize = [[CCDirector sharedDirector] viewSize];
     
     // Find the location of the textField
     float fieldCenterY = _textField.frame.origin.y - (_textField.frame.size.height/2);

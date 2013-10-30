@@ -36,6 +36,7 @@
 #import "ccUtils.h"
 #import "NSAttributedString+CCAdditions.h"
 #import "CCConfiguration.h"
+#import "CCNode_Private.h"
 
 #ifdef __CC_PLATFORM_IOS
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -45,11 +46,11 @@
 static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 
-@implementation CCTexture2D (CCLabelTTF)
+@implementation CCTexture (CCLabelTTF)
 
 - (void) setPremultipliedAlpha:(BOOL)flag
 {
-    _hasPremultipliedAlpha = flag;
+    _premultipliedAlpha = flag;
 }
 
 @end
@@ -445,7 +446,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
 
     // Generate a new texture from the attributed string
-	CCTexture2D *tex;
+	CCTexture *tex;
     
     tex = [self createTextureWithAttributedString:[formattedAttributedString copyAdjustedForContentScaleFactor] useFullColor:useFullColor];
 
@@ -489,7 +490,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	return YES;
 }
 
-- (CCTexture2D*) createTextureWithAttributedString:(NSAttributedString*)attributedString useFullColor:(BOOL) fullColor
+- (CCTexture*) createTextureWithAttributedString:(NSAttributedString*)attributedString useFullColor:(BOOL) fullColor
 {
 	NSAssert(attributedString, @"Invalid attributedString");
     
@@ -764,13 +765,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	unsigned char *data = (unsigned char*) [bitmap bitmapData];  //Use the same buffer to improve the performance.
 #endif
     
-    CCTexture2D* texture = NULL;
+    CCTexture* texture = NULL;
     
     // Initialize the texture
     if (fullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -782,7 +783,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
     
@@ -808,7 +809,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     if (!ccc4BEqual(_fontColor, ccc4(255, 255, 255, 255))) useFullColor = YES;
     if (_outlineColor.a > 0 && _outlineWidth > 0) useFullColor = YES;
     
-    CCTexture2D* tex = [self createTextureWithString:string useFullColor:useFullColor];
+    CCTexture* tex = [self createTextureWithString:string useFullColor:useFullColor];
     if (!tex) return NO;
     
     if (!useFullColor)
@@ -841,7 +842,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	return YES;
 }
 
-- (CCTexture2D*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
+- (CCTexture*) createTextureWithString:(NSString*) string useFullColor:(BOOL)useFullColor
 {
     // Scale everything up by content scale
     UIFont* font = [UIFont fontWithName:_fontName size:_fontSize * CC_CONTENT_SCALE_FACTOR()];
@@ -1041,13 +1042,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     UIGraphicsPopContext();
     CGContextRelease(context);
 
-    CCTexture2D* texture = NULL;
+    CCTexture* texture = NULL;
 
     // Initialize the texture
     if (useFullColor)
     {
         // RGBA8888 format
-        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_RGBA8888 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
         [texture setPremultipliedAlpha:YES];
     }
     else
@@ -1059,7 +1060,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         for(int i = 0; i<textureSize; i++)
             dst[i] = data[i*4+3];
         
-        texture = [[CCTexture2D alloc] initWithData:data pixelFormat:kCCTexture2DPixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
+        texture = [[CCTexture alloc] initWithData:data pixelFormat:CCTexturePixelFormat_A8 pixelsWide:POTSize.width pixelsHigh:POTSize.height contentSize:dimensions];
         self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureA8Color];
     }
 

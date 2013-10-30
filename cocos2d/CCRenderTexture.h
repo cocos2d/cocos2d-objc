@@ -57,7 +57,7 @@ typedef enum
 	GLuint				_FBO;
 	GLuint				_depthRenderBufffer;
 	GLint				_oldFBO;
-	CCTexture2D*		_texture;
+	CCTexture*		_texture;
 	CCSprite*			_sprite;
 	GLenum				_pixelFormat;
 
@@ -91,19 +91,19 @@ typedef enum
 
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format depthStencilFormat:(GLuint)depthStencilFormat;
 
 /** creates a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
-+(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format;
++(id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
 
 /** creates a RenderTexture object with width and height in Points, pixel format is RGBA8888 */
 +(id)renderTextureWithWidth:(int)w height:(int)h;
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format, only RGB and RGBA formats are valid */
--(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat) format;
+-(id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat) format;
 
 /** initializes a RenderTexture object with width and height in Points and a pixel format( only RGB and RGBA formats are valid ) and depthStencil format*/
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexture2DPixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
+- (id)initWithWidth:(int)w height:(int)h pixelFormat:(CCTexturePixelFormat)format depthStencilFormat:(GLuint)depthStencilFormat;
 
 /** starts grabbing */
 -(void)begin;

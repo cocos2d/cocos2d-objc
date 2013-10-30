@@ -72,7 +72,7 @@
 #import "Platforms/CCGL.h"
 #import "Platforms/CCNS.h"
 
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
 #import "CCConfiguration.h"
@@ -87,32 +87,35 @@
 
 #import "ccDeprecated.h"
 
+#import "CCTexture_Private.h"
+
 
 //CLASS IMPLEMENTATIONS:
 
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat_Default;
+static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Default;
 
 #pragma mark -
 #pragma mark CCTexture2D - Main
 
-@implementation CCTexture2D
+@implementation CCTexture
 
-@synthesize contentSizeInPixels = _size, pixelFormat = _format, pixelsWide = _width, pixelsHigh = _height, name = _name, maxS = _maxS, maxT = _maxT;
-@synthesize hasPremultipliedAlpha = _hasPremultipliedAlpha;
+@synthesize contentSizeInPixels = _size, pixelFormat = _format, pixelWidth = _width, pixelHeight = _height, name = _name, maxS = _maxS, maxT = _maxT;
+@synthesize premultipliedAlpha = _premultipliedAlpha;
 @synthesize shaderProgram = _shaderProgram;
 @synthesize resolutionType = _resolutionType;
+@synthesize antialiased = _antialiased;
 
 
-- (id) initWithData:(const void*)data pixelFormat:(CCTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+- (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {
 		
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-		if( pixelFormat == kCCTexture2DPixelFormat_RGBA8888 || ( ccNextPOT(width)==width && ccNextPOT(height)==height) )
+		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( ccNextPOT(width)==width && ccNextPOT(height)==height) )
 			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 		else
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -129,25 +132,25 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 		switch(pixelFormat)
 		{
-			case kCCTexture2DPixelFormat_RGBA8888:
+			case CCTexturePixelFormat_RGBA8888:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				break;
-			case kCCTexture2DPixelFormat_RGBA4444:
+			case CCTexturePixelFormat_RGBA4444:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 				break;
-			case kCCTexture2DPixelFormat_RGB5A1:
+			case CCTexturePixelFormat_RGB5A1:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei) width, (GLsizei) height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 				break;
-			case kCCTexture2DPixelFormat_RGB565:
+			case CCTexturePixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kCCTexture2DPixelFormat_RGB888:
+			case CCTexturePixelFormat_RGB888:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei) width, (GLsizei) height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 				break;
-			case kCCTexture2DPixelFormat_AI88:
+			case CCTexturePixelFormat_AI88:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_LUMINANCE_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_LUMINANCE_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
-			case kCCTexture2DPixelFormat_A8:
+			case CCTexturePixelFormat_A8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei) width, (GLsizei) height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			default:
@@ -162,9 +165,11 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		_maxS = size.width / (float)width;
 		_maxT = size.height / (float)height;
 
-		_hasPremultipliedAlpha = NO;
+		_premultipliedAlpha = NO;
 
 		_hasMipmaps = NO;
+        
+        _antialiased = YES;
 
 		_resolutionType = kCCResolutionUnknown;
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
@@ -214,12 +219,19 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
     return [CCSpriteFrame frameWithTexture:self rect:bounds];
 }
 
+- (void) setAntialiased:(BOOL)antialiased
+{
+    _antialiased = antialiased;
+    if (antialiased) [self setAntiAliasTexParameters];
+    else [self setAliasTexParameters];
+}
+
 @end
 
 #pragma mark -
 #pragma mark CCTexture2D - Image
 
-@implementation CCTexture2D (Image)
+@implementation CCTexture (Image)
 
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution
 {
@@ -233,7 +245,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	BOOL					hasAlpha;
 	CGImageAlphaInfo		info;
 	CGSize					imageSize;
-	CCTexture2DPixelFormat	pixelFormat;
+	CCTexturePixelFormat	pixelFormat;
 
 	if(cgImage == NULL) {
 		CCLOG(@"cocos2d: CCTexture2D. Can't create Texture. cgImage is nil");
@@ -268,18 +280,18 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 			// Use RGBA8888 if default is RGBA8888, otherwise use RGB565.
 			// DO NOT USE RGB888 since it is the same as RGBA8888, but it is more expensive to create it
-			if( defaultAlphaPixel_format == kCCTexture2DPixelFormat_RGBA8888 )
-				pixelFormat = kCCTexture2DPixelFormat_RGBA8888;
+			if( defaultAlphaPixel_format == CCTexturePixelFormat_RGBA8888 )
+				pixelFormat = CCTexturePixelFormat_RGBA8888;
 			else
 			{
-				pixelFormat = kCCTexture2DPixelFormat_RGB565;
+				pixelFormat = CCTexturePixelFormat_RGB565;
 				CCLOG(@"cocos2d: CCTexture2D: Using RGB565 texture since image has no alpha");
 			}
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
 		CCLOG(@"cocos2d: CCTexture2D: Using A8 texture since image is a mask");
-		pixelFormat = kCCTexture2DPixelFormat_A8;
+		pixelFormat = CCTexturePixelFormat_A8;
 	}
 
 	if( ! [conf supportsNPOT]  )
@@ -331,11 +343,11 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	// Create the bitmap graphics context
 
 	switch(pixelFormat) {
-		case kCCTexture2DPixelFormat_RGBA8888:
-		case kCCTexture2DPixelFormat_RGBA4444:
-		case kCCTexture2DPixelFormat_RGB5A1:
-		case kCCTexture2DPixelFormat_RGB565:
-		case kCCTexture2DPixelFormat_RGB888:
+		case CCTexturePixelFormat_RGBA8888:
+		case CCTexturePixelFormat_RGBA4444:
+		case CCTexturePixelFormat_RGB5A1:
+		case CCTexturePixelFormat_RGB565:
+		case CCTexturePixelFormat_RGB888:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(textureHeight * textureWidth * 4);
 //			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
@@ -343,7 +355,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, 4 * textureWidth, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
-		case kCCTexture2DPixelFormat_A8:
+		case CCTexturePixelFormat_A8:
 			data = malloc(textureHeight * textureWidth);
 			info = kCGImageAlphaOnly;
 			context = CGBitmapContextCreate(data, textureWidth, textureHeight, 8, textureWidth, NULL, (CGBitmapInfo)info);
@@ -359,7 +371,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	// Repack the pixel data into the right format
 
-	if(pixelFormat == kCCTexture2DPixelFormat_RGB565) {
+	if(pixelFormat == CCTexturePixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
@@ -371,7 +383,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 
 	}
 
-	else if(pixelFormat == kCCTexture2DPixelFormat_RGB888) {
+	else if(pixelFormat == CCTexturePixelFormat_RGB888) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRRRRGGGGGGGGBBBBBBB"
 		tempData = malloc(textureHeight * textureWidth * 3);
 		char *inData = (char*)data;
@@ -387,7 +399,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		
 	}
 
-	else if (pixelFormat == kCCTexture2DPixelFormat_RGBA4444) {
+	else if (pixelFormat == CCTexturePixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(textureHeight * textureWidth * 2);
 		inPixel32 = (unsigned int*)data;
@@ -404,7 +416,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 		data = tempData;
 
 	}
-	else if (pixelFormat == kCCTexture2DPixelFormat_RGB5A1) {
+	else if (pixelFormat == CCTexturePixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		/*
 		 Here was a bug.
@@ -435,7 +447,7 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:textureWidth pixelsHigh:textureHeight contentSize:imageSize];
 
 	// should be after calling super init
-	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	_premultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
 
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -449,10 +461,10 @@ static CCTexture2DPixelFormat defaultAlphaPixel_format = kCCTexture2DPixelFormat
 #pragma mark -
 #pragma mark CCTexture2D - PVRSupport
 
-@implementation CCTexture2D (PVRSupport)
+@implementation CCTexture (PVRSupport)
 
-// By default PVR images are treated as if they don't have the alpha channel premultiplied
-static BOOL _PVRHaveAlphaPremultiplied = NO;
+// By default PVR images are treated as if they have the alpha channel premultiplied
+static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
@@ -470,7 +482,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 			_width = pvr.width;
 			_height = pvr.height;
 			_size = CGSizeMake(_width, _height);
-			_hasPremultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
+			_premultipliedAlpha = (pvr.forcePremultipliedAlpha) ? pvr.hasPremultipliedAlpha : _PVRHaveAlphaPremultiplied;
 			_format = pvr.format;
 
 			_hasMipmaps = ( pvr.numberOfMipmaps > 1  );
@@ -494,7 +506,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 #pragma mark -
 #pragma mark CCTexture2D - Drawing
 
-@implementation CCTexture2D (Drawing)
+@implementation CCTexture (Drawing)
 
 - (void) drawAtPoint:(CGPoint)point
 {
@@ -564,7 +576,7 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 //
 // Use to apply MIN/MAG filter
 //
-@implementation CCTexture2D (GLFilter)
+@implementation CCTexture (GLFilter)
 
 -(void) generateMipmap
 {
@@ -596,7 +608,9 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 	else
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );	
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+	
+    _antialiased = NO;
 }
 
 -(void) setAntiAliasTexParameters
@@ -608,7 +622,9 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 	else
 		glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST );
 
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );	
+	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR );
+    
+    _antialiased = YES;
 }
 @end
 
@@ -619,51 +635,51 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 //
 // Texture options for images that contains alpha
 //
-@implementation CCTexture2D (PixelFormat)
-+(void) setDefaultAlphaPixelFormat:(CCTexture2DPixelFormat)format
+@implementation CCTexture (PixelFormat)
++(void) setDefaultAlphaPixelFormat:(CCTexturePixelFormat)format
 {
 	defaultAlphaPixel_format = format;
 }
 
-+(CCTexture2DPixelFormat) defaultAlphaPixelFormat
++(CCTexturePixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixel_format;
 }
 
-+(NSUInteger) bitsPerPixelForFormat:(CCTexture2DPixelFormat)format
++(NSUInteger) bitsPerPixelForFormat:(CCTexturePixelFormat)format
 {
 	NSUInteger ret=0;
 	
 	switch (format) {
-		case kCCTexture2DPixelFormat_RGBA8888:
+		case CCTexturePixelFormat_RGBA8888:
 			ret = 32;
 			break;
-		case kCCTexture2DPixelFormat_RGB888:
+		case CCTexturePixelFormat_RGB888:
 			// It is 32 and not 24, since its internal representation uses 32 bits.
 			ret = 32;
 			break;
-		case kCCTexture2DPixelFormat_RGB565:
+		case CCTexturePixelFormat_RGB565:
 			ret = 16;
 			break;
-		case kCCTexture2DPixelFormat_RGBA4444:
+		case CCTexturePixelFormat_RGBA4444:
 			ret = 16;
 			break;
-		case kCCTexture2DPixelFormat_RGB5A1:
+		case CCTexturePixelFormat_RGB5A1:
 			ret = 16;
 			break;
-		case kCCTexture2DPixelFormat_AI88:
+		case CCTexturePixelFormat_AI88:
 			ret = 16;
 			break;
-		case kCCTexture2DPixelFormat_A8:
+		case CCTexturePixelFormat_A8:
 			ret = 8;
 			break;
-		case kCCTexture2DPixelFormat_I8:
+		case CCTexturePixelFormat_I8:
 			ret = 8;
 			break;
-		case kCCTexture2DPixelFormat_PVRTC4:
+		case CCTexturePixelFormat_PVRTC4:
 			ret = 4;
 			break;
-		case kCCTexture2DPixelFormat_PVRTC2:
+		case CCTexturePixelFormat_PVRTC2:
 			ret = 2;
 			break;
 		default:
@@ -684,34 +700,34 @@ static BOOL _PVRHaveAlphaPremultiplied = NO;
 {
 	
 	switch (_format) {
-		case kCCTexture2DPixelFormat_RGBA8888:
+		case CCTexturePixelFormat_RGBA8888:
 			return  @"RGBA8888";
 
-		case kCCTexture2DPixelFormat_RGB888:
+		case CCTexturePixelFormat_RGB888:
 			return  @"RGB888";
 
-		case kCCTexture2DPixelFormat_RGB565:
+		case CCTexturePixelFormat_RGB565:
 			return  @"RGB565";
 
-		case kCCTexture2DPixelFormat_RGBA4444:
+		case CCTexturePixelFormat_RGBA4444:
 			return  @"RGBA4444";
 
-		case kCCTexture2DPixelFormat_RGB5A1:
+		case CCTexturePixelFormat_RGB5A1:
 			return  @"RGB5A1";
 
-		case kCCTexture2DPixelFormat_AI88:
+		case CCTexturePixelFormat_AI88:
 			return  @"AI88";
 
-		case kCCTexture2DPixelFormat_A8:
+		case CCTexturePixelFormat_A8:
 			return  @"A8";
 
-		case kCCTexture2DPixelFormat_I8:
+		case CCTexturePixelFormat_I8:
 			return  @"I8";
 			
-		case kCCTexture2DPixelFormat_PVRTC4:
+		case CCTexturePixelFormat_PVRTC4:
 			return  @"PVRTC4";
 			
-		case kCCTexture2DPixelFormat_PVRTC2:
+		case CCTexturePixelFormat_PVRTC2:
 			return  @"PVRTC2";
 
 		default:

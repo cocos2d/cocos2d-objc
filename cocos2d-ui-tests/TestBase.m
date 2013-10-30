@@ -46,7 +46,7 @@
     // Create interface
     
     // Header background
-    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithSpriteFrameName:@"Interface/header.png"];
+    CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
     headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
@@ -131,10 +131,10 @@
 - (void) onEnterTransitionDidFinish
 {
     // Fade buttons in
-    [_btnBack.background runAction:[CCFadeIn actionWithDuration:0.3f]];
-    [_btnPrev.background runAction:[CCFadeIn actionWithDuration:0.3f]];
-    [_btnNext.background runAction:[CCFadeIn actionWithDuration:0.3f]];
-    [_btnReload.background runAction:[CCFadeIn actionWithDuration:0.3f]];
+    [_btnBack.background runAction:[CCActionFadeIn actionWithDuration:0.3f]];
+    [_btnPrev.background runAction:[CCActionFadeIn actionWithDuration:0.3f]];
+    [_btnNext.background runAction:[CCActionFadeIn actionWithDuration:0.3f]];
+    [_btnReload.background runAction:[CCActionFadeIn actionWithDuration:0.3f]];
     
     [super onEnterTransitionDidFinish];
 }
@@ -142,10 +142,10 @@
 - (void) onExitTransitionDidStart
 {
     // Fade buttons out
-    [_btnBack.background runAction:[CCFadeOut actionWithDuration:0.1f]];
-    [_btnPrev.background runAction:[CCFadeOut actionWithDuration:0.1f]];
-    [_btnNext.background runAction:[CCFadeOut actionWithDuration:0.1f]];
-    [_btnReload.background runAction:[CCFadeOut actionWithDuration:0.1f]];
+    [_btnBack.background runAction:[CCActionFadeOut actionWithDuration:0.1f]];
+    [_btnPrev.background runAction:[CCActionFadeOut actionWithDuration:0.1f]];
+    [_btnNext.background runAction:[CCActionFadeOut actionWithDuration:0.1f]];
+    [_btnReload.background runAction:[CCActionFadeOut actionWithDuration:0.1f]];
     
     [super onExitTransitionDidStart];
 }

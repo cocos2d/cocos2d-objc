@@ -79,7 +79,7 @@
 	// Data used when the sprite is self-rendered
 	//
 	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
-	CCTexture2D				*_texture;				// Texture used to render the sprite
+	CCTexture				*_texture;				// Texture used to render the sprite
 
 	//
 	// Shared data
@@ -106,20 +106,13 @@
 	BOOL	_flipY;
 }
 
-/** whether or not the Sprite needs to be updated in the Atlas */
-@property (nonatomic,readwrite) BOOL dirty;
-/** the quad (tex coords, vertex coords and color) information */
-@property (nonatomic,readonly) ccV3F_C4B_T2F_Quad quad;
-/** The index used on the TextureAtlas. Don't modify this value unless you know what you are doing */
-@property (nonatomic,readwrite) NSUInteger atlasIndex;
 /** returns the texture rect of the CCSprite in points */
 @property (nonatomic,readonly) CGRect textureRect;
+
 /** returns whether or not the texture rectangle is rotated */
 @property (nonatomic,readonly) BOOL textureRectRotated;
 
-/**
- *  The currently displayed spriteFrame.
- */
+/** The currently displayed spriteFrame. */
 @property (nonatomic,strong) CCSpriteFrame* spriteFrame;
 
 /** whether or not the sprite is flipped horizontally.
@@ -138,14 +131,12 @@
 	sprite.scaleY *= -1;
  */
 @property (nonatomic,readwrite) BOOL flipY;
-/** weak reference of the CCTextureAtlas used when the sprite is rendered using a CCSpriteBatchNode */
-@property (nonatomic,readwrite,unsafe_unretained) CCTextureAtlas *textureAtlas;
-/** weak reference to the CCSpriteBatchNode that renders the CCSprite */
-@property (nonatomic,readwrite,unsafe_unretained) CCSpriteBatchNode *batchNode;
+
 /** offset position in points of the sprite in points. Calculated automatically by editors like Zwoptex.
  @since v0.99.0
  */
 @property (nonatomic,readonly) CGPoint	offsetPosition;
+
 /** conforms to CCTextureProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 
@@ -164,34 +155,16 @@
  The rect used will be the size of the texture.
  The offset will be (0,0).
  */
-+(id) spriteWithTexture:(CCTexture2D*)texture;
++(id) spriteWithTexture:(CCTexture*)texture;
 
 /** Creates an sprite with a texture and a rect.
  The offset will be (0,0).
  */
-+(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
++(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /** Creates an sprite with an sprite frame.
  */
 +(id) spriteWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
-
-/** Creates an sprite with an sprite frame name.
- An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
- If the CCSpriteFrame doesn't exist it will raise an exception.
- @since v0.9
- */
-+(id) spriteWithSpriteFrameName:(NSString*)spriteFrameName;
-
-/** Creates an sprite with an image filename.
- The rect used will be the size of the image.
- The offset will be (0,0).
- */
-+(id) spriteWithFile:(NSString*)filename;
-
-/** Creates an sprite with an image filename and a rect.
- The offset will be (0,0).
- */
-+(id) spriteWithFile:(NSString*)filename rect:(CGRect)rect;
 
 /** Creates an sprite with a CGImageRef and a key.
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
@@ -201,45 +174,36 @@
  */
 +(id) spriteWithCGImage: (CGImageRef)image key:(NSString*)key;
 
+/**
+ *  Initializes a sprite with the name of an image. The name can be either a name in a sprite sheet or the name of a file.
+ *
+ *  @param imageName name of the image to load
+ *
+ *  @return a sprite
+ */
+- (id) initWithImageNamed:(NSString*)imageName;
+
 /** Initializes an sprite with a texture.
  The rect used will be the size of the texture.
  The offset will be (0,0).
  */
--(id) initWithTexture:(CCTexture2D*)texture;
+-(id) initWithTexture:(CCTexture*)texture;
 
 /** Initializes an sprite with a texture and a rect in points (unrotated)
  The offset will be (0,0).
  */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /** Initializes an sprite with a texture and a rect in points, optionally rotated.
  The offset will be (0,0).
  IMPORTANT: This is the designated initializer.
  */
-- (id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
 
 
 /** Initializes an sprite with an sprite frame.
  */
 -(id) initWithSpriteFrame:(CCSpriteFrame*)spriteFrame;
-
-/** Initializes an sprite with an sprite frame name.
- An CCSpriteFrame will be fetched from the CCSpriteFrameCache by name.
- If the CCSpriteFrame doesn't exist it will raise an exception.
- @since v0.9
- */
--(id) initWithSpriteFrameName:(NSString*)spriteFrameName;
-
-/** Initializes an sprite with an image filename.
- The rect used will be the size of the image.
- The offset will be (0,0).
- */
--(id) initWithFile:(NSString*)filename;
-
-/** Initializes an sprite with an image filename, and a rect.
- The offset will be (0,0).
- */
--(id) initWithFile:(NSString*)filename rect:(CGRect)rect;
 
 /** Initializes an sprite with a CGImageRef and a key
  The key is used by the CCTextureCache to know if a texture was already created with this CGImage.
@@ -248,12 +212,6 @@
  @since v0.99.0
  */
 -(id) initWithCGImage:(CGImageRef)image key:(NSString*)key;
-
-#pragma mark CCSprite - BatchNode methods
-
-/** updates the quad according the the rotation, position, scale values.
- */
--(void)updateTransform;
 
 #pragma mark CCSprite - Texture methods
 
@@ -266,19 +224,5 @@
  It will update the texture coordinates and the vertex rectangle.
  */
 -(void) setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)size;
-
-/** set the vertex rect.
- It will be called internally by setTextureRect. Useful if you want to create 2x images from SD images in Retina Display.
- Do not call it manually. Use setTextureRect instead.
- */
--(void)setVertexRect:(CGRect)rect;
-
-#pragma mark CCSprite - Animation
-
-/** changes the display frame with animation name and index.
- The animation name will be get from the CCAnimationCache
- @since v0.99.5
- */
--(void) setSpriteFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex;
 
 @end

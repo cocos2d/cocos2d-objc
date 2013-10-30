@@ -40,7 +40,6 @@ enum {
 };
 
 @class CCScene;
-@class CCGridBase;
 @class CCGLProgram;
 @class CCScheduler;
 @class CCActionManager;
@@ -66,7 +65,6 @@ enum {
  - position
  - scale (x, y)
  - rotation (in degrees, clockwise)
- - CCGridBase (to do mesh transformations)
  - anchor point
  - size
  - visible
@@ -83,21 +81,13 @@ enum {
  Limitations:
  - A CCNode is a "void" object. It doesn't have a texture
 
- Order in transformations with grid disabled
+ Order in transformations
  -# The node will be translated (position)
  -# The node will be rotated (rotation)
  -# The node will be skewed (skewX, skewY)
  -# The node will be scaled (scale, scaleX, scaleY)
  -# The node will be moved according to the camera values (camera)
 
- Order in transformations with grid enabled
- -# The node will be translated (position)
- -# The node will be rotated (rotation, rotationX, rotationY)
- -# The node will be skewed (skewX, skewY)
- -# The node will be scaled (scale, scaleX, scaleY)
- -# The grid will capture the screen
- -# The node will be moved according to the camera values (camera)
- -# The grid will render the captured screen
  */
 @interface CCNode : CCResponder < CCResponderProtocol, CCSchedulerTarget > {
 	// rotation angle
@@ -127,9 +117,6 @@ enum {
 	CGAffineTransform _transform, _inverse;
 	BOOL _isTransformDirty;
 	BOOL _isInverseDirty;
-
-	// a Grid
-	CCGridBase *_grid;
 
 	// z-order value
 	NSInteger _zOrder;
@@ -179,15 +166,6 @@ enum {
 
 /** The z order of the node relative to its "siblings": children of the same parent */
 @property(nonatomic,assign) NSInteger zOrder;
-/** The real openGL Z vertex.
- Differences between openGL Z vertex and cocos2d Z order:
-   - OpenGL Z modifies the Z vertex, and not the Z order in the relation between parent-children
-   - OpenGL Z might require to set 2D projection
-   - cocos2d Z order works OK if all the nodes uses the same openGL Z vertex. eg: vertexZ = 0
- @warning: Use it at your own risk since it might break the cocos2d parent-children z order
- @since v0.8
- */
-@property (nonatomic,readwrite) float vertexZ;
 
 /** The X skew angle of the node in degrees.
  This angle describes the shear distortion in the X direction.
@@ -202,17 +180,22 @@ enum {
  The default skewY angle is 0. Positive values distort the node in a CCW direction.
  */
 @property(nonatomic,readwrite,assign) float skewY;
+
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
+
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the X rotation performing a horizontal rotational skew . */
 @property(nonatomic,readwrite,assign) float rotationalSkewX;
+
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. It only modifies the Y rotation performing a vertical rotational skew . */
 @property(nonatomic,readwrite,assign) float rotationalSkewY;
 
 /** The scale factor of the node. 1.0 is the default scale factor. It modifies the X and Y scale at the same time. */
 @property(nonatomic,readwrite,assign) float scale;
+
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the X scale factor. */
 @property(nonatomic,readwrite,assign) float scaleX;
+
 /** The scale factor of the node. 1.0 is the default scale factor. It only modifies the Y scale factor. */
 @property(nonatomic,readwrite,assign) float scaleY;
 
@@ -221,20 +204,22 @@ enum {
 @property (nonatomic,readonly) float scaleYInPoints;
 
 @property (nonatomic,assign) CCScaleType scaleType;
-@property (nonatomic,readonly) BOOL isPhysicsNode;
 
 /** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
 @property(nonatomic,readwrite,assign) CGPoint position;
+
 /** Position (x,y) of the node in points from the bottom left corner */
 @property(nonatomic,readonly) CGPoint positionInPoints;
+
 /** Defines the position type used for the X component of the position property */
 @property(nonatomic,readwrite,assign) CCPositionType positionType;
+
 /** Array of children */
 @property(nonatomic,readonly) NSArray *children;
-/** A CCGrid object that is used when applying effects */
-@property(nonatomic,readwrite,strong) CCGridBase* grid;
+
 /** Whether of not the node is visible. Default is YES */
 @property( nonatomic,readwrite,assign) BOOL visible;
+
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
  The anchorPoint is normalized, like a percentage. (0,0) means the bottom-left corner and (1,1) means the top-right corner.
@@ -243,6 +228,7 @@ enum {
  @since v0.8
  */
 @property(nonatomic,readwrite) CGPoint anchorPoint;
+
 /** The anchorPoint in absolute pixels.
  Since v0.8 you can only read it. If you wish to modify it, use anchorPoint instead
  */
@@ -252,8 +238,10 @@ enum {
  @since v0.8
  */
 @property (nonatomic,readwrite,assign) CGSize contentSize;
+
 /** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. */
 @property (nonatomic,readonly) CGSize contentSizeInPoints;
+
 /** Defines the contentSize type used for the widht and height component of the contentSize property. */
 @property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
 
@@ -264,57 +252,35 @@ enum {
 @property(nonatomic, strong) CCPhysicsBody *physicsBody;
 
 /** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly) BOOL isRunning;
+@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
+
 /** A weak reference to the parent */
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
+
 /** A tag used to identify the node easily */
 @property(nonatomic,readwrite,assign) NSInteger tag;
+
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** Shader Program
- @since v2.0
- */
-@property(nonatomic,readwrite,strong) CCGLProgram *shaderProgram;
-
-/** used internally for zOrder sorting, don't change this manually */
-@property(nonatomic,readwrite) NSUInteger orderOfArrival;
-
-/** GL server side state
- @since v2.0
-*/
-@property (nonatomic, readwrite) ccGLServerState glServerState;
-
-/** CCActionManager used by all the actions.
- IMPORTANT: If you set a new CCActionManager, then previously created actions are going to be removed.
- @since v2.0
- */
-@property (nonatomic, readwrite, strong) CCActionManager *actionManager;
-
-/** CCScheduler used to schedule all "updates" and timers.
- IMPORTANT: If you set a new CCScheduler, then previously created timers/update are going to be removed.
- @since v2.0
- */
-@property (nonatomic, readwrite, strong) CCScheduler *scheduler;
-
 /** Enabled user interaction on a node, like touch
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
 
 /** Enabled multiple touches inside a single node
- @since v2.5
+ @since v3.0
  */
 @property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
 
 /** Locks the touch to the node if touch started outside
  If a touch is moved inside a non locked node, a touchesBegan will be generated
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic, assign) BOOL claimsUserInteraction;
 
 /** Expands ( or contracts ) the hit area of the node, value is in points.
- @since v2.5
+ @since v3.0
  */
 @property (nonatomic,assign) float hitAreaExpansion;
  
@@ -323,6 +289,7 @@ enum {
  The node will be created as "autorelease".
  */
 +(id) node;
+
 /** initializes the node */
 -(id) init;
 
@@ -482,19 +449,24 @@ enum {
  @return An Action pointer
  */
 -(CCAction*) runAction: (CCAction*) action;
+
 /** Removes all actions from the running action list */
 -(void) stopAllActions;
+
 /** Removes an action from the running action list */
 -(void) stopAction: (CCAction*) action;
+
 /** Removes an action from the running action list given its tag
  @since v0.7.1
 */
 -(void) stopActionByTag:(NSInteger) tag;
+
 /** Gets an action from the running action list given its tag
  @since v0.7.1
  @return the Action the with the given tag
  */
 -(CCAction*) getActionByTag:(NSInteger) tag;
+
 /** Returns the numbers of actions that are running plus the ones that are schedule to run (actions in actionsToAdd and actions arrays).
  * Composable actions are counted as 1 action. Example:
  *    If you are running 1 Sequence of 7 actions, it will return 1.
@@ -513,6 +485,7 @@ enum {
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(CCTimer *) schedule: (SEL) s interval:(ccTime)seconds;
+
 /**
  repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
  delay is the amount of time the action will wait before execution
@@ -582,25 +555,9 @@ enum {
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-#ifdef __CC_PLATFORM_IOS
-
-/** Converts a UITouch to node (local) space coordinates. The result is in Points.
- @since v0.7.1
- */
-- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch;
-/** Converts a UITouch to node (local) space coordinates. The result is in Points.
- This method is AR (Anchor Relative)..
- @since v0.7.1
- */
-- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch;
-#endif // __CC_PLATFORM_IOS
-
-/** Compares two nodes in respect to zOrder and orderOfArrival (used for sorting sprites in display list) */
-- (NSComparisonResult) compareZOrderToNode:(CCNode*)node;
-
 /** check if a touch is inside the node
  to expand or shrink the touch area of a node, override this method
- @since v2.5
+ @since v3.0
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 

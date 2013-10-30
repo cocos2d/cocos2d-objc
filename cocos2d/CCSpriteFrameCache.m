@@ -45,7 +45,7 @@
 
 @interface CCSpriteFrameCache ()
 - (void) addSpriteFramesWithDictionary:(NSDictionary*)dictionary textureFilename:(NSString*)filename;
-- (void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture2D *)texture;
+- (void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture;
 - (void) removeSpriteFramesFromDictionary:(NSDictionary*) dictionary;
 @end
 
@@ -243,13 +243,13 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 		}
 
 		NSString *textureFileName = nil;
-		CCTexture2D * texture = nil;
+		CCTexture * texture = nil;
 
 		if ( [textureReference isKindOfClass:[NSString class]] )
 		{
 			textureFileName	= textureReference;
 		}
-		else if ( [textureReference isKindOfClass:[CCTexture2D class]] )
+		else if ( [textureReference isKindOfClass:[CCTexture class]] )
 		{
 			texture = textureReference;
 		}
@@ -273,7 +273,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	return [self addSpriteFramesWithDictionary:dictionary textureReference:textureFilename];
 }
 
--(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture2D *)texture
+-(void) addSpriteFramesWithDictionary:(NSDictionary *)dictionary texture:(CCTexture *)texture
 {
 	return [self addSpriteFramesWithDictionary:dictionary textureReference:texture];
 }
@@ -301,7 +301,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	return [self addSpriteFramesWithFile:plist textureReference:textureFilename];
 }
 
--(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture2D*)texture
+-(void) addSpriteFramesWithFile:(NSString*)plist texture:(CCTexture*)texture
 {
 	return [self addSpriteFramesWithFile:plist textureReference:texture];
 }
@@ -426,7 +426,7 @@ static CCSpriteFrameCache *_sharedSpriteFrameCache=nil;
 	[_spriteFrames removeObjectsForKeys:keysToRemove];
 }
 
-- (void) removeSpriteFramesFromTexture:(CCTexture2D*) texture
+- (void) removeSpriteFramesFromTexture:(CCTexture*) texture
 {
 	NSMutableArray *keysToRemove=[NSMutableArray array];
 

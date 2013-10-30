@@ -67,7 +67,7 @@
 	// nothing
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
 	return [self copy];
 }
@@ -78,15 +78,15 @@
 //
 #pragma mark CCShow
 
-@implementation CCShow
+@implementation CCActionShow
 -(void) update:(ccTime)time
 {
 	((CCNode *)_target).visible = YES;
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
-	return [CCHide action];
+	return [CCActionHide action];
 }
 @end
 
@@ -95,15 +95,15 @@
 //
 #pragma mark CCHide
 
-@implementation CCHide
+@implementation CCActionHide
 -(void) update:(ccTime)time
 {
 	((CCNode *)_target).visible = NO;
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
-	return [CCShow action];
+	return [CCActionShow action];
 }
 @end
 
@@ -112,7 +112,7 @@
 //
 #pragma mark CCToggleVisibility
 
-@implementation CCToggleVisibility
+@implementation CCActionToggleVisibility
 -(void) update:(ccTime)time
 {
 	((CCNode *)_target).visible = !((CCNode *)_target).visible;
@@ -124,7 +124,7 @@
 //
 #pragma mark CCFlipX
 
-@implementation CCFlipX
+@implementation CCActionFlipX
 +(id) actionWithFlipX:(BOOL)x
 {
 	return [[self alloc] initWithFlipX:x];
@@ -143,9 +143,9 @@
 	[(CCSprite*)_target setFlipX:_flipX];
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
-	return [CCFlipX actionWithFlipX:!_flipX];
+	return [CCActionFlipX actionWithFlipX:!_flipX];
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -160,7 +160,7 @@
 //
 #pragma mark CCFlipY
 
-@implementation CCFlipY
+@implementation CCActionFlipY
 +(id) actionWithFlipY:(BOOL)y
 {
 	return [[self alloc] initWithFlipY:y];
@@ -179,9 +179,9 @@
 	[(CCSprite*)_target setFlipY:_flipY];
 }
 
--(CCFiniteTimeAction*) reverse
+-(CCActionFiniteTime*) reverse
 {
-	return [CCFlipY actionWithFlipY:!_flipY];
+	return [CCActionFlipY actionWithFlipY:!_flipY];
 }
 
 -(id) copyWithZone: (NSZone*) zone
@@ -197,7 +197,7 @@
 //
 #pragma mark CCPlace
 
-@implementation CCPlace
+@implementation CCActionPlace
 +(id) actionWithPosition: (CGPoint) pos
 {
 	return [[self alloc]initWithPosition:pos];
@@ -229,7 +229,7 @@
 //
 #pragma mark CCCallFunc
 
-@implementation CCCallFunc
+@implementation CCActionCallFunc
 
 @synthesize targetCallback = _targetCallback;
 
@@ -275,98 +275,13 @@
 }
 @end
 
-//
-// CallFuncN
-//
-#pragma mark CCCallFuncN
-
-@implementation CCCallFuncN
-
--(void) execute
-{
-    objc_msgSend(_targetCallback, _selector, _target);
-}
-@end
-
-//
-// CallFuncND
-//
-#pragma mark CCCallFuncND
-
-@implementation CCCallFuncND
-
-@synthesize callbackMethod = _callbackMethod;
-
-+(id) actionWithTarget:(id)t selector:(SEL)s data:(void*)d
-{
-	return [[self alloc] initWithTarget:t selector:s data:d];
-}
-
--(id) initWithTarget:(id)t selector:(SEL)s data:(void*)d
-{
-	if( (self=[super initWithTarget:t selector:s]) ) {
-		_data = d;
-
-#if COCOS2D_DEBUG
-		NSMethodSignature * sig = [t methodSignatureForSelector:s]; // added
-		NSAssert(sig !=0 , @"Signature not found for selector - does it have the following form? -(void)name:(id)sender data:(void*)data");
-#endif
-		_callbackMethod = (CC_CALLBACK_ND) [t methodForSelector:s];
-	}
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector data:_data];
-	return copy;
-}
-
-
--(void) execute
-{
-	_callbackMethod(_targetCallback,_selector,_target, _data);
-}
-@end
-
-@implementation CCCallFuncO
-@synthesize  object = _object;
-
-+(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object
-{
-	return [[self alloc] initWithTarget:t selector:s object:object];
-}
-
--(id) initWithTarget:(id) t selector:(SEL) s object:(id)object
-{
-	if( (self=[super initWithTarget:t selector:s] ) )
-		self.object = object;
-
-	return self;
-}
-
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithTarget:_targetCallback selector:_selector object:_object];
-	return copy;
-}
-
-
--(void) execute
-{
-    objc_msgSend(_targetCallback, _selector, _object);
-}
-
-@end
-
 
 #pragma mark -
 #pragma mark Blocks
 
 #pragma mark CCCallBlock
 
-@implementation CCCallBlock
+@implementation CCActionCallBlock
 
 +(id) actionWithBlock:(void(^)())block
 {
@@ -395,82 +310,6 @@
 -(void) execute
 {
 	_block();
-}
-
-
-@end
-
-#pragma mark CCCallBlockN
-
-@implementation CCCallBlockN
-
-+(id) actionWithBlock:(void(^)(CCNode *node))block
-{
-	return [[self alloc] initWithBlock:block];
-}
-
--(id) initWithBlock:(void(^)(CCNode *node))block
-{
-	if ((self = [super init]))
-		_block = [block copy];
-
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:_block];
-	return copy;
-}
-
--(void) update:(ccTime)time
-{
-	[self execute];
-}
-
--(void) execute
-{
-	_block(_target);
-}
-
-
-@end
-
-#pragma mark CCCallBlockO
-
-@implementation CCCallBlockO
-
-@synthesize object=_object;
-
-+(id) actionWithBlock:(void(^)(id object))block object:(id)object
-{
-	return [[self alloc] initWithBlock:block object:object];
-}
-
--(id) initWithBlock:(void(^)(id object))block object:(id)object
-{
-	if ((self = [super init])) {
-		_block = [block copy];
-		_object = object;
-	}
-
-	return self;
-}
-
--(id) copyWithZone: (NSZone*) zone
-{
-	CCActionInstant *copy = [[[self class] allocWithZone: zone] initWithBlock:_block];
-	return copy;
-}
-
--(void) update:(ccTime)time
-{
-	[self execute];
-}
-
--(void) execute
-{
-	_block(_object);
 }
 
 

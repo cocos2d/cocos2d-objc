@@ -93,7 +93,7 @@ enum {
    - An action with a duration of 35.5 seconds
  Infinite time actions are valid
  */
-@interface CCFiniteTimeAction : CCAction <NSCopying>
+@interface CCActionFiniteTime : CCAction <NSCopying>
 {
 	//! duration in seconds
 	ccTime _duration;
@@ -102,7 +102,7 @@ enum {
 @property (nonatomic,readwrite) ccTime duration;
 
 /** returns a reversed action */
-- (CCFiniteTimeAction*) reverse;
+- (CCActionFiniteTime*) reverse;
 @end
 
 
@@ -111,7 +111,7 @@ enum {
  To repeat the an action for a limited number of times use the Repeat action.
  @warning This action can't be Sequence-able because it is not an IntervalAction
  */
-@interface CCRepeatForever : CCAction <NSCopying>
+@interface CCActionRepeatForever : CCAction <NSCopying>
 {
 	CCActionInterval *_innerAction;
 }
@@ -129,7 +129,7 @@ enum {
  Useful to simulate 'slow motion' or 'fast forward' effect.
  @warning This action can't be Sequence-able because it is not an CCIntervalAction
  */
-@interface CCSpeed : CCAction <NSCopying>
+@interface CCActionSpeed : CCAction <NSCopying>
 {
 	CCActionInterval	*_innerAction;
 	CGFloat _speed;
@@ -154,7 +154,7 @@ enum {
  Instead of using CCCamera as a "follower", use this action instead.
  @since v0.99.2
  */
-@interface CCFollow : CCAction <NSCopying>
+@interface CCActionFollow : CCAction <NSCopying>
 {
 	/* node to follow */
 	CCNode	*_followedNode;

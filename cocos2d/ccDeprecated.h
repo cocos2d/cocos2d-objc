@@ -28,7 +28,6 @@
 
 #import "ccTypes.h"
 #import "ccMacros.h"
-#import "CCMenu.h"
 #import "CCDirector.h"
 #import "CCSprite.h"
 #import "CCParticleSystemQuad.h"
@@ -40,12 +39,10 @@
 #import "CCRenderTexture.h"
 #import "CCSpriteFrameCache.h"
 #import "CCLabelTTF.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
-#import "CCActionTiledGrid.h"
-#import "CCActionGrid3D.h"
 
 
 /*
@@ -63,13 +60,12 @@
 #define ccg CGSizeMake
 
 // ccTypes.h
-enum {
 #ifdef __CC_PLATFORM_IOS
+enum {
 	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
 	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = kCCResolutioniPhoneRetinaDisplay,
-#endif // __CC_PLATFORM_IOS
-	kCCMenuTouchPriority DEPRECATED_ATTRIBUTE	= kCCMenuHandlerPriority,
 };
+#endif // __CC_PLATFORM_IOS
 
 // CCRenderTexture.h
 enum {
@@ -146,10 +142,6 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 @end
 
 @interface CCSprite (Deprecated)
-// new: spriteWithTexture:rect:
-+(id) spriteWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-// new: initWithTexture:rect:
--(id) initWithBatchNode:(CCSpriteBatchNode*)node rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 // new: spriteFrame
 -(CCSpriteFrame*) displayedFrame DEPRECATED_ATTRIBUTE;
 // new: spriteFrame
@@ -158,73 +150,9 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 - (void) setDisplayFrame:(CCSpriteFrame *)newFrame DEPRECATED_ATTRIBUTE;
 // don't use
 -(BOOL) isFrameDisplayed:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
-// new: setSpriteFrameWithAnimationName:index:
--(void) setDisplayFrameWithAnimationName:(NSString*)animationName index:(int) frameIndex DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCParticleSystemQuad (Deprecated)
--(void) setDisplayFrame:(CCSpriteFrame *)spriteFrame DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItem (Deprecated)
-// new: -(CGRect) activeArea;
--(CGRect) rect DEPRECATED_ATTRIBUTE;
--(void) setRect:(CGRect)rect DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemAtlasFont (Deprecated)
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap DEPRECATED_ATTRIBUTE;
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
-// new itemWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
-+(id) itemFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:target:selector
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap target:(id) rec selector:(SEL) cb DEPRECATED_ATTRIBUTE;
-// new initWithStirng:charmapFile:itemWidth:itemHeight:startCharMap:block
--(id) initFromString: (NSString*) value charMapFile:(NSString*) charMapFile itemWidth:(int)itemWidth itemHeight:(int)itemHeight startCharMap:(char)startCharMap block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-
-@interface CCMenuItemFont (Deprecated)
-// new: itemWithString:
-+(id) itemFromString: (NSString*) value DEPRECATED_ATTRIBUTE;
-// new: itemWithString:target:selector
-+(id) itemFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithString:block:
-+(id) itemFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: initWithString:target:selector
--(id) initFromString: (NSString*) value target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: initWithString:block:
--(id) initFromString: (NSString*) value block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemSprite (Deprecated)
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-+(id) itemFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite target:(id)target selector:(SEL)selector DEPRECATED_ATTRIBUTE;
--(id) initFromNormalSprite:(CCNode<CCRGBAProtocol>*)normalSprite selectedSprite:(CCNode<CCRGBAProtocol>*)selectedSprite disabledSprite:(CCNode<CCRGBAProtocol>*)disabledSprite block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCMenuItemImage (Deprecated)
-// new: itemWithNormalImage:selectedImage:
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:target:selector
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:disabledImage:target:selector
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:block
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: itemWithNormalImage:selectedImage:disabledImage:block
-+(id) itemFromNormalImage: (NSString*)value selectedImage:(NSString*) value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
-// new: initWithNormalImage:selectedImage:disabledImage:target:selector
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 target:(id) r selector:(SEL) s DEPRECATED_ATTRIBUTE;
-// new: initWithNormalImage:selectedImage:disabledImage:block
--(id) initFromNormalImage: (NSString*) value selectedImage:(NSString*)value2 disabledImage:(NSString*) value3 block:(void(^)(id sender))block DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCAnimation (Deprecated)
@@ -234,10 +162,10 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay DEPRECATED_ATTRIBUTE;
 -(void) addFrame:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
 -(void) addFrameWithFilename:(NSString*)filename DEPRECATED_ATTRIBUTE;
--(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+-(void) addFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCAnimate (Deprecated)
+@interface CCActionAnimate (Deprecated)
 // new: actionWithAnimation:
 +(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 // new: actiontWithAnimation:
@@ -248,12 +176,12 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCSequence (Deprecated)
+@interface CCActionSequence (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
 @end
 
-@interface CCSpawn (Deprecated)
+@interface CCActionSpawn (Deprecated)
 // new: actionWithArray
 +(id) actionsWithArray: (NSArray*) actions DEPRECATED_ATTRIBUTE;
 @end
@@ -319,95 +247,11 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
  */
 @end
 
-@interface CCTexture2D (Deprecated)
+@interface CCTexture (Deprecated)
 /*
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
  */
 @end
 
-// Effects
-#pragma mark - Effects
-
-@interface CCGridAction (Deprecated)
-+(id) actionWithSize:(CGSize)size duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id) initWithSize:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWaves3D (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCLens3D (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos radius:(float)r grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCRipple3D (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos radius:(float)r waves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShaky3D (Deprecated)
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCLiquid (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWaves (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp horizontal:(BOOL)h vertical:(BOOL)v grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCTwirl (Deprecated)
-+(id)actionWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithPosition:(CGPoint)pos twirls:(int)t amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShakyTiles3D (Deprecated)
-+(id)actionWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shakeZ:(BOOL)shakeZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShatteredTiles3D  (Deprecated)
-+(id)actionWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithRange:(int)range shatterZ:(BOOL)shatterZ grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCShuffleTiles (Deprecated)
-+(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCTurnOffTiles (Deprecated)
-+(id)actionWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithSeed:(int)s grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCWavesTiles3D  (Deprecated)
-+(id)actionWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithWaves:(int)wav amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCJumpTiles3D (Deprecated)
-+(id)actionWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
--(id)initWithJumps:(int)j amplitude:(float)amp grid:(CGSize)gridSize duration:(ccTime)d DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCSplitRows (Deprecated)
-+(id)actionWithRows:(int)rows duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
--(id)initWithRows:(int)rows duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
-@end
-
-@interface CCSplitCols  (Deprecated)
-+(id)actionWithCols:(int)cols duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
--(id)initWithCols:(int)cols duration:(ccTime)duration DEPRECATED_ATTRIBUTE;
-@end
-
 #endif // CC_ENABLE_DEPRECATED
-
