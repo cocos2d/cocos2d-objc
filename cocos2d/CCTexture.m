@@ -260,7 +260,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 	// Bug #886. It is present on iOS 4 only
 	unsigned int version = [conf OSVersion];
-	if( version >= kCCiOSVersion_4_0 && version < kCCiOSVersion_5_0 )
+	if( version >= CCSystemVersion_iOS_4_0 && version < CCSystemVersion_iOS_5_0 )
 		hasAlpha = ((info == kCGImageAlphaNoneSkipLast) || (info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	else
 #endif // __CC_PLATFORM_IOS
@@ -310,7 +310,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	// iOS 5 BUG:
 	// If width is not word aligned, convert it to word aligned.
 	// http://www.cocos2d-iphone.org/forum/topic/31092
-	if( [conf OSVersion] >= kCCiOSVersion_5_0 )
+	if( [conf OSVersion] >= CCSystemVersion_iOS_5_0 )
 	{
 		
 		NSUInteger bpp = [[self class] bitsPerPixelForFormat:pixelFormat];
