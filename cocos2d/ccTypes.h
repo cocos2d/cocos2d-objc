@@ -330,7 +330,7 @@ typedef struct _ccBlendFunc
 static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
 //! ccResolutionType
-typedef enum
+typedef NS_ENUM(NSUInteger, CCResolutionType)
 {
 	//! Unknown resolution type
 	CCResolutionTypeUnknown,
@@ -356,36 +356,38 @@ typedef enum
 	CCResolutionTypeMacRetinaDisplay,
 #endif // platform
 
-} CCResolutionType;
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
-typedef enum
+typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)
 {
     CCVerticalTextAlignmentTop,
     CCVerticalTextAlignmentCenter,
     CCVerticalTextAlignmentBottom,
-} CCVerticalTextAlignment;
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
-typedef enum
+typedef NS_ENUM(NSUInteger, CCTextAlignment)
 {
 	CCTextAlignmentLeft,
 	CCTextAlignmentCenter,
 	CCTextAlignmentRight,
-} CCTextAlignment;
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Line break modes
-typedef enum {
-	kCCLineBreakModeWordWrap,
-	kCCLineBreakModeCharacterWrap,
-	kCCLineBreakModeClip,
-	kCCLineBreakModeHeadTruncation,
-	kCCLineBreakModeTailTruncation,
-	kCCLineBreakModeMiddleTruncation
-} CCLineBreakMode;
+    /*
+typedef NS_ENUM(NSUInteger, CCLineBreakMode)
+{
+	CCLineBreakModeWordWrap,
+	CCLineBreakModeCharacterWrap,
+	CCLineBreakModeClip,
+	CCLineBreakModeHeadTruncation,
+	CCLineBreakModeTailTruncation,
+	CCLineBreakModeMiddleTruncation
+};*/
 
 //! delta time type
 typedef double ccTime;
