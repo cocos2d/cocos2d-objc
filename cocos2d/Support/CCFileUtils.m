@@ -185,7 +185,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 #endif // __CC_PLATFORM_IOS
 
-		_searchMode = kCCFileUtilsSearchSuffixMode;
+		_searchMode = CCFileUtilsSearchModeSuffix;
 		
 		[self buildSearchResolutionsOrder];
 	}
@@ -496,7 +496,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 
 			NSString *fileWithPath = [path stringByAppendingPathComponent:newfilename];
 			
-			if( _searchMode == kCCFileUtilsSearchSuffixMode ) {
+			if( _searchMode == CCFileUtilsSearchModeSuffix ) {
 				// Search using suffixes
 				NSString *suffix = [_suffixesDict objectForKey:device];
 				ret = [self getPathForFilename:fileWithPath withSuffix:suffix];
@@ -575,7 +575,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 -(NSString*) standarizePath:(NSString*)path
 {
 	NSString *ret = [path stringByStandardizingPath];
-	if( _searchMode == kCCFileUtilsSearchSuffixMode )
+	if( _searchMode == CCFileUtilsSearchModeSuffix )
 		ret = [self removeSuffixFromFile:ret];
 	
 	return ret;

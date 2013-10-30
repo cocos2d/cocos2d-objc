@@ -41,9 +41,9 @@ extern NSString const *kCCFileUtilsMacHD;
 
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 
-enum {
-	kCCFileUtilsSearchSuffixMode,
-	kCCFileUtilsSearchDirectoryMode,
+typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
+	CCFileUtilsSearchModeSuffix,
+	CCFileUtilsSearchModeDirectory,
 };
 
 
@@ -66,7 +66,7 @@ enum {
 	NSMutableArray		*_searchPath;
 	
 	// it could be suffix (default) or directory
-	int					_searchMode;
+	CCFileUtilsSearchMode _searchMode;
 	
 	BOOL				_enableiPhoneResourcesOniPad;
 }
@@ -159,7 +159,7 @@ enum {
  Default: kCCFileUtilsSearchSuffix
  @since v2.1
  */
-@property (nonatomic, readwrite) int searchMode;
+@property (nonatomic, readwrite) CCFileUtilsSearchMode searchMode;
 
 /** Dictionary used to lookup filenames based on a key.
  It is used internally by the following methods:
