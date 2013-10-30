@@ -115,7 +115,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 		
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( ccNextPOT(width)==width && ccNextPOT(height)==height) )
+		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
 			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 		else
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -296,8 +296,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 	if( ! [conf supportsNPOT]  )
 	{
-		textureWidth = ccNextPOT(CGImageGetWidth(cgImage));
-		textureHeight = ccNextPOT(CGImageGetHeight(cgImage));
+		textureWidth = CCNextPOT(CGImageGetWidth(cgImage));
+		textureHeight = CCNextPOT(CGImageGetHeight(cgImage));
 	}
 	else
 	{
@@ -580,7 +580,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
-	NSAssert( _width == ccNextPOT(_width) && _height == ccNextPOT(_height), @"Mimpap texture only works in POT textures");
+	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
 	ccGLBindTexture2D( _name );
 	glGenerateMipmap(GL_TEXTURE_2D);
 	_hasMipmaps = YES;
@@ -588,7 +588,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	NSAssert( (_width == ccNextPOT(_width) && _height == ccNextPOT(_height)) ||
+	NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
 				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 

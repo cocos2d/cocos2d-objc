@@ -104,8 +104,8 @@
 			powW = w;
 			powH = h;
 		} else {
-			powW = ccNextPOT(w);
-			powH = ccNextPOT(h);
+			powW = CCNextPOT(w);
+			powH = CCNextPOT(h);
 		}
 
 		void *data = malloc((int)(powW * powH * 4));
