@@ -64,6 +64,9 @@
 /// Implements the ChipmunkObject protocol.
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
+-(void)addJoint:(CCPhysicsJoint *)joint;
+-(void)removeJoint:(CCPhysicsJoint *)joint;
+
 // Used for deferring collision type setup until there is access to the physics node.
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics;
@@ -90,10 +93,19 @@
 @end
 
 
-@interface CCPhysicsJoint(ObjectiveChipmunk)
+@interface CCPhysicsJoint(ObjectiveChipmunk)<ChipmunkObject>
 
 /// Access to the underlying Objective-Chipmunk object.
 @property(nonatomic, readonly) ChipmunkConstraint *constraint;
+
+/// Returns YES if the body is currently added to a physicsNode.
+@property(nonatomic, readonly) BOOL isRunning;
+
+/// Add the joint to the physics node, but only if both connected bodies are running.
+-(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform;
+
+/// Used for deferring collision type setup until there is access to the physics node.
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 
 @end
 

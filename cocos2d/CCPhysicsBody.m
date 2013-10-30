@@ -41,6 +41,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	ChipmunkBody *_body;
 	CCPhysicsShape *_shapeList;
 	
+	NSMutableArray *_joints;
+	
 	NSMutableArray *_chipmunkObjects;
 	
 	BOOL _allowsRotation;
@@ -271,8 +273,7 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(NSArray *)joints
 {
-	NYI();
-	return @[];
+	return (_joints ?: [NSArray array]);
 }
 
 -(BOOL)sleeping {return _body.isSleeping;}
@@ -295,6 +296,17 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 -(ChipmunkBody *)body {return _body;}
 
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
+
+-(void)addJoint:(CCPhysicsJoint *)joint
+{
+	if(_joints == nil) _joints = [NSMutableArray array];
+	[_joints addObject:joint];
+}
+
+-(void)removeJoint:(CCPhysicsJoint *)joint
+{
+	[_joints removeObject:joint];
+}
 
 -(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
 {

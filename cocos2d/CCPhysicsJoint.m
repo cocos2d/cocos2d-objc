@@ -28,11 +28,73 @@
 // TODO temporary
 static inline void NYI(){@throw @"Not Yet Implemented";}
 
+
+@interface CCNode(Private)
+
+-(CGAffineTransform)nonRigidTransform;
+
+@end
+
+
+@interface CCPhysicsPivotJoint : CCPhysicsJoint
+@end
+
+
+@implementation CCPhysicsPivotJoint {
+	ChipmunkPivotJoint *_constraint;
+	CGPoint _anchor;
+}
+
+-(id)initWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
+{
+	if((self = [super init])){
+		_constraint = [ChipmunkPivotJoint pivotJointWithBodyA:bodyA.body bodyB:bodyB.body pivot:anchor];
+		_anchor = anchor;
+	}
+	
+	return self;
+}
+
+-(ChipmunkConstraint *)constraint {return _constraint;}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+{
+	CGPoint anchor = cpTransformPoint(transform, _anchor);
+	_constraint.anchr1 = anchor;
+	_constraint.anchr2 = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:anchor]];
+}
+
+@end
+
+
 @implementation CCPhysicsJoint
 
 -(id)init
 {
-	@throw @"CCPhysicsJoint is an abstract class.";
+	if((self = [super init])){
+		
+	}
+	
+	return self;
+}
+
+-(void)addToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform
+{
+	NSAssert(self.bodyA.physicsNode == self.bodyB.physicsNode, @"Bodies connected by a joint must be added to the same CCPhysicsNode.");
+	
+	[self willAddToPhysicsNode:physicsNode nonRigidTransform:nonRigidTransform];
+	[self.bodyA.body.space smartAdd:self];
+}
+
++(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
+{
+	CCPhysicsJoint *joint = [[CCPhysicsPivotJoint alloc] initWithBodyA:bodyA bodyB:bodyB anchor:anchor];
+	[bodyA addJoint:joint];
+	[bodyB addJoint:joint];
+	
+	[joint addToPhysicsNode:bodyA.physicsNode transform:bodyA.node.nonRigidTransform];
+	
+	return joint;
 }
 
 -(CCPhysicsBody *)bodyA {return self.constraint.bodyA.userData;}
@@ -44,14 +106,37 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(CGFloat)maxForce {return self.constraint.maxForce;}
 -(void)setMaxForce:(CGFloat)maxForce {self.constraint.maxForce = maxForce;}
 
--(CGFloat)maxBias {return self.constraint.maxBias;}
--(void)setMaxBias:(CGFloat)maxBias {self.constraint.maxBias = maxBias;}
-
 -(CGFloat)impulse {return self.constraint.impulse;}
 
--(BOOL)enabled {NYI(); return NO;}
--(void)setEnabled:(BOOL)enabled {NYI();}
+-(void)invalidate {NYI();}
 
 -(void)setBreakingForce:(CGFloat)breakingForce {NYI();}
+
+@end
+
+
+@implementation CCPhysicsJoint(ObjectiveChipmunk)
+
+-(id<NSFastEnumeration>)chipmunkObjects {return [NSArray arrayWithObject:self.constraint];}
+
+-(ChipmunkConstraint *)constraint
+{
+	@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];
+}
+
+-(BOOL)isRunning
+{
+	return (self.bodyA.isRunning && self.bodyB.isRunning);
+}
+
+-(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform
+{
+	if(self.isRunning) [self addToPhysicsNode:physicsNode transform:nonRigidTransform];
+}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+{
+	@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];
+}
 
 @end
