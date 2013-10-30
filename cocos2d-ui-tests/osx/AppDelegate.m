@@ -43,7 +43,7 @@
                             [[NSBundle mainBundle] resourcePath],
                             nil];
     
-    fileUtils.searchMode = kCCFileUtilsSearchDirectoryMode;
+    fileUtils.searchMode = CCFileUtilsSearchModeDirectory;
     [fileUtils buildSearchResolutionsOrder];
     
     [fileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];

@@ -153,7 +153,7 @@
      nil];
     
 	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
-    sharedFileUtils.searchMode = kCCFileUtilsSearchDirectoryMode;
+    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
     [sharedFileUtils buildSearchResolutionsOrder];
     
     [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
