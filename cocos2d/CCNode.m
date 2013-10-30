@@ -38,6 +38,7 @@
 #import "ccMacros.h"
 #import "CCGLProgram.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCDirector_Private.h"
 
 // externals
 #import "kazmath/GL/matrix.h"

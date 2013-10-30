@@ -77,8 +77,8 @@
 
 #import "CCTexture.h"
 #import "CCTexturePVR.h"
-#import "CCTextureCache.h"
-#import "CCTextureAtlas.h"
+//#import "CCTextureCache.h"
+//#import "CCTextureAtlas.h"
 
 #import "CCTransition.h"
 
@@ -103,7 +103,7 @@
 #import "CCDrawNode.h"
 #import "CCClippingNode.h"
 
-#import "ccFPSImages.h"
+//#import "ccFPSImages.h"
 
 // Layouts
 #import "CCLayout.h"

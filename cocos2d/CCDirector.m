@@ -66,6 +66,7 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
+#import "CCDirector_Private.h"
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
@@ -96,7 +97,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize displayStats = _displayStats;
 @synthesize nextDeltaTimeZero = _nextDeltaTimeZero;
 @synthesize paused = _isPaused;
-@synthesize isAnimating = _isAnimating;
+@synthesize animating = _animating;
 @synthesize sendCleanupToScene = _sendCleanupToScene;
 @synthesize runningThread = _runningThread;
 @synthesize notificationNode = _notificationNode;
@@ -147,7 +148,7 @@ static CCDirector *_sharedDirector = nil;
 		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
 		// Set default projection (3D)
-		_projection = kCCDirectorProjectionDefault;
+		_projection = CCDirectorProjectionDefault;
 
 		// projection delegate if "Custom" projection is used
 		_delegate = nil;
@@ -255,7 +256,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director - Scene OpenGL Helper
 
--(ccDirectorProjection) projection
+-(CCDirectorProjection) projection
 {
 	return _projection;
 }
@@ -270,7 +271,7 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: override me");
 }
 
--(void) setProjection:(ccDirectorProjection)projection
+-(void) setProjection:(CCDirectorProjection)projection
 {
 	CCLOG(@"cocos2d: override me");
 }
@@ -349,12 +350,12 @@ static CCDirector *_sharedDirector = nil;
 	return CGPointZero;
 }
 
--(CGSize)winSize
+-(CGSize)viewSize
 {
 	return _winSizeInPoints;
 }
 
--(CGSize)winSizeInPixels
+-(CGSize)viewSizeInPixels
 {
 	return _winSizeInPixels;
 }
@@ -423,7 +424,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-- (void)popScenewithTransition:(CCTransition *)transition
+- (void)popSceneWithTransition:(CCTransition *)transition
 {
 	NSAssert( _runningScene != nil, @"A running Scene is needed");
     
