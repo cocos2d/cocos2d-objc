@@ -71,29 +71,29 @@
     [[CCSpriteFrameCache sharedSpriteFrameCache] registerSpriteFramesFile:@"Sprites.plist"];
     
     // Make the node the same size as the parent container (i.e. the screen)
-    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSizeType = CCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Header background
     CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
-    headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    headerBg.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
-    headerBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    headerBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     headerBg.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
     
     [self addChild:headerBg];
     
     // Header label
     CCLabelTTF* lblTitle = [CCLabelTTF labelWithString:@"Cocos2d Tests" fontName:@"HelveticaNeue-Medium" fontSize:17];
-    lblTitle.positionType = kCCPositionTypeNormalized;
+    lblTitle.positionType = CCPositionTypeNormalized;
     lblTitle.position = ccp(0.5, 0.5);
     
     [headerBg addChild:lblTitle];
     
     // Table view
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    tableView.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitInsetPoints);
     tableView.contentSize = CGSizeMake(1, kCCUITestHeaderHeight);
     tableView.rowHeight = kCCTestMenuItemHeight;
     tableView.dataSource = self;
@@ -120,7 +120,7 @@
 - (CCTableViewCell*) tableView:(CCTableView*)tableView nodeForRowAtIndex:(NSUInteger) index
 {
     CCTableViewCell* cell = [[CCTableViewCell alloc] init];
-    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     cell.contentSize = CGSizeMake(1, kCCTestMenuItemHeight);
     
     CCSpriteFrame* frameNormal = [CCSpriteFrame frameWithImageNamed:@"Interface/table-bg-normal.png"];
@@ -130,7 +130,7 @@
     [cell.button setBackgroundSpriteFrame:frameHilite forState:CCControlStateHighlighted];
     
     CCLabelTTF* label = [CCLabelTTF labelWithString:[[self testClassNames] objectAtIndex:index] fontName:@"HelveticaNeue" fontSize:17];
-    label.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft);
+    label.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft);
     label.position = ccp(20, 0.5f);
     label.anchorPoint = ccp(0, 0.5f);
     

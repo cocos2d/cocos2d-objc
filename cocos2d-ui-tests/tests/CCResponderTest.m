@@ -29,12 +29,12 @@
     self.multipleTouchEnabled = YES;
     
     // Make the node fill the entire area
-    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSizeType = CCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Setup a label that displays the number of current touches
     _lblNumTouches = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
-    _lblNumTouches.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    _lblNumTouches.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     _lblNumTouches.position = ccp(0.5, 64);
     _lblNumTouches.horizontalAlignment = CCTextAlignmentCenter;
     

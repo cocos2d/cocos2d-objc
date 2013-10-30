@@ -397,13 +397,13 @@ typedef double CCTime;
 enum
 {
     //! Position is set in points (this is the default)
-    kCCPositionUnitPoints,
+    CCPositionUnitPoints,
     
     //! Position is scaled by the global positionScaleFactor (as defined by CCDirector)
-    kCCPositionUnitScaled,
+    CCPositionUnitScaled,
     
     //! Position is a normalized value multiplied by the content size of the parent's container
-    kCCPositionUnitNormalized,
+    CCPositionUnitNormalized,
     
 };
 typedef unsigned char CCPositionUnit;
@@ -411,19 +411,19 @@ typedef unsigned char CCPositionUnit;
 enum
 {
     //! Content size is set in points (this is the default)
-    kCCContentSizeUnitPoints,
+    CCContentSizeUnitPoints,
     
     //! Content size is scaled by the global positionScaleFactor (as defined by CCDirector)
-    kCCContentSizeUnitScaled,
+    CCContentSizeUnitScaled,
     
     //! Content size is a normalized value multiplied by the content size of the parent's container
-    kCCContentSizeUnitNormalized,
+    CCContentSizeUnitNormalized,
     
     //! Content size is the size of the parents container inset by the supplied value
-    kCCContentSizeUnitInsetPoints,
+    CCContentSizeUnitInsetPoints,
     
     //! Content size is the size of the parents container inset by the supplied value multiplied by the positionScaleFactor (as defined by CCDirector)
-    kCCContentSizeUnitInsetScaled,
+    CCContentSizeUnitInsetScaled,
     
 };
 typedef unsigned char CCContentSizeUnit;
@@ -431,16 +431,16 @@ typedef unsigned char CCContentSizeUnit;
 enum
 {
     //! Position is relative to the bottom left corner of the parent container (this is the default)
-    kCCPositionReferenceCornerBottomLeft,
+    CCPositionReferenceCornerBottomLeft,
     
     //! Position is relative to the top left corner of the parent container
-    kCCPositionReferenceCornerTopLeft,
+    CCPositionReferenceCornerTopLeft,
     
     //! Position is relative to the top right corner of the parent container
-    kCCPositionReferenceCornerTopRight,
+    CCPositionReferenceCornerTopRight,
     
     //! Position is relative to the bottom right corner of the parent container
-    kCCPositionReferenceCornerBottomRight,
+    CCPositionReferenceCornerBottomRight,
     
 };
 typedef unsigned char CCPositionReferenceCorner;
@@ -477,20 +477,20 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
     return cst;
 }
 
-#define kCCPositionTypePoints CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypePoints CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft)
 
-#define kCCPositionTypeScaled CCPositionTypeMake(kCCPositionUnitScaled, kCCPositionUnitScaled, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypeScaled CCPositionTypeMake(CCPositionUnitScaled, CCPositionUnitScaled, CCPositionReferenceCornerBottomLeft)
 
-#define kCCPositionTypeNormalized CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypeNormalized CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft)
 
 
-#define kCCContentSizeTypePoints CCContentSizeTypeMake(kCCContentSizeUnitPoints, kCCContentSizeUnitPoints)
-#define kCCContentSizeTypeScaled CCContentSizeTypeMake(kCCContentSizeUnitScaled, kCCContentSizeUnitScaled)
-#define kCCContentSizeTypeNormalized CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitNormalized)
+#define CCContentSizeTypePoints CCContentSizeTypeMake(CCContentSizeUnitPoints, CCContentSizeUnitPoints)
+#define CCContentSizeTypeScaled CCContentSizeTypeMake(CCContentSizeUnitScaled, CCContentSizeUnitScaled)
+#define CCContentSizeTypeNormalized CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitNormalized)
 
 typedef enum {
-    kCCScaleTypePoints,
-    kCCScaleTypeScaled,
+    CCScaleTypePoints,
+    CCScaleTypeScaled,
 } CCScaleType;
     
 #ifdef __cplusplus

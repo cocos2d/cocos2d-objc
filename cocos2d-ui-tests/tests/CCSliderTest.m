@@ -29,10 +29,10 @@
     
     CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
     [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
-    slider.positionType = kCCPositionTypeNormalized;
+    slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     
-    slider.preferredSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    slider.preferredSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     slider.preferredSize = CGSizeMake(0.5f, 32);
     
     slider.anchorPoint = ccp(0.5f, 0.5f);
@@ -52,10 +52,10 @@
     
     CCSlider* slider = [[CCSlider alloc] initWithBackground:background andHandleImage:handle];
     [slider setBackgroundSpriteFrame:backgroundHilite forState:CCControlStateHighlighted];
-    slider.positionType = kCCPositionTypeNormalized;
+    slider.positionType = CCPositionTypeNormalized;
     slider.position = ccp(0.5f, 0.5f);
     
-    slider.preferredSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    slider.preferredSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     slider.preferredSize = CGSizeMake(0.5f, 32);
     
     slider.anchorPoint = ccp(0.5f, 0.5f);

@@ -56,7 +56,7 @@ static float roundUpToEven(float f)
             CGPoint position = ccpAdd(localPos, offset);
             
             child.position = position;
-            child.positionType = kCCPositionTypePoints;
+            child.positionType = CCPositionTypePoints;
             
             width += childSize.width;
             width += _spacing;
@@ -66,7 +66,7 @@ static float roundUpToEven(float f)
         width -= _spacing;
         if (width < 0) width = 0;
         
-        self.contentSizeType = kCCContentSizeTypePoints;
+        self.contentSizeType = CCContentSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(width), roundUpToEven(maxHeight));
     }
     else
@@ -90,7 +90,7 @@ static float roundUpToEven(float f)
             CGPoint position = ccpAdd(localPos, offset);
             
             child.position = position;
-            child.positionType = kCCPositionTypePoints;
+            child.positionType = CCPositionTypePoints;
             
             height += childSize.height;
             height += _spacing;
@@ -100,7 +100,7 @@ static float roundUpToEven(float f)
         height -= _spacing;
         if (height < 0) height = 0;
         
-        self.contentSizeType = kCCContentSizeTypePoints;
+        self.contentSizeType = CCContentSizeTypePoints;
         self.contentSize = CGSizeMake(roundUpToEven(maxWidth), roundUpToEven(height));
     }
 }

@@ -64,7 +64,7 @@
     self.subTitle = @"Horizontal Scrolling - Layer should only scroll horizontally.";
     
     CCScrollView* scrollView = [[CCScrollView alloc] initWithContentNode:[self createScrollContent]];
-    scrollView.contentSizeType = kCCContentSizeTypeNormalized;
+    scrollView.contentSizeType = CCContentSizeTypeNormalized;
     scrollView.flipYCoordinates = NO;
     scrollView.verticalScrollEnabled = NO;
     
@@ -118,7 +118,7 @@
     float h = 3;
     
     // Make it 3 times the width and height of the parents container
-    node.contentSizeType = kCCContentSizeTypeNormalized;
+    node.contentSizeType = CCContentSizeTypeNormalized;
     node.contentSize = CGSizeMake(w, h);
     
     BOOL toggle = NO;
@@ -128,7 +128,7 @@
         for (int y = 0; y < h; y++)
         {
             CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"(%d,%d)",x,y] fontName:@"HelveticaNeue-Light" fontSize:100 * dir.positionScaleFactor];
-            lbl.positionType = kCCPositionTypeNormalized;
+            lbl.positionType = CCPositionTypeNormalized;
             lbl.position = ccp((x + 0.5f)/w, (y + 0.5f)/h);
             [node addChild:lbl];
             
@@ -136,11 +136,11 @@
             if (toggle)
             {
                 CCLayerColor* layer = [CCLayerColor layerWithColor:ccc4(127, 127, 127, 255)];
-                layer.contentSizeType = kCCContentSizeTypeNormalized;
+                layer.contentSizeType = CCContentSizeTypeNormalized;
                 layer.contentSize = CGSizeMake(1.0f/w, 1.0f/h);
                 //layer.contentSize = CGSizeMake(100, 100);
                 
-                layer.positionType = kCCPositionTypeNormalized;
+                layer.positionType = CCPositionTypeNormalized;
                 layer.position = ccp(x/w, y/h);
                 [node addChild:layer z:-1];
             }

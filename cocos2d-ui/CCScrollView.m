@@ -169,7 +169,7 @@
 - (id) init
 {
     self = [self initWithContentNode:[CCNode node]];
-    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSizeType = CCContentSizeTypeNormalized;
     return self;
 }
 
@@ -182,7 +182,7 @@
     
     // Setup content node
     self.contentSize = CGSizeMake(1, 1);
-    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSizeType = CCContentSizeTypeNormalized;
     self.contentNode = contentNode;
     
     // Default properties
@@ -232,12 +232,12 @@
 {
     if (flipYCoordinates)
     {
-        _contentNode.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+        _contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
         _contentNode.anchorPoint = ccp(0,1);
     }
     else
     {
-        _contentNode.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+        _contentNode.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
         _contentNode.anchorPoint = ccp(0,0);
     }
     
