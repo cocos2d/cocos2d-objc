@@ -96,7 +96,6 @@
 #import "CCNode+Debug.h"
 #import "CCDirector.h"
 #import "CCAtlasNode.h"
-#import "CCGrabber.h"
 #import "CCParallaxNode.h"
 #import "CCRenderTexture.h"
 #import "CCMotionStreak.h"
