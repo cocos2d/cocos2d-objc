@@ -26,7 +26,7 @@
 
 #import "CCActionProgressTimer.h"
 
-@implementation CCProgressTo
+@implementation CCActionProgressTo
 +(id) actionWithDuration: (ccTime) t percent: (float) v
 {
 	return [[ self alloc] initWithDuration: t percent: v];
@@ -63,7 +63,7 @@
 }
 @end
 
-@implementation CCProgressFromTo
+@implementation CCActionProgressFromTo
 +(id) actionWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
 {
 	return [[self alloc] initWithDuration: t from: fromPercentage to: toPercentage];
