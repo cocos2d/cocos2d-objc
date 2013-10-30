@@ -383,45 +383,45 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
-    if (widthUnit == kCCContentSizeUnitPoints)
+    if (widthUnit == CCContentSizeUnitPoints)
     {
         size.width = contentSize.width;
     }
-    else if (widthUnit == kCCContentSizeUnitScaled)
+    else if (widthUnit == CCContentSizeUnitScaled)
     {
         size.width = director.positionScaleFactor * contentSize.width;
     }
-    else if (widthUnit == kCCContentSizeUnitNormalized)
+    else if (widthUnit == CCContentSizeUnitNormalized)
     {
         size.width = contentSize.width * _parent.contentSizeInPoints.width;
     }
-    else if (widthUnit == kCCContentSizeUnitInsetPoints)
+    else if (widthUnit == CCContentSizeUnitInsetPoints)
     {
         size.width = _parent.contentSizeInPoints.width - contentSize.width;
     }
-    else if (widthUnit == kCCContentSizeUnitInsetScaled)
+    else if (widthUnit == CCContentSizeUnitInsetScaled)
     {
         size.width = _parent.contentSizeInPoints.width - contentSize.width * director.positionScaleFactor;
     }
     
     // Height
-    if (heightUnit == kCCContentSizeUnitPoints)
+    if (heightUnit == CCContentSizeUnitPoints)
     {
         size.height = contentSize.height;
     }
-    else if (heightUnit == kCCContentSizeUnitScaled)
+    else if (heightUnit == CCContentSizeUnitScaled)
     {
         size.height = director.positionScaleFactor * contentSize.height;
     }
-    else if (heightUnit == kCCContentSizeUnitNormalized)
+    else if (heightUnit == CCContentSizeUnitNormalized)
     {
         size.height = contentSize.height * _parent.contentSizeInPoints.height;
     }
-    else if (heightUnit == kCCContentSizeUnitInsetPoints)
+    else if (heightUnit == CCContentSizeUnitInsetPoints)
     {
         size.height = _parent.contentSizeInPoints.height - contentSize.height;
     }
-    else if (heightUnit == kCCContentSizeUnitInsetScaled)
+    else if (heightUnit == CCContentSizeUnitInsetScaled)
     {
         size.height = _parent.contentSizeInPoints.height - contentSize.height * director.positionScaleFactor;
     }
@@ -439,15 +439,15 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     CCContentSizeUnit heightUnit = type.heightUnit;
     
     // Width
-    if (widthUnit == kCCContentSizeUnitPoints)
+    if (widthUnit == CCContentSizeUnitPoints)
     {
         size.width = pointSize.width;
     }
-    else if (widthUnit == kCCContentSizeUnitScaled)
+    else if (widthUnit == CCContentSizeUnitScaled)
     {
         size.width = pointSize.width / director.positionScaleFactor;
     }
-    else if (widthUnit == kCCContentSizeUnitNormalized)
+    else if (widthUnit == CCContentSizeUnitNormalized)
     {
         
         float parentWidthInPoints = _parent.contentSizeInPoints.width;
@@ -460,25 +460,25 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
             size.width = 0;
         }
     }
-    else if (widthUnit == kCCContentSizeUnitInsetPoints)
+    else if (widthUnit == CCContentSizeUnitInsetPoints)
     {
         size.width = _parent.contentSizeInPoints.width - pointSize.width;
     }
-    else if (widthUnit == kCCContentSizeUnitInsetScaled)
+    else if (widthUnit == CCContentSizeUnitInsetScaled)
     {
         size.width = (_parent.contentSizeInPoints.width - pointSize.width) / director.positionScaleFactor;
     }
     
     // Height
-    if (heightUnit == kCCContentSizeUnitPoints)
+    if (heightUnit == CCContentSizeUnitPoints)
     {
         size.height = pointSize.height;
     }
-    else if (heightUnit == kCCContentSizeUnitScaled)
+    else if (heightUnit == CCContentSizeUnitScaled)
     {
         size.height = pointSize.height / director.positionScaleFactor;
     }
-    else if (heightUnit == kCCContentSizeUnitNormalized)
+    else if (heightUnit == CCContentSizeUnitNormalized)
     {
         
         float parentHeightInPoints = _parent.contentSizeInPoints.height;
@@ -491,11 +491,11 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
             size.height = 0;
         }
     }
-    else if (heightUnit == kCCContentSizeUnitInsetPoints)
+    else if (heightUnit == CCContentSizeUnitInsetPoints)
     {
         size.height = _parent.contentSizeInPoints.height - pointSize.height;
     }
-    else if (heightUnit == kCCContentSizeUnitInsetScaled)
+    else if (heightUnit == CCContentSizeUnitInsetScaled)
     {
         size.height = (_parent.contentSizeInPoints.height - pointSize.height) / director.positionScaleFactor;
     }
@@ -510,7 +510,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 - (float) scaleInPoints
 {
-    if (_scaleType == kCCScaleTypeScaled)
+    if (_scaleType == CCScaleTypeScaled)
     {
         return self.scale * [CCDirector sharedDirector].positionScaleFactor;
     }
@@ -519,7 +519,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 - (float) scaleXInPoints
 {
-    if (_scaleType == kCCScaleTypeScaled)
+    if (_scaleType == CCScaleTypeScaled)
     {
         return _scaleX * [CCDirector sharedDirector].positionScaleFactor;
     }
@@ -528,7 +528,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 
 - (float) scaleYInPoints
 {
-    if (_scaleType == kCCScaleTypeScaled)
+    if (_scaleType == CCScaleTypeScaled)
     {
         return _scaleY * [CCDirector sharedDirector].positionScaleFactor;
     }
@@ -972,7 +972,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(void)setPhysicsBody:(CCPhysicsBody *)physicsBody
 {
 	if(physicsBody){
-		NSAssert(_scaleType == kCCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
+		NSAssert(_scaleType == CCScaleTypePoints, @"Currently only 'Points' is supported as a scale type for physics nodes.");
 		NSAssert(_rotationalSkewX == _rotationalSkewY, @"Currently physics nodes don't support skewing.");
 		NSAssert(_skewX == 0.0 && _skewY == 0.0, @"Currently physics nodes don't support skewing.");
 	}
@@ -1124,7 +1124,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	
 	[self unschedule:selector];
 	
-	void (*imp)(id, SEL, ccTime) = (__typeof(imp))[self methodForSelector:selector];
+	void (*imp)(id, SEL, CCTime) = (__typeof(imp))[self methodForSelector:selector];
 	CCTimer *timer = [self.scheduler scheduleBlock:^(CCTimer *t){
 		imp(self, selector, t.deltaTime);
 	} forTarget:self withDelay:delay];
@@ -1199,33 +1199,33 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
     // Convert position to points
     CCPositionUnit xUnit = type.xUnit;
-    if (xUnit == kCCPositionUnitPoints) x = position.x;
-    else if (xUnit == kCCPositionUnitScaled) x = position.x * director.positionScaleFactor;
-    else if (xUnit == kCCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
+    if (xUnit == CCPositionUnitPoints) x = position.x;
+    else if (xUnit == CCPositionUnitScaled) x = position.x * director.positionScaleFactor;
+    else if (xUnit == CCPositionUnitNormalized) x = position.x * _parent.contentSizeInPoints.width;
     
     CCPositionUnit yUnit = type.yUnit;
-    if (yUnit == kCCPositionUnitPoints) y = position.y;
-    else if (yUnit == kCCPositionUnitScaled) y = position.y * director.positionScaleFactor;
-    else if (yUnit == kCCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
+    if (yUnit == CCPositionUnitPoints) y = position.y;
+    else if (yUnit == CCPositionUnitScaled) y = position.y * director.positionScaleFactor;
+    else if (yUnit == CCPositionUnitNormalized) y = position.y * _parent.contentSizeInPoints.height;
     
     // Account for reference corner
     CCPositionReferenceCorner corner = _positionType.corner;
-    if (corner == kCCPositionReferenceCornerBottomLeft)
+    if (corner == CCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
     }
-    else if (corner == kCCPositionReferenceCornerTopLeft)
+    else if (corner == CCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
         y = _parent.contentSizeInPoints.height - y;
     }
-    else if (corner == kCCPositionReferenceCornerTopRight)
+    else if (corner == CCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
         x = _parent.contentSizeInPoints.width - x;
         y = _parent.contentSizeInPoints.height - y;
     }
-    else if (corner == kCCPositionReferenceCornerBottomRight)
+    else if (corner == CCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
         x = _parent.contentSizeInPoints.width - x;
@@ -1248,22 +1248,22 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
     // Account for reference corner
     CCPositionReferenceCorner corner = type.corner;
-    if (corner == kCCPositionReferenceCornerBottomLeft)
+    if (corner == CCPositionReferenceCornerBottomLeft)
     {
         // Nothing needs to be done
     }
-    else if (corner == kCCPositionReferenceCornerTopLeft)
+    else if (corner == CCPositionReferenceCornerTopLeft)
     {
         // Reverse y-axis
         y = _parent.contentSizeInPoints.height - y;
     }
-    else if (corner == kCCPositionReferenceCornerTopRight)
+    else if (corner == CCPositionReferenceCornerTopRight)
     {
         // Reverse x-axis and y-axis
         x = _parent.contentSizeInPoints.width - x;
         y = _parent.contentSizeInPoints.height - y;
     }
-    else if (corner == kCCPositionReferenceCornerBottomRight)
+    else if (corner == CCPositionReferenceCornerBottomRight)
     {
         // Reverse x-axis
         x = _parent.contentSizeInPoints.width - x;
@@ -1271,9 +1271,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     
     // Convert position from points
     CCPositionUnit xUnit = type.xUnit;
-    if (xUnit == kCCPositionUnitPoints) position.x = x;
-    else if (xUnit == kCCPositionUnitScaled) position.x = x / director.positionScaleFactor;
-    else if (xUnit == kCCPositionUnitNormalized)
+    if (xUnit == CCPositionUnitPoints) position.x = x;
+    else if (xUnit == CCPositionUnitScaled) position.x = x / director.positionScaleFactor;
+    else if (xUnit == CCPositionUnitNormalized)
     {
         float parentWidth = _parent.contentSizeInPoints.width;
         if (parentWidth > 0)
@@ -1283,9 +1283,9 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     }
     
     CCPositionUnit yUnit = type.yUnit;
-    if (yUnit == kCCPositionUnitPoints) position.y = y;
-    else if (yUnit == kCCPositionUnitScaled) position.y = y / director.positionScaleFactor;
-    else if (yUnit == kCCPositionUnitNormalized)
+    if (yUnit == CCPositionUnitPoints) position.y = y;
+    else if (yUnit == CCPositionUnitScaled) position.y = y / director.positionScaleFactor;
+    else if (yUnit == CCPositionUnitNormalized)
     {
         float parentHeight = _parent.contentSizeInPoints.height;
         if (parentHeight > 0)
@@ -1335,7 +1335,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		BOOL needsSkewMatrix = ( _skewX || _skewY );
         
         float scaleFactor = 1;
-        if (_scaleType == kCCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
+        if (_scaleType == CCScaleTypeScaled) scaleFactor = [CCDirector sharedDirector].positionScaleFactor;
 
 		// optimization:
 		// inline anchor point calculation if skew is not needed

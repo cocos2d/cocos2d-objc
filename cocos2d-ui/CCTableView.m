@@ -79,7 +79,7 @@
     if (!self) return NULL;
     
     _button = [CCButton buttonWithTitle:NULL];
-    _button.contentSizeType = kCCContentSizeTypeNormalized;
+    _button.contentSizeType = CCContentSizeTypeNormalized;
     _button.preferredSize = CGSizeMake(1, 1);
     _button.anchorPoint = ccp(0, 0);
     [_button setTarget:self selector:@selector(pressedCell:)];
@@ -117,9 +117,9 @@
     
     self.contentNode = [CCTableViewContentNode node];
     
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     
-    _rowHeightUnit = kCCContentSizeUnitPoints;
+    _rowHeightUnit = CCContentSizeUnitPoints;
     _rowHeight = 32;
     self.horizontalScrollEnabled = NO;
     
@@ -153,7 +153,7 @@
         {
             // Increase row position
             CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow];
-            if (_rowHeightUnit == kCCContentSizeUnitScaled) rowHeight *= positionScale;
+            if (_rowHeightUnit == CCContentSizeUnitScaled) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
             // Check if we are within visible range
@@ -177,7 +177,7 @@
             
             // Increase row position
             CGFloat rowHeight = [_dataSource tableView:self heightForRowAtIndex:currentRow + 1];
-            if (_rowHeightUnit == kCCContentSizeUnitScaled) rowHeight *= positionScale;
+            if (_rowHeightUnit == CCContentSizeUnitScaled) rowHeight *= positionScale;
             currentRowPos += rowHeight;
             
             numVisibleRows ++;
@@ -224,7 +224,7 @@
         location = idx * _rowHeight;
     }
     
-    if (_rowHeightUnit == kCCContentSizeUnitScaled)
+    if (_rowHeightUnit == CCContentSizeUnitScaled)
     {
         location *= [CCDirector sharedDirector].positionScaleFactor;
     }
@@ -259,7 +259,7 @@
                 holder.cell = [_dataSource tableView:self nodeForRowAtIndex:newIdx];
                 holder.cell.index = newIdx;
                 holder.cell.position = CGPointMake(0, [self locationForCellWithIndex:newIdx]);
-                holder.cell.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+                holder.cell.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
                 holder.cell.anchorPoint = CGPointMake(0, 1);
             }
             
@@ -310,7 +310,7 @@
     }
     
     self.contentNode.contentSize = CGSizeMake(1, layerHeight);
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, _rowHeightUnit);
+    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, _rowHeightUnit);
     
     // Create empty placeholders for all rows
     _rows = [NSMutableArray arrayWithCapacity:numRows];
@@ -338,8 +338,8 @@
 
 - (CGFloat) rowHeightInPoints
 {
-    if (_rowHeightUnit == kCCContentSizeUnitPoints) return _rowHeight;
-    else if (_rowHeightUnit == kCCContentSizeUnitScaled)
+    if (_rowHeightUnit == CCContentSizeUnitPoints) return _rowHeight;
+    else if (_rowHeightUnit == CCContentSizeUnitScaled)
         return _rowHeight * [CCDirector sharedDirector].positionScaleFactor;
     else
     {

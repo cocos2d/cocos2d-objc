@@ -26,7 +26,7 @@
     
     CCLayerColor* bgLayer = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255)];
     bgLayer.contentSize = CGSizeMake(1, 1);
-    bgLayer.contentSizeType = kCCContentSizeTypeNormalized;
+    bgLayer.contentSizeType = CCContentSizeTypeNormalized;
     [self.contentNode addChild:bgLayer];
 }
 
@@ -37,7 +37,7 @@
     
     CCLayerColor* bgLayer = [CCLayerColor layerWithColor:ccc4(0, 255, 0, 255)];
     bgLayer.contentSize = CGSizeMake(1, 1);
-    bgLayer.contentSizeType = kCCContentSizeTypeNormalized;
+    bgLayer.contentSizeType = CCContentSizeTypeNormalized;
     [self.contentNode addChild:bgLayer];
 }
 

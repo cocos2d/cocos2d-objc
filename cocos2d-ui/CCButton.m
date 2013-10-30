@@ -178,7 +178,7 @@
     _background.anchorPoint = ccp(0,0);
     _background.position = ccp(0,0);
     
-    _label.positionType = kCCPositionTypeNormalized;
+    _label.positionType = CCPositionTypeNormalized;
     _label.position = ccp(0.5f, 0.5f);
     
     self.contentSize = [self convertContentSizeFromPoints: size type:self.contentSizeType];

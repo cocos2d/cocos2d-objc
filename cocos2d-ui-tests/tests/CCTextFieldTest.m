@@ -25,9 +25,9 @@
     CCSpriteFrame* bg = [CCSpriteFrame frameWithImageNamed:@"Tests/textfield-bg.png"];
     CCTextField* textField = [[CCTextField alloc] initWithSpriteFrame:bg];
     
-    textField.preferredSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    textField.preferredSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     textField.preferredSize = CGSizeMake(0.5, 36);
-    textField.positionType = kCCPositionTypeNormalized;
+    textField.positionType = CCPositionTypeNormalized;
     textField.position = ccp(0.5f, 0.5f);
     textField.padding = 6;
     textField.anchorPoint = ccp(0.5f, 0.5f);
