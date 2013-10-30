@@ -610,7 +610,7 @@ typedef struct {
 		GLenum pixelFormat = _pixelFormatInfo->ccPixelFormat;
 		CCConfiguration *conf = [CCConfiguration sharedConfiguration];
 		
-		if( [conf OSVersion] >= kCCiOSVersion_5_0 )
+		if( [conf OSVersion] >= CCSystemVersion_iOS_5_0 )
 		{
 			
 			// iOS 5 BUG:

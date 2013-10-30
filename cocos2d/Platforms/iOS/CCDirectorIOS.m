@@ -479,11 +479,11 @@ GLToClipTransform(kmMat4 *transformOut)
 {
 	int device = [[CCConfiguration sharedConfiguration] runningDevice];
 
-	if( device == kCCDeviceiPadRetinaDisplay) {
+	if( device == CCDeviceiPadRetinaDisplay) {
 		*datapointer = cc_fps_images_ipadhd_png;
 		*len = cc_fps_images_ipadhd_len();
 		
-	} else if( device == kCCDeviceiPhoneRetinaDisplay || device == kCCDeviceiPhone5RetinaDisplay ) {
+	} else if( device == CCDeviceiPhoneRetinaDisplay || device == CCDeviceiPhone5RetinaDisplay ) {
 		*datapointer = cc_fps_images_hd_png;
 		*len = cc_fps_images_hd_len();
 

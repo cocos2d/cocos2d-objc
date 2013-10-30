@@ -208,7 +208,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 	[_searchResolutionsOrder removeAllObjects];
 	
 #ifdef __CC_PLATFORM_IOS
-	if (device == kCCDeviceiPadRetinaDisplay)
+	if (device == CCDeviceiPadRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPadHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPad];
@@ -217,7 +217,7 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		}
 	}
-	else if (device == kCCDeviceiPad)
+	else if (device == CCDeviceiPad)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPad];
 		if( _enableiPhoneResourcesOniPad ) {
@@ -225,35 +225,35 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 			[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		}
 	}
-	else if (device == kCCDeviceiPhone5RetinaDisplay)
+	else if (device == CCDeviceiPhone5RetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5HD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
-	else if (device == kCCDeviceiPhoneRetinaDisplay)
+	else if (device == CCDeviceiPhoneRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhoneHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
-	else if (device == kCCDeviceiPhone5)
+	else if (device == CCDeviceiPhone5)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone5];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
-	else if (device == kCCDeviceiPhone)
+	else if (device == CCDeviceiPhone)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixiPhone];
 	}
 	
 #elif defined(__CC_PLATFORM_MAC)
-	if (device == kCCDeviceMacRetinaDisplay)
+	if (device == CCDeviceMacRetinaDisplay)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMacHD];
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMac];
 	}
-	else if (device == kCCDeviceMac)
+	else if (device == CCDeviceMac)
 	{
 		[_searchResolutionsOrder addObject:CCFileUtilsSuffixMac];
 	}
