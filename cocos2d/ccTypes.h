@@ -392,7 +392,7 @@ typedef NS_ENUM(NSUInteger, CCLineBreakMode)
 //! delta time type
 typedef double CCTime;
 
-typedef float ccMat4[16];
+//typedef float CCMat4[16];
     
 enum
 {
