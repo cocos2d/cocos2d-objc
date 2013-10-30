@@ -159,7 +159,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 {
 	[self addSpriteFrameWithFilename:filename];
 }
--(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+-(void) addFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	[self addSpriteFrameWithTexture:texture rect:rect];
 }
@@ -306,7 +306,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 
 #pragma mark - Texture2D
 
-@implementation CCTexture2D (Deprecated)
+@implementation CCTexture (Deprecated)
 
 @end
 

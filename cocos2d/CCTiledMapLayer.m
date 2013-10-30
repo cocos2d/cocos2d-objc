@@ -93,7 +93,7 @@ int compareInts (const void * a, const void * b);
 	float totalNumberOfTiles = size.width * size.height;
 	float capacity = totalNumberOfTiles * 0.35f + 1; // 35 percent is occupied ?
 
-	CCTexture2D *tex = nil;
+	CCTexture *tex = nil;
 	if( tilesetInfo )
 		tex = [[CCTextureCache sharedTextureCache] addImage:tilesetInfo.sourceImage];
 

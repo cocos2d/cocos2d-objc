@@ -79,7 +79,7 @@
 	// Data used when the sprite is self-rendered
 	//
 	ccBlendFunc				_blendFunc;				// Needed for the texture protocol
-	CCTexture2D				*_texture;				// Texture used to render the sprite
+	CCTexture				*_texture;				// Texture used to render the sprite
 
 	//
 	// Shared data
@@ -155,12 +155,12 @@
  The rect used will be the size of the texture.
  The offset will be (0,0).
  */
-+(id) spriteWithTexture:(CCTexture2D*)texture;
++(id) spriteWithTexture:(CCTexture*)texture;
 
 /** Creates an sprite with a texture and a rect.
  The offset will be (0,0).
  */
-+(id) spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
++(id) spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /** Creates an sprite with an sprite frame.
  */
@@ -187,18 +187,18 @@
  The rect used will be the size of the texture.
  The offset will be (0,0).
  */
--(id) initWithTexture:(CCTexture2D*)texture;
+-(id) initWithTexture:(CCTexture*)texture;
 
 /** Initializes an sprite with a texture and a rect in points (unrotated)
  The offset will be (0,0).
  */
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 /** Initializes an sprite with a texture and a rect in points, optionally rotated.
  The offset will be (0,0).
  IMPORTANT: This is the designated initializer.
  */
-- (id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated;
 
 
 /** Initializes an sprite with an sprite frame.

@@ -295,7 +295,7 @@
 	}
 }
 
--(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect
+-(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect
 {
 	// Only update the texture if is different from the current one
 	if( [texture name] != [_texture name] )
@@ -304,7 +304,7 @@
 	[self initTexCoordsWithRect:rect];
 }
 
--(void) setTexture:(CCTexture2D *)texture
+-(void) setTexture:(CCTexture *)texture
 {
 	CGSize s = [texture contentSize];
 	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];

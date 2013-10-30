@@ -111,7 +111,7 @@ typedef struct _sCCParticle {
 
 typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 
-@class CCTexture2D;
+@class CCTexture;
 
 /** Particle System base class
  Attributes of a Particle System:
@@ -264,7 +264,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	float _emitCounter;
 
 	// Texture of the particles
-	CCTexture2D *_texture;
+	CCTexture *_texture;
 	// blend function
 	ccBlendFunc	_blendFunc;
 	// Texture alpha behavior
@@ -369,7 +369,7 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 /** maximum particles of the system */
 @property (nonatomic,readwrite,assign) NSUInteger totalParticles;
 /** conforms to CocosNodeTexture protocol */
-@property (nonatomic,readwrite, strong) CCTexture2D * texture;
+@property (nonatomic,readwrite, strong) CCTexture * texture;
 /** conforms to CocosNodeTexture protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
 /** does the alpha value modify color */

@@ -484,7 +484,7 @@ void FNTConfigRemoveCache( void )
 	// if theString && fntfile are both nil, then it is OK
 	NSAssert( (theString && fntFile) || (theString==nil && fntFile==nil), @"Invalid params for CCLabelBMFont");
 	
-	CCTexture2D *texture = nil;
+	CCTexture *texture = nil;
     
 	if( fntFile ) {
 		CCBMFontConfiguration *newConf = FNTConfigLoadFile(fntFile);
@@ -499,7 +499,7 @@ void FNTConfigRemoveCache( void )
 		texture = [[CCTextureCache sharedTextureCache] addImage:_configuration.atlasName];
         
 	} else
-		texture = [[CCTexture2D alloc] init];
+		texture = [[CCTexture alloc] init];
     
     
 	if ( (self=[super initWithTexture:texture capacity:[theString length]]) ) {

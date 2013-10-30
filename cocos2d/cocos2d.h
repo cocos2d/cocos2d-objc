@@ -75,7 +75,7 @@
 #import "CCParticleExamples.h"
 #import "CCParticleBatchNode.h"
 
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCTexturePVR.h"
 #import "CCTextureCache.h"
 #import "CCTextureAtlas.h"

@@ -24,7 +24,7 @@
  *
  */
 
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "ccTypes.h"
 #import "ccConfig.h"
 
@@ -46,7 +46,7 @@
 	NSUInteger			_capacity;
 	ccV3F_C4B_T2F_Quad	*_quads;	// quads to be rendered
 	GLushort			*_indices;
-	CCTexture2D			*_texture;
+	CCTexture			*_texture;
 	
 	GLuint				_buffersVBO[2]; //0: vertex  1: indices
 	BOOL				_dirty;			//indicates whether or not the array buffer of the VBO needs to be updated
@@ -61,7 +61,7 @@
 /** quantity of quads that can be stored with the current texture atlas size */
 @property (nonatomic,readonly) NSUInteger capacity;
 /** Texture of the texture atlas */
-@property (nonatomic,strong) CCTexture2D *texture;
+@property (nonatomic,strong) CCTexture *texture;
 /** Quads that are going to be rendered */
 @property (nonatomic,readwrite) ccV3F_C4B_T2F_Quad *quads;
 
@@ -81,7 +81,7 @@
  * with an initial capacity for n Quads.
  * The TextureAtlas capacity can be increased in runtime.
  */
-+(id) textureAtlasWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
++(id) textureAtlasWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
 
 /** initializes a TextureAtlas with a previously initialized Texture2D object, and
  * with an initial capacity for Quads.
@@ -89,7 +89,7 @@
  *
  * WARNING: Do not reinitialize the TextureAtlas because it will leak memory (issue #706)
  */
--(id) initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
+-(id) initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
 
 /** updates a Quad (texture, vertex and color) at a certain index
  * index must be between 0 and the atlas capacity - 1

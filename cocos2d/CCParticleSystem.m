@@ -250,7 +250,7 @@
 			if( ! [textureDir isEqualToString:dirname] )
 				textureName = [dirname stringByAppendingPathComponent:textureName];
 
-			CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
+			CCTexture *tex = [[CCTextureCache sharedTextureCache] addImage:textureName];
 
 			if( tex )
 				[self setTexture:tex];
@@ -651,7 +651,7 @@
 
 #pragma mark ParticleSystem - CCTexture protocol
 
--(void) setTexture:(CCTexture2D*) texture
+-(void) setTexture:(CCTexture*) texture
 {
 	if( _texture != texture ) {
 		_texture = texture;
@@ -660,7 +660,7 @@
 	}
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	return _texture;
 }

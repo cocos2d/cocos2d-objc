@@ -80,12 +80,12 @@
     return [[self alloc] initWithImageNamed:imageName];
 }
 
-+(id)spriteWithTexture:(CCTexture2D*)texture
++(id)spriteWithTexture:(CCTexture*)texture
 {
 	return [[self alloc] initWithTexture:texture];
 }
 
-+(id)spriteWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
++(id)spriteWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	return [[self alloc] initWithTexture:texture rect:rect];
 }
@@ -124,7 +124,7 @@
 }
 
 // designated initializer
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect rotated:(BOOL)rotated
+-(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect rotated:(BOOL)rotated
 {
 	if( (self = [super init]) )
 	{
@@ -176,12 +176,12 @@
     return [self initWithSpriteFrame:[CCSpriteFrame frameWithImageNamed:imageName]];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+-(id) initWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	return [self initWithTexture:texture rect:rect rotated:NO];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture
+-(id) initWithTexture:(CCTexture*)texture
 {
 	NSAssert(texture!=nil, @"Invalid texture for sprite");
 
@@ -194,7 +194,7 @@
 {
 	NSAssert(filename != nil, @"Invalid filename for sprite");
 
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture ) {
 		CGRect rect = CGRectZero;
 		rect.size = texture.contentSize;
@@ -208,7 +208,7 @@
 {
 	NSAssert(filename!=nil, @"Invalid filename for sprite");
 
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage: filename];
 	if( texture )
 		return [self initWithTexture:texture rect:rect];
 
@@ -237,7 +237,7 @@
 	NSAssert(image!=nil, @"Invalid CGImageRef for sprite");
 
 	// XXX: possible bug. See issue #349. New API should be added
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addCGImage:image forKey:key];
 
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
@@ -347,7 +347,7 @@
 {
 	rect = CC_RECT_POINTS_TO_PIXELS(rect);
 
-	CCTexture2D *tex	= (_batchNode) ? [_textureAtlas texture] : _texture;
+	CCTexture *tex	= (_batchNode) ? [_textureAtlas texture] : _texture;
 	if(!tex)
 		return;
 
@@ -854,7 +854,7 @@
 {
 	_unflippedOffsetPositionFromCenter = frame.offset;
 
-	CCTexture2D *newTexture = [frame texture];
+	CCTexture *newTexture = [frame texture];
 	// update texture before updating texture rect
 	if ( newTexture.name != _texture.name )
 		[self setTexture: newTexture];
@@ -900,13 +900,13 @@
 	}
 }
 
--(void) setTexture:(CCTexture2D*)texture
+-(void) setTexture:(CCTexture*)texture
 {
 	// If batchnode, then texture id should be the same
 	NSAssert( !_batchNode || texture.name == _batchNode.texture.name , @"CCSprite: Batched sprites should use the same texture as the batchnode");	
 
 	// accept texture==nil as argument
-	NSAssert( !texture || [texture isKindOfClass:[CCTexture2D class]], @"setTexture expects a CCTexture2D. Invalid argument");
+	NSAssert( !texture || [texture isKindOfClass:[CCTexture class]], @"setTexture expects a CCTexture2D. Invalid argument");
 
 	if( ! _batchNode && _texture != texture ) {
 		_texture = texture;
@@ -915,7 +915,7 @@
 	}
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	return _texture;
 }

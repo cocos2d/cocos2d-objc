@@ -161,7 +161,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
     _runTime = 0.0f;
     _progress = 0.0f;
     
-    _transitionPixelFormat = kCCTexture2DPixelFormat_RGB565;
+    _transitionPixelFormat = CCTexturePixelFormat_RGB565;
     
     // disable touch during transition
     self.userInteractionEnabled = NO;

@@ -27,7 +27,7 @@
 #import "ccMacros.h"
 #import "CCAnimation.h"
 #import "CCSpriteFrame.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCTextureCache.h"
 
 #pragma mark - CCAnimationFrame
@@ -176,7 +176,7 @@
 
 -(void) addSpriteFrameWithFilename:(NSString*)filename
 {
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	CGRect rect = CGRectZero;
 	rect.size = texture.contentSize;
 	CCSpriteFrame *spriteFrame = [CCSpriteFrame frameWithTexture:texture rect:rect];
@@ -184,7 +184,7 @@
 	[self addSpriteFrame:spriteFrame];
 }
 
--(void) addSpriteFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect
+-(void) addSpriteFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect
 {
 	CCSpriteFrame *frame = [CCSpriteFrame frameWithTexture:texture rect:rect];
 	[self addSpriteFrame:frame];

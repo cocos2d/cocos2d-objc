@@ -25,7 +25,7 @@
  */
 
 
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCSprite.h"
 #import "Platforms/CCNS.h"
 

@@ -66,7 +66,7 @@
 /** creates a CCSpriteBatchNode with a texture2d and a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
  */
-+(id)batchNodeWithTexture:(CCTexture2D *)tex;
++(id)batchNodeWithTexture:(CCTexture *)tex;
 
 /** creates a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) with a default capacity of 29 children.
  The capacity will be increased in 33% in runtime if it run out of space.
@@ -77,7 +77,7 @@
 /** initializes a CCSpriteBatchNode with a texture2d and capacity of children.
  The capacity will be increased in 33% in runtime if it run out of space.
  */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
+-(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
 /** initializes a CCSpriteBatchNode with a file image (.png, .jpeg, .pvr, etc) and a capacity of children.
  The capacity will be increased in 33% in runtime if it run out of space.
  The file will be loaded using the TextureMgr.

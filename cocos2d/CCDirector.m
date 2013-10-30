@@ -39,7 +39,7 @@
 #import "ccMacros.h"
 #import "CCScene.h"
 #import "CCSpriteFrameCache.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
 #import "ccGLStateCache.h"
@@ -711,7 +711,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) createStatsLabel
 {
-	CCTexture2D *texture;
+	CCTexture *texture;
 	CCTextureCache *textureCache = [CCTextureCache sharedTextureCache];
 	
 	if( _FPSLabel && _SPFLabel ) {
@@ -724,8 +724,8 @@ static CCDirector *_sharedDirector = nil;
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
 
-	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+	CCTexturePixelFormat currentFormat = [CCTexture defaultAlphaPixelFormat];
+	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA4444];
 
 	unsigned char *data;
 	NSUInteger data_len;
@@ -742,7 +742,7 @@ static CCDirector *_sharedDirector = nil;
 	_SPFLabel = [[CCLabelAtlas alloc]  initWithString:@"0.000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 	_drawsLabel = [[CCLabelAtlas alloc]  initWithString:@"000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 
-	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
+	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
 
 	[_drawsLabel setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
 	[_SPFLabel setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];

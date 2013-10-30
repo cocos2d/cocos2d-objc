@@ -434,7 +434,7 @@ typedef struct _ccBezierConfig {
 
 
 @class CCAnimation;
-@class CCTexture2D;
+@class CCTexture;
 /** Animates a sprite given the name of an Animation */
 @interface CCActionAnimate : CCActionInterval <NSCopying>
 {

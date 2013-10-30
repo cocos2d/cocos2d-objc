@@ -39,7 +39,7 @@
 #import "CCRenderTexture.h"
 #import "CCSpriteFrameCache.h"
 #import "CCLabelTTF.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "Support/CCFileUtils.h"
 #import "Platforms/Mac/CCDirectorMac.h"
 #import "Platforms/iOS/CCDirectorIOS.h"
@@ -162,7 +162,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 -(id) initWithFrames:(NSArray *)arrayOfSpriteFrameNames delay:(float)delay DEPRECATED_ATTRIBUTE;
 -(void) addFrame:(CCSpriteFrame*)frame DEPRECATED_ATTRIBUTE;
 -(void) addFrameWithFilename:(NSString*)filename DEPRECATED_ATTRIBUTE;
--(void) addFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
+-(void) addFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCActionAnimate (Deprecated)
@@ -247,7 +247,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
  */
 @end
 
-@interface CCTexture2D (Deprecated)
+@interface CCTexture (Deprecated)
 /*
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment lineBreakMode:(CCLineBreakMode)lineBreakMode fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;
 - (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(CCTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size DEPRECATED_ATTRIBUTE;

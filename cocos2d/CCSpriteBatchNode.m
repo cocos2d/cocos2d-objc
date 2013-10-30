@@ -68,12 +68,12 @@ const NSUInteger defaultCapacity = 0;
 /*
  * creation with CCTexture2D
  */
-+(id)batchNodeWithTexture:(CCTexture2D *)tex
++(id)batchNodeWithTexture:(CCTexture *)tex
 {
 	return [[self alloc] initWithTexture:tex capacity:defaultCapacity];
 }
 
-+(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
++(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
@@ -93,17 +93,17 @@ const NSUInteger defaultCapacity = 0;
 
 -(id)init
 {
-    return [self initWithTexture:[[CCTexture2D alloc] init] capacity:0];
+    return [self initWithTexture:[[CCTexture alloc] init] capacity:0];
 }
 
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
+	CCTexture *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
 	return [self initWithTexture:tex capacity:capacity];
 }
 
 // Designated initializer
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
+-(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	if( (self=[super init])) {
 
@@ -563,13 +563,13 @@ const NSUInteger defaultCapacity = 0;
 	}
 }
 
--(void) setTexture:(CCTexture2D*)texture
+-(void) setTexture:(CCTexture*)texture
 {
 	_textureAtlas.texture = texture;
 	[self updateBlendFunc];
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	return _textureAtlas.texture;
 }
