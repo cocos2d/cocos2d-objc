@@ -105,7 +105,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	int limit = (looped ? count : count - 1);
 	for(int i=0; i<limit; i++){
 		CCPhysicsShape *shape = [CCPhysicsShape pillShapeFrom:points[i] to:points[(i + 1)%count] cornerRadius:cornerRadius];
-		cpSegmentShapeSetNeighbors(shape.shape.shape, points[(i - 1 + count)%count], points[(i + 2)%count]);
+		// TODO Broken. Values may be wrong after applying a transform in onEnter.
+		//cpSegmentShapeSetNeighbors(shape.shape.shape, points[(i - 1 + count)%count], points[(i + 2)%count]);
 		
 		shape.next = shapes;
 		shapes = shape;
@@ -136,24 +137,24 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	_shapeList.mass = mass;
 }
 
--(CGFloat)density
-{
-	return self.mass/self.area;
-}
-
--(void)setDensity:(CGFloat)density
-{
-	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
-	_shapeList.density = density;
-}
-
--(CGFloat)area
-{
-	CGFloat sum = 0.0;
-	FOREACH_SHAPE(self, shape) sum += shape.area;
-	
-	return sum;
-}
+//-(CGFloat)density
+//{
+//	return self.mass/self.area;
+//}
+//
+//-(void)setDensity:(CGFloat)density
+//{
+//	NSAssert(_shapeList.next == nil, @"Cannot set the density of a multi-shape body directly. Set the individual shape densities instead.");
+//	_shapeList.density = density;
+//}
+//
+//-(CGFloat)area
+//{
+//	CGFloat sum = 0.0;
+//	FOREACH_SHAPE(self, shape) sum += shape.area;
+//	
+//	return sum;
+//}
 
 -(CGFloat)friction {return _shapeList.friction;}
 -(void)setFriction:(CGFloat)friction {FOREACH_SHAPE(self, shape) shape.friction = friction;}
@@ -295,9 +296,9 @@ static cpBodyType ToChipmunkBodyType[] = {CP_BODY_TYPE_DYNAMIC, CP_BODY_TYPE_KIN
 
 -(NSArray *)chipmunkObjects {return _chipmunkObjects;}
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
 {
-	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics];
+	FOREACH_SHAPE(self, shape) [shape willAddToPhysicsNode:physics nonRigidTransform:transform];
 }
 
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics

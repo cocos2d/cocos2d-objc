@@ -29,32 +29,16 @@
 #import "ObjectiveChipmunk/ObjectiveChipmunk.h"
 
 
-// For comparison:
-// https://developer.apple.com/library/ios/documentation/SpriteKit/Reference/SpriteKitFramework_Ref/_index.html#//apple_ref/doc/uid/TP40013041
-
 /*
-	TODO:
+	Things to consider:
 	* Projectile bodies?
-	* Body constructors are still a little temporary.
-	* Objective-Chipmunk interop.
-	* affectedByGravity and allowsRotation properties not implemented.
-	* Joints.
-	* Queries.
-	
-	Consider:
 	* Interpolation?
 	* Post-step callbacks?
 	* What to do about CCActions?
-	* What to do about transform changes?
-	* Chain/loop body types have multiple ChipmunkShapes and thus will get multiple callbacks.
 	* Check argument types for delegate callbacks?
 	* Angular velocity in degrees?
 	* Warnings for CCPhysicsCollisionPair methods in the wrong event cycle?
 	* Should CCPhysicsCollisionPair.userData retain?
-	
-	Probably Definitely Not:
-	* Body queries?
-	* Collision detection only mode.
 */
 
 
@@ -81,7 +65,7 @@
 @property(nonatomic, readonly) NSArray *chipmunkObjects;
 
 // Used for deferring collision type setup until there is access to the physics node.
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 -(void)didAddToPhysicsNode:(CCPhysicsNode *)physics;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
@@ -100,8 +84,7 @@
 @property(nonatomic, weak) CCPhysicsBody *body;
 
 // Used for deferring collision type setup until there is access to the physics node.
--(void)rescaleShape;
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics;
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform;
 -(void)didRemoveFromPhysicsNode:(CCPhysicsNode *)physics;
 
 @end

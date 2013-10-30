@@ -42,7 +42,7 @@
 	CCPhysicsNode *physicsNode = [CCPhysicsNode node];
 //	physicsNode.gravity = ccp(0.0, -100.0);
 	physicsNode.collisionDelegate = self;
-	physicsNode.debugDraw = NO;
+	physicsNode.debugDraw = YES;
 	[self addChild:physicsNode];
 	
 	// Add the ball
@@ -66,7 +66,8 @@
 			
 			CGSize size = sprite.contentSize;
 			sprite.position = ccp(size.width*(i + 0.5), 320 - size.height*(j + 0.5));
-			sprite.scale = 0.5 + 0.5*CCRANDOM_0_1();
+			sprite.scaleX = 0.5 + 0.5*CCRANDOM_0_1();
+			sprite.scaleY = 0.5 + 0.5*CCRANDOM_0_1();
 			sprite.rotation = 30*CCRANDOM_MINUS1_1();
 			
 			CGRect rect = CGRectMake(0, 0, size.width, size.height);

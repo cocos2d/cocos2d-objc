@@ -930,7 +930,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	kmGLMultMatrix( &transfrom4x4 );
 }
-
 #pragma mark CCPhysics support.
 
 // Overriden by CCPhysicsNode to return YES.
@@ -951,7 +950,8 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		CGAffineTransform transform = NodeToPhysicsTransform(self);
 		physicsBody.absolutePosition = ccp(transform.tx, transform.ty);
 		
-		[_physicsBody willAddToPhysicsNode:physics];
+		cpTransform nonRigid = cpTransformMult(cpTransformInverse(physicsBody.absoluteTransform), NodeToPhysicsTransform(self));
+		[_physicsBody willAddToPhysicsNode:physics nonRigidTransform:nonRigid];
 		[physics.space smartAdd:physicsBody];
 		
 #ifndef NDEBUG
@@ -1315,7 +1315,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	CCPhysicsBody *physicsBody = GetBodyIfRunning(self);
 	if(physicsBody){
 		CGAffineTransform rigidTransform = RigidBodyToParentTransform(self, physicsBody);
-		return cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
+		_transform = cpTransformMult(rigidTransform, cpTransformScale(_scaleX, _scaleY));
 	} else if ( _isTransformDirty ) {
         
         // TODO: Make this more efficient
