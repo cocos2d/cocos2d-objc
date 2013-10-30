@@ -39,11 +39,6 @@
 //MARK: Basic Properties:
 
 @property(nonatomic, assign) CGFloat mass;
-/// Density of the physics body.
-/// Changing this property also changes the mass.
-@property(nonatomic, assign) CGFloat density;
-/// Surface area of the physics body.
-@property(nonatomic, readonly) CGFloat area;
 /// Surface friction of the physics body.
 /// When two objects collide, their friction is multiplied together.
 /// The calculated value can be overriden in a CCCollisionPairDelegate pre-solve method.
