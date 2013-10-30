@@ -129,7 +129,7 @@
 
 #pragma mark -
 
-- (void) update:(ccTime)delta
+- (void) update:(CCTime)delta
 {
 	if( !_startingPositionInitialized )
 		return;

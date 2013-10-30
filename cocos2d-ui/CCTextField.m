@@ -146,7 +146,7 @@
     [self unregisterForKeyboardNotifications];
 }
 
-- (void) update:(ccTime)delta
+- (void) update:(CCTime)delta
 {
     [self positionTextField];
 }

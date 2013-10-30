@@ -48,12 +48,12 @@
 	return nil;
 }
 
-+(id) actionWithDuration: (ccTime) d
++(id) actionWithDuration: (CCTime) d
 {
 	return [[self alloc] initWithDuration:d ];
 }
 
--(id) initWithDuration: (ccTime) d
+-(id) initWithDuration: (CCTime) d
 {
 	if( (self=[super init]) ) {
 		_duration = d;
@@ -80,7 +80,7 @@
 	return (_elapsed >= _duration);
 }
 
--(void) step: (ccTime) dt
+-(void) step: (CCTime) dt
 {
 	if( _firstTick ) {
 		_firstTick = NO;
@@ -166,7 +166,7 @@
 	NSAssert( one!=_actions[0] && one!=_actions[1], @"Sequence: re-init using the same parameters is not supported");
 	NSAssert( two!=_actions[1] && two!=_actions[0], @"Sequence: re-init using the same parameters is not supported");
 	
-	ccTime d = [one duration] + [two duration];
+	CCTime d = [one duration] + [two duration];
 	
 	if( (self=[super initWithDuration: d]) ) {
 		
@@ -202,11 +202,11 @@
 	[super stop];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 
 	int found = 0;
-	ccTime new_t = 0.0f;
+	CCTime new_t = 0.0f;
 	
 	if( t < _split ) {
 		// action[0]
@@ -283,7 +283,7 @@
 
 -(id) initWithAction:(CCActionFiniteTime*)action times:(NSUInteger)times
 {
-	ccTime d = [action duration] * times;
+	CCTime d = [action duration] * times;
 
 	if( (self=[super initWithDuration: d ]) ) {
 		_times = times;
@@ -321,7 +321,7 @@
 
 // issue #80. Instead of hooking step:, hook update: since it can be called by any
 // container action like CCRepeat, CCSequence, CCEase, etc..
--(void) update:(ccTime) dt
+-(void) update:(CCTime) dt
 {
 	if (dt >= _nextDt)
 	{
@@ -429,8 +429,8 @@
 	NSAssert( one!=_one && one!=_two, @"Spawn: reinit using same parameters is not supported");
 	NSAssert( two!=_two && two!=_one, @"Spawn: reinit using same parameters is not supported");
 
-	ccTime d1 = [one duration];
-	ccTime d2 = [two duration];
+	CCTime d1 = [one duration];
+	CCTime d2 = [two duration];
 
 	if( (self=[super initWithDuration: MAX(d1,d2)] ) ) {
 
@@ -469,7 +469,7 @@
 	[super stop];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_one update:t];
 	[_two update:t];
@@ -487,12 +487,12 @@
 #pragma mark - CCRotateTo
 
 @implementation CCActionRotateTo
-+(id) actionWithDuration: (ccTime) t angle:(float) a
++(id) actionWithDuration: (CCTime) t angle:(float) a
 {
 	return [[self alloc] initWithDuration:t angle:a ];
 }
 
--(id) initWithDuration: (ccTime) t angle:(float) a
+-(id) initWithDuration: (CCTime) t angle:(float) a
 {
 	if( (self=[super initWithDuration: t]) )
 		_dstAngleX = _dstAngleY = a;
@@ -500,12 +500,12 @@
 	return self;
 }
 
-+(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
++(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY
 {
 	return [[self alloc] initWithDuration:t angleX:aX angleY:aY ];
 }
 
--(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+-(id) initWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY
 {
 	if( (self=[super initWithDuration: t]) ){
 		_dstAngleX = aX;
@@ -551,7 +551,7 @@
 	if (_diffAngleY < -180)
 		_diffAngleY += 360;
 }
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_target setRotationalSkewX: _startAngleX + _diffAngleX * t];
 	[_target setRotationalSkewY: _startAngleY + _diffAngleY * t];
@@ -565,12 +565,12 @@
 #pragma mark - RotateBy
 
 @implementation CCActionRotateBy
-+(id) actionWithDuration: (ccTime) t angle:(float) a
++(id) actionWithDuration: (CCTime) t angle:(float) a
 {
 	return [[self alloc] initWithDuration:t angle:a ];
 }
 
--(id) initWithDuration: (ccTime) t angle:(float) a
+-(id) initWithDuration: (CCTime) t angle:(float) a
 {
 	if( (self=[super initWithDuration: t]) )
 		_angleX = _angleY = a;
@@ -578,12 +578,12 @@
 	return self;
 }
 
-+(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
++(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY
 {
 	return [[self alloc] initWithDuration:t angleX:aX angleY:aY ];
 }
 
--(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY
+-(id) initWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY
 {
 	if( (self=[super initWithDuration: t]) ){
 		_angleX = aX;
@@ -605,7 +605,7 @@
 	_startAngleY = [_target rotationalSkewY];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	// XXX: shall I add % 360
 	[_target setRotationalSkewX: (_startAngleX + _angleX * t )];
@@ -625,12 +625,12 @@
 #pragma mark - MoveBy
 
 @implementation CCActionMoveBy
-+(id) actionWithDuration: (ccTime) t position: (CGPoint) p
++(id) actionWithDuration: (CCTime) t position: (CGPoint) p
 {
 	return [[self alloc] initWithDuration:t position:p ];
 }
 
--(id) initWithDuration: (ccTime) t position: (CGPoint) p
+-(id) initWithDuration: (CCTime) t position: (CGPoint) p
 {
 	if( (self=[super initWithDuration: t]) )
 		_positionDelta = p;
@@ -653,7 +653,7 @@
 	return [[self class] actionWithDuration:_duration position:ccp( -_positionDelta.x, -_positionDelta.y)];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 
 	CCNode *node = (CCNode*)_target;
@@ -678,12 +678,12 @@
 #pragma mark MoveTo
 
 @implementation CCActionMoveTo
-+(id) actionWithDuration: (ccTime) t position: (CGPoint) p
++(id) actionWithDuration: (CCTime) t position: (CGPoint) p
 {
 	return [[self alloc] initWithDuration:t position:p ];
 }
 
--(id) initWithDuration: (ccTime) t position: (CGPoint) p
+-(id) initWithDuration: (CCTime) t position: (CGPoint) p
 {
 	if( (self=[super initWithDuration: t]) ) {
 		_endPosition = p;
@@ -712,12 +712,12 @@
 #pragma mark - CCSkewTo
 
 @implementation CCActionSkewTo
-+(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
++(id) actionWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy
 {
 	return [[self alloc] initWithDuration: t skewX:sx skewY:sy];
 }
 
--(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy
+-(id) initWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy
 {
 	if( (self=[super initWithDuration:t]) ) {
 		_endSkewX = sx;
@@ -769,7 +769,7 @@
 	}
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_target setSkewX: (_startSkewX + _deltaX * t ) ];
 	[_target setSkewY: (_startSkewY + _deltaY * t ) ];
@@ -784,7 +784,7 @@
 
 @implementation CCActionSkewBy
 
--(id) initWithDuration:(ccTime)t skewX:(float)deltaSkewX skewY:(float)deltaSkewY
+-(id) initWithDuration:(CCTime)t skewX:(float)deltaSkewX skewY:(float)deltaSkewY
 {
 	if( (self=[super initWithDuration:t skewX:deltaSkewX skewY:deltaSkewY]) ) {
 		_skewX = deltaSkewX;
@@ -815,12 +815,12 @@
 #pragma mark - CCJumpBy
 
 @implementation CCActionJumpBy
-+(id) actionWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
++(id) actionWithDuration: (CCTime) t position: (CGPoint) pos height: (CCTime) h jumps:(NSUInteger)j
 {
 	return [[self alloc] initWithDuration: t position: pos height: h jumps:j];
 }
 
--(id) initWithDuration: (ccTime) t position: (CGPoint) pos height: (ccTime) h jumps:(NSUInteger)j
+-(id) initWithDuration: (CCTime) t position: (CGPoint) pos height: (CCTime) h jumps:(NSUInteger)j
 {
 	if( (self=[super initWithDuration:t]) ) {
 		_delta = pos;
@@ -842,7 +842,7 @@
 	_previousPos = _startPosition = [(CCNode*)_target position];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	// Sin jump. Less realistic
 //	ccTime y = _height * fabsf( sinf(t * (CGFloat)M_PI * _jumps ) );
@@ -898,7 +898,7 @@
 //	((1 - t) + t)3 = 1
 // Expands to…
 //   (1 - t)3 + 3t(1-t)2 + 3t2(1 - t) + t3 = 1
-static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
+static inline CGFloat bezierat( float a, float b, float c, float d, CCTime t )
 {
 	return (powf(1-t,3) * a +
 			3*t*(powf(1-t,2))*b +
@@ -910,12 +910,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 // BezierBy
 //
 @implementation CCActionBezierBy
-+(id) actionWithDuration: (ccTime) t bezier:(ccBezierConfig) c
++(id) actionWithDuration: (CCTime) t bezier:(ccBezierConfig) c
 {
 	return [[self alloc] initWithDuration:t bezier:c ];
 }
 
--(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
+-(id) initWithDuration: (CCTime) t bezier:(ccBezierConfig) c
 {
 	if( (self=[super initWithDuration: t]) ) {
 		_config = c;
@@ -934,7 +934,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_previousPosition = _startPosition = [(CCNode*)_target position];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	CGFloat xa = 0;
 	CGFloat xb = _config.controlPoint_1.x;
@@ -983,7 +983,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCBezierTo
 @implementation CCActionBezierTo
--(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c
+-(id) initWithDuration: (CCTime) t bezier:(ccBezierConfig) c
 {
 	if( (self=[super initWithDuration: t]) ) {
 		_toConfig = c;
@@ -1012,12 +1012,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCScaleTo
 @implementation CCActionScaleTo
-+(id) actionWithDuration: (ccTime) t scale:(float) s
++(id) actionWithDuration: (CCTime) t scale:(float) s
 {
 	return [[self alloc] initWithDuration: t scale:s];
 }
 
--(id) initWithDuration: (ccTime) t scale:(float) s
+-(id) initWithDuration: (CCTime) t scale:(float) s
 {
 	if( (self=[super initWithDuration: t]) ) {
 		_endScaleX = s;
@@ -1026,12 +1026,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	return self;
 }
 
-+(id) actionWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
++(id) actionWithDuration: (CCTime) t scaleX:(float)sx scaleY:(float)sy
 {
 	return [[self alloc] initWithDuration: t scaleX:sx scaleY:sy];
 }
 
--(id) initWithDuration: (ccTime) t scaleX:(float)sx scaleY:(float)sy
+-(id) initWithDuration: (CCTime) t scaleX:(float)sx scaleY:(float)sy
 {
 	if( (self=[super initWithDuration: t]) ) {
 		_endScaleX = sx;
@@ -1055,7 +1055,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_deltaY = _endScaleY - _startScaleY;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_target setScaleX: (_startScaleX + _deltaX * t ) ];
 	[_target setScaleY: (_startScaleY + _deltaY * t ) ];
@@ -1085,12 +1085,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCBlink
 @implementation CCActionBlink
-+(id) actionWithDuration: (ccTime) t blinks: (NSUInteger) b
++(id) actionWithDuration: (CCTime) t blinks: (NSUInteger) b
 {
 	return [[ self alloc] initWithDuration: t blinks: b];
 }
 
--(id) initWithDuration: (ccTime) t blinks: (NSUInteger) b
+-(id) initWithDuration: (CCTime) t blinks: (NSUInteger) b
 {
 	if( (self=[super initWithDuration: t] ) )
 		_times = b;
@@ -1110,11 +1110,11 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_originalState = [target visible];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	if( ! [self isDone] ) {
-		ccTime slice = 1.0f / _times;
-		ccTime m = fmodf(t, slice);
+		CCTime slice = 1.0f / _times;
+		CCTime m = fmodf(t, slice);
 		[_target setVisible: (m > slice/2) ? YES : NO];
 	}
 }
@@ -1137,7 +1137,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCFadeIn
 @implementation CCActionFadeIn
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[(id<CCRGBAProtocol>) _target setOpacity: 255 *t];
 }
@@ -1153,7 +1153,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCFadeOut
 @implementation CCActionFadeOut
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[(id<CCRGBAProtocol>) _target setOpacity: 255 *(1-t)];
 }
@@ -1169,12 +1169,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCFadeTo
 @implementation CCActionFadeTo
-+(id) actionWithDuration: (ccTime) t opacity: (GLubyte) o
++(id) actionWithDuration: (CCTime) t opacity: (GLubyte) o
 {
 	return [[ self alloc] initWithDuration: t opacity: o];
 }
 
--(id) initWithDuration: (ccTime) t opacity: (GLubyte) o
+-(id) initWithDuration: (CCTime) t opacity: (GLubyte) o
 {
 	if( (self=[super initWithDuration: t] ) )
 		_toOpacity = o;
@@ -1194,7 +1194,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_fromOpacity = [(id<CCRGBAProtocol>)_target opacity];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[(id<CCRGBAProtocol>)_target setOpacity:_fromOpacity + ( _toOpacity - _fromOpacity ) * t];
 }
@@ -1205,12 +1205,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCTintTo
 @implementation CCActionTintTo
-+(id) actionWithDuration:(ccTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
++(id) actionWithDuration:(CCTime)t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
 	return [(CCActionTintTo*)[ self alloc] initWithDuration:t red:r green:g blue:b];
 }
 
--(id) initWithDuration: (ccTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
+-(id) initWithDuration: (CCTime) t red:(GLubyte)r green:(GLubyte)g blue:(GLubyte)b
 {
 	if( (self=[super initWithDuration:t] ) )
 		_to = ccc3(r,g,b);
@@ -1232,7 +1232,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_from = [tn color];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
 	[tn setColor:ccc3(_from.r + (_to.r - _from.r) * t, _from.g + (_to.g - _from.g) * t, _from.b + (_to.b - _from.b) * t)];
@@ -1244,12 +1244,12 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCTintBy
 @implementation CCActionTintBy
-+(id) actionWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
++(id) actionWithDuration:(CCTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
 {
 	return [(CCActionTintBy*)[ self alloc] initWithDuration:t red:r green:g blue:b];
 }
 
--(id) initWithDuration:(ccTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
+-(id) initWithDuration:(CCTime)t red:(GLshort)r green:(GLshort)g blue:(GLshort)b
 {
 	if( (self=[super initWithDuration: t] ) ) {
 		_deltaR = r;
@@ -1275,7 +1275,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	_fromB = color.b;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	id<CCRGBAProtocol> tn = (id<CCRGBAProtocol>) _target;
 	[tn setColor:ccc3( _fromR + _deltaR * t, _fromG + _deltaG * t, _fromB + _deltaB * t)];
@@ -1292,7 +1292,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 //
 #pragma mark - CCDelayTime
 @implementation CCActionDelay
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	return;
 }
@@ -1346,7 +1346,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	[super stop];
 }
 
--(void) update:(ccTime)t
+-(void) update:(CCTime)t
 {
 	[_other update:1-t];
 }
@@ -1431,7 +1431,7 @@ static inline CGFloat bezierat( float a, float b, float c, float d, ccTime t )
 	[super stop];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	
 	// if t==1, ignore. Animation should finish with t==1

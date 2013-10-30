@@ -54,9 +54,9 @@
 }
 
 /** creates an initializes the action with the property name (key), and the from and to parameters. */
-+ (id)actionWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
++ (id)actionWithDuration:(CCTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
 
 /** initializes the action with the property name (key), and the from and to parameters. */
-- (id)initWithDuration:(ccTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
+- (id)initWithDuration:(CCTime)aDuration key:(NSString *)key from:(float)from to:(float)to;
 
 @end

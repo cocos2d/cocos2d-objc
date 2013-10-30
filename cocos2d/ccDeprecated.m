@@ -176,7 +176,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	
 	return [[self alloc] initWithAnimation:anim];
 }
-+(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
++(id) actionWithDuration:(CCTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	CCAnimation *anim = [animation copy];
 	anim.restoreOriginalFrame = restoreOriginalFrame;
@@ -191,7 +191,7 @@ void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )
 	
 	return [self initWithAnimation:anim];	
 }
--(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
+-(id) initWithDuration:(CCTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame
 {
 	CCAnimation *anim = [animation copy];
 	anim.restoreOriginalFrame = restoreOriginalFrame;

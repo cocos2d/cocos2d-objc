@@ -260,10 +260,10 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	CCDrawNode *_debugDraw;
 	
 	// How much time passes per fixedUpdate.
-	ccTime _fixedTimestep;
+	CCTime _fixedTimestep;
 	
 	// "left-over" time from the last update.
-	ccTime _accumulator;
+	CCTime _accumulator;
 }
 
 // Used by CCNode.physicsNode
@@ -294,7 +294,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return self;
 }
 
--(void)setFixedRate:(ccTime)fixedRate
+-(void)setFixedRate:(CCTime)fixedRate
 {
 	_fixedRate = fixedRate;
 	_fixedTimestep = 1.0/fixedRate;
@@ -303,8 +303,8 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 -(CGPoint)gravity {return _space.gravity;}
 -(void)setGravity:(CGPoint)gravity {_space.gravity = gravity;}
 
--(ccTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
--(void)setSleepTimeThreshold:(ccTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
+-(CCTime)sleepTimeThreshold {return _space.sleepTimeThreshold;}
+-(void)setSleepTimeThreshold:(CCTime)sleepTimeThreshold {_space.sleepTimeThreshold = sleepTimeThreshold;}
 
 // Collision Delegates
 
@@ -410,7 +410,7 @@ static void PhysicsSeparate(cpArbiter *arb, cpSpace *space, CCPhysicsCollisionHa
 	return NSIntegerMax;
 }
 
--(void)fixedUpdate:(ccTime)delta
+-(void)fixedUpdate:(CCTime)delta
 {
 	[_space step:delta];
 	

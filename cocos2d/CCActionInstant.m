@@ -57,12 +57,12 @@
 	return YES;
 }
 
--(void) step: (ccTime) dt
+-(void) step: (CCTime) dt
 {
 	[self update: 1];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	// nothing
 }
@@ -79,7 +79,7 @@
 #pragma mark CCShow
 
 @implementation CCActionShow
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	((CCNode *)_target).visible = YES;
 }
@@ -96,7 +96,7 @@
 #pragma mark CCHide
 
 @implementation CCActionHide
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	((CCNode *)_target).visible = NO;
 }
@@ -113,7 +113,7 @@
 #pragma mark CCToggleVisibility
 
 @implementation CCActionToggleVisibility
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	((CCNode *)_target).visible = !((CCNode *)_target).visible;
 }
@@ -138,7 +138,7 @@
 	return self;
 }
 
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	[(CCSprite*)_target setFlipX:_flipX];
 }
@@ -174,7 +174,7 @@
 	return self;
 }
 
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	[(CCSprite*)_target setFlipY:_flipY];
 }
@@ -217,7 +217,7 @@
 	return copy;
 }
 
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	((CCNode *)_target).position = _position;
 }
@@ -264,7 +264,7 @@
 	return copy;
 }
 
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	[self execute];
 }
@@ -302,7 +302,7 @@
 	return copy;
 }
 
--(void) update:(ccTime)time
+-(void) update:(CCTime)time
 {
 	[self execute];
 }

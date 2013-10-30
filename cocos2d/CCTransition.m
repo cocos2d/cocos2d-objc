@@ -218,7 +218,7 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-- (void)update:(ccTime)delta
+- (void)update:(CCTime)delta
 {
     // update progress
     _runTime += delta;

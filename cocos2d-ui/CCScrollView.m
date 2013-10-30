@@ -96,7 +96,7 @@
 
 @implementation CCMoveToX
 
--(id) initWithDuration: (ccTime) t positionX: (float) p
+-(id) initWithDuration: (CCTime) t positionX: (float) p
 {
 	if( (self=[super initWithDuration: t]) )
 		_endPosition = p;
@@ -110,7 +110,7 @@
 	_startPos = target.position.x;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
     CCNode *node = (CCNode*)_target;
     
@@ -132,7 +132,7 @@
 
 @implementation CCMoveToY
 
--(id) initWithDuration: (ccTime) t positionY: (float) p
+-(id) initWithDuration: (CCTime) t positionY: (float) p
 {
 	if( (self=[super initWithDuration: t]) )
 		_endPosition = p;
@@ -146,7 +146,7 @@
 	_startPos = target.position.y;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
     CCNode *node = (CCNode*)_target;
     
@@ -457,7 +457,7 @@
     _contentNode.position = ccpMult(newPos, -1);
 }
 
-- (void) update:(ccTime)df
+- (void) update:(CCTime)df
 {
     float fps = 1.0/df;
     float p = 60/fps;

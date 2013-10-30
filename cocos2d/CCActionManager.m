@@ -307,7 +307,7 @@
 
 #pragma mark ActionManager - main loop
 
--(void) update: (ccTime) dt
+-(void) update: (CCTime) dt
 {
 	for(tHashElement *elt = targets; elt != NULL; ) {
 

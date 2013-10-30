@@ -38,9 +38,9 @@
 	float _from;
 }
 /** Creates and initializes with a duration and a percent */
-+(id) actionWithDuration:(ccTime)duration percent:(float)percent;
++(id) actionWithDuration:(CCTime)duration percent:(float)percent;
 /** Initializes with a duration and a percent */
--(id) initWithDuration:(ccTime)duration percent:(float)percent;
+-(id) initWithDuration:(CCTime)duration percent:(float)percent;
 @end
 
 /**
@@ -53,7 +53,7 @@
 	float _from;
 }
 /** Creates and initializes the action with a duration, a "from" percentage and a "to" percentage */
-+(id) actionWithDuration:(ccTime)duration from:(float)fromPercentage to:(float) toPercentage;
++(id) actionWithDuration:(CCTime)duration from:(float)fromPercentage to:(float) toPercentage;
 /** Initializes the action with a duration, a "from" percentage and a "to" percentage */
--(id) initWithDuration:(ccTime)duration from:(float)fromPercentage to:(float) toPercentage;
+-(id) initWithDuration:(CCTime)duration from:(float)fromPercentage to:(float) toPercentage;
 @end

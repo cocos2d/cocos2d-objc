@@ -86,12 +86,12 @@
 	return YES;
 }
 
--(void) step: (ccTime) dt
+-(void) step: (CCTime) dt
 {
 	CCLOG(@"[Action step]. override me");
 }
 
--(void) update: (ccTime) time
+-(void) update: (CCTime) time
 {
 	CCLOG(@"[Action update]. override me");
 }
@@ -146,11 +146,11 @@
 	[_innerAction startWithTarget:_target];
 }
 
--(void) step:(ccTime) dt
+-(void) step:(CCTime) dt
 {
 	[_innerAction step: dt];
 	if( [_innerAction isDone] ) {
-		ccTime diff = _innerAction.elapsed - _innerAction.duration;
+		CCTime diff = _innerAction.elapsed - _innerAction.duration;
 		[_innerAction startWithTarget:_target];
 
 		// to prevent jerk. issue #390, 1247
@@ -213,7 +213,7 @@
 	[super stop];
 }
 
--(void) step:(ccTime) dt
+-(void) step:(CCTime) dt
 {
 	[_innerAction step: dt * _speed];
 }
@@ -308,7 +308,7 @@
 	return copy;
 }
 
--(void) step:(ccTime) dt
+-(void) step:(CCTime) dt
 {
 	if(_boundarySet)
 	{
