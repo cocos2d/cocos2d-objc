@@ -49,17 +49,17 @@ Example:
 */
 @interface CCActionInterval: CCActionFiniteTime <NSCopying>
 {
-	ccTime	_elapsed;
+	CCTime	_elapsed;
 	BOOL	_firstTick;
 }
 
 /** how many seconds had elapsed since the actions started to run. */
-@property (nonatomic,readonly) ccTime elapsed;
+@property (nonatomic,readonly) CCTime elapsed;
 
 /** creates the action */
-+(id) actionWithDuration: (ccTime) d;
++(id) actionWithDuration: (CCTime) d;
 /** initializes the action */
--(id) initWithDuration: (ccTime) d;
+-(id) initWithDuration: (CCTime) d;
 /** returns YES if the action has finished */
 -(BOOL) isDone;
 /** returns a reversed action */
@@ -71,7 +71,7 @@ Example:
 @interface CCActionSequence : CCActionInterval <NSCopying>
 {
 	CCActionFiniteTime *_actions[2];
-	ccTime _split;
+	CCTime _split;
 	int _last;
 }
 /** helper constructor to create an array of sequence-able actions */
@@ -94,7 +94,7 @@ Example:
 {
 	NSUInteger _times;
 	NSUInteger _total;
-	ccTime _nextDt;
+	CCTime _nextDt;
 	BOOL _isActionInstant;
 	CCActionFiniteTime *_innerAction;
 }
@@ -143,13 +143,13 @@ Example:
 	float _diffAngleY;
 }
 /** creates the action */
-+(id) actionWithDuration:(ccTime)duration angle:(float)angle;
++(id) actionWithDuration:(CCTime)duration angle:(float)angle;
 /** initializes the action */
--(id) initWithDuration:(ccTime)duration angle:(float)angle;
+-(id) initWithDuration:(CCTime)duration angle:(float)angle;
 
 /** creates the action with separate rotation angles */
-+(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
--(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
++(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /** Rotates a CCNode object clockwise a number of degrees by modifying its rotation attribute.
@@ -162,13 +162,13 @@ Example:
 	float _startAngleY;
 }
 /** creates the action */
-+(id) actionWithDuration:(ccTime)duration angle:(float)deltaAngle;
++(id) actionWithDuration:(CCTime)duration angle:(float)deltaAngle;
 /** initializes the action */
--(id) initWithDuration:(ccTime)duration angle:(float)deltaAngle;
+-(id) initWithDuration:(CCTime)duration angle:(float)deltaAngle;
 
 /** creates the action with separate rotation angles */
-+(id) actionWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
--(id) initWithDuration: (ccTime) t angleX:(float) aX angleY:(float) aY;
++(id) actionWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
+-(id) initWithDuration: (CCTime) t angleX:(float) aX angleY:(float) aY;
 @end
 
 /**  Moves a CCNode object x,y pixels by modifying it's position attribute.
@@ -184,9 +184,9 @@ Example:
 	CGPoint _previousPos;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
++(id) actionWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
 /** initializes the action */
--(id) initWithDuration: (ccTime)duration position:(CGPoint)deltaPosition;
+-(id) initWithDuration: (CCTime)duration position:(CGPoint)deltaPosition;
 @end
 
 /** Moves a CCNode object to the position x,y. x and y are absolute coordinates by modifying it's position attribute.
@@ -199,9 +199,9 @@ Example:
 	CGPoint _endPosition;
 }
 /** creates the action */
-+(id) actionWithDuration:(ccTime)duration position:(CGPoint)position;
++(id) actionWithDuration:(CCTime)duration position:(CGPoint)position;
 /** initializes the action */
--(id) initWithDuration:(ccTime)duration position:(CGPoint)position;
+-(id) initWithDuration:(CCTime)duration position:(CGPoint)position;
 @end
 
 /** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
@@ -219,9 +219,9 @@ Example:
 	float _deltaY;
 }
 /** creates the action */
-+(id) actionWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
++(id) actionWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy;
 /** initializes the action with duration, skew X and skew Y */
--(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+-(id) initWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
 /** Skews a CCNode object by skewX and skewY degrees
@@ -231,7 +231,7 @@ Example:
 {
 }
 /** initializes the action with duration, skew X and skew Y */
--(id) initWithDuration:(ccTime)t skewX:(float)sx skewY:(float)sy;
+-(id) initWithDuration:(CCTime)t skewX:(float)sx skewY:(float)sy;
 @end
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
@@ -240,14 +240,14 @@ Example:
 {
 	CGPoint _startPosition;
 	CGPoint _delta;
-	ccTime	_height;
+	CCTime	_height;
 	NSUInteger _jumps;
 	CGPoint _previousPos;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
++(id) actionWithDuration: (CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
 /** initializes the action */
--(id) initWithDuration: (ccTime)duration position:(CGPoint)position height:(ccTime)height jumps:(NSUInteger)jumps;
+-(id) initWithDuration: (CCTime)duration position:(CGPoint)position height:(CCTime)height jumps:(NSUInteger)jumps;
 @end
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
@@ -280,10 +280,10 @@ typedef struct _ccBezierConfig {
 }
 
 /** creates the action with a duration and a bezier configuration */
-+(id) actionWithDuration: (ccTime) t bezier:(ccBezierConfig) c;
++(id) actionWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
 
 /** initializes the action with a duration and a bezier configuration */
--(id) initWithDuration: (ccTime) t bezier:(ccBezierConfig) c;
+-(id) initWithDuration: (CCTime) t bezier:(ccBezierConfig) c;
 @end
 
 /** An action that moves the target with a cubic Bezier curve to a destination point.
@@ -312,13 +312,13 @@ typedef struct _ccBezierConfig {
 	float _deltaY;
 }
 /** creates the action with the same scale factor for X and Y */
-+(id) actionWithDuration: (ccTime)duration scale:(float) s;
++(id) actionWithDuration: (CCTime)duration scale:(float) s;
 /** initializes the action with the same scale factor for X and Y */
--(id) initWithDuration: (ccTime)duration scale:(float) s;
+-(id) initWithDuration: (CCTime)duration scale:(float) s;
 /** creates the action with and X factor and a Y factor */
-+(id) actionWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
++(id) actionWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
 /** initializes the action with and X factor and a Y factor */
--(id) initWithDuration: (ccTime)duration scaleX:(float) sx scaleY:(float)sy;
+-(id) initWithDuration: (CCTime)duration scaleX:(float) sx scaleY:(float)sy;
 @end
 
 /** Scales a CCNode object a zoom factor by modifying its scale attribute.
@@ -338,9 +338,9 @@ typedef struct _ccBezierConfig {
 	BOOL _originalState;
 }
 /** creates the action */
-+(id) actionWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
++(id) actionWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
 /** initializes the action */
--(id) initWithDuration: (ccTime)duration blinks:(NSUInteger)blinks;
+-(id) initWithDuration: (CCTime)duration blinks:(NSUInteger)blinks;
 @end
 
 /** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
@@ -350,7 +350,7 @@ typedef struct _ccBezierConfig {
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) update:(ccTime)dt;
+-(void) update:(CCTime)dt;
 @end
 
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
@@ -360,7 +360,7 @@ typedef struct _ccBezierConfig {
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) update:(ccTime)dt;
+-(void) update:(CCTime)dt;
 @end
 
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
@@ -372,9 +372,9 @@ typedef struct _ccBezierConfig {
 	GLubyte _fromOpacity;
 }
 /** creates an action with duration and opacity */
-+(id) actionWithDuration:(ccTime)duration opacity:(GLubyte)opactiy;
++(id) actionWithDuration:(CCTime)duration opacity:(GLubyte)opactiy;
 /** initializes the action with duration and opacity */
--(id) initWithDuration:(ccTime)duration opacity:(GLubyte)opacity;
+-(id) initWithDuration:(CCTime)duration opacity:(GLubyte)opacity;
 @end
 
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
@@ -387,9 +387,9 @@ typedef struct _ccBezierConfig {
 	ccColor3B _from;
 }
 /** creates an action with duration and color */
-+(id) actionWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
++(id) actionWithDuration:(CCTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 /** initializes the action with duration and color */
--(id) initWithDuration:(ccTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
+-(id) initWithDuration:(CCTime)duration red:(GLubyte)red green:(GLubyte)green blue:(GLubyte)blue;
 @end
 
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
@@ -401,9 +401,9 @@ typedef struct _ccBezierConfig {
 	GLshort _fromR, _fromG, _fromB;
 }
 /** creates an action with duration and color */
-+(id) actionWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
++(id) actionWithDuration:(CCTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
 /** initializes the action with duration and color */
--(id) initWithDuration:(ccTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
+-(id) initWithDuration:(CCTime)duration red:(GLshort)deltaRed green:(GLshort)deltaGreen blue:(GLshort)deltaBlue;
 @end
 
 /** Delays the action a certain amount of seconds
@@ -412,7 +412,7 @@ typedef struct _ccBezierConfig {
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
--(void) update:(ccTime)dt;
+-(void) update:(CCTime)dt;
 @end
 
 /** Executes an action in reverse order, from time=duration to time=0

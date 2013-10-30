@@ -156,7 +156,7 @@
 
 // CatmullRom Spline formula:
 
-inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t )
+inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, CCTime t )
 {
 	CGFloat t2 = t * t;
 	CGFloat t3 = t2 * t;
@@ -187,12 +187,12 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 @synthesize points=_points;
 
-+(id) actionWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension
++(id) actionWithDuration:(CCTime)duration points:(CCPointArray *)points tension:(CGFloat)tension
 {
 	return [[self alloc] initWithDuration:duration points:points tension:tension ];
 }
 
--(id) initWithDuration:(ccTime)duration points:(CCPointArray *)points tension:(CGFloat)tension								
+-(id) initWithDuration:(CCTime)duration points:(CCPointArray *)points tension:(CGFloat)tension								
 {
 	NSAssert( [points count] > 0, @"Invalid configuration. It must at least have one control point");
 
@@ -225,7 +225,7 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
     return copy;
 }
 
--(void) update:(ccTime)dt
+-(void) update:(CCTime)dt
 {
 	NSUInteger p;
 	CGFloat lt;
@@ -338,12 +338,12 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 @end
 
 @implementation CCActionCatmullRomTo
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	return [[self alloc] initWithDuration:dt points:points];
 }
 
--(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
 		
@@ -354,12 +354,12 @@ inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 @end
 
 @implementation CCActionCatmullRomBy
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	return [[self alloc] initWithDuration:dt points:points];
 }
 
--(id) initWithDuration:(ccTime)dt points:(CCPointArray *)points
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray *)points
 {
 	if( (self=[super initWithDuration:dt points:points tension:0.5f]) ) {
 		

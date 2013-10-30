@@ -22,7 +22,7 @@
 -(void) postStep;
 
 //! called in every loop.
--(void) update: (ccTime) dt;
+-(void) update: (CCTime) dt;
 
 -(void) updateWithNoTime;
 

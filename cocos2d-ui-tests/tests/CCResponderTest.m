@@ -43,7 +43,7 @@
     return self;
 }
 
-- (void) update:(ccTime)delta
+- (void) update:(CCTime)delta
 {
     _lblNumTouches.string = [NSString stringWithFormat:@"Num touches: %d", _currentTouches.count];
 }

@@ -462,7 +462,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		// This doesn't give the most accurate global time value.
 		// Cocos2D doesn't store a high precision time value, so this will have to do.
 		// Getting Mach time per frame per shader using time could be extremely expensive.
-		ccTime time = director.totalFrames*director.animationInterval;
+		CCTime time = director.totalFrames*director.animationInterval;
 		
 		[self setUniformLocation:_uniforms[kCCUniformTime] withF1:time/10.0 f2:time f3:time*2 f4:time*4];
 		[self setUniformLocation:_uniforms[kCCUniformSinTime] withF1:sinf(time/8.0) f2:sinf(time/4.0) f3:sinf(time/2.0) f4:sinf(time)];

@@ -40,9 +40,9 @@
 
 @optional
 
--(void) update:(ccTime)delta;
+-(void) update:(CCTime)delta;
 
--(void) fixedUpdate:(ccTime)delta;
+-(void) fixedUpdate:(CCTime)delta;
 
 @end
 
@@ -55,16 +55,16 @@
 
 /// Amount of time to wait between calls of the block.
 /// Defaults to the initial delay value.
-@property(nonatomic, assign) ccTime repeatInterval;
+@property(nonatomic, assign) CCTime repeatInterval;
 
 /// Is the timer paused or not.
 @property(nonatomic, assign) BOOL paused;
 
 /// Elapsed time since the last invocation.
-@property(nonatomic, readonly) ccTime deltaTime;
+@property(nonatomic, readonly) CCTime deltaTime;
 
 /// Absolute time the timer will invoke at.
-@property(nonatomic, readonly) ccTime invokeTime;
+@property(nonatomic, readonly) CCTime invokeTime;
 
 /// Scheduler this timer was invoked from.
 /// Useful if you need to schedule more timers, or access lastUpdate times, etc.
@@ -79,7 +79,7 @@
 
 /// Set the timer to repeat once with the given interval.
 /// Can be used from a timer block to make the timer run again.
--(void)repeatOnceWithInterval:(ccTime)interval;
+-(void)repeatOnceWithInterval:(CCTime)interval;
 
 /// Cancel the timer.
 -(void)invalidate;
@@ -118,7 +118,7 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
  @since v0.8
  @warning It will affect EVERY scheduled selector / action.
  */
-@property (nonatomic,readwrite) ccTime	timeScale;
+@property (nonatomic,readwrite) CCTime	timeScale;
 
 
 /** Will pause / resume the CCScheduler.
@@ -133,27 +133,27 @@ typedef void (^CCTimerBlock)(CCTimer *timer);
 @property (nonatomic, assign) BOOL paused;
 
 /// Current time the scheduler is calling a block for.
-@property(nonatomic, readonly) ccTime currentTime;
+@property(nonatomic, readonly) CCTime currentTime;
 
 /// Time of the most recent update: calls.
-@property(nonatomic, readonly) ccTime lastUpdateTime;
+@property(nonatomic, readonly) CCTime lastUpdateTime;
 
 /// Time of the most recent fixedUpdate: calls.
-@property(nonatomic, readonly) ccTime lastFixedUpdateTime;
+@property(nonatomic, readonly) CCTime lastFixedUpdateTime;
 
 /// Maximum allowed time step.
 /// If the CPU can't keep up with the game, time will slow down.
-@property(nonatomic, assign) ccTime maxTimeStep;
+@property(nonatomic, assign) CCTime maxTimeStep;
 
 /// The time between fixedUpdate: calls.
-@property(nonatomic, assign) ccTime fixedTimeStep;
+@property(nonatomic, assign) CCTime fixedTimeStep;
 
 /** 'update' the scheduler.
  You should NEVER call this method, unless you know what you are doing.
  */
--(void) update:(ccTime)dt;
+-(void) update:(CCTime)dt;
 
--(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(ccTime)delay;
+-(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay;
 
 -(void) scheduleTarget:(NSObject<CCSchedulerTarget> *)target;
 

@@ -476,7 +476,7 @@ enum {
 
 // timers
 
--(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(ccTime)delay;
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay;
 
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
@@ -484,18 +484,18 @@ enum {
 
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
--(CCTimer *) schedule: (SEL) s interval:(ccTime)seconds;
+-(CCTimer *) schedule: (SEL) s interval:(CCTime)seconds;
 
 /**
  repeat will execute the action repeat + 1 times, for a continues action use kCCRepeatForever
  delay is the amount of time the action will wait before execution
  */
--(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay;
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay;
 
 /**
  Schedules a selector that runs only once, with a delay of 0 or larger
 */
-- (CCTimer *) scheduleOnce:(SEL) selector delay:(ccTime) delay;
+- (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay;
 
 -(void)unschedule:(SEL)selector;
 

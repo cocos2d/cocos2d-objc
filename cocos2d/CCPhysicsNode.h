@@ -115,14 +115,14 @@
 /// How often the physics is updated.
 /// This is run independently of the framerate.
 /// Defaults to 60hz.
-@property(nonatomic, assign) ccTime fixedRate;
+@property(nonatomic, assign) CCTime fixedRate;
 
 /// Maximum delta time to process in a single update call.
 /// Defaults to 1/15.
-@property(nonatomic, assign) ccTime maxDeltaTime;
+@property(nonatomic, assign) CCTime maxDeltaTime;
 
 /// Previous fixed update time.
-@property(nonatomic, readonly) ccTime fixedTime;
+@property(nonatomic, readonly) CCTime fixedTime;
 
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
@@ -131,7 +131,7 @@
 /// Physics bodies fall asleep when a group of them move slowly for longer than the threshold.
 /// Sleeping bodies use minimal CPU resources and wake automatically when a collision happens.
 /// Defaults to 0.5 seconds.
-@property(nonatomic, assign) ccTime sleepTimeThreshold;
+@property(nonatomic, assign) CCTime sleepTimeThreshold;
 
 /// The delegate that is called when two physics bodies collide.
 @property(nonatomic, assign) NSObject<CCPhysicsCollisionDelegate> *collisionDelegate;

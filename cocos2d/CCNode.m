@@ -1092,7 +1092,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return 0;
 }
 
--(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(ccTime)delay
+-(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay
 {
 	return [self.scheduler scheduleBlock:block forTarget:self withDelay:delay];
 }
@@ -1112,12 +1112,12 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return (_scheduler ?: self.parent.scheduler);
 }
 
--(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval
 {
 	return [self schedule:selector interval:interval repeat:kCCRepeatForever delay:0];
 }
 
--(CCTimer *) schedule:(SEL)selector interval:(ccTime)interval repeat: (uint) repeat delay:(ccTime) delay
+-(CCTimer *) schedule:(SEL)selector interval:(CCTime)interval repeat: (uint) repeat delay:(CCTime) delay
 {
 	NSAssert( selector != nil, @"Argument must be non-nil");
 	NSAssert( interval >=0, @"Arguemnt must be positive");
@@ -1136,7 +1136,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return timer;
 }
 
-- (CCTimer *) scheduleOnce:(SEL) selector delay:(ccTime) delay
+- (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay
 {
 	return [self schedule:selector interval:0.f repeat:0 delay:delay];
 }

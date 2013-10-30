@@ -55,17 +55,17 @@
 
 @interface CCTimer (Private)
 
-@property(nonatomic, readwrite) ccTime deltaTime;
+@property(nonatomic, readwrite) CCTime deltaTime;
 @property(nonatomic, readonly) CCTimerBlock block;
 @property(nonatomic, readonly) CCScheduledTarget *scheduledTarget;
 
 // May differ from invoke time due to pausing.
-@property(nonatomic, assign) ccTime invokeTimeInternal;
+@property(nonatomic, assign) CCTime invokeTimeInternal;
 // Timers form a linked list per target.
 @property(nonatomic, strong) CCTimer *next;
 // Positive value when timer is paused or completing a pause,
 // The minim amount of time remaining on the timer after the next invocation.
-@property(nonatomic, readonly) ccTime pauseDelay;
+@property(nonatomic, readonly) CCTime pauseDelay;
 
 @end
 
@@ -80,7 +80,7 @@
 }
 
 static void
-InvokeMethods(NSArray *methods, SEL selector, ccTime dt)
+InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
 	for(int i=0, count=methods.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = methods[i];
@@ -148,14 +148,14 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 	CCTimerBlock _block;
 	CCTimer *_next;
 	
-	ccTime _invokeTimeInternal;
-	ccTime _pauseDelay;
+	CCTime _invokeTimeInternal;
+	CCTime _pauseDelay;
 	
 	__weak CCScheduler *_scheduler;
 	__weak CCScheduledTarget *_scheduledTarget;
 }
 
--(ccTime)invokeTime
+-(CCTime)invokeTime
 {
 	return (self.paused ? INFINITY : _invokeTimeInternal + _pauseDelay);
 }
@@ -175,7 +175,7 @@ RemoveRecursive(CCTimer *timer, CCTimer *skip)
 // A valid block that does nothing.
 static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
--(void)repeatOnceWithInterval:(ccTime)interval
+-(void)repeatOnceWithInterval:(CCTime)interval
 {
 	self.repeatCount = 1;
 	self.repeatInterval = interval;
@@ -195,7 +195,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 
 @implementation CCTimer(Private)
 
--(id)initWithDelay:(ccTime)delay scheduler:(CCScheduler *)scheduler scheduledTarget:(CCScheduledTarget *)scheduledTarget block:(CCTimerBlock)block;
+-(id)initWithDelay:(CCTime)delay scheduler:(CCScheduler *)scheduler scheduledTarget:(CCScheduledTarget *)scheduledTarget block:(CCTimerBlock)block;
 {
 	if((self = [super init])){
 		_deltaTime = delay;
@@ -209,10 +209,10 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 	return self;
 }
 
--(ccTime)pauseDelay {return _pauseDelay;}
+-(CCTime)pauseDelay {return _pauseDelay;}
 
--(ccTime)invokeTimeInternal {return _invokeTimeInternal;}
--(void)setInvokeTimeInternal:(ccTime)invokeTimeInternal {_invokeTimeInternal = invokeTimeInternal;}
+-(CCTime)invokeTimeInternal {return _invokeTimeInternal;}
+-(void)setInvokeTimeInternal:(CCTime)invokeTimeInternal {_invokeTimeInternal = invokeTimeInternal;}
 
 -(CCTimerBlock)block {return _block;}
 -(CCScheduledTarget *)scheduledTarget {return _scheduledTarget;}
@@ -220,7 +220,7 @@ static CCTimerBlock INVALIDATED_BLOCK = ^(CCTimer *timer){};
 -(CCTimer *)next {return _next;}
 -(void)setNext:(CCTimer *)next {_next = next;}
 
--(void)setDeltaTime:(ccTime)deltaTime {_deltaTime = deltaTime;}
+-(void)setDeltaTime:(CCTime)deltaTime {_deltaTime = deltaTime;}
 
 @end
 
@@ -254,8 +254,8 @@ ComparePriorities(const void *a, const void *b)
 static CFComparisonResult
 CompareTimers(const void *a, const void *b, void *context)
 {
-	ccTime time_a = [(__bridge CCTimer *)a invokeTimeInternal];
-	ccTime time_b = [(__bridge CCTimer *)b invokeTimeInternal];
+	CCTime time_a = [(__bridge CCTimer *)a invokeTimeInternal];
+	CCTime time_b = [(__bridge CCTimer *)b invokeTimeInternal];
 	
 	if(time_a < time_b){
 		return kCFCompareLessThan;
@@ -321,8 +321,8 @@ CompareTimers(const void *a, const void *b, void *context)
 	return NSIntegerMax;
 }
 
--(ccTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
--(void)setFixedTimeStep:(ccTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
+-(CCTime)fixedTimeStep {return _fixedUpdateTimer.repeatInterval;}
+-(void)setFixedTimeStep:(CCTime)fixedTimeStep {_fixedUpdateTimer.repeatInterval = fixedTimeStep;}
 
 -(CCScheduledTarget *)scheduledTargetForTarget:(NSObject<CCSchedulerTarget> *)target insert:(BOOL)insert
 {
@@ -341,7 +341,7 @@ CompareTimers(const void *a, const void *b, void *context)
 	return scheduledTarget;
 }
 
--(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(ccTime)delay
+-(CCTimer *)scheduleBlock:(CCTimerBlock)block forTarget:(NSObject<CCSchedulerTarget> *)target withDelay:(CCTime)delay
 {
 	CCScheduledTarget *scheduledTarget = [self scheduledTargetForTarget:target insert:YES];
 	
@@ -354,13 +354,13 @@ CompareTimers(const void *a, const void *b, void *context)
 	return timer;
 }
 
--(void)updateTo:(ccTime)targetTime
+-(void)updateTo:(CCTime)targetTime
 {
 	NSAssert(targetTime >= _currentTime, @"Cannot step to a time in the past.");
 	
 	while(CFBinaryHeapGetCount(_heap) > 0){
 		CCTimer *timer = CFBinaryHeapGetMinimum(_heap);
-		ccTime invokeTime = timer.invokeTimeInternal;
+		CCTime invokeTime = timer.invokeTimeInternal;
 		
 		if(invokeTime > targetTime){
 			break;
@@ -370,7 +370,7 @@ CompareTimers(const void *a, const void *b, void *context)
 		
 		_currentTime = invokeTime;
 		
-		ccTime pauseDelay = timer.pauseDelay;
+		CCTime pauseDelay = timer.pauseDelay;
 		if(pauseDelay > 0.0){
 			// Rschedule the timer with the minimum remaining delay due to the timer being paused.
 			timer.invokeTimeInternal += pauseDelay;
@@ -381,7 +381,7 @@ CompareTimers(const void *a, const void *b, void *context)
 			if(timer.repeatCount > 0){
 				if(timer.repeatCount < CCTimerRepeatForever) timer.repeatCount--;
 				
-				ccTime delay = timer.deltaTime = timer.repeatInterval;
+				CCTime delay = timer.deltaTime = timer.repeatInterval;
 				timer.invokeTimeInternal += delay;
 				
 				CFBinaryHeapAddValue(_heap, (__bridge CFTypeRef)timer);
@@ -485,9 +485,9 @@ PrioritySearch(NSArray *array, NSInteger priority)
 	return arr;
 }
 
--(void)update:(ccTime)dt
+-(void)update:(CCTime)dt
 {
-	ccTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
+	CCTime clampedDelta = MIN(dt*_timeScale, _maxTimeStep);
 	[self updateTo:_currentTime + clampedDelta];
 	
 	InvokeMethods(_updates, @selector(update:), clampedDelta);
