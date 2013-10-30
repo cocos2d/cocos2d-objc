@@ -57,9 +57,11 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 -(ChipmunkConstraint *)constraint {return _constraint;}
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
-	CGPoint anchor = cpTransformPoint(transform, _anchor);
+	CCPhysicsBody *bodyA = self.bodyA;
+	CGPoint anchor = cpTransformPoint(bodyA.node.nonRigidTransform, _anchor);
+	
 	_constraint.anchr1 = anchor;
 	_constraint.anchr2 = [_constraint.bodyB worldToLocal:[_constraint.bodyA localToWorld:anchor]];
 }
@@ -78,12 +80,12 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return self;
 }
 
--(void)addToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform
+-(void)addToPhysicsNode:(CCPhysicsNode *)physicsNode
 {
 	NSAssert(self.bodyA.physicsNode == self.bodyB.physicsNode, @"Bodies connected by a joint must be added to the same CCPhysicsNode.");
 	
-	[self willAddToPhysicsNode:physicsNode nonRigidTransform:nonRigidTransform];
-	[self.bodyA.body.space smartAdd:self];
+	[self willAddToPhysicsNode:physicsNode];
+	[physicsNode.space smartAdd:self];
 }
 
 +(CCPhysicsJoint *)connectedPivotJointWithBodyA:(CCPhysicsBody *)bodyA bodyB:(CCPhysicsBody *)bodyB anchor:(CGPoint)anchor
@@ -92,7 +94,7 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	[bodyA addJoint:joint];
 	[bodyB addJoint:joint];
 	
-	[joint addToPhysicsNode:bodyA.physicsNode transform:bodyA.node.nonRigidTransform];
+	[joint addToPhysicsNode:bodyA.physicsNode];
 	
 	return joint;
 }
@@ -108,7 +110,11 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 -(CGFloat)impulse {return self.constraint.impulse;}
 
--(void)invalidate {NYI();}
+-(void)invalidate {
+	[self tryRemoveFromPhysicsNode:self.bodyA.physicsNode];
+	[self.bodyA removeJoint:self];
+	[self.bodyB removeJoint:self];
+}
 
 -(void)setBreakingForce:(CGFloat)breakingForce {NYI();}
 
@@ -129,12 +135,17 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 	return (self.bodyA.isRunning && self.bodyB.isRunning);
 }
 
--(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode transform:(cpTransform)nonRigidTransform
+-(void)tryAddToPhysicsNode:(CCPhysicsNode *)physicsNode
 {
-	if(self.isRunning) [self addToPhysicsNode:physicsNode transform:nonRigidTransform];
+	if(self.isRunning && self.constraint.space == nil) [self addToPhysicsNode:physicsNode];
 }
 
--(void)willAddToPhysicsNode:(CCPhysicsNode *)physics nonRigidTransform:(cpTransform)transform
+-(void)tryRemoveFromPhysicsNode:(CCPhysicsNode *)physicsNode
+{
+	if(self.constraint.space) [physicsNode.space smartRemove:self];
+}
+
+-(void)willAddToPhysicsNode:(CCPhysicsNode *)physics
 {
 	@throw [NSException exceptionWithName:@"AbstractInvocation" reason:@"This method is abstract." userInfo:nil];
 }

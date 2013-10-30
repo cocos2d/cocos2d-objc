@@ -128,24 +128,36 @@
 	}
 	
 //	[CCPhysicsJoint connectedPivotJointWithBodyA:sprite1.physicsBody bodyB:sprite2.physicsBody anchor:CGPointMake(0, 0)];
-	[CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchor:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
-}
-
-//-(id)init
-//{
-//	if((self = [super init])){
-//		[self setup];
-//	}
-//	
-//	return self;
-//}
-
--(void)onEnter
-{
-	[super onEnter];
+	CCPhysicsJoint *joint = [CCPhysicsJoint connectedPivotJointWithBodyA:sprite2.physicsBody bodyB:sprite1.physicsBody anchor:CGPointMake(sprite1.contentSize.width, sprite1.contentSize.height)];
 	
-	[self setup];
+	[self scheduleBlock:^(CCTimer *timer){
+		[sprite1 removeFromParent];
+	} delay:3.0];
+	
+	[self scheduleBlock:^(CCTimer *timer){
+		[physicsNode addChild:sprite1];
+	} delay:5.0];
+	
+	[self scheduleBlock:^(CCTimer *timer){
+		[joint invalidate];
+	} delay:7.0];
 }
+
+-(id)init
+{
+	if((self = [super init])){
+		[self setup];
+	}
+	
+	return self;
+}
+
+//-(void)onEnter
+//{
+//	[super onEnter];
+//	
+//	[self setup];
+//}
 
 @end
 

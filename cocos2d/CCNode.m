@@ -947,7 +947,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	if(physicsBody){
 		CCPhysicsNode *physics = self.physicsNode;
-		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendent of a CCPhysicsNode.");
+		NSAssert(physics != nil, @"A CCNode with an attached CCPhysicsBody must be added as a descendant of a CCPhysicsNode.");
 		
 		// Copy the node's rotation first.
 		// Otherwise it may cause the position to rotate around a non-zero center of gravity.
@@ -963,7 +963,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		
 		NSArray *joints = physicsBody.joints;
 		for(int i=0, count=joints.count; i<count; i++){
-			[joints[i] tryAddToPhysicsNode:physics transform:nonRigid];;
+			[joints[i] tryAddToPhysicsNode:physics];
 		}
 		
 #ifndef NDEBUG
@@ -983,6 +983,11 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		// Copy the positional data back to the ivars.
 		_position = self.position;
 		_rotationalSkewX = _rotationalSkewY = self.rotation;
+		
+		NSArray *joints = _physicsBody.joints;
+		for(int i=0, count=joints.count; i<count; i++){
+			[joints[i] tryRemoveFromPhysicsNode:physics];
+		}
 		
 		[physics.space smartRemove:_physicsBody];
 		[_physicsBody didRemoveFromPhysicsNode:physics];
