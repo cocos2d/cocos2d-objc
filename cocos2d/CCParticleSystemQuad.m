@@ -53,6 +53,11 @@
 // extern
 #import "kazmath/GL/matrix.h"
 
+#import "CCNode_Private.h"
+#import "CCParticleSystem_Private.h"
+#import "CCParticleSystemQuad_Private.h"
+#import "CCTexture_Private.h"
+
 @interface CCParticleSystemQuad ()
 -(void) initVAO;
 -(BOOL) allocMemory;
@@ -111,11 +116,11 @@
     if( tp > _allocatedParticles )
     {
         // Allocate new memory
-        size_t particlesSize = tp * sizeof(tCCParticle);
+        size_t particlesSize = tp * sizeof(_CCParticle);
         size_t quadsSize = sizeof(_quads[0]) * tp * 1;
         size_t indicesSize = sizeof(_indices[0]) * tp * 6 * 1;
         
-        tCCParticle* particlesNew = realloc(_particles, particlesSize);
+        _CCParticle* particlesNew = realloc(_particles, particlesSize);
         ccV3F_C4B_T2F_Quad *quadsNew = realloc(_quads, quadsSize);
         GLushort* indicesNew = realloc(_indices, indicesSize);
         
@@ -241,8 +246,8 @@
 							 pointRect.size.width * CC_CONTENT_SCALE_FACTOR(),
 							 pointRect.size.height * CC_CONTENT_SCALE_FACTOR() );
 
-	GLfloat wide = [_texture pixelsWide];
-	GLfloat high = [_texture pixelsHigh];
+	GLfloat wide = [_texture pixelWidth];
+	GLfloat high = [_texture pixelHeight];
 
 #if CC_FIX_ARTIFACTS_BY_STRECHING_TEXEL
 	GLfloat left = (rect.origin.x*2+1) / (wide*2);
@@ -291,7 +296,7 @@
 	}
 }
 
--(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect
+-(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect
 {
 	// Only update the texture if is different from the current one
 	if( [texture name] != [_texture name] )
@@ -300,7 +305,7 @@
 	[self initTexCoordsWithRect:rect];
 }
 
--(void) setTexture:(CCTexture2D *)texture
+-(void) setTexture:(CCTexture *)texture
 {
 	CGSize s = [texture contentSize];
 	[self setTexture:texture withRect:CGRectMake(0,0, s.width, s.height)];
@@ -331,7 +336,7 @@
 	}
 }
 
--(void) updateQuadWithParticle:(tCCParticle*)p newPosition:(CGPoint)newPos
+-(void) updateQuadWithParticle:(_CCParticle*)p newPosition:(CGPoint)newPos
 {
 	ccV3F_C4B_T2F_Quad *quad;
 

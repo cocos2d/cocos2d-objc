@@ -37,12 +37,6 @@
 #import "CCProtocols.h"
 #import "CCNode.h"
 
-#pragma mark - CCLayer
-
-@interface CCLayer : CCNode
-
-@end
-
 #pragma mark -
 #pragma mark CCLayerColor
 
@@ -71,15 +65,6 @@
 - (id) initWithColor:(ccColor4B)color width:(GLfloat)w height:(GLfloat)h;
 /** initializes a CCLayer with color. Width and height are the window size. */
 - (id) initWithColor:(ccColor4B)color;
-
-/** change width in Points */
--(void) changeWidth: (GLfloat)w;
-/** change height in Points */
--(void) changeHeight: (GLfloat)h;
-/** change width and height in Points
- @since v0.8
- */
--(void) changeWidth:(GLfloat)w height:(GLfloat)h;
 
 /** BlendFunction. Conforms to CCBlendProtocol protocol */
 @property (nonatomic,readwrite) ccBlendFunc blendFunc;
@@ -152,7 +137,7 @@ the background.
    - It supports one or more children
    - Only one children will be active a time
  */
-@interface CCLayerMultiplex : CCLayer
+@interface CCNodeMultiplex : CCNode
 {
 	unsigned int _enabledLayer;
 	NSMutableArray *_layers;
@@ -161,22 +146,17 @@ the background.
 /** creates a CCMultiplexLayer with an array of layers.
  @since v2.1
  */
-+(id) layerWithArray:(NSArray*)arrayOfLayers;
++(id) nodeWithArray:(NSArray*)arrayOfLayers;
 /** creates a CCMultiplexLayer with one or more layers using a variable argument list. */
-+(id) layerWithLayers: (CCLayer*) layer, ... NS_REQUIRES_NIL_TERMINATION;
++(id) nodeWithNodes: (CCNode*) layer, ... NS_REQUIRES_NIL_TERMINATION;
 /** initializes a CCMultiplexLayer with an array of layers
  @since v2.1
  */
 -(id) initWithArray:(NSArray*)arrayOfLayers;
-/** initializes a MultiplexLayer with one or more layers using a variable argument list. */
--(id) initWithLayers: (CCLayer*) layer vaList:(va_list) params;
 /** switches to a certain layer indexed by n.
  The current (old) layer will be removed from its parent with 'cleanup:YES'.
  */
 -(void) switchTo: (unsigned int) n;
-/** release the current layer and switches to another layer indexed by n.
- The current (old) layer will be removed from its parent with 'cleanup:YES'.
- */
--(void) switchToAndReleaseMe: (unsigned int) n;
+
 @end
 

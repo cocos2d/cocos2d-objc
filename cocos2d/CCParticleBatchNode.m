@@ -33,7 +33,6 @@
 #import "CCTextureAtlas.h"
 #import "ccConfig.h"
 #import "ccMacros.h"
-#import "CCGrid.h"
 #import "Support/CGPointExtension.h"
 #import "CCParticleSystem.h"
 #import "CCParticleSystem.h"
@@ -46,6 +45,11 @@
 #import "Support/CCFileUtils.h"
 
 #import "kazmath/GL/matrix.h"
+
+#import "CCNode_Private.h"
+#import "CCParticleSystem_Private.h"
+
+#import "CCTexture_Private.h"
 
 #define kCCParticleDefaultCapacity 500
 
@@ -69,12 +73,12 @@
 /*
  * creation with CCTexture2D
  */
-+(id)batchNodeWithTexture:(CCTexture2D *)tex
++(id)batchNodeWithTexture:(CCTexture *)tex
 {
 	return [[self alloc] initWithTexture:tex capacity:kCCParticleDefaultCapacity];
 }
 
-+(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity
++(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger) capacity
 {
 	return [[self alloc] initWithTexture:tex capacity:capacity];
 }
@@ -95,7 +99,7 @@
 /*
  * init with CCTexture2D
  */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity
+-(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity
 {
 	if (self = [super init])
 	{
@@ -118,7 +122,7 @@
  */
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity
 {
-	CCTexture2D *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
+	CCTexture *tex = [[CCTextureCache sharedTextureCache] addImage:fileImage];
 	return [self initWithTexture:tex capacity:capacity];
 }
 
@@ -146,17 +150,9 @@
 
 	kmGLPushMatrix();
 
-	if ( _grid && _grid.active) {
-		[_grid beforeDraw];
-		[self transformAncestors];
-	}
-
 	[self transform];
 
 	[self draw];
-
-	if ( _grid && _grid.active)
-		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 }
@@ -446,7 +442,7 @@
 	}
 }
 
--(void) setTexture:(CCTexture2D*)texture
+-(void) setTexture:(CCTexture*)texture
 {
 	_textureAtlas.texture = texture;
 
@@ -458,7 +454,7 @@
 	}
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	return _textureAtlas.texture;
 }

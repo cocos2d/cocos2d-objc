@@ -1,7 +1,10 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2009 On-Core
+ * Copyright (c) 2010 Neophit
+ *
+ * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,24 +24,44 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
+ *
+ * TMX Tiled Map support:
+ * http://www.mapeditor.org
+ *
  */
 
+#import "CCNode.h"
 
-#import "Platforms/CCGL.h"
-#import <Foundation/Foundation.h>
 
-@class CCTexture2D;
+@class CCTiledMapObjectGroup;
 
-/** FBO class that grabs the the contents of the screen */
-@interface CCGrabber : NSObject
+
+/** CCTMXObjectGroup represents the TMX object group.
+@since v0.99.0
+*/
+@interface CCTiledMapObjectGroup : NSObject
 {
-	GLuint	_FBO;
-	GLint	_oldFBO;
-	GLfloat	oldClearColor_[4];
+	NSString			*_groupName;
+	CGPoint				_positionOffset;
+	NSMutableArray		*_objects;
+	NSMutableDictionary	*_properties;
 }
 
--(void)grab:(CCTexture2D*)texture;
--(void)beforeRender:(CCTexture2D*)texture;
--(void)afterRender:(CCTexture2D*)texture;
+/** name of the group */
+@property (nonatomic,readwrite,strong) NSString *groupName;
+/** offset position of child objects */
+@property (nonatomic,readwrite,assign) CGPoint positionOffset;
+/** array of the objects */
+@property (nonatomic,readwrite,strong) NSMutableArray *objects;
+/** list of properties stored in a dictionary */
+@property (nonatomic,readwrite,strong) NSMutableDictionary *properties;
+
+/** return the value for the specific property name */
+-(id) propertyNamed:(NSString *)propertyName;
+
+/** return the dictionary for the specific object name.
+ It will return the 1st object found on the array for the given name.
+ */
+-(NSMutableDictionary*) objectNamed:(NSString *)objectName;
 
 @end

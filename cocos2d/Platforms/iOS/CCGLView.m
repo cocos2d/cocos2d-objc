@@ -80,6 +80,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../Support/OpenGL_Internal.h"
 #import "CCScene.h"
 
+#import "CCDirector_Private.h"
+
 //CLASS IMPLEMENTATIONS:
 
 @interface CCGLView (Private)
@@ -144,7 +146,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
         
         /** Multiple touch default enabled
-         @since v2.5
+         @since v3.0
          */
         self.multipleTouchEnabled = YES;
 

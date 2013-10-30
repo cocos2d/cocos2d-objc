@@ -48,7 +48,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import <Foundation/Foundation.h>
 
 #import "Platforms/CCGL.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 
 
 #pragma mark -
@@ -66,7 +66,7 @@ typedef struct _ccPVRTexturePixelFormatInfo {
 	uint32_t bpp;
 	BOOL compressed;
 	BOOL alpha;
-	CCTexture2DPixelFormat ccPixelFormat;
+	CCTexturePixelFormat ccPixelFormat;
 } ccPVRTexturePixelFormatInfo;
 
 enum {
@@ -108,7 +108,7 @@ enum {
 
 	// cocos2d integration
 	BOOL _retainName;
-	CCTexture2DPixelFormat _format;
+	CCTexturePixelFormat _format;
 	
 	const ccPVRTexturePixelFormatInfo *_pixelFormatInfo;
 }
@@ -139,7 +139,7 @@ enum {
 
 // cocos2d integration
 @property (nonatomic,readwrite) BOOL retainName;
-@property (nonatomic,readonly) CCTexture2DPixelFormat format;
+@property (nonatomic,readonly) CCTexturePixelFormat format;
 
 @end
 

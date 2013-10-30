@@ -30,7 +30,7 @@
 /** Instant actions are immediate actions. They don't have a duration like
  the CCIntervalAction actions.
 */
-@interface CCActionInstant : CCFiniteTimeAction <NSCopying>
+@interface CCActionInstant : CCActionFiniteTime <NSCopying>
 {
 }
 // XXX Needed for BridgeSupport
@@ -39,7 +39,7 @@
 
 /** Show the node
  */
- @interface CCShow : CCActionInstant
+ @interface CCActionShow : CCActionInstant
 {
 }
 // XXX Needed for BridgeSupport
@@ -48,7 +48,7 @@
 
 /** Hide the node
  */
-@interface CCHide : CCActionInstant
+@interface CCActionHide : CCActionInstant
 {
 }
 -(void) update:(ccTime)time;
@@ -56,7 +56,7 @@
 
 /** Toggles the visibility of a node
  */
-@interface CCToggleVisibility : CCActionInstant
+@interface CCActionToggleVisibility : CCActionInstant
 {
 }
 -(void) update:(ccTime)time;
@@ -65,7 +65,7 @@
 /** Flips the sprite horizontally
  @since v0.99.0
  */
-@interface CCFlipX : CCActionInstant
+@interface CCActionFlipX : CCActionInstant
 {
 	BOOL	_flipX;
 }
@@ -76,7 +76,7 @@
 /** Flips the sprite vertically
  @since v0.99.0
  */
-@interface CCFlipY : CCActionInstant
+@interface CCActionFlipY : CCActionInstant
 {
 	BOOL	_flipY;
 }
@@ -86,7 +86,7 @@
 
 /** Places the node in a certain position
  */
-@interface CCPlace : CCActionInstant <NSCopying>
+@interface CCActionPlace : CCActionInstant <NSCopying>
 {
 	CGPoint _position;
 }
@@ -98,7 +98,7 @@
 
 /** Calls a 'callback'
  */
-@interface CCCallFunc : CCActionInstant <NSCopying>
+@interface CCActionCallFunc : CCActionInstant <NSCopying>
 {
 	id _targetCallback;
 	SEL _selector;
@@ -115,58 +115,11 @@
 -(void) execute;
 @end
 
-/** Calls a 'callback' with the node as the first argument.
- N means Node
- */
-@interface CCCallFuncN : CCCallFunc
-{
-}
-// XXX: Needed for BridgeSupport
--(void) execute;
-@end
-
-typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
-/** Calls a 'callback' with the node as the first argument and the 2nd argument is data.
- * ND means: Node and Data. Data is void *, so it could be anything.
- */
-@interface CCCallFuncND : CCCallFuncN
-{
-	void			*_data;
-	CC_CALLBACK_ND	_callbackMethod;
-}
-
-/** Invocation object that has the target#selector and the parameters */
-@property (nonatomic,readwrite) CC_CALLBACK_ND callbackMethod;
-
-/** creates the action with the callback and the data to pass as an argument */
-+(id) actionWithTarget: (id) t selector:(SEL) s data:(void*)d;
-/** initializes the action with the callback and the data to pass as an argument */
--(id) initWithTarget:(id) t selector:(SEL) s data:(void*) d;
-@end
-
-/** Calls a 'callback' with an object as the first argument.
- O means Object.
- @since v0.99.5
- */
-@interface CCCallFuncO : CCCallFunc
-{
-	id	_object;
-}
-/** object to be passed as argument */
-@property (nonatomic, readwrite, strong) id object;
-
-/** creates the action with the callback and the object to pass as an argument */
-+(id) actionWithTarget: (id) t selector:(SEL) s object:(id)object;
-/** initializes the action with the callback and the object to pass as an argument */
--(id) initWithTarget:(id) t selector:(SEL) s object:(id)object;
-
-@end
-
 #pragma mark Blocks Support
 
 /** Executes a callback using a block.
  */
-@interface CCCallBlock : CCActionInstant<NSCopying>
+@interface CCActionCallBlock : CCActionInstant<NSCopying>
 {
 	void (^_block)();
 }
@@ -180,55 +133,6 @@ typedef void (*CC_CALLBACK_ND)(id, SEL, id, void *);
  The block will be "copied".
  */
 -(id) initWithBlock:(void(^)())block;
-
-/** executes the callback */
--(void) execute;
-@end
-
-@class CCNode;
-
-/** Executes a callback using a block with a single CCNode parameter.
- */
-@interface CCCallBlockN : CCActionInstant<NSCopying>
-{
-	void (^_block)(CCNode *);
-}
-
-/** creates the action with the specified block, to be used as a callback.
- The block will be "copied".
- */
-+(id) actionWithBlock:(void(^)(CCNode *node))block;
-
-/** initialized the action with the specified block, to be used as a callback.
- The block will be "copied".
- */
--(id) initWithBlock:(void(^)(CCNode *node))block;
-
-/** executes the callback */
--(void) execute;
-@end
-
-/** Executes a callback using a block with a single NSObject parameter.
- @since v2.0
- */
-@interface CCCallBlockO : CCActionInstant<NSCopying>
-{
-	void (^_block)(id object);
-	id _object;
-}
-
-/** object to be passed to the block */
-@property (nonatomic,strong) id object;
-
-/** creates the action with the specified block, to be used as a callback.
- The block will be "copied".
- */
-+(id) actionWithBlock:(void(^)(id object))block object:(id)object;
-
-/** initialized the action with the specified block, to be used as a callback.
- The block will be "copied".
- */
--(id) initWithBlock:(void(^)(id object))block object:(id)object;
 
 /** executes the callback */
 -(void) execute;

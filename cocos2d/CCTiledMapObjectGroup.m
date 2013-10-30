@@ -1,7 +1,10 @@
 /*
  * cocos2d for iPhone: http://www.cocos2d-iphone.org
  *
- * Copyright (c) 2009 Sindesso Pty Ltd http://www.sindesso.com/
+ * Copyright (c) 2010 Neophit
+ *
+ * Copyright (c) 2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,23 +24,59 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
+ *
+ * TMX Tiled Map support:
+ * http://www.mapeditor.org
+ *
  */
 
+#import "CCTiledMapObjectGroup.h"
+#import "CCTMXXMLParser.h"
+#import "ccMacros.h"
+#import "Support/CGPointExtension.h"
 
-#import "CCActionGrid3D.h"
 
-/**
- * This action simulates a page turn from the bottom right hand corner of the screen
- * It's not much use by itself but is used by the PageTurnTransition.
- *
- * Based on an original paper by L Hong et al.
- * http://www.parc.com/publication/1638/turning-pages-of-3d-electronic-books.html
- *
- * @since v0.8.2
- */
-@interface CCPageTurn3D : CCGrid3DAction
+#pragma mark -
+#pragma mark TMXObjectGroup
+
+@implementation CCTiledMapObjectGroup
+
+@synthesize groupName = _groupName;
+@synthesize objects = _objects;
+@synthesize positionOffset = _positionOffset;
+@synthesize properties = _properties;
+
+-(id) init
 {
+	if (( self=[super init] )) {
+		self.groupName = nil;
+		self.positionOffset = CGPointZero;
+		self.objects = [NSMutableArray arrayWithCapacity:10];
+		self.properties = [NSMutableDictionary dictionaryWithCapacity:5];
+	}
+	return self;
 }
-// XXX: To make BridgeSupport happy
--(void)update:(ccTime)time;
+
+-(void) dealloc
+{
+	CCLOGINFO( @"cocos2d: deallocing %@", self );
+
+}
+
+-(NSMutableDictionary*) objectNamed:(NSString *)objectName
+{
+	for( id object in _objects ) {
+		if( [[object valueForKey:@"name"] isEqual:objectName] )
+			return object;
+		}
+
+	// object not found
+	return nil;
+}
+
+-(id) propertyNamed:(NSString *)propertyName
+{
+	return [_properties valueForKey:propertyName];
+}
+
 @end

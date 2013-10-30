@@ -52,22 +52,10 @@
 	GLuint				_buffersVBO[2]; //0: vertex  1: indices
 }
 
-/** initialices the indices for the vertices */
--(void) initIndices;
-
-/** initilizes the texture with a rectangle measured Points */
--(void) initTexCoordsWithRect:(CGRect)rect;
-
-/** Sets a new CCSpriteFrame as particle.
- WARNING: this method is experimental. Use setTexture:withRect instead.
- @since v0.99.4
- */
--(void)setSpriteFrame:(CCSpriteFrame*)spriteFrame;
-
 /** Sets a new texture with a rect. The rect is in Points.
  @since v0.99.4
  */
--(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
+-(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect;
 
 @end
 

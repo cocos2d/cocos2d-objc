@@ -27,7 +27,7 @@
  */
 
 #import "CCNode.h"
-#import "CCGrid.h"
+#import "CCNode_Private.h"
 #import "CCDirector.h"
 #import "CCActionManager.h"
 #import "CCScheduler.h"
@@ -38,6 +38,7 @@
 #import "ccMacros.h"
 #import "CCGLProgram.h"
 #import "CCPhysics+ObjectiveChipmunk.h"
+#import "CCDirector_Private.h"
 
 // externals
 #import "kazmath/GL/matrix.h"
@@ -71,7 +72,7 @@
 }
 
 // Suppress automatic ivar creation.
-@dynamic isRunning;
+@dynamic runningInActiveScene;
 @dynamic paused;
 
 static inline
@@ -123,7 +124,6 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize children = _children;
 @synthesize visible = _visible;
 @synthesize parent = _parent;
-@synthesize grid = _grid;
 @synthesize zOrder = _zOrder;
 @synthesize tag = _tag;
 @synthesize vertexZ = _vertexZ;
@@ -162,8 +162,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_isTransformDirty = _isInverseDirty = YES;
 
 		_vertexZ = 0;
-
-		_grid = nil;
 
 		_visible = YES;
 
@@ -560,7 +558,7 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
     if (visible == _visible) return;
     
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
     _visible = visible;
@@ -613,7 +611,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	for(int i=0, count=children.count; i<count; i++){
 		CCNode *child = children[i];
 		
-		BOOL wasRunning = node.isRunning;
+		BOOL wasRunning = node.runningInActiveScene;
 		child->_pausedAncestors += increment;
 		[node wasRunning:wasRunning];
 		
@@ -651,7 +649,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
     
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
@@ -743,7 +741,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[c setParent:nil];
         
         /** mark responder manager as dirty
-         @since v2.5
+         @since v3.0
          */
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -775,7 +773,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	[child setParent:nil];
 
     /** mark responder manager as dirty
-     @since v2.5
+     @since v3.0
      */
     [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -845,7 +843,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		_isReorderChildDirty = NO;
         
         /** mark responder manager as dirty
-         @since v2.5
+         @since v3.0
          */
         [[[CCDirector sharedDirector] responderManager] markAsDirty];
 
@@ -865,9 +863,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		return;
     
 	kmGLPushMatrix();
-
-	if ( _grid && _grid.active)
-		[_grid beforeDraw];
 
 	[self transform];
 
@@ -900,9 +895,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	// reset for next frame
 	_orderOfArrival = 0;
-
-	if ( _grid && _grid.active)
-		[_grid afterDraw:self];
 
 	kmGLPopMatrix();
 }
@@ -1033,7 +1025,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[scheduler scheduleTarget:self];
 	}
 	
-	BOOL wasRunning = self.isRunning;
+	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = YES;
 	[self wasRunning:wasRunning];
 }
@@ -1052,7 +1044,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	[self teardownPhysics];
 	
-	BOOL wasRunning = self.isRunning;
+	BOOL wasRunning = self.runningInActiveScene;
 	_isInActiveScene = NO;
 	[self wasRunning:wasRunning];
 	
@@ -1079,7 +1071,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSAssert( action != nil, @"Argument must be non-nil");
 
-	[_actionManager addAction:action target:self paused:!self.isRunning];
+	[_actionManager addAction:action target:self paused:!self.runningInActiveScene];
 	return action;
 }
 
@@ -1185,7 +1177,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 // Used to pause/unpause a node's actions and timers when it's isRunning state changes.
 -(void)wasRunning:(BOOL)wasRunning
 {
-	BOOL isRunning = self.isRunning;
+	BOOL isRunning = self.runningInActiveScene;
 	
 	if(isRunning && !wasRunning){
 		[self.scheduler setPaused:NO target:self];
@@ -1196,7 +1188,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	}
 }
 
--(BOOL)isRunning
+-(BOOL)isRunningInActiveScene
 {
 	return (_isInActiveScene && !_paused && _pausedAncestors == 0);
 }
@@ -1204,7 +1196,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(void)setPaused:(BOOL)paused
 {
 	if(_paused != paused){
-		BOOL wasRunning = self.isRunning;
+		BOOL wasRunning = self.runningInActiveScene;
 		_paused = paused;
 		[self wasRunning:wasRunning];
 		
@@ -1452,33 +1444,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 	return [[CCDirector sharedDirector] convertToUI:worldPoint];
 }
 
-// convenience methods which take a UITouch instead of CGPoint
-
-#ifdef __CC_PLATFORM_IOS
-
-- (CGPoint)convertTouchToNodeSpace:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpace:point];
-}
-
-- (CGPoint)convertTouchToNodeSpaceAR:(UITouch *)touch
-{
-	CGPoint point = [touch locationInView: [touch view]];
-	point = [[CCDirector sharedDirector] convertToGL: point];
-	return [self convertToNodeSpaceAR:point];
-}
-
-#endif // __CC_PLATFORM_IOS
-
 // -----------------------------------------------------------------
 #pragma mark - touch interface
 // -----------------------------------------------------------------
 
 /** Returns YES, if touch is inside sprite
  Added hit area expansion / contraction
- @since v2.5
+ @since v3.0
  */
 - (BOOL)hitTestWithWorldPos:(CGPoint)pos
 {

@@ -156,7 +156,7 @@
 
 // CatmullRom Spline formula:
 
-inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t )
+inline CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t )
 {
 	CGFloat t2 = t * t;
 	CGFloat t3 = t2 * t;
@@ -179,11 +179,11 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 
 #pragma mark - CCCatmullRomTo
 
-@interface CCCardinalSplineTo ()
+@interface CCActionCardinalSplineTo ()
 -(void) updatePosition:(CGPoint)newPosition;
 @end
 
-@implementation CCCardinalSplineTo
+@implementation CCActionCardinalSplineTo
 
 @synthesize points=_points;
 
@@ -248,7 +248,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 	CGPoint pp2 = [_points getControlPointAtIndex:p+1];
 	CGPoint pp3 = [_points getControlPointAtIndex:p+2];
 
-	CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, _tension, lt );
+	CGPoint newPos = CCCardinalSplineAt( pp0, pp1, pp2, pp3, _tension, lt );
 
 #if CC_ENABLE_STACKABLE_ACTIONS
 	CCNode *node = (CCNode*)_target;
@@ -337,7 +337,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 }
 @end
 
-@implementation CCCatmullRomTo
+@implementation CCActionCatmullRomTo
 +(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
 {
 	return [[self alloc] initWithDuration:dt points:points];
@@ -353,7 +353,7 @@ inline CGPoint ccCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p
 }
 @end
 
-@implementation CCCatmullRomBy
+@implementation CCActionCatmullRomBy
 +(id) actionWithDuration:(ccTime)dt points:(CCPointArray *)points
 {
 	return [[self alloc] initWithDuration:dt points:points];

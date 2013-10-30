@@ -466,7 +466,7 @@ void ccDrawCardinalSpline( CCPointArray *config, CGFloat tension,  NSUInteger se
 		CGPoint pp2 = [config getControlPointAtIndex:p+1];
 		CGPoint pp3 = [config getControlPointAtIndex:p+2];
 		
-		CGPoint newPos = ccCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
+		CGPoint newPos = CCCardinalSplineAt( pp0, pp1, pp2, pp3, tension, lt);
 		vertices[i].x = newPos.x;
 		vertices[i].y = newPos.y;
 	}

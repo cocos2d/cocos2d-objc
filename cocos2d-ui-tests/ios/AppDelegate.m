@@ -114,7 +114,7 @@
 	[director_ setView:glView];
 	
 	// 2D projection
-	[director_ setProjection:kCCDirectorProjection2D];
+	[director_ setProjection:CCDirectorProjection2D];
 	//	[director setProjection:kCCDirectorProjection3D];
 	
 	// Enables High Res mode (Retina Display) on iPhone 4 and maintains low res on all other devices
@@ -124,7 +124,7 @@
 	// Default texture format for PNG/BMP/TIFF/JPEG/GIF images
 	// It can be RGBA8888, RGBA4444, RGB5_A1, RGB565
 	// You can change this setting at any time.
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA8888];
+	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA8888];
 	
 	// If the 1st suffix is not found and if fallback is enabled then fallback suffixes are going to searched. If none is found, it will try with the name without suffix.
 	// On iPad HD  : "-ipadhd", "-ipad",  "-hd"
@@ -157,9 +157,6 @@
     [sharedFileUtils buildSearchResolutionsOrder];
     
     [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];
-	
-	// Assume that PVR images have premultiplied alpha
-	[CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
 	
 	// Create a Navigation Controller with the Director
 	navController_ = [[MyNavigationController alloc] initWithRootViewController:director_];

@@ -29,9 +29,12 @@
 #import "CCGLProgram.h"
 #import "CCShaderCache.h"
 #import "ccMacros.h"
+#import "CCNode_Private.h"
 
 #import "Support/CCVertex.h"
 #import "Support/CGPointExtension.h"
+
+#import "CCTexture_Private.h"
 
 
 @implementation CCMotionStreak
@@ -44,7 +47,7 @@
     return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color textureFilename:path];
 }
 
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture
 {
     return [[self alloc] initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
@@ -53,11 +56,11 @@
 {
     NSAssert(path != nil, @"Invalid filename");
 
-    CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:path];
+    CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:path];
     return [self initWithFade:fade minSeg:minSeg width:stroke color:color texture:texture];
 }
 
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture
 {
     self = [super init];
     if (self)
@@ -91,7 +94,7 @@
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTextureColor];
 
         [self setTexture:texture];
-        [self setColor:color];
+        [super setColor:color];
     }
     return self;
 }
@@ -104,13 +107,13 @@
     _positionR = position;
 }
 
-- (void) tintWithColor:(ccColor3B)colors
+- (void) setColor:(ccColor3B)color
 {
-    [self setColor:colors];
+    [super setColor:color];
 
     // Fast assignation
     for(int i = 0; i<_nuPoints*2; i++)
-        *((ccColor3B*) (_colorPointer+i*4)) = colors;
+        *((ccColor3B*) (_colorPointer+i*4)) = color;
 }
 
 - (void) setOpacity:(GLubyte)opacity

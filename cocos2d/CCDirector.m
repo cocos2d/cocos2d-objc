@@ -39,7 +39,7 @@
 #import "ccMacros.h"
 #import "CCScene.h"
 #import "CCSpriteFrameCache.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCLabelBMFont.h"
 #import "CCLayer.h"
 #import "ccGLStateCache.h"
@@ -66,6 +66,7 @@
 #define CC_DIRECTOR_DEFAULT CCDirectorDisplayLink
 #endif
 
+#import "CCDirector_Private.h"
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)
@@ -96,7 +97,7 @@ extern NSString * cocos2dVersion(void);
 @synthesize displayStats = _displayStats;
 @synthesize nextDeltaTimeZero = _nextDeltaTimeZero;
 @synthesize paused = _isPaused;
-@synthesize isAnimating = _isAnimating;
+@synthesize animating = _animating;
 @synthesize sendCleanupToScene = _sendCleanupToScene;
 @synthesize runningThread = _runningThread;
 @synthesize notificationNode = _notificationNode;
@@ -147,7 +148,7 @@ static CCDirector *_sharedDirector = nil;
 		_scenesStack = [[NSMutableArray alloc] initWithCapacity:10];
 
 		// Set default projection (3D)
-		_projection = kCCDirectorProjectionDefault;
+		_projection = CCDirectorProjectionDefault;
 
 		// projection delegate if "Custom" projection is used
 		_delegate = nil;
@@ -255,7 +256,7 @@ static CCDirector *_sharedDirector = nil;
 
 #pragma mark Director - Scene OpenGL Helper
 
--(ccDirectorProjection) projection
+-(CCDirectorProjection) projection
 {
 	return _projection;
 }
@@ -270,7 +271,7 @@ static CCDirector *_sharedDirector = nil;
 	CCLOG(@"cocos2d: override me");
 }
 
--(void) setProjection:(ccDirectorProjection)projection
+-(void) setProjection:(CCDirectorProjection)projection
 {
 	CCLOG(@"cocos2d: override me");
 }
@@ -349,12 +350,12 @@ static CCDirector *_sharedDirector = nil;
 	return CGPointZero;
 }
 
--(CGSize)winSize
+-(CGSize)viewSize
 {
 	return _winSizeInPoints;
 }
 
--(CGSize)winSizeInPixels
+-(CGSize)viewSizeInPixels
 {
 	return _winSizeInPixels;
 }
@@ -423,7 +424,7 @@ static CCDirector *_sharedDirector = nil;
 	}
 }
 
-- (void)popScenewithTransition:(CCTransition *)transition
+- (void)popSceneWithTransition:(CCTransition *)transition
 {
 	NSAssert( _runningScene != nil, @"A running Scene is needed");
     
@@ -463,7 +464,7 @@ static CCDirector *_sharedDirector = nil;
 	// pop stack until reaching desired level
 	while (c > level) {
 		CCScene *current = [_scenesStack lastObject];
-		if( [current isRunning] ){
+		if( current.runningInActiveScene ){
 			[current onExitTransitionDidStart];
 			[current onExit];
 		}
@@ -711,7 +712,7 @@ static CCDirector *_sharedDirector = nil;
 
 -(void) createStatsLabel
 {
-	CCTexture2D *texture;
+	CCTexture *texture;
 	CCTextureCache *textureCache = [CCTextureCache sharedTextureCache];
 	
 	if( _FPSLabel && _SPFLabel ) {
@@ -724,8 +725,8 @@ static CCDirector *_sharedDirector = nil;
 		[[CCFileUtils sharedFileUtils] purgeCachedEntries];
 	}
 
-	CCTexture2DPixelFormat currentFormat = [CCTexture2D defaultAlphaPixelFormat];
-	[CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGBA4444];
+	CCTexturePixelFormat currentFormat = [CCTexture defaultAlphaPixelFormat];
+	[CCTexture setDefaultAlphaPixelFormat:CCTexturePixelFormat_RGBA4444];
 
 	unsigned char *data;
 	NSUInteger data_len;
@@ -742,7 +743,7 @@ static CCDirector *_sharedDirector = nil;
 	_SPFLabel = [[CCLabelAtlas alloc]  initWithString:@"0.000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 	_drawsLabel = [[CCLabelAtlas alloc]  initWithString:@"000" texture:texture itemWidth:12 itemHeight:32 startCharMap:'.'];
 
-	[CCTexture2D setDefaultAlphaPixelFormat:currentFormat];
+	[CCTexture setDefaultAlphaPixelFormat:currentFormat];
 
 	[_drawsLabel setPosition: ccpAdd( ccp(0,34), CC_DIRECTOR_STATS_POSITION ) ];
 	[_SPFLabel setPosition: ccpAdd( ccp(0,17), CC_DIRECTOR_STATS_POSITION ) ];

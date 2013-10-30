@@ -25,7 +25,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "ccTypes.h"
 #import "CCNode.h"
 
@@ -34,7 +34,7 @@
  */
 @interface CCMotionStreak : CCNodeRGBA <CCTextureProtocol>
 {
-    CCTexture2D *_texture;
+    CCTexture *_texture;
     CGPoint _positionR;
     ccBlendFunc _blendFunc;
     float _stroke;
@@ -65,20 +65,17 @@
 @property (nonatomic, readwrite, assign, getter = isFastMode) BOOL fastMode;
 
 /** texture used for the motion streak */
-@property (nonatomic, strong) CCTexture2D *texture;
+@property (nonatomic, strong) CCTexture *texture;
 
 /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture filename */
 + (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
 /** creates and initializes a motion streak with fade in seconds, minimum segments, stroke's width, color, texture */
-+ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
++ (id) streakWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
 
 /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture filename */
 - (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color textureFilename:(NSString*)path;
 /** initializes a motion streak with fade in seconds, minimum segments, stroke's width, color and texture  */
-- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture2D*)texture;
-
-/** color used for the tint */
-- (void) tintWithColor:(ccColor3B)colors;
+- (id) initWithFade:(float)fade minSeg:(float)minSeg width:(float)stroke color:(ccColor3B)color texture:(CCTexture*)texture;
 
 /** Remove all living segments of the ribbon */
 - (void) reset;

@@ -32,6 +32,7 @@
 #import "ccGLStateCache.h"
 #import "CCDirector.h"
 #import "Support/TransformUtils.h"
+#import "CCNode_Private.h"
 
 // external
 #import "kazmath/GL/matrix.h"
@@ -63,11 +64,11 @@
 
 -(id) initWithTileFile:(NSString*)filename tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c
 {
-	CCTexture2D *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
+	CCTexture *texture = [[CCTextureCache sharedTextureCache] addImage:filename];
 	return [self initWithTexture:texture tileWidth:w tileHeight:h itemsToRender:c];
 }
 
--(id) initWithTexture:(CCTexture2D*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
+-(id) initWithTexture:(CCTexture*)texture tileWidth:(NSUInteger)w tileHeight:(NSUInteger)h itemsToRender: (NSUInteger) c;
 {
 	if( (self=[super init]) ) {
 		
@@ -190,14 +191,14 @@
 	}
 }
 
--(void) setTexture:(CCTexture2D*)texture
+-(void) setTexture:(CCTexture*)texture
 {
 	_textureAtlas.texture = texture;
 	[self updateBlendFunc];
 	[self updateOpacityModifyRGB];
 }
 
--(CCTexture2D*) texture
+-(CCTexture*) texture
 {
 	return _textureAtlas.texture;
 }
