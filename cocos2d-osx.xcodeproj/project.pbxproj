@@ -200,8 +200,8 @@
 		E076E7251225EC7400DE0DA2 /* CCSpriteFrame.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E67F1225EC7400DE0DA2 /* CCSpriteFrame.m */; };
 		E076E7261225EC7400DE0DA2 /* CCSpriteFrameCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6801225EC7400DE0DA2 /* CCSpriteFrameCache.h */; };
 		E076E7271225EC7400DE0DA2 /* CCSpriteFrameCache.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6811225EC7400DE0DA2 /* CCSpriteFrameCache.m */; };
-		E076E72A1225EC7400DE0DA2 /* CCTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6841225EC7400DE0DA2 /* CCTexture2D.h */; };
-		E076E72B1225EC7400DE0DA2 /* CCTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6851225EC7400DE0DA2 /* CCTexture2D.m */; };
+		E076E72A1225EC7400DE0DA2 /* CCTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6841225EC7400DE0DA2 /* CCTexture.h */; };
+		E076E72B1225EC7400DE0DA2 /* CCTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6851225EC7400DE0DA2 /* CCTexture.m */; };
 		E076E72C1225EC7400DE0DA2 /* CCTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6861225EC7400DE0DA2 /* CCTextureAtlas.h */; };
 		E076E72D1225EC7400DE0DA2 /* CCTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = E076E6871225EC7400DE0DA2 /* CCTextureAtlas.m */; };
 		E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = E076E6881225EC7400DE0DA2 /* CCTextureCache.h */; };
@@ -578,8 +578,8 @@
 		E076E67F1225EC7400DE0DA2 /* CCSpriteFrame.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrame.m; sourceTree = "<group>"; };
 		E076E6801225EC7400DE0DA2 /* CCSpriteFrameCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSpriteFrameCache.h; sourceTree = "<group>"; };
 		E076E6811225EC7400DE0DA2 /* CCSpriteFrameCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSpriteFrameCache.m; sourceTree = "<group>"; };
-		E076E6841225EC7400DE0DA2 /* CCTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture2D.h; sourceTree = "<group>"; };
-		E076E6851225EC7400DE0DA2 /* CCTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture2D.m; sourceTree = "<group>"; };
+		E076E6841225EC7400DE0DA2 /* CCTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTexture.h; sourceTree = "<group>"; };
+		E076E6851225EC7400DE0DA2 /* CCTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTexture.m; sourceTree = "<group>"; };
 		E076E6861225EC7400DE0DA2 /* CCTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureAtlas.h; sourceTree = "<group>"; };
 		E076E6871225EC7400DE0DA2 /* CCTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCTextureAtlas.m; sourceTree = "<group>"; };
 		E076E6881225EC7400DE0DA2 /* CCTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCTextureCache.h; sourceTree = "<group>"; };
@@ -1511,8 +1511,8 @@
 		E076E7761225ECB800DE0DA2 /* Textures */ = {
 			isa = PBXGroup;
 			children = (
-				E076E6841225EC7400DE0DA2 /* CCTexture2D.h */,
-				E076E6851225EC7400DE0DA2 /* CCTexture2D.m */,
+				E076E6841225EC7400DE0DA2 /* CCTexture.h */,
+				E076E6851225EC7400DE0DA2 /* CCTexture.m */,
 				E076E6861225EC7400DE0DA2 /* CCTextureAtlas.h */,
 				E076E6871225EC7400DE0DA2 /* CCTextureAtlas.m */,
 				E076E6881225EC7400DE0DA2 /* CCTextureCache.h */,
@@ -1699,7 +1699,7 @@
 				E076E7241225EC7400DE0DA2 /* CCSpriteFrame.h in Headers */,
 				E076E7261225EC7400DE0DA2 /* CCSpriteFrameCache.h in Headers */,
 				B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */,
-				E076E72A1225EC7400DE0DA2 /* CCTexture2D.h in Headers */,
+				E076E72A1225EC7400DE0DA2 /* CCTexture.h in Headers */,
 				E076E72C1225EC7400DE0DA2 /* CCTextureAtlas.h in Headers */,
 				E076E72E1225EC7400DE0DA2 /* CCTextureCache.h in Headers */,
 				E076E7301225EC7400DE0DA2 /* CCTexturePVR.h in Headers */,
@@ -1900,7 +1900,7 @@
 				E076E7231225EC7400DE0DA2 /* CCSpriteBatchNode.m in Sources */,
 				E076E7251225EC7400DE0DA2 /* CCSpriteFrame.m in Sources */,
 				E076E7271225EC7400DE0DA2 /* CCSpriteFrameCache.m in Sources */,
-				E076E72B1225EC7400DE0DA2 /* CCTexture2D.m in Sources */,
+				E076E72B1225EC7400DE0DA2 /* CCTexture.m in Sources */,
 				E076E72D1225EC7400DE0DA2 /* CCTextureAtlas.m in Sources */,
 				E076E72F1225EC7400DE0DA2 /* CCTextureCache.m in Sources */,
 				E076E7311225EC7400DE0DA2 /* CCTexturePVR.m in Sources */,

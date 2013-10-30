@@ -27,7 +27,7 @@
 #import "ccTypes.h"
 
 
-@class CCTexture2D;
+@class CCTexture;
 @class CCDirector;
 
 #pragma mark - CCRGBAProtocol
@@ -99,9 +99,9 @@
  */
 @protocol CCTextureProtocol <CCBlendProtocol>
 /** returns the used texture */
--(CCTexture2D*) texture;
+-(CCTexture*) texture;
 /** sets a new texture. it will be retained */
--(void) setTexture:(CCTexture2D*)texture;
+-(void) setTexture:(CCTexture*)texture;
 @end
 
 #pragma mark - CCLabelProtocol

@@ -68,19 +68,19 @@
 @property (nonatomic, readwrite) ccBlendFunc blendFunc;
 
 /** initializes the particle system with CCTexture2D, a default capacity of 500 */
-+(id)batchNodeWithTexture:(CCTexture2D *)tex;
++(id)batchNodeWithTexture:(CCTexture *)tex;
 
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a default capacity of 500 particles */
 +(id)batchNodeWithFile:(NSString*) imageFile;
 
 /** initializes the particle system with CCTexture2D, a capacity of particles, which particle system to use */
-+(id)batchNodeWithTexture:(CCTexture2D *)tex capacity:(NSUInteger) capacity;
++(id)batchNodeWithTexture:(CCTexture *)tex capacity:(NSUInteger) capacity;
 
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
 +(id)batchNodeWithFile:(NSString*)fileImage capacity:(NSUInteger)capacity;
 
 /** initializes the particle system with CCTexture2D, a capacity of particles */
--(id)initWithTexture:(CCTexture2D *)tex capacity:(NSUInteger)capacity;
+-(id)initWithTexture:(CCTexture *)tex capacity:(NSUInteger)capacity;
 
 /** initializes the particle system with the name of a file on disk (for a list of supported formats look at the CCTexture2D class), a capacity of particles */
 -(id)initWithFile:(NSString *)fileImage capacity:(NSUInteger)capacity;

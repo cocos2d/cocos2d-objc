@@ -30,7 +30,7 @@
 #endif // IPHONE
 
 @class CCSpriteFrame;
-@class CCTexture2D;
+@class CCTexture;
 @class CCSpriteFrame;
 
 /** CCAnimationFrame
@@ -145,6 +145,6 @@
  The frame will be added with one "delay unit".
  Added to facilitate the migration from v0.8 to v0.9.
  */
--(void) addSpriteFrameWithTexture:(CCTexture2D*)texture rect:(CGRect)rect;
+-(void) addSpriteFrameWithTexture:(CCTexture*)texture rect:(CGRect)rect;
 
 @end

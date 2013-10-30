@@ -27,7 +27,7 @@
 #import "ccMacros.h"
 #import "Platforms/CCGL.h"
 #import "CCTextureCache.h"
-#import "CCTexture2D.h"
+#import "CCTexture.h"
 #import "CCTexturePVR.h"
 #import "CCConfiguration.h"
 #import "CCDirector.h"
@@ -148,7 +148,7 @@ static CCTextureCache *sharedTextureCache;
 	path = [fileUtils standarizePath:path];
 
 	// optimization
-	__block CCTexture2D * tex;
+	__block CCTexture * tex;
 		
 	dispatch_sync(_dictQueue, ^{
 		tex = [_textures objectForKey:path];
@@ -162,7 +162,7 @@ static CCTextureCache *sharedTextureCache;
 	// dispatch it serially
 	dispatch_async(_loadingQueue, ^{
 
-		CCTexture2D *texture;
+		CCTexture *texture;
 
 #ifdef __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
@@ -199,7 +199,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 }
 
--(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture2D *tex))block
+-(void) addImageAsync:(NSString*)path withBlock:(void(^)(CCTexture *tex))block
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
@@ -208,7 +208,7 @@ static CCTextureCache *sharedTextureCache;
 	path = [fileUtils standarizePath:path];
 
 	// optimization
-	__block CCTexture2D * tex;
+	__block CCTexture * tex;
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [_textures objectForKey:path];
@@ -222,7 +222,7 @@ static CCTextureCache *sharedTextureCache;
 	// dispatch it serially
 	dispatch_async( _loadingQueue, ^{
 
-		CCTexture2D *texture;
+		CCTexture *texture;
 
 #ifdef __CC_PLATFORM_IOS
 		if( [EAGLContext setCurrentContext:_auxGLcontext] ) {
@@ -262,7 +262,7 @@ static CCTextureCache *sharedTextureCache;
 	});
 }
 
--(CCTexture2D*) addImage: (NSString*) path
+-(CCTexture*) addImage: (NSString*) path
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nil");
 
@@ -270,7 +270,7 @@ static CCTextureCache *sharedTextureCache;
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 	path = [fileUtils standarizePath:path];
 
-	__block CCTexture2D * tex = nil;
+	__block CCTexture * tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [_textures objectForKey: path];
@@ -297,7 +297,7 @@ static CCTextureCache *sharedTextureCache;
 		else {
             
 			UIImage *image = [[UIImage alloc] initWithContentsOfFile:fullpath];
-			tex = [[CCTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolution];
+			tex = [[CCTexture alloc] initWithCGImage:image.CGImage resolutionType:resolution];
             
 			if( tex ){
 				dispatch_sync(_dictQueue, ^{
@@ -314,7 +314,7 @@ static CCTextureCache *sharedTextureCache;
 
 			NSData *data = [[NSData alloc] initWithContentsOfFile:fullpath];
 			NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-			tex = [ [CCTexture2D alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
+			tex = [ [CCTexture alloc] initWithCGImage:[image CGImage] resolutionType:resolution];
 
 
 			if( tex ){
@@ -336,11 +336,11 @@ static CCTextureCache *sharedTextureCache;
 }
 
 
--(CCTexture2D*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
+-(CCTexture*) addCGImage: (CGImageRef) imageref forKey: (NSString *)key
 {
 	NSAssert(imageref != nil, @"TextureCache: image MUST not be nill");
 
-	__block CCTexture2D * tex = nil;
+	__block CCTexture * tex = nil;
 
 	// If key is nil, then create a new texture each time
 	if( key ) {
@@ -351,7 +351,7 @@ static CCTextureCache *sharedTextureCache;
 			return tex;
 	}
 
-	tex = [[CCTexture2D alloc] initWithCGImage:imageref resolutionType:kCCResolutionUnknown];
+	tex = [[CCTexture alloc] initWithCGImage:imageref resolutionType:kCCResolutionUnknown];
 
 	if(tex && key){
 		dispatch_sync(_dictQueue, ^{
@@ -390,7 +390,7 @@ static CCTextureCache *sharedTextureCache;
      */
 }
 
--(void) removeTexture: (CCTexture2D*) tex
+-(void) removeTexture: (CCTexture*) tex
 {
 	if( ! tex )
 		return;
@@ -414,9 +414,9 @@ static CCTextureCache *sharedTextureCache;
 }
 
 #pragma mark TextureCache - Get
-- (CCTexture2D *)textureForKey:(NSString *)key
+- (CCTexture *)textureForKey:(NSString *)key
 {
-	__block CCTexture2D *tex = nil;
+	__block CCTexture *tex = nil;
 
 	dispatch_sync(_dictQueue, ^{
 		tex = [_textures objectForKey:key];
@@ -430,7 +430,7 @@ static CCTextureCache *sharedTextureCache;
 
 @implementation CCTextureCache (PVRSupport)
 
--(CCTexture2D*) addPVRImage:(NSString*)path
+-(CCTexture*) addPVRImage:(NSString*)path
 {
 	NSAssert(path != nil, @"TextureCache: fileimage MUST not be nill");
 
@@ -438,7 +438,7 @@ static CCTextureCache *sharedTextureCache;
 	CCFileUtils *fileUtils = [CCFileUtils sharedFileUtils];
 	path = [fileUtils standarizePath:path];
 
-	__block CCTexture2D * tex;
+	__block CCTexture * tex;
 	
 	dispatch_sync(_dictQueue, ^{
 		tex = [_textures objectForKey:path];
@@ -448,7 +448,7 @@ static CCTextureCache *sharedTextureCache;
 		return tex;
 	}
 
-	tex = [[CCTexture2D alloc] initWithPVRFile: path];
+	tex = [[CCTexture alloc] initWithPVRFile: path];
 	if( tex ){
 		dispatch_sync(_dictQueue, ^{
 			[_textures setObject: tex forKey:path];
@@ -472,7 +472,7 @@ static CCTextureCache *sharedTextureCache;
 
 	dispatch_sync(_dictQueue, ^{
 		for (NSString* texKey in _textures) {
-			CCTexture2D* tex = [_textures objectForKey:texKey];
+			CCTexture* tex = [_textures objectForKey:texKey];
 			NSUInteger bpp = [tex bitsPerPixelForFormat];
 			// Each texture takes up width * height * bytesPerPixel bytes.
 			NSUInteger bytes = tex.pixelsWide * tex.pixelsHigh * bpp / 8;

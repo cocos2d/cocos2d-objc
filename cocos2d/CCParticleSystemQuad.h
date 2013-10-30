@@ -55,7 +55,7 @@
 /** Sets a new texture with a rect. The rect is in Points.
  @since v0.99.4
  */
--(void) setTexture:(CCTexture2D *)texture withRect:(CGRect)rect;
+-(void) setTexture:(CCTexture *)texture withRect:(CGRect)rect;
 
 @end
 

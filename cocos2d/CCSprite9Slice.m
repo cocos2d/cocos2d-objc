@@ -50,7 +50,7 @@ typedef enum {
 #pragma mark - create and destroy
 // ---------------------------------------------------------------------
 
-- (id)initWithTexture:(CCTexture2D *)texture rect:(CGRect)rect rotated:(BOOL)rotated
+- (id)initWithTexture:(CCTexture *)texture rect:(CGRect)rect rotated:(BOOL)rotated
 {
     self = [super initWithTexture:texture rect:rect rotated:rotated];
     NSAssert(self != nil, @"Unable to create class");

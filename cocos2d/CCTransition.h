@@ -65,7 +65,7 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  Pixel format used for transition
  *  Default kCCTexture2DPixelFormat_RGB565
  */
-@property (nonatomic, assign) CCTexture2DPixelFormat transitionPixelFormat;
+@property (nonatomic, assign) CCTexturePixelFormat transitionPixelFormat;
 
 /**
  *  Defines whether incoming and outgoing scene will be animated during transition
