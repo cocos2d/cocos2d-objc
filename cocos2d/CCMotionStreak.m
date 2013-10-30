@@ -214,16 +214,16 @@
         if(_nuPoints > 0 && _fastMode )
         {
             if(_nuPoints > 1)
-                ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, _nuPoints, 1);
+                CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, _nuPoints, 1);
             else
-                ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, 2);
+                CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, 2);
         }
 
         _nuPoints ++;
     }
 
     if( ! _fastMode )
-        ccVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
+        CCVertexLineToPolygon(_pointVertexes, _stroke, _vertices, 0, _nuPoints);
 	
 	
 	// Updated Tex Coords only if they are different than previous step
