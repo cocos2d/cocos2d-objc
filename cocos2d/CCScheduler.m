@@ -82,7 +82,7 @@
 static void
 InvokeMethods(NSArray *methods, SEL selector, CCTime dt)
 {
-	for(int i=0, count=methods.count; i<count; i++){
+	for(NSUInteger i=0, count=methods.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = methods[i];
 		if(!scheduledTarget->_paused) objc_msgSend(scheduledTarget->_target, selector, dt);
 	}
@@ -406,7 +406,7 @@ CompareTimers(const void *a, const void *b, void *context)
 static NSUInteger
 PrioritySearch(NSArray *array, NSInteger priority)
 {
-	for(int i=0, count=array.count; i<count; i++){
+	for(NSUInteger i=0, count=array.count; i<count; i++){
 		CCScheduledTarget *scheduledTarget = array[i];
 		if(scheduledTarget.target.priority > priority) return i;
 	}
