@@ -32,12 +32,13 @@
 
 const float CCSprite9SliceMarginDefault         = 1.0f/3.0f;
 
-typedef enum {
+typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
+{
     CCSprite9SliceStrips                        = 3,
     CCSprite9SliceVerticesX                     = 4,
     CCSprite9SliceVerticesY                     = 4,
     CCSprite9SliceVertices                      = 8,
-} CCSprite9SliceSizes;
+};
 
 // ---------------------------------------------------------------------
 
@@ -45,6 +46,7 @@ typedef enum {
 {
     CGSize _originalContentSize;
     CGPoint _contentScale;
+    ccV3F_C4B_T2F _quadNine[(CCSprite9SliceVerticesX * CCSprite9SliceVerticesY) + CCSprite9SliceVertices];
 }
 
 // ---------------------------------------------------------------------
@@ -67,7 +69,8 @@ typedef enum {
 }
 
 // ---------------------------------------------------------------------
-// override to set original contentSize when a texture is assigned
+#pragma mark - overridden properties
+// ---------------------------------------------------------------------
 
 - (void)setTextureRect:(CGRect)rect rotated:(BOOL)rotated untrimmedSize:(CGSize)untrimmedSize
 {
@@ -75,6 +78,8 @@ typedef enum {
     CCContentSizeType oldContentSizeType = self.contentSizeType;
     
     [super setTextureRect:rect rotated:rotated untrimmedSize:untrimmedSize];
+    
+    // save the original sizes for texture calculations
     _originalContentSize = self.contentSizeInPoints;
     
     if (!CGSizeEqualToSize(oldContentSize, CGSizeZero))
@@ -85,32 +90,111 @@ typedef enum {
 }
 
 // ---------------------------------------------------------------------
-#pragma mark - draw
+#pragma mark - lerping functions
 // ---------------------------------------------------------------------
 
-- (ccV3F_C4B_T2F)calculateVertice:(CGPoint)mult andTexture:(CGPoint)texMult
+- (ccVertex3F)vertex3FLerp:(ccVertex3F)min max:(ccVertex3F)max alpha:(CGPoint)alpha
 {
-    ccV3F_C4B_T2F result;
-   
-    // calculate vertices, color and texture coordinates
-    result.vertices.x = _contentScale.x * ((_quad.bl.vertices.x * (1 - mult.x)) + (_quad.br.vertices.x * mult.x));
-    result.vertices.y = _contentScale.y * ((_quad.bl.vertices.y * (1 - mult.y)) + (_quad.tl.vertices.y * mult.y));
-    result.vertices.z = _quad.bl.vertices.z;
-    result.colors = _quad.bl.colors;
-    if (_rectRotated)
-    {
-        result.texCoords.u = (_quad.bl.texCoords.u * (1 - texMult.y)) + (_quad.tr.texCoords.u * texMult.y);
-        result.texCoords.v = (_quad.bl.texCoords.v * (1 - texMult.x)) + (_quad.br.texCoords.v * texMult.x);
-    }
-    else
-    {
-        result.texCoords.u = (_quad.bl.texCoords.u * (1 - texMult.x)) + (_quad.br.texCoords.u * texMult.x);
-        result.texCoords.v = (_quad.bl.texCoords.v * (1 - texMult.y)) + (_quad.tl.texCoords.v * texMult.y);
-    }
-    // done
-    return(result);
+    return((ccVertex3F)
+           {
+               (min.x * (1 - alpha.x)) + (max.x * alpha.x),
+               (min.y * (1 - alpha.y)) + (max.y * alpha.y),
+               min.z
+           });
 }
 
+- (ccTex2F)tex2FLerp:(ccTex2F)min max:(ccTex2F)max alpha:(CGPoint)alpha
+{
+    if (_rectRotated)
+        return((ccTex2F)
+               {
+                   (min.u * (1 - alpha.y)) + (max.u * alpha.y),
+                   (min.v * (1 - alpha.x)) + (max.v * alpha.x)
+               });
+    return((ccTex2F)
+           {
+               (min.u * (1 - alpha.x)) + (max.u * alpha.x),
+               (min.v * (1 - alpha.y)) + (max.v * alpha.y)
+           });
+}
+
+- (ccColor4B)color4BLerp:(ccColor4B)min max:(ccColor4B)max alpha:(CGPoint)alpha
+{
+    return(min);
+}
+
+// ---------------------------------------------------------------------
+#pragma mark - vertice calculation
+// ---------------------------------------------------------------------
+// TODO: Implement a dirty flag
+
+- (void)calculateQuadNine
+{
+    float alphaX[CCSprite9SliceVerticesX];
+    float alphaY[CCSprite9SliceVerticesY];
+    float alphaTexX[CCSprite9SliceVerticesX];
+    float alphaTexY[CCSprite9SliceVerticesY];
+    ccV3F_C4B_T2F min, max;
+    
+    // calculate interpolation min and max
+    min.vertices = _quad.bl.vertices;
+    min.texCoords = _quad.bl.texCoords;
+    
+    CGSize physicalSize = CGSizeMake(
+                                     self.contentSizeInPoints.width + _rect.size.width - _originalContentSize.width,
+                                     self.contentSizeInPoints.height + _rect.size.height - _originalContentSize.height);
+    max.vertices = (ccVertex3F)
+    {
+        _quad.bl.vertices.x + physicalSize.width,
+        _quad.bl.vertices.y + physicalSize.height,
+        _quad.tr.vertices.z
+    };
+    max.texCoords = _quad.tr.texCoords;
+    
+    // calculate alpha
+    alphaX[0] = 0;
+    alphaX[1] = _marginLeft / (physicalSize.width / _rect.size.width);
+    alphaX[2] = 1 - _marginRight / (physicalSize.width / _rect.size.width);
+    alphaX[3] = 1;
+    
+    alphaY[0] = 0;
+    alphaY[1] = _marginBottom / (physicalSize.height / _rect.size.height);
+    alphaY[2] = 1 - _marginTop / (physicalSize.height / _rect.size.height);
+    alphaY[3] = 1;
+    
+    alphaTexX[0] = 0;
+    alphaTexX[1] = _marginLeft;
+    alphaTexX[2] = 1 - _marginRight;
+    alphaTexX[3] = 1;
+    
+    alphaTexY[0] = 0;
+    alphaTexY[1] = _marginBottom;
+    alphaTexY[2] = 1 - _marginTop;
+    alphaTexY[3] = 1;
+    
+    
+    for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
+    {
+        for (int col = 0; col < CCSprite9SliceVerticesX; col ++)
+        {
+            int index = 2 * ((strip * CCSprite9SliceVerticesX) + col);
+            
+            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip])];
+            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip])];
+            _quadNine[index].colors = _quad.bl.colors;
+
+            index ++;
+            
+            _quadNine[index].vertices = [self vertex3FLerp:min.vertices max:max.vertices alpha:ccp(alphaX[col],alphaY[strip+1])];
+            _quadNine[index].texCoords = [self tex2FLerp:min.texCoords max:max.texCoords alpha:ccp(alphaTexX[col],alphaTexY[strip+1])];
+            _quadNine[index].colors = _quad.bl.colors;
+
+        }
+    }
+}
+
+// ---------------------------------------------------------------------
+#pragma mark - draw
 // ---------------------------------------------------------------------
 // this completely overrides draw of CCSprite
 // sprite is divided into 9 quads, and rendered as 3 triangle strips
@@ -118,14 +202,7 @@ typedef enum {
 
 -( void )draw
 {
-    // create a clamped content size
-    CGSize clampedSize = self.contentSizeInPoints;
-    if (clampedSize.width < (_originalContentSize.width * (_marginLeft + _marginRight))) clampedSize.width = _originalContentSize.width * (_marginLeft + _marginRight);
-    if (clampedSize.height < (_originalContentSize.height * (_marginTop + _marginBottom))) clampedSize.height = _originalContentSize.height * (_marginTop + _marginBottom);
-    
-    _contentScale = CGPointMake(clampedSize.width / _originalContentSize.width, clampedSize.height / _originalContentSize.height);
-    
-	CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
+    CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
     
 	CC_NODE_DRAW_SETUP();
     
@@ -135,49 +212,23 @@ typedef enum {
     
 	// enable buffers
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
-
-    // create space for a single strip, and set single color
-    ccV3F_C4B_T2F vertice[CCSprite9SliceVertices];
-
+    
+    // calculate quad 9
+    [self calculateQuadNine];
+    
     // set the buffer positions
     // position
-	glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&vertice[0].vertices);
-	// texCoods
-	glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&vertice[0].texCoords);
-	// color
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), (void *)&vertice[0].colors);
+    glVertexAttribPointer(kCCVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].vertices);
+    // texCoods
+    glVertexAttribPointer(kCCVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].texCoords);
+    // color
+    glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(ccV3F_C4B_T2F), (void *)&_quadNine[0].colors);
     
-    // create some helper vars
-    float multX[CCSprite9SliceVerticesX] = {0, _marginLeft / _contentScale.x, 1 - (_marginRight / _contentScale.x), 1};
-    float multY[CCSprite9SliceVerticesY] = {0, _marginBottom / _contentScale.y, 1 - (_marginTop / _contentScale.y), 1};
-
-    float texMultX[CCSprite9SliceVerticesX] = {0, _marginLeft, 1 - _marginRight, 1};
-    float texMultY[CCSprite9SliceVerticesY] = {0, _marginBottom, 1 - _marginTop, 1};
-
-    // create bottow row vertices
-    for (int index = 0; index < CCSprite9SliceVerticesX; index ++)
-    {
-        vertice[index * 2] = [self calculateVertice:ccp(multX[index], multY[0]) andTexture:ccp(texMultX[index], texMultY[0])];
-    }
-    
-    // scan through the strips
+    // loop through strips
     for (int strip = 0; strip < CCSprite9SliceStrips; strip ++)
     {
-        // create top row vertices
-        for (int index = 0; index < CCSprite9SliceVerticesX; index ++)
-        {
-            vertice[(index * 2 ) + 1] = [self calculateVertice:ccp(multX[index], multY[strip + 1]) andTexture:ccp(texMultX[index], texMultY[strip + 1])];
-        }
-        
         // draw
-        glDrawArrays(GL_TRIANGLE_STRIP, 0, 8);
-    
-        // copy top vertices to bottom vertices
-        for (int index = 0; index < CCSprite9SliceVerticesX; index ++)
-        {
-            vertice[index * 2] = vertice[(index * 2) + 1];
-        }
-        
+        glDrawArrays(GL_TRIANGLE_STRIP, strip * CCSprite9SliceVertices, CCSprite9SliceVertices);
     }
     
     // check for errors
