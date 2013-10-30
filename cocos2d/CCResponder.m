@@ -29,6 +29,7 @@
 
 #import "CCResponder.h"
 #import "CCDirector.h"
+#import "CCDirector_Private.h"
 
 // -----------------------------------------------------------------
 

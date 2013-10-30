@@ -80,7 +80,7 @@
 
 -(id) init
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	return [self initWithColor:ccc4(0,0,0,0) width:s.width height:s.height];
 }
 
@@ -112,7 +112,7 @@
 
 - (id) initWithColor:(ccColor4B)color
 {
-	CGSize s = [[CCDirector sharedDirector] winSize];
+	CGSize s = [[CCDirector sharedDirector] viewSize];
 	return [self initWithColor:color width:s.width height:s.height];
 }
 

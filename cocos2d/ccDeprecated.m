@@ -27,6 +27,7 @@
 #if CC_ENABLE_DEPRECATED
 
 #import "CCSpriteBatchNode.h"
+#import "CCDirector_Private.h"
 
 // Free functions
 void ccGLUniformModelViewProjectionMatrix( CCGLProgram* program )

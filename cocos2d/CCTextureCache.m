@@ -390,6 +390,7 @@ static CCTextureCache *sharedTextureCache;
 		}
 	});
      */
+    [self removeAllTextures];
 }
 
 -(void) removeTexture: (CCTexture*) tex

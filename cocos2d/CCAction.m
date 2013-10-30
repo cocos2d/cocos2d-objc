@@ -256,7 +256,7 @@
 		_boundarySet = FALSE;
 		_boundaryFullyCovered = FALSE;
 
-		CGSize s = [[CCDirector sharedDirector] winSize];
+		CGSize s = [[CCDirector sharedDirector] viewSize];
 		_fullScreenSize = CGPointMake(s.width, s.height);
 		_halfScreenSize = ccpMult(_fullScreenSize, .5f);
 	}
@@ -272,7 +272,7 @@
 		_boundarySet = TRUE;
 		_boundaryFullyCovered = FALSE;
 
-		CGSize winSize = [[CCDirector sharedDirector] winSize];
+		CGSize winSize = [[CCDirector sharedDirector] viewSize];
 		_fullScreenSize = CGPointMake(winSize.width, winSize.height);
 		_halfScreenSize = ccpMult(_fullScreenSize, .5f);
 

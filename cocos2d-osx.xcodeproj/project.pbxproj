@@ -105,6 +105,7 @@
 		A66680C417D4D73000ECDE6F /* CCResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = A66680C017D4D73000ECDE6F /* CCResponder.m */; };
 		A66680C517D4D73000ECDE6F /* CCResponderManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A66680C117D4D73000ECDE6F /* CCResponderManager.h */; };
 		A66680C617D4D73000ECDE6F /* CCResponderManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A66680C217D4D73000ECDE6F /* CCResponderManager.m */; };
+		B706B19B1820A42300B27A2C /* CCDirector_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = B706B19A1820A42300B27A2C /* CCDirector_Private.h */; };
 		B74C2B9617BDA54600A829C0 /* CCSprite9Slice.m in Sources */ = {isa = PBXBuildFile; fileRef = B74C2B9417BDA54600A829C0 /* CCSprite9Slice.m */; };
 		B74C2B9717BDA54600A829C0 /* CCSprite9Slice.h in Headers */ = {isa = PBXBuildFile; fileRef = B74C2B9517BDA54600A829C0 /* CCSprite9Slice.h */; };
 		B750162C18125C4A00708A2F /* CCControlSubclass.h in Headers */ = {isa = PBXBuildFile; fileRef = B750162B18125C4A00708A2F /* CCControlSubclass.h */; };
@@ -465,6 +466,7 @@
 		A66680C117D4D73000ECDE6F /* CCResponderManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCResponderManager.h; sourceTree = "<group>"; };
 		A66680C217D4D73000ECDE6F /* CCResponderManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCResponderManager.m; sourceTree = "<group>"; };
 		B706B191182097A400B27A2C /* CCTexture_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCTexture_Private.h; sourceTree = "<group>"; };
+		B706B19A1820A42300B27A2C /* CCDirector_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCDirector_Private.h; sourceTree = "<group>"; };
 		B74C2B9417BDA54600A829C0 /* CCSprite9Slice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCSprite9Slice.m; sourceTree = "<group>"; };
 		B74C2B9517BDA54600A829C0 /* CCSprite9Slice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCSprite9Slice.h; sourceTree = "<group>"; };
 		B750162B18125C4A00708A2F /* CCControlSubclass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCControlSubclass.h; path = "cocos2d-ui/CCControlSubclass.h"; sourceTree = "<group>"; };
@@ -1370,6 +1372,7 @@
 				E076E6711225EC7400DE0DA2 /* CCProtocols.h */,
 				E076E6781225EC7400DE0DA2 /* CCScheduler.h */,
 				E076E6791225EC7400DE0DA2 /* CCScheduler.m */,
+				B706B19A1820A42300B27A2C /* CCDirector_Private.h */,
 			);
 			path = cocos2d;
 			sourceTree = "<group>";
@@ -1675,6 +1678,7 @@
 				E076E6DB1225EC7400DE0DA2 /* CCActionInterval.h in Headers */,
 				E076E6DD1225EC7400DE0DA2 /* CCActionManager.h in Headers */,
 				E076E6E11225EC7400DE0DA2 /* CCActionProgressTimer.h in Headers */,
+				B706B19B1820A42300B27A2C /* CCDirector_Private.h in Headers */,
 				B791E850182065BD00DAE1D7 /* CCTiledMapLayer.h in Headers */,
 				E076E6E51225EC7400DE0DA2 /* CCActionTween.h in Headers */,
 				E076E6E71225EC7400DE0DA2 /* CCAtlasNode.h in Headers */,

@@ -34,6 +34,7 @@
 #import "Support/CGPointExtension.h"
 
 #import "CCTexture_Private.h"
+#import "CCDirector_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
@@ -185,7 +186,7 @@
 
 
 	// Calculate the adjustment ratios based on the old and new projections
-	CGSize size = [director winSizeInPixels];
+	CGSize size = [director viewSizeInPixels];
 	float widthRatio = size.width / texSize.width;
 	float heightRatio = size.height / texSize.height;
 
