@@ -67,7 +67,7 @@ typedef enum ccPhysicsBodyType {
 //MARK: Basic Properties:
 
 /// Mass of the physics body.
-/// Changing this property also changes the density.
+/// If the body has multiple shapes, you cannot change the mass directly.
 /// Defaults to 1.0.
 @property(nonatomic, assign) CGFloat mass;
 /// Surface friction of the physics body.
@@ -89,9 +89,11 @@ typedef enum ccPhysicsBodyType {
 
 //MARK: Simulation Properties:
 
-/// Whether or not the physics body is affected by gravity.
-/// Defaults to YES.
-@property(nonatomic, assign) BOOL affectedByGravity;
+// Not yet implemented due to time constraints.
+///// Whether or not the physics body is affected by gravity.
+///// Defaults to YES.
+//@property(nonatomic, assign) BOOL affectedByGravity;
+
 /// Whether or not the physics body should be allowed to rotate.
 /// Defaults to YES.
 @property(nonatomic, assign) BOOL allowsRotation;

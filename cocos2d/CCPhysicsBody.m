@@ -119,8 +119,14 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 
 +(CCPhysicsBody *)bodyWithShapes:(NSArray *)shapes
 {
-	NYI();
-	return nil;
+	CCPhysicsShape *shapeList = nil;
+	for(int i=0, count=shapes.count; i<count; i++){
+		CCPhysicsShape *shape = shapes[i];
+		shape.next = shapeList;
+		shapeList = shape;
+	}
+	
+	return [[self alloc] initWithShapeList:shapeList];
 }
 
 //MARK: Basic Properties:
@@ -173,8 +179,8 @@ static inline void NYI(){@throw @"Not Yet Implemented";}
 -(CCPhysicsNode *)physicsNode {return _body.space.userData;}
 -(BOOL)isRunning {return self.physicsNode != nil;}
 
--(BOOL)affectedByGravity {NYI(); return YES;}
--(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
+//-(BOOL)affectedByGravity {NYI(); return YES;}
+//-(void)setAffectedByGravity:(BOOL)affectedByGravity {NYI();}
 
 -(BOOL)allowsRotation {return _allowsRotation;}
 -(void)setAllowsRotation:(BOOL)allowsRotation
