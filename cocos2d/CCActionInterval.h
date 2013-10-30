@@ -68,7 +68,7 @@ Example:
 
 /** Runs actions sequentially, one after another
  */
-@interface CCSequence : CCActionInterval <NSCopying>
+@interface CCActionSequence : CCActionInterval <NSCopying>
 {
 	CCActionFiniteTime *_actions[2];
 	ccTime _split;
@@ -90,7 +90,7 @@ Example:
 /** Repeats an action a number of times.
  * To repeat an action forever use the CCRepeatForever action.
  */
-@interface CCRepeat : CCActionInterval <NSCopying>
+@interface CCActionRepeat : CCActionInterval <NSCopying>
 {
 	NSUInteger _times;
 	NSUInteger _total;
@@ -111,7 +111,7 @@ Example:
 
 /** Spawn a new action immediately
  */
-@interface CCSpawn : CCActionInterval <NSCopying>
+@interface CCActionSpawn : CCActionInterval <NSCopying>
 {
 	CCActionFiniteTime *_one;
 	CCActionFiniteTime *_two;
@@ -132,7 +132,7 @@ Example:
  rotation attribute.
  The direction will be decided by the shortest angle.
 */
-@interface CCRotateTo : CCActionInterval <NSCopying>
+@interface CCActionRotateTo : CCActionInterval <NSCopying>
 {
 	float _dstAngleX;
 	float _startAngleX;
@@ -154,7 +154,7 @@ Example:
 
 /** Rotates a CCNode object clockwise a number of degrees by modifying its rotation attribute.
 */
-@interface CCRotateBy : CCActionInterval <NSCopying>
+@interface CCActionRotateBy : CCActionInterval <NSCopying>
 {
 	float _angleX;
 	float _startAngleX;
@@ -177,7 +177,7 @@ Example:
  movement will be the sum of individual movements.
  @since v2.1beta2-custom
  */
-@interface CCMoveBy : CCActionInterval <NSCopying>
+@interface CCActionMoveBy : CCActionInterval <NSCopying>
 {
 	CGPoint _positionDelta;
 	CGPoint _startPos;
@@ -194,7 +194,7 @@ Example:
  movement will be the sum of individual movements.
  @since v2.1beta2-custom
  */
-@interface CCMoveTo : CCMoveBy
+@interface CCActionMoveTo : CCActionMoveBy
 {
 	CGPoint _endPosition;
 }
@@ -207,7 +207,7 @@ Example:
 /** Skews a CCNode object to given angles by modifying its skewX and skewY attributes
  @since v1.0
  */
-@interface CCSkewTo : CCActionInterval <NSCopying>
+@interface CCActionSkewTo : CCActionInterval <NSCopying>
 {
 	float _skewX;
 	float _skewY;
@@ -227,7 +227,7 @@ Example:
 /** Skews a CCNode object by skewX and skewY degrees
  @since v1.0
  */
-@interface CCSkewBy : CCSkewTo <NSCopying>
+@interface CCActionSkewBy : CCActionSkewTo <NSCopying>
 {
 }
 /** initializes the action with duration, skew X and skew Y */
@@ -236,7 +236,7 @@ Example:
 
 /** Moves a CCNode object simulating a parabolic jump movement by modifying its position attribute.
 */
-@interface CCJumpBy : CCActionInterval <NSCopying>
+@interface CCActionJumpBy : CCActionInterval <NSCopying>
 {
 	CGPoint _startPosition;
 	CGPoint _delta;
@@ -252,7 +252,7 @@ Example:
 
 /** Moves a CCNode object to a parabolic position simulating a jump movement by modifying its position attribute.
 */
-@interface CCJumpTo : CCJumpBy <NSCopying>
+@interface CCActionJumpTo : CCActionJumpBy <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
@@ -272,7 +272,7 @@ typedef struct _ccBezierConfig {
 
 /** An action that moves the target with a cubic Bezier curve by a certain distance.
  */
-@interface CCBezierBy : CCActionInterval <NSCopying>
+@interface CCActionBezierBy : CCActionInterval <NSCopying>
 {
 	ccBezierConfig _config;
 	CGPoint _startPosition;
@@ -289,7 +289,7 @@ typedef struct _ccBezierConfig {
 /** An action that moves the target with a cubic Bezier curve to a destination point.
  @since v0.8.2
  */
-@interface CCBezierTo : CCBezierBy
+@interface CCActionBezierTo : CCActionBezierBy
 {
 	ccBezierConfig _toConfig;
 }
@@ -300,7 +300,7 @@ typedef struct _ccBezierConfig {
 /** Scales a CCNode object to a zoom factor by modifying its scale attribute.
  @warning This action doesn't support "reverse"
  */
-@interface CCScaleTo : CCActionInterval <NSCopying>
+@interface CCActionScaleTo : CCActionInterval <NSCopying>
 {
 	float _scaleX;
 	float _scaleY;
@@ -323,7 +323,7 @@ typedef struct _ccBezierConfig {
 
 /** Scales a CCNode object a zoom factor by modifying its scale attribute.
 */
-@interface CCScaleBy : CCScaleTo <NSCopying>
+@interface CCActionScaleBy : CCActionScaleTo <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
@@ -332,7 +332,7 @@ typedef struct _ccBezierConfig {
 
 /** Blinks a CCNode object by modifying its visible attribute
 */
-@interface CCBlink : CCActionInterval <NSCopying>
+@interface CCActionBlink : CCActionInterval <NSCopying>
 {
 	NSUInteger _times;
 	BOOL _originalState;
@@ -346,7 +346,7 @@ typedef struct _ccBezierConfig {
 /** Fades In an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 0 to 255.
  The "reverse" of this action is FadeOut
  */
-@interface CCFadeIn : CCActionInterval <NSCopying>
+@interface CCActionFadeIn : CCActionInterval <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
@@ -356,7 +356,7 @@ typedef struct _ccBezierConfig {
 /** Fades Out an object that implements the CCRGBAProtocol protocol. It modifies the opacity from 255 to 0.
  The "reverse" of this action is FadeIn
 */
-@interface CCFadeOut : CCActionInterval <NSCopying>
+@interface CCActionFadeOut : CCActionInterval <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
@@ -366,7 +366,7 @@ typedef struct _ccBezierConfig {
 /** Fades an object that implements the CCRGBAProtocol protocol. It modifies the opacity from the current value to a custom one.
  @warning This action doesn't support "reverse"
  */
-@interface CCFadeTo : CCActionInterval <NSCopying>
+@interface CCActionFadeTo : CCActionInterval <NSCopying>
 {
 	GLubyte _toOpacity;
 	GLubyte _fromOpacity;
@@ -381,7 +381,7 @@ typedef struct _ccBezierConfig {
  @warning This action doesn't support "reverse"
  @since v0.7.2
 */
-@interface CCTintTo : CCActionInterval <NSCopying>
+@interface CCActionTintTo : CCActionInterval <NSCopying>
 {
 	ccColor3B _to;
 	ccColor3B _from;
@@ -395,7 +395,7 @@ typedef struct _ccBezierConfig {
 /** Tints a CCNode that implements the CCNodeRGB protocol from current tint to a custom one.
  @since v0.7.2
  */
-@interface CCTintBy : CCActionInterval <NSCopying>
+@interface CCActionTintBy : CCActionInterval <NSCopying>
 {
 	GLshort _deltaR, _deltaG, _deltaB;
 	GLshort _fromR, _fromG, _fromB;
@@ -408,7 +408,7 @@ typedef struct _ccBezierConfig {
 
 /** Delays the action a certain amount of seconds
 */
-@interface CCDelayTime : CCActionInterval <NSCopying>
+@interface CCActionDelay : CCActionInterval <NSCopying>
 {
 }
 // XXX: Added to prevent bug on BridgeSupport
@@ -422,7 +422,7 @@ typedef struct _ccBezierConfig {
  of your own actions, but using it outside the "reversed"
  scope is not recommended.
 */
-@interface CCReverseTime : CCActionInterval <NSCopying>
+@interface CCActionReverse : CCActionInterval <NSCopying>
 {
 	CCActionFiniteTime * _other;
 }
@@ -436,7 +436,7 @@ typedef struct _ccBezierConfig {
 @class CCAnimation;
 @class CCTexture2D;
 /** Animates a sprite given the name of an Animation */
-@interface CCAnimate : CCActionInterval <NSCopying>
+@interface CCActionAnimate : CCActionInterval <NSCopying>
 {
 	NSMutableArray		*_splitTimes;
 	NSInteger			_nextFrame;
@@ -451,23 +451,4 @@ typedef struct _ccBezierConfig {
 +(id) actionWithAnimation:(CCAnimation*)animation;
 /** initializes the action with an Animation and will restore the original frame when the animation is over */
 -(id) initWithAnimation:(CCAnimation*)animation;
-@end
-
-/** Overrides the target of an action so that it always runs on the target
- * specified at action creation rather than the one specified by runAction.
- */
-@interface CCTargetedAction : CCActionInterval <NSCopying>
-{
-	id _forcedTarget;
-	CCActionFiniteTime* _action;
-}
-/** This is the target that the action will be forced to run with */
-@property(readwrite,nonatomic,strong) id forcedTarget;
-
-/** Create an action with the specified action and forced target */
-+ (id) actionWithTarget:(id) target action:(CCActionFiniteTime*) action;
-
-/** Init an action with the specified action and forced target */
-- (id) initWithTarget:(id) target action:(CCActionFiniteTime*) action;
-
 @end
