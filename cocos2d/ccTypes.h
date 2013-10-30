@@ -362,18 +362,18 @@ typedef enum
 //! Vertical text alignment type
 typedef enum
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
+    CCVerticalTextAlignmentTop,
+    CCVerticalTextAlignmentCenter,
+    CCVerticalTextAlignmentBottom,
 } CCVerticalTextAlignment;
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
 typedef enum
 {
-	kCCTextAlignmentLeft,
-	kCCTextAlignmentCenter,
-	kCCTextAlignmentRight,
+	CCTextAlignmentLeft,
+	CCTextAlignmentCenter,
+	CCTextAlignmentRight,
 } CCTextAlignment;
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
@@ -391,57 +391,6 @@ typedef enum {
 typedef double ccTime;
 
 typedef float ccMat4[16];
-    
-/*
-typedef struct _ccFontShadow
-{
-    // true if shadow enabled
-    bool   m_shadowEnabled;
-    // shadow x and y offset
-    CGSize m_shadowOffset;
-    // shadow blurrines
-    float  m_shadowBlur;
-    // shadow opacity
-    float  m_shadowOpacity;
-    
-} ccFontShadow;
-
-typedef struct _ccFontStroke
-{
-    // true if stroke enabled
-    bool        m_strokeEnabled;
-    // stroke color
-    ccColor3B   m_strokeColor;
-    // stroke size
-    float       m_strokeSize;
-    
-} ccFontStroke;
- */
-    
-/*
-typedef struct _ccFontDefinition
-{
-    // font name
-    NSString                *m_fontName;
-    // font size
-    int                     m_fontSize;
-    // horizontal alignment
-    CCTextAlignment         m_alignment;
-    // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
-    // line break mode
-    CCLineBreakMode         m_lineBreakMode;
-    // renering box
-    CGSize                  m_dimensions;
-    // font color
-    ccColor3B               m_fontFillColor;
-    // font shadow
-    ccFontShadow            m_shadow;
-    // font stroke
-    ccFontStroke            m_stroke;
-    
-} ccFontDefinition;
-*/
     
 enum
 {

@@ -393,9 +393,9 @@ NSInteger ccLoadFileIntoMemory(const char *filename, unsigned char **out)
 				return CCResolutionTypeUnknown;
 #elif defined(__CC_PLATFORM_MAC)
 			if( [key isEqualToString:kCCFileUtilsMacHD] )
-				return kCCResolutionMacRetinaDisplay;
+				return CCResolutionTypeMacRetinaDisplay;
 			if( [key isEqualToString:kCCFileUtilsMac] )
-				return kCCResolutionMac;
+				return CCResolutionTypeMac;
 			if( [key isEqualToString:kCCFileUtilsDefault] )
 				return CCResolutionTypeUnknown;
 #endif // __CC_PLATFORM_MAC

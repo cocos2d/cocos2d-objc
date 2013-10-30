@@ -387,9 +387,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
         
-        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSTextAlignmentLeft;
-        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSTextAlignmentCenter;
-        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSTextAlignmentRight;
+        if (_horizontalAlignment == CCTextAlignmentLeft) style.alignment = NSTextAlignmentLeft;
+        else if (_horizontalAlignment == CCTextAlignmentCenter) style.alignment = NSTextAlignmentCenter;
+        else if (_horizontalAlignment == CCTextAlignmentRight) style.alignment = NSTextAlignmentRight;
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
@@ -436,9 +436,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
         
-        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSLeftTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSCenterTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSRightTextAlignment;
+        if (_horizontalAlignment == CCTextAlignmentLeft) style.alignment = NSLeftTextAlignment;
+        else if (_horizontalAlignment == CCTextAlignmentCenter) style.alignment = NSCenterTextAlignment;
+        else if (_horizontalAlignment == CCTextAlignmentRight) style.alignment = NSRightTextAlignment;
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
@@ -595,11 +595,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 #elif defined(__CC_PLATFORM_MAC)
         CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
 #endif
-        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        if (_verticalAlignment == CCVerticalTextAlignmentBottom)
         {
             yOffset = hDrawArea - actualSize.height;
         }
-        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        else if (_verticalAlignment == CCVerticalTextAlignmentCenter)
         {
             yOffset = (hDrawArea - actualSize.height)/2;
         }
@@ -938,11 +938,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         // Handle vertical alignment
         CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(wDrawArea, 1024) lineBreakMode:0];
     
-        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        if (_verticalAlignment == CCVerticalTextAlignmentBottom)
         {
             yOffset = hDrawArea - actualSize.height;
         }
-        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        else if (_verticalAlignment == CCVerticalTextAlignmentCenter)
         {
             yOffset = (hDrawArea - actualSize.height)/2;
         }

@@ -124,8 +124,8 @@
     // Setup label
     _label = [CCLabelTTF labelWithString:title fontName:@"Helvetica" fontSize:14];
     _label.adjustsFontSizeToFit = YES;
-    _label.horizontalAlignment = kCCTextAlignmentCenter;
-    _label.verticalAlignment = kCCVerticalTextAlignmentCenter;
+    _label.horizontalAlignment = CCTextAlignmentCenter;
+    _label.verticalAlignment = CCVerticalTextAlignmentCenter;
     
     [self addChild:_label z:1];
     

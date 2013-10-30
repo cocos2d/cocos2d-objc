@@ -36,7 +36,7 @@
     _lblNumTouches = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
     _lblNumTouches.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
     _lblNumTouches.position = ccp(0.5, 64);
-    _lblNumTouches.horizontalAlignment = kCCTextAlignmentCenter;
+    _lblNumTouches.horizontalAlignment = CCTextAlignmentCenter;
     
     [self addChild:_lblNumTouches];
     
