@@ -27,12 +27,12 @@
 #import "CCActionProgressTimer.h"
 
 @implementation CCActionProgressTo
-+(id) actionWithDuration: (ccTime) t percent: (float) v
++(id) actionWithDuration: (CCTime) t percent: (float) v
 {
 	return [[ self alloc] initWithDuration: t percent: v];
 }
 
--(id) initWithDuration: (ccTime) t percent: (float) v
+-(id) initWithDuration: (CCTime) t percent: (float) v
 {
 	if( (self=[super initWithDuration: t] ) )
 		_to = v;
@@ -57,19 +57,19 @@
 		_from = 0;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }
 @end
 
 @implementation CCActionProgressFromTo
-+(id) actionWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
++(id) actionWithDuration: (CCTime) t from:(float)fromPercentage to:(float) toPercentage
 {
 	return [[self alloc] initWithDuration: t from: fromPercentage to: toPercentage];
 }
 
--(id) initWithDuration: (ccTime) t from:(float)fromPercentage to:(float) toPercentage
+-(id) initWithDuration: (CCTime) t from:(float)fromPercentage to:(float) toPercentage
 {
 	if( (self=[super initWithDuration: t] ) ){
 		_to = toPercentage;
@@ -94,7 +94,7 @@
 	[super startWithTarget:aTarget];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[(CCProgressNode*)_target setPercentage: _from + ( _to - _from ) * t];
 }

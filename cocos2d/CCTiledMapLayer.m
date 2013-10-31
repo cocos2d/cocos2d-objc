@@ -269,7 +269,9 @@ int compareInts (const void * a, const void * b);
 	// if GID == 0, then no tile is present
 	if( gid ) {
 		int z = pos.x + pos.y * _layerSize.width;
-		tile = (CCSprite*) [self getChildByTag:z];
+#warning Look over this implementation, may inefficient
+        NSString* zStr = [NSString stringWithFormat:@"%d",z];
+		tile = (CCSprite*) [self getChildByName:zStr];
 
 		// tile not created yet. create it
 		if( ! tile ) {
@@ -531,8 +533,9 @@ int compareInts (const void * a, const void * b)
 		// modifying an existing tile with a non-empty tile
 		else {
 
-			NSUInteger z = pos.x + pos.y * _layerSize.width;
-			CCSprite *sprite = (CCSprite*)[self getChildByTag:z];
+			int z = pos.x + pos.y * _layerSize.width;
+            NSString* zStr = [NSString stringWithFormat:@"%d", z];
+			CCSprite *sprite = (CCSprite*)[self getChildByName:zStr];
 			if( sprite ) {
 				CGRect rect = [_tileset rectForGID:gid];
 				rect = CC_RECT_PIXELS_TO_POINTS(rect);
@@ -588,7 +591,8 @@ int compareInts (const void * a, const void * b)
         [_atlasIndexArray removeObjectAtIndex:atlasIndex];
 
 		// remove it from sprites and/or texture atlas
-		id sprite = [self getChildByTag:z];
+        NSString* zStr = [NSString stringWithFormat:@"%d", (int)z];
+		id sprite = [self getChildByName:zStr];
 		if( sprite )
 			[super removeChild:sprite cleanup:YES];
 		else {

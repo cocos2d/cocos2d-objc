@@ -79,7 +79,8 @@
 
 		if( layerInfo.visible ) {
 			CCNode *child = [self parseLayer:layerInfo map:mapInfo];
-			[self addChild:child z:idx tag:idx];
+            NSString* idxStr = [NSString stringWithFormat:@"%d",idx];
+			[self addChild:child z:idx name:idxStr];
 
 			// update content size with the max size
 			CGSize childSize = [child contentSize];

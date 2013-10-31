@@ -62,8 +62,8 @@
 // ccTypes.h
 #ifdef __CC_PLATFORM_IOS
 enum {
-	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= kCCResolutioniPhone,
-	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = kCCResolutioniPhoneRetinaDisplay,
+	kCCResolutionStandard DEPRECATED_ATTRIBUTE	= CCResolutionTypeiPhone,
+	kCCResolutionRetinaDisplay DEPRECATED_ATTRIBUTE = CCResolutionTypeiPhoneRetinaDisplay,
 };
 #endif // __CC_PLATFORM_IOS
 
@@ -72,27 +72,6 @@ enum {
 	kCCImageFormatJPG DEPRECATED_ATTRIBUTE = kCCImageFormatJPEG,
 	kCCImageFormatRawData UNAVAILABLE_ATTRIBUTE,
 };
-
-enum {
-	CCTextAlignmentLeft DEPRECATED_ATTRIBUTE = kCCTextAlignmentLeft,
-	CCTextAlignmentCenter DEPRECATED_ATTRIBUTE = kCCTextAlignmentCenter,
-	CCTextAlignmentRight DEPRECATED_ATTRIBUTE = kCCTextAlignmentRight,
-
-	CCVerticalTextAlignmentTop DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentTop,
-	CCVerticalTextAlignmentMiddle DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentCenter,
-	CCVerticalTextAlignmentBottom DEPRECATED_ATTRIBUTE = kCCVerticalTextAlignmentBottom,
-
-	CCLineBreakModeWordWrap DEPRECATED_ATTRIBUTE = kCCLineBreakModeWordWrap,
-	CCLineBreakModeCharacterWrap DEPRECATED_ATTRIBUTE = kCCLineBreakModeCharacterWrap,
-	CCLineBreakModeClip	DEPRECATED_ATTRIBUTE = kCCLineBreakModeClip,
-	CCLineBreakModeHeadTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeHeadTruncation,
-	CCLineBreakModeTailTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeTailTruncation,
-	CCLineBreakModeMiddleTruncation DEPRECATED_ATTRIBUTE = kCCLineBreakModeMiddleTruncation,
-};
-
-//DEPRECATED_ATTRIBUTE typedef  ccTextAlignment CCTextAlignment;
-//
-//DEPRECATED_ATTRIBUTE typedef  ccVerticalTextAlignment CCVerticalTextAlignment;
 
 // Free functions
 void ccGLUniformModelViewProjectionMatrix(CCGLProgram* program) DEPRECATED_ATTRIBUTE;
@@ -169,11 +148,11 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 // new: actionWithAnimation:
 +(id) actionWithAnimation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 // new: actiontWithAnimation:
-+(id) actionWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
++(id) actionWithDuration:(CCTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 // new: initWithAnimation:
 -(id) initWithAnimation:(CCAnimation*) a restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 // new: initWithAnimation:
--(id) initWithDuration:(ccTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
+-(id) initWithDuration:(CCTime)duration animation:(CCAnimation*)animation restoreOriginalFrame:(BOOL)restoreOriginalFrame DEPRECATED_ATTRIBUTE;
 @end
 
 @interface CCActionSequence (Deprecated)
@@ -205,7 +184,7 @@ DEPRECATED_ATTRIBUTE @interface MacView : CCGLView
 // new: -(NSString*) fullPathFromRelativePath:  (instance method, not class method)
 +(NSString*) fullPathFromRelativePath:(NSString*) relPath DEPRECATED_ATTRIBUTE;
 // new: -(NSString*) fullPathFromRelativePath:resolutionType  (instance method, not class method)
-+(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
++(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType DEPRECATED_ATTRIBUTE;
 
 #ifdef __CC_PLATFORM_IOS
 // new: -(NSString*) removeSuffixFromFile:  (instance method, not class method)

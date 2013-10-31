@@ -24,7 +24,7 @@
     self.subTitle = @"Horizontal Box Layout.";
     
     CCLayoutBox* layout = [[CCLayoutBox alloc] init];
-    layout.positionType = kCCPositionTypeNormalized;
+    layout.positionType = CCPositionTypeNormalized;
     layout.position = ccp(0.5f, 0.5f);
     
     CCSprite* sprite0 = [CCSprite spriteWithImageNamed:@"Sprites/bird.png"];
@@ -46,7 +46,7 @@
     self.subTitle = @"Vertical Box Layout.";
     
     CCLayoutBox* layout = [[CCLayoutBox alloc] init];
-    layout.positionType = kCCPositionTypeNormalized;
+    layout.positionType = CCPositionTypeNormalized;
     layout.position = ccp(0.5f, 0.5f);
     layout.direction = CCLayoutBoxDirectionVertical;
     

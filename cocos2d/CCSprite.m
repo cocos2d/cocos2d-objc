@@ -249,9 +249,9 @@
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %ld | atlasIndex = %ld>", [self class], self,
+	return [NSString stringWithFormat:@"<%@ = %p | Rect = (%.2f,%.2f,%.2f,%.2f) | tag = %@ | atlasIndex = %ld>", [self class], self,
 			_rect.origin.x, _rect.origin.y, _rect.size.width, _rect.size.height,
-			(long)_tag,
+			_name,
 			(unsigned long)_atlasIndex
 	];
 }
@@ -298,7 +298,7 @@
 {
 	_rectRotated = rotated;
 
-    self.contentSizeType = kCCContentSizeTypePoints;
+    self.contentSizeType = CCContentSizeTypePoints;
 	[self setContentSize:untrimmedSize];
 	[self setVertexRect:rect];
 	[self setTextureCoords:rect];
@@ -565,7 +565,7 @@
 
 #pragma mark CCSprite - CCNode overrides
 
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z name:(NSString*) name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 
@@ -581,7 +581,7 @@
 	}
 
 	//CCNode already sets _isReorderChildDirty so this needs to be after batchNode check
-	[super addChild:child z:z tag:aTag];
+	[super addChild:child z:z name:name];
 
 	_hasChildren = YES;
 }

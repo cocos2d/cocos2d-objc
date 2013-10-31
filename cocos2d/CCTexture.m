@@ -115,7 +115,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 		
 		
 		// XXX: 32 bits or POT textures uses UNPACK of 4 (is this correct ??? )
-		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( ccNextPOT(width)==width && ccNextPOT(height)==height) )
+		if( pixelFormat == CCTexturePixelFormat_RGBA8888 || ( CCNextPOT(width)==width && CCNextPOT(height)==height) )
 			glPixelStorei(GL_UNPACK_ALIGNMENT,4);
 		else
 			glPixelStorei(GL_UNPACK_ALIGNMENT,1);
@@ -171,7 +171,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
         
         _antialiased = YES;
 
-		_resolutionType = kCCResolutionUnknown;
+		_resolutionType = CCResolutionTypeUnknown;
 		self.shaderProgram = [[CCShaderCache sharedShaderCache] programForKey:kCCShader_PositionTexture];
 	}
 	return self;
@@ -233,7 +233,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 @implementation CCTexture (Image)
 
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(CCResolutionType)resolution
 {
 	NSUInteger				textureWidth, textureHeight;
 	CGContextRef			context = nil;
@@ -260,7 +260,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 	// Bug #886. It is present on iOS 4 only
 	unsigned int version = [conf OSVersion];
-	if( version >= kCCiOSVersion_4_0 && version < kCCiOSVersion_5_0 )
+	if( version >= CCSystemVersion_iOS_4_0 && version < CCSystemVersion_iOS_5_0 )
 		hasAlpha = ((info == kCGImageAlphaNoneSkipLast) || (info == kCGImageAlphaPremultipliedLast) || (info == kCGImageAlphaPremultipliedFirst) || (info == kCGImageAlphaLast) || (info == kCGImageAlphaFirst) ? YES : NO);
 	else
 #endif // __CC_PLATFORM_IOS
@@ -296,8 +296,8 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 
 	if( ! [conf supportsNPOT]  )
 	{
-		textureWidth = ccNextPOT(CGImageGetWidth(cgImage));
-		textureHeight = ccNextPOT(CGImageGetHeight(cgImage));
+		textureWidth = CCNextPOT(CGImageGetWidth(cgImage));
+		textureHeight = CCNextPOT(CGImageGetHeight(cgImage));
 	}
 	else
 	{
@@ -310,7 +310,7 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 	// iOS 5 BUG:
 	// If width is not word aligned, convert it to word aligned.
 	// http://www.cocos2d-iphone.org/forum/topic/31092
-	if( [conf OSVersion] >= kCCiOSVersion_5_0 )
+	if( [conf OSVersion] >= CCSystemVersion_iOS_5_0 )
 	{
 		
 		NSUInteger bpp = [[self class] bitsPerPixelForFormat:pixelFormat];
@@ -468,7 +468,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(id) initWithPVRFile: (NSString*) relPath
 {
-	ccResolutionType resolution;
+	CCResolutionType resolution;
 	NSString *fullpath = [[CCFileUtils sharedFileUtils] fullPathForFilename:relPath resolutionType:&resolution];
 
 	if( (self = [super init]) ) {
@@ -580,7 +580,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) generateMipmap
 {
-	NSAssert( _width == ccNextPOT(_width) && _height == ccNextPOT(_height), @"Mimpap texture only works in POT textures");
+	NSAssert( _width == CCNextPOT(_width) && _height == CCNextPOT(_height), @"Mimpap texture only works in POT textures");
 	ccGLBindTexture2D( _name );
 	glGenerateMipmap(GL_TEXTURE_2D);
 	_hasMipmaps = YES;
@@ -588,7 +588,7 @@ static BOOL _PVRHaveAlphaPremultiplied = YES;
 
 -(void) setTexParameters: (ccTexParams*) texParams
 {
-	NSAssert( (_width == ccNextPOT(_width) && _height == ccNextPOT(_height)) ||
+	NSAssert( (_width == CCNextPOT(_width) && _height == CCNextPOT(_height)) ||
 				(texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			@"GL_CLAMP_TO_EDGE should be used in NPOT dimensions");
 

@@ -19,12 +19,12 @@
 
 @implementation SchedulerTarget
 
--(void)update:(ccTime)delta
+-(void)update:(CCTime)delta
 {
 	[_sequence addObject:[NSString stringWithFormat:@"update(%@):%.1f", self.name, delta]];
 }
 
--(void)fixedUpdate:(ccTime)delta
+-(void)fixedUpdate:(CCTime)delta
 {
 	[_sequence addObject:[NSString stringWithFormat:@"fixedUpdate(%@):%.1f", self.name, delta]];
 }
@@ -111,8 +111,8 @@
 	scheduler.maxTimeStep = INFINITY;
 	scheduler.fixedTimeStep = INFINITY;
 	
-	__block ccTime expectedInvokeTime = 1.0;
-	__block ccTime expectedDeltaTime = 1.0;
+	__block CCTime expectedInvokeTime = 1.0;
+	__block CCTime expectedDeltaTime = 1.0;
 	
 	[scheduler scheduleBlock:^(CCTimer *timer){
 		XCTAssertEqual(timer.deltaTime, expectedDeltaTime, @"");
@@ -283,8 +283,8 @@
 	}
 	
 	// 1/(power of two) just to avoid floating point issues
-	ccTime dt = 1.0/64.0;
-	for(ccTime t=0.0; t<100.0; t += dt){
+	CCTime dt = 1.0/64.0;
+	for(CCTime t=0.0; t<100.0; t += dt){
 		[scheduler update:dt];
 	}
 	
@@ -318,8 +318,8 @@
 		[expectedInvocations setObject:expectedInvocationCount forKey:n];
 	}
 	
-	ccTime dt = 1.0/60.0;
-	for(ccTime t=0.0; t<(repeatCount + 1); t += dt){
+	CCTime dt = 1.0/60.0;
+	for(CCTime t=0.0; t<(repeatCount + 1); t += dt){
 		[scheduler update:dt];
 	}
 	
@@ -335,7 +335,7 @@
 	[scheduler update:1.0];
 	XCTAssertEqual(scheduler.currentTime, 1.0, @"");
 	
-	__block ccTime invokedTime = -1.0;
+	__block CCTime invokedTime = -1.0;
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 		invokedTime = timer.invokeTime;
 		
@@ -345,7 +345,7 @@
 	timer.paused = YES;
 	
 	// XCTAssertEqual() doesn't like comparing to the preprocessor token for some reason.
-	ccTime inf = INFINITY;
+	CCTime inf = INFINITY;
 	XCTAssertEqual(timer.invokeTime, inf, @"");
 	
 	[scheduler update:10.0];
@@ -373,8 +373,8 @@
 	scheduler.fixedTimeStep = INFINITY;
 	
 	__block int invocations = 0;
-	__block ccTime delay = 1.0;
-	__block ccTime expectedInvokeTime = delay;
+	__block CCTime delay = 1.0;
+	__block CCTime expectedInvokeTime = delay;
 	
 	CCTimer *timer = [scheduler scheduleBlock:^(CCTimer *timer){
 		XCTAssertEqual(timer.invokeTime, expectedInvokeTime, @"");

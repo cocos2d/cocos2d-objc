@@ -137,13 +137,13 @@
     
     sharedFileUtils.directoriesDict =
     [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-     @"resources-tablet", kCCFileUtilsiPad,
-     @"resources-tablethd", kCCFileUtilsiPadHD,
-     @"resources-phone", kCCFileUtilsiPhone,
-     @"resources-phonehd", kCCFileUtilsiPhoneHD,
-     @"resources-phone", kCCFileUtilsiPhone5,
-     @"resources-phonehd", kCCFileUtilsiPhone5HD,
-     @"", kCCFileUtilsDefault,
+     @"resources-tablet", CCFileUtilsSuffixiPad,
+     @"resources-tablethd", CCFileUtilsSuffixiPadHD,
+     @"resources-phone", CCFileUtilsSuffixiPhone,
+     @"resources-phonehd", CCFileUtilsSuffixiPhoneHD,
+     @"resources-phone", CCFileUtilsSuffixiPhone5,
+     @"resources-phonehd", CCFileUtilsSuffixiPhone5HD,
+     @"", CCFileUtilsSuffixDefault,
      nil];
     
     sharedFileUtils.searchPath =
@@ -153,7 +153,7 @@
      nil];
     
 	sharedFileUtils.enableiPhoneResourcesOniPad = YES;
-    sharedFileUtils.searchMode = kCCFileUtilsSearchDirectoryMode;
+    sharedFileUtils.searchMode = CCFileUtilsSearchModeDirectory;
     [sharedFileUtils buildSearchResolutionsOrder];
     
     [sharedFileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];

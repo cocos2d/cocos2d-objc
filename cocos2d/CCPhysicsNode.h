@@ -32,18 +32,18 @@
 @class CCPhysicsShape;
 
 /// Contains information about colliding physics bodies.
-/// NOTE: There is only one CCPhysicsCollisionPair object per scene and it's reused.
-/// Only use the CCPhysicsCollisionPair object in the method or block it was given to you in.
+/// NOTE: There is only one CCPhysicsCollisionPair object per CCPhysicsNode and it's reused.
+/// Only use the CCPhysicsCollisionPair object in the method or block it was given to you in. Do not retain it.
 @interface CCPhysicsCollisionPair : NSObject
 
 /// The contact information from the two colliding bodies.
 @property(nonatomic, readonly) cpContactPointSet contacts;
 
-/// The friction coefficient for this pair of colliding bodies.
+/// The friction coefficient for this pair of colliding shapes.
 /// The default value is pair.bodyA.friction*pair.bodyB.friction.
 /// Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
 @property(nonatomic, assign) CGFloat friction;
-/// The restitution coefficient for this pair of colliding bodies.
+/// The restitution coefficient for this pair of colliding shapes.
 /// The default value is "pair.bodyA.elasticity*pair.bodyB.elasticity".
 /// Can be overriden in a CCCollisionPairDelegate pre-solve method to change the collision.
 @property(nonatomic, assign) CGFloat restitution;
@@ -56,11 +56,11 @@
 // They are intended to be called from a CCPhysicsCollisionPairDelegate post-solve method or from a [CCPhysicsBody eachContactPair:] block.
 // TODO Is it possible to make a warning for this?
 
-/// The amount of kinetic energy disappated by the last collision of the two bodies.
+/// The amount of kinetic energy dissipated by the last collision of the two shapes.
 /// This is roughly equivalent to the idea of damage.
 /// NOTE: By definition, fully elastic collisions do not lose any energy or cause any permanent damage.
 @property(nonatomic, readonly) CGFloat totalKineticEnergy;
-/// The total impulse applied by this collision to the colliding bodies.
+/// The total impulse applied by this collision to the colliding shapes.
 @property(nonatomic, readonly) CGPoint totalImpulse;
 
 /// A persistent object reference associated with these two colliding objects.
@@ -71,7 +71,7 @@
 /// Retrive the specific physics shapes that were involved in the collision.
 -(void)shapeA:(__autoreleasing CCPhysicsShape **)shapeA shapeB:(__autoreleasing CCPhysicsShape **)shapeB;
 
-/// Ignore the collision between these two physics bodies until they stop colliding.
+/// Ignore the collision between these two shapes bodies until they stop colliding.
 /// It's idomatic to write "return [pair ignore];" if using this method from a CCCollisionPairDelegate pre-solve method.
 /// Always returns false.
 -(BOOL)ignore;
@@ -80,7 +80,7 @@
 
 
 /// Delegate type called when two physics bodies collide.
-/// The final two parameter names should be replaced with strings used with CCPhysicsBody.collisionType.
+/// The final two parameter names should be replaced with strings used with CCPhysicsBody.collisionType or CCPhysicsShape.collisionType.
 /// If both final parameter names are "default" then the method is called when a more specific method isn't found.
 /// "wildcard" can be used as the final parameter name to mean "collides with anything".
 @protocol CCPhysicsCollisionDelegate
@@ -108,22 +108,6 @@
 /// Defaults to NO
 @property(nonatomic, assign) BOOL debugDraw;
 
-
-// TODO Would *really* like to push this to CCScheduler.
-// Will be a lot of work and testing, so it's here for now.
-
-/// How often the physics is updated.
-/// This is run independently of the framerate.
-/// Defaults to 60hz.
-@property(nonatomic, assign) ccTime fixedRate;
-
-/// Maximum delta time to process in a single update call.
-/// Defaults to 1/15.
-@property(nonatomic, assign) ccTime maxDeltaTime;
-
-/// Previous fixed update time.
-@property(nonatomic, readonly) ccTime fixedTime;
-
 /// Gravity applied to the dynamic bodies in the world.
 /// Defaults to CGPointZero.
 @property(nonatomic, assign) CGPoint gravity;
@@ -131,15 +115,22 @@
 /// Physics bodies fall asleep when a group of them move slowly for longer than the threshold.
 /// Sleeping bodies use minimal CPU resources and wake automatically when a collision happens.
 /// Defaults to 0.5 seconds.
-@property(nonatomic, assign) ccTime sleepTimeThreshold;
+@property(nonatomic, assign) CCTime sleepTimeThreshold;
 
 /// The delegate that is called when two physics bodies collide.
 @property(nonatomic, assign) NSObject<CCPhysicsCollisionDelegate> *collisionDelegate;
 
-// TODO think about these more.
+/// Find all CCPhysicsShapes within a certain distance of a point.
+/// The block is called once for each shape found.
 -(void)pointQueryAt:(CGPoint)point within:(CGFloat)radius block:(BOOL (^)(CCPhysicsShape *shape, CGPoint nearest, CGFloat distance))block;
+
+/// Shoot a ray from 'start' to 'end' and find all of the CCPhysicsShapes that it would hit.
+/// The block is called once for each shape found.
 -(void)rayQueryFirstFrom:(CGPoint)start to:(CGPoint)end block:(BOOL (^)(CCPhysicsShape *shape, CGPoint point, CGPoint normal, CGFloat distance))block;
--(BOOL)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsBody *body))block;
+
+/// Find all CCPhysicsShapes whose bounding boxes overlap the given CGRect.
+/// The block is called once for each shape found.
+-(void)rectQuery:(CGRect)rect block:(BOOL (^)(CCPhysicsShape *shape))block;
 
 @end
 

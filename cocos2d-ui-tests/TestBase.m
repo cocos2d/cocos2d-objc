@@ -33,12 +33,12 @@
     self = [super init];
     if (!self) return NULL;
     
-    self.contentSizeType = kCCContentSizeTypeNormalized;
+    self.contentSizeType = CCContentSizeTypeNormalized;
     self.contentSize = CGSizeMake(1, 1);
     
     // Create test content
     self.contentNode = [CCNode node];
-    self.contentNode.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitInsetPoints);
+    self.contentNode.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitInsetPoints);
     self.contentNode.contentSize = CGSizeMake(1, 44);
 	
     [self addChild:self.contentNode];
@@ -47,25 +47,25 @@
     
     // Header background
     CCSprite9Slice* headerBg = [CCSprite9Slice spriteWithImageNamed:@"Interface/header.png"];
-    headerBg.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    headerBg.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     headerBg.position = ccp(0,0);
     headerBg.anchorPoint = ccp(0,1);
-    headerBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    headerBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     headerBg.contentSize = CGSizeMake(1, 44);
     
     [self addChild:headerBg];
     
     // Header label
     _lblTitle = [CCLabelTTF labelWithString:NSStringFromClass([self class]) fontName:@"HelveticaNeue-Medium" fontSize:17];
-    _lblTitle.positionType = kCCPositionTypeNormalized;
+    _lblTitle.positionType = CCPositionTypeNormalized;
     _lblTitle.position = ccp(0.5f,0.5f);
     
     [headerBg addChild:_lblTitle];
     
     _lblSubTitle = [CCLabelTTF labelWithString:@"" fontName:@"HelveticaNeue-Light" fontSize:14];
-    _lblSubTitle.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    _lblSubTitle.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     _lblSubTitle.position = ccp(0.5, 64);
-    _lblSubTitle.horizontalAlignment = kCCTextAlignmentCenter;
+    _lblSubTitle.horizontalAlignment = CCTextAlignmentCenter;
     
     [self addChild:_lblSubTitle];
     
@@ -73,7 +73,7 @@
     CCSpriteFrame* frame = [[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-back.png"];
     
     _btnBack = [CCButton buttonWithTitle:NULL spriteFrame:frame];
-    _btnBack.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerTopLeft);
+    _btnBack.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerTopLeft);
     _btnBack.position = ccp(22, 22);
     _btnBack.background.opacity = 0;
     
@@ -82,7 +82,7 @@
     
     // Prev button
     _btnPrev = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-prev.png"]];
-    _btnPrev.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+    _btnPrev.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
     _btnPrev.position = ccp(22, 22);
     _btnPrev.background.opacity = 0;
     
@@ -91,7 +91,7 @@
     
     // Next button
     _btnNext = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-next.png"]];
-    _btnNext.positionType = CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomRight);
+    _btnNext.positionType = CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomRight);
     _btnNext.position = ccp(22, 22);
     _btnNext.background.opacity = 0;
     
@@ -100,7 +100,7 @@
     
     // Reload button
     _btnReload = [CCButton buttonWithTitle:NULL spriteFrame:[[CCSpriteFrameCache sharedSpriteFrameCache]spriteFrameByName:@"Interface/btn-reload.png"]];
-    _btnReload.positionType = CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft);
+    _btnReload.positionType = CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft);
     _btnReload.position = ccp(0.5, 22);
     _btnReload.background.opacity = 0;
     
