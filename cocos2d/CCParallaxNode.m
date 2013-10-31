@@ -89,7 +89,7 @@
 	pos.y = pos.y * ratio.y + offset.y;
 	child.position = pos;
 
-	[super addChild: child z:z tag:child.tag];
+	[super addChild: child z:z name:child.name];
 }
 
 -(void) removeChild:(CCNode*)node cleanup:(BOOL)cleanup

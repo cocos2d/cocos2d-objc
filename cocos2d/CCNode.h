@@ -35,10 +35,6 @@
 #import "CCResponder.h"
 #import "CCScheduler.h"
 
-enum {
-	kCCNodeTagInvalid = -1,
-};
-
 @class CCScene;
 @class CCGLProgram;
 @class CCScheduler;
@@ -128,7 +124,8 @@ enum {
 	CCNode *__unsafe_unretained _parent;
 
 	// a tag. any number you want to assign to the node
-	NSInteger _tag;
+	//NSInteger _tag;
+    NSString* _name;
 
 	// user data field
 	id _userObject;
@@ -258,7 +255,8 @@ enum {
 @property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
 
 /** A tag used to identify the node easily */
-@property(nonatomic,readwrite,assign) NSInteger tag;
+//@property(nonatomic,readwrite,assign) NSInteger tag;
+@property(nonatomic,strong) NSString* name;
 
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
@@ -339,7 +337,7 @@ enum {
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
  @since v0.7.1
  */
--(void) addChild: (CCNode*)node z:(NSInteger)z tag:(NSInteger)tag;
+-(void) addChild: (CCNode*)node z:(NSInteger)z name:(NSString*)name;
 
 // composition: REMOVE
 
@@ -368,12 +366,12 @@ enum {
 /** Removes a child from the container by tag value forcing a cleanup.
  @since v2.1
  */
--(void) removeChildByTag:(NSInteger) tag;
+-(void) removeChildByName:(NSString*)name;
 
 /** Removes a child from the container by tag value. It will also cleanup all running actions depending on the cleanup parameter
  @since v0.7.1
  */
--(void) removeChildByTag:(NSInteger) tag cleanup:(BOOL)cleanup;
+-(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup;
 
 /** Removes all children from the container forcing a cleanup.
  @since v2.1
@@ -390,7 +388,7 @@ enum {
  @return returns a CCNode object
  @since v0.7.1
  */
--(CCNode*) getChildByTag:(NSInteger) tag;
+-(CCNode*) getChildByName:(NSString*) name;
 
 /** Reorders a child according to a new z value.
  * The child MUST be already added.

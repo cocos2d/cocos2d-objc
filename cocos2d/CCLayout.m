@@ -56,9 +56,9 @@
     [super visit];
 }
 
-- (void) addChild:(CCNode *)node z:(NSInteger)z tag:(NSInteger)tag
+- (void) addChild:(CCNode *)node z:(NSInteger)z name:(NSString*)name
 {
-    [super addChild:node z:z tag:tag];
+    [super addChild:node z:z name:name];
     [self layout];
 }
 
