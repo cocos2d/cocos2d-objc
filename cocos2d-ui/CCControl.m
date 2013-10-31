@@ -50,6 +50,7 @@
     if (!self) return NULL;
     
     self.userInteractionEnabled = YES;
+    self.exclusiveTouch = YES;
     
     return self;
 }
