@@ -85,7 +85,7 @@
  -# The node will be moved according to the camera values (camera)
 
  */
-@interface CCNode : CCResponder < CCResponderProtocol, CCSchedulerTarget > {
+@interface CCNode : CCResponder < CCSchedulerTarget > {
 	// rotation angle
 	float _rotationalSkewX, _rotationalSkewY;
 
@@ -261,27 +261,11 @@
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** Enabled user interaction on a node, like touch
- @since v3.0
- */
-@property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
-
-/** Enabled multiple touches inside a single node
- @since v3.0
- */
-@property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
-
-/** Locks the touch to the node if touch started outside
- If a touch is moved inside a non locked node, a touchesBegan will be generated
- @since v3.0
- */
-@property (nonatomic, assign) BOOL claimsUserInteraction;
-
 /** Expands ( or contracts ) the hit area of the node, value is in points.
  @since v3.0
  */
-@property (nonatomic,assign) float hitAreaExpansion;
- 
+@property (nonatomic, assign) float hitAreaExpansion;
+
 // initializators
 /** allocates and initializes a node.
  The node will be created as "autorelease".

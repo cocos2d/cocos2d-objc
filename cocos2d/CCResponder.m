@@ -51,11 +51,26 @@
     NSAssert(self, @"Unable to create class");
 
     // initialize
+    _userInteractionEnabled = NO;
+    _claimsUserInteraction = YES;
+    _multipleTouchEnabled = NO;
+    _exclusiveTouch = NO;
     
     // done
     return(self);
 }
 
+// -----------------------------------------------------------------
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    if (_userInteractionEnabled == userInteractionEnabled) return;
+    _userInteractionEnabled = userInteractionEnabled;
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+}
+
+// -----------------------------------------------------------------
+#pragma mark - iOS
 // -----------------------------------------------------------------
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
@@ -70,27 +85,30 @@
  */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {    
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
+#else
+
+// -----------------------------------------------------------------
+#pragma mark - OSX
 // -----------------------------------------------------------------
 
-#else
 /**
  *  Mouse callbacks
  *  If these functions are not overridden by a responder, the event will not be flagged as being processed, and thus be sent to next responder
@@ -100,52 +118,52 @@
  */
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 #endif

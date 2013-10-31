@@ -45,8 +45,8 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 @implementation CCSprite9Slice
 {
     CGSize _originalContentSize;
-    CGPoint _contentScale;
     ccV3F_C4B_T2F _quadNine[(CCSprite9SliceVerticesX * CCSprite9SliceVerticesY) + CCSprite9SliceVertices];
+    BOOL _quadNineDirty;
 }
 
 // ---------------------------------------------------------------------
@@ -63,6 +63,8 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
     _marginRight = CCSprite9SliceMarginDefault;
     _marginTop = CCSprite9SliceMarginDefault;
     _marginBottom = CCSprite9SliceMarginDefault;
+    
+    _quadNineDirty = YES;
     
     // done
     return(self);
@@ -81,6 +83,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
     
     // save the original sizes for texture calculations
     _originalContentSize = self.contentSizeInPoints;
+    _quadNineDirty = YES;
     
     if (!CGSizeEqualToSize(oldContentSize, CGSizeZero))
     {
@@ -191,6 +194,8 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 
         }
     }
+    
+    _quadNineDirty = NO;
 }
 
 // ---------------------------------------------------------------------
@@ -214,6 +219,10 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
     // calculate quad 9
+    // TODO: Enable dirty functionality
+    // Disabled, as it for some reason does not work on CCButton
+    
+    // if (_quadNineDirty) [self calculateQuadNine];
     [self calculateQuadNine];
     
     // set the buffer positions
@@ -281,6 +290,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
     _marginRight = margin;
     _marginTop = margin;
     _marginBottom = margin;
+    _quadNineDirty = YES;
 }
 
 // ---------------------------------------------------------------------
@@ -288,6 +298,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginLeft:(float)marginLeft
 {
     _marginLeft = clampf(marginLeft, 0, 1);
+    _quadNineDirty = YES;
     // sum of left and right margin, can not exceed 1
     NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
 }
@@ -295,6 +306,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginRight:(float)marginRight
 {
     _marginRight = clampf(marginRight, 0, 1);
+    _quadNineDirty = YES;
     // sum of left and right margin, can not exceed 1
     NSAssert((_marginLeft + _marginRight) <= 1, @"Sum of left and right margine, can not exceed 1");
 }
@@ -302,6 +314,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginTop:(float)marginTop
 {
     _marginTop = clampf(marginTop, 0, 1);
+    _quadNineDirty = YES;
     // sum of top and bottom margin, can not exceed 1
     NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
 }
@@ -309,6 +322,7 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 - (void)setMarginBottom:(float)marginBottom
 {
     _marginBottom = clampf(marginBottom, 0, 1);
+    _quadNineDirty = YES;
     // sum of top and bottom margin, can not exceed 1
     NSAssert((_marginTop + _marginBottom) <= 1, @"Sum of top and bottom margine, can not exceed 1");
 }

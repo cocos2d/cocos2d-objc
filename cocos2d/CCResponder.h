@@ -33,13 +33,61 @@
 // -----------------------------------------------------------------
 /**
  *  CCResponder is the base class for all nodes.
- *  It exposes the touch and mouse protocol to any node, which enables user interaction
+ *  It exposes the touch and mouse interface to any node, which enables user interaction
  */
-@interface CCResponder : NSObject <CCResponderProtocol>
+@interface CCResponder : NSObject
+
+// -----------------------------------------------------------------
+/** Enabled user interaction on a node, like touch
+ @since v3.0
+ */
+@property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
+
+/** Enabled multiple touches inside a single node
+ @since v3.0
+ */
+@property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
+
+/** Locks the touch to the node if touch moved outside
+ If a touch is moved inside a node that does not claim user interaction, a touchesBegan will be generated
+ @since v3.0
+ */
+@property (nonatomic, assign) BOOL claimsUserInteraction;
+
+/** All other touches will be cancelled / ignored, if a node with exclusive touch, is active
+ @since v3.0
+ */
+@property (nonatomic, assign, getter = isExclusiveTouch) BOOL exclusiveTouch;
 
 // -----------------------------------------------------------------
 
 - (id)init;
+
+#if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+
+#else
+
+- (void)mouseDown:(NSEvent *)theEvent;
+- (void)mouseDragged:(NSEvent *)theEvent;
+- (void)mouseUp:(NSEvent *)theEvent;
+
+- (void)rightMouseDown:(NSEvent *)theEvent;
+- (void)rightMouseDragged:(NSEvent *)theEvent;
+- (void)rightMouseUp:(NSEvent *)theEvent;
+
+- (void)otherMouseDown:(NSEvent *)theEvent;
+- (void)otherMouseDragged:(NSEvent *)theEvent;
+- (void)otherMouseUp:(NSEvent *)theEvent;
+
+- (void)scrollWheel:(NSEvent *)theEvent;
+
+#endif
+
 
 // -----------------------------------------------------------------
 
