@@ -100,12 +100,19 @@ enum
 
 // -----------------------------------------------------------------
 
-@property (nonatomic) BOOL eventProcessed;                          // event was processed
+/**
+ *  Enables the responder manager
+ *  When the responder manager is disabled, all current touches will be cancelled, 
+ *  and no further touch handling registered
+ */
+@property (nonatomic, assign, getter = isEnabled) BOOL enabled;     // responder manager enabled
 
 // -----------------------------------------------------------------
 
 + (CCResponderManager*)responderManager;
 - (id)init;
+
+- (void)discardCurrentEvent;
 
 - (void)addResponder:(CCNode *)responder;
 - (void)removeAllResponders;

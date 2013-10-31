@@ -70,22 +70,22 @@
  */
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {    
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 // -----------------------------------------------------------------
@@ -100,52 +100,52 @@
  */
 - (void)mouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
-    [CCDirector sharedDirector].responderManager.eventProcessed = NO;
+    [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
 #endif
