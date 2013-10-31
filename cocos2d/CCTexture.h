@@ -130,6 +130,8 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 	CCGLProgram					*_shaderProgram;
 
 }
++ (id) textureWithFile:(NSString*)file;
+
 /** Initializes with a texture2d with data */
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
