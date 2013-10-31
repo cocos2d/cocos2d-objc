@@ -148,7 +148,7 @@
 {
     while (_runningResponderList.count > 0)
     {
-        [self cancelResponder:[_runningResponderList firstObject]];
+        [self cancelResponder:[_runningResponderList lastObject]];
     }
     _exclusiveMode = NO;
 }
@@ -492,7 +492,7 @@
         if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
         {
             // begin the mouse down
-            self.eventProcessed = YES;
+            _currentEventProcessed = YES;
             switch (button)
             {
                 case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
@@ -501,7 +501,7 @@
             }
             
             // if mouse was processed, remember it and break
-            if (self.eventProcessed)
+            if (_currentEventProcessed)
             {
                 [self addResponder:node withButton:button];
                 break;
@@ -564,7 +564,7 @@
             if (!node.claimsUserInteraction && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
             {
                 // begin the mouse down
-                self.eventProcessed = YES;
+                _currentEventProcessed = YES;
                 switch (button)
                 {
                     case CCMouseButtonLeft: if ([node respondsToSelector:@selector(mouseDown:)]) [node mouseDown:theEvent]; break;
@@ -573,7 +573,7 @@
                 }
                 
                 // if mouse was accepted, add it and break
-                if (self.eventProcessed)
+                if (_currentEventProcessed)
                 {
                     [self addResponder:node withButton:button];
                     break;
@@ -674,11 +674,11 @@
     {
         CCNode *node = (CCNode *)responder.target;
         
-        self.eventProcessed = YES;
+        _currentEventProcessed = YES;
         if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
     
         // if mouse was accepted, return
-        if (self.eventProcessed) return;
+        if (_currentEventProcessed) return;
     }
     
     // scan through responders, and find first one
@@ -689,11 +689,11 @@
         // check for hit test
         if ([node hitTestWithWorldPos:[[CCDirector sharedDirector] convertEventToGL:theEvent]])
         {
-            self.eventProcessed = YES;
+            _currentEventProcessed = YES;
             if ([node respondsToSelector:@selector(scrollWheel:)]) [node scrollWheel:theEvent];
         
             // if mouse was accepted, break
-            if (self.eventProcessed) break;
+            if (_currentEventProcessed) break;
         }
     }
 }
