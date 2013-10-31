@@ -85,7 +85,7 @@
  -# The node will be moved according to the camera values (camera)
 
  */
-@interface CCNode : CCResponder < CCResponderProtocol, CCSchedulerTarget > {
+@interface CCNode : CCResponder < CCSchedulerTarget > {
 	// rotation angle
 	float _rotationalSkewX, _rotationalSkewY;
 

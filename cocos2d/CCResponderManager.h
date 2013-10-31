@@ -36,22 +36,12 @@
 #if TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR
 
 // -----------------------------------------------------------------
-#pragma mark - iOS
+#pragma mark - CCRunningResponder iOS
 // -----------------------------------------------------------------
 
 #import <UIKit/UIKit.h>
 
 #define RESPONDER UIResponder
-
-@protocol CCResponderProtocol <NSObject>
-
-@optional
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
-
-@end
 
 // -----------------------------------------------------------------
 
@@ -66,7 +56,7 @@
 #else
 
 // -----------------------------------------------------------------
-#pragma mark - Mac
+#pragma mark - CCRunningResponder Mac
 // -----------------------------------------------------------------
 
 #import <AppKit/AppKit.h>
@@ -80,26 +70,6 @@ typedef enum
     CCMouseButtonOther,
 } CCMouseButton;
 
-@protocol CCResponderProtocol <NSObject>
-
-@optional
-- (void)mouseDown:(NSEvent *)theEvent;
-- (void)mouseDragged:(NSEvent *)theEvent;
-- (void)mouseUp:(NSEvent *)theEvent;
-- (void)rightMouseDown:(NSEvent *)theEvent;
-- (void)rightMouseDragged:(NSEvent *)theEvent;
-- (void)rightMouseUp:(NSEvent *)theEvent;
-- (void)otherMouseDown:(NSEvent *)theEvent;
-- (void)otherMouseDragged:(NSEvent *)theEvent;
-- (void)otherMouseUp:(NSEvent *)theEvent;
-- (void)scrollWheel:(NSEvent *)theEvent;
-
-- (void)mouseMoved:(NSEvent *)theEvent;
-- (void)mouseEntered:(NSEvent *)theEvent;
-- (void)mouseExited:(NSEvent *)theEvent;
-
-@end
-
 // -----------------------------------------------------------------
 
 @interface CCRunningResponder : NSObject
@@ -112,7 +82,7 @@ typedef enum
 #endif
 
 // -----------------------------------------------------------------
-#pragma mark - Both
+#pragma mark - CCResponderManager
 // -----------------------------------------------------------------
 
 @class CCNode;
