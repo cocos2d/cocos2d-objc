@@ -188,10 +188,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		self.scheduler = [director scheduler];
         
         // set default touch handling
-        self.userInteractionEnabled = NO;
-        self.claimsUserInteraction = YES;
-        self.multipleTouchEnabled = NO;
-        self.exclusiveTouch = NO;
         self.hitAreaExpansion = 0.0f;
         
 	}
@@ -1459,13 +1455,6 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
     if ((pos.y < offset.y) || (pos.y > size.height) || (pos.x < offset.x) || (pos.x > size.width)) return(NO);
     
     return(YES);
-}
-
-- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
-{
-    if (_userInteractionEnabled == userInteractionEnabled) return;
-    _userInteractionEnabled = userInteractionEnabled;
-    [[[CCDirector sharedDirector] responderManager] markAsDirty];
 }
 
 // -----------------------------------------------------------------
