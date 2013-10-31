@@ -51,11 +51,26 @@
     NSAssert(self, @"Unable to create class");
 
     // initialize
+    _userInteractionEnabled = NO;
+    _claimsUserInteraction = YES;
+    _multipleTouchEnabled = NO;
+    _exclusiveTouch = NO;
     
     // done
     return(self);
 }
 
+// -----------------------------------------------------------------
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    if (_userInteractionEnabled == userInteractionEnabled) return;
+    _userInteractionEnabled = userInteractionEnabled;
+    [[[CCDirector sharedDirector] responderManager] markAsDirty];
+}
+
+// -----------------------------------------------------------------
+#pragma mark - iOS
 // -----------------------------------------------------------------
 
 #if ( TARGET_OS_IPHONE || TARGET_IPHONE_SIMULATOR )
@@ -88,9 +103,12 @@
     [[CCDirector sharedDirector].responderManager discardCurrentEvent];
 }
 
+#else
+
+// -----------------------------------------------------------------
+#pragma mark - OSX
 // -----------------------------------------------------------------
 
-#else
 /**
  *  Mouse callbacks
  *  If these functions are not overridden by a responder, the event will not be flagged as being processed, and thus be sent to next responder

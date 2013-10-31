@@ -38,6 +38,28 @@
 @interface CCResponder : NSObject
 
 // -----------------------------------------------------------------
+/** Enabled user interaction on a node, like touch
+ @since v3.0
+ */
+@property ( nonatomic, assign, getter = isUserInteractionEnabled ) BOOL userInteractionEnabled;
+
+/** Enabled multiple touches inside a single node
+ @since v3.0
+ */
+@property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
+
+/** Locks the touch to the node if touch moved outside
+ If a touch is moved inside a node that does not claim user interaction, a touchesBegan will be generated
+ @since v3.0
+ */
+@property (nonatomic, assign) BOOL claimsUserInteraction;
+
+/** All other touches will be cancelled / ignored, if a node with exclusive touch, is active
+ @since v3.0
+ */
+@property (nonatomic, assign, getter = isExclusiveTouch) BOOL exclusiveTouch;
+
+// -----------------------------------------------------------------
 
 - (id)init;
 
