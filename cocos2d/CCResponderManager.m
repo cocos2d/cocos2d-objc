@@ -50,6 +50,9 @@
     __weak CCNode *_responderList[CCResponderManagerBufferSize];    // list of active responders
     int _responderListCount;                                        // number of active responders
     BOOL _dirty;                                                    // list of responders should be rebuild
+    BOOL _currentEventProcessed;                                    // current event was processed
+    BOOL _enabled;                                                  // responder manager enabled
+    BOOL _exclusiveMode;                                            // manager only responds to current exclusive responder
     
     NSMutableArray *_runningResponderList;                          // list of running responders
 }
@@ -70,12 +73,22 @@
     
     // initalize
     _runningResponderList = [NSMutableArray array];
+    
     // reset touch handling
     [self removeAllResponders];
     _dirty = YES;
+    _enabled = YES;
+    _exclusiveMode = NO;
     
     // done
     return(self);
+}
+
+// -----------------------------------------------------------------
+
+- (void)discardCurrentEvent
+{
+    _currentEventProcessed = NO;
 }
 
 // -----------------------------------------------------------------
@@ -131,6 +144,15 @@
     _responderListCount = 0;
 }
 
+- (void)cancelAllResponders
+{
+    while (_runningResponderList.count > 0)
+    {
+        [self cancelResponder:[_runningResponderList firstObject]];
+    }
+    _exclusiveMode = NO;
+}
+
 // -----------------------------------------------------------------
 #pragma mark - dirty
 // -----------------------------------------------------------------
@@ -138,6 +160,21 @@
 - (void)markAsDirty
 {
     _dirty = YES;
+}
+
+// -----------------------------------------------------------------
+#pragma mark - enabled
+// -----------------------------------------------------------------
+
+- (void)setEnabled:(BOOL)enabled
+{
+    if (enabled == _enabled) return;
+    _enabled = enabled;
+    // cancel ongoing touches, if disabled
+    if (!_enabled)
+    {
+        [self cancelAllResponders];
+    }
 }
 
 // -----------------------------------------------------------------
@@ -191,6 +228,9 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!_enabled) return;
+    if (_exclusiveMode) return;
+    
     // End editing any text fields
     [[CCDirector sharedDirector].view endEditing:YES];
     
@@ -211,6 +251,13 @@
             // check for hit test
             if ([node hitTestWithWorldPos:worldTouchLocation])
             {
+                // check if node has exclusive touch
+                if (node.isExclusiveTouch)
+                {
+                    [self cancelAllResponders];
+                    _exclusiveMode = YES;
+                }
+                
                 // if not a multi touch node, check if node already is being touched
                 responderCanAcceptTouch = YES;
                 if (!node.isMultipleTouchEnabled)
@@ -228,12 +275,12 @@
                 if (!responderCanAcceptTouch) break;
                 
                 // begin the touch
-                self.eventProcessed = YES;
+                _currentEventProcessed = YES;
                 if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
                     [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
  
                 // if touch was processed, add it and break
-                if (self.eventProcessed)
+                if (_currentEventProcessed)
                 {
                     [self addResponder:node withTouch:touch andEvent:event];
                     break;
@@ -247,6 +294,7 @@
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
     // go through all touches
@@ -277,6 +325,9 @@
                         [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
                     // remove from list
                     [_runningResponderList removeObject:touchEntry];
+
+                    // always end exclusive mode
+                    _exclusiveMode = NO;
                 }
                 else
                 {
@@ -288,24 +339,34 @@
         }
         else
         {
-            // scan backwards through touch responders
-            for (int index = _responderListCount - 1; index >= 0; index --)
+            if (!_exclusiveMode)
             {
-                CCNode *node = _responderList[index];
-            
-                // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
-                if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
+                // scan backwards through touch responders
+                for (int index = _responderListCount - 1; index >= 0; index --)
                 {
-                    // begin the touch
-                    self.eventProcessed = YES;
-                    if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
-                        [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                    CCNode *node = _responderList[index];
                     
-                    // if touch was accepted, add it and break
-                    if (self.eventProcessed)
+                    // if the touch responder does not lock touch, it will receive a touchesBegan if a touch is moved inside
+                    if (!node.claimsUserInteraction  && [node hitTestWithWorldPos:[[CCDirector sharedDirector] convertToGL:[touch locationInView:[CCDirector sharedDirector].view ]]])
                     {
-                        [self addResponder:node withTouch:touch andEvent:event];
-                        break;
+                        // check if node has exclusive touch
+                        if (node.isExclusiveTouch)
+                        {
+                            [self cancelAllResponders];
+                            _exclusiveMode = YES;
+                        }
+
+                        // begin the touch
+                        _currentEventProcessed = YES;
+                        if ([node respondsToSelector:@selector(touchesBegan:withEvent:)])
+                            [node touchesBegan:[NSSet setWithObject:touch] withEvent:event];
+                        
+                        // if touch was accepted, add it and break
+                        if (_currentEventProcessed)
+                        {
+                            [self addResponder:node withTouch:touch andEvent:event];
+                            break;
+                        }
                     }
                 }
             }
@@ -317,6 +378,7 @@
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
     // go through all touches
@@ -334,6 +396,9 @@
                 [node touchesEnded:[NSSet setWithObject:touch] withEvent:event];
             // remove from list
             [_runningResponderList removeObject:touchEntry];
+            
+            // always end exclusive mode
+            _exclusiveMode = NO;
         }
     }
 }
@@ -342,6 +407,7 @@
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
     // go through all touches
@@ -352,13 +418,10 @@
         
         if (touchEntry)
         {
-            CCNode *node = (CCNode *)touchEntry.target;
+            [self cancelResponder:touchEntry];
 
-            // cancel the touch
-            if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)])
-                [node touchesCancelled:[NSSet setWithObject:touch] withEvent:event];
-            // remove from list
-            [_runningResponderList removeObject:touchEntry];
+            // always end exclusive mode
+            _exclusiveMode = NO;
         }
     }
 }
@@ -390,6 +453,20 @@
     touchEntry.touch = touch;
     touchEntry.event = event;
     [_runningResponderList addObject:touchEntry];
+}
+
+// -----------------------------------------------------------------
+// cancels a running responder
+
+- (void)cancelResponder:(CCRunningResponder *)responder
+{
+    CCNode *node = (CCNode *)responder.target;
+    
+    // cancel the touch
+    if ([node respondsToSelector:@selector(touchesCancelled:withEvent:)])
+        [node touchesCancelled:[NSSet setWithObject:responder.touch] withEvent:responder.event];
+    // remove from list
+    [_runningResponderList removeObject:responder];
 }
 
 // -----------------------------------------------------------------
@@ -531,52 +608,62 @@
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [[CCDirector sharedDirector].view.window makeFirstResponder:[CCDirector sharedDirector].view];
     [self mouseDown:theEvent button:CCMouseButtonLeft];
 }
 
 - (void)mouseDragged:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseDragged:theEvent button:CCMouseButtonLeft];
 }
 
 - (void)mouseUp:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseUp:theEvent button:CCMouseButtonLeft];
 }
 
 - (void)rightMouseDown:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseDown:theEvent button:CCMouseButtonRight];
 }
 
 - (void)rightMouseDragged:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseDragged:theEvent button:CCMouseButtonRight];
 }
 
 - (void)rightMouseUp:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseUp:theEvent button:CCMouseButtonRight];
 }
 
 - (void)otherMouseDown:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseDown:theEvent button:CCMouseButtonOther];
 }
 
 - (void)otherMouseDragged:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseDragged:theEvent button:CCMouseButtonOther];
 }
 
 - (void)otherMouseUp:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     [self mouseUp:theEvent button:CCMouseButtonOther];
 }
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
+    if (!_enabled) return;
     if (_dirty) [self buildResponderList];
 
     // if otherMouse is active, scrollWheel goes to that node
@@ -656,6 +743,14 @@
     touchEntry.target = node;
     touchEntry.button = button;
     [_runningResponderList addObject:touchEntry];
+}
+
+// -----------------------------------------------------------------
+// cancels a running responder
+
+- (void)cancelResponder:(CCRunningResponder *)responder
+{
+    [_runningResponderList removeObject:responder];
 }
 
 // -----------------------------------------------------------------
