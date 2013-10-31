@@ -330,129 +330,80 @@ typedef struct _ccBlendFunc
 static const ccBlendFunc kCCBlendFuncDisable = {GL_ONE, GL_ZERO};
 
 //! ccResolutionType
-typedef enum
+typedef NS_ENUM(NSUInteger, CCResolutionType)
 {
 	//! Unknown resolution type
-	kCCResolutionUnknown,
+	CCResolutionTypeUnknown,
 #ifdef __CC_PLATFORM_IOS
 	//! iPhone resolution type
-	kCCResolutioniPhone,
+	CCResolutionTypeiPhone,
 	//! iPhone RetinaDisplay resolution type
-	kCCResolutioniPhoneRetinaDisplay,
+	CCResolutionTypeiPhoneRetinaDisplay,
 	//! iPhone5 resolution type
-	kCCResolutioniPhone5,
+	CCResolutionTypeiPhone5,
 	//! iPhone 5 RetinaDisplay resolution type
-	kCCResolutioniPhone5RetinaDisplay,
+	CCResolutionTypeiPhone5RetinaDisplay,
 	//! iPad resolution type
-	kCCResolutioniPad,
+	CCResolutionTypeiPad,
 	//! iPad Retina Display resolution type
-	kCCResolutioniPadRetinaDisplay,
+	CCResolutionTypeiPadRetinaDisplay,
 	
 #elif defined(__CC_PLATFORM_MAC)
 	//! Mac resolution type
-	kCCResolutionMac,
+	CCResolutionTypeMac,
 
 	//! Mac RetinaDisplay resolution type
-	kCCResolutionMacRetinaDisplay,
+	CCResolutionTypeMacRetinaDisplay,
 #endif // platform
 
-} ccResolutionType;
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Vertical text alignment type
-typedef enum
+typedef NS_ENUM(NSUInteger, CCVerticalTextAlignment)
 {
-    kCCVerticalTextAlignmentTop,
-    kCCVerticalTextAlignmentCenter,
-    kCCVerticalTextAlignmentBottom,
-} CCVerticalTextAlignment;
+    CCVerticalTextAlignmentTop,
+    CCVerticalTextAlignmentCenter,
+    CCVerticalTextAlignmentBottom,
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Horizontal text alignment type
-typedef enum
+typedef NS_ENUM(NSUInteger, CCTextAlignment)
 {
-	kCCTextAlignmentLeft,
-	kCCTextAlignmentCenter,
-	kCCTextAlignmentRight,
-} CCTextAlignment;
+	CCTextAlignmentLeft,
+	CCTextAlignmentCenter,
+	CCTextAlignmentRight,
+};
 
 // XXX: If any of these enums are edited and/or reordered, update CCTexture2D.m
 //! Line break modes
-typedef enum {
-	kCCLineBreakModeWordWrap,
-	kCCLineBreakModeCharacterWrap,
-	kCCLineBreakModeClip,
-	kCCLineBreakModeHeadTruncation,
-	kCCLineBreakModeTailTruncation,
-	kCCLineBreakModeMiddleTruncation
-} CCLineBreakMode;
+    /*
+typedef NS_ENUM(NSUInteger, CCLineBreakMode)
+{
+	CCLineBreakModeWordWrap,
+	CCLineBreakModeCharacterWrap,
+	CCLineBreakModeClip,
+	CCLineBreakModeHeadTruncation,
+	CCLineBreakModeTailTruncation,
+	CCLineBreakModeMiddleTruncation
+};*/
 
 //! delta time type
-typedef double ccTime;
+typedef double CCTime;
 
-typedef float ccMat4[16];
-    
-/*
-typedef struct _ccFontShadow
-{
-    // true if shadow enabled
-    bool   m_shadowEnabled;
-    // shadow x and y offset
-    CGSize m_shadowOffset;
-    // shadow blurrines
-    float  m_shadowBlur;
-    // shadow opacity
-    float  m_shadowOpacity;
-    
-} ccFontShadow;
-
-typedef struct _ccFontStroke
-{
-    // true if stroke enabled
-    bool        m_strokeEnabled;
-    // stroke color
-    ccColor3B   m_strokeColor;
-    // stroke size
-    float       m_strokeSize;
-    
-} ccFontStroke;
- */
-    
-/*
-typedef struct _ccFontDefinition
-{
-    // font name
-    NSString                *m_fontName;
-    // font size
-    int                     m_fontSize;
-    // horizontal alignment
-    CCTextAlignment         m_alignment;
-    // vertical alignment
-    CCVerticalTextAlignment m_vertAlignment;
-    // line break mode
-    CCLineBreakMode         m_lineBreakMode;
-    // renering box
-    CGSize                  m_dimensions;
-    // font color
-    ccColor3B               m_fontFillColor;
-    // font shadow
-    ccFontShadow            m_shadow;
-    // font stroke
-    ccFontStroke            m_stroke;
-    
-} ccFontDefinition;
-*/
+//typedef float CCMat4[16];
     
 enum
 {
     //! Position is set in points (this is the default)
-    kCCPositionUnitPoints,
+    CCPositionUnitPoints,
     
     //! Position is scaled by the global positionScaleFactor (as defined by CCDirector)
-    kCCPositionUnitScaled,
+    CCPositionUnitScaled,
     
     //! Position is a normalized value multiplied by the content size of the parent's container
-    kCCPositionUnitNormalized,
+    CCPositionUnitNormalized,
     
 };
 typedef unsigned char CCPositionUnit;
@@ -460,19 +411,19 @@ typedef unsigned char CCPositionUnit;
 enum
 {
     //! Content size is set in points (this is the default)
-    kCCContentSizeUnitPoints,
+    CCContentSizeUnitPoints,
     
     //! Content size is scaled by the global positionScaleFactor (as defined by CCDirector)
-    kCCContentSizeUnitScaled,
+    CCContentSizeUnitScaled,
     
     //! Content size is a normalized value multiplied by the content size of the parent's container
-    kCCContentSizeUnitNormalized,
+    CCContentSizeUnitNormalized,
     
     //! Content size is the size of the parents container inset by the supplied value
-    kCCContentSizeUnitInsetPoints,
+    CCContentSizeUnitInsetPoints,
     
     //! Content size is the size of the parents container inset by the supplied value multiplied by the positionScaleFactor (as defined by CCDirector)
-    kCCContentSizeUnitInsetScaled,
+    CCContentSizeUnitInsetScaled,
     
 };
 typedef unsigned char CCContentSizeUnit;
@@ -480,16 +431,16 @@ typedef unsigned char CCContentSizeUnit;
 enum
 {
     //! Position is relative to the bottom left corner of the parent container (this is the default)
-    kCCPositionReferenceCornerBottomLeft,
+    CCPositionReferenceCornerBottomLeft,
     
     //! Position is relative to the top left corner of the parent container
-    kCCPositionReferenceCornerTopLeft,
+    CCPositionReferenceCornerTopLeft,
     
     //! Position is relative to the top right corner of the parent container
-    kCCPositionReferenceCornerTopRight,
+    CCPositionReferenceCornerTopRight,
     
     //! Position is relative to the bottom right corner of the parent container
-    kCCPositionReferenceCornerBottomRight,
+    CCPositionReferenceCornerBottomRight,
     
 };
 typedef unsigned char CCPositionReferenceCorner;
@@ -526,20 +477,20 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
     return cst;
 }
 
-#define kCCPositionTypePoints CCPositionTypeMake(kCCPositionUnitPoints, kCCPositionUnitPoints, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypePoints CCPositionTypeMake(CCPositionUnitPoints, CCPositionUnitPoints, CCPositionReferenceCornerBottomLeft)
 
-#define kCCPositionTypeScaled CCPositionTypeMake(kCCPositionUnitScaled, kCCPositionUnitScaled, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypeScaled CCPositionTypeMake(CCPositionUnitScaled, CCPositionUnitScaled, CCPositionReferenceCornerBottomLeft)
 
-#define kCCPositionTypeNormalized CCPositionTypeMake(kCCPositionUnitNormalized, kCCPositionUnitNormalized, kCCPositionReferenceCornerBottomLeft)
+#define CCPositionTypeNormalized CCPositionTypeMake(CCPositionUnitNormalized, CCPositionUnitNormalized, CCPositionReferenceCornerBottomLeft)
 
 
-#define kCCContentSizeTypePoints CCContentSizeTypeMake(kCCContentSizeUnitPoints, kCCContentSizeUnitPoints)
-#define kCCContentSizeTypeScaled CCContentSizeTypeMake(kCCContentSizeUnitScaled, kCCContentSizeUnitScaled)
-#define kCCContentSizeTypeNormalized CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitNormalized)
+#define CCContentSizeTypePoints CCContentSizeTypeMake(CCContentSizeUnitPoints, CCContentSizeUnitPoints)
+#define CCContentSizeTypeScaled CCContentSizeTypeMake(CCContentSizeUnitScaled, CCContentSizeUnitScaled)
+#define CCContentSizeTypeNormalized CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitNormalized)
 
 typedef enum {
-    kCCScaleTypePoints,
-    kCCScaleTypeScaled,
+    CCScaleTypePoints,
+    CCScaleTypeScaled,
 } CCScaleType;
     
 #ifdef __cplusplus

@@ -448,7 +448,7 @@ void FNTConfigRemoveCache( void )
 
 +(id) labelWithString:(NSString *)string fntFile:(NSString *)fntFile
 {
-	return [[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero];
+	return [[self alloc] initWithString:string fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
 }
 
 +(id) labelWithString:(NSString*)string fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
@@ -463,12 +463,12 @@ void FNTConfigRemoveCache( void )
 
 -(id) init
 {
-	return [self initWithString:nil fntFile:nil width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft imageOffset:CGPointZero];
+	return [self initWithString:nil fntFile:nil width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft imageOffset:CGPointZero];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile
 {
-    return [self initWithString:theString fntFile:fntFile width:kCCLabelAutomaticWidth alignment:kCCTextAlignmentLeft];
+    return [self initWithString:theString fntFile:fntFile width:kCCLabelAutomaticWidth alignment:CCTextAlignmentLeft];
 }
 
 -(id) initWithString:(NSString*)theString fntFile:(NSString*)fntFile width:(float)width alignment:(CCTextAlignment)alignment
@@ -547,7 +547,9 @@ void FNTConfigRemoveCache( void )
         for (int j = 0; j < [_children count]; j++) {
             CCSprite *characterSprite;
             int justSkipped = 0;
-            while(!(characterSprite = (CCSprite *)[self getChildByTag:j+skip+justSkipped]))
+            int idx = j+skip+justSkipped;
+            NSString* idxStr = [NSString stringWithFormat:@"%d", idx];
+            while(!(characterSprite = (CCSprite *)[self getChildByName:idxStr]))
                 justSkipped++;
             skip += justSkipped;
 			
@@ -627,7 +629,7 @@ void FNTConfigRemoveCache( void )
 	
     //Step 2: Make alignment
 	
-    if (self.alignment != kCCTextAlignmentLeft) {
+    if (self.alignment != CCTextAlignmentLeft) {
 		
         int i = 0;
         //Number of spaces skipped
@@ -642,17 +644,19 @@ void FNTConfigRemoveCache( void )
                 continue;
 			
             //Find position of last character on the line
-            CCSprite *lastChar = (CCSprite *)[self getChildByTag:index];
+#warning Inefficient should not be done with strings
+            NSString* indexStr = [NSString stringWithFormat:@"%d",(int)index];
+            CCSprite *lastChar = (CCSprite *)[self getChildByName:indexStr];
 			
             lineWidth = lastChar.position.x + lastChar.contentSize.width/2;
 			
             //Figure out how much to shift each character in this line horizontally
             float shift = 0;
             switch (self.alignment) {
-                case kCCTextAlignmentCenter:
+                case CCTextAlignmentCenter:
                     shift = self.contentSize.width/2 - lineWidth/2;
                     break;
-                case kCCTextAlignmentRight:
+                case CCTextAlignmentRight:
                     shift = self.contentSize.width - lineWidth;
                 default:
                     break;
@@ -665,7 +669,8 @@ void FNTConfigRemoveCache( void )
                     index = i + j + lineNumber;
                     if (index < 0)
                         continue;
-                    CCSprite *characterSprite = (CCSprite *)[self getChildByTag:index];
+                    NSString* indexStr1 = [NSString stringWithFormat:@"%d",(int)index];
+                    CCSprite *characterSprite = (CCSprite *)[self getChildByName:indexStr1];
                     characterSprite.position = ccpAdd(characterSprite.position, ccp(shift, 0));
                 }
             }
@@ -762,7 +767,8 @@ void FNTConfigRemoveCache( void )
 		CCSprite *fontChar;
 
 		BOOL hasSprite = YES;
-		fontChar = (CCSprite*) [self getChildByTag:i];
+        NSString* iStr = [NSString stringWithFormat:@"%d",(int)i];
+		fontChar = (CCSprite*) [self getChildByName:iStr];
 		if( fontChar )
 		{
 			// Reusing previous Sprite
@@ -781,7 +787,8 @@ void FNTConfigRemoveCache( void )
 				hasSprite = NO;
 			} else {
 				fontChar = [[CCSprite alloc] initWithTexture:_textureAtlas.texture rect:rect];
-				[self addChild:fontChar z:i tag:i];
+                NSString* iStr1 = [NSString stringWithFormat:@"%d",(int)i];
+				[self addChild:fontChar z:i name:iStr1];
 			}
 			
 			// Apply label properties

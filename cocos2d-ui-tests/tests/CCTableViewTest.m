@@ -36,7 +36,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitPoints);
+    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitPoints);
     cell.contentSize = CGSizeMake(1, kSimpleTableViewRowHeight);
     
     // Color every other row differently
@@ -45,13 +45,13 @@
     else bg = [CCLayerColor layerWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = kCCContentSizeTypeNormalized;
+    bg.contentSizeType = CCContentSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
     // Create a label with the row number
     CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18];
-    lbl.positionType = kCCPositionTypeNormalized;
+    lbl.positionType = CCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
     [cell addChild:lbl];
@@ -78,7 +78,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitScaled);
+    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitScaled);
     cell.contentSize = CGSizeMake(1, kSimpleTableViewRowHeight);
     
     // Color every other row differently
@@ -87,13 +87,13 @@
     else bg = [CCLayerColor layerWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = kCCContentSizeTypeNormalized;
+    bg.contentSizeType = CCContentSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
     // Create a label with the row number
     CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
-    lbl.positionType = kCCPositionTypeNormalized;
+    lbl.positionType = CCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
     [cell addChild:lbl];
@@ -120,7 +120,7 @@
 {
     CCTableViewCell* cell = [CCTableViewCell node];
     
-    cell.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitNormalized, kCCContentSizeUnitScaled);
+    cell.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitScaled);
     
     // Make every row have a different height
     cell.contentSize = CGSizeMake(1, 5 * index + 15);
@@ -131,13 +131,13 @@
     else bg = [CCLayerColor layerWithColor:ccc4(0, 255, 0, 127)];
     
     bg.userInteractionEnabled = NO;
-    bg.contentSizeType = kCCContentSizeTypeNormalized;
+    bg.contentSizeType = CCContentSizeTypeNormalized;
     bg.contentSize = CGSizeMake(1, 1);
     [cell addChild:bg];
     
     // Create a label with the row number
     CCLabelTTF* lbl = [CCLabelTTF labelWithString:[NSString stringWithFormat:@"%d", (int)index] fontName:@"HelveticaNeue" fontSize:18 * [CCDirector sharedDirector].positionScaleFactor];
-    lbl.positionType = kCCPositionTypeNormalized;
+    lbl.positionType = CCPositionTypeNormalized;
     lbl.position = ccp(0.5f, 0.5f);
     
     [cell addChild:lbl];
@@ -175,7 +175,7 @@
     
     // Add a gray background box
     CCLayerColor* colorBg = [CCLayerColor layerWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitInsetPoints, kCCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -195,7 +195,7 @@
     
     // Add a gray background box
     CCLayerColor* colorBg = [CCLayerColor layerWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitInsetPoints, kCCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -203,7 +203,7 @@
     
     // Create the table view and add it to the box
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.rowHeightUnit = kCCContentSizeUnitScaled;
+    tableView.rowHeightUnit = CCContentSizeUnitScaled;
     tableView.rowHeight = kSimpleTableViewRowHeight;
     [colorBg addChild:tableView];
     
@@ -216,7 +216,7 @@
     
     // Add a gray background box
     CCLayerColor* colorBg = [CCLayerColor layerWithColor:ccc4(127, 127, 127, 255)];
-    colorBg.contentSizeType = CCContentSizeTypeMake(kCCContentSizeUnitInsetPoints, kCCContentSizeUnitInsetPoints);
+    colorBg.contentSizeType = CCContentSizeTypeMake(CCContentSizeUnitInsetPoints, CCContentSizeUnitInsetPoints);
     colorBg.contentSize = CGSizeMake(kSimpleTableViewInset * 2, kSimpleTableViewInset * 2);
     colorBg.userInteractionEnabled = NO;
     colorBg.position = ccp(kSimpleTableViewInset, kSimpleTableViewInset);
@@ -224,7 +224,7 @@
     
     // Create the table view and add it to the box
     CCTableView* tableView = [[CCTableView alloc] init];
-    tableView.rowHeightUnit = kCCContentSizeUnitScaled;
+    tableView.rowHeightUnit = CCContentSizeUnitScaled;
     tableView.rowHeight = kSimpleTableViewRowHeight;
     [colorBg addChild:tableView];
     

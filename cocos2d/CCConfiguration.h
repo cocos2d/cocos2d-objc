@@ -29,38 +29,40 @@
 
 /** OS version definitions. Includes both iOS and Mac OS versions
  */
-enum {
-	kCCiOSVersion_4_0   = 0x04000000,
-	kCCiOSVersion_4_0_1 = 0x04000100,
-	kCCiOSVersion_4_1   = 0x04010000,
-	kCCiOSVersion_4_2   = 0x04020000,
-	kCCiOSVersion_4_2_1 = 0x04020100,
-	kCCiOSVersion_4_3   = 0x04030000,
-	kCCiOSVersion_4_3_1 = 0x04030100,
-	kCCiOSVersion_4_3_2 = 0x04030200,
-	kCCiOSVersion_4_3_3 = 0x04030300,
-	kCCiOSVersion_4_3_4 = 0x04030400,
-	kCCiOSVersion_4_3_5 = 0x04030500,
-	kCCiOSVersion_5_0   = 0x05000000,
-	kCCiOSVersion_5_0_1 = 0x05000100,
-	kCCiOSVersion_5_1_0 = 0x05010000,
-	kCCiOSVersion_6_0_0 = 0x06000000,
+typedef NS_ENUM(NSUInteger, CCSystemVersion){
+	CCSystemVersion_iOS_4_0   = 0x04000000,
+	CCSystemVersion_iOS_4_0_1 = 0x04000100,
+	CCSystemVersion_iOS_4_1   = 0x04010000,
+	CCSystemVersion_iOS_4_2   = 0x04020000,
+	CCSystemVersion_iOS_4_2_1 = 0x04020100,
+	CCSystemVersion_iOS_4_3   = 0x04030000,
+	CCSystemVersion_iOS_4_3_1 = 0x04030100,
+	CCSystemVersion_iOS_4_3_2 = 0x04030200,
+	CCSystemVersion_iOS_4_3_3 = 0x04030300,
+	CCSystemVersion_iOS_4_3_4 = 0x04030400,
+	CCSystemVersion_iOS_4_3_5 = 0x04030500,
+	CCSystemVersion_iOS_5_0   = 0x05000000,
+	CCSystemVersion_iOS_5_0_1 = 0x05000100,
+	CCSystemVersion_iOS_5_1_0 = 0x05010000,
+	CCSystemVersion_iOS_6_0  = 0x06000000,
+	CCSystemVersion_iOS_7_0  = 0x06000000,
 	
-	kCCMacVersion_10_6  = 0x0a060000,
-	kCCMacVersion_10_7  = 0x0a070000,
-	kCCMacVersion_10_8  = 0x0a080000,
+	CCSystemVersion_Mac_10_6  = 0x0a060000,
+	CCSystemVersion_Mac_10_7  = 0x0a070000,
+	CCSystemVersion_Mac_10_8  = 0x0a080000,
+	CCSystemVersion_Mac_10_9  = 0x0a080000,
 };
 
-enum {
-	kCCDeviceiPhone,
-	kCCDeviceiPhoneRetinaDisplay,
-	kCCDeviceiPhone5,
-	kCCDeviceiPhone5RetinaDisplay,
-	kCCDeviceiPad,
-	kCCDeviceiPadRetinaDisplay,
+typedef NS_ENUM(NSUInteger, CCDevice) {
+	CCDeviceiPhone,
+	CCDeviceiPhoneRetinaDisplay,
+	CCDeviceiPhone5,
+	CCDeviceiPhone5RetinaDisplay,
+	CCDeviceiPad,
+	CCDeviceiPadRetinaDisplay,
 
-	kCCDeviceMac,
-	kCCDeviceMacRetinaDisplay,
+	CCDeviceMac,
+	CCDeviceMacRetinaDisplay,
 };
 
 /**

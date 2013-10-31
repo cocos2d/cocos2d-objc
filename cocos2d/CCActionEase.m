@@ -80,7 +80,7 @@
 	[super stop];
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_inner update: t];
 }
@@ -130,7 +130,7 @@
 // EeseIn
 //
 @implementation CCActionEaseIn
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_inner update: powf(t,_rate)];
 }
@@ -140,7 +140,7 @@
 // EaseOut
 //
 @implementation CCActionEaseOut
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	[_inner update: powf(t,1/_rate)];
 }
@@ -150,7 +150,7 @@
 // EaseInOut
 //
 @implementation CCActionEaseInOut
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	t *= 2;
 	if (t < 1) {
@@ -221,9 +221,9 @@
 //
 
 @implementation CCActionEaseElasticIn
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT = 0;
+	CCTime newT = 0;
 	if (t == 0 || t == 1)
 		newT = t;
 
@@ -247,9 +247,9 @@
 //
 @implementation CCActionEaseElasticOut
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT = 0;
+	CCTime newT = 0;
 	if (t == 0 || t == 1) {
 		newT = t;
 
@@ -271,9 +271,9 @@
 // EaseElasticInOut
 //
 @implementation CCActionEaseElasticInOut
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT = 0;
+	CCTime newT = 0;
 
 	if( t == 0 || t == 1 )
 		newT = t;
@@ -281,7 +281,7 @@
 		t = t * 2;
 		if(! _period )
 			_period = 0.3f * 1.5f;
-		ccTime s = _period / 4;
+		CCTime s = _period / 4;
 
 		t = t -1;
 		if( t < 0 )
@@ -306,7 +306,7 @@
 // EaseBounce
 //
 @implementation CCActionEaseBounce
--(ccTime) bounceTime:(ccTime) t
+-(CCTime) bounceTime:(CCTime) t
 {
 	if (t < 1 / 2.75) {
 		return 7.5625f * t * t;
@@ -331,9 +331,9 @@
 
 @implementation CCActionEaseBounceIn
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT = t;
+	CCTime newT = t;
 	// prevents rounding errors
 	if( t !=0 && t!=1)
 		newT = 1 - [self bounceTime:1-t];
@@ -350,9 +350,9 @@
 
 @implementation CCActionEaseBounceOut
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT = t;
+	CCTime newT = t;
 	// prevents rounding errors
 	if( t !=0 && t!=1)
 		newT = [self bounceTime:t];
@@ -369,9 +369,9 @@
 
 @implementation CCActionEaseBounceInOut
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime newT;
+	CCTime newT;
 	// prevents possible rounding errors
 	if( t ==0 || t==1)
 		newT = t;
@@ -393,9 +393,9 @@
 //
 @implementation CCActionEaseBackIn
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime overshoot = 1.70158f;
+	CCTime overshoot = 1.70158f;
 	[_inner update: t * t * ((overshoot + 1) * t - overshoot)];
 }
 
@@ -409,9 +409,9 @@
 // EaseBackOut
 //
 @implementation CCActionEaseBackOut
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime overshoot = 1.70158f;
+	CCTime overshoot = 1.70158f;
 
 	t = t - 1;
 	[_inner update: t * t * ((overshoot + 1) * t + overshoot) + 1];
@@ -428,9 +428,9 @@
 //
 @implementation CCActionEaseBackInOut
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
-	ccTime overshoot = 1.70158f * 1.525f;
+	CCTime overshoot = 1.70158f * 1.525f;
 
 	t = t * 2;
 	if (t < 1)

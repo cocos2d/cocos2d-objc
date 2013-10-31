@@ -36,14 +36,14 @@
     CCFileUtils* fileUtils = [CCFileUtils sharedFileUtils];
     
     fileUtils.directoriesDict = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                 @"resources-tablet", kCCFileUtilsDefault,
+                                 @"resources-tablet", CCFileUtilsSuffixDefault,
                                  nil];
     fileUtils.searchPath = [NSArray arrayWithObjects:
                             [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Resources-shared"],
                             [[NSBundle mainBundle] resourcePath],
                             nil];
     
-    fileUtils.searchMode = kCCFileUtilsSearchDirectoryMode;
+    fileUtils.searchMode = CCFileUtilsSearchModeDirectory;
     [fileUtils buildSearchResolutionsOrder];
     
     [fileUtils loadFilenameLookupDictionaryFromFile:@"fileLookup.plist"];

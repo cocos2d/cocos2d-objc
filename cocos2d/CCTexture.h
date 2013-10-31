@@ -124,7 +124,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
     
     BOOL                        _antialiased;
 
-	ccResolutionType			_resolutionType;
+	CCResolutionType			_resolutionType;
 
 	// needed for drawAtRect, drawInPoint
 	CCGLProgram					*_shaderProgram;
@@ -158,7 +158,7 @@ typedef NS_ENUM(NSUInteger, CCTexturePixelFormat) {
 
  @since v1.1
  */
-@property (nonatomic, readwrite) ccResolutionType resolutionType;
+@property (nonatomic, readwrite) CCResolutionType resolutionType;
 
 
 /** returns the content size of the texture in points */
@@ -182,7 +182,7 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 */
 @interface CCTexture (Image)
 /** Initializes a texture from a CGImage object */
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ccResolutionType)resolution;
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(CCResolutionType)resolution;
 @end
 
 

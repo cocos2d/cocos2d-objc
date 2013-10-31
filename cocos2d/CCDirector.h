@@ -93,10 +93,10 @@ and when to execute the Scenes.
 
 	NSUInteger _frames;
 	NSUInteger _totalFrames;
-	ccTime _secondsPerFrame;
+	CCTime _secondsPerFrame;
 
-	ccTime		_accumDt;
-	ccTime		_frameRate;
+	CCTime		_accumDt;
+	CCTime		_frameRate;
 	CCLabelAtlas *_FPSLabel;
 	CCLabelAtlas *_SPFLabel;
 	CCLabelAtlas *_drawsLabel;
@@ -126,7 +126,7 @@ and when to execute the Scenes.
 	/* last time the main loop was updated */
 	struct timeval _lastUpdate;
 	/* delta time since last tick to main loop */
-	ccTime _dt;
+	CCTime _dt;
 	/* whether or not the next delta time will be zero */
 	BOOL _nextDeltaTimeZero;
 
@@ -178,7 +178,7 @@ and when to execute the Scenes.
 /** How many frames were called since the director started */
 @property (nonatomic,readonly) NSUInteger	totalFrames;
 /** seconds per frame */
-@property (nonatomic, readonly) ccTime secondsPerFrame;
+@property (nonatomic, readonly) CCTime secondsPerFrame;
 
 /** Sets the touch manager
  @since v3.0

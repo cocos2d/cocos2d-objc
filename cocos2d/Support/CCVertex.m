@@ -26,7 +26,7 @@
 #import "CGPointExtension.h"
 #import "../ccMacros.h"
 
-void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints)
+void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints)
 {
     nuPoints += offset;
     if(nuPoints<=1) return;
@@ -84,7 +84,7 @@ void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, 
 
         float s;
         //BOOL fixVertex = !ccpLineIntersect(ccp(p1.x, p1.y), ccp(p4.x, p4.y), ccp(p2.x, p2.y), ccp(p3.x, p3.y), &s, &t);
-        BOOL fixVertex = !ccVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
+        BOOL fixVertex = !CCVertexLineIntersect(p1.x, p1.y, p4.x, p4.y, p2.x, p2.y, p3.x, p3.y, &s);
         if(!fixVertex)
             if (s<0.0f || s>1.0f)
                 fixVertex = YES;
@@ -97,7 +97,7 @@ void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, 
     }
 }
 
-BOOL ccVertexLineIntersect(float Ax, float Ay,
+BOOL CCVertexLineIntersect(float Ax, float Ay,
                                float Bx, float By,
                                float Cx, float Cy,
                                float Dx, float Dy, float *T)

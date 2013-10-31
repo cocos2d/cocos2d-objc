@@ -98,13 +98,13 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString;
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:CGSizeZero];
 }
 
 - (id) initWithAttributedString:(NSAttributedString *)attrString dimensions:(CGSize)dimensions
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     return [self initWithAttributedString:attrString fontName:@"Helvetica" fontSize:12 dimensions:dimensions];
 }
 
@@ -148,7 +148,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 
 - (void) setAttributedString:(NSAttributedString *)attributedString
 {
-    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= kCCiOSVersion_6_0_0, @"Attributed strings are only supported on iOS 6 or later");
+    NSAssert([CCConfiguration sharedConfiguration].OSVersion >= CCSystemVersion_iOS_6_0, @"Attributed strings are only supported on iOS 6 or later");
     [self _setAttributedString:attributedString];
 }
 
@@ -328,7 +328,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
 #ifdef __CC_PLATFORM_IOS
     // Handle fonts on iOS 5
-    if ([CCConfiguration sharedConfiguration].OSVersion < kCCiOSVersion_6_0_0)
+    if ([CCConfiguration sharedConfiguration].OSVersion < CCSystemVersion_iOS_6_0)
     {
         return [self updateTextureOld];
     }
@@ -387,9 +387,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
         
-        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSTextAlignmentLeft;
-        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSTextAlignmentCenter;
-        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSTextAlignmentRight;
+        if (_horizontalAlignment == CCTextAlignmentLeft) style.alignment = NSTextAlignmentLeft;
+        else if (_horizontalAlignment == CCTextAlignmentCenter) style.alignment = NSTextAlignmentCenter;
+        else if (_horizontalAlignment == CCTextAlignmentRight) style.alignment = NSTextAlignmentRight;
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
@@ -436,9 +436,9 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     {
         NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
         
-        if (_horizontalAlignment == kCCTextAlignmentLeft) style.alignment = NSLeftTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentCenter) style.alignment = NSCenterTextAlignment;
-        else if (_horizontalAlignment == kCCTextAlignmentRight) style.alignment = NSRightTextAlignment;
+        if (_horizontalAlignment == CCTextAlignmentLeft) style.alignment = NSLeftTextAlignment;
+        else if (_horizontalAlignment == CCTextAlignmentCenter) style.alignment = NSCenterTextAlignment;
+        else if (_horizontalAlignment == CCTextAlignmentRight) style.alignment = NSRightTextAlignment;
         
         [formattedAttributedString addAttribute:NSParagraphStyleAttributeName value:style range:fullRange];
     }
@@ -466,17 +466,17 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 	// iPad ?
 	if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPad];
+			[tex setResolutionType:CCResolutionTypeiPad];
 	}
 	// iPhone ?
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPhone];
+			[tex setResolutionType:CCResolutionTypeiPhone];
 	}
 #endif
 	
@@ -595,11 +595,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
 #elif defined(__CC_PLATFORM_MAC)
         CGSize actualSize = NSSizeToCGSize([attributedString boundingRectWithSize:NSMakeSize(wDrawArea, 0) options:NSStringDrawingUsesLineFragmentOrigin].size);
 #endif
-        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        if (_verticalAlignment == CCVerticalTextAlignmentBottom)
         {
             yOffset = hDrawArea - actualSize.height;
         }
-        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        else if (_verticalAlignment == CCVerticalTextAlignmentCenter)
         {
             yOffset = (hDrawArea - actualSize.height)/2;
         }
@@ -614,7 +614,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     dimensions.height = ceilf(dimensions.height/2)*2;
     
     // get nearest power of two
-    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+    CGSize POTSize = CGSizeMake(CCNextPOT(dimensions.width), CCNextPOT(dimensions.height));
     
 	// Mac crashes if the width or height is 0
 	if( POTSize.width == 0 )
@@ -819,17 +819,17 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     
     if( UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad ) {
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPadRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPadRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPad];
+			[tex setResolutionType:CCResolutionTypeiPad];
 	}
 	// iPhone ?
 	else
 	{
 		if( CC_CONTENT_SCALE_FACTOR() == 2 )
-			[tex setResolutionType:kCCResolutioniPhoneRetinaDisplay];
+			[tex setResolutionType:CCResolutionTypeiPhoneRetinaDisplay];
 		else
-			[tex setResolutionType:kCCResolutioniPhone];
+			[tex setResolutionType:CCResolutionTypeiPhone];
 	}
     
     // Update texture and content size
@@ -938,11 +938,11 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
         // Handle vertical alignment
         CGSize actualSize = [string sizeWithFont:font constrainedToSize:CGSizeMake(wDrawArea, 1024) lineBreakMode:0];
     
-        if (_verticalAlignment == kCCVerticalTextAlignmentBottom)
+        if (_verticalAlignment == CCVerticalTextAlignmentBottom)
         {
             yOffset = hDrawArea - actualSize.height;
         }
-        else if (_verticalAlignment == kCCVerticalTextAlignmentCenter)
+        else if (_verticalAlignment == CCVerticalTextAlignmentCenter)
         {
             yOffset = (hDrawArea - actualSize.height)/2;
         }
@@ -957,7 +957,7 @@ static __strong NSMutableDictionary* ccLabelTTF_registeredFonts;
     dimensions.height = ceilf(dimensions.height/2)*2;
 
     // get nearest power of two
-    CGSize POTSize = CGSizeMake(ccNextPOT(dimensions.width), ccNextPOT(dimensions.height));
+    CGSize POTSize = CGSizeMake(CCNextPOT(dimensions.width), CCNextPOT(dimensions.height));
 
     // Mac crashes if the width or height is 0
     if( POTSize.width == 0 )

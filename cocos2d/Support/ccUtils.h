@@ -27,7 +27,7 @@ extern "C" {
 
  @since v0.99.5
  */
-unsigned long ccNextPOT( unsigned long value );
+unsigned long CCNextPOT( unsigned long value );
 
 #ifdef __cplusplus
 }

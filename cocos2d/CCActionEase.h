@@ -61,7 +61,7 @@
 @interface CCActionEaseIn : CCActionEaseRate <NSCopying>
 {} 
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseOut action with a rate
@@ -69,7 +69,7 @@
 @interface CCActionEaseOut : CCActionEaseRate <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseInOut action with a rate
@@ -77,7 +77,7 @@
 @interface CCActionEaseInOut : CCActionEaseRate <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** Ease Elastic abstract class
@@ -104,7 +104,7 @@
 @interface CCActionEaseElasticIn : CCActionEaseElastic <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** Ease Elastic Out action.
@@ -114,7 +114,7 @@
 @interface CCActionEaseElasticOut : CCActionEaseElastic <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** Ease Elastic InOut action.
@@ -124,7 +124,7 @@
 @interface CCActionEaseElasticInOut : CCActionEaseElastic <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseBounce abstract class.
@@ -133,7 +133,7 @@
 @interface CCActionEaseBounce : CCActionEase <NSCopying>
 {}
 // Needed for BridgeSupport
--(ccTime) bounceTime:(ccTime) t;
+-(CCTime) bounceTime:(CCTime) t;
 @end
 
 /** CCEaseBounceIn action.
@@ -143,7 +143,7 @@
 @interface CCActionEaseBounceIn : CCActionEaseBounce <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** EaseBounceOut action.
@@ -153,7 +153,7 @@
 @interface CCActionEaseBounceOut : CCActionEaseBounce <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseBounceInOut action.
@@ -163,7 +163,7 @@
 @interface CCActionEaseBounceInOut : CCActionEaseBounce <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseBackIn action.
@@ -173,7 +173,7 @@
 @interface CCActionEaseBackIn : CCActionEase <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseBackOut action.
@@ -183,7 +183,7 @@
 @interface CCActionEaseBackOut : CCActionEase <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 
 /** CCEaseBackInOut action.
@@ -193,6 +193,6 @@
 @interface CCActionEaseBackInOut : CCActionEase <NSCopying>
 {}
 // Needed for BridgeSupport
--(void) update: (ccTime) t;
+-(void) update: (CCTime) t;
 @end
 

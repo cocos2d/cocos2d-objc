@@ -93,10 +93,10 @@
  @property (nonatomic,readwrite,strong) CCPointArray *points;
 
 /** creates an action with a Cardinal Spline array of points and tension */
-+(id) actionWithDuration:(ccTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
++(id) actionWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
 
 /** initializes the action with a duration and an array of points */
--(id) initWithDuration:(ccTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
+-(id) initWithDuration:(CCTime)duration points:(CCPointArray*)points tension:(CGFloat)tension;
 
 @end
 
@@ -119,10 +119,10 @@
 {
 }
 /** creates an action with a Cardinal Spline array of points and tension */
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray*)points;
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
 /** initializes the action with a duration and an array of points */
--(id) initWithDuration:(ccTime)dt points:(CCPointArray*)points;
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray*)points;
 @end
 
 /** An action that moves the target with a CatmullRom curve by a certain distance.
@@ -133,10 +133,10 @@
 {
 }
 /** creates an action with a Cardinal Spline array of points and tension */
-+(id) actionWithDuration:(ccTime)dt points:(CCPointArray*)points;
++(id) actionWithDuration:(CCTime)dt points:(CCPointArray*)points;
 
 /** initializes the action with a duration and an array of points */
--(id) initWithDuration:(ccTime)dt points:(CCPointArray*)points;
+-(id) initWithDuration:(CCTime)dt points:(CCPointArray*)points;
 @end
 
 #ifdef __cplusplus
@@ -144,7 +144,7 @@ extern "C" {
 #endif
 
 /** Returns the Cardinal Spline position for a given set of control points, tension and time */
-CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, ccTime t );
+CGPoint CCCardinalSplineAt( CGPoint p0, CGPoint p1, CGPoint p2, CGPoint p3, CGFloat tension, CCTime t );
 
 #ifdef __cplusplus
 }

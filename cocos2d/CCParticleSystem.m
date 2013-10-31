@@ -484,7 +484,7 @@
 }
 
 #pragma mark ParticleSystem - MainLoop
--(void) update: (ccTime) dt
+-(void) update: (CCTime) dt
 {
 	CC_PROFILER_START_CATEGORY(kCCProfilerCategoryParticles , @"CCParticleSystem - update");
 

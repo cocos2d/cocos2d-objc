@@ -43,7 +43,7 @@
 {
 }
 // XXX Needed for BridgeSupport
--(void) update:(ccTime)time;
+-(void) update:(CCTime)time;
 @end
 
 /** Hide the node
@@ -51,7 +51,7 @@
 @interface CCActionHide : CCActionInstant
 {
 }
--(void) update:(ccTime)time;
+-(void) update:(CCTime)time;
 @end
 
 /** Toggles the visibility of a node
@@ -59,7 +59,7 @@
 @interface CCActionToggleVisibility : CCActionInstant
 {
 }
--(void) update:(ccTime)time;
+-(void) update:(CCTime)time;
 @end
 
 /** Flips the sprite horizontally

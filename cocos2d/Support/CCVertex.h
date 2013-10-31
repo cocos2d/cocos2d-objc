@@ -27,10 +27,10 @@
 /** @file CCVertex.h */
 
 /** converts a line to a polygon */
-void ccVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints);
+void CCVertexLineToPolygon(CGPoint *points, float stroke, ccVertex2F *vertices, NSUInteger offset, NSUInteger nuPoints);
 
 /** returns whether or not the line intersects */
-BOOL ccVertexLineIntersect(float Ax, float Ay,
+BOOL CCVertexLineIntersect(float Ax, float Ay,
                              float Bx, float By,
                              float Cx, float Cy,
                              float Dx, float Dy, float *T);

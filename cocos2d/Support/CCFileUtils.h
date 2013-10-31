@@ -29,21 +29,21 @@
 #import "../ccTypes.h"
 
 // keys used for the suffix or directory dictionaries
-extern NSString const *kCCFileUtilsDefault;
-extern NSString const *kCCFileUtilsiPad;
-extern NSString const *kCCFileUtilsiPadHD;
-extern NSString const *kCCFileUtilsiPhone;
-extern NSString const *kCCFileUtilsiPhoneHD;
-extern NSString const *kCCFileUtilsiPhone5;
-extern NSString const *kCCFileUtilsiPhone5HD;
-extern NSString const *kCCFileUtilsMac;
-extern NSString const *kCCFileUtilsMacHD;
+extern NSString const *CCFileUtilsSuffixDefault;
+extern NSString const *CCFileUtilsSuffixiPad;
+extern NSString const *CCFileUtilsSuffixiPadHD;
+extern NSString const *CCFileUtilsSuffixiPhone;
+extern NSString const *CCFileUtilsSuffixiPhoneHD;
+extern NSString const *CCFileUtilsSuffixiPhone5;
+extern NSString const *CCFileUtilsSuffixiPhone5HD;
+extern NSString const *CCFileUtilsSuffixMac;
+extern NSString const *CCFileUtilsSuffixMacHD;
 
 extern NSString const *kCCFileUtilsDefaultSearchPath;
 
-enum {
-	kCCFileUtilsSearchSuffixMode,
-	kCCFileUtilsSearchDirectoryMode,
+typedef NS_ENUM(NSUInteger, CCFileUtilsSearchMode) {
+	CCFileUtilsSearchModeSuffix,
+	CCFileUtilsSearchModeDirectory,
 };
 
 
@@ -66,7 +66,7 @@ enum {
 	NSMutableArray		*_searchPath;
 	
 	// it could be suffix (default) or directory
-	int					_searchMode;
+	CCFileUtilsSearchMode _searchMode;
 	
 	BOOL				_enableiPhoneResourcesOniPad;
 }
@@ -159,7 +159,7 @@ enum {
  Default: kCCFileUtilsSearchSuffix
  @since v2.1
  */
-@property (nonatomic, readwrite) int searchMode;
+@property (nonatomic, readwrite) CCFileUtilsSearchMode searchMode;
 
 /** Dictionary used to lookup filenames based on a key.
  It is used internally by the following methods:
@@ -246,7 +246,7 @@ enum {
  * In iPad RetinaDisplay mode: "image.png" -> "/full/path/image-ipadhd.png" (in case the -ipadhd file exists)
  
  */
--(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(ccResolutionType*)resolutionType;
+-(NSString*) fullPathFromRelativePath:(NSString*)relPath resolutionType:(CCResolutionType*)resolutionType;
 
 /** Returns the fullpath of an filename without taking into account the screen resolution suffixes or directories.
 
@@ -301,7 +301,7 @@ enum {
  
  @since v2.1
  */
--(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(ccResolutionType*)resolutionType;
+-(NSString*) fullPathForFilename:(NSString*)filename resolutionType:(CCResolutionType*)resolutionType;
 
 /** Returns the fullpath for a given filename, without taking into account device resolution.
  
