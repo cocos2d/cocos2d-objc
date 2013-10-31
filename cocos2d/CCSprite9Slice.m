@@ -207,6 +207,8 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 
 -( void )draw
 {
+    if (!_texture) return;
+    
     CC_PROFILER_START_CATEGORY(kCCProfilerCategorySprite, @"CCSprite9Slice - draw");
     
 	CC_NODE_DRAW_SETUP();
