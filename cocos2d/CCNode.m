@@ -191,6 +191,7 @@ static NSUInteger globalOrderOfArrival = 1;
         self.userInteractionEnabled = NO;
         self.claimsUserInteraction = YES;
         self.multipleTouchEnabled = NO;
+        self.exclusiveTouch = NO;
         self.hitAreaExpansion = 0.0f;
         
 	}

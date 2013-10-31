@@ -271,8 +271,8 @@
  */
 @property ( nonatomic, assign, getter = isMultipleTouchEnabled ) BOOL multipleTouchEnabled;
 
-/** Locks the touch to the node if touch started outside
- If a touch is moved inside a non locked node, a touchesBegan will be generated
+/** Locks the touch to the node if touch moved outside
+ If a touch is moved inside a node that does not claim user interaction, a touchesBegan will be generated
  @since v3.0
  */
 @property (nonatomic, assign) BOOL claimsUserInteraction;
@@ -280,8 +280,13 @@
 /** Expands ( or contracts ) the hit area of the node, value is in points.
  @since v3.0
  */
-@property (nonatomic,assign) float hitAreaExpansion;
- 
+@property (nonatomic, assign) float hitAreaExpansion;
+
+/** All other touches will be cancelled / ignored, if a node with exclusive touch, is active
+ @since v3.0
+ */
+@property (nonatomic, assign, getter = isExclusiveTouch) BOOL exclusiveTouch;
+
 // initializators
 /** allocates and initializes a node.
  The node will be created as "autorelease".
