@@ -261,7 +261,7 @@
 /** Similar to userData, but instead of holding a void* it holds an id */
 @property(nonatomic,readwrite,strong) id userObject;
 
-/** Expands ( or contracts ) the hit area of the node, value is in points.
+/** Expands ( or contracts ) the hit area of the node, value is a normalized fraction of the content size.
  @since v3.0
  */
 @property (nonatomic, assign) float hitAreaExpansion;
