@@ -23,15 +23,16 @@
  */
 
 #import "CDXPropertyModifierAction.h"
+#import "CCDirector_private.h"
 
 @implementation CDXPropertyModifierAction
 
-+(id) actionWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
++(id) actionWithDuration:(CCTime)t modifier:(CDPropertyModifier*) aModifier;
 {
 	return [[[self alloc] initWithDuration:t modifier:aModifier] autorelease];
 }
 
--(id) initWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
+-(id) initWithDuration:(CCTime)t modifier:(CDPropertyModifier*) aModifier;
 {
 	if( (self=[super initWithDuration: t]) ) {
 		//Release the previous modifier
@@ -65,7 +66,7 @@
 	return copy;
 }
 
--(void) update: (ccTime) t
+-(void) update: (CCTime) t
 {
 	//Check if modified property has been externally modified and if so bail out
 	if ([modifier _getTargetProperty] != lastSetValue) {
@@ -77,7 +78,7 @@
 	lastSetValue = [modifier _getTargetProperty];
 }
 
-+(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop {
++(void) fadeSoundEffects:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop {
 	CDSoundEngine* se = [CDAudioManager sharedManager].soundEngine;
 	//Create a fader object
 	CDSoundEngineFader* fader = [[CDSoundEngineFader alloc] init:se interpolationType:curve startVal:se.masterGain endVal:endVol];
@@ -90,7 +91,7 @@
 	[[director actionManager] addAction:action target:se paused:NO];
 }
 
-+(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop effect:(CDSoundSource*) effect{
++(void) fadeSoundEffect:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop effect:(CDSoundSource*) effect{
 	//Create a fader object
 	CDSoundSourceFader* fader = [[CDSoundSourceFader alloc] init:effect interpolationType:curve startVal:effect.gain endVal:endVol];
 	[fader setStopTargetWhenComplete:stop];
@@ -103,7 +104,7 @@
 }
 
 
-+(void) fadeBackgroundMusic:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType) curve shouldStop:(BOOL) stop
++(void) fadeBackgroundMusic:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType) curve shouldStop:(BOOL) stop
 {
 	//Background music is mapped to the left "channel"
 	CDLongAudioSource *player = [[CDAudioManager sharedManager] audioSourceForChannel:kASC_Left];

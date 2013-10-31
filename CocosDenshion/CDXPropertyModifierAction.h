@@ -33,13 +33,13 @@
 	float lastSetValue;
 }
 /** creates the action */
-+(id) actionWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
++(id) actionWithDuration:(CCTime)t modifier:(CDPropertyModifier*) aModifier;
 
 /** initializes the action */
--(id) initWithDuration:(ccTime)t modifier:(CDPropertyModifier*) aModifier;
+-(id) initWithDuration:(CCTime)t modifier:(CDPropertyModifier*) aModifier;
 
-+(void) fadeSoundEffects:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop;
-+(void) fadeSoundEffect:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop effect:(CDSoundSource*) effect;
-+(void) fadeBackgroundMusic:(ccTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType) curve shouldStop:(BOOL) stop;
++(void) fadeSoundEffects:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop;
++(void) fadeSoundEffect:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType)curve shouldStop:(BOOL) stop effect:(CDSoundSource*) effect;
++(void) fadeBackgroundMusic:(CCTime)t finalVolume:(float)endVol curveType:(tCDInterpolationType) curve shouldStop:(BOOL) stop;
 
 @end
