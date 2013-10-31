@@ -1,6 +1,7 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * SpriteBuilder: http://www.spritebuilder.org
  *
+ * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,11 +23,28 @@
  * THE SOFTWARE.
  */
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
-#import "CCScrollView.h"
-#import "CCTableView.h"
+#import <Foundation/Foundation.h>
 
-// CCBReader
-#import "CCBuilderReader.h"
+@class CCBSequenceProperty;
+
+@interface CCBSequence : NSObject
+{
+    float duration;
+    NSString* name;
+    int sequenceId;
+    int chainedSequenceId;
+    
+    // Channels
+    CCBSequenceProperty* callbackChannel;
+    CCBSequenceProperty* soundChannel;
+}
+
+@property (nonatomic,assign) float duration;
+@property (nonatomic,copy) NSString* name;
+@property (nonatomic,assign) int sequenceId;
+@property (nonatomic,assign) int chainedSequenceId;
+
+@property (nonatomic,strong) CCBSequenceProperty* callbackChannel;
+@property (nonatomic,strong) CCBSequenceProperty* soundChannel;
+
+@end

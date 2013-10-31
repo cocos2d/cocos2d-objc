@@ -1,6 +1,7 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * CocosBuilder: http://www.spritebuilder.org
  *
+ * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,11 +23,6 @@
  * THE SOFTWARE.
  */
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
-#import "CCScrollView.h"
-#import "CCTableView.h"
-
-// CCBReader
-#import "CCBuilderReader.h"
+#import "CCBReader.h"
+#import "CCBAnimationManager.h"
+#import "CCBLocalizationManager.h"
