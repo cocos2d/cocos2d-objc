@@ -94,14 +94,21 @@
 
 @end
 
+// -----------------------------------------------------------------
+
 @implementation CCResponderTest
+
+// -----------------------------------------------------------------
 
 - (NSArray*) testConstructors
 {
     return [NSArray arrayWithObjects:
             @"setupSimpleMultiTouchTest",
+            @"setupExclusiveTouchTest",
             nil];
 }
+
+// -----------------------------------------------------------------
 
 - (void) setupSimpleMultiTouchTest
 {
@@ -110,5 +117,46 @@
     SimpleMultiTouchLayer* touchLayer = [[SimpleMultiTouchLayer alloc] init];
     [self.contentNode addChild:touchLayer];
 }
+
+// -----------------------------------------------------------------
+
+- (void)setupExclusiveTouchTest
+{
+    self.subTitle = @"The two rightmost buttons are exclusive, and will cancel all other touches.";
+
+    SimpleMultiTouchLayer* touchLayer = [[SimpleMultiTouchLayer alloc] init];
+    [self.contentNode addChild:touchLayer];
+
+    CCButton *button0 = [CCButton buttonWithTitle:@"Excl" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Sprites/circle.png"]];
+    button0.positionType = CCPositionTypeNormalized;
+    button0.position = ccp(0.9f, 0.65f);
+    button0.claimsUserInteraction = YES;
+    button0.exclusiveTouch = YES;
+    [self.contentNode addChild:button0];
+
+    CCButton *button1 = [CCButton buttonWithTitle:@"Excl" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Sprites/circle.png"]];
+    button1.positionType = CCPositionTypeNormalized;
+    button1.position = ccp(0.9f, 0.35f);
+    button1.claimsUserInteraction = NO;
+    button1.exclusiveTouch = YES;
+    [self.contentNode addChild:button1];
+
+    CCButton *button2 = [CCButton buttonWithTitle:@"Non Excl" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Sprites/circle.png"]];
+    button2.positionType = CCPositionTypeNormalized;
+    button2.position = ccp(0.1f, 0.65f);
+    button2.claimsUserInteraction = YES;
+    button2.exclusiveTouch = NO;
+    [self.contentNode addChild:button2];
+    
+    CCButton *button3 = [CCButton buttonWithTitle:@"Non Excl" spriteFrame:[CCSpriteFrame frameWithImageNamed:@"Sprites/circle.png"]];
+    button3.positionType = CCPositionTypeNormalized;
+    button3.position = ccp(0.1f, 0.35f);
+    button3.claimsUserInteraction = NO;
+    button3.exclusiveTouch = NO;
+    [self.contentNode addChild:button3];
+
+}
+
+// -----------------------------------------------------------------
 
 @end
