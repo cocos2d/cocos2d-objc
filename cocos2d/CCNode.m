@@ -125,7 +125,7 @@ static NSUInteger globalOrderOfArrival = 1;
 @synthesize visible = _visible;
 @synthesize parent = _parent;
 @synthesize zOrder = _zOrder;
-@synthesize tag = _tag;
+@synthesize name = _name;
 @synthesize vertexZ = _vertexZ;
 @synthesize userObject = _userObject;
 @synthesize	shaderProgram = _shaderProgram;
@@ -164,8 +164,6 @@ static NSUInteger globalOrderOfArrival = 1;
 		_vertexZ = 0;
 
 		_visible = YES;
-
-		_tag = kCCNodeTagInvalid;
 
 		_zOrder = 0;
 
@@ -212,7 +210,7 @@ static NSUInteger globalOrderOfArrival = 1;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name];
 }
 
 - (void) dealloc
@@ -591,12 +589,12 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 	_children = [[NSMutableArray alloc] init];
 }
 
--(CCNode*) getChildByTag:(NSInteger) aTag
+-(CCNode*) getChildByName:(NSString *)name
 {
-	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
+	NSAssert(name, @"name is NULL");
 
     for (CCNode* node in _children) {
-		if( node.tag == aTag )
+		if( [node.name isEqualToString:name] )
 			return node;
 	}
 	// not found
@@ -608,7 +606,7 @@ static void
 RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 {
 	NSArray *children = node->_children;
-	for(int i=0, count=children.count; i<count; i++){
+	for(NSUInteger i=0, count=children.count; i<count; i++){
 		CCNode *child = children[i];
 		
 		BOOL wasRunning = node.runningInActiveScene;
@@ -623,7 +621,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
  * If a class want's to extend the 'addChild' behaviour it only needs
  * to override this method
  */
--(void) addChild: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild: (CCNode*)child z:(NSInteger)z name:(NSString*)name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
@@ -633,7 +631,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 
 	[self insertChild:child z:z];
 
-	child.tag = aTag;
+	child.name = name;
 
 	[child setParent: self];
 
@@ -657,13 +655,13 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 -(void) addChild: (CCNode*) child z:(NSInteger)z
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	[self addChild:child z:z tag:child.tag];
+	[self addChild:child z:z name:child.name];
 }
 
 -(void) addChild: (CCNode*) child
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
-	[self addChild:child z:child.zOrder tag:child.tag];
+	[self addChild:child z:child.zOrder name:child.name];
 }
 
 -(void) removeFromParent
@@ -695,16 +693,16 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[self detachChild:child cleanup:cleanup];
 }
 
--(void) removeChildByTag:(NSInteger)aTag
+-(void) removeChildByName:(NSString*)name
 {
-	[self removeChildByTag:aTag cleanup:YES];
+	[self removeChildByName:name cleanup:YES];
 }
 
--(void) removeChildByTag:(NSInteger)aTag cleanup:(BOOL)cleanup
+-(void) removeChildByName:(NSString*)name cleanup:(BOOL)cleanup
 {
-	NSAssert( aTag != kCCNodeTagInvalid, @"Invalid tag");
+	NSAssert( !name, @"Invalid tag");
 
-	CCNode *child = [self getChildByTag:aTag];
+	CCNode *child = [self getChildByName:name];
 
 	if (child == nil)
 		CCLOG(@"cocos2d: removeChildByTag: child not found!");
@@ -954,7 +952,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		[physics.space smartAdd:physicsBody];
 		
 		NSArray *joints = physicsBody.joints;
-		for(int i=0, count=joints.count; i<count; i++){
+		for(NSUInteger i=0, count=joints.count; i<count; i++){
 			[joints[i] tryAddToPhysicsNode:physics];
 		}
 		
@@ -977,7 +975,7 @@ RecursivelyIncrementPausedAncestors(CCNode *node, int increment)
 		_rotationalSkewX = _rotationalSkewY = self.rotation;
 		
 		NSArray *joints = _physicsBody.joints;
-		for(int i=0, count=joints.count; i<count; i++){
+		for(NSUInteger i=0, count=joints.count; i<count; i++){
 			[joints[i] tryRemoveFromPhysicsNode:physics];
 		}
 		

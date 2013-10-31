@@ -128,7 +128,7 @@ const NSUInteger defaultCapacity = 0;
 
 - (NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name ];
 }
 
 
@@ -166,13 +166,13 @@ const NSUInteger defaultCapacity = 0;
 }
 
 // override addChild:
--(void) addChild:(CCSprite*)child z:(NSInteger)z tag:(NSInteger) aTag
+-(void) addChild:(CCSprite*)child z:(NSInteger)z name:(NSString*) name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
 	NSAssert( child.texture.name == _textureAtlas.texture.name, @"CCSprite is not using the same texture id");
 
-	[super addChild:child z:z tag:aTag];
+	[super addChild:child z:z name:name];
 
 	[self appendChild:child];
 }
@@ -629,7 +629,7 @@ const NSUInteger defaultCapacity = 0;
 }
 
 
--(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z tag:(NSInteger)aTag
+-(id) addSpriteWithoutQuad:(CCSprite*)child z:(NSUInteger)z name:(NSString*)name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( [child isKindOfClass:[CCSprite class]], @"CCSpriteBatchNode only supports CCSprites as children");
@@ -648,7 +648,7 @@ const NSUInteger defaultCapacity = 0;
 	
 	
 	// IMPORTANT: Call super, and not self. Avoid adding it to the texture atlas array
-	[super addChild:child z:z tag:aTag];
+	[super addChild:child z:z name:name];
 	
 	//#issue 1262 don't use lazy sorting, tiles are added as quads not as sprites, so sprites need to be added in order
 	[self reorderBatch:NO];

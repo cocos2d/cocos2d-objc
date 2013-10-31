@@ -128,7 +128,7 @@
 
 -(NSString*) description
 {
-	return [NSString stringWithFormat:@"<%@ = %p | Tag = %ld>", [self class], self, (long)_tag ];
+	return [NSString stringWithFormat:@"<%@ = %p | Tag = %@>", [self class], self, _name ];
 }
 
 
@@ -191,7 +191,7 @@
 // XXX research whether lazy sorting + freeing current quads and calloc a new block with size of capacity would be faster
 // XXX or possibly using vertexZ for reordering, that would be fastest
 // this helper is almost equivalent to CCNode's addChild, but doesn't make use of the lazy sorting
--(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z tag:(NSInteger) aTag
+-(NSUInteger) addChildHelper: (CCNode*) child z:(NSInteger)z name:(NSString*) name
 {
 	NSAssert( child != nil, @"Argument must be non-nil");
 	NSAssert( child.parent == nil, @"child already added. It can't be added again");
@@ -204,7 +204,7 @@
 
 	[_children insertObject:child atIndex:pos];
 
-	child.tag = aTag;
+	child.name = name;
 	[child _setZOrder:z];
 
 	[child setParent: self];
