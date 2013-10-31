@@ -219,6 +219,9 @@ typedef NS_ENUM(NSInteger, CCSprite9SliceSizes)
 	ccGLEnableVertexAttribs(kCCVertexAttribFlag_PosColorTex);
     
     // calculate quad 9
+    // TODO: Enable dirty functionality
+    // Disabled, as it for some reason does not work on CCButton
+    
     // if (_quadNineDirty) [self calculateQuadNine];
     [self calculateQuadNine];
     
