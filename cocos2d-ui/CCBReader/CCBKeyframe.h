@@ -1,6 +1,7 @@
 /*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ * SpriteBuilder: http://www.spritebuilder.org
  *
+ * Copyright (c) 2012 Zynga Inc.
  * Copyright (c) 2013 Apportable Inc.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,11 +23,19 @@
  * THE SOFTWARE.
  */
 
-// Cocos2d-UI
-#import "CCControl.h"
-#import "CCButton.h"
-#import "CCScrollView.h"
-#import "CCTableView.h"
+#import <Foundation/Foundation.h>
 
-// CCBReader
-#import "CCBuilderReader.h"
+@interface CCBKeyframe : NSObject
+{
+    id value;
+    float time;
+    int easingType;
+    float easingOpt;
+}
+
+@property (nonatomic,strong) id value;
+@property (nonatomic,assign) float time;
+@property (nonatomic,assign) int easingType;
+@property (nonatomic,assign) float easingOpt;
+
+@end
