@@ -88,6 +88,7 @@
 #import "ccDeprecated.h"
 
 #import "CCTexture_Private.h"
+#import "CCTextureCache.h"
 
 
 //CLASS IMPLEMENTATIONS:
@@ -107,6 +108,11 @@ static CCTexturePixelFormat defaultAlphaPixel_format = CCTexturePixelFormat_Defa
 @synthesize shaderProgram = _shaderProgram;
 @synthesize resolutionType = _resolutionType;
 @synthesize antialiased = _antialiased;
+
++ (id) textureWithFile:(NSString*)file
+{
+    return [[CCTextureCache sharedTextureCache] addImage:file];
+}
 
 
 - (id) initWithData:(const void*)data pixelFormat:(CCTexturePixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
