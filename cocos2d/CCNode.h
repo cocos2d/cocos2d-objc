@@ -42,48 +42,31 @@
 @class CCAction;
 @class CCPhysicsBody;
 
-/** CCNode is the main element. Anything thats gets drawn or contains things that get drawn is a CCNode.
- The most popular CCNodes are: CCScene, CCLayer, CCSprite, CCMenu.
+/** CCNode is the base class for all objects displayed by Cocos2d. The nodes are hierachically organized in a tree, normally with a CCScene as its root node. Example of CCNode:s are CCSprite, CCScene and CCButton. The CCNode handles transformations, can have a content size and provides a coordinate system to its children. Any CCNode or subclass can handle user interaction, such as touches and mouse events, see the CCResponder for more information on this.
+ 
+ ### Coordinate System and Positioning
+ 
+ Coordinates in the CCNode coordinate system are by default set in points by the position property. The point measurement provides a way to handle different screen densities. For instance, on a retina display one point corresponds to two pixels, but on non-retina devices one point corresponds directly to one pixel.
+ 
+ By using the positionType property you can specify how a node's position is interpreted. For instance, if you set the type to CCPositionTypeNormalized a position value of (0.5, 0.5) will place the node in the center of its parent's container. The container is specified by the parent's contentSize. It's also possible to set positions relative to the different corners of the parent's container. The CCPositionType has three components, xUnit, yUnit and corner. The corner can be any reference corner of the parent's container and the xUnit and yUnit can be any of the following:
+ 
+ - CCPositionUnitPoints - This is the default, the position value will be in points.
+ - CCPositionUnitScaled - The position is scaled by the positionScaleFactor as defined by CCDirector. This is very useful for scaling up game play without changing the game logic. E.g. if you want to support both phones and tablets in native resolutions.
+ - CCPositionUnitNormalized - Using the normalized type allows you to position object in relative to the parents container. E.g. it can be used to center nodes on the screen regardless of the device type your game is running on.
+ 
+ Similarily to how you set a node's position and positionType you can also set it's contentSize and contentSizeType. However, some classes doesn't allow you to set these directly. For instance, the CCSprite sets its contentSize depending on the size of its texture and for descendants of CCControl you should set the preferredSize and preferredSizeType rather than changing their contentSize directly. The CCSizeType has two components widthUnit and heightUnit which can be any of the following:
+ 
+ - CCSizeUnitPoints - This is the default, the size will be in points
+ - CCSizeUnitScaled - The size is scaled by the positionScaleFactor.
+ - CCSizeUnitNormalized - The content size will be set as a normalized value of the parent's container.
+ - CCSizeUnitInset - The content size will be the size of it's parent container, but inset by a number of points.
+ - CCSizeUnitInsetScaled - The content size will be the size of it's parent container, but inset by a number of points multiplied by the positionScaleFactor.
+ 
+ Even if the positions and content sizes are not set in points you can use actions to animate the nodes. See the examples and tests for more information on how to set positions and content sizes, or use SpriteBuilder to easily play around with the settings. There are also more positioning options available by using CCLayout and CCLayoutBox.
 
- The main features of a CCNode are:
- - They can contain other CCNode nodes (addChild, getChildByTag, removeChild, etc)
- - They can schedule periodic callback (schedule, unschedule, etc)
- - They can execute actions (runAction, stopAction, etc)
-
- Some CCNode nodes provide extra functionality for them or their children.
-
- Subclassing a CCNode usually means (one/all) of:
- - overriding init to initialize resources and schedule callbacks
- - create callbacks to handle the advancement of time
- - overriding draw to render the node
-
- Features of CCNode:
- - position
- - scale (x, y)
- - rotation (in degrees, clockwise)
- - anchor point
- - size
- - visible
- - z-order
- - openGL z position
-
- Default values:
-  - rotation: 0
-  - position: (x=0,y=0)
-  - scale: (x=1,y=1)
-  - contentSize: (x=0,y=0)
-  - anchorPoint: (x=0,y=0)
-
- Limitations:
- - A CCNode is a "void" object. It doesn't have a texture
-
- Order in transformations
- -# The node will be translated (position)
- -# The node will be rotated (rotation)
- -# The node will be skewed (skewX, skewY)
- -# The node will be scaled (scale, scaleX, scaleY)
- -# The node will be moved according to the camera values (camera)
-
+### Subclassing Notes
+ 
+A common user pattern in building a Cocos2d game is to subclass CCNode, add it to a CCScene and override the methods for handling user input.
  */
 @interface CCNode : CCResponder < CCSchedulerTarget > {
 	// rotation angle
@@ -161,22 +144,51 @@
     CCPhysicsBody* _physicsBody;
 }
 
-/** The z order of the node relative to its "siblings": children of the same parent */
-@property(nonatomic,assign) NSInteger zOrder;
+/// -----------------------------------------------------------------------
+/// @name Creating Nodes
+/// -----------------------------------------------------------------------
 
-/** The X skew angle of the node in degrees.
- This angle describes the shear distortion in the X direction.
- Thus, it is the angle between the Y axis and the left edge of the shape
- The default skewX angle is 0. Positive values distort the node in a CW direction.
+/** Allocates and initializes a node.
+ The node will be created as "autorelease".
  */
-@property(nonatomic,readwrite,assign) float skewX;
++(id) node;
 
-/** The Y skew angle of the node in degrees.
- This angle describes the shear distortion in the Y direction.
- Thus, it is the angle between the X axis and the bottom edge of the shape
- The default skewY angle is 0. Positive values distort the node in a CCW direction.
- */
-@property(nonatomic,readwrite,assign) float skewY;
+/** Initializes the node */
+-(id) init;
+
+/// -----------------------------------------------------------------------
+/// @name Pausing and Hiding
+/// -----------------------------------------------------------------------
+
+/** If paused, no callbacks will be called, and no actions will be run. */
+@property(nonatomic, assign) BOOL paused;
+
+/** Whether of not the node is visible. Default is YES */
+@property( nonatomic,readwrite,assign) BOOL visible;
+
+/// -----------------------------------------------------------------------
+/// @name Tagging and Setting User Object
+/// -----------------------------------------------------------------------
+
+/** A tag used to identify the node easily */
+//@property(nonatomic,readwrite,assign) NSInteger tag;
+@property(nonatomic,strong) NSString* name;
+
+/** Similar to userData, but instead of holding a void* it holds an id */
+@property(nonatomic,readwrite,strong) id userObject;
+
+/// -----------------------------------------------------------------------
+/// @name Position and Size
+/// -----------------------------------------------------------------------
+
+/** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
+@property(nonatomic,readwrite,assign) CGPoint position;
+
+/** Position (x,y) of the node in points from the bottom left corner */
+@property(nonatomic,readonly) CGPoint positionInPoints;
+
+/** Defines the position type used for the X component of the position property */
+@property(nonatomic,readwrite,assign) CCPositionType positionType;
 
 /** The rotation (angle) of the node in degrees. 0 is the default rotation angle. Positive values rotate node CW. */
 @property(nonatomic,readwrite,assign) float rotation;
@@ -202,20 +214,30 @@
 
 @property (nonatomic,assign) CCScaleType scaleType;
 
-/** Position (x,y) of the node in the unit specified by the positionType property. The distance is measured from one of the corners of the node's parent container, which corner is specified by the positionType property. Default setting is referencing the bottom left corner in points. */
-@property(nonatomic,readwrite,assign) CGPoint position;
+/** The X skew angle of the node in degrees.
+ This angle describes the shear distortion in the X direction.
+ Thus, it is the angle between the Y axis and the left edge of the shape
+ The default skewX angle is 0. Positive values distort the node in a CW direction.
+ */
+@property(nonatomic,readwrite,assign) float skewX;
 
-/** Position (x,y) of the node in points from the bottom left corner */
-@property(nonatomic,readonly) CGPoint positionInPoints;
+/** The Y skew angle of the node in degrees.
+ This angle describes the shear distortion in the Y direction.
+ Thus, it is the angle between the X axis and the bottom edge of the shape
+ The default skewY angle is 0. Positive values distort the node in a CCW direction.
+ */
+@property(nonatomic,readwrite,assign) float skewY;
 
-/** Defines the position type used for the X component of the position property */
-@property(nonatomic,readwrite,assign) CCPositionType positionType;
+/** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated.
+ @since v0.8
+ */
+@property (nonatomic,readwrite,assign) CGSize contentSize;
 
-/** Array of children */
-@property(nonatomic,readonly) NSArray *children;
+/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. */
+@property (nonatomic,readonly) CGSize contentSizeInPoints;
 
-/** Whether of not the node is visible. Default is YES */
-@property( nonatomic,readwrite,assign) BOOL visible;
+/** Defines the contentSize type used for the widht and height component of the contentSize property. */
+@property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
 
 /** anchorPoint is the point around which all transformations and positioning manipulations take place.
  It's like a pin in the node where it is "attached" to its parent.
@@ -231,79 +253,17 @@
  */
 @property(nonatomic,readonly) CGPoint anchorPointInPoints;
 
-/** The untransformed size of the node in the unit specified by contentSizeType property. The contentSize remains the same no matter the node is scaled or rotated.
- @since v0.8
+/** returns a "local" axis aligned bounding box of the node in points.
+ The returned box is relative only to its parent.
+ The returned box is in Points.
+ 
+ @since v0.8.2
  */
-@property (nonatomic,readwrite,assign) CGSize contentSize;
+- (CGRect) boundingBox;
 
-/** The untransformed size of the node in Points. The contentSize remains the same no matter the node is scaled or rotated. */
-@property (nonatomic,readonly) CGSize contentSizeInPoints;
-
-/** Defines the contentSize type used for the widht and height component of the contentSize property. */
-@property (nonatomic,readwrite,assign) CCContentSizeType contentSizeType;
-
-/** The scene this node is added to, or nil if it's not part of a scene. */
-@property(nonatomic, readonly) CCScene *scene;
-
-/** The physics body (if any) that this node is attached to. */
-@property(nonatomic, strong) CCPhysicsBody *physicsBody;
-
-/** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
-@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
-
-/** A weak reference to the parent */
-@property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
-
-/** A tag used to identify the node easily */
-//@property(nonatomic,readwrite,assign) NSInteger tag;
-@property(nonatomic,strong) NSString* name;
-
-/** Similar to userData, but instead of holding a void* it holds an id */
-@property(nonatomic,readwrite,strong) id userObject;
-
-/** Expands ( or contracts ) the hit area of the node, value is a normalized fraction of the content size.
- @since v3.0
- */
-@property (nonatomic, assign) float hitAreaExpansion;
-
-// initializators
-/** allocates and initializes a node.
- The node will be created as "autorelease".
- */
-+(id) node;
-
-/** initializes the node */
--(id) init;
-
-// scene management
-
-/** Event that is called every time the CCNode enters the 'stage'.
- If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
- During onEnter you can't access a sibling node.
- If you override onEnter, you shall call [super onEnter].
- */
--(void) onEnter;
-
-/** Event that is called when the CCNode enters in the 'stage'.
- If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
- If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
- @since v0.8
- */
--(void) onEnterTransitionDidFinish;
-
-/** Event that is called every time the CCNode leaves the 'stage'.
- If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
- During onExit you can't access a sibling node.
- If you override onExit, you shall call [super onExit].
- */
--(void) onExit;
-
-/** callback that is called every time the CCNode leaves the 'stage'.
- If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
- */
--(void) onExitTransitionDidStart;
-
-// composition: ADD
+/// -----------------------------------------------------------------------
+/// @name Adding, Removing and Sorting Children
+/// -----------------------------------------------------------------------
 
 /** Adds a child to the container with z-order as 0.
  If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.
@@ -322,8 +282,6 @@
  @since v0.7.1
  */
 -(void) addChild: (CCNode*)node z:(NSInteger)z name:(NSString*)name;
-
-// composition: REMOVE
 
 /** Remove itself from its parent node forcing a cleanup.
  If the node orphan, then nothing happens.
@@ -367,62 +325,82 @@
  */
 -(void) removeAllChildrenWithCleanup:(BOOL)cleanup;
 
-// composition: GET
+/** A weak reference to the parent */
+@property(nonatomic,readwrite,unsafe_unretained) CCNode* parent;
+
+/** Array of children */
+@property(nonatomic,readonly) NSArray *children;
+
 /** Gets a child from the container given its tag
  @return returns a CCNode object
  @since v0.7.1
  */
 -(CCNode*) getChildByName:(NSString*) name;
 
-/** Reorders a child according to a new z value.
- * The child MUST be already added.
+/** The z order of the node relative to its "siblings": children of the same parent */
+@property(nonatomic,assign) NSInteger zOrder;
+
+/// -----------------------------------------------------------------------
+/// @name Hit tests
+/// -----------------------------------------------------------------------
+
+/** check if a touch is inside the node
+ to expand or shrink the touch area of a node, override this method
+ @since v3.0
  */
--(void) reorderChild:(CCNode*)child z:(NSInteger)zOrder;
+- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
 
-/** performance improvement, Sort the children array once before drawing, instead of every time when a child is added or reordered
- don't call this manually unless a child added needs to be removed in the same frame */
-- (void) sortAllChildren;
+/** Expands ( or contracts ) the hit area of the node, value is in points.
+ @since v3.0
+ */
+@property (nonatomic, assign) float hitAreaExpansion;
 
-/** Event that is called when the running node is no longer running (eg: its CCScene is being removed from the "stage" ).
- On cleanup you should break any possible circular references.
- CCNode's cleanup removes any possible scheduled timer and/or any possible action.
- If you override cleanup, you shall call [super cleanup]
+/// -----------------------------------------------------------------------
+/// @name Scene Management
+/// -----------------------------------------------------------------------
+
+/** Event that is called every time the CCNode enters the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition starts.
+ During onEnter you can't access a sibling node.
+ If you override onEnter, you shall call [super onEnter].
+ */
+-(void) onEnter;
+
+/** Event that is called when the CCNode enters in the 'stage'.
+ If the CCNode enters the 'stage' with a transition, this event is called when the transition finishes.
+ If you override onEnterTransitionDidFinish, you shall call [super onEnterTransitionDidFinish].
  @since v0.8
  */
--(void) cleanup;
+-(void) onEnterTransitionDidFinish;
 
-// draw
-
-/** Override this method to draw your own node.
- You should use cocos2d's GL API to enable/disable the GL state / shaders.
- For further info, please see ccGLstate.h.
- You shall NOT call [super draw];
+/** Event that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this event is called when the transition finishes.
+ During onExit you can't access a sibling node.
+ If you override onExit, you shall call [super onExit].
  */
--(void) draw;
+-(void) onExit;
 
-/** recursive method that visit its children and draw them */
--(void) visit;
-
-// transformations
-
-/** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
--(void) transform;
-
-/** performs OpenGL view-matrix transformation of its ancestors.
- Generally the ancestors are already transformed, but in certain cases (eg: attaching a FBO) it is necessary to transform the ancestors again.
- @since v0.7.2
+/** callback that is called every time the CCNode leaves the 'stage'.
+ If the CCNode leaves the 'stage' with a transition, this callback is called when the transition starts.
  */
--(void) transformAncestors;
+-(void) onExitTransitionDidStart;
 
-/** returns a "local" axis aligned bounding box of the node in points.
- The returned box is relative only to its parent.
- The returned box is in Points.
+/** The scene this node is added to, or nil if it's not part of a scene. */
+@property(nonatomic, readonly) CCScene *scene;
 
- @since v0.8.2
- */
-- (CGRect) boundingBox;
+/** Returns YES if the node is added to an active scene and neither it nor any of it's ancestors is paused. */
+@property(nonatomic,readonly,getter=isRunningInActiveScene) BOOL runningInActiveScene;
 
-// actions
+/// -----------------------------------------------------------------------
+/// @name Physics
+/// -----------------------------------------------------------------------
+
+/** The physics body (if any) that this node is attached to. */
+@property(nonatomic, strong) CCPhysicsBody *physicsBody;
+
+/// -----------------------------------------------------------------------
+/// @name Actions
+/// -----------------------------------------------------------------------
 
 /** Executes an action, and returns the action that is executed.
  The node becomes the action's target.
@@ -440,7 +418,7 @@
 
 /** Removes an action from the running action list given its tag
  @since v0.7.1
-*/
+ */
 -(void) stopActionByTag:(NSInteger) tag;
 
 /** Gets an action from the running action list given its tag
@@ -456,14 +434,16 @@
  */
 -(NSUInteger) numberOfRunningActions;
 
-// timers
+/// -----------------------------------------------------------------------
+/// @name Scheduling Repeating Callbacks
+/// -----------------------------------------------------------------------
 
 -(CCTimer *) scheduleBlock:(CCTimerBlock)block delay:(CCTime)delay;
 
 /** schedules a custom selector with an interval time in seconds.
  If time is 0 it will be ticked every frame.
  If time is 0, it is recommended to use 'scheduleUpdate' instead.
-
+ 
  If the selector is already scheduled, then the interval parameter will be updated without scheduling it again.
  */
 -(CCTimer *) schedule: (SEL) s interval:(CCTime)seconds;
@@ -476,16 +456,19 @@
 
 /**
  Schedules a selector that runs only once, with a delay of 0 or larger
-*/
+ */
 - (CCTimer *) scheduleOnce:(SEL) selector delay:(CCTime) delay;
 
 -(void)unschedule:(SEL)selector;
 
 -(void)unscheduleAllSelectors;
 
-@property(nonatomic, assign) BOOL paused;
+/// -----------------------------------------------------------------------
+/// @name Accessing Transformations and Matrices
+/// -----------------------------------------------------------------------
 
-// transformation methods
+/** performs OpenGL view-matrix transformation based on position, scale, rotation and other attributes. */
+-(void) transform;
 
 /** Returns the matrix that transform the node's (local) space coordinates into the parent's space coordinates.
  The matrix is in Pixels.
@@ -537,11 +520,19 @@
  */
 - (CGPoint)convertToWorldSpaceAR:(CGPoint)nodePoint;
 
-/** check if a touch is inside the node
- to expand or shrink the touch area of a node, override this method
- @since v3.0
+/// -----------------------------------------------------------------------
+/// @name Rendering (Used by Subclasses)
+/// -----------------------------------------------------------------------
+
+/** Override this method to draw your own node.
+ You should use cocos2d's GL API to enable/disable the GL state / shaders.
+ For further info, please see ccGLstate.h.
+ You shall NOT call [super draw];
  */
-- (BOOL)hitTestWithWorldPos:(CGPoint)pos;
+-(void) draw;
+
+/** recursive method that visit its children and draw them */
+-(void) visit;
 
 @end
 

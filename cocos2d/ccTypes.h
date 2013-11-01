@@ -488,10 +488,10 @@ static inline CCContentSizeType CCContentSizeTypeMake(CCContentSizeUnit widthUni
 #define CCContentSizeTypeScaled CCContentSizeTypeMake(CCContentSizeUnitScaled, CCContentSizeUnitScaled)
 #define CCContentSizeTypeNormalized CCContentSizeTypeMake(CCContentSizeUnitNormalized, CCContentSizeUnitNormalized)
 
-typedef enum {
+typedef NS_ENUM(char, CCScaleType) {
     CCScaleTypePoints,
     CCScaleTypeScaled,
-} CCScaleType;
+};
     
 #ifdef __cplusplus
 }

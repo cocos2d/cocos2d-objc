@@ -35,6 +35,7 @@
 
 #import "CCTexture_Private.h"
 #import "CCDirector_Private.h"
+#import "CCNode_Private.h"
 
 #if __CC_PLATFORM_MAC
 #import <ApplicationServices/ApplicationServices.h>
