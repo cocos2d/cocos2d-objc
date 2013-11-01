@@ -23,6 +23,7 @@
  */
 
 #import "CCNode+Debug.h"
+#import "CCNode_Private.h"
 
 #ifdef DEBUG
 

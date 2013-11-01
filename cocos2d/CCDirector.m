@@ -67,6 +67,7 @@
 #endif
 
 #import "CCDirector_Private.h"
+#import "CCNode_Private.h"
 
 #pragma mark -
 #pragma mark Director - global variables (optimization)

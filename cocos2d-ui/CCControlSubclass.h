@@ -28,7 +28,7 @@
 /// @name Methods Used by Sub-Classes
 /// -----------------------------------------------------------------------
 
-@interface CCControl ()
+@interface CCControl (Subclass)
 
 /**
  *  Used by sub-classes. This method is called to trigger an action callback. E.g. CCButton calls this method when the button is tapped.
