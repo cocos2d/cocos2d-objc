@@ -385,18 +385,6 @@
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/Chipmunk/chipmunk/src/CMakeLists.txt</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>Chipmunk</string>
-               <string>chipmunk</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/Chipmunk/chipmunk/src/CMakeLists.txt</string>
-         </dict>
          <key>Libraries/Chipmunk/chipmunk/src/chipmunk.c</key>
          <dict>
             <key>Group</key>
@@ -949,7 +937,6 @@
          <string>Libraries/Chipmunk/chipmunk/include/chipmunk/cpSpatialIndex.h</string>
          <string>Libraries/Chipmunk/chipmunk/include/chipmunk/cpTransform.h</string>
          <string>Libraries/Chipmunk/chipmunk/include/chipmunk/cpVect.h</string>
-         <string>Libraries/Chipmunk/chipmunk/src/CMakeLists.txt</string>
          <string>Libraries/Chipmunk/chipmunk/src/chipmunk.c</string>
          <string>Libraries/Chipmunk/chipmunk/src/cpArbiter.c</string>
          <string>Libraries/Chipmunk/chipmunk/src/cpArray.c</string>
