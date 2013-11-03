@@ -76,7 +76,7 @@
 		</dict>
 	</dict>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d-v3.0 for iOS. It also includes CocosDenshion, kazmath and CCBReader.</string>
+	<string>This template provides a starting point for an application that uses cocos2d-v3.0 for iOS. It also includes Chipmunk, kazmath and CCBReader.</string>
 	<key>Nodes</key>
 	<array>
 		<string>Prefix.pch</string>

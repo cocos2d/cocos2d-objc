@@ -4,11 +4,15 @@
 <dict>
 	<key>Ancestors</key>
 	<array>
-		<string>com.cocos2d-v2.bundlebase</string>
-		<string>com.cocos2d-v2.macbase</string>
-		<string>com.cocos2d-v2.cocos2dlib</string>
-		<string>com.cocos2d-v2.cocosdenshionlib</string>
-		<string>com.cocos2d-v2.kazmathlib</string>
+		<string>com.cocos2d-v3.bundlebase</string>
+		<string>com.cocos2d-v3.macbase</string>
+		<string>com.cocos2d-v3.cocos2dlib</string>
+		<!-- Doesn't support ARC, commented out until resolved -->
+		<!-- <string>com.cocos2d-v3.cocosdenshionlib</string> -->
+		<string>com.cocos2d-v3.cocos2d-uilib</string>
+		<string>com.cocos2d-v3.kazmathlib</string>
+		<string>com.cocos2d-v3.ccbreaderlib</string>
+		<string>com.cocos2d-v3.chipmunklib</string>
 	</array>
 	<key>Concrete</key>
 	<true/>
@@ -65,9 +69,9 @@
 		<string>HelloWorldLayer.m</string>
 	</array>
 	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d v2.0 for Mac. It also includes CocosDenshion.</string>
+	<string>This template provides a starting point for an application that uses cocos2d v3.0 for Mac. It also includes CCBReader, kazmath and Chipmunk.</string>
 	<key>Identifier</key>
-	<string>com.cocos2d-v2.cocos2dOnlyMacTemplate</string>
+	<string>com.cocos2d-v3.cocos2dOnlyMacTemplate</string>
 	<key>Kind</key>
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 </dict>
