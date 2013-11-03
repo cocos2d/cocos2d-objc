@@ -16,6 +16,12 @@
 	</array>
 	<key>Concrete</key>
 	<true/>
+	<key>Description</key>
+	<string>This template provides a starting point for an application that uses cocos2d v3.0 for Mac. It also includes CCBReader, kazmath and Chipmunk.</string>
+	<key>Identifier</key>
+	<string>com.cocos2d-v3.cocos2dOnlyMacTemplate</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
 		<key>Prefix.pch</key>
@@ -68,11 +74,5 @@
 		<string>HelloWorldLayer.h</string>
 		<string>HelloWorldLayer.m</string>
 	</array>
-	<key>Description</key>
-	<string>This template provides a starting point for an application that uses cocos2d v3.0 for Mac. It also includes CCBReader, kazmath and Chipmunk.</string>
-	<key>Identifier</key>
-	<string>com.cocos2d-v3.cocos2dOnlyMacTemplate</string>
-	<key>Kind</key>
-	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 </dict>
 </plist>
