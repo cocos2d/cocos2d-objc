@@ -10,7 +10,6 @@
 #import "HelloWorldLayer.h"
 
 @implementation ___PROJECTNAMEASIDENTIFIER___AppDelegate
-@synthesize window=window_, glView=glView_;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
@@ -20,7 +19,7 @@
 	[director setDisplayStats:YES];
 	
 	// connect the OpenGL view with the director
-	[director setView:glView_];
+	[director setView:_glView];
 
 	// EXPERIMENTAL stuff.
 	// 'Effects' don't work correctly when autoscale is turned on.
@@ -28,10 +27,10 @@
 	[director setResizeMode:kCCDirectorResize_AutoScale];
 	
 	// Enable "moving" mouse event. Default no.
-	[window_ setAcceptsMouseMovedEvents:NO];
+	[_window setAcceptsMouseMovedEvents:NO];
 	
 	// Center main window
-	[window_ center];
+	[_window center];
 	
 	[director runWithScene:[HelloWorldLayer scene]];
 }
@@ -44,8 +43,6 @@
 - (void)dealloc
 {
 	[[CCDirector sharedDirector] end];
-	[window_ release];
-	[super dealloc];
 }
 
 #pragma mark AppDelegate - IBActions

@@ -15,7 +15,7 @@
 			<key>ARCHS</key>
 			<string>$(ARCHS_STANDARD_64_BIT)</string>
 			<key>MACOSX_DEPLOYMENT_TARGET</key>
-			<string>___RUNNINGOSXVERSION___</string>
+			<string>10.8</string>
 			<key>GCC_WARN_64_TO_32_BIT_CONVERSION</key>
 			<string>YES</string>
 		</dict>
