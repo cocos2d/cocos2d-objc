@@ -230,17 +230,6 @@
             <key>Path</key>
             <string>Libraries/kazmath/src/ChangeLog</string>
          </dict>
-         <key>Libraries/kazmath/src/CMakeLists.txt</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>kazmath</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/kazmath/src/CMakeLists.txt</string>
-         </dict>
          <key>Libraries/kazmath/src/GL/mat4stack.c</key>
          <dict>
             <key>Group</key>
@@ -403,7 +392,6 @@
          <string>Libraries/kazmath/include/kazmath/vec4.h</string>
          <string>Libraries/kazmath/src/aabb.c</string>
          <string>Libraries/kazmath/src/ChangeLog</string>
-         <string>Libraries/kazmath/src/CMakeLists.txt</string>
          <string>Libraries/kazmath/src/GL/mat4stack.c</string>
          <string>Libraries/kazmath/src/GL/matrix.c</string>
          <string>Libraries/kazmath/src/mat3.c</string>

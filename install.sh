@@ -15,6 +15,7 @@ SCRIPT_DIR="$(dirname $0)"
 TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR"
 DST_DIR="$TEMPLATE_DIR"
 
+INSTALL=true
 FORCE=false
 DELETE=false
 
@@ -35,6 +36,7 @@ usage()
 	echo "usage:	$0 [options]"
 	echo ""
 	echo "options:"
+	echo "--install		default option, installs project templates if not already installed (synonym: -i)"
 	echo "--force       force re-installation when templates already installed (synonym: -f)"
 	echo "--delete      deletes already installed templates (synonym: -d)"
 	echo "--help        shows this help notice (synonym: -h)"
@@ -104,12 +106,16 @@ if [[ "$#" > "1" ]]; then
 fi
 
 # Check for arguments
-if [[ "${1}" = "--help" ]] || [[ "${1}" = "-h" ]]; then
-	usage
+if [[ "${1}" = "--install" ]] || [[ "${1}" = "-i" ]]; then
+	INSTALL=true
 elif [[ "${1}" = "--force" ]] || [[ "${1}" = "-f" ]]; then
 	FORCE=true
+	INSTALL=true
 elif [[ "${1}" = "--delete" ]] || [[ "${1}" = "-d" ]]; then
 	DELETE=true
+	INSTALL=false
+elif [[ "${1}" = "--help" ]] || [[ "${1}" = "-h" ]]; then
+	usage
 elif [[ "$#" -eq "1" ]]; then
 	handle_error 3
 fi
@@ -133,7 +139,7 @@ fi
 
 if [[ -d "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/" ]]; then
 	if $FORCE || $DELETE ; then
-		echo "Removing old file template files: $DST_DIR"
+		echo "Removing old file template files: $HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
 		rm -rf "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
 	else
 		handle_error 4
@@ -152,97 +158,98 @@ fi
 # ----------------------------------------------------
 # Installation
 # ----------------------------------------------------
+if $INSTALL ; then
+	echo ""
+	echo ">>> Installing project templates"
 
-echo ""
-echo ">>> Installing project templates"
+	# Copy cocos2d files
+	echo "...copying cocos2d files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocos2d.xctemplate/Libraries/"
+	copy_files "cocos2d" "$LIBS_DIR"
+	copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
 
-# Copy cocos2d files
-echo "...copying cocos2d files"
-LIBS_DIR="$DST_DIR/lib_cocos2d.xctemplate/Libraries/"
-copy_files "cocos2d" "$LIBS_DIR"
-copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
+	# Copy cocos2d-ui files
+	echo "...copying cocos2d-ui files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocos2d-ui.xctemplate/Libraries/"
+	copy_files "cocos2d-ui" "$LIBS_DIR"
+	copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
+	rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader"
 
-# Copy cocos2d-ui files
-echo "...copying cocos2d-ui files"
-LIBS_DIR="$DST_DIR/lib_cocos2d-ui.xctemplate/Libraries/"
-copy_files "cocos2d-ui" "$LIBS_DIR"
-copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
-rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader"
-
-# Download Chipmunk files
-echo "...downloading Chipmunk files, please wait"
-if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
-	echo "	...downloading zip file"
-	if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
-		rm -rf "$SCRIPT_DIR/external/Chipmunk/"
+	# Download Chipmunk files
+	echo "...downloading Chipmunk files, please wait"
+	if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
+		echo "	...downloading zip file"
+		if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
+			rm -rf "$SCRIPT_DIR/external/Chipmunk/"
+		fi
+		DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
+	
+		mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
+		mkdir -p "$DOWNLOAD_DIR"
+	
+		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
+		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
+		rm -rf "$DOWNLOAD_DIR"
+	else
+		git submodule init "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+		git submodule update "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
 	fi
-	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
-	
-	mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
-	mkdir -p "$DOWNLOAD_DIR"
-	
-	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
-	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
-	rm -rf "$DOWNLOAD_DIR"
-else
-	git submodule init "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
-	git submodule update "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+
+	# Copy Chipmunk files
+	echo "...copying Chipmunk files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
+	copy_files "external/Chipmunk/objectivec" "$LIBS_DIR"
+	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR"
+	mv -f "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
+	mv -f "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
+
+	# DISABLED
+	# CocosDenshion isn't ARC, so it does not compile with the rest of library.
+	# There is no way right now how to specify compiler flags in Xcode templates,
+	# so the only options are: 
+	# 1. Convert to ARC 
+	# 2. Replace with better audio engine
+
+	# Copy CocosDenshion files
+	# echo "...copying CocosDenshion files"
+	# LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocosdenshion.xctemplate/Libraries/"
+	# copy_files "CocosDenshion" "$LIBS_DIR"
+	# copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
+
+	# Copy kazmath files
+	echo "...copying kazmath files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_kazmath.xctemplate/Libraries/"
+	copy_files "external/kazmath" "$LIBS_DIR"
+	copy_files "LICENSE_Kazmath.txt" "$LIBS_DIR"
+
+	# Copy CCBReader files
+	echo "...copying CCBReader files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_ccbreader.xctemplate/Libraries/"
+	copy_files "cocos2d-ui/CCBReader" "$LIBS_DIR"
+	copy_files "LICENSE_CCBReader.txt" "$LIBS_DIR"
+
+	# Copy actual template files
+	echo "...copying Xcode template files"
+	copy_files "templates/" "$DST_DIR"
+
+	echo ""
+	echo ">>> Installing file templates"
+	echo "...copying CCNode file templates"
+	echo ""
+
+	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" ]]; then
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
+	fi
+
+	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
+	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
+
+	mv -f "$OLD_DIR/CCNode class.xctemplate" "$DST_DIR/CCNode class.xctemplate"
+
+	echo "-----------------------"
+	echo "Everything installed successfully."
+	echo "Have fun!"
+	echo ""
 fi
-
-# Copy Chipmunk files
-echo "...copying Chipmunk files"
-LIBS_DIR="$DST_DIR/lib_chipmunk.xctemplate/Libraries/"
-copy_files "external/Chipmunk/objectivec" "$LIBS_DIR"
-copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
-copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR"
-mv -f "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
-mv -f "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
-
-# DISABLED
-# CocosDenshion isn't ARC, so it does not compile with the rest of library.
-# There is no way right now how to specify compiler flags in Xcode templates,
-# so the only options are: 
-# 1. Convert to ARC 
-# 2. Replace with better audio engine
-
-# Copy CocosDenshion files
-# echo "...copying CocosDenshion files"
-# LIBS_DIR="$DST_DIR/lib_cocosdenshion.xctemplate/Libraries/"
-# copy_files "CocosDenshion" "$LIBS_DIR"
-# copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
-
-# Copy kazmath files
-echo "...copying kazmath files"
-LIBS_DIR="$DST_DIR/lib_kazmath.xctemplate/Libraries/"
-copy_files "external/kazmath" "$LIBS_DIR"
-copy_files "LICENSE_Kazmath.txt" "$LIBS_DIR"
-
-# Copy CCBReader files
-echo "...copying CCBReader files"
-LIBS_DIR="$DST_DIR/lib_ccbreader.xctemplate/Libraries/"
-copy_files "cocos2d-ui/CCBReader" "$LIBS_DIR"
-copy_files "LICENSE_CCBReader.txt" "$LIBS_DIR"
-
-# Copy actual template files
-echo "...copying Xcode template files"
-copy_files "templates/" "$DST_DIR"
-
-echo ""
-echo ">>> Installing file templates"
-echo "...copying CCNode file templates"
-echo ""
-
-if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/" ]]; then
-	mkdir - "$HOME/Library/Developer/Xcode/Templates/File Templates/"
-fi
-
-DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
-OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
-
-mv -f "$OLD_DIR""/CCNode class.xctemplate" "$DST_DIR"
-
-echo "-----------------------"
-echo "Everything installed successfully."
-echo "Have fun!"
-echo ""
