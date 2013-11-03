@@ -645,7 +645,7 @@
 		B7EE6A1D181AE34600B983FE /* CCSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCSlider.m; path = "cocos2d-ui/CCSlider.m"; sourceTree = "<group>"; };
 		D33803DC18032E4F0072D8FE /* CCPhysics+ObjectiveChipmunk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CCPhysics+ObjectiveChipmunk.h"; sourceTree = "<group>"; };
 		D33803E218032ECE0072D8FE /* CCPhysicsBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsBody.m; sourceTree = "<group>"; };
-		D33803E418032F250072D8FE /* CCPhysicsbody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsbody.h; sourceTree = "<group>"; };
+		D33803E418032F250072D8FE /* CCPhysicsBody.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsBody.h; sourceTree = "<group>"; };
 		D33803E518032F390072D8FE /* CCPhysicsNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPhysicsNode.m; sourceTree = "<group>"; };
 		D33803E718032F4A0072D8FE /* CCPhysicsNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsNode.h; sourceTree = "<group>"; };
 		D33803E81803319F0072D8FE /* CCPhysicsJoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CCPhysicsJoint.h; sourceTree = "<group>"; };
@@ -1200,7 +1200,7 @@
 		A0D7D9D415E2E737000CA0C4 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
-				D33803E418032F250072D8FE /* CCPhysicsbody.h */,
+				D33803E418032F250072D8FE /* CCPhysicsBody.h */,
 				D33803E218032ECE0072D8FE /* CCPhysicsBody.m */,
 				D3A2E7D0181E12750033614C /* CCPhysicsShape.h */,
 				D3A2E7D1181E12750033614C /* CCPhysicsShape.m */,

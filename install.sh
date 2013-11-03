@@ -162,6 +162,13 @@ LIBS_DIR="$DST_DIR/lib_cocos2d.xctemplate/Libraries/"
 copy_files "cocos2d" "$LIBS_DIR"
 copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
 
+# Copy cocos2d-ui files
+echo "...copying cocos2d-ui files"
+LIBS_DIR="$DST_DIR/lib_cocos2d-ui.xctemplate/Libraries/"
+copy_files "cocos2d-ui" "$LIBS_DIR"
+copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
+rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader"
+
 # Download Chipmunk files
 echo "...downloading Chipmunk files, please wait"
 if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
@@ -192,11 +199,18 @@ copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR"
 mv -f "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
 mv -f "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
 
+# DISABLED
+# CocosDenshion isn't ARC, so it does not compile with the rest of library.
+# There is no way right now how to specify compiler flags in Xcode templates,
+# so the only options are: 
+# 1. Convert to ARC 
+# 2. Replace with better audio engine
+
 # Copy CocosDenshion files
-echo "...copying CocosDenshion files"
-LIBS_DIR="$DST_DIR/lib_cocosdenshion.xctemplate/Libraries/"
-copy_files "CocosDenshion" "$LIBS_DIR"
-copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
+# echo "...copying CocosDenshion files"
+# LIBS_DIR="$DST_DIR/lib_cocosdenshion.xctemplate/Libraries/"
+# copy_files "CocosDenshion" "$LIBS_DIR"
+# copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
 
 # Copy kazmath files
 echo "...copying kazmath files"
