@@ -162,18 +162,34 @@ LIBS_DIR="$DST_DIR/lib_cocos2d.xctemplate/Libraries/"
 copy_files "cocos2d" "$LIBS_DIR"
 copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
 
-# Copy Chipmunk files
+# Download Chipmunk files
 echo "...downloading Chipmunk files, please wait"
-git submodule init "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
-git submodule update "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+if [[ ! -f "$SCRIPT_DIR/.git" ]]; then
+	if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
+		rm -rf "$SCRIPT_DIR/external/Chipmunk/"
+	fi
+	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
+	
+	mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
+	mkdir -p "$DOWNLOAD_DIR"
+	
+	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
+	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
+	rm -rf "$DOWNLOAD_DIR"
+else
+	git submodule init "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+	git submodule update "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+fi
+
+# Copy Chipmunk files
 echo "...copying Chipmunk files"
 LIBS_DIR="$DST_DIR/lib_chipmunk.xctemplate/Libraries/"
 copy_files "external/Chipmunk/objectivec" "$LIBS_DIR"
 copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
 copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
 copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR"
-mv "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
-mv "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
+mv -f "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
+mv -f "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
 
 # Copy CocosDenshion files
 echo "...copying CocosDenshion files"
