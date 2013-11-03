@@ -1,6 +1,6 @@
 #!/bin/bash
 # cocos2d template installer script
-# Author: Dominik Hadl (based on original v2.1 script made by Stuart Carnie and Ricardo Quesada)
+# Author: Dominik Hadl (based on original script made by Stuart Carnie and Ricardo Quesada)
 # Date: November 2013
 # Description: This script installs cocos2d project templates to the Xcode templates directory, so they can be used within Xcode.
 # -------------------------------------------------------------------------------------------------------------------------------
@@ -25,8 +25,8 @@ DELETE=false
 header()
 {
 	echo ""
-	echo "${COCOS2D_VER} template installer, November 2013, by Lars Birkemose, Dominik Hadl and cocos2d community."
-	echo "------------------------------------------------------------------------------------------------------"
+	echo "${COCOS2D_VER} template installer (November 2013), by Dominik Hadl and Lars Birkemose"
+	echo "-----------------------------------------------------------------------------------"
 }
 
 usage()
@@ -36,16 +36,18 @@ usage()
 	echo "usage:	$0 [options]"
 	echo ""
 	echo "options:"
-	echo "--install		default option, installs project templates if not already installed (synonym: -i)"
+	echo "--install     executed by default, installs project templates if not already installed (synonym: -i)"
 	echo "--force       force re-installation when templates already installed (synonym: -f)"
 	echo "--delete      deletes already installed templates (synonym: -d)"
 	echo "--help        shows this help notice (synonym: -h)"
 	echo ""
 	echo "This script installs ${COCOS2D_VER} project templates to the Xcode templates directory,"
 	echo "so they can be easily used within Xcode without needing to manually add required cocos2d frameworks."
-	echo "If you already have template files installed, they won't by default be overwritten. You have to run this"
-	echo "script with --force option if you want to overwrite templates that are already installed. It will automatically"
-	echo "delete all previously installed files and install new ones."
+	echo "If you already have template files installed, they will not be overwritten, unless you run this"
+	echo "script with --force option, which will automatically delete all previously installed files before installing."
+	echo "If you just want to uninstall the templates, then run this script with the --delete option specified."
+	echo ""
+	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'."
 	echo ""
 	exit 0
 }
@@ -55,28 +57,40 @@ usage()
 # ----------------------------------------------------
 handle_error()
 {
+	echo ""	
 	if [[ "$1" -eq "1" ]]; then
 		# Script executed as root.
-		echo "TODO: Add correct text..."
-		echo "Error: Do not run this script as root."
-		echo "       If you want to know more about how to use this script execute '$0 --help'."
+		echo "Error: Script cannot be executed as root."
+		echo "       In order for it to work properly, please execute the script again without 'sudo'."
 		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "2" ]]; then
-		# Script run with too many arguments.
-		echo "TODO: Add correct text..."
-		echo "Too many arguments"
+		# Script run with too many options.
+		echo "Error: Too many options specified."
+		echo "       This script only takes one option (--install, --delete, --force or --help)."
+		echo "       Please, execute the script again with only one or less options specified."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "3" ]]; then
-		# Templates already installed
-		echo "TODO: Add correct text..."
-		echo "Unknown argument specified"
+		# Uknown option specified
+		echo "Error: Unknown option specified."
+		echo "       This script only takes these options: --install, --delete, --force or --help."
+		echo "       Please, execute the script again with or without one of the supported options."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "4" ]]; then
 		# Templates already installed
-		echo "TODO: Add correct text..."
-		echo "Templates already installed"
+		echo "Error: Templates are already installed."
+		echo "       If you want to override and re-install the templates, then please execute"
+		echo "       this script with the --force option specified."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "5" ]]; then
 		# Nothing to delete
-		echo "TODO: Add correct text..."
-		echo "Nothing to delete"
+		echo "Error: Template files not found, nothing to delete."
+		echo "       No $COCOS2D_VER template files were found thus cannot be deleted."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	fi
 	echo ""
 	exit "$1"
@@ -90,6 +104,9 @@ copy_files()
     SOURCE_DIR="${SCRIPT_DIR}/${1}"
 	rsync -r --exclude=".*" "$SOURCE_DIR" "$2"
 }
+
+# Print header
+header
 
 # ----------------------------------------------------
 # Basic checks
@@ -119,9 +136,6 @@ elif [[ "${1}" = "--help" ]] || [[ "${1}" = "-h" ]]; then
 elif [[ "$#" -eq "1" ]]; then
 	handle_error 3
 fi
-
-# Print header
-header
 
 # Check if templates installed
 if [[ -d $DST_DIR ]]; then
@@ -178,7 +192,6 @@ if $INSTALL ; then
 	# Download Chipmunk files
 	echo "...downloading Chipmunk files, please wait"
 	if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
-		echo "	...downloading zip file"
 		if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
 			rm -rf "$SCRIPT_DIR/external/Chipmunk/"
 		fi
