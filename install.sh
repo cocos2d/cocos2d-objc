@@ -164,7 +164,8 @@ copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
 
 # Download Chipmunk files
 echo "...downloading Chipmunk files, please wait"
-if [[ ! -f "$SCRIPT_DIR/.git" ]]; then
+if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
+	echo "	...downloading zip file"
 	if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
 		rm -rf "$SCRIPT_DIR/external/Chipmunk/"
 	fi

@@ -192,6 +192,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCAnimation.h</string>
@@ -204,6 +205,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCAnimation.m</string>
@@ -214,6 +216,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCAnimationCache.h</string>
@@ -226,6 +229,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCAnimationCache.m</string>
@@ -1340,6 +1344,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSprite_Private.h</string>
@@ -1352,6 +1357,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSprite.h</string>
@@ -1364,6 +1370,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSprite.m</string>
@@ -1374,6 +1381,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSprite9Slice.h</string>
@@ -1386,6 +1394,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSprite9Slice.m</string>
@@ -1396,6 +1405,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteBatchNode_Private.h</string>
@@ -1408,6 +1418,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteBatchNode.h</string>
@@ -1420,6 +1431,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteBatchNode.m</string>
@@ -1430,6 +1442,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteFrame.h</string>
@@ -1442,6 +1455,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteFrame.m</string>
@@ -1452,6 +1466,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteFrameCache.h</string>
@@ -1464,6 +1479,7 @@
 			<array>
 				<string>Libraries</string>
 				<string>cocos2d</string>
+				<string>Sprite &amp; Animation Nodes</string>				
 			</array>
 			<key>Path</key>
 			<string>Libraries/cocos2d/CCSpriteFrameCache.m</string>
