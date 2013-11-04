@@ -152,7 +152,7 @@
 
 - (void) pressedBack:(id)sender
 {
-    CCTransition* transition = [CCTransition moveInWithDirection:CCTransitionDirectionRight duration:0.3];
+    CCTransition* transition = [CCTransition transitionMoveInWithDirection:CCTransitionDirectionRight duration:0.3];
     [[CCDirector sharedDirector] replaceScene:[MainMenu scene] withTransition:transition];
 }
 

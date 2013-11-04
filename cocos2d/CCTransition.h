@@ -92,17 +92,17 @@ typedef NS_ENUM(NSInteger, CCTransitionDirection)
  *  @param duration The duration of the transition in seconds
  *  @return A CCTransition
  */
-+ (CCTransition *)crossFadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration;
 
-+ (CCTransition *)fadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration;
 
-+ (CCTransition *)fadeWithDuration:(NSTimeInterval)duration;
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration;
 
-+ (CCTransition *)moveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
-+ (CCTransition *)pushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
-+ (CCTransition *)revealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration;
 
 // -----------------------------------------------------------------
 
