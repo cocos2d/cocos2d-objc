@@ -24,55 +24,63 @@
 	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
 	<key>Definitions</key>
 	<dict>
-		<key>Prefix.pch</key>
+		<key>Supporting Files/Prefix.pch</key>
 		<dict>
 			<key>Group</key>
 			<string>Supporting Files</string>
 			<key>Path</key>
-			<string>Prefix.pch</string>
+			<string>Supporting Files/Prefix.pch</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>main.m</key>
+		<key>Supporting Files/main.m</key>
 		<dict>
 			<key>Group</key>
 			<string>Supporting Files</string>
 			<key>Path</key>
-			<string>main.m</string>
+			<string>Supporting Files/main.m</string>
 		</dict>
-		<key>HelloWorldLayer.h</key>
+		<key>Classes/HelloWorldLayer.h</key>
 		<dict>
+			<key>Group</key>
+			<string>Classes</string>
 			<key>Path</key>
-			<string>HelloWorldLayer.h</string>
+			<string>Classes/HelloWorldLayer.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>HelloWorldLayer.m</key>
+		<key>Classes/HelloWorldLayer.m</key>
 		<dict>
+			<key>Group</key>
+			<string>Classes</string>			
 			<key>Path</key>
-			<string>HelloWorldLayer.m</string>
+			<string>Classes/HelloWorldLayer.m</string>
 		</dict>
-		<key>AppDelegate.h</key>
+		<key>Classes/AppDelegate.h</key>
 		<dict>
+			<key>Group</key>
+			<string>Classes</string>			
 			<key>Path</key>
-			<string>AppDelegate.h</string>
+			<string>Classes/AppDelegate.h</string>
 			<key>TargetIndices</key>
 			<array/>
 		</dict>
-		<key>AppDelegate.m</key>
+		<key>Classes/AppDelegate.m</key>
 		<dict>
+			<key>Group</key>
+			<string>Classes</string>			
 			<key>Path</key>
-			<string>AppDelegate.m</string>
+			<string>Classes/AppDelegate.m</string>
 		</dict>
 	</dict>
 	<key>Nodes</key>
 	<array>
-		<string>Prefix.pch</string>
-		<string>main.m</string>
-		<string>AppDelegate.h</string>
-		<string>AppDelegate.m</string>
-		<string>HelloWorldLayer.h</string>
-		<string>HelloWorldLayer.m</string>
+		<string>Supporting Files/Prefix.pch</string>
+		<string>Supporting Files/main.m</string>
+		<string>Classes/AppDelegate.h</string>
+		<string>Classes/AppDelegate.m</string>
+		<string>Classes/HelloWorldLayer.h</string>
+		<string>Classes/HelloWorldLayer.m</string>
 	</array>
 </dict>
 </plist>
