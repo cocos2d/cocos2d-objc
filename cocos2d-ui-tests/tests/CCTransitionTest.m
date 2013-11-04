@@ -22,7 +22,7 @@
 - (void) setupCrossFadeTest
 {
     self.subTitle = @"Cross fade";
-    _nextTransition = [CCTransition crossFadeWithDuration:1];
+    _nextTransition = [CCTransition transitionCrossFadeWithDuration:1];
     
     CCLayerColor* bgLayer = [CCLayerColor layerWithColor:ccc4(255, 0, 0, 255)];
     bgLayer.contentSize = CGSizeMake(1, 1);
@@ -33,7 +33,7 @@
 - (void) setupFadeWithColorTest
 {
     self.subTitle = @"Fade with Color";
-    _nextTransition = [CCTransition fadeWithColor:ccc3(0, 0, 0) duration:1];
+    _nextTransition = [CCTransition transitionFadeWithColor:ccc3(0, 0, 0) duration:1];
     
     CCLayerColor* bgLayer = [CCLayerColor layerWithColor:ccc4(0, 255, 0, 255)];
     bgLayer.contentSize = CGSizeMake(1, 1);

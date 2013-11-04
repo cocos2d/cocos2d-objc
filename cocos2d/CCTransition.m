@@ -63,32 +63,32 @@ typedef NS_ENUM(NSInteger, CCTransitionFixedFunction)
 
 // -----------------------------------------------------------------
 
-+ (CCTransition *)crossFadeWithDuration:(NSTimeInterval)duration
++ (CCTransition *)transitionCrossFadeWithDuration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionCrossFade direction:CCTransitionDirectionInvalid color:ccBLACK]);
 }
 
-+ (CCTransition *)fadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithColor:(ccColor3B)color duration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:color]);
 }
 
-+ (CCTransition *)fadeWithDuration:(NSTimeInterval)duration
++ (CCTransition *)transitionFadeWithDuration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionFadeWithColor direction:CCTransitionDirectionInvalid color:ccBLACK]);
 }
 
-+ (CCTransition *)moveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionMoveInWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionMoveIn direction:direction color:ccBLACK]);
 }
 
-+ (CCTransition *)pushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionPushWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionPush direction:direction color:ccBLACK]);
 }
 
-+ (CCTransition *)revealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
++ (CCTransition *)transitionRevealWithDirection:(CCTransitionDirection)direction duration:(NSTimeInterval)duration
 {
     return([[self alloc] initWithDuration:duration fixedFunction:CCTransitionFixedFunctionReveal direction:direction color:ccBLACK]);
 }
