@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Identifier</key>
+	<string>com.cocos2d-v3.cocos2dOnlyIOSTemplate</string>
+	<key>Kind</key>
+	<string>Xcode.Xcode3.ProjectTemplateUnitKind</string>
+	<key>Ancestors</key>
+	<array>
+		<string>com.cocos2d-v3.bundlebase</string>
+		<string>com.cocos2d-v3.iosbase</string>
+		<string>com.cocos2d-v3.cocos2dlib</string>
+		<!-- Doesn't support ARC, commented out until resolved -->
+		<!-- <string>com.cocos2d-v3.cocosdenshionlib</string> -->
+		<string>com.cocos2d-v3.cocos2d-uilib</string>
+		<string>com.cocos2d-v3.kazmathlib</string>
+		<string>com.cocos2d-v3.ccbreaderlib</string>
+		<string>com.cocos2d-v3.chipmunklib</string>
+	</array>
+	<key>Concrete</key>
+	<true/>
+	<key>Definitions</key>
+	<dict>
+		<key>Supporting Files/Prefix.pch</key>
+		<dict>
+			<key>Group</key>
+			<string>Supporting Files</string>
+			<key>Path</key>
+			<string>Supporting Files/Prefix.pch</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Supporting Files/main.m</key>
+		<dict>
+			<key>Group</key>
+			<string>Supporting Files</string>
+			<key>Path</key>
+			<string>Supporting Files/main.m</string>
+		</dict>
+		<key>Classes/HelloWorldScene.h</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/HelloWorldScene.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Classes/HelloWorldScene.m</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/HelloWorldScene.m</string>
+		</dict>
+		<key>Classes/IntroScene.h</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/IntroScene.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Classes/IntroScene.m</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/IntroScene.m</string>
+		</dict>
+		<key>Classes/AppDelegate.h</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/AppDelegate.h</string>
+			<key>TargetIndices</key>
+			<array/>
+		</dict>
+		<key>Classes/AppDelegate.m</key>
+		<dict>
+			<key>Group</key>
+			<string>Classes</string>
+			<key>Path</key>
+			<string>Classes/AppDelegate.m</string>
+		</dict>
+	</dict>
+	<key>Description</key>
+	<string>This template provides a starting point for an application that uses cocos2d-v3.0 for iOS. It also includes Chipmunk, kazmath and CCBReader.</string>
+	<key>Nodes</key>
+	<array>
+		<string>Supporting Files/Prefix.pch</string>
+		<string>Supporting Files/main.m</string>
+		<string>Classes/AppDelegate.h</string>
+		<string>Classes/AppDelegate.m</string>
+		<string>Classes/HelloWorldScene.h</string>
+		<string>Classes/HelloWorldScene.m</string>
+		<string>Classes/IntroScene.h</string>
+		<string>Classes/IntroScene.m</string>
+	</array>
+</dict>
+</plist>
