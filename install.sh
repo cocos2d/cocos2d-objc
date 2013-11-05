@@ -175,6 +175,10 @@ fi
 if $INSTALL ; then
 	echo ""
 	echo ">>> Installing project templates"
+	
+	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates" ]]; then
+		mkdir "$HOME/Library/Developer/Xcode/Templates"
+	fi
 
 	# Copy cocos2d files
 	echo "...copying cocos2d files"
@@ -212,7 +216,8 @@ if $INSTALL ; then
 	echo "...bulding Chipmunk fat static lib, please wait"
 	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
 	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
-	lipo -create "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" -output "$SCRIPT_DIR/external/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>/dev/null
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	lipo -create "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "$SCRIPT_DIR/external/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>/dev/null
 
 	# Copy Chipmunk files
 	echo "...copying Chipmunk files"
@@ -227,6 +232,7 @@ if $INSTALL ; then
 	echo "...cleaning after Chipmunk"
 	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
 	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null	
 	rm -rf "$SCRIPT_DIR/external/Chipmunk/xcode/build"
 
 	# DISABLED
@@ -262,6 +268,10 @@ if $INSTALL ; then
 	echo ">>> Installing file templates"
 	echo "...copying CCNode file templates"
 	echo ""
+
+	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates"
+	fi
 
 	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" ]]; then
 		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
