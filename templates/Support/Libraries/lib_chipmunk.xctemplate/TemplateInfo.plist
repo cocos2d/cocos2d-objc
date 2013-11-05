@@ -840,65 +840,18 @@
             <key>TargetIndices</key>
             <array />
          </dict>
-         <key>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</key>
+         <key>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</key>		 
          <dict>
             <key>Group</key>
             <array>
                <string>Libraries</string>
                <string>Chipmunk</string>
                <string>objectivec</string>
-               <string>src</string>
             </array>
             <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</string>
-         </dict>
-         <key>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>Chipmunk</string>
-               <string>objectivec</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</string>
-         </dict>
-         <key>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>Chipmunk</string>
-               <string>objectivec</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</string>
-         </dict>
-         <key>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>Chipmunk</string>
-               <string>objectivec</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</string>
-         </dict>
-         <key>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</key>
-         <dict>
-            <key>Group</key>
-            <array>
-               <string>Libraries</string>
-               <string>Chipmunk</string>
-               <string>objectivec</string>
-               <string>src</string>
-            </array>
-            <key>Path</key>
-            <string>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</string>
+            <string>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</string>
+            <key>TargetIndices</key>
+            <array />
          </dict>
          <key>Libraries/LICENSE_Chipmunk.txt</key>
          <dict>
@@ -973,11 +926,7 @@
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ChipmunkShape.h</string>
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ChipmunkSpace.h</string>
          <string>Libraries/Chipmunk/objectivec/include/ObjectiveChipmunk/ObjectiveChipmunk.h</string>
-         <string>Libraries/Chipmunk/objectivec/src/ChipmunkBody.m</string>
-         <string>Libraries/Chipmunk/objectivec/src/ChipmunkConstraint.m</string>
-         <string>Libraries/Chipmunk/objectivec/src/ChipmunkMultiGrab.m</string>
-         <string>Libraries/Chipmunk/objectivec/src/ChipmunkShape.m</string>
-         <string>Libraries/Chipmunk/objectivec/src/ChipmunkSpace.m</string>
+		 <string>Libraries/Chipmunk/objectivec/libObjectiveChipmunk.a</string>
          <string>Libraries/LICENSE_Chipmunk.txt</string>
       </array>
       <key>Targets</key>
