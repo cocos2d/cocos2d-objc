@@ -204,19 +204,30 @@ if $INSTALL ; then
 		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
 		rm -rf "$DOWNLOAD_DIR"
 	else
-		git submodule init "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
-		git submodule update "$SCRIPT_DIR/external/Chipmunk" 1>/dev/null 2>/dev/null
+		(cd $SCRIPT_DIR && git submodule init "external/Chipmunk") 1>/dev/null 2>/dev/null
+		(cd $SCRIPT_DIR && git submodule update "external/Chipmunk") 1>/dev/null 2>/dev/null
 	fi
+	
+	# Building Chipmunk (fat static lib)
+	echo "...bulding Chipmunk fat static lib, please wait"
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	lipo -create "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" -output "$SCRIPT_DIR/external/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>/dev/null
 
 	# Copy Chipmunk files
 	echo "...copying Chipmunk files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
-	copy_files "external/Chipmunk/objectivec" "$LIBS_DIR"
+	copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk/xcode/build/libObjectiveChipmunk.a" "$LIBS_DIR/Chipmunk/objectivec"
 	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
 	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR"
-	mv -f "$LIBS_DIR/objectivec" "$LIBS_DIR/Chipmunk"
-	mv -f "$LIBS_DIR/LICENSE.txt" "$LIBS_DIR/LICENSE_Chipmunk.txt"
+	copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	
+	# Clean after Chipmunk
+	echo "...cleaning after Chipmunk"
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
+	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
+	rm -rf "$SCRIPT_DIR/external/Chipmunk/xcode/build"
 
 	# DISABLED
 	# CocosDenshion isn't ARC, so it does not compile with the rest of library.
