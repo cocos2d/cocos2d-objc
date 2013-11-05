@@ -8,10 +8,12 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
+SCRIPT_VER="v0.9.1"
 COCOS2D_VER="cocos2d-v3.0"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
 
+BASE_DIR="$HOME/Library/Developer/Xcode/Templates"
 TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR"
 DST_DIR="$TEMPLATE_DIR"
 
@@ -25,8 +27,8 @@ DELETE=false
 header()
 {
 	echo ""
-	echo "${COCOS2D_VER} template installer (November 2013), by Dominik Hadl and Lars Birkemose"
-	echo "-----------------------------------------------------------------------------------"
+	echo "cocos2d template installer (${SCRIPT_VER}, November 2013) by Dominik Hadl and Lars Birkemose"
+	echo "-------------------------------------------------------------------------------------"
 }
 
 usage()
@@ -47,7 +49,8 @@ usage()
 	echo "script with --force option, which will automatically delete all previously installed files before installing."
 	echo "If you just want to uninstall the templates, then run this script with the --delete option specified."
 	echo ""
-	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'."
+	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'"
+	echo "along with the version number of this script (${SCRIPT_VER}). Thank you!"
 	echo ""
 	exit 0
 }
@@ -174,11 +177,19 @@ fi
 # ----------------------------------------------------
 if $INSTALL ; then
 	echo ""
-	echo ">>> Installing project templates"
-	
-	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates"
+
+	if [[ ! -d  "$BASE_DIR" ]]; then
+		mkdir -p "$BASE_DIR"
+	else
+		perms=$(find "$HOME/Library/Developer/Xcode/Templates" -name "Templates" -perm 0755 -type d)
+		if [[ ! "$perms" =~ "$BASE_DIR" ]]; then
+			echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
+			sudo chmod 755 "$BASE_DIR"
+			echo ""	
+		fi
 	fi
+	
+	echo ">>> Installing project templates"
 
 	# Copy cocos2d files
 	echo "...copying cocos2d files"
