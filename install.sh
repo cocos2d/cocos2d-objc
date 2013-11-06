@@ -246,28 +246,22 @@ if $INSTALL ; then
 
 	# Download Chipmunk files
 	echo -n "...downloading Chipmunk files, please wait"
-	if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
-		if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
-			rm -rf "$SCRIPT_DIR/external/Chipmunk/"
-		fi
-		DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
+	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
 	
-		mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
-		mkdir -p "$DOWNLOAD_DIR"
-	
-		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>/dev/null
-		echo -n "."
-		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
-		echo -n "."		
-		rm -rf "$DOWNLOAD_DIR"
-		printf " ${GREEN}✔${COLOREND}\n"
-	else
-		(cd $SCRIPT_DIR && git submodule init "external/Chipmunk") 1>/dev/null 2>/dev/null		
-		(cd $SCRIPT_DIR && git submodule update "external/Chipmunk") 1>/dev/null 2>/dev/null
-		printf " ${GREEN}✔${COLOREND}\n"
+	if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
+		rm -rf "$SCRIPT_DIR/external/Chipmunk/"
 	fi
-	
+	mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
+	mkdir -p "$DOWNLOAD_DIR"
 
+	echo -n "."
+	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>/dev/null
+	echo -n "."
+	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
+	echo -n "."		
+	rm -rf "$DOWNLOAD_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"
+	
 	# Building Chipmunk (fat static lib)
 	echo -n "...bulding Chipmunk fat static lib, please wait"
 	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
