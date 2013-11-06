@@ -3,21 +3,35 @@
 # Author: Dominik Hadl (based on original script made by Stuart Carnie and Ricardo Quesada)
 # Date: November 2013
 # Description: This script installs cocos2d project templates to the Xcode templates directory, so they can be used within Xcode.
+# TODO: 
+# * Create an error log, if there were any errors during installation
+# * Better handle errors on rsync
+# * Add more colors... Yay!
 # -------------------------------------------------------------------------------------------------------------------------------
 
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
+SCRIPT_VER="v0.9.1"
 COCOS2D_VER="cocos2d-v3.0"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
 
+BASE_DIR="$HOME/Library/Developer/Xcode/Templates"
 TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR"
 DST_DIR="$TEMPLATE_DIR"
+LOG_PATH="/tmp/cocos2d-install"
+ERROR_LOG="${LOG_PATH}/error.log"
 
 INSTALL=true
 FORCE=false
 DELETE=false
+
+COLOREND=$(tput sgr0)
+GREEN=$(tput setaf 2)
+RED=$(tput setaf 1)	
+UNDER=$(tput smul)
+BOLD=$(tput bold)
 
 # ----------------------------------------------------
 # Header and usage
@@ -25,21 +39,19 @@ DELETE=false
 header()
 {
 	echo ""
-	echo "${COCOS2D_VER} template installer (November 2013), by Dominik Hadl and Lars Birkemose"
-	echo "-----------------------------------------------------------------------------------"
+	echo "${UNDER}${BOLD}cocos2d template installer (${SCRIPT_VER}, November 2013) by Dominik Hadl and Lars Birkemose${COLOREND}"
+	echo ""
 }
 
 usage()
 {
-	header
-	echo ""
 	echo "usage:	$0 [options]"
 	echo ""
 	echo "options:"
-	echo "--install     executed by default, installs project templates if not already installed (synonym: -i)"
-	echo "--force       force re-installation when templates already installed (synonym: -f)"
-	echo "--delete      deletes already installed templates (synonym: -d)"
-	echo "--help        shows this help notice (synonym: -h)"
+	echo "${GREEN}--install${COLOREND}     executed by default, installs project templates if not already installed (synonym: ${GREEN}-i${COLOREND})"
+	echo "${GREEN}--force${COLOREND}       force re-installation when templates already installed (synonym: ${GREEN}-f${COLOREND})"
+	echo "${GREEN}--delete${COLOREND}      deletes already installed templates (synonym: ${GREEN}-d${COLOREND})"
+	echo "${GREEN}--help${COLOREND}        shows this help notice (synonym: ${GREEN}-h${COLOREND})"
 	echo ""
 	echo "This script installs ${COCOS2D_VER} project templates to the Xcode templates directory,"
 	echo "so they can be easily used within Xcode without needing to manually add required cocos2d frameworks."
@@ -47,8 +59,13 @@ usage()
 	echo "script with --force option, which will automatically delete all previously installed files before installing."
 	echo "If you just want to uninstall the templates, then run this script with the --delete option specified."
 	echo ""
-	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'."
-	echo ""
+	echo "Everything installed only to this directory: ${BASE_DIR}."
+	echo "The files copied are Xcode templates (.xctemplate) and required libraries (cocos2d, cocos2d-ui, kazmath, CCBReader and Chipmunk)."
+	echo "Included are also some basic resources - app icons, launch images and Hello World examples."
+	echo ""		
+	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'"
+	echo "along with the version number of this script (${RED}${SCRIPT_VER}${COLOREND}). Thank you!"
+	echo ""	
 	exit 0
 }
 
@@ -60,40 +77,68 @@ handle_error()
 	echo ""	
 	if [[ "$1" -eq "1" ]]; then
 		# Script executed as root.
-		echo "Error: Script cannot be executed as root."
+		echo "Error: ${RED}✖︎${COLOREND} Script cannot be executed as root."
 		echo "       In order for it to work properly, please execute the script again without 'sudo'."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "2" ]]; then
 		# Script run with too many options.
-		echo "Error: Too many options specified."
+		echo "Error: ${RED}✖︎${COLOREND} Too many options specified."
 		echo "       This script only takes one option (--install, --delete, --force or --help)."
 		echo "       Please, execute the script again with only one or less options specified."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "3" ]]; then
 		# Uknown option specified
-		echo "Error: Unknown option specified."
+		echo "Error: ${RED}✖︎${COLOREND} Unknown option specified."
 		echo "       This script only takes these options: --install, --delete, --force or --help."
 		echo "       Please, execute the script again with or without one of the supported options."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "4" ]]; then
 		# Templates already installed
-		echo "Error: Templates are already installed."
+		echo "Error: ${RED}✖︎${COLOREND} Templates are already installed."
 		echo "       If you want to override and re-install the templates, then please execute"
 		echo "       this script with the --force option specified."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "5" ]]; then
 		# Nothing to delete
-		echo "Error: Template files not found, nothing to delete."
+		echo "Error: ${RED}✖︎${COLOREND} Template files not found, nothing to delete."
 		echo "       No $COCOS2D_VER template files were found thus cannot be deleted."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
+	elif [[ "$1" -eq "6" ]]; then
+		# Command-line tools not installed
+		echo "Error: ${RED}✖︎${COLOREND} Xcode command line tools are not installed."
+		echo "       Please, install the command line tools from Xcode or Apple Developer website"
+		echo "       an then run this script again. These tools are required for making"
+		echo "       fat static library for Chipmnuk."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
+	elif [[ "$1" -eq "7" ]]; then
+		echo "${UNDER}                                     ${COLOREND}"
+		echo ""
+		echo "${BOLD}${RED}Installation failed!${COLOREND}"
+		echo "Please, send an email containing your error.log on the support email (written in the --help)."
+		echo "It would make it easier for us to improve this script and fix the issues immediately."
+		echo ""
+		echo "Your error log is located at: ${ERROR_LOG}"
+		echo ""
+		exit 7
 	fi
 	echo ""
 	exit "$1"
+}
+
+check_status()
+{
+	if [[ "$?" != "0" ]]; then
+		printf " ${RED}✖︎${COLOREND}"
+		handle_error 7
+	else
+		rm -rf "${ERROR_LOG}"
+	fi
 }
 
 copy_files()
@@ -102,7 +147,8 @@ copy_files()
 		mkdir -p "$2"
 	fi
     SOURCE_DIR="${SCRIPT_DIR}/${1}"
-	rsync -r --exclude=".*" "$SOURCE_DIR" "$2"
+	rsync -r --exclude=".*" "$SOURCE_DIR" "$2" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 }
 
 # Print header
@@ -140,7 +186,8 @@ fi
 # Check if templates installed
 if [[ -d $DST_DIR ]]; then
 	if $FORCE || $DELETE ; then
-		echo "Removing old project template files: $DST_DIR"
+		echo -n "Removing old project template files: $DST_DIR"
+		printf " ${GREEN}✔${COLOREND}\n"		
 		rm -rf "$DST_DIR"
 	else
 		handle_error 4
@@ -153,8 +200,9 @@ fi
 
 if [[ -d "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/" ]]; then
 	if $FORCE || $DELETE ; then
-		echo "Removing old file template files: $HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
+		echo -n "Removing old file template files: $HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
 		rm -rf "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR/"
+		printf " ${GREEN}✔${COLOREND}\n"
 	else
 		handle_error 4
 	fi
@@ -163,6 +211,9 @@ else
 		handle_error 5
 	fi
 fi
+
+# Check if command line tools installed
+command -v xcodebuild > /dev/null || handle_error 6
 
 if $DELETE ; then
 	echo ""
@@ -174,66 +225,117 @@ fi
 # ----------------------------------------------------
 if $INSTALL ; then
 	echo ""
-	echo ">>> Installing project templates"
-	
-	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates"
+
+	mkdir -p "${LOG_PATH}"
+
+	# Check directories
+	if [[ ! -d  "$BASE_DIR" ]]; then
+		mkdir -p "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
+	else
+		perms=$(find "$HOME/Library/Developer/Xcode/Templates" -name "Templates" -perm 0755 -type d)
+		if [[ ! "$perms" =~ "$BASE_DIR" ]]; then
+			didPrint=true
+			echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
+			sudo chmod 755 "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+			check_status
+			echo ""	
+		fi
 	fi
+	
+	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
+	else
+		perms=$(find "$HOME/Library/Developer/Xcode/Templates/File Templates" -name "File Templates" -perm 0755 -type d)
+		if [[ ! "$perms" =~ "$BASE_DIR/File Templates" ]]; then
+			if ! $didPrint ; then
+				echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
+			fi
+			sudo chmod 755 "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+			check_status
+			if ! $didPrint ; then
+				echo ""	
+			fi
+		fi
+	fi
+	
+	echo "${BOLD}>>> Installing project templates${COLOREND}"
 
 	# Copy cocos2d files
-	echo "...copying cocos2d files"
+	echo -n "...copying cocos2d files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocos2d.xctemplate/Libraries/"
 	copy_files "cocos2d" "$LIBS_DIR"
 	copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy cocos2d-ui files
-	echo "...copying cocos2d-ui files"
+	echo -n "...copying cocos2d-ui files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocos2d-ui.xctemplate/Libraries/"
 	copy_files "cocos2d-ui" "$LIBS_DIR"
 	copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
-	rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader"
+	rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Download Chipmunk files
-	echo "...downloading Chipmunk files, please wait"
-	if [[ ! -d "$SCRIPT_DIR/.git" ]]; then
-		if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
-			rm -rf "$SCRIPT_DIR/external/Chipmunk/"
-		fi
-		DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
-	
-		mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
-		mkdir -p "$DOWNLOAD_DIR"
-	
-		curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip"
-		tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
-		rm -rf "$DOWNLOAD_DIR"
-	else
-		(cd $SCRIPT_DIR && git submodule init "external/Chipmunk") 1>/dev/null 2>/dev/null
-		(cd $SCRIPT_DIR && git submodule update "external/Chipmunk") 1>/dev/null 2>/dev/null
+	echo -n "...downloading Chipmunk files, please wait"
+	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
+	mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+
+	echo -n "."
+	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	echo -n "."
+	if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
+		mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
 	fi
+	echo -n "."
+	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
+	printf " ${GREEN}✔${COLOREND}\n"
 	
 	# Building Chipmunk (fat static lib)
-	echo "...bulding Chipmunk fat static lib, please wait"
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
-	lipo -create "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "$SCRIPT_DIR/external/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>/dev/null
-
-	# Copy Chipmunk files
-	echo "...copying Chipmunk files"
-	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
-	copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk/xcode/build/libObjectiveChipmunk.a" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	echo -n "...bulding Chipmunk fat static lib, please wait"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
+	echo -n "."
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
+	echo -n "."	
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
+	echo -n "."	
+	lipo -create "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "${DOWNLOAD_DIR}/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
+	printf " ${GREEN}✔${COLOREND}\n"
 	
+	# Copy Chipmunk files
+	echo -n "...copying Chipmunk files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
+	copy_files "external/Chipmunk_download/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk_download/Chipmunk/xcode/build/libObjectiveChipmunk.a" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk_download/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	printf " ${GREEN}✔${COLOREND}\n"
+		
 	# Clean after Chipmunk
-	echo "...cleaning after Chipmunk"
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null	
-	rm -rf "$SCRIPT_DIR/external/Chipmunk/xcode/build"
+	echo -n "...cleaning after Chipmunk"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	echo -n "."
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	echo -n "."	
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"	
+	check_status
+	echo -n "."	
+	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	printf " ${GREEN}✔${COLOREND}\n"	
 
 	# DISABLED
 	# CocosDenshion isn't ARC, so it does not compile with the rest of library.
@@ -249,41 +351,44 @@ if $INSTALL ; then
 	# copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
 
 	# Copy kazmath files
-	echo "...copying kazmath files"
+	echo -n "...copying kazmath files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_kazmath.xctemplate/Libraries/"
 	copy_files "external/kazmath" "$LIBS_DIR"
 	copy_files "LICENSE_Kazmath.txt" "$LIBS_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"	
 
 	# Copy CCBReader files
-	echo "...copying CCBReader files"
+	echo -n "...copying CCBReader files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_ccbreader.xctemplate/Libraries/"
 	copy_files "cocos2d-ui/CCBReader" "$LIBS_DIR"
 	copy_files "LICENSE_CCBReader.txt" "$LIBS_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"	
 
 	# Copy actual template files
-	echo "...copying Xcode template files"
+	echo -n "...copying Xcode template files"
 	copy_files "templates/" "$DST_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"
 
 	echo ""
-	echo ">>> Installing file templates"
-	echo "...copying CCNode file templates"
-	echo ""
-
-	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates"
-	fi
+	echo "${BOLD}>>> Installing file templates${COLOREND}"
+	echo -n "...copying CCNode file templates"
 
 	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
 	fi
 
 	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
 	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 
-	mv -f "$OLD_DIR/CCNode class.xctemplate" "$DST_DIR/CCNode class.xctemplate"
-
-	echo "-----------------------"
-	echo "Everything installed successfully."
-	echo "Have fun!"
+	mv -f "$OLD_DIR/CCNode class.xctemplate" "$DST_DIR/CCNode class.xctemplate" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
+	printf " ${GREEN}✔${COLOREND}\n\n"
+	echo "${UNDER}                                     ${COLOREND}"
 	echo ""
+	echo "${BOLD}Everything installed successfully.${COLOREND}"
+	echo "${BOLD}Have fun!${COLOREND}"
+	echo ""
+	
+	rm -rf "${LOG_PATH}" 1>/dev/null 2>/dev/null
 fi
