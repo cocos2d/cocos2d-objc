@@ -20,6 +20,8 @@ SCRIPT_DIR="$(dirname $0)"
 BASE_DIR="$HOME/Library/Developer/Xcode/Templates"
 TEMPLATE_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR"
 DST_DIR="$TEMPLATE_DIR"
+LOG_PATH="/tmp/cocos2d-install"
+ERROR_LOG="${LOG_PATH}/error.log"
 
 INSTALL=true
 FORCE=false
@@ -110,9 +112,29 @@ handle_error()
 		echo "       fat static library for Chipmnuk."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
+	elif [[ "$1" -eq "7" ]]; then
+		echo "${UNDER}                                     ${COLOREND}"
+		echo ""
+		echo "${BOLD}${RED}Installation failed!${COLOREND}"
+		echo "Please, send an email containing your error.log on the support email (written in the --help)."
+		echo "It would make it easier for us to improve this script and fix the issues immediately."
+		echo ""
+		echo "Your error log is located at: ${ERROR_LOG}"
+		echo ""
+		exit 7
 	fi
 	echo ""
 	exit "$1"
+}
+
+check_status()
+{
+	if [[ "$?" != "0" ]]; then
+		printf " ${RED}✖︎${COLOREND}"
+		handle_error 7
+	else
+		rm -rf "${ERROR_LOG}"
+	fi
 }
 
 copy_files()
@@ -121,7 +143,8 @@ copy_files()
 		mkdir -p "$2"
 	fi
     SOURCE_DIR="${SCRIPT_DIR}/${1}"
-	rsync -r --exclude=".*" "$SOURCE_DIR" "$2"
+	rsync -r --exclude=".*" "$SOURCE_DIR" "$2" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 }
 
 # Print header
@@ -199,28 +222,34 @@ fi
 if $INSTALL ; then
 	echo ""
 
+	mkdir -p "${LOG_PATH}"
+
 	# Check directories
 	if [[ ! -d  "$BASE_DIR" ]]; then
-		mkdir -p "$BASE_DIR"
+		mkdir -p "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
 	else
 		perms=$(find "$HOME/Library/Developer/Xcode/Templates" -name "Templates" -perm 0755 -type d)
 		if [[ ! "$perms" =~ "$BASE_DIR" ]]; then
 			didPrint=true
 			echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
-			sudo chmod 755 "$BASE_DIR"
+			sudo chmod 755 "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+			check_status
 			echo ""	
 		fi
 	fi
 	
 	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates"
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
 	else
 		perms=$(find "$HOME/Library/Developer/Xcode/Templates/File Templates" -name "File Templates" -perm 0755 -type d)
 		if [[ ! "$perms" =~ "$BASE_DIR/File Templates" ]]; then
 			if ! $didPrint ; then
 				echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
 			fi
-			sudo chmod 755 "$BASE_DIR"
+			sudo chmod 755 "$BASE_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+			check_status
 			if ! $didPrint ; then
 				echo ""	
 			fi
@@ -241,57 +270,67 @@ if $INSTALL ; then
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocos2d-ui.xctemplate/Libraries/"
 	copy_files "cocos2d-ui" "$LIBS_DIR"
 	copy_files "LICENSE_cocos2d.txt" "$LIBS_DIR"
-	rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader"
+	rm -rf "$LIBS_DIR/cocos2d-ui/CCBReader" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Download Chipmunk files
 	echo -n "...downloading Chipmunk files, please wait"
 	DOWNLOAD_DIR="$SCRIPT_DIR/external/Chipmunk_download"
-	
-	if [[ -d "$SCRIPT_DIR/external/Chipmunk/" ]]; then
-		rm -rf "$SCRIPT_DIR/external/Chipmunk/"
-	fi
-	mkdir -p "$SCRIPT_DIR/external/Chipmunk/"
-	mkdir -p "$DOWNLOAD_DIR"
+	mkdir -p "$DOWNLOAD_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 
 	echo -n "."
-	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>/dev/null
+	curl -L -# "https://github.com/slembcke/Chipmunk2D/archive/a51044feb5d2aa227941c2faa91271a312928ef3.zip" -o "$DOWNLOAD_DIR/Chipmunk_tarball.zip" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	echo -n "."
-	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "$SCRIPT_DIR/external/Chipmunk/" --strip-components=1
-	echo -n "."		
-	rm -rf "$DOWNLOAD_DIR"
+	if [[ ! -d "${DOWNLOAD_DIR}/Chipmunk/" ]]; then
+		mkdir -p "${DOWNLOAD_DIR}/Chipmunk/" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
+	fi
+	echo -n "."
+	tar -xf "$DOWNLOAD_DIR/Chipmunk_tarball.zip" -C "${DOWNLOAD_DIR}/Chipmunk/" --strip-components=1 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
 	printf " ${GREEN}✔${COLOREND}\n"
 	
 	# Building Chipmunk (fat static lib)
 	echo -n "...bulding Chipmunk fat static lib, please wait"
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
 	echo -n "."
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
 	echo -n "."	
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="$SCRIPT_DIR/external/Chipmunk/xcode/build/" 1>/dev/null 2>/dev/null
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
 	echo -n "."	
-	lipo -create "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${SCRIPT_DIR}/external/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "$SCRIPT_DIR/external/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>/dev/null
+	lipo -create "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "${DOWNLOAD_DIR}/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status	
 	printf " ${GREEN}✔${COLOREND}\n"
 	
 	# Copy Chipmunk files
 	echo -n "...copying Chipmunk files"
 	LIBS_DIR="$DST_DIR/Support/Libraries/lib_chipmunk.xctemplate/Libraries/"
-	copy_files "external/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk/xcode/build/libObjectiveChipmunk.a" "$LIBS_DIR/Chipmunk/objectivec"
-	copy_files "external/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
-	copy_files "external/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
+	copy_files "external/Chipmunk_download/Chipmunk/objectivec/include" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk_download/Chipmunk/xcode/build/libObjectiveChipmunk.a" "$LIBS_DIR/Chipmunk/objectivec"
+	copy_files "external/Chipmunk_download/Chipmunk/include" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk_download/Chipmunk/src" "$LIBS_DIR/Chipmunk/chipmunk"
+	copy_files "external/Chipmunk_download/Chipmunk/LICENSE.txt" "$LIBS_DIR/Chipmunk"
 	printf " ${GREEN}✔${COLOREND}\n"
 		
 	# Clean after Chipmunk
 	echo -n "...cleaning after Chipmunk"
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	echo -n "."
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	echo -n "."	
-	xcodebuild -project "${SCRIPT_DIR}/external/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="$SCRIPT_DIR/external/Chipmunk/xcode/" clean 1>/dev/null 2>/dev/null	
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>/dev/null 2>"${ERROR_LOG}"	
+	check_status
 	echo -n "."	
-	rm -rf "$SCRIPT_DIR/external/Chipmunk/xcode/build"
+	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	printf " ${GREEN}✔${COLOREND}\n"	
 
 	# DISABLED
@@ -331,13 +370,15 @@ if $INSTALL ; then
 	echo -n "...copying CCNode file templates"
 
 	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" 1>/dev/null 2>"${ERROR_LOG}"
+		check_status
 	fi
 
 	DST_DIR="$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
 	OLD_DIR="$HOME/Library/Developer/Xcode/Templates/$COCOS2D_DST_DIR/"
 
-	mv -f "$OLD_DIR/CCNode class.xctemplate" "$DST_DIR/CCNode class.xctemplate"
+	mv -f "$OLD_DIR/CCNode class.xctemplate" "$DST_DIR/CCNode class.xctemplate" 1>/dev/null 2>"${ERROR_LOG}"
+	check_status
 	printf " ${GREEN}✔${COLOREND}\n\n"
 	echo "${UNDER}                                     ${COLOREND}"
 	echo ""
