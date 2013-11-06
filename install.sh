@@ -94,6 +94,14 @@ handle_error()
 		echo "       No $COCOS2D_VER template files were found thus cannot be deleted."
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
+	elif [[ "$1" -eq "6" ]]; then
+		# Command-line tools not installed
+		echo "Error: Xcode command line tools are not installed."
+		echo "       Please, install the command line tools from Xcode or Apple Developer website"
+		echo "       an then run this script again. These tools are required for making"
+		echo "       fat static library for Chipmnuk."
+		echo ""
+		echo "If you want to know more about how to use this script execute '$0 --help'."
 	fi
 	echo ""
 	exit "$1"
@@ -167,6 +175,9 @@ else
 	fi
 fi
 
+# Check if command line tools installed
+command -v xcodebuild > /dev/null || handle_error 6
+
 if $DELETE ; then
 	echo ""
 	exit 0;
@@ -178,14 +189,31 @@ fi
 if $INSTALL ; then
 	echo ""
 
+	# Check directories
 	if [[ ! -d  "$BASE_DIR" ]]; then
 		mkdir -p "$BASE_DIR"
 	else
 		perms=$(find "$HOME/Library/Developer/Xcode/Templates" -name "Templates" -perm 0755 -type d)
 		if [[ ! "$perms" =~ "$BASE_DIR" ]]; then
+			didPrint=true
 			echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
 			sudo chmod 755 "$BASE_DIR"
 			echo ""	
+		fi
+	fi
+	
+	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
+		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates"
+	else
+		perms=$(find "$HOME/Library/Developer/Xcode/Templates/File Templates" -name "File Templates" -perm 0755 -type d)
+		if [[ ! "$perms" =~ "$BASE_DIR/File Templates" ]]; then
+			if ! $didPrint ; then
+				echo "In order to install templates you need access to the Xcode templates folder. Please enter your password if prompted."
+			fi
+			sudo chmod 755 "$BASE_DIR"
+			if ! $didPrint ; then
+				echo ""	
+			fi
 		fi
 	fi
 	
@@ -279,10 +307,6 @@ if $INSTALL ; then
 	echo ">>> Installing file templates"
 	echo "...copying CCNode file templates"
 	echo ""
-
-	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates" ]]; then
-		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates"
-	fi
 
 	if [[ ! -d  "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR" ]]; then
 		mkdir "$HOME/Library/Developer/Xcode/Templates/File Templates/$COCOS2D_DST_DIR"
