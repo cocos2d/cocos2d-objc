@@ -59,6 +59,10 @@ usage()
 	echo "script with --force option, which will automatically delete all previously installed files before installing."
 	echo "If you just want to uninstall the templates, then run this script with the --delete option specified."
 	echo ""
+	echo "Everything installed only to this directory: ${BASE_DIR}."
+	echo "The files copied are Xcode templates (.xctemplate) and required libraries (cocos2d, cocos2d-ui, kazmath, CCBReader and Chipmunk)."
+	echo "Included are also some basic resources - app icons, launch images and Hello World examples."
+	echo ""		
 	echo "If this script is behaving unexpectedly, then please send support emails to 'support (at) dynamicdust (dot) com'"
 	echo "along with the version number of this script (${RED}${SCRIPT_VER}${COLOREND}). Thank you!"
 	echo ""	
@@ -385,4 +389,6 @@ if $INSTALL ; then
 	echo "${BOLD}Everything installed successfully.${COLOREND}"
 	echo "${BOLD}Have fun!${COLOREND}"
 	echo ""
+	
+	rm -rf "${LOG_PATH}" 1>/dev/null 2>/dev/null
 fi
