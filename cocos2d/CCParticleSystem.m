@@ -84,6 +84,7 @@
 @synthesize blendFunc = _blendFunc;
 @synthesize particlePositionType = _particlePositionType;
 @synthesize autoRemoveOnFinish = _autoRemoveOnFinish;
+@synthesize resetOnVisibilityToggle = _resetOnVisibilityToggle;
 @synthesize emitterMode = _emitterMode;
 @synthesize atlasIndex = _atlasIndex;
 @synthesize totalParticles = _totalParticles;
@@ -324,6 +325,8 @@
 		_emitterMode = CCParticleSystemModeGravity;
 
 		_autoRemoveOnFinish = NO;
+        
+        _resetOnVisibilityToggle = YES;
 
 		// Optimization: compile updateParticle method
 		_updateParticleSel = @selector(updateQuadWithParticle:newPosition:);
@@ -477,6 +480,17 @@
 	}
 
 }
+
+-(void)setVisible:(BOOL)visible
+{
+    if(self.visible == NO && visible ==  YES && _resetOnVisibilityToggle)
+    {
+        [self resetSystem];
+    }
+    
+    [super setVisible:visible];
+}
+
 
 -(BOOL) isFull
 {
