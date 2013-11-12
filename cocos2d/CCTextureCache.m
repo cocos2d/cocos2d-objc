@@ -132,11 +132,10 @@ static CCTextureCache *sharedTextureCache;
     
 	_auxGLcontext = nil;
 	sharedTextureCache = nil;
-#warning Not implemented with ARC
-    /*
+    
 	dispatch_release(_loadingQueue);
 	dispatch_release(_dictQueue);
-     */
+    
 }
 
 #pragma mark TextureCache - Add Images
@@ -379,19 +378,16 @@ static CCTextureCache *sharedTextureCache;
 
 -(void) removeUnusedTextures
 {
-#warning Not implemented with ARC
-    /*
 	dispatch_sync(_dictQueue, ^{
 		NSArray *keys = [_textures allKeys];
 		for( id key in keys ) {
 			id value = [_textures objectForKey:key];
-			if( [value retainCount] == 1 ) {
+			if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
 				CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
 				[_textures removeObjectForKey:key];
 			}
 		}
 	});
-     */
     [self removeAllTextures];
 }
 

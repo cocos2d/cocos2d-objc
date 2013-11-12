@@ -335,8 +335,6 @@ GetPositionFromBody(CCNode *node, CCPhysicsBody *body)
 {
 	_positionType = positionType;
 	_isTransformDirty = _isInverseDirty = YES;
-	
-	#warning Position is not preserved when changing position type.
 }
 
 -(void) setAnchorPoint:(CGPoint)point
