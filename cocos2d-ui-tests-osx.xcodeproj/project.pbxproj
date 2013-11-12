@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B73C129A17EA48CC0029B6AC /* TestBase.m */; };
+		B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060191831B0080043CC67 /* ObjectALTest.m */; };
+		B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B770609D1831B3F60043CC67 /* AVFoundation.framework */; };
 		B78AE47C17E7B13C0028BE0B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */; };
 		B78AE47E17E7B13C0028BE0B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47D17E7B13C0028BE0B /* OpenGL.framework */; };
 		B78AE48017E7B13C0028BE0B /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B78AE47F17E7B13C0028BE0B /* OpenAL.framework */; };
@@ -65,6 +67,9 @@
 /* Begin PBXFileReference section */
 		B73C129917EA48CC0029B6AC /* TestBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TestBase.h; path = "cocos2d-ui-tests/TestBase.h"; sourceTree = SOURCE_ROOT; };
 		B73C129A17EA48CC0029B6AC /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
+		B77060181831B0080043CC67 /* ObjectALTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectALTest.h; path = "cocos2d-ui-tests/tests/ObjectALTest.h"; sourceTree = SOURCE_ROOT; };
+		B77060191831B0080043CC67 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
+		B770609D1831B3F60043CC67 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		B78AE47817E7B13C0028BE0B /* cocos2d-ui-tests-osx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "cocos2d-ui-tests-osx.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B78AE47D17E7B13C0028BE0B /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
@@ -105,6 +110,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B770609E1831B3F60043CC67 /* AVFoundation.framework in Frameworks */,
 				B78AE63817E7B2FC0028BE0B /* libcocos2d.a in Frameworks */,
 				B78AE47C17E7B13C0028BE0B /* QuartzCore.framework in Frameworks */,
 				B78AE47E17E7B13C0028BE0B /* OpenGL.framework in Frameworks */,
@@ -138,6 +144,7 @@
 		B78AE47A17E7B13C0028BE0B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B770609D1831B3F60043CC67 /* AVFoundation.framework */,
 				B78AE47B17E7B13C0028BE0B /* QuartzCore.framework */,
 				B78AE47D17E7B13C0028BE0B /* OpenGL.framework */,
 				B78AE47F17E7B13C0028BE0B /* OpenAL.framework */,
@@ -237,6 +244,8 @@
 				B7EE69EF1819EB0E00B983FE /* CCLayoutTest.m */,
 				B7EE6A2E181B285700B983FE /* CCSliderTest.h */,
 				B7EE6A2F181B285700B983FE /* CCSliderTest.m */,
+				B77060181831B0080043CC67 /* ObjectALTest.h */,
+				B77060191831B0080043CC67 /* ObjectALTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -341,6 +350,7 @@
 				B7EE6A30181B285700B983FE /* CCSliderTest.m in Sources */,
 				B78AE63D17E7B7690028BE0B /* MainMenu.m in Sources */,
 				B73C129B17EA48CC0029B6AC /* TestBase.m in Sources */,
+				B770601A1831B0080043CC67 /* ObjectALTest.m in Sources */,
 				B79DEE1718105B7C00A653C9 /* CCTransitionTest.m in Sources */,
 				B7C6239617F10F0600928F91 /* CCTableViewTest.m in Sources */,
 			);
@@ -439,6 +449,7 @@
 					"cocos2d-ui-tests/**",
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
@@ -467,6 +478,7 @@
 					"cocos2d-ui-tests/**",
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/osx/Resources/Info.plist";
 				OTHER_LDFLAGS = (
