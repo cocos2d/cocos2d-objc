@@ -384,11 +384,11 @@ static CCTextureCache *sharedTextureCache;
 			id value = [_textures objectForKey:key];
 			if( CFGetRetainCount((CFTypeRef) value) == 1 ) {
 				CCLOG(@"cocos2d: CCTextureCache: removing unused texture: %@", key);
+                NSLog(@"Remove!");
 				[_textures removeObjectForKey:key];
 			}
 		}
 	});
-    [self removeAllTextures];
 }
 
 -(void) removeTexture: (CCTexture*) tex
