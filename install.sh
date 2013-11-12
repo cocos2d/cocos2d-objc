@@ -12,7 +12,7 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
-SCRIPT_VER="v0.9.1"
+SCRIPT_VER="v0.9.2"
 COCOS2D_VER="cocos2d-v3.0"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
@@ -117,18 +117,19 @@ handle_error()
 		echo ""
 		echo "If you want to know more about how to use this script execute '$0 --help'."
 	elif [[ "$1" -eq "7" ]]; then
+		# Something bad happened, error notice
 		echo "${UNDER}                                     ${COLOREND}"
 		echo ""
 		echo "${BOLD}${RED}Installation failed!${COLOREND}"
 		echo "Please, send an email containing your error.log on the support email (written in the --help)."
 		echo "It would make it easier for us to improve this script and fix the issues immediately."
 		echo ""
-		echo "Your error log is located at: ${ERROR_LOG}"
-		echo ""
-		exit 7
+		echo "Your error log is located at: ${HOME}/Desktop/cocos2d-install.log"
 	fi
 	echo ""
-	exit "$1"
+	if [[ "$1" -ne "7" ]]; then
+		exit "$1"
+	fi
 }
 
 check_status()
@@ -137,6 +138,7 @@ check_status()
 		printf " ${RED}✖︎${COLOREND}"
 		handle_error 7
 		mv -f "${ERROR_LOG}" "${HOME}/Desktop/cocos2d-install.log"
+		exit 7		
 	fi
 }
 
@@ -322,20 +324,13 @@ if $INSTALL ; then
 	echo -n "."	
 	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
 	check_status
-	printf " ${GREEN}✔${COLOREND}\n"	
+	printf " ${GREEN}✔${COLOREND}\n"
 
-	# DISABLED
-	# CocosDenshion isn't ARC, so it does not compile with the rest of library.
-	# There is no way right now how to specify compiler flags in Xcode templates,
-	# so the only options are: 
-	# 1. Convert to ARC 
-	# 2. Replace with better audio engine
-
-	# Copy CocosDenshion files
-	# echo "...copying CocosDenshion files"
-	# LIBS_DIR="$DST_DIR/Support/Libraries/lib_cocosdenshion.xctemplate/Libraries/"
-	# copy_files "CocosDenshion" "$LIBS_DIR"
-	# copy_files "LICENSE_CocosDenshion.txt" "$LIBS_DIR"
+	# Copy ObjectAL files
+	echo -n "...copying ObjectAL files"
+	LIBS_DIR="$DST_DIR/Support/Libraries/lib_objectal.xctemplate/Libraries/"
+	copy_files "external/ObjectAL" "$LIBS_DIR"
+	printf " ${GREEN}✔${COLOREND}\n"
 
 	# Copy kazmath files
 	echo -n "...copying kazmath files"
