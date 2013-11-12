@@ -53,6 +53,7 @@
 				<string>QuartzCore</string>
 				<string>OpenGL</string>
 				<string>OpenAL</string>
+				<string>AVFoundation</string>
 				<string>AudioToolbox</string>
 				<string>AppKit</string>
 				<string>Foundation</string>
