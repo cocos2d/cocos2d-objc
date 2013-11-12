@@ -10,6 +10,7 @@
 		B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B70AFC2F180F2D7400516435 /* CCTransitionTest.m */; };
 		B71B087C17EA5B490082EBC0 /* TestBase.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B087B17EA5B490082EBC0 /* TestBase.m */; };
 		B71B088217EA5B6A0082EBC0 /* CCScrollViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */; };
+		B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B77060131831A17C0043CC67 /* ObjectALTest.m */; };
 		B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B772F69E1811C8D9005C069B /* CCResponderTest.m */; };
 		B7C6237617EA695100928F91 /* Resources-shared in Resources */ = {isa = PBXBuildFile; fileRef = B7C6237517EA695100928F91 /* Resources-shared */; };
 		B7C6238C17ECDF6A00928F91 /* CCTableViewTest.m in Sources */ = {isa = PBXBuildFile; fileRef = B7C6238B17ECDF6A00928F91 /* CCTableViewTest.m */; };
@@ -96,6 +97,8 @@
 		B71B087B17EA5B490082EBC0 /* TestBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TestBase.m; path = "cocos2d-ui-tests/TestBase.m"; sourceTree = SOURCE_ROOT; };
 		B71B088017EA5B6A0082EBC0 /* CCScrollViewTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCScrollViewTest.h; path = "cocos2d-ui-tests/tests/CCScrollViewTest.h"; sourceTree = SOURCE_ROOT; };
 		B71B088117EA5B6A0082EBC0 /* CCScrollViewTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCScrollViewTest.m; path = "cocos2d-ui-tests/tests/CCScrollViewTest.m"; sourceTree = SOURCE_ROOT; };
+		B77060121831A17C0043CC67 /* ObjectALTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ObjectALTest.h; path = "cocos2d-ui-tests/tests/ObjectALTest.h"; sourceTree = SOURCE_ROOT; };
+		B77060131831A17C0043CC67 /* ObjectALTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ObjectALTest.m; path = "cocos2d-ui-tests/tests/ObjectALTest.m"; sourceTree = SOURCE_ROOT; };
 		B772F69D1811C8D9005C069B /* CCResponderTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CCResponderTest.h; path = "cocos2d-ui-tests/tests/CCResponderTest.h"; sourceTree = SOURCE_ROOT; };
 		B772F69E1811C8D9005C069B /* CCResponderTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CCResponderTest.m; path = "cocos2d-ui-tests/tests/CCResponderTest.m"; sourceTree = SOURCE_ROOT; };
 		B7C6237517EA695100928F91 /* Resources-shared */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Resources-shared"; path = "cocos2d-ui-tests/Resources-shared"; sourceTree = SOURCE_ROOT; };
@@ -181,6 +184,8 @@
 				B7EE69CE1819D82300B983FE /* CCLayoutTest.m */,
 				B7EE6A26181B075E00B983FE /* CCSliderTest.h */,
 				B7EE6A27181B075E00B983FE /* CCSliderTest.m */,
+				B77060121831A17C0043CC67 /* ObjectALTest.h */,
+				B77060131831A17C0043CC67 /* ObjectALTest.m */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -420,6 +425,7 @@
 				B7EE69811818760700B983FE /* CCSprite9SliceTest.m in Sources */,
 				B7EE6A28181B075E00B983FE /* CCSliderTest.m in Sources */,
 				B772F69F1811C8D9005C069B /* CCResponderTest.m in Sources */,
+				B77060141831A17C0043CC67 /* ObjectALTest.m in Sources */,
 				B7EE69CF1819D82300B983FE /* CCLayoutTest.m in Sources */,
 				B7E2622117E7D3B2007067F0 /* MainMenu.m in Sources */,
 				B70AFC30180F2D7400516435 /* CCTransitionTest.m in Sources */,
@@ -501,6 +507,7 @@
 					"cocos2d-ui-tests/**",
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
@@ -533,6 +540,7 @@
 					"cocos2d-ui-tests/**",
 					external/Chipmunk/include,
 					external/Chipmunk/objectivec/include,
+					"external/ObjectAL/**",
 				);
 				INFOPLIST_FILE = "cocos2d-ui-tests/ios/Resources/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;

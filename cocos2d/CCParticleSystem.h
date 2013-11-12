@@ -276,6 +276,9 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
 	// Whether or not the node will be auto-removed when there are not particles
 	BOOL	_autoRemoveOnFinish;
 
+    //the particly system resetd upon visibility toggling to True
+    BOOL    _resetOnVisibilityToggle;
+    
 	//  particle idx
 	NSUInteger _particleIdx;
 
@@ -391,6 +394,8 @@ typedef void (*_CC_UPDATE_PARTICLE_IMP)(id, SEL, _CCParticle*, CGPoint);
  @since v0.8
  */
 @property (nonatomic,readwrite) BOOL autoRemoveOnFinish;
+/** does the particly system reset upon visibility toggling to True */
+@property (nonatomic,readwrite) BOOL resetOnVisibilityToggle;
 /** Switch between different kind of emitter modes:
    - CCParticleSystemModeGravity: uses gravity, speed, radial and tangential acceleration
    - CCParticleSystemModeRadius: uses radius movement + rotation
