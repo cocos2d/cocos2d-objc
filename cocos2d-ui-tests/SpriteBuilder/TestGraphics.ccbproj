@@ -151,8 +151,6 @@
 		</dict>
 		<key>Sprites/circle.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -160,8 +158,6 @@
 		</dict>
 		<key>Tests/slider-background-hilite.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -169,8 +165,6 @@
 		</dict>
 		<key>Tests/slider-background.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -178,8 +172,6 @@
 		</dict>
 		<key>Tests/slider-handle.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -187,8 +179,6 @@
 		</dict>
 		<key>Tests/textfield-bg.png</key>
 		<dict>
-			<key>isDirty</key>
-			<true/>
 			<key>scaleFrom</key>
 			<integer>2</integer>
 			<key>tabletScale</key>
@@ -233,8 +223,8 @@
 	<key>tabletPositionScaleFactorType</key>
 	<integer>0</integer>
 	<key>versionStr</key>
-	<string>Version: 0.6b3
-GitHub: bbe1f0c90c
+	<string>Version: 0.9.alpha
+GitHub: a60fad70ec
 </string>
 </dict>
 </plist>
