@@ -20,6 +20,8 @@
 
 - (void) setupSimpleAudioTest
 {
+    self.subTitle = @"Test playback of sound effect.";
+    
     CCButton* btn = [CCButton buttonWithTitle:@"Play Sound"];
     btn.positionType = CCPositionTypeNormalized;
     btn.position = ccp(0.5, 0.5);

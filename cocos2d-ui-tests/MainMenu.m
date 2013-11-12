@@ -44,6 +44,7 @@
             @"CCResponderTest",
 #endif
             @"ObjectALTest",
+            @"CCTextureCacheTest",
             nil];
 }
 
