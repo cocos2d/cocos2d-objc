@@ -28,12 +28,10 @@
 #import "CCBSequenceProperty.h"
 #import "CCBReader.h"
 #import "CCBKeyframe.h"
-//#import "SimpleAudioEngine.h"
+#import "OALSimpleAudio.h"
 #import <objc/runtime.h>
 
 #import "CCDirector_Private.h"
-
-#warning FIX Sounds
 
 static NSInteger ccbAnimationManagerID = 0;
 
@@ -775,8 +773,7 @@ static NSInteger ccbAnimationManagerID = 0;
 
 - (void) update:(CCTime)time
 {
-#warning FIX Sounds
-    //[[SimpleAudioEngine sharedEngine] playEffect:soundFile pitch:pitch pan:pan gain:gain];
+    [[OALSimpleAudio sharedInstance] playEffect:soundFile volume:gain pitch:pitch pan:pan loop:NO];
 }
 
 @end
