@@ -32,6 +32,7 @@
 #import <objc/runtime.h>
 
 #import "CCDirector_Private.h"
+#import "CCBReader_Private.h"
 
 static NSInteger ccbAnimationManagerID = 0;
 

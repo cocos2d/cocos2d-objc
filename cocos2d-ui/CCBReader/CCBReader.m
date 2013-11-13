@@ -31,6 +31,7 @@
 #import "CCBSequenceProperty.h"
 #import "CCBKeyframe.h"
 #import "CCBLocalizationManager.h"
+#import "CCBReader_Private.h"
 
 #ifdef CCB_ENABLE_UNZIP
 #import "SSZipArchive.h"
@@ -48,13 +49,7 @@
 
 @implementation CCBReader
 
-@synthesize actionManager;
-@synthesize ownerOutletNames;
-@synthesize ownerOutletNodes;
-@synthesize ownerCallbackNames;
-@synthesize ownerCallbackNodes;
-@synthesize nodesWithAnimationManagers;
-@synthesize animationManagersForNodes;
+@synthesize animationManager;
 
 + (void) configureCCFileUtils
 {
@@ -94,13 +89,13 @@
     if (!self) return NULL;
     
     // Setup action manager
-    self.actionManager = [[CCBAnimationManager alloc] init];
+    self.animationManager = [[CCBAnimationManager alloc] init];
     
     // Setup set of loaded sprite sheets
     loadedSpriteSheets = [[NSMutableSet alloc] init];
     
     // Setup resolution scale and default container size
-    actionManager.rootContainerSize = [[CCDirector sharedDirector] viewSize];
+    animationManager.rootContainerSize = [[CCDirector sharedDirector] viewSize];
     
     return self;
 }
@@ -327,7 +322,7 @@ static inline float readFloat(CCBReader *self)
             setProp &= [extraPropsNames containsObject:name];
         }
     }
-    else if (isExtraProp && node == actionManager.rootNode)
+    else if (isExtraProp && node == animationManager.rootNode)
     {
         NSMutableSet* extraPropNames = node.userObject;
         if (!extraPropNames)
@@ -367,7 +362,7 @@ static inline float readFloat(CCBReader *self)
                                 [NSNumber numberWithInt:xUnit],
                                 [NSNumber numberWithInt:yUnit],
                                 nil];
-                [actionManager setBaseValue:baseValue forNode:node propertyName:name];
+                [animationManager setBaseValue:baseValue forNode:node propertyName:name];
             }
         }
     }
@@ -426,7 +421,7 @@ static inline float readFloat(CCBReader *self)
                                 [NSNumber numberWithFloat:y],
                                 [NSNumber numberWithInt:sType],
                                 nil];
-                [actionManager setBaseValue:baseValue forNode:node propertyName:name];
+                [animationManager setBaseValue:baseValue forNode:node propertyName:name];
             }
         }
     }
@@ -455,7 +450,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:value forNode:node propertyName:name];
+                [animationManager setBaseValue:value forNode:node propertyName:name];
             }
         }
     }
@@ -503,7 +498,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:value forNode:node propertyName:name];
+                [animationManager setBaseValue:value forNode:node propertyName:name];
             }
         }
     }
@@ -518,7 +513,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:spriteFrame forNode:node propertyName:name];
+                [animationManager setBaseValue:spriteFrame forNode:node propertyName:name];
             }
         }
     }
@@ -543,7 +538,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:value forNode:node propertyName:name];
+                [animationManager setBaseValue:value forNode:node propertyName:name];
             }
         }
     }
@@ -561,7 +556,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:cVal forNode:node propertyName:name];
+                [animationManager setBaseValue:cVal forNode:node propertyName:name];
             }
         }
     }
@@ -580,7 +575,7 @@ static inline float readFloat(CCBReader *self)
             
             if ([animatedProps containsObject:name])
             {
-                [actionManager setBaseValue:cVal forNode:node propertyName:name];
+                [animationManager setBaseValue:cVal forNode:node propertyName:name];
             }
         }
     }
@@ -678,7 +673,7 @@ static inline float readFloat(CCBReader *self)
             if (selectorTarget)
             {
                 id target = NULL;
-                if (selectorTarget == kCCBTargetTypeDocumentRoot) target = actionManager.rootNode;
+                if (selectorTarget == kCCBTargetTypeDocumentRoot) target = animationManager.rootNode;
                 else if (selectorTarget == kCCBTargetTypeOwner) target = owner;
                 
                 if (target)
@@ -724,7 +719,7 @@ static inline float readFloat(CCBReader *self)
         NSData* d = [NSData dataWithContentsOfFile:path];
         
         CCBReader* reader = [[CCBReader alloc] init];
-        reader.actionManager.rootContainerSize = parent.contentSize;
+        reader.animationManager.rootContainerSize = parent.contentSize;
         
         // Setup byte array & owner
         reader->data = d;
@@ -734,19 +729,14 @@ static inline float readFloat(CCBReader *self)
         
         reader->owner = owner;
         
-        reader->ownerOutletNames = ownerOutletNames;
-        reader->ownerOutletNodes = ownerOutletNodes;
-        reader->ownerCallbackNames = ownerCallbackNames;
-        reader->ownerCallbackNodes = ownerCallbackNodes;
-        
-        reader.actionManager.owner = owner;
+        reader.animationManager.owner = owner;
         
         CCNode* ccbFile = [reader readFileWithCleanUp:NO actionManagers:actionManagers];
         
-        if (ccbFile && reader.actionManager.autoPlaySequenceId != -1)
+        if (ccbFile && reader.animationManager.autoPlaySequenceId != -1)
         {
             // Auto play animations
-            [reader.actionManager runAnimationsForSequenceId:reader.actionManager.autoPlaySequenceId tweenDuration:0];
+            [reader.animationManager runAnimationsForSequenceId:reader.animationManager.autoPlaySequenceId tweenDuration:0];
         }
         
         if (setProp)
@@ -854,7 +844,7 @@ static inline float readFloat(CCBReader *self)
     CCNode* node = [[class alloc] init];
     
     // Set root node
-    if (!actionManager.rootNode) actionManager.rootNode = node;
+    if (!animationManager.rootNode) animationManager.rootNode = node;
     
     // Read animated properties
     NSMutableDictionary* seqs = [NSMutableDictionary dictionary];
@@ -893,7 +883,7 @@ static inline float readFloat(CCBReader *self)
     
     if (seqs.count > 0)
     {
-        [actionManager addNode:node andSequences:seqs];
+        [animationManager addNode:node andSequences:seqs];
     }
     
     // Read properties
@@ -922,7 +912,7 @@ static inline float readFloat(CCBReader *self)
         embeddedNode.visible = YES;
         //embeddedNode.ignoreAnchorPointForPosition = ccbFileNode.ignoreAnchorPointForPosition;
         
-        [actionManager moveAnimationsFromNode:ccbFileNode toNode:embeddedNode];
+        [animationManager moveAnimationsFromNode:ccbFileNode toNode:embeddedNode];
         
         ccbFileNode.ccbFile = NULL;
         
@@ -933,7 +923,7 @@ static inline float readFloat(CCBReader *self)
     if (memberVarAssignmentType)
     {
         id target = NULL;
-        if (memberVarAssignmentType == kCCBTargetTypeDocumentRoot) target = actionManager.rootNode;
+        if (memberVarAssignmentType == kCCBTargetTypeDocumentRoot) target = animationManager.rootNode;
         else if (memberVarAssignmentType == kCCBTargetTypeOwner) target = owner;
         
         if (target)
@@ -1086,7 +1076,7 @@ static inline float readFloat(CCBReader *self)
 
 - (BOOL) readSequences
 {
-    NSMutableArray* sequences = actionManager.sequences;
+    NSMutableArray* sequences = animationManager.sequences;
     
     int numSeqs = readIntWithSign(self, NO);
     
@@ -1104,7 +1094,7 @@ static inline float readFloat(CCBReader *self)
         [sequences addObject:seq];
     }
     
-    actionManager.autoPlaySequenceId = readIntWithSign(self, YES);
+    animationManager.autoPlaySequenceId = readIntWithSign(self, YES);
     return YES;
 }
 
@@ -1167,7 +1157,7 @@ static inline float readFloat(CCBReader *self)
     
     CCNode* node = [self readNodeGraphParent:NULL];
     
-    [actionManagers setObject:self.actionManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
+    [actionManagers setObject:self.animationManager forKey:[NSValue valueWithPointer:(__bridge const void *)(node)]];
     
     if (cleanUp)
     {
@@ -1190,7 +1180,7 @@ static inline float readFloat(CCBReader *self)
     }
 }
 
-- (CCNode*) nodeGraphFromData:(NSData*)d owner:(id)o parentSize:(CGSize) parentSize
+- (CCNode*) loadWithData:(NSData*)d owner:(id)o
 {
     // Setup byte array
     data = d;
@@ -1200,21 +1190,16 @@ static inline float readFloat(CCBReader *self)
     
     owner = o;
     
-    self.actionManager.rootContainerSize = parentSize;
-    self.actionManager.owner = owner;
-    
-    ownerOutletNames = [[NSMutableArray alloc] init];
-    ownerOutletNodes = [[NSMutableArray alloc] init];
-    ownerCallbackNames = [[NSMutableArray alloc] init];
-    ownerCallbackNodes = [[NSMutableArray alloc] init];
+    self.animationManager.rootContainerSize = [[CCDirector sharedDirector] viewSize];
+    self.animationManager.owner = owner;
     
     NSMutableDictionary* animationManagers = [NSMutableDictionary dictionary];
     CCNode* nodeGraph = [self readFileWithCleanUp:YES actionManagers:animationManagers];
     
-    if (nodeGraph && self.actionManager.autoPlaySequenceId != -1)
+    if (nodeGraph && self.animationManager.autoPlaySequenceId != -1)
     {
         // Auto play animations
-        [self.actionManager runAnimationsForSequenceId:self.actionManager.autoPlaySequenceId tweenDuration:0];
+        [self.animationManager runAnimationsForSequenceId:self.animationManager.autoPlaySequenceId tweenDuration:0];
     }
     
     for (NSValue* pointerValue in animationManagers)
@@ -1239,15 +1224,15 @@ static inline float readFloat(CCBReader *self)
     NSString* path = [[CCFileUtils sharedFileUtils] fullPathForFilename:file];
     NSData* d = [NSData dataWithContentsOfFile:path];
     
-    return [self nodeGraphFromData:d owner:(id)o parentSize:parentSize];
+    return [self loadWithData:d owner:(id)o];
 }
 
-- (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)o
+- (CCNode*) load:(NSString*) file owner:(id)o
 {
     return [self nodeGraphFromFile:file owner:o parentSize:[[CCDirector sharedDirector] viewSize]];
 }
 
-- (CCNode*) nodeGraphFromFile:(NSString*) file
+- (CCNode*) load:(NSString*) file
 {
     return [self nodeGraphFromFile:file owner:NULL parentSize:[[CCDirector sharedDirector] viewSize]];
 }
@@ -1264,42 +1249,42 @@ static inline float readFloat(CCBReader *self)
     return [[CCBReader alloc] init];
 }
 
-+ (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner
++ (CCNode*) load:(NSString*) file owner:(id)owner
 {
-    return [CCBReader nodeGraphFromFile:file owner:owner parentSize:[[CCDirector sharedDirector] viewSize]];
+    return [CCBReader load:file owner:owner parentSize:[[CCDirector sharedDirector] viewSize]];
 }
 
 + (CCNode*) nodeGraphFromData:(NSData*) data owner:(id)owner parentSize:(CGSize)parentSize
 {
-    return [[CCBReader reader] nodeGraphFromData:data owner:owner parentSize:parentSize];
+    return [[CCBReader reader] loadWithData:data owner:owner];
 }
 
-+ (CCNode*) nodeGraphFromFile:(NSString*) file owner:(id)owner parentSize:(CGSize)parentSize
++ (CCNode*) load:(NSString*) file owner:(id)owner parentSize:(CGSize)parentSize
 {
     return [[CCBReader reader] nodeGraphFromFile:file owner:owner parentSize:parentSize];
 }
 
-+ (CCNode*) nodeGraphFromFile:(NSString*) file
++ (CCNode*) load:(NSString*) file
 {
-    return [CCBReader nodeGraphFromFile:file owner:NULL];
+    return [CCBReader load:file owner:NULL];
 }
 
-+ (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner
++ (CCScene*) loadAsScene:(NSString *)file owner:(id)owner
 {
     return [CCBReader sceneWithNodeGraphFromFile:file owner:owner parentSize:[[CCDirector sharedDirector] viewSize]];
 }
 
 + (CCScene*) sceneWithNodeGraphFromFile:(NSString *)file owner:(id)owner parentSize:(CGSize)parentSize
 {
-    CCNode* node = [CCBReader nodeGraphFromFile:file owner:owner parentSize:parentSize];
+    CCNode* node = [CCBReader load:file owner:owner parentSize:parentSize];
     CCScene* scene = [CCScene node];
     [scene addChild:node];
     return scene;
 }
 
-+ (CCScene*) sceneWithNodeGraphFromFile:(NSString*) file
++ (CCScene*) loadAsScene:(NSString*) file
 {
-    return [CCBReader sceneWithNodeGraphFromFile:file owner:NULL]; 
+    return [CCBReader loadAsScene:file owner:NULL]; 
 }
 
 + (NSString*) ccbDirectoryPath
@@ -1308,16 +1293,6 @@ static inline float readFloat(CCBReader *self)
     return [[searchPaths objectAtIndex:0] stringByAppendingPathComponent:@"ccb"];
 }
 
-#ifdef CCB_ENABLE_UNZIP
-+ (BOOL) unzipResources:(NSString*)resPath
-{
-    NSString* fullResPath = [[CCFileUtils sharedFileUtils] fullPathForFilenameIgnoringResolutions:resPath];
-    
-    NSString* dstPath = [CCBReader ccbDirectoryPath];
-    
-    return [SSZipArchive unzipFileAtPath:fullResPath toDestination:dstPath overwrite:YES password:NULL error:NULL];
-}
-#endif
 @end
 
 
