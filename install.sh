@@ -12,7 +12,7 @@
 # ----------------------------------------------------
 # Variables setup
 # ----------------------------------------------------
-SCRIPT_VER="v0.9.2"
+SCRIPT_VER="v0.9.3"
 COCOS2D_VER="cocos2d-v3.0"
 COCOS2D_DST_DIR="cocos2d v3.x"
 SCRIPT_DIR="$(dirname $0)"
@@ -288,13 +288,13 @@ if $INSTALL ; then
 	
 	# Building Chipmunk (fat static lib)
 	echo -n "...bulding Chipmunk fat static lib, please wait"
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 	check_status	
 	echo -n "."
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 	check_status	
 	echo -n "."	
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" CONFIGURATION_TEMP_DIR="${DOWNLOAD_DIR}/Chipmunk/xcode/build/" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 	check_status	
 	echo -n "."	
 	lipo -create "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphoneos/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release-iphonesimulator/libObjectiveChipmunk.a" "${DOWNLOAD_DIR}/Chipmunk/xcode/build/Release/libObjectiveChipmunk.a" -output "${DOWNLOAD_DIR}/Chipmunk/xcode/build/libObjectiveChipmunk.a" 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
@@ -313,13 +313,13 @@ if $INSTALL ; then
 		
 	# Clean after Chipmunk
 	echo -n "...cleaning after Chipmunk"
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphoneos SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 	check_status
 	echo -n "."
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk iphonesimulator SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"
 	check_status
 	echo -n "."	
-	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"	
+	xcodebuild -project "${DOWNLOAD_DIR}/Chipmunk/xcode/Chipmunk7.xcodeproj" -configuration Release -target ObjectiveChipmunk -sdk macosx SYM_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" DST_ROOT="${DOWNLOAD_DIR}/Chipmunk/xcode/" clean 1>>"${ERROR_LOG}" 2>>"${ERROR_LOG}"	
 	check_status
 	echo -n "."	
 	rm -rf "${DOWNLOAD_DIR}" 1>/dev/null 2>>"${ERROR_LOG}"
