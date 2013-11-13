@@ -11,8 +11,7 @@
 		<string>com.cocos2d-v3.bundlebase</string>
 		<string>com.cocos2d-v3.iosbase</string>
 		<string>com.cocos2d-v3.cocos2dlib</string>
-		<!-- Doesn't support ARC, commented out until resolved -->
-		<!-- <string>com.cocos2d-v3.cocosdenshionlib</string> -->
+		<string>com.cocos2d-v3.objectallib</string>
 		<string>com.cocos2d-v3.cocos2d-uilib</string>
 		<string>com.cocos2d-v3.kazmathlib</string>
 		<string>com.cocos2d-v3.ccbreaderlib</string>
